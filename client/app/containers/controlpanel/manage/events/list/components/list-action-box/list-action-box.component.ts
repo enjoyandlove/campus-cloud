@@ -17,11 +17,11 @@ import {
 } from './../../../../../../../shared/utils/privileges/privileges';
 import { DATE_FILTER } from './events-filters';
 import { CPSession } from '../../../../../../../session';
+import { EventAttendance } from '../../../event.status';
+import { CPDate } from '../../../../../../../shared/utils/date';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
-import { CPTrackingService, StoreService } from '../../../../../../../shared/services';
-import { CPDate } from '../../../../../../../shared/utils/date';
-import { EventAttendance } from '../../../event.status';
+import { CPTrackingService, RouteLevel, StoreService } from '../../../../../../../shared/services';
 
 interface IState {
   end: number;
@@ -47,7 +47,6 @@ export class ListActionBoxComponent implements OnInit {
   eventFilter;
   dateFilterOpts;
   canCreateEvent;
-  amplitudeEvents;
   threeYearsFromNow = CPDate.now(this.session.tz)
     .add(3, 'years')
     .unix();
@@ -173,9 +172,14 @@ export class ListActionBoxComponent implements OnInit {
     $('#excelEventsModal').modal();
   }
 
-  trackEvent(eventName) {
+  trackEvent() {
+    const eventName = this.isSimple
+      ? amplitudeEvents.CLICKED_CHANGE_BUTTON
+      : amplitudeEvents.CLICKED_CREATE_ITEM;
+
     const eventProperties = {
-      ...this.cpTracking.getEventProperties()
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
 
     return {
@@ -200,10 +204,6 @@ export class ListActionBoxComponent implements OnInit {
       mode: 'range',
       minDate: CPDate.now(this.session.tz).format(),
       maxDate: null
-    };
-
-    this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE_ITEM
     };
 
     this.listAction.emit(this.state);

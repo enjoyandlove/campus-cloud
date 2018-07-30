@@ -12,6 +12,9 @@ import { BaseComponent } from '../../../../../base/base.component';
 import { CPI18nService } from '../../../../../shared/services/index';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { CPTrackingService, RouteLevel } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-deals-info',
@@ -35,7 +38,8 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    public service: DealsService
+    public service: DealsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     this.dateFormat = FORMAT.DATETIME;
@@ -84,6 +88,19 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload
     });
+  }
+
+  trackChangeEvent() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
+      eventProperties
+    };
   }
 
   ngOnInit() {

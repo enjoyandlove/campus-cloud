@@ -1,12 +1,14 @@
-import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
+
 import { CPSession } from './../../../../../session';
-import { OrientationInfoComponent } from './orientation-info.component';
-import { mockSchool } from '../../../../../session/mock/school';
-import { OrientationDetailsModule } from '../details/orientation-details.module';
 import { OrientationService } from '../orientation.services';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPTrackingService } from '../../../../../shared/services';
+import { OrientationInfoComponent } from './orientation-info.component';
+import { OrientationDetailsModule } from '../details/orientation-details.module';
 
 class MockOrientationService {
   dummy;
@@ -43,6 +45,7 @@ describe('OrientationInfoComponent', () => {
         imports: [OrientationDetailsModule],
         providers: [
           CPSession,
+          CPTrackingService,
           { provide: OrientationService, useClass: MockOrientationService },
           {
             provide: ActivatedRoute,

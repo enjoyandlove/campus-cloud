@@ -1,7 +1,9 @@
 import { PersonasType } from './../../../personas.status';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { CPI18nService } from '../../../../../../../shared/services';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-personas-list-action-box',
@@ -14,7 +16,7 @@ export class PersonasListActionBoxComponent implements OnInit {
 
   dropdownItems;
 
-  constructor(public cpI18n: CPI18nService) {}
+  constructor(public cpI18n: CPI18nService, public cpTracking: CPTrackingService) {}
 
   onSearch(query) {
     this.search.emit(query);
@@ -22,6 +24,14 @@ export class PersonasListActionBoxComponent implements OnInit {
 
   onSelectedFilter({ id }) {
     this.filterBy.emit(id);
+  }
+
+  trackEvent() {
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
   }
 
   ngOnInit() {

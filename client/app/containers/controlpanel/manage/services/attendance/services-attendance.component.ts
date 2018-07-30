@@ -16,6 +16,9 @@ import { BaseComponent } from '../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import { CPI18nService } from '../../../../../shared/services/index';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { CPTrackingService } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 const FEEDBACK_ENABLED = 1;
 
@@ -44,6 +47,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
+    private cpTracking: CPTrackingService,
     private serviceService: ServicesService
   ) {
     super();
@@ -147,6 +151,19 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
   onProvidersResult(data) {
     this.noProviders = !data;
+  }
+
+  trackChangeEvent() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.ASSESSMENT
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
+      eventProperties
+    };
   }
 
   ngOnInit() {}

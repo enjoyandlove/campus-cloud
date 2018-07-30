@@ -13,7 +13,7 @@ export class TodosListActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() launchCreateModal: EventEmitter<null> = new EventEmitter();
 
-  clicked_create = amplitudeEvents.CLICKED_CREATE_ITEM;
+  clicked_change = amplitudeEvents.CLICKED_CHANGE_BUTTON;
 
   constructor(public cpTracking: CPTrackingService) {}
 

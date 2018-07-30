@@ -26,7 +26,8 @@ export class CalendarsDetailsActionBoxComponent implements OnInit {
 
   trackEvent(eventName) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties()
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.CALENDAR_EVENTS
     };
 
     return {
@@ -38,7 +39,7 @@ export class CalendarsDetailsActionBoxComponent implements OnInit {
 
   ngOnInit() {
     this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE_ITEM
+      clicked_change: amplitudeEvents.CLICKED_CHANGE_BUTTON
     };
   }
 }

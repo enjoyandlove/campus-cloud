@@ -80,11 +80,13 @@
                 class="cpbtn cpbtn--secondary">
                 {{ 'services_button_download_assessment_data' | cpI18n }}
               </button>
-              <button 
-                type="button" 
+              <button
+                cpTracker
+                type="button"
                 data-toggle="modal"
-                class="cpbtn cpbtn--primary" 
+                class="cpbtn cpbtn--primary"
                 data-target="#createProvider"
+                [eventData]="trackChangeEvent()"
                 (click)="onLaunchProviderAdd()">
                 {{ 'services_button_add_service_provider' | cpI18n }}
               </button>
