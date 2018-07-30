@@ -61,7 +61,7 @@ export class PersonasResourceTypesComponent implements OnInit {
   }
 
   isTypeUrl(link_url: string) {
-    return link_url.startsWith('http');
+    return link_url ? link_url.startsWith('http') : false;
   }
 
   setUrlType() {
