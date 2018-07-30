@@ -5,6 +5,9 @@ import { BehaviorSubject } from 'rxjs';
 import { EventAttendance } from '../../../event.status';
 import { FORMAT } from '../../../../../../../shared/pipes/date';
 import { EventUtilService } from '../../../events.utils.service';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPTrackingService, RouteLevel } from '../../../../../../../shared/services';
 import { IResourceBanner } from '../../../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
@@ -26,7 +29,20 @@ export class AttendanceUpcomingComponent implements OnInit {
   showLocationDetails = true;
   attendanceEnabled = EventAttendance.enabled;
 
-  constructor(public utils: EventUtilService) {}
+  constructor(public utils: EventUtilService, public cpTracking: CPTrackingService) {}
+
+  trackChangeEvent() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
+      eventProperties
+    };
+  }
 
   ngOnInit() {
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);

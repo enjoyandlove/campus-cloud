@@ -10,8 +10,10 @@ import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
-import { CPI18nService } from '../../../../../shared/services/index';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
@@ -48,7 +50,8 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     public utils: EventUtilService,
-    public service: EventsService
+    public service: EventsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     this.dateFormat = FORMAT.DATETIME;
@@ -114,6 +117,19 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload
     });
+  }
+
+  trackChangeEvent() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
+      eventProperties
+    };
   }
 
   ngOnInit() {

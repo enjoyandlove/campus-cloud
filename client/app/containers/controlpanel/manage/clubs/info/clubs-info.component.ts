@@ -4,6 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import {
+  CPI18nService,
+  CPTrackingService,
+  FileUploadService,
+  RouteLevel
+} from '../../../../../shared/services';
+
 import { switchMap } from 'rxjs/operators';
 import { ClubStatus } from '../club.status';
 import { API } from '../../../../../config/api';
@@ -12,9 +19,10 @@ import { CPSession } from '../../../../../session';
 import { ClubsUtilsService } from '../clubs.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { appStorage } from './../../../../../shared/utils/storage/storage';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
-import { CPI18nService, FileUploadService } from '../../../../../shared/services';
 import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 
 @Component({
@@ -38,13 +46,16 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
 
-  constructor(public session: CPSession,
-              public route: ActivatedRoute,
-              public cpI18n: CPI18nService,
-              public store: Store<ISnackbar>,
-              public clubsService: ClubsService,
-              public helper: ClubsUtilsService,
-              public fileService: FileUploadService) {
+  constructor(
+    public session: CPSession,
+    public route: ActivatedRoute,
+    public cpI18n: CPI18nService,
+    public store: Store<ISnackbar>,
+    public clubsService: ClubsService,
+    public helper: ClubsUtilsService,
+    public fileService: FileUploadService,
+    public cpTracking: CPTrackingService
+  ) {
     super();
     this.clubId = this.route.parent.snapshot.params['clubId'];
 
@@ -168,6 +179,19 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     });
 
     return menu;
+  }
+
+  trackChangeEvent() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
+      eventProperties
+    };
   }
 
   ngOnInit() {

@@ -159,6 +159,8 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_CLUB: 'Manage - Updated Club',
 
+  CLICKED_CHANGE_BUTTON: 'Clicked Change Button',
+
   MANAGE_APPROVED_CLUB: 'Manage - Approved Club',
 
   WALL_DELETED_COMMENT: 'Wall - Deleted Comment',

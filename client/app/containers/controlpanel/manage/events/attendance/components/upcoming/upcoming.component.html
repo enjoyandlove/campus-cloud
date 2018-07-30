@@ -7,6 +7,8 @@
           <div class="row event__buttons">
             <div class="col-12">
               <a
+                cpTracker
+                [eventData]="trackChangeEvent()"
                 [routerLink]="['edit']"
                 class="cpbtn cpbtn--primary" i18n>
                 {{ 'edit' | cpI18n }}
