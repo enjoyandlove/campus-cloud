@@ -65,40 +65,12 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
 
   loadServices() {
     const headers = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.items$ = this.tileService.getSchoolServices(headers).pipe(
-      map((services) => {
-        return services.map((service: any) => {
-          return service.value
-            ? {
-                ...service,
-                meta: {
-                  is_system: 1,
-                  link_params: {
-                    id: service.value
-                  },
-                  open_in_browser: 0,
-                  link_url: 'oohlala://campus_service'
-                }
-              }
-            : service;
-        });
-      }),
-      map(this.updateSelectedItem.bind(this)),
-      catchError(() => this.handleError())
-    );
-  }
-
-  updateSelectedItem(items) {
-    if (items.length > 1) {
-      const resourceId = this.resource.link_params.id;
-      this.selectedItem = items.filter((c) => c.value === resourceId)[0];
-
-      if (!this.selectedItem && this.resource.link_params.id) {
-        this.handleMissingResource();
-      }
-    }
-
-    return items;
+    this.items$ = this.tileService
+      .getSchoolServices(headers)
+      .pipe(
+        map((stores) => this.updateValues(stores, 'oohlala://campus_service')),
+        catchError(() => this.handleError())
+      );
   }
 
   handleMissingResource() {
@@ -116,52 +88,48 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
 
   loadCalendars() {
     const headers = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.items$ = this.tileService.getSchoolCalendars(headers).pipe(
-      map((calendars) => {
-        return calendars.map((calendar: any) => {
-          return calendar.value
-            ? {
-                ...calendar,
-                meta: {
-                  is_system: 1,
-                  link_params: {
-                    id: calendar.value
-                  },
-                  open_in_browser: 0,
-                  link_url: 'oohlala://subscribable_calendar'
-                }
-              }
-            : calendar;
-        });
-      }),
-      map(this.updateSelectedItem.bind(this)),
-      catchError(() => this.handleError())
-    );
+    this.items$ = this.tileService
+      .getSchoolCalendars(headers)
+      .pipe(
+        map((stores) => this.updateValues(stores, 'oohlala://subscribable_calendar')),
+        catchError(() => this.handleError())
+      );
+  }
+
+  updateValues(items, link_url) {
+    const resourceId = this.resource.link_params.id;
+
+    return items.map((item: any) => {
+      if (item.value) {
+        item = {
+          ...item,
+          meta: {
+            is_system: 1,
+            link_params: {
+              id: item.value
+            },
+            open_in_browser: 0,
+            link_url
+          }
+        };
+
+        if (item.value === resourceId) {
+          this.selectedItem = item;
+        }
+      }
+
+      return item;
+    });
   }
 
   loadStores() {
     const headers = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.items$ = this.storeService.getStores(headers).pipe(
-      map((stores) => {
-        return stores.map((store: any) => {
-          return store.value
-            ? {
-                ...store,
-                meta: {
-                  is_system: 1,
-                  link_params: {
-                    id: store.value
-                  },
-                  open_in_browser: 0,
-                  link_url: 'oohlala://store'
-                }
-              }
-            : store;
-        });
-      }),
-      map(this.updateSelectedItem.bind(this)),
-      catchError(() => this.handleError())
-    );
+    this.items$ = this.storeService
+      .getStores(headers)
+      .pipe(
+        map((stores) => this.updateValues(stores, 'oohlala://store')),
+        catchError(() => this.handleError())
+      );
   }
 
   ngOnInit(): void {}
