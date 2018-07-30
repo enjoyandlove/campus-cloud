@@ -40,14 +40,14 @@
     <div class="row">
       <cp-personas-tile
         [tile]="tile"
-        [ngClass]="tileWidth"
+        [ngClass]="['col-' + tileWidth]"
         (edit)="onEditTile(tile)"
-        [class.mb-4]="i % 5 === 0"
         (edited)="onEditedTile($event)"
         (deleted)="onDeletedTile($event)"
-        *ngFor="let tile of guide.tiles; let i = index">
+        *ngFor="let tile of guide.tiles; let i = index"
+        [class.mb-4]="guide.tiles.length > (12 / +tileWidth)">
       </cp-personas-tile>
-      <div [ngClass]="tileWidth">
+      <div [ngClass]="['col-' + tileWidth]">
         <cp-personas-tile-add-button
           (buttonClick)="goToCreateTile()">
         </cp-personas-tile-add-button>

@@ -20,12 +20,12 @@ import { SectionsService } from '../sections.service';
 export class PersonasSectionComponent implements OnInit {
   @Input() last: boolean;
   @Input() first: boolean;
+  @Input() tileWidth = '2';
   @Input() hideName: boolean;
   @Input() personaId: number;
   @Input() addSection = true;
   @Input() noControls = false;
   @Input() guide: ICampusGuide;
-  @Input() tileWidth = 'col-2';
   @Input() previousRank: number;
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
