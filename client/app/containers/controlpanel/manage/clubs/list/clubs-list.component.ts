@@ -11,6 +11,7 @@ import { ClubsUtilsService } from '../clubs.utils.service';
 import { ClubSocialGroup, ClubStatus } from '../club.status';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
@@ -128,6 +129,14 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_APPROVED_CLUB, this.eventProperties);
+  }
+
+  trackViewEvent() {
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
   }
 
   doFilter(filter) {

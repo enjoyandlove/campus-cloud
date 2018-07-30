@@ -1,13 +1,16 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
-import { AudienceType } from './../audience.status';
-import { BaseComponent } from '../../../../base/base.component';
-import { ISnackbar, SNACKBAR_SHOW } from '../../../../reducers/snackbar.reducer';
+
 import { CPSession } from '../../../../session';
-import { CPI18nService } from '../../../../shared/services/index';
+import { AudienceType } from './../audience.status';
 import { AudienceService } from '../audience.service';
+import { BaseComponent } from '../../../../base/base.component';
+import { CP_TRACK_TO } from '../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
+import { CPI18nService, CPTrackingService } from '../../../../shared/services';
+import { ISnackbar, SNACKBAR_SHOW } from '../../../../reducers/snackbar.reducer';
 
 interface IState {
   audiences: Array<any>;
@@ -45,7 +48,8 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
-    private service: AudienceService
+    private service: AudienceService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -226,6 +230,14 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
       this.resetPagination();
       this.fetch();
     }
+  }
+
+  trackViewEvent() {
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
   }
 
   ngOnInit() {

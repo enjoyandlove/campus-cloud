@@ -8,6 +8,7 @@ import { CPSession } from './../../../../../session/index';
 import { base64 } from './../../../../../shared/utils/encrypt';
 import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from './../../../../../base/base.component';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
@@ -155,6 +156,14 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.NOTIFY_VIEWED_LISTING,
       this.eventProperties);
+  }
+
+  trackViewEvent() {
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
   }
 
   onComposed() {

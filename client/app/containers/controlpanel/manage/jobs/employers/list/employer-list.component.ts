@@ -6,8 +6,10 @@ import { IEmployer } from '../employer.interface';
 import { CPSession } from '../../../../../../session';
 import { EmployerService } from '../employer.service';
 import { BaseComponent } from '../../../../../../base';
-import { CPI18nService } from '../../../../../../shared/services';
+import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
+import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
 
 export interface IState {
   employers: Array<IEmployer>;
@@ -42,7 +44,8 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
-    public service: EmployerService
+    public service: EmployerService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -116,6 +119,19 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
       this.resetPagination();
       this.fetch();
     }
+  }
+
+  trackViewEvent() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_type: amplitudeEvents.EMPLOYER
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties
+    };
   }
 
   public fetch() {

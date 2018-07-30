@@ -7,9 +7,11 @@ import { JobsService } from '../jobs.service';
 import { ManageHeaderService } from '../../utils';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
-import { CPI18nService } from '../../../../../shared/services';
 import { FORMAT } from '../../../../../shared/pipes/date/date.pipe';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 export interface IState {
   jobs: Array<IJob>;
@@ -45,6 +47,7 @@ export class JobsListComponent extends BaseComponent implements OnInit {
     public service: JobsService,
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
+    public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService
   ) {
     super();
@@ -120,6 +123,14 @@ export class JobsListComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload: this.headerService.filterByPrivileges()
     });
+  }
+
+  trackViewEvent() {
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
   }
 
   ngOnInit() {

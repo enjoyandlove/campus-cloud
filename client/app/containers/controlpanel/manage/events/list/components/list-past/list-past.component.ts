@@ -8,6 +8,7 @@ import {
 import { FORMAT } from '../../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../../session/index';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../../../shared/services';
 
@@ -47,19 +48,29 @@ export class ListPastComponent implements OnInit {
 
   onDelete(event) {
     this.deleteEvent.emit(event);
-    this.trackEvent();
+    this.trackDeleteEvent();
   }
 
-  trackEvent() {
-    const eventProperties = {
+  trackViewEvent() {
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.setEventProperties()
+    };
+  }
+
+  trackDeleteEvent() {
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.setEventProperties());
+  }
+
+  setEventProperties() {
+    return {
       ...this.cpTracking.getEventProperties(),
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth),
       page_type: amplitudeEvents.PAST_EVENT
     };
-
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.DELETED_ITEM,
-      eventProperties);
   }
 
   doSort(sort_field) {

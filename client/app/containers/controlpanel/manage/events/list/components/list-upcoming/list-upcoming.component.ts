@@ -67,16 +67,26 @@ export class ListUpcomingComponent implements OnInit {
     this.sortList.emit(this.sort);
   }
 
+  trackViewEvent() {
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.setEventProperties()
+    };
+  }
+
   trackDeleteEvent() {
-    const eventProperties = {
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.setEventProperties());
+  }
+
+  setEventProperties() {
+    return {
       ...this.cpTracking.getEventProperties(),
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth),
       page_type: amplitudeEvents.UPCOMING_EVENT
     };
-
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.DELETED_ITEM,
-      eventProperties);
   }
 
   trackEvent(event_id) {

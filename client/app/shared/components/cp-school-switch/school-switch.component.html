@@ -31,7 +31,7 @@
         cpTracker
         [href]="helpDeskUrl"
         target="_blank"
-        [eventData]="trackEvent(amplitudeEvents.visited_help_desk, true)">{{ 'help_desk' | cpI18n }}</a>
+        [eventData]="trackEvent(amplitudeEvents.visited_help_desk)">{{ 'help_desk' | cpI18n }}</a>
     </li>
 
     <li
@@ -49,7 +49,7 @@
       <a
         cpTracker
         [routerLink]="['/logout']"
-        [eventData]="trackEvent(amplitudeEvents.logged_out, true)">{{ 'logout' | cpI18n }}</a>
+        [eventData]="trackEvent(amplitudeEvents.logged_out)">{{ 'logout' | cpI18n }}</a>
     </li>
   </div>
 
@@ -61,7 +61,7 @@
         href="#"
         cpTracker
         (click)="onSwitchSchool($event, school)"
-        [eventData]="trackEvent(amplitudeEvents.changed_school, false)">
+        [eventData]="trackEvent(amplitudeEvents.changed_school)">
       <div class="row">
         <div class="col-10">
           <div

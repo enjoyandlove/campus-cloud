@@ -9,8 +9,10 @@ import { CPSession } from '../../../../../../session';
 import { isClubAthletic } from '../../clubs.athletics.labels';
 import { MembersUtilsService } from '../members.utils.service';
 import { ClubsUtilsService } from './../../clubs.utils.service';
-import { CPI18nService } from '../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../base/base.component';
+import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
 
 declare var $: any;
 
@@ -61,7 +63,8 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     public helper: ClubsUtilsService,
     private utils: MembersUtilsService,
-    private membersService: MembersService
+    private membersService: MembersService,
+    private cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -141,6 +144,19 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
   onTearDown(modal) {
     this[modal] = false;
+  }
+
+  trackViewEvent() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.MEMBER
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties
+    };
   }
 
   ngOnInit() {

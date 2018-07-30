@@ -21,6 +21,8 @@ export const amplitudeEvents = {
 
   EVENT: 'Event',
 
+  TODOS: 'To-Dos',
+
   EVENTS: 'Events',
 
   MEMBER: 'Member',
@@ -38,6 +40,8 @@ export const amplitudeEvents = {
   ENABLED: 'Enabled',
 
   NEW_AUDIENCE: 'New',
+
+  PROVIDER: 'Provider',
 
   EMPLOYER: 'Employer',
 
@@ -80,6 +84,8 @@ export const amplitudeEvents = {
   FULL_ACCESS: 'Full Access',
 
   CUSTOM_LIST: 'Custom List',
+
+  VIEWED_ITEM: 'Viewed Item',
 
   MENU_CUSTOMIZE: 'Customize',
 

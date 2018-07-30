@@ -37,6 +37,8 @@
 
         <strong>
           <a
+            cpTracker
+            [eventData]="trackViewEvent()"
             class="event__title"
             [routerLink]="[event.id]"
             queryParamsHandling="merge">

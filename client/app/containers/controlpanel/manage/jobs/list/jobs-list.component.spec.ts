@@ -1,16 +1,18 @@
-import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { JobsListComponent } from './jobs-list.component';
-import { reducers } from '../../../../../reducers';
-import { CPSession } from '../../../../../session';
-import { mockSchool } from '../../../../../session/mock/school';
-import { ManageHeaderService } from '../../utils';
+
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
+import { ManageHeaderService } from '../../utils';
+import { CPSession } from '../../../../../session';
+import { reducers } from '../../../../../reducers';
+import { JobsListComponent } from './jobs-list.component';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPTrackingService } from '../../../../../shared/services';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 const mockJobs = require('../mockJobs.json');
 
@@ -45,6 +47,7 @@ describe('JobsListComponent', () => {
         providers: [
           CPSession,
           CPI18nService,
+          CPTrackingService,
           ManageHeaderService,
           { provide: JobsService, useClass: MockJobsService }
         ]

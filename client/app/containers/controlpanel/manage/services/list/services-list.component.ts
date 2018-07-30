@@ -6,6 +6,9 @@ import { ServicesService } from '../services.service';
 import { CPSession } from './../../../../../session/index';
 import { ManageHeaderService } from './../../utils/header';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CPTrackingService } from '../../../../../shared/services';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
@@ -41,6 +44,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private service: ServicesService,
+    private cpTracking: CPTrackingService,
     private headerService: ManageHeaderService
   ) {
     super();
@@ -114,6 +118,14 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
     _state.services = _state.services.filter((service) => service.id !== serviceId);
 
     this.state = Object.assign({}, this.state, { services: _state.services });
+  }
+
+  trackViewEvent() {
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
   }
 
   ngOnInit() {

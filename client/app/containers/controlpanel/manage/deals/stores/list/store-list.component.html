@@ -41,6 +41,8 @@
                 [src]="store.logo_url"
                 class="rounded img-fit-cover">
                 <span
+                  cpTracker
+                  [eventData]="trackViewEvent()"
                   data-toggle="modal"
                   data-target="#editModal"
                   (click)="launchEditModal = true; selectedStore = store">

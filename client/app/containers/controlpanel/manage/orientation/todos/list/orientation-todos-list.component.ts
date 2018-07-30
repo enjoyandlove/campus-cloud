@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 import { ITodo } from '../todos.interface';
 import { TodosService } from '../todos.service';
 import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base';
 import { FORMAT } from '../../../../../../shared/pipes/date/date.pipe';
-import { ActivatedRoute } from '@angular/router';
-import { CPI18nService } from '../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
+import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking/tracking.directive';
 
 @Component({
   selector: 'cp-orientation-todos-list',
@@ -35,7 +37,8 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: TodosService,
-    public route: ActivatedRoute
+    public route: ActivatedRoute,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -123,6 +126,19 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
       this.resetPagination();
       this.fetch();
     }
+  }
+
+  trackViewEvent() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.TODOS
+    };
+
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties
+    };
   }
 
   ngOnInit() {

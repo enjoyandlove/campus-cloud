@@ -7,9 +7,11 @@ import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { ProgramDuration } from '../orientation.status';
 import { OrientationService } from '../orientation.services';
-import { CPI18nService } from '../../../../../shared/services';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 import { FORMAT } from '../../../../../shared/pipes/date/date.pipe';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking/tracking.directive';
 
 @Component({
   selector: 'cp-list-orientation',
@@ -40,6 +42,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
     public service: OrientationService,
+    public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService
   ) {
     super();
@@ -130,6 +133,14 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
       this.resetPagination();
       this.fetch();
     }
+  }
+
+  trackViewEvent() {
+    return {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
   }
 
   ngOnInit() {

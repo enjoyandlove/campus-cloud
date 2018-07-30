@@ -35,6 +35,8 @@
                   event.store_logo_url">
         <strong>
             <a
+              cpTracker
+              [eventData]="trackViewEvent()"
               class="event__title"
               [routerLink]="[event.id]"
               queryParamsHandling="merge"
@@ -42,6 +44,8 @@
               {{ event.title }}
             </a>
             <a
+              cpTracker
+              [eventData]="trackViewEvent()"
               class="event__title"
               queryParamsHandling="merge"
               [routerLink]="[event.id + '/info']"

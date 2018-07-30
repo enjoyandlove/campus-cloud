@@ -43,6 +43,8 @@
 
               <strong>
                 <button
+                  cpTracker
+                  [eventData]="trackViewEvent()"
                   (click)="editLink = link"
                   class="cpbtn cpbtn--link-dark"
                   (click)="isLinksEdit = true"

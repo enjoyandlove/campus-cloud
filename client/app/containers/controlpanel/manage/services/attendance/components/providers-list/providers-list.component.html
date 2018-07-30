@@ -50,7 +50,10 @@
               <div class="row">
                 <div
                   class="col-3 text-truncate">
-                  <a [routerLink]="['provider/' + provider.id]">
+                  <a
+                    cpTracker
+                    [eventData]="trackViewEvent()"
+                    [routerLink]="['provider/' + provider.id]">
                     <span>
                       <strong>{{ provider.provider_name }}</strong>
                       <br>

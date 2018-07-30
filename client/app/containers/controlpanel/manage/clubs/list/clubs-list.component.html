@@ -50,6 +50,8 @@
 
               <strong>
                 <a
+                  cpTracker
+                  [eventData]="trackViewEvent()"
                   queryParamsHandling="merge"
                   [routerLink]="[club.id + '/info']">
                   {{ club.name }}

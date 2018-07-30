@@ -48,7 +48,10 @@
             <li class="cp-form__item col-12" *ngFor="let program of state.orientationPrograms;">
               <div class="row">
                 <span class="col-5 text-truncate hover">
-                  <a [routerLink]="[program.id+'/events']">
+                  <a
+                    cpTracker
+                    [eventData]="trackViewEvent()"
+                    [routerLink]="[program.id+'/events']">
                     <strong>
                       {{ program.name }}
                     </strong>
