@@ -1,10 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { throwError as observableThrowError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { throwError as observableThrowError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { HTTPService } from '../../base/http.service';
+import { sortBy } from 'lodash';
+
 import { API } from '../../config/api';
+import { HTTPService } from '../../base/http.service';
 
 @Injectable()
 export class AdminService extends HTTPService {
@@ -21,9 +23,13 @@ export class AdminService extends HTTPService {
   }
 
   getAdminByStoreId(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/1;900`;
 
-    return super.get(url, search);
+    return super
+      .get(url, search)
+      .pipe(
+        map((admins: Array<any>) => sortBy(admins, (admin: any) => admin.firstname.toLowerCase()))
+      );
   }
 
   getAdminById(adminId: number) {
