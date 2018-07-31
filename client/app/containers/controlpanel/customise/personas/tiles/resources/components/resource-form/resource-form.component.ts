@@ -10,6 +10,7 @@ import { CPI18nService } from '../../../../../../../../shared/services/i18n.serv
 })
 export class PersonasResourceFormComponent implements OnInit {
   @Input() form: FormGroup;
+  @Input() editView = false;
   @Input() hideTypeSelector = false;
 
   @Output() formChange: EventEmitter<FormGroup> = new EventEmitter();
@@ -84,7 +85,7 @@ export class PersonasResourceFormComponent implements OnInit {
       };
     });
 
-    if (this.form.value.name) {
+    if (this.editView) {
       this.updateState();
     }
   }

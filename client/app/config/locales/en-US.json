@@ -1808,6 +1808,9 @@
   "new_password": {
     "message": "New Password"
   },
+  "new_tile": {
+    "message": "New Tile"
+  },
   "next": {
     "message": "Next"
   },
@@ -2453,7 +2456,7 @@
     "message": "This experience has users associated, so you cannot delete it."
   },
   "t_personas_delete_guide_error_non_empty_category": {
-    "message": "This section has tiles associated, so you cannot delete it. Delete all tiles from the section, and try again."
+    "message": "To delete a section, delete all the tiles."
   },
   "t_personas_details_feature": {
     "message": "Featured"
@@ -2472,6 +2475,9 @@
   },
   "t_personas_edit_message_on_save_ok": {
     "message": "Changes saved."
+  },
+  "t_personas_edit_missing_resource": {
+    "message": "The resource associated with this tile was not found."
   },
   "t_personas_edit_submit_button": {
     "message": "Save Changes"
@@ -2628,6 +2634,9 @@
   },
   "t_personas_tile_modal_create_resource_type": {
     "message": "Resource Type"
+  },
+  "t_personas_tile_update_header": {
+    "message": "Edit Tile"
   },
   "t_persona_create_cancel_button": {
     "message": "Cancel"

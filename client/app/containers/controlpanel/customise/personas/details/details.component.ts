@@ -11,17 +11,15 @@ import { PersonasService } from './../personas.service';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
-import { SectionsService } from './../sections/sections.service';
-import { ITile } from './../tiles/tile.interface';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
 
 interface IState {
   working: boolean;
-  featureTiles: Array<ITile>;
-  categoryZero: Array<ITile>;
   guides: Array<ICampusGuide>;
+  featureTiles: Array<ICampusGuide>;
+  categoryZero: Array<ICampusGuide>;
 }
 
 @Component({
@@ -47,7 +45,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public service: PersonasService,
     public utils: PersonasUtilsService,
-    public sectionService: SectionsService,
     public sectionUtils: SectionUtilsService,
     public store: Store<IHeader | ISnackbar>
   ) {
@@ -157,28 +154,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     }
   }
 
-  createFeatureTile() {
-    let tempGuide = this.sectionUtils.temporaryGuide();
-    tempGuide = {
-      ...tempGuide,
-      featureTile: true
-    };
-    this.sectionService.guide = tempGuide;
-
-    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
-  }
-
-  createCategoryZeroTile() {
-    let tempGuide = this.sectionUtils.temporaryGuide();
-    tempGuide = {
-      ...tempGuide,
-      categoryZero: true
-    };
-    this.sectionService.guide = tempGuide;
-
-    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
-  }
-
   fetch() {
     const schoolIdSearch = new HttpParams().append('school_id', this.session.g.get('school').id);
 
@@ -223,8 +198,24 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         this.state = {
           ...this.state,
           guides,
-          featureTiles: data.featured,
-          categoryZero: data.categoryZero
+          featureTiles: [
+            {
+              id: null,
+              rank: 1,
+              name: null,
+              featureTile: true,
+              tiles: [...data.featured]
+            }
+          ],
+          categoryZero: [
+            {
+              id: null,
+              rank: 1,
+              name: null,
+              categoryZero: true,
+              tiles: [...data.categoryZero]
+            }
+          ]
         };
       })
       .catch(() => this.router.navigate(['/customize/personas']));

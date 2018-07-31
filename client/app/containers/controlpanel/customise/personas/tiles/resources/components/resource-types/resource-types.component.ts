@@ -9,6 +9,7 @@ import { CPI18nService } from '../../../../../../../../shared/services/i18n.serv
 })
 export class PersonasResourceTypesComponent implements OnInit {
   @Input() resource;
+  @Input() editView;
 
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() linkUrl: EventEmitter<string> = new EventEmitter();
@@ -42,10 +43,6 @@ export class PersonasResourceTypesComponent implements OnInit {
     }
   }
 
-  // isUrlType(resource: ILink) {
-  //   return resource.link_url ==
-  // }
-
   populateDropdowns() {
     const resources = require('./resources.json');
     const sortedResources = sortBy(resources.slice(1, resources.length), (r: any) => r.id);
@@ -57,25 +54,40 @@ export class PersonasResourceTypesComponent implements OnInit {
         label: this.cpI18n.translate(resource.label)
       };
     });
-    console.log(this.resource);
-    if (this.resource.link_url) {
-      const isURLType = Object.keys(this.resource.link_params).length === 0;
 
-      if (isURLType) {
-        this.selectedItem = this.resources.filter((r) => {
-          if (this.resource.open_in_browser) {
-            return r.id === 'external_link';
-          }
-
-          return r.id === 'web_link';
-        })[0];
-      } else {
-        this.selectedItem = this.resources.filter(
-          (r) => r.meta.link_url === this.resource.link_url
-        )[0];
-      }
-      this.resourceSelection = this.selectedItem.id;
+    if (this.editView) {
+      this.updateState();
     }
+  }
+
+  isTypeUrl(link_url: string) {
+    return link_url ? link_url.startsWith('http') : false;
+  }
+
+  setUrlType() {
+    const urlIds = ['web_link', 'external_link'];
+
+    return this.resources
+      .filter((r) => urlIds.includes(r.id))
+      .filter((r) => !!r.meta.open_in_browser === this.resource.open_in_browser)
+      .map((r) => r.id)[0];
+  }
+
+  setGeneralType() {
+    return this.resources
+      .filter((r) => r.meta.link_url === this.resource.link_url)
+      .map((r) => r.id)[0];
+  }
+
+  updateResourceType() {
+    this.selectedItem = this.resources.filter((r) => r.id === this.resourceSelection)[0];
+  }
+
+  updateState() {
+    const isTypeUrl = this.isTypeUrl(this.resource.link_url);
+    this.resourceSelection = isTypeUrl ? this.setUrlType() : this.setGeneralType();
+
+    this.updateResourceType();
   }
 
   ngOnInit(): void {
