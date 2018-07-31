@@ -3,7 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { sortBy } from 'lodash';
 import { switchMap } from 'rxjs/operators';
 import { SNACKBAR_HIDE } from './../../../../../../reducers/snackbar.reducer';
 import { BaseComponent } from '../../../../../../base';
@@ -15,7 +14,6 @@ import { PersonasService } from '../../personas.service';
 import { ICampusGuide } from '../../sections/section.interface';
 import { SectionUtilsService } from '../../sections/section.utils.service';
 import { SectionsService } from '../../sections/sections.service';
-import { ITile } from '../tile.interface';
 import { TilesService } from '../tiles.service';
 import { TilesUtilsService } from '../tiles.utils.service';
 
@@ -29,8 +27,6 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   buttonData;
   personaId: number;
   guide: ICampusGuide;
-  isFeatured: boolean;
-  isCategoryZero: boolean;
   campusLinkForm: FormGroup;
   campusGuideTileForm: FormGroup;
 
@@ -53,49 +49,59 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
-  createGuideLink(tileCategoryId = this.guide.id) {
+  createGuideLink(newCategoryId = null) {
     let cloneGuideTileForm = {
-      ...this.campusGuideTileForm.value,
-      tile_category_id: tileCategoryId
+      ...this.campusGuideTileForm.value
     };
 
     let guideTilePersonaZero = {
       ...this.campusGuideTileForm.value,
-      school_persona_id: 0,
-      tile_category_id: tileCategoryId
+      school_persona_id: 0
     };
 
-    if (this.isFeatured) {
+    if (newCategoryId) {
       cloneGuideTileForm = {
         ...cloneGuideTileForm,
-        rank: -1,
-        featured_rank: 0,
-        tile_category_id: 0
+        tile_category_id: newCategoryId
       };
 
       guideTilePersonaZero = {
         ...guideTilePersonaZero,
-        rank: -1,
-        featured_rank: 0,
-        tile_category_id: 0
+        tile_category_id: newCategoryId
       };
     }
 
-    if (this.isCategoryZero) {
-      cloneGuideTileForm = {
-        ...cloneGuideTileForm,
-        rank: -1,
-        featured_rank: -1,
-        tile_category_id: 0
-      };
+    // if (this.isFeatured) {
+    //   cloneGuideTileForm = {
+    //     ...cloneGuideTileForm,
+    //     rank: -1,
+    //     featured_rank: 0,
+    //     tile_category_id: 0
+    //   };
 
-      guideTilePersonaZero = {
-        ...guideTilePersonaZero,
-        rank: -1,
-        featured_rank: -1,
-        tile_category_id: 0
-      };
-    }
+    //   guideTilePersonaZero = {
+    //     ...guideTilePersonaZero,
+    //     rank: -1,
+    //     featured_rank: 0,
+    //     tile_category_id: 0
+    //   };
+    // }
+
+    // if (this.isCategoryZero) {
+    //   cloneGuideTileForm = {
+    //     ...cloneGuideTileForm,
+    //     rank: -1,
+    //     featured_rank: -1,
+    //     tile_category_id: 0
+    //   };
+
+    //   guideTilePersonaZero = {
+    //     ...guideTilePersonaZero,
+    //     rank: -1,
+    //     featured_rank: -1,
+    //     tile_category_id: 0
+    //   };
+    // }
 
     const createLink$ = this.service.createCampusLink(this.campusLinkForm.value);
 
@@ -136,10 +142,9 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
   onSubmit() {
     let stream$ = this.createGuideLink();
-    const emptySection =
-      this.guideUtils.isTemporaryGuide(this.guide) && !this.isCategoryZero && !this.isFeatured;
+    const emptySection = this.guideUtils.isTemporaryGuide(this.guide);
 
-    if (emptySection) {
+    if (emptySection && !this.guide.categoryZero && !this.guide.featureTile) {
       const body = {
         ...this.guide,
         school_id: this.session.g.get('school').id
@@ -178,16 +183,13 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   }
 
   buildForm() {
-    const temporaryTile = this.sectionUtils.isTemporaryGuide(this.guide);
-    const lastRank = temporaryTile
-      ? 1
-      : sortBy(this.guide.tiles, (t: ITile) => -t.rank)[0].rank + 100;
+    // const isTemporaryTile = this.sectionUtils.isTemporaryGuide(this.guide);
+    // const lastRank = isTemporaryTile
+    //   ? 1
+    //   : sortBy(this.guide.tiles, (t: ITile) => -t.rank)[0].rank + 100;
     this.campusLinkForm = this.utils.campusLinkForm(false, false);
-    this.campusGuideTileForm = this.utils.campusGuideTileForm(
-      this.personaId,
-      lastRank,
-      this.guide.id
-    );
+    this.campusGuideTileForm = this.utils.campusGuideTileForm(this.personaId, this.guide);
+    console.log(this.campusGuideTileForm.value);
   }
 
   buildHeader(personaName: string) {
@@ -260,9 +262,6 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
       return;
     }
-
-    this.isFeatured = this.guide.featureTile;
-    this.isCategoryZero = this.guide.categoryZero;
 
     this.buttonData = {
       class: 'primary',

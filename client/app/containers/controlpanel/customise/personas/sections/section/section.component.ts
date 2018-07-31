@@ -81,9 +81,8 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   createFeatureTile() {
-    let tempGuide = this.utils.temporaryGuide();
-    tempGuide = {
-      ...tempGuide,
+    const tempGuide = {
+      ...this.guide,
       featureTile: true
     };
     this.service.guide = tempGuide;
@@ -92,9 +91,8 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   createCategoryZeroTile() {
-    let tempGuide = this.utils.temporaryGuide();
-    tempGuide = {
-      ...tempGuide,
+    const tempGuide = {
+      ...this.guide,
       categoryZero: true
     };
     this.service.guide = tempGuide;
