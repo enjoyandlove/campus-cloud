@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span i18n><strong>{{ 't_persona_delete_modal_title' | cpI18n }}</strong></span>
+        <span><strong>{{ 't_persona_delete_modal_title' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -17,7 +17,7 @@
   <div class="cpmodal__body">
     <div class="row">
       <div class="col-12">
-        <p class="text-center" i18n>
+        <p class="text-center">
           {{ 't_persona_delete_modal_body' | cpI18n: personaName }}
         </p>
       </div>
@@ -31,7 +31,7 @@
           type="button"
           data-dismiss="modal"
           (click)="resetModal()"
-          class="cpbtn cpbtn--cancel" i18n>
+          class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 
