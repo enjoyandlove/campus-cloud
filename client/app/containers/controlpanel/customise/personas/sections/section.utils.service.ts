@@ -7,7 +7,7 @@ export class SectionUtilsService {
   constructor(public cpI18n: CPI18nService) {}
 
   isTemporaryGuide(guide: ICampusGuide) {
-    return guide.id === null;
+    return !guide.tiles.length;
   }
 
   temporaryGuide(rank = 1): ICampusGuide {
