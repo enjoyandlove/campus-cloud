@@ -2590,6 +2590,12 @@
   "t_persona_create_cancel_button": {
     "message": "Annuler"
   },
+  "t_persona_delete_modal_body": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "t_persona_delete_modal_title": {
+    "message": "Supprimer expérience"
+  },
   "t_persona_edit_cancel_button": {
     "message": "Annuler"
   },
@@ -2684,11 +2690,5 @@
   },
   "zero_quantity": {
     "message": "Aucune"
-  },
-  "_t_persona_delete_modal_body_": {
-    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
-  },
-  "_t_persona_delete_modal_title_": {
-    "message": "Supprimer expérience"
   }
 }
