@@ -134,7 +134,7 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   onAddSection() {
-    this.created.emit(this.utils.temporaryGuide(this.previousRank + 1));
+    this.created.emit(this.utils.temporaryGuide(this.previousRank + 10));
   }
 
   onNameChange(name, updatedGuide: ICampusGuide) {
