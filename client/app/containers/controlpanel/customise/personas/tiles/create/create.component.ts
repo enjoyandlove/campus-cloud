@@ -71,38 +71,6 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       };
     }
 
-    // if (this.isFeatured) {
-    //   cloneGuideTileForm = {
-    //     ...cloneGuideTileForm,
-    //     rank: -1,
-    //     featured_rank: 0,
-    //     tile_category_id: 0
-    //   };
-
-    //   guideTilePersonaZero = {
-    //     ...guideTilePersonaZero,
-    //     rank: -1,
-    //     featured_rank: 0,
-    //     tile_category_id: 0
-    //   };
-    // }
-
-    // if (this.isCategoryZero) {
-    //   cloneGuideTileForm = {
-    //     ...cloneGuideTileForm,
-    //     rank: -1,
-    //     featured_rank: -1,
-    //     tile_category_id: 0
-    //   };
-
-    //   guideTilePersonaZero = {
-    //     ...guideTilePersonaZero,
-    //     rank: -1,
-    //     featured_rank: -1,
-    //     tile_category_id: 0
-    //   };
-    // }
-
     const createLink$ = this.service.createCampusLink(this.campusLinkForm.value);
 
     return createLink$.pipe(
@@ -183,13 +151,8 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   }
 
   buildForm() {
-    // const isTemporaryTile = this.sectionUtils.isTemporaryGuide(this.guide);
-    // const lastRank = isTemporaryTile
-    //   ? 1
-    //   : sortBy(this.guide.tiles, (t: ITile) => -t.rank)[0].rank + 100;
     this.campusLinkForm = this.utils.campusLinkForm(false, false);
     this.campusGuideTileForm = this.utils.campusGuideTileForm(this.personaId, this.guide);
-    console.log(this.campusGuideTileForm.value);
   }
 
   buildHeader(personaName: string) {
