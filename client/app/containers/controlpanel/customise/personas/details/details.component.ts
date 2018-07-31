@@ -11,16 +11,15 @@ import { PersonasService } from './../personas.service';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
-import { ITile } from './../tiles/tile.interface';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
 
 interface IState {
   working: boolean;
-  featureTiles: Array<ITile>;
-  categoryZero: Array<ITile>;
   guides: Array<ICampusGuide>;
+  featureTiles: Array<ICampusGuide>;
+  categoryZero: Array<ICampusGuide>;
 }
 
 @Component({
@@ -155,10 +154,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     }
   }
 
-  createFeatureTile() {}
-
-  createCategoryZeroTile() {}
-
   fetch() {
     const schoolIdSearch = new HttpParams().append('school_id', this.session.g.get('school').id);
 
@@ -178,23 +173,23 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         return combineLatest([tilesByPersona$, tileCategories$, tilesByPersonaZero$]);
       })
     );
-    const groupTiles = (categories, tiles) =>
-      this.utils.groupTilesWithTileCategories(categories, tiles);
 
     const stream$ = request$.pipe(
       map(([tiles, categories, tilesByPersonaZero]) => {
         tiles = this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero);
 
-        return groupTiles(categories, tiles);
+        return {
+          featured: this.utils.getFeatureTiles(tiles),
+          categoryZero: this.utils.getCategoryZeroTiles(tiles),
+          guides: this.utils.groupTilesWithTileCategories(categories, tiles)
+        };
       })
     );
 
     super
       .fetchData(stream$)
       .then(({ data }) => {
-        const filteredTiles = this.utils
-          .filterTiles(data)
-          .filter((g: ICampusGuide) => g.tiles.length);
+        const filteredTiles = data.guides.filter((g: ICampusGuide) => g.tiles.length);
 
         const temporaryTile = [this.sectionUtils.temporaryGuide()];
 
@@ -203,8 +198,24 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         this.state = {
           ...this.state,
           guides,
-          featureTiles: this.utils.getFeaturedTiles(data),
-          categoryZero: this.utils.getCategoryZeroTiles(data)
+          featureTiles: [
+            {
+              id: null,
+              rank: 1,
+              name: null,
+              featureTile: true,
+              tiles: [...data.featured]
+            }
+          ],
+          categoryZero: [
+            {
+              id: null,
+              rank: 1,
+              name: null,
+              categoryZero: true,
+              tiles: [...data.categoryZero]
+            }
+          ]
         };
       })
       .catch(() => this.router.navigate(['/customize/personas']));

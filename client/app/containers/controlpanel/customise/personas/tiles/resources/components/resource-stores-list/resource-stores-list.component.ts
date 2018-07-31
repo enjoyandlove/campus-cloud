@@ -24,7 +24,7 @@ export class PersonasResourceStoresListComponent implements OnInit {
       };
     });
 
-    if (this.updateState) {
+    if (this.category) {
       this.updateState();
     }
   }

@@ -57,7 +57,7 @@ export class TilesUtilsService {
       color: [_guide.color, Validators.required],
       extra_info: [_guide.extra_info],
       visibility_status: [_guide.visibility_status],
-      tile_category_id: [_guide.tile_category_id, Validators.required],
+      tile_category_id: [_guide.tile_category_id, null],
       featured_rank: [_guide.featured_rank, Validators.required]
     });
   }
