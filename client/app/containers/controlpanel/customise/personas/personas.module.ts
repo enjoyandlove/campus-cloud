@@ -14,7 +14,6 @@ import { PersonasService } from './personas.service';
 import { PersonasUtilsService } from './personas.utils.service';
 import { SectionUtilsService } from './sections/section.utils.service';
 import { PersonasSectionsModule } from './sections/sections.module';
-import { SectionsService } from './sections/sections.service';
 import { PersonasTilesModule } from './tiles/tiles.module';
 import { SharedModule } from '../../../../shared/shared.module';
 
@@ -39,6 +38,6 @@ import { SharedModule } from '../../../../shared/shared.module';
     PersonasTilesModule
   ],
 
-  providers: [PersonasService, PersonasUtilsService, SectionUtilsService, SectionsService]
+  providers: [PersonasService, PersonasUtilsService, SectionUtilsService]
 })
 export class PersonasModule {}

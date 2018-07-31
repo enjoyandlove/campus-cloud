@@ -120,7 +120,7 @@ export class PersonasCreateComponent implements OnInit {
       : createPersona$;
 
     stream$.subscribe(
-      () => this.router.navigate(['/customize/personas']),
+      (persona) => this.router.navigate([`/customize/personas/${persona.id}`]),
       (err) => {
         this.buttonData = { ...this.buttonData, disabled: false };
 

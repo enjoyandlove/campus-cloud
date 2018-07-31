@@ -2426,7 +2426,7 @@
     "message": "Cette expérience a des utilisateurs associés, donc vous ne pouvez pas la supprimer."
   },
   "t_personas_delete_guide_error_non_empty_category": {
-    "message": "Cette section a des tuiles associées, donc vous ne pouvez pas la supprimer. Supprimez toutes les tuiles de la section, et essayez de nouveau."
+    "message": "Pour supprimer une section, supprimez toutes les tuiles de la section."
   },
   "t_personas_edit_error_users_associated": {
     "message": "Cette expérience a des utilisateurs associés, donc vous ne pouvez pas modifier ses exigences de connexion."

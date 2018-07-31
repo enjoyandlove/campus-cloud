@@ -20,8 +20,11 @@ import { SectionsService } from '../sections.service';
 export class PersonasSectionComponent implements OnInit {
   @Input() last: boolean;
   @Input() first: boolean;
+  @Input() tileWidth = '2';
+  @Input() hideName: boolean;
   @Input() personaId: number;
   @Input() addSection = true;
+  @Input() noControls = false;
   @Input() guide: ICampusGuide;
   @Input() previousRank: number;
 
@@ -65,7 +68,37 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   goToCreateTile() {
+    if (this.guide.categoryZero) {
+      return this.createCategoryZeroTile();
+    }
+
+    if (this.guide.featureTile) {
+      return this.createFeatureTile();
+    }
+
     this.service.guide = this.guide;
+    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
+  }
+
+  createFeatureTile() {
+    let tempGuide = this.utils.temporaryGuide();
+    tempGuide = {
+      ...tempGuide,
+      featureTile: true
+    };
+    this.service.guide = tempGuide;
+
+    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
+  }
+
+  createCategoryZeroTile() {
+    let tempGuide = this.utils.temporaryGuide();
+    tempGuide = {
+      ...tempGuide,
+      categoryZero: true
+    };
+    this.service.guide = tempGuide;
+
     this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
   }
 
