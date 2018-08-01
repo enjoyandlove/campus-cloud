@@ -20,7 +20,7 @@ class MockDashboardService {
   }
 }
 
-fdescribe('DashboardTopOrientationComponent', () => {
+describe('DashboardTopOrientationComponent', () => {
   let spy;
   let search;
   let comp: DashboardTopOrientationComponent;
@@ -70,12 +70,16 @@ fdescribe('DashboardTopOrientationComponent', () => {
   );
 
   it('should fetch top orientation programs', fakeAsync(() => {
+    const resourceUrl = '/manage/orientation/84/events';
+
     comp.ngOnInit();
     tick();
 
     expect(spy).toHaveBeenCalledWith(search);
     expect(spy).toHaveBeenCalledTimes(1);
     expect(comp.items.length).toEqual(1);
+    expect(comp.items[0].resourceUrl).not.toBeNull();
+    expect(comp.items[0].resourceUrl).toBe(resourceUrl);
   }));
 
   it('should have orientation privileges', () => {
