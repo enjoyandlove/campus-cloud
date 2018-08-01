@@ -20,4 +20,8 @@ button {
     display: block;
     line-height: 1;
   }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 }

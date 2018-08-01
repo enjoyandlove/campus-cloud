@@ -26,12 +26,11 @@ export class PersonasSectionComponent implements OnInit {
   @Input() addSection = true;
   @Input() noControls = false;
   @Input() guide: ICampusGuide;
-  @Input() previousRank: number;
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
-  @Output() deleted: EventEmitter<number> = new EventEmitter();
-  @Output() created: EventEmitter<ICampusGuide> = new EventEmitter();
+  @Output() deleted: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output() removeSection: EventEmitter<number> = new EventEmitter();
+  @Output() createNewSection: EventEmitter<ICampusGuide> = new EventEmitter();
 
   state = {
     working: false
@@ -68,11 +67,11 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   goToCreateTile() {
-    if (this.guide.categoryZero) {
+    if (this.guide._categoryZero) {
       return this.createCategoryZeroTile();
     }
 
-    if (this.guide.featureTile) {
+    if (this.guide._featureTile) {
       return this.createFeatureTile();
     }
 
@@ -134,7 +133,7 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   onAddSection() {
-    this.created.emit(this.utils.temporaryGuide(this.previousRank + 10));
+    this.createNewSection.emit(this.utils.temporaryGuide(this.guide.rank - 1));
   }
 
   onNameChange(name, updatedGuide: ICampusGuide) {
@@ -173,9 +172,15 @@ export class PersonasSectionComponent implements OnInit {
     this.setWorkingState(true);
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
 
+    if (this.utils.isTemporaryGuide(this.guide)) {
+      this.deleted.emit(this.guide);
+
+      return;
+    }
+
     this.service.deleteSectionTileCategory(this.guide.id, search).subscribe(
       () => {
-        this.deleted.emit(this.guide.id);
+        this.deleted.emit(this.guide);
         this.setWorkingState(false);
       },
       (err) => this.errorHandler(err)
