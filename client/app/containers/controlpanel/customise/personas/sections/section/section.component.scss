@@ -7,3 +7,13 @@
 .section-details.no_margin_top {
   margin-top: 0;
 }
+
+.tile {
+  &.draggable {
+    cursor: grab;
+  }
+
+  &.sorting {
+    cursor: progress;
+  }
+}
