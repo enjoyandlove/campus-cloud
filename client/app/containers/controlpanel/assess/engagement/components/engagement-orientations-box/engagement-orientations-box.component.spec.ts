@@ -53,7 +53,8 @@ const mockFilterState = {
 
 describe('EngagementOrientationsBoxComponent', () => {
   let spy;
-  const filters$ = new BehaviorSubject(null);
+  let newMockFilterState;
+  let filters$ = new BehaviorSubject(null);
   let comp: EngagementOrientationsBoxComponent;
   let fixture: ComponentFixture<EngagementOrientationsBoxComponent>;
 
@@ -118,13 +119,24 @@ describe('EngagementOrientationsBoxComponent', () => {
     comp.ngOnInit();
     tick();
 
+    // reset filter
+    filters$ = new BehaviorSubject(null);
+
     expect(comp.loading).toBeFalsy();
     expect(comp.isDisable).toBeFalsy();
     expect(comp.isSorting).toBeFalsy();
     expect(spy).toHaveBeenCalledTimes(1);
     expect(comp.stats.length).toEqual(5);
+  }));
 
-    let newMockFilterState;
+  it('should set disable status', fakeAsync(() => {
+    filters$.next(mockFilterState);
+    comp.props = filters$;
+
+    comp.ngOnInit();
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(comp.isDisable).toBeFalsy();
+
     newMockFilterState = {
       ...mockFilterState,
       engagement: {
@@ -136,11 +148,51 @@ describe('EngagementOrientationsBoxComponent', () => {
       }
     };
 
+    // reset filter
+    filters$ = new BehaviorSubject(null);
     filters$.next(newMockFilterState);
     comp.props = filters$;
 
     comp.ngOnInit();
 
     expect(comp.isDisable).toBeTruthy();
+
+    newMockFilterState = {
+      ...mockFilterState,
+      engagement: {
+        data: {
+          value: 0,
+          type: 'services',
+          queryParam: 'scope'
+        }
+      }
+    };
+
+    // reset filter
+    filters$ = new BehaviorSubject(null);
+    filters$.next(newMockFilterState);
+    comp.props = filters$;
+
+    comp.ngOnInit();
+    expect(comp.isDisable).toBeTruthy();
+
+    newMockFilterState = {
+      ...mockFilterState,
+      engagement: {
+        data: {
+          value: 0,
+          type: 'orientation',
+          queryParam: 'scope'
+        }
+      }
+    };
+
+    // reset filter
+    filters$ = new BehaviorSubject(null);
+    filters$.next(newMockFilterState);
+    comp.props = filters$;
+
+    comp.ngOnInit();
+    expect(comp.isDisable).toBeFalsy();
   }));
 });
