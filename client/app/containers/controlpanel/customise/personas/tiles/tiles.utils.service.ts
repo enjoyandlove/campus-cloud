@@ -49,8 +49,6 @@ export class TilesUtilsService {
       ? 1
       : sortBy(guide.tiles, (t: ITile) => -t.featured_rank)[0].rank + 1;
 
-    console.log(lastRank, guide);
-
     const _tile = tileToEdit
       ? { ...tileToEdit }
       : {
