@@ -24,7 +24,10 @@ export class TilesUtilsService {
   }
 
   isCampaignTile(tile: ITile) {
-    return tile.related_link_data.link_url === 'oohlala://school_campaign';
+    return (
+      tile.related_link_data.link_url === 'oohlala://school_campaign' ||
+      tile.related_link_data.link_url === 'oohlala://campaign_list'
+    );
   }
 
   isFeatured(tile: ITile) {
