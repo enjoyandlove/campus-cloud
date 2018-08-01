@@ -1,4 +1,4 @@
-<fieldset [disabled]="guide._disabled">
+<fieldset [disabled]="guide._disabled || state.sorting">
   <section
     *ngIf="addSection"
     class="new-section">
@@ -36,12 +36,16 @@
     </section>
 
     <section class="section-tiles">
-      <div class="row">
+      <div
+        class="row"
+        [sortablejs]="guide.tiles"
+        [sortablejsOptions]="sortableOptions">
         <cp-personas-tile
           [tile]="tile"
-          [ngClass]="['col-' + tileWidth]"
+          class="draggable"
           (edit)="onEditTile(tile)"
           (edited)="onEditedTile($event)"
+          [ngClass]="['col-' + tileWidth]"
           (deleted)="onDeletedTile($event)"
           *ngFor="let tile of guide.tiles; let i = index"
           [class.mb-4]="guide.tiles.length >= (12 / +tileWidth)">

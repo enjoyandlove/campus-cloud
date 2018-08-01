@@ -1,6 +1,7 @@
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { ICampusGuide } from './section.interface';
 import { Injectable } from '@angular/core';
+import { ITile } from '../tiles/tile.interface';
 
 @Injectable()
 export class SectionUtilsService {
@@ -8,6 +9,10 @@ export class SectionUtilsService {
 
   isTemporaryGuide(guide: ICampusGuide) {
     return !guide.tiles.length;
+  }
+
+  tileAtIndex(tiles: ITile[], index) {
+    return tiles[index];
   }
 
   temporaryGuide(rank = 1): ICampusGuide {
