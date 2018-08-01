@@ -3,7 +3,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { sortBy } from 'lodash';
 import { switchMap } from 'rxjs/operators';
 import { SNACKBAR_HIDE } from './../../../../../../reducers/snackbar.reducer';
 import { BaseComponent } from '../../../../../../base';
@@ -15,7 +14,6 @@ import { PersonasService } from '../../personas.service';
 import { ICampusGuide } from '../../sections/section.interface';
 import { SectionUtilsService } from '../../sections/section.utils.service';
 import { SectionsService } from '../../sections/sections.service';
-import { ITile } from '../tile.interface';
 import { TilesService } from '../tiles.service';
 import { TilesUtilsService } from '../tiles.utils.service';
 
@@ -134,14 +132,12 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     const tileId = this.route.snapshot.params['tileId'];
     const guideTile = this.guide.tiles.filter((i) => i.id === +tileId)[0];
 
-    const lastRank = sortBy(this.guide.tiles, (t: ITile) => -t.rank)[0].rank + 100;
     this.campusLinkForm = this.utils.campusLinkForm(false, false, guideTile.related_link_data);
     this.campusLinkId = guideTile.related_link_data.id;
 
     this.campusGuideTileForm = this.utils.campusGuideTileForm(
       this.personaId,
-      lastRank,
-      this.guide.id,
+      this.guide,
       guideTile
     );
   }
