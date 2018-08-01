@@ -53,6 +53,7 @@ const mockFilterState = {
 
 describe('EngagementOrientationsBoxComponent', () => {
   let spy;
+  const filters$ = new BehaviorSubject(null);
   let comp: EngagementOrientationsBoxComponent;
   let fixture: ComponentFixture<EngagementOrientationsBoxComponent>;
 
@@ -90,11 +91,11 @@ describe('EngagementOrientationsBoxComponent', () => {
           fixture = TestBed.createComponent(EngagementOrientationsBoxComponent);
           comp = fixture.componentInstance;
           comp.session.g.set('school', { id: 157 });
-          const filters$ = new BehaviorSubject(null);
           filters$.next(mockFilterState);
           comp.props = filters$;
 
           spyOn(comp, 'trackAmplitudeEvent');
+          spy = spyOn(comp.service, 'getOrientationData').and.returnValue(mockOrientation);
         });
     })
   );
@@ -114,13 +115,32 @@ describe('EngagementOrientationsBoxComponent', () => {
   });
 
   it('should fetch top orientation programs', fakeAsync(() => {
-    spy = spyOn(comp.service, 'getOrientationData').and.returnValue(mockOrientation);
     comp.ngOnInit();
     tick();
 
     expect(comp.loading).toBeFalsy();
+    expect(comp.isDisable).toBeFalsy();
     expect(comp.isSorting).toBeFalsy();
     expect(spy).toHaveBeenCalledTimes(1);
     expect(comp.stats.length).toEqual(5);
+
+    let newMockFilterState;
+    newMockFilterState = {
+      ...mockFilterState,
+      engagement: {
+        data: {
+          value: 0,
+          type: 'events',
+          queryParam: 'scope'
+        }
+      }
+    };
+
+    filters$.next(newMockFilterState);
+    comp.props = filters$;
+
+    comp.ngOnInit();
+
+    expect(comp.isDisable).toBeTruthy();
   }));
 });
