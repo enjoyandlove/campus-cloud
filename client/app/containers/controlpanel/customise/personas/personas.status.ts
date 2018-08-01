@@ -13,5 +13,6 @@ export enum PersonaValidationErrors {
   api_env = 'api_env',
   last_persona = 'last persona',
   users_associated = 'users associated',
-  customization_off = 'customization off'
+  customization_off = 'customization off',
+  persona_non_empty = 'persona non-empty'
 }

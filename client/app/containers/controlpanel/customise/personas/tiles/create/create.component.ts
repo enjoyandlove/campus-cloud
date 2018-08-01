@@ -112,7 +112,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     let stream$ = this.createGuideLink();
     const emptySection = this.guideUtils.isTemporaryGuide(this.guide);
 
-    if (emptySection && !this.guide.categoryZero && !this.guide.featureTile) {
+    if (emptySection && !this.guide._categoryZero && !this.guide._featureTile) {
       const body = {
         ...this.guide,
         school_id: this.session.g.get('school').id

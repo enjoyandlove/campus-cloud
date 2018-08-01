@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 
 @Component({
   selector: 'cp-personas-tile-add-button',
@@ -6,6 +6,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./tile-add-button.component.scss']
 })
 export class PersonasTileAddButtonComponent implements OnInit {
+  @Input() disabled;
+
   @Output() buttonClick: EventEmitter<null> = new EventEmitter();
 
   constructor() {}

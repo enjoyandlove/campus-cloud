@@ -49,19 +49,17 @@ export class TilesUtilsService {
       ? 1
       : sortBy(guide.tiles, (t: ITile) => -t.featured_rank)[0].rank + 1;
 
-    console.log(lastRank, guide);
-
     const _tile = tileToEdit
       ? { ...tileToEdit }
       : {
           name: null,
-          rank: guide.featureTile || guide.categoryZero ? TileCategoryRank.hidden : lastRank,
+          rank: guide._featureTile || guide._categoryZero ? TileCategoryRank.hidden : lastRank,
           img_url: null,
           color: 'FFFFFF',
           extra_info: null,
           visibility_status: TileVisibility.visible,
-          tile_category_id: guide.featureTile || guide.categoryZero ? 0 : guide.id,
-          featured_rank: guide.featureTile ? lastFeaturedRank : TileFeatureRank.notFeatured
+          tile_category_id: guide._featureTile || guide._categoryZero ? 0 : guide.id,
+          featured_rank: guide._featureTile ? lastFeaturedRank : TileFeatureRank.notFeatured
         };
 
     return this.fb.group({

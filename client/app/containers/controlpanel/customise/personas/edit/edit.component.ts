@@ -195,14 +195,9 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     const stream$ = shouldCreateSecurityTile ? updatePersonaAndLink$ : updatePersona$;
 
     stream$.subscribe(
-      (persona) => this.router.navigate([`/customize/personas/${persona.id}`]),
+      () => this.router.navigate(['/customize/personas']),
       (err) => {
-        let error;
-        try {
-          error = JSON.parse(err._body).error;
-        } catch {
-          error = 'JSON_PARSE_ERROR';
-        }
+        const error = err.error.response;
 
         let message = this.cpI18n.translate('something_went_wrong');
         this.submitButtonData = { ...this.submitButtonData, disabled: false };

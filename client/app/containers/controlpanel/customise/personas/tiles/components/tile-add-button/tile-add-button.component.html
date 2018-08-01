@@ -1,8 +1,9 @@
 <cp-personas-tile-base>
   <div class="row">
     <div class="col-12">
-      <button 
+      <button
         type="button"
+        [disabled]="disabled"
         (click)="buttonClick.emit()">
         <i class="material-icons">add</i>
         add

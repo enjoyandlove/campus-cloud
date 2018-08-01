@@ -38,13 +38,16 @@ export class PersonasDeleteComponent implements OnInit {
         this.deleted.emit();
       },
       (err) => {
-        const error = JSON.parse(err._body).error;
+        const error = err.error.response;
+
         let message = this.cpI18n.translate('something_went_wrong');
 
         if (error === PersonaValidationErrors.last_persona) {
           message = this.cpI18n.translate('t_personas_delete_error_last_persona');
         } else if (error === PersonaValidationErrors.users_associated) {
           message = this.cpI18n.translate('t_personas_delete_error_users_associated');
+        } else if (error === PersonaValidationErrors.persona_non_empty) {
+          message = this.cpI18n.translate('t_personas_delete_error_persona_non_empty');
         }
 
         this.resetModal();

@@ -1,3 +1,4 @@
+import { TileCategoryRank } from './tiles/tiles.status';
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { flatten, sortBy, get as _get } from 'lodash';
@@ -43,7 +44,11 @@ export class PersonasUtilsService {
   }
 
   getFeatureTiles(tiles: ITile[]) {
-    const featureTiles = tiles.filter((tile: ITile) => tile.featured_rank > -1);
+    const featureTiles = tiles.filter(
+      (tile: ITile) =>
+        tile.featured_rank > -1 &&
+        tile.related_link_data.link_url !== 'oohlala://campus_security_service'
+    );
 
     return sortBy(flatten(featureTiles), (i) => i.featured_rank);
   }
@@ -101,7 +106,7 @@ export class PersonasUtilsService {
       tile_category_id: [0, Validators.required],
       visibility_status: [1, Validators.required],
       name: [null, Validators.required],
-      rank: [-1, Validators.required]
+      rank: [TileCategoryRank.hidden, Validators.required]
     });
   }
 
