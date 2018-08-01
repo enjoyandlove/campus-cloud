@@ -41,12 +41,14 @@
         [sortablejs]="guide.tiles"
         [sortablejsOptions]="sortableOptions">
         <cp-personas-tile
+          class="tile"
           [tile]="tile"
-          class="draggable"
           (edit)="onEditTile(tile)"
+          [class.sorting]="state.sorting"
           (edited)="onEditedTile($event)"
           [ngClass]="['col-' + tileWidth]"
           (deleted)="onDeletedTile($event)"
+          [class.draggable]="!state.sorting"
           *ngFor="let tile of guide.tiles; let i = index"
           [class.mb-4]="guide.tiles.length >= (12 / +tileWidth)">
         </cp-personas-tile>
