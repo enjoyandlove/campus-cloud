@@ -3,6 +3,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { get as _get } from 'lodash';
+import { combineLatest, Observable } from 'rxjs';
+import { TilesService } from './../../tiles/tiles.service';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services';
@@ -33,10 +35,12 @@ export class PersonasSectionComponent implements OnInit {
   @Output() createNewSection: EventEmitter<ICampusGuide> = new EventEmitter();
 
   state = {
-    working: false
+    working: false,
+    sorting: false
   };
 
   lastRank;
+  sortableOptions;
 
   constructor(
     public router: Router,
@@ -44,6 +48,7 @@ export class PersonasSectionComponent implements OnInit {
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
     public service: SectionsService,
+    public tilesService: TilesService,
     public utils: SectionUtilsService
   ) {}
 
@@ -198,5 +203,78 @@ export class PersonasSectionComponent implements OnInit {
     }
   }
 
-  ngOnInit(): void {}
+  updateRank(stream$: Observable<any>) {
+    this.state = { ...this.state, sorting: true };
+    stream$.subscribe(
+      () => {
+        this.state = { ...this.state, sorting: false };
+      },
+      (err) => {
+        this.errorHandler(err);
+        this.state = { ...this.state, sorting: false };
+      }
+    );
+  }
+
+  onDragged({ oldIndex, newIndex }: any) {
+    let updatedTileA;
+    let updatedTileB;
+    const tileA: ITile = this.utils.tileAtIndex(this.guide.tiles, oldIndex);
+    const tileB: ITile = this.utils.tileAtIndex(this.guide.tiles, newIndex);
+
+    const isFeatured = (t: ITile) => t.featured_rank > -1;
+
+    if (isFeatured(tileA)) {
+      updatedTileA = {
+        featured_rank: tileB.featured_rank
+      };
+
+      updatedTileB = {
+        featured_rank: tileA.featured_rank
+      };
+    } else {
+      updatedTileA = {
+        rank: tileB.rank
+      };
+
+      updatedTileB = {
+        rank: tileA.rank
+      };
+    }
+
+    updatedTileA = {
+      ...updatedTileA,
+      school_id: this.session.g.get('school').id
+    };
+
+    updatedTileB = {
+      ...updatedTileB,
+      school_id: this.session.g.get('school').id
+    };
+
+    const updateTileA$ = this.tilesService.updateCampusTile(tileA.id, updatedTileA);
+    const updateTileB$ = this.tilesService.updateCampusTile(tileB.id, updatedTileB);
+    const stream$ = combineLatest([updateTileA$, updateTileB$]);
+
+    this.updateRank(stream$);
+  }
+
+  ngOnInit(): void {
+    let groupName = this.guide.name;
+
+    if (this.guide._categoryZero) {
+      groupName = 'category_zero';
+    }
+
+    if (this.guide._featureTile) {
+      groupName = 'featured';
+    }
+
+    this.sortableOptions = {
+      scroll: false,
+      group: groupName,
+      draggable: '.draggable',
+      onUpdate: this.onDragged.bind(this)
+    };
+  }
 }

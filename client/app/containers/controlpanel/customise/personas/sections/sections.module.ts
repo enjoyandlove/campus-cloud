@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SortablejsModule } from 'angular-sortablejs';
 import { SharedModule } from './../../../../../shared/shared.module';
+import { TilesService } from './../tiles/tiles.service';
 import {
   PersonasSectionAddButtonComponent,
   PersonasSectionControlsComponent,
@@ -11,7 +13,6 @@ import { SectionUtilsService } from './section.utils.service';
 import { PersonasSectionComponent } from './section/section.component';
 import { SectionsService } from './sections.service';
 import { PersonasTilesModule } from '../tiles/tiles.module';
-/*tslint:disable:max-line-length */
 
 @NgModule({
   declarations: [
@@ -20,13 +21,13 @@ import { PersonasTilesModule } from '../tiles/tiles.module';
     PersonasSectionAddButtonComponent,
     PersonasSectionTitleComponent
   ],
-  imports: [CommonModule, SharedModule, ReactiveFormsModule, PersonasTilesModule],
+  imports: [CommonModule, SharedModule, ReactiveFormsModule, PersonasTilesModule, SortablejsModule],
   exports: [
     PersonasSectionComponent,
     PersonasSectionControlsComponent,
     PersonasSectionAddButtonComponent,
     PersonasSectionTitleComponent
   ],
-  providers: [SectionsService, SectionUtilsService]
+  providers: [SectionsService, SectionUtilsService, TilesService]
 })
 export class PersonasSectionsModule {}
