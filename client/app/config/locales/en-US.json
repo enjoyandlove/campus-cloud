@@ -2437,6 +2437,9 @@
   "t_personas_create_header_title": {
     "message": "Create Experience"
   },
+  "t_personas_create_label_campus_security": {
+    "message": "Campus Security Service"
+  },
   "t_personas_create_section_default_name": {
     "message": "Untitled "
   },
@@ -2460,6 +2463,9 @@
   },
   "t_personas_details_feature": {
     "message": "Featured"
+  },
+  "t_personas_edit_delete_button": {
+    "message": "Delete Experience"
   },
   "t_personas_edit_error_users_associated": {
     "message": "This experience has users associated, so you cannot update its login requirements."
@@ -2641,6 +2647,12 @@
   "t_persona_create_cancel_button": {
     "message": "Cancel"
   },
+  "t_persona_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_persona_delete_modal_title": {
+    "message": "Delete Experience"
+  },
   "t_persona_edit_cancel_button": {
     "message": "Cancel"
   },
@@ -2738,11 +2750,5 @@
   },
   "zero_quantity": {
     "message": "No"
-  },
-  "_t_persona_delete_modal_body_": {
-    "message": "Are you sure you want to delete %s?"
-  },
-  "_t_persona_delete_modal_title_": {
-    "message": "Delete Experience"
   }
 }

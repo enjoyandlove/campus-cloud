@@ -23,7 +23,7 @@ export class AdminService extends HTTPService {
   }
 
   getAdminByStoreId(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/1;900`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/1;9000`;
 
     return super
       .get(url, search)

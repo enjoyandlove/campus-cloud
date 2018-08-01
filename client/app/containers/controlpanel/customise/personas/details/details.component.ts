@@ -72,7 +72,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
   }
 
   previousRank(index): number {
-    return index === 0 ? this.state.guides[index].rank - 1 : this.state.guides[index - 1].rank;
+    return index === 0 ? 0 : this.state.guides[index - 1].rank;
   }
 
   errorHanlder() {}
@@ -191,7 +191,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
       .then(({ data }) => {
         const filteredTiles = data.guides.filter((g: ICampusGuide) => g.tiles.length);
 
-        const temporaryTile = [this.sectionUtils.temporaryGuide()];
+        const temporaryTile = [this.sectionUtils.temporaryGuide(100)];
 
         const guides = filteredTiles.length ? filteredTiles : temporaryTile;
 
