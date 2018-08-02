@@ -57,6 +57,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     const nextGuide = (guide: ICampusGuide) => guide.id === guideId;
     const nextGuideIndex = this.state.guides.findIndex(nextGuide);
 
+    this.setGuideDisableStatus(true);
+
     this.state.guides.splice(nextGuideIndex, 0, newGuide);
   }
 
@@ -67,15 +69,55 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     };
   }
 
-  onDeletedSection(sectionId: number) {
-    this.state.guides = this.state.guides.filter((guide: ICampusGuide) => guide.id !== sectionId);
+  setGuideDisableStatus(status) {
+    this.state = {
+      ...this.state,
+      guides: this.state.guides.map((g: ICampusGuide) => {
+        return {
+          ...g,
+          _disabled: status
+        };
+      })
+    };
   }
 
-  previousRank(index): number {
-    return index === 0 ? this.state.guides[index].rank - 1 : this.state.guides[index - 1].rank;
+  onDeletedSection(section: ICampusGuide) {
+    this.state.guides = this.state.guides.filter((guide: ICampusGuide) => guide.id !== section.id);
+
+    if (this.sectionUtils.isTemporaryGuide(section)) {
+      this.setGuideDisableStatus(false);
+    }
   }
 
   errorHanlder() {}
+
+  rankSections() {
+    this.state = {
+      ...this.state,
+      guides: this.state.guides.sort((a, b) => a.rank - b.rank)
+    };
+  }
+
+  fakeSwap(movingGuide, movedGuide, position: 'up' | 'down') {
+    this.state = {
+      ...this.state,
+      guides: this.state.guides.map((g: ICampusGuide) => {
+        return g.id === movingGuide.id
+          ? {
+              ...g,
+              rank: position === 'up' ? movedGuide.rank - 1 : movedGuide.rank + 1
+            }
+          : g;
+      })
+    };
+
+    this.rankSections();
+
+    this.state = {
+      ...this.state,
+      working: false
+    };
+  }
 
   moveUp(guide) {
     const previousSectionIndex = this.state.guides.findIndex((g) => g.id === guide.id);
@@ -92,6 +134,12 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
       school_id,
       rank: currentRank
     };
+
+    if (this.sectionUtils.isTemporaryGuide(guide)) {
+      this.fakeSwap(guide, previousSection, 'up');
+
+      return;
+    }
 
     const updateCurrentTile$ = this.service.updateSectionTileCategory(guide.id, currentTileBody);
     const updatePushedTile$ = this.service.updateSectionTileCategory(
@@ -124,6 +172,12 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
       school_id,
       rank: currentRank
     };
+
+    if (this.sectionUtils.isTemporaryGuide(guide)) {
+      this.fakeSwap(guide, nextSection, 'down');
+
+      return;
+    }
 
     const updateCurrentTile$ = this.service.updateSectionTileCategory(guide.id, currentTileBody);
     const updatePushedTile$ = this.service.updateSectionTileCategory(
@@ -191,7 +245,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
       .then(({ data }) => {
         const filteredTiles = data.guides.filter((g: ICampusGuide) => g.tiles.length);
 
-        const temporaryTile = [this.sectionUtils.temporaryGuide()];
+        const temporaryTile = [this.sectionUtils.temporaryGuide(100)];
 
         const guides = filteredTiles.length ? filteredTiles : temporaryTile;
 
@@ -203,7 +257,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
               id: null,
               rank: 1,
               name: null,
-              featureTile: true,
+              _featureTile: true,
               tiles: [...data.featured]
             }
           ],
@@ -212,7 +266,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
               id: null,
               rank: 1,
               name: null,
-              categoryZero: true,
+              _categoryZero: true,
               tiles: [...data.categoryZero]
             }
           ]
