@@ -215,7 +215,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     const tilesSearch = schoolIdSearch.append('school_persona_id', this.personaId);
 
     const tilesByPersona$ = this.service.getTilesByPersona(tilesSearch);
-    const tileCategories$ = this.service.getTilesCategories(schoolIdSearch);
+    const tileCategories$ = this.service
+      .getTilesCategories(schoolIdSearch)
+      .pipe(map((categories) => categories.filter((c) => c.id !== 0)));
     const tilesByPersonaZero$ = this.service.getTilesByPersona(schoolIdSearch);
     const persona$ = this.service.getPersonaById(this.personaId, schoolIdSearch);
 

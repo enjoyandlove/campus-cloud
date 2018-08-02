@@ -263,9 +263,9 @@ export class PersonasSectionComponent implements OnInit {
     );
   }
 
-  onAdd(event) {
-    const { oldIndex, newIndex } = event;
-    console.log(oldIndex, newIndex, event);
+  onAdd() {
+    // const { oldIndex, newIndex } = event;
+    // console.log(oldIndex, newIndex, event);
   }
 
   onDragged(event) {
