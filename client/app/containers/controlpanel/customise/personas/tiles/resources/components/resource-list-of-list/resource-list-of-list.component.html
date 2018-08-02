@@ -10,25 +10,30 @@
       </div>
     </div>
 
-    <div class="list__items">
-      <div
-        class="row list__item"
-        *ngFor="let resource of state.resources">
-          <div class="col-11 text-truncate">
-            <span class="image">
-              <img [src]="resource.img_url" class="img-fluid rounded"/>
-            </span>
-            <span
-              class="name"
-              [attr.title]="resource.name">
-              {{resource.name}}
-          </span>
+    <ng-container [ngSwitch]="state.loading">
+      <cp-spinner *ngSwitchCase="true"></cp-spinner>
+      <ng-container *ngSwitchCase="false">
+        <div class="list__items">
+          <div
+            class="row list__item"
+            *ngFor="let resource of state.resources">
+              <div class="col-11 text-truncate">
+                <span class="image">
+                  <img [src]="resource.img_url" class="img-fluid rounded"/>
+                </span>
+                <span
+                  class="name"
+                  [attr.title]="resource.name">
+                  {{resource.name}}
+              </span>
+            </div>
+            <div class="col-1" (click)="onDelete(resource)">
+              <span class="close-button hover float-right">&times;</span>
+            </div>
+          </div>
         </div>
-        <div class="col-1" (click)="onDelete(resource)">
-          <span class="close-button hover float-right">&times;</span>
-        </div>
-      </div>
-    </div>
+      </ng-container>
+    </ng-container>
   </div>
 </div>
 

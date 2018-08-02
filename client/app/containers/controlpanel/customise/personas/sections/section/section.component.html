@@ -29,7 +29,7 @@
             [disableDown]="last"
             (moveUp)="onMove('up')"
             (moveDown)="onMove('down')"
-            (deleteClick)="onDeleteSection()">
+            (deleteClick)="onDeleteSectionClick()">
           </cp-personas-section-controls>
         </div>
       </div>
@@ -44,11 +44,12 @@
           class="tile"
           [tile]="tile"
           (edit)="onEditTile(tile)"
+          [attr.data-section]="guide.id"
           [class.sorting]="state.sorting"
           (edited)="onEditedTile($event)"
           [ngClass]="['col-' + tileWidth]"
-          (deleted)="onDeletedTile($event)"
           [class.draggable]="!state.sorting"
+          (deleteClick)="onDeleteTileClick($event)"
           *ngFor="let tile of guide.tiles; let i = index"
           [class.mb-4]="guide.tiles.length >= (12 / +tileWidth)">
         </cp-personas-tile>
@@ -62,3 +63,25 @@
     </section>
   </fieldset>
 </fieldset>
+
+<cp-modal
+  [modalId]="tileDeleteModalId"
+  *ngIf="state.tileDeleteModal">
+  <cp-personas-tile-delete
+    [tile]="selectedTile"
+    (error)="errorHandler(err)"
+    (deleted)="onTileDeleted($event)"
+    (teardown)="onTileDeleteTeardown()">
+  </cp-personas-tile-delete>
+</cp-modal>
+
+<cp-modal
+  [modalId]="sectionDeleteModalId"
+  *ngIf="state.sectionDeleteModal">
+  <cp-personas-section-delete
+    [section]="guide"
+    (error)="errorHandler($event)"
+    (deleted)="deleted.emit(guide)"
+    (teardown)="onSectionDeleteTeardown()">
+  </cp-personas-section-delete>
+</cp-modal>
