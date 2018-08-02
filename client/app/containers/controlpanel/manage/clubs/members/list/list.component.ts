@@ -46,6 +46,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   loading;
   isCreate;
   isDelete;
+  eventData;
   query = null;
   sortingLabels;
   hasSSO = false;
@@ -146,20 +147,18 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     this[modal] = false;
   }
 
-  trackViewEvent() {
+  ngOnInit() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: amplitudeEvents.MEMBER
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM,
       eventProperties
     };
-  }
 
-  ngOnInit() {
     this.clubId = this.route.snapshot.parent.parent.parent.params['clubId'];
 
     this.limitedAdmin =

@@ -16,6 +16,7 @@ import { CPTrackingService, RouteLevel } from '../../../../../shared/services';
 })
 export class OrientationInfoComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   selectedProgram;
   orientationId: number;
   launchEditModal = false;
@@ -56,20 +57,18 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
     this.selectedProgram = editedProgram;
   }
 
-  trackChangeEvent() {
+  ngOnInit() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
       eventProperties
     };
-  }
 
-  ngOnInit() {
     this.fetch();
   }
 }

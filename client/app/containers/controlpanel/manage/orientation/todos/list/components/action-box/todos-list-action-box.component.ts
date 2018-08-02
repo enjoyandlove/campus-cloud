@@ -13,7 +13,7 @@ export class TodosListActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() launchCreateModal: EventEmitter<null> = new EventEmitter();
 
-  clicked_change = amplitudeEvents.CLICKED_CHANGE_BUTTON;
+  eventData;
 
   constructor(public cpTracking: CPTrackingService) {}
 
@@ -25,18 +25,16 @@ export class TodosListActionBoxComponent implements OnInit {
     this.launchCreateModal.emit();
   }
 
-  trackEvent(eventName) {
+  ngOnInit() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: amplitudeEvents.TODOS
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
+      eventName : amplitudeEvents.CLICKED_CHANGE_BUTTON,
       eventProperties
     };
   }
-
-  ngOnInit() {}
 }

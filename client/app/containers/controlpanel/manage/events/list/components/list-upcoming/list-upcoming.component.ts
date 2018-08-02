@@ -42,6 +42,7 @@ export class ListUpcomingComponent implements OnInit {
 
   sort: ISort = sort;
   canDelete;
+  eventData;
   sortingLabels;
   eventCheckinRoute;
   dateFormat = FORMAT.SHORT;
@@ -65,14 +66,6 @@ export class ListUpcomingComponent implements OnInit {
     this.sort = Object.assign({}, this.sort, { sort_field, sort_direction });
 
     this.sortList.emit(this.sort);
-  }
-
-  trackViewEvent() {
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties: this.setEventProperties()
-    };
   }
 
   trackDeleteEvent() {
@@ -110,6 +103,12 @@ export class ListUpcomingComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.setEventProperties()
+    };
+
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
     const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const accountAccess = canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.events);

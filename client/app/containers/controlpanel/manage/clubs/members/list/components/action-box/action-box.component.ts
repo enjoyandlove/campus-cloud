@@ -19,6 +19,7 @@ export class ClubsMembersActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
 
   clubId;
+  eventData;
   limitedAdmin;
 
   constructor(
@@ -32,20 +33,18 @@ export class ClubsMembersActionBoxComponent implements OnInit {
     this.search.emit(query);
   }
 
-  trackChangeEvent() {
+  ngOnInit() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: amplitudeEvents.MEMBER
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
       eventProperties
     };
-  }
 
-  ngOnInit() {
     this.clubId = this.route.snapshot.parent.parent.parent.params['clubId'];
 
     this.limitedAdmin =

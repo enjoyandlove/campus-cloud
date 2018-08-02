@@ -53,7 +53,6 @@ export class FeedInputBoxComponent implements OnInit {
     wall_page: null,
     host_type: null,
     comment_id: null,
-    wall_source: null,
     upload_image: null,
     campus_wall_category: null
   };
@@ -267,7 +266,7 @@ export class FeedInputBoxComponent implements OnInit {
       ...this.eventProperties,
       post_id: data.id,
       upload_image: this.utils.hasImage(data.has_image),
-      wall_source: this.utils.wallSource(this.athleticId, this.orientationId, this.clubId)
+      wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
     };
 
     if (this.replyView) {
@@ -296,11 +295,6 @@ export class FeedInputBoxComponent implements OnInit {
     this.buttonData = {
       class: 'primary',
       text: this.cpI18n.translate('walls_button_create_post')
-    };
-
-    this.eventProperties = {
-      ...this.eventProperties,
-      wall_page: this.utils.isWallPage(this.clubId, this.athleticId, this.orientationId)
     };
 
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;

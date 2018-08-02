@@ -31,6 +31,7 @@ const state: IState = {
 })
 export class LocationsListComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   sortingLabels;
   isLocationsCreate;
   deleteLocation = '';
@@ -126,15 +127,13 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     };
   }
 
-  trackViewEvent() {
-    return {
+  ngOnInit() {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM,
       eventProperties: this.cpTracking.getEventProperties()
     };
-  }
 
-  ngOnInit() {
     this.sortingLabels = {
       locations: this.cpI18n.translate('locations')
     };

@@ -20,7 +20,7 @@ export class FeedsUtilsService {
     return image ? hasData.yes : hasData.no;
   }
 
-  wallSource(athleticId: number, orientationId: number, clubId: number) {
+  wallPage(athleticId: number, orientationId: number, clubId: number) {
     if (athleticId) {
       return amplitudeEvents.ATHLETICS;
     } else if (orientationId) {
@@ -29,7 +29,7 @@ export class FeedsUtilsService {
       return amplitudeEvents.CLUB;
     }
 
-    return amplitudeEvents.CAMPUS;
+    return amplitudeEvents.WALL;
   }
 
   hasLikes(likes) {
@@ -38,11 +38,5 @@ export class FeedsUtilsService {
 
   hasComments(comments) {
     return comments > 0 ? hasData.yes : hasData.no;
-  }
-
-  isWallPage(club, athletic, orientation) {
-    const wall = !club && !athletic && !orientation;
-
-    return wall ? WallPage.yes : WallPage.no;
   }
 }

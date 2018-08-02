@@ -31,6 +31,7 @@ const state: IState = {
 export class LinksListComponent extends BaseComponent implements OnInit {
   pageNext;
   pagePrev;
+  eventData;
   pageNumber;
   isLinksEdit;
   sortingLabels;
@@ -139,15 +140,13 @@ export class LinksListComponent extends BaseComponent implements OnInit {
     }
   }
 
-  trackViewEvent() {
-    return {
+  ngOnInit() {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM,
       eventProperties: this.cpTracking.getEventProperties()
     };
-  }
 
-  ngOnInit() {
     this.sortingLabels = {
       name: this.cpI18n.translate('name')
     };

@@ -35,6 +35,7 @@ const state = {
 })
 export class DealsListComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   deleteDeal;
   sortingLabels;
   state: IState = state;
@@ -102,14 +103,6 @@ export class DealsListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  trackViewEvent() {
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties: this.cpTracking.getEventProperties()
-    };
-  }
-
   public fetch() {
     const store_id = this.state.store_id ? this.state.store_id.toString() : null;
 
@@ -133,6 +126,12 @@ export class DealsListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
+
     this.fetch();
     this.buildHeader();
 

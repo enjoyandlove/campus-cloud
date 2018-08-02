@@ -23,6 +23,7 @@ export class JobsInfoComponent extends BaseComponent implements OnInit {
   jobId;
   loading;
   jobType;
+  eventData;
   job: IJob;
   dateFormat;
   desiredYear;
@@ -89,20 +90,18 @@ export class JobsInfoComponent extends BaseComponent implements OnInit {
     });
   }
 
-  trackChangeEvent() {
+  ngOnInit() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
       eventProperties
     };
-  }
 
-  ngOnInit() {
     this.fetch();
     this.buildHeader();
   }

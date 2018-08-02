@@ -43,6 +43,7 @@ export class ListActionBoxComponent implements OnInit {
   @Output() listAction: EventEmitter<IState> = new EventEmitter();
 
   hosts;
+  eventData;
   isCalendar;
   eventFilter;
   dateFilterOpts;
@@ -172,7 +173,7 @@ export class ListActionBoxComponent implements OnInit {
     $('#excelEventsModal').modal();
   }
 
-  trackEvent() {
+  ngOnInit() {
     const eventName = this.isSimple
       ? amplitudeEvents.CLICKED_CHANGE_BUTTON
       : amplitudeEvents.CLICKED_CREATE_ITEM;
@@ -182,14 +183,12 @@ export class ListActionBoxComponent implements OnInit {
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName,
       eventProperties
     };
-  }
 
-  ngOnInit() {
     this.getStores();
     const canSchoolWrite = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const canAccountWrite = canAccountLevelWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);

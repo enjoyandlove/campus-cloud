@@ -26,6 +26,7 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
   dealId;
   loading;
   forever;
+  eventData;
   dateFormat;
   hasMetaData;
   draggable = false;
@@ -90,20 +91,18 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
     });
   }
 
-  trackChangeEvent() {
+  ngOnInit() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
       eventProperties
     };
-  }
 
-  ngOnInit() {
     this.fetch();
     this.forever = DateStatus.forever;
   }

@@ -21,6 +21,7 @@ export class AttendanceUpcomingComponent implements OnInit {
   @Input() resourceBanner: IResourceBanner;
 
   banner;
+  eventData;
   mapCenter;
   dateFormat;
   eventCheckinRoute;
@@ -31,20 +32,18 @@ export class AttendanceUpcomingComponent implements OnInit {
 
   constructor(public utils: EventUtilService, public cpTracking: CPTrackingService) {}
 
-  trackChangeEvent() {
+  ngOnInit() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
       eventProperties
     };
-  }
 
-  ngOnInit() {
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
     this.banner = this.event.poster_url === '' ? this.event.store_logo_url : this.event.poster_url;
     this.showLocationDetails = this.event.latitude !== 0 && this.event.longitude !== 0;

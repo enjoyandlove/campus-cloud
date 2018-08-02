@@ -35,7 +35,8 @@ export class JobsListActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() listAction: EventEmitter<any> = new EventEmitter();
 
-  amplitudeEvents;
+  eventPageItemData;
+  eventCreateItemData;
   state: IState = state;
 
   constructor(
@@ -55,26 +56,26 @@ export class JobsListActionBoxComponent implements OnInit {
     this.listAction.emit(this.state);
   }
 
-  trackEvent(eventName, page_type) {
-    const eventProperties = {
+  setEventProperties(page_type = null) {
+    return {
       ...this.cpTracking.getEventProperties(),
       page_type
-    };
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
-      eventProperties
     };
   }
 
   ngOnInit() {
     this.employers$ = this.jobsService.getEmployers('all');
 
-    this.amplitudeEvents = {
-      page_type: amplitudeEvents.EMPLOYER,
-      clicked_create: amplitudeEvents.CLICKED_CREATE_ITEM,
-      clicked_page_item: amplitudeEvents.CLICKED_PAGE_ITEM
+    this.eventPageItemData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_PAGE_ITEM,
+      eventProperties: this.setEventProperties(amplitudeEvents.EMPLOYER)
+    };
+
+    this.eventCreateItemData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
+      eventProperties: this.setEventProperties()
     };
   }
 }

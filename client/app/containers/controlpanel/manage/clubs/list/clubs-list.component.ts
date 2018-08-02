@@ -43,6 +43,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
   label;
   loading;
+  eventData;
   clubStatus;
   sortingLabels;
   deleteClub = '';
@@ -131,14 +132,6 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_APPROVED_CLUB, this.eventProperties);
   }
 
-  trackViewEvent() {
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties: this.cpTracking.getEventProperties()
-    };
-  }
-
   doFilter(filter) {
     this.router.navigate(['.'], {
       relativeTo: this.route,
@@ -193,6 +186,12 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
+
     this.label = clubAthleticLabels(this.isAthletic);
 
     this.clubStatus = {

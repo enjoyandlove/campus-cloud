@@ -36,6 +36,7 @@ const state = {
 })
 export class JobsListComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   deleteJob;
   sortingLabels;
   state: IState = state;
@@ -125,14 +126,6 @@ export class JobsListComponent extends BaseComponent implements OnInit {
     });
   }
 
-  trackViewEvent() {
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties: this.cpTracking.getEventProperties()
-    };
-  }
-
   ngOnInit() {
     this.fetch();
     this.buildHeader();
@@ -141,6 +134,12 @@ export class JobsListComponent extends BaseComponent implements OnInit {
       name: this.cpI18n.translate('name'),
       employer_name: this.cpI18n.translate('employer_name'),
       posting_start: this.cpI18n.translate('jobs_posting_start')
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
   }
 }

@@ -9,6 +9,10 @@ export const cpTrackAmplitude = {
 };
 
 export const amplitudeEvents = {
+  NEW: 'New',
+
+  WALL: 'Wall',
+
   CLUB: 'Club',
 
   INFO: 'Info',
@@ -27,8 +31,6 @@ export const amplitudeEvents = {
 
   MEMBER: 'Member',
 
-  CAMPUS: 'Campus',
-
   ACTIVE: 'Active',
 
   REGULAR: 'Regular',
@@ -40,6 +42,8 @@ export const amplitudeEvents = {
   ENABLED: 'Enabled',
 
   NEW_AUDIENCE: 'New',
+
+  EXISTING: 'Existing',
 
   PROVIDER: 'Provider',
 

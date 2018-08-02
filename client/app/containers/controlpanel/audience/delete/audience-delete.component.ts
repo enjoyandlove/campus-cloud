@@ -13,7 +13,7 @@ import { HttpParams } from '@angular/common/http';
 import { AudienceService } from '../audience.service';
 import { CPSession } from '../../../../session';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../shared/services/index';
+import { CPI18nService, CPTrackingService } from '../../../../shared/services';
 
 const AUDIENCE_USED_IN_TEMPLATE = 409;
 

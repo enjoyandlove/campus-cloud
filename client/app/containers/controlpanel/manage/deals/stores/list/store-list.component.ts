@@ -32,6 +32,7 @@ const state = {
 })
 export class StoreListComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   deleteStore;
   selectedStore;
   sortingLabels;
@@ -119,19 +120,6 @@ export class StoreListComponent extends BaseComponent implements OnInit {
     }
   }
 
-  trackViewEvent() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_type: amplitudeEvents.STORE
-    };
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties
-    };
-  }
-
   public fetch() {
     const search = new HttpParams()
       .append('search_str', this.state.search_str)
@@ -161,6 +149,17 @@ export class StoreListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_type: amplitudeEvents.STORE
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties
+    };
+
     this.fetch();
     this.buildHeader();
 

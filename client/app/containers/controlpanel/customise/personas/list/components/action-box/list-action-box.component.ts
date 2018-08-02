@@ -14,6 +14,7 @@ export class PersonasListActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() filterBy: EventEmitter<null> = new EventEmitter();
 
+  eventData;
   dropdownItems;
 
   constructor(public cpI18n: CPI18nService, public cpTracking: CPTrackingService) {}
@@ -26,15 +27,13 @@ export class PersonasListActionBoxComponent implements OnInit {
     this.filterBy.emit(id);
   }
 
-  trackEvent() {
-    return {
+  ngOnInit() {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
       eventProperties: this.cpTracking.getEventProperties()
     };
-  }
 
-  ngOnInit() {
     this.dropdownItems = [
       {
         id: null,

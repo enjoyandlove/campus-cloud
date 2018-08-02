@@ -20,6 +20,7 @@ import { CPI18nService, CPTrackingService } from '../../../../../shared/services
 })
 export class CalendarsListComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   sortingLabels;
   selectedCalendar = null;
   launchEditModal = false;
@@ -142,20 +143,18 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
     }
   }
 
-  trackViewEvent() {
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties: this.cpTracking.getEventProperties()
-    };
-  }
-
   ngOnInit() {
     this.buildHeader();
 
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),
       created: this.cpI18n.translate('created')
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
   }
 }

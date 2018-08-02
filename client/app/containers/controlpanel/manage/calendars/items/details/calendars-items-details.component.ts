@@ -21,6 +21,7 @@ import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking/tracki
 })
 export class CalendarsItemsDetailsComponent extends BaseComponent implements OnInit {
   item;
+  eventData;
   mapCenter;
   itemId: number;
   loading = true;
@@ -90,18 +91,16 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
     });
   }
 
-  trackChangeEvent() {
+  ngOnInit() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: amplitudeEvents.CALENDAR_EVENTS
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
       eventProperties
     };
   }
-
-  ngOnInit() {}
 }

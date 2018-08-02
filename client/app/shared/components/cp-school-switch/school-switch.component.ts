@@ -18,8 +18,10 @@ export class SchoolSwitchComponent implements OnInit {
 
   helpDeskUrl;
   isSchoolPanel;
-  amplitudeEvents;
   canManageAdmins;
+  logoutEventData;
+  helpDeskEventData;
+  changedSchoolEventData;
   selectedSchool: ISchool;
   schools: Array<ISchool> = [];
   defaultImage = require('public/default/user.png');
@@ -43,16 +45,10 @@ export class SchoolSwitchComponent implements OnInit {
     this.isSchoolPanel = !this.isSchoolPanel;
   }
 
-  trackEvent(eventName) {
-    const eventProperties = {
+  setEventProperties() {
+    return {
       ...this.cpTracking.getEventProperties(),
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
-    };
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
-      eventProperties
     };
   }
 
@@ -76,10 +72,22 @@ export class SchoolSwitchComponent implements OnInit {
       this.canManageAdmins = manage_admin ? manage_admin : false;
     }
 
-    this.amplitudeEvents = {
-      logged_out: amplitudeEvents.LOGGED_OUT,
-      changed_school: amplitudeEvents.CHANGED_SCHOOL,
-      visited_help_desk: amplitudeEvents.VISITED_HELP_DESK
+    this.helpDeskEventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VISITED_HELP_DESK,
+      eventProperties: this.setEventProperties()
+    };
+
+    this.logoutEventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.LOGGED_OUT,
+      eventProperties: this.setEventProperties()
+    };
+
+    this.changedSchoolEventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CHANGED_SCHOOL,
+      eventProperties: this.setEventProperties()
     };
   }
 }

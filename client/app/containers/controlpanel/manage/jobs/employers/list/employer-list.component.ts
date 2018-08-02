@@ -32,6 +32,7 @@ const state = {
 })
 export class EmployerListComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   sortingLabels;
   deleteEmployer;
   selectedEmployer;
@@ -121,19 +122,6 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
     }
   }
 
-  trackViewEvent() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_type: amplitudeEvents.EMPLOYER
-    };
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties
-    };
-  }
-
   public fetch() {
     const search = new HttpParams()
       .append('search_str', this.state.search_str)
@@ -163,6 +151,17 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_type: amplitudeEvents.EMPLOYER
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties
+    };
+
     this.fetch();
     this.buildHeader();
 

@@ -22,6 +22,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
   label;
   isOpen;
   loading;
+  eventData;
   noDuration;
   selectedProgram = null;
   launchDeleteModal = false;
@@ -135,20 +136,18 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     }
   }
 
-  trackViewEvent() {
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties: this.cpTracking.getEventProperties()
-    };
-  }
-
   ngOnInit() {
     this.noDuration = ProgramDuration.disabled;
     this.buildHeader();
     this.fetch();
     this.label = {
       name: this.cpI18n.translate('name')
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
   }
 }

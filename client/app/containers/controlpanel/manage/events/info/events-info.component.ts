@@ -33,6 +33,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
   event;
   banner;
+  eventData;
   urlPrefix;
   dateFormat;
   isPastEvent;
@@ -119,20 +120,18 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     });
   }
 
-  trackChangeEvent() {
+  ngOnInit() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
       eventProperties
     };
-  }
 
-  ngOnInit() {
     this.fetch();
   }
 }

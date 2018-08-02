@@ -15,14 +15,14 @@
         cpTracker
         [routerLink]="['employers']"
         class="cpbtn cpbtn--cancel margin-right"
-        [eventData]="trackEvent(amplitudeEvents.clicked_page_item, amplitudeEvents.page_type)">
+        [eventData]="eventPageItemData">
         {{ 'jobs_manage_employer' | cpI18n }}
       </a>
       <a
         cpTracker
         [routerLink]="['create']"
         class="cpbtn cpbtn--primary"
-        [eventData]="trackEvent(amplitudeEvents.clicked_create)">
+        [eventData]="eventCreateItemData">
         {{ 'jobs_create_job' | cpI18n }}
       </a>
     </div>

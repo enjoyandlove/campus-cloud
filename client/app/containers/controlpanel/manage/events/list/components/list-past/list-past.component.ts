@@ -35,6 +35,7 @@ export class ListPastComponent implements OnInit {
   @Output() deleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() sortList: EventEmitter<ISort> = new EventEmitter();
 
+  eventData;
   sortingLabels;
   sort: ISort = sort;
   canDelete = false;
@@ -49,14 +50,6 @@ export class ListPastComponent implements OnInit {
   onDelete(event) {
     this.deleteEvent.emit(event);
     this.trackDeleteEvent();
-  }
-
-  trackViewEvent() {
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties: this.setEventProperties()
-    };
   }
 
   trackDeleteEvent() {
@@ -82,6 +75,12 @@ export class ListPastComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.setEventProperties()
+    };
+
     const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const accountAccess = canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
     this.canDelete = scholAccess || accountAccess || this.isOrientation;
