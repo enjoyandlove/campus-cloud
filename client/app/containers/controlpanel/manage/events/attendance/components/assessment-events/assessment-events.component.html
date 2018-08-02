@@ -33,10 +33,10 @@
 
 <div class="row">
   <div class="col-12">
-    <cp-past-events-action-box
+    <cp-assessment-events-action-box
       (querySearch)="doSearch($event)"
       (createExcel)="onCreateExcel()">
-    </cp-past-events-action-box>
+    </cp-assessment-events-action-box>
   </div>
 </div>
 
@@ -113,12 +113,8 @@
               </i>
             </div>
             <div class="col-3 text-truncate">
-              <span
-                class="link hover"
-                data-toggle="modal"
-                (click)="onViewFeedback(attendee)"
-                data-target="#eventFeedbackModal">
-                {{ attendee.feedback_text !== -1 ? attendee.feedback_text : '' }}
+              <span>
+                {{ attendee.feedback_text }}
               </span>
             </div>
             <div class="col-3">
@@ -145,11 +141,4 @@
       </div>
     </div>
   </div>
-
-  <cp-modal modalId="eventFeedbackModal">
-    <cp-feedback-modal
-      (resetModal)="onResetModal()"
-      [attendee]="attendeeFeedback">
-    </cp-feedback-modal>
-  </cp-modal>
 </div>

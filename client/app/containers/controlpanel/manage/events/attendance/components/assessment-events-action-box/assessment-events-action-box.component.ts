@@ -4,11 +4,11 @@ import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants/privi
 import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
 
 @Component({
-  selector: 'cp-past-events-action-box',
-  templateUrl: './past-events-action-box.component.html',
-  styleUrls: ['./past-events-action-box.component.scss']
+  selector: 'cp-assessment-events-action-box',
+  templateUrl: './assessment-events-action-box.component.html',
+  styleUrls: ['./assessment-events-action-box.component.scss']
 })
-export class EventsPastActionBoxComponent implements OnInit {
+export class AssessmentEventsActionBoxComponent implements OnInit {
   @Output() querySearch: EventEmitter<string> = new EventEmitter();
   @Output() createExcel: EventEmitter<null> = new EventEmitter();
   canDownload = false;

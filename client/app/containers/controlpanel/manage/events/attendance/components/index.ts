@@ -1,4 +1,4 @@
-export * from './past';
+export * from './assessment-events';
 export * from './upcoming';
 export * from './feedback-modal';
-export * from './past-events-action-box';
+export * from './assessment-events-action-box';

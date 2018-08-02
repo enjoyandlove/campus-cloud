@@ -10,6 +10,7 @@ import { amplitudeEvents } from '../../../../../../../shared/constants/analytics
 import { CPTrackingService } from '../../../../../../../shared/services';
 import { EventsService } from '../../../events.service';
 import { EventUtilService } from '../../../events.utils.service';
+import { FORMAT } from '../../../../../../../shared/pipes';
 
 interface IState {
   sort_field: string;
@@ -24,11 +25,11 @@ const state = {
 };
 
 @Component({
-  selector: 'cp-attendance-past',
-  templateUrl: './past.component.html',
-  styleUrls: ['./past.component.scss']
+  selector: 'cp-assessment-events',
+  templateUrl: './assessment-events.component.html',
+  styleUrls: ['./assessment-events.component.scss']
 })
-export class AttendancePastComponent extends BaseComponent implements OnInit {
+export class AssessmentEventsComponent extends BaseComponent implements OnInit {
   @Input() event: any;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
@@ -39,6 +40,7 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
   attendeeFeedback;
   state: IState = state;
   downloadEventProperties;
+  dateFormat = FORMAT.DATETIME;
   listStarSize = STAR_SIZE.DEFAULT;
   detailStarSize = STAR_SIZE.LARGE;
 
@@ -174,15 +176,6 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     );
   }
 
-  onViewFeedback(attendee): void {
-    this.trackFeedbackEvent();
-    attendee = Object.assign({}, attendee, {
-      maxRate: this.event.rating_scale_maximum
-    });
-
-    this.attendeeFeedback = attendee;
-  }
-
   trackFeedbackEvent() {
     this.eventProperties = {
       ...this.eventProperties,
@@ -205,13 +198,6 @@ export class AttendancePastComponent extends BaseComponent implements OnInit {
     this.resetPagination();
 
     this.fetch();
-  }
-
-  onResetModal(): void {
-    /**
-     * in order to clean the stars component
-     */
-    this.attendeeFeedback = null;
   }
 
   ngOnInit() {

@@ -2,17 +2,10 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <cp-attendance-past
+    <cp-assessment-events
       [event]="event"
       [orientationId]="orientationId"
-      [isOrientation]="isOrientation"
-      *ngIf="!isUpcoming">
-    </cp-attendance-past>
-
-    <cp-attendance-upcoming
-      [event]="event"
-      [isOrientation]="isOrientation"
-      *ngIf="isUpcoming">
-    </cp-attendance-upcoming>
+      [isOrientation]="isOrientation">
+    </cp-assessment-events>
   </div>
 </div>

@@ -40,7 +40,7 @@
             cpTracker
             [eventData]="eventData"
             class="event__title"
-            [routerLink]="[event.id]"
+            [routerLink]="[event.id + '/info']"
             queryParamsHandling="merge">
             {{ event.title }}
           </a>

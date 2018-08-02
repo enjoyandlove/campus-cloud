@@ -2422,6 +2422,12 @@
   "t_events_import_upload_picture": {
     "message": "Upload Image"
   },
+  "t_event_assessment_check_in_date": {
+    "message": "Check-In"
+  },
+  "t_event_assessment_check_out_date": {
+    "message": "Check-Out"
+  },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
   },
@@ -2441,7 +2447,7 @@
     "message": "Campus Security Service"
   },
   "t_personas_create_section_default_name": {
-    "message": "Untitled "
+    "message": "Untitled"
   },
   "t_personas_create_submit_button": {
     "message": "Save Changes"

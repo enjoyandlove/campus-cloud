@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
+import { EventAttendance } from '../event.status';
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
@@ -39,9 +40,11 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   isPastEvent;
   loading = true;
   eventId: number;
+  eventCheckinRoute;
   draggable = false;
   showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
+  attendanceEnabled = EventAttendance.enabled;
 
   defaultImage = require('public/default/image.png');
 
@@ -121,6 +124,8 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
+
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)

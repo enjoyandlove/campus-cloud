@@ -7,10 +7,10 @@ import { SharedModule } from '../../../../shared/shared.module';
 
 import { EventsAttendanceComponent } from './attendance';
 import {
-  AttendancePastComponent,
+  AssessmentEventsComponent,
   AttendanceUpcomingComponent,
   EventsFeedbackModalComponent,
-  EventsPastActionBoxComponent
+  AssessmentEventsActionBoxComponent
 } from './attendance/components';
 import { EventsCreateComponent } from './create';
 import { EventsDeleteComponent } from './delete';
@@ -56,10 +56,10 @@ import { OrientationEventsService } from '../orientation/events/orientation.even
     ListActionBoxComponent,
     ListPastComponent,
     ListUpcomingComponent,
-    AttendancePastComponent,
+    AssessmentEventsComponent,
     AttendanceUpcomingComponent,
     EventsFeedbackModalComponent,
-    EventsPastActionBoxComponent,
+    AssessmentEventsActionBoxComponent,
     FacebookEventsCreateComponent,
     FacebookEventsUpdateComponent,
     FacebookEventsDeleteComponent,
@@ -85,10 +85,10 @@ import { OrientationEventsService } from '../orientation/events/orientation.even
     ListActionBoxComponent,
     ListPastComponent,
     ListUpcomingComponent,
-    AttendancePastComponent,
+    AssessmentEventsComponent,
     AttendanceUpcomingComponent,
     EventsFeedbackModalComponent,
-    EventsPastActionBoxComponent,
+    AssessmentEventsActionBoxComponent,
     EventsComponent
   ]
 })

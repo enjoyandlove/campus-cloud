@@ -6,7 +6,7 @@ import { of as observableOf } from 'rxjs';
 import { EventsModule } from '../../../events.module';
 import { EventsService } from '../../../events.service';
 import { CPSession } from '../../../../../../../session';
-import { AttendancePastComponent } from './past.component';
+import { AssessmentEventsComponent } from './assessment-events.component';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { mockSchool } from '../../../../../../../session/mock/school';
 
@@ -20,11 +20,11 @@ class MockService {
   }
 }
 
-describe('AttendancePastComponent', () => {
+describe('AssessmentEventsComponent', () => {
   let spy;
   let search;
-  let component: AttendancePastComponent;
-  let fixture: ComponentFixture<AttendancePastComponent>;
+  let component: AssessmentEventsComponent;
+  let fixture: ComponentFixture<AssessmentEventsComponent>;
 
   beforeEach(
     async(() => {
@@ -34,7 +34,7 @@ describe('AttendancePastComponent', () => {
       })
         .compileComponents()
         .then(() => {
-          fixture = TestBed.createComponent(AttendancePastComponent);
+          fixture = TestBed.createComponent(AssessmentEventsComponent);
 
           component = fixture.componentInstance;
           component.isLoading().subscribe((_) => (component.loading = false));
