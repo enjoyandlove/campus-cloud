@@ -33,6 +33,7 @@ export class DashboardComponent implements OnInit {
   campusTileTile$ = new BehaviorSubject(false);
   topClubsTile$ = new BehaviorSubject(false);
   integrationsTile$ = new BehaviorSubject(false);
+  topOrientationTile$ = new BehaviorSubject(false);
 
   constructor(
     private router: Router,
@@ -104,7 +105,8 @@ export class DashboardComponent implements OnInit {
       this.socialActivityTile$,
       this.campusTileTile$,
       this.topClubsTile$,
-      this.integrationsTile$
+      this.integrationsTile$,
+      this.topOrientationTile$
     ]).subscribe((tiles: any) => {
       setTimeout(
         () => {

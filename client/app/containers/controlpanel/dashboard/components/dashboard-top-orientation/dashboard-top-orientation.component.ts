@@ -4,20 +4,22 @@ import { HttpParams } from '@angular/common/http';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { DashboardService } from './../../dashboard.service';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { DashboardUtilsService } from '../../dashboard.utils.service';
+import { canSchoolReadResource } from '../../../../../shared/utils/privileges';
 
 @Component({
-  selector: 'cp-dashboard-top-events',
-  templateUrl: './dashboard-top-events.component.html',
-  styleUrls: ['./dashboard-top-events.component.scss']
+  selector: 'cp-dashboard-top-orientation',
+  templateUrl: './dashboard-top-orientation.component.html',
+  styleUrls: ['./dashboard-top-orientation.component.scss']
 })
-export class DashboardTopEventsComponent extends BaseComponent implements OnInit {
+export class DashboardTopOrientationComponent extends BaseComponent implements OnInit {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
   loading;
-  isSuperAdmin;
   items = [];
+  canViewOrientation;
 
   @Input()
   set dates(dates) {
@@ -26,9 +28,9 @@ export class DashboardTopEventsComponent extends BaseComponent implements OnInit
   }
 
   constructor(
-    private session: CPSession,
-    private service: DashboardService,
-    private utils: DashboardUtilsService) {
+    public session: CPSession,
+    public service: DashboardService,
+    public utils: DashboardUtilsService) {
     super();
     super.isLoading().subscribe((loading) => {
       this.loading = loading;
@@ -38,21 +40,21 @@ export class DashboardTopEventsComponent extends BaseComponent implements OnInit
 
   fetch() {
     const search = new HttpParams()
-      .append('sort_by', 'engagements')
+      .append('sort_by', 'average')
       .append('end', this._dates.end.toString())
       .append('start', this._dates.start.toString())
       .append('school_id', this.session.g.get('school').id.toString());
 
-    const stream$ = this.service.getTopEvents(search);
+    const stream$ = this.service.getTopOrientation(search);
 
     super
       .fetchData(stream$)
-      .then((res) => this.utils.parseEventsResponse(res.data.top_events))
+      .then((res) => this.utils.parseOrientationResponse(res.data.top_events))
       .then((res: any) => (this.items = res));
   }
 
   ngOnInit() {
-    this.isSuperAdmin = this.utils.isSuperAdmin(this.session);
+    this.canViewOrientation = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.orientation);
 
     this.fetch();
   }
