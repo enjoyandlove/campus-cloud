@@ -62,6 +62,7 @@ export class PersonasUtilsService {
       return {
         ...guide,
         tiles: guide.tiles
+          // filter category zero && featured
           .filter((tile: ITile) => tile.tile_category_id !== 0)
           .filter((tile: ITile) => tile.rank > -1)
       };

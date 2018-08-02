@@ -2581,11 +2581,20 @@
   "t_personas_tile_create_resource_type_courses": {
     "message": "Courses"
   },
+  "t_personas_tile_create_resource_type_deal_store_list": {
+    "message": "Deals"
+  },
   "t_personas_tile_create_resource_type_exams": {
     "message": "Exams"
   },
   "t_personas_tile_create_resource_type_in_app_feedback": {
     "message": "In-App feedback"
+  },
+  "t_personas_tile_create_resource_type_job_list": {
+    "message": "Jobs"
+  },
+  "t_personas_tile_create_resource_type_orientation_calendar_list": {
+    "message": "Orientation"
   },
   "t_personas_tile_create_resource_type_service_by_category_id": {
     "message": "Services by Category"
