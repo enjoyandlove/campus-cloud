@@ -31,11 +31,11 @@ interface IState {
 }
 
 @Component({
-  selector: 'cp-engagement-services-box',
-  templateUrl: './engagement-services-box.component.html',
-  styleUrls: ['./engagement-services-box.component.scss']
+  selector: 'cp-engagement-orientations-box',
+  templateUrl: './engagement-orientations-box.component.html',
+  styleUrls: ['./engagement-orientations-box.component.scss']
 })
-export class EngagementServicesBoxComponent extends BaseComponent implements OnInit {
+export class EngagementOrientationsBoxComponent extends BaseComponent implements OnInit {
   @Input() props: Observable<any>;
 
   labels;
@@ -45,7 +45,7 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
   sortingBy;
   eventProperties;
   loading = false;
-  servicesRanking;
+  orientationRanking;
   state: IState = {
     sortBy: sortTypes[0],
     list_id: null,
@@ -81,14 +81,12 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
 
   trackAmplitudeEvent(sort_type) {
     this.eventProperties = {
-      ...this.utils.getEventProperties(this.filters),
-      sort_type
+      ...this.utils.getEventProperties(this.filters), sort_type
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.ASSESS_VIEWED_TOP_SERVICES,
-      this.eventProperties
-    );
+      amplitudeEvents.ASSESS_VIEWED_TOP_ORIENTATIONS,
+      this.eventProperties);
   }
 
   fetch() {
@@ -117,22 +115,22 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
 
     this.updateSortingLabel();
 
-    super.fetchData(this.service.getServicesData(search)).then(
+    super.fetchData(this.service.getOrientationData(search)).then(
       (res) => {
         this.loading = false;
         this.isSorting = false;
 
-        this.servicesRanking = this.parseResponse(res.data.top_services);
+        this.orientationRanking = this.parseResponse(res.data.top_events);
 
         this.stats = [
           {
-            value: res.data.total_services,
-            label: this.cpI18n.translate('assess_total_services'),
+            value: res.data.total_events,
+            label: this.cpI18n.translate('t_assess_total_orientation_programs'),
             icon: require('public/png/assess/chart_service.png')
           },
           {
-            value: res.data.total_services_with_attendance,
-            label: this.cpI18n.translate('assess_services_assessed'),
+            value: res.data.total_events_with_attendance,
+            label: this.cpI18n.translate('t_assess_total_orientation_programs_assessed'),
             icon: require('public/png/assess/chart_service_assess.png')
           },
           {
@@ -163,8 +161,8 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
   parseResponse(items) {
     return items.map((item) => {
       return {
-        name: item.service_name,
-        image: item.service_logo_url,
+        image: '',
+        name: item.calendar_name,
         attendees: item.num_of_attendees,
         feedbacks: item.num_of_feedbacks,
         avg_feedbacks: item.average_of_feedbacks
@@ -186,8 +184,8 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
 
   ngOnInit() {
     this.labels = {
-      heading: this.cpI18n.translate('services'),
-      sub_heading: this.cpI18n.translate('assess_top_services')
+      heading: this.cpI18n.translate('t_assess_orientation_programs'),
+      sub_heading: this.cpI18n.translate('t_assess_top_orientation_programs')
     };
 
     this.sortyBy = this.engagementUtils.resourceSortingFilter();
@@ -195,7 +193,7 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
     this.props.subscribe((res) => {
       const type = res.engagement.data.type;
       this.filters = res;
-      this.isDisable = type === 'events' || type === 'orientations';
+      this.isDisable = type === 'events' || type === 'services';
 
       this.state = {
         ...this.state,
