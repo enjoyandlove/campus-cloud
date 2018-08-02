@@ -11,9 +11,9 @@
     <ng-container *ngSwitchCase="false">
       <div
         class="wrapper"
-        (mouseenter)="hover = true"
-        (mouseleave)="hover = false">
-        <div class="row" *ngIf="!hover">
+        (mouseenter)="toggleHover(true)"
+        (mouseleave)="toggleHover(false)">
+        <div class="row" *ngIf="!state.hover">
           <div class="col-12">
             <cp-personas-tile-content
               [name]="tile.name"
@@ -23,14 +23,14 @@
             </cp-personas-tile-content>
           </div>
         </div>
-        <div class="row" *ngIf="hover">
+        <div class="row" *ngIf="state.hover">
           <div class="col-12">
             <cp-personas-tile-hover
               (editClick)="edit.emit()"
-              (deleteClick)="onDeleteTile()"
               (toggleVisibility)="onToggleTile()"
               [visible]="utils.isTileVisible(tile)"
               [noEdit]="utils.isCampaignTile(tile)"
+              (deleteClick)="deleteClick.emit(tile)"
               [defaultTile]="utils.isTileDefault(tile)">
             </cp-personas-tile-hover>
           </div>

@@ -1,4 +1,4 @@
-import { HttpParams } from '@angular/common/http';
+// import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CPSession } from './../../../../../../session/index';
@@ -19,12 +19,11 @@ export class PersonasTileComponent implements OnInit {
 
   @Output() edit: EventEmitter<ITile> = new EventEmitter();
   @Output() edited: EventEmitter<ITile> = new EventEmitter();
-  @Output() deleted: EventEmitter<number> = new EventEmitter();
-
-  hover = false;
+  @Output() deleteClick: EventEmitter<ITile> = new EventEmitter();
 
   state = {
-    working: false
+    working: false,
+    hover: false
   };
 
   constructor(
@@ -34,6 +33,13 @@ export class PersonasTileComponent implements OnInit {
     public store: Store<ISnackbar>,
     public utils: TilesUtilsService
   ) {}
+
+  toggleHover(hover) {
+    this.state = {
+      ...this.state,
+      hover
+    };
+  }
 
   errorHandler() {
     this.state = {
@@ -54,22 +60,8 @@ export class PersonasTileComponent implements OnInit {
 
   onDeleteTile() {
     this.state = {
-      ...this.state,
-      working: true
+      ...this.state
     };
-
-    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
-
-    this.service.deleteTile(this.tile.id, search).subscribe(
-      () => {
-        this.state = {
-          ...this.state,
-          working: false
-        };
-        this.deleted.emit(this.tile.id);
-      },
-      () => this.errorHandler()
-    );
   }
 
   onToggleTile() {

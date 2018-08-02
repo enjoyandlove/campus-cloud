@@ -30,6 +30,7 @@ interface IState {
 export class PersonasDetailsComponent extends BaseComponent implements OnInit {
   loading;
   personaId;
+  guideNames;
 
   state: IState = {
     working: false,
@@ -248,6 +249,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         const temporaryTile = [this.sectionUtils.temporaryGuide(100)];
 
         const guides = filteredTiles.length ? filteredTiles : temporaryTile;
+
+        this.guideNames = ['featured', 'category_zero', ...guides.map((g: ICampusGuide) => g.name)];
 
         this.state = {
           ...this.state,
