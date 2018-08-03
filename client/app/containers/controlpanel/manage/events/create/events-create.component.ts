@@ -12,7 +12,6 @@ import { EventUtilService } from '../events.utils.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPDate, CPMap } from '../../../../../shared/utils';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
@@ -380,18 +379,16 @@ export class EventsCreateComponent implements OnInit {
     }
   }
 
-  getEventProperties() {
+  trackCancelEvent() {
     this.eventProperties = {
       ...this.eventProperties,
       ...this.utils.setEventProperties(this.form.controls),
       uploaded_photo: this.utils.didUploadPhoto(this.form.controls['poster_url'].value)
     };
 
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.MANAGE_CANCELED_EVENT,
-      eventProperties: this.eventProperties
-    };
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CANCELED_EVENT,
+      this.eventProperties);
   }
 
   ngOnInit() {

@@ -31,6 +31,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   loading;
   service;
   storeId;
+  eventData;
   noProviders;
   serviceId: number;
   isProviderAdd;
@@ -153,18 +154,16 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     this.noProviders = !data;
   }
 
-  trackChangeEvent() {
+  ngOnInit() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: amplitudeEvents.ASSESSMENT
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
       eventProperties
     };
   }
-
-  ngOnInit() {}
 }

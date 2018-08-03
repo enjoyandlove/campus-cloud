@@ -3,7 +3,7 @@
     cpTracker
     type="button"
     (click)="cancel.emit()"
-    [eventData]="trackEvent(canceledPhoto)"
+    [eventData]="canceledPhoto"
     class="cpbtn cpbtn--cancel">
       {{ 'cancel' | cpI18n }}
   </button>
@@ -11,7 +11,7 @@
   <cp-button
     cpTracker
     [props]="buttonData"
-    [eventData]="trackEvent(savedPhoto)"
+    [eventData]="savedPhoto"
     (buttonClick)="save.emit()">
   </cp-button>
 </div>

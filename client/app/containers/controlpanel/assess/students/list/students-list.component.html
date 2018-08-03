@@ -47,7 +47,10 @@
                   <img [src]="student.avatar <= avatarCustomCodeThreshold ? defaultImage : student.avatar_url" class="rounded img-fit-cover">
                 </div>
                 <div class="col-9 no-left-padding">
-                  <a [routerLink]="[student.id]">
+                  <a
+                    cpTracker
+                    [eventData]="eventData"
+                    [routerLink]="[student.id]">
                     <strong>{{ student.firstname }} {{ student.lastname }}</strong>
                   </a>
                 </div>

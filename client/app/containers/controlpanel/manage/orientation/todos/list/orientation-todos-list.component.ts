@@ -18,6 +18,7 @@ import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking/tracki
 })
 export class OrientationTodosListComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   sortingLabels;
   selectedTodo = null;
   orientationId: number;
@@ -128,25 +129,23 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
     }
   }
 
-  trackViewEvent() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.TODOS
-    };
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties
-    };
-  }
-
   ngOnInit() {
     this.fetch();
 
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),
       due_date: this.cpI18n.translate('due_date')
+    };
+
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.TODOS
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties
     };
   }
 }

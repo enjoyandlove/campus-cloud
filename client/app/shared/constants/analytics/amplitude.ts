@@ -183,8 +183,6 @@ export const amplitudeEvents = {
 
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
 
-  NOTIFY_VIEWED_LISTING: 'Notify - Viewed Listing',
-
   MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
 
   MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',

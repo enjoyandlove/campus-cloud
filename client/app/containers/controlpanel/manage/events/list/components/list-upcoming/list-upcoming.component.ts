@@ -82,7 +82,7 @@ export class ListUpcomingComponent implements OnInit {
     };
   }
 
-  trackEvent(event_id) {
+  trackCheckinEvent(event_id) {
     const source_page = this.utils.getCheckinSourcePage(
       this.isAthletic,
       this.isService,
@@ -95,11 +95,9 @@ export class ListUpcomingComponent implements OnInit {
       source_page
     };
 
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
-      eventProperties
-    };
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CLICKED_CHECKIN,
+      eventProperties);
   }
 
   ngOnInit() {

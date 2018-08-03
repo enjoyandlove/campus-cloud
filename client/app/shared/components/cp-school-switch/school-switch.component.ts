@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
-import { CP_TRACK_TO } from '../../directives/tracking';
 import { appStorage } from '../../../shared/utils/storage';
 import { amplitudeEvents } from '../../constants/analytics';
 import { CPSession, ISchool, IUser } from '../../../session';
@@ -19,9 +18,7 @@ export class SchoolSwitchComponent implements OnInit {
   helpDeskUrl;
   isSchoolPanel;
   canManageAdmins;
-  logoutEventData;
-  helpDeskEventData;
-  changedSchoolEventData;
+  amplitudeEvents;
   selectedSchool: ISchool;
   schools: Array<ISchool> = [];
   defaultImage = require('public/default/user.png');
@@ -45,11 +42,13 @@ export class SchoolSwitchComponent implements OnInit {
     this.isSchoolPanel = !this.isSchoolPanel;
   }
 
-  setEventProperties() {
-    return {
+  trackEvent(eventName) {
+    const eventProperties =  {
       ...this.cpTracking.getEventProperties(),
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
+
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
 
   ngOnInit() {
@@ -72,22 +71,10 @@ export class SchoolSwitchComponent implements OnInit {
       this.canManageAdmins = manage_admin ? manage_admin : false;
     }
 
-    this.helpDeskEventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VISITED_HELP_DESK,
-      eventProperties: this.setEventProperties()
-    };
-
-    this.logoutEventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.LOGGED_OUT,
-      eventProperties: this.setEventProperties()
-    };
-
-    this.changedSchoolEventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.CHANGED_SCHOOL,
-      eventProperties: this.setEventProperties()
+    this.amplitudeEvents = {
+      logged_out: amplitudeEvents.LOGGED_OUT,
+      changed_school: amplitudeEvents.CHANGED_SCHOOL,
+      visited_help_desk: amplitudeEvents.VISITED_HELP_DESK
     };
   }
 }

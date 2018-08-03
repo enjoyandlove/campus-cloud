@@ -21,6 +21,7 @@ import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/t
 export class ServicesProviderDetailsComponent extends BaseComponent implements OnInit {
   loading;
   provider;
+  eventData;
   serviceId;
   providerId;
   MAX_RATE = 5;
@@ -29,13 +30,6 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   starSize = STAR_SIZE.LARGE;
   query$: BehaviorSubject<string> = new BehaviorSubject(null);
   download$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-
-  eventProperties = {
-    visits: null,
-    ratings: null,
-    service_id: null,
-    service_provider_id: null
-  };
 
   constructor(
     private route: ActivatedRoute,
@@ -66,7 +60,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     super.fetchData(stream$).then((res) => {
       this.provider = res.data;
       this.eventRating = (this.provider.avg_rating_percent * this.MAX_RATE / 100).toFixed(1);
-
+      this.trackCheckinEvent(this.provider.encrypted_campus_service_id);
       this.buildHeader();
     });
   }
@@ -93,7 +87,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
       source_page: amplitudeEvents.SERVICE
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
       eventProperties

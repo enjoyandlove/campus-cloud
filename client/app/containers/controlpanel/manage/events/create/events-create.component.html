@@ -219,8 +219,7 @@
                     {{ isDateError ? dateErrorMessage : cpI18n.translate('error_fill_out_marked_fields') }}
                   </label>
                   <a
-                    cpTracker
-                    [eventData]="getEventProperties(eventProperties)"
+                    (click)="trackCancelEvent()"
                     [routerLink]="['../']"
                       class="cpbtn cpbtn--cancel">
                     {{ 'cancel' | cpI18n }}

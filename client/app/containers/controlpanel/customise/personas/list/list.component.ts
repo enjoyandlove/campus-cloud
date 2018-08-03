@@ -7,6 +7,9 @@ import { IPersona } from './../persona.interface';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { PersonasService } from './../personas.service';
+import { CPTrackingService } from '../../../../../shared/services';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
@@ -18,6 +21,7 @@ import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.red
 })
 export class PersonasListComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   state = {
     updating: false,
     platform: null,
@@ -29,6 +33,7 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: PersonasService,
+    public cpTracking: CPTrackingService,
     public store: Store<IHeader | ISnackbar>
   ) {
     super();
@@ -186,5 +191,11 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.updateHeader();
     this.fetch();
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
   }
 }

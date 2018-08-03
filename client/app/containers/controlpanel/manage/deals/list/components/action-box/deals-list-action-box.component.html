@@ -15,14 +15,14 @@
         cpTracker
         [routerLink]="['stores']"
         class="cpbtn cpbtn--cancel margin-right"
-        [eventData]="trackEvent(amplitudeEvents.clicked_page_item, amplitudeEvents.page_type)">
+        [eventData]="storeEventData">
         {{ 'deals_manage_stores' | cpI18n }}
       </a>
       <a
         cpTracker
         [routerLink]="['create']"
         class="cpbtn cpbtn--primary"
-        [eventData]="trackEvent(amplitudeEvents.clicked_create)">
+        [eventData]="dealsEventData">
         {{ 'deals_create_deal' | cpI18n }}
       </a>
     </div>

@@ -30,6 +30,8 @@ const state = {
 export class DealsListActionBoxComponent implements OnInit {
   stores$;
   amplitudeEvents;
+  storeEventData;
+  dealsEventData;
   state: IState = state;
 
   @Output() search: EventEmitter<string> = new EventEmitter();
@@ -47,26 +49,26 @@ export class DealsListActionBoxComponent implements OnInit {
     this.search.emit(query);
   }
 
-  trackEvent(eventName, page_type) {
-    const eventProperties = {
+  setEventProperties(page_type = null) {
+    return {
       ...this.cpTracking.getEventProperties(),
       page_type
-    };
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
-      eventProperties
     };
   }
 
   ngOnInit() {
     this.stores$ = this.dealsService.getDealStores();
 
-    this.amplitudeEvents = {
-      page_type: amplitudeEvents.STORE,
-      clicked_create: amplitudeEvents.CLICKED_CREATE_ITEM,
-      clicked_page_item: amplitudeEvents.CLICKED_PAGE_ITEM
+    this.storeEventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_PAGE_ITEM,
+      eventProperties: this.setEventProperties(amplitudeEvents.STORE)
+    };
+
+    this.dealsEventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
+      eventProperties: this.setEventProperties()
     };
   }
 }
