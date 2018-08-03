@@ -2428,6 +2428,9 @@
   "t_personas_delete_guide_error_non_empty_category": {
     "message": "Pour supprimer une section, supprimez toutes les tuiles de la section."
   },
+  "t_personas_delete_tile_modal_body": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
   "t_personas_edit_error_users_associated": {
     "message": "Cette expérience a des utilisateurs associés, donc vous ne pouvez pas modifier ses exigences de connexion."
   },

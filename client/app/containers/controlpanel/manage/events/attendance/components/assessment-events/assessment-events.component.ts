@@ -1,16 +1,17 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+
+import { EventsService } from '../../../events.service';
 import { CPSession } from './../../../../../../../session';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
+import { FORMAT } from '../../../../../../../shared/pipes';
+import { EventUtilService } from '../../../events.utils.service';
 import { CPDate } from './../../../../../../../shared/utils/date/date';
+import { CPTrackingService } from '../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPTrackingService } from '../../../../../../../shared/services';
-import { EventsService } from '../../../events.service';
-import { EventUtilService } from '../../../events.utils.service';
-import { FORMAT } from '../../../../../../../shared/pipes';
+import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 interface IState {
   sort_field: string;

@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
-import { CPDate } from '../../../../../shared/utils/date';
 import { EventUtilService } from './../events.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
@@ -26,7 +25,6 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
   event;
   urlPrefix;
-  isUpcoming;
   loading = true;
   eventId: number;
 
@@ -54,8 +52,6 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       this.event = event.data;
 
       this.buildHeader(event.data);
-
-      this.isUpcoming = this.event.end > CPDate.now(this.session.tz).unix();
     });
   }
 

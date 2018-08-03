@@ -2428,6 +2428,9 @@
   "t_event_assessment_check_out_date": {
     "message": "Check-Out"
   },
+  "t_event_assessment_web_checkin_page": {
+    "message": "Web Check-In Page"
+  },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
   },
@@ -2466,6 +2469,12 @@
   },
   "t_personas_delete_guide_error_non_empty_category": {
     "message": "To delete a section, delete all the tiles."
+  },
+  "t_personas_delete_tile_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_personas_delete_tile_modal_title": {
+    "message": "Delete Tile"
   },
   "t_personas_details_feature": {
     "message": "Featured"
@@ -2575,11 +2584,20 @@
   "t_personas_tile_create_resource_type_courses": {
     "message": "Courses"
   },
+  "t_personas_tile_create_resource_type_deal_store_list": {
+    "message": "Deals"
+  },
   "t_personas_tile_create_resource_type_exams": {
     "message": "Exams"
   },
   "t_personas_tile_create_resource_type_in_app_feedback": {
     "message": "In-App feedback"
+  },
+  "t_personas_tile_create_resource_type_job_list": {
+    "message": "Jobs"
+  },
+  "t_personas_tile_create_resource_type_orientation_calendar_list": {
+    "message": "Orientation"
   },
   "t_personas_tile_create_resource_type_service_by_category_id": {
     "message": "Services by Category"

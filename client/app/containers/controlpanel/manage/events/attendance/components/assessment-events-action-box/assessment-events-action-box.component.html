@@ -3,14 +3,18 @@
     <div class="col-3">
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
-    <div
-      *ngIf="canDownload"
-      class="col text-right">
+    <div class="col text-right">
       <button
+        *ngIf="canDownload"
         (click)="downloadExcel()"
-        class="cpbtn cpbtn--primary">
+        class="cpbtn cpbtn--cancel margin-right">
         {{ 'download_csv' | cpI18n }}
       </button>
+      <a
+        [routerLink]="[eventCheckinRoute + event.encrypted_id]"
+        class="cpbtn cpbtn--primary">
+        {{ 't_event_assessment_web_checkin_page' | cpI18n }}
+      </a>
     </div>
   </div>
 </div>

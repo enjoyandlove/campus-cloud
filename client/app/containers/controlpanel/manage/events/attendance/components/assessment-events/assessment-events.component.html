@@ -34,6 +34,8 @@
 <div class="row">
   <div class="col-12">
     <cp-assessment-events-action-box
+      [event]="event"
+      [isOrientation]="isOrientation"
       (querySearch)="doSearch($event)"
       (createExcel)="onCreateExcel()">
     </cp-assessment-events-action-box>
@@ -64,7 +66,9 @@
                 [sortDirection]="state.sort_direction">
               </cp-sorting-header>
             </div>
-
+            <div class="col-3">
+              <span>{{ 't_event_assessment_check_in_date' | cpI18n }}</span>
+            </div>
             <div class="col-2">
               <cp-sorting-header
                 sortLabel="check_in_method"
@@ -73,9 +77,6 @@
                 [sortField]="state.sort_field"
                 [sortDirection]="state.sort_direction">
               </cp-sorting-header>
-            </div>
-            <div class="col-3">
-              <span>{{ 'student_feedback' | cpI18n }}</span>
             </div>
             <div class="col-3">
               <cp-sorting-header
@@ -100,6 +101,9 @@
               <br>
               <small class="text-muted">{{ attendee.email }}</small>
             </div>
+            <div class="col-3">
+              <span> {{ attendee.check_in_time | cpDatePipe:dateFormat }} </span>
+            </div>
             <div class="col-2">
               <i
                 class="material-icons"
@@ -112,11 +116,6 @@
                 computer
               </i>
             </div>
-            <div class="col-3 text-truncate">
-              <span>
-                {{ attendee.feedback_text }}
-              </span>
-            </div>
             <div class="col-3">
               <cp-stars
                 [size]="listStarSize"
@@ -124,6 +123,11 @@
                 [maxRate]="event.rating_scale_maximum">
               </cp-stars>
             </div>
+          </div>
+          <div class="row cp-table__feedback" *ngIf="attendee.feedback_text">
+            <small>
+              {{ attendee.feedback_text }}
+            </small>
           </div>
         </div>
       </div>
