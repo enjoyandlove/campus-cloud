@@ -1,11 +1,10 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-
-import { CPTrackingService } from '../../services';
 import { CP_PRIVILEGES_MAP } from './../../constants';
-import { amplitudeEvents } from '../../constants/analytics';
-import { CPSession, ISchool, IUser } from '../../../session';
 import { canAccountLevelReadResource, canSchoolReadResource } from './../../utils/privileges';
+import { CPSession, ISchool, IUser } from '../../../session';
+import { amplitudeEvents } from '../../constants/analytics';
+import { CPTrackingService } from '../../services';
 
 @Component({
   selector: 'cp-topbar',
