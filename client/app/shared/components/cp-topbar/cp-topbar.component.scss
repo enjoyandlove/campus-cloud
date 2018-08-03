@@ -2,20 +2,14 @@
 @import '~styles/core/typography';
 @import '~styles/components/dropdown';
 
-hr {
-  margin: 0;
-}
-
-nav {
+.wrapper {
   overflow: visible;
   background: $color-black;
 
   .avatar {
-    top: 7px;
     width: 40px;
     height: 40px;
     padding-top: 6px;
-    position: relative;
     display: inline-block;
 
     img {
@@ -36,6 +30,7 @@ nav {
 
     &.nav__links {
       padding-left: 25px;
+      display: inline-block;
     }
 
     li {

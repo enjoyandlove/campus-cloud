@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavigationEnd, Router, ActivatedRoute } from '@angular/router';
-
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { CPTrackingService } from './../../services/tracking.service';
+
+declare var Beamer;
 
 @Component({
   selector: 'cp-trackers',
@@ -24,6 +25,8 @@ export class CPTrackersComponent implements OnInit {
   }
 
   ngOnInit() {
+    Beamer.init();
+
     this.listenForRouteChanges();
   }
 }
