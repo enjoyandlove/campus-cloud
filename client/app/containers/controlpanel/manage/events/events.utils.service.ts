@@ -2,6 +2,7 @@ import IEvent from './event.interface';
 
 import { Injectable } from '@angular/core';
 import { CPSession } from '../../../../session';
+import { CPI18nService } from '../../../../shared/services';
 import { CPDate } from './../../../../shared/utils/date/date';
 import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
@@ -16,7 +17,7 @@ import {
 
 @Injectable()
 export class EventUtilService {
-  constructor(public session: CPSession) {}
+  constructor(public session: CPSession, public cpI18n: CPI18nService) {}
   isPastEvent(event: IEvent): boolean {
     return event.end < CPDate.now(this.session.tz).unix();
   }
@@ -110,6 +111,16 @@ export class EventUtilService {
     }
 
     return '/cb/checkin/e/';
+  }
+
+  checkInMethods(checkInMethod) {
+    const checkInMethods =  {
+      1: this.cpI18n.translate('t_web_checkin_method'),
+      2: this.cpI18n.translate('t_web_based_qr_scan'),
+      3: this.cpI18n.translate('t_app_checkin_method')
+    };
+
+    return checkInMethods[checkInMethod];
   }
 
   getCheckinSourcePage(

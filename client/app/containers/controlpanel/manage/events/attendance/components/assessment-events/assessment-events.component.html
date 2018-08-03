@@ -105,16 +105,7 @@
               <span> {{ attendee.check_in_time | cpDatePipe:dateFormat }} </span>
             </div>
             <div class="col-2">
-              <i
-                class="material-icons"
-                *ngIf="attendee.check_in_method === 3">
-                smartphone
-              </i>
-              <i
-                class="material-icons"
-                *ngIf="attendee.check_in_method === 1">
-                computer
-              </i>
+             <span> {{ utils.checkInMethods(attendee.check_in_method)}}</span>
             </div>
             <div class="col-3">
               <cp-stars
@@ -125,9 +116,7 @@
             </div>
           </div>
           <div class="row cp-table__feedback" *ngIf="attendee.feedback_text">
-            <small>
-              {{ attendee.feedback_text }}
-            </small>
+            <small>{{ attendee.feedback_text }}</small>
           </div>
         </div>
       </div>
