@@ -8,7 +8,9 @@ import {
 import { FORMAT } from '../../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../../session/index';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
-import { CPI18nService } from '../../../../../../../shared/services';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../../../shared/services';
 
 interface ISort {
   sort_field: string;
@@ -33,15 +35,35 @@ export class ListPastComponent implements OnInit {
   @Output() deleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() sortList: EventEmitter<ISort> = new EventEmitter();
 
+  eventData;
   sortingLabels;
   sort: ISort = sort;
   canDelete = false;
   dateFormat = FORMAT.SHORT;
 
-  constructor(private session: CPSession, private cpI18n: CPI18nService) {}
+  constructor(
+    private session: CPSession,
+    private cpI18n: CPI18nService,
+    private cpTracking: CPTrackingService
+  ) {}
 
   onDelete(event) {
     this.deleteEvent.emit(event);
+    this.trackDeleteEvent();
+  }
+
+  trackDeleteEvent() {
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.setEventProperties());
+  }
+
+  setEventProperties() {
+    return {
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth),
+      page_type: amplitudeEvents.PAST_EVENT
+    };
   }
 
   doSort(sort_field) {
@@ -53,6 +75,12 @@ export class ListPastComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.setEventProperties()
+    };
+
     const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const accountAccess = canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
     this.canDelete = scholAccess || accountAccess || this.isOrientation;

@@ -48,7 +48,9 @@
                   <i class="material-icons">settings_applications</i>
                   {{'t_persona_list_button_customize' | cpI18n }}
                 </a>
-                <a 
+                <a
+                  cpTracker
+                  [eventData]="eventData"
                   [routerLink]="[persona.id + '/edit']"
                   class="cpbtn cpbtn--link">
                   <i class="material-icons">edit</i>

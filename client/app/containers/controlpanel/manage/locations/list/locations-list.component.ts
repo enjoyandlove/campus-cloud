@@ -3,8 +3,10 @@ import { Component, OnInit } from '@angular/core';
 
 import { CPSession } from './../../../../../session';
 import { LocationsService } from '../locations.service';
-import { CPI18nService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 declare var $: any;
 
@@ -29,6 +31,7 @@ const state: IState = {
 })
 export class LocationsListComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   sortingLabels;
   isLocationsCreate;
   deleteLocation = '';
@@ -38,6 +41,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public cpTracking: CPTrackingService,
     private locationsService: LocationsService
   ) {
     super();
@@ -124,6 +128,12 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
+
     this.sortingLabels = {
       locations: this.cpI18n.translate('locations')
     };

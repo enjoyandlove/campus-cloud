@@ -6,6 +6,7 @@ import { DebugElement } from '@angular/core';
 import { EventsModule } from '../../../events.module';
 import { CPSession } from '../../../../../../../session';
 import { AttendanceUpcomingComponent } from './upcoming.component';
+import { CPTrackingService } from '../../../../../../../shared/services';
 
 describe('AttendanceUpcomingComponent', () => {
   let component: AttendanceUpcomingComponent;
@@ -15,7 +16,7 @@ describe('AttendanceUpcomingComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [HttpClientModule, EventsModule, RouterTestingModule],
-        providers: [CPSession]
+        providers: [CPSession, CPTrackingService]
       })
         .compileComponents()
         .then(() => {

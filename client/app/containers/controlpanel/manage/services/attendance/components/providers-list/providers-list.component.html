@@ -50,7 +50,10 @@
               <div class="row">
                 <div
                   class="col-3 text-truncate">
-                  <a [routerLink]="['provider/' + provider.id]">
+                  <a
+                    cpTracker
+                    [eventData]="eventData"
+                    [routerLink]="['provider/' + provider.id]">
                     <span>
                       <strong>{{ provider.provider_name }}</strong>
                       <br>
@@ -73,8 +76,7 @@
                 </div>
                 <div class="col-2">
                   <a
-                    cpTracker
-                    [eventData]="trackCheckinEvent(provider.encrypted_campus_service_id)"
+                    (click)="trackCheckinEvent(provider.encrypted_campus_service_id)"
                     [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]"
                     class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary">
                     {{ 'services_label_check_in_details' | cpI18n }}

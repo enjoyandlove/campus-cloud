@@ -14,7 +14,9 @@
       </div>
     </div>
     <div class="col-3 float-right">
-      <a 
+      <a
+        cpTracker
+        [eventData]="eventData"
         routerLink="create"
         class="cpbtn cpbtn--primary float-right">
         {{ 't_personas_button_list_create' | cpI18n }}

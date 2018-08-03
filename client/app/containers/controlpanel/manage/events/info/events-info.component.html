@@ -11,6 +11,8 @@
               <div class="row event__buttons">
                 <div class="col-12" *ngIf="!utils.isPastEvent(event)">
                   <a
+                    cpTracker
+                    [eventData]="eventData"
                     [routerLink]="['../edit']"
                     class="cpbtn cpbtn--primary" i18n>
                     {{ 'edit' | cpI18n }}

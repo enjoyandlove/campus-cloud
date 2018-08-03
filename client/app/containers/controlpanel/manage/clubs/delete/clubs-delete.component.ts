@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { ClubsService } from '../clubs.service';
+import { CPTrackingService } from '../../../../../shared/services';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-clubs-delete',
@@ -18,11 +20,17 @@ export class ClubsDeleteComponent implements OnInit {
   labels;
   buttonData;
 
-  constructor(private service: ClubsService, private cpI18n: CPI18nService) {}
+  constructor(
+    private service: ClubsService,
+    private cpI18n: CPI18nService,
+    private cpTracking: CPTrackingService
+  ) {}
 
   onDelete() {
     this.service.deleteClubById(this.club.id).subscribe(
       (_) => {
+        this.trackEvent();
+
         this.deletedClub.emit(this.club.id);
 
         $('#deleteClubsModal').modal('hide');
@@ -40,6 +48,16 @@ export class ClubsDeleteComponent implements OnInit {
         );
       }
     );
+  }
+
+  trackEvent() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties()
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      eventProperties);
   }
 
   ngOnInit() {

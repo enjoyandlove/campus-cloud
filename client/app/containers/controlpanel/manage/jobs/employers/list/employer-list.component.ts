@@ -6,8 +6,10 @@ import { IEmployer } from '../employer.interface';
 import { CPSession } from '../../../../../../session';
 import { EmployerService } from '../employer.service';
 import { BaseComponent } from '../../../../../../base';
-import { CPI18nService } from '../../../../../../shared/services';
+import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
+import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
 
 export interface IState {
   employers: Array<IEmployer>;
@@ -30,6 +32,7 @@ const state = {
 })
 export class EmployerListComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   sortingLabels;
   deleteEmployer;
   selectedEmployer;
@@ -42,7 +45,8 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
-    public service: EmployerService
+    public service: EmployerService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -147,6 +151,17 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_type: amplitudeEvents.EMPLOYER
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties
+    };
+
     this.fetch();
     this.buildHeader();
 

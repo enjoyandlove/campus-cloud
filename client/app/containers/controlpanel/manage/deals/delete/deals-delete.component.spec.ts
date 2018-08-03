@@ -1,13 +1,14 @@
-import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
-import { DealsDeleteComponent } from './deals-delete.component';
-import { CPSession } from '../../../../../session';
-import { mockSchool } from '../../../../../session/mock/school';
-import { CPI18nService } from '../../../../../shared/services';
+
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
+import { CPSession } from '../../../../../session';
+import { DealsDeleteComponent } from './deals-delete.component';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 class MockDealsService {
   dummy;
@@ -29,7 +30,11 @@ describe('DealsDeleteComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [DealsModule, RouterTestingModule],
-        providers: [CPSession, CPI18nService, { provide: DealsService, useClass: MockDealsService }]
+        providers: [
+          CPSession,
+          CPI18nService,
+          CPTrackingService,
+          { provide: DealsService, useClass: MockDealsService }]
       })
         .compileComponents()
         .then(() => {

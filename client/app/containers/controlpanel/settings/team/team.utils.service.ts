@@ -324,6 +324,11 @@ export class TeamUtilsService {
       CP_PRIVILEGES_MAP.athletics
     );
 
+    const audiencePermission = this.getAudiencePermissions(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.audience
+    );
+
     return {
       service_permission: servicePermission,
       club_permission: clubPermission,
@@ -331,7 +336,8 @@ export class TeamUtilsService {
       event_permission: eventPermission,
       notify_permission: notifyPermission,
       assess_permission: assessPermission,
-      invite_permission: invitePermission
+      invite_permission: invitePermission,
+      audience_permission: audiencePermission
     };
   }
 
@@ -379,6 +385,10 @@ export class TeamUtilsService {
 
   getInviteAssessPermissions(schoolPrivileges, type) {
     return schoolPrivileges[type] ? amplitudeEvents.ENABLED : amplitudeEvents.DISABLED;
+  }
+
+  getAudiencePermissions(schoolPrivileges, type) {
+    return schoolPrivileges[type] ? amplitudeEvents.FULL_ACCESS : amplitudeEvents.NO_ACCESS;
   }
 
   getNotifyPermissions(schoolPrivileges) {

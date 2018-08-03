@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
-import { FORMAT } from './../../../../../shared/pipes/date/date.pipe';
+import { ManageHeaderService } from '../../utils';
+import { CPSession } from '../../../../../session';
+import { BaseComponent } from '../../../../../base';
 import { ICalendar } from './../calendars.interface';
 import { CalendarsService } from './../calendars.services';
-import { BaseComponent } from '../../../../../base';
+import { FORMAT } from './../../../../../shared/pipes/date/date.pipe';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
-import { ManageHeaderService } from '../../utils';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-calendars-list',
@@ -18,6 +20,7 @@ import { ManageHeaderService } from '../../utils';
 })
 export class CalendarsListComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   sortingLabels;
   selectedCalendar = null;
   launchEditModal = false;
@@ -37,6 +40,7 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
     public service: CalendarsService,
+    public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService
   ) {
     super();
@@ -145,6 +149,12 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),
       created: this.cpI18n.translate('created')
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
   }
 }

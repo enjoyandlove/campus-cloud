@@ -2,12 +2,14 @@ import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of as observableOf } from 'rxjs';
+
 import { CPSession } from './../../../../../session';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { OrientationProgramDeleteComponent } from './orientation-program-delete.component';
-import { mockSchool } from '../../../../../session/mock/school';
 import { OrientationModule } from '../orientation.module';
 import { OrientationService } from '../orientation.services';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPTrackingService } from '../../../../../shared/services';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { OrientationProgramDeleteComponent } from './orientation-program-delete.component';
 
 class MockOrientationService {
   dummy;
@@ -32,6 +34,7 @@ describe('OrientationProgramDeleteComponent', () => {
         providers: [
           CPSession,
           CPI18nService,
+          CPTrackingService,
           { provide: OrientationService, useClass: MockOrientationService }
         ]
       })

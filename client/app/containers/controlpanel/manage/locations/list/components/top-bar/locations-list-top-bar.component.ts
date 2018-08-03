@@ -13,30 +13,19 @@ export class LocationsListTopBarComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() launchModal: EventEmitter<null> = new EventEmitter();
 
-  amplitudeEvents;
+  eventData;
 
   constructor(private cpTracking: CPTrackingService) {}
-
-  trackEvent(eventName) {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      create_page_name: amplitudeEvents.CREATE_LOCATION
-    };
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
-      eventProperties
-    };
-  }
 
   onSearch(query) {
     this.search.emit(query);
   }
 
   ngOnInit() {
-    this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
   }
 }

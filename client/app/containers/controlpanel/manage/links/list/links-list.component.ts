@@ -1,10 +1,13 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { CPSession } from './../../../../../session/index';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CPI18nService } from '../../../../../shared/services/index';
+
 import { ILink } from '../link.interface';
 import { LinksService } from '../links.service';
+import { CPSession } from './../../../../../session';
+import { BaseComponent } from '../../../../../base/base.component';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 interface IState {
   links: Array<ILink>;
@@ -28,6 +31,7 @@ const state: IState = {
 export class LinksListComponent extends BaseComponent implements OnInit {
   pageNext;
   pagePrev;
+  eventData;
   pageNumber;
   isLinksEdit;
   sortingLabels;
@@ -42,7 +46,8 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     public cpI18n: CPI18nService,
-    private service: LinksService
+    private service: LinksService,
+    public cpTracking: CPTrackingService
   ) {
     super();
 
@@ -136,6 +141,12 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
+
     this.sortingLabels = {
       name: this.cpI18n.translate('name')
     };

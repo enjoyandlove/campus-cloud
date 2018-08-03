@@ -17,7 +17,7 @@ export class AudienceListActionBoxComponent implements OnInit {
   @Output() launchImportModal: EventEmitter<null> = new EventEmitter();
 
   listTypes;
-  amplitudeEvents;
+  eventData;
 
   constructor(public cpI18n: CPI18nService, public cpTracking: CPTrackingService) {}
 
@@ -25,22 +25,11 @@ export class AudienceListActionBoxComponent implements OnInit {
     this.filterBy.emit(selected.action);
   }
 
-  trackEvent(eventName) {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      create_page_name: amplitudeEvents.CREATE_LIST
-    };
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
-      eventProperties
-    };
-  }
-
   ngOnInit() {
-    this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
 
     this.listTypes = [

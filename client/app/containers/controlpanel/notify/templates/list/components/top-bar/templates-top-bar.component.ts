@@ -13,26 +13,15 @@ export class TemplatesTopBarComponent implements OnInit {
   @Output() create: EventEmitter<null> = new EventEmitter();
   @Output() query: EventEmitter<string> = new EventEmitter();
 
-  amplitudeEvents;
+  eventData;
 
   constructor(public cpTracking: CPTrackingService) {}
 
-  trackEvent(eventName) {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      create_page_name: amplitudeEvents.CREATE_TEMPLATE
-    };
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
-      eventProperties
-    };
-  }
-
   ngOnInit() {
-    this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
   }
 }

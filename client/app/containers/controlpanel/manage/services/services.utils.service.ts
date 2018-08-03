@@ -33,13 +33,4 @@ export class ServicesUtilsService {
       assessment: this.getAssessmentStatus(data.service_attendance)
     };
   }
-
-  setServiceProviderEventProperties(data) {
-    return {
-      visits: this.hasData(data.total_visits),
-      ratings: this.hasData(data.num_ratings),
-      service_id: data.campus_service_id,
-      service_provider_id: data.id
-    };
-  }
 }

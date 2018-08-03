@@ -4,6 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import {
+  CPI18nService,
+  CPTrackingService,
+  FileUploadService,
+  RouteLevel
+} from '../../../../../shared/services';
+
 import { switchMap } from 'rxjs/operators';
 import { ClubStatus } from '../club.status';
 import { API } from '../../../../../config/api';
@@ -12,9 +19,10 @@ import { CPSession } from '../../../../../session';
 import { ClubsUtilsService } from '../clubs.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { appStorage } from './../../../../../shared/utils/storage/storage';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
-import { CPI18nService, FileUploadService } from '../../../../../shared/services';
 import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 
 @Component({
@@ -28,6 +36,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   club;
   labels;
   loading;
+  eventData;
   clubStatus;
   buttonText;
   clubId: number;
@@ -45,7 +54,8 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     public store: Store<ISnackbar>,
     public clubsService: ClubsService,
     public helper: ClubsUtilsService,
-    public fileService: FileUploadService
+    public fileService: FileUploadService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     this.clubId = this.route.parent.snapshot.params['clubId'];
@@ -162,6 +172,8 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
     links.forEach((link) => {
       menu.children.push({
+        amplitude: link,
+        isSubMenuItem: true,
         label: link.toLocaleLowerCase(),
         url: `/manage/` + this.labels.club_athletic + `/${this.clubId}/${link.toLocaleLowerCase()}`
       });
@@ -171,6 +183,17 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
+      eventProperties
+    };
+
     this.buttonText = this.cpI18n.translate('reupload');
     this.limitedAdmin =
       this.isAthletic === isClubAthletic.club

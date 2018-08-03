@@ -2,12 +2,14 @@ import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of as observableOf } from 'rxjs';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { OrientationTodosDeleteComponent } from './orientation-todos-delete.component';
-import { CPSession } from '../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
+
 import { TodosModule } from '../todos.module';
 import { TodosService } from '../todos.service';
+import { CPSession } from '../../../../../../session';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { CPTrackingService } from '../../../../../../shared/services';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { OrientationTodosDeleteComponent } from './orientation-todos-delete.component';
 
 class MockTodosService {
   dummy;
@@ -29,7 +31,11 @@ describe('OrientationTodosDeleteComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [TodosModule, RouterTestingModule],
-        providers: [CPSession, CPI18nService, { provide: TodosService, useClass: MockTodosService }]
+        providers: [
+          CPSession,
+          CPI18nService,
+          CPTrackingService,
+          { provide: TodosService, useClass: MockTodosService }]
       })
         .compileComponents()
         .then(() => {

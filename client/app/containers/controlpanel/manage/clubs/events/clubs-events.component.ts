@@ -80,6 +80,8 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
 
     links.forEach((link) => {
       menu.children.push({
+        amplitude: link,
+        isSubMenuItem: true,
         label: link.toLocaleLowerCase(),
         url: `/manage/` + this.labels.club_athletic + `/${this.clubId}/${link.toLocaleLowerCase()}`
       });

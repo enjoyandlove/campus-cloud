@@ -1,15 +1,17 @@
-import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { EmployerListComponent } from './employer-list.component';
+
+import { EmployerModule } from '../employer.module';
 import { reducers } from '../../../../../../reducers';
 import { CPSession } from '../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { EmployerModule } from '../employer.module';
 import { EmployerService } from '../employer.service';
+import { EmployerListComponent } from './employer-list.component';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { CPTrackingService } from '../../../../../../shared/services';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 class MockEmployerService {
   dummy;
@@ -51,6 +53,7 @@ describe('EmployersListComponent', () => {
         providers: [
           CPSession,
           CPI18nService,
+          CPTrackingService,
           { provide: EmployerService, useClass: MockEmployerService }
         ]
       })

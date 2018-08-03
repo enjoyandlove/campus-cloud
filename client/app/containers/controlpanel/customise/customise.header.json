@@ -4,11 +4,13 @@
   "em": null,
   "children": [
     {
+      "amplitude": "Banner",
       "label": "customise_banner",
       "url": "/customize/banner"
     },
     {
       "hiddenInProd": true,
+      "amplitude": "Studio",
       "label": "t_customise_personas",
       "url": "/customize/personas"
     }

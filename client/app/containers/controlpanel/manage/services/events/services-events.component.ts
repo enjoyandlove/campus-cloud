@@ -16,6 +16,7 @@ import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import { EventsComponent } from '../../events/list/base/events.component';
 import { CPI18nService } from '../../../../../shared/services/index';
 import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-services-events',
@@ -57,6 +58,8 @@ export class ServicesEventsComponent extends EventsComponent {
     let children = [
       {
         label: 'info',
+        isSubMenuItem: true,
+        amplitude: amplitudeEvents.INFO,
         url: `/manage/services/${this.serviceId}/info`
       }
     ];
@@ -71,6 +74,8 @@ export class ServicesEventsComponent extends EventsComponent {
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
         label: 'events',
+        isSubMenuItem: true,
+        amplitude: amplitudeEvents.EVENTS,
         url: `/manage/services/${this.serviceId}/events`
       };
 
@@ -80,6 +85,8 @@ export class ServicesEventsComponent extends EventsComponent {
     if (this.service.service_attendance) {
       const attendance = {
         label: 'assessment',
+        isSubMenuItem: true,
+        amplitude: amplitudeEvents.ASSESSMENT,
         url: `/manage/services/${this.serviceId}`
       };
 

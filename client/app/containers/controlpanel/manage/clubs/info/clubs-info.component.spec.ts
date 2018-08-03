@@ -9,6 +9,7 @@ import { CPSession } from './../../../../../session';
 import { ClubsInfoComponent } from './clubs-info.component';
 import { ClubsUtilsService } from './../clubs.utils.service';
 import { ClubsDetailsModule } from './../details/details.module';
+import { CPTrackingService } from '../../../../../shared/services';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
@@ -73,6 +74,7 @@ describe('ClubsInfoComponent', () => {
       providers: [
         CPI18nService,
         ClubsUtilsService,
+        CPTrackingService,
         {
           provide: ActivatedRoute,
           useValue: {

@@ -7,9 +7,11 @@ import { JobsService } from '../jobs.service';
 import { ManageHeaderService } from '../../utils';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
-import { CPI18nService } from '../../../../../shared/services';
 import { FORMAT } from '../../../../../shared/pipes/date/date.pipe';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 export interface IState {
   jobs: Array<IJob>;
@@ -34,6 +36,7 @@ const state = {
 })
 export class JobsListComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   deleteJob;
   sortingLabels;
   state: IState = state;
@@ -45,6 +48,7 @@ export class JobsListComponent extends BaseComponent implements OnInit {
     public service: JobsService,
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
+    public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService
   ) {
     super();
@@ -130,6 +134,12 @@ export class JobsListComponent extends BaseComponent implements OnInit {
       name: this.cpI18n.translate('name'),
       employer_name: this.cpI18n.translate('employer_name'),
       posting_start: this.cpI18n.translate('jobs_posting_start')
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
   }
 }

@@ -1,15 +1,18 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { switchMap } from 'rxjs/operators';
-import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
-import { FORMAT } from './../../../../../shared/pipes/date/date.pipe';
+import { Store } from '@ngrx/store';
+
+import { CPSession } from '../../../../../session';
+import { BaseComponent } from '../../../../../base';
 import { ICalendar } from './../calendars.interface';
 import { CalendarsService } from './../calendars.services';
-import { BaseComponent } from '../../../../../base';
-import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
+import { FORMAT } from './../../../../../shared/pipes/date/date.pipe';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-calendars-details',
@@ -18,6 +21,7 @@ import { CPI18nService } from '../../../../../shared/services';
 })
 export class CalendarsDetailComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   sortingLabels;
   calendarId: number;
   calendar: ICalendar;
@@ -37,7 +41,8 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
     public route: ActivatedRoute,
-    public service: CalendarsService
+    public service: CalendarsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -137,6 +142,17 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.CALENDAR_EVENTS
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties
+    };
+
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),
       start_date: this.cpI18n.translate('start_date')

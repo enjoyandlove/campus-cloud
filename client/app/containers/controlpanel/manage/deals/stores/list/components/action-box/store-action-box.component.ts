@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 import { CPTrackingService } from '../../../../../../../../shared/services';
 import { amplitudeEvents } from '../../../../../../../../shared/constants/analytics';
@@ -9,17 +9,13 @@ import { CP_TRACK_TO } from '../../../../../../../../shared/directives/tracking'
   templateUrl: './store-action-box.component.html',
   styleUrls: ['./store-action-box.component.scss']
 })
-export class StoreActionBoxComponent {
+export class StoreActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() launchCreateModal: EventEmitter<null> = new EventEmitter();
 
-  amplitudeEvents;
+  eventData;
 
-  constructor(public cpTracking: CPTrackingService) {
-    this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
-    };
-  }
+  constructor(public cpTracking: CPTrackingService) {}
 
   onSearch(query) {
     this.search.emit(query);
@@ -29,15 +25,15 @@ export class StoreActionBoxComponent {
     this.launchCreateModal.emit();
   }
 
-  trackEvent(eventName) {
+  ngOnInit() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
-      create_page_name: amplitudeEvents.CREATE_STORE
+      page_type: amplitudeEvents.STORE
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
+      eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
       eventProperties
     };
   }

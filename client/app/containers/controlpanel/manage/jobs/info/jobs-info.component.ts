@@ -10,6 +10,9 @@ import { BaseComponent } from '../../../../../base';
 import { JobsUtilsService } from '../jobs.utils.service';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPTrackingService, RouteLevel } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-jobs-info',
@@ -20,6 +23,7 @@ export class JobsInfoComponent extends BaseComponent implements OnInit {
   jobId;
   loading;
   jobType;
+  eventData;
   job: IJob;
   dateFormat;
   desiredYear;
@@ -29,7 +33,8 @@ export class JobsInfoComponent extends BaseComponent implements OnInit {
     public service: JobsService,
     public route: ActivatedRoute,
     public store: Store<IHeader>,
-    public utils: JobsUtilsService
+    public utils: JobsUtilsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     this.dateFormat = FORMAT.SHORT;
@@ -86,6 +91,17 @@ export class JobsInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
+      eventProperties
+    };
+
     this.fetch();
     this.buildHeader();
   }

@@ -9,13 +9,15 @@ import {
   canSchoolReadResource,
   canStoreReadAndWriteResource
 } from './../../../../../shared/utils/privileges';
-import { BaseComponent } from '../../../../../base/base.component';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { CPSession, ISchool } from '../../../../../session';
-import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { AdminService } from '../../../../../shared/services';
 import { ServicesService } from '../services.service';
+import { CPSession, ISchool } from '../../../../../session';
+import { BaseComponent } from '../../../../../base/base.component';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { AdminService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
+import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
   selector: 'cp-services-info',
@@ -28,6 +30,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   admins;
   service;
   storeId;
+  eventData;
   loading = true;
   school: ISchool;
   serviceId: number;
@@ -41,6 +44,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private adminService: AdminService,
+    private cpTracking: CPTrackingService,
     private serviceService: ServicesService
   ) {
     super();
@@ -103,6 +107,8 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     let children = [
       {
         label: 'info',
+        isSubMenuItem: true,
+        amplitude: amplitudeEvents.INFO,
         url: `/manage/services/${this.serviceId}/info`
       }
     ];
@@ -116,6 +122,8 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     if (eventsSchoolLevel || eventsAccountLevel) {
       const events = {
         label: 'events',
+        isSubMenuItem: true,
+        amplitude: amplitudeEvents.EVENTS,
         url: `/manage/services/${this.serviceId}/events`
       };
 
@@ -125,6 +133,8 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     if (this.service.service_attendance) {
       const attendance = {
         label: 'assessment',
+        isSubMenuItem: true,
+        amplitude: amplitudeEvents.ASSESSMENT,
         url: `/manage/services/${this.serviceId}`
       };
 
@@ -145,5 +155,16 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
+      eventProperties
+    };
+  }
 }

@@ -50,6 +50,8 @@
 
               <strong>
                 <a
+                  cpTracker
+                  [eventData]="eventData"
                   queryParamsHandling="merge"
                   [routerLink]="[club.id + '/info']">
                   {{ club.name }}

@@ -2,12 +2,14 @@ import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of as observableOf } from 'rxjs';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { StoreDeleteComponent } from './store-delete.component';
-import { CPSession } from '../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
+
 import { StoreModule } from '../store.module';
 import { DealsStoreService } from '../store.service';
+import { CPSession } from '../../../../../../session';
+import { StoreDeleteComponent } from './store-delete.component';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { CPTrackingService } from '../../../../../../shared/services';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 class MockService {
   dummy;
@@ -28,7 +30,11 @@ describe('DealsStoreDeleteComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [StoreModule, RouterTestingModule],
-        providers: [CPSession, CPI18nService, { provide: DealsStoreService, useClass: MockService }]
+        providers: [
+          CPSession,
+          CPI18nService,
+          CPTrackingService,
+          { provide: DealsStoreService, useClass: MockService }]
       })
         .compileComponents()
         .then(() => {

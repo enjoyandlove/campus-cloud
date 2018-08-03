@@ -9,10 +9,10 @@ import { EventAttendance } from '../../../event.status';
 import { FORMAT } from '../../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../../session/index';
 import { EventUtilService } from '../../../events.utils.service';
-import { CPI18nService } from '../../../../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../../../shared/services';
 
 interface ISort {
   sort_field: string;
@@ -42,6 +42,7 @@ export class ListUpcomingComponent implements OnInit {
 
   sort: ISort = sort;
   canDelete;
+  eventData;
   sortingLabels;
   eventCheckinRoute;
   dateFormat = FORMAT.SHORT;
@@ -50,11 +51,13 @@ export class ListUpcomingComponent implements OnInit {
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private utils: EventUtilService
+    private utils: EventUtilService,
+    private cpTracking: CPTrackingService
   ) {}
 
   onDelete(event) {
     this.deleteEvent.emit(event);
+    this.trackDeleteEvent();
   }
 
   doSort(sort_field) {
@@ -65,7 +68,21 @@ export class ListUpcomingComponent implements OnInit {
     this.sortList.emit(this.sort);
   }
 
-  trackEvent(event_id) {
+  trackDeleteEvent() {
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.setEventProperties());
+  }
+
+  setEventProperties() {
+    return {
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth),
+      page_type: amplitudeEvents.UPCOMING_EVENT
+    };
+  }
+
+  trackCheckinEvent(event_id) {
     const source_page = this.utils.getCheckinSourcePage(
       this.isAthletic,
       this.isService,
@@ -78,14 +95,18 @@ export class ListUpcomingComponent implements OnInit {
       source_page
     };
 
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
-      eventProperties
-    };
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CLICKED_CHECKIN,
+      eventProperties);
   }
 
   ngOnInit() {
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.setEventProperties()
+    };
+
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
     const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
     const accountAccess = canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.events);

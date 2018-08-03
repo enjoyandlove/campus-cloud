@@ -49,7 +49,10 @@
                 *ngIf="deal.image_url"
                 [src]="deal.image_url"
                 class="rounded img-fit-cover">
-              <a [routerLink]="[deal.id+'/info']">
+              <a
+                cpTracker
+                [eventData]="eventData"
+                [routerLink]="[deal.id+'/info']">
                 <strong>
                   {{ deal.title }}
                 </strong>
