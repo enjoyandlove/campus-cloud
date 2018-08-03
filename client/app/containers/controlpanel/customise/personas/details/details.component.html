@@ -20,7 +20,8 @@
             [hideName]="true"
             [noControls]="true"
             [addSection]="false"
-            [personaId]="personaId">
+            [personaId]="personaId"
+            [guideNames]="guideNames">
           </cp-personas-section>
         </div>
       </div>
@@ -38,7 +39,8 @@
             [hideName]="true"
             [noControls]="true"
             [addSection]="false"
-            [personaId]="personaId">
+            [personaId]="personaId"
+            [guideNames]="guideNames">
           </cp-personas-section>
         </div>
       </div>
@@ -51,6 +53,7 @@
             [guide]="guide"
             [first]="first"
             [personaId]="personaId"
+            [guideNames]="guideNames"
             (deleted)="onDeletedSection($event)"
             (swap)="onSwapSection($event, guide)"
             (removeSection)="onRemoveSection($event)"

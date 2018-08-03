@@ -56,7 +56,7 @@ export class TilesUtilsService {
       ? { ...tileToEdit }
       : {
           name: null,
-          rank: guide._featureTile || guide._categoryZero ? TileCategoryRank.hidden : lastRank,
+          rank: guide._featureTile ? TileCategoryRank.hidden : lastRank,
           img_url: null,
           color: 'FFFFFF',
           extra_info: null,

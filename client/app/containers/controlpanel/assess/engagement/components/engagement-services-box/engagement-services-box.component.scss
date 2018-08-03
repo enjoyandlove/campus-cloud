@@ -1,8 +1,4 @@
-@import '~styles/core/colors';
-@import '~styles/components/card';
 @import '~styles/core/typography';
-
-$margin-top: 30px;
 
 .feedback-padding {
   padding-left: 23px;
@@ -30,96 +26,5 @@ $margin-top: 30px;
   &--heading {
     @include font-24px();
     @include font-bold();
-  }
-
-  &--stats {
-    margin-top: $margin-top;
-
-    &--stat {
-      margin-bottom: $margin-top;
-    }
-
-    &--data {
-      padding-left: 6px;
-
-      p {
-        font-size: 0.8em;
-
-        &.stat {
-          @include font-24px();
-
-          line-height: 1;
-          margin-bottom: 3px;
-        }
-      }
-    }
-  }
-
-  &--not_found {
-    margin-top: 150px;
-
-    &--title {
-      @include font-16px();
-      @include font-semi-bold();
-    }
-  }
-
-  &--ranking {
-    // margin-top: $margin-top;
-    padding-top: $margin-top;
-    border-top: 1px solid $border-color;
-
-    &--sorting {
-      p {
-        line-height: 1;
-        margin-bottom: 0;
-        margin-top: 10px;
-      }
-    }
-
-    &--table {
-      margin-top: $margin-top;
-    }
-  }
-
-  &--table {
-    margin-top: $margin-top;
-
-    p {
-      margin-bottom: 0;
-    }
-
-    &--header {
-      padding: 16px 0;
-      p {
-        color: $color-secondary-text;
-      }
-    }
-
-    &--item {
-      padding: 15px 0;
-      border-top: 1px solid $border-color;
-
-      p {
-        top: 12px;
-        position: relative;
-      }
-
-      p.ranking {
-        color: $color-secondary-text;
-      }
-
-      img.service-avatar {
-        float: left;
-        width: 38px;
-        height: 38px;
-        margin-top: 5px;
-        margin-right: 10px;
-      }
-
-      &.isLast {
-        padding-bottom: 0;
-      }
-    }
   }
 }

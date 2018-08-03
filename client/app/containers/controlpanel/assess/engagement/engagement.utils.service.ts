@@ -9,7 +9,7 @@ import {
 } from '../../../../shared/components/cp-range-picker/cp-range-picker.utils.service';
 
 import { CPSession } from '../../../../session';
-import { AssessType } from './engagement.status';
+import { AssessType, FilterType } from './engagement.status';
 import { CPI18nService } from '../../../../shared/services';
 
 @Injectable()
@@ -194,6 +194,15 @@ export class EngagementUtilsService {
           value: AssessType.Events,
           queryParam: 'scope'
         }
+      },
+      {
+        route_id: 'all_orientations',
+        label: this.cpI18n.translate('t_assess_all_orientations'),
+        data: {
+          type: 'orientations',
+          value: AssessType.Orientation,
+          queryParam: 'scope'
+        }
       }
     ];
   }
@@ -204,6 +213,23 @@ export class EngagementUtilsService {
         route_id: 'all_students',
         label: this.cpI18n.translate('assess_all_students'),
         listId: null
+      }
+    ];
+  }
+
+  resourceSortingFilter() {
+    return [
+      {
+        label: this.cpI18n.translate('attendees'),
+        action: FilterType.attendees
+      },
+      {
+        label: this.cpI18n.translate('feedback'),
+        action: FilterType.feedback
+      },
+      {
+        label: this.cpI18n.translate('rating'),
+        action: FilterType.rating
       }
     ];
   }

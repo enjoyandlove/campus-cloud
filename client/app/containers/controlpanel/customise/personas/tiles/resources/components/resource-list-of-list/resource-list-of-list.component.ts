@@ -107,6 +107,7 @@ export class PersonasResourceListOfListComponent implements OnInit {
       (resources) => {
         this.state = {
           ...this.state,
+          loading: false,
           resources: [...resources]
         };
       },

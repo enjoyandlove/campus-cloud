@@ -4,6 +4,7 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
 const ALL_ENGAGEMENTS = 0;
 const SERVICES_ENGAGEMENTS = 1;
 const EVENTS_ENGAGEMENTS = 2;
+const ORIENTATION_ENGAGEMENTS = 3;
 
 @Component({
   selector: 'cp-profile-top-bar',
@@ -31,6 +32,10 @@ export class StudentsProfileTopBarComponent implements OnInit {
       {
         label: this.cpI18n.translate('assess_all_services'),
         action: SERVICES_ENGAGEMENTS
+      },
+      {
+        label: this.cpI18n.translate('t_assess_all_orientations'),
+        action: ORIENTATION_ENGAGEMENTS
       }
     ];
   }

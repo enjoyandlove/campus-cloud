@@ -62,4 +62,58 @@ export class DashboardUtilsService {
       label: cpI18n.translate('dashboard_all_time')
     };
   }
+
+  parseOrientationResponse(items: Array<any>) {
+    return new Promise((resolve) => {
+      resolve(
+        items.map((item) => {
+          return {
+            image: '',
+            id: item.calendar_id,
+            name: item.calendar_name,
+            feedback: item.num_of_feedbacks,
+            attendees: item.num_of_attendees,
+            rating: item.average_of_feedbacks,
+            resourceUrl: `/manage/orientation/${item.calendar_id}/events`
+          };
+        })
+      );
+    });
+  }
+
+  parseEventsResponse(items: Array<any>) {
+    return new Promise((resolve) => {
+      resolve(
+        items.map((item) => {
+          return {
+            id: item.event_id,
+            name: item.event_title,
+            image: item.event_poster_thumb_url,
+            attendees: item.num_of_attendees,
+            feedback: item.num_of_feedbacks,
+            rating: item.average_of_feedbacks,
+            resourceUrl: `/manage/events/${item.event_id}`
+          };
+        })
+      );
+    });
+  }
+
+  parseServicesResponse(items: Array<any>) {
+    return new Promise((resolve) => {
+      resolve(
+        items.map((item) => {
+          return {
+            id: item.campus_service_id,
+            name: item.service_name,
+            image: item.service_logo_url,
+            attendees: item.num_of_attendees,
+            feedback: item.num_of_feedbacks,
+            rating: item.average_of_feedbacks,
+            resourceUrl: `/manage/services/${item.campus_service_id}`
+          };
+        })
+      );
+    });
+  }
 }

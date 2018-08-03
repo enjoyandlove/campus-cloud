@@ -21,7 +21,7 @@
           <p>{{ 'rating' | cpI18n }}</p>
         </div>
       </div>
-      <div class="row" *ngFor="let item of items; index as index last as last">
+      <div class="row" *ngFor="let item of items; index as index; last as last">
         <div class="col-12">
           <div class="dashboard-table--item" [class.isLast]="last">
             <div class="row">
@@ -32,12 +32,10 @@
                 <img
                   class="avatar rounded"
                   [src]="item.image === '' ? defaultImage : item.image">
-                <ng-container *ngIf="!isSuperAdmin">
-                  <p class="title text-truncate">{{ item.name }}</p>
-                </ng-container>
-                <ng-container *ngIf="isSuperAdmin">
-                  <p class="title text-truncate hover" (click)="router.navigate(['/manage/' + resource + '/' + item.id])">{{ item.name }}</p>
-                </ng-container>
+                <cp-dashboard-top-resource-title
+                  [item]="item"
+                  [canNavigate]="canNavigate">
+                </cp-dashboard-top-resource-title>
               </div>
               <div class="col-2 no-left-padding">
                 <p class="semi-bold">{{ item.attendees }}</p>

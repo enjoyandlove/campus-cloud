@@ -1,0 +1,31 @@
+@import '~styles/core/typography';
+
+.feedback-padding {
+  padding-left: 23px;
+}
+
+.orientation {
+  margin-top: 15px;
+  min-height: 803px;
+
+  &--no-data-wrapper {
+    margin-top: 300px;
+
+    p {
+      line-height: 1;
+      margin-bottom: 0;
+    }
+
+    p.heading {
+      @include font-24px();
+      @include font-semi-bold();
+
+      margin-bottom: 12px;
+    }
+  }
+
+  &--heading {
+    @include font-24px();
+    @include font-bold();
+  }
+}

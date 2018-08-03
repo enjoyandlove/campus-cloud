@@ -120,4 +120,10 @@ export class DashboardService extends HTTPService {
       })
     );
   }
+
+  getTopOrientation(search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ORIENTATION_EVENT}/`;
+
+    return super.get(url, search);
+  }
 }

@@ -30,6 +30,7 @@ interface IState {
 export class PersonasDetailsComponent extends BaseComponent implements OnInit {
   loading;
   personaId;
+  guideNames;
 
   state: IState = {
     working: false,
@@ -214,7 +215,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     const tilesSearch = schoolIdSearch.append('school_persona_id', this.personaId);
 
     const tilesByPersona$ = this.service.getTilesByPersona(tilesSearch);
-    const tileCategories$ = this.service.getTilesCategories(schoolIdSearch);
+    const tileCategories$ = this.service
+      .getTilesCategories(schoolIdSearch)
+      .pipe(map((categories) => categories.filter((c) => c.id !== 0)));
     const tilesByPersonaZero$ = this.service.getTilesByPersona(schoolIdSearch);
     const persona$ = this.service.getPersonaById(this.personaId, schoolIdSearch);
 
@@ -248,6 +251,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         const temporaryTile = [this.sectionUtils.temporaryGuide(100)];
 
         const guides = filteredTiles.length ? filteredTiles : temporaryTile;
+
+        this.guideNames = ['featured', 'category_zero', ...guides.map((g: ICampusGuide) => g.name)];
 
         this.state = {
           ...this.state,

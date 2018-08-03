@@ -1,4 +1,4 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -28,6 +28,7 @@ export class PersonasSectionComponent implements OnInit {
   @Input() addSection = true;
   @Input() noControls = false;
   @Input() guide: ICampusGuide;
+  @Input() guideNames: String[];
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
   @Output() deleted: EventEmitter<ICampusGuide> = new EventEmitter();
@@ -36,11 +37,18 @@ export class PersonasSectionComponent implements OnInit {
 
   state = {
     working: false,
-    sorting: false
+    sorting: false,
+    deletingTile: false,
+    disableDragging: false,
+    tileDeleteModal: false,
+    sectionDeleteModal: false
   };
 
   lastRank;
   sortableOptions;
+  selectedTile: ITile;
+  tileDeleteModalId = 'tileDeleteModal';
+  sectionDeleteModalId = 'sectionDeleteModal';
 
   constructor(
     public router: Router,
@@ -115,7 +123,7 @@ export class PersonasSectionComponent implements OnInit {
     };
   }
 
-  errorHandler(err) {
+  errorHandler(err: HttpErrorResponse) {
     let snackBarClass = 'danger';
     let body = _get(err, ['error', 'response'], this.cpI18n.translate('something_went_wrong'));
 
@@ -173,34 +181,73 @@ export class PersonasSectionComponent implements OnInit {
     );
   }
 
-  onDeleteSection() {
-    this.setWorkingState(true);
-    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
+  onSectionDeleteTeardown() {
+    this.selectedTile = null;
 
-    if (this.utils.isTemporaryGuide(this.guide)) {
-      this.deleted.emit(this.guide);
+    this.state = {
+      ...this.state,
+      disableDragging: false,
+      sectionDeleteModal: false
+    };
 
-      return;
-    }
+    $(`#${this.sectionDeleteModalId}`).modal('hide');
+  }
 
-    this.service.deleteSectionTileCategory(this.guide.id, search).subscribe(
+  onDeleteSectionClick() {
+    this.state = {
+      ...this.state,
+      disableDragging: true,
+      sectionDeleteModal: true
+    };
+
+    setTimeout(
       () => {
-        this.deleted.emit(this.guide);
-        this.setWorkingState(false);
+        $(`#${this.sectionDeleteModalId}`).modal();
       },
-      (err) => this.errorHandler(err)
+
+      1
     );
   }
 
-  onDeletedTile(tileId: number) {
+  onTileDeleteTeardown() {
+    this.selectedTile = null;
+
+    this.state = {
+      ...this.state,
+      tileDeleteModal: false,
+      disableDragging: false
+    };
+
+    $(`#${this.tileDeleteModalId}`).modal('hide');
+  }
+
+  onTileDeleted(tileId: number) {
     this.guide = {
       ...this.guide,
-      tiles: this.guide.tiles.filter((tile: ITile) => tile.id !== tileId)
+      tiles: this.guide.tiles.filter((t: ITile) => t.id !== tileId)
     };
 
     if (!this.guide.tiles.length) {
       this.removeSection.emit(this.guide.id);
     }
+  }
+
+  onDeleteTileClick(tileId: ITile) {
+    this.selectedTile = tileId;
+
+    this.state = {
+      ...this.state,
+      tileDeleteModal: true,
+      disableDragging: true
+    };
+
+    setTimeout(
+      () => {
+        $(`#${this.tileDeleteModalId}`).modal();
+      },
+
+      1
+    );
   }
 
   updateRank(stream$: Observable<any>) {
@@ -216,7 +263,14 @@ export class PersonasSectionComponent implements OnInit {
     );
   }
 
-  onDragged({ oldIndex, newIndex }: any) {
+  onAdd() {
+    // const { oldIndex, newIndex } = event;
+    // console.log(oldIndex, newIndex, event);
+  }
+
+  onDragged(event) {
+    const { oldIndex, newIndex } = event;
+
     let updatedTileA;
     let updatedTileB;
     const tileA: ITile = this.utils.tileAtIndex(this.guide.tiles, oldIndex);
@@ -272,8 +326,14 @@ export class PersonasSectionComponent implements OnInit {
 
     this.sortableOptions = {
       scroll: false,
-      group: groupName,
+      disabled: this.state.disableDragging,
+      group: {
+        name: groupName,
+        put: this.guideNames,
+        pull: this.guideNames
+      },
       draggable: '.draggable',
+      onAdd: this.onAdd.bind(this),
       onUpdate: this.onDragged.bind(this)
     };
   }
