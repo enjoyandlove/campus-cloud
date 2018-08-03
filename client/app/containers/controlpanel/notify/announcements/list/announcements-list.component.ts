@@ -47,10 +47,6 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   deleteAnnouncement = null;
   dateFormat = FORMAT.DATETIME;
 
-  eventProperties = {
-    listing_type: null
-  };
-
   constructor(
     private session: CPSession,
     public store: Store<IHeader>,
@@ -120,14 +116,9 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   }
 
   trackViewMoreEvent() {
-    this.eventProperties = {
-      ...this.eventProperties,
-      listing_type: amplitudeEvents.ANNOUNCEMENT
-    };
-
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.NOTIFY_VIEWED_LISTING,
-      this.eventProperties);
+      amplitudeEvents.VIEWED_ITEM,
+      this.cpTracking.getEventProperties());
   }
 
   onDeleted(id) {

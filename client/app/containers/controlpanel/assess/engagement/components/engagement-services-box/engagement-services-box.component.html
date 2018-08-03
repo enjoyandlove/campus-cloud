@@ -2,7 +2,7 @@
   <div class="cp-card services services--no-data" *ngSwitchCase="true">
     <div class="row">
       <div class="col-12">
-        <p class="services--heading" i18n>{{ 'services' | cpI18n }}</p>
+        <p class="services--heading">{{ 'services' | cpI18n }}</p>
 
         <div class="services--no-data-wrapper text-center">
           <cp-spinner></cp-spinner>
@@ -16,7 +16,7 @@
       <div class="cp-card services services--no-data" *ngSwitchCase="true">
         <div class="row">
           <div class="col-12">
-            <p class="services--heading" i18n>{{ 'services' | cpI18n }}</p>
+            <p class="services--heading">{{ 'services' | cpI18n }}</p>
 
             <div class="services--no-data-wrapper text-center">
               <p class="heading">{{ 'assess_no_service_data' | cpI18n }}</p>
@@ -27,106 +27,15 @@
       </div>
 
       <div class="cp-card services" *ngSwitchCase="false">
-        <div class="row">
-          <div class="col-12">
-            <p class="services--heading" i18n>{{ 'services' | cpI18n }}</p>
-            <div class="services--stats">
-              <div class="row">
-                <div class="col-4 services--stats--stat" *ngFor="let stat of stats">
-                  <div class="row">
-                    <div class="col-4 services--stats--graph no-right-padding">
-                      <img [src]="[stat.icon]" alt="total services">
-                    </div>
-                    <div class="col-8 services--stats--data no-right-padding no-left-padding">
-                      <p class="stat">{{ stat.value }}</p>
-                      <p class="text-muted text-truncate" i18n>{{ stat.label }}</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="services--ranking">
-              <div class="row">
-                <div class="col-5">
-                  <p class="services--heading" i18n>{{ 'assess_top_services' | cpI18n }}</p>
-                </div>
-                <div class="services--ranking--sorting col-7">
-                  <div class="row">
-                    <div class="col-4 text-right no-right-padding">
-                      <p i18n>{{ 'assess_sort_by' | cpI18n }}</p>
-                    </div>
-                    <div class="col-8">
-                      <cp-dropdown
-                        [items]="sortyBy"
-                        [selectedItem]="sortingBy"
-                        (selected)="onSortBy($event)">
-                      </cp-dropdown>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <ng-container [ngSwitch]="isSorting">
-                <cp-spinner *ngSwitchCase="true"></cp-spinner>
-
-                <div class="row services--table" *ngSwitchCase="false">
-                  <ng-container *ngIf="!servicesRanking.length">
-                    <div class="col-12 text-center services--not_found">
-                      <p class="services--not_found--title" i18n>{{ 'zero_quantity' | cpI18n }} {{ sortingBy.label }}</p>
-                    </div>
-                  </ng-container>
-                  <ng-container *ngIf="servicesRanking.length">
-                      <div class="col-12">
-                        <div class="row services--table--header">
-                          <div class="col-1">
-                            <p>#</p>
-                          </div>
-                          <div class="col-5 no-left-padding">
-                            <p i18n>{{ 'title' | cpI18n }}</p>
-                          </div>
-                          <div class="col-2 no-left-padding">
-                            <p i18n>{{ 'attendees' | cpI18n }}</p>
-                          </div>
-                          <div class="col-2 no-right-padding">
-                            <p i18n>{{ 'feedback' | cpI18n }}</p>
-                          </div>
-                          <div class="col-2 text-right no-left-padding">
-                            <p i18n>{{ 'rating' | cpI18n }}</p>
-                          </div>
-                        </div>
-                        <div class="row" *ngFor="let service of servicesRanking; index as index last as last">
-                          <div class="col-12">
-                            <div class="services--table--item" [class.isLast]="last">
-                              <div class="row">
-                                <div class="col-1">
-                                  <p class="ranking">{{ index + 1 }}</p>
-                                </div>
-                                <div class="col-5 no-left-padding text-truncate">
-                                  <img
-                                    class="service-avatar rounded"
-                                    [src]="service.service_logo_url === '' ? defaultImage : service.service_logo_url">
-                                  <p class="service-title text-truncate">{{ service.service_name }}</p>
-                                </div>
-                                <div class="col-2 no-left-padding">
-                                  <p>{{ service.num_of_attendees }}</p>
-                                </div>
-                                <div class="col-2 no-right-padding">
-                                  <p>{{ service.num_of_feedbacks }}</p>
-                                </div>
-                                <div class="col-2 text-right no-left-padding">
-                                  <p>{{ ((service.average_of_feedbacks / 100) * 5).toFixed(1) }}</p>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                  </ng-container>
-                </div>
-              </ng-container>
-            </div>
-          </div>
-        </div>
+        <cp-engagement-resource-stats
+          [stats]="stats"
+          [labels]="labels"
+          [loading]="loading"
+          [sortingBy]="sortingBy"
+          [isSorting]="isSorting"
+          [items]="servicesRanking"
+          (sortBy)="onSortBy($event)">
+        </cp-engagement-resource-stats>
       </div>
     </ng-container>
   </ng-container>

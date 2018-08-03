@@ -1,0 +1,11 @@
+<p
+  class="title text-truncate"
+  *ngIf="!canNavigate">
+  {{ item.name }}
+</p>
+<p
+  *ngIf="canNavigate"
+  class="title text-truncate hover"
+  (click)="router.navigate([item.resourceUrl])">
+  {{ item.name }}
+</p>

@@ -46,7 +46,7 @@
               <a
                 cpTracker
                 target="_blank"
-                [eventData]="trackCheckinEvent(provider.encrypted_campus_service_id)"
+                [eventData]="eventData"
                 class="cpbtn cpbtn--no-border cpbtn--primary"
                 [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]">
                 {{ 'services_label_check_in_details' | cpI18n }}

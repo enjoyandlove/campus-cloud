@@ -12,37 +12,32 @@
         </div>
         <ul class="nav__links float-left">
           <li
-            cpTracker
             *ngIf="manageHomePage"
-            [eventData]="trackMenu(amplitudeEvents.menu_manage)"
+            (click)="trackMenu(amplitudeEvents.menu_manage)"
             [class.active]="isManageActiveRoute">
             <a [routerLink]="['/manage/' + manageHomePage]">{{ 'manage' | cpI18n }}</a>
           </li>
           <li
-            cpTracker
             *ngIf="canNotify"
             routerLinkActive="active"
-            [eventData]="trackMenu(amplitudeEvents.menu_notify)">
+            (click)="trackMenu(amplitudeEvents.menu_notify)">
             <a [routerLink]="['/notify']">{{ 'notify' | cpI18n }}</a>
           </li>
           <li
-            cpTracker
             routerLinkActive="active"
-            [eventData]="trackMenu(amplitudeEvents.menu_assess)">
+            (click)="trackMenu(amplitudeEvents.menu_assess)">
             <a [routerLink]="[canAssess ? '/assess' : '/demo/assess']">{{ 'assess' | cpI18n }}</a>
           </li>
           <li
-            cpTracker
             *ngIf="canCustomise"
             routerLinkActive="active"
-            [eventData]="trackMenu(amplitudeEvents.menu_customize)">
+            (click)="trackMenu(amplitudeEvents.menu_customize)">
             <a [routerLink]="['/customize']">{{ 'customise' | cpI18n }}</a>
           </li>
           <li
-            cpTracker
             *ngIf="canAudience"
             routerLinkActive="active"
-            [eventData]="trackMenu(amplitudeEvents.menu_audience)">
+            (click)="trackMenu(amplitudeEvents.menu_audience)">
             <a [routerLink]="['/audience']">{{ 'audience' | cpI18n }}</a>
           </li>
         </ul>

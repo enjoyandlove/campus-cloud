@@ -35,6 +35,7 @@ const state: IState = {
 })
 export class ServicesListComponent extends BaseComponent implements OnInit {
   loading;
+  eventData;
   sortingLabels;
   deleteService = '';
   state: IState = state;
@@ -120,18 +121,16 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
     this.state = Object.assign({}, this.state, { services: _state.services });
   }
 
-  trackViewEvent() {
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties: this.cpTracking.getEventProperties()
-    };
-  }
-
   ngOnInit() {
     this.fetch();
     this.sortingLabels = {
       name: this.cpI18n.translate('name')
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
   }
 }

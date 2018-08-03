@@ -12,6 +12,7 @@ import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 export class CalendarsDetailsActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
 
+  eventData;
   amplitudeEvents;
 
   constructor(public cpTracking: CPTrackingService) {}
@@ -24,22 +25,16 @@ export class CalendarsDetailsActionBoxComponent implements OnInit {
     $('#calendarsItemsImport').modal();
   }
 
-  trackEvent(eventName) {
+  ngOnInit() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: amplitudeEvents.CALENDAR_EVENTS
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
+      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
       eventProperties
-    };
-  }
-
-  ngOnInit() {
-    this.amplitudeEvents = {
-      clicked_change: amplitudeEvents.CLICKED_CHANGE_BUTTON
     };
   }
 }

@@ -28,6 +28,7 @@ interface IState {
 export class TemplatesListComponent extends BaseComponent implements OnInit {
   loading;
   schoolId;
+  eventData;
   templateId;
   buttonText;
   headerText;
@@ -44,10 +45,6 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     templates: [],
     sort_field: 'name',
     sort_direction: 'asc'
-  };
-
-  eventProperties = {
-    listing_type: null
   };
 
   constructor(
@@ -133,7 +130,6 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
   }
 
   onViewMoreModal(recipients) {
-    this.trackViewMoreEvent();
     this.buttonText = 'done';
     this.headerText = `(${recipients.length})
       ${this.cpI18n.translate('notify_announcement_recipient')}`;
@@ -145,25 +141,6 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
       1
     );
-  }
-
-  trackViewMoreEvent() {
-    this.eventProperties = {
-      ...this.eventProperties,
-      listing_type: amplitudeEvents.TEMPLATE
-    };
-
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.NOTIFY_VIEWED_LISTING,
-      this.eventProperties);
-  }
-
-  trackViewEvent() {
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties: this.cpTracking.getEventProperties()
-    };
   }
 
   onComposed() {
@@ -253,6 +230,12 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
     this.sortingLabels = {
       name: this.cpI18n.translate('name')
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
   }
 }

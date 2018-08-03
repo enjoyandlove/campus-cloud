@@ -183,8 +183,6 @@ export const amplitudeEvents = {
 
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
 
-  NOTIFY_VIEWED_LISTING: 'Notify - Viewed Listing',
-
   MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
 
   MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
@@ -224,6 +222,8 @@ export const amplitudeEvents = {
   ASSESS_VIEWED_TOP_SERVICES: 'Assess - Viewed Top Services',
 
   MANAGE_UPDATED_CALENDAR_EVENT: 'Manage - Updated Calendar Event',
+
+  ASSESS_VIEWED_TOP_ORIENTATIONS: 'Assess - Viewed Top Orientations',
 
   MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
 

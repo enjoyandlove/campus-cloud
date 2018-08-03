@@ -26,8 +26,8 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
   @Output() filter: EventEmitter<IState> = new EventEmitter();
 
   types;
+  eventData;
   canCompose;
-  amplitudeEvents;
   state: IState = state;
 
   constructor(
@@ -46,21 +46,11 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
     this.filter.emit(this.state);
   }
 
-  trackEvent(eventName) {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties()
-    };
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
-      eventProperties
-    };
-  }
-
   ngOnInit() {
-    this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE_ITEM
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
 
     const schoolPrivilege = this.session.g.get('user').school_level_privileges[

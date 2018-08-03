@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { CP_TRACK_TO } from '../../../directives/tracking';
 import { amplitudeEvents } from '../../../constants/analytics';
 import { CPTrackingService, RouteLevel } from '../../../services';
 
@@ -31,11 +30,7 @@ export class CPHeaderLinkComponent {
       ? amplitudeEvents.CLICKED_PAGE_ITEM
       : amplitudeEvents.CLICKED_SUB_MENU;
 
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
-      eventProperties : this.setEventProperties(subMenu, isSubMenuItem)
-    };
+    this.cpTracking.amplitudeEmitEvent(eventName, this.setEventProperties(subMenu, isSubMenuItem));
   }
 
   setEventProperties(subMenu, isSubMenuItem) {

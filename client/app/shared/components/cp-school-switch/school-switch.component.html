@@ -5,10 +5,10 @@
       class="switch__item"
       *ngIf="isSchoolPanel"
       (click)="onGoToSchools($event)">
-      <i class="material-icons float-left">chevron_left</i><span i18n>Back</span>
+      <i class="material-icons float-left">chevron_left</i><span>Back</span>
     </a>
     <a href="#" *ngIf="!isSchoolPanel" (click)="onGoToSchools($event)">
-      <span i18n>{{ 'change_school' | cpI18n }}</span>
+      <span>{{ 'change_school' | cpI18n }}</span>
       <i class="material-icons float-right">chevron_right</i>
     </a>
   </li>
@@ -19,7 +19,7 @@
       class="switch__item"
       [class.isFirstItem]="schools.length === 1">
       <a
-        [routerLink]="['/settings/team/' + session.g.get('user').id + '/edit']" [queryParams]="{profile: true}" i18n>
+        [routerLink]="['/settings/team/' + session.g.get('user').id + '/edit']" [queryParams]="{profile: true}">
         {{ 'profile' | cpI18n }}
     </a>
     </li>
@@ -28,28 +28,28 @@
       class="switch__item"
       (click)="close.emit()">
       <a
-        cpTracker
         [href]="helpDeskUrl"
-        target="_blank"
-        [eventData]="helpDeskEventData">{{ 'help_desk' | cpI18n }}</a>
+        (click)="trackEvent(amplitudeEvents.visited_help_desk)"
+        target="_blank">{{ 'help_desk' | cpI18n }}</a>
     </li>
 
     <li
       class="switch__item"
       (click)="close.emit()"
       *ngIf="canManageAdmins">
-      <a [routerLink]="['/settings/team']" i18n>{{ 'team_settings' | cpI18n }}</a>
+      <a [routerLink]="['/settings/team']">{{ 'team_settings' | cpI18n }}</a>
     </li>
     <li
       class="switch__item"
       (click)="close.emit()">
-      <a [routerLink]="['/account/change-password']" i18n>{{ 'change_password' | cpI18n }}</a>
+      <a [routerLink]="['/account/change-password']">{{ 'change_password' | cpI18n }}</a>
     </li>
-    <li class="switch__item" (click)="close.emit()">
+    <li
+      class="switch__item"
+      (click)="close.emit()">
       <a
-        cpTracker
-        [routerLink]="['/logout']"
-        [eventData]="logoutEventData">{{ 'logout' | cpI18n }}</a>
+        (click)="trackEvent(amplitudeEvents.logged_out)"
+        [routerLink]="['/logout']">{{ 'logout' | cpI18n }}</a>
     </li>
   </div>
 
@@ -59,9 +59,8 @@
       class="switch__item switch__school switch__school--current">
       <a
         href="#"
-        cpTracker
         (click)="onSwitchSchool($event, school)"
-        [eventData]="changedSchoolEventData">
+        (click)="trackEvent(amplitudeEvents.changed_school)">
       <div class="row">
         <div class="col-10">
           <div

@@ -7,6 +7,7 @@ import { CPSession } from './../../../../../../session/index';
 import { AssessUtilsService } from '../../../assess.utils.service';
 import { CPTrackingService } from '../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../base/base.component';
+import { EngagementUtilsService } from '../../engagement.utils.service';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
@@ -37,6 +38,7 @@ interface IState {
 export class EngagementServicesBoxComponent extends BaseComponent implements OnInit {
   @Input() props: Observable<any>;
 
+  labels;
   filters;
   isDisable;
   isSorting;
@@ -53,7 +55,6 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
     persona_id: null
   };
   stats: Array<any>;
-  defaultImage = require('public/default/user.png');
   sortyBy: Array<{ label: string; action: number }>;
 
   constructor(
@@ -61,7 +62,8 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
     public cpI18n: CPI18nService,
     public utils: AssessUtilsService,
     public service: EngagementService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    public engagementUtils: EngagementUtilsService
   ) {
     super();
   }
@@ -69,9 +71,10 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
   onSortBy(sortBy) {
     this.isSorting = true;
     this.trackAmplitudeEvent(sortBy.label);
-    this.state = Object.assign({}, this.state, {
+    this.state = {
+      ...this.state,
       sortBy: sortTypes[sortBy.action]
-    });
+    };
 
     this.fetch();
   }
@@ -119,7 +122,7 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
         this.loading = false;
         this.isSorting = false;
 
-        this.servicesRanking = res.data.top_services;
+        this.servicesRanking = this.parseResponse(res.data.top_services);
 
         this.stats = [
           {
@@ -157,6 +160,18 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
     );
   }
 
+  parseResponse(items) {
+    return items.map((item) => {
+      return {
+        name: item.service_name,
+        image: item.service_logo_url,
+        attendees: item.num_of_attendees,
+        feedbacks: item.num_of_feedbacks,
+        avg_feedbacks: item.average_of_feedbacks
+      };
+    });
+  }
+
   updateSortingLabel() {
     Object.keys(sortTypes).map((key) => {
       if (sortTypes[key] === this.state.sortBy && this.sortyBy) {
@@ -170,38 +185,30 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
   }
 
   ngOnInit() {
-    this.props.subscribe((res) => {
-      this.filters = res;
-      this.isDisable = res.engagement.data.type === 'events';
+    this.labels = {
+      heading: this.cpI18n.translate('services'),
+      sub_heading: this.cpI18n.translate('assess_top_services')
+    };
 
-      this.state = Object.assign({}, this.state, {
+    this.sortyBy = this.engagementUtils.resourceSortingFilter();
+
+    this.props.subscribe((res) => {
+      const type = res.engagement.data.type;
+      this.filters = res;
+      this.isDisable = type === 'events' || type === 'orientations';
+
+      this.state = {
+        ...this.state,
         end: res.range.payload.range.end,
         scope: res.engagement.data,
         start: res.range.payload.range.start,
         list_id: res.for.listId,
         persona_id: res.for.personaId
-      });
+      };
 
       if (!this.isDisable) {
         this.fetch();
       }
     });
-
-    this.sortyBy = [
-      {
-        label: this.cpI18n.translate('attendees'),
-        action: 0
-      },
-      {
-        label: this.cpI18n.translate('feedback'),
-        action: 1
-      },
-      {
-        label: this.cpI18n.translate('rating'),
-        action: 2
-      }
-    ];
-
-    this.sortingBy = this.sortyBy[0];
   }
 }
