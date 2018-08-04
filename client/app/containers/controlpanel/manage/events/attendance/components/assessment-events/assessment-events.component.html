@@ -105,7 +105,9 @@
               <span> {{ attendee.check_in_time | cpDatePipe:dateFormat }} </span>
             </div>
             <div class="col-2">
-             <span> {{ utils.checkInMethods(attendee.check_in_method)}}</span>
+             <span>
+             <i class="material-icons">{{ checkInMethodType(attendee.check_in_method) }}</i>
+             </span>
             </div>
             <div class="col-3">
               <cp-stars

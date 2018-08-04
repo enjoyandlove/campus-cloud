@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
+import { CheckInMethod } from '../../../event.status';
 import { EventsService } from '../../../events.service';
 import { CPSession } from './../../../../../../../session';
 import { FORMAT } from '../../../../../../../shared/pipes';
@@ -164,6 +165,10 @@ export class AssessmentEventsComponent extends BaseComponent implements OnInit {
 
       createSpreadSheet(attendees, columns);
     });
+  }
+
+  checkInMethodType(method) {
+    return method === CheckInMethod.web ? 'computer' : 'smartphone';
   }
 
   trackAmplitudeEvent() {
