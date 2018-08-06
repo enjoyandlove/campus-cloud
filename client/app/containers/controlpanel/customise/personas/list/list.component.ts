@@ -171,12 +171,19 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const search = new HttpParams()
-      .append('school_id', this.session.g.get('school').id)
-      .append('search_str', this.state.search_str)
-      .append('platform', this.state.platform);
+    let search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    const stream$ = this.service.getPersonas(this.startRange, this.endRange, search);
+    if (this.state.search_str) {
+      search = search.append('search_str', this.state.search_str);
+    }
+
+    if (this.state.platform) {
+      search = search.append('platform', this.state.platform);
+    }
+
+    const stream$ = this.state.search_str
+      ? this.service.getPersonas(null, null, search)
+      : this.service.getPersonas(this.startRange, this.endRange, search);
 
     super.fetchData(stream$).then(({ data }) => (this.state = { ...this.state, personas: data }));
   }

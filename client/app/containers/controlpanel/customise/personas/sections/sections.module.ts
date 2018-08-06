@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SortablejsModule } from 'angular-sortablejs';
 import { SharedModule } from './../../../../../shared/shared.module';
 import { TilesService } from './../tiles/tiles.service';
+import { TilesUtilsService } from './../tiles/tiles.utils.service';
 import {
   PersonasSectionAddButtonComponent,
   PersonasSectionControlsComponent,
@@ -31,6 +32,6 @@ import { PersonasTilesModule } from '../tiles/tiles.module';
     PersonasSectionAddButtonComponent,
     PersonasSectionTitleComponent
   ],
-  providers: [SectionsService, SectionUtilsService, TilesService]
+  providers: [SectionsService, SectionUtilsService, TilesService, TilesUtilsService]
 })
 export class PersonasSectionsModule {}
