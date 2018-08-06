@@ -1,19 +1,24 @@
+import { TileCategoryRank, TileFeatureRank } from './../tiles/tiles.status';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { flatten } from 'lodash';
 import { combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
-import { ISnackbar } from './../../../../../reducers/snackbar.reducer';
+import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { IPersona } from './../persona.interface';
 import { PersonasService } from './../personas.service';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
+import { ITile } from './../tiles/tile.interface';
+import { TilesUtilsService } from './../tiles/tiles.utils.service';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
+import { TilesService } from '../tiles/tiles.service';
 
 interface IState {
   working: boolean;
@@ -45,9 +50,11 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
     public service: PersonasService,
+    public tileService: TilesService,
     public utils: PersonasUtilsService,
-    public sectionUtils: SectionUtilsService,
-    public store: Store<IHeader | ISnackbar>
+    public tileUtils: TilesUtilsService,
+    public store: Store<IHeader | ISnackbar>,
+    public sectionUtils: SectionUtilsService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -82,6 +89,185 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     };
   }
 
+  nonFeaturedTileToFeatureSection(movingTile: ITile, newCategory: ICampusGuide) {
+    const isFeatured = this.tileUtils.isFeatured(movingTile);
+
+    return !isFeatured && newCategory._featureTile;
+  }
+
+  featuredTileToNonFeatureSection(movingTile: ITile, newCategory: ICampusGuide) {
+    const isFeatured = this.tileUtils.isFeatured(movingTile);
+
+    return isFeatured && !newCategory._featureTile;
+  }
+
+  nonCategoryZeroTileToCategoryZeroSection(movingTile: ITile, newCategory: ICampusGuide) {
+    const isCategoryZero = this.tileUtils.isCategoryZero(movingTile);
+
+    return !isCategoryZero && newCategory._categoryZero;
+  }
+
+  categoryZeroTileToNonCategoryZeroSection(movingTile: ITile, newCategory: ICampusGuide) {
+    const isCategoryZero = this.tileUtils.isCategoryZero(movingTile);
+
+    return isCategoryZero && !newCategory._categoryZero;
+  }
+
+  handleSuccess() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        autoClose: true,
+        class: 'success',
+        body: this.cpI18n.translate('t_personas_tile_moved_success')
+      }
+    });
+  }
+
+  doBulkUpdate(_) {
+    // const tileUpdateRequests$ = tileUpdates.map((t) => this.tileService.updateTile(t.id, t));
+    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
+
+    this.service.getTilesCategories(search).subscribe(
+      () => {
+        this.handleSuccess();
+      },
+      () => this.errorHanlder()
+    );
+  }
+
+  updateAllTilesRank(guide: ICampusGuide) {
+    const tiles = [...guide.tiles];
+
+    const tileUpdates = tiles.map((t: ITile, index) => {
+      // delete t['related_link_data'];
+
+      return {
+        ...t,
+        rank: index + 1,
+        school_id: this.session.g.get('school').id
+      };
+    });
+
+    this.doBulkUpdate(tileUpdates);
+  }
+
+  updateAllTilesFeaturedRank(guide: ICampusGuide) {
+    const tiles = [...guide.tiles];
+
+    const tileUpdates = tiles.map((t: ITile, index) => {
+      // delete t['related_link_data'];
+
+      return {
+        ...t,
+        featured_rank: index + 1,
+        school_id: this.session.g.get('school').id
+      };
+    });
+
+    this.doBulkUpdate(tileUpdates);
+  }
+
+  getRankByIndex(guide: ICampusGuide, index, featured = false) {
+    const previousTile = guide.tiles[index - 1];
+
+    return featured ? previousTile.featured_rank + 1 : previousTile.rank + 1;
+  }
+
+  updateTileBodyAfterDrop(guide: ICampusGuide, tile: ITile, newBody) {
+    return {
+      ...guide,
+      tiles: guide.tiles.map((t: ITile) => {
+        return t.id === tile.id
+          ? {
+              ...t,
+              ...newBody
+            }
+          : t;
+      })
+    };
+  }
+
+  onTileMoved({ tile, section }) {
+    const guideTiles = flatten(this.state.guides.map((g) => g.tiles));
+    const featuredTiles = flatten(this.state.featureTiles.map((g) => g.tiles));
+    const categoryZerTiles = flatten(this.state.categoryZero.map((g) => g.tiles));
+    const allTiles = [...guideTiles, ...featuredTiles, ...categoryZerTiles];
+    const allGuides = [
+      ...this.state.guides,
+      ...this.state.categoryZero,
+      ...this.state.featureTiles
+    ];
+
+    const movingTile = allTiles.filter((t: ITile) => t.id === tile)[0];
+    const featureOrCategoryZero = (s) =>
+      s === 'featured' ? this.state.featureTiles[0] : this.state.categoryZero[0];
+
+    let newCategory: ICampusGuide = isNaN(section)
+      ? featureOrCategoryZero(section)
+      : allGuides.filter((g) => g.id === +section)[0];
+
+    const school_id = this.session.g.get('school').id;
+
+    if (this.nonFeaturedTileToFeatureSection(movingTile, newCategory)) {
+      const body = {
+        ...movingTile,
+        school_id,
+        tile_category_id: 0,
+        rank: TileCategoryRank.hidden
+      };
+
+      newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
+
+      this.updateAllTilesFeaturedRank(newCategory);
+    } else if (this.featuredTileToNonFeatureSection(movingTile, newCategory)) {
+      const body = {
+        ...movingTile,
+        school_id,
+        featured_rank: TileFeatureRank.notFeatured,
+        tile_category_id: newCategory._categoryZero ? 0 : newCategory.id
+      };
+
+      newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
+
+      this.updateAllTilesRank(newCategory);
+    } else if (this.nonCategoryZeroTileToCategoryZeroSection(movingTile, newCategory)) {
+      const body = {
+        ...movingTile,
+        school_id,
+        tile_category_id: 0,
+        featured_rank: TileFeatureRank.notFeatured
+      };
+
+      newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
+
+      this.updateAllTilesRank(newCategory);
+    } else if (this.categoryZeroTileToNonCategoryZeroSection(movingTile, newCategory)) {
+      const body = {
+        ...movingTile,
+        school_id,
+        tile_category_id: newCategory.id,
+        featured_rank: TileFeatureRank.notFeatured
+      };
+
+      newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
+
+      this.updateAllTilesRank(newCategory);
+    } else {
+      const body = {
+        ...movingTile,
+        school_id,
+        tile_category_id: newCategory.id,
+        featured_rank: TileFeatureRank.notFeatured
+      };
+
+      newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
+
+      this.updateAllTilesRank(newCategory);
+    }
+  }
+
   onDeletedSection(section: ICampusGuide) {
     this.state.guides = this.state.guides.filter((guide: ICampusGuide) => guide.id !== section.id);
 
@@ -90,7 +276,18 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     }
   }
 
-  errorHanlder() {}
+  errorHanlder() {
+    console.log('errorHanlder');
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        autoClose: true,
+        class: 'danger',
+        body: this.cpI18n.translate('something_went_wrong')
+      }
+    });
+  }
 
   rankSections() {
     this.state = {

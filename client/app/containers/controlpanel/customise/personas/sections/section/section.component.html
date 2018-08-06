@@ -39,12 +39,13 @@
       <div
         class="row"
         [sortablejs]="guide.tiles"
+        [attr.data-section]="sectionId"
         [sortablejsOptions]="sortableOptions">
         <cp-personas-tile
           class="tile"
           [tile]="tile"
           (edit)="onEditTile(tile)"
-          [attr.data-section]="guide.id"
+          [attr.data-tile]="tile.id"
           [class.sorting]="state.sorting"
           (edited)="onEditedTile($event)"
           [ngClass]="['col-' + tileWidth]"
