@@ -14,8 +14,14 @@
                     cpTracker
                     [eventData]="eventData"
                     [routerLink]="['../edit']"
-                    class="cpbtn cpbtn--primary" i18n>
+                    class="cpbtn cpbtn--primary">
                     {{ 'edit' | cpI18n }}
+                  </a>
+                  <a
+                    class="cpbtn cpbtn--primary"
+                    *ngIf="event.event_attendance === attendanceEnabled"
+                    [routerLink]="[eventCheckinRoute + event.encrypted_id]">
+                    {{ 'events_check_in_details' | cpI18n }}
                   </a>
                 </div>
               </div>
@@ -31,8 +37,8 @@
                   <div class="row">
                     <div class="col-2">
                       <p>
-                        <strong i18n *ngIf="!utils.isPastEvent(event)">{{ 'starts' | cpI18n }}</strong>
-                        <strong i18n *ngIf="utils.isPastEvent(event)">{{ 'started' | cpI18n }}</strong>
+                        <strong *ngIf="!utils.isPastEvent(event)">{{ 'starts' | cpI18n }}</strong>
+                        <strong *ngIf="utils.isPastEvent(event)">{{ 'started' | cpI18n }}</strong>
                       </p>
                     </div>
                     <div class="col-10">
@@ -43,8 +49,8 @@
                   <div class="row">
                     <div class="col-2">
                       <p>
-                        <strong i18n *ngIf="!utils.isPastEvent(event)">{{ 'ends' | cpI18n }}</strong>
-                        <strong i18n *ngIf="utils.isPastEvent(event)">{{ 'ended' | cpI18n }}</strong>
+                        <strong *ngIf="!utils.isPastEvent(event)">{{ 'ends' | cpI18n }}</strong>
+                        <strong *ngIf="utils.isPastEvent(event)">{{ 'ended' | cpI18n }}</strong>
                       </p>
                     </div>
                     <div class="col-10">
@@ -54,7 +60,7 @@
 
                   <div class="row" *ngIf="event.address">
                     <div class="col-2">
-                      <p><strong i18n>{{ 'location' | cpI18n }}</strong></p>
+                      <p><strong>{{ 'location' | cpI18n }}</strong></p>
                     </div>
                     <div class="col-10">
                       <p>{{ event.address }}</p>

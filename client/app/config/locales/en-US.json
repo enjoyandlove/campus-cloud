@@ -2320,6 +2320,9 @@
   "type": {
     "message": "Type"
   },
+  "t_app_checkin_method": {
+    "message": "App check-in"
+  },
   "t_assess_all_orientations": {
     "message": "All Orientations"
   },
@@ -2427,6 +2430,9 @@
   },
   "t_event_assessment_check_out_date": {
     "message": "Check-Out"
+  },
+  "t_event_assessment_web_checkin_page": {
+    "message": "Web Check-In Page"
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
@@ -2721,6 +2727,12 @@
   },
   "t_tile_button_locked": {
     "message": "Locked"
+  },
+  "t_web_based_qr_scan": {
+    "message": "Web Based QR scan"
+  },
+  "t_web_checkin_method": {
+    "message": "Web check-in"
   },
   "update": {
     "message": "Update",

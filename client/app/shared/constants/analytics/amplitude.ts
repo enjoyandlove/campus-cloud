@@ -197,8 +197,6 @@ export const amplitudeEvents = {
 
   MANAGE_CLICKED_CHECKIN: 'Manage - Clicked Check-In',
 
-  MANAGE_CLICKED_FEEDBACK: 'Manage - Clicked Feedback',
-
   MANAGE_CREATED_LOCATION: 'Manage - Created Location',
 
   MANAGE_CREATED_CALENDAR: 'Manage - Created Calendar',

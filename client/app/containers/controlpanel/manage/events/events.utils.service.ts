@@ -84,7 +84,6 @@ export class EventUtilService {
   }
 
   getSubNavChildren(event, urlPrefix) {
-    const pastEvent = this.isPastEvent(event);
     const attendanceEnabled = event.event_attendance === EventAttendance.enabled;
 
     const children = [
@@ -98,7 +97,7 @@ export class EventUtilService {
       }
     ];
 
-    return pastEvent && attendanceEnabled ? children : [];
+    return attendanceEnabled ? children : [];
   }
 
   getPrivilegeType(type: boolean) {

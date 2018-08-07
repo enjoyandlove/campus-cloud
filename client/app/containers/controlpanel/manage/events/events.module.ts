@@ -6,12 +6,7 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { EventsAttendanceComponent } from './attendance';
-import {
-  AttendancePastComponent,
-  AttendanceUpcomingComponent,
-  EventsFeedbackModalComponent,
-  EventsPastActionBoxComponent
-} from './attendance/components';
+import { EventsAttendanceActionBoxComponent } from './attendance/components';
 import { EventsCreateComponent } from './create';
 import { EventsDeleteComponent } from './delete';
 import { EventsEditComponent } from './edit';
@@ -56,10 +51,7 @@ import { OrientationEventsService } from '../orientation/events/orientation.even
     ListActionBoxComponent,
     ListPastComponent,
     ListUpcomingComponent,
-    AttendancePastComponent,
-    AttendanceUpcomingComponent,
-    EventsFeedbackModalComponent,
-    EventsPastActionBoxComponent,
+    EventsAttendanceActionBoxComponent,
     FacebookEventsCreateComponent,
     FacebookEventsUpdateComponent,
     FacebookEventsDeleteComponent,
@@ -85,10 +77,7 @@ import { OrientationEventsService } from '../orientation/events/orientation.even
     ListActionBoxComponent,
     ListPastComponent,
     ListUpcomingComponent,
-    AttendancePastComponent,
-    AttendanceUpcomingComponent,
-    EventsFeedbackModalComponent,
-    EventsPastActionBoxComponent,
+    EventsAttendanceActionBoxComponent,
     EventsComponent
   ]
 })
