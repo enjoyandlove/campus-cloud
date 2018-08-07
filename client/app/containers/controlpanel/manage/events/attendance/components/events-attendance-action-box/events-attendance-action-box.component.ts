@@ -6,11 +6,11 @@ import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants/privi
 import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
 
 @Component({
-  selector: 'cp-assessment-events-action-box',
-  templateUrl: './assessment-events-action-box.component.html',
-  styleUrls: ['./assessment-events-action-box.component.scss']
+  selector: 'cp-events-attendance-action-box',
+  templateUrl: './events-attendance-action-box.component.html',
+  styleUrls: ['./events-attendance-action-box.component.scss']
 })
-export class AssessmentEventsActionBoxComponent implements OnInit {
+export class EventsAttendanceActionBoxComponent implements OnInit {
   @Input() event: any;
   @Input() isOrientation: boolean;
 
