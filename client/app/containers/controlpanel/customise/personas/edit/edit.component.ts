@@ -197,20 +197,27 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     stream$.subscribe(
       () => this.router.navigate(['/customize/personas']),
       (err) => {
+        let snackBarClass = 'danger';
         const error = err.error.response;
 
         let message = this.cpI18n.translate('something_went_wrong');
         this.submitButtonData = { ...this.submitButtonData, disabled: false };
 
         if (error === PersonaValidationErrors.users_associated) {
+          snackBarClass = 'warning';
           message = this.cpI18n.translate('t_personas_edit_error_users_associated');
+        }
+
+        if (error === PersonaValidationErrors.customization_off) {
+          snackBarClass = 'warning';
+          message = this.cpI18n.translate('t_personas_edit_error_customization_off');
         }
 
         this.store.dispatch({
           type: SNACKBAR_SHOW,
           payload: {
             sticky: true,
-            class: 'danger',
+            class: snackBarClass,
             body: message
           }
         });
