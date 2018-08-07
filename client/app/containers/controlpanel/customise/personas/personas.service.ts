@@ -99,7 +99,7 @@ export class PersonasService extends HTTPService {
   updatePersona(personaId: number, search: HttpParams, body) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/${personaId}`;
 
-    return super.update(url, body, search);
+    return super.update(url, body, search, true);
   }
 
   getTilesByPersona(search: HttpParams) {

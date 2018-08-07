@@ -417,13 +417,13 @@
     "message": "Aucune donnée d'événement"
   },
   "assess_no_event_data_help": {
-    "message": "Pour voir les données des événements utilisez le filtre d'implication"
+    "message": "Pour voir les données des événements, utilisez le filtre d'implication"
   },
   "assess_no_service_data": {
     "message": "Aucune données de service"
   },
   "assess_no_service_data_help": {
-    "message": "Pour voir les données des services utilisez le filtre d'implication"
+    "message": "Pour voir les données des services, utilisez le filtre d'implication"
   },
   "assess_number_of_checkins": {
     "message": "# de présences"
@@ -2317,8 +2317,14 @@
   "type": {
     "message": "Type"
   },
+  "t_assess_all_orientations": {
+    "message": "Tous les programmes d'orientation"
+  },
   "t_assess_chart_tooltip_label_engagements": {
     "message": "Implication(s)"
+  },
+  "t_assess_no_orientation_data_help": {
+    "message": "Pour voir les données des programmes d'orientation, utilisez le filtre d'implication"
   },
   "t_audience_dynamic_integration_disabled": {
     "message": "Pour activer cette fonctionalité, veuillez contacter votre consultant en engagement mobile."
@@ -2334,6 +2340,9 @@
   },
   "t_dashboard_chart_tooltip_label_registrations": {
     "message": "Inscriptions"
+  },
+  "t_dashboard_top_orientation": {
+    "message": "Palmarès des orientations"
   },
   "t_deals_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s?"
