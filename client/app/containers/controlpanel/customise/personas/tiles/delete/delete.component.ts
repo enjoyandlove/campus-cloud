@@ -14,7 +14,7 @@ export class PersonasTileDeleteComponent implements OnInit {
   @Input() tile: ITile;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() deleted: EventEmitter<number> = new EventEmitter();
+  @Output() deleted: EventEmitter<ITile> = new EventEmitter();
   @Output() error: EventEmitter<HttpErrorResponse> = new EventEmitter();
 
   buttonData;
@@ -30,7 +30,7 @@ export class PersonasTileDeleteComponent implements OnInit {
 
     this.service.deleteTile(this.tile.id, search).subscribe(
       () => {
-        this.deleted.emit(this.tile.id);
+        this.deleted.emit(this.tile);
         this.teardown.emit();
       },
       (err) => {
