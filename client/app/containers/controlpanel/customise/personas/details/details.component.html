@@ -21,7 +21,7 @@
             [noControls]="true"
             [addSection]="false"
             [personaId]="personaId"
-            [guideNames]="guideNames">
+            (shuffle)="onTileMoved($event)">
           </cp-personas-section>
         </div>
       </div>
@@ -40,7 +40,7 @@
             [noControls]="true"
             [addSection]="false"
             [personaId]="personaId"
-            [guideNames]="guideNames">
+            (shuffle)="onTileMoved($event)">
           </cp-personas-section>
         </div>
       </div>
@@ -53,7 +53,7 @@
             [guide]="guide"
             [first]="first"
             [personaId]="personaId"
-            [guideNames]="guideNames"
+            (shuffle)="onTileMoved($event)"
             (deleted)="onDeletedSection($event)"
             (swap)="onSwapSection($event, guide)"
             (removeSection)="onRemoveSection($event)"

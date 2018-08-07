@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { get as _get } from 'lodash';
 import { combineLatest, Observable } from 'rxjs';
 import { TilesService } from './../../tiles/tiles.service';
+import { TilesUtilsService } from './../../tiles/tiles.utils.service';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services';
@@ -34,6 +35,12 @@ export class PersonasSectionComponent implements OnInit {
   @Output() deleted: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output() removeSection: EventEmitter<number> = new EventEmitter();
   @Output() createNewSection: EventEmitter<ICampusGuide> = new EventEmitter();
+  @Output()
+  shuffle: EventEmitter<{
+    tile: number;
+    section: number | string;
+    position: number;
+  }> = new EventEmitter();
 
   state = {
     working: false,
@@ -47,6 +54,7 @@ export class PersonasSectionComponent implements OnInit {
   lastRank;
   sortableOptions;
   selectedTile: ITile;
+  sectionId: number | string;
   tileDeleteModalId = 'tileDeleteModal';
   sectionDeleteModalId = 'sectionDeleteModal';
 
@@ -57,7 +65,8 @@ export class PersonasSectionComponent implements OnInit {
     public store: Store<ISnackbar>,
     public service: SectionsService,
     public tilesService: TilesService,
-    public utils: SectionUtilsService
+    public utils: SectionUtilsService,
+    public tileUtils: TilesUtilsService
   ) {}
 
   onSavedGuide(newGuide) {
@@ -263,9 +272,12 @@ export class PersonasSectionComponent implements OnInit {
     );
   }
 
-  onAdd() {
-    // const { oldIndex, newIndex } = event;
-    // console.log(oldIndex, newIndex, event);
+  onAdd(event) {
+    const position = event.newIndex;
+    const tile = Number(event.item.dataset.tile);
+    const section = event.target.dataset.section;
+
+    this.shuffle.emit({ tile, section, position });
   }
 
   onDragged(event) {
@@ -276,9 +288,7 @@ export class PersonasSectionComponent implements OnInit {
     const tileA: ITile = this.utils.tileAtIndex(this.guide.tiles, oldIndex);
     const tileB: ITile = this.utils.tileAtIndex(this.guide.tiles, newIndex);
 
-    const isFeatured = (t: ITile) => t.featured_rank > -1;
-
-    if (isFeatured(tileA)) {
+    if (this.tileUtils.isFeatured(tileA)) {
       updatedTileA = {
         featured_rank: tileB.featured_rank
       };
@@ -314,25 +324,22 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let groupName = this.guide.name;
-
-    if (this.guide._categoryZero) {
-      groupName = 'category_zero';
-    }
-
     if (this.guide._featureTile) {
-      groupName = 'featured';
+      this.sectionId = 'featured';
+    } else if (this.guide._categoryZero) {
+      this.sectionId = 'category_zero';
+    } else {
+      this.sectionId = this.guide.id;
     }
 
     this.sortableOptions = {
       scroll: false,
       disabled: this.state.disableDragging,
       group: {
-        name: groupName,
-        put: this.guideNames,
-        pull: this.guideNames
+        name: 'studio',
+        put: true,
+        pull: true
       },
-      draggable: '.draggable',
       onAdd: this.onAdd.bind(this),
       onUpdate: this.onDragged.bind(this)
     };

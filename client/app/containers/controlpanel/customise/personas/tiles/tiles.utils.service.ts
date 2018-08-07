@@ -31,7 +31,11 @@ export class TilesUtilsService {
   }
 
   isFeatured(tile: ITile) {
-    return tile.featured_rank !== -1;
+    return tile.featured_rank > -1;
+  }
+
+  isCategoryZero(tile: ITile) {
+    return tile.tile_category_id === 0 && tile.featured_rank === -1;
   }
 
   isTileVisible(tile: ITile) {
