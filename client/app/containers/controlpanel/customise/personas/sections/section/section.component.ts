@@ -11,7 +11,6 @@ import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services';
 import { ITile } from '../../tiles/tile.interface';
 import { ICampusGuide } from '../section.interface';
-import { CategoryDeleteErrors } from '../section.status';
 import { SectionUtilsService } from '../section.utils.service';
 import { SectionsService } from '../sections.service';
 
@@ -34,7 +33,9 @@ export class PersonasSectionComponent implements OnInit {
   @Output() swap: EventEmitter<any> = new EventEmitter();
   @Output() deleted: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output() removeSection: EventEmitter<number> = new EventEmitter();
+  @Output() deleteTileClick: EventEmitter<ITile> = new EventEmitter();
   @Output() createNewSection: EventEmitter<ICampusGuide> = new EventEmitter();
+  @Output() deleteSectionClick: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output()
   shuffle: EventEmitter<{
     tile: number;
@@ -44,19 +45,13 @@ export class PersonasSectionComponent implements OnInit {
 
   state = {
     working: false,
-    sorting: false,
-    deletingTile: false,
-    disableDragging: false,
-    tileDeleteModal: false,
-    sectionDeleteModal: false
+    sorting: false
   };
 
   lastRank;
   sortableOptions;
   selectedTile: ITile;
   sectionId: number | string;
-  tileDeleteModalId = 'tileDeleteModal';
-  sectionDeleteModalId = 'sectionDeleteModal';
 
   constructor(
     public router: Router,
@@ -133,13 +128,8 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   errorHandler(err: HttpErrorResponse) {
-    let snackBarClass = 'danger';
-    let body = _get(err, ['error', 'response'], this.cpI18n.translate('something_went_wrong'));
-
-    if (body === CategoryDeleteErrors.NON_EMPTY_CATEGORY) {
-      snackBarClass = 'warning';
-      body = this.cpI18n.translate('t_personas_delete_guide_error_non_empty_category');
-    }
+    const snackBarClass = 'danger';
+    const body = _get(err, ['error', 'response'], this.cpI18n.translate('something_went_wrong'));
 
     this.setWorkingState(false);
 
@@ -187,75 +177,6 @@ export class PersonasSectionComponent implements OnInit {
         this.setWorkingState(false);
       },
       (err) => this.errorHandler(err)
-    );
-  }
-
-  onSectionDeleteTeardown() {
-    this.selectedTile = null;
-
-    this.state = {
-      ...this.state,
-      disableDragging: false,
-      sectionDeleteModal: false
-    };
-
-    $(`#${this.sectionDeleteModalId}`).modal('hide');
-  }
-
-  onDeleteSectionClick() {
-    this.state = {
-      ...this.state,
-      disableDragging: true,
-      sectionDeleteModal: true
-    };
-
-    setTimeout(
-      () => {
-        $(`#${this.sectionDeleteModalId}`).modal();
-      },
-
-      1
-    );
-  }
-
-  onTileDeleteTeardown() {
-    this.selectedTile = null;
-
-    this.state = {
-      ...this.state,
-      tileDeleteModal: false,
-      disableDragging: false
-    };
-
-    $(`#${this.tileDeleteModalId}`).modal('hide');
-  }
-
-  onTileDeleted(tileId: number) {
-    this.guide = {
-      ...this.guide,
-      tiles: this.guide.tiles.filter((t: ITile) => t.id !== tileId)
-    };
-
-    if (!this.guide.tiles.length) {
-      this.removeSection.emit(this.guide.id);
-    }
-  }
-
-  onDeleteTileClick(tileId: ITile) {
-    this.selectedTile = tileId;
-
-    this.state = {
-      ...this.state,
-      tileDeleteModal: true,
-      disableDragging: true
-    };
-
-    setTimeout(
-      () => {
-        $(`#${this.tileDeleteModalId}`).modal();
-      },
-
-      1
     );
   }
 
@@ -334,7 +255,6 @@ export class PersonasSectionComponent implements OnInit {
 
     this.sortableOptions = {
       scroll: false,
-      disabled: this.state.disableDragging,
       group: {
         name: 'studio',
         put: true,

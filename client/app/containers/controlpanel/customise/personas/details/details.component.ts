@@ -1,9 +1,9 @@
-import { TileCategoryRank, TileFeatureRank } from './../tiles/tiles.status';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { flatten } from 'lodash';
+import { get as _get } from 'lodash';
 import { combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
@@ -14,17 +14,21 @@ import { PersonasUtilsService } from './../personas.utils.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
 import { ITile } from './../tiles/tile.interface';
+import { TileCategoryRank, TileFeatureRank } from './../tiles/tiles.status';
 import { TilesUtilsService } from './../tiles/tiles.utils.service';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
+import { CategoryDeleteErrors } from '../sections/section.status';
 import { TilesService } from '../tiles/tiles.service';
 
 interface IState {
   working: boolean;
+  featureTiles: ICampusGuide;
+  categoryZero: ICampusGuide;
   guides: Array<ICampusGuide>;
-  featureTiles: Array<ICampusGuide>;
-  categoryZero: Array<ICampusGuide>;
+  showTileDeleteModal: boolean;
+  showSectionDeleteModal: boolean;
 }
 
 @Component({
@@ -36,12 +40,18 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
   loading;
   personaId;
   guideNames;
+  tileToDelete: ITile;
+  sectionToDelete: ICampusGuide;
+  tileDeleteModalId = 'tileDeleteModal';
+  sectionDeleteModalId = 'sectionDeleteModal';
 
   state: IState = {
     working: false,
     guides: [],
-    featureTiles: [],
-    categoryZero: []
+    featureTiles: null,
+    categoryZero: null,
+    showTileDeleteModal: false,
+    showSectionDeleteModal: false
   };
 
   constructor(
@@ -65,19 +75,21 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     const nextGuide = (guide: ICampusGuide) => guide.id === guideId;
     const nextGuideIndex = this.state.guides.findIndex(nextGuide);
 
-    this.setGuideDisableStatus(true);
+    this.setGuideDisabledStatus(true);
 
     this.state.guides.splice(nextGuideIndex, 0, newGuide);
   }
 
-  onRemoveSection(guideId) {
+  onRemoveSection(g: ICampusGuide) {
+    this.setGuideDisabledStatus(false);
+
     this.state = {
       ...this.state,
-      guides: this.state.guides.filter((guide) => guide.id !== guideId)
+      guides: this.state.guides.filter((guide) => guide.id !== g.id)
     };
   }
 
-  setGuideDisableStatus(status) {
+  setGuideDisabledStatus(status) {
     this.state = {
       ...this.state,
       guides: this.state.guides.map((g: ICampusGuide) => {
@@ -125,6 +137,96 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     });
   }
 
+  onDeleteTileFromSection(tile: ITile) {
+    this.tileToDelete = tile;
+
+    this.state = {
+      ...this.state,
+      showTileDeleteModal: true
+    };
+
+    setTimeout(
+      () => {
+        $(`#${this.tileDeleteModalId}`).modal();
+      },
+
+      1
+    );
+  }
+
+  onTileDeleted(tile: ITile) {
+    if (this.tileUtils.isCategoryZero(tile)) {
+      this.state = {
+        ...this.state,
+        categoryZero: {
+          ...this.state.categoryZero,
+          tiles: this.state.categoryZero.tiles.filter((t: ITile) => t.id !== tile.id)
+        }
+      };
+    } else if (this.tileUtils.isFeatured(tile)) {
+      this.state = {
+        ...this.state,
+        featureTiles: {
+          ...this.state.featureTiles,
+          tiles: this.state.categoryZero.tiles.filter((t: ITile) => t.id !== tile.id)
+        }
+      };
+    } else {
+      this.state = {
+        ...this.state,
+        guides: this.state.guides.map((g: ICampusGuide) => {
+          if (g.id === tile.tile_category_id) {
+            g = {
+              ...g,
+              tiles: g.tiles.filter((t: ITile) => t.id !== tile.id)
+            };
+          }
+
+          return g;
+        })
+      };
+    }
+  }
+
+  onSectionDeleteTeardown() {
+    this.sectionToDelete = null;
+
+    this.state = {
+      ...this.state,
+      showSectionDeleteModal: false
+    };
+
+    $(`#${this.sectionDeleteModalId}`).modal('hide');
+  }
+
+  onDeleteSectionClick(section: ICampusGuide) {
+    this.sectionToDelete = section;
+
+    this.state = {
+      ...this.state,
+      showSectionDeleteModal: true
+    };
+
+    setTimeout(
+      () => {
+        $(`#${this.sectionDeleteModalId}`).modal();
+      },
+
+      1
+    );
+  }
+
+  onTileDeleteTeardown() {
+    this.state = {
+      ...this.state,
+      showTileDeleteModal: false
+    };
+
+    this.tileToDelete = null;
+
+    $(`#${this.tileDeleteModalId}`).modal('hide');
+  }
+
   doBulkUpdate(_) {
     // const tileUpdateRequests$ = tileUpdates.map((t) => this.tileService.updateTile(t.id, t));
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
@@ -133,7 +235,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
       () => {
         this.handleSuccess();
       },
-      () => this.errorHanlder()
+      () => this.errorHandler()
     );
   }
 
@@ -191,14 +293,12 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
 
   onTileMoved({ tile, section }) {
     const guideTiles = flatten(this.state.guides.map((g) => g.tiles));
-    const featuredTiles = flatten(this.state.featureTiles.map((g) => g.tiles));
-    const categoryZerTiles = flatten(this.state.categoryZero.map((g) => g.tiles));
-    const allTiles = [...guideTiles, ...featuredTiles, ...categoryZerTiles];
-    const allGuides = [
-      ...this.state.guides,
-      ...this.state.categoryZero,
-      ...this.state.featureTiles
+    const allTiles = [
+      ...guideTiles,
+      ...this.state.featureTiles.tiles,
+      ...this.state.categoryZero.tiles
     ];
+    const allGuides = [...this.state.guides, this.state.categoryZero, this.state.featureTiles];
 
     const movingTile = allTiles.filter((t: ITile) => t.id === tile)[0];
     const featureOrCategoryZero = (s) =>
@@ -272,19 +372,26 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
     this.state.guides = this.state.guides.filter((guide: ICampusGuide) => guide.id !== section.id);
 
     if (this.sectionUtils.isTemporaryGuide(section)) {
-      this.setGuideDisableStatus(false);
+      this.setGuideDisabledStatus(false);
     }
   }
 
-  errorHanlder() {
-    console.log('errorHanlder');
+  errorHandler(err = null) {
+    let snackBarClass = 'danger';
+    let body = _get(err, ['error', 'response'], this.cpI18n.translate('something_went_wrong'));
+
+    if (body === CategoryDeleteErrors.NON_EMPTY_CATEGORY) {
+      snackBarClass = 'warning';
+      body = this.cpI18n.translate('t_personas_delete_guide_error_non_empty_category');
+    }
+
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
         sticky: true,
         autoClose: true,
-        class: 'danger',
-        body: this.cpI18n.translate('something_went_wrong')
+        class: snackBarClass,
+        body: body
       }
     });
   }
@@ -352,7 +459,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         this.state = { ...this.state, working: false };
         this.fetch();
       },
-      () => this.errorHanlder()
+      () => this.errorHandler()
     );
   }
 
@@ -390,7 +497,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         this.state = { ...this.state, working: false };
         this.fetch();
       },
-      () => this.errorHanlder()
+      () => this.errorHandler()
     );
   }
 
@@ -454,24 +561,20 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         this.state = {
           ...this.state,
           guides,
-          featureTiles: [
-            {
-              id: null,
-              rank: 1,
-              name: null,
-              _featureTile: true,
-              tiles: [...data.featured]
-            }
-          ],
-          categoryZero: [
-            {
-              id: null,
-              rank: 1,
-              name: null,
-              _categoryZero: true,
-              tiles: [...data.categoryZero]
-            }
-          ]
+          featureTiles: {
+            id: null,
+            rank: 1,
+            name: null,
+            _featureTile: true,
+            tiles: [...data.featured]
+          },
+          categoryZero: {
+            id: null,
+            rank: 1,
+            name: null,
+            _categoryZero: true,
+            tiles: [...data.categoryZero]
+          }
         };
       })
       .catch(() => this.router.navigate(['/customize/personas']));
