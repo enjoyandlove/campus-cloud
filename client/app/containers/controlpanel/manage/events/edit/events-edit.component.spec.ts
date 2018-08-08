@@ -112,17 +112,22 @@ describe('EventEditComponent', () => {
 
   it('should have event manager tooltip', () => {
     const eventManager = component.cpI18n.translate('events_event_manager_tooltip');
-    expect(component.eventManagerToolTip.content).toEqual(eventManager);
+    expect(component.utils.getToolTipContent('events_event_manager_tooltip')).toEqual(eventManager);
   });
 
   it('should have attendance Manager tooltip', () => {
     const attendanceManager = component.cpI18n.translate('events_attendance_manager_tooltip');
-    expect(component.attendanceManagerToolTip.content).toEqual(attendanceManager);
+    expect(
+      component.utils.getToolTipContent('events_attendance_manager_tooltip'))
+      .toEqual(attendanceManager);
+
   });
 
   it('should have student feedback tooltip', () => {
     const studentFeedback = component.cpI18n.translate('events_event_feedback_tooltip');
-    expect(component.studentFeedbackToolTip.content).toEqual(studentFeedback);
+    expect(
+      component.utils.getToolTipContent('events_event_feedback_tooltip'))
+      .toEqual(studentFeedback);
   });
 
   it('form validation should fail required fields missing', () => {

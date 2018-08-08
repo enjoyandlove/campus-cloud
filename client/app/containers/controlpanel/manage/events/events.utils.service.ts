@@ -1,22 +1,25 @@
 import IEvent from './event.interface';
-
 import { Injectable } from '@angular/core';
+
 import { CPSession } from '../../../../session';
+import { CPI18nService } from '../../../../shared/services';
 import { CPDate } from './../../../../shared/utils/date/date';
 import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import {
+  QRCode,
   Location,
   Feedback,
   Assessment,
   UploadedPhoto,
   EventFeedback,
-  EventAttendance
+  EventAttendance,
+  AttendanceType
 } from './event.status';
 
 @Injectable()
 export class EventUtilService {
-  constructor(public session: CPSession) {}
+  constructor(public session: CPSession, public cpI18n: CPI18nService) {}
   isPastEvent(event: IEvent): boolean {
     return event.end < CPDate.now(this.session.tz).unix();
   }
@@ -133,6 +136,51 @@ export class EventUtilService {
     }
 
     return sourcePage;
+  }
+
+  attendanceType() {
+    return [
+      {
+        label: this.cpI18n.translate('t_events_assessment_check_in_only'),
+        action: AttendanceType.checkInOnly
+      },
+      {
+        label: this.cpI18n.translate('t_events_assessment_check_in_and_checkout'),
+        action: AttendanceType.checkInCheckOut
+      },
+    ];
+  }
+
+  QRCodes() {
+    return [
+      {
+        label: this.cpI18n.translate('t_events_assessment_qr_enabled_yes'),
+        action: QRCode.active
+      },
+      {
+        label: this.cpI18n.translate('t_events_assessment_qr_enabled_no'),
+        action: QRCode.inActive
+      },
+    ];
+  }
+
+  attendanceFeedback() {
+    return [
+      {
+        label: this.cpI18n.translate('event_enabled'),
+        action: EventAttendance.enabled
+      },
+      {
+        label: this.cpI18n.translate('events_disabled'),
+        action: EventAttendance.disabled
+      }
+    ];
+  }
+
+  getToolTipContent(label) {
+    return {
+      content: this.cpI18n.translate(label)
+    };
   }
 
   hasLocation(location) {

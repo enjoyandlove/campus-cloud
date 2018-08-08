@@ -45,6 +45,16 @@ export enum CheckInMethod {
   'app' = 3
 }
 
+export enum QRCode {
+  'active' = 1,
+  'inActive' = 0
+}
+
+export enum AttendanceType {
+  'checkInOnly' = 0,
+  'checkInCheckOut' = 1
+}
+
 export const isAllDay = {
   enabled: true,
   disabled: false

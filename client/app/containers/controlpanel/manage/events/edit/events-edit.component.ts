@@ -56,8 +56,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   serverError;
   isDateError;
   originalHost;
-  booleanOptions;
+  eventQRCodes;
+  selectedQRCode;
   loading = true;
+  attendanceTypes;
   school: ISchool;
   eventId: number;
   form: FormGroup;
@@ -65,15 +67,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   dateErrorMessage;
   enddatePickerOpts;
   attendanceEnabled;
+  attendanceFeedback;
   attendance = false;
   isFormReady = false;
   startdatePickerOpts;
   originalAttnFeedback;
   eventFeedbackEnabled;
-  eventManagerToolTip;
   production = isProd;
-  studentFeedbackToolTip;
-  attendanceManagerToolTip;
+  selectedAttendanceType;
   formMissingFields = false;
   showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
@@ -98,7 +99,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private utils: EventUtilService,
+    public utils: EventUtilService,
     private adminService: AdminService,
     public storeService: StoreService,
     private errorService: ErrorService,
@@ -236,6 +237,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       postal_code: [res.postal_code],
       latitude: [res.latitude],
       longitude: [res.longitude],
+      is_qr_active: [res.is_qr_active],
+      has_checkout: [res.has_checkout],
       event_attendance: [res.event_attendance],
       start: [res.start, Validators.required],
       end: [res.end, Validators.required],
@@ -253,9 +256,20 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.fetchManagersBySelectedStore(res.store_id);
 
     this.originalAttnFeedback = this.getFromArray(
-      this.booleanOptions,
+      this.attendanceFeedback,
       'action',
       res.event_feedback
+    );
+
+    this.selectedAttendanceType = this.getFromArray(
+      this.utils.attendanceType(),
+      'action',
+      res.has_checkout);
+
+    this.selectedQRCode = this.getFromArray(
+      this.utils.QRCodes(),
+      'action',
+      res.is_qr_active
     );
 
     this.originalHost = this.getFromArray(this.stores, 'value', res.store_id);
@@ -322,6 +336,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   onSelectedManager(manager): void {
     this.form.controls['event_manager_id'].setValue(manager.value);
+  }
+
+  onSelectedAttendanceType(type): void {
+    this.form.controls['has_checkout'].setValue(type.action);
+  }
+
+  onSelectedQRCode(qr): void {
+    this.form.controls['is_qr_active'].setValue(qr.action);
   }
 
   onAllDayToggle(value) {
@@ -424,7 +446,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   enableStudentFeedbackOnAttendanceToggle(value) {
     this.form.controls['event_feedback'].setValue(value);
-    this.originalAttnFeedback = this.getFromArray(this.booleanOptions, 'action', value);
+    this.originalAttnFeedback = this.getFromArray(this.attendanceFeedback, 'action', value);
   }
 
   toggleEventAttendance(value) {
@@ -509,17 +531,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.eventManagerToolTip = Object.assign({}, this.eventManagerToolTip, {
-      content: this.cpI18n.translate('events_event_manager_tooltip')
-    });
-    this.attendanceManagerToolTip = Object.assign({}, this.attendanceManagerToolTip, {
-      content: this.cpI18n.translate('events_attendance_manager_tooltip')
-    });
-
-    this.studentFeedbackToolTip = Object.assign({}, this.studentFeedbackToolTip, {
-      content: this.cpI18n.translate('events_event_feedback_tooltip')
-    });
-
     this.buttonData = {
       text: this.cpI18n.translate('save'),
       class: 'primary'
@@ -534,19 +545,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     );
 
     this.dateFormat = FORMAT.DATETIME;
-    this.booleanOptions = [
-      {
-        label: this.cpI18n.translate('event_enabled'),
-        action: EventAttendance.enabled
-      },
-      {
-        label: this.cpI18n.translate('events_disabled'),
-        action: EventAttendance.disabled
-      }
-    ];
-
     this.attendanceEnabled = EventAttendance.enabled;
     this.eventFeedbackEnabled = EventFeedback.enabled;
+    this.eventQRCodes = this.utils.QRCodes();
+    this.attendanceTypes = this.utils.attendanceType();
+    this.attendanceFeedback = this.utils.attendanceFeedback();
     this.fetch();
     this.buildHeader();
   }
