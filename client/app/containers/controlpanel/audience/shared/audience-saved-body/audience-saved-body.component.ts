@@ -1,8 +1,7 @@
 /*tslint:disable:max-line-length */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { combineLatest, Observable, of as observableOf } from 'rxjs';
+import { combineLatest, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
-import { map, startWith } from 'rxjs/operators';
 
 import { CPSession } from '../../../../../session';
 import { PersonaType, UserCount } from '../../audience.status';
@@ -23,7 +22,6 @@ export class AudienceSavedBodyComponent implements OnInit {
   @Output() selected: EventEmitter<{ action: number; label: string }> = new EventEmitter();
 
   audiences;
-  audiences$;
   selectedItem;
 
   constructor(
@@ -35,13 +33,6 @@ export class AudienceSavedBodyComponent implements OnInit {
 
   fetch() {
     if (!this.canReadAudience) {
-      this.audiences$ = observableOf([
-        {
-          action: null,
-          label: this.cpI18n.translate('campus_wide')
-        }
-      ]);
-
       return;
     }
 
@@ -50,74 +41,44 @@ export class AudienceSavedBodyComponent implements OnInit {
       .append('with_user_count', UserCount.withUserCount.toString())
       .append('platform', PersonaType.app.toString());
 
-    const audiences$ = this.service.getAudiences(search, 1, 1000).pipe(
-      startWith([
-        {
-          action: null,
-          heading: true,
-          label: this.cpI18n.translate('audience_my_audiences')
-        }
-      ]),
-      map((audiences) => {
-        return [
-          {
-            action: null,
-            heading: true,
-            label: this.cpI18n.translate('audience_my_audiences')
-          },
-          ...this.utils.parsedAudience(audiences)
-        ];
-      })
-    );
+    const audiences$ = this.service.getAudiences(search, 1, 1000);
 
-    const persona$ = this.service.getPersona(search, 1, 1000).pipe(
-      startWith([
-        {
-          action: null,
-          label: this.cpI18n.translate('campus_wide')
-        }
-      ]),
-      map((persona, index) => {
-        let _personas = [];
-        const heading = [
-          {
-            action: null,
-            label: this.cpI18n.translate('campus_wide')
-          }
-        ];
+    const persona$ = this.service.getPersona(search, 1, 1000);
 
-        if (index !== 0) {
-          _personas = persona;
-        }
+    const stream$ = combineLatest(audiences$, persona$, this.importedAudience$);
 
-        return [...heading, ...this.utils.parsedPersona(_personas)];
-      })
-    );
+    stream$.subscribe((res: any) => {
+      // @data [audiences, persona, importedAudience]
+      let _persona = [];
+      let _audiences = [];
 
-    this.audiences$ = combineLatest(audiences$, persona$, this.importedAudience$).pipe(
-      map(([audiences, persona, importedAudienceId]: any) => {
-        if (importedAudienceId) {
-          this.selectedItem = audiences.filter(
-            (audience) => audience.action === importedAudienceId
-          )[0];
+      _persona = this.utils.parsedPersona(res[1]);
+      _audiences = this.utils.parsedAudience(res[0]);
 
-          // the first run is undefined
-          if (this.selectedItem) {
-            this.selected.emit(this.selectedItem);
-          }
-        } else {
-          this.selected.emit({
-            action: null,
-            label: this.cpI18n.translate('campus_wide')
-          });
-        }
+      if (res[2]) {
+        this.selectedItem = _audiences.filter(
+          (audience) => audience.action === res[2]
+        )[0];
 
-        return [...persona, ...audiences];
-      })
-    );
+        this.selected.emit(this.selectedItem);
+      }
+
+      this.audiences = [
+        ...this.audiences,
+        ..._persona,
+        ..._audiences
+      ];
+    });
   }
 
   ngOnInit(): void {
+    this.audiences = [
+      {
+        action: null,
+        label: this.cpI18n.translate('campus_wide')
+      }
+    ];
+
     this.fetch();
   }
 }
