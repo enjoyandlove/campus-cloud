@@ -159,3 +159,25 @@
   border: none;
   background: transparent;
 }
+
+.extras,
+.nav__school {
+  display: inline-block;
+}
+
+.extras {
+  margin-right: 25px;
+
+  button {
+    top: 9px;
+    padding: 0;
+    line-height: 1;
+    position: relative;
+    background: transparent;
+
+    i {
+      font-size: 2em;
+      color: $color-grey;
+    }
+  }
+}

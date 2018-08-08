@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { isProd } from './../../../config/env';
 import { CP_PRIVILEGES_MAP } from './../../constants';
 import { canAccountLevelReadResource, canSchoolReadResource } from './../../utils/privileges';
 import { CPSession, ISchool, IUser } from '../../../session';
@@ -18,6 +19,7 @@ export class CPTopBarComponent implements OnInit {
   canNotify = false;
   canManage = false;
   canAssess = false;
+  production = isProd;
   canAudience = false;
   canCustomise = false;
   manageHomePage: string;

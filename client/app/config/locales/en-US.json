@@ -2324,7 +2324,7 @@
     "message": "App check-in"
   },
   "t_assess_all_orientations": {
-    "message": "All Orientations"
+    "message": "All Orientation Programs"
   },
   "t_assess_chart_tooltip_label_engagements": {
     "message": "Engagement(s)"
@@ -2333,7 +2333,7 @@
     "message": "No Orientation Data"
   },
   "t_assess_no_orientation_data_help": {
-    "message": "To see Orientations data use the Engagement filter"
+    "message": "To see Orientation data, use the Engagement filter."
   },
   "t_assess_orientation_programs": {
     "message": "Orientation Programs"
@@ -2363,7 +2363,7 @@
     "message": "Registrations"
   },
   "t_dashboard_top_orientation": {
-    "message": "Top Orientations"
+    "message": "Orientation Top 5"
   },
   "t_deals_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -2418,6 +2418,33 @@
   },
   "t_deals_list_grid_column_store": {
     "message": "Store"
+  },
+  "t_events_assessment_add_checkin_modal_title": {
+    "message": "Check-In"
+  },
+  "t_events_assessment_add_check_in": {
+    "message": "Add Check-In"
+  },
+  "t_events_assessment_check_in_and_checkout": {
+    "message": "Check-In and Check-Out"
+  },
+  "t_events_assessment_check_in_only": {
+    "message": "Check-In Only"
+  },
+  "t_events_assessment_message_attendees": {
+    "message": "Message Attendees"
+  },
+  "t_events_assessment_qr_enabled_no": {
+    "message": "No"
+  },
+  "t_events_assessment_qr_enabled_yes": {
+    "message": "Yes"
+  },
+  "t_events_attendance_type": {
+    "message": "Attendance Type"
+  },
+  "t_events_event_qr_enabled": {
+    "message": "QR Enabled"
   },
   "t_events_import_import_events": {
     "message": "Import Events"
@@ -2484,6 +2511,9 @@
   },
   "t_personas_edit_delete_button": {
     "message": "Delete Experience"
+  },
+  "t_personas_edit_error_customization_off": {
+    "message": "This school has not enabled campus guide customization"
   },
   "t_personas_edit_error_users_associated": {
     "message": "This experience has users associated, so you cannot update its login requirements."

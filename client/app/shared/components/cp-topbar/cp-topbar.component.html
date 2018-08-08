@@ -41,34 +41,48 @@
         </li>
       </ul>
     </nav>
-    <div
-      class="nav__school float-right noselect">
-      <div class="row" data-toggle="dropdown">
+    <div>
+      <div class="float-right">
         <div
-          class="col-10 no-left-padding no-right-padding">
-          <div
-            *ngIf="school.app_logo_url !== ''"
-            class="nav__school__thumb float-left rounded"
-            [ngStyle]="{'background-image': 'url(' + school.app_logo_url + ')'}">
+          class="extras"
+          *ngIf="production">
+          <button
+            type="button"
+            id="beamerButton"
+            class="cpbtn cpbtn--link--dark">
+            <i class="material-icons">notifications</i>
+          </button>
+        </div>
+        <div
+          class="nav__school noselect">
+          <div class="row" data-toggle="dropdown">
+            <div
+              class="col-10 no-left-padding no-right-padding">
+              <div
+                *ngIf="school.app_logo_url !== ''"
+                class="nav__school__thumb float-left rounded"
+                [ngStyle]="{'background-image': 'url(' + school.app_logo_url + ')'}">
+              </div>
+              <div
+                *ngIf="school.app_logo_url === ''"
+                class="nav__school__thumb float-left rounded"
+                [ngStyle]="{'background-image': 'url( ' + defaultImage + ')'}">
+              </div>
+              <div class="nav__school__user text-truncate">
+                <span>{{ user.firstname }}</span>
+              </div>
+              <div class="nav__school__name text-truncate">
+                {{ school.name }}
+              </div>
+            </div>
+            <div class="col-2 no-left-padding text-right nav__school__arrow">
+              <i class="material-icons float-right">expand_more</i>
+            </div>
           </div>
-          <div
-            *ngIf="school.app_logo_url === ''"
-            class="nav__school__thumb float-left rounded"
-            [ngStyle]="{'background-image': 'url( ' + defaultImage + ')'}">
-          </div>
-          <div class="nav__school__user text-truncate">
-            <span>{{ user.firstname }}</span>
-          </div>
-          <div class="nav__school__name text-truncate">
-            {{ school.name }}
+          <div class="nav__school--menu dropdown-menu">
+            <cp-school-switch></cp-school-switch>
           </div>
         </div>
-        <div class="col-2 no-left-padding text-right nav__school__arrow">
-          <i class="material-icons float-right">expand_more</i>
-        </div>
-      </div>
-      <div class="nav__school--menu dropdown-menu">
-        <cp-school-switch></cp-school-switch>
       </div>
     </div>
   </div>
