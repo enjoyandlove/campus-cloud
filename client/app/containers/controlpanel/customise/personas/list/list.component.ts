@@ -1,18 +1,18 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { pullAt } from 'lodash';
-
-import { IPersona } from './../persona.interface';
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
-import { PersonasService } from './../personas.service';
-import { CPTrackingService } from '../../../../../shared/services';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { IPersona } from './../persona.interface';
+import { PersonasService } from './../personas.service';
+import { PersonaValidationErrors } from './../personas.status';
+import { BaseComponent } from '../../../../../base';
+import { CPSession } from '../../../../../session';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { CPTrackingService } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-personas-list',
@@ -181,11 +181,35 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
       search = search.append('platform', this.state.platform);
     }
 
-    const stream$ = this.state.search_str
-      ? this.service.getPersonas(null, null, search)
-      : this.service.getPersonas(this.startRange, this.endRange, search);
+    const stream$ = this.service.getPersonas(this.startRange, this.endRange, search);
 
-    super.fetchData(stream$).then(({ data }) => (this.state = { ...this.state, personas: data }));
+    super
+      .fetchData(stream$)
+      .then(({ data }) => (this.state = { ...this.state, personas: data }))
+      .catch((err) => this.errorHandler(err));
+  }
+
+  errorHandler(err: HttpErrorResponse) {
+    this.loading = false;
+    let snackBarClass = 'danger';
+
+    const error = err.error.response;
+
+    let message = this.cpI18n.translate('something_went_wrong');
+
+    if (error === PersonaValidationErrors.customization_off) {
+      snackBarClass = 'warning';
+      message = this.cpI18n.translate('t_personas_edit_error_customization_off');
+    }
+
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        class: snackBarClass,
+        body: message
+      }
+    });
   }
 
   updateHeader() {

@@ -20,10 +20,11 @@
   <div class="row">
     <div class="col-6 form-group">
       <label>{{ 't_personas_form_label_platform' | cpI18n }}</label>
-      <cp-dropdown 
+      <cp-dropdown
         [items]="platformMenu"
         [selectedItem]="selectedPlatform"
-        (selected)="onPlatformChange($event)">
+        (selected)="onPlatformChange($event)"
+        [disabled]="!!form.controls['name'].value">
       </cp-dropdown>
     </div>
   </div>
@@ -32,14 +33,14 @@
     <div class="row">
       <div class="col-6 form-group">
         <label>{{ 't_personas_form_label_requires_credentials' | cpI18n }}</label>
-        <cp-dropdown 
+        <cp-dropdown
           [items]="requiresCredentialsMenu"
           [selectedItem]="selectedRequiresCredentials"
           (selected)="onRequireCredentialsChange($event)">
         </cp-dropdown>
       </div>
     </div>
-  
+
     <ng-container *ngIf="form.controls['login_requirement'].value === loginRequired">
       <div class="row form-group">
         <div class="col-8">
@@ -48,8 +49,8 @@
         </div>
         <div class="col-4">
           <div class="float-right">
-            <cp-switch 
-              [id]="['personas_pretour']" 
+            <cp-switch
+              [id]="['personas_pretour']"
               (toggle)="togglePretour($event)"
               [isChecked]="form.controls['pretour_enabled'].value">
             </cp-switch>
