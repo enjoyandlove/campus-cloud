@@ -30,7 +30,7 @@ export class PersonasResourceListOfListComponent implements OnInit {
   };
 
   state = {
-    loading: true,
+    loading: false,
     resources: [],
     showModal: false
   };
@@ -99,6 +99,10 @@ export class PersonasResourceListOfListComponent implements OnInit {
   }
 
   fetchLinks() {
+    this.state = {
+      ...this.state,
+      loading: true
+    };
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
     const getLink = (id) => this.service.getCampusLinkById(id, search);
     const stream$ = combineLatest(this.selectedIds.map(getLink));
