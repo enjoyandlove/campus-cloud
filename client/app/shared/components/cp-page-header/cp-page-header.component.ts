@@ -1,20 +1,26 @@
-import { CPSession } from './../../../session/index';
 import { Component, Input, OnChanges } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { get as _get } from 'lodash';
-
+import { CPSession } from './../../../session';
 import { isProd } from '../../../config/env';
+
+interface IChildren {
+  url: string;
+  label: string;
+  hidden?: boolean;
+  amplitude?: string;
+  allow_internal?: boolean;
+}
 
 interface IData {
   heading: string;
   subheading?: string;
   em?: string;
-  children: [
-    {
-      label: string;
-      url: string;
-    }
-  ];
+  crumbs?: {
+    url: string;
+    label: string;
+  };
+  children: IChildren[];
 }
 
 @Component({
