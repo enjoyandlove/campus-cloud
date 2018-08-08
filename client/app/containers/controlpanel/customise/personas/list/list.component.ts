@@ -13,6 +13,7 @@ import { CPSession } from '../../../../../session';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { CPTrackingService } from '../../../../../shared/services';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'cp-personas-list',
@@ -173,15 +174,33 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
   fetch() {
     let search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    if (this.state.search_str) {
-      search = search.append('search_str', this.state.search_str);
-    }
+    // if (this.state.search_str) {
+    //   search = search.append('search_str', this.state.search_str);
+    // }
 
     if (this.state.platform) {
       search = search.append('platform', this.state.platform);
     }
 
-    const stream$ = this.service.getPersonas(this.startRange, this.endRange, search);
+    let stream$ = this.service.getPersonas(this.startRange, this.endRange, search);
+
+    if (this.state.search_str) {
+      const matchesEnglish = (p: IPersona) =>
+        p.localized_name_map.en
+          .toLocaleLowerCase()
+          .includes(this.state.search_str.toLocaleLowerCase());
+
+      const matchesFrench = (p: IPersona) =>
+        p.localized_name_map.fr
+          .toLocaleLowerCase()
+          .includes(this.state.search_str.toLocaleLowerCase());
+
+      stream$ = stream$.pipe(
+        map((personas: any) =>
+          personas.filter((p: IPersona) => matchesEnglish(p) || matchesFrench(p))
+        )
+      );
+    }
 
     super
       .fetchData(stream$)
