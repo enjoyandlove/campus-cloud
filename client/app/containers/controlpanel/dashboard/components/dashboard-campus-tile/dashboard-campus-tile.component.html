@@ -19,10 +19,10 @@
                 <p>#</p>
               </div>
               <div class="col-8 no-left-padding">
-                <p i18n>{{ 'title' | cpI18n }}</p>
+                <p>{{ 'title' | cpI18n }}</p>
               </div>
               <div class="col-3 no-left-padding text-right">
-                <p i18n>{{ 'clicks' | cpI18n }}</p>
+                <p>{{ 'clicks' | cpI18n }}</p>
               </div>
             </div>
             <div class="row" *ngFor="let item of items; index as index last as last">
@@ -38,12 +38,15 @@
                       </ng-container>
                       <ng-container *ngIf="item.img_url !== '' && item.color !== ''">
                           <img class="avatar rounded" [src]="item.img_url">
-                        <!-- <div class="avatar" [ngStyle]="{'background' : '#' + item.color }"></div> -->
                       </ng-container>
                       <ng-container *ngIf="item.img_url === ''">
                           <img class="avatar rounded" [src]="defaultImage">
                       </ng-container>
-                      <p class="title text-truncate">{{ item.name }}</p>
+                      <p
+                        [attr.title]="item.name"
+                        class="title text-truncate">
+                        {{ item.name }}
+                      </p>
                     </div>
                     <div class="col-3 no-left-padding text-right">
                       <p class="semi-bold">{{ item.clicks | cpStatsFormatter }} ({{ item.clicks_average }}%)</p>
