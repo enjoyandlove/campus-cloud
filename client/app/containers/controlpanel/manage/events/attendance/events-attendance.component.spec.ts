@@ -30,7 +30,7 @@ class MockService {
   }
 }
 
-fdescribe('EventAttendanceComponent', () => {
+describe('EventAttendanceComponent', () => {
   let spy;
   let search;
   let spyAttendee;
@@ -85,8 +85,9 @@ fdescribe('EventAttendanceComponent', () => {
 
           spyOn(component, 'buildHeader');
           spy = spyOn(component.service, 'getEventById').and.returnValue(observableOf({}));
-          spyAttendee = spyOn(component.service, 'getEventAttendanceByEventId')
-            .and.returnValue(observableOf({}));
+          spyAttendee = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
+            observableOf({})
+          );
         });
     })
   );
@@ -133,9 +134,6 @@ fdescribe('EventAttendanceComponent', () => {
     component.fetchAttendees();
 
     expect(spyAttendee).toHaveBeenCalledTimes(1);
-    expect(spyAttendee).toHaveBeenCalledWith(
-      component.startRange,
-      component.endRange,
-      _search);
+    expect(spyAttendee).toHaveBeenCalledWith(component.startRange, component.endRange, _search);
   });
 });

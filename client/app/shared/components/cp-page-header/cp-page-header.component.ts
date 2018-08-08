@@ -1,18 +1,26 @@
 import { Component, Input, OnChanges } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
-
+import { ActivatedRoute, Router } from '@angular/router';
+import { get as _get } from 'lodash';
+import { CPSession } from './../../../session';
 import { isProd } from '../../../config/env';
+
+interface IChildren {
+  url: string;
+  label: string;
+  hidden?: boolean;
+  amplitude?: string;
+  allow_internal?: boolean;
+}
 
 interface IData {
   heading: string;
   subheading?: string;
   em?: string;
-  children: [
-    {
-      label: string;
-      url: string;
-    }
-  ];
+  crumbs?: {
+    url: string;
+    label: string;
+  };
+  children: IChildren[];
 }
 
 @Component({
@@ -28,10 +36,16 @@ export class CPPageHeaderComponent implements OnChanges {
   readyFeatures = [];
   extraChildren = [];
 
-  constructor(public router: Router, public route: ActivatedRoute) {}
+  constructor(public router: Router, public route: ActivatedRoute, public session: CPSession) {}
 
   getProductionReadyFeatures() {
-    return this.data.children.filter((child) => !child.hasOwnProperty('hiddenInProd'));
+    const hidden = (child) => _get(child, 'hidden', false);
+    const internalDemo = (child) => _get(child, 'allow_internal', false);
+    const isInternal = this.session.isInternal;
+
+    return this.data.children.filter(
+      (c) => (hidden(c) && internalDemo(c) && isInternal ? c : !hidden(c))
+    );
   }
 
   ngOnChanges() {
