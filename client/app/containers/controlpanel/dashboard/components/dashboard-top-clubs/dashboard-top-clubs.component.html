@@ -37,10 +37,19 @@
                         class="avatar rounded"
                         [src]="item.logo_url === '' ? defaultImage : item.logo_url">
                       <ng-container *ngIf="!isSuperAdmin">
-                        <p class="title text-truncate">{{ item.name }}</p>
+                        <p
+                          [attr.title]="item.name"
+                          class="title text-truncate">
+                          {{ item.name }}
+                        </p>
                       </ng-container>
                       <ng-container *ngIf="isSuperAdmin">
-                        <p class="title text-truncate hover" (click)="router.navigate(['/manage/clubs/' + item.id + '/info'])">{{ item.name }}</p>
+                        <p
+                          [attr.title]="item.name"
+                          class="title text-truncate hover"
+                          (click)="router.navigate(['/manage/clubs/' + item.id + '/info'])">
+                          {{ item.name }}
+                        </p>
                       </ng-container>
                     </div>
                     <div class="col-2 no-left-padding text-right">

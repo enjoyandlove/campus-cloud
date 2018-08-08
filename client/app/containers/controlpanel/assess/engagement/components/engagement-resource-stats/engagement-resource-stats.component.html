@@ -76,7 +76,9 @@
                           <img
                             class="resource-avatar rounded"
                             [src]="item.image === '' ? defaultImage : item.image">
-                          <p class="service-title text-truncate">{{ item.name }}</p>
+                          <p
+                            [attr.title]="item.name"
+                            class="service-title text-truncate">{{ item.name }}</p>
                         </div>
                         <div class="col-2 no-left-padding">
                           <p>{{ item.attendees }}</p>
