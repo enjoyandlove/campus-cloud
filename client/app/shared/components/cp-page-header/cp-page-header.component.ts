@@ -1,5 +1,7 @@
+import { CPSession } from './../../../session/index';
 import { Component, Input, OnChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { get as _get } from 'lodash';
 
 import { isProd } from '../../../config/env';
 
@@ -28,10 +30,16 @@ export class CPPageHeaderComponent implements OnChanges {
   readyFeatures = [];
   extraChildren = [];
 
-  constructor(public router: Router, public route: ActivatedRoute) {}
+  constructor(public router: Router, public route: ActivatedRoute, public session: CPSession) {}
 
   getProductionReadyFeatures() {
-    return this.data.children.filter((child) => !child.hasOwnProperty('hiddenInProd'));
+    const hidden = (child) => _get(child, 'hidden', false);
+    const internalDemo = (child) => _get(child, 'allow_internal', false);
+    const isInternal = this.session.isInternal;
+
+    return this.data.children.filter(
+      (c) => (hidden(c) && internalDemo(c) && isInternal ? c : !hidden(c))
+    );
   }
 
   ngOnChanges() {
