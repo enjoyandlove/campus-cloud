@@ -1,6 +1,12 @@
 @import '~styles/components/card';
 @import '~styles/components/table';
 @import '~styles/components/button';
+@import '~styles/components/dropdown';
+
+.dropdown-menu,
+.action-dropdown-list {
+  @include cpDropdownMenu();
+}
 
 .actions {
   @include card-margin();
@@ -9,4 +15,24 @@
 
 .margin-right {
   margin-right: 20px;
+}
+
+.action-dropdown {
+  margin-left: -2px;
+  position: relative;
+
+  i {
+    padding: 4px;
+    font-size: 23px;
+  }
+
+  .dropdown-menu {
+    top: 115%;
+    padding: 0;
+    min-width: 200px;
+
+    a:hover {
+      background: none;
+    }
+  }
 }

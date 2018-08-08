@@ -38,6 +38,12 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     sort_field: 'firstname',
     sort_direction: 'asc'
   };
+
+  eventProperties = {
+    host_type: null,
+    engagement_type: null
+  };
+
   eventData;
   messageData;
   listIdFromUrl;
@@ -110,7 +116,9 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  onFlashMessage() {
+  onFlashMessage(data) {
+    this.trackAmplitudeEvents(data.hostType);
+
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
@@ -153,6 +161,18 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     }
 
     this.fetch();
+  }
+
+  trackAmplitudeEvents(host_type) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type,
+      engagement_type: amplitudeEvents.SINGLE_STUDENT
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_SENT_MESSAGE,
+      this.eventProperties);
   }
 
   ngOnInit() {

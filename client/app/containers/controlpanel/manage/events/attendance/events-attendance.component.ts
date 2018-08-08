@@ -10,10 +10,13 @@ import { FORMAT } from '../../../../../shared/pipes';
 import { EventUtilService } from './../events.utils.service';
 import { CPDate } from '../../../../../shared/utils/date/date';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { createSpreadSheet } from '../../../../../shared/utils/csv/parser';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { canSchoolReadResource } from '../../../../../shared/utils/privileges';
+import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 
 interface IState {
   sort_field: string;
@@ -42,22 +45,26 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   @Input() isOrientation: boolean;
 
   event;
+  canAssess;
   urlPrefix;
-  attendees;
+  appCheckIn;
+  messageData;
   sortingLabels;
+  attendees = [];
   loading = true;
   eventId: number;
+  allStudents = false;
   state: IState = state;
   attendeesLoading = true;
   downloadEventProperties;
+  isSendMessageModal = false;
   dateFormat = FORMAT.DATETIME;
 
   eventProperties = {
-    data_type: null,
-    event_id: null,
-    start_date: null,
-    end_date: null,
-    location: null
+    host_type: null,
+    sub_menu_name: null,
+    engagement_type: null,
+    announcement_source: null
   };
 
   constructor(
@@ -242,6 +249,83 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     );
   }
 
+  onFlashMessage(data) {
+    this.trackSendMessageEvents(data.hostType);
+
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        body: this.cpI18n.translate('announcement_success_sent'),
+        autoClose: true
+      }
+    });
+  }
+
+  onComposeTeardown() {
+    $('#sendMessageModal').modal('hide');
+    this.messageData = null;
+    this.isSendMessageModal = false;
+  }
+
+  messageAllAttendees() {
+    this.allStudents = true;
+
+    const userIds = [];
+
+    this.attendees.map((attendee) => {
+      if (attendee.user_id) {
+        userIds.push(attendee.user_id);
+      }
+    });
+
+    this.messageData = {
+      name: this.event.title,
+      userIds
+    };
+
+    this.loadModal();
+  }
+
+  messageAttendee(attendee) {
+    this.allStudents = false;
+
+    this.messageData = {
+      name: `${attendee.firstname} ${attendee.lastname}`,
+      userIds: [attendee.user_id]
+    };
+
+    this.loadModal();
+  }
+
+  loadModal() {
+    this.isSendMessageModal = true;
+    setTimeout(
+      () => {
+        $('#sendMessageModal').modal();
+      },
+
+      1
+    );
+  }
+
+  trackSendMessageEvents(host_type) {
+    const engagement_type = this.allStudents
+      ? amplitudeEvents.ALL_STUDENTS
+      : amplitudeEvents.SINGLE_STUDENT;
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type,
+      engagement_type,
+      announcement_source: amplitudeEvents.EVENT_ASSESSMENT,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MENAGE_SENT_MESSAGE,
+      this.eventProperties);
+  }
+
   ngOnInit() {
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,
@@ -255,6 +339,9 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       name: this.cpI18n.translate('attendee'),
       method: this.cpI18n.translate('events_checked_in_method')
     };
+
+    this.appCheckIn = CheckInMethod.app;
+    this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
 
     this.fetch();
   }

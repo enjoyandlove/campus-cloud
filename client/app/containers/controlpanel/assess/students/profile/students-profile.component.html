@@ -124,7 +124,7 @@
   modalId="studentsComposeModal">
   <cp-students-compose
     [props]="messageData"
-    (success)="onFlashMessage()"
+    (success)="onFlashMessage($event)"
     (teardown)="onComposeTeardown()">
   </cp-students-compose>
 </cp-modal>
