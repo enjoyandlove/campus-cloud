@@ -3,6 +3,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { get as _get } from 'lodash';
 import { combineLatest, Observable } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
@@ -242,6 +243,30 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     });
   }
 
+  errorHandler(err = null) {
+    let snackBarClass = 'danger';
+    let body = _get(err, ['error', 'response'], this.cpI18n.translate('something_went_wrong'));
+
+    if (body === PersonaValidationErrors.customization_off) {
+      snackBarClass = 'warning';
+      body = this.cpI18n.translate('t_personas_edit_error_customization_off');
+    }
+
+    if (err.status === 404) {
+      this.router.navigate(['/customize/personas']);
+    }
+
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        autoClose: true,
+        class: snackBarClass,
+        body: body
+      }
+    });
+  }
+
   fetch() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
@@ -259,7 +284,8 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
         this.buildHeader();
         this.buildForm(data);
         this.loadServices();
-      });
+      })
+      .catch((err) => this.errorHandler(err));
   }
 
   onDeleteError(message) {
