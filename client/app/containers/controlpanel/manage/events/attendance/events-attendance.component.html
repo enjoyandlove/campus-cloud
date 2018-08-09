@@ -126,9 +126,13 @@
                 <div class="col-1">
                   <span>
                     <i
+                      data-toggle="tooltip"
+                      data-placement="bottom"
+                      [title]="tooltipContent"
                       class="material-icons hover"
+                      [class.disabled]="!hasPermission"
                       (click)="messageAttendee(attendee)"
-                      *ngIf="attendee.check_in_method === appCheckIn && canAssess">
+                      *ngIf="attendee.check_in_method === appCheckIn">
                       chat_bubble
                     </i>
                   </span>

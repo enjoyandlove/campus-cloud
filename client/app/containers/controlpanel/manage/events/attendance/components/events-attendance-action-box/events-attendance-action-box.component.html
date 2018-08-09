@@ -5,7 +5,7 @@
     </div>
     <div class="col text-right">
       <button
-        *ngIf="canDownload"
+        *ngIf="hasPermission"
         (click)="downloadExcel()"
         class="cpbtn cpbtn--cancel margin-right">
         {{ 'download_csv' | cpI18n }}
@@ -19,9 +19,11 @@
         <i class="material-icons" data-toggle="dropdown">expand_more</i>
         <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
           <li
-            title="No attendees available"
-            *ngIf="canAssess"
+            data-toggle="tooltip"
+            data-placement="left"
+            [title]="tooltipContent"
             class="list-as-anchor"
+            [class.disabled]="disabled"
             (click)="sendAttendeesMessage()">
             {{ 't_events_assessment_message_attendees' | cpI18n }}
           </li>

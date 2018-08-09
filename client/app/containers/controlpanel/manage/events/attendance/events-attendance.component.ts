@@ -15,7 +15,7 @@ import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { createSpreadSheet } from '../../../../../shared/utils/csv/parser';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { canSchoolReadResource } from '../../../../../shared/utils/privileges';
+import { canSchoolWriteResource } from '../../../../../shared/utils/privileges/privileges';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 
 interface IState {
@@ -49,8 +49,10 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   urlPrefix;
   appCheckIn;
   messageData;
+  hasPermission;
   sortingLabels;
   attendees = [];
+  tooltipContent;
   loading = true;
   eventId: number;
   allStudents = false;
@@ -143,7 +145,18 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(stream$)
-      .then((res) => (this.attendees = res.data))
+      .then((res) => {
+        this.attendees = res.data;
+        setTimeout(
+          () => {
+            $(function () {
+              $('[data-toggle="tooltip"]').tooltip();
+            });
+          },
+
+          10
+        );
+      })
       .catch((_) => {});
   }
 
@@ -287,6 +300,10 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   messageAttendee(attendee) {
+    if (!this.hasPermission) {
+      return;
+    }
+
     this.allStudents = false;
 
     this.messageData = {
@@ -341,7 +358,11 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     };
 
     this.appCheckIn = CheckInMethod.app;
-    this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
+    this.hasPermission = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.event_attendance);
+
+    this.tooltipContent = !this.hasPermission
+      ? this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text')
+      : '';
 
     this.fetch();
   }

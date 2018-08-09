@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { CPSession } from './../../../../../../../session';
 import { EventUtilService } from '../../../events.utils.service';
-import { canSchoolReadResource } from '../../../../../../../shared/utils/privileges';
+import { CPI18nService } from '../../../../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants/privileges';
 import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
 
@@ -20,11 +20,16 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   @Output() createExcel: EventEmitter<null> = new EventEmitter();
   @Output() sendMessage: EventEmitter<null> = new EventEmitter();
 
+  disabled;
   eventCheckinRoute;
-  canAssess = false;
-  canDownload = false;
+  tooltipContent = '';
+  hasPermission = false;
 
-  constructor(public session: CPSession, public utils: EventUtilService) {}
+  constructor(
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public utils: EventUtilService
+  ) {}
 
   onSearch(query) {
     this.querySearch.emit(query);
@@ -35,12 +40,23 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   }
 
   sendAttendeesMessage() {
+    if (this.disabled) {
+      return;
+    }
+
     this.sendMessage.emit();
   }
 
   ngOnInit() {
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
-    this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
-    this.canDownload = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.event_attendance);
+    this.hasPermission = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.event_attendance);
+
+    this.disabled = !this.hasPermission || !this.attendees;
+
+    if (!this.attendees) {
+      this.tooltipContent = this.cpI18n.translate('t_events_attendance_no_attendees_tooltip_text');
+    } else if (!this.hasPermission) {
+      this.tooltipContent = this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text');
+    }
   }
 }

@@ -6,6 +6,7 @@
 .dropdown-menu,
 .action-dropdown-list {
   @include cpDropdownMenu();
+  overflow-y: unset;
 }
 
 .actions {
@@ -34,5 +35,11 @@
     a:hover {
       background: none;
     }
+  }
+
+  .disabled {
+    cursor: default !important;
+    background: none !important;
+    color: $color-grey !important;
   }
 }
