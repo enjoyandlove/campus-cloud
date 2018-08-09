@@ -21,10 +21,10 @@
     <div class="col-6 form-group">
       <label>{{ 't_personas_form_label_platform' | cpI18n }}</label>
       <cp-dropdown
+        [disabled]="isEdit"
         [items]="platformMenu"
         [selectedItem]="selectedPlatform"
-        (selected)="onPlatformChange($event)"
-        [disabled]="!!form.controls['name'].value">
+        (selected)="onPlatformChange($event)">
       </cp-dropdown>
     </div>
   </div>
