@@ -8,6 +8,12 @@ export class AudienceUtilsService {
   constructor(private cpI18n: CPI18nService) {}
 
   parsedAudience(audiences): Array<any> {
+    const heading = {
+      action: null,
+      heading: true,
+      label: this.cpI18n.translate('audience_my_audiences')
+    };
+
     audiences = audiences.map((audience) => {
       const users = _get(audience, 'count', null);
 
@@ -19,6 +25,10 @@ export class AudienceUtilsService {
         type: audience.type
       };
     });
+
+    if (audiences.length) {
+      audiences.unshift(heading);
+    }
 
     return audiences;
   }
