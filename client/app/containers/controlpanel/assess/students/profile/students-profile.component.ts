@@ -8,6 +8,7 @@ import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
 import { CPDate } from './../../../../../shared/utils/date';
 import { FORMAT } from './../../../../../shared/pipes/date';
+import { AssessUtilsService } from '../../assess.utils.service';
 import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from './../../../../../base/base.component';
 import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
@@ -54,7 +55,6 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   timeFormat = FORMAT.TIME;
   loadingStudentData = true;
   starSize = STAR_SIZE.SMALL;
-  isEvent = 'event';
 
   state = {
     scope: ALL_ENGAGEMENTS
@@ -66,6 +66,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
     public service: StudentsService,
+    public utils: AssessUtilsService,
     public cpTracking: CPTrackingService
   ) {
     super();

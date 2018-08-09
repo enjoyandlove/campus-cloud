@@ -9,17 +9,27 @@ export const cpTrackAmplitude = {
 };
 
 export const amplitudeEvents = {
+  NEW: 'New',
+
+  WALL: 'Wall',
+
   CLUB: 'Club',
+
+  INFO: 'Info',
 
   USER: 'User',
 
   LIST: 'List',
 
+  STORE: 'Store',
+
   EVENT: 'Event',
 
-  MEMBER: 'Member',
+  TODOS: 'To-Dos',
 
-  CAMPUS: 'Campus',
+  EVENTS: 'Events',
+
+  MEMBER: 'Member',
 
   ACTIVE: 'Active',
 
@@ -33,11 +43,21 @@ export const amplitudeEvents = {
 
   NEW_AUDIENCE: 'New',
 
+  EXISTING: 'Existing',
+
+  PROVIDER: 'Provider',
+
+  EMPLOYER: 'Employer',
+
+  TEMPLATE: 'Template',
+
   DISABLED: 'Disabled',
 
   MENU_MANAGE: 'Manage',
 
   MENU_ASSESS: 'Assess',
+
+  MENU_STUDIO: 'Studio',
 
   MENU_NOTIFY: 'Notify',
 
@@ -53,7 +73,7 @@ export const amplitudeEvents = {
 
   ATTENDANCE: 'Attendance',
 
-  CREATE_JOB: 'Create Job',
+  PAST_EVENT: 'Past Event',
 
   LOGGED_OUT: 'Logged Out',
 
@@ -67,27 +87,17 @@ export const amplitudeEvents = {
 
   ONE_SERVICE: 'One Service',
 
-  CREATE_CLUB: 'Create Club',
-
-  CREATE_DEAL: 'Create Deal',
-
   FULL_ACCESS: 'Full Access',
-
-  CREATE_LIST: 'Create List',
-
-  CREATE_LINK: 'Create link',
 
   CUSTOM_LIST: 'Custom List',
 
-  CREATE_EVENT: 'Create Event',
+  VIEWED_ITEM: 'Viewed Item',
 
-  MENU_CUSTOMIZE: 'Customize',
+  DELETED_ITEM: 'Deleted Item',
 
-  SET_PASSWORD: 'Set Password',
+  ANNOUNCEMENT: 'Announcement',
 
   DYNAMIC_LIST: 'Dynamic List',
-
-  CREATE_STORE: 'Create Store',
 
   CAROUSEL_WHEEL: 'Carousel Wheel',
 
@@ -95,17 +105,17 @@ export const amplitudeEvents = {
 
   NO_ENGAGEMENT: 'No Engagement',
 
-  CLICKED_CREATE: 'Clicked Create',
-
   UPLOADED_PHOTO: 'Uploaded Photo',
 
-  CREATE_SERVICE: 'Create Service',
+  CREATED_ACCOUNT: 'Created Account',
+
+  UPCOMING_EVENT: 'Upcomping Event',
+
+  CALENDAR_EVENTS: 'Calendar Events',
 
   RESET_PASSWORD: 'Reset Password',
 
   ONE_ENGAGEMENT: 'One Engagement',
-
-  CREATE_PROGRAM: 'Create Program',
 
   SINGLE_STUDENT: 'Single Student',
 
@@ -113,29 +123,23 @@ export const amplitudeEvents = {
 
   CHANGED_SCHOOL: 'Changed School',
 
-  CREATE_TEMPLATE: 'Create Template',
-
   CLICKED_MENU: 'Clicked Menu Item',
 
   CHANGE_PASSWORD: 'Changed Password',
 
-  CREATE_ATHLETIC: 'Create Athletic',
-
-  CREATE_LOCATION: 'Create Location',
-
-  CREATE_CALENDAR: 'Create Calendar',
-
-  CREATE_EMPLOYER: 'Create Employer',
-
   WALL_MOVED_POST: 'Wall - Moved Post',
+
+  CLICKED_PAGE_ITEM: 'Clicked Page Item',
 
   VISITED_HELP_DESK: 'Visited Help Desk',
 
   WALL_DELETED_POST: 'Wall - Deleted Post',
 
-  CLICKED_SUB_MENU: 'Clicked Sub-Menu Item',
+  CLICKED_CREATE_ITEM: 'Clicked Create Item',
 
-  CREATE_ANNOUNCEMENT: 'Create Announcement',
+  CREATE_ACCOUNT_PAGE: 'Create Account Page',
+
+  CLICKED_SUB_MENU: 'Clicked Sub-Menu Item',
 
   INVITED_TEAM_MEMBER: 'Invited Team Member',
 
@@ -153,8 +157,6 @@ export const amplitudeEvents = {
 
   WALL_SUBMITTED_POST: 'Wall - Submitted Post',
 
-  CREATE_CALENDAR_ITEM: 'Create Calendar Item',
-
   MANAGE_CREATED_LINK: 'Manage - Created Link',
 
   MANAGE_UPDATED_LINK: 'Manage - Updated Link',
@@ -162,6 +164,8 @@ export const amplitudeEvents = {
   MANAGE_CREATED_CLUB: 'Manage - Created Club',
 
   MANAGE_UPDATED_CLUB: 'Manage - Updated Club',
+
+  CLICKED_CHANGE_BUTTON: 'Clicked Change Button',
 
   MANAGE_APPROVED_CLUB: 'Manage - Approved Club',
 
@@ -193,8 +197,6 @@ export const amplitudeEvents = {
 
   MANAGE_CLICKED_CHECKIN: 'Manage - Clicked Check-In',
 
-  MANAGE_CLICKED_FEEDBACK: 'Manage - Clicked Feedback',
-
   MANAGE_CREATED_LOCATION: 'Manage - Created Location',
 
   MANAGE_CREATED_CALENDAR: 'Manage - Created Calendar',
@@ -204,8 +206,6 @@ export const amplitudeEvents = {
   MANAGE_ADDED_CLUB_MEMBER: 'Manage - Added Club Member',
 
   MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
-
-  MANAGE_DELETED_CLUB_MEMBER: 'Manage - Deleted Club Member',
 
   CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
 
@@ -221,11 +221,11 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_CALENDAR_EVENT: 'Manage - Updated Calendar Event',
 
+  ASSESS_VIEWED_TOP_ORIENTATIONS: 'Assess - Viewed Top Orientations',
+
   MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
 
   MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
-
-  MANAGE_DELETED_SERVICE_PROVIDER: 'Manage - Deleted Service Provider',
 
   MANAGE_CREATED_SERVICE_PROVIDER: 'Manage - Created Service Provider'
 };

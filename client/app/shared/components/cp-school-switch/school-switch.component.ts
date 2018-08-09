@@ -1,12 +1,11 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
+import { appStorage } from '../../../shared/utils/storage';
+import { amplitudeEvents } from '../../constants/analytics';
 import { CPSession, ISchool, IUser } from '../../../session';
 import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
-import { appStorage } from '../../../shared/utils/storage';
-import { CPTrackingService } from '../../services';
+import { CPTrackingService, RouteLevel } from '../../services';
 import { ZendeskService } from './../../services/zendesk.service';
-import { CP_TRACK_TO } from '../../directives/tracking';
-import { amplitudeEvents } from '../../constants/analytics';
 
 @Component({
   selector: 'cp-school-switch',
@@ -18,8 +17,8 @@ export class SchoolSwitchComponent implements OnInit {
 
   helpDeskUrl;
   isSchoolPanel;
-  amplitudeEvents;
   canManageAdmins;
+  amplitudeEvents;
   selectedSchool: ISchool;
   schools: Array<ISchool> = [];
   defaultImage = require('public/default/user.png');
@@ -43,16 +42,13 @@ export class SchoolSwitchComponent implements OnInit {
     this.isSchoolPanel = !this.isSchoolPanel;
   }
 
-  trackEvent(eventName, hasProperties) {
-    let eventProperties = this.cpTracking.getEventProperties();
-
-    eventProperties = hasProperties ? eventProperties : null;
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
-      eventProperties
+  trackEvent(eventName) {
+    const eventProperties =  {
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
+
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
 
   ngOnInit() {

@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { sortBy } from 'lodash';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { ICampusGuide } from './../sections/section.interface';
+import { SectionUtilsService } from './../sections/section.utils.service';
 import { ITile } from './tile.interface';
-import { TileFeatureRank, TileVisibility } from './tiles.status';
+import { TileCategoryRank, TileFeatureRank, TileVisibility } from './tiles.status';
 import { CPSession } from '../../../../../session';
 import { IPersona } from '../persona.interface';
 
@@ -10,18 +13,29 @@ import { IPersona } from '../persona.interface';
 export class TilesUtilsService {
   defaultTileCategoryIds = [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13];
 
-  constructor(public fb: FormBuilder, public session: CPSession) {}
+  constructor(
+    public fb: FormBuilder,
+    public session: CPSession,
+    public sectionUtils: SectionUtilsService
+  ) {}
 
   isTileDefault(tile: ITile) {
     return this.defaultTileCategoryIds.includes(tile.tile_category_id);
   }
 
   isCampaignTile(tile: ITile) {
-    return tile.related_link_data.link_url === 'oohlala://school_campaign';
+    return (
+      tile.related_link_data.link_url === 'oohlala://school_campaign' ||
+      tile.related_link_data.link_url === 'oohlala://campaign_list'
+    );
   }
 
   isFeatured(tile: ITile) {
-    return tile.featured_rank !== -1;
+    return tile.featured_rank > -1;
+  }
+
+  isCategoryZero(tile: ITile) {
+    return tile.tile_category_id === 0 && tile.featured_rank === -1;
   }
 
   isTileVisible(tile: ITile) {
@@ -34,30 +48,62 @@ export class TilesUtilsService {
     return CPI18nService.getLocale().startsWith('fr') ? name.fr : name.en;
   }
 
-  campusGuideTileForm(personaId, lastRank, tileCategoryId) {
+  campusGuideTileForm(personaId, guide: ICampusGuide, tileToEdit = null) {
+    const isTemporaryGuide = this.sectionUtils.isTemporaryGuide(guide);
+    const lastRank = isTemporaryGuide ? 1 : sortBy(guide.tiles, (t: ITile) => -t.rank)[0].rank + 1;
+
+    const lastFeaturedRank = isTemporaryGuide
+      ? 1
+      : sortBy(guide.tiles, (t: ITile) => -t.featured_rank)[0].rank + 1;
+
+    const _tile = tileToEdit
+      ? { ...tileToEdit }
+      : {
+          name: null,
+          rank: guide._featureTile ? TileCategoryRank.hidden : lastRank,
+          img_url: null,
+          color: 'FFFFFF',
+          extra_info: null,
+          visibility_status: TileVisibility.visible,
+          tile_category_id: guide._featureTile || guide._categoryZero ? 0 : guide.id,
+          featured_rank: guide._featureTile ? lastFeaturedRank : TileFeatureRank.notFeatured
+        };
+
     return this.fb.group({
       school_id: [this.session.g.get('school').id, Validators.required],
       school_persona_id: [personaId, Validators.required],
-      name: [null, Validators.required],
-      rank: [lastRank, Validators.required],
-      img_url: [null, Validators.required],
-      color: ['FFFFFF', Validators.required],
-      extra_info: [null],
-      visibility_status: [TileVisibility.visible],
-      tile_category_id: [tileCategoryId, Validators.required],
-      featured_rank: [TileFeatureRank.notFeatured, Validators.required]
+      name: [_tile.name, Validators.required],
+      rank: [_tile.rank, Validators.required],
+      img_url: [_tile.img_url, Validators.required],
+      color: [_tile.color, Validators.required],
+      extra_info: [_tile.extra_info],
+      visibility_status: [_tile.visibility_status],
+      tile_category_id: [_tile.tile_category_id, null],
+      featured_rank: [_tile.featured_rank, Validators.required]
     });
   }
 
-  campusLinkForm(nameRequired = true, imageRequired = true) {
+  campusLinkForm(nameRequired = true, imageRequired = true, link = null) {
+    const _link = link
+      ? { ...link }
+      : {
+          name: null,
+          link_url: null,
+          link_params: null,
+          img_url: null,
+          open_in_browser: 0,
+          is_system: 1,
+          school_id: this.session.g.get('school').id
+        };
+
     return this.fb.group({
-      name: [null, nameRequired ? Validators.required : null],
-      link_url: [null, Validators.required],
-      link_params: [null],
-      img_url: [null, imageRequired ? Validators.required : null],
-      open_in_browser: [0],
-      is_system: [1],
-      school_id: [this.session.g.get('school').id, Validators.required]
+      name: [_link.name, nameRequired ? Validators.required : null],
+      link_url: [_link.link_url, Validators.required],
+      link_params: [_link.link_params, Validators.required],
+      img_url: [_link.img_url, imageRequired ? Validators.required : null],
+      open_in_browser: [_link.open_in_browser],
+      is_system: [_link.is_system],
+      school_id: [_link.school_id, Validators.required]
     });
   }
 }

@@ -417,13 +417,13 @@
     "message": "Aucune donnée d'événement"
   },
   "assess_no_event_data_help": {
-    "message": "Pour voir les données des événements utilisez le filtre d'implication"
+    "message": "Pour voir les données des événements, utilisez le filtre d'implication"
   },
   "assess_no_service_data": {
     "message": "Aucune données de service"
   },
   "assess_no_service_data_help": {
-    "message": "Pour voir les données des services utilisez le filtre d'implication"
+    "message": "Pour voir les données des services, utilisez le filtre d'implication"
   },
   "assess_number_of_checkins": {
     "message": "# de présences"
@@ -961,7 +961,7 @@
     "message": "Téléverser fichier CSV"
   },
   "customise": {
-    "message": "Personnaliser"
+    "message": "Studio"
   },
   "customise_banner": {
     "message": "Bannière"
@@ -2317,8 +2317,14 @@
   "type": {
     "message": "Type"
   },
+  "t_assess_all_orientations": {
+    "message": "Tous les programmes d'orientation"
+  },
   "t_assess_chart_tooltip_label_engagements": {
     "message": "Implication(s)"
+  },
+  "t_assess_no_orientation_data_help": {
+    "message": "Pour voir les données des programmes d'orientation, utilisez le filtre d'implication"
   },
   "t_audience_dynamic_integration_disabled": {
     "message": "Pour activer cette fonctionalité, veuillez contacter votre consultant en engagement mobile."
@@ -2334,6 +2340,9 @@
   },
   "t_dashboard_chart_tooltip_label_registrations": {
     "message": "Inscriptions"
+  },
+  "t_dashboard_top_orientation": {
+    "message": "Palmarès des orientations"
   },
   "t_deals_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s?"
@@ -2426,13 +2435,22 @@
     "message": "Cette expérience a des utilisateurs associés, donc vous ne pouvez pas la supprimer."
   },
   "t_personas_delete_guide_error_non_empty_category": {
-    "message": "Cette section a des tuiles associées, donc vous ne pouvez pas la supprimer. Supprimez toutes les tuiles de la section, et essayez de nouveau."
+    "message": "Pour supprimer une section, supprimez toutes les tuiles de la section."
+  },
+  "t_personas_delete_tile_modal_body": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
   "t_personas_edit_error_users_associated": {
     "message": "Cette expérience a des utilisateurs associés, donc vous ne pouvez pas modifier ses exigences de connexion."
   },
+  "t_personas_edit_header_title": {
+    "message": "Éditer expérience"
+  },
   "t_personas_edit_message_on_save_ok": {
     "message": "Changements enregistrés."
+  },
+  "t_personas_edit_submit_button": {
+    "message": "Enregistrer les changements"
   },
   "t_personas_form_delete_button": {
     "message": "Supprimer expérience"
@@ -2509,6 +2527,9 @@
   "t_personas_tile_create_resource_type_courses": {
     "message": "Cours"
   },
+  "t_personas_tile_create_resource_type_event_list": {
+    "message": "Événements"
+  },
   "t_personas_tile_create_resource_type_exams": {
     "message": "Examens"
   },
@@ -2584,6 +2605,15 @@
   "t_persona_create_cancel_button": {
     "message": "Annuler"
   },
+  "t_persona_delete_modal_body": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "t_persona_delete_modal_title": {
+    "message": "Supprimer expérience"
+  },
+  "t_persona_edit_cancel_button": {
+    "message": "Annuler"
+  },
   "t_persona_list_button_customize": {
     "message": "Personnaliser"
   },
@@ -2616,6 +2646,9 @@
   },
   "t_shared_preview": {
     "message": "Aperçu"
+  },
+  "t_shared_save": {
+    "message": "Terminé"
   },
   "t_shared_show": {
     "message": "Montrer"

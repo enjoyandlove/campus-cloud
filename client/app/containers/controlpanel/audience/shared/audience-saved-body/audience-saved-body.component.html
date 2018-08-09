@@ -1,7 +1,7 @@
 <label>{{'audience_label_audience' | cpI18n}}</label>
 <cp-dropdown 
   [reset]="reset"
-  [items]="audiences$ | async" 
+  [items]="audiences"
   [disabled]="!canReadAudience"
   [selectedItem]="selectedItem"
   (selected)="selected.emit($event)">

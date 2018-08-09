@@ -19,8 +19,8 @@
 
     <div *ngIf="state.personas.length">
       <ul class="personas cp-form">
-        <li 
-          class="cp-form__item col-12" 
+        <li
+          class="cp-form__item col-12"
           *ngFor="let persona of state.personas; let i = index">
           <div class="row">
             <span class="col-5 text-truncate personas__name">
@@ -28,27 +28,27 @@
             </span>
             <span class="col-7 float-right personas__actions text-right">
               <fieldset [disabled]="state.updating">
-                <button 
+                <button
                   type="button"
                   [disabled]="i === 0"
                   class="cpbtn cpbtn--link"
                   (click)="onRankUp(persona, i)">
                   <i class="material-icons">keyboard_arrow_up</i>
                 </button>
-                <button 
+                <button
                   type="button"
                   class="cpbtn cpbtn--link"
                   (click)="onRankDown(persona, i)"
                   [disabled]="i === state.personas.length - 1">
                   <i class="material-icons">keyboard_arrow_down</i>
                 </button>
-                <a 
+                <a
                   [routerLink]="[persona.id]"
                   class="cpbtn cpbtn--link">
                   <i class="material-icons">settings_applications</i>
                   {{'t_persona_list_button_customize' | cpI18n }}
                 </a>
-                <a 
+                <a
                   [routerLink]="[persona.id + '/edit']"
                   class="cpbtn cpbtn--link">
                   <i class="material-icons">edit</i>
@@ -61,11 +61,11 @@
       </ul>
 
       <cp-pagination
-        [pageNext]="pageNext"
-        [pagePrev]="pagePrev"
         [pageNumber]="pageNumber"
         (next)="onPaginationNext()"
-        (previous)="onPaginationPrevious()">
+        (previous)="onPaginationPrevious()"
+        [pageNext]="pageNext && !state.search_str"
+        [pagePrev]="pagePrev && !state.search_str">
       </cp-pagination>
     </div>
   </div>

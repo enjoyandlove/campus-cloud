@@ -1,16 +1,17 @@
-import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
-import { OrientationListComponent } from './list.component';
+
+import { ManageHeaderService } from '../../utils';
 import { reducers } from '../../../../../reducers';
 import { CPSession } from '../../../../../session';
-import { mockSchool } from '../../../../../session/mock/school';
-import { CPI18nService } from '../../../../../shared/services';
-import { ManageHeaderService } from '../../utils';
 import { OrientationModule } from '../orientation.module';
+import { OrientationListComponent } from './list.component';
 import { OrientationService } from '../orientation.services';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 class MockOrientationService {
   dummy;
@@ -44,6 +45,7 @@ describe('OrientationListComponent', () => {
         providers: [
           CPSession,
           CPI18nService,
+          CPTrackingService,
           ManageHeaderService,
           { provide: OrientationService, useClass: MockOrientationService }
         ]

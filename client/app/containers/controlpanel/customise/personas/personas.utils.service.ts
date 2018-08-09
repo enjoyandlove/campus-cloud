@@ -1,3 +1,4 @@
+import { TileCategoryRank } from './tiles/tiles.status';
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { flatten, sortBy, get as _get } from 'lodash';
@@ -34,22 +35,22 @@ export class PersonasUtilsService {
       .filter((tile: ITile) => tile.rank !== -1);
   }
 
-  getCategoryZeroTiles(guides: Array<ICampusGuide>) {
-    return sortBy(
-      flatten(
-        guides.map((guide: ICampusGuide) =>
-          guide.tiles.filter((tile: ITile) => tile.tile_category_id === 0)
-        )
-      ),
-      (i) => i.rank
+  getCategoryZeroTiles(tiles: ITile[]) {
+    const categoryZeroTiles = tiles.filter(
+      (tile: ITile) => tile.tile_category_id === 0 && tile.featured_rank === -1
     );
+
+    return sortBy(flatten(categoryZeroTiles), (i) => i.rank);
   }
 
-  getFeaturedTiles(guides: Array<ICampusGuide>) {
-    const isFeatured = (tile: ITile) => tile.featured_rank !== -1;
-    const featureTiles = guides.map((g: ICampusGuide) => g.tiles.filter(isFeatured));
+  getFeatureTiles(tiles: ITile[]) {
+    const featureTiles = tiles.filter(
+      (tile: ITile) =>
+        tile.featured_rank > -1 &&
+        tile.related_link_data.link_url !== 'oohlala://campus_security_service'
+    );
 
-    return sortBy(flatten(featureTiles), (i) => i.rank);
+    return sortBy(flatten(featureTiles), (i) => i.featured_rank);
   }
 
   getCampusSecurityServiceId(campusSecurity) {
@@ -61,6 +62,7 @@ export class PersonasUtilsService {
       return {
         ...guide,
         tiles: guide.tiles
+          // filter category zero && featured
           .filter((tile: ITile) => tile.tile_category_id !== 0)
           .filter((tile: ITile) => tile.rank > -1)
       };
@@ -105,7 +107,7 @@ export class PersonasUtilsService {
       tile_category_id: [0, Validators.required],
       visibility_status: [1, Validators.required],
       name: [null, Validators.required],
-      rank: [-1, Validators.required]
+      rank: [TileCategoryRank.hidden, Validators.required]
     });
   }
 

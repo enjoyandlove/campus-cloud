@@ -7,6 +7,11 @@ enum hasData {
   no = 'No'
 }
 
+export enum WallPage {
+  yes = 'Yes',
+  no = 'No'
+}
+
 @Injectable()
 export class FeedsUtilsService {
   constructor() {}
@@ -15,7 +20,7 @@ export class FeedsUtilsService {
     return image ? hasData.yes : hasData.no;
   }
 
-  wallSource(athleticId: number, orientationId: number, clubId: number) {
+  wallPage(athleticId: number, orientationId: number, clubId: number) {
     if (athleticId) {
       return amplitudeEvents.ATHLETICS;
     } else if (orientationId) {
@@ -24,7 +29,7 @@ export class FeedsUtilsService {
       return amplitudeEvents.CLUB;
     }
 
-    return amplitudeEvents.CAMPUS;
+    return amplitudeEvents.WALL;
   }
 
   hasLikes(likes) {

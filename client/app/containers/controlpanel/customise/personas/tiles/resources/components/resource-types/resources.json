@@ -1,7 +1,7 @@
 [
   {
     "id": null,
-    "label": "[NOTRANSLATE]----[NOTRANSLATE]",
+    "label": "[NOTRANSLATE]---[NOTRANSLATE]",
     "meta": {}
   },
   {
@@ -28,7 +28,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://academic_calendar_list"
     }
   },
@@ -38,7 +38,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://course_search"
     }
   },
@@ -48,7 +48,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://attended_event_list"
     }
   },
@@ -58,7 +58,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://camera_qr"
     }
   },
@@ -68,7 +68,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://exam_search"
     }
   },
@@ -78,7 +78,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://advisor_list"
     }
   },
@@ -88,7 +88,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://timetable"
     }
   },
@@ -98,7 +98,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://user_orientation_calendar_list"
     }
   },
@@ -108,7 +108,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://user_school_course_material_list"
     }
   },
@@ -118,7 +118,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://campus_poi_list"
     }
   },
@@ -128,7 +128,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://campus_tour_list"
     }
   },
@@ -138,7 +138,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://in_app_feedback"
     }
   },
@@ -148,7 +148,7 @@
     "meta": {
       "is_system": 1,
       "link_params": {},
-      "open_in_browser": 1,
+      "open_in_browser": 0,
       "link_url": "oohlala://store_list"
     }
   },
@@ -183,6 +183,36 @@
     }
   },
   {
+    "id": "orientation_calendar_list",
+    "label": "t_personas_tile_create_resource_type_orientation_calendar_list",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://orientation_calendar_list"
+    }
+  },
+  {
+    "id": "deal_store_list",
+    "label": "t_personas_tile_create_resource_type_deal_store_list",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://deal_store_list"
+    }
+  },
+  {
+    "id": "job_list",
+    "label": "t_personas_tile_create_resource_type_job_list",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://job_list"
+    }
+  },
+  {
     "id": "service_by_category_id",
     "label": "t_personas_tile_create_resource_type_service_by_category_id",
     "meta": {
@@ -190,6 +220,16 @@
       "link_params": {},
       "open_in_browser": 0,
       "link_url": "oohlala://campus_service_list"
+    }
+  },
+  {
+    "id": "event_list",
+    "label": "t_personas_tile_create_resource_type_event_list",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://event_list"
     }
   }
 ]

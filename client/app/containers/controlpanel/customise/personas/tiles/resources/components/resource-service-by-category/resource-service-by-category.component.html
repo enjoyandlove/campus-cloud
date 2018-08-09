@@ -1,12 +1,15 @@
 <div class="row">
-  <cp-dropdown 
-    class="col-4"
-    [items]="options"
-    (selected)="onSelected($event)">
-  </cp-dropdown>
-  <cp-dropdown-multiselect 
-    class="col-8"
-    [items]="items$ | async"
-    (selection)="onMultiSelect($event)">
-  </cp-dropdown-multiselect>
+  <div class="col-4">
+    <cp-dropdown
+      [items]="options"
+      [selectedItem]="selectedFilter"
+      (selected)="onSelected($event)">
+    </cp-dropdown>
+  </div>
+  <div class="col-8">
+    <cp-dropdown-multiselect
+      [items]="items$ | async"
+      (selection)="onMultiSelect($event)">
+    </cp-dropdown-multiselect>
+  </div>
 </div>

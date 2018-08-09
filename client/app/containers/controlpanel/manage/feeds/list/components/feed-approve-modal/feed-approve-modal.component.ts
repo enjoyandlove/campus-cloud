@@ -31,7 +31,7 @@ export class FeedApproveModalComponent implements OnInit {
     post_id: null,
     likes: null,
     comments: null,
-    wall_source: null,
+    wall_page: null,
     upload_image: null
   };
 
@@ -67,7 +67,7 @@ export class FeedApproveModalComponent implements OnInit {
       likes: this.utils.hasLikes(feed.likes),
       upload_image: this.utils.hasImage(feed.has_image),
       comments: this.utils.hasComments(feed.comment_count),
-      wall_source: this.utils.wallSource(this.athleticId, this.orientationId, this.clubId)
+      wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_APPROVED_POST, this.eventProperties);

@@ -3,31 +3,39 @@
   <ng-container *ngSwitchCase="false">
 
     <div class="cp-card mb-4">
-      <div class="row" [class.mb-4]="i % 5 === 0">
-        <cp-personas-tile
-          [tile]="tile"
-          class="col-3"
-          *ngFor="let tile of state.featureTiles; let i = index">
-        </cp-personas-tile>
-        <cp-personas-tile-add-button
-          class="col-3"
-          (buttonClick)="createFeatureTile()">
-        </cp-personas-tile-add-button>
+      <div class="row">
+        <div class="col-12">
+          <span class="title">{{ 't_personas_details_feature' | cpI18n }}</span>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <cp-personas-section
+            tileWidth="4"
+            [hideName]="true"
+            [noControls]="true"
+            [addSection]="false"
+            [personaId]="personaId"
+            [guide]="state.featureTiles"
+            (shuffle)="onTileMoved($event)"
+            (deleteTileClick)="onDeleteTileFromSection($event)">
+          </cp-personas-section>
+        </div>
       </div>
     </div>
 
     <div class="cp-card">
-      <div class="mb-4">
-        <div class="row" [class.mb-4]="i % 5 === 0">
-          <cp-personas-tile
-            [tile]="tile"
-            class="col-2"
-            *ngFor="let tile of state.categoryZero; let i = index">
-          </cp-personas-tile>
-          <cp-personas-tile-add-button
-            class="col-2"
-            (buttonClick)="createCategoryZeroTile()">
-          </cp-personas-tile-add-button>
+      <div class="row">
+        <div class="col-12">
+          <cp-personas-section
+            [hideName]="true"
+            [noControls]="true"
+            [addSection]="false"
+            [personaId]="personaId"
+            [guide]="state.categoryZero"
+            (shuffle)="onTileMoved($event)"
+            (deleteTileClick)="onDeleteTileFromSection($event)">
+          </cp-personas-section>
         </div>
       </div>
       <div
@@ -39,14 +47,38 @@
             [guide]="guide"
             [first]="first"
             [personaId]="personaId"
-            [previousRank]="previousRank(i)"
+            (shuffle)="onTileMoved($event)"
             (deleted)="onDeletedSection($event)"
             (swap)="onSwapSection($event, guide)"
             (removeSection)="onRemoveSection($event)"
-            (created)="onAddSectionBefore($event, guide.id)">
+            (deleteSectionClick)="onDeleteSectionClick($event)"
+            (deleteTileClick)="onDeleteTileFromSection($event)"
+            (createNewSection)="onAddSectionBefore($event, guide.id)">
           </cp-personas-section>
         </div>
       </div>
     </div>
   </ng-container>
 </ng-container>
+
+<cp-modal
+  [modalId]="tileDeleteModalId"
+  *ngIf="state.showTileDeleteModal">
+  <cp-personas-tile-delete
+    [tile]="tileToDelete"
+    (error)="errorHandler($event)"
+    (deleted)="onTileDeleted($event)"
+    (teardown)="onTileDeleteTeardown()">
+  </cp-personas-tile-delete>
+</cp-modal>
+
+<cp-modal
+  [modalId]="sectionDeleteModalId"
+  *ngIf="state.showSectionDeleteModal">
+  <cp-personas-section-delete
+    [section]="sectionToDelete"
+    (error)="errorHandler($event)"
+    (deleted)="onRemoveSection($event)"
+    (teardown)="onSectionDeleteTeardown()">
+  </cp-personas-section-delete>
+</cp-modal>

@@ -30,9 +30,9 @@ export class ClubsListActionBoxComponent implements OnInit {
   @Output() filter: EventEmitter<IState> = new EventEmitter();
 
   labels;
+  eventData;
   clubFilter;
   canCreate;
-  amplitudeEvents;
   selectedItem = null;
   state: IState = state;
   isClubAthleticPrivilege;
@@ -49,24 +49,6 @@ export class ClubsListActionBoxComponent implements OnInit {
     this.filter.emit(this.state);
   }
 
-  trackEvent(eventName) {
-    const createClubAthletic =
-      this.isAthletic === isClubAthletic.athletic
-        ? amplitudeEvents.CREATE_ATHLETIC
-        : amplitudeEvents.CREATE_CLUB;
-
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      create_page_name: createClubAthletic
-    };
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
-      eventProperties
-    };
-  }
-
   updateStateFromUrl() {
     const type = this.route.snapshot.queryParams['type'];
 
@@ -81,6 +63,12 @@ export class ClubsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
+
     this.isClubAthleticPrivilege =
       this.isAthletic === isClubAthletic.club
         ? CP_PRIVILEGES_MAP.clubs
@@ -88,10 +76,6 @@ export class ClubsListActionBoxComponent implements OnInit {
     this.canCreate = canSchoolWriteResource(this.session.g, this.isClubAthleticPrivilege);
 
     this.labels = clubAthleticLabels(this.isAthletic);
-
-    this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
-    };
 
     this.clubFilter = [
       {

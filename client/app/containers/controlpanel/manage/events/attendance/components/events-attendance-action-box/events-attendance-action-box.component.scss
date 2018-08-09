@@ -1,0 +1,12 @@
+@import '~styles/components/card';
+@import '~styles/components/table';
+@import '~styles/components/button';
+
+.actions {
+  @include card-margin();
+  margin-bottom: 0;
+}
+
+.margin-right {
+  margin-right: 20px;
+}

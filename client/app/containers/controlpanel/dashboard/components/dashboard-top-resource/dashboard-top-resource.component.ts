@@ -3,10 +3,6 @@
  * between top-events and top services
  */
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { CPSession } from '../../../../../session';
-import { DashboardUtilsService } from './../../dashboard.utils.service';
 
 @Component({
   selector: 'cp-dashboard-top-resource',
@@ -14,20 +10,12 @@ import { DashboardUtilsService } from './../../dashboard.utils.service';
   styleUrls: ['./dashboard-top-resource.component.scss']
 })
 export class DashboardTopResourceComponent implements OnInit {
-  isSuperAdmin;
-
   @Input() items;
-  @Input() resource: string;
+  @Input() canNavigate;
 
   defaultImage = require('public/default/user.png');
 
-  constructor(
-    public router: Router,
-    private session: CPSession,
-    private helper: DashboardUtilsService
-  ) {}
+  constructor() {}
 
-  ngOnInit() {
-    this.isSuperAdmin = this.helper.isSuperAdmin(this.session);
-  }
+  ngOnInit() {}
 }

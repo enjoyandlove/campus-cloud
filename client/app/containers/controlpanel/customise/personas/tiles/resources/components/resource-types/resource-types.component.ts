@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { sortBy } from 'lodash';
 import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
 
@@ -8,10 +8,14 @@ import { CPI18nService } from '../../../../../../../../shared/services/i18n.serv
   styleUrls: ['./resource-types.component.scss']
 })
 export class PersonasResourceTypesComponent implements OnInit {
+  @Input() resource;
+  @Input() editView;
+
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() linkUrl: EventEmitter<string> = new EventEmitter();
 
   resources;
+  selectedItem = null;
   resourceSelection = null;
   preventEmit = [
     'store',
@@ -50,6 +54,40 @@ export class PersonasResourceTypesComponent implements OnInit {
         label: this.cpI18n.translate(resource.label)
       };
     });
+
+    if (this.editView) {
+      this.updateState();
+    }
+  }
+
+  isTypeUrl(link_url: string) {
+    return link_url ? link_url.startsWith('http') : false;
+  }
+
+  setUrlType() {
+    const urlIds = ['web_link', 'external_link'];
+
+    return this.resources
+      .filter((r) => urlIds.includes(r.id))
+      .filter((r) => !!r.meta.open_in_browser === this.resource.open_in_browser)
+      .map((r) => r.id)[0];
+  }
+
+  setGeneralType() {
+    return this.resources
+      .filter((r) => r.meta.link_url === this.resource.link_url)
+      .map((r) => r.id)[0];
+  }
+
+  updateResourceType() {
+    this.selectedItem = this.resources.filter((r) => r.id === this.resourceSelection)[0];
+  }
+
+  updateState() {
+    const isTypeUrl = this.isTypeUrl(this.resource.link_url);
+    this.resourceSelection = isTypeUrl ? this.setUrlType() : this.setGeneralType();
+
+    this.updateResourceType();
   }
 
   ngOnInit(): void {

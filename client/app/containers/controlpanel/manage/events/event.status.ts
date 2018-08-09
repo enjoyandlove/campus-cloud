@@ -19,13 +19,6 @@ export enum EventSortDirection {
   'desc' = 'desc'
 }
 
-export enum EventVerificationMethod {
-  'web' = 1,
-  'hostQR' = 2,
-  'userQR' = 3,
-  'QR' = 4
-}
-
 export enum Assessment {
   'on' = 'On',
   'off' = 'Off'
@@ -44,6 +37,12 @@ export enum UploadedPhoto {
 export enum Feedback {
   'enabled' = 'Enabled',
   'disabled' = 'Disabled'
+}
+
+export enum CheckInMethod {
+  'web' = 1,
+  'web-qr' = 2,
+  'app' = 3
 }
 
 export const isAllDay = {

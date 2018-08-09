@@ -5,7 +5,7 @@ import * as Picker from 'pickr-widget';
   selector: '[cpColorPicker]'
 })
 export class CPColorPickerDirective implements OnInit {
-  @Input() defaultColor = '#ffffff';
+  @Input() defaultColor = 'FFFFFF';
   @Input() postion: 'top' | 'middle' | 'left' = 'top';
 
   @Output() changed: EventEmitter<string> = new EventEmitter();
@@ -23,10 +23,12 @@ export class CPColorPickerDirective implements OnInit {
     this.picker = new Picker({
       el: this.el.nativeElement,
       position: this.postion,
-      default: this.defaultColor,
+      default: `#${this.defaultColor}`,
       components: {
         hue: true,
-        output: true
+        output: {
+          input: true
+        }
       },
 
       onSave(hsva) {

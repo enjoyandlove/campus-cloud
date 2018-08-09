@@ -5,11 +5,13 @@
   "children": [
     {
       "label": "engagement",
+      "amplitude": "Engagement",
       "url": "/assess/dashboard",
       "hasParams": true
     },
     {
       "label": "students",
+      "amplitude": "Students",
       "url": "/assess/students"
     }
   ]

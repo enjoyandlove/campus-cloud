@@ -4,11 +4,14 @@
   "em": null,
   "children": [
     {
+      "amplitude": "Banner",
       "label": "customise_banner",
       "url": "/customize/banner"
     },
     {
-      "hiddenInProd": true,
+      "hidden": true,
+      "allow_internal": true,
+      "amplitude": "Experiences",
       "label": "t_customise_personas",
       "url": "/customize/personas"
     }

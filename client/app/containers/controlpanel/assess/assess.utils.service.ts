@@ -1,9 +1,18 @@
 import { Injectable } from '@angular/core';
 
+import { CPI18nService } from '../../../shared/services';
 import { amplitudeEvents } from '../../../shared/constants/analytics';
+
+const EventType = {
+  event: 'event',
+  service: 'service',
+  orientation: 'user_event'
+};
 
 @Injectable()
 export class AssessUtilsService {
+  constructor(public cpI18n: CPI18nService) {}
+
   getEventProperties(filterState) {
     return {
       interval: filterState.range.label,
@@ -20,5 +29,15 @@ export class AssessUtilsService {
 
   getCohortType(cohort) {
     return cohort.listId ? amplitudeEvents.LIST : cohort.label;
+  }
+
+  getEventType(type) {
+    if (type === EventType.event) {
+      return this.cpI18n.translate('event');
+    } else if (type === EventType.service) {
+      return this.cpI18n.translate('service');
+    } else if (type === EventType.orientation) {
+      return this.cpI18n.translate('orientation');
+    }
   }
 }

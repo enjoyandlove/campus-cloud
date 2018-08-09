@@ -13,7 +13,7 @@ export class LinksListActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
   @Output() launchCreateModal: EventEmitter<null> = new EventEmitter();
 
-  amplitudeEvents;
+  eventData;
 
   constructor(private cpTracking: CPTrackingService) {}
 
@@ -25,22 +25,11 @@ export class LinksListActionBoxComponent implements OnInit {
     this.launchCreateModal.emit();
   }
 
-  trackEvent(eventName) {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      create_page_name: amplitudeEvents.CREATE_LINK
-    };
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
-      eventProperties
-    };
-  }
-
   ngOnInit() {
-    this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
   }
 }

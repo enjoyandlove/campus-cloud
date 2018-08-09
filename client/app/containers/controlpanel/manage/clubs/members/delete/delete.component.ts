@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { MembersService } from '../members.service';
-import { MembersUtilsService } from '../members.utils.service';
-import { CPTrackingService } from '../../../../../../shared/services';
+import { CPTrackingService, RouteLevel } from '../../../../../../shared/services';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
@@ -20,16 +19,11 @@ export class ClubsMembersDeleteComponent implements OnInit {
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   buttonData;
-
-  eventProperties = {
-    member_id: null,
-    member_type: null
-  };
+  eventProperties;
 
   constructor(
     private cpI18n: CPI18nService,
     private service: MembersService,
-    private utils: MembersUtilsService,
     private cpTracking: CPTrackingService
   ) {}
 
@@ -44,7 +38,7 @@ export class ClubsMembersDeleteComponent implements OnInit {
       )
       .subscribe(
         (_) => {
-          this.trackEvent(this.member);
+          this.trackEvent();
           this.deleted.emit(this.member.id);
           $('#membersDelete').modal('hide');
           this.buttonData = Object.assign({}, this.buttonData, {
@@ -60,15 +54,14 @@ export class ClubsMembersDeleteComponent implements OnInit {
       );
   }
 
-  trackEvent(res) {
+  trackEvent() {
     this.eventProperties = {
-      ...this.eventProperties,
-      member_id: res.id,
-      member_type: this.utils.getMemberTypeLabel(res.member_type)
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_DELETED_CLUB_MEMBER,
+      amplitudeEvents.DELETED_ITEM,
       this.eventProperties
     );
   }

@@ -1,13 +1,14 @@
-import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
-import { JobsDeleteComponent } from './jobs-delete.component';
-import { CPSession } from '../../../../../session';
-import { mockSchool } from '../../../../../session/mock/school';
-import { CPI18nService } from '../../../../../shared/services';
+
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
+import { CPSession } from '../../../../../session';
+import { JobsDeleteComponent } from './jobs-delete.component';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 const mockJobs = require('../mockJobs.json');
 
@@ -31,7 +32,11 @@ describe('JobsDeleteComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [JobsModule, RouterTestingModule],
-        providers: [CPSession, CPI18nService, { provide: JobsService, useClass: MockJobsService }]
+        providers: [
+          CPSession,
+          CPI18nService,
+          CPTrackingService,
+          { provide: JobsService, useClass: MockJobsService }]
       })
         .compileComponents()
         .then(() => {

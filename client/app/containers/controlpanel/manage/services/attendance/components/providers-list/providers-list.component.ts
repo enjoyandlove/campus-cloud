@@ -1,13 +1,14 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { CPTrackingService } from './../../../../../../../shared/services/tracking.service';
-import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
+import { HttpParams } from '@angular/common/http';
+
+import { ProvidersService } from '../../../providers.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { ProvidersService } from '../../../providers.service';
+import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { CPTrackingService } from './../../../../../../../shared/services/tracking.service';
+import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
 
 interface IState {
   search_text: string;
@@ -37,6 +38,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   @Output() providersLength$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   loading;
+  eventData;
   sortingLabels;
   eventProperties;
   deleteProvider = '';
@@ -107,14 +109,23 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       source_page: amplitudeEvents.SERVICE
     };
 
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
-      eventProperties
-    };
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CLICKED_CHECKIN,
+      eventProperties);
   }
 
   ngOnInit() {
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.PROVIDER
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties
+    };
+
     this.serviceWithFeedback.subscribe((withRating) => (this.displayRatingColumn = withRating));
 
     this.query.subscribe((search_text) => {

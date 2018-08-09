@@ -50,9 +50,9 @@ export class FeedInputBoxComponent implements OnInit {
 
   eventProperties = {
     post_id: null,
+    wall_page: null,
     host_type: null,
     comment_id: null,
-    wall_source: null,
     upload_image: null,
     campus_wall_category: null
   };
@@ -266,7 +266,7 @@ export class FeedInputBoxComponent implements OnInit {
       ...this.eventProperties,
       post_id: data.id,
       upload_image: this.utils.hasImage(data.has_image),
-      wall_source: this.utils.wallSource(this.athleticId, this.orientationId, this.clubId)
+      wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
     };
 
     if (this.replyView) {

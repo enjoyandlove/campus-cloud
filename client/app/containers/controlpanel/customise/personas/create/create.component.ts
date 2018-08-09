@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { get as _get } from 'lodash';
 import { Observable } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 import { PersonasService } from './../personas.service';
@@ -27,6 +27,7 @@ export class PersonasCreateComponent implements OnInit {
   services$;
   buttonData;
   form: FormGroup;
+  createdPersonaId;
   campusSecurityTile;
 
   constructor(
@@ -116,11 +117,18 @@ export class PersonasCreateComponent implements OnInit {
     const createPersona$ = this.service.createPersona(body);
 
     const stream$ = this.campusSecurityTile
-      ? createPersona$.pipe(switchMap(({ id }: any) => this.createSecurityTile(id)))
-      : createPersona$;
+      ? createPersona$.pipe(
+          map(({ id }: any) => {
+            this.createdPersonaId = id;
+
+            return id;
+          }),
+          switchMap((id) => this.createSecurityTile(id))
+        )
+      : createPersona$.pipe(map(({ id }: any) => (this.createdPersonaId = id)));
 
     stream$.subscribe(
-      () => this.router.navigate(['/customize/personas']),
+      () => this.router.navigate([`/customize/personas/${this.createdPersonaId}`]),
       (err) => {
         this.buttonData = { ...this.buttonData, disabled: false };
 

@@ -5,6 +5,7 @@ import {
   OnDestroy,
   OnInit,
   Output,
+  Input,
   ViewChild
 } from '@angular/core';
 import { fromEvent } from 'rxjs';
@@ -16,6 +17,8 @@ import { map, takeWhile } from 'rxjs/operators';
   styleUrls: ['./form-type-url.component.scss']
 })
 export class PersonasResourceTypeUrlComponent implements OnInit, OnDestroy {
+  @Input() value: string;
+
   @ViewChild('inputEl') inputEl: ElementRef;
 
   @Output() valueChange: EventEmitter<string> = new EventEmitter();

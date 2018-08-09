@@ -13,6 +13,8 @@
               <div class="row deals__buttons">
                 <div class="col-12">
                   <a
+                    cpTracker
+                    [eventData]="eventData"
                     [routerLink]="['../edit']"
                     class="cpbtn cpbtn--primary" i18n>
                     {{ 'edit' | cpI18n }}

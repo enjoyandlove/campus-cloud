@@ -1,0 +1,102 @@
+  <div class="row">
+    <div class="col-12">
+      <p class="resource--heading">{{ labels.heading }}</p>
+      <div class="resource--stats">
+        <div class="row">
+          <div class="col-4 resource--stats--stat" *ngFor="let stat of stats">
+            <div class="row">
+              <div class="col-4 resource--stats--graph no-right-padding">
+                <img [src]="[stat.icon]" alt="total resource">
+              </div>
+              <div class="col-8 resource--stats--data no-right-padding no-left-padding">
+                <p class="stat">{{ stat.value }}</p>
+                <p class="text-muted text-truncate">{{ stat.label }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="resource--ranking">
+        <div class="row">
+          <div class="col-5">
+            <p class="resource--heading">{{ labels.sub_heading }}</p>
+          </div>
+          <div class="resource--ranking--sorting col-7">
+            <div class="row">
+              <div class="col-4 text-right no-right-padding">
+                <p>{{ 'assess_sort_by' | cpI18n }}</p>
+              </div>
+              <div class="col-8">
+                <cp-dropdown
+                  [items]="sortyBy"
+                  [selectedItem]="sortingBy"
+                  (selected)="sortBy.emit($event)">
+                </cp-dropdown>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-container [ngSwitch]="isSorting">
+          <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+          <div class="row resource--table" *ngSwitchCase="false">
+            <ng-container *ngIf="!items.length">
+              <div class="col-12 text-center resource--not_found">
+                <p class="resource--not_found--title">{{ 'zero_quantity' | cpI18n }} {{ sortingBy.label }}</p>
+              </div>
+            </ng-container>
+            <ng-container *ngIf="items.length">
+              <div class="col-12">
+                <div class="row resource--table--header">
+                  <div class="col-1">
+                    <p>#</p>
+                  </div>
+                  <div class="col-5 no-left-padding">
+                    <p>{{ 'title' | cpI18n }}</p>
+                  </div>
+                  <div class="col-2 no-left-padding">
+                    <p>{{ 'attendees' | cpI18n }}</p>
+                  </div>
+                  <div class="col-2 no-right-padding">
+                    <p>{{ 'feedback' | cpI18n }}</p>
+                  </div>
+                  <div class="col-2 text-right no-left-padding">
+                    <p>{{ 'rating' | cpI18n }}</p>
+                  </div>
+                </div>
+                <div class="row" *ngFor="let item of items; index as index; last as last">
+                  <div class="col-12">
+                    <div class="resource--table--item" [class.isLast]="last">
+                      <div class="row">
+                        <div class="col-1">
+                          <p class="ranking">{{ index + 1 }}</p>
+                        </div>
+                        <div class="col-5 no-left-padding text-truncate">
+                          <img
+                            class="resource-avatar rounded"
+                            [src]="item.image === '' ? defaultImage : item.image">
+                          <p
+                            [attr.title]="item.name"
+                            class="service-title text-truncate">{{ item.name }}</p>
+                        </div>
+                        <div class="col-2 no-left-padding">
+                          <p>{{ item.attendees }}</p>
+                        </div>
+                        <div class="col-2 no-right-padding">
+                          <p>{{ item.feedbacks }}</p>
+                        </div>
+                        <div class="col-2 text-right no-left-padding">
+                          <p>{{ ((item.avg_feedbacks / 100) * 5).toFixed(1) }}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>

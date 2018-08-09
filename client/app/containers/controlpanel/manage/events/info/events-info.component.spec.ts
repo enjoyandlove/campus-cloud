@@ -1,16 +1,17 @@
-import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
-import { EventsInfoComponent } from './events-info.component';
-import { reducers } from '../../../../../reducers';
-import { CPSession } from '../../../../../session';
-import { mockSchool } from '../../../../../session/mock/school';
-import { CPI18nService } from '../../../../../shared/services';
+
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
+import { CPSession } from '../../../../../session';
+import { reducers } from '../../../../../reducers';
 import { EventUtilService } from '../events.utils.service';
+import { EventsInfoComponent } from './events-info.component';
+import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 class MockService {
   dummy;
@@ -47,6 +48,7 @@ describe('EventInfoComponent', () => {
           CPSession,
           CPI18nService,
           EventUtilService,
+          CPTrackingService,
           { provide: Router, useClass: RouterMock },
           { provide: EventsService, useClass: MockService },
           {

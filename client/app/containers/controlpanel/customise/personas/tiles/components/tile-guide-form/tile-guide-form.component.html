@@ -13,7 +13,8 @@
         type="text"
         cpColorPicker
         class="form-control"
-        (changed)="onColorChange($event)">
+        (changed)="onColorChange($event)"
+        [defaultColor]="form.controls['color'].value">
     </div>
 
     <div class="col-3">

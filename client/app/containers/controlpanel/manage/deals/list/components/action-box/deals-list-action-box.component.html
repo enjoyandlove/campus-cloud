@@ -12,15 +12,17 @@
 
     <div class="col-7 float-right text-right">
       <a
+        cpTracker
         [routerLink]="['stores']"
-        class="cpbtn cpbtn--cancel margin-right">
+        class="cpbtn cpbtn--cancel margin-right"
+        [eventData]="storeEventData">
         {{ 'deals_manage_stores' | cpI18n }}
       </a>
       <a
         cpTracker
         [routerLink]="['create']"
         class="cpbtn cpbtn--primary"
-        [eventData]="trackEvent(amplitudeEvents.clicked_create)">
+        [eventData]="dealsEventData">
         {{ 'deals_create_deal' | cpI18n }}
       </a>
     </div>

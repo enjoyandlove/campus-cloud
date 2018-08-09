@@ -29,7 +29,7 @@ export class ServicesListActionBoxComponent implements OnInit {
   @Output() listAction: EventEmitter<IState> = new EventEmitter();
 
   loading;
-  amplitudeEvents;
+  eventData;
   canWriteSchoolWide;
   state: IState = state;
 
@@ -55,22 +55,11 @@ export class ServicesListActionBoxComponent implements OnInit {
     $('#excelServicesModal').modal();
   }
 
-  trackEvent(eventName) {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      create_page_name: amplitudeEvents.CREATE_SERVICE
-    };
-
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName,
-      eventProperties
-    };
-  }
-
   ngOnInit() {
-    this.amplitudeEvents = {
-      clicked_create: amplitudeEvents.CLICKED_CREATE
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
 
     this.canWriteSchoolWide = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.services);

@@ -2,13 +2,17 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BaseComponent } from './../../../../../base/base.component';
-import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+
+import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
 import { FORMAT } from './../../../../../shared/pipes/date';
+import { CPTrackingService } from '../../../../../shared/services';
+import { BaseComponent } from './../../../../../base/base.component';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { StudentsService } from './../students.service';
 
 interface IState {
   search_str: string;
@@ -34,6 +38,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     sort_field: 'firstname',
     sort_direction: 'asc'
   };
+  eventData;
   messageData;
   listIdFromUrl;
   dateFormat = FORMAT.DATETIME;
@@ -47,7 +52,8 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     private route: ActivatedRoute,
-    private service: StudentsService
+    private service: StudentsService,
+    private cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -161,5 +167,11 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
       this.listIdFromUrl = this.route.snapshot.queryParams['list_id'];
       this.readStateFromUrl();
     }
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
+    };
   }
 }

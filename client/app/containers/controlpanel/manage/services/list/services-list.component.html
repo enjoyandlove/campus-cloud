@@ -44,7 +44,17 @@
               <div class="col-2 services__thumbnail">
                 <img class="rounded img-fit-cover" [src]="service.logo_url">
               </div>
-              <div class="col-9 text-truncate no-left-padding"><strong><a [routerLink]="[service.service_attendance ? service.id : service.id + '/info']">{{ service.name }}</a></strong><br>{{ service.description }}</div>
+              <div class="col-9 text-truncate no-left-padding">
+                <strong>
+                  <a
+                    cpTracker
+                    [eventData]="eventData"
+                    [routerLink]="[service.service_attendance ? service.id : service.id + '/info']">
+                    {{ service.name }}
+                  </a>
+                </strong>
+                <br>
+                {{ service.description }}</div>
             </div>
           </span>
           <span class="col-2">{{ service.total_visits }}</span>

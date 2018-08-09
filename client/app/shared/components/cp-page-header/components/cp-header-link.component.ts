@@ -1,7 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { CP_TRACK_TO } from '../../../directives/tracking';
 import { amplitudeEvents } from '../../../constants/analytics';
 import { CPTrackingService, RouteLevel } from '../../../services';
 
@@ -26,18 +25,25 @@ export class CPHeaderLinkComponent {
     return page.clearParams ? null : 'merge';
   }
 
-  trackSubMenu(subMenu) {
-    const eventName = amplitudeEvents.CLICKED_SUB_MENU;
-    const menuName = this.cpTracking.activatedRoute(this.router, RouteLevel.first);
-    const eventProperties = {
-      menu_name: menuName,
+  trackSubMenu(subMenu, isSubMenuItem) {
+    const eventName = isSubMenuItem
+      ? amplitudeEvents.CLICKED_PAGE_ITEM
+      : amplitudeEvents.CLICKED_SUB_MENU;
+
+    this.cpTracking.amplitudeEmitEvent(eventName, this.setEventProperties(subMenu, isSubMenuItem));
+  }
+
+  setEventProperties(subMenu, isSubMenuItem) {
+    const subMenuProperties = {
+      menu_name: this.cpTracking.activatedRoute(RouteLevel.first),
       sub_menu_name: subMenu
     };
 
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: eventName,
-      eventProperties: eventProperties
+    const subMenuItemProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: subMenu
     };
+
+    return isSubMenuItem ? subMenuItemProperties : subMenuProperties;
   }
 }

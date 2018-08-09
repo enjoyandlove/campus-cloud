@@ -45,7 +45,10 @@
           <li class="cp-form__item col-12" *ngFor="let item of state.items">
             <div class="row">
               <span class="col-5 text-truncate hover">
-                <a [routerLink]="['items/' + item.id]">
+                <a
+                  cpTracker
+                  [eventData]="eventData"
+                  [routerLink]="['items/' + item.id]">
                   <strong>
                     {{ item.title }}
                   </strong>

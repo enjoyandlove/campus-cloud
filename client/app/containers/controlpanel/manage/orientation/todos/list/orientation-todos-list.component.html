@@ -45,6 +45,8 @@
         <li class="cp-form__item col-12" *ngFor="let todo of state.todos">
           <div class="row">
             <span
+              cpTracker
+              [eventData]="eventData"
               data-toggle="modal"
               data-target="#todoEdit"
               class="col-5 text-truncate hover"

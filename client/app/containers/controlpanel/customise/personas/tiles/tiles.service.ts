@@ -14,6 +14,12 @@ export class TilesService extends HTTPService {
     Object.setPrototypeOf(this, TilesService.prototype);
   }
 
+  getTileById(tileId, search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${tileId}`;
+
+    return super.get(url, search);
+  }
+
   updateTile(linkId, body) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${linkId}`;
 
@@ -105,12 +111,6 @@ export class TilesService extends HTTPService {
     return super.delete(url, search);
   }
 
-  getTileById(tileId, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${tileId}`;
-
-    return super.get(url, search);
-  }
-
   createCampusTile(body) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/`;
 
@@ -121,5 +121,17 @@ export class TilesService extends HTTPService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/`;
 
     return super.post(url, body, null, true);
+  }
+
+  updateCampusTile(tileId, body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${tileId}`;
+
+    return super.update(url, body, null, true);
+  }
+
+  updateCampusLink(linkId, body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${linkId}`;
+
+    return super.update(url, body, null, true);
   }
 }

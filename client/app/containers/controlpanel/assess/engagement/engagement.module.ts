@@ -10,7 +10,9 @@ import {
   EngagementTopBarComponent,
   EngagementComposeComponent,
   EngagementEventsBoxComponent,
-  EngagementServicesBoxComponent
+  EngagementServicesBoxComponent,
+  EngagementResourceStatsComponent,
+  EngagementOrientationsBoxComponent
 } from './components';
 
 import { CPStatsFormatterPipe } from './components/engagement-stats/pipes/stats-formatter.pipe';
@@ -27,6 +29,8 @@ import { EngagementUtilsService } from './engagement.utils.service';
     EngagementEventsBoxComponent,
     EngagementServicesBoxComponent,
     EngagementComposeComponent,
+    EngagementResourceStatsComponent,
+    EngagementOrientationsBoxComponent,
     CPStatsFormatterPipe
   ],
 

@@ -1,53 +1,60 @@
-<nav>
-  <div class="cp-wrapper cp-wrapper--outer">
-    <div class="row">
-      <div class="col-12">
-        <div class="avatar float-left">
-          <a [routerLink]="['/dashboard']">
-            <img
-              [src]="logo"
-              alt="Control Panel"
-              class="rounded img-fit-cover">
-          </a>
-        </div>
-        <ul class="nav__links float-left">
-          <li
-            cpTracker
-            *ngIf="manageHomePage"
-            [eventData]="trackMenu(amplitudeEvents.menu_manage)"
-            [class.active]="isManageActiveRoute">
-            <a [routerLink]="['/manage/' + manageHomePage]">{{ 'manage' | cpI18n }}</a>
-          </li>
-          <li
-            cpTracker
-            *ngIf="canNotify"
-            routerLinkActive="active"
-            [eventData]="trackMenu(amplitudeEvents.menu_notify)">
-            <a [routerLink]="['/notify']">{{ 'notify' | cpI18n }}</a>
-          </li>
-          <li
-            cpTracker
-            routerLinkActive="active"
-            [eventData]="trackMenu(amplitudeEvents.menu_assess)">
-            <a [routerLink]="[canAssess ? '/assess' : '/demo/assess']">{{ 'assess' | cpI18n }}</a>
-          </li>
-          <li
-            cpTracker
-            *ngIf="canCustomise"
-            routerLinkActive="active"
-            [eventData]="trackMenu(amplitudeEvents.menu_customize)">
-            <a [routerLink]="['/customize']">{{ 'customise' | cpI18n }}</a>
-          </li>
-          <li
-            cpTracker
-            *ngIf="canAudience"
-            routerLinkActive="active"
-            [eventData]="trackMenu(amplitudeEvents.menu_audience)">
-            <a [routerLink]="['/audience']">{{ 'audience' | cpI18n }}</a>
-          </li>
-        </ul>
+<div class="wrapper">
+  <div class="cp-wrapper cp-wrapper--outer d-flex justify-content-between">
+    <nav>
+      <div class="avatar">
+        <a [routerLink]="['/dashboard']">
+          <img
+            [src]="logo"
+            alt="Control Panel"
+            class="rounded img-fit-cover">
+        </a>
+      </div>
+      <ul class="nav__links">
+        <li
+          *ngIf="manageHomePage"
+          (click)="trackMenu(amplitudeEvents.menu_manage)"
+          [class.active]="isManageActiveRoute">
+          <a [routerLink]="['/manage/' + manageHomePage]">{{ 'manage' | cpI18n }}</a>
+        </li>
+        <li
+          *ngIf="canNotify"
+          routerLinkActive="active"
+          (click)="trackMenu(amplitudeEvents.menu_notify)">
+          <a [routerLink]="['/notify']">{{ 'notify' | cpI18n }}</a>
+        </li>
+        <li
+          routerLinkActive="active"
+          (click)="trackMenu(amplitudeEvents.menu_assess)">
+          <a [routerLink]="[canAssess ? '/assess' : '/demo/assess']">{{ 'assess' | cpI18n }}</a>
+        </li>
+        <li
+          *ngIf="canCustomise"
+          routerLinkActive="active"
+          (click)="trackMenu(amplitudeEvents.menu_studio)">
+          <a [routerLink]="['/customize']">{{ 'customise' | cpI18n }}</a>
+        </li>
+        <li
+          *ngIf="canAudience"
+          routerLinkActive="active"
+          (click)="trackMenu(amplitudeEvents.menu_audience)">
+          <a [routerLink]="['/audience']">{{ 'audience' | cpI18n }}</a>
+        </li>
+      </ul>
+    </nav>
+    <div>
+      <div class="float-right">
         <div
-          class="nav__school float-right noselect">
+          class="extras"
+          *ngIf="production">
+          <button
+            type="button"
+            id="beamerButton"
+            class="cpbtn cpbtn--link--dark">
+            <i class="material-icons">notifications</i>
+          </button>
+        </div>
+        <div
+          class="nav__school noselect">
           <div class="row" data-toggle="dropdown">
             <div
               class="col-10 no-left-padding no-right-padding">
@@ -79,4 +86,4 @@
       </div>
     </div>
   </div>
-</nav>
+</div>

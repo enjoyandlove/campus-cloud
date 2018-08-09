@@ -1,11 +1,11 @@
-import { map, startWith } from 'rxjs/operators';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { sortBy } from 'lodash';
-
-import { API } from '../../../../config/api';
+import { map, startWith } from 'rxjs/operators';
+import { ICampusGuide } from './sections/section.interface';
 import { HTTPService } from '../../../../base/http.service';
+import { API } from '../../../../config/api';
 
 @Injectable()
 export class PersonasService extends HTTPService {
@@ -26,7 +26,7 @@ export class PersonasService extends HTTPService {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return super.get(url, search, true);
   }
 
   getServices(search) {
@@ -81,7 +81,7 @@ export class PersonasService extends HTTPService {
   getPersonaById(personaId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/${personaId}`;
 
-    return super.get(url, search);
+    return super.get(url, search, true);
   }
 
   deletePersonaById(personaId: number, search: HttpParams) {
@@ -99,7 +99,7 @@ export class PersonasService extends HTTPService {
   updatePersona(personaId: number, search: HttpParams, body) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/${personaId}`;
 
-    return super.update(url, body, search);
+    return super.update(url, body, search, true);
   }
 
   getTilesByPersona(search: HttpParams) {
@@ -112,6 +112,12 @@ export class PersonasService extends HTTPService {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILE_CATEGORY}`;
     const url = `${common}/1;90000`;
 
-    return super.get(url, search).pipe(map((res) => sortBy(res, (t: any) => t.rank)));
+    return super.get(url, search).pipe(
+      map((categories: ICampusGuide[]) => {
+        categories = categories.filter((c) => c.id !== 0);
+
+        return sortBy(categories, (t: any) => t.rank);
+      })
+    );
   }
 }

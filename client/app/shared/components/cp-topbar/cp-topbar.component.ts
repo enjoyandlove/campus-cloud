@@ -1,13 +1,11 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-
-import { CPSession, ISchool, IUser } from '../../../session';
-
+import { isProd } from './../../../config/env';
 import { CP_PRIVILEGES_MAP } from './../../constants';
-import { CPTrackingService } from '../../services';
-import { CP_TRACK_TO } from '../../directives/tracking';
-import { amplitudeEvents } from '../../constants/analytics';
 import { canAccountLevelReadResource, canSchoolReadResource } from './../../utils/privileges';
+import { CPSession, ISchool, IUser } from '../../../session';
+import { amplitudeEvents } from '../../constants/analytics';
+import { CPTrackingService } from '../../services';
 
 @Component({
   selector: 'cp-topbar',
@@ -21,6 +19,7 @@ export class CPTopBarComponent implements OnInit {
   canNotify = false;
   canManage = false;
   canAssess = false;
+  production = isProd;
   canAudience = false;
   canCustomise = false;
   manageHomePage: string;
@@ -83,11 +82,7 @@ export class CPTopBarComponent implements OnInit {
     const eventName = amplitudeEvents.CLICKED_MENU;
     const eventProperties = { menu_name };
 
-    return {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: eventName,
-      eventProperties: eventProperties
-    };
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
 
   ngOnInit() {
@@ -113,7 +108,7 @@ export class CPTopBarComponent implements OnInit {
       menu_manage: amplitudeEvents.MENU_MANAGE,
       menu_notify: amplitudeEvents.MENU_NOTIFY,
       menu_assess: amplitudeEvents.MENU_ASSESS,
-      menu_customize: amplitudeEvents.MENU_CUSTOMIZE,
+      menu_studio: amplitudeEvents.MENU_STUDIO,
       menu_audience: amplitudeEvents.MENU_AUDIENCE
     };
   }

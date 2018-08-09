@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
 import { ProvidersService } from '../../../providers.service';
-import { ServicesUtilsService } from '../../../services.utils.service';
 import { CPTrackingService } from '../../../../../../../shared/services';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 
@@ -18,15 +17,9 @@ export class ServicesProviderDeleteComponent {
   @Input() serviceId: number;
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
-  eventProperties = {
-    visits: null,
-    ratings: null,
-    service_id: null,
-    service_provider_id: null
-  };
+  eventProperties;
 
   constructor(
-    private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
     private providersService: ProvidersService
   ) {}
@@ -35,20 +28,21 @@ export class ServicesProviderDeleteComponent {
     const search = new HttpParams().append('service_id', this.serviceId.toString());
 
     this.providersService.deleteProvider(this.provider.id, search).subscribe((_) => {
-      this.trackEvent(this.provider);
+      this.trackEvent();
       $('#deleteProvider').modal('hide');
       this.deleted.emit(this.provider.id);
     });
   }
 
-  trackEvent(data) {
+  trackEvent() {
     this.eventProperties = {
       ...this.eventProperties,
-      ...this.utils.setServiceProviderEventProperties(data)
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.ASSESSMENT
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_DELETED_SERVICE_PROVIDER,
+      amplitudeEvents.DELETED_ITEM,
       this.eventProperties
     );
   }

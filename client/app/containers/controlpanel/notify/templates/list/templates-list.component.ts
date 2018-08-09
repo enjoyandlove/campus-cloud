@@ -2,12 +2,16 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
-import { BaseComponent } from './../../../../../base/base.component';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-import { CPSession } from './../../../../../session/index';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { base64 } from './../../../../../shared/utils/encrypt';
+
 import { TemplatesService } from './../templates.service';
+import { CPSession } from './../../../../../session/index';
+import { base64 } from './../../../../../shared/utils/encrypt';
+import { CPTrackingService } from '../../../../../shared/services';
+import { BaseComponent } from './../../../../../base/base.component';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 interface IState {
   search_str: string;
@@ -23,16 +27,16 @@ interface IState {
 })
 export class TemplatesListComponent extends BaseComponent implements OnInit {
   loading;
-
   schoolId;
+  eventData;
   templateId;
-
-  deleteTemplate;
+  buttonText;
+  headerText;
   templateData;
-
   sortingLabels;
+  deleteTemplate;
   isTemplateDelete;
-
+  viewMoreRecipients = [];
   isTemplateCreateModal = false;
   isTemplateComposeModal = false;
 
@@ -49,7 +53,8 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private cpI18n: CPI18nService,
-    private service: TemplatesService
+    private service: TemplatesService,
+    private cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -118,6 +123,20 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     setTimeout(
       () => {
         $('#deleteTemplateModal').modal();
+      },
+
+      1
+    );
+  }
+
+  onViewMoreModal(recipients) {
+    this.buttonText = 'done';
+    this.headerText = `(${recipients.length})
+      ${this.cpI18n.translate('notify_announcement_recipient')}`;
+    this.viewMoreRecipients = recipients;
+    setTimeout(
+      () => {
+        $('#viewMoreModal').modal();
       },
 
       1
@@ -211,6 +230,12 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
     this.sortingLabels = {
       name: this.cpI18n.translate('name')
+    };
+
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.VIEWED_ITEM,
+      eventProperties: this.cpTracking.getEventProperties()
     };
   }
 }

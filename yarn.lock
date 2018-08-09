@@ -328,6 +328,10 @@ amplitude-js@^3.8.0:
     lodash "^4.17.4"
     ua-parser-js amplitude/ua-parser-js#ed538f1
 
+angular-sortablejs@2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/angular-sortablejs/-/angular-sortablejs-2.5.2.tgz#ffd651e47cc93a191db4c023f617db3789fd9af5"
+
 angular2-router-loader@^0.3.4:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/angular2-router-loader/-/angular2-router-loader-0.3.5.tgz#2b18fa9683e0e8aab3e942f5d93a11d63c37c303"
@@ -5667,6 +5671,10 @@ sort-keys@^2.0.0:
   resolved "https://registry.yarnpkg.com/sort-keys/-/sort-keys-2.0.0.tgz#658535584861ec97d730d6cf41822e1f56684128"
   dependencies:
     is-plain-obj "^1.0.0"
+
+sortablejs@1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.7.0.tgz#80a2b2370abd568e1cec8c271131ef30a904fa28"
 
 source-list-map@^0.1.7, source-list-map@~0.1.7:
   version "0.1.8"

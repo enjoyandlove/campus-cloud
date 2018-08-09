@@ -3,22 +3,21 @@
  * More info: https://angular.io/docs/ts/latest/guide/testing.html#!#simple-component-test
  */
 import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { Store, StoreModule } from '@ngrx/store';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 
-// import { By } from '@angular/platform-browser';
-// import { DebugElement } from '@angular/core';
-
+import { reducers } from '../../../../../reducers';
 import { CPSession } from './../../../../../session';
 import { StudentsService } from './../students.service';
 import { mockUser } from './../../../../../session/mock/user';
+import { AssessUtilsService } from '../../assess.utils.service';
 import { mockSchool } from './../../../../../session/mock/school';
 import { MockCPSession } from './../../../../../session/mock/session';
 import { SharedModule } from './../../../../../shared/shared.module';
 import { StudentsProfileComponent } from './students-profile.component';
-import { reducers } from '../../../../../reducers';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 const mockStudentsService = {
@@ -66,6 +65,7 @@ describe('StudentsProfileComponent', () => {
       declarations: [StudentsProfileComponent],
       imports: [
         SharedModule,
+        RouterTestingModule,
         StoreModule.forRoot({
           HEADER: reducers.HEADER,
           SNACKBAR: reducers.SNACKBAR
@@ -73,6 +73,7 @@ describe('StudentsProfileComponent', () => {
       ],
       providers: [
         CPI18nService,
+        AssessUtilsService,
         { provide: CPSession, useClass: MockCPSession },
         { provide: StudentsService, useValue: mockStudentsService },
         {

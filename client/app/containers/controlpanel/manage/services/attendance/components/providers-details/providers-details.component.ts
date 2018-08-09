@@ -4,15 +4,14 @@ import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
+
 import { ServicesService } from './../../../services.service';
-import { ServicesUtilsService } from '../../../services.utils.service';
-import { CPTrackingService } from '../../../../../../../shared/services';
+import { ProvidersService } from '../../../providers.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
-import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
 import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { ProvidersService } from '../../../providers.service';
+import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
+import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
 
 @Component({
   selector: 'cp-providers-details',
@@ -22,6 +21,7 @@ import { ProvidersService } from '../../../providers.service';
 export class ServicesProviderDetailsComponent extends BaseComponent implements OnInit {
   loading;
   provider;
+  eventData;
   serviceId;
   providerId;
   MAX_RATE = 5;
@@ -31,18 +31,9 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   query$: BehaviorSubject<string> = new BehaviorSubject(null);
   download$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  eventProperties = {
-    visits: null,
-    ratings: null,
-    service_id: null,
-    service_provider_id: null
-  };
-
   constructor(
     private route: ActivatedRoute,
     private store: Store<IHeader>,
-    private utils: ServicesUtilsService,
-    private cpTracking: CPTrackingService,
     private serviceService: ServicesService,
     private providersService: ProvidersService
   ) {
@@ -67,10 +58,9 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     );
 
     super.fetchData(stream$).then((res) => {
-      this.trackEvent(res.data);
       this.provider = res.data;
       this.eventRating = (this.provider.avg_rating_percent * this.MAX_RATE / 100).toFixed(1);
-
+      this.trackCheckinEvent(this.provider.encrypted_campus_service_id);
       this.buildHeader();
     });
   }
@@ -97,23 +87,11 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
       source_page: amplitudeEvents.SERVICE
     };
 
-    return {
+    this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
       eventProperties
     };
-  }
-
-  trackEvent(data) {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.utils.setServiceProviderEventProperties(data)
-    };
-
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_VIEWED_SERVICE_PROVIDER,
-      this.eventProperties
-    );
   }
 
   ngOnInit() {

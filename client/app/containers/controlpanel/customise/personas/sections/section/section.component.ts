@@ -1,14 +1,16 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { get as _get } from 'lodash';
+import { combineLatest, Observable } from 'rxjs';
+import { TilesService } from './../../tiles/tiles.service';
+import { TilesUtilsService } from './../../tiles/tiles.utils.service';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services';
 import { ITile } from '../../tiles/tile.interface';
 import { ICampusGuide } from '../section.interface';
-import { CategoryDeleteErrors } from '../section.status';
 import { SectionUtilsService } from '../section.utils.service';
 import { SectionsService } from '../sections.service';
 
@@ -20,21 +22,36 @@ import { SectionsService } from '../sections.service';
 export class PersonasSectionComponent implements OnInit {
   @Input() last: boolean;
   @Input() first: boolean;
+  @Input() tileWidth = '2';
+  @Input() hideName: boolean;
   @Input() personaId: number;
   @Input() addSection = true;
+  @Input() noControls = false;
   @Input() guide: ICampusGuide;
-  @Input() previousRank: number;
+  @Input() guideNames: String[];
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
-  @Output() deleted: EventEmitter<number> = new EventEmitter();
-  @Output() created: EventEmitter<ICampusGuide> = new EventEmitter();
+  @Output() deleted: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output() removeSection: EventEmitter<number> = new EventEmitter();
+  @Output() deleteTileClick: EventEmitter<ITile> = new EventEmitter();
+  @Output() createNewSection: EventEmitter<ICampusGuide> = new EventEmitter();
+  @Output() deleteSectionClick: EventEmitter<ICampusGuide> = new EventEmitter();
+  @Output()
+  shuffle: EventEmitter<{
+    tile: number;
+    section: number | string;
+    position: number;
+  }> = new EventEmitter();
 
   state = {
-    working: false
+    working: false,
+    sorting: false
   };
 
   lastRank;
+  sortableOptions;
+  selectedTile: ITile;
+  sectionId: number | string;
 
   constructor(
     public router: Router,
@@ -42,7 +59,9 @@ export class PersonasSectionComponent implements OnInit {
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
     public service: SectionsService,
-    public utils: SectionUtilsService
+    public tilesService: TilesService,
+    public utils: SectionUtilsService,
+    public tileUtils: TilesUtilsService
   ) {}
 
   onSavedGuide(newGuide) {
@@ -60,11 +79,40 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   onEditTile(tile: ITile) {
+    this.service.guide = this.guide;
     this.router.navigate([`/customize/personas/${this.personaId}/tiles/${tile.id}/edit`]);
   }
 
   goToCreateTile() {
+    if (this.guide._categoryZero) {
+      return this.createCategoryZeroTile();
+    }
+
+    if (this.guide._featureTile) {
+      return this.createFeatureTile();
+    }
+
     this.service.guide = this.guide;
+    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
+  }
+
+  createFeatureTile() {
+    const tempGuide = {
+      ...this.guide,
+      featureTile: true
+    };
+    this.service.guide = tempGuide;
+
+    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
+  }
+
+  createCategoryZeroTile() {
+    const tempGuide = {
+      ...this.guide,
+      categoryZero: true
+    };
+    this.service.guide = tempGuide;
+
     this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
   }
 
@@ -79,14 +127,9 @@ export class PersonasSectionComponent implements OnInit {
     };
   }
 
-  errorHandler(err) {
-    let snackBarClass = 'danger';
-    let body = _get(err, ['error', 'response'], this.cpI18n.translate('something_went_wrong'));
-
-    if (body === CategoryDeleteErrors.NON_EMPTY_CATEGORY) {
-      snackBarClass = 'warning';
-      body = this.cpI18n.translate('t_personas_delete_guide_error_non_empty_category');
-    }
+  errorHandler(err: HttpErrorResponse) {
+    const snackBarClass = 'danger';
+    const body = _get(err, ['error', 'response'], this.cpI18n.translate('something_went_wrong'));
 
     this.setWorkingState(false);
 
@@ -102,7 +145,7 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   onAddSection() {
-    this.created.emit(this.utils.temporaryGuide(this.previousRank + 1));
+    this.createNewSection.emit(this.utils.temporaryGuide(this.guide.rank - 1));
   }
 
   onNameChange(name, updatedGuide: ICampusGuide) {
@@ -137,29 +180,88 @@ export class PersonasSectionComponent implements OnInit {
     );
   }
 
-  onDeleteSection() {
-    this.setWorkingState(true);
-    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
-
-    this.service.deleteSectionTileCategory(this.guide.id, search).subscribe(
+  updateRank(stream$: Observable<any>) {
+    this.state = { ...this.state, sorting: true };
+    stream$.subscribe(
       () => {
-        this.deleted.emit(this.guide.id);
-        this.setWorkingState(false);
+        this.state = { ...this.state, sorting: false };
       },
-      (err) => this.errorHandler(err)
+      (err) => {
+        this.errorHandler(err);
+        this.state = { ...this.state, sorting: false };
+      }
     );
   }
 
-  onDeletedTile(tileId: number) {
-    this.guide = {
-      ...this.guide,
-      tiles: this.guide.tiles.filter((tile: ITile) => tile.id !== tileId)
-    };
+  onAdd(event) {
+    const position = event.newIndex;
+    const tile = Number(event.item.dataset.tile);
+    const section = event.target.dataset.section;
 
-    if (!this.guide.tiles.length) {
-      this.removeSection.emit(this.guide.id);
-    }
+    this.shuffle.emit({ tile, section, position });
   }
 
-  ngOnInit(): void {}
+  onDragged(event) {
+    const { oldIndex, newIndex } = event;
+
+    let updatedTileA;
+    let updatedTileB;
+    const tileA: ITile = this.utils.tileAtIndex(this.guide.tiles, oldIndex);
+    const tileB: ITile = this.utils.tileAtIndex(this.guide.tiles, newIndex);
+
+    if (this.tileUtils.isFeatured(tileA)) {
+      updatedTileA = {
+        featured_rank: tileB.featured_rank
+      };
+
+      updatedTileB = {
+        featured_rank: tileA.featured_rank
+      };
+    } else {
+      updatedTileA = {
+        rank: tileB.rank
+      };
+
+      updatedTileB = {
+        rank: tileA.rank
+      };
+    }
+
+    updatedTileA = {
+      ...updatedTileA,
+      school_id: this.session.g.get('school').id
+    };
+
+    updatedTileB = {
+      ...updatedTileB,
+      school_id: this.session.g.get('school').id
+    };
+
+    const updateTileA$ = this.tilesService.updateCampusTile(tileA.id, updatedTileA);
+    const updateTileB$ = this.tilesService.updateCampusTile(tileB.id, updatedTileB);
+    const stream$ = combineLatest([updateTileA$, updateTileB$]);
+
+    this.updateRank(stream$);
+  }
+
+  ngOnInit(): void {
+    if (this.guide._featureTile) {
+      this.sectionId = 'featured';
+    } else if (this.guide._categoryZero) {
+      this.sectionId = 'category_zero';
+    } else {
+      this.sectionId = this.guide.id;
+    }
+
+    this.sortableOptions = {
+      scroll: false,
+      group: {
+        name: 'studio',
+        put: true,
+        pull: true
+      },
+      onAdd: this.onAdd.bind(this),
+      onUpdate: this.onDragged.bind(this)
+    };
+  }
 }

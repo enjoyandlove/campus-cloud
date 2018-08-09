@@ -1808,6 +1808,9 @@
   "new_password": {
     "message": "New Password"
   },
+  "new_tile": {
+    "message": "New Tile"
+  },
   "next": {
     "message": "Next"
   },
@@ -2318,7 +2321,7 @@
     "message": "Type"
   },
   "t_assess_all_orientations": {
-    "message": "All Orientations"
+    "message": "All Orientation Programs"
   },
   "t_assess_chart_tooltip_label_engagements": {
     "message": "Engagement(s)"
@@ -2327,7 +2330,7 @@
     "message": "No Orientation Data"
   },
   "t_assess_no_orientation_data_help": {
-    "message": "To see Orientations data use the Engagement filter"
+    "message": "To see Orientation data, use the Engagement filter."
   },
   "t_assess_orientation_programs": {
     "message": "Orientation Programs"
@@ -2357,7 +2360,7 @@
     "message": "Registrations"
   },
   "t_dashboard_top_orientation": {
-    "message": "Top Orientations"
+    "message": "All Orientation Programs"
   },
   "t_deals_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -2413,26 +2416,68 @@
   "t_deals_list_grid_column_store": {
     "message": "Store"
   },
+  "t_events_assessment_add_checkin_modal_title": {
+    "message": "Check-In"
+  },
+  "t_events_assessment_add_check_in": {
+    "message": "Add Check-In"
+  },
+  "t_events_assessment_check_in_and_checkout": {
+    "message": "Check-In and Check-Out"
+  },
+  "t_events_assessment_check_in_only": {
+    "message": "Check-In Only"
+  },
+  "t_events_assessment_message_attendees": {
+    "message": "Message Attendees"
+  },
+  "t_events_assessment_qr_enabled_no": {
+    "message": "No"
+  },
+  "t_events_assessment_qr_enabled_yes": {
+    "message": "Yes"
+  },
+  "t_events_attendance_type": {
+    "message": "Attendance Type"
+  },
+  "t_events_event_qr_enabled": {
+    "message": "QR Enabled"
+  },
   "t_events_import_import_events": {
     "message": "Import Events"
   },
   "t_events_import_upload_picture": {
     "message": "Upload Image"
   },
+  "t_event_assessment_check_in_date": {
+    "message": "Check-In"
+  },
+  "t_event_assessment_check_out_date": {
+    "message": "Check-Out"
+  },
+  "t_event_assessment_web_checkin_page": {
+    "message": "Web Check-In Page"
+  },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
   },
+  "t_personas": {
+    "message": "App Experiences"
+  },
   "t_personas_button_list_create": {
-    "message": "Create Persona"
+    "message": "Create Experience"
   },
   "t_personas_create_form_title": {
-    "message": "Persona Details"
+    "message": "Experience Details"
   },
   "t_personas_create_header_title": {
-    "message": "Create Persona"
+    "message": "Create Experience"
+  },
+  "t_personas_create_label_campus_security": {
+    "message": "Campus Security Service"
   },
   "t_personas_create_section_default_name": {
-    "message": "Untitled "
+    "message": "Untitled"
   },
   "t_personas_create_submit_button": {
     "message": "Save Changes"
@@ -2444,22 +2489,52 @@
     "message": "Content"
   },
   "t_personas_delete_error_last_persona": {
-    "message": "A school must have at least one persona enabled."
+    "message": "A school must have at least one experience enabled."
   },
   "t_personas_delete_error_users_associated": {
     "message": "This experience has users associated, so you cannot delete it."
   },
   "t_personas_delete_guide_error_non_empty_category": {
-    "message": "This section has tiles associated, so you cannot delete it. Delete all tiles from the section, and try again."
+    "message": "To delete a section, delete all the tiles."
+  },
+  "t_personas_delete_tile_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_personas_delete_tile_modal_title": {
+    "message": "Delete Tile"
+  },
+  "t_personas_details_feature": {
+    "message": "Featured"
+  },
+  "t_personas_edit_delete_button": {
+    "message": "Delete Experience"
+  },
+  "t_personas_edit_error_customization_off": {
+    "message": "This school has not enabled campus guide customization"
   },
   "t_personas_edit_error_users_associated": {
     "message": "This experience has users associated, so you cannot update its login requirements."
   },
+  "t_personas_edit_form_title": {
+    "message": "Experience details"
+  },
+  "t_personas_edit_header_title": {
+    "message": "Edit Experience"
+  },
+  "t_personas_edit_label_campus_security": {
+    "message": "Campus Security Service"
+  },
   "t_personas_edit_message_on_save_ok": {
     "message": "Changes saved."
   },
+  "t_personas_edit_missing_resource": {
+    "message": "The resource associated with this tile was not found."
+  },
+  "t_personas_edit_submit_button": {
+    "message": "Save Changes"
+  },
   "t_personas_form_delete_button": {
-    "message": "Delete Persona"
+    "message": "Delete Experience"
   },
   "t_personas_form_dropdown_login_forbidden": {
     "message": "Forbidden"
@@ -2477,7 +2552,7 @@
     "message": "Web"
   },
   "t_personas_form_label_persona_name": {
-    "message": "Persona Name"
+    "message": "Experience Name"
   },
   "t_personas_form_label_platform": {
     "message": "Platform"
@@ -2506,8 +2581,14 @@
   "t_personas_list_dropdown_web_experiences": {
     "message": "Web"
   },
+  "t_personas_resource_create_modal_title": {
+    "message": "New Resource"
+  },
   "t_personas_section_button_add_section": {
     "message": "Add Section"
+  },
+  "t_personas_tile_create_header": {
+    "message": "New Tile"
   },
   "t_personas_tile_create_resource_type_academic_calendar": {
     "message": "Academic Calendar"
@@ -2533,11 +2614,23 @@
   "t_personas_tile_create_resource_type_courses": {
     "message": "Courses"
   },
+  "t_personas_tile_create_resource_type_deal_store_list": {
+    "message": "Deals"
+  },
+  "t_personas_tile_create_resource_type_event_list": {
+    "message": "Events"
+  },
   "t_personas_tile_create_resource_type_exams": {
     "message": "Exams"
   },
   "t_personas_tile_create_resource_type_in_app_feedback": {
     "message": "In-App feedback"
+  },
+  "t_personas_tile_create_resource_type_job_list": {
+    "message": "Jobs"
+  },
+  "t_personas_tile_create_resource_type_orientation_calendar_list": {
+    "message": "Orientation"
   },
   "t_personas_tile_create_resource_type_service_by_category_id": {
     "message": "Services by Category"
@@ -2605,7 +2698,19 @@
   "t_personas_tile_modal_create_resource_type": {
     "message": "Resource Type"
   },
+  "t_personas_tile_update_header": {
+    "message": "Edit Tile"
+  },
   "t_persona_create_cancel_button": {
+    "message": "Cancel"
+  },
+  "t_persona_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_persona_delete_modal_title": {
+    "message": "Delete Experience"
+  },
+  "t_persona_edit_cancel_button": {
     "message": "Cancel"
   },
   "t_persona_list_button_customize": {
@@ -2640,6 +2745,9 @@
   },
   "t_shared_preview": {
     "message": "Preview"
+  },
+  "t_shared_save": {
+    "message": "Done"
   },
   "t_shared_show": {
     "message": "Show"

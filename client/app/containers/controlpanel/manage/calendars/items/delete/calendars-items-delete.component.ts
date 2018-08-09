@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 
 import { CPSession } from './../../../../../../session';
 import { CalendarsService } from '../../calendars.services';
+import { CPTrackingService } from '../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 @Component({
@@ -16,12 +18,14 @@ export class CalendarsItemsDeleteComponent implements OnInit {
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   buttonData;
+  eventProperties;
   calendarId: number;
 
   constructor(
     public session: CPSession,
     public route: ActivatedRoute,
     private cpI18n: CPI18nService,
+    private cpTracking: CPTrackingService,
     private calendarService: CalendarsService
   ) {
     this.calendarId = this.route.snapshot.params['calendarId'];
@@ -33,12 +37,26 @@ export class CalendarsItemsDeleteComponent implements OnInit {
       .append('academic_calendar_id', this.calendarId.toString());
 
     this.calendarService.delteItemById(this.item.id, search).subscribe(() => {
+      this.trackEvent();
+
       this.deleted.emit(this.item.id);
 
       $('#deleteCalendarItemModal').modal('hide');
 
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
     });
+  }
+
+  trackEvent() {
+    this.eventProperties = {
+      ...this.eventProperties,
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.CALENDAR_EVENTS
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.eventProperties);
   }
 
   ngOnInit() {

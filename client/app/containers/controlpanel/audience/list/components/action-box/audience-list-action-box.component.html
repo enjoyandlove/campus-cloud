@@ -19,7 +19,7 @@
           <button
             cpTracker
             (click)="launchCreateModal.emit()"
-            [eventData]="trackEvent(amplitudeEvents.clicked_create)"
+            [eventData]="eventData"
             class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">
             {{ 'lists_button_create' | cpI18n }}
           </button>

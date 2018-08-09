@@ -10,6 +10,7 @@ import {
   PseronasTileBaseComponent
 } from './components';
 import { PersonasTileCreateComponent } from './create';
+import { PersonasTileDeleteComponent } from './delete';
 import { PersonasTileEditComponent } from './edit/edit.component';
 import { PersonasResourceModule } from './resources/resources.module';
 import { PersonasTileComponent } from './tile/tile.component';
@@ -23,6 +24,7 @@ import { SectionsService } from '../sections/sections.service';
 
 @NgModule({
   declarations: [
+    PersonasTileDeleteComponent,
     PersonasTileEditComponent,
     PersonasTileGuideFormComponent,
     PseronasTileBaseComponent,
@@ -34,6 +36,7 @@ import { SectionsService } from '../sections/sections.service';
   ],
   imports: [CommonModule, SharedModule, ReactiveFormsModule, RouterModule, PersonasResourceModule],
   exports: [
+    PersonasTileDeleteComponent,
     PersonasTileEditComponent,
     PersonasTileGuideFormComponent,
     PersonasTileContentComponent,

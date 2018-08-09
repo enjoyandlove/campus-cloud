@@ -24,7 +24,7 @@ export class FeedBodyComponent implements OnInit {
     post_id: null,
     likes: null,
     comments: null,
-    wall_source: null,
+    wall_page: null,
     upload_image: null
   };
 
@@ -42,7 +42,7 @@ export class FeedBodyComponent implements OnInit {
         likes: this.utils.hasLikes(this.feed.likes),
         upload_image: this.utils.hasImage(this.feed.has_image),
         comments: this.utils.hasComments(this.feed.comment_count),
-        wall_source: this.utils.wallSource(this.athleticId, this.orientationId, this.clubId)
+        wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
       };
 
       this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_VIEWED_COMMENT, this.eventProperties);
