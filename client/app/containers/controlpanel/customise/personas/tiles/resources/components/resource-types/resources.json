@@ -231,5 +231,15 @@
       "open_in_browser": 0,
       "link_url": "oohlala://event_list"
     }
+  },
+  {
+    "id": "default_campus_link_list",
+    "label": "t_personas_tile_create_resource_type_default_campus_link_list",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://default_campus_link_list"
+    }
   }
 ]
