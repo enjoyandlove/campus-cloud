@@ -369,7 +369,5 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       : '';
 
     this.fetch();
-
-    console.log(this.session.g.get('user'));
   }
 }
