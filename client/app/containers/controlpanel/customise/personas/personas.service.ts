@@ -24,9 +24,9 @@ export class PersonasService extends HTTPService {
 
   getPersonas(startRange: number, endRange: number, search: HttpParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}`;
-    const url = startRange && endRange ? `${common}/${startRange};${endRange}` : `${common}/`;
+    const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return super.get(url, search, true);
   }
 
   getServices(search) {
@@ -81,7 +81,7 @@ export class PersonasService extends HTTPService {
   getPersonaById(personaId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/${personaId}`;
 
-    return super.get(url, search);
+    return super.get(url, search, true);
   }
 
   deletePersonaById(personaId: number, search: HttpParams) {

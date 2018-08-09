@@ -108,7 +108,7 @@ export class CPTopBarComponent implements OnInit {
       menu_manage: amplitudeEvents.MENU_MANAGE,
       menu_notify: amplitudeEvents.MENU_NOTIFY,
       menu_assess: amplitudeEvents.MENU_ASSESS,
-      menu_customize: amplitudeEvents.MENU_CUSTOMIZE,
+      menu_studio: amplitudeEvents.MENU_STUDIO,
       menu_audience: amplitudeEvents.MENU_AUDIENCE
     };
   }

@@ -9,8 +9,9 @@
       "url": "/customize/banner"
     },
     {
-      "hiddenInProd": true,
-      "amplitude": "Studio",
+      "hidden": true,
+      "allow_internal": true,
+      "amplitude": "Experiences",
       "label": "t_customise_personas",
       "url": "/customize/personas"
     }

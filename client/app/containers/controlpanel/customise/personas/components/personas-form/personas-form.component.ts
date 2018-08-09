@@ -11,6 +11,7 @@ import { CPI18nService } from './../../../../../../shared/services/i18n.service'
   styleUrls: ['./personas-form.component.scss']
 })
 export class PersonasFormComponent implements OnInit {
+  @Input() isEdit = false;
   @Input() form: FormGroup;
 
   @Output() valueChanges: EventEmitter<FormGroup> = new EventEmitter();
