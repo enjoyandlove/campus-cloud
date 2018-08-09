@@ -57,6 +57,8 @@ export const amplitudeEvents = {
 
   MENU_ASSESS: 'Assess',
 
+  MENU_STUDIO: 'Studio',
+
   MENU_NOTIFY: 'Notify',
 
   EXECUTIVE: 'Executive',
@@ -90,8 +92,6 @@ export const amplitudeEvents = {
   CUSTOM_LIST: 'Custom List',
 
   VIEWED_ITEM: 'Viewed Item',
-
-  MENU_CUSTOMIZE: 'Customize',
 
   DELETED_ITEM: 'Deleted Item',
 
