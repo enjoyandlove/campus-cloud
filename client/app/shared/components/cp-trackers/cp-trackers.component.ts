@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { CPSession } from './../../../session';
 import { CPTrackingService } from './../../services/tracking.service';
 
-declare var Beamer;
+declare var window;
 
 @Component({
   selector: 'cp-trackers',
@@ -11,6 +12,7 @@ declare var Beamer;
 export class CPTrackersComponent implements OnInit {
   constructor(
     public router: Router,
+    public session: CPSession,
     public route: ActivatedRoute,
     public cpTrackingService: CPTrackingService
   ) {}
@@ -24,8 +26,28 @@ export class CPTrackersComponent implements OnInit {
     });
   }
 
+  beamerInit() {
+    const user = this.session.g.get('user');
+    const { firstname, lastname, id, email } = user;
+    const beamer_config = {
+      user_id: id,
+      user_email: email,
+      user_firstname: firstname,
+      user_lastname: lastname,
+      selector: 'beamerButton',
+      product_id: 'fUBlZgzD4800'
+    };
+
+    window.beamer_config = beamer_config;
+
+    const script = document.createElement('script');
+    script.src = 'https://app.getbeamer.com/js/beamer-embed.js';
+
+    document.body.appendChild(script);
+  }
+
   ngOnInit() {
-    Beamer.init();
+    this.beamerInit();
 
     this.listenForRouteChanges();
   }
