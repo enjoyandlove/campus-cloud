@@ -20,6 +20,7 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   @Output() querySearch: EventEmitter<string> = new EventEmitter();
   @Output() createExcel: EventEmitter<null> = new EventEmitter();
   @Output() sendMessage: EventEmitter<null> = new EventEmitter();
+  @Output() addCheckIn: EventEmitter<null> = new EventEmitter();
 
   disabled;
   tooltipText;
@@ -47,6 +48,10 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
     }
 
     this.sendMessage.emit();
+  }
+
+  onAddCheckIn() {
+    this.addCheckIn.emit();
   }
 
   ngOnInit() {

@@ -327,6 +327,16 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     );
   }
 
+  onAddCheckIn() {
+    setTimeout(
+      () => {
+        $('#addCheckInModal').modal();
+      },
+
+      1
+    );
+  }
+
   trackSendMessageEvents(host_type) {
     const engagement_type = this.allStudents
       ? amplitudeEvents.ALL_STUDENTS

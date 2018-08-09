@@ -39,6 +39,7 @@
       <div class="col-12">
         <cp-events-attendance-action-box
           [event]="event"
+          (addCheckIn)="onAddCheckIn()"
           [totalAttendees]="totalAttendees"
           [isOrientation]="isOrientation"
           (querySearch)="doSearch($event)"
@@ -160,6 +161,12 @@
     </div>
   </div>
 </div>
+
+<cp-modal modalId="addCheckInModal">
+  <cp-event-attendance-add-check-in>
+
+  </cp-event-attendance-add-check-in>
+</cp-modal>
 
 <cp-modal
   modalId="sendMessageModal"

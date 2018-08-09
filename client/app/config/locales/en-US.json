@@ -2437,11 +2437,26 @@
   "t_events_assessment_qr_enabled_yes": {
     "message": "Yes"
   },
+  "t_events_attendance_add_edit_check_in_check_in_time": {
+    "message": "Check-In Time"
+  },
+  "t_events_attendance_add_edit_check_in_check_out_time": {
+    "message": "Check-Out Time"
+  },
+  "t_events_attendance_add_edit_check_in_email": {
+    "message": "Email"
+  },
+  "t_events_attendance_add_edit_check_in_first_name": {
+    "message": "First Name"
+  },
+  "t_events_attendance_add_edit_check_in_last_name": {
+    "message": "Last Name"
+  },
   "t_events_attendance_no_attendees_tooltip_text": {
     "message": "There are no users"
   },
   "t_events_attendance_no_permission_tooltip_text": {
-    "message": "You don't have Announcement Permission"
+    "message": "Notify permission required"
   },
   "t_events_attendance_type": {
     "message": "Attendance Type"

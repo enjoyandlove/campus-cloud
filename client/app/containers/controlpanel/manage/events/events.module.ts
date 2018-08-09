@@ -6,7 +6,11 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '../../../../shared/shared.module';
 
 import { EventsAttendanceComponent } from './attendance';
-import { EventsAttendanceActionBoxComponent } from './attendance/components';
+import {
+  CheckInFormComponent,
+  AddCheckInComponent,
+  EventsAttendanceActionBoxComponent
+} from './attendance/components';
 import { EventsCreateComponent } from './create';
 import { EventsDeleteComponent } from './delete';
 import { EventsEditComponent } from './edit';
@@ -56,7 +60,9 @@ import { EngagementStudentsModule } from '../../assess/students/students.module'
     FacebookEventsCreateComponent,
     FacebookEventsUpdateComponent,
     FacebookEventsDeleteComponent,
-    EventsComponent
+    EventsComponent,
+    AddCheckInComponent,
+    CheckInFormComponent
   ],
 
   imports: [
@@ -86,7 +92,9 @@ import { EngagementStudentsModule } from '../../assess/students/students.module'
     ListPastComponent,
     ListUpcomingComponent,
     EventsAttendanceActionBoxComponent,
-    EventsComponent
+    EventsComponent,
+    AddCheckInComponent,
+    CheckInFormComponent
   ]
 })
 export class EventsModule {}
