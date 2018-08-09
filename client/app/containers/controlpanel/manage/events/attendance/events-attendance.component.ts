@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs/index';
 import { Store } from '@ngrx/store';
 
 import { CheckInMethod } from '../event.status';
@@ -17,7 +18,6 @@ import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { canSchoolWriteResource } from '../../../../../shared/utils/privileges/privileges';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
-import { BehaviorSubject } from 'rxjs/index';
 
 interface IState {
   sort_field: string;
@@ -46,11 +46,10 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   @Input() isOrientation: boolean;
 
   event;
-  canAssess;
   urlPrefix;
+  canMessage;
   appCheckIn;
   messageData;
-  hasPermission;
   sortingLabels;
   attendees = [];
   tooltipContent;
@@ -303,7 +302,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   messageAttendee(attendee) {
-    if (!this.hasPermission) {
+    if (!this.canMessage) {
       return;
     }
 
@@ -361,12 +360,16 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     };
 
     this.appCheckIn = CheckInMethod.app;
-    this.hasPermission = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.event_attendance);
+    this.canMessage = canSchoolWriteResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.campus_announcements);
 
-    this.tooltipContent = !this.hasPermission
+    this.tooltipContent = !this.canMessage
       ? this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text')
       : '';
 
     this.fetch();
+
+    console.log(this.session.g.get('user'));
   }
 }

@@ -24,7 +24,8 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   disabled;
   tooltipText;
   eventCheckinRoute;
-  hasPermission = false;
+  canMessage = false;
+  canDownload = false;
 
   constructor(
     public session: CPSession,
@@ -50,13 +51,18 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
 
   ngOnInit() {
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
-    this.hasPermission = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.event_attendance);
+    this.canDownload = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.event_attendance);
+
+    this.canMessage = canSchoolWriteResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.campus_announcements
+    );
 
     this.totalAttendees.subscribe((attendees) => {
-      this.disabled = !this.hasPermission || !attendees;
+      this.disabled = !this.canMessage || !attendees;
       if (!attendees) {
         this.tooltipText = this.cpI18n.translate('t_events_attendance_no_attendees_tooltip_text');
-      } else if (!this.hasPermission) {
+      } else if (!this.canMessage) {
         this.tooltipText = this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text');
       } else {
         this.tooltipText = '';

@@ -5,7 +5,7 @@
     </div>
     <div class="col text-right">
       <button
-        *ngIf="hasPermission"
+        *ngIf="canDownload"
         (click)="downloadExcel()"
         class="cpbtn cpbtn--cancel margin-right">
         {{ 'download_csv' | cpI18n }}
