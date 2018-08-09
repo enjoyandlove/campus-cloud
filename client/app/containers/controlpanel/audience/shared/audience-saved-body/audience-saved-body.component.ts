@@ -48,16 +48,14 @@ export class AudienceSavedBodyComponent implements OnInit {
     const stream$ = combineLatest(audiences$, persona$, this.importedAudience$);
 
     stream$.subscribe((res: any) => {
-      // @data [audiences, persona, importedAudience]
-      let _persona = [];
-      let _audiences = [];
+      let [audiences, personas, importedAudience] = res;
 
-      _persona = this.utils.parsedPersona(res[1]);
-      _audiences = this.utils.parsedAudience(res[0]);
+      personas = this.utils.parsedPersona(personas);
+      audiences = this.utils.parsedAudience(audiences);
 
-      if (res[2]) {
-        this.selectedItem = _audiences.filter(
-          (audience) => audience.action === res[2]
+      if (importedAudience) {
+        this.selectedItem = audiences.filter(
+          (audience) => audience.action === importedAudience
         )[0];
 
         this.selected.emit(this.selectedItem);
@@ -65,8 +63,8 @@ export class AudienceSavedBodyComponent implements OnInit {
 
       this.audiences = [
         ...this.audiences,
-        ..._persona,
-        ..._audiences
+        ...personas,
+        ...audiences
       ];
     });
   }
