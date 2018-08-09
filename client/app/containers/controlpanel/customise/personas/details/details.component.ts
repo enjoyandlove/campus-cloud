@@ -1,15 +1,19 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { flatten } from 'lodash';
-import { get as _get } from 'lodash';
+import { flatten, get as _get } from 'lodash';
 import { combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
-import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import {
+  ISnackbar,
+  SNACKBAR_HIDE,
+  SNACKBAR_SHOW
+} from './../../../../../reducers/snackbar.reducer';
 import { IPersona } from './../persona.interface';
 import { PersonasService } from './../personas.service';
+import { PersonaValidationErrors } from './../personas.status';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
@@ -36,7 +40,7 @@ interface IState {
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.scss']
 })
-export class PersonasDetailsComponent extends BaseComponent implements OnInit {
+export class PersonasDetailsComponent extends BaseComponent implements OnDestroy, OnInit {
   loading;
   personaId;
   guideNames;
@@ -385,6 +389,17 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
       body = this.cpI18n.translate('t_personas_delete_guide_error_non_empty_category');
     }
 
+    if (body === PersonaValidationErrors.customization_off) {
+      snackBarClass = 'warning';
+      body = this.cpI18n.translate('t_personas_edit_error_customization_off');
+    }
+
+    if (err.status === 404) {
+      this.router.navigate(['/customize/personas']);
+
+      return;
+    }
+
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
@@ -577,7 +592,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
           }
         };
       })
-      .catch(() => this.router.navigate(['/customize/personas']));
+      .catch((err: HttpErrorResponse) => this.errorHandler(err));
   }
 
   updateHeader(personName) {
@@ -594,6 +609,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnInit {
         children: []
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch({ type: SNACKBAR_HIDE });
   }
 
   ngOnInit(): void {

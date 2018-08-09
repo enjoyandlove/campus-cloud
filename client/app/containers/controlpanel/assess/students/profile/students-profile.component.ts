@@ -46,7 +46,6 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   student;
   studentId;
   messageData;
-  eventProperties;
   engagementData = [];
   engagementsByDay = [];
   loadingEngagementData;
@@ -58,6 +57,11 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
   state = {
     scope: ALL_ENGAGEMENTS
+  };
+
+  eventProperties = {
+    host_type: null,
+    engagement_type: null
   };
 
   constructor(
@@ -225,13 +229,13 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   }
 
   trackAmplitudeEvents() {
-    this.eventProperties = {
-      cohort_type: amplitudeEvents.SINGLE_STUDENT,
-      engagement_type: amplitudeEvents.SINGLE_STUDENT,
-      engagement_source: amplitudeEvents.ALL_ENGAGEMENT
+    const eventProperties = {
+      engagement_type: amplitudeEvents.SINGLE_STUDENT
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_DOWNLOAD_DATA, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_DOWNLOAD_DATA,
+      eventProperties);
   }
 
   onComposeTeardown() {
@@ -255,7 +259,9 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     );
   }
 
-  onFlashMessage() {
+  onFlashMessage(data) {
+    this.trackSendMessageEvents(data.hostType);
+
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
@@ -263,6 +269,18 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
         autoClose: true
       }
     });
+  }
+
+  trackSendMessageEvents(host_type) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type,
+      engagement_type: amplitudeEvents.SINGLE_STUDENT
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_SENT_MESSAGE,
+      this.eventProperties);
   }
 
   ngOnInit() {

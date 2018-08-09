@@ -56,5 +56,11 @@ export class CPSession {
   get defaultHost() {
     return this._defaultHost;
   }
+
+  get isInternal() {
+    const email = this.g.get('user').email.toLowerCase();
+
+    return email.endsWith('@oohlalamobile.com') || email.endsWith('@dublabs.com');
+  }
   constructor() {}
 }

@@ -2320,9 +2320,6 @@
   "type": {
     "message": "Type"
   },
-  "t_app_checkin_method": {
-    "message": "App check-in"
-  },
   "t_assess_all_orientations": {
     "message": "All Orientation Programs"
   },
@@ -2363,7 +2360,7 @@
     "message": "Registrations"
   },
   "t_dashboard_top_orientation": {
-    "message": "Orientation Top 5"
+    "message": "All Orientation Programs"
   },
   "t_deals_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -2439,6 +2436,12 @@
   },
   "t_events_assessment_qr_enabled_yes": {
     "message": "Yes"
+  },
+  "t_events_attendance_no_attendees_tooltip_text": {
+    "message": "There are no users"
+  },
+  "t_events_attendance_no_permission_tooltip_text": {
+    "message": "You don't have Announcement Permission"
   },
   "t_events_attendance_type": {
     "message": "Attendance Type"
@@ -2620,6 +2623,9 @@
   "t_personas_tile_create_resource_type_deal_store_list": {
     "message": "Deals"
   },
+  "t_personas_tile_create_resource_type_event_list": {
+    "message": "Events"
+  },
   "t_personas_tile_create_resource_type_exams": {
     "message": "Exams"
   },
@@ -2757,12 +2763,6 @@
   },
   "t_tile_button_locked": {
     "message": "Locked"
-  },
-  "t_web_based_qr_scan": {
-    "message": "Web Based QR scan"
-  },
-  "t_web_checkin_method": {
-    "message": "Web check-in"
   },
   "update": {
     "message": "Update",

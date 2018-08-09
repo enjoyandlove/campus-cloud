@@ -2527,6 +2527,9 @@
   "t_personas_tile_create_resource_type_courses": {
     "message": "Cours"
   },
+  "t_personas_tile_create_resource_type_event_list": {
+    "message": "Événements"
+  },
   "t_personas_tile_create_resource_type_exams": {
     "message": "Examens"
   },

@@ -57,6 +57,8 @@ export const amplitudeEvents = {
 
   MENU_ASSESS: 'Assess',
 
+  MENU_STUDIO: 'Studio',
+
   MENU_NOTIFY: 'Notify',
 
   EXECUTIVE: 'Executive',
@@ -91,7 +93,7 @@ export const amplitudeEvents = {
 
   VIEWED_ITEM: 'Viewed Item',
 
-  MENU_CUSTOMIZE: 'Customize',
+  ALL_STUDENTS: 'All Students',
 
   DELETED_ITEM: 'Deleted Item',
 
@@ -125,6 +127,8 @@ export const amplitudeEvents = {
 
   CLICKED_MENU: 'Clicked Menu Item',
 
+  EVENT_ASSESSMENT: 'Event Assessment',
+
   CHANGE_PASSWORD: 'Changed Password',
 
   WALL_MOVED_POST: 'Wall - Moved Post',
@@ -154,6 +158,8 @@ export const amplitudeEvents = {
   WALL_VIEWED_COMMENT: 'Wall - Viewed Comment',
 
   ASSESS_SENT_MESSAGE: 'Assess - Sent Message',
+
+  MENAGE_SENT_MESSAGE: 'Menage - Sent Message',
 
   WALL_SUBMITTED_POST: 'Wall - Submitted Post',
 
