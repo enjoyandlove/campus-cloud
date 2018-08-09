@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/index';
 
 import { CPSession } from './../../../../../../../session';
 import { EventUtilService } from '../../../events.utils.service';
@@ -13,7 +14,7 @@ import { canSchoolWriteResource } from './../../../../../../../shared/utils/priv
 })
 export class EventsAttendanceActionBoxComponent implements OnInit {
   @Input() event: any;
-  @Input() attendees: any;
+  @Input() totalAttendees = new BehaviorSubject(null);
   @Input() isOrientation: boolean;
 
   @Output() querySearch: EventEmitter<string> = new EventEmitter();
@@ -21,8 +22,8 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   @Output() sendMessage: EventEmitter<null> = new EventEmitter();
 
   disabled;
+  tooltipText;
   eventCheckinRoute;
-  tooltipContent = '';
   hasPermission = false;
 
   constructor(
@@ -51,12 +52,16 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
     this.hasPermission = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.event_attendance);
 
-    this.disabled = !this.hasPermission || !this.attendees;
+    this.totalAttendees.subscribe((attendees) => {
+      this.disabled = !this.hasPermission || !attendees;
+      if (!attendees) {
+        this.tooltipText = this.cpI18n.translate('t_events_attendance_no_attendees_tooltip_text');
+      } else if (!this.hasPermission) {
+        this.tooltipText = this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text');
+      } else {
+        this.tooltipText = '';
+      }
+    });
 
-    if (!this.attendees) {
-      this.tooltipContent = this.cpI18n.translate('t_events_attendance_no_attendees_tooltip_text');
-    } else if (!this.hasPermission) {
-      this.tooltipContent = this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text');
-    }
   }
 }

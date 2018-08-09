@@ -17,6 +17,7 @@ import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { canSchoolWriteResource } from '../../../../../shared/utils/privileges/privileges';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
+import { BehaviorSubject } from 'rxjs/index';
 
 interface IState {
   sort_field: string;
@@ -61,6 +62,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   downloadEventProperties;
   isSendMessageModal = false;
   dateFormat = FORMAT.DATETIME;
+  totalAttendees = new BehaviorSubject(null);
 
   eventProperties = {
     host_type: null,
@@ -147,6 +149,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       .fetchData(stream$)
       .then((res) => {
         this.attendees = res.data;
+        this.totalAttendees.next(res.data.length);
         setTimeout(
           () => {
             $(function () {
