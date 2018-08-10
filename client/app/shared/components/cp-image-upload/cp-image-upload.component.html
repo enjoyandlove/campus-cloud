@@ -20,11 +20,11 @@
     </div>
   </div>
   <div class="col-8 wrapper__right-side">
-    <label class="no-margin dark">{{ description }}</label>
-    <a 
+    <label class="no-margin dark">{{ heading }}</label>
+    <a
     target="_blank"
     [attr.href]="zdArticle">
-      <span class="text-muted">{{ 'component_cpimage_help' | cpI18n }}</span>
+      <span class="text-muted">{{ description }}</span>
     </a>
     <div class="row" *ngIf="error">
       <div class="col-12">

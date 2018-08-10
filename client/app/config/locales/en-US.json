@@ -2360,7 +2360,7 @@
     "message": "Registrations"
   },
   "t_dashboard_top_orientation": {
-    "message": "All Orientation Programs"
+    "message": "Top Orientation Programs"
   },
   "t_deals_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
@@ -2436,6 +2436,21 @@
   },
   "t_events_assessment_qr_enabled_yes": {
     "message": "Yes"
+  },
+  "t_events_attendance_add_check_in_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_events_attendance_add_check_in_delete_modal_title": {
+    "message": "Delete Check-In"
+  },
+  "t_events_attendance_add_check_in_error_check_in_time_after_now": {
+    "message": "Check-In Time must be in future"
+  },
+  "t_events_attendance_add_check_in_error_check_out_time_after_check_in": {
+    "message": "Check-Out  must be later than Check-In"
+  },
+  "t_events_attendance_add_check_in_error_fill_out_all_fields": {
+    "message": "Please fill out the marked fields"
   },
   "t_events_attendance_add_edit_check_in_check_in_time": {
     "message": "Check-In Time"
@@ -2722,6 +2737,9 @@
   "t_personas_tile_modal_create_resource_type": {
     "message": "Resource Type"
   },
+  "t_personas_tile_moved_success": {
+    "message": "Tile saved."
+  },
   "t_personas_tile_update_header": {
     "message": "Edit Tile"
   },
@@ -2775,6 +2793,9 @@
   },
   "t_shared_show": {
     "message": "Show"
+  },
+  "t_shared_wrong_dimensions": {
+    "message": "Must be JPG or PNG, 720*400px, smaller than 300KB "
   },
   "t_tile_button_default": {
     "message": "Default"
