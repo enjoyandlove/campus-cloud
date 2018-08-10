@@ -2398,6 +2398,12 @@
   "t_deals_list_grid_column_store": {
     "message": "Magasin"
   },
+  "t_events_assessment_qr_enabled_no": {
+    "message": "Non"
+  },
+  "t_events_assessment_qr_enabled_yes": {
+    "message": "Oui"
+  },
   "t_events_import_import_events": {
     "message": "Importer des événements"
   },

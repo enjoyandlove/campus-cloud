@@ -137,6 +137,10 @@
                       chat_bubble
                     </i>
                   </span>
+                  <span *ngIf="attendee.check_in_method === webCheckIn">
+                    <i class="material-icons hover">edit_mode</i>
+                    <i class="material-icons hover">close</i>
+                  </span>
                 </div>
               </div>
               <div class="row cp-table__feedback" *ngIf="attendee.feedback_text">
@@ -162,8 +166,12 @@
   </div>
 </div>
 
-<cp-modal modalId="addCheckInModal">
-  <cp-event-attendance-add-check-in>
+<cp-modal
+  modalId="addCheckInModal"
+  *ngIf="isAddCheckInModal">
+  <cp-event-attendance-add-check-in
+    (created)="onCreated($event)"
+    (resetAddCheckInModal)="isAddCheckInModal = false">
 
   </cp-event-attendance-add-check-in>
 </cp-modal>

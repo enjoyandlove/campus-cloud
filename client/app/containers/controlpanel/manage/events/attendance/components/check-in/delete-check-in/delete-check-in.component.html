@@ -2,13 +2,13 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span><strong>{{ 't_events_assessment_add_checkin_modal_title' | cpI18n }}</strong></span>
+        <span><strong>{{ 't_events_attendance_add_check_in_delete_modal_title' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
           class="float-right hover cpmodal__header__close">
-          &times;
-        </span>
+            &times;
+          </span>
       </div>
     </div>
   </div>
@@ -16,26 +16,18 @@
   <div class="cpmodal__body">
     <div class="row">
       <div class="col-12">
-        <cp-event-attendance-check-in-form
-        [form]="form"
-        [formErrors]="formErrors">
-        </cp-event-attendance-check-in-form>
+        <p class="text-center">
+          {{ 't_events_attendance_add_check_in_delete_modal_body' | cpI18n:checkIn.name }}
+        </p>
       </div>
     </div>
   </div>
 
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
-      <div class="col-12 text-right">
-        <label class="error" *ngIf="formErrors">
-          <i class="material-icons">
-            warning
-          </i>
-          {{ isDateError ? dateErrorMessage : cpI18n.translate('t_events_attendance_add_check_in_error_fill_out_all_fields') }}
-        </label>
+      <div class="col-6 text-right">
         <button
           type="button"
-          (click)="resetModal()"
           class="cpbtn cpbtn--cancel"
           data-dismiss="modal">
           {{ 'cancel' | cpI18n }}
@@ -43,7 +35,7 @@
 
         <cp-button
           [props]="buttonData"
-          (buttonClick)="onSubmit()">
+          (buttonClick)="onDelete()">
         </cp-button>
       </div>
     </div>

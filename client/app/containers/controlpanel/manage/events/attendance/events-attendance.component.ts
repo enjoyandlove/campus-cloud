@@ -49,6 +49,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   urlPrefix;
   canMessage;
   appCheckIn;
+  webCheckIn;
   messageData;
   sortingLabels;
   attendees = [];
@@ -59,6 +60,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   state: IState = state;
   attendeesLoading = true;
   downloadEventProperties;
+  isAddCheckInModal = false;
   isSendMessageModal = false;
   dateFormat = FORMAT.DATETIME;
   totalAttendees = new BehaviorSubject(null);
@@ -328,6 +330,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   onAddCheckIn() {
+    this.isAddCheckInModal = true;
     setTimeout(
       () => {
         $('#addCheckInModal').modal();
@@ -355,6 +358,14 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       this.eventProperties);
   }
 
+  onCreated(newAttendee) {
+    this.isAddCheckInModal = false;
+    this.attendees = [
+      ...newAttendee,
+      ...this.attendees,
+    ];
+  }
+
   ngOnInit() {
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,
@@ -370,6 +381,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     };
 
     this.appCheckIn = CheckInMethod.app;
+    this.webCheckIn = CheckInMethod.web;
     this.canMessage = canSchoolWriteResource(
       this.session.g,
       CP_PRIVILEGES_MAP.campus_announcements);
