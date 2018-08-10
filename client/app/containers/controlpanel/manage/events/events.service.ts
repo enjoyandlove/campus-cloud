@@ -70,28 +70,4 @@ export class EventsService extends HTTPService {
 
     return super.delete(url);
   }
-
-  getFacebookEvents(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FB_EVENTS}/`;
-
-    return super.get(url, search);
-  }
-
-  createFacebookEvent(body, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FB_EVENTS}/`;
-
-    return super.post(url, body, search);
-  }
-
-  bulkUpdateFacebookEvents(events, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FB_EVENTS}/`;
-
-    return super.update(url, events, search);
-  }
-
-  deleteFacebookEventByLinkId(linkId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FB_EVENTS}/${linkId}`;
-
-    return super.delete(url, search);
-  }
 }

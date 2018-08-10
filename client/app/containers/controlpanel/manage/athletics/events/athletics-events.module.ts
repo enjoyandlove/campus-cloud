@@ -9,7 +9,6 @@ import {
   AthleticsEventsInfoComponent,
   AthleticsEventsExcelComponent,
   AthleticsEventsCreateComponent,
-  AthleticsEventsFacebookComponent,
   AthleticsEventsAtthendanceComponent
 } from './components';
 
@@ -20,7 +19,6 @@ import {
     AthleticsEventsInfoComponent,
     AthleticsEventsExcelComponent,
     AthleticsEventsCreateComponent,
-    AthleticsEventsFacebookComponent,
     AthleticsEventsAtthendanceComponent
   ],
 

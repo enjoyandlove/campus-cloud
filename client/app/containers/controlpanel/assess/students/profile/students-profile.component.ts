@@ -11,10 +11,10 @@ import { FORMAT } from './../../../../../shared/pipes/date';
 import { AssessUtilsService } from '../../assess.utils.service';
 import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from './../../../../../base/base.component';
-import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { createSpreadSheet } from './../../../../../shared/utils/csv/parser';
+import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { SNACKBAR_SHOW, ISnackbar } from './../../../../../reducers/snackbar.reducer';
 import { STAR_SIZE } from './../../../../../shared/components/cp-stars/cp-stars.component';
 
 declare var $;
@@ -65,13 +65,13 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   };
 
   constructor(
-    public store: Store<any>,
     public session: CPSession,
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
     public service: StudentsService,
     public utils: AssessUtilsService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    public store: Store<ISnackbar | IHeader>,
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loadingEngagementData = loading));

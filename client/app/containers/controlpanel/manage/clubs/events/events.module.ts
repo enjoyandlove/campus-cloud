@@ -14,8 +14,7 @@ import {
   ClubsEventInfoComponent,
   ClubsEventsAttendanceComponent,
   ClubsEventsCreateComponent,
-  ClubsEventsExcelComponent,
-  ClubsEventsFacebookComponent
+  ClubsEventsExcelComponent
 } from './components';
 
 /**
@@ -29,7 +28,6 @@ import {
     ClubsEventsAttendanceComponent,
     ClubsEventInfoComponent,
     ClubsEventEditComponent,
-    ClubsEventsFacebookComponent,
     ClubsEventsExcelComponent
   ],
 
@@ -48,7 +46,6 @@ import {
     ClubsEventsAttendanceComponent,
     ClubsEventInfoComponent,
     ClubsEventEditComponent,
-    ClubsEventsFacebookComponent,
     ClubsEventsExcelComponent
   ],
 

@@ -13,7 +13,6 @@ import { EventsCreateComponent } from './create';
  * Imports
  */
 import { EventsExcelComponent } from './excel';
-import { EventsFacebookComponent } from './facebook';
 
 /**
  * MISC
@@ -60,12 +59,6 @@ const appRoutes: Routes = [
     data: { zendesk: 'events' },
     canActivate: [PrivilegesGuard],
     component: EventsExcelComponent
-  },
-  {
-    path: 'import/facebook',
-    data: { zendesk: 'events' },
-    canActivate: [PrivilegesGuard],
-    component: EventsFacebookComponent
   }
 ];
 @NgModule({

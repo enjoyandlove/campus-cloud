@@ -1,3 +1,4 @@
+/*tslint:disable:max-line-length*/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/index';
 
@@ -22,11 +23,11 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   @Output() sendMessage: EventEmitter<null> = new EventEmitter();
   @Output() addCheckIn: EventEmitter<null> = new EventEmitter();
 
-  disabled;
-  tooltipText;
   eventCheckinRoute;
-  canMessage = false;
-  canDownload = false;
+  disableMessageAttendees;
+  messageAttendeesTooltipText;
+  canDownload = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.event_attendance);
+  canMessage = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements);
 
   constructor(
     public session: CPSession,
@@ -43,7 +44,7 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   }
 
   sendAttendeesMessage() {
-    if (this.disabled) {
+    if (this.disableMessageAttendees) {
       return;
     }
 
@@ -56,21 +57,15 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
 
   ngOnInit() {
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
-    this.canDownload = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.event_attendance);
-
-    this.canMessage = canSchoolWriteResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.campus_announcements
-    );
 
     this.totalAttendees.subscribe((attendees) => {
-      this.disabled = !this.canMessage || !attendees;
+      this.disableMessageAttendees = !this.canMessage || !attendees;
       if (!attendees) {
-        this.tooltipText = this.cpI18n.translate('t_events_attendance_no_attendees_tooltip_text');
+        this.messageAttendeesTooltipText = this.cpI18n.translate('t_events_attendance_no_attendees_tooltip_text');
       } else if (!this.canMessage) {
-        this.tooltipText = this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text');
+        this.messageAttendeesTooltipText = this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text');
       } else {
-        this.tooltipText = '';
+        this.messageAttendeesTooltipText = '';
       }
     });
 

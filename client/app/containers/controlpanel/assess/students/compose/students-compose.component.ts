@@ -28,7 +28,7 @@ declare var $;
 export class StudentsComposeComponent implements OnInit {
   @Input() props: { name: string; userIds: Array<number> };
   @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() success: EventEmitter<{hostType: null}> = new EventEmitter();
+  @Output() success: EventEmitter<{hostType: string}> = new EventEmitter();
 
   isError;
   stores$;

@@ -47,13 +47,9 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
   event;
   urlPrefix;
-  canMessage;
-  appCheckIn;
-  webCheckIn;
   messageData;
   sortingLabels;
   attendees = [];
-  tooltipContent;
   loading = true;
   eventId: number;
   allStudents = false;
@@ -62,8 +58,12 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   downloadEventProperties;
   isAddCheckInModal = false;
   isSendMessageModal = false;
+  messageAttendeesTooltipText;
   dateFormat = FORMAT.DATETIME;
+  appCheckIn = CheckInMethod.app;
+  webCheckIn = CheckInMethod.web;
   totalAttendees = new BehaviorSubject(null);
+  canMessage = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements);
 
   eventProperties = {
     host_type: null,
@@ -287,13 +287,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   messageAllAttendees() {
     this.allStudents = true;
 
-    const userIds = [];
-
-    this.attendees.map((attendee) => {
-      if (attendee.user_id) {
-        userIds.push(attendee.user_id);
-      }
-    });
+    const userIds = this.attendees.filter((attendee) => attendee.user_id)
+      .map((attendee) => attendee.user_id);
 
     this.messageData = {
       name: this.event.title,
@@ -380,13 +375,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       method: this.cpI18n.translate('events_checked_in_method')
     };
 
-    this.appCheckIn = CheckInMethod.app;
-    this.webCheckIn = CheckInMethod.web;
-    this.canMessage = canSchoolWriteResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.campus_announcements);
-
-    this.tooltipContent = !this.canMessage
+    this.messageAttendeesTooltipText = !this.canMessage
       ? this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text')
       : '';
 

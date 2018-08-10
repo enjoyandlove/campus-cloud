@@ -23,12 +23,6 @@ import {
   EventsImportActionDropdownComponent,
   EventsImportTopBarComponent
 } from './excel/components';
-import { EventsFacebookComponent } from './facebook';
-import {
-  FacebookEventsCreateComponent,
-  FacebookEventsDeleteComponent,
-  FacebookEventsUpdateComponent
-} from './facebook/components';
 import { EventsInfoComponent } from './info';
 import { EventsListComponent } from './list';
 import { EventsComponent } from './list/base/events.component';
@@ -49,7 +43,6 @@ import { EngagementStudentsModule } from '../../assess/students/students.module'
     EventsInfoComponent,
     EventsEditComponent,
     EventsExcelModalComponent,
-    EventsFacebookComponent,
     EventsExcelComponent,
     EventsImportActionDropdownComponent,
     EventsImportTopBarComponent,
@@ -57,9 +50,6 @@ import { EngagementStudentsModule } from '../../assess/students/students.module'
     ListPastComponent,
     ListUpcomingComponent,
     EventsAttendanceActionBoxComponent,
-    FacebookEventsCreateComponent,
-    FacebookEventsUpdateComponent,
-    FacebookEventsDeleteComponent,
     EventsComponent,
     AddCheckInComponent,
     CheckInFormComponent
@@ -84,7 +74,6 @@ import { EngagementStudentsModule } from '../../assess/students/students.module'
     EventsInfoComponent,
     EventsEditComponent,
     EventsExcelModalComponent,
-    EventsFacebookComponent,
     EventsExcelComponent,
     EventsImportActionDropdownComponent,
     EventsImportTopBarComponent,

@@ -25,7 +25,6 @@ import {
   ServicesEventsInfoComponent,
   ServicesEventsExcelComponent,
   ServicesEventsCreateComponent,
-  ServicesEventsFacebookComponent,
   ServicesEventsAttendanceComponent
 } from './events/components';
 
@@ -72,7 +71,6 @@ import { ServicesUtilsService } from './services.utils.service';
     ServicesEventsAttendanceComponent,
     ServicesEventsInfoComponent,
     ServicesEventsEditComponent,
-    ServicesEventsFacebookComponent,
     ServicesEventsExcelComponent,
     ServicesEditDeleteModalComponent,
     ServicesEditCreateProviderComponent

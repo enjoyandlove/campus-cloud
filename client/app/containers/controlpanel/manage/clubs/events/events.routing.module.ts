@@ -12,8 +12,7 @@ import {
   ClubsEventInfoComponent,
   ClubsEventsAttendanceComponent,
   ClubsEventsCreateComponent,
-  ClubsEventsExcelComponent,
-  ClubsEventsFacebookComponent
+  ClubsEventsExcelComponent
 } from './components';
 
 const appRoutes: Routes = [
@@ -48,11 +47,6 @@ const appRoutes: Routes = [
   {
     path: 'import/excel',
     component: ClubsEventsExcelComponent,
-    data: { zendesk: 'clubs' }
-  },
-  {
-    path: 'import/facebook',
-    component: ClubsEventsFacebookComponent,
     data: { zendesk: 'clubs' }
   }
 ];

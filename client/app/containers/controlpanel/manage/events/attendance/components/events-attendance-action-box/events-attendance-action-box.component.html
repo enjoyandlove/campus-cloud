@@ -26,10 +26,10 @@
           <li
             data-toggle="tooltip"
             data-placement="left"
-            [title]="tooltipText"
             class="list-as-anchor"
-            [class.disabled]="disabled"
-            (click)="sendAttendeesMessage()">
+            (click)="sendAttendeesMessage()"
+            [title]="messageAttendeesTooltipText"
+            [class.disabled]="disableMessageAttendees">
             {{ 't_events_assessment_message_attendees' | cpI18n }}
           </li>
         </ul>
