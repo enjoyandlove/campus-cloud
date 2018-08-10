@@ -1,13 +1,15 @@
 <form [formGroup]="form">
   <div class="row form__row">
-    <div class="col-6">
+    <div class="col-12">
       <label>{{'name' | cpI18n }}</label>
       <input
         type="text"
         class="form-control"
         formControlName="name">
     </div>
-    <div class="col-3">
+  </div>
+  <div class="row form__row">
+    <div class="col-6">
       <label>{{'t_shared_color' | cpI18n }}</label>
       <input
         type="text"
@@ -17,7 +19,7 @@
         [defaultColor]="form.controls['color'].value">
     </div>
 
-    <div class="col-3">
+    <div class="col-6">
       <label>{{'t_shared_image' | cpI18n }}</label>
       <cp-upload-button
         [id]="uploadButtonId"

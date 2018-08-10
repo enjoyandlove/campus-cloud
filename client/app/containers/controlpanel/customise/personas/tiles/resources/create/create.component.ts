@@ -15,6 +15,7 @@ export class PersonaResourceCreateComponent implements OnInit {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   buttonData;
+  tileImageRequirements;
   campusLinkForm: FormGroup;
 
   constructor(
@@ -26,6 +27,15 @@ export class PersonaResourceCreateComponent implements OnInit {
   handleError(err) {
     this.error.emit(err);
     this.teardown.emit();
+  }
+
+  validateTileImage(file) {
+    return new Promise((resolve, reject) => {
+      this.tileUtils
+        .validateTileImage(file)
+        .then(() => resolve({ valid: true }))
+        .catch((err) => reject({ valid: false, errors: [err] }));
+    });
   }
 
   resetModal() {
@@ -56,6 +66,7 @@ export class PersonaResourceCreateComponent implements OnInit {
     };
 
     this.campusLinkForm = this.tileUtils.campusLinkForm();
+    this.tileImageRequirements = this.cpI18n.translate('t_personas_tile_image_requirements');
     this.campusLinkForm.valueChanges.subscribe(() => {
       this.buttonData = {
         ...this.buttonData,

@@ -24,7 +24,9 @@
             <div class="col-12">
               <cp-image-upload
                 id="resource_image_upload_button"
-                (uploaded)="onUploadedImage($event)">
+                (uploaded)="onUploadedImage($event)"
+                [description]="tileImageRequirements"
+                [validationFn]="validateTileImage.bind(this)">
               </cp-image-upload>
             </div>
           </div>

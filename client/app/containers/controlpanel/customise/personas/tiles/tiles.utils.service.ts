@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { sortBy } from 'lodash';
+import { FileUploadService } from './../../../../../shared/services/file-upload.service';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
@@ -16,6 +17,7 @@ export class TilesUtilsService {
   constructor(
     public fb: FormBuilder,
     public session: CPSession,
+    public cpI18n: CPI18nService,
     public sectionUtils: SectionUtilsService
   ) {}
 
@@ -81,6 +83,29 @@ export class TilesUtilsService {
       tile_category_id: [_tile.tile_category_id, null],
       featured_rank: [_tile.featured_rank, Validators.required]
     });
+  }
+
+  async validateTileImage(file: File): Promise<string> {
+    let error;
+    const rightRation = 1.85;
+    const threeHundrendKb = 3e5;
+    const maxImageSize = threeHundrendKb;
+    const validRatio = (w, h) => Number((w / h).toFixed(2)) === rightRation;
+    const validExtension = (media) => ['image/jpeg', 'image/jpg', 'image/png'].includes(media.type);
+    const validSize = FileUploadService.validFileSize(file, maxImageSize);
+    const { height, width } = await FileUploadService.getImageDimensions(file);
+
+    if (!validSize || !validRatio(width, height) || !validExtension(file)) {
+      if (!validSize) {
+        error = this.cpI18n.translate('error_file_is_too_big');
+      } else if (!validRatio(width, height)) {
+        error = this.cpI18n.translate('t_shared_wrong_dimensions');
+      } else {
+        error = this.cpI18n.translate('error_invalid_extension');
+      }
+    }
+
+    return error ? Promise.reject(error) : Promise.resolve(null);
   }
 
   campusLinkForm(nameRequired = true, imageRequired = true, link = null) {
