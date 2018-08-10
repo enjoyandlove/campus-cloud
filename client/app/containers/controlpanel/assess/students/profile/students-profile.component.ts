@@ -11,10 +11,10 @@ import { FORMAT } from './../../../../../shared/pipes/date';
 import { AssessUtilsService } from '../../assess.utils.service';
 import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from './../../../../../base/base.component';
-import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { createSpreadSheet } from './../../../../../shared/utils/csv/parser';
+import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { SNACKBAR_SHOW, ISnackbar } from './../../../../../reducers/snackbar.reducer';
 import { STAR_SIZE } from './../../../../../shared/components/cp-stars/cp-stars.component';
 
 declare var $;
@@ -46,7 +46,6 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   student;
   studentId;
   messageData;
-  eventProperties;
   engagementData = [];
   engagementsByDay = [];
   loadingEngagementData;
@@ -60,14 +59,19 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     scope: ALL_ENGAGEMENTS
   };
 
+  eventProperties = {
+    host_type: null,
+    engagement_type: null
+  };
+
   constructor(
-    public store: Store<any>,
     public session: CPSession,
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
     public service: StudentsService,
     public utils: AssessUtilsService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    public store: Store<ISnackbar | IHeader>,
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loadingEngagementData = loading));
@@ -225,13 +229,13 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   }
 
   trackAmplitudeEvents() {
-    this.eventProperties = {
-      cohort_type: amplitudeEvents.SINGLE_STUDENT,
-      engagement_type: amplitudeEvents.SINGLE_STUDENT,
-      engagement_source: amplitudeEvents.ALL_ENGAGEMENT
+    const eventProperties = {
+      engagement_type: amplitudeEvents.SINGLE_STUDENT
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_DOWNLOAD_DATA, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_DOWNLOAD_DATA,
+      eventProperties);
   }
 
   onComposeTeardown() {
@@ -255,7 +259,9 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     );
   }
 
-  onFlashMessage() {
+  onFlashMessage(data) {
+    this.trackSendMessageEvents(data.hostType);
+
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
@@ -263,6 +269,18 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
         autoClose: true
       }
     });
+  }
+
+  trackSendMessageEvents(host_type) {
+    this.eventProperties = {
+      ...this.eventProperties,
+      host_type,
+      engagement_type: amplitudeEvents.SINGLE_STUDENT
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_SENT_MESSAGE,
+      this.eventProperties);
   }
 
   ngOnInit() {

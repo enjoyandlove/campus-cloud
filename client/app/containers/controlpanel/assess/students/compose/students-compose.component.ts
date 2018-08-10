@@ -13,9 +13,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from '../../../../../session';
 import { StudentsService } from './../students.service';
-import { CPTrackingService, StoreService } from '../../../../../shared/services';
+import { StoreService } from '../../../../../shared/services';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 const THROTTLED_STATUS = 1;
 
@@ -29,15 +28,15 @@ declare var $;
 export class StudentsComposeComponent implements OnInit {
   @Input() props: { name: string; userIds: Array<number> };
   @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() success: EventEmitter<null> = new EventEmitter();
+  @Output() success: EventEmitter<{hostType: string}> = new EventEmitter();
 
   isError;
   stores$;
   hostType;
+  buttonData;
   sendAsName;
   errorMessage;
   form: FormGroup;
-  eventProperties;
   resetStores$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -46,8 +45,7 @@ export class StudentsComposeComponent implements OnInit {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private service: StudentsService,
-    private storeService: StoreService,
-    private cpTracking: CPTrackingService
+    private storeService: StoreService
   ) {
     const school = this.session.g.get('school');
     const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
@@ -81,9 +79,8 @@ export class StudentsComposeComponent implements OnInit {
 
           return;
         }
-        this.trackAmplitudeEvents();
+        this.success.emit({ hostType: this.hostType });
         this.resetModal();
-        this.success.emit();
         $('#studentsComposeModal').modal('hide');
       },
       (_) => {
@@ -105,17 +102,6 @@ export class StudentsComposeComponent implements OnInit {
     this.resetStores$.next(true);
   }
 
-  trackAmplitudeEvents() {
-    this.eventProperties = {
-      host_type: this.hostType,
-      cohort_type: amplitudeEvents.SINGLE_STUDENT,
-      engagement_type: amplitudeEvents.SINGLE_STUDENT,
-      engagement_source: amplitudeEvents.ALL_ENGAGEMENT
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_SENT_MESSAGE, this.eventProperties);
-  }
-
   ngOnInit() {
     this.hostType = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
@@ -128,5 +114,16 @@ export class StudentsComposeComponent implements OnInit {
       message: [null, [Validators.required, Validators.maxLength(400)]],
       priority: [2, Validators.required]
     });
+
+    this.buttonData = {
+      disabled: true,
+      class: 'primary',
+      text: this.cpI18n.translate('send')
+    };
+
+    this.form.valueChanges.subscribe(() => {
+      this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
+    });
+
   }
 }

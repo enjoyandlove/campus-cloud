@@ -28,6 +28,7 @@ import {
   ListUpcomingComponent
 } from './list/components';
 import { OrientationEventsService } from '../orientation/events/orientation.events.service';
+import { EngagementStudentsModule } from '../../assess/students/students.module';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,14 @@ import { OrientationEventsService } from '../orientation/events/orientation.even
     EventsComponent
   ],
 
-  imports: [CommonModule, SharedModule, EventsRoutingModule, RouterModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    EventsRoutingModule,
+    RouterModule,
+    ReactiveFormsModule,
+    EngagementStudentsModule
+  ],
 
   providers: [EventsService, EventUtilService, OrientationEventsService],
 
