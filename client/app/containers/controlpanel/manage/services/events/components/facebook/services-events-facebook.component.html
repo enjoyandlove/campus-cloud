@@ -1,8 +1,0 @@
-<div [ngSwitch]="loading">
-  <cp-spinner *ngSwitchCase="true"></cp-spinner>
-
-  <cp-events-facebook
-    [storeId]="storeId"
-    *ngSwitchCase="false">
-  </cp-events-facebook>
-</div>
