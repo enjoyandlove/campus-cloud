@@ -19,6 +19,12 @@ export class ResourceService extends HTTPService {
     return super.get(url, search, true);
   }
 
+  getCampusLink(search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/`;
+
+    return super.get(url, search, true);
+  }
+
   createCampusLink(body) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/`;
 
