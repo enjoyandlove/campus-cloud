@@ -13,7 +13,6 @@ import { HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ICheckIn } from '../check-in.interface';
-import { CheckInMethod } from '../../../../event.status';
 import { EventsService } from '../../../../events.service';
 import { CPSession } from './../../../../../../../../session';
 import { CPDate } from '../../../../../../../../shared/utils';
@@ -23,16 +22,17 @@ import { CPI18nService } from '../../../../../../../../shared/services';
 const NO_CHECKOUT_DATE = -1;
 
 @Component({
-  selector: 'cp-add-check-in',
-  templateUrl: './add-check-in.component.html',
-  styleUrls: ['./add-check-in.component.scss']
+  selector: 'cp-edit-check-in',
+  templateUrl: './edit-check-in.component.html',
+  styleUrls: ['./edit-check-in.component.scss']
 })
-export class AddCheckInComponent implements OnInit {
+export class EditCheckInComponent implements OnInit {
   @Input() event: any;
+  @Input() checkIn: ICheckIn;
   @Input() orientationId: number;
 
-  @Output() created: EventEmitter<ICheckIn> = new EventEmitter();
-  @Output() resetAddCheckInModal: EventEmitter<null> = new EventEmitter();
+  @Output() edited: EventEmitter<ICheckIn> = new EventEmitter();
+  @Output() resetEditCheckInModal: EventEmitter<null> = new EventEmitter();
 
   formErrors;
   buttonData;
@@ -57,8 +57,8 @@ export class AddCheckInComponent implements OnInit {
 
   resetModal() {
     this.form.reset();
-    this.resetAddCheckInModal.emit();
-    $('#addCheckInModal').modal('hide');
+    this.resetEditCheckInModal.emit();
+    $('#editCheckInModal').modal('hide');
   }
 
   onSubmit() {
@@ -101,9 +101,9 @@ export class AddCheckInComponent implements OnInit {
         .append('calendar_id', this.orientationId.toString());
     }
 
-    this.service.addEventCheckIn(this.form.value, search).subscribe(
+    this.service.updateEventCheckIn(this.form.value, this.checkIn.id, search).subscribe(
       (res: ICheckIn) => {
-        this.created.emit(res);
+        this.edited.emit(res);
         this.resetModal();
       },
       (_) => {
@@ -122,12 +122,12 @@ export class AddCheckInComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      email: [null, Validators.required],
-      check_in_method: [CheckInMethod.web],
-      lastname: [null, Validators.required],
-      firstname: [null, Validators.required],
-      check_out_time_epoch: [NO_CHECKOUT_DATE],
-      check_in_time: [null, Validators.required]
+      email: [this.checkIn.email, Validators.required],
+      check_in_method: [this.checkIn.check_in_method],
+      lastname: [this.checkIn.lastname, Validators.required],
+      firstname: [this.checkIn.firstname, Validators.required],
+      check_out_time_epoch: [this.checkIn.check_out_time_epoch],
+      check_in_time: [this.checkIn.check_in_time, Validators.required]
     });
 
     this.buttonData = {

@@ -155,11 +155,11 @@ export class EventUtilService {
     return [
       {
         label: this.cpI18n.translate('t_events_assessment_qr_enabled_yes'),
-        action: QRCode.active
+        action: QRCode.enabled
       },
       {
         label: this.cpI18n.translate('t_events_assessment_qr_enabled_no'),
-        action: QRCode.inActive
+        action: QRCode.disabled
       },
     ];
   }

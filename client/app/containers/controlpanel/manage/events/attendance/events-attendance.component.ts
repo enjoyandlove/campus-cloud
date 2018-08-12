@@ -11,6 +11,7 @@ import { FORMAT } from '../../../../../shared/pipes';
 import { EventUtilService } from './../events.utils.service';
 import { CPDate } from '../../../../../shared/utils/date/date';
 import { BaseComponent } from '../../../../../base/base.component';
+import { ICheckIn } from './components/check-in/check-in.interface';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { createSpreadSheet } from '../../../../../shared/utils/csv/parser';
@@ -48,6 +49,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   event;
   urlPrefix;
   messageData;
+  checkInData;
   sortingLabels;
   attendees = [];
   loading = true;
@@ -57,8 +59,10 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   attendeesLoading = true;
   downloadEventProperties;
   isAddCheckInModal = false;
+  isEditCheckInModal = false;
   isSendMessageModal = false;
   messageAttendeesTooltipText;
+  isDeleteCheckInModal = false;
   dateFormat = FORMAT.DATETIME;
   appCheckIn = CheckInMethod.app;
   webCheckIn = CheckInMethod.web;
@@ -335,6 +339,30 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     );
   }
 
+  onEditCheckIn(attendee) {
+    this.checkInData = attendee;
+    this.isEditCheckInModal = true;
+    setTimeout(
+      () => {
+        $('#editCheckInModal').modal();
+      },
+
+      1
+    );
+  }
+
+  onDeleteCheckIn(attendee) {
+    this.checkInData = attendee;
+    this.isDeleteCheckInModal = true;
+    setTimeout(
+      () => {
+        $('#deleteCheckInModal').modal();
+      },
+
+      1
+    );
+  }
+
   trackSendMessageEvents(host_type) {
     const engagement_type = this.allStudents
       ? amplitudeEvents.ALL_STUDENTS
@@ -353,12 +381,38 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       this.eventProperties);
   }
 
-  onCreated(newAttendee) {
+  onCreated(newCheckedIn: ICheckIn) {
     this.isAddCheckInModal = false;
     this.attendees = [
-      ...newAttendee,
+      newCheckedIn,
       ...this.attendees,
     ];
+  }
+
+  onEdited(editedCheckIn: ICheckIn) {
+    this.checkInData = null;
+    this.isEditCheckInModal = false;
+
+    this.attendees = this.attendees.map((attendee) => (
+      attendee.id === editedCheckIn.id
+        ? editedCheckIn
+        : attendee));
+  }
+
+  onDeleted(id: number) {
+    this.checkInData = null;
+    this.isDeleteCheckInModal = false;
+
+    this.attendees = this.attendees.filter((attendee) => attendee.id !== id);
+
+    if (this.attendees.length === 0 && this.pageNumber > 1) {
+      this.resetPagination();
+      this.fetchAttendees();
+    }
+  }
+
+  onEnableDisableQR() {
+    
   }
 
   ngOnInit() {

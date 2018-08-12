@@ -4,19 +4,12 @@
 @import '~styles/core/colors';
 
 .cp-table {
-  &__header {
-    span.hover {
-      position: relative;
 
-      > span i {
-        top: 1px;
-        font-size: 17px;
-        position: absolute;
-        padding-left: 6px;
-      }
+  &__item {
+    span i {
+      width: 30px;
     }
   }
-
   span.disabled {
     cursor: default;
     color: $color-med-grey;

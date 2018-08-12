@@ -17,6 +17,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
 })
 export class CheckInFormComponent implements OnInit {
   @Input() form;
+  @Input() event;
   @Input() formErrors;
 
   checkInDatePickerOptions;
@@ -27,7 +28,7 @@ export class CheckInFormComponent implements OnInit {
   ngOnInit() {
     const _self = this;
     const check_in_time = this.form.controls['check_in_time'].value;
-    const check_out_time = this.form.controls['check_out_time'].value;
+    const check_out_time = this.form.controls['check_out_time_epoch'].value;
 
     this.checkInDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
@@ -45,7 +46,8 @@ export class CheckInFormComponent implements OnInit {
         ? CPDate.fromEpoch(check_out_time, _self.session.tz).format()
         : null,
       onChange: function(_, dataStr) {
-        _self.form.controls['check_out_time'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
+        _self.form.controls['check_out_time_epoch']
+          .setValue(CPDate.toEpoch(dataStr, _self.session.tz));
       }
     };
   }

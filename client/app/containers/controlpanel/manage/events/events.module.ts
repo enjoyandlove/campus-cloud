@@ -9,6 +9,8 @@ import { EventsAttendanceComponent } from './attendance';
 import {
   CheckInFormComponent,
   AddCheckInComponent,
+  DeleteCheckInComponent,
+  EditCheckInComponent,
   EventsAttendanceActionBoxComponent
 } from './attendance/components';
 import { EventsCreateComponent } from './create';
@@ -52,7 +54,9 @@ import { EngagementStudentsModule } from '../../assess/students/students.module'
     EventsAttendanceActionBoxComponent,
     EventsComponent,
     AddCheckInComponent,
-    CheckInFormComponent
+    CheckInFormComponent,
+    DeleteCheckInComponent,
+    EditCheckInComponent
   ],
 
   imports: [
@@ -83,7 +87,9 @@ import { EngagementStudentsModule } from '../../assess/students/students.module'
     EventsAttendanceActionBoxComponent,
     EventsComponent,
     AddCheckInComponent,
-    CheckInFormComponent
+    CheckInFormComponent,
+    DeleteCheckInComponent,
+    EditCheckInComponent
   ]
 })
 export class EventsModule {}

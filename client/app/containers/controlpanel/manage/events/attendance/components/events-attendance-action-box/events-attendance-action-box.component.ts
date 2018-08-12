@@ -22,6 +22,7 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   @Output() createExcel: EventEmitter<null> = new EventEmitter();
   @Output() sendMessage: EventEmitter<null> = new EventEmitter();
   @Output() addCheckIn: EventEmitter<null> = new EventEmitter();
+  @Output() enableDisableQR: EventEmitter<null> = new EventEmitter();
 
   eventCheckinRoute;
   disableMessageAttendees;
@@ -53,6 +54,10 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
 
   onAddCheckIn() {
     this.addCheckIn.emit();
+  }
+
+  onEnableDisableQR() {
+    this.enableDisableQR.emit();
   }
 
   ngOnInit() {

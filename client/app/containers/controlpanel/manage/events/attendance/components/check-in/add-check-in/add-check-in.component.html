@@ -18,6 +18,7 @@
       <div class="col-12">
         <cp-event-attendance-check-in-form
         [form]="form"
+        [event]="event"
         [formErrors]="formErrors">
         </cp-event-attendance-check-in-form>
       </div>
@@ -31,7 +32,7 @@
           <i class="material-icons">
             warning
           </i>
-          {{ isDateError ? dateErrorMessage : cpI18n.translate('t_events_attendance_add_check_in_error_fill_out_all_fields') }}
+          {{ errorMessage }}
         </label>
         <button
           type="button"

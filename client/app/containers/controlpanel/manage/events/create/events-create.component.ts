@@ -460,7 +460,7 @@ export class EventsCreateComponent implements OnInit {
       postal_code: [null],
       latitude: [0],
       longitude: [0],
-      is_qr_active: [QRCode.active],
+      is_qr_active: [QRCode.enabled],
       has_checkout: [AttendanceType.checkInCheckOut],
       event_attendance: [EventAttendance.disabled],
       start: [null, Validators.required],

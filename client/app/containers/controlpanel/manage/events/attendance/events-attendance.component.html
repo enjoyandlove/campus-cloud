@@ -39,12 +39,12 @@
       <div class="col-12">
         <cp-events-attendance-action-box
           [event]="event"
-          (addCheckIn)="onAddCheckIn()"
-          [totalAttendees]="totalAttendees"
           [totalAttendees]="totalAttendees"
           [isOrientation]="isOrientation"
+          (addCheckIn)="onAddCheckIn()"
           (querySearch)="doSearch($event)"
           (createExcel)="onCreateExcel()"
+          (enableDisableQR)="onEnableDisableQR()"
           (sendMessage)="messageAllAttendees()">
         </cp-events-attendance-action-box>
       </div>
@@ -74,10 +74,13 @@
                     [sortDirection]="state.sort_direction">
                   </cp-sorting-header>
                 </div>
-                <div class="col-3">
+                <div [class]="event.has_checkout ? 'col-2' : 'col-3'">
                   <span>{{ 't_event_assessment_check_in_date' | cpI18n }}</span>
                 </div>
-                <div class="col-2">
+                <div class="col-2" *ngIf="event.has_checkout">
+                  <span>{{ 't_event_assessment_check_out_date' | cpI18n }}</span>
+                </div>
+                <div [class]="event.has_checkout ? 'col-1' : 'col-2'">
                   <cp-sorting-header
                     sortLabel="check_in_method"
                     (click)="doSort('check_in_method')"
@@ -110,10 +113,13 @@
                   <br>
                   <small class="text-muted">{{ attendee.email }}</small>
                 </div>
-                <div class="col-3">
+                <div [class]="event.has_checkout ? 'col-2' : 'col-3'">
                   <span> {{ attendee.check_in_time | cpDatePipe:dateFormat }} </span>
                 </div>
-                <div class="col-2">
+                <div class="col-2" *ngIf="event.has_checkout">
+                  <span> {{ attendee.check_out_time_epoch | cpDatePipe:dateFormat }} </span>
+                </div>
+                <div [class]="event.has_checkout ? 'col-1' : 'col-2'">
              <span>
              <i class="material-icons">{{ checkInMethodType(attendee.check_in_method) }}</i>
              </span>
@@ -125,7 +131,7 @@
                     [maxRate]="event.rating_scale_maximum">
                   </cp-stars>
                 </div>
-                <div class="col-1">
+                <div class="col-1 text-center">
                   <span
                   class="hover"
                   [class.disabled]="!canMessage"
@@ -140,8 +146,12 @@
                     </i>
                   </span>
                   <span *ngIf="attendee.check_in_method === webCheckIn">
-                    <i class="material-icons hover">edit_mode</i>
-                    <i class="material-icons hover">close</i>
+                    <i
+                      (click)="onEditCheckIn(attendee)"
+                      class="material-icons hover">edit_mode</i>
+                    <i
+                      (click)="onDeleteCheckIn(attendee)"
+                      class="material-icons hover">close</i>
                   </span>
                 </div>
               </div>
@@ -169,13 +179,38 @@
 </div>
 
 <cp-modal
+  modalId="editCheckInModal"
+  *ngIf="isEditCheckInModal">
+  <cp-edit-check-in
+    [event]="event"
+    [checkIn]="checkInData"
+    [orientationId]="orientationId"
+    (deleted)="onEdited($event)"
+    (resetEditCheckInModal)="isEditCheckInModal = false">
+  </cp-edit-check-in>
+</cp-modal>
+
+<cp-modal
+  modalId="deleteCheckInModal"
+  *ngIf="isDeleteCheckInModal">
+  <cp-delete-check-in
+    [event]="event"
+    [checkIn]="checkInData"
+    [orientationId]="orientationId"
+    (deleted)="onDeleted($event)"
+    (resetDeleteCheckInModal)="isDeleteCheckInModal = false">
+  </cp-delete-check-in>
+</cp-modal>
+
+<cp-modal
   modalId="addCheckInModal"
   *ngIf="isAddCheckInModal">
-  <cp-event-attendance-add-check-in
+  <cp-add-check-in
+    [event]="event"
+    [orientationId]="orientationId"
     (created)="onCreated($event)"
     (resetAddCheckInModal)="isAddCheckInModal = false">
-
-  </cp-event-attendance-add-check-in>
+  </cp-add-check-in>
 </cp-modal>
 
 <cp-modal

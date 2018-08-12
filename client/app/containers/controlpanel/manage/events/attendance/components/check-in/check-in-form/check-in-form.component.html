@@ -5,16 +5,16 @@
       <input
         type="text"
         class="form-control"
-        formControlName="first_name"
-        [class.error]="formErrors && form.controls.first_name.hasError('required')">
+        formControlName="firstname"
+        [class.error]="formErrors && form.controls.firstname.hasError('required')">
     </div>
     <div class="col-6">
       <label>{{ 't_events_attendance_add_edit_check_in_last_name' | cpI18n }}</label>
       <input
         type="text"
         class="form-control"
-        formControlName="last_name"
-        [class.error]="formErrors && form.controls.last_name.hasError('required')">
+        formControlName="lastname"
+        [class.error]="formErrors && form.controls.lastname.hasError('required')">
     </div>
   </div>
   <div class="row form-group">
@@ -35,11 +35,11 @@
         [error]="formErrors && form.controls['check_in_time'].hasError('required')">
       </cp-datepicker>
     </div>
-    <div class="col-6">
+    <div class="col-6" *ngIf="event.has_checkout">
       <label>{{ 't_events_attendance_add_edit_check_in_check_out_time' | cpI18n }}</label>
       <cp-datepicker
         [options]="checkOutDatePickerOptions"
-        [error]="formErrors && form.controls['check_out_time'].hasError('required')">
+        [error]="formErrors && form.controls['check_out_time_epoch'].hasError('required')">
       </cp-datepicker>
     </div>
   </div>
