@@ -59,7 +59,7 @@ describe('DashboardTopOrientationComponent', () => {
           };
 
           search = new HttpParams()
-            .append('sort_by', 'average')
+            .append('sort_by', 'engagements')
             .append('end', comp._dates.end.toString())
             .append('start', comp._dates.start.toString())
             .append('school_id', comp.session.g.get('school').id.toString());
