@@ -174,11 +174,7 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
   fetch() {
     let search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    // if (this.state.search_str) {
-    //   search = search.append('search_str', this.state.search_str);
-    // }
-
-    if (this.state.platform) {
+    if (this.state.platform !== null) {
       search = search.append('platform', this.state.platform);
     }
 
