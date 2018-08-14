@@ -243,7 +243,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
           [this.cpI18n.translate('events_checked_in_method')]: check_in_method[
             item.check_in_method
-            ],
+          ],
 
           [this.cpI18n.translate('student_id')]: item.student_identifier
         };

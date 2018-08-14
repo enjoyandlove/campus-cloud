@@ -58,21 +58,22 @@ describe('EngagementOrientationsBoxComponent', () => {
   let comp: EngagementOrientationsBoxComponent;
   let fixture: ComponentFixture<EngagementOrientationsBoxComponent>;
 
-  const mockOrientation = observableOf(
-    {
-      avg_feedbacks: 50,
-      total_events: 500,
-      total_attendees: 25,
-      total_feedbacks: 75,
-      total_events_with_attendance: 50,
-      top_events: [{
+  const mockOrientation = observableOf({
+    avg_feedbacks: 50,
+    total_events: 500,
+    total_attendees: 25,
+    total_feedbacks: 75,
+    total_events_with_attendance: 50,
+    top_events: [
+      {
         calendar_id: 84,
         calendar_name: 'Hello World!',
         num_of_feedbacks: 20,
         num_of_attendees: 30,
-        average_of_feedbacks: 50,
-      }]
-    });
+        average_of_feedbacks: 50
+      }
+    ]
+  });
 
   beforeEach(
     async(() => {
@@ -115,84 +116,90 @@ describe('EngagementOrientationsBoxComponent', () => {
     expect(comp.state.sortBy).toBe('average');
   });
 
-  it('should fetch top orientation programs', fakeAsync(() => {
-    comp.ngOnInit();
-    tick();
+  it(
+    'should fetch top orientation programs',
+    fakeAsync(() => {
+      comp.ngOnInit();
+      tick();
 
-    // reset filter
-    filters$ = new BehaviorSubject(null);
+      // reset filter
+      filters$ = new BehaviorSubject(null);
 
-    expect(comp.loading).toBeFalsy();
-    expect(comp.isDisable).toBeFalsy();
-    expect(comp.isSorting).toBeFalsy();
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(comp.stats.length).toEqual(5);
-  }));
+      expect(comp.loading).toBeFalsy();
+      expect(comp.isDisable).toBeFalsy();
+      expect(comp.isSorting).toBeFalsy();
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(comp.stats.length).toEqual(5);
+    })
+  );
 
-  it('should set disable status', fakeAsync(() => {
-    filters$.next(mockFilterState);
-    comp.props = filters$;
+  it(
+    'should set disable status',
+    fakeAsync(() => {
+      filters$.next(mockFilterState);
+      comp.props = filters$;
 
-    comp.ngOnInit();
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(comp.isDisable).toBeFalsy();
+      comp.ngOnInit();
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(comp.isDisable).toBeFalsy();
 
-    newMockFilterState = {
-      ...mockFilterState,
-      engagement: {
-        data: {
-          value: 0,
-          type: 'events',
-          queryParam: 'scope'
+      newMockFilterState = {
+        ...mockFilterState,
+        engagement: {
+          data: {
+            value: 0,
+            type: 'events',
+            queryParam: 'scope'
+          }
         }
-      }
-    };
+      };
 
-    // reset filter
-    filters$ = new BehaviorSubject(null);
-    filters$.next(newMockFilterState);
-    comp.props = filters$;
+      // reset filter
+      filters$ = new BehaviorSubject(null);
+      filters$.next(newMockFilterState);
+      comp.props = filters$;
 
-    comp.ngOnInit();
+      comp.ngOnInit();
 
-    expect(comp.isDisable).toBeTruthy();
+      expect(comp.isDisable).toBeTruthy();
 
-    newMockFilterState = {
-      ...mockFilterState,
-      engagement: {
-        data: {
-          value: 0,
-          type: 'services',
-          queryParam: 'scope'
+      newMockFilterState = {
+        ...mockFilterState,
+        engagement: {
+          data: {
+            value: 0,
+            type: 'services',
+            queryParam: 'scope'
+          }
         }
-      }
-    };
+      };
 
-    // reset filter
-    filters$ = new BehaviorSubject(null);
-    filters$.next(newMockFilterState);
-    comp.props = filters$;
+      // reset filter
+      filters$ = new BehaviorSubject(null);
+      filters$.next(newMockFilterState);
+      comp.props = filters$;
 
-    comp.ngOnInit();
-    expect(comp.isDisable).toBeTruthy();
+      comp.ngOnInit();
+      expect(comp.isDisable).toBeTruthy();
 
-    newMockFilterState = {
-      ...mockFilterState,
-      engagement: {
-        data: {
-          value: 0,
-          type: 'orientation',
-          queryParam: 'scope'
+      newMockFilterState = {
+        ...mockFilterState,
+        engagement: {
+          data: {
+            value: 0,
+            type: 'orientation',
+            queryParam: 'scope'
+          }
         }
-      }
-    };
+      };
 
-    // reset filter
-    filters$ = new BehaviorSubject(null);
-    filters$.next(newMockFilterState);
-    comp.props = filters$;
+      // reset filter
+      filters$ = new BehaviorSubject(null);
+      filters$.next(newMockFilterState);
+      comp.props = filters$;
 
-    comp.ngOnInit();
-    expect(comp.isDisable).toBeFalsy();
-  }));
+      comp.ngOnInit();
+      expect(comp.isDisable).toBeFalsy();
+    })
+  );
 });

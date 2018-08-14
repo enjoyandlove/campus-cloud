@@ -30,7 +30,8 @@ export class DashboardTopOrientationComponent extends BaseComponent implements O
   constructor(
     public session: CPSession,
     public service: DashboardService,
-    public utils: DashboardUtilsService) {
+    public utils: DashboardUtilsService
+  ) {
     super();
     super.isLoading().subscribe((loading) => {
       this.loading = loading;

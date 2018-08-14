@@ -60,10 +60,7 @@ export class ClubsMembersDeleteComponent implements OnInit {
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.DELETED_ITEM,
-      this.eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
   }
 
   ngOnInit() {

@@ -19,8 +19,7 @@ export class EngagementResourceStatsComponent implements OnInit {
   sortyBy;
   defaultImage = require('public/default/user.png');
 
-  constructor(public utils: EngagementUtilsService) {
-  }
+  constructor(public utils: EngagementUtilsService) {}
 
   ngOnInit() {
     this.sortyBy = this.utils.resourceSortingFilter();

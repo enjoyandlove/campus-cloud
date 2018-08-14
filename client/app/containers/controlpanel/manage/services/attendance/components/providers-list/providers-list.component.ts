@@ -109,9 +109,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       source_page: amplitudeEvents.SERVICE
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CLICKED_CHECKIN,
-      eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CLICKED_CHECKIN, eventProperties);
   }
 
   ngOnInit() {

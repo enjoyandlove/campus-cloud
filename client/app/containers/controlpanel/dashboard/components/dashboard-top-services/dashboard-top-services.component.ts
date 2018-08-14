@@ -28,7 +28,8 @@ export class DashboardTopServicesComponent extends BaseComponent implements OnIn
   constructor(
     private session: CPSession,
     private service: DashboardService,
-    private utils: DashboardUtilsService) {
+    private utils: DashboardUtilsService
+  ) {
     super();
     super.isLoading().subscribe((loading) => {
       this.loading = loading;

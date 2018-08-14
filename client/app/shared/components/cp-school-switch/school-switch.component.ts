@@ -43,7 +43,7 @@ export class SchoolSwitchComponent implements OnInit {
   }
 
   trackEvent(eventName) {
-    const eventProperties =  {
+    const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };

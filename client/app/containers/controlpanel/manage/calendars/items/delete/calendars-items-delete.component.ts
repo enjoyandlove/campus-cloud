@@ -54,9 +54,7 @@ export class CalendarsItemsDeleteComponent implements OnInit {
       page_name: amplitudeEvents.CALENDAR_EVENTS
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.DELETED_ITEM,
-      this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
   }
 
   ngOnInit() {

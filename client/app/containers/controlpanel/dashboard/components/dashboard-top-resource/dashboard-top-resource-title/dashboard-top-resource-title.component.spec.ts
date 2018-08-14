@@ -4,22 +4,16 @@ import { By } from '@angular/platform-browser';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 
-import {
-OrientationEventsComponent
-} from '../../../../manage/orientation/events/orientation-events.component';
+import { OrientationEventsComponent } from '../../../../manage/orientation/events/orientation-events.component';
 
-import {
-OrientationEventsModule
-} from '../../../../manage/orientation/events/orientation-events.module';
+import { OrientationEventsModule } from '../../../../manage/orientation/events/orientation-events.module';
 
 import { DashboardModule } from '../../../dashboard.module';
 import { AuthGuard } from '../../../../../../config/guards';
 import { DashboardTopResourceTitleComponent } from './dashboard-top-resource-title.component';
 
 class MockAuthGuard {
-  canActivate() {
-
-  }
+  canActivate() {}
 }
 
 describe('DashboardTopResourceTitleComponent', () => {
@@ -51,9 +45,7 @@ describe('DashboardTopResourceTitleComponent', () => {
             }
           ])
         ],
-        providers: [
-          { provide: AuthGuard, useClass: MockAuthGuard }
-        ]
+        providers: [{ provide: AuthGuard, useClass: MockAuthGuard }]
       })
         .compileComponents()
         .then(() => {
@@ -79,14 +71,17 @@ describe('DashboardTopResourceTitleComponent', () => {
     expect(link.textContent.trim()).toBe(mockItem.name);
   });
 
-  it('should navigate to expected URL', fakeAsync(() => {
-    fixture.detectChanges();
+  it(
+    'should navigate to expected URL',
+    fakeAsync(() => {
+      fixture.detectChanges();
 
-    const link = fixture.debugElement.query(By.css('p.title')).nativeElement;
-    link.click();
+      const link = fixture.debugElement.query(By.css('p.title')).nativeElement;
+      link.click();
 
-    tick();
-    expect(link.textContent.trim()).toBe(mockItem.name);
-    expect(location.path()).toEqual(mockItem.resourceUrl);
-  }));
+      tick();
+      expect(link.textContent.trim()).toBe(mockItem.name);
+      expect(location.path()).toEqual(mockItem.resourceUrl);
+    })
+  );
 });

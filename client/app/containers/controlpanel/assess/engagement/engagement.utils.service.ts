@@ -103,10 +103,10 @@ export class EngagementUtilsService {
     const _persona = [];
 
     const heading = {
-        label: this.cpI18n.translate('t_notify_announcement_audiences_my_experiences'),
-        value: null,
-        heading: true
-      };
+      label: this.cpI18n.translate('t_notify_announcement_audiences_my_experiences'),
+      value: null,
+      heading: true
+    };
 
     personas.forEach((persona) => {
       _persona.push({

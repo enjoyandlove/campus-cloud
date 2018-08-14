@@ -141,6 +141,29 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     });
   }
 
+  doBulkUpdate(tileUpdates) {
+    const search = new HttpParams().set('persona_id', this.personaId);
+
+    const body = tileUpdates.map((t) => {
+      return {
+        rank: t.rank,
+        tile_id: t.id,
+        school_id: t.school_id,
+        featured_rank: t.featured_rank,
+        tile_category_id: t.tile_category_id
+      };
+    });
+
+    this.tileService.bulkUpdateTiles(search, body).subscribe(
+      () => this.fetch(),
+      (err) => {
+        this.fetch();
+
+        this.errorHandler(err);
+      }
+    );
+  }
+
   onDeleteTileFromSection(tile: ITile) {
     this.tileToDelete = tile;
 
@@ -231,18 +254,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     $(`#${this.tileDeleteModalId}`).modal('hide');
   }
 
-  doBulkUpdate(_) {
-    // const tileUpdateRequests$ = tileUpdates.map((t) => this.tileService.updateTile(t.id, t));
-    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
-
-    this.service.getTilesCategories(search).subscribe(
-      () => {
-        this.handleSuccess();
-      },
-      () => this.errorHandler()
-    );
-  }
-
   updateAllTilesRank(guide: ICampusGuide) {
     const tiles = [...guide.tiles];
 
@@ -306,7 +317,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
     const movingTile = allTiles.filter((t: ITile) => t.id === tile)[0];
     const featureOrCategoryZero = (s) =>
-      s === 'featured' ? this.state.featureTiles[0] : this.state.categoryZero[0];
+      s === 'featured' ? this.state.featureTiles : this.state.categoryZero;
 
     let newCategory: ICampusGuide = isNaN(section)
       ? featureOrCategoryZero(section)

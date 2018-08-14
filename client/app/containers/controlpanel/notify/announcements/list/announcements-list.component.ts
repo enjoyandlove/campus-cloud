@@ -118,7 +118,8 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   trackViewMoreEvent() {
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.VIEWED_ITEM,
-      this.cpTracking.getEventProperties());
+      this.cpTracking.getEventProperties()
+    );
   }
 
   onDeleted(id) {

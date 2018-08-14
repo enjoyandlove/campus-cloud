@@ -129,6 +129,12 @@ export class TilesService extends HTTPService {
     return super.update(url, body, null, true);
   }
 
+  bulkUpdateTiles(search: HttpParams, body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/`;
+
+    return super.update(url, body, search, true);
+  }
+
   updateCampusLink(linkId, body) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${linkId}`;
 
