@@ -22,11 +22,17 @@ export class CPColorPickerDirective implements OnInit {
     const _self = this;
     this.picker = new Picker({
       el: this.el.nativeElement,
+
       position: this.postion,
+
       default: `#${this.defaultColor}`,
+
       components: {
         hue: true,
+        opacity: true,
+
         output: {
+          hex: true,
           input: true
         }
       },
