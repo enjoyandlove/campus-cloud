@@ -50,12 +50,10 @@ export class OrientationTodosDeleteComponent implements OnInit {
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.DELETED_ITEM,
-      this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
   }
 
-  ngOnInit()  {
+  ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('delete'),
       class: 'danger'

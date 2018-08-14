@@ -46,9 +46,7 @@ export class DealsDeleteComponent implements OnInit {
       ...this.cpTracking.getEventProperties()
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.DELETED_ITEM,
-      this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
   }
 
   ngOnInit() {

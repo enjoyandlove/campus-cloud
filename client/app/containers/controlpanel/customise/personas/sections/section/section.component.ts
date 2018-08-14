@@ -22,7 +22,7 @@ import { SectionsService } from '../sections.service';
 export class PersonasSectionComponent implements OnInit {
   @Input() last: boolean;
   @Input() first: boolean;
-  @Input() tileWidth = '2';
+  @Input() tileWidth = '3';
   @Input() hideName: boolean;
   @Input() personaId: number;
   @Input() addSection = true;
@@ -45,7 +45,11 @@ export class PersonasSectionComponent implements OnInit {
 
   state = {
     working: false,
-    sorting: false
+    sorting: false,
+    deletingTile: false,
+    disableDragging: false,
+    tileDeleteModal: false,
+    sectionDeleteModal: false
   };
 
   lastRank;

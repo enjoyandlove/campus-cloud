@@ -33,7 +33,7 @@ export class TodosListActionBoxComponent implements OnInit {
 
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
-      eventName : amplitudeEvents.CLICKED_CHANGE_BUTTON,
+      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
       eventProperties
     };
   }

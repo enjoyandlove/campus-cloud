@@ -26,16 +26,17 @@ describe('DashboardTopOrientationComponent', () => {
   let comp: DashboardTopOrientationComponent;
   let fixture: ComponentFixture<DashboardTopOrientationComponent>;
 
-  const mockProgram = observableOf(
-    {
-      top_events: [{
+  const mockProgram = observableOf({
+    top_events: [
+      {
         calendar_id: 84,
         calendar_name: 'Hello World!',
         num_of_feedbacks: 20,
         num_of_attendees: 30,
-        average_of_feedbacks: 50,
-      }]
-    });
+        average_of_feedbacks: 50
+      }
+    ]
+  });
 
   beforeEach(
     async(() => {
@@ -52,7 +53,7 @@ describe('DashboardTopOrientationComponent', () => {
           fixture = TestBed.createComponent(DashboardTopOrientationComponent);
           comp = fixture.componentInstance;
           comp.session.g.set('user', mockUser);
-          comp.session.g.set('school', {id: 157});
+          comp.session.g.set('school', { id: 157 });
           comp._dates = {
             end: 1515625016,
             start: 7845125016
@@ -69,18 +70,21 @@ describe('DashboardTopOrientationComponent', () => {
     })
   );
 
-  it('should fetch top orientation programs', fakeAsync(() => {
-    const resourceUrl = '/manage/orientation/84/events';
+  it(
+    'should fetch top orientation programs',
+    fakeAsync(() => {
+      const resourceUrl = '/manage/orientation/84/events';
 
-    comp.ngOnInit();
-    tick();
+      comp.ngOnInit();
+      tick();
 
-    expect(spy).toHaveBeenCalledWith(search);
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(comp.items.length).toEqual(1);
-    expect(comp.items[0].resourceUrl).not.toBeNull();
-    expect(comp.items[0].resourceUrl).toBe(resourceUrl);
-  }));
+      expect(spy).toHaveBeenCalledWith(search);
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(comp.items.length).toEqual(1);
+      expect(comp.items[0].resourceUrl).not.toBeNull();
+      expect(comp.items[0].resourceUrl).toBe(resourceUrl);
+    })
+  );
 
   it('should have orientation privileges', () => {
     comp.ngOnInit();

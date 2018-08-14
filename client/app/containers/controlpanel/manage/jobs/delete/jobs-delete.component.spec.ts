@@ -36,7 +36,8 @@ describe('JobsDeleteComponent', () => {
           CPSession,
           CPI18nService,
           CPTrackingService,
-          { provide: JobsService, useClass: MockJobsService }]
+          { provide: JobsService, useClass: MockJobsService }
+        ]
       })
         .compileComponents()
         .then(() => {
