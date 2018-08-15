@@ -350,7 +350,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   onSelectedQRCode(val): void {
     const verificationMethods = this.form.controls['attend_verification_methods'].value;
 
-    // todo refactor code
     if (val && !verificationMethods.includes(CheckInMethod.app)) {
       verificationMethods.push(CheckInMethod.app);
     } else if (!val && verificationMethods.includes(CheckInMethod.app)) {

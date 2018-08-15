@@ -13,8 +13,15 @@ import { CPSession, ISchool } from '../../../../../session';
 import { CPDate, CPMap } from '../../../../../shared/utils';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { AttendanceType, EventAttendance, EventFeedback, isAllDay, QRCode } from '../event.status';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import {
+  AttendanceType,
+  CheckInMethod,
+  EventAttendance,
+  EventFeedback,
+  isAllDay
+} from '../event.status';
+
 import {
   AdminService,
   CPI18nService,
@@ -117,8 +124,14 @@ export class EventsCreateComponent implements OnInit {
     this.form.controls['has_checkout'].setValue(type.action);
   }
 
-  onSelectedQRCode(qr): void {
-    this.form.controls['is_qr_active'].setValue(qr.action);
+  onSelectedQRCode(val): void {
+    const verificationMethods = this.form.controls['attend_verification_methods'].value;
+
+    if (val && !verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.push(CheckInMethod.app);
+    } else if (!val && verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.pop(CheckInMethod.app);
+    }
   }
 
   onSelectedHost(host): void {
@@ -460,8 +473,7 @@ export class EventsCreateComponent implements OnInit {
       postal_code: [null],
       latitude: [0],
       longitude: [0],
-      is_qr_active: [QRCode.enabled],
-      has_checkout: [AttendanceType.checkInCheckOut],
+      has_checkout: [AttendanceType.checkInOnly],
       event_attendance: [EventAttendance.disabled],
       start: [null, Validators.required],
       poster_url: [null, Validators.required],
@@ -472,7 +484,8 @@ export class EventsCreateComponent implements OnInit {
       event_manager_id: [null],
       attendance_manager_email: [null],
       custom_basic_feedback_label: [null],
-      is_all_day: [isAllDay.disabled]
+      is_all_day: [isAllDay.disabled],
+      attend_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
     });
 
     const _self = this;

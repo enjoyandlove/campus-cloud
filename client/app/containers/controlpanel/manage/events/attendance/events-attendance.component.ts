@@ -4,14 +4,13 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/index';
 import { Store } from '@ngrx/store';
 
-import { CheckInMethod } from '../event.status';
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes';
 import { EventUtilService } from './../events.utils.service';
 import { CPDate } from '../../../../../shared/utils/date/date';
+import { CheckInMethod, CheckInOutTime } from '../event.status';
 import { BaseComponent } from '../../../../../base/base.component';
-import { ICheckIn } from './components/check-in/check-in.interface';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { createSpreadSheet } from '../../../../../shared/utils/csv/parser';
@@ -66,6 +65,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   dateFormat = FORMAT.DATETIME;
   appCheckIn = CheckInMethod.app;
   webCheckIn = CheckInMethod.web;
+  emptyCheckOutTime = CheckInOutTime.empty;
+  updateQrCode = new BehaviorSubject(null);
   totalAttendees = new BehaviorSubject(null);
   canMessage = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements);
 
@@ -104,6 +105,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       this.fetchAttendees();
       this.buildHeader(event.data);
       this.loading = false;
+      this.updateQrCode.next(this.event.attend_verification_methods);
     });
   }
 
@@ -381,22 +383,15 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       this.eventProperties);
   }
 
-  onCreated(newCheckedIn: ICheckIn) {
+  onCreated() {
     this.isAddCheckInModal = false;
-    this.attendees = [
-      newCheckedIn,
-      ...this.attendees,
-    ];
+    this.fetchAttendees();
   }
 
-  onEdited(editedCheckIn: ICheckIn) {
+  onEdited() {
     this.checkInData = null;
     this.isEditCheckInModal = false;
-
-    this.attendees = this.attendees.map((attendee) => (
-      attendee.id === editedCheckIn.id
-        ? editedCheckIn
-        : attendee));
+    this.fetchAttendees();
   }
 
   onDeleted(id: number) {
@@ -411,8 +406,51 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     }
   }
 
-  onEnableDisableQR() {
-    
+  onEnableDisableQR(val) {
+    const verificationMethods = this.event.attend_verification_methods;
+
+    if (!val && !verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.push(CheckInMethod.app);
+    } else if (val && verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.pop(CheckInMethod.app);
+    }
+
+    const data = {
+      ...this.event,
+      attend_verification_methods: verificationMethods
+    };
+
+    this.updateQrCode.next(verificationMethods);
+
+    let search = new HttpParams();
+    if (this.orientationId) {
+      search = search
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.orientationId.toString());
+    }
+
+    this.service.updateEvent(data, this.eventId, search).subscribe(
+      (res) => {
+        this.event = res;
+        this.successQRCodeMessage(val);
+      },
+      (_) => {
+
+      });
+  }
+
+  successQRCodeMessage(val) {
+    const message = val
+      ? 't_event_assessment_qr_code_disabled_success_message'
+      : 't_event_assessment_qr_code_enable_success_message';
+
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        body: this.cpI18n.translate(message),
+        autoClose: true
+      }
+    });
   }
 
   ngOnInit() {

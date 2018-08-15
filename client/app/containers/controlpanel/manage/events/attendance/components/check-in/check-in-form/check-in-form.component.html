@@ -24,10 +24,11 @@
         type="text"
         class="form-control"
         formControlName="email"
+        [attr.disabled]="disableEmailOnEdit"
         [class.error]="formErrors && form.controls.email.hasError('required')">
     </div>
   </div>
-  <div class="row form-group">
+  <div class="row form-group item-details">
     <div class="col-6">
       <label>{{ 't_events_attendance_add_edit_check_in_check_in_time' | cpI18n }}</label>
       <cp-datepicker

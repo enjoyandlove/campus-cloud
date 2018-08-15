@@ -10,6 +10,8 @@ const COMMON_DATE_PICKER_OPTIONS = {
   altFormat: 'F j, Y h:i K'
 };
 
+const NO_CHECKOUT_DATE = -1;
+
 @Component({
   selector: 'cp-event-attendance-check-in-form',
   templateUrl: './check-in-form.component.html',
@@ -20,6 +22,7 @@ export class CheckInFormComponent implements OnInit {
   @Input() event;
   @Input() formErrors;
 
+  disableEmailOnEdit;
   checkInDatePickerOptions;
   checkOutDatePickerOptions;
 
@@ -29,6 +32,8 @@ export class CheckInFormComponent implements OnInit {
     const _self = this;
     const check_in_time = this.form.controls['check_in_time'].value;
     const check_out_time = this.form.controls['check_out_time_epoch'].value;
+
+    this.disableEmailOnEdit = this.form.controls['email'].value;
 
     this.checkInDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
@@ -42,7 +47,7 @@ export class CheckInFormComponent implements OnInit {
 
     this.checkOutDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: check_out_time
+      defaultDate: check_out_time !== NO_CHECKOUT_DATE
         ? CPDate.fromEpoch(check_out_time, _self.session.tz).format()
         : null,
       onChange: function(_, dataStr) {

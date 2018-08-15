@@ -13,14 +13,12 @@ import { HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ICheckIn } from '../check-in.interface';
-import { CheckInMethod } from '../../../../event.status';
 import { EventsService } from '../../../../events.service';
 import { CPSession } from './../../../../../../../../session';
 import { CPDate } from '../../../../../../../../shared/utils';
 import { EventUtilService } from '../../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../../shared/services';
-
-const NO_CHECKOUT_DATE = -1;
+import { CheckInMethod, CheckInOutTime } from '../../../../event.status';
 
 @Component({
   selector: 'cp-add-check-in',
@@ -81,7 +79,7 @@ export class AddCheckInComponent implements OnInit {
       return;
     }
 
-    if (this.form.controls['check_out_time_epoch'].value !== NO_CHECKOUT_DATE) {
+    if (this.form.controls['check_out_time_epoch'].value !== CheckInOutTime.empty) {
       if (this.form.controls['check_out_time_epoch'].value <= this.form.controls['check_in_time'].value) {
         this.formErrors = true;
         this.enableSaveButton();
@@ -102,8 +100,8 @@ export class AddCheckInComponent implements OnInit {
     }
 
     this.service.addEventCheckIn(this.form.value, search).subscribe(
-      (res: ICheckIn) => {
-        this.created.emit(res);
+      () => {
+        this.created.emit();
         this.resetModal();
       },
       (_) => {
@@ -126,8 +124,8 @@ export class AddCheckInComponent implements OnInit {
       check_in_method: [CheckInMethod.web],
       lastname: [null, Validators.required],
       firstname: [null, Validators.required],
-      check_out_time_epoch: [NO_CHECKOUT_DATE],
-      check_in_time: [null, Validators.required]
+      check_in_time: [null, Validators.required],
+      check_out_time_epoch: [CheckInOutTime.empty]
     });
 
     this.buttonData = {

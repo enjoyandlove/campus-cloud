@@ -41,8 +41,12 @@ export enum Feedback {
 
 export enum CheckInMethod {
   'web' = 1,
-  'web-qr' = 2,
+  'webQr' = 2,
   'app' = 3
+}
+
+export enum CheckInOutTime {
+  'empty' = -1
 }
 
 export const QRCode = {

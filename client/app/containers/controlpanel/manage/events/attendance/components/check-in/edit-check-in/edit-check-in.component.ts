@@ -13,13 +13,12 @@ import { HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ICheckIn } from '../check-in.interface';
+import { CheckInOutTime } from '../../../../event.status';
 import { EventsService } from '../../../../events.service';
 import { CPSession } from './../../../../../../../../session';
 import { CPDate } from '../../../../../../../../shared/utils';
 import { EventUtilService } from '../../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../../shared/services';
-
-const NO_CHECKOUT_DATE = -1;
 
 @Component({
   selector: 'cp-edit-check-in',
@@ -31,7 +30,7 @@ export class EditCheckInComponent implements OnInit {
   @Input() checkIn: ICheckIn;
   @Input() orientationId: number;
 
-  @Output() edited: EventEmitter<ICheckIn> = new EventEmitter();
+  @Output() edited: EventEmitter<null> = new EventEmitter();
   @Output() resetEditCheckInModal: EventEmitter<null> = new EventEmitter();
 
   formErrors;
@@ -81,7 +80,7 @@ export class EditCheckInComponent implements OnInit {
       return;
     }
 
-    if (this.form.controls['check_out_time_epoch'].value !== NO_CHECKOUT_DATE) {
+    if (this.form.controls['check_out_time_epoch'].value !== CheckInOutTime.empty && this.event.has_checkout) {
       if (this.form.controls['check_out_time_epoch'].value <= this.form.controls['check_in_time'].value) {
         this.formErrors = true;
         this.enableSaveButton();
@@ -102,8 +101,8 @@ export class EditCheckInComponent implements OnInit {
     }
 
     this.service.updateEventCheckIn(this.form.value, this.checkIn.id, search).subscribe(
-      (res: ICheckIn) => {
-        this.edited.emit(res);
+      () => {
+        this.edited.emit();
         this.resetModal();
       },
       (_) => {

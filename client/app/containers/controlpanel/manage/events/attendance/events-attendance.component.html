@@ -39,13 +39,14 @@
       <div class="col-12">
         <cp-events-attendance-action-box
           [event]="event"
+          [updateQrCode]="updateQrCode"
           [totalAttendees]="totalAttendees"
           [isOrientation]="isOrientation"
           (addCheckIn)="onAddCheckIn()"
-          (querySearch)="doSearch($event)"
           (createExcel)="onCreateExcel()"
-          (enableDisableQR)="onEnableDisableQR()"
-          (sendMessage)="messageAllAttendees()">
+          (querySearch)="doSearch($event)"
+          (sendMessage)="messageAllAttendees()"
+          (enableDisableQR)="onEnableDisableQR($event)">
         </cp-events-attendance-action-box>
       </div>
     </div>
@@ -117,7 +118,9 @@
                   <span> {{ attendee.check_in_time | cpDatePipe:dateFormat }} </span>
                 </div>
                 <div class="col-2" *ngIf="event.has_checkout">
-                  <span> {{ attendee.check_out_time_epoch | cpDatePipe:dateFormat }} </span>
+                  <span *ngIf="attendee.check_out_time_epoch !== emptyCheckOutTime">
+                    {{ attendee.check_out_time_epoch | cpDatePipe:dateFormat }}
+                  </span>
                 </div>
                 <div [class]="event.has_checkout ? 'col-1' : 'col-2'">
              <span>
@@ -185,7 +188,7 @@
     [event]="event"
     [checkIn]="checkInData"
     [orientationId]="orientationId"
-    (deleted)="onEdited($event)"
+    (edited)="onEdited()"
     (resetEditCheckInModal)="isEditCheckInModal = false">
   </cp-edit-check-in>
 </cp-modal>
@@ -208,7 +211,7 @@
   <cp-add-check-in
     [event]="event"
     [orientationId]="orientationId"
-    (created)="onCreated($event)"
+    (created)="onCreated()"
     (resetAddCheckInModal)="isAddCheckInModal = false">
   </cp-add-check-in>
 </cp-modal>
