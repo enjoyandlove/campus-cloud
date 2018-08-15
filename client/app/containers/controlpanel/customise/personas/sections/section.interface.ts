@@ -1,11 +1,21 @@
-import { ITile } from './../tiles/tile.interface';
+import { ITile, ITileBulk } from './../tiles/tile.interface';
 
 export interface ICampusGuide {
   id?: number;
   name: string;
   rank: number;
   _disabled?: boolean;
-  tiles?: Array<ITile>;
+  tiles?: ITile[];
+  _featureTile?: boolean;
+  _categoryZero?: boolean;
+}
+
+export interface ICampusGuideBulk {
+  id?: number;
+  name: string;
+  rank: number;
+  _disabled?: boolean;
+  tiles?: ITileBulk[];
   _featureTile?: boolean;
   _categoryZero?: boolean;
 }

@@ -14,6 +14,14 @@ export interface ITile {
   related_link_data: any;
 }
 
+export interface ITileBulk {
+  rank: number;
+  tile_id: number;
+  school_id: number;
+  featured_rank: number;
+  tile_category_id: number;
+}
+
 export interface ITileCategory {
   id?: number;
   name: string;
