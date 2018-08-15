@@ -2585,7 +2585,7 @@
     "message": "Delete Experience"
   },
   "t_personas_form_dropdown_login_forbidden": {
-    "message": "Not required"
+    "message": "Forbidden"
   },
   "t_personas_form_dropdown_login_optional": {
     "message": "Optional"

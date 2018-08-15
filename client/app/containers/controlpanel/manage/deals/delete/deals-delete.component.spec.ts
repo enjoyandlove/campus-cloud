@@ -34,7 +34,8 @@ describe('DealsDeleteComponent', () => {
           CPSession,
           CPI18nService,
           CPTrackingService,
-          { provide: DealsService, useClass: MockDealsService }]
+          { provide: DealsService, useClass: MockDealsService }
+        ]
       })
         .compileComponents()
         .then(() => {

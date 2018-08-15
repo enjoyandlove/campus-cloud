@@ -406,9 +406,7 @@ export class EventsCreateComponent implements OnInit {
       uploaded_photo: this.utils.didUploadPhoto(this.form.controls['poster_url'].value)
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CANCELED_EVENT,
-      this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CANCELED_EVENT, this.eventProperties);
   }
 
   ngOnInit() {

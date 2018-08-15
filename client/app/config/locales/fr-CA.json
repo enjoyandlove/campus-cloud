@@ -2579,7 +2579,7 @@
     "message": "Supprimer expérience"
   },
   "t_personas_form_dropdown_login_forbidden": {
-    "message": "Non-requis"
+    "message": "Interdit"
   },
   "t_personas_form_dropdown_login_optional": {
     "message": "Optionnel"

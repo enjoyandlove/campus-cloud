@@ -1,6 +1,10 @@
-import { Component, Input, OnInit, EventEmitter, Output } from '@angular/core';
+import { TilesUtilsService } from './../../tiles.utils.service';
+import { SNACKBAR_SHOW } from './../../../../../../../reducers/snackbar.reducer';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { ISnackbar } from '../../../../../../../reducers/snackbar.reducer';
 import { FileUploadService } from '../../../../../../../shared/services';
 
 @Component({
@@ -16,7 +20,12 @@ export class PersonasTileGuideFormComponent implements OnInit {
 
   uploadImageBtn;
 
-  constructor(public cpI18n: CPI18nService, public fileService: FileUploadService) {}
+  constructor(
+    public cpI18n: CPI18nService,
+    public store: Store<ISnackbar>,
+    public utils: TilesUtilsService,
+    public fileService: FileUploadService
+  ) {}
 
   onColorChange(hexColor: string) {
     const colorStr = hexColor.replace('#', '');
@@ -29,12 +38,19 @@ export class PersonasTileGuideFormComponent implements OnInit {
     });
   }
 
-  onFileChanged(image) {
-    const validate = this.fileService.validImage(image);
+  onFileChanged(file) {
+    const validateTileImage = this.utils.validateTileImage(file);
 
-    if (validate.valid) {
-      this.uploadImage(image);
-    }
+    validateTileImage.then(() => this.uploadImage(file)).catch((body) => {
+      this.store.dispatch({
+        type: SNACKBAR_SHOW,
+        payload: {
+          autoClose: true,
+          class: 'warning',
+          body
+        }
+      });
+    });
   }
 
   ngOnInit(): void {

@@ -43,12 +43,10 @@ export class EmployerDeleteComponent implements OnInit {
     this.eventProperties = {
       ...this.eventProperties,
       ...this.cpTracking.getEventProperties(),
-      page_type: amplitudeEvents.EMPLOYER,
+      page_type: amplitudeEvents.EMPLOYER
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.DELETED_ITEM,
-      this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
   }
 
   ngOnInit() {

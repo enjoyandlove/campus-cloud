@@ -53,9 +53,7 @@ export class ListPastComponent implements OnInit {
   }
 
   trackDeleteEvent() {
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.DELETED_ITEM,
-      this.setEventProperties());
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.setEventProperties());
   }
 
   setEventProperties() {

@@ -4,10 +4,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CPI18nService } from './index';
 
+const maxAllowed = 8e6;
+
 @Injectable()
 export class FileUploadService {
-  maxImageSize = 8e6; // 5MB
-  maxFileSize = 8e6; // 8MB
+  maxImageSize = maxAllowed; // 8MB
+  maxFileSize = maxAllowed; // 8MB
 
   validFileTypes = [
     'application/pdf', // .pdf
@@ -18,6 +20,27 @@ export class FileUploadService {
   imageUploadUrl = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
 
   validImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+
+  static validFileSize(file: File, maxSize = maxAllowed) {
+    return file.size <= maxSize;
+  }
+
+  static getImageDimensions(image: File): Promise<{ height: number; width: number }> {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.onload = () => {
+        const img = new Image();
+        img.src = fileReader.result;
+
+        img.onload = () => resolve({ width: img.width, height: img.height });
+      };
+
+      fileReader.onerror = () => reject();
+
+      fileReader.readAsDataURL(image);
+    });
+  }
 
   constructor(private http: HttpClient, private cpI18n: CPI18nService) {}
 
