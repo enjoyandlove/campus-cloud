@@ -28,7 +28,7 @@ declare var $;
 export class StudentsComposeComponent implements OnInit {
   @Input() props: { name: string; userIds: Array<number> };
   @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() success: EventEmitter<{hostType: string}> = new EventEmitter();
+  @Output() success: EventEmitter<{ hostType: string }> = new EventEmitter();
 
   isError;
   stores$;
@@ -124,6 +124,5 @@ export class StudentsComposeComponent implements OnInit {
     this.form.valueChanges.subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
-
   }
 }
