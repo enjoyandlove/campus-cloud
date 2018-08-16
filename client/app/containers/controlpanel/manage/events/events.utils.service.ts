@@ -177,6 +177,19 @@ export class EventUtilService {
     ];
   }
 
+  getAttendanceFeedback() {
+    return [
+      {
+        label: 'Enabled',
+        event: EventFeedback.enabled
+      },
+      {
+        label: 'Disabled',
+        event: EventFeedback.disabled
+      }
+    ];
+  }
+
   getToolTipContent(label) {
     return {
       content: this.cpI18n.translate(label)

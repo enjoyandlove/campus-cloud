@@ -1,15 +1,17 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, of as observableOf } from 'rxjs';
 import { flatMap, map, startWith } from 'rxjs/operators';
-import { BaseComponent } from '../../../../../../../base/base.component';
-import { CPSession, ISchool } from '../../../../../../../session';
-import { AdminService, CPI18nService, StoreService } from '../../../../../../../shared/services';
+import { HttpParams } from '@angular/common/http';
+
 import { EventAttendance } from '../../../event.status';
 import { EventUtilService } from '../../../events.utils.service';
+import { CPSession, ISchool } from '../../../../../../../session';
+import { BaseComponent } from '../../../../../../../base/base.component';
+import { AdminService, CPI18nService, StoreService } from '../../../../../../../shared/services';
 
 interface IState {
   store_id: any;
+  has_checkout: any;
   event_feedback: any;
   event_manager_id: any;
   event_attendance: number;
@@ -40,6 +42,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   isOpen = false;
   state: IState;
   school: ISchool;
+  checkInOptions;
   eventAttendanceFeedback;
   selectedHost$: BehaviorSubject<number> = new BehaviorSubject(null);
 
@@ -51,7 +54,6 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
     private storeService: StoreService
   ) {
     super();
-    this.fetch();
     this.school = this.session.g.get('school');
     super.isLoading().subscribe((res) => (this.loading = res));
   }
@@ -68,7 +70,10 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   onHostSelected(store_id) {
     this.selectedHost$.next(store_id.value);
 
-    this.state = Object.assign({}, this.state, { store_id });
+    this.state = {
+      ...this.state,
+      store_id
+    };
   }
 
   getManagersByHostId(storeId) {
@@ -98,44 +103,56 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
     );
   }
 
-  toggleEventAttendance() {
-    const value =
-      this.state.event_attendance === EventAttendance.disabled
+  updateCheckInOption(item) {
+    const event_attendance = item.action !== null
         ? EventAttendance.enabled
         : EventAttendance.disabled;
 
-    this.state = Object.assign({}, this.state, { event_attendance: value });
+    this.state = {
+      ...this.state,
+      event_attendance,
+      has_checkout: item
+    };
 
     return;
   }
 
-  updateEventManager(manager) {
-    this.state = Object.assign({}, this.state, { event_manager_id: manager });
+  updateEventManager(event_manager_id) {
+    this.state = {
+      ...this.state,
+      event_manager_id
+    };
 
     return;
   }
 
-  updateAttendanceManager(manager) {
-    this.state = Object.assign({}, this.state, {
-      attendance_manager_email: manager
-    });
+  updateAttendanceManager(attendance_manager_email) {
+    this.state = {
+      ...this.state,
+      attendance_manager_email
+    };
 
     return;
   }
 
-  updateAttendanceFeedback(feedback) {
-    this.state = Object.assign({}, this.state, { event_feedback: feedback });
+  updateAttendanceFeedback(event_feedback) {
+    this.state = {
+      ...this.state,
+      event_feedback
+    };
 
     return;
   }
 
   defaultState() {
-    this.state = Object.assign({}, this.state, {
-      event_feedback: this.eventAttendanceFeedback[1],
-      event_attendance: EventAttendance.disabled,
+    this.state = {
+      ...this.state,
       event_manager_id: null,
-      attendance_manager_email: null
-    });
+      attendance_manager_email: null,
+      has_checkout: this.checkInOptions[0],
+      event_attendance: EventAttendance.disabled,
+      event_feedback: this.eventAttendanceFeedback[1],
+    };
   }
 
   updateManagersByStoreOrClubId(storeId) {
@@ -181,25 +198,27 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
     }
 
     if (!this.isClub && !this.isService && !this.isOrientation) {
+      this.fetch();
       this.listenForHostChanges();
+    } else {
+      this.loading = false;
     }
 
-    this.eventAttendanceFeedback = [
-      {
-        label: this.cpI18n.translate('event_enabled'),
-        event: 1
-      },
-      {
-        label: this.cpI18n.translate('events_disabled'),
-        event: 0
-      }
-    ];
+    const attendanceType = [{
+      action: null,
+      label: this.cpI18n.translate('t_events_assessment_no_check_in')
+    }];
+
+    this.eventAttendanceFeedback = this.utils.getAttendanceFeedback();
+
+    this.checkInOptions = [...attendanceType, ...this.utils.attendanceType()];
 
     this.state = {
       store_id: null,
-      event_attendance: EventAttendance.disabled,
       event_manager_id: null,
       attendance_manager_email: null,
+      has_checkout: this.checkInOptions[0],
+      event_attendance: EventAttendance.disabled,
       event_feedback: this.eventAttendanceFeedback[1]
     };
   }
