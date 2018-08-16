@@ -13,7 +13,7 @@ import { PersonasType, PersonasLoginRequired } from './../personas.status';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { MockPersonasService, mockPersonas } from './../mock/personas.service.mock';
 
-describe('PersonasCreateComponent', () => {
+xdescribe('PersonasCreateComponent', () => {
   let comp: PersonasCreateComponent;
   let fixture: ComponentFixture<PersonasCreateComponent>;
 

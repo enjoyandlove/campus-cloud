@@ -119,7 +119,7 @@ describe('StudentsProfileComponent', () => {
 
     comp.fetchStudentData();
 
-    comp.onFlashMessage(null);
+    comp.onFlashMessage({ hostType: null });
 
     store.select('SNACKBAR').subscribe((payload) => expect(payload).toEqual(expected));
   });

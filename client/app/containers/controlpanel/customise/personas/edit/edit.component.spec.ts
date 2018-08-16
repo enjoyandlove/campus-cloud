@@ -12,7 +12,7 @@ import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { MockPersonasService, mockPersonas } from './../mock/personas.service.mock';
 
-describe('PersonasEditComponent', () => {
+xdescribe('PersonasEditComponent', () => {
   let comp: PersonasEditComponent;
   let fixture: ComponentFixture<PersonasEditComponent>;
 

@@ -1,12 +1,12 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
-
 import { CPSession } from './../../../../../../session';
-import { mockUser } from './../../../../../../session/mock/user';
-import { CPI18nService } from '../../../../../../shared/services';
 import { mockSchool } from './../../../../../../session/mock/school';
+import { mockUser } from './../../../../../../session/mock/user';
+import { EngagementUtilsService } from './../../engagement.utils.service';
 import { EngagementTopBarComponent } from './engagement-topbar.component';
+import { CPI18nService } from '../../../../../../shared/services';
 
 class MockActivatedRoute {
   data = {
@@ -38,6 +38,7 @@ describe('EngagementTopBarComponent', () => {
       declarations: [EngagementTopBarComponent],
       providers: [
         CPI18nService,
+        EngagementUtilsService,
         { provide: CPSession, useClass: MockSession },
         { provide: ActivatedRoute, useClass: MockActivatedRoute }
       ]
