@@ -61,7 +61,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   dateFormat = FORMAT.DATETIME;
   totalAttendees = new BehaviorSubject(null);
   appCheckIn = CheckInMethod.app;
-  canMessage = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements);
+  canMessage;
 
   eventProperties = {
     host_type: null,
@@ -340,6 +340,11 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.canMessage = canSchoolWriteResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.campus_announcements
+    );
+
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,
       this.serviceId,
