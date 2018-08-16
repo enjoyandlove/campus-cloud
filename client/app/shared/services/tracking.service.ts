@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { get as _get } from 'lodash';
 import { PRIMARY_OUTLET, Router } from '@angular/router';
 
 import { isCanada, isProd, isSea, isUsa, isStaging } from './../../config/env/index';
@@ -78,9 +79,9 @@ export class CPTrackingService {
   activatedRoute(level) {
     const tree = this.router.parseUrl(this.router.url);
     const children = tree.root.children[PRIMARY_OUTLET];
-    const segments = children.segments;
+    const path = _get(children, ['segments', level, 'path'], null);
 
-    return segments[level] ? this.capitalizeFirstLetter(segments[level].path) : null;
+    return path ? this.capitalizeFirstLetter(path) : null;
   }
 
   capitalizeFirstLetter(string) {

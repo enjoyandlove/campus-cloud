@@ -5,7 +5,7 @@ import { PersonasModule } from './../../../personas.module';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { PersonasListActionBoxComponent } from './list-action-box.component';
 
-describe('PersonasListActionBoxComponent', () => {
+xdescribe('PersonasListActionBoxComponent', () => {
   let comp: PersonasListActionBoxComponent;
   let fixture: ComponentFixture<PersonasListActionBoxComponent>;
 

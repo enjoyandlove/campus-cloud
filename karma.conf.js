@@ -5,9 +5,8 @@ var webpackConfig = require('./webpack.config');
 var ENV = process.env.npm_lifecycle_event;
 var isTestWatch = ENV === 'test-watch';
 
-module.exports = function (config) {
+module.exports = function(config) {
   var _config = {
-
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
@@ -16,9 +15,7 @@ module.exports = function (config) {
     frameworks: ['jasmine'],
 
     // list of files / patterns to load in the browser
-    files: [
-      { pattern: './karma-shim.js', watched: false }
-    ],
+    files: [{ pattern: './karma-shim.js', watched: false }],
 
     // list of files to exclude
     exclude: [],
@@ -44,7 +41,7 @@ module.exports = function (config) {
     // test results reporter to use
     // possible values: 'dots', 'progress', 'mocha'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ["mocha"],
+    reporters: ['mocha'],
 
     // web server port
     port: 9876,
@@ -61,7 +58,7 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['PhantomJS'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
@@ -69,19 +66,20 @@ module.exports = function (config) {
   };
 
   if (!isTestWatch) {
-    _config.reporters.push("coverage");
+    _config.reporters.push('coverage');
 
     _config.coverageReporter = {
       dir: 'coverage/',
-      reporters: [{
-        type: 'json',
-        dir: 'coverage',
-        subdir: 'json',
-        file: 'coverage-final.json'
-      }]
+      reporters: [
+        {
+          type: 'json',
+          dir: 'coverage',
+          subdir: 'json',
+          file: 'coverage-final.json'
+        }
+      ]
     };
   }
 
   config.set(_config);
-
 };

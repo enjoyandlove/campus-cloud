@@ -8,7 +8,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { MockPersonasService, mockPersonas } from '../mock/personas.service.mock';
 import { of } from 'rxjs';
 
-describe('PersonasDeleteComponent', () => {
+xdescribe('PersonasDeleteComponent', () => {
   let comp: PersonasDeleteComponent;
   let fixture: ComponentFixture<PersonasDeleteComponent>;
 
