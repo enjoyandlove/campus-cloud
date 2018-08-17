@@ -77,9 +77,13 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
     this.totalAttendees.subscribe((attendees) => {
       this.disableMessageAttendees = !this.canMessage || !attendees;
       if (!attendees) {
-        this.messageAttendeesTooltipText = this.cpI18n.translate('t_events_attendance_no_attendees_tooltip_text');
+        this.messageAttendeesTooltipText = this.cpI18n.translate(
+          't_events_attendance_no_attendees_tooltip_text'
+        );
       } else if (!this.canMessage) {
-        this.messageAttendeesTooltipText = this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text');
+        this.messageAttendeesTooltipText = this.cpI18n.translate(
+          't_events_attendance_no_permission_tooltip_text'
+        );
       } else {
         this.messageAttendeesTooltipText = '';
       }

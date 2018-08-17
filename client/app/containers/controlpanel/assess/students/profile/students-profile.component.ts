@@ -71,7 +71,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     public service: StudentsService,
     public utils: AssessUtilsService,
     public cpTracking: CPTrackingService,
-    public store: Store<ISnackbar | IHeader>,
+    public store: Store<ISnackbar | IHeader>
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loadingEngagementData = loading));
@@ -233,9 +233,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       engagement_type: amplitudeEvents.SINGLE_STUDENT
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.ASSESS_DOWNLOAD_DATA,
-      eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_DOWNLOAD_DATA, eventProperties);
   }
 
   onComposeTeardown() {
@@ -278,9 +276,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       engagement_type: amplitudeEvents.SINGLE_STUDENT
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.ASSESS_SENT_MESSAGE,
-      this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_SENT_MESSAGE, this.eventProperties);
   }
 
   ngOnInit() {

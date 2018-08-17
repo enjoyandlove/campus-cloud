@@ -159,7 +159,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
         this.totalAttendees.next(res.data.length);
         setTimeout(
           () => {
-            $(function () {
+            $(function() {
               $('[data-toggle="tooltip"]').tooltip();
             });
           },
@@ -293,7 +293,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   messageAllAttendees() {
     this.allStudents = true;
 
-    const userIds = this.attendees.filter((attendee) => attendee.user_id)
+    const userIds = this.attendees
+      .filter((attendee) => attendee.user_id)
       .map((attendee) => attendee.user_id);
 
     this.messageData = {

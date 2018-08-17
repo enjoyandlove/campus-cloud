@@ -1,14 +1,14 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of as observableOf } from 'rxjs';
-
-import { TodosModule } from '../todos.module';
-import { TodosService } from '../todos.service';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { OrientationTodosListComponent } from './orientation-todos-list.component';
 import { CPSession } from '../../../../../../session';
 import { mockSchool } from '../../../../../../session/mock/school';
 import { CPTrackingService } from '../../../../../../shared/services';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { OrientationTodosListComponent } from './orientation-todos-list.component';
+import { TodosModule } from '../todos.module';
+import { TodosService } from '../todos.service';
 
 class MockTodosService {
   dummy;
@@ -31,7 +31,7 @@ describe('OrientationTodosListComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [TodosModule],
+        imports: [TodosModule, RouterTestingModule],
         providers: [
           CPSession,
           CPI18nService,

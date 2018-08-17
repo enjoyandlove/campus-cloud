@@ -26,12 +26,7 @@ import { StudentsRoutingModule } from './students.routing.module';
     StudentsProfileTopBarComponent
   ],
 
-  imports: [
-    ReactiveFormsModule,
-    CommonModule,
-    SharedModule,
-    StudentsRoutingModule
-  ],
+  imports: [ReactiveFormsModule, CommonModule, SharedModule, StudentsRoutingModule],
 
   providers: [StudentsService],
 
