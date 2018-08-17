@@ -189,7 +189,7 @@
     [checkIn]="checkInData"
     [orientationId]="orientationId"
     (edited)="onEdited()"
-    (tearDown)="isEditCheckInModal = false">
+    (teardown)="isEditCheckInModal = false">
   </cp-edit-check-in>
 </cp-modal>
 
@@ -201,7 +201,7 @@
     [checkIn]="checkInData"
     [orientationId]="orientationId"
     (deleted)="onDeleted($event)"
-    (tearDown)="isDeleteCheckInModal = false">
+    (teardown)="isDeleteCheckInModal = false">
   </cp-delete-check-in>
 </cp-modal>
 
@@ -212,7 +212,7 @@
     [event]="event"
     [orientationId]="orientationId"
     (created)="onCreated()"
-    (tearDown)="isAddCheckInModal = false">
+    (teardown)="isAddCheckInModal = false">
   </cp-create-check-in>
 </cp-modal>
 

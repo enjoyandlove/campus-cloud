@@ -11,12 +11,12 @@ import { CPI18nService } from '../../../../../../../../shared/services';
   templateUrl: './delete.component.html',
   styleUrls: ['./delete.component.scss']
 })
-export class DeleteComponent implements OnInit {
+export class CheckInDeleteComponent implements OnInit {
   @Input() event;
   @Input() checkIn: ICheckIn;
   @Input() orientationId: number;
 
-  @Output() tearDown: EventEmitter<null> = new EventEmitter();
+  @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   buttonData;
@@ -44,7 +44,7 @@ export class DeleteComponent implements OnInit {
     this.service.deleteEventCheckInById(this.checkIn.id, search).subscribe(
       (_) => {
         this.deleted.emit(this.checkIn.id);
-        this.tearDown.emit();
+        this.teardown.emit();
         $('#deleteCheckInModal').modal('hide');
       },
       (_) => {

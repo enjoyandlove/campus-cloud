@@ -15,21 +15,17 @@ export class CheckInUtilsService {
     public cpI18n: CPI18nService
   ) {}
 
-  isCheckinInPast(form) {
-    if (form.controls['check_in_time'].value <= Math.round(CPDate.now(this.session.tz).unix())) {
-      form.controls['check_in_time'].setErrors({ required: true });
-
+  isCheckinInPast(checkInTime) {
+    if (checkInTime <= Math.round(CPDate.now(this.session.tz).unix())) {
       return true;
     }
 
     return false;
   }
 
-  checkoutTimeBeforeCheckinTime(form) {
-    if (form.controls['check_out_time_epoch'].value !== CheckInOutTime.empty) {
-      if (form.controls['check_out_time_epoch'].value <= form.controls['check_in_time'].value) {
-        form.controls['check_out_time_epoch'].setErrors({ required: true });
-
+  checkoutTimeBeforeCheckinTime(checkInTime, checkOutTime) {
+    if (checkOutTime !== CheckInOutTime.empty) {
+      if (checkOutTime <= checkInTime) {
         return true;
       }
 
@@ -37,8 +33,9 @@ export class CheckInUtilsService {
     }
   }
 
-  getCheckInForm(formData) {
+  getCheckInForm(formData, eventId) {
     return this.fb.group({
+      event_id: [eventId, Validators.required],
       email: [formData ? formData.email : null, Validators.required],
       lastname: [formData ? formData.lastname : null, Validators.required],
       firstname: [formData ? formData.firstname : null, Validators.required],

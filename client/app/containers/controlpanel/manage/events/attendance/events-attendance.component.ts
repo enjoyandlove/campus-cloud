@@ -407,12 +407,12 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     }
   }
 
-  onToggleQr(isEnable: boolean) {
+  onToggleQr(isEnabled: boolean) {
     const verificationMethods = this.event.attend_verification_methods;
 
-    if (!isEnable && !verificationMethods.includes(CheckInMethod.app)) {
+    if (!isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
       verificationMethods.push(CheckInMethod.app);
-    } else if (isEnable && verificationMethods.includes(CheckInMethod.app)) {
+    } else if (isEnabled && verificationMethods.includes(CheckInMethod.app)) {
       verificationMethods.pop(CheckInMethod.app);
     }
 
@@ -433,15 +433,15 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     this.service.updateEvent(data, this.eventId, search).subscribe(
       (res) => {
         this.event = res;
-        this.onSuccessQRCheckInMessage(isEnable);
+        this.onSuccessQRCheckInMessage(isEnabled);
       },
       (_) => {
         this.onErrorQRCheckInMessage();
       });
   }
 
-  onSuccessQRCheckInMessage(isEnable: boolean) {
-    const message = isEnable
+  onSuccessQRCheckInMessage(isEnabled: boolean) {
+    const message = isEnabled
       ? 't_event_assessment_qr_code_disabled_success_message'
       : 't_event_assessment_qr_code_enable_success_message';
 

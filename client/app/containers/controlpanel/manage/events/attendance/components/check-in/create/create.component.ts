@@ -22,11 +22,11 @@ import { CPI18nService } from '../../../../../../../../shared/services';
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class CreateComponent implements OnInit {
+export class CheckInCreateComponent implements OnInit {
   @Input() event: any;
   @Input() orientationId: number;
 
-  @Output() tearDown: EventEmitter<null> = new EventEmitter();
+  @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() created: EventEmitter<ICheckIn> = new EventEmitter();
 
   form;
@@ -53,7 +53,7 @@ export class CreateComponent implements OnInit {
 
   resetModal() {
     this.form.reset();
-    this.tearDown.emit();
+    this.teardown.emit();
     $('#addCheckInModal').modal('hide');
   }
 
@@ -69,32 +69,36 @@ export class CreateComponent implements OnInit {
       return;
     }
 
+    const checkInTime = this.form.controls['check_in_time'].value;
+    const checkOutTime = this.form.controls['check_out_time_epoch'].value;
+
     const checkinTimeInThePast =
-      this.checkInUtils.isCheckinInPast(this.form);
+      this.checkInUtils.isCheckinInPast(checkInTime);
 
     const checkoutTimeBeforeCheckinTime =
-      this.checkInUtils.checkoutTimeBeforeCheckinTime(this.form);
+      this.checkInUtils.checkoutTimeBeforeCheckinTime(checkInTime, checkOutTime);
 
-    if (checkinTimeInThePast) {
+    if (checkinTimeInThePast || checkoutTimeBeforeCheckinTime) {
       this.formErrors = true;
       this.enableSaveButton();
-      this.errorMessage = this.cpI18n
-        .translate('t_events_attendance_add_check_in_error_check_in_time_after_now');
+
+      if (checkinTimeInThePast) {
+        this.form.controls['check_in_time'].setErrors({ required: true });
+
+        this.errorMessage = this.cpI18n.
+        translate('t_events_attendance_add_check_in_error_check_in_time_after_now');
+
+      } else if (checkoutTimeBeforeCheckinTime) {
+        this.form.controls['check_out_time_epoch'].setErrors({ required: true });
+
+        this.errorMessage = this.cpI18n.
+        translate('t_events_attendance_add_check_in_error_check_out_time_after_check_in');
+      }
 
       return;
     }
 
-    if (checkoutTimeBeforeCheckinTime) {
-      this.formErrors = true;
-      this.enableSaveButton();
-      this.errorMessage = this.cpI18n
-        .translate('t_events_attendance_add_check_in_error_check_out_time_after_check_in');
-
-      return;
-    }
-
-    let search = new HttpParams()
-      .append('event_id', this.event.id);
+    let search = new HttpParams();
 
     if (this.orientationId) {
       search = search
@@ -122,7 +126,7 @@ export class CreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.checkInUtils.getCheckInForm(null);
+    this.form = this.checkInUtils.getCheckInForm(null, this.event.id);
 
     this.buttonData = {
       class: 'primary',

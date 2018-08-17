@@ -347,12 +347,12 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.form.controls['has_checkout'].setValue(type.action);
   }
 
-  onSelectedQRCode(val): void {
+  onSelectedQRCode(isEnabled: boolean): void {
     const verificationMethods = this.form.controls['attend_verification_methods'].value;
 
-    if (val && !verificationMethods.includes(CheckInMethod.app)) {
+    if (isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
       verificationMethods.push(CheckInMethod.app);
-    } else if (!val && verificationMethods.includes(CheckInMethod.app)) {
+    } else if (!isEnabled && verificationMethods.includes(CheckInMethod.app)) {
       verificationMethods.pop(CheckInMethod.app);
     }
   }

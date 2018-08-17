@@ -2,20 +2,20 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { EditComponent } from './edit';
-import { FormComponent } from './form';
-import { CreateComponent } from './create';
-import { DeleteComponent } from './delete';
+import { CheckInEditComponent } from './edit';
+import { CheckInFormComponent } from './form';
+import { CheckInCreateComponent } from './create';
+import { CheckInDeleteComponent } from './delete';
 
 import { CheckInUtilsService } from './check-in.utils.service';
 import { SharedModule } from '../../../../../../../shared/shared.module';
 
 @NgModule({
   declarations: [
-    FormComponent,
-    EditComponent,
-    CreateComponent,
-    DeleteComponent
+    CheckInFormComponent,
+    CheckInEditComponent,
+    CheckInCreateComponent,
+    CheckInDeleteComponent
   ],
 
   imports: [
@@ -27,10 +27,10 @@ import { SharedModule } from '../../../../../../../shared/shared.module';
   providers: [CheckInUtilsService],
 
   exports: [
-    FormComponent,
-    EditComponent,
-    CreateComponent,
-    DeleteComponent
+    CheckInFormComponent,
+    CheckInEditComponent,
+    CheckInCreateComponent,
+    CheckInDeleteComponent
   ]
 })
 
