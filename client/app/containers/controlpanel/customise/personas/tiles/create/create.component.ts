@@ -197,12 +197,6 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     this.store.dispatch({ type: SNACKBAR_HIDE });
   }
 
-  getPersona() {
-    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
-
-    this.personaService.getPersonaById(this.personaId, search);
-  }
-
   fetch() {
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
 

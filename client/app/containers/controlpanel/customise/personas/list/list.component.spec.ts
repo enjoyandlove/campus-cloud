@@ -11,7 +11,7 @@ import { PersonasListComponent } from './list.component';
 import { MockPersonasService } from './../mock/personas.service.mock';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
-xdescribe('PersonasListComponent', () => {
+describe('PersonasListComponent', () => {
   let storeSpy;
   let comp: PersonasListComponent;
   let fixture: ComponentFixture<PersonasListComponent>;
@@ -139,4 +139,23 @@ xdescribe('PersonasListComponent', () => {
     expect(comp.state.platform).toBe(platform);
     expect(resetPagination).toHaveBeenCalled();
   });
+
+  it(
+    'fetch',
+    fakeAsync(() => {
+      comp.fetch();
+
+      tick();
+
+      expect(comp.state.personas.length).toBe(2);
+
+      comp.state.search_str = 'web';
+
+      comp.fetch();
+
+      tick();
+
+      expect(comp.state.personas.length).toBe(1);
+    })
+  );
 });
