@@ -111,8 +111,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
 
   downloadAudience({ id }) {
     const columns = [
-      this.cpI18n.translate('first_name'),
-      this.cpI18n.translate('last_name'),
+      this.cpI18n.translate('name'),
       this.cpI18n.translate('email')
     ];
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
@@ -123,8 +122,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
       .then(({ users, name }) => {
         const data = users.map((user) => {
           return {
-            [this.cpI18n.translate('first_name')]: user.firstname,
-            [this.cpI18n.translate('last_name')]: user.lastname,
+            [this.cpI18n.translate('name')]: `${user.firstname} ${user.lastname}`,
             [this.cpI18n.translate('email')]: user.email
           };
         });
