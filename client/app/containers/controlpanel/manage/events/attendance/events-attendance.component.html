@@ -46,7 +46,7 @@
           (createExcel)="onCreateExcel()"
           (querySearch)="doSearch($event)"
           (sendMessage)="messageAllAttendees()"
-          (enableDisableQR)="onEnableDisableQR($event)">
+          (onToggleQr)="onToggleQr($event)">
         </cp-events-attendance-action-box>
       </div>
     </div>
@@ -189,7 +189,7 @@
     [checkIn]="checkInData"
     [orientationId]="orientationId"
     (edited)="onEdited()"
-    (resetEditCheckInModal)="isEditCheckInModal = false">
+    (tearDown)="isEditCheckInModal = false">
   </cp-edit-check-in>
 </cp-modal>
 
@@ -201,19 +201,19 @@
     [checkIn]="checkInData"
     [orientationId]="orientationId"
     (deleted)="onDeleted($event)"
-    (resetDeleteCheckInModal)="isDeleteCheckInModal = false">
+    (tearDown)="isDeleteCheckInModal = false">
   </cp-delete-check-in>
 </cp-modal>
 
 <cp-modal
   modalId="addCheckInModal"
   *ngIf="isAddCheckInModal">
-  <cp-add-check-in
+  <cp-create-check-in
     [event]="event"
     [orientationId]="orientationId"
     (created)="onCreated()"
-    (resetAddCheckInModal)="isAddCheckInModal = false">
-  </cp-add-check-in>
+    (tearDown)="isAddCheckInModal = false">
+  </cp-create-check-in>
 </cp-modal>
 
 <cp-modal

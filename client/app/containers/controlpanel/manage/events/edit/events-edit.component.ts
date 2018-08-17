@@ -263,12 +263,12 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     );
 
     this.selectedAttendanceType = this.getFromArray(
-      this.utils.attendanceType(),
+      this.utils.getAttendanceTypeOptions(),
       'action',
       res.has_checkout);
 
     this.selectedQRCode = this.getFromArray(
-      this.utils.QRCodes(),
+      this.utils.getQROptions(),
       'action',
       this.getQRCodeStatus(res.attend_verification_methods)
     );
@@ -558,9 +558,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.dateFormat = FORMAT.DATETIME;
     this.attendanceEnabled = EventAttendance.enabled;
     this.eventFeedbackEnabled = EventFeedback.enabled;
-    this.eventQRCodes = this.utils.QRCodes();
-    this.attendanceTypes = this.utils.attendanceType();
-    this.attendanceFeedback = this.utils.attendanceFeedback();
+    this.eventQRCodes = this.utils.getQROptions();
+    this.attendanceTypes = this.utils.getAttendanceTypeOptions();
+    this.attendanceFeedback = this.utils.getAttendanceFeedback();
     this.fetch();
     this.buildHeader();
   }

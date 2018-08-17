@@ -138,7 +138,7 @@ export class EventUtilService {
     return sourcePage;
   }
 
-  attendanceType() {
+  getAttendanceTypeOptions() {
     return [
       {
         label: this.cpI18n.translate('t_events_assessment_check_in_only'),
@@ -151,7 +151,7 @@ export class EventUtilService {
     ];
   }
 
-  QRCodes() {
+  getQROptions() {
     return [
       {
         label: this.cpI18n.translate('t_events_assessment_qr_enabled_yes'),
@@ -164,7 +164,7 @@ export class EventUtilService {
     ];
   }
 
-  attendanceFeedback() {
+  getAttendanceFeedback() {
     return [
       {
         label: this.cpI18n.translate('event_enabled'),

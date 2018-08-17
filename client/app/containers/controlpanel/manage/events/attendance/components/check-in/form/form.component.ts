@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { CheckInOutTime } from '../../../../event.status';
 import { CPSession } from '../../../../../../../../session';
 import { CPDate } from '../../../../../../../../shared/utils';
 
@@ -10,14 +11,12 @@ const COMMON_DATE_PICKER_OPTIONS = {
   altFormat: 'F j, Y h:i K'
 };
 
-const NO_CHECKOUT_DATE = -1;
-
 @Component({
-  selector: 'cp-event-attendance-check-in-form',
-  templateUrl: './check-in-form.component.html',
-  styleUrls: ['./check-in-form.component.scss']
+  selector: 'cp-check-in-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.scss']
 })
-export class CheckInFormComponent implements OnInit {
+export class FormComponent implements OnInit {
   @Input() form;
   @Input() event;
   @Input() formErrors;
@@ -47,7 +46,7 @@ export class CheckInFormComponent implements OnInit {
 
     this.checkOutDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: check_out_time !== NO_CHECKOUT_DATE
+      defaultDate: check_out_time !== CheckInOutTime.empty
         ? CPDate.fromEpoch(check_out_time, _self.session.tz).format()
         : null,
       onChange: function(_, dataStr) {

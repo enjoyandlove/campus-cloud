@@ -455,9 +455,9 @@ export class EventsCreateComponent implements OnInit {
       lng: this.school.longitude
     });
 
-    this.eventQRCodes = this.utils.QRCodes();
-    this.attendanceTypes = this.utils.attendanceType();
-    this.attendanceFeedback = this.utils.attendanceFeedback();
+    this.eventQRCodes = this.utils.getQROptions();
+    this.attendanceTypes = this.utils.getAttendanceTypeOptions();
+    this.attendanceFeedback = this.utils.getAttendanceFeedback();
 
     this.form = this.fb.group({
       title: [null, Validators.required],

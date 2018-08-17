@@ -8,16 +8,16 @@ import { CPI18nService } from '../../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-delete-check-in',
-  templateUrl: './delete-check-in.component.html',
-  styleUrls: ['./delete-check-in.component.scss']
+  templateUrl: './delete.component.html',
+  styleUrls: ['./delete.component.scss']
 })
-export class DeleteCheckInComponent implements OnInit {
+export class DeleteComponent implements OnInit {
   @Input() event;
   @Input() checkIn: ICheckIn;
   @Input() orientationId: number;
 
+  @Output() tearDown: EventEmitter<null> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
-  @Output() resetDeleteCheckInModal: EventEmitter<null> = new EventEmitter();
 
   buttonData;
   errorMessage;
@@ -44,7 +44,7 @@ export class DeleteCheckInComponent implements OnInit {
     this.service.deleteEventCheckInById(this.checkIn.id, search).subscribe(
       (_) => {
         this.deleted.emit(this.checkIn.id);
-        this.resetDeleteCheckInModal.emit();
+        this.tearDown.emit();
         $('#deleteCheckInModal').modal('hide');
       },
       (_) => {

@@ -406,12 +406,12 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     }
   }
 
-  onEnableDisableQR(val) {
+  onToggleQr(isEnable: boolean) {
     const verificationMethods = this.event.attend_verification_methods;
 
-    if (!val && !verificationMethods.includes(CheckInMethod.app)) {
+    if (!isEnable && !verificationMethods.includes(CheckInMethod.app)) {
       verificationMethods.push(CheckInMethod.app);
-    } else if (val && verificationMethods.includes(CheckInMethod.app)) {
+    } else if (isEnable && verificationMethods.includes(CheckInMethod.app)) {
       verificationMethods.pop(CheckInMethod.app);
     }
 
@@ -432,15 +432,15 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     this.service.updateEvent(data, this.eventId, search).subscribe(
       (res) => {
         this.event = res;
-        this.successQRCodeMessage(val);
+        this.onSuccessQRCheckInMessage(isEnable);
       },
       (_) => {
-
+        this.onErrorQRCheckInMessage();
       });
   }
 
-  successQRCodeMessage(val) {
-    const message = val
+  onSuccessQRCheckInMessage(isEnable: boolean) {
+    const message = isEnable
       ? 't_event_assessment_qr_code_disabled_success_message'
       : 't_event_assessment_qr_code_enable_success_message';
 
@@ -448,6 +448,17 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       type: SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate(message),
+        autoClose: true
+      }
+    });
+  }
+
+  onErrorQRCheckInMessage() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        class: 'danger',
+        body: this.cpI18n.translate('something_went_wrong'),
         autoClose: true
       }
     });

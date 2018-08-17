@@ -1,4 +1,3 @@
-/* tslint:disable:max-line-length */
 import {
   Input,
   OnInit,
@@ -10,40 +9,39 @@ import {
 } from '@angular/core';
 
 import { HttpParams } from '@angular/common/http';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ICheckIn } from '../check-in.interface';
 import { EventsService } from '../../../../events.service';
 import { CPSession } from './../../../../../../../../session';
-import { CPDate } from '../../../../../../../../shared/utils';
+import { CheckInUtilsService } from '../check-in.utils.service';
 import { EventUtilService } from '../../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../../shared/services';
-import { CheckInMethod, CheckInOutTime } from '../../../../event.status';
 
 @Component({
-  selector: 'cp-add-check-in',
-  templateUrl: './add-check-in.component.html',
-  styleUrls: ['./add-check-in.component.scss']
+  selector: 'cp-create-check-in',
+  templateUrl: './create.component.html',
+  styleUrls: ['./create.component.scss']
 })
-export class AddCheckInComponent implements OnInit {
+export class CreateComponent implements OnInit {
   @Input() event: any;
   @Input() orientationId: number;
 
+  @Output() tearDown: EventEmitter<null> = new EventEmitter();
   @Output() created: EventEmitter<ICheckIn> = new EventEmitter();
-  @Output() resetAddCheckInModal: EventEmitter<null> = new EventEmitter();
 
+  form;
   formErrors;
   buttonData;
   errorMessage;
-  form: FormGroup;
 
   constructor(
     public el: ElementRef,
-    public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: EventsService,
-    public utils: EventUtilService) {}
+    public utils: EventUtilService,
+    public checkInUtils: CheckInUtilsService
+  ) {}
 
   @HostListener('document:click', ['$event'])
   onClick(event) {
@@ -55,7 +53,7 @@ export class AddCheckInComponent implements OnInit {
 
   resetModal() {
     this.form.reset();
-    this.resetAddCheckInModal.emit();
+    this.tearDown.emit();
     $('#addCheckInModal').modal('hide');
   }
 
@@ -65,29 +63,34 @@ export class AddCheckInComponent implements OnInit {
     if (!this.form.valid) {
       this.formErrors = true;
       this.enableSaveButton();
-      this.errorMessage = this.cpI18n.translate('t_events_attendance_add_check_in_error_fill_out_all_fields');
+      this.errorMessage = this.cpI18n.
+      translate('t_events_attendance_add_check_in_error_fill_out_all_fields');
 
       return;
     }
 
-    if (this.form.controls['check_in_time'].value <= Math.round(CPDate.now(this.session.tz).unix())) {
+    const checkinTimeInThePast =
+      this.checkInUtils.isCheckinInPast(this.form);
+
+    const checkoutTimeBeforeCheckinTime =
+      this.checkInUtils.checkoutTimeBeforeCheckinTime(this.form);
+
+    if (checkinTimeInThePast) {
       this.formErrors = true;
       this.enableSaveButton();
-      this.form.controls['check_in_time'].setErrors({ required: true });
-      this.errorMessage = this.cpI18n.translate('t_events_attendance_add_check_in_error_check_in_time_after_now');
+      this.errorMessage = this.cpI18n
+        .translate('t_events_attendance_add_check_in_error_check_in_time_after_now');
 
       return;
     }
 
-    if (this.form.controls['check_out_time_epoch'].value !== CheckInOutTime.empty) {
-      if (this.form.controls['check_out_time_epoch'].value <= this.form.controls['check_in_time'].value) {
-        this.formErrors = true;
-        this.enableSaveButton();
-        this.form.controls['check_out_time_epoch'].setErrors({ required: true });
-        this.errorMessage = this.cpI18n.translate('t_events_attendance_add_check_in_error_check_out_time_after_check_in');
+    if (checkoutTimeBeforeCheckinTime) {
+      this.formErrors = true;
+      this.enableSaveButton();
+      this.errorMessage = this.cpI18n
+        .translate('t_events_attendance_add_check_in_error_check_out_time_after_check_in');
 
-        return;
-      }
+      return;
     }
 
     let search = new HttpParams()
@@ -119,14 +122,7 @@ export class AddCheckInComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.fb.group({
-      email: [null, Validators.required],
-      check_in_method: [CheckInMethod.web],
-      lastname: [null, Validators.required],
-      firstname: [null, Validators.required],
-      check_in_time: [null, Validators.required],
-      check_out_time_epoch: [CheckInOutTime.empty]
-    });
+    this.form = this.checkInUtils.getCheckInForm(null);
 
     this.buttonData = {
       class: 'primary',
