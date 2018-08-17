@@ -33,6 +33,23 @@ export class MockPersonasService {
     return of(mockPersonas);
   }
 
+  getServices(search) {
+    this.dummy = search;
+
+    return of([{ label: 'noService', value: null }]);
+  }
+
+  createCampusLink(formValue) {
+    return of(formValue);
+  }
+
+  createGuideTile(formValue) {
+    return of({
+      id: 1,
+      ...formValue
+    });
+  }
+
   updatePersona(personaId, search, persona) {
     this.dummy = { personaId, search };
 
