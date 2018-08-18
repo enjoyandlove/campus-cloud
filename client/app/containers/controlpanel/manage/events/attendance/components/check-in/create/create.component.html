@@ -32,7 +32,7 @@
           <i class="material-icons">
             warning
           </i>
-          {{ errorMessage }}
+          {{ errorMessage ?errorMessage : cpI18n.translate('t_events_attendance_add_check_in_error_fill_out_all_fields') }}
         </label>
         <button
           type="button"

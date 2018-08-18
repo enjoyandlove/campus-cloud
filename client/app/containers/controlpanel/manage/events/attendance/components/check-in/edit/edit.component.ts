@@ -64,8 +64,6 @@ export class CheckInEditComponent implements OnInit {
     if (!this.form.valid) {
       this.formErrors = true;
       this.enableSaveButton();
-      this.errorMessage = this.cpI18n.
-      translate('t_events_attendance_add_check_in_error_fill_out_all_fields');
 
       return;
     }
