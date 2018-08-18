@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
@@ -11,9 +11,9 @@ import { CPDate } from './../../../../../shared/utils/date/date';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { PersonasType, PersonasLoginRequired } from './../personas.status';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { MockPersonasService, mockPersonas } from './../mock/personas.service.mock';
+import { MockPersonasService } from './../mock/personas.service.mock';
 
-xdescribe('PersonasCreateComponent', () => {
+describe('PersonasCreateComponent', () => {
   let comp: PersonasCreateComponent;
   let fixture: ComponentFixture<PersonasCreateComponent>;
 
@@ -69,6 +69,29 @@ xdescribe('PersonasCreateComponent', () => {
     expect(comp.form.valid).toBeFalsy();
   });
 
+  it('onSecurityServiceChanged', () => {
+    let mock = {};
+    const fakeService = { id: 1, name: 'fake service' };
+
+    mock = {
+      label: 'dummy',
+      value: null
+    };
+
+    comp.onSecurityServiceChanged(mock);
+
+    expect(comp.campusSecurityTile).toBeNull();
+
+    mock = {
+      ...mock,
+      meta: { ...fakeService }
+    };
+
+    comp.onSecurityServiceChanged(mock);
+
+    expect(comp.campusSecurityTile).toEqual(fakeService);
+  });
+
   it('buildForm', () => {
     const expected = {
       school_id: 157,
@@ -78,7 +101,7 @@ xdescribe('PersonasCreateComponent', () => {
       login_requirement: PersonasLoginRequired.optional,
       pretour_enabled: false,
       cre_enabled: false,
-      clone_tiles: true
+      clone_tiles: false
     };
 
     comp.buildForm();
@@ -96,26 +119,59 @@ xdescribe('PersonasCreateComponent', () => {
     expect(comp.buttonData.disabled).toBeFalsy();
   });
 
-  it('onSubmit', () => {
-    fixture.detectChanges();
+  it('getCampusLinkForm', () => {
+    const fakeService = { id: 1, name: 'name', img_url: 'image' };
 
-    const persona = mockPersonas[0];
+    const expected = {
+      description: null,
+      img_url: 'image',
+      is_system: 1,
+      link_params: { id: 1 },
+      link_url: 'oohlala://campus_security_service',
+      name: 'name',
+      open_in_browser: 0,
+      school_id: 157
+    };
 
-    const fb = new FormBuilder();
+    comp.campusSecurityTile = fakeService;
 
-    const expectedForm = fb.group({
-      school_id: [157, Validators.required],
-      name: [persona.localized_name_map.en, [Validators.required, Validators.maxLength(255)]],
-      platform: [persona.platform, Validators.required],
-      rank: [persona.rank, Validators.required],
-      login_requirement: [persona.login_requirement],
-      pretour_enabled: [persona.pretour_enabled],
-      cre_enabled: [persona.cre_enabled],
-      clone_tiles: [true]
+    const result = comp.getCampusLinkForm();
+
+    expect(result).toEqual(expected);
+  });
+
+  it('createCampusTile', () => {
+    const fakeService = { id: 1, name: 'name', img_url: 'image' };
+    comp.campusSecurityTile = fakeService;
+
+    const expected = {
+      id: 1,
+      color: 'FFFFFF',
+      description: null,
+      featured_rank: 0,
+      img_url: null,
+      school_id: 157,
+      extra_info: { id: 1 },
+      school_persona_id: 3,
+      tile_category_id: 0,
+      visibility_status: 1,
+      name: 'name',
+      rank: -1
+    };
+
+    comp.createCampusTile(1, 3).subscribe((result) => {
+      expect(result).toEqual(expected);
     });
+  });
 
-    comp.createForm.form = expectedForm;
+  it('createSecurityTile', () => {
+    const fakeService = { id: 1, name: 'name', img_url: 'image' };
+    comp.campusSecurityTile = fakeService;
 
-    comp.onSubmit();
+    const spyOncreateCampusTile = spyOn(comp, 'createCampusTile');
+
+    comp.createSecurityTile(1).subscribe(() => {
+      expect(spyOncreateCampusTile).toHaveBeenCalledTimes(1);
+    });
   });
 });
