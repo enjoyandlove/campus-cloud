@@ -76,7 +76,10 @@ export class CheckInCreateComponent implements OnInit {
       this.checkInUtils.isCheckinInPast(checkInTime);
 
     const checkoutTimeBeforeCheckinTime =
-      this.checkInUtils.checkoutTimeBeforeCheckinTime(checkInTime, checkOutTime);
+      this.checkInUtils.checkoutTimeBeforeCheckinTime(
+        checkInTime,
+        checkOutTime,
+        this.event.has_checkout);
 
     if (checkinTimeInThePast || checkoutTimeBeforeCheckinTime) {
       this.formErrors = true;

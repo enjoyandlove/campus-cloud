@@ -23,8 +23,8 @@ export class CheckInUtilsService {
     return false;
   }
 
-  checkoutTimeBeforeCheckinTime(checkInTime, checkOutTime) {
-    if (checkOutTime !== CheckInOutTime.empty) {
+  checkoutTimeBeforeCheckinTime(checkInTime, checkOutTime, hasCheckOut) {
+    if (checkOutTime !== CheckInOutTime.empty && hasCheckOut) {
       if (checkOutTime <= checkInTime) {
         return true;
       }
