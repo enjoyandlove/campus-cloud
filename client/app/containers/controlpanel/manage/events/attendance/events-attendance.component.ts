@@ -47,6 +47,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
   event;
   urlPrefix;
+  canMessage;
   messageData;
   checkInData;
   sortingLabels;
@@ -68,7 +69,6 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   emptyCheckOutTime = CheckInOutTime.empty;
   updateQrCode = new BehaviorSubject(null);
   totalAttendees = new BehaviorSubject(null);
-  canMessage = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements);
 
   eventProperties = {
     host_type: null,
@@ -478,6 +478,10 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       name: this.cpI18n.translate('attendee'),
       method: this.cpI18n.translate('events_checked_in_method')
     };
+
+    this.canMessage = canSchoolWriteResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.campus_announcements);
 
     this.messageAttendeesTooltipText = !this.canMessage
       ? this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text')

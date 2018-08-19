@@ -106,24 +106,33 @@ describe('EventCreateComponent', () => {
   });
 
   it('should have event manager tooltip', () => {
-    const eventManager = component.cpI18n.translate('events_event_manager_tooltip');
-    expect(component.utils.getToolTipContent('events_event_manager_tooltip')).toEqual(eventManager);
+    const utilsEventManagerTooltip = component.utils
+      .getToolTipContent('events_event_manager_tooltip');
+
+    const eventManagerTooltip = component.cpI18n
+      .translate('events_event_manager_tooltip');
+
+    expect(utilsEventManagerTooltip.content).toEqual(eventManagerTooltip);
   });
 
   it('should have attendance Manager tooltip', () => {
-    const attendanceManager = component.cpI18n.translate('events_attendance_manager_tooltip');
-    expect(
-      component.utils.getToolTipContent('events_attendance_manager_tooltip'))
-      .toEqual(attendanceManager);
+    const utilsAttendanceManagerTooltip = component.utils
+      .getToolTipContent('events_attendance_manager_tooltip');
 
+    const attendanceManagerTooltip = component.cpI18n
+      .translate('events_attendance_manager_tooltip');
+
+    expect(utilsAttendanceManagerTooltip.content).toEqual(attendanceManagerTooltip);
   });
 
   it('should have student feedback tooltip', () => {
-    const studentFeedback = component.cpI18n.translate('events_event_feedback_tooltip');
-    expect(
-      component.utils.getToolTipContent('events_event_feedback_tooltip'))
-      .toEqual(studentFeedback);
+    const utilsStudentFeedbackTooltip = component.utils
+      .getToolTipContent('events_event_feedback_tooltip');
 
+    const studentFeedbackTooltip = component.cpI18n
+      .translate('events_event_feedback_tooltip');
+
+    expect(utilsStudentFeedbackTooltip.content).toEqual(studentFeedbackTooltip);
   });
 
   it('form validation should fail required fields missing', () => {
