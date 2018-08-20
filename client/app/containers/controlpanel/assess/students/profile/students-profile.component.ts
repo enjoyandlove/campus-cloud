@@ -16,6 +16,7 @@ import { createSpreadSheet } from './../../../../../shared/utils/csv/parser';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW, ISnackbar } from './../../../../../reducers/snackbar.reducer';
 import { STAR_SIZE } from './../../../../../shared/components/cp-stars/cp-stars.component';
+import { CheckInOutTime } from '../../../manage/events/event.status';
 
 declare var $;
 
@@ -185,6 +186,8 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       this.cpI18n.translate('assess_check_in_time'),
       this.cpI18n.translate('type'),
       this.cpI18n.translate('assess_checkin_date'),
+      this.cpI18n.translate('t_assess_checkout_date'),
+      this.cpI18n.translate('t_assess_time_spend'),
       this.cpI18n.translate('assess_response_date'),
       this.cpI18n.translate('rating'),
       this.cpI18n.translate('response')
@@ -208,6 +211,15 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
             item.time_epoch,
             this.session.tz
           ).format('MMMM Do YYYY - h:mm a'),
+
+          [this.cpI18n.translate('t_assess_checkout_date')]:
+            item.check_out_time_epoch === CheckInOutTime.empty
+              ? '' : CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz
+              ).format('MMMM Do YYYY - h:mm a'),
+
+          [this.cpI18n.translate('t_assess_time_spend')]:
+            item.check_out_time_epoch === CheckInOutTime.empty
+              ? '' : (item.check_out_time_epoch - item.time_epoch),
 
           [this.cpI18n.translate('assess_response_date')]:
             item.feedback_time_epoch === 0

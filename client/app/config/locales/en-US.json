@@ -2326,6 +2326,9 @@
   "t_assess_chart_tooltip_label_engagements": {
     "message": "Engagement(s)"
   },
+  "t_assess_checkout_date": {
+    "message": "Check-Out Date"
+  },
   "t_assess_no_orientation_data": {
     "message": "No Orientation Data"
   },
@@ -2334,6 +2337,9 @@
   },
   "t_assess_orientation_programs": {
     "message": "Orientation Programs"
+  },
+  "t_assess_time_spend": {
+    "message": "Time Spend"
   },
   "t_assess_top_orientation_programs": {
     "message": "Top Programs"
@@ -2437,6 +2443,9 @@
   "t_events_assessment_message_attendees": {
     "message": "Message Attendees"
   },
+  "t_events_assessment_no_check_in": {
+    "message": "No Check-In"
+  },
   "t_events_assessment_qr_enabled_no": {
     "message": "No"
   },
@@ -2502,6 +2511,9 @@
   },
   "t_event_assessment_qr_code_enable_success_message": {
     "message": "QR Check-In successfully enabled"
+  },
+  "t_event_assessment_time_spend": {
+    "message": "Time Spend"
   },
   "t_event_assessment_web_checkin_page": {
     "message": "Web Check-In Page"
@@ -2585,7 +2597,7 @@
     "message": "Delete Experience"
   },
   "t_personas_form_dropdown_login_forbidden": {
-    "message": "Forbidden"
+    "message": "Not required"
   },
   "t_personas_form_dropdown_login_optional": {
     "message": "Optional"

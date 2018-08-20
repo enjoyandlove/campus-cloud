@@ -222,6 +222,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
         this.cpI18n.translate('events_attendant'),
         this.cpI18n.translate('events_attendee_email'),
         this.cpI18n.translate('events_checked_in_time'),
+        this.cpI18n.translate('t_events_attendance_add_edit_check_in_check_out_time'),
+        this.cpI18n.translate('t_event_assessment_time_spend'),
         this.cpI18n.translate('rating'),
         this.cpI18n.translate('events_user_feedback'),
         this.cpI18n.translate('events_checked_in_method'),
@@ -243,6 +245,15 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
             item.check_in_time,
             this.session.tz
           ).format('MMMM Do YYYY - h:mm a'),
+
+          [this.cpI18n.translate('t_events_attendance_add_edit_check_in_check_out_time')]:
+            item.check_out_time_epoch === CheckInOutTime.empty
+              ? '' : CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz
+              ).format('MMMM Do YYYY - h:mm a'),
+
+          [this.cpI18n.translate('t_event_assessment_time_spend')]:
+            item.check_out_time_epoch === CheckInOutTime.empty
+              ? '' : (item.check_out_time_epoch - item.check_in_time),
 
           [this.cpI18n.translate('rating')]:
             item.feedback_rating === -1 ? '' : (item.feedback_rating * 5 / 100).toFixed(2),
