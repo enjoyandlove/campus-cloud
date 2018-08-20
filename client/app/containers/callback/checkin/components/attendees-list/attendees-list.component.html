@@ -1,20 +1,44 @@
 <div class="attendees">
   <div class="attendees__header">
     <div class="row">
-      <div class="col-12">
-        <p i18n>{{ 'checkin_attendance_list' | cpI18n }} ({{ attendees.length}})</p>
+      <div class="col-4">
+        <p>{{ 'checkin_attendance_list' | cpI18n }}</p>
+      </div>
+      <div class="col-2">
+        <p>{{ 't_external_checkin_method' | cpI18n }}</p>
+      </div>
+      <div class="col-3">
+        <p>{{ 't_external_checkin_checkin' | cpI18n }}</p>
+      </div>
+      <div class="col-3">
+        <p>{{ 't_external_checkin_chechout' | cpI18n }}</p>
       </div>
     </div>
   </div>
-  <ul class="attendees__list">
-    <li class="attendees__item" *ngFor="let attendee of attendees">
-      <span class="attendees__name">{{ attendee.firstname }} {{ attendee.lastname }}</span>
-      <br>
-      <span class="attendees__email">{{ attendee.email }}</span>
 
-      <span>
-        <i class="material-icons attendees__icon float-right">check</i>
-      </span>
-    </li>
-  </ul>
+  <div class="attendees__list">
+    <div class="row attendees__item" *ngFor="let attendee of attendees">
+      <div class="col-4 text-truncate">
+        <strong>
+          {{ attendee.firstname }}
+          {{ attendee.lastname }}
+        </strong>
+        <br>
+        <small class="text-muted">{{ attendee.email }}</small>
+      </div>
+      <div class="col-2">{{ attendee.check_in_type}}</div>
+      <div class="col-3">{{ attendee.time | cpDatePipe:dateFormat }}</div>
+      <div class="col-3">
+        <span *ngIf="attendee.check_out_time_epoch !== empty">
+          {{ attendee.check_out_time_epoch | cpDatePipe:dateFormat }}
+        </span>
+
+        <button
+          class="cpbtn cpbtn--cancel"
+          *ngIf="attendee.check_out_time_epoch === empty">
+          Check-Out
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

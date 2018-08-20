@@ -25,8 +25,9 @@ import * as French from 'flatpickr/dist/l10n/fr.js';
 export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
   @ViewChild('input') input: ElementRef;
 
-  @Input() error: boolean;
   @Input() options: any;
+  @Input() error: boolean;
+  @Input() placeholder: string;
 
   el;
   locale;

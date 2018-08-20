@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-12">
         <div class="row">
-          <div class="col-6"><span i18n>{{ 'checkin_scannable_qr_code' | cpI18n }}</span></div>
-          <div class="col-6"><span i18n>{{ 'checkin_manual_checkin' | cpI18n }}</span></div>
+          <div class="col-6"><span>{{ 'checkin_scannable_qr_code' | cpI18n }}</span></div>
+          <div class="col-6"><span>{{ 'checkin_manual_checkin' | cpI18n }}</span></div>
         </div>
       </div>
     </div>
@@ -19,18 +19,26 @@
       <div class="col-6">
         <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
           <div class="form-group">
-            <label i18n>{{ 'first_name' | cpI18n }}</label>
+            <label>{{ 'first_name' | cpI18n }}</label>
             <input type="text" class="form-control" formControlName="firstname">
           </div>
 
           <div class="form-group">
-            <label i18n>{{ 'last_name' | cpI18n }}</label>
+            <label>{{ 'last_name' | cpI18n }}</label>
             <input type="text" class="form-control" formControlName="lastname">
           </div>
 
           <div class="form-group">
-            <label i18n>{{ 'email' | cpI18n }}</label>
+            <label>{{ 'email' | cpI18n }}</label>
             <input type="email" class="form-control" formControlName="email">
+          </div>
+
+          <div class="form-group item-details">
+            <label>{{ 't_external_checkin_time' | cpI18n }}</label>
+            <cp-datepicker
+              [placeholder]="placeholder"
+              [options]="datePickerOptions">
+            </cp-datepicker>
           </div>
 
           <div class="form-group">

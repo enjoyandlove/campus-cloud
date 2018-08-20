@@ -2326,6 +2326,9 @@
   "t_assess_chart_tooltip_label_engagements": {
     "message": "Engagement(s)"
   },
+  "t_assess_checkout_date": {
+    "message": "Check-Out Date"
+  },
   "t_assess_no_orientation_data": {
     "message": "No Orientation Data"
   },
@@ -2334,6 +2337,9 @@
   },
   "t_assess_orientation_programs": {
     "message": "Orientation Programs"
+  },
+  "t_assess_time_spend": {
+    "message": "Time Spend"
   },
   "t_assess_top_orientation_programs": {
     "message": "Top Programs"
@@ -2428,8 +2434,17 @@
   "t_events_assessment_check_in_only": {
     "message": "Check-In Only"
   },
+  "t_events_assessment_disable_qr_check_in": {
+    "message": "Disable QR Check-In"
+  },
+  "t_events_assessment_enable_qr_check_in": {
+    "message": "Enable QR Check-In"
+  },
   "t_events_assessment_message_attendees": {
     "message": "Message Attendees"
+  },
+  "t_events_assessment_no_check_in": {
+    "message": "No Check-In"
   },
   "t_events_assessment_qr_enabled_no": {
     "message": "No"
@@ -2491,8 +2506,29 @@
   "t_event_assessment_check_out_date": {
     "message": "Check-Out"
   },
+  "t_event_assessment_qr_code_disabled_success_message": {
+    "message": "QR Check-In successfully disabled"
+  },
+  "t_event_assessment_qr_code_enable_success_message": {
+    "message": "QR Check-In successfully enabled"
+  },
+  "t_event_assessment_time_spend": {
+    "message": "Time Spend"
+  },
   "t_event_assessment_web_checkin_page": {
     "message": "Web Check-In Page"
+  },
+  "t_external_checkin_chechout": {
+    "message": "Check-Out"
+  },
+  "t_external_checkin_checkin": {
+    "message": "Check-In"
+  },
+  "t_external_checkin_method": {
+    "message": "Method"
+  },
+  "t_external_checkin_time": {
+    "message": "Check-In Time"
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
@@ -2573,7 +2609,7 @@
     "message": "Delete Experience"
   },
   "t_personas_form_dropdown_login_forbidden": {
-    "message": "Forbidden"
+    "message": "Not required"
   },
   "t_personas_form_dropdown_login_optional": {
     "message": "Optional"
@@ -2616,6 +2652,9 @@
   },
   "t_personas_list_dropdown_web_experiences": {
     "message": "Web"
+  },
+  "t_personas_no_results_found": {
+    "message": "No experiences found"
   },
   "t_personas_resource_create_modal_title": {
     "message": "New Resource"
@@ -2716,6 +2755,9 @@
   "t_personas_tile_form_categories_includes": {
     "message": "Includes"
   },
+  "t_personas_tile_image_requirements": {
+    "message": "Image size: 720 pixels by 400 pixels.  File must be smaller than 300KB. Use JPG or PNG format."
+  },
   "t_personas_tile_modal_create_appearance": {
     "message": "Appearance"
   },
@@ -2796,6 +2838,9 @@
   },
   "t_shared_wrong_dimensions": {
     "message": "Must be JPG or PNG, 720*400px, smaller than 300KB "
+  },
+  "t_studio": {
+    "message": "Studio"
   },
   "t_tile_button_default": {
     "message": "Default"
