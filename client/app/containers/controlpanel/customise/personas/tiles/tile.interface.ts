@@ -2,7 +2,7 @@ export interface ITile {
   id?: number;
   school_persona_id?: number;
   tile_category_id: number;
-  name: number;
+  name: string;
   description: string;
   rank: number;
   img_url: string;

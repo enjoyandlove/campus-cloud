@@ -107,7 +107,7 @@ export class TilesUtilsService {
       : {
           name: null,
           link_url: null,
-          link_params: null,
+          link_params: {},
           img_url: null,
           open_in_browser: 0,
           is_system: 1,
