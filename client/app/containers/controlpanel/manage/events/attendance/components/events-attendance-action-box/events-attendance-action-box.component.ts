@@ -24,7 +24,7 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   @Output() createExcel: EventEmitter<null> = new EventEmitter();
   @Output() sendMessage: EventEmitter<null> = new EventEmitter();
   @Output() addCheckIn: EventEmitter<null> = new EventEmitter();
-  @Output() onToggleQr: EventEmitter<null> = new EventEmitter();
+  @Output() onToggleQr: EventEmitter<boolean> = new EventEmitter();
 
   hasQr;
   qrLabel;

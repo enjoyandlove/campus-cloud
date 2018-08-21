@@ -466,6 +466,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.enableStudentFeedbackOnAttendanceToggle(value);
 
     this.form.controls['event_attendance'].setValue(value);
+
+    this.form.controls['attend_verification_methods']
+      .setValue([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
   }
 
   onResetMap() {

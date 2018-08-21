@@ -460,7 +460,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       type: SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate(message),
-        autoClose: true
+        autoClose: true,
+        class: 'danger'
       }
     });
   }

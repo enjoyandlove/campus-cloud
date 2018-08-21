@@ -59,6 +59,7 @@ export class CheckInCreateComponent implements OnInit {
 
   onSubmit() {
     this.formErrors = false;
+    this.form.controls['check_out_time_epoch'].setErrors(null);
 
     if (!this.form.valid) {
       this.formErrors = true;
@@ -70,31 +71,20 @@ export class CheckInCreateComponent implements OnInit {
     const checkInTime = this.form.controls['check_in_time'].value;
     const checkOutTime = this.form.controls['check_out_time_epoch'].value;
 
-    const checkinTimeInThePast =
-      this.checkInUtils.isCheckinInPast(checkInTime);
-
     const checkoutTimeBeforeCheckinTime =
       this.checkInUtils.checkoutTimeBeforeCheckinTime(
         checkInTime,
         checkOutTime,
         this.event.has_checkout);
 
-    if (checkinTimeInThePast || checkoutTimeBeforeCheckinTime) {
+    if (checkoutTimeBeforeCheckinTime) {
       this.formErrors = true;
       this.enableSaveButton();
 
-      if (checkinTimeInThePast) {
-        this.form.controls['check_in_time'].setErrors({ required: true });
+      this.form.controls['check_out_time_epoch'].setErrors({ required: true });
 
-        this.errorMessage = this.cpI18n.
-        translate('t_events_attendance_add_check_in_error_check_in_time_after_now');
-
-      } else if (checkoutTimeBeforeCheckinTime) {
-        this.form.controls['check_out_time_epoch'].setErrors({ required: true });
-
-        this.errorMessage = this.cpI18n.
-        translate('t_events_attendance_add_check_in_error_check_out_time_after_check_in');
-      }
+      this.errorMessage = this.cpI18n.
+      translate('t_events_attendance_add_check_in_error_check_out_time_after_check_in');
 
       return;
     }
@@ -127,7 +117,7 @@ export class CheckInCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.checkInUtils.getCheckInForm(null, this.event.id);
+    this.form = this.checkInUtils.getCheckInForm(null, this.event);
 
     this.buttonData = {
       class: 'primary',

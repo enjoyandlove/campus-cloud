@@ -23,7 +23,7 @@ class MockService {
   }
 }
 
-describe('EventCheckInCreateComponent', () => {
+fdescribe('EventCheckInCreateComponent', () => {
   let spy;
   let component: CheckInCreateComponent;
   let fixture: ComponentFixture<CheckInCreateComponent>;
@@ -79,18 +79,6 @@ describe('EventCheckInCreateComponent', () => {
     expect(component.form.valid).toBeFalsy();
     expect(component.formErrors).toBeTruthy();
     expect(component.buttonData.disabled).toBeFalsy();
-  });
-
-  it('form validation should fail - check-in time should be in future', () => {
-    const dateError = component.cpI18n
-      .translate('t_events_attendance_add_check_in_error_check_in_time_after_now');
-
-    component.form.controls['check_in_time'].setValue(1460806527);
-    component.onSubmit();
-
-    expect(component.formErrors).toBeTruthy();
-    expect(component.buttonData.disabled).toBeFalsy();
-    expect(component.errorMessage).toEqual(dateError);
   });
 
   it('form validation should fail- check-out time should be greater than check-in time', () => {

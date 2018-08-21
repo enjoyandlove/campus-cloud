@@ -142,8 +142,8 @@
                   *ngIf="attendee.check_in_method === appCheckIn">
                     <i
                       data-toggle="tooltip"
-                      class="material-icons"
                       data-placement="bottom"
+                      class="material-icons action-button"
                       [title]="messageAttendeesTooltipText">
                       chat_bubble
                     </i>
@@ -151,10 +151,10 @@
                   <span *ngIf="attendee.check_in_method === webCheckIn">
                     <i
                       (click)="onEditCheckIn(attendee)"
-                      class="material-icons hover">edit_mode</i>
+                      class="material-icons hover margin-right action-button">edit</i>
                     <i
                       (click)="onDeleteCheckIn(attendee)"
-                      class="material-icons hover">close</i>
+                      class="material-icons hover action-button">close</i>
                   </span>
                 </div>
               </div>
