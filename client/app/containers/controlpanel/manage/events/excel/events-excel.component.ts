@@ -534,7 +534,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     this.eventAttendanceFeedback = this.utils.getAttendanceFeedback();
 
-    this.checkInOptions = [...attendanceType, ...this.utils.attendanceType()];
+    this.checkInOptions = [...attendanceType, ...this.utils.getAttendanceTypeOptions()];
 
     this.selectedCheckInOption[1] = this.checkInOptions[1];
   }

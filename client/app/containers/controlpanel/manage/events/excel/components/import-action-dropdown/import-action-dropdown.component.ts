@@ -211,7 +211,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
 
     this.eventAttendanceFeedback = this.utils.getAttendanceFeedback();
 
-    this.checkInOptions = [...attendanceType, ...this.utils.attendanceType()];
+    this.checkInOptions = [...attendanceType, ...this.utils.getAttendanceTypeOptions()];
 
     this.state = {
       store_id: null,
