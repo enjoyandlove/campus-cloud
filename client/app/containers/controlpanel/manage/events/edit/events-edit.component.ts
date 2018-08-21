@@ -263,12 +263,12 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     );
 
     this.selectedAttendanceType = this.getFromArray(
-      this.utils.attendanceType(),
+      this.utils.getAttendanceTypeOptions(),
       'action',
       res.has_checkout);
 
     this.selectedQRCode = this.getFromArray(
-      this.utils.QRCodes(),
+      this.utils.getQROptions(),
       'action',
       this.getQRCodeStatus(res.attend_verification_methods)
     );
@@ -347,12 +347,12 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.form.controls['has_checkout'].setValue(type.action);
   }
 
-  onSelectedQRCode(val): void {
+  onSelectedQRCode(isEnabled: boolean): void {
     const verificationMethods = this.form.controls['attend_verification_methods'].value;
 
-    if (val && !verificationMethods.includes(CheckInMethod.app)) {
+    if (isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
       verificationMethods.push(CheckInMethod.app);
-    } else if (!val && verificationMethods.includes(CheckInMethod.app)) {
+    } else if (!isEnabled && verificationMethods.includes(CheckInMethod.app)) {
       verificationMethods.pop(CheckInMethod.app);
     }
   }
@@ -466,6 +466,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.enableStudentFeedbackOnAttendanceToggle(value);
 
     this.form.controls['event_attendance'].setValue(value);
+
+    this.form.controls['attend_verification_methods']
+      .setValue([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
   }
 
   onResetMap() {
@@ -558,9 +561,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.dateFormat = FORMAT.DATETIME;
     this.attendanceEnabled = EventAttendance.enabled;
     this.eventFeedbackEnabled = EventFeedback.enabled;
-    this.eventQRCodes = this.utils.QRCodes();
-    this.attendanceTypes = this.utils.attendanceType();
-    this.attendanceFeedback = this.utils.attendanceFeedback();
+    this.eventQRCodes = this.utils.getQROptions();
+    this.attendanceTypes = this.utils.getAttendanceTypeOptions();
+    this.attendanceFeedback = this.utils.getAttendanceFeedback();
     this.fetch();
     this.buildHeader();
   }

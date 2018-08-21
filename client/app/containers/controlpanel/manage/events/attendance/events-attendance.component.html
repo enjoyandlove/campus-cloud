@@ -46,7 +46,7 @@
           (createExcel)="onCreateExcel()"
           (querySearch)="doSearch($event)"
           (sendMessage)="messageAllAttendees()"
-          (enableDisableQR)="onEnableDisableQR($event)">
+          (onToggleQr)="onToggleQr($event)">
         </cp-events-attendance-action-box>
       </div>
     </div>
@@ -142,8 +142,8 @@
                   *ngIf="attendee.check_in_method === appCheckIn">
                     <i
                       data-toggle="tooltip"
-                      class="material-icons"
                       data-placement="bottom"
+                      class="material-icons action-button"
                       [title]="messageAttendeesTooltipText">
                       chat_bubble
                     </i>
@@ -151,10 +151,10 @@
                   <span *ngIf="attendee.check_in_method === webCheckIn">
                     <i
                       (click)="onEditCheckIn(attendee)"
-                      class="material-icons hover">edit_mode</i>
+                      class="material-icons hover margin-right action-button">edit</i>
                     <i
                       (click)="onDeleteCheckIn(attendee)"
-                      class="material-icons hover">close</i>
+                      class="material-icons hover action-button">close</i>
                   </span>
                 </div>
               </div>
@@ -189,7 +189,7 @@
     [checkIn]="checkInData"
     [orientationId]="orientationId"
     (edited)="onEdited()"
-    (resetEditCheckInModal)="isEditCheckInModal = false">
+    (teardown)="isEditCheckInModal = false">
   </cp-edit-check-in>
 </cp-modal>
 
@@ -201,19 +201,19 @@
     [checkIn]="checkInData"
     [orientationId]="orientationId"
     (deleted)="onDeleted($event)"
-    (resetDeleteCheckInModal)="isDeleteCheckInModal = false">
+    (teardown)="isDeleteCheckInModal = false">
   </cp-delete-check-in>
 </cp-modal>
 
 <cp-modal
   modalId="addCheckInModal"
   *ngIf="isAddCheckInModal">
-  <cp-add-check-in
+  <cp-create-check-in
     [event]="event"
     [orientationId]="orientationId"
     (created)="onCreated()"
-    (resetAddCheckInModal)="isAddCheckInModal = false">
-  </cp-add-check-in>
+    (teardown)="isAddCheckInModal = false">
+  </cp-create-check-in>
 </cp-modal>
 
 <cp-modal

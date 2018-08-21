@@ -47,6 +47,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
   event;
   urlPrefix;
+  canMessage;
   messageData;
   checkInData;
   sortingLabels;
@@ -68,7 +69,6 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   emptyCheckOutTime = CheckInOutTime.empty;
   updateQrCode = new BehaviorSubject(null);
   totalAttendees = new BehaviorSubject(null);
-  canMessage = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements);
 
   eventProperties = {
     host_type: null,
@@ -159,7 +159,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
         this.totalAttendees.next(res.data.length);
         setTimeout(
           () => {
-            $(function () {
+            $(function() {
               $('[data-toggle="tooltip"]').tooltip();
             });
           },
@@ -222,6 +222,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
         this.cpI18n.translate('events_attendant'),
         this.cpI18n.translate('events_attendee_email'),
         this.cpI18n.translate('events_checked_in_time'),
+        this.cpI18n.translate('t_events_attendance_add_edit_check_in_check_out_time'),
+        this.cpI18n.translate('t_event_assessment_time_spend'),
         this.cpI18n.translate('rating'),
         this.cpI18n.translate('events_user_feedback'),
         this.cpI18n.translate('events_checked_in_method'),
@@ -243,6 +245,15 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
             item.check_in_time,
             this.session.tz
           ).format('MMMM Do YYYY - h:mm a'),
+
+          [this.cpI18n.translate('t_events_attendance_add_edit_check_in_check_out_time')]:
+            item.check_out_time_epoch === CheckInOutTime.empty
+              ? '' : CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz
+              ).format('MMMM Do YYYY - h:mm a'),
+
+          [this.cpI18n.translate('t_event_assessment_time_spend')]:
+            item.check_out_time_epoch === CheckInOutTime.empty
+              ? '' : (item.check_out_time_epoch - item.check_in_time),
 
           [this.cpI18n.translate('rating')]:
             item.feedback_rating === -1 ? '' : (item.feedback_rating * 5 / 100).toFixed(2),
@@ -293,7 +304,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   messageAllAttendees() {
     this.allStudents = true;
 
-    const userIds = this.attendees.filter((attendee) => attendee.user_id)
+    const userIds = this.attendees
+      .filter((attendee) => attendee.user_id)
       .map((attendee) => attendee.user_id);
 
     this.messageData = {
@@ -406,12 +418,12 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     }
   }
 
-  onEnableDisableQR(val) {
+  onToggleQr(isEnabled: boolean) {
     const verificationMethods = this.event.attend_verification_methods;
 
-    if (!val && !verificationMethods.includes(CheckInMethod.app)) {
+    if (!isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
       verificationMethods.push(CheckInMethod.app);
-    } else if (val && verificationMethods.includes(CheckInMethod.app)) {
+    } else if (isEnabled && verificationMethods.includes(CheckInMethod.app)) {
       verificationMethods.pop(CheckInMethod.app);
     }
 
@@ -432,15 +444,15 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     this.service.updateEvent(data, this.eventId, search).subscribe(
       (res) => {
         this.event = res;
-        this.successQRCodeMessage(val);
+        this.onSuccessQRCheckInMessage(isEnabled);
       },
       (_) => {
-
+        this.onErrorQRCheckInMessage();
       });
   }
 
-  successQRCodeMessage(val) {
-    const message = val
+  onSuccessQRCheckInMessage(isEnabled: boolean) {
+    const message = isEnabled
       ? 't_event_assessment_qr_code_disabled_success_message'
       : 't_event_assessment_qr_code_enable_success_message';
 
@@ -448,6 +460,18 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       type: SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate(message),
+        autoClose: true,
+        class: 'danger'
+      }
+    });
+  }
+
+  onErrorQRCheckInMessage() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        class: 'danger',
+        body: this.cpI18n.translate('something_went_wrong'),
         autoClose: true
       }
     });
@@ -466,6 +490,10 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       name: this.cpI18n.translate('attendee'),
       method: this.cpI18n.translate('events_checked_in_method')
     };
+
+    this.canMessage = canSchoolWriteResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.campus_announcements);
 
     this.messageAttendeesTooltipText = !this.canMessage
       ? this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text')

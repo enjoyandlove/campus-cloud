@@ -6,10 +6,11 @@
 .cp-table {
 
   &__item {
-    span i {
-      width: 30px;
+    span i.action-button {
+      color: $color-secondary-text;
     }
   }
+
   span.disabled {
     cursor: default;
     color: $color-med-grey;
@@ -19,6 +20,14 @@
     padding: 10px;
     margin: 5px 0 0 0;
     background-color: $color-light-grey;
+
+    small {
+      max-width: 100%;
+    }
+  }
+
+  .margin-right {
+    margin-right: 10px;
   }
 }
 

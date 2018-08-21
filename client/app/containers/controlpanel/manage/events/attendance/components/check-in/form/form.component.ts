@@ -1,5 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
+import IEvent from '../../../../event.interface';
+import { CheckInOutTime } from '../../../../event.status';
 import { CPSession } from '../../../../../../../../session';
 import { CPDate } from '../../../../../../../../shared/utils';
 
@@ -10,19 +13,17 @@ const COMMON_DATE_PICKER_OPTIONS = {
   altFormat: 'F j, Y h:i K'
 };
 
-const NO_CHECKOUT_DATE = -1;
-
 @Component({
-  selector: 'cp-event-attendance-check-in-form',
-  templateUrl: './check-in-form.component.html',
-  styleUrls: ['./check-in-form.component.scss']
+  selector: 'cp-check-in-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.component.scss']
 })
 export class CheckInFormComponent implements OnInit {
-  @Input() form;
-  @Input() event;
-  @Input() formErrors;
+  @Input() event: IEvent;
+  @Input() isEdit: false;
+  @Input() form: FormGroup;
+  @Input() formErrors: string;
 
-  disableEmailOnEdit;
   checkInDatePickerOptions;
   checkOutDatePickerOptions;
 
@@ -30,15 +31,13 @@ export class CheckInFormComponent implements OnInit {
 
   ngOnInit() {
     const _self = this;
-    const check_in_time = this.form.controls['check_in_time'].value;
-    const check_out_time = this.form.controls['check_out_time_epoch'].value;
-
-    this.disableEmailOnEdit = this.form.controls['email'].value;
+    const checkInTime = this.form.controls['check_in_time'].value;
+    const checkOutTime = this.form.controls['check_out_time_epoch'].value;
 
     this.checkInDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: check_in_time
-        ? CPDate.fromEpoch(check_in_time, _self.session.tz).format()
+      defaultDate: checkInTime
+        ? CPDate.fromEpoch(checkInTime, _self.session.tz).format()
         : null,
       onChange: function(_, dataStr) {
         _self.form.controls['check_in_time'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
@@ -47,8 +46,8 @@ export class CheckInFormComponent implements OnInit {
 
     this.checkOutDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: check_out_time !== NO_CHECKOUT_DATE
-        ? CPDate.fromEpoch(check_out_time, _self.session.tz).format()
+      defaultDate: checkOutTime !== CheckInOutTime.empty
+        ? CPDate.fromEpoch(checkOutTime, _self.session.tz).format()
         : null,
       onChange: function(_, dataStr) {
         _self.form.controls['check_out_time_epoch']

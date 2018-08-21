@@ -1,12 +1,13 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
-
+import { HttpErrorResponse } from '@angular/common/http';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of, throwError } from 'rxjs';
 import { CPSession } from './../../../../../session';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { PersonasModule } from './../personas.module';
 import { PersonasService } from './../personas.service';
 import { PersonasDeleteComponent } from './delete.component';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { MockPersonasService, mockPersonas } from '../mock/personas.service.mock';
-import { of } from 'rxjs';
+import { mockPersonas, MockPersonasService } from '../mock/personas.service.mock';
 
 describe('PersonasDeleteComponent', () => {
   let comp: PersonasDeleteComponent;
@@ -15,7 +16,7 @@ describe('PersonasDeleteComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [PersonasModule],
+        imports: [PersonasModule, RouterTestingModule],
         providers: [
           CPSession,
           CPI18nService,
@@ -38,6 +39,7 @@ describe('PersonasDeleteComponent', () => {
 
   it('should create', () => {
     expect(comp).toBeTruthy();
+    expect(comp.personaName).toBe("Student's Tile");
   });
 
   it('resetModal', () => {
@@ -64,5 +66,48 @@ describe('PersonasDeleteComponent', () => {
 
     expect(comp.deleted.emit).toHaveBeenCalled();
     expect(comp.deleted.emit).toHaveBeenCalledTimes(1);
+  });
+
+  it('onDelete last persona', () => {
+    const spyOnerrorEvent = spyOn(comp.errorEvent, 'emit');
+
+    spyOn(comp.service, 'deletePersonaById').and.returnValue(
+      throwError(new HttpErrorResponse({ error: { response: 'last persona' } }))
+    );
+
+    comp.onDelete();
+
+    expect(spyOnerrorEvent).toHaveBeenCalled();
+    expect(spyOnerrorEvent).toHaveBeenCalledWith(
+      'A school must have at least one experience enabled.'
+    );
+  });
+
+  it('onDelete users associated', () => {
+    const spyOnerrorEvent = spyOn(comp.errorEvent, 'emit');
+
+    spyOn(comp.service, 'deletePersonaById').and.returnValue(
+      throwError(new HttpErrorResponse({ error: { response: 'users associated' } }))
+    );
+
+    comp.onDelete();
+
+    expect(spyOnerrorEvent).toHaveBeenCalled();
+    expect(spyOnerrorEvent).toHaveBeenCalledWith(
+      'This experience has users associated, so you cannot delete it.'
+    );
+  });
+
+  xit('onDelete users persona non-empty', () => {
+    const spyOnerrorEvent = spyOn(comp.errorEvent, 'emit');
+
+    spyOn(comp.service, 'deletePersonaById').and.returnValue(
+      throwError(new HttpErrorResponse({ error: { response: 'persona non-empty' } }))
+    );
+
+    comp.onDelete();
+
+    expect(spyOnerrorEvent).toHaveBeenCalled();
+    expect(spyOnerrorEvent).toHaveBeenCalledWith('sopa');
   });
 });

@@ -24,7 +24,7 @@
         type="text"
         class="form-control"
         formControlName="email"
-        [attr.disabled]="disableEmailOnEdit"
+        [attr.disabled]="isEdit"
         [class.error]="formErrors && form.controls.email.hasError('required')">
     </div>
   </div>

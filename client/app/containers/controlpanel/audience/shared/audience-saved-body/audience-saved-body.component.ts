@@ -54,18 +54,12 @@ export class AudienceSavedBodyComponent implements OnInit {
       audiences = this.utils.parsedAudience(audiences);
 
       if (importedAudience) {
-        this.selectedItem = audiences.filter(
-          (audience) => audience.action === importedAudience
-        )[0];
+        this.selectedItem = audiences.filter((audience) => audience.action === importedAudience)[0];
 
         this.selected.emit(this.selectedItem);
       }
 
-      this.audiences = [
-        ...this.audiences,
-        ...personas,
-        ...audiences
-      ];
+      this.audiences = [...this.audiences, ...personas, ...audiences];
     });
   }
 

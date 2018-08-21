@@ -254,44 +254,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     $(`#${this.tileDeleteModalId}`).modal('hide');
   }
 
-  updateAllTilesRank(guide: ICampusGuide) {
-    const tiles = [...guide.tiles];
-
-    const tileUpdates = tiles.map((t: ITile, index) => {
-      // delete t['related_link_data'];
-
-      return {
-        ...t,
-        rank: index + 1,
-        school_id: this.session.g.get('school').id
-      };
-    });
-
-    this.doBulkUpdate(tileUpdates);
-  }
-
-  updateAllTilesFeaturedRank(guide: ICampusGuide) {
-    const tiles = [...guide.tiles];
-
-    const tileUpdates = tiles.map((t: ITile, index) => {
-      // delete t['related_link_data'];
-
-      return {
-        ...t,
-        featured_rank: index + 1,
-        school_id: this.session.g.get('school').id
-      };
-    });
-
-    this.doBulkUpdate(tileUpdates);
-  }
-
-  getRankByIndex(guide: ICampusGuide, index, featured = false) {
-    const previousTile = guide.tiles[index - 1];
-
-    return featured ? previousTile.featured_rank + 1 : previousTile.rank + 1;
-  }
-
   updateTileBodyAfterDrop(guide: ICampusGuide, tile: ITile, newBody) {
     return {
       ...guide,
@@ -335,7 +297,12 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
       newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
 
-      this.updateAllTilesFeaturedRank(newCategory);
+      const tilesToUpdate = this.sectionUtils.updateGuideTileRank(
+        newCategory,
+        school_id,
+        'featured_rank'
+      );
+      this.doBulkUpdate(tilesToUpdate);
     } else if (this.featuredTileToNonFeatureSection(movingTile, newCategory)) {
       const body = {
         ...movingTile,
@@ -346,7 +313,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
       newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
 
-      this.updateAllTilesRank(newCategory);
+      const tilesToUpdate = this.sectionUtils.updateGuideTileRank(newCategory, school_id, 'rank');
+      this.doBulkUpdate(tilesToUpdate);
     } else if (this.nonCategoryZeroTileToCategoryZeroSection(movingTile, newCategory)) {
       const body = {
         ...movingTile,
@@ -357,7 +325,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
       newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
 
-      this.updateAllTilesRank(newCategory);
+      const tilesToUpdate = this.sectionUtils.updateGuideTileRank(newCategory, school_id, 'rank');
+      this.doBulkUpdate(tilesToUpdate);
     } else if (this.categoryZeroTileToNonCategoryZeroSection(movingTile, newCategory)) {
       const body = {
         ...movingTile,
@@ -368,7 +337,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
       newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
 
-      this.updateAllTilesRank(newCategory);
+      const tilesToUpdate = this.sectionUtils.updateGuideTileRank(newCategory, school_id, 'rank');
+      this.doBulkUpdate(tilesToUpdate);
     } else {
       const body = {
         ...movingTile,
@@ -379,7 +349,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
       newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
 
-      this.updateAllTilesRank(newCategory);
+      const tilesToUpdate = this.sectionUtils.updateGuideTileRank(newCategory, school_id, 'rank');
+      this.doBulkUpdate(tilesToUpdate);
     }
   }
 

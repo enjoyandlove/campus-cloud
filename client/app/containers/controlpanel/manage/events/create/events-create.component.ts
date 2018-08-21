@@ -124,12 +124,12 @@ export class EventsCreateComponent implements OnInit {
     this.form.controls['has_checkout'].setValue(type.action);
   }
 
-  onSelectedQRCode(val): void {
+  onSelectedQRCode(isEnabled: boolean): void {
     const verificationMethods = this.form.controls['attend_verification_methods'].value;
 
-    if (val && !verificationMethods.includes(CheckInMethod.app)) {
+    if (isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
       verificationMethods.push(CheckInMethod.app);
-    } else if (!val && verificationMethods.includes(CheckInMethod.app)) {
+    } else if (!isEnabled && verificationMethods.includes(CheckInMethod.app)) {
       verificationMethods.pop(CheckInMethod.app);
     }
   }
@@ -455,9 +455,9 @@ export class EventsCreateComponent implements OnInit {
       lng: this.school.longitude
     });
 
-    this.eventQRCodes = this.utils.QRCodes();
-    this.attendanceTypes = this.utils.attendanceType();
-    this.attendanceFeedback = this.utils.attendanceFeedback();
+    this.eventQRCodes = this.utils.getQROptions();
+    this.attendanceTypes = this.utils.getAttendanceTypeOptions();
+    this.attendanceFeedback = this.utils.getAttendanceFeedback();
 
     this.form = this.fb.group({
       title: [null, Validators.required],

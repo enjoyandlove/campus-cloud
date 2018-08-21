@@ -60,7 +60,7 @@ export class PersonasCreateComponent implements OnInit {
     this.campusSecurityTile = serviceMeta;
   }
 
-  createCampusLink(): Observable<any> {
+  getCampusLinkForm() {
     const service = this.campusSecurityTile;
 
     const campusLinkForm = this.utils.getCampusLinkForm();
@@ -71,7 +71,7 @@ export class PersonasCreateComponent implements OnInit {
     const link_params = <FormGroup>campusLinkForm.controls['link_params'];
     link_params.controls['id'].setValue(service.id);
 
-    return this.service.createCampusLink(campusLinkForm.value);
+    return campusLinkForm.value;
   }
 
   createCampusTile(campusLinkId, personaId): Observable<any> {
@@ -107,8 +107,11 @@ export class PersonasCreateComponent implements OnInit {
   }
 
   createSecurityTile(personaId): Observable<any> {
-    return this.createCampusLink().pipe(
-      switchMap((link) => this.createCampusTile(link.id, personaId))
+    const campusLinkForm = this.getCampusLinkForm();
+    const createCampusLink$ = this.service.createCampusLink(campusLinkForm);
+
+    return createCampusLink$.pipe(
+      switchMap((link: any) => this.createCampusTile(link.id, personaId))
     );
   }
 
