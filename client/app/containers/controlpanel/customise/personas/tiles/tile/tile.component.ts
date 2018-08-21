@@ -1,4 +1,3 @@
-// import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CPSession } from './../../../../../../session/index';
@@ -56,12 +55,6 @@ export class PersonasTileComponent implements OnInit {
         autoClose: true
       }
     });
-  }
-
-  onDeleteTile() {
-    this.state = {
-      ...this.state
-    };
   }
 
   onToggleTile() {

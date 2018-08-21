@@ -4,6 +4,7 @@ import { CPSession } from './../../../session';
 import { CPTrackingService } from './../../services/tracking.service';
 
 declare var window;
+declare var Beamer;
 
 @Component({
   selector: 'cp-trackers',
@@ -30,6 +31,7 @@ export class CPTrackersComponent implements OnInit {
     const user = this.session.g.get('user');
     const { firstname, lastname, id, email } = user;
     const beamer_config = {
+      lazy: true,
       user_id: id,
       user_email: email,
       user_firstname: firstname,
@@ -42,6 +44,7 @@ export class CPTrackersComponent implements OnInit {
 
     const script = document.createElement('script');
     script.src = 'https://app.getbeamer.com/js/beamer-embed.js';
+    script.onload = () => Beamer.init();
 
     document.body.appendChild(script);
   }
