@@ -354,6 +354,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         const controls = <FormArray>this.form.controls['events'];
         const control = <FormGroup>controls.controls[index];
         control.controls['poster_url'].setValue(res.image_url);
+        control.controls['poster_thumb_url'].setValue(res.image_url);
       })
       .catch((err) => {
         this.store.dispatch({
@@ -496,7 +497,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     };
 
     this.store.select('EVENTS_MODAL').subscribe((res) => {
-      this.events = !isDev ? res : require('./mock.json');
+      this.events = isDev ? res : require('./mock.json');
       // this.events = res;
 
       if (!this.storeId && !this.clubId && !this.isOrientation) {
