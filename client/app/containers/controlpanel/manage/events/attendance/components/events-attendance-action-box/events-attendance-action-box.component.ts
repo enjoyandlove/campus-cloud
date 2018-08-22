@@ -6,7 +6,10 @@ import { CPSession } from './../../../../../../../session';
 import { EventUtilService } from '../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants/privileges';
-import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
+import {
+  canSchoolWriteResource,
+  canStoreReadAndWriteResource
+} from './../../../../../../../shared/utils/privileges/privileges';
 
 @Component({
   selector: 'cp-events-attendance-action-box',
@@ -23,9 +26,9 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   @Output() sendMessage: EventEmitter<null> = new EventEmitter();
 
   eventCheckinRoute;
+  canDownload: boolean;
   disableMessageAttendees;
   messageAttendeesTooltipText;
-  canDownload = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.event_attendance);
   canMessage = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements);
 
   constructor(
@@ -51,6 +54,8 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.canDownload = this.session.canAttendance(this.event.store_id);
+
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
 
     this.totalAttendees.subscribe((attendees) => {
