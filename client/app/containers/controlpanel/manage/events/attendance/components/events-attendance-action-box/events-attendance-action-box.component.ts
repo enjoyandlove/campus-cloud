@@ -6,10 +6,7 @@ import { CPSession } from './../../../../../../../session';
 import { EventUtilService } from '../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants/privileges';
-import {
-  canSchoolWriteResource,
-  canStoreReadAndWriteResource
-} from './../../../../../../../shared/utils/privileges/privileges';
+import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
 
 @Component({
   selector: 'cp-events-attendance-action-box',
