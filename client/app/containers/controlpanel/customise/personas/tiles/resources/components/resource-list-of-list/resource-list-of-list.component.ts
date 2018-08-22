@@ -107,7 +107,7 @@ export class PersonasResourceListOfListComponent implements OnInit {
     const search = new HttpParams()
       .set('school_id', this.session.g.get('school').id)
       .set('campus_link_ids', campus_link_ids);
-    const stream$ = this.service.getCampusLink(search);
+    const stream$ = this.service.getCampusLink(search, 1, 9000);
 
     stream$.subscribe(
       (resources: any) => {
