@@ -9,6 +9,7 @@ import { FeedsUtilsService } from './feeds.utils.service';
 import { FeedsRoutingModule } from './feeds.routing.module';
 import { FeedsComponent } from './list/base/feeds.component';
 import { SharedModule } from '../../../../shared/shared.module';
+import { LazyLoadImagesModule } from 'ngx-lazy-load-images';
 
 import {
   FeedApproveCommentModalComponent,
@@ -47,7 +48,14 @@ import {
     FeedsComponent
   ],
 
-  imports: [CommonModule, SharedModule, FeedsRoutingModule, RouterModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    FeedsRoutingModule,
+    RouterModule,
+    ReactiveFormsModule,
+    LazyLoadImagesModule
+  ],
 
   providers: [FeedsService, FeedsUtilsService],
 
