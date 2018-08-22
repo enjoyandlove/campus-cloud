@@ -1,15 +1,14 @@
+import { Injectable } from '@angular/core';
+import { get as _get } from 'lodash';
+import { CP_PRIVILEGES_MAP } from './../shared/constants/privileges';
+import { canSchoolWriteResource } from './../shared/utils/privileges/privileges';
 /**
  * All session data should be set
  * as part of the g (global) Map
  */
-import { Injectable } from '@angular/core';
-import { get as _get } from 'lodash';
 
 export * from './user.interface';
 export * from './school.interface';
-
-import { CP_PRIVILEGES_MAP } from '../shared/constants';
-import { canSchoolWriteResource } from './../shared/utils/privileges/privileges';
 
 @Injectable()
 export class CPSession {
@@ -62,5 +61,23 @@ export class CPSession {
 
     return email.endsWith('@oohlalamobile.com') || email.endsWith('@dublabs.com');
   }
+
+  get school() {
+    return this.g.get('school');
+  }
+
+  get user() {
+    return this.g.get('user');
+  }
   constructor() {}
+
+  canAttendance(storeId = null) {
+    const schoolPrivilges = _get(this.user, ['school_level_privileges', this.school.id], {});
+    const schoolAccess = _get(schoolPrivilges, CP_PRIVILEGES_MAP.event_attendance, false);
+
+    const accountPrivileges = _get(this.user, ['account_level_privileges', storeId], {});
+    const accountAccess = _get(accountPrivileges, CP_PRIVILEGES_MAP.event_attendance, false);
+
+    return schoolAccess || accountAccess;
+  }
 }

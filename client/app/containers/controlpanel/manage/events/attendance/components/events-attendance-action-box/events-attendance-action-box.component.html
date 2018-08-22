@@ -12,9 +12,23 @@
       </button>
       <a
         [routerLink]="[eventCheckinRoute + event.encrypted_id]"
-        class="cpbtn cpbtn--primary">
+        class="cpbtn cpbtn--primary no-right-padding cpbtn--square-right">
         {{ 't_event_assessment_web_checkin_page' | cpI18n }}
       </a>
+      <div class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
+        <i class="material-icons" data-toggle="dropdown">expand_more</i>
+        <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
+          <li
+            data-toggle="tooltip"
+            data-placement="left"
+            class="list-as-anchor"
+            (click)="sendAttendeesMessage()"
+            [title]="messageAttendeesTooltipText"
+            [class.disabled]="disableMessageAttendees">
+            {{ 't_events_assessment_message_attendees' | cpI18n }}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

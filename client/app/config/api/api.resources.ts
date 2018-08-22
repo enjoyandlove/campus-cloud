@@ -63,8 +63,6 @@ export const API_ENDPOINTS = {
 
   ASSESS_SERVICE: 'assess_service',
 
-  FB_EVENTS: 'facebook_event_link',
-
   SERVICES_CATEGORY: 'org_category',
 
   STUDENT_PROFILE: 'student_profile',

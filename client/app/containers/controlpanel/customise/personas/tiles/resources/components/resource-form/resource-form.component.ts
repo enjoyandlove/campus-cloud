@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { ResourcesUtilsService } from './../../resources.utils.service';
 import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
 
@@ -31,6 +31,14 @@ export class PersonasResourceFormComponent implements OnInit {
     }
   }
 
+  nonEmptyObject(control) {
+    if (control.value) {
+      return Object.keys(control.value).length > 0 ? null : { valid: false };
+    }
+
+    return null;
+  }
+
   onContentTypeChange(selected) {
     this.form.controls['link_url'].setValue(null);
     this.form.controls['link_params'].setValue({});
@@ -46,9 +54,27 @@ export class PersonasResourceFormComponent implements OnInit {
     this.form.controls['link_url'].setValue(url);
   }
 
+  requiresLinkParams(linkUrl) {
+    const requiresLinkParams = [
+      'oohlala://store',
+      'oohlala://store_list',
+      'oohlala://campus_service',
+      'oohlala://subscribable_calendar',
+      'oohlala://service_by_category_id'
+    ];
+
+    return requiresLinkParams.includes(linkUrl);
+  }
+
   onResourceTypeSelected(resourceType) {
     this.form.controls['link_url'].setValue(null);
     this.form.controls['link_params'].setValue({});
+
+    if (this.requiresLinkParams(resourceType.meta.link_url)) {
+      this.form.get('link_params').setValidators([Validators.required, this.nonEmptyObject]);
+    } else {
+      this.form.get('link_params').setValidators([Validators.required]);
+    }
 
     this.updateFormMetaValues(resourceType);
   }

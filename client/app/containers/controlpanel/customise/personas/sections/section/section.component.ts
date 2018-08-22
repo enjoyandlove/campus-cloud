@@ -1,9 +1,8 @@
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { get as _get } from 'lodash';
-import { combineLatest, Observable } from 'rxjs';
 import { TilesService } from './../../tiles/tiles.service';
 import { TilesUtilsService } from './../../tiles/tiles.utils.service';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
@@ -22,7 +21,7 @@ import { SectionsService } from '../sections.service';
 export class PersonasSectionComponent implements OnInit {
   @Input() last: boolean;
   @Input() first: boolean;
-  @Input() tileWidth = '2';
+  @Input() tileWidth = '3';
   @Input() hideName: boolean;
   @Input() personaId: number;
   @Input() addSection = true;
@@ -45,7 +44,11 @@ export class PersonasSectionComponent implements OnInit {
 
   state = {
     working: false,
-    sorting: false
+    sorting: false,
+    deletingTile: false,
+    disableDragging: false,
+    tileDeleteModal: false,
+    sectionDeleteModal: false
   };
 
   lastRank;
@@ -127,6 +130,18 @@ export class PersonasSectionComponent implements OnInit {
     };
   }
 
+  handleSuccess() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        autoClose: true,
+        class: 'success',
+        body: this.cpI18n.translate('t_changes_saved_ok')
+      }
+    });
+  }
+
   errorHandler(err: HttpErrorResponse) {
     const snackBarClass = 'danger';
     const body = _get(err, ['error', 'response'], this.cpI18n.translate('something_went_wrong'));
@@ -180,19 +195,6 @@ export class PersonasSectionComponent implements OnInit {
     );
   }
 
-  updateRank(stream$: Observable<any>) {
-    this.state = { ...this.state, sorting: true };
-    stream$.subscribe(
-      () => {
-        this.state = { ...this.state, sorting: false };
-      },
-      (err) => {
-        this.errorHandler(err);
-        this.state = { ...this.state, sorting: false };
-      }
-    );
-  }
-
   onAdd(event) {
     const position = event.newIndex;
     const tile = Number(event.item.dataset.tile);
@@ -201,47 +203,37 @@ export class PersonasSectionComponent implements OnInit {
     this.shuffle.emit({ tile, section, position });
   }
 
-  onDragged(event) {
-    const { oldIndex, newIndex } = event;
+  onDragged() {
+    this.state = { ...this.state, sorting: true };
+    const schoolId = this.session.g.get('school').id;
+    const bulkContent = {
+      ...this.guide,
+      tiles: this.guide.tiles.map((t) => {
+        const { rank, featured_rank, tile_category_id } = t;
 
-    let updatedTileA;
-    let updatedTileB;
-    const tileA: ITile = this.utils.tileAtIndex(this.guide.tiles, oldIndex);
-    const tileB: ITile = this.utils.tileAtIndex(this.guide.tiles, newIndex);
-
-    if (this.tileUtils.isFeatured(tileA)) {
-      updatedTileA = {
-        featured_rank: tileB.featured_rank
-      };
-
-      updatedTileB = {
-        featured_rank: tileA.featured_rank
-      };
-    } else {
-      updatedTileA = {
-        rank: tileB.rank
-      };
-
-      updatedTileB = {
-        rank: tileA.rank
-      };
-    }
-
-    updatedTileA = {
-      ...updatedTileA,
-      school_id: this.session.g.get('school').id
+        return {
+          rank: rank,
+          featured_rank,
+          tile_id: t.id,
+          tile_category_id,
+          school_id: schoolId
+        };
+      })
     };
 
-    updatedTileB = {
-      ...updatedTileB,
-      school_id: this.session.g.get('school').id
-    };
+    const search = new HttpParams().set('persona_id', this.personaId.toString());
+    const updatedTiles = this.utils.updateGuideTileRank(bulkContent, schoolId, 'rank');
 
-    const updateTileA$ = this.tilesService.updateCampusTile(tileA.id, updatedTileA);
-    const updateTileB$ = this.tilesService.updateCampusTile(tileB.id, updatedTileB);
-    const stream$ = combineLatest([updateTileA$, updateTileB$]);
-
-    this.updateRank(stream$);
+    this.tilesService.bulkUpdateTiles(search, updatedTiles).subscribe(
+      () => {
+        this.state = { ...this.state, sorting: false };
+        this.handleSuccess();
+      },
+      (err) => {
+        this.state = { ...this.state, sorting: false };
+        this.errorHandler(err);
+      }
+    );
   }
 
   ngOnInit(): void {

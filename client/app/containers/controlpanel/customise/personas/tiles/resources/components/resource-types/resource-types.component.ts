@@ -17,13 +17,6 @@ export class PersonasResourceTypesComponent implements OnInit {
   resources;
   selectedItem = null;
   resourceSelection = null;
-  preventEmit = [
-    'store',
-    'store_list',
-    'campus_service',
-    'subscribable_calendar',
-    'service_by_category_id'
-  ];
 
   textInputComponent = ['web_link', 'external_link'];
 
@@ -38,9 +31,7 @@ export class PersonasResourceTypesComponent implements OnInit {
   onResourceSelected(selection) {
     this.resourceSelection = selection.id;
 
-    if (!this.preventEmit.includes(selection.id)) {
-      this.selected.emit(selection);
-    }
+    this.selected.emit(selection);
   }
 
   populateDropdowns() {

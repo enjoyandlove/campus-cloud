@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
-
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { API } from '../../../config/api';
-import { CPI18nService, ZendeskService } from '../../services';
-import { appStorage } from '../../../shared/utils';
 import { FileUploadService } from '../../../shared/services/file-upload.service';
+import { appStorage } from '../../../shared/utils';
+import { CPI18nService, ZendeskService } from '../../services';
 
 @Component({
   selector: 'cp-image-upload',
@@ -16,7 +15,9 @@ export class CPImageUploadComponent implements OnInit {
   @Input() small: boolean;
   @Input() required: boolean;
   @Input() defaultImage: string;
+  @Input() heading: string;
   @Input() description: string;
+  @Input() validationFn: Function;
   @Output() uploaded: EventEmitter<string> = new EventEmitter();
 
   image;
@@ -37,7 +38,23 @@ export class CPImageUploadComponent implements OnInit {
       return;
     }
 
-    const validate = this.fileUploadService.validImage(file);
+    let validate = this.fileUploadService.validImage(file);
+
+    if (this.validationFn) {
+      this.validationFn(file)
+        .then(() => {
+          validate = {
+            valid: true,
+            errors: []
+          };
+        })
+        .catch((err) => {
+          validate = {
+            valid: false,
+            errors: [err]
+          };
+        });
+    }
 
     if (!validate.valid) {
       if (asPromise) {
@@ -85,8 +102,12 @@ export class CPImageUploadComponent implements OnInit {
     this.zdArticle = `${root}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud`;
     this.buttonText = this.cpI18n.translate('upload_picture');
 
+    if (!this.heading) {
+      this.heading = this.cpI18n.translate('component_cpimage_description');
+    }
+
     if (!this.description) {
-      this.description = this.cpI18n.translate('component_cpimage_description');
+      this.description = this.cpI18n.translate('component_cpimage_help');
     }
 
     if (this.defaultImage) {

@@ -48,9 +48,7 @@ export class OrientationProgramDeleteComponent implements OnInit {
       ...this.cpTracking.getEventProperties()
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.DELETED_ITEM,
-      this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
   }
 
   ngOnInit() {

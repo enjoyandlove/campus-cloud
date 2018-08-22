@@ -35,7 +35,8 @@ describe('OrientationTodosDeleteComponent', () => {
           CPSession,
           CPI18nService,
           CPTrackingService,
-          { provide: TodosService, useClass: MockTodosService }]
+          { provide: TodosService, useClass: MockTodosService }
+        ]
       })
         .compileComponents()
         .then(() => {

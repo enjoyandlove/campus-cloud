@@ -1,4 +1,5 @@
 @import '~styles/components/card';
+@import '~styles/core/typography';
 @import '~styles/components/table';
 @import '~styles/core/colors';
 
@@ -14,6 +15,11 @@
         padding-left: 6px;
       }
     }
+  }
+
+  span.disabled {
+    cursor: default;
+    color: $color-med-grey;
   }
 
   &__feedback {

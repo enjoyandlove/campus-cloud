@@ -1,6 +1,6 @@
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { ICampusGuide } from './section.interface';
 import { Injectable } from '@angular/core';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { ICampusGuide, ICampusGuideBulk } from './section.interface';
 import { ITile } from '../tiles/tile.interface';
 
 @Injectable()
@@ -13,6 +13,22 @@ export class SectionUtilsService {
 
   tileAtIndex(tiles: ITile[], index) {
     return tiles[index];
+  }
+
+  updateGuideTileRank(
+    guide: ICampusGuide | ICampusGuideBulk,
+    school_id: number,
+    rankType: 'rank' | 'featured_rank'
+  ) {
+    const tiles = [...guide.tiles];
+
+    return tiles.map((t: ITile, index) => {
+      return {
+        ...t,
+        school_id,
+        [rankType]: index + 1
+      };
+    });
   }
 
   temporaryGuide(rank = 1): ICampusGuide {

@@ -39,9 +39,11 @@
       <div class="col-12">
         <cp-events-attendance-action-box
           [event]="event"
+          [totalAttendees]="totalAttendees"
           [isOrientation]="isOrientation"
           (querySearch)="doSearch($event)"
-          (createExcel)="onCreateExcel()">
+          (createExcel)="onCreateExcel()"
+          (sendMessage)="messageAllAttendees()">
         </cp-events-attendance-action-box>
       </div>
     </div>
@@ -61,7 +63,7 @@
           <div class="cp-table">
             <div class="cp-table__header">
               <div class="row">
-                <div class="col-4">
+                <div class="col-3">
                   <cp-sorting-header
                     sortLabel="firstname"
                     (click)="doSort('firstname')"
@@ -92,12 +94,13 @@
                   </cp-sorting-header>
                 </div>
               </div>
+              <div class="col-1"></div>
             </div>
 
             <div class="cp-table__item"
                  *ngFor="let attendee of attendees">
               <div class="row">
-                <div class="col-4 text-truncate">
+                <div class="col-3 text-truncate">
                   <strong>
                     {{ attendee.firstname }}
                     {{ attendee.lastname }}
@@ -119,6 +122,21 @@
                     [avgRate]="attendee.feedback_rating"
                     [maxRate]="event.rating_scale_maximum">
                   </cp-stars>
+                </div>
+                <div class="col-1">
+                  <span
+                  class="hover"
+                  [class.disabled]="!canMessage"
+                  (click)="messageAttendee(attendee)"
+                  *ngIf="attendee.check_in_method === appCheckIn">
+                    <i
+                      data-toggle="tooltip"
+                      class="material-icons"
+                      data-placement="bottom"
+                      [title]="messageAttendeesTooltipText">
+                      chat_bubble
+                    </i>
+                  </span>
                 </div>
               </div>
               <div class="row cp-table__feedback" *ngIf="attendee.feedback_text">
@@ -143,3 +161,13 @@
     </div>
   </div>
 </div>
+
+<cp-modal
+  modalId="sendMessageModal"
+  *ngIf="isSendMessageModal">
+<cp-students-compose
+  [props]="messageData"
+  (success)="onFlashMessage($event)"
+  (teardown)="onComposeTeardown()">
+</cp-students-compose>
+</cp-modal>

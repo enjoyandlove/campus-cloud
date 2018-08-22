@@ -30,7 +30,8 @@ export class DashboardTopOrientationComponent extends BaseComponent implements O
   constructor(
     public session: CPSession,
     public service: DashboardService,
-    public utils: DashboardUtilsService) {
+    public utils: DashboardUtilsService
+  ) {
     super();
     super.isLoading().subscribe((loading) => {
       this.loading = loading;
@@ -40,7 +41,7 @@ export class DashboardTopOrientationComponent extends BaseComponent implements O
 
   fetch() {
     const search = new HttpParams()
-      .append('sort_by', 'average')
+      .append('sort_by', 'engagements')
       .append('end', this._dates.end.toString())
       .append('start', this._dates.start.toString())
       .append('school_id', this.session.g.get('school').id.toString());

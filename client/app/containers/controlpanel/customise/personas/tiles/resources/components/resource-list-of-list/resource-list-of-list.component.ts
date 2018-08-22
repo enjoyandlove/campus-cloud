@@ -4,7 +4,6 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ResourceService } from './../../resource.service';
 import { CPSession } from '../../../../../../../../session';
 import { TilesService } from '../../../tiles.service';
-import { combineLatest } from '../../../../../../../../../../node_modules/rxjs';
 import { ISnackbar } from '../../../../../../../../reducers/snackbar.reducer';
 import { Store } from '../../../../../../../../../../node_modules/@ngrx/store';
 import { CPI18nService } from '../../../../../../../../shared/services';
@@ -103,12 +102,15 @@ export class PersonasResourceListOfListComponent implements OnInit {
       ...this.state,
       loading: true
     };
-    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
-    const getLink = (id) => this.service.getCampusLinkById(id, search);
-    const stream$ = combineLatest(this.selectedIds.map(getLink));
+    const campus_link_ids = this.selectedIds.map((n) => String(n)).join(',');
+
+    const search = new HttpParams()
+      .set('school_id', this.session.g.get('school').id)
+      .set('campus_link_ids', campus_link_ids);
+    const stream$ = this.service.getCampusLink(search, 1, 9000);
 
     stream$.subscribe(
-      (resources) => {
+      (resources: any) => {
         this.state = {
           ...this.state,
           loading: false,

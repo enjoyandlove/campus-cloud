@@ -4,9 +4,6 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { AppModule } from './app/app.module';
 
 import { isProd } from './app/config/env/index';
-// import { TRANSLATIONS, TRANSLATIONS_FORMAT, LOCALE_ID  } from '@angular/core';
-
-// import { TRANSLATION_FR, TRANSLATION_EN } from '../locale';
 
 // depending on the env mode, enable prod mode or add debugging modules
 if (isProd) {
@@ -14,15 +11,7 @@ if (isProd) {
 }
 
 export function main() {
-  // need to implement logic to switch languages
   return platformBrowserDynamic().bootstrapModule(AppModule);
-  // return platformBrowserDynamic().bootstrapModule(AppModule, {
-  //   providers: [
-  //     {provide: TRANSLATIONS, useValue: true ? TRANSLATION_EN : TRANSLATION_FR},
-  //     {provide: TRANSLATIONS_FORMAT, useValue: 'xlf'},
-  //     {provide: LOCALE_ID, useValue: 'en'}
-  //     ]
-  // });
 }
 
 if (document.readyState === 'complete') {

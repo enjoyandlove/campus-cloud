@@ -69,9 +69,7 @@ export class ListUpcomingComponent implements OnInit {
   }
 
   trackDeleteEvent() {
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.DELETED_ITEM,
-      this.setEventProperties());
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.setEventProperties());
   }
 
   setEventProperties() {
@@ -95,9 +93,7 @@ export class ListUpcomingComponent implements OnInit {
       source_page
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CLICKED_CHECKIN,
-      eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CLICKED_CHECKIN, eventProperties);
   }
 
   ngOnInit() {

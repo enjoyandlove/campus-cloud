@@ -16,7 +16,6 @@ import {
   ServicesEventsInfoComponent,
   ServicesEventsExcelComponent,
   ServicesEventsCreateComponent,
-  ServicesEventsFacebookComponent,
   ServicesEventsAttendanceComponent
 } from './events/components';
 
@@ -94,13 +93,6 @@ const appRoutes: Routes = [
     path: ':serviceId/events/import/excel',
     component: ServicesEventsExcelComponent
   },
-  {
-    data: { zendesk: 'services' },
-    canActivate: [PrivilegesGuard],
-    path: ':serviceId/events/import/facebook',
-    component: ServicesEventsFacebookComponent
-  },
-
   {
     path: ':serviceId',
     canActivate: [PrivilegesGuard],

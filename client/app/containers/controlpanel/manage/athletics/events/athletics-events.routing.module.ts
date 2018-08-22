@@ -11,7 +11,6 @@ import {
   AthleticsEventsInfoComponent,
   AthleticsEventsExcelComponent,
   AthleticsEventsCreateComponent,
-  AthleticsEventsFacebookComponent,
   AthleticsEventsAtthendanceComponent
 } from './components';
 
@@ -28,9 +27,7 @@ const appRoutes: Routes = [
 
   { path: ':eventId/info', component: AthleticsEventsInfoComponent },
 
-  { path: 'import/excel', component: AthleticsEventsExcelComponent },
-
-  { path: 'import/facebook', component: AthleticsEventsFacebookComponent }
+  { path: 'import/excel', component: AthleticsEventsExcelComponent }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],

@@ -3,21 +3,17 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../../shared/shared.module';
 
-import { StudentsListComponent } from './list';
-
-import { StudentsTopBarComponent } from './list/components';
-
-import { StudentsProfileComponent } from './profile';
-
 import {
   StudentsProfileTopBarComponent,
   StudentsProfileHeaderComponent
 } from './profile/components';
 
+import { StudentsListComponent } from './list';
+import { StudentsProfileComponent } from './profile';
+import { StudentsTopBarComponent } from './list/components';
 import { StudentsComposeComponent } from './compose/students-compose.component';
 
 import { StudentsService } from './students.service';
-
 import { StudentsRoutingModule } from './students.routing.module';
 
 @NgModule({
@@ -32,6 +28,8 @@ import { StudentsRoutingModule } from './students.routing.module';
 
   imports: [ReactiveFormsModule, CommonModule, SharedModule, StudentsRoutingModule],
 
-  providers: [StudentsService]
+  providers: [StudentsService],
+
+  exports: [StudentsComposeComponent]
 })
 export class EngagementStudentsModule {}

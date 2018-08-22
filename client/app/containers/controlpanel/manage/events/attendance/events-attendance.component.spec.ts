@@ -72,6 +72,7 @@ describe('EventAttendanceComponent', () => {
           component.loading = false;
           component.attendeesLoading = false;
           component.session.g.set('school', mockSchool);
+          component.session.g.set('user', { school_level_privileges: {} });
 
           component.event = {
             id: 5125
@@ -93,6 +94,7 @@ describe('EventAttendanceComponent', () => {
   );
 
   it('HttpParams does not include calendar_id or school_id', () => {
+    console.log(component.session, component.session.g);
     component.fetch();
     const _search = new HttpParams();
     expect(spy).toHaveBeenCalledWith(component.eventId, _search);

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { sortBy } from 'lodash';
+import { FileUploadService } from './../../../../../shared/services/file-upload.service';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
@@ -16,6 +17,7 @@ export class TilesUtilsService {
   constructor(
     public fb: FormBuilder,
     public session: CPSession,
+    public cpI18n: CPI18nService,
     public sectionUtils: SectionUtilsService
   ) {}
 
@@ -83,13 +85,29 @@ export class TilesUtilsService {
     });
   }
 
+  async validateTileImage(file: File): Promise<string> {
+    let error;
+    const threeHundrendKb = 3e5;
+    const maxImageSize = threeHundrendKb;
+    const validExtension = (media) => ['image/jpeg', 'image/jpg', 'image/png'].includes(media.type);
+    const validSize = FileUploadService.validFileSize(file, maxImageSize);
+
+    if (!validSize || !validExtension(file)) {
+      error = !validSize
+        ? this.cpI18n.translate('error_file_is_too_big')
+        : this.cpI18n.translate('error_invalid_extension');
+    }
+
+    return error ? Promise.reject(error) : Promise.resolve(null);
+  }
+
   campusLinkForm(nameRequired = true, imageRequired = true, link = null) {
     const _link = link
       ? { ...link }
       : {
           name: null,
           link_url: null,
-          link_params: null,
+          link_params: {},
           img_url: null,
           open_in_browser: 0,
           is_system: 1,

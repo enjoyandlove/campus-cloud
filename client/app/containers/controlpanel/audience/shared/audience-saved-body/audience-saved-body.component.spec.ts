@@ -1,19 +1,22 @@
 /*tslint:disable:max-line-length */
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { of as observableOf } from 'rxjs';
 
-import { CPSession } from './../../../../../session';
-import { SharedModule } from '../../../../../shared/shared.module';
-import { AudienceSavedBodyComponent } from './audience-saved-body.component';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { of as observableOf } from 'rxjs';
 import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
+import { CPSession } from './../../../../../session';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { AudienceUtilsService } from './../../audience.utils.service';
+import { AudienceSavedBodyComponent } from './audience-saved-body.component';
+import { SharedModule } from '../../../../../shared/shared.module';
 
 const mockAudiences = [
   {
     id: 1,
     name: 'hello',
-    count: 1
+    count: 1,
+    isList: true,
+    type: 2
   }
 ];
 
@@ -36,7 +39,12 @@ describe('AudienceSavedBodyComponent', () => {
     TestBed.configureTestingModule({
       imports: [SharedModule],
       declarations: [AudienceSavedBodyComponent],
-      providers: [CPSession, CPI18nService, { provide: AudienceService, useClass: MockService }],
+      providers: [
+        CPSession,
+        CPI18nService,
+        AudienceUtilsService,
+        { provide: AudienceService, useClass: MockService }
+      ],
       schemas: [NO_ERRORS_SCHEMA]
     });
 
@@ -59,7 +67,9 @@ describe('AudienceSavedBodyComponent', () => {
     expect(comp.utils.parsedAudience(mockAudiences)[1]).toEqual({
       action: 1,
       label: 'hello',
-      userCount: 1
+      userCount: 1,
+      isList: true,
+      type: 2
     });
 
     expect(comp.utils.parsedAudience([]).length).toBe(0);
