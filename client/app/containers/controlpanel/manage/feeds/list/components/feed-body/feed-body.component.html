@@ -1,7 +1,7 @@
 <div class="feed">
   <div class="row feed__image-wrapper" *ngIf="feed.image_list.length">
     <div class="col-3" *ngFor="let image of feed.image_list">
-      <img [attr.src]="image.url" class="img-fluid feed__image">
+      <img [attr.data-src]="image.url" class="img-fluid feed__image">
     </div>
   </div>
   <div class="row feed__message">
