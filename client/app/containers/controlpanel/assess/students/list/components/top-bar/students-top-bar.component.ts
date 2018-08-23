@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 
 import { CPSession } from './../../../../../../../session';
@@ -68,7 +68,9 @@ export class StudentsTopBarComponent implements OnInit {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const audiences$ = this.service.getLists(search, 1, 1000);
-    const experiences$ = this.service.getExperiences(search, 1, 1000);
+    const experiences$ = this.session.hasGuideCustomization
+      ? this.service.getExperiences(search, 1, 1000)
+      : of([]);
 
     const stream$ = combineLatest([audiences$, experiences$]);
 

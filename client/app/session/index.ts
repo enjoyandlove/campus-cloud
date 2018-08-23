@@ -80,4 +80,8 @@ export class CPSession {
 
     return schoolAccess || accountAccess;
   }
+
+  get hasGuideCustomization() {
+    return this.g.get('school').has_guide_customization;
+  }
 }
