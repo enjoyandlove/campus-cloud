@@ -336,7 +336,7 @@
     "message": "Suivi de présence"
   },
   "assess_demo_footer_bottom": {
-    "message": "pour mettre en place OOHLALA Assessment sur votre campus"
+    "message": "pour mettre en place Ready Education Assessment sur votre campus"
   },
   "assess_demo_footer_cta": {
     "message": "Commencer aujourd'hui"
@@ -348,10 +348,10 @@
     "message": "Planifier une démo aujourd'hui !"
   },
   "assess_demo_hero_cta_help": {
-    "message": "ou contactez-nous à cm@oohlalamobile.com"
+    "message": "ou contactez-nous à cm@readyeducation.com"
   },
   "assess_demo_hero_description": {
-    "message": "OOHLALA Assessment Tools vous permet de mesurer et évaluer l'activité étudiante en dehors de la salle de classe"
+    "message": "Ready Education Assessment vous permet de mesurer et évaluer l'activité étudiante en dehors de la salle de classe"
   },
   "assess_demo_hero_title": {
     "message": "Mesurer l'engagement étudiant n'importe où sur le campus"
@@ -1291,7 +1291,7 @@
     "message": "Importer des événements depuis Facebook"
   },
   "events_facebook_help": {
-    "message": "Fournissez le lien vers la page de l'événement Facebook (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
+    "message": "Fournissez le lien vers la page de l'événement Facebook (e.g., https://www.facebook.com/readyeducation/events/)."
   },
   "events_facebook_label_host": {
     "message": "Sélectionner l'hôte"
@@ -1808,6 +1808,9 @@
   "new_password": {
     "message": "Nouveau mot de passe"
   },
+  "new_tile": {
+    "message": "Nouvelle tuile"
+  },
   "next": {
     "message": "Suivant"
   },
@@ -1969,7 +1972,7 @@
     "message": "Nouveau depuis le 2 juin 2017 :"
   },
   "release_notes_p_four": {
-    "message": "L'équipe OOHLALA."
+    "message": "Ready Education"
   },
   "release_notes_p_two": {
     "message": "Do I need to translate release notes?"
@@ -2323,8 +2326,23 @@
   "t_assess_chart_tooltip_label_engagements": {
     "message": "Implication(s)"
   },
+  "t_assess_no_orientation_data": {
+    "message": "Aucune donnée d'orientation"
+  },
   "t_assess_no_orientation_data_help": {
     "message": "Pour voir les données des programmes d'orientation, utilisez le filtre d'implication"
+  },
+  "t_assess_orientation_programs": {
+    "message": "Programmes d'orientation"
+  },
+  "t_assess_top_orientation_programs": {
+    "message": "Programmes populaires"
+  },
+  "t_assess_total_orientation_programs": {
+    "message": "Total de programmes"
+  },
+  "t_assess_total_orientation_programs_assessed": {
+    "message": "Programmes évalués"
   },
   "t_audience_dynamic_integration_disabled": {
     "message": "Pour activer cette fonctionalité, veuillez contacter votre consultant en engagement mobile."
@@ -2398,11 +2416,74 @@
   "t_deals_list_grid_column_store": {
     "message": "Magasin"
   },
+  "t_events_assessment_add_checkin_modal_title": {
+    "message": "Vérification de présence"
+  },
+  "t_events_assessment_add_check_in": {
+    "message": "Ajouter vérification de présence"
+  },
+  "t_events_assessment_check_in_and_checkout": {
+    "message": "Vérification de présence et de sortie"
+  },
+  "t_events_assessment_check_in_only": {
+    "message": "Vérification de présence seulement"
+  },
+  "t_events_assessment_disable_qr_check_in": {
+    "message": "Désactiver la vérification de présence"
+  },
+  "t_events_assessment_enable_qr_check_in": {
+    "message": "Activer vérification de présence QR"
+  },
+  "t_events_assessment_message_attendees": {
+    "message": "Contacter les participants"
+  },
   "t_events_assessment_qr_enabled_no": {
     "message": "Non"
   },
   "t_events_assessment_qr_enabled_yes": {
     "message": "Oui"
+  },
+  "t_events_attendance_add_check_in_delete_modal_body": {
+    "message": "Voulez-vous supprimer %s?"
+  },
+  "t_events_attendance_add_check_in_delete_modal_title": {
+    "message": "Supprimer vérification de présence"
+  },
+  "t_events_attendance_add_check_in_error_check_in_time_after_now": {
+    "message": "L'heure de vérification de présence doit être dans le futur"
+  },
+  "t_events_attendance_add_check_in_error_check_out_time_after_check_in": {
+    "message": "La sortie doit être plus tard que la vérification de présence"
+  },
+  "t_events_attendance_add_check_in_error_fill_out_all_fields": {
+    "message": "Veuillez remplir les champs marqués"
+  },
+  "t_events_attendance_add_edit_check_in_check_in_time": {
+    "message": "Heure de vérification de présence"
+  },
+  "t_events_attendance_add_edit_check_in_check_out_time": {
+    "message": "Heure de sortie"
+  },
+  "t_events_attendance_add_edit_check_in_email": {
+    "message": "Courriel"
+  },
+  "t_events_attendance_add_edit_check_in_first_name": {
+    "message": "Prénom"
+  },
+  "t_events_attendance_add_edit_check_in_last_name": {
+    "message": "Nom"
+  },
+  "t_events_attendance_no_attendees_tooltip_text": {
+    "message": "Il n'y a aucun utilisateur"
+  },
+  "t_events_attendance_no_permission_tooltip_text": {
+    "message": "Permission de notification requise"
+  },
+  "t_events_attendance_type": {
+    "message": "Type de présence"
+  },
+  "t_events_event_qr_enabled": {
+    "message": "QR activé"
   },
   "t_events_import_import_events": {
     "message": "Importer des événements"
@@ -2410,8 +2491,20 @@
   "t_events_import_upload_picture": {
     "message": "Téléverser image"
   },
+  "t_event_assessment_check_in_date": {
+    "message": "Vérification de présence"
+  },
+  "t_event_assessment_check_out_date": {
+    "message": "Sortie"
+  },
+  "t_event_assessment_web_checkin_page": {
+    "message": "Page de vérification de présence web"
+  },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "Mes expériences"
+  },
+  "t_personas": {
+    "message": "Expériences d'application"
   },
   "t_personas_button_list_create": {
     "message": "Créer expérience"
@@ -2421,6 +2514,9 @@
   },
   "t_personas_create_header_title": {
     "message": "Créer expérience"
+  },
+  "t_personas_create_label_campus_security": {
+    "message": "Service de sécurité du campus"
   },
   "t_personas_create_section_default_name": {
     "message": "Sans titre"
@@ -2446,14 +2542,35 @@
   "t_personas_delete_tile_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
+  "t_personas_delete_tile_modal_title": {
+    "message": "Supprimer tuile"
+  },
+  "t_personas_details_feature": {
+    "message": "En vedette"
+  },
+  "t_personas_edit_delete_button": {
+    "message": "Supprimer expérience"
+  },
+  "t_personas_edit_error_customization_off": {
+    "message": "Cette école n'a pas activé la personnalisation du guide du campus"
+  },
   "t_personas_edit_error_users_associated": {
     "message": "Cette expérience a des utilisateurs associés, donc vous ne pouvez pas modifier ses exigences de connexion."
+  },
+  "t_personas_edit_form_title": {
+    "message": "Détails de l'expérience"
   },
   "t_personas_edit_header_title": {
     "message": "Éditer expérience"
   },
+  "t_personas_edit_label_campus_security": {
+    "message": "Service de sécurité du campus"
+  },
   "t_personas_edit_message_on_save_ok": {
     "message": "Changements enregistrés."
+  },
+  "t_personas_edit_missing_resource": {
+    "message": "La ressource associée avec cette tuile n'a pas été trouvée."
   },
   "t_personas_edit_submit_button": {
     "message": "Enregistrer les changements"
@@ -2462,7 +2579,7 @@
     "message": "Supprimer expérience"
   },
   "t_personas_form_dropdown_login_forbidden": {
-    "message": "Interdit"
+    "message": "Non-requis"
   },
   "t_personas_form_dropdown_login_optional": {
     "message": "Optionnel"
@@ -2506,8 +2623,17 @@
   "t_personas_list_dropdown_web_experiences": {
     "message": "Web"
   },
+  "t_personas_no_results_found": {
+    "message": "Aucune expérience trouvée"
+  },
+  "t_personas_resource_create_modal_title": {
+    "message": "Nouvelle ressource"
+  },
   "t_personas_section_button_add_section": {
     "message": "Ajouter section"
+  },
+  "t_personas_tile_create_header": {
+    "message": "Nouvelle tuile"
   },
   "t_personas_tile_create_resource_type_academic_calendar": {
     "message": "Calendrier académique"
@@ -2533,6 +2659,12 @@
   "t_personas_tile_create_resource_type_courses": {
     "message": "Cours"
   },
+  "t_personas_tile_create_resource_type_deal_store_list": {
+    "message": "Emplois"
+  },
+  "t_personas_tile_create_resource_type_default_campus_link_list": {
+    "message": "Liste des liens du campus"
+  },
   "t_personas_tile_create_resource_type_event_list": {
     "message": "Événements"
   },
@@ -2541,6 +2673,12 @@
   },
   "t_personas_tile_create_resource_type_in_app_feedback": {
     "message": "Retour dans l'application"
+  },
+  "t_personas_tile_create_resource_type_job_list": {
+    "message": "Emplois"
+  },
+  "t_personas_tile_create_resource_type_orientation_calendar_list": {
+    "message": "Orientation"
   },
   "t_personas_tile_create_resource_type_service_by_category_id": {
     "message": "Services par catégories"
@@ -2587,6 +2725,9 @@
   "t_personas_tile_form_categories_includes": {
     "message": "Inclut"
   },
+  "t_personas_tile_image_requirements": {
+    "message": "Taille de l'image: 720 pixels par 400 pixels. Le fichier doit être plus petit que 300Ko. Utilisez les format JPG ou PNG."
+  },
   "t_personas_tile_modal_create_appearance": {
     "message": "Apparence"
   },
@@ -2607,6 +2748,12 @@
   },
   "t_personas_tile_modal_create_resource_type": {
     "message": "Type de ressource"
+  },
+  "t_personas_tile_moved_success": {
+    "message": "Tuile enregistrée."
+  },
+  "t_personas_tile_update_header": {
+    "message": "Éditer tuile"
   },
   "t_persona_create_cancel_button": {
     "message": "Annuler"
@@ -2659,8 +2806,20 @@
   "t_shared_show": {
     "message": "Montrer"
   },
+  "t_shared_wrong_dimensions": {
+    "message": "Doit être en JPG ou PNG, 720*400px, moins de 300Ko"
+  },
+  "t_students_profile_students": {
+    "message": "Élèves"
+  },
+  "t_studio": {
+    "message": "Studio"
+  },
   "t_tile_button_default": {
     "message": "Défaut"
+  },
+  "t_tile_button_locked": {
+    "message": "Verrouillé"
   },
   "update": {
     "message": "Mettre à jour",

@@ -22,7 +22,7 @@ class MockTilesService {
 
 const initialState = { working: false, hover: false };
 
-fdescribe('PersonasTileComponent', () => {
+describe('PersonasTileComponent', () => {
   let comp: PersonasTileComponent;
   let fixture: ComponentFixture<PersonasTileComponent>;
 
