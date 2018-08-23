@@ -5,10 +5,10 @@
     </div>
     <div class="col-2 no-left-padding">
       <cp-dropdown
-        [items]="lists$ | async"
         [disabled]="!canAudience"
-        [selectedItem]="selectedList"
-        (selected)="onListSelected($event.id)">
+        [selectedItem]="selectedItem"
+        [items]="dropdownItems$ | async"
+        (selected)="onListSelected($event)">
       </cp-dropdown>
     </div>
   </div>

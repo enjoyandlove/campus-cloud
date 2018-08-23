@@ -1,6 +1,7 @@
+import { StudentListFilter } from './../students.status';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { StudentsService } from './../students.service';
@@ -16,7 +17,8 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 interface IState {
   search_str: string;
-  user_list_id: number;
+  audience_id: number;
+  experience_id: number;
   sort_field: string;
   sort_direction: string;
 }
@@ -34,7 +36,8 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
 
   state: IState = {
     search_str: null,
-    user_list_id: null,
+    audience_id: null,
+    experience_id: null,
     sort_field: 'firstname',
     sort_direction: 'asc'
   };
@@ -57,7 +60,6 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     private store: Store<any>,
     private session: CPSession,
     public cpI18n: CPI18nService,
-    private route: ActivatedRoute,
     private service: StudentsService,
     private cpTracking: CPTrackingService
   ) {
@@ -76,14 +78,30 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   }
 
   fetch() {
-    const user_list_id = this.state.user_list_id ? this.state.user_list_id.toString() : null;
+    const audience_id = this.state.audience_id ? this.state.audience_id.toString() : null;
+    const experience_id = this.state.experience_id ? this.state.experience_id.toString() : null;
 
-    const search = new HttpParams()
-      .set('school_id', this.session.g.get('school').id.toString())
-      .set('search_str', this.state.search_str)
-      .set('sort_field', this.state.sort_field)
-      .set('sort_direction', this.state.sort_direction)
-      .set('user_list_id', user_list_id);
+    let search = new HttpParams().set('school_id', this.session.g.get('school').id.toString());
+
+    if (this.state.search_str) {
+      search = search.set('search_str', this.state.search_str);
+    }
+
+    if (this.state.sort_field) {
+      search = search.set('sort_field', this.state.sort_field);
+    }
+
+    if (this.state.sort_direction) {
+      search = search.set('sort_direction', this.state.sort_direction);
+    }
+
+    if (audience_id) {
+      search = search.set('user_list_id', audience_id);
+    }
+
+    if (experience_id) {
+      search = search.set('persona_id', experience_id);
+    }
 
     const stream$ = this.service.getStudentsByList(search, this.startRange, this.endRange);
 
@@ -103,17 +121,10 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   updateUrl() {
     this.router.navigate(['/assess/students'], {
       queryParams: {
-        list_id: this.state.user_list_id
+        list_id: this.state.audience_id,
+        experience_id: this.state.experience_id
       }
     });
-  }
-
-  readStateFromUrl() {
-    this.state = Object.assign({}, this.state, {
-      user_list_id: this.route.snapshot.queryParams['list_id']
-    });
-
-    this.fetch();
   }
 
   onFlashMessage(data) {
@@ -149,16 +160,22 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     );
   }
 
-  onFilter(filterBy) {
-    this.state = Object.assign({}, this.state, {
-      search_str: filterBy.search_str,
-      user_list_id: filterBy.list_id
-    });
-    this.updateUrl();
+  onFilter(filter) {
+    this.resetPagination();
 
-    if (filterBy.search_str) {
-      this.resetPagination();
-    }
+    const { filterBy } = filter;
+
+    const isAudience = filterBy.queryParam === StudentListFilter.audienceId;
+    const isExperience = filterBy.queryParam === StudentListFilter.experienceId;
+
+    this.state = {
+      ...this.state,
+      search_str: filter.search_str,
+      audience_id: isAudience ? filterBy.id : null,
+      experience_id: isExperience ? filterBy.id : null
+    };
+
+    this.updateUrl();
 
     this.fetch();
   }
@@ -180,11 +197,6 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload: require('../../assess.header.json')
     });
-
-    if ('list_id' in this.route.snapshot.queryParams) {
-      this.listIdFromUrl = this.route.snapshot.queryParams['list_id'];
-      this.readStateFromUrl();
-    }
 
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
