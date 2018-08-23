@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { IPersona } from './../../customise/personas/persona.interface';
 import { PersonasUtilsService } from './../../customise/personas/personas.utils.service';
+import { PersonaPermission } from './../engagement/engagement.status';
 import { HTTPService } from '../../../../base/http.service';
 import { API } from '../../../../config/api';
 
@@ -50,6 +51,7 @@ export class StudentsService extends HTTPService {
     }/${startRange};${endRange}`;
 
     return super.get(url, search).pipe(
+      map((res: any) => res.filter((p) => p.login_requirement !== PersonaPermission.forbidden)),
       map((personas: IPersona[]) =>
         personas.map((p) => {
           return {
