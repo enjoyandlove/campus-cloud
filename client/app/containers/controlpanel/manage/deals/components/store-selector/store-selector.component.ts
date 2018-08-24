@@ -12,7 +12,7 @@ import { BaseComponent } from '../../../../../../base';
 export class StoreSelectorComponent extends BaseComponent implements OnInit {
   @Input() form: FormGroup;
 
-  stores$;
+  stores;
   selectedStore;
 
   constructor(public service: DealsService) {
@@ -26,14 +26,15 @@ export class StoreSelectorComponent extends BaseComponent implements OnInit {
   getSelectedStore() {
     const store_id = this.form.controls['store_id'].value;
     if (store_id) {
-      super.fetchData(this.stores$).then((stores) => {
-        this.selectedStore = stores.data.filter((store) => store.action === store_id)[0];
-      });
+      this.selectedStore = this.stores.filter((store) => store.action === store_id)[0];
     }
   }
 
   ngOnInit() {
-    this.stores$ = this.service.getDealStores('select');
-    this.getSelectedStore();
+    this.stores = this.service.getDealStores('select')
+      .subscribe((data) => {
+        this.stores = data;
+        this.getSelectedStore();
+      });
   }
 }
