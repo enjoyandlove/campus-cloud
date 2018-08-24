@@ -66,9 +66,10 @@ export class StudentsComposeComponent implements OnInit {
     this.isError = false;
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    data = Object.assign({}, data, {
-      message: `${data.message} ${this.sendAsName}`
-    });
+    data = {
+      ...data,
+      message: `${data.message} \n ${this.sendAsName}`
+    };
 
     this.service.postAnnouncements(search, data).subscribe(
       (res: any) => {
@@ -105,6 +106,10 @@ export class StudentsComposeComponent implements OnInit {
   ngOnInit() {
     this.hostType = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
+
+    if (defaultHost) {
+      this.sendAsName = this.session.defaultHost.label;
+    }
 
     this.form = this.fb.group({
       user_ids: [this.props.userIds],
