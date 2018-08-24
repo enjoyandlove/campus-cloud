@@ -12,7 +12,7 @@ import { BaseComponent } from '../../../../../../base';
 export class StoreSelectorComponent extends BaseComponent implements OnInit {
   @Input() form: FormGroup;
 
-  stores;
+  stores = [];
   selectedStore;
 
   constructor(public service: DealsService) {
@@ -31,9 +31,11 @@ export class StoreSelectorComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.stores = this.service.getDealStores('select')
-      .subscribe((data) => {
-        this.stores = data;
+    super.fetchData(this.service.getDealStores('select'))
+      .then((stores) => {
+        this.stores = stores.data;
+      })
+      .then(() => {
         this.getSelectedStore();
       });
   }

@@ -14,7 +14,7 @@ class MockDealsService {
     }
 }
 
-fdescribe('StoreSelectorComponent', () => {
+describe('StoreSelectorComponent', () => {
     let spyStores;
     let component: StoreSelectorComponent;
     let fixture: ComponentFixture<StoreSelectorComponent>;
