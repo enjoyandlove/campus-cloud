@@ -3,11 +3,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { combineLatest, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
-
 import { CPSession } from './../../../../../../../session';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants/privileges';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { canSchoolReadResource } from './../../../../../../../shared/utils/privileges/privileges';
+import { PersonaType } from './../../../../../audience/audience.status';
 import { StudentsService } from './../../../students.service';
 import { StudentListFilter } from './../../../students.status';
 
@@ -67,9 +67,11 @@ export class StudentsTopBarComponent implements OnInit {
 
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
+    const experienceSearch = search.append('platform', PersonaType.app.toString());
+
     const audiences$ = this.service.getLists(search, 1, 1000);
     const experiences$ = this.session.hasGuideCustomization
-      ? this.service.getExperiences(search, 1, 1000)
+      ? this.service.getExperiences(experienceSearch, 1, 1000)
       : of([]);
 
     const stream$ = combineLatest([audiences$, experiences$]);
