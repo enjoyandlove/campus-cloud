@@ -11,6 +11,7 @@
 .attendees {
   @include card-shadow();
   border-radius: 4px;
+  margin-bottom: 20px;
 
   &__header {
     @include card-padding();

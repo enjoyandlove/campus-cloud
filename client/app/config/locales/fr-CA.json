@@ -336,7 +336,7 @@
     "message": "Suivi de présence"
   },
   "assess_demo_footer_bottom": {
-    "message": "pour mettre en place OOHLALA Assessment sur votre campus"
+    "message": "pour mettre en place Ready Education Assessment sur votre campus"
   },
   "assess_demo_footer_cta": {
     "message": "Commencer aujourd'hui"
@@ -348,10 +348,10 @@
     "message": "Planifier une démo aujourd'hui !"
   },
   "assess_demo_hero_cta_help": {
-    "message": "ou contactez-nous à cm@oohlalamobile.com"
+    "message": "ou contactez-nous à cm@readyeducation.com"
   },
   "assess_demo_hero_description": {
-    "message": "OOHLALA Assessment Tools vous permet de mesurer et évaluer l'activité étudiante en dehors de la salle de classe"
+    "message": "Ready Education Assessment vous permet de mesurer et évaluer l'activité étudiante en dehors de la salle de classe"
   },
   "assess_demo_hero_title": {
     "message": "Mesurer l'engagement étudiant n'importe où sur le campus"
@@ -1291,7 +1291,7 @@
     "message": "Importer des événements depuis Facebook"
   },
   "events_facebook_help": {
-    "message": "Fournissez le lien vers la page de l'événement Facebook (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
+    "message": "Fournissez le lien vers la page de l'événement Facebook (e.g., https://www.facebook.com/readyeducation/events/)."
   },
   "events_facebook_label_host": {
     "message": "Sélectionner l'hôte"
@@ -1972,7 +1972,7 @@
     "message": "Nouveau depuis le 2 juin 2017 :"
   },
   "release_notes_p_four": {
-    "message": "L'équipe OOHLALA."
+    "message": "Ready Education"
   },
   "release_notes_p_two": {
     "message": "Do I need to translate release notes?"
@@ -2808,6 +2808,9 @@
   },
   "t_shared_wrong_dimensions": {
     "message": "Doit être en JPG ou PNG, 720*400px, moins de 300Ko"
+  },
+  "t_students_profile_students": {
+    "message": "Élèves"
   },
   "t_studio": {
     "message": "Studio"

@@ -1,12 +1,29 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 
 import { AdminInviteComponent } from './admin-invite';
 import { CallbackComponent } from './callback.component';
 import { CallbackRoutingModule } from './callback.routing.module';
+import { CallbackPasswordResetComponent } from './password-reset';
+
+import { AuthService } from '../auth/auth.service';
 import { CallbackService } from './callback.service';
+import { SharedModule } from '../../shared/shared.module';
+import { CheckinService } from './checkin/checkin.service';
+import { FeedbackService } from './feedback/feedback.service';
+
+import {
+  BaseFeedbackComponent,
+  FeedbackConfirmationComponent,
+  FeedbackEventComponent,
+  FeedbackFormComponent,
+  FeedbackServiceComponent,
+  FeedbackStarsComponent,
+  FeedbackOrientationEventComponent
+} from './feedback';
+
 import {
   BaseCheckinComponent,
   CheckinAttendeesListComponent,
@@ -17,24 +34,9 @@ import {
   CheckinRegisterComponent,
   CheckinServiceComponent,
   CheckinServiceHeaderComponent,
-  CheckinOrientationEventsComponent
+  CheckinOrientationEventsComponent,
+  CheckOutModalComponent
 } from './checkin';
-import { CheckinService } from './checkin/checkin.service';
-import {
-  BaseFeedbackComponent,
-  FeedbackConfirmationComponent,
-  FeedbackEventComponent,
-  FeedbackFormComponent,
-  FeedbackServiceComponent,
-  FeedbackStarsComponent,
-  FeedbackOrientationEventComponent
-} from './feedback';
-import { FeedbackService } from './feedback/feedback.service';
-import { CallbackPasswordResetComponent } from './password-reset';
-
-import { SharedModule } from '../../shared/shared.module';
-
-import { AuthService } from '../auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -57,11 +59,24 @@ import { AuthService } from '../auth/auth.service';
     AdminInviteComponent,
     CheckinInternalModalComponent,
     CheckinOrientationEventsComponent,
-    FeedbackOrientationEventComponent
+    FeedbackOrientationEventComponent,
+    CheckOutModalComponent
   ],
 
-  imports: [CommonModule, ReactiveFormsModule, SharedModule, RouterModule, CallbackRoutingModule],
+  imports: [
+    CommonModule,
+    SharedModule,
+    RouterModule,
+    ReactiveFormsModule,
+    CallbackRoutingModule
+  ],
 
-  providers: [AuthService, CallbackService, CheckinService, FeedbackService]
+  providers: [
+    AuthService,
+    CheckinService,
+    FeedbackService,
+    CallbackService
+  ]
 })
+
 export class CallbackModule {}

@@ -1,24 +1,26 @@
 <div class="attendees">
   <div class="attendees__header">
     <div class="row">
-      <div class="col-4">
+      <div [class]="data.has_checkout ? 'col-4' : 'col-6'">
         <p>{{ 'checkin_attendance_list' | cpI18n }}</p>
       </div>
       <div class="col-2">
         <p>{{ 't_external_checkin_method' | cpI18n }}</p>
       </div>
-      <div class="col-3">
+      <div [class]="data.has_checkout ? 'col-3' : 'col-4'">
         <p>{{ 't_external_checkin_checkin' | cpI18n }}</p>
       </div>
-      <div class="col-3">
+      <div class="col-3" *ngIf="data.has_checkout">
         <p>{{ 't_external_checkin_chechout' | cpI18n }}</p>
       </div>
     </div>
   </div>
 
   <div class="attendees__list">
-    <div class="row attendees__item" *ngFor="let attendee of attendees">
-      <div class="col-4 text-truncate">
+    <div class="row attendees__item" *ngFor="let attendee of data.attendees">
+      <div
+        class="text-truncate"
+        [class]="data.has_checkout ? 'col-4' : 'col-6'">
         <strong>
           {{ attendee.firstname }}
           {{ attendee.lastname }}
@@ -27,18 +29,30 @@
         <small class="text-muted">{{ attendee.email }}</small>
       </div>
       <div class="col-2">{{ attendee.check_in_type}}</div>
-      <div class="col-3">{{ attendee.time | cpDatePipe:dateFormat }}</div>
-      <div class="col-3">
+      <div [class]="data.has_checkout ? 'col-3' : 'col-4'">
+        {{ attendee.check_in_time_epoch | cpDatePipe:dateFormat }}
+      </div>
+      <div class="col-3" *ngIf="data.has_checkout">
         <span *ngIf="attendee.check_out_time_epoch !== empty">
           {{ attendee.check_out_time_epoch | cpDatePipe:dateFormat }}
         </span>
 
         <button
           class="cpbtn cpbtn--cancel"
+          (click)="onCheckOutModal(attendee)"
           *ngIf="attendee.check_out_time_epoch === empty">
-          Check-Out
+          {{ 't_external_check_in_check_out_button' | cpI18n }}
         </button>
       </div>
     </div>
   </div>
 </div>
+
+<cp-modal modalId="checkOutModal" *ngIf="launchCheckOutModal">
+  <cp-check-out-modal
+    [attendee]="attendee"
+    [timezone]="data.tz_zoneinfo_str"
+    (created)="onCreated($event)"
+    (teardown)="launchCheckOutModal = false">
+  </cp-check-out-modal>
+</cp-modal>

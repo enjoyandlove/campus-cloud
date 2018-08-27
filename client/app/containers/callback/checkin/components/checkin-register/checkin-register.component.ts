@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { CPDate } from '../../../../../shared/utils';
 import { CPSession } from '../../../../../session';
+import { CPDate } from '../../../../../shared/utils';
+import { CheckInOutTime } from '../../../callback.status';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 
@@ -31,6 +32,12 @@ export class CheckinRegisterComponent implements OnInit {
     if (!data.check_in_time_epoch) {
       data.check_in_time_epoch = Math.round(CPDate.now(this.session.tz).unix());
     }
+
+    data = {
+      ...data,
+      check_in_type: 'web',
+      check_out_time_epoch: CheckInOutTime.empty
+    };
 
     this.send.emit(data);
     this.registrationForm.reset();
