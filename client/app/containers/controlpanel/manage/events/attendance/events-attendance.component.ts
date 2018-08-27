@@ -461,7 +461,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       payload: {
         body: this.cpI18n.translate(message),
         autoClose: true,
-        class: 'danger'
+        class: 'success'
       }
     });
   }

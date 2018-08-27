@@ -20,7 +20,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
 })
 export class CheckInFormComponent implements OnInit {
   @Input() event: IEvent;
-  @Input() isEdit: false;
+  @Input() isEdit = false;
   @Input() form: FormGroup;
   @Input() formErrors: string;
 

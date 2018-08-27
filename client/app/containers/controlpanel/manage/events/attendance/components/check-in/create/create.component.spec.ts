@@ -23,7 +23,7 @@ class MockService {
   }
 }
 
-fdescribe('EventCheckInCreateComponent', () => {
+describe('EventCheckInCreateComponent', () => {
   let spy;
   let component: CheckInCreateComponent;
   let fixture: ComponentFixture<CheckInCreateComponent>;
@@ -85,8 +85,11 @@ fdescribe('EventCheckInCreateComponent', () => {
     const dateError = component.cpI18n
       .translate('t_events_attendance_add_check_in_error_check_out_time_after_check_in');
 
-    component.form.controls['check_in_time'].setValue(1598918399);
-    component.form.controls['check_out_time_epoch'].setValue(1538390648);
+    const checkInTime = 1598918399;
+    const checkOutTimeInPast = 1538390648;
+
+    component.form.controls['check_in_time'].setValue(checkInTime);
+    component.form.controls['check_out_time_epoch'].setValue(checkOutTimeInPast);
     component.onSubmit();
 
     expect(component.formErrors).toBeTruthy();
@@ -100,8 +103,11 @@ fdescribe('EventCheckInCreateComponent', () => {
     spy = spyOn(component.service, 'addEventCheckIn')
       .and.returnValue(observableOf(mockCheckIn));
 
-    component.form.controls['check_in_time'].setValue(1598918399);
-    component.form.controls['check_out_time_epoch'].setValue(1601549048);
+    const checkInTime = 1598918399;
+    const checkOutTimeInFuture = 1601549048;
+
+    component.form.controls['check_in_time'].setValue(checkInTime);
+    component.form.controls['check_out_time_epoch'].setValue(checkOutTimeInFuture);
     component.onSubmit();
 
     expect(spy).toHaveBeenCalled();
