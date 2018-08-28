@@ -64,7 +64,7 @@ describe('PersonasTileComponent', () => {
     expect(comp.store.dispatch).toHaveBeenCalled();
   });
 
-  xit('onToggleTile', () => {
+  it('onToggleTile', () => {
     comp.onToggleTile();
 
     expect(comp.state.working).toBeTruthy();
