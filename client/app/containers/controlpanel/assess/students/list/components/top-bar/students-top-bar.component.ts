@@ -1,16 +1,25 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable, of as observableOf } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { combineLatest, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+
 import { CPSession } from './../../../../../../../session';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants/privileges';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { canSchoolReadResource } from './../../../../../../../shared/utils/privileges/privileges';
 import { StudentsService } from './../../../students.service';
+import { StudentListFilter } from './../../../students.status';
+
+interface IFilterBy {
+  id: number;
+  label: string;
+  queryParam: string;
+}
 
 interface IState {
   search_str: string;
-  list_id: number;
+  filterBy: IFilterBy;
 }
 
 @Component({
@@ -23,76 +32,107 @@ export class StudentsTopBarComponent implements OnInit {
   @Output() filter: EventEmitter<IState> = new EventEmitter();
   @Output() query: EventEmitter<string> = new EventEmitter();
 
+  selectedItem;
   canAudience = false;
-  selectedList: number;
-  lists$: Observable<any>;
+  dropdownItems$: Observable<any>;
 
   state: IState = {
     search_str: null,
-    list_id: null
+    filterBy: null
   };
 
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public route: ActivatedRoute,
     public service: StudentsService
   ) {}
 
-  onListSelected(list_id) {
-    this.state = Object.assign({}, this.state, { list_id });
+  onListSelected(filterBy) {
+    this.state = { ...this.state, filterBy };
+
     this.filter.emit(this.state);
   }
 
   onSearch(search_str) {
-    this.state = Object.assign({}, this.state, { search_str });
+    this.state = { ...this.state, search_str };
+
     this.filter.emit(this.state);
   }
 
   ngOnInit() {
+    const params = this.route.snapshot.queryParams;
+
     this.canAudience = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.audience);
-
-    if (!this.canAudience) {
-      this.lists$ = observableOf([
-        {
-          label: this.cpI18n.translate('assess_all_students'),
-          id: null
-        }
-      ]);
-
-      return;
-    }
 
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    this.lists$ = this.service.getLists(search, 1, 1000).pipe(
-      startWith([
-        {
-          label: this.cpI18n.translate('assess_all_students'),
-          id: null
+    const audiences$ = this.service.getLists(search, 1, 1000);
+    const experiences$ = this.session.hasGuideCustomization
+      ? this.service.getExperiences(search, 1, 1000)
+      : of([]);
+
+    const stream$ = combineLatest([audiences$, experiences$]);
+
+    this.dropdownItems$ = stream$.pipe(
+      startWith([{ label: '---', id: null }]),
+      map((response: any) => {
+        if (response.length === 1) {
+          return [{ label: '---', id: null }];
         }
-      ]),
-      map((lists) => {
-        const items = [
+
+        const [audiences, experiences] = response;
+
+        const res = [
           {
-            label: this.cpI18n.translate('assess_all_students'),
-            id: null
+            id: null,
+            heading: false,
+            label: this.cpI18n.translate('assess_all_students')
           }
         ];
 
-        lists.map((list: any) => {
-          list = {
-            label: list.name,
-            id: list.id
-          };
+        if (experiences.length) {
+          res.push(
+            {
+              id: null,
+              heading: true,
+              label: this.cpI18n.translate('t_notify_announcement_audiences_my_experiences')
+            },
+            ...experiences.map((e) => {
+              return {
+                ...e,
+                queryParam: StudentListFilter.experienceId
+              };
+            })
+          );
+        }
 
-          items.push(list);
+        if (audiences.length) {
+          res.push(
+            {
+              id: null,
+              heading: true,
+              label: this.cpI18n.translate('t_students_profile_students')
+            },
+            ...audiences.map((a) => {
+              return {
+                id: a.id,
+                label: a.name,
+                queryParam: StudentListFilter.audienceId
+              };
+            })
+          );
+        }
 
-          if (list.id === +this.listIdFromUrl) {
-            this.selectedList = list;
-          }
-        });
+        this.selectedItem = params
+          ? res.filter((r) => r.id === Number(Object.values(params)[0]))[0]
+          : null;
 
-        return items;
+        if (this.selectedItem) {
+          this.onListSelected(this.selectedItem);
+        }
+
+        return res;
       })
     );
   }

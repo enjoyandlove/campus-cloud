@@ -336,7 +336,7 @@
     "message": "Attendance Tracking"
   },
   "assess_demo_footer_bottom": {
-    "message": "to set up OOHLALA Assessment on your campus"
+    "message": "to set up Ready Education Assessment on your campus"
   },
   "assess_demo_footer_cta": {
     "message": "Get Started Today"
@@ -348,10 +348,10 @@
     "message": "Schedule a Demo Today!"
   },
   "assess_demo_hero_cta_help": {
-    "message": "or email us at cm@oohlalamobile.com"
+    "message": "or email us at cm@readyeducation.com"
   },
   "assess_demo_hero_description": {
-    "message": "OOHLALA Assessment enables you to measure and assess student activity outside of the classroom"
+    "message": "READY Education Assessment enables you to measure and assess student activity outside of the classroom"
   },
   "assess_demo_hero_title": {
     "message": "Measure Student Engagement Anywhere on Campus"
@@ -1291,7 +1291,7 @@
     "message": "Import Events from Facebook"
   },
   "events_facebook_help": {
-    "message": "Provide the link to the Facebook event page (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
+    "message": "Provide the link to the Facebook event page (e.g., https://www.facebook.com/readyeducation/events/)."
   },
   "events_facebook_label_host": {
     "message": "Select Host"
@@ -1972,7 +1972,7 @@
     "message": "New as of June 2, 2017:"
   },
   "release_notes_p_four": {
-    "message": "The OOHLALA Team."
+    "message": "Ready Education"
   },
   "release_notes_p_two": {
     "message": "Should you wish to return to the old Campus Cloud, you can always do so by clicking on the banner at the top of the screen. If you wish to provide any feedback on your experience with the new Campus Cloud, please contact us at "
@@ -2518,6 +2518,18 @@
   "t_event_assessment_web_checkin_page": {
     "message": "Web Check-In Page"
   },
+  "t_external_checkin_chechout": {
+    "message": "Check-Out"
+  },
+  "t_external_checkin_checkin": {
+    "message": "Check-In"
+  },
+  "t_external_checkin_method": {
+    "message": "Method"
+  },
+  "t_external_checkin_time": {
+    "message": "Check-In Time"
+  },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
   },
@@ -2826,6 +2838,9 @@
   },
   "t_shared_wrong_dimensions": {
     "message": "Must be JPG or PNG, 720*400px, smaller than 300KB "
+  },
+  "t_students_profile_students": {
+    "message": "Students"
   },
   "t_studio": {
     "message": "Studio"

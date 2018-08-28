@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
-import { isDev } from '../../../../../config/env';
 import { CPDate } from '../../../../../shared/utils';
 import { STATUS } from '../../../../../shared/constants';
 import { EventUtilService } from '../events.utils.service';
@@ -370,6 +369,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         const controls = <FormArray>this.form.controls['events'];
         const control = <FormGroup>controls.controls[index];
         control.controls['poster_url'].setValue(res.image_url);
+        control.controls['poster_thumb_url'].setValue(res.image_url);
       })
       .catch((err) => {
         this.store.dispatch({
@@ -514,8 +514,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     };
 
     this.store.select('EVENTS_MODAL').subscribe((res) => {
-      this.events = !isDev ? res : require('./mock.json');
-      // this.events = res;
+      this.events = res;
 
       if (!this.storeId && !this.clubId && !this.isOrientation) {
         this.fetch();
@@ -534,8 +533,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
     this.eventAttendanceFeedback = this.utils.getAttendanceFeedback();
 
-    this.checkInOptions = [...attendanceType, ...this.utils.getAttendanceTypeOptions()];
-
-    this.selectedCheckInOption[1] = this.checkInOptions[1];
+    this.checkInOptions = [...this.utils.getAttendanceTypeOptions(), ...attendanceType];
   }
 }

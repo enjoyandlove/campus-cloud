@@ -1,6 +1,6 @@
 <div
   class="float-left avatar avatar--small"
-  [ngStyle]="{'background-image': 'url(' + feed.avatar_thumb + ')'}">
+  [attr.data-background-src]="feed.avatar_thumb">
 </div>
 <div class="feed__meta float-left">
   <span class="name">

@@ -94,7 +94,7 @@
                     <label>{{ 'assessment' | cpI18n }}</label>
                     <cp-dropdown
                       [items]="checkInOptions"
-                      [selectedItem]="selectedCheckInOption[1]"
+                      [selectedItem]="selectedCheckInOption[i]"
                       (selected)="updateCheckInOption($event.action, i)">
                     </cp-dropdown>
                   </div>

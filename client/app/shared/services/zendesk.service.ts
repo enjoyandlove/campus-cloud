@@ -34,7 +34,7 @@ export class ZendeskService {
     const french = 'fr';
     const english = 'en-us';
     const locale = CPI18nService.getLocale();
-    const root = 'https://oohlalamobile.zendesk.com/hc';
+    const root = 'https://support.readyeducation.com/hc';
 
     return locale === 'fr-CA' ? `${root}/${french}` : `${root}/${english}`;
   }

@@ -9,7 +9,8 @@ export enum DivideBy {
   'daily' = 0,
   'weekly' = 1,
   'monthly' = 2,
-  'quarter' = 3
+  'quarter' = 3,
+  'yearly' = 4
 }
 
 export const addGroup = (data) => {
@@ -58,6 +59,12 @@ export const groupByQuarter = (dates: any[], series: Number[]) => {
   const datesByQuarter = dates.map((d) => moment(d).quarter());
 
   return aggregate(datesByQuarter, series);
+};
+
+export const groupByYear = (dates: any[], series: Number[]) => {
+  const datesByYear = dates.map((d) => moment(d).year());
+
+  return aggregate(datesByYear, series);
 };
 
 @Injectable()
@@ -112,6 +119,19 @@ export class CPLineChartUtilsService {
       .format('MMM YY');
   }
 
+  yearLabel(range, index) {
+    const date = CPDate.toEpoch(
+      moment(range)
+        .add(index, 'years'),
+      this.session.tz
+    );
+
+    return moment
+      .unix(date)
+      .locale(CPI18nService.getLocale())
+      .format('YYYY');
+  }
+
   chartOptions(divider, series) {
     return {
       high: this.highestNoInArray(series),
@@ -161,6 +181,10 @@ export class CPLineChartUtilsService {
 
       case DivideBy.quarter:
         label = this.quarterLabel(range.start, index);
+        break;
+
+      case DivideBy.yearly:
+        label = this.yearLabel(range.start, index);
         break;
     }
 
