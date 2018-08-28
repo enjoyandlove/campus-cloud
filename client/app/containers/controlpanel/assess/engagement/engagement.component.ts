@@ -303,7 +303,9 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       host_type: data.hostType,
       engagement_type: data.props.label
     };
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_SENT_MESSAGE, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_SENT_ANNOUNCEMENT,
+      this.eventProperties);
   }
 
   trackDownloadEvent(engagement_type) {

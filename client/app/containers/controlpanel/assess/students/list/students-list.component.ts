@@ -187,7 +187,9 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
       engagement_type: amplitudeEvents.SINGLE_STUDENT
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_SENT_MESSAGE, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_SENT_ANNOUNCEMENT,
+      this.eventProperties);
   }
 
   ngOnInit() {

@@ -337,7 +337,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MENAGE_SENT_MESSAGE,
+      amplitudeEvents.MANAGE_SENT_ANNOUNCEMENT,
       this.eventProperties);
   }
 

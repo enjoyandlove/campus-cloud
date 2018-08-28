@@ -90,7 +90,8 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
 
   amplitudeEventProperties = {
     host_type: null,
-    audience_type: null,
+    sub_menu_name: null,
+    announcement_id: null,
     announcement_type: amplitudeEvents.REGULAR
   };
 
@@ -341,10 +342,6 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
       ...this.amplitudeEventProperties,
       announcement_type: this.selectedType.label
     };
-    this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties,
-      audience_type: amplitudeEvents.CAMPUS_WIDE
-    };
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
@@ -358,18 +355,10 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
-      this.amplitudeEventProperties = {
-        ...this.amplitudeEventProperties,
-        audience_type: amplitudeEvents.USER
-      };
       data = Object.assign({}, data, { user_ids: this.form.value.user_ids });
     }
 
     if (this.state.isToLists && !this.state.isCampusWide) {
-      this.amplitudeEventProperties = {
-        ...this.amplitudeEventProperties,
-        audience_type: amplitudeEvents.LIST
-      };
       data = Object.assign({}, data, { list_ids: this.form.value.list_ids });
     }
 
@@ -528,6 +517,13 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
+    this.amplitudeEventProperties = {
+      ...this.amplitudeEventProperties,
+      sub_menu_name: amplitudeEvents.TEMPLATE,
+      host_type
+    };
+
     this.toolTipContent = Object.assign({}, this.toolTipContent, {
       content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
       link: {

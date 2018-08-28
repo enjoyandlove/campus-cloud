@@ -28,7 +28,7 @@ export class AssessUtilsService {
   }
 
   getCohortType(cohort) {
-    return cohort.listId ? amplitudeEvents.LIST : cohort.label;
+    return cohort['cohort_type'] ? cohort['cohort_type'] : amplitudeEvents.ALL_STUDENTS;
   }
 
   getEventType(type) {
