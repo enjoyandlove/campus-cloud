@@ -9,7 +9,7 @@ import { DealsService } from '../../deals.service';
 import { DealsModule } from '../../deals.module';
 
 class MockDealsService {
-    getDealStores() {
+    getDealStores(label: string) {
         return observableOf({});
     }
 }
