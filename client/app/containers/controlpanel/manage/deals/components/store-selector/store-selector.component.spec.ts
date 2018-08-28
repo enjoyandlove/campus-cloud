@@ -9,7 +9,7 @@ import { DealsService } from '../../deals.service';
 import { DealsModule } from '../../deals.module';
 
 class MockDealsService {
-    getDealStores(label: string) {
+    getDealStores() {
         return observableOf({});
     }
 }
@@ -40,7 +40,7 @@ describe('StoreSelectorComponent', () => {
         });
     }));
 
-    it('should call getDealStores once ngOnInit', () => {
+    fit('should call getDealStores once ngOnInit', () => {
         component.ngOnInit();
         expect(spyStores).toHaveBeenCalledTimes(1);
         expect(spyStores).toHaveBeenCalledWith('select');
