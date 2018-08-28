@@ -142,7 +142,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   }
 
   doBulkUpdate(tileUpdates) {
-    const search = new HttpParams().set('persona_id', this.personaId);
+    const search = new HttpParams().set('school_persona_id', this.personaId);
 
     const body = tileUpdates.map((t) => {
       return {
