@@ -336,7 +336,9 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MENAGE_SENT_MESSAGE, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_SENT_ANNOUNCEMENT,
+      this.eventProperties);
   }
 
   ngOnInit() {

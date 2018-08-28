@@ -233,7 +233,9 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       engagement_type: amplitudeEvents.SINGLE_STUDENT
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_DOWNLOAD_DATA, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_DOWNLOAD_DATA,
+      eventProperties);
   }
 
   onComposeTeardown() {
@@ -276,7 +278,9 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       engagement_type: amplitudeEvents.SINGLE_STUDENT
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_SENT_MESSAGE, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_SENT_ANNOUNCEMENT,
+      this.eventProperties);
   }
 
   ngOnInit() {

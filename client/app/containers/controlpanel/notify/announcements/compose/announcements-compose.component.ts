@@ -82,8 +82,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   };
 
   amplitudeEventProperties = {
-    audience_status: null,
     host_type: null,
+    sub_menu_name: null,
     audience_type: null,
     announcement_type: amplitudeEvents.REGULAR
   };
@@ -212,8 +212,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   getAudienceType(type) {
-    const audience_type =
-      type === AudienceType.dynamic ? amplitudeEvents.DYNAMIC_LIST : amplitudeEvents.CUSTOM_LIST;
+    const audience_type = type === AudienceType.dynamic
+      ? amplitudeEvents.DYNAMIC_AUDIENCE
+      : amplitudeEvents.CUSTOM_AUDIENCE;
 
     this.amplitudeEventProperties = {
       ...this.amplitudeEventProperties,
@@ -348,10 +349,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     this.hideEmergencyType(true);
     this.updatePriority();
-    this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties,
-      audience_status: amplitudeEvents.NEW_AUDIENCE
-    };
   }
 
   onResetSavedAudience() {
@@ -367,10 +364,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.form.controls['is_school_wide'].setValue(true);
 
     this.hideEmergencyType(false);
-    this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties,
-      audience_status: amplitudeEvents.SAVED_AUDIENCE
-    };
   }
 
   doValidate() {
@@ -417,7 +410,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     if (this.state.isToUsers && !this.state.isCampusWide) {
       this.amplitudeEventProperties = {
         ...this.amplitudeEventProperties,
-        audience_type: amplitudeEvents.CUSTOM_LIST
+        audience_type: amplitudeEvents.CUSTOM_AUDIENCE
       };
       data = Object.assign({}, data, { user_ids: this.form.value.user_ids });
 
@@ -437,7 +430,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     if (this.state.isToFilters && !this.state.isCampusWide) {
       this.amplitudeEventProperties = {
         ...this.amplitudeEventProperties,
-        audience_type: amplitudeEvents.DYNAMIC_LIST
+        audience_type: amplitudeEvents.DYNAMIC_AUDIENCE
       };
       data = Object.assign({}, data, { filters: this.form.value.filters });
 
@@ -447,6 +440,11 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     }
 
     if (this.state.isToPersona && !this.state.isCampusWide) {
+      this.amplitudeEventProperties = {
+        ...this.amplitudeEventProperties,
+        audience_type: amplitudeEvents.EXPERIENCE
+      };
+
       data = Object.assign({}, data, { persona_id: this.form.value.persona_id });
 
       delete data['filters'];
@@ -589,6 +587,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     this.amplitudeEventProperties = {
       ...this.amplitudeEventProperties,
+      sub_menu_name: amplitudeEvents.ANNOUNCEMENT,
       host_type
     };
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
