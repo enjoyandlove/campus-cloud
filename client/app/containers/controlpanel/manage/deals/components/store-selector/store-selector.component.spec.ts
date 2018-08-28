@@ -40,7 +40,7 @@ describe('StoreSelectorComponent', () => {
         });
     }));
 
-    fit('should call getDealStores once ngOnInit', () => {
+    it('should call getDealStores once ngOnInit', () => {
         component.ngOnInit();
         expect(spyStores).toHaveBeenCalledTimes(1);
         expect(spyStores).toHaveBeenCalledWith('select');
