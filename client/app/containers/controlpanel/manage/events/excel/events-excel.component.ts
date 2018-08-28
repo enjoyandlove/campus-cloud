@@ -8,7 +8,6 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { BaseComponent } from '../../../../../base/base.component';
-import { isDev } from '../../../../../config/env';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPImageUploadComponent } from '../../../../../shared/components';
@@ -354,6 +353,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         const controls = <FormArray>this.form.controls['events'];
         const control = <FormGroup>controls.controls[index];
         control.controls['poster_url'].setValue(res.image_url);
+        control.controls['poster_thumb_url'].setValue(res.image_url);
       })
       .catch((err) => {
         this.store.dispatch({
@@ -496,8 +496,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     };
 
     this.store.select('EVENTS_MODAL').subscribe((res) => {
-      this.events = !isDev ? res : require('./mock.json');
-      // this.events = res;
+      this.events = res;
 
       if (!this.storeId && !this.clubId && !this.isOrientation) {
         this.fetch();

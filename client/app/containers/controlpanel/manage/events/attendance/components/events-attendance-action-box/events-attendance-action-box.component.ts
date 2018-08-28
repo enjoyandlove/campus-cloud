@@ -29,9 +29,9 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   hasQr;
   qrLabel;
   eventCheckinRoute;
+  canDownload: boolean;
   disableMessageAttendees;
   messageAttendeesTooltipText;
-  canDownload = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.event_attendance);
   canMessage = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements);
 
   constructor(
@@ -65,6 +65,8 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.canDownload = this.session.canAttendance(this.event.store_id);
+
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
 
     this.updateQrCode.subscribe((checkInMethods) => {

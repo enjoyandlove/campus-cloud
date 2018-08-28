@@ -1,3 +1,4 @@
+import { IPersona } from './persona.interface';
 import { TileCategoryRank } from './tiles/tiles.status';
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -133,6 +134,12 @@ export class PersonasUtilsService {
           .map((t: ITile) => t.related_link_data)[0]
       };
     });
+  }
+
+  localaizedPersonaName(persona: IPersona) {
+    const locale = CPI18nService.getLocale().startsWith('fr') ? 'fr' : 'en';
+
+    return persona.localized_name_map[locale];
   }
 
   parseLocalFormToApi(data) {

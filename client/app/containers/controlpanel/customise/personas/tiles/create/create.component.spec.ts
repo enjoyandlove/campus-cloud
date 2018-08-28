@@ -1,8 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpErrorResponse } from '@angular/common/http';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 import { reducers } from './../../../../../../reducers';
 import { CPSession } from './../../../../../../session/index';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
@@ -14,6 +15,7 @@ import { PersonasTilesModule } from './../tiles.module';
 import { TilesService } from './../tiles.service';
 import { PersonasTileCreateComponent } from './create.component';
 import { SharedModule } from '../../../../../../shared/shared.module';
+import { SNACKBAR_HIDE } from '../../../../../../reducers/snackbar.reducer';
 
 class MockPersonasService {
   dummy;
@@ -41,7 +43,24 @@ class MockSectionsService {
   }
 }
 
-class MockTilesService {}
+class MockTilesService {
+  dummy;
+
+  createCampusLink(formValue) {
+    this.dummy = formValue;
+
+    return of({
+      id: 1,
+      ...formValue
+    });
+  }
+
+  createCampusTile(data) {
+    this.dummy = data;
+
+    return of(data);
+  }
+}
 
 describe('PersonasTileCreateComponent', () => {
   let comp: PersonasTileCreateComponent;
@@ -84,6 +103,95 @@ describe('PersonasTileCreateComponent', () => {
   it('should init', () => {
     expect(comp).toBeTruthy();
     expect(comp.buttonData.disabled).toBeTruthy();
+  });
+
+  it('should redirect if no guide has been set', () => {
+    spyOnProperty(comp.guideService, 'guide', 'get').and.returnValue(null);
+    spyOn(comp.router, 'navigate').and.returnValue(Promise.resolve());
+
+    const expected = ['/customize/personas/', comp.personaId];
+
+    comp.ngOnInit();
+
+    expect(comp.router.navigate).toHaveBeenCalled();
+    expect(comp.router.navigate).toHaveBeenCalledWith(expected);
+  });
+
+  it(
+    'fetch',
+    fakeAsync(() => {
+      spyOn(comp.personaService, 'getPersonaById').and.callThrough();
+      spyOn(comp, 'buildForm');
+      spyOn(comp, 'buildHeader');
+
+      comp.fetch();
+
+      expect(comp.personaService.getPersonaById).toHaveBeenCalled();
+
+      tick();
+
+      expect(comp.campusLinkForm).toBeDefined();
+      expect(comp.campusGuideTileForm).toBeDefined();
+
+      expect(comp.buildForm).toHaveBeenCalled();
+      expect(comp.buildHeader).toHaveBeenCalled();
+    })
+  );
+
+  it(
+    'fetch with errors',
+    fakeAsync(() => {
+      spyOn(comp, 'erroHandler');
+      spyOn(comp, 'buildForm');
+      spyOn(comp, 'buildHeader');
+      spyOn(comp.personaService, 'getPersonaById').and.returnValue(
+        throwError(new HttpErrorResponse({ error: 'error' }))
+      );
+
+      comp.fetch();
+
+      tick();
+
+      expect(comp.buildForm).not.toHaveBeenCalled();
+      expect(comp.buildHeader).not.toHaveBeenCalled();
+      expect(comp.erroHandler).toHaveBeenCalled();
+    })
+  );
+
+  it('should show snackbar on erroHandler', () => {
+    spyOn(comp.store, 'dispatch');
+
+    comp.erroHandler();
+
+    expect(comp.store.dispatch).toHaveBeenCalled();
+  });
+
+  it('should destroy', () => {
+    spyOn(comp.store, 'dispatch');
+
+    expect(comp.ngOnDestroy).toBeDefined();
+
+    comp.ngOnDestroy();
+
+    expect(comp.guideService.guide).toBeNull();
+    expect(comp.store.dispatch).toHaveBeenCalled();
+    expect(comp.store.dispatch).toHaveBeenCalledWith({ type: SNACKBAR_HIDE });
+  });
+
+  it('createGuideLink', () => {
+    const expected = {
+      school_id: 157,
+      school_persona_id: 1,
+      name: null,
+      rank: 1,
+      img_url: null,
+      color: 'FFFFFF',
+      extra_info: { id: 1 },
+      visibility_status: 1,
+      tile_category_id: 1,
+      featured_rank: -1
+    };
+    comp.createGuideLink(1).subscribe((result) => expect(result).toEqual(expected));
   });
 
   it('doReset', () => {
