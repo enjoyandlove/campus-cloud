@@ -3,6 +3,7 @@ import { FormGroup } from '@angular/forms';
 
 import { DealsService } from '../../deals.service';
 import { BaseComponent } from '../../../../../../base';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'cp-store-selector',
@@ -23,17 +24,16 @@ export class StoreSelectorComponent extends BaseComponent implements OnInit {
     this.form.controls['store_id'].setValue(store_id);
   }
 
-  getSelectedStore() {
+  getSelectedStore(stores) {
     const store_id = this.form.controls['store_id'].value;
     if (store_id) {
-      super.fetchData(this.stores$).then((stores) => {
-        this.selectedStore = stores.data.filter((store) => store.action === store_id)[0];
-      });
+      this.selectedStore = stores.filter((store) => store.action === store_id)[0];
     }
   }
 
   ngOnInit() {
-    this.stores$ = this.service.getDealStores('select');
-    this.getSelectedStore();
+    this.stores$ = this.service.getDealStores('select').pipe(
+      tap((stores) => this.getSelectedStore(stores))
+    );
   }
 }
