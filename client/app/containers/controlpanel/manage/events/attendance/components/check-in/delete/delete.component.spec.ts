@@ -11,6 +11,8 @@ import { CPSession } from '../../../../../../../../session';
 import { mockSchool } from '../../../../../../../../session/mock';
 import { CPI18nService } from '../../../../../../../../shared/services';
 
+const mockCheckIn = require('../../../../../../../../../public/mock/mockEventCheckIn.json');
+
 class MockService {
   dummy;
   deleteEventCheckInById(id: number, search: any) {
@@ -30,8 +32,6 @@ describe('EventCheckInDeleteComponent', () => {
     id: 12543,
     has_checkout: AttendanceType.checkInCheckOut
   };
-
-  const mockCheckIn = require('../mockCheckIn.json');
 
   beforeEach(
     async(() => {
@@ -55,12 +55,6 @@ describe('EventCheckInDeleteComponent', () => {
         });
     })
   );
-
-  it('buttonData should have "Delete" label & "Danger class"', () => {
-    component.ngOnInit();
-    expect(component.buttonData.text).toEqual('Delete');
-    expect(component.buttonData.class).toEqual('danger');
-  });
 
   it('should delete check-in', () => {
     spyOn(component.deleted, 'emit');

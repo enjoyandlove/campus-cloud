@@ -13,6 +13,8 @@ import { mockSchool } from '../../../../../../../../session/mock';
 import { EventUtilService } from '../../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../../shared/services';
 
+const mockCheckIn = require('../../../../../../../../../public/mock/mockEventCheckIn.json');
+
 class MockService {
   dummy;
 
@@ -32,8 +34,6 @@ describe('EventCheckInCreateComponent', () => {
     id: 12543,
     has_checkout: AttendanceType.checkInCheckOut
   };
-
-  const mockCheckIn = require('../mockCheckIn.json');
 
   beforeEach(
     async(() => {
@@ -59,16 +59,10 @@ describe('EventCheckInCreateComponent', () => {
           component.session.g.set('school', mockSchool);
           component.event = mockEvent;
           component.ngOnInit();
-          component.form = component.checkInUtils.getCheckInForm(mockCheckIn, component.event.id);
+          component.form = component.checkInUtils.getCheckInForm(mockCheckIn, component.event);
         });
     })
   );
-
-  it('buttonData should have "Save" label & "primary class"', () => {
-    component.ngOnInit();
-    expect(component.buttonData.text).toEqual('Save');
-    expect(component.buttonData.class).toEqual('primary');
-  });
 
   it('form validation should fail required fields missing', () => {
     component.form.controls['email'].setValue(null);

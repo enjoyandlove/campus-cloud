@@ -118,7 +118,7 @@
                   <span> {{ attendee.check_in_time | cpDatePipe:dateFormat }} </span>
                 </div>
                 <div class="col-2" *ngIf="event.has_checkout">
-                  <span *ngIf="attendee.check_out_time_epoch !== emptyCheckOutTime">
+                  <span *ngIf="attendee.check_out_time_epoch && attendee.check_out_time_epoch !== emptyCheckOutTime">
                     {{ attendee.check_out_time_epoch | cpDatePipe:dateFormat }}
                   </span>
                 </div>

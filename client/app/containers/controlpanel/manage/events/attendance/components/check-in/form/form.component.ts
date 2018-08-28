@@ -7,7 +7,6 @@ import { CPSession } from '../../../../../../../../session';
 import { CPDate } from '../../../../../../../../shared/utils';
 
 const COMMON_DATE_PICKER_OPTIONS = {
-  utc: true,
   altInput: true,
   enableTime: true,
   altFormat: 'F j, Y h:i K'

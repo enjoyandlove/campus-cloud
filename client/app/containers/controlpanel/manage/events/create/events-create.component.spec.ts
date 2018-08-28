@@ -1,23 +1,26 @@
-import { HttpClientModule } from '@angular/common/http';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
+import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { By } from '@angular/platform-browser';
+import { FormBuilder } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
-import { EventsCreateComponent } from './events-create.component';
-import { reducers } from '../../../../../reducers';
+
+import { EventsModule } from '../events.module';
+import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
+import { reducers } from '../../../../../reducers';
+import { EventUtilService } from '../events.utils.service';
 import { mockSchool } from '../../../../../session/mock/school';
+import { EventsCreateComponent } from './events-create.component';
+import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
+
 import {
   AdminService,
   CPI18nService,
   ErrorService,
   StoreService
 } from '../../../../../shared/services';
-import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
-import { EventsModule } from '../events.module';
-import { EventsService } from '../events.service';
-import { EventUtilService } from '../events.utils.service';
 
 class MockService {
   dummy;
@@ -63,6 +66,7 @@ describe('EventCreateComponent', () => {
 
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
+          component.attendance = true;
           component.ngOnInit();
 
           component.form = component.fb.group({
@@ -105,35 +109,113 @@ describe('EventCreateComponent', () => {
     expect(component.form.controls['is_all_day'].value).toBeFalsy();
   });
 
-  it('should have event manager tooltip', () => {
+  it('should have event attendance type tooltip', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+
+    const toolTipInfoIcon = fixture.debugElement
+      .query(By.css('.row .attendance-type-tooltip button')).nativeElement;
+    toolTipInfoIcon.click();
+    tick();
+
+    fixture.detectChanges();
+
+    tick();
+    const toolTipContent = fixture.debugElement
+      .query(By.css('.row .attendance-type-tooltip .popover .popover-content div'))
+      .nativeElement;
+
+    const utilsEventAttendanceTypeTooltip = component.utils
+      .getToolTipContent('t_events_event_attendance_type_tooltip');
+
+    expect(toolTipContent.textContent).toEqual(utilsEventAttendanceTypeTooltip.content);
+  }));
+
+  it('should have event QR enabled tooltip', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+
+    const toolTipInfoIcon = fixture.debugElement
+      .query(By.css('.row .event-qr-enable-tooltip button')).nativeElement;
+    toolTipInfoIcon.click();
+    tick();
+
+    fixture.detectChanges();
+
+    tick();
+    const toolTipContent = fixture.debugElement
+      .query(By.css('.row .event-qr-enable-tooltip .popover .popover-content div'))
+      .nativeElement;
+
+    const utilsEventQREnableTooltip = component.utils
+      .getToolTipContent('t_events_event_qr_code_tooltip');
+
+    expect(toolTipContent.textContent).toEqual(utilsEventQREnableTooltip.content);
+  }));
+
+  it('should have event manager tooltip', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
+
+    const toolTipInfoIcon = fixture.debugElement
+      .query(By.css('.row .event-manager-tooltip button')).nativeElement;
+    toolTipInfoIcon.click();
+    tick();
+
+    fixture.detectChanges();
+
+    tick();
+    const toolTipContent = fixture.debugElement
+      .query(By.css('.row .event-manager-tooltip .popover .popover-content div')).nativeElement;
+
     const utilsEventManagerTooltip = component.utils
       .getToolTipContent('events_event_manager_tooltip');
 
-    const eventManagerTooltip = component.cpI18n
-      .translate('events_event_manager_tooltip');
+    expect(toolTipContent.textContent).toEqual(utilsEventManagerTooltip.content);
+  }));
 
-    expect(utilsEventManagerTooltip.content).toEqual(eventManagerTooltip);
-  });
+  it('should have attendance Manager tooltip', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
 
-  it('should have attendance Manager tooltip', () => {
+    const toolTipInfoIcon = fixture.debugElement
+      .query(By.css('.row .attendance-manager-tooltip button')).nativeElement;
+    toolTipInfoIcon.click();
+    tick();
+
+    fixture.detectChanges();
+
+    tick();
+    const toolTipContent = fixture.debugElement
+      .query(By.css('.row .attendance-manager-tooltip .popover .popover-content div'))
+      .nativeElement;
+
     const utilsAttendanceManagerTooltip = component.utils
       .getToolTipContent('events_attendance_manager_tooltip');
 
-    const attendanceManagerTooltip = component.cpI18n
-      .translate('events_attendance_manager_tooltip');
+    expect(toolTipContent.textContent).toEqual(utilsAttendanceManagerTooltip.content);
+  }));
 
-    expect(utilsAttendanceManagerTooltip.content).toEqual(attendanceManagerTooltip);
-  });
+  it('should have student feedback tooltip', fakeAsync(() => {
+    fixture.detectChanges();
+    tick();
 
-  it('should have student feedback tooltip', () => {
+    const toolTipInfoIcon = fixture.debugElement
+      .query(By.css('.row .student-feedback-tooltip button')).nativeElement;
+    toolTipInfoIcon.click();
+    tick();
+
+    fixture.detectChanges();
+
+    tick();
+    const toolTipContent = fixture.debugElement
+      .query(By.css('.row .student-feedback-tooltip .popover .popover-content div')).nativeElement;
+
     const utilsStudentFeedbackTooltip = component.utils
       .getToolTipContent('events_event_feedback_tooltip');
 
-    const studentFeedbackTooltip = component.cpI18n
-      .translate('events_event_feedback_tooltip');
-
-    expect(utilsStudentFeedbackTooltip.content).toEqual(studentFeedbackTooltip);
-  });
+    expect(toolTipContent.textContent).toEqual(utilsStudentFeedbackTooltip.content);
+  }));
 
   it('form validation should fail required fields missing', () => {
     component.form.controls['title'].setValue(null);

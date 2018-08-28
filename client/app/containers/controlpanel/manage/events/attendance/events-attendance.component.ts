@@ -8,12 +8,10 @@ import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes';
 import { EventUtilService } from './../events.utils.service';
-import { CPDate } from '../../../../../shared/utils/date/date';
 import { CheckInMethod, CheckInOutTime } from '../event.status';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { createSpreadSheet } from '../../../../../shared/utils/csv/parser';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { canSchoolWriteResource } from '../../../../../shared/utils/privileges/privileges';
@@ -217,59 +215,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
     this.trackAmplitudeEvent();
 
-    stream$.toPromise().then((attendees: Array<any>) => {
-      const columns = [
-        this.cpI18n.translate('events_attendant'),
-        this.cpI18n.translate('events_attendee_email'),
-        this.cpI18n.translate('events_checked_in_time'),
-        this.cpI18n.translate('t_events_attendance_add_edit_check_in_check_out_time'),
-        this.cpI18n.translate('t_event_assessment_time_spend'),
-        this.cpI18n.translate('rating'),
-        this.cpI18n.translate('events_user_feedback'),
-        this.cpI18n.translate('events_checked_in_method'),
-        this.cpI18n.translate('student_id')
-      ];
-
-      const check_in_method = {
-        1: 'Web',
-        3: 'QR Code'
-      };
-
-      attendees = attendees.map((item) => {
-        return {
-          [this.cpI18n.translate('events_attendant')]: `${item.firstname} ${item.lastname}`,
-
-          [this.cpI18n.translate('events_attendee_email')]: item.email,
-
-          [this.cpI18n.translate('events_checked_in_time')]: CPDate.fromEpoch(
-            item.check_in_time,
-            this.session.tz
-          ).format('MMMM Do YYYY - h:mm a'),
-
-          [this.cpI18n.translate('t_events_attendance_add_edit_check_in_check_out_time')]:
-            item.check_out_time_epoch === CheckInOutTime.empty
-              ? '' : CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz
-              ).format('MMMM Do YYYY - h:mm a'),
-
-          [this.cpI18n.translate('t_event_assessment_time_spend')]:
-            item.check_out_time_epoch === CheckInOutTime.empty
-              ? '' : (item.check_out_time_epoch - item.check_in_time),
-
-          [this.cpI18n.translate('rating')]:
-            item.feedback_rating === -1 ? '' : (item.feedback_rating * 5 / 100).toFixed(2),
-
-          [this.cpI18n.translate('events_user_feedback')]: item.feedback_text,
-
-          [this.cpI18n.translate('events_checked_in_method')]: check_in_method[
-            item.check_in_method
-          ],
-
-          [this.cpI18n.translate('student_id')]: item.student_identifier
-        };
-      });
-
-      createSpreadSheet(attendees, columns);
-    });
+    this.utils.createExcel(stream$, this.event.has_checkout);
   }
 
   trackAmplitudeEvent() {
