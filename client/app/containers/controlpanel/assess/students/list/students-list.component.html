@@ -50,6 +50,7 @@
                   <a
                     cpTracker
                     [eventData]="eventData"
+                    queryParamsHandling="merge"
                     [routerLink]="[student.id]">
                     <strong>{{ student.firstname }} {{ student.lastname }}</strong>
                   </a>

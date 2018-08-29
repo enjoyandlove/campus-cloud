@@ -45,6 +45,17 @@
     border: 1px solid $border-color;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
 
+    &--spinner {
+      height: 197px;
+    }
+
+    &__search {
+      padding: 5px;
+      text-align: left;
+      color: $color-secondary-text;
+      border-bottom: 1px solid $border-color;
+    }
+
     li {
       transition: all 200ms ease-in-out;
 
@@ -53,7 +64,7 @@
         margin-bottom: 0;
       }
 
-      &:hover {
+      &:hover:not(.no-hover) {
         color: $color-white;
         background: $color-brand;
       }

@@ -150,10 +150,38 @@
           <div *ngIf="attendance">
             <div class="row margin-top">
               <div class="col-6">
-                <div class="form-group">
+                <div class="form-group attendance-type-tooltip">
+                  <label>{{ 't_events_attendance_type' | cpI18n }}
+                    <cp-tooltip
+                      [toolTipContent]="utils.getToolTipContent('t_events_event_attendance_type_tooltip')">
+                    </cp-tooltip>
+                  </label>
+                  <cp-dropdown
+                    [items]="attendanceTypes"
+                    (selected)="onSelectedAttendanceType($event)">
+                  </cp-dropdown>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group event-qr-enable-tooltip">
+                  <label>{{ 't_events_event_qr_enabled' | cpI18n }}
+                    <cp-tooltip
+                      [toolTipContent]="utils.getToolTipContent('t_events_event_qr_code_tooltip')">
+                    </cp-tooltip>
+                  </label>
+                  <cp-dropdown
+                    [items]="eventQRCodes"
+                    (selected)="onSelectedQRCode($event.action)">
+                  </cp-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group event-manager-tooltip">
                   <label>{{ 'events_event_manager' | cpI18n }}
                     <cp-tooltip
-                      [toolTipContent]="eventManagerToolTip">
+                      [toolTipContent]="utils.getToolTipContent('events_event_manager_tooltip')">
                     </cp-tooltip>
                   </label>
                   <cp-dropdown
@@ -164,10 +192,10 @@
                 </div>
               </div>
               <div class="col-6">
-                <div class="form-group">
+                <div class="form-group attendance-manager-tooltip">
                   <label>{{ 'events_attendance_manager_full' | cpI18n }}
                     <cp-tooltip
-                      [toolTipContent]="attendanceManagerToolTip">
+                      [toolTipContent]="utils.getToolTipContent('events_attendance_manager_tooltip')">
                     </cp-tooltip>
                   </label>
                   <input
@@ -178,15 +206,15 @@
               </div>
             </div>
 
-            <div class="row form-group">
+            <div class="row form-group student-feedback-tooltip">
               <div class="col-6">
                 <label>{{ 'student_feedback' | cpI18n }}
                   <cp-tooltip
-                    [toolTipContent]="studentFeedbackToolTip">
+                    [toolTipContent]="utils.getToolTipContent('events_event_feedback_tooltip')">
                   </cp-tooltip>
                 </label>
                 <cp-dropdown
-                  [items]="booleanOptions"
+                  [items]="attendanceFeedback"
                   (selected)="onEventFeedbackChange($event)"
                   [isRequiredError]="formError && form.controls['event_feedback'].hasError('required')">
                 </cp-dropdown>

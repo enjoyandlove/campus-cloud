@@ -81,7 +81,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
         _comments.push({
           id: comment.id,
           avatar_thumb: comment.avatar_thumb,
-          image_thumb_url: comment.image_thumb_url,
+          image_list: comment.image_list,
           message: comment.comment,
           likes: comment.likes,
           flag: comment.flag,

@@ -12,10 +12,10 @@ import { AssessUtilsService } from '../../assess.utils.service';
 import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from './../../../../../base/base.component';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { createSpreadSheet } from './../../../../../shared/utils/csv/parser';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { SNACKBAR_SHOW, ISnackbar } from './../../../../../reducers/snackbar.reducer';
 import { STAR_SIZE } from './../../../../../shared/components/cp-stars/cp-stars.component';
+import { CheckInOutTime } from '../../../manage/events/event.status';
 
 declare var $;
 
@@ -54,6 +54,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   timeFormat = FORMAT.TIME;
   loadingStudentData = true;
   starSize = STAR_SIZE.SMALL;
+  noCheckOutTime = CheckInOutTime.empty;
 
   state = {
     scope: ALL_ENGAGEMENTS
@@ -181,51 +182,8 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       this.endRange
     );
 
-    const columns = [
-      this.cpI18n.translate('assess_check_in_time'),
-      this.cpI18n.translate('type'),
-      this.cpI18n.translate('assess_checkin_date'),
-      this.cpI18n.translate('assess_response_date'),
-      this.cpI18n.translate('rating'),
-      this.cpI18n.translate('response')
-    ];
-
-    const type = {
-      event: this.cpI18n.translate('event'),
-      service: this.cpI18n.translate('service')
-    };
-
     this.trackAmplitudeEvents();
-
-    stream$.toPromise().then((data: any) => {
-      data = data.map((item) => {
-        return {
-          [this.cpI18n.translate('assess_check_in_time')]: item.name,
-
-          [this.cpI18n.translate('type')]: type[item.type],
-
-          [this.cpI18n.translate('assess_checkin_date')]: CPDate.fromEpoch(
-            item.time_epoch,
-            this.session.tz
-          ).format('MMMM Do YYYY - h:mm a'),
-
-          [this.cpI18n.translate('assess_response_date')]:
-            item.feedback_time_epoch === 0
-              ? 'No Feedback Provided'
-              : CPDate.fromEpoch(item.feedback_time_epoch, this.session.tz).format(
-                  'MMMM Do YYYY - h:mm a'
-                ),
-
-          [this.cpI18n.translate('rating')]:
-            item.user_rating_percent === -1
-              ? 'No Rating Provided'
-              : (item.user_rating_percent / 100 * 5).toFixed(1),
-          [this.cpI18n.translate('response')]: item.user_feedback_text
-        };
-      });
-
-      createSpreadSheet(data, columns, `${this.student.firstname} ${this.student.lastname}`);
-    });
+    this.utils.createExcel(stream$, this.student);
   }
 
   trackAmplitudeEvents() {
@@ -233,7 +191,9 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       engagement_type: amplitudeEvents.SINGLE_STUDENT
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_DOWNLOAD_DATA, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_DOWNLOAD_DATA,
+      eventProperties);
   }
 
   onComposeTeardown() {
@@ -276,7 +236,9 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       engagement_type: amplitudeEvents.SINGLE_STUDENT
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_SENT_MESSAGE, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_SENT_ANNOUNCEMENT,
+      this.eventProperties);
   }
 
   ngOnInit() {

@@ -9,8 +9,10 @@ import {
 } from '../../../../shared/components/cp-range-picker/cp-range-picker.utils.service';
 
 import { CPSession } from '../../../../session';
-import { AssessType, FilterType } from './engagement.status';
 import { CPI18nService } from '../../../../shared/services';
+import { AssessType, FilterType } from './engagement.status';
+import { AudienceType } from '../../audience/audience.status';
+import { amplitudeEvents } from '../../../../shared/constants/analytics';
 
 @Injectable()
 export class EngagementUtilsService {
@@ -86,11 +88,16 @@ export class EngagementUtilsService {
     ];
 
     audiences.forEach((audience) => {
+      const cohort_type = audience.type === AudienceType.custom
+        ? amplitudeEvents.CUSTOM_AUDIENCE
+        : amplitudeEvents.DYNAMIC_AUDIENCE;
+
       _audiences.push({
         route_id: audience.name
           .toLowerCase()
           .split(' ')
           .join('_'),
+        cohort_type,
         label: audience.name,
         listId: audience.id
       });
@@ -115,7 +122,8 @@ export class EngagementUtilsService {
           .split(' ')
           .join('_'),
         label: this.getLocalizedLabel(persona.localized_name_map),
-        personaId: persona.id
+        personaId: persona.id,
+        cohort_type: amplitudeEvents.EXPERIENCE,
       });
     });
 

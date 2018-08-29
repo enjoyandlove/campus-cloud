@@ -39,11 +39,14 @@
       <div class="col-12">
         <cp-events-attendance-action-box
           [event]="event"
+          [updateQrCode]="updateQrCode"
           [totalAttendees]="totalAttendees"
           [isOrientation]="isOrientation"
-          (querySearch)="doSearch($event)"
+          (addCheckIn)="onAddCheckIn()"
           (createExcel)="onCreateExcel()"
-          (sendMessage)="messageAllAttendees()">
+          (querySearch)="doSearch($event)"
+          (sendMessage)="messageAllAttendees()"
+          (onToggleQr)="onToggleQr($event)">
         </cp-events-attendance-action-box>
       </div>
     </div>
@@ -72,10 +75,13 @@
                     [sortDirection]="state.sort_direction">
                   </cp-sorting-header>
                 </div>
-                <div class="col-3">
+                <div [class]="event.has_checkout ? 'col-2' : 'col-3'">
                   <span>{{ 't_event_assessment_check_in_date' | cpI18n }}</span>
                 </div>
-                <div class="col-2">
+                <div class="col-2" *ngIf="event.has_checkout">
+                  <span>{{ 't_event_assessment_check_out_date' | cpI18n }}</span>
+                </div>
+                <div [class]="event.has_checkout ? 'col-1' : 'col-2'">
                   <cp-sorting-header
                     sortLabel="check_in_method"
                     (click)="doSort('check_in_method')"
@@ -108,10 +114,15 @@
                   <br>
                   <small class="text-muted">{{ attendee.email }}</small>
                 </div>
-                <div class="col-3">
+                <div [class]="event.has_checkout ? 'col-2' : 'col-3'">
                   <span> {{ attendee.check_in_time | cpDatePipe:dateFormat }} </span>
                 </div>
-                <div class="col-2">
+                <div class="col-2" *ngIf="event.has_checkout">
+                  <span *ngIf="attendee.check_out_time_epoch && attendee.check_out_time_epoch !== emptyCheckOutTime">
+                    {{ attendee.check_out_time_epoch | cpDatePipe:dateFormat }}
+                  </span>
+                </div>
+                <div [class]="event.has_checkout ? 'col-1' : 'col-2'">
              <span>
              <i class="material-icons">{{ checkInMethodType(attendee.check_in_method) }}</i>
              </span>
@@ -123,7 +134,7 @@
                     [maxRate]="event.rating_scale_maximum">
                   </cp-stars>
                 </div>
-                <div class="col-1">
+                <div class="col-1 text-center">
                   <span
                   class="hover"
                   [class.disabled]="!canMessage"
@@ -131,16 +142,24 @@
                   *ngIf="attendee.check_in_method === appCheckIn">
                     <i
                       data-toggle="tooltip"
-                      class="material-icons"
                       data-placement="bottom"
+                      class="material-icons action-button"
                       [title]="messageAttendeesTooltipText">
                       chat_bubble
                     </i>
                   </span>
+                  <span *ngIf="attendee.check_in_method === webCheckIn">
+                    <i
+                      (click)="onEditCheckIn(attendee)"
+                      class="material-icons hover margin-right action-button">edit</i>
+                    <i
+                      (click)="onDeleteCheckIn(attendee)"
+                      class="material-icons hover action-button">close</i>
+                  </span>
                 </div>
               </div>
               <div class="row cp-table__feedback" *ngIf="attendee.feedback_text">
-                <small>{{ attendee.feedback_text }}</small>
+                <small class="text-wrap">{{ attendee.feedback_text }}</small>
               </div>
             </div>
           </div>
@@ -161,6 +180,41 @@
     </div>
   </div>
 </div>
+
+<cp-modal
+  modalId="editCheckInModal"
+  *ngIf="isEditCheckInModal">
+  <cp-edit-check-in
+    [event]="event"
+    [checkIn]="checkInData"
+    [orientationId]="orientationId"
+    (edited)="onEdited()"
+    (teardown)="isEditCheckInModal = false">
+  </cp-edit-check-in>
+</cp-modal>
+
+<cp-modal
+  modalId="deleteCheckInModal"
+  *ngIf="isDeleteCheckInModal">
+  <cp-delete-check-in
+    [event]="event"
+    [checkIn]="checkInData"
+    [orientationId]="orientationId"
+    (deleted)="onDeleted($event)"
+    (teardown)="isDeleteCheckInModal = false">
+  </cp-delete-check-in>
+</cp-modal>
+
+<cp-modal
+  modalId="addCheckInModal"
+  *ngIf="isAddCheckInModal">
+  <cp-create-check-in
+    [event]="event"
+    [orientationId]="orientationId"
+    (created)="onCreated()"
+    (teardown)="isAddCheckInModal = false">
+  </cp-create-check-in>
+</cp-modal>
 
 <cp-modal
   modalId="sendMessageModal"

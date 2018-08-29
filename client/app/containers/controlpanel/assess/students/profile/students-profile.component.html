@@ -69,6 +69,11 @@
                                   <p class="engagement__time">
                                     <strong>{{ engagement.time_epoch | cpDatePipe:timeFormat }}</strong>
                                   </p>
+                                  <p
+                                    class="engagement__time"
+                                    *ngIf="engagement.check_out_time_epoch && engagement.check_out_time_epoch !== noCheckOutTime">
+                                    <span>{{ engagement.check_out_time_epoch | cpDatePipe:timeFormat }}</span>
+                                  </p>
                                 </div>
                                 <div class="col-10 engagement__meta no-left-padding">
                                   <p class="engagement__meta__title">
