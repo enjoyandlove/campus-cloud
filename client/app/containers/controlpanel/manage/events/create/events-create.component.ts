@@ -15,7 +15,7 @@ import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
-  AttendanceType,
+  attendanceType,
   CheckInMethod,
   EventAttendance,
   EventFeedback,
@@ -471,7 +471,7 @@ export class EventsCreateComponent implements OnInit {
       postal_code: [null],
       latitude: [0],
       longitude: [0],
-      has_checkout: [AttendanceType.checkInOnly],
+      has_checkout: [attendanceType.checkInOnly],
       event_attendance: [EventAttendance.disabled],
       start: [null, Validators.required],
       poster_url: [null, Validators.required],

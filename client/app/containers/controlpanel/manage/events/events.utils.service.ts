@@ -9,13 +9,13 @@ import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { createSpreadSheet } from '../../../../shared/utils/csv/parser';
 
 import {
-  QRCode,
+  qrCode,
   Location,
   Feedback,
   Assessment,
   UploadedPhoto,
   EventFeedback,
-  AttendanceType,
+  attendanceType,
   CheckInOutTime,
   EventAttendance
 } from './event.status';
@@ -145,11 +145,11 @@ export class EventUtilService {
     return [
       {
         label: this.cpI18n.translate('t_events_assessment_check_in_only'),
-        action: AttendanceType.checkInOnly
+        action: attendanceType.checkInOnly
       },
       {
         label: this.cpI18n.translate('t_events_assessment_check_in_and_checkout'),
-        action: AttendanceType.checkInCheckOut
+        action: attendanceType.checkInCheckOut
       },
     ];
   }
@@ -158,11 +158,11 @@ export class EventUtilService {
     return [
       {
         label: this.cpI18n.translate('t_events_assessment_qr_enabled_yes'),
-        action: QRCode.enabled
+        action: qrCode.enabled
       },
       {
         label: this.cpI18n.translate('t_events_assessment_qr_enabled_no'),
-        action: QRCode.disabled
+        action: qrCode.disabled
       },
     ];
   }

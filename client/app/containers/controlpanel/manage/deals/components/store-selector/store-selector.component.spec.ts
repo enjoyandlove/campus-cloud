@@ -1,4 +1,3 @@
-
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 
@@ -9,9 +8,13 @@ import { DealsService } from '../../deals.service';
 import { DealsModule } from '../../deals.module';
 
 class MockDealsService {
-    getDealStores(label: string) {
-        return observableOf({});
-    }
+  dummy;
+
+  getDealStores(label: string) {
+    this.dummy = [label];
+
+    return observableOf({});
+  }
 }
 
 describe('StoreSelectorComponent', () => {

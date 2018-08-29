@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { CPSession } from '../../../../../../../session';
-import { CPI18nService } from '../../../../../../../shared/services';
-import { CheckInMethod, CheckInOutTime } from '../../../event.status';
+import { CPSession } from '../../../../../../session';
+import { CPI18nService } from '../../../../../../shared/services';
+import { CheckInMethod, CheckInOutTime } from '../../event.status';
 
 @Injectable()
 export class CheckInUtilsService {

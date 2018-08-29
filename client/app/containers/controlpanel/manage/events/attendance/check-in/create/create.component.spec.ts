@@ -3,36 +3,36 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormBuilder } from '@angular/forms';
 import { of as observableOf } from 'rxjs';
 
-import { CheckInEditComponent } from './edit.component';
-import { EventsModule } from '../../../../events.module';
-import { AttendanceType } from '../../../../event.status';
-import { EventsService } from '../../../../events.service';
-import { CPSession } from '../../../../../../../../session';
+import { EventsModule } from '../../../events.module';
+import { attendanceType } from '../../../event.status';
+import { EventsService } from '../../../events.service';
+import { CheckInCreateComponent } from './create.component';
+import { CPSession } from '../../../../../../../session';
 import { CheckInUtilsService } from '../check-in.utils.service';
-import { mockSchool } from '../../../../../../../../session/mock';
-import { EventUtilService } from '../../../../events.utils.service';
-import { CPI18nService } from '../../../../../../../../shared/services';
+import { mockSchool } from '../../../../../../../session/mock';
+import { EventUtilService } from '../../../events.utils.service';
+import { CPI18nService } from '../../../../../../../shared/services';
 
-const mockCheckIn = require('../../../../../../../../../public/mock/mockEventCheckIn.json');
+const mockCheckIn = require('../../../__mock__/mockEventCheckIn.json');
 
 class MockService {
   dummy;
 
-  updateEventCheckIn(body: any, id: number, search: any) {
-    this.dummy = [id, search];
+  addEventCheckIn(body: any, search: any) {
+    this.dummy = [search];
 
     return observableOf({ body });
   }
 }
 
-describe('EventCheckInEditComponent', () => {
+describe('EventCheckInCreateComponent', () => {
   let spy;
-  let component: CheckInEditComponent;
-  let fixture: ComponentFixture<CheckInEditComponent>;
+  let component: CheckInCreateComponent;
+  let fixture: ComponentFixture<CheckInCreateComponent>;
 
   const mockEvent = {
     id: 12543,
-    has_checkout: AttendanceType.checkInCheckOut
+    has_checkout: attendanceType.checkInCheckOut
   };
 
   beforeEach(
@@ -53,13 +53,13 @@ describe('EventCheckInEditComponent', () => {
       })
         .compileComponents()
         .then(() => {
-          fixture = TestBed.createComponent(CheckInEditComponent);
+          fixture = TestBed.createComponent(CheckInCreateComponent);
 
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
-          component.checkIn = mockCheckIn;
           component.event = mockEvent;
           component.ngOnInit();
+          component.form = component.checkInUtils.getCheckInForm(mockCheckIn, component.event);
         });
     })
   );
@@ -91,10 +91,10 @@ describe('EventCheckInEditComponent', () => {
     expect(component.errorMessage).toEqual(dateError);
   });
 
-  it('should edit event check-in', () => {
-    spyOn(component.edited, 'emit');
+  it('should add event check-in', () => {
+    spyOn(component.created, 'emit');
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'updateEventCheckIn')
+    spy = spyOn(component.service, 'addEventCheckIn')
       .and.returnValue(observableOf(mockCheckIn));
 
     const checkInTime = 1598918399;
@@ -109,7 +109,7 @@ describe('EventCheckInEditComponent', () => {
     expect(component.form.valid).toBeTruthy();
     expect(spy).toHaveBeenCalledTimes(1);
     expect(component.resetModal).toHaveBeenCalled();
-    expect(component.edited.emit).toHaveBeenCalled();
+    expect(component.created.emit).toHaveBeenCalled();
     expect(component.resetModal).toHaveBeenCalledTimes(1);
   });
 });

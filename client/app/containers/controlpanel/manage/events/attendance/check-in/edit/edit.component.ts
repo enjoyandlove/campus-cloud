@@ -11,23 +11,24 @@ import {
 import { HttpParams } from '@angular/common/http';
 
 import { ICheckIn } from '../check-in.interface';
-import { EventsService } from '../../../../events.service';
-import { CPSession } from './../../../../../../../../session';
+import { EventsService } from '../../../events.service';
+import { CPSession } from './../../../../../../../session';
 import { CheckInUtilsService } from '../check-in.utils.service';
-import { EventUtilService } from '../../../../events.utils.service';
-import { CPI18nService } from '../../../../../../../../shared/services';
+import { EventUtilService } from '../../../events.utils.service';
+import { CPI18nService } from '../../../../../../../shared/services';
 
 @Component({
-  selector: 'cp-create-check-in',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  selector: 'cp-edit-check-in',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.scss']
 })
-export class CheckInCreateComponent implements OnInit {
+export class CheckInEditComponent implements OnInit {
   @Input() event: any;
+  @Input() checkIn: ICheckIn;
   @Input() orientationId: number;
 
+  @Output() edited: EventEmitter<null> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() created: EventEmitter<ICheckIn> = new EventEmitter();
 
   form;
   formErrors;
@@ -54,7 +55,7 @@ export class CheckInCreateComponent implements OnInit {
   resetModal() {
     this.form.reset();
     this.teardown.emit();
-    $('#addCheckInModal').modal('hide');
+    $('#editCheckInModal').modal('hide');
   }
 
   onSubmit() {
@@ -97,9 +98,9 @@ export class CheckInCreateComponent implements OnInit {
         .append('calendar_id', this.orientationId.toString());
     }
 
-    this.service.addEventCheckIn(this.form.value, search).subscribe(
+    this.service.updateEventCheckIn(this.form.value, this.checkIn.id, search).subscribe(
       () => {
-        this.created.emit();
+        this.edited.emit();
         this.resetModal();
       },
       (_) => {
@@ -117,7 +118,7 @@ export class CheckInCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.checkInUtils.getCheckInForm(null, this.event);
+    this.form = this.checkInUtils.getCheckInForm(this.checkIn, this.event);
 
     this.buttonData = {
       class: 'primary',
