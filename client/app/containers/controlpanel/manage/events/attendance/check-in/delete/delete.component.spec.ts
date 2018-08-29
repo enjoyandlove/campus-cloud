@@ -11,7 +11,7 @@ import { CPSession } from '../../../../../../../session';
 import { mockSchool } from '../../../../../../../session/mock';
 import { CPI18nService } from '../../../../../../../shared/services';
 
-const mockCheckIn = require('../../../__mock__/mockEventCheckIn.json');
+const mockCheckIn = require('../../../__mock__/eventCheckIn.json');
 
 class MockService {
   dummy;
