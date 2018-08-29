@@ -154,7 +154,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       .fetchData(stream$)
       .then((res) => {
         this.attendees = res.data;
-        this.totalAttendees.next(res.data.length);
+        this.totalAttendees.next(res.data);
         setTimeout(
           () => {
             $(function() {

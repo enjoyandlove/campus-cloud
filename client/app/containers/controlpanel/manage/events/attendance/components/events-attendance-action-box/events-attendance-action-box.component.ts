@@ -1,13 +1,12 @@
-/*tslint:disable:max-line-length*/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/index';
 
+import { CheckInMethod } from '../../../event.status';
 import { CPSession } from './../../../../../../../session';
 import { EventUtilService } from '../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants/privileges';
 import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
-import { CheckInMethod } from '../../../event.status';
 
 @Component({
   selector: 'cp-events-attendance-action-box',
@@ -28,11 +27,11 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
 
   hasQr;
   qrLabel;
+  canMessage;
   eventCheckinRoute;
   canDownload: boolean;
   disableMessageAttendees;
   messageAttendeesTooltipText;
-  canMessage = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.campus_announcements);
 
   constructor(
     public session: CPSession,
@@ -64,7 +63,26 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
     this.onToggleQr.emit(this.hasQr);
   }
 
+  getStudentIds(attendees) {
+    if (attendees) {
+
+      return attendees.filter((attendee) => attendee.user_id)
+        .map((attendee) => attendee.user_id).length;
+    }
+  }
+
+  getTotalAttendees(attendees) {
+    if (attendees) {
+
+      return attendees.length;
+    }
+  }
+
   ngOnInit() {
+    this.canMessage = canSchoolWriteResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.campus_announcements);
+
     this.canDownload = this.session.canAttendance(this.event.store_id);
 
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
@@ -77,14 +95,21 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
     });
 
     this.totalAttendees.subscribe((attendees) => {
-      this.disableMessageAttendees = !this.canMessage || !attendees;
-      if (!attendees) {
-        this.messageAttendeesTooltipText = this.cpI18n.translate(
-          't_events_attendance_no_attendees_tooltip_text'
-        );
-      } else if (!this.canMessage) {
+      this.disableMessageAttendees = !this.canMessage
+        || !this.getTotalAttendees(attendees)
+        || !this.getStudentIds(attendees);
+
+      if (!this.canMessage) {
         this.messageAttendeesTooltipText = this.cpI18n.translate(
           't_events_attendance_no_permission_tooltip_text'
+        );
+      } else if (!this.getStudentIds(attendees)) {
+        this.messageAttendeesTooltipText = this.cpI18n.translate(
+          't_events_attendance_no_students_tooltip_text'
+        );
+      } else if (!this.getTotalAttendees(attendees)) {
+        this.messageAttendeesTooltipText = this.cpI18n.translate(
+          't_events_attendance_no_attendees_tooltip_text'
         );
       } else {
         this.messageAttendeesTooltipText = '';

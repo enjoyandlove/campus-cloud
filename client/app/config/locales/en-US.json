@@ -2488,6 +2488,9 @@
   "t_events_attendance_no_permission_tooltip_text": {
     "message": "Notify permission required"
   },
+  "t_events_attendance_no_students_tooltip_text": {
+    "message": "No App user to send message"
+  },
   "t_events_attendance_type": {
     "message": "Attendance Type"
   },
@@ -2529,6 +2532,21 @@
   },
   "t_external_checkin_time": {
     "message": "Check-In Time"
+  },
+  "t_external_check_in_check_out_button": {
+    "message": "Check-Out"
+  },
+  "t_external_check_in_check_out_modal_title": {
+    "message": "Check-Out"
+  },
+  "t_external_check_in_check_out_time": {
+    "message": "Check-Out Time"
+  },
+  "t_external_check_in_error_fill_out_all_fields": {
+    "message": "Please fill out the marked fields"
+  },
+  "t_external_check_in_greater_than_checkout_error": {
+    "message": "Check-Out must be > Check-In"
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
