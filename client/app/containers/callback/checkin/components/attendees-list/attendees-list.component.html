@@ -28,19 +28,21 @@
         <br>
         <small class="text-muted">{{ attendee.email }}</small>
       </div>
-      <div class="col-2">{{ attendee.check_in_type}}</div>
+      <div class="col-2">
+        <i class="material-icons">{{ checkInMethodType(attendee.check_in_type) }}</i>
+      </div>
       <div [class]="data.has_checkout ? 'col-3' : 'col-4'">
         {{ attendee.check_in_time_epoch | cpDatePipe:dateFormat }}
       </div>
       <div class="col-3" *ngIf="data.has_checkout">
-        <span *ngIf="attendee.check_out_time_epoch !== empty">
+        <span *ngIf="attendee.check_out_time_epoch && attendee.check_out_time_epoch !== empty">
           {{ attendee.check_out_time_epoch | cpDatePipe:dateFormat }}
         </span>
 
         <button
           class="cpbtn cpbtn--cancel"
           (click)="onCheckOutModal(attendee)"
-          *ngIf="attendee.check_out_time_epoch === empty">
+          *ngIf="showCheckOutButton(attendee)">
           {{ 't_external_check_in_check_out_button' | cpI18n }}
         </button>
       </div>
@@ -52,7 +54,7 @@
   <cp-check-out-modal
     [attendee]="attendee"
     [timezone]="data.tz_zoneinfo_str"
-    (created)="onCreated($event)"
+    (checkout)="onCheckOut($event)"
     (teardown)="launchCheckOutModal = false">
   </cp-check-out-modal>
 </cp-modal>

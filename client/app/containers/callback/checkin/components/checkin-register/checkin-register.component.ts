@@ -1,9 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import IAttendee from '../attendee.interface';
+import ICheckIn from '../../checkin.interface';
 import { CPSession } from '../../../../../session';
 import { CPDate } from '../../../../../shared/utils';
-import { CheckInOutTime } from '../../../callback.status';
+import { CheckInOutTime, CheckInType } from '../../../callback.status';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 
@@ -19,8 +21,8 @@ const COMMON_DATE_PICKER_OPTIONS = {
   styleUrls: ['./checkin-register.component.scss']
 })
 export class CheckinRegisterComponent implements OnInit {
-  @Input() data: any;
-  @Output() send: EventEmitter<any> = new EventEmitter();
+  @Input() data: ICheckIn;
+  @Output() send: EventEmitter<IAttendee> = new EventEmitter();
 
   datePickerOptions;
   placeholder = 'Now';
@@ -35,7 +37,7 @@ export class CheckinRegisterComponent implements OnInit {
 
     data = {
       ...data,
-      check_in_type: 'web',
+      check_in_type: CheckInType.web,
       check_out_time_epoch: CheckInOutTime.empty
     };
 

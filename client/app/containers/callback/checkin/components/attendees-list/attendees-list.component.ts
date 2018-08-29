@@ -1,7 +1,9 @@
 import { Component, Input } from '@angular/core';
 
+import ICheckIn from '../../checkin.interface';
+import IAttendee from '../attendee.interface';
 import { FORMAT } from '../../../../../shared/pipes';
-import { CheckInOutTime } from '../../../callback.status';
+import { CheckInOutTime, CheckInType } from '../../../callback.status';
 
 @Component({
   selector: 'cp-attendees-list',
@@ -9,15 +11,19 @@ import { CheckInOutTime } from '../../../callback.status';
   styleUrls: ['./attendees-list.component.scss']
 })
 export class CheckinAttendeesListComponent {
-  @Input() data;
+  @Input() data: ICheckIn;
 
-  attendee;
-  timezone;
+  timezone: string;
+  attendee: IAttendee;
   launchCheckOutModal = false;
   dateFormat = FORMAT.DATETIME;
   empty = CheckInOutTime.empty;
 
-  onCheckOutModal(attendee) {
+  checkInMethodType(method) {
+    return method === CheckInType.web ? 'computer' : 'smartphone';
+  }
+
+  onCheckOutModal(attendee: IAttendee) {
     this.attendee = attendee;
     this.launchCheckOutModal = true;
 
@@ -30,12 +36,19 @@ export class CheckinAttendeesListComponent {
     );
   }
 
-  onCreated(data) {
+  showCheckOutButton(attendee: IAttendee) {
+    return (!attendee.check_out_time_epoch
+      || attendee.check_out_time_epoch === this.empty)
+      && attendee.check_in_type === CheckInType.web;
+  }
+
+  onCheckOut(newAttendee: IAttendee) {
     this.attendee = null;
     this.launchCheckOutModal = true;
 
     const attendees = this.data.attendees
-      .map((attendee) => attendee.attendance_id === data.attendance_id ? data : attendee);
+      .map((attendee: IAttendee) => attendee.attendance_id === newAttendee.attendance_id
+        ? newAttendee : attendee);
 
     this.data = {
       ...this.data,

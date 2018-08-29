@@ -12,6 +12,7 @@ import {
   HostListener
 } from '@angular/core';
 
+import IAttendee from '../attendee.interface';
 import { CPDate } from '../../../../../shared/utils';
 import { CheckinService } from '../../checkin.service';
 import { CPI18nService } from '../../../../../shared/services/i18n.service';
@@ -31,11 +32,11 @@ const COMMON_DATE_PICKER_OPTIONS = {
 })
 
 export class CheckOutModalComponent implements OnInit {
-  @Input() attendee;
-  @Input() timezone;
+  @Input() timezone: string;
+  @Input() attendee: IAttendee;
 
-  @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
+  @Output() checkout: EventEmitter<IAttendee> = new EventEmitter();
 
   eventId;
   formErrors;
@@ -90,8 +91,7 @@ export class CheckOutModalComponent implements OnInit {
     }
 
     const search = new HttpParams()
-      .append('event_id', this.eventId.toString())
-      .append('check_in_id', this.attendee.attendance_id.toString());
+      .append('event_id', this.eventId.toString());
 
     this.service.doEventCheckin(this.form.value, search).subscribe(
       (_) => {
@@ -100,11 +100,11 @@ export class CheckOutModalComponent implements OnInit {
           check_out_time_epoch: checkOutTime.value
         };
 
-        this.created.emit(this.attendee);
+        this.checkout.emit(this.attendee);
         this.resetModal();
       },
       (_) => {
-
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
       });
   }
 
@@ -128,10 +128,12 @@ export class CheckOutModalComponent implements OnInit {
     };
 
     this.form = this.fb.group({
-      email: [this.attendee.email],
-      lastname: [this.attendee.lastname],
-      firstname: [this.attendee.firstname],
+      email: [this.attendee.email, Validators.required],
       check_out_time_epoch: [null, Validators.required],
+      lastname: [this.attendee.lastname, Validators.required],
+      firstname: [this.attendee.firstname, Validators.required],
+      attendance_id: [this.attendee.attendance_id, Validators.required],
+      check_in_time_epoch: [this.attendee.check_in_time_epoch, Validators.required],
     });
   }
 }
