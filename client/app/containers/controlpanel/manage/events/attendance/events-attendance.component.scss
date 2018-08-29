@@ -4,16 +4,10 @@
 @import '~styles/core/colors';
 
 .cp-table {
-  &__header {
-    span.hover {
-      position: relative;
 
-      > span i {
-        top: 1px;
-        font-size: 17px;
-        position: absolute;
-        padding-left: 6px;
-      }
+  &__item {
+    span i.action-button {
+      color: $color-secondary-text;
     }
   }
 
@@ -26,6 +20,10 @@
     padding: 10px;
     margin: 5px 0 0 0;
     background-color: $color-light-grey;
+  }
+
+  .margin-right {
+    margin-right: 10px;
   }
 }
 

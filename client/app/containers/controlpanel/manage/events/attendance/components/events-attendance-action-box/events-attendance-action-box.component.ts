@@ -7,6 +7,7 @@ import { EventUtilService } from '../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants/privileges';
 import { canSchoolWriteResource } from './../../../../../../../shared/utils/privileges/privileges';
+import { CheckInMethod } from '../../../event.status';
 
 @Component({
   selector: 'cp-events-attendance-action-box',
@@ -15,13 +16,18 @@ import { canSchoolWriteResource } from './../../../../../../../shared/utils/priv
 })
 export class EventsAttendanceActionBoxComponent implements OnInit {
   @Input() event: any;
-  @Input() totalAttendees = new BehaviorSubject(null);
   @Input() isOrientation: boolean;
+  @Input() updateQrCode = new BehaviorSubject(null);
+  @Input() totalAttendees = new BehaviorSubject(null);
 
   @Output() querySearch: EventEmitter<string> = new EventEmitter();
   @Output() createExcel: EventEmitter<null> = new EventEmitter();
   @Output() sendMessage: EventEmitter<null> = new EventEmitter();
+  @Output() addCheckIn: EventEmitter<null> = new EventEmitter();
+  @Output() onToggleQr: EventEmitter<boolean> = new EventEmitter();
 
+  hasQr;
+  qrLabel;
   eventCheckinRoute;
   canDownload: boolean;
   disableMessageAttendees;
@@ -50,10 +56,25 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
     this.sendMessage.emit();
   }
 
+  onAddCheckIn() {
+    this.addCheckIn.emit();
+  }
+
+  onEnableDisableQR() {
+    this.onToggleQr.emit(this.hasQr);
+  }
+
   ngOnInit() {
     this.canDownload = this.session.canAttendance(this.event.store_id);
 
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
+
+    this.updateQrCode.subscribe((checkInMethods) => {
+      this.hasQr = checkInMethods.includes(CheckInMethod.app);
+      this.qrLabel = this.hasQr
+        ? this.cpI18n.translate('t_events_assessment_disable_qr_check_in')
+        : this.cpI18n.translate('t_events_assessment_enable_qr_check_in');
+    });
 
     this.totalAttendees.subscribe((attendees) => {
       this.disableMessageAttendees = !this.canMessage || !attendees;

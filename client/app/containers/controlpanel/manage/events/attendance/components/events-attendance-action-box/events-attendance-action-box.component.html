@@ -10,14 +10,22 @@
         class="cpbtn cpbtn--cancel margin-right">
         {{ 'download_csv' | cpI18n }}
       </button>
-      <a
-        [routerLink]="[eventCheckinRoute + event.encrypted_id]"
+      <button
+        (click)="onAddCheckIn()"
         class="cpbtn cpbtn--primary no-right-padding cpbtn--square-right">
-        {{ 't_event_assessment_web_checkin_page' | cpI18n }}
-      </a>
+        {{ 't_events_assessment_add_check_in' | cpI18n }}
+      </button>
       <div class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
         <i class="material-icons" data-toggle="dropdown">expand_more</i>
         <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
+          <li>
+            <a [routerLink]="[eventCheckinRoute + event.encrypted_id]">
+              {{ 't_event_assessment_web_checkin_page' | cpI18n }}
+            </a>
+          </li>
+          <li
+            (click)="onEnableDisableQR()"
+            class="list-as-anchor"> {{ qrLabel }}</li>
           <li
             data-toggle="tooltip"
             data-placement="left"
