@@ -1,3 +1,4 @@
+import { IPersona } from './../../persona.interface';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -27,6 +28,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   loading;
   buttonData;
   campusLinkId;
+  persona: IPersona;
   personaId: number;
   guide: ICampusGuide;
   campusLinkForm: FormGroup;
@@ -186,14 +188,15 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   fetch() {
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
 
-    const personas$ = this.personaService.getPersonaById(this.personaId, search);
+    const persona$ = this.personaService.getPersonaById(this.personaId, search);
 
     super
-      .fetchData(personas$)
+      .fetchData(persona$)
       .then(({ data }) => {
         const persona = data;
 
         this.buildForm();
+        this.persona = persona;
 
         this.buildHeader(this.utils.getPersonaNameByLocale(persona));
       })
