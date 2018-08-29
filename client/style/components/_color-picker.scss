@@ -1,6 +1,10 @@
 @import '~node_modules/pickr-widget/dist/pickr.min.css';
 
 .pickr {
+  .pcr-button {
+    border-radius: 4px !important;
+    border: 1px solid $border-color;
+  }
   .pcr-app {
     @include font_family();
 
@@ -14,5 +18,9 @@
       letter-spacing: none;
       background: $color-brand;
     }
+  }
+
+  .pcr-app .pcr-output .pcr-type {
+    display: none;
   }
 }
