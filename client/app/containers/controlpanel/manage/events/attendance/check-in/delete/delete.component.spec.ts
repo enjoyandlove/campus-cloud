@@ -3,13 +3,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 
-import { EventsModule } from '../../../../events.module';
-import { AttendanceType } from '../../../../event.status';
-import { EventsService } from '../../../../events.service';
+import { EventsModule } from '../../../events.module';
+import { attendanceType } from '../../../event.status';
+import { EventsService } from '../../../events.service';
 import { CheckInDeleteComponent } from './delete.component';
-import { CPSession } from '../../../../../../../../session';
-import { mockSchool } from '../../../../../../../../session/mock';
-import { CPI18nService } from '../../../../../../../../shared/services';
+import { CPSession } from '../../../../../../../session';
+import { mockSchool } from '../../../../../../../session/mock';
+import { CPI18nService } from '../../../../../../../shared/services';
+
+const mockCheckIn = require('../../../__mock__/eventCheckIn.json');
 
 class MockService {
   dummy;
@@ -28,10 +30,8 @@ describe('EventCheckInDeleteComponent', () => {
 
   const mockEvent = {
     id: 12543,
-    has_checkout: AttendanceType.checkInCheckOut
+    has_checkout: attendanceType.checkInCheckOut
   };
-
-  const mockCheckIn = require('../mockCheckIn.json');
 
   beforeEach(
     async(() => {
@@ -55,12 +55,6 @@ describe('EventCheckInDeleteComponent', () => {
         });
     })
   );
-
-  it('buttonData should have "Delete" label & "Danger class"', () => {
-    component.ngOnInit();
-    expect(component.buttonData.text).toEqual('Delete');
-    expect(component.buttonData.class).toEqual('danger');
-  });
 
   it('should delete check-in', () => {
     spyOn(component.deleted, 'emit');

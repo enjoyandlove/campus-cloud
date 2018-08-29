@@ -49,7 +49,7 @@ export enum CheckInOutTime {
   'empty' = -1
 }
 
-export const QRCode = {
+export const qrCode = {
   'enabled': true,
   'disabled': false
 };
@@ -59,7 +59,7 @@ export const isAllDay = {
   disabled: false
 };
 
-export const AttendanceType = {
+export const attendanceType = {
   'checkInOnly': false,
   'checkInCheckOut': true
 };

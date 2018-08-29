@@ -31,7 +31,7 @@ import { OrientationEventsService } from '../orientation/events/orientation.even
 
 import { EventsRoutingModule } from './events.routing.module';
 import { SharedModule } from '../../../../shared/shared.module';
-import { CheckInModule } from './attendance/components/check-in/check-in.module';
+import { CheckInModule } from './attendance/check-in/check-in.module';
 import { EngagementStudentsModule } from '../../assess/students/students.module';
 
 @NgModule({

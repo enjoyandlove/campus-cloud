@@ -1,13 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import IEvent from '../../../../event.interface';
-import { CheckInOutTime } from '../../../../event.status';
-import { CPSession } from '../../../../../../../../session';
-import { CPDate } from '../../../../../../../../shared/utils';
+import IEvent from '../../../event.interface';
+import { CheckInOutTime } from '../../../event.status';
+import { CPSession } from '../../../../../../../session';
+import { CPDate } from '../../../../../../../shared/utils';
 
 const COMMON_DATE_PICKER_OPTIONS = {
-  utc: true,
   altInput: true,
   enableTime: true,
   altFormat: 'F j, Y h:i K'
@@ -20,7 +19,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
 })
 export class CheckInFormComponent implements OnInit {
   @Input() event: IEvent;
-  @Input() isEdit: false;
+  @Input() isEdit = false;
   @Input() form: FormGroup;
   @Input() formErrors: string;
 

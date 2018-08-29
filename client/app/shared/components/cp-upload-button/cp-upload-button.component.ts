@@ -16,8 +16,12 @@ export class CPUploadButtonComponent implements OnInit {
 
   constructor() {}
 
-  onChange(file) {
-    this.fileUpload.emit(file.target.files[0]);
+  onChange(event) {
+    this.fileUpload.emit(event.target.files[0]);
+
+    // chrome wont trigger change event if
+    // you upload same file unless we clear it
+    event.target.value = null;
   }
 
   ngOnInit() {}

@@ -3,15 +3,17 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormBuilder } from '@angular/forms';
 import { of as observableOf } from 'rxjs';
 
-import { EventsModule } from '../../../../events.module';
-import { AttendanceType } from '../../../../event.status';
-import { EventsService } from '../../../../events.service';
+import { EventsModule } from '../../../events.module';
+import { attendanceType } from '../../../event.status';
+import { EventsService } from '../../../events.service';
 import { CheckInCreateComponent } from './create.component';
-import { CPSession } from '../../../../../../../../session';
+import { CPSession } from '../../../../../../../session';
 import { CheckInUtilsService } from '../check-in.utils.service';
-import { mockSchool } from '../../../../../../../../session/mock';
-import { EventUtilService } from '../../../../events.utils.service';
-import { CPI18nService } from '../../../../../../../../shared/services';
+import { mockSchool } from '../../../../../../../session/mock';
+import { EventUtilService } from '../../../events.utils.service';
+import { CPI18nService } from '../../../../../../../shared/services';
+
+const mockCheckIn = require('../../../__mock__/eventCheckIn.json');
 
 class MockService {
   dummy;
@@ -23,17 +25,15 @@ class MockService {
   }
 }
 
-fdescribe('EventCheckInCreateComponent', () => {
+describe('EventCheckInCreateComponent', () => {
   let spy;
   let component: CheckInCreateComponent;
   let fixture: ComponentFixture<CheckInCreateComponent>;
 
   const mockEvent = {
     id: 12543,
-    has_checkout: AttendanceType.checkInCheckOut
+    has_checkout: attendanceType.checkInCheckOut
   };
-
-  const mockCheckIn = require('../mockCheckIn.json');
 
   beforeEach(
     async(() => {
@@ -59,16 +59,10 @@ fdescribe('EventCheckInCreateComponent', () => {
           component.session.g.set('school', mockSchool);
           component.event = mockEvent;
           component.ngOnInit();
-          component.form = component.checkInUtils.getCheckInForm(mockCheckIn, component.event.id);
+          component.form = component.checkInUtils.getCheckInForm(mockCheckIn, component.event);
         });
     })
   );
-
-  it('buttonData should have "Save" label & "primary class"', () => {
-    component.ngOnInit();
-    expect(component.buttonData.text).toEqual('Save');
-    expect(component.buttonData.class).toEqual('primary');
-  });
 
   it('form validation should fail required fields missing', () => {
     component.form.controls['email'].setValue(null);
@@ -85,8 +79,11 @@ fdescribe('EventCheckInCreateComponent', () => {
     const dateError = component.cpI18n
       .translate('t_events_attendance_add_check_in_error_check_out_time_after_check_in');
 
-    component.form.controls['check_in_time'].setValue(1598918399);
-    component.form.controls['check_out_time_epoch'].setValue(1538390648);
+    const checkInTime = 1598918399;
+    const checkOutTimeInPast = 1538390648;
+
+    component.form.controls['check_in_time'].setValue(checkInTime);
+    component.form.controls['check_out_time_epoch'].setValue(checkOutTimeInPast);
     component.onSubmit();
 
     expect(component.formErrors).toBeTruthy();
@@ -100,8 +97,11 @@ fdescribe('EventCheckInCreateComponent', () => {
     spy = spyOn(component.service, 'addEventCheckIn')
       .and.returnValue(observableOf(mockCheckIn));
 
-    component.form.controls['check_in_time'].setValue(1598918399);
-    component.form.controls['check_out_time_epoch'].setValue(1601549048);
+    const checkInTime = 1598918399;
+    const checkOutTimeInFuture = 1601549048;
+
+    component.form.controls['check_in_time'].setValue(checkInTime);
+    component.form.controls['check_out_time_epoch'].setValue(checkOutTimeInFuture);
     component.onSubmit();
 
     expect(spy).toHaveBeenCalled();

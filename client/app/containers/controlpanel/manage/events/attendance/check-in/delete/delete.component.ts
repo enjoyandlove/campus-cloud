@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
 import { ICheckIn } from '../check-in.interface';
-import { EventsService } from '../../../../events.service';
-import { CPSession } from '../../../../../../../../session';
-import { CPI18nService } from '../../../../../../../../shared/services';
+import { EventsService } from '../../../events.service';
+import { CPSession } from '../../../../../../../session';
+import { CPI18nService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-delete-check-in',

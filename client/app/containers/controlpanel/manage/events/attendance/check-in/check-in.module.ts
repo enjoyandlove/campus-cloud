@@ -8,7 +8,7 @@ import { CheckInCreateComponent } from './create';
 import { CheckInDeleteComponent } from './delete';
 
 import { CheckInUtilsService } from './check-in.utils.service';
-import { SharedModule } from '../../../../../../../shared/shared.module';
+import { SharedModule } from '../../../../../../shared/shared.module';
 
 @NgModule({
   declarations: [
