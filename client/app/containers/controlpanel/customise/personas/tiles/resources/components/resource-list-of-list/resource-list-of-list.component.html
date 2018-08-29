@@ -41,6 +41,7 @@
   *ngIf="state.showModal"
   modalId="resourceCreateModal">
   <cp-personas-resource-create
+    [persona]="persona"
     (error)="onError($event)"
     (teardown)="onTearDown()"
     (success)="onCreatedResource($event)">
