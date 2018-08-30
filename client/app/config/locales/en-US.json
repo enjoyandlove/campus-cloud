@@ -2488,6 +2488,9 @@
   "t_events_attendance_no_permission_tooltip_text": {
     "message": "Notify permission required"
   },
+  "t_events_attendance_no_students_tooltip_text": {
+    "message": "No App user to send message"
+  },
   "t_events_attendance_type": {
     "message": "Attendance Type"
   },

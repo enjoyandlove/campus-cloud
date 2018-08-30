@@ -24,14 +24,16 @@
 }
 
 .action {
-  &.show {
-    .orientation__dropdown {
-      display: block;
+  text-align: center;
+  
+  button {    
+    &:first-child {
+      float: left;
     }
-  }
-
-  .orientation__dropdown {
-    display: none;
+    
+    &:last-child {
+      float: right;
+    }
   }
 }
 

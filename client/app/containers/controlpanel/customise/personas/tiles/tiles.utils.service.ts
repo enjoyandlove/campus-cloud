@@ -12,6 +12,21 @@ import { IPersona } from '../persona.interface';
 
 @Injectable()
 export class TilesUtilsService {
+  static webAppSupportedLinkUrls = [
+    'oohlala://campus_service',
+    'oohlala://store',
+    'oohlala://job_list',
+    'oohlala://store_list',
+    'oohlala://school_campaign',
+    'oohlala://event_list',
+    'oohlala://campaign_list',
+    'oohlala://deal_store_list',
+    'oohlala://campus_service_list',
+    'oohlala://campus_poi_list',
+    'oohlala://campus_security_service',
+    'oohlala://campus_link_list'
+  ];
+
   defaultTileCategoryIds = [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13];
 
   constructor(
@@ -23,6 +38,12 @@ export class TilesUtilsService {
 
   isTileDefault(tile: ITile) {
     return this.defaultTileCategoryIds.includes(tile.tile_category_id);
+  }
+
+  isTileSupportedByWebApp(tile: ITile) {
+    const supportedLinkUrls = TilesUtilsService.webAppSupportedLinkUrls;
+
+    return supportedLinkUrls.includes(tile.related_link_data.link_url);
   }
 
   isCampaignTile(tile: ITile) {
