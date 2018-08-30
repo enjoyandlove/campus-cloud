@@ -81,7 +81,7 @@ export class CheckOutModalComponent implements OnInit {
       return;
     }
 
-    if (checkOutTime.value <= this.attendee.check_in_time_epoch) {
+    if (checkOutTime.value < this.attendee.check_in_time_epoch) {
       this.formErrors = true;
       this.enableCheckOutButton();
       checkOutTime.setErrors({ required: true });
@@ -110,13 +110,17 @@ export class CheckOutModalComponent implements OnInit {
 
   enableCheckOutButton() {
     this.buttonData = {
-      class: 'primary',
-      text: this.cpI18n.translate('t_external_check_in_check_out_button')
+      ...this.buttonData,
+      disabled: false
     };
   }
 
   ngOnInit() {
-    this.enableCheckOutButton();
+    this.buttonData = {
+      class: 'primary',
+      disable: false,
+      text: this.cpI18n.translate('t_external_check_in_check_out_button')
+    };
 
     const _self = this;
     this.checkOutOptions = {

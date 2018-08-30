@@ -1,6 +1,4 @@
 export default interface  IAttendee {
-  time: number;
-
   email: string;
 
   firstname: string;
