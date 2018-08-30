@@ -1,5 +1,5 @@
 <div [ngSwitch]="loading">
-  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <cp-working *ngSwitchCase="true"></cp-working>
 
   <div class="menu" *ngSwitchCase="false">
     <button
@@ -26,11 +26,12 @@
           <div class="row">
             <div class="col-12">
               <div class="menu__item">
-                <label i18n>{{ 'events_event_attendance' | cpI18n }}</label>
-                <cp-switch
-                  [id]="id1"
-                  (toggle)="toggleEventAttendance()">
-                </cp-switch>
+                <label i18n>{{ 't_events_attendance_type' | cpI18n }}</label>
+                <cp-dropdown
+                  [items]="checkInOptions"
+                  [selectedItem]="checkInOptions[i]"
+                  (selected)="updateCheckInOption($event)">
+                </cp-dropdown>
               </div>
             </div>
           </div>
