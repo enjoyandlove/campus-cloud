@@ -141,10 +141,13 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
   private buildGroup() {
     const control = <FormArray>this.form.controls['events'];
+    const selectedCheckInOption = this.checkInOptions.filter((
+      selected) => selected.action === attendanceType.checkInOnly)[0];
 
     this.events.forEach((event, index) => {
       control.push(this.buildEventControl(event));
       this.isSingleChecked.push({ index, checked: false });
+      this.selectedCheckInOption[index] = selectedCheckInOption;
     });
 
     this.isFormReady = true;
@@ -493,11 +496,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     );
   }
 
-  setDefaultSelectedCheckInType() {
-    const controls = <FormArray>this.form.controls['events'];
-    controls.controls.map((_, i) => this.selectedCheckInOption[i] = this.checkInOptions[1]);
-  }
-
   ngOnInit() {
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,
@@ -518,6 +516,15 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       disabled: true
     };
 
+    const attendanceTypeOptions = [{
+      action: null,
+      label: this.cpI18n.translate('t_events_assessment_no_check_in')
+    }];
+
+    this.eventAttendanceFeedback = this.utils.getAttendanceFeedback();
+
+    this.checkInOptions = [...attendanceTypeOptions, ...this.utils.getAttendanceTypeOptions()];
+
     this.store.select('EVENTS_MODAL').subscribe((res) => {
       this.events = res;
 
@@ -530,15 +537,5 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       this.buildForm();
       this.buildHeader();
     });
-
-    const attendanceTypeOptions = [{
-      action: null,
-      label: this.cpI18n.translate('t_events_assessment_no_check_in')
-    }];
-
-    this.eventAttendanceFeedback = this.utils.getAttendanceFeedback();
-
-    this.checkInOptions = [...attendanceTypeOptions, ...this.utils.getAttendanceTypeOptions()];
-    this.setDefaultSelectedCheckInType();
   }
 }
