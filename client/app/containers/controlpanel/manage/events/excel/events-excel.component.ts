@@ -1,28 +1,36 @@
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
+import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
-import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
+
+import { EventsService } from '../events.service';
+import { CPDate } from '../../../../../shared/utils';
+import { STATUS } from '../../../../../shared/constants';
+import { EventUtilService } from '../events.utils.service';
+import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { CPSession, ISchool } from '../../../../../session';
+import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { CPImageUploadComponent } from '../../../../../shared/components';
-import { STATUS } from '../../../../../shared/constants';
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+
+import {
+  isAllDay,
+  CheckInMethod,
+  EventFeedback,
+  attendanceType,
+  EventAttendance
+} from '../event.status';
+
 import {
   AdminService,
+  StoreService,
   CPI18nService,
-  FileUploadService,
-  StoreService
+  FileUploadService
 } from '../../../../../shared/services';
-import { CPDate } from '../../../../../shared/utils';
-import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
-import { EventsService } from '../events.service';
-import { EventUtilService } from '../events.utils.service';
-/*tslint:disable:max-line-length*/
 
 const i18n = new CPI18nPipe();
 
@@ -49,16 +57,18 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   urlPrefix;
   formError;
   buttonData;
-  selectedHost = [];
-  eventManager = [];
-  attendanceFeedback = [];
-  uploadButtonData;
-  isSingleChecked = [];
+  checkInOptions = [];
   school: ISchool;
   loading = false;
   form: FormGroup;
+  uploadButtonData;
+  selectedHost = [];
+  eventManager = [];
   isFormReady = false;
+  isSingleChecked = [];
+  attendanceFeedback = [];
   eventAttendanceFeedback;
+  selectedCheckInOption = [];
   resetManagerDropdown$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -157,22 +167,23 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     }
 
     return this.fb.group({
-      store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
       room: [event.room],
-      is_all_day: [isAllDay.enabled],
-      title: [event.title, Validators.required],
-      poster_url: [null, Validators.required],
-      poster_thumb_url: [null, Validators.required],
+      event_manager_id: [null],
       location: [event.location],
-      managers: [[{ label: '---', event: null }]],
+      is_all_day: [isAllDay.enabled],
       description: [event.description],
+      attendance_manager_email: [null],
+      poster_url: [null, Validators.required],
+      event_feedback: [EventFeedback.enabled],
+      title: [event.title, Validators.required],
+      has_checkout: [attendanceType.checkInOnly],
+      event_attendance: [EventAttendance.enabled],
+      managers: [[{ label: '---', event: null }]],
+      poster_thumb_url: [null, Validators.required],
       end: [CPDate.toEpoch(event.end_date, this.session.tz), Validators.required],
       start: [CPDate.toEpoch(event.start_date, this.session.tz), Validators.required],
-      // these controls are only required when event attendance is true
-      attendance_manager_email: [null],
-      event_manager_id: [null],
-      event_attendance: [EventAttendance.enabled],
-      event_feedback: [EventFeedback.enabled]
+      store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
+      attend_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
     });
   }
 
@@ -194,7 +205,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     const control = <FormArray>this.form.controls['events'];
     if ('store_id' in actions && !this.isOrientation) {
       // load all managers for all controls
-      this.updateManagersByStoreOrClubId(actions.store_id.value);
+      if (actions.store_id) {
+        this.updateManagersByStoreOrClubId(actions.store_id.value);
+      }
     }
 
     this.isSingleChecked.map((item) => {
@@ -214,6 +227,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
           } else if (key === 'event_feedback') {
             this.attendanceFeedback[item.index] = actions[key];
             ctrl.controls[key].setValue(actions[key].event);
+          } else if (key === 'has_checkout') {
+            this.selectedCheckInOption[item.index] = actions[key];
+            ctrl.controls[key].setValue(actions[key].action);
           } else if (actions[key] !== null) {
             ctrl.controls[key].setValue(actions[key]);
           }
@@ -251,7 +267,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   getManagersByHostId(storeOrClubId): Observable<any> {
-    if (!storeOrClubId) {
+    if (!storeOrClubId && !this.isOrientation) {
       return of([{ label: '---' }]);
     }
     const search: HttpParams = new HttpParams()
@@ -420,6 +436,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
         start: events[key].start,
         location: events[key].location,
         poster_url: events[key].poster_url,
+        has_checkout: events[key].has_checkout,
         poster_thumb_url: events[key].poster_thumb_url,
         event_attendance: events[key].event_attendance
       };
@@ -465,14 +482,20 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     );
   }
 
-  toggleSingleEventAttendance(checked, index) {
+  updateCheckInOption(item, index) {
     const controls = <FormArray>this.form.controls['events'];
     const control = <FormGroup>controls.controls[index];
 
+    control.controls['has_checkout'].setValue(item);
     control.controls['event_manager_id'].setValue(null);
     control.controls['event_attendance'].setValue(
-      checked ? EventAttendance.enabled : EventAttendance.disabled
+      item !== null ? EventAttendance.enabled : EventAttendance.disabled
     );
+  }
+
+  setDefaultSelectedCheckInType() {
+    const controls = <FormArray>this.form.controls['events'];
+    controls.controls.map((_, i) => this.selectedCheckInOption[i] = this.checkInOptions[1]);
   }
 
   ngOnInit() {
@@ -508,15 +531,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       this.buildHeader();
     });
 
-    this.eventAttendanceFeedback = [
-      {
-        label: 'Enabled',
-        event: 1
-      },
-      {
-        label: 'Disabled',
-        event: 0
-      }
-    ];
+    const attendanceTypeOptions = [{
+      action: null,
+      label: this.cpI18n.translate('t_events_assessment_no_check_in')
+    }];
+
+    this.eventAttendanceFeedback = this.utils.getAttendanceFeedback();
+
+    this.checkInOptions = [...attendanceTypeOptions, ...this.utils.getAttendanceTypeOptions()];
+    this.setDefaultSelectedCheckInType();
   }
 }

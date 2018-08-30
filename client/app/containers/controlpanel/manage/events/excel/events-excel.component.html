@@ -49,9 +49,9 @@
                           <div class="col-8">
                             <div class="event__thumbnail">
                               <span
-                                  class="deleteButton hover"
-                                  (click)="onRemoveImage(i)"
-                                  *ngIf="event.controls['poster_url'].value">
+                                class="deleteButton hover"
+                                (click)="onRemoveImage(i)"
+                                *ngIf="event.controls['poster_url'].value">
                                 &times;
                               </span>
                               <cp-upload-button
@@ -68,7 +68,7 @@
                             </div>
                           </div>
                         </div>
-                        </div>
+                      </div>
 
                       <div [class]="[storeId || clubId || isOrientation ? 'col-9 no-left-padding text-truncate' : 'col-8 no-left-padding text-truncate']">
                         <span class="event__title">
@@ -90,19 +90,17 @@
                       [isRequiredError]="formError && event.controls.store_id.hasError('required')">
                     </cp-dropdown>
                   </div>
-                  <div class="col-2">
-                    <label>{{ 'assessment' | cpI18n }}</label>
-                    <cp-switch
-                      [id]="i"
-                      [isChecked]="event.controls['event_attendance'].value"
-                      (toggle)="toggleSingleEventAttendance($event, i)">
-                    </cp-switch>
-
+                  <div class="col-2 no-left-padding">
+                    <label>{{ 't_events_attendance_type' | cpI18n }}</label>
+                    <cp-dropdown
+                      [items]="checkInOptions"
+                      [selectedItem]="selectedCheckInOption[i]"
+                      (selected)="updateCheckInOption($event.action, i)">
+                    </cp-dropdown>
                   </div>
-                  <div
-                    class="col-5 no-left-padding" *ngIf="event.controls.event_attendance.value">
+                  <div class="col-5" *ngIf="event.controls.event_attendance.value">
                     <div class="row">
-                      <div class="col-4 no-left-padding">
+                      <div class="col-4">
                         <label>{{ 'student_feedback' | cpI18n }}</label>
                         <cp-dropdown
                           [selectedItem]="attendanceFeedback[i]"
