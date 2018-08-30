@@ -7,7 +7,15 @@
   }
 
   &__item {
+    cursor: grab;
     padding: 18px 0;
+
+    i {
+      top: 9px;
+      left: -5px;
+      position: relative;
+      color: $color-med-grey;
+    }
 
     > div {
       line-height: 1;

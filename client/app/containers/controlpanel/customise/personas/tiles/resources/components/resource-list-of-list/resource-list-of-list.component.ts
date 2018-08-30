@@ -21,6 +21,8 @@ export class PersonasResourceListOfListComponent implements OnInit {
   @Output() resourceAdded: EventEmitter<any> = new EventEmitter();
 
   links$;
+  sortableOptions;
+
   meta = {
     is_system: 1,
     link_params: {
@@ -113,10 +115,14 @@ export class PersonasResourceListOfListComponent implements OnInit {
 
     stream$.subscribe(
       (resources: any) => {
+        const sortedResources = this.selectedIds.map(
+          (id) => resources.filter((r) => r.id === id)[0]
+        );
+
         this.state = {
           ...this.state,
           loading: false,
-          resources: [...resources]
+          resources: sortedResources
         };
       },
       () => this.errorHandler()
@@ -132,7 +138,16 @@ export class PersonasResourceListOfListComponent implements OnInit {
     this.udpateMetaAndEmit();
   }
 
+  onDragged() {
+    this.udpateMetaAndEmit();
+  }
+
   ngOnInit(): void {
+    this.sortableOptions = {
+      scroll: false,
+      onUpdate: this.onDragged.bind(this)
+    };
+
     if (this.selectedIds) {
       this.fetchLinks();
     }
