@@ -24,7 +24,7 @@ export class TilesUtilsService {
     'oohlala://campus_service_list',
     'oohlala://campus_poi_list',
     'oohlala://campus_security_service',
-    'oohlala://default_campus_link_list'
+    'oohlala://campus_link_list'
   ];
 
   defaultTileCategoryIds = [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13];
