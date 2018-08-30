@@ -13,7 +13,6 @@ import { IPersona } from '../persona.interface';
 @Injectable()
 export class TilesUtilsService {
   static webAppSupportedLinkUrls = [
-    'oohlala://campus_link_list',
     'oohlala://campus_service',
     'oohlala://store',
     'oohlala://job_list',
@@ -24,7 +23,8 @@ export class TilesUtilsService {
     'oohlala://deal_store_list',
     'oohlala://campus_service_list',
     'oohlala://campus_poi_list',
-    'oohlala://campus_security_service'
+    'oohlala://campus_security_service',
+    'oohlala://default_campus_link_list'
   ];
 
   defaultTileCategoryIds = [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13];
