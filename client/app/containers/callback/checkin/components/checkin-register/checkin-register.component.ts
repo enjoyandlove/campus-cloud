@@ -6,7 +6,6 @@ import ICheckIn from '../../checkin.interface';
 import { CPSession } from '../../../../../session';
 import { CPDate } from '../../../../../shared/utils';
 import { CPI18nService } from '../../../../../shared/services';
-import { CheckInOutTime, CheckInType } from '../../../callback.status';
 import { CheckInMethod } from '../../../../controlpanel/manage/events/event.status';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
@@ -44,12 +43,6 @@ export class CheckinRegisterComponent implements OnInit {
     if (!data.check_in_time_epoch) {
       data.check_in_time_epoch = Math.round(CPDate.now(this.session.tz).unix());
     }
-
-    data = {
-      ...data,
-      check_in_type: CheckInType.web,
-      check_out_time_epoch: CheckInOutTime.empty
-    };
 
     this.registrationForm.reset();
     this.send.emit(data);
