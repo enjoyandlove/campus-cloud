@@ -40,13 +40,14 @@
         *ngFor="let opt of items | cpFilterPipe: { query: query, filterBy: 'label' }">
         <div class="row">
           <div class="col-12">
-            <p>
+            <p *ngIf="!opt.heading">
               <cp-checkbox
                 [label]="opt.label"
                 (toggle)="onToggle(null, opt)"
                 [isChecked]="opt.selected">
               </cp-checkbox>
             </p>
+            <p *ngIf="opt.heading">{{opt.label}}</p>
           </div>
         </div>
       </li>

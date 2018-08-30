@@ -31,7 +31,10 @@ export class CPFilterPipe implements PipeTransform {
       });
 
       if (!filterResults.length) {
-        filterResults.push({ [filterBy]: 'No Results' });
+        filterResults.push({
+          heading: true,
+          [filterBy]: 'No Results'
+        });
       }
     }
 
