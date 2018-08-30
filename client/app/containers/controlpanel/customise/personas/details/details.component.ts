@@ -13,7 +13,7 @@ import {
 } from './../../../../../reducers/snackbar.reducer';
 import { IPersona } from './../persona.interface';
 import { PersonasService } from './../personas.service';
-import { PersonaValidationErrors } from './../personas.status';
+import { PersonaValidationErrors, PersonasType } from './../personas.status';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
@@ -45,6 +45,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   personaId;
   guideNames;
   tileToDelete: ITile;
+  isWebPersona = false;
   sectionToDelete: ICampusGuide;
   tileDeleteModalId = 'tileDeleteModal';
   sectionDeleteModalId = 'sectionDeleteModal';
@@ -525,7 +526,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     const request$ = persona$.pipe(
       switchMap((persona: IPersona) => {
         const key = CPI18nService.getLocale().startsWith('fr') ? 'fr' : 'en';
-
+        this.isWebPersona = persona.platform === PersonasType.web;
         this.updateHeader(persona.localized_name_map[key]);
 
         return combineLatest([tilesByPersona$, tileCategories$, tilesByPersonaZero$]);
@@ -535,6 +536,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     const stream$ = request$.pipe(
       map(([tiles, categories, tilesByPersonaZero]) => {
         tiles = this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero);
+
+        if (this.isWebPersona) {
+          tiles = tiles.filter((tile) => this.tileUtils.isTileSupportedByWebApp(tile));
+        }
 
         return {
           featured: this.utils.getFeatureTiles(tiles),
