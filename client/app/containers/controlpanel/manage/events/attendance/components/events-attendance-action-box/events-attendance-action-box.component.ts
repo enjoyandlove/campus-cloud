@@ -71,13 +71,6 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
     }
   }
 
-  getTotalAttendees(attendees) {
-    if (attendees) {
-
-      return attendees.length;
-    }
-  }
-
   ngOnInit() {
     this.canMessage = canSchoolWriteResource(
       this.session.g,
@@ -96,7 +89,6 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
 
     this.totalAttendees.subscribe((attendees) => {
       this.disableMessageAttendees = !this.canMessage
-        || !this.getTotalAttendees(attendees)
         || !this.getStudentIds(attendees);
 
       if (!this.canMessage) {
@@ -106,10 +98,6 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
       } else if (!this.getStudentIds(attendees)) {
         this.messageAttendeesTooltipText = this.cpI18n.translate(
           't_events_attendance_no_students_tooltip_text'
-        );
-      } else if (!this.getTotalAttendees(attendees)) {
-        this.messageAttendeesTooltipText = this.cpI18n.translate(
-          't_events_attendance_no_attendees_tooltip_text'
         );
       } else {
         this.messageAttendeesTooltipText = '';

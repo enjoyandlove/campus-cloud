@@ -1,71 +1,55 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/index';
-import { StoreModule } from '@ngrx/store';
 
 import { EventsModule } from '../../../events.module';
-import { CheckInMethod } from '../../../event.status';
 import { CPSession } from '../../../../../../../session';
-import { reducers } from '../../../../../../../reducers';
-import { mockUser } from '../../../../../../../session/mock';
 import { EventUtilService } from '../../../events.utils.service';
-import { CPI18nService } from '../../../../../../../shared/services';
+import { mockUser } from '../../../../../../../session/mock/user';
 import { mockSchool } from '../../../../../../../session/mock/school';
-import { EventsAttendanceComponent } from '../../events-attendance.component';
+import { CPI18nService } from '../../../../../../../shared/services';
 import { EventsAttendanceActionBoxComponent } from './events-attendance-action-box.component';
 
-const mockEvent = require('../../../list/base/mockEvents.json');
-
-fdescribe('EventAttendanceActionBoxComponent', () => {
-  let updateQr = new BehaviorSubject(null);
+fdescribe('EventsAttendanceActionBoxComponent', () => {
   let component: EventsAttendanceActionBoxComponent;
   let fixture: ComponentFixture<EventsAttendanceActionBoxComponent>;
 
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [
-          EventsModule,
-          HttpClientModule,
-          RouterTestingModule,
-          StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
-          })
-        ],
-        providers: [
-          CPSession,
-          CPI18nService,
-          EventUtilService,
-        ]
+        imports: [EventsModule, HttpClientModule, RouterTestingModule],
+        providers: [CPSession, CPI18nService, EventUtilService]
       })
         .compileComponents()
         .then(() => {
-          fixture = TestBed.createComponent(EventsAttendanceComponent);
-
+          fixture = TestBed.createComponent(EventsAttendanceActionBoxComponent);
           component = fixture.componentInstance;
-          component.event = mockEvent[0];
           component.session.g.set('user', mockUser);
           component.session.g.set('school', mockSchool);
+          component.updateQrCode = new BehaviorSubject(null);
+          component.totalAttendees = new BehaviorSubject(null);
+
+          component.event = {
+            store_id: 12548
+          };
         });
     })
   );
 
-  it('updateQrCode', () => {
-    const qrCodes = [CheckInMethod.app, CheckInMethod.web, CheckInMethod.webQr];
-
-    // const hasQrLabel = component.cpI18n.translate('t_events_assessment_disable_qr_check_in');
-
-    updateQr.next(qrCodes);
-
-    component.updateQrCode = updateQr;
-
+  it('should have canMessage privileges', () => {
     component.ngOnInit();
+    // expect(component.canMessage).toBeTruthy();
 
-    console.log(component.hasQr);
-    // expect(component.hasQr).toBeTruthy();
-    // expect(component.qrLabel).toBe(hasQrLabel);
+    /*component.session.g.set('user', { school_level_privileges: {} });
+    component.ngOnInit();
+    expect(component.canMessage).toBeFalsy();*/
   });
 
+  it('onTabClick - existing store', () => {
+    component.updateQrCode.next([1, 2, 3]);
+
+    component.ngOnInit();
+    expect(component.hasQr).toBeTruthy();
+  });
 });
