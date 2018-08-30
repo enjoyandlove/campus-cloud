@@ -141,11 +141,13 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
   private buildGroup() {
     const control = <FormArray>this.form.controls['events'];
+    const selectedCheckInOption = this.checkInOptions.filter((
+      selected) => selected.action === attendanceType.checkInOnly)[0];
 
     this.events.forEach((event, index) => {
       control.push(this.buildEventControl(event));
-      this.selectedCheckInOption[index] = this.checkInOptions[1];
       this.isSingleChecked.push({ index, checked: false });
+      this.selectedCheckInOption[index] = selectedCheckInOption;
     });
 
     this.isFormReady = true;
