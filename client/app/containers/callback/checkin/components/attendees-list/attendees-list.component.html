@@ -1,5 +1,27 @@
 <div class="attendees">
-  <div class="attendees__header">
+  <!-- temporary code for services will be removed once service check in done -->
+  <div class="attendees__header" *ngIf="isService">
+    <div class="row">
+      <div class="col-12">
+        <p>{{ 'checkin_attendance_list' | cpI18n }} ({{ data.attendees.length}})</p>
+      </div>
+    </div>
+  </div>
+
+  <ul class="attendees__list" *ngIf="isService">
+    <li class="attendees__item" *ngFor="let attendee of data.attendees">
+      <span class="attendees__name">{{ attendee.firstname }} {{ attendee.lastname }}</span>
+      <br>
+      <span class="attendees__email">{{ attendee.email }}</span>
+
+      <span>
+        <i class="material-icons attendees__icon float-right">check</i>
+      </span>
+    </li>
+  </ul>
+  <!-- END-->
+
+  <div class="attendees__header" *ngIf="!isService">
     <div class="row">
       <div [class]="data.has_checkout ? 'col-4' : 'col-6'">
         <p>{{ 'checkin_attendance_list' | cpI18n }}</p>
@@ -15,8 +37,7 @@
       </div>
     </div>
   </div>
-
-  <div class="attendees__list">
+  <div class="attendees__list" *ngIf="!isService">
     <div class="row attendees__item" *ngFor="let attendee of data.attendees">
       <div
         class="text-truncate"

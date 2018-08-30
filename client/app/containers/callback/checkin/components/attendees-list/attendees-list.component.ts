@@ -12,6 +12,7 @@ import { CheckInOutTime, CheckInType } from '../../../callback.status';
 })
 export class CheckinAttendeesListComponent {
   @Input() data: ICheckIn;
+  @Input() isService: boolean;
 
   timezone: string;
   attendee: IAttendee;

@@ -5,7 +5,9 @@ import IAttendee from '../attendee.interface';
 import ICheckIn from '../../checkin.interface';
 import { CPSession } from '../../../../../session';
 import { CPDate } from '../../../../../shared/utils';
+import { CPI18nService } from '../../../../../shared/services';
 import { CheckInOutTime, CheckInType } from '../../../callback.status';
+import { CheckInMethod } from '../../../../controlpanel/manage/events/event.status';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 
@@ -22,13 +24,21 @@ const COMMON_DATE_PICKER_OPTIONS = {
 })
 export class CheckinRegisterComponent implements OnInit {
   @Input() data: ICheckIn;
+  @Input() isService: boolean;
+
   @Output() send: EventEmitter<IAttendee> = new EventEmitter();
 
+  buttonData;
   datePickerOptions;
   placeholder = 'Now';
+  disableCheckInTooltip = '';
   registrationForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private session: CPSession) {}
+  constructor(
+    private fb: FormBuilder,
+    private session: CPSession,
+    private cpI18n: CPI18nService
+  ) {}
 
   onSubmit(data) {
     if (!data.check_in_time_epoch) {
@@ -41,8 +51,28 @@ export class CheckinRegisterComponent implements OnInit {
       check_out_time_epoch: CheckInOutTime.empty
     };
 
-    this.send.emit(data);
     this.registrationForm.reset();
+    this.send.emit(data);
+  }
+
+  disableManualCheckIn() {
+    // todo temporary remove when service check-in done
+    if (this.isService) {
+      return;
+    }
+
+    const disabled = !this.data.attend_verification_methods.includes(CheckInMethod.web);
+
+    if (disabled) {
+      $(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+      });
+
+      this.disableCheckInTooltip = this.cpI18n.
+      translate('t_external_check_in_disable_manual_check_in');
+
+      return disabled;
+    }
   }
 
   ngOnInit() {
@@ -61,5 +91,20 @@ export class CheckinRegisterComponent implements OnInit {
           .setValue(CPDate.toEpoch(dateStr, _self.session.tz));
       }
     };
+
+    this.buttonData = {
+      disabled: true,
+      text: this.cpI18n.translate('confirm'),
+      class: 'primary cpbtn--full-width cpbtn--tall'
+    };
+
+    const isDisabledManualCheckIn = this.disableManualCheckIn();
+
+    this.registrationForm.valueChanges.subscribe(() => {
+      this.buttonData = {
+        ...this.buttonData,
+        disabled: !this.registrationForm.valid || isDisabledManualCheckIn
+      };
+    });
   }
 }

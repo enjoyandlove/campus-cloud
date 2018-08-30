@@ -47,4 +47,15 @@
       padding-bottom: 0;
     }
   }
+
+  // todo remove
+  &__name {
+    @include font-semi-bold();
+  }
+
+  &__icon {
+    display: block;
+    margin-top: -10px;
+    color: $color-success;
+  }
 }

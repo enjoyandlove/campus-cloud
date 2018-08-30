@@ -17,7 +17,7 @@
           [ngStyle]="{'background-image': 'url(' + data.qr_img_url + ')'}"></div>
       </div>
       <div class="col-6">
-        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
+        <form [formGroup]="registrationForm">
           <div class="form-group">
             <label>{{ 'first_name' | cpI18n }}</label>
             <input type="text" class="form-control" formControlName="firstname">
@@ -44,12 +44,12 @@
           <div class="form-group">
             <div class="row">
               <div class="col-12">
-                <button
-                  type="submit"
-                  [disabled]="!registrationForm.valid"
-                  class="cpbtn cpbtn--tall cpbtn--full-width cpbtn--primary">
-                  {{ 'confirm' | cpI18n }}
-                </button>
+                <cp-button
+                  [props]="buttonData"
+                  [attr.data-toggle]="'tooltip'"
+                  [attr.title]="disableCheckInTooltip"
+                  (buttonClick)="onSubmit(registrationForm.value)">
+                </cp-button>
               </div>
             </div>
           </div>
