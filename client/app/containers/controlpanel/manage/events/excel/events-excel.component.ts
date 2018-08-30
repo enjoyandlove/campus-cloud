@@ -21,7 +21,7 @@ import {
   isAllDay,
   CheckInMethod,
   EventFeedback,
-  AttendanceType,
+  attendanceType,
   EventAttendance
 } from '../event.status';
 
@@ -176,7 +176,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       poster_url: [null, Validators.required],
       event_feedback: [EventFeedback.enabled],
       title: [event.title, Validators.required],
-      has_checkout: [AttendanceType.checkInOnly],
+      has_checkout: [attendanceType.checkInOnly],
       event_attendance: [EventAttendance.enabled],
       managers: [[{ label: '---', event: null }]],
       poster_thumb_url: [null, Validators.required],
@@ -493,6 +493,11 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     );
   }
 
+  setDefaultSelectedCheckInType() {
+    const controls = <FormArray>this.form.controls['events'];
+    controls.controls.map((_, i) => this.selectedCheckInOption[i] = this.checkInOptions[1]);
+  }
+
   ngOnInit() {
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,
@@ -526,13 +531,14 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       this.buildHeader();
     });
 
-    const attendanceType = [{
+    const attendanceTypeOptions = [{
       action: null,
       label: this.cpI18n.translate('t_events_assessment_no_check_in')
     }];
 
     this.eventAttendanceFeedback = this.utils.getAttendanceFeedback();
 
-    this.checkInOptions = [...this.utils.getAttendanceTypeOptions(), ...attendanceType];
+    this.checkInOptions = [...attendanceTypeOptions, ...this.utils.getAttendanceTypeOptions()];
+    this.setDefaultSelectedCheckInType();
   }
 }

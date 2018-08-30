@@ -204,14 +204,14 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
       this.loading = false;
     }
 
-    const attendanceType = [{
+    const attendanceTypeOptions = [{
       action: null,
       label: this.cpI18n.translate('t_events_assessment_no_check_in')
     }];
 
     this.eventAttendanceFeedback = this.utils.getAttendanceFeedback();
 
-    this.checkInOptions = [...attendanceType, ...this.utils.getAttendanceTypeOptions()];
+    this.checkInOptions = [...attendanceTypeOptions, ...this.utils.getAttendanceTypeOptions()];
 
     this.state = {
       store_id: null,
