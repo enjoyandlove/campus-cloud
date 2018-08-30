@@ -1,6 +1,10 @@
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { PersonasLoginRequired } from './../../../../personas.status';
+import { PersonaType } from './../../../../../../assess/engagement/engagement.status';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { sortBy } from 'lodash';
+import { IPersona } from './../../../../persona.interface';
 import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
+import { ResourcesUtilsService } from '../../resources.utils.service';
 
 @Component({
   selector: 'cp-personas-resource-types',
@@ -10,6 +14,7 @@ import { CPI18nService } from '../../../../../../../../shared/services/i18n.serv
 export class PersonasResourceTypesComponent implements OnInit {
   @Input() resource;
   @Input() editView;
+  @Input() persona: IPersona;
 
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() linkUrl: EventEmitter<string> = new EventEmitter();
@@ -22,7 +27,7 @@ export class PersonasResourceTypesComponent implements OnInit {
 
   typeSearchComponent = ['store', 'campus_service', 'subscribable_calendar'];
 
-  constructor(public cpI18n: CPI18nService) {}
+  constructor(public cpI18n: CPI18nService, public utils: ResourcesUtilsService) {}
 
   onUrlChange(url) {
     this.linkUrl.emit(url);
@@ -45,6 +50,16 @@ export class PersonasResourceTypesComponent implements OnInit {
         label: this.cpI18n.translate(resource.label)
       };
     });
+
+    if (this.persona.login_requirement === PersonasLoginRequired.forbidden) {
+      this.resources = this.resources.filter((r) => (r.id ? !r.login_required : r));
+    }
+
+    if (this.persona.platform === PersonaType.web) {
+      this.resources = this.resources.filter(
+        (r) => (r.id ? this.utils.isResourceSupportedByWebApp(r.meta.link_url) : r)
+      );
+    }
 
     if (this.editView) {
       this.updateState();

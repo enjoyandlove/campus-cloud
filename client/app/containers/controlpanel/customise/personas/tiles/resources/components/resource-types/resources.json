@@ -6,6 +6,7 @@
   },
   {
     "id": "web_link",
+    "login_required": false,
     "label": "t_personas_tile_create_type_resource_web_link",
     "meta": {
       "is_system": 1,
@@ -15,6 +16,7 @@
   },
   {
     "id": "external_link",
+    "login_required": false,
     "label": "t_personas_tile_create_type_resource_external_link",
     "meta": {
       "is_system": 1,
@@ -24,6 +26,7 @@
   },
   {
     "id": "academic_calendar",
+    "login_required": true,
     "label": "t_personas_tile_create_resource_type_academic_calendar",
     "meta": {
       "is_system": 1,
@@ -34,6 +37,7 @@
   },
   {
     "id": "courses",
+    "login_required": true,
     "label": "t_personas_tile_create_resource_type_courses",
     "meta": {
       "is_system": 1,
@@ -44,6 +48,7 @@
   },
   {
     "id": "user_attended_events",
+    "login_required": true,
     "label": "t_personas_tile_create_resource_type_user_attended_events",
     "meta": {
       "is_system": 1,
@@ -54,6 +59,7 @@
   },
   {
     "id": "camera_qr",
+    "login_required": true,
     "label": "t_personas_tile_create_resource_type_camera_qr",
     "meta": {
       "is_system": 1,
@@ -64,6 +70,7 @@
   },
   {
     "id": "exams",
+    "login_required": true,
     "label": "t_personas_tile_create_resource_type_exams",
     "meta": {
       "is_system": 1,
@@ -74,6 +81,7 @@
   },
   {
     "id": "advisor_list",
+    "login_required": true,
     "label": "t_personas_tile_create_resource_type_advisor_list",
     "meta": {
       "is_system": 1,
@@ -84,6 +92,7 @@
   },
   {
     "id": "timetable",
+    "login_required": true,
     "label": "t_personas_tile_create_resource_type_timetable",
     "meta": {
       "is_system": 1,
@@ -94,6 +103,7 @@
   },
   {
     "id": "user_orientation_calendar_list",
+    "login_required": true,
     "label": "t_personas_tile_create_resource_type_user_orientation_calendar_list",
     "meta": {
       "is_system": 1,
@@ -104,6 +114,7 @@
   },
   {
     "id": "user_school_course_material_list",
+    "login_required": true,
     "label": "t_personas_tile_create_resource_type_user_school_course_material_list",
     "meta": {
       "is_system": 1,
@@ -114,6 +125,7 @@
   },
   {
     "id": "campus_poi_list",
+    "login_required": false,
     "label": "t_personas_tile_create_resource_type_campus_poi_list",
     "meta": {
       "is_system": 1,
@@ -124,6 +136,7 @@
   },
   {
     "id": "campus_tour_list",
+    "login_required": false,
     "label": "t_personas_tile_create_resource_type_campus_tour_list",
     "meta": {
       "is_system": 1,
@@ -134,6 +147,7 @@
   },
   {
     "id": "in_app_feedback",
+    "login_required": false,
     "label": "t_personas_tile_create_resource_type_in_app_feedback",
     "meta": {
       "is_system": 1,
@@ -144,6 +158,7 @@
   },
   {
     "id": "store_list",
+    "login_required": false,
     "label": "t_personas_tile_create_resource_type_store_list",
     "meta": {
       "is_system": 1,
@@ -154,6 +169,7 @@
   },
   {
     "id": "store",
+    "login_required": false,
     "label": "t_personas_tile_create_resource_type_store",
     "meta": {
       "is_system": 1,
@@ -164,6 +180,7 @@
   },
   {
     "id": "subscribable_calendar",
+    "login_required": false,
     "label": "t_personas_tile_create_resource_type_subscribable_calendar",
     "meta": {
       "is_system": 1,
@@ -174,6 +191,7 @@
   },
   {
     "id": "campus_service",
+    "login_required": false,
     "label": "t_personas_tile_create_resource_type_campus_service",
     "meta": {
       "is_system": 1,
@@ -184,6 +202,7 @@
   },
   {
     "id": "orientation_calendar_list",
+    "login_required": false,
     "label": "t_personas_tile_create_resource_type_orientation_calendar_list",
     "meta": {
       "is_system": 1,
@@ -194,6 +213,7 @@
   },
   {
     "id": "deal_store_list",
+    "login_required": false,
     "label": "t_personas_tile_create_resource_type_deal_store_list",
     "meta": {
       "is_system": 1,
@@ -204,6 +224,7 @@
   },
   {
     "id": "job_list",
+    "login_required": true,
     "label": "t_personas_tile_create_resource_type_job_list",
     "meta": {
       "is_system": 1,
@@ -214,6 +235,7 @@
   },
   {
     "id": "service_by_category_id",
+    "login_required": false,
     "label": "t_personas_tile_create_resource_type_service_by_category_id",
     "meta": {
       "is_system": 1,
@@ -224,6 +246,7 @@
   },
   {
     "id": "event_list",
+    "login_required": false,
     "label": "t_personas_tile_create_resource_type_event_list",
     "meta": {
       "is_system": 1,
@@ -234,6 +257,7 @@
   },
   {
     "id": "default_campus_link_list",
+    "login_required": false,
     "label": "t_personas_tile_create_resource_type_default_campus_link_list",
     "meta": {
       "is_system": 1,

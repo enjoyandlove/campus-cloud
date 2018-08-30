@@ -20,6 +20,7 @@
             {{ 't_personas_create_tile_heading_right' | cpI18n }}
           </p>
           <cp-personas-resource-form
+            [persona]="persona"
             [form]="campusLinkForm"
             (formChange)="onCampusLinkFormChange(campusLinkForm)">
           </cp-personas-resource-form>
