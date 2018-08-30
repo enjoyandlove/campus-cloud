@@ -182,6 +182,7 @@
 </div>
 
 <cp-modal
+  [centered]="true"
   modalId="editCheckInModal"
   *ngIf="isEditCheckInModal">
   <cp-edit-check-in
@@ -206,6 +207,7 @@
 </cp-modal>
 
 <cp-modal
+  [centered]="true"
   modalId="addCheckInModal"
   *ngIf="isAddCheckInModal">
   <cp-create-check-in
@@ -217,11 +219,12 @@
 </cp-modal>
 
 <cp-modal
+  [centered]="true"
   modalId="sendMessageModal"
   *ngIf="isSendMessageModal">
-<cp-students-compose
-  [props]="messageData"
-  (success)="onFlashMessage($event)"
-  (teardown)="onComposeTeardown()">
-</cp-students-compose>
+  <cp-students-compose
+    [props]="messageData"
+    (success)="onFlashMessage($event)"
+    (teardown)="onComposeTeardown()">
+  </cp-students-compose>
 </cp-modal>
