@@ -14,7 +14,7 @@ import { EventsAttendanceActionBoxComponent } from './events-attendance-action-b
 
 const mockAttendees = require('../../../__mock__/eventAttendees.json');
 
-describe('EventsAttendanceActionBoxComponent', () => {
+fdescribe('EventsAttendanceActionBoxComponent', () => {
   let component: EventsAttendanceActionBoxComponent;
   let fixture: ComponentFixture<EventsAttendanceActionBoxComponent>;
 
@@ -46,13 +46,13 @@ describe('EventsAttendanceActionBoxComponent', () => {
     component.updateQrCode.next([CheckInMethod.web, CheckInMethod.app, CheckInMethod.webQr]);
 
     component.ngOnInit();
-    expect(component.hasQr).toBeTruthy();
+    expect(component.hasQr).toBe(true);
     expect(component.qrLabel).toBe(enableQrLabel);
 
     component.updateQrCode.next([CheckInMethod.web, CheckInMethod.webQr]);
 
     component.ngOnInit();
-    expect(component.hasQr).toBeFalsy();
+    expect(component.hasQr).toBe(false);
     expect(component.qrLabel).toBe(disableQrLabel);
   });
 
@@ -65,8 +65,8 @@ describe('EventsAttendanceActionBoxComponent', () => {
 
     component.ngOnInit();
 
-    expect(component.canMessage).toBeFalsy();
-    expect(component.disableMessageAttendees).toBeTruthy();
+    expect(component.canMessage).toBe(false);
+    expect(component.disableMessageAttendees).toBe(true);
     expect(component.messageAttendeesTooltipText).toBe(noPermissionTooltip);
   });
 
@@ -78,8 +78,8 @@ describe('EventsAttendanceActionBoxComponent', () => {
 
     component.ngOnInit();
 
-    expect(component.canMessage).toBeTruthy();
-    expect(component.disableMessageAttendees).toBeTruthy();
+    expect(component.canMessage).toBe(true);
+    expect(component.disableMessageAttendees).toBe(true);
     expect(component.messageAttendeesTooltipText).toBe(noStudentTooltip);
   });
 });
