@@ -1,4 +1,4 @@
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
 import { of } from 'rxjs';
@@ -24,6 +24,7 @@ export class PersonasResourceServiceByCategoryComponent implements OnInit {
     include: true,
     selection: []
   };
+  multiSelectPlaceholder;
 
   constructor(
     public session: CPSession,
@@ -88,11 +89,18 @@ export class PersonasResourceServiceByCategoryComponent implements OnInit {
     return items;
   }
 
+  updateMultiSelectPlaceholder(items) {
+    this.multiSelectPlaceholder = items
+      .filter((i) => i.selected)
+      .map((i) => i.label)
+      .join(', ');
+  }
+
   loadCategories() {
     const headers = new HttpParams().set('school_id', this.session.g.get('school').id);
     this.items$ = this.tileService
       .getServiceCategories(headers)
-      .pipe(map(this.updateItems.bind(this)));
+      .pipe(map(this.updateItems.bind(this)), tap(this.updateMultiSelectPlaceholder.bind(this)));
   }
 
   updateState() {

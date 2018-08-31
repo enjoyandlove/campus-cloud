@@ -9,7 +9,8 @@
   <div class="col-8">
     <cp-dropdown-multiselect
       [items]="items$ | async"
-      (selection)="onMultiSelect($event)">
+      (selection)="onMultiSelect($event)"
+      [placeholder]="[multiSelectPlaceholder ? multiSelectPlaceholder : '...']">
     </cp-dropdown-multiselect>
   </div>
 </div>
