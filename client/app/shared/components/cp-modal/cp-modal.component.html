@@ -1,11 +1,12 @@
 <div
-  [id]="modalId"
   #cpModal
   role="dialog"
   tabindex="-1"
   class="modal"
-  aria-labelledby="myModalLabel">
-  <div [class]="['modal-dialog ' + class]" role="document">
+  [id]="modalId"
+  [attr.aria-labelledby]="modalId">
+  <div
+    [class]="class" role="document">
     <div class="modal-content">
       <div class="modal-body">
         <ng-content></ng-content>

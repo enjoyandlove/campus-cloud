@@ -13,11 +13,15 @@
     <ng-container [ngSwitch]="state.loading">
       <cp-spinner *ngSwitchCase="true"></cp-spinner>
       <ng-container *ngSwitchCase="false">
-        <div class="list__items">
+        <div
+          class="list__items"
+          [sortablejs]="state.resources"
+          [sortablejsOptions]="sortableOptions">
           <div
             class="row list__item"
             *ngFor="let resource of state.resources">
               <div class="col-11 text-truncate">
+                <i class="material-icons">drag_indicator</i>
                 <span class="image">
                   <img [src]="resource.img_url" class="img-fluid rounded"/>
                 </span>
