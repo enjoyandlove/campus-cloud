@@ -1,0 +1,21 @@
+@import '~styles/components/button';
+
+.widget {
+  &__wrapper {
+    padding: 15px;
+  }
+
+  &__body {
+    width: 770px;
+    height: 300px;
+    margin: 0 auto;
+  }
+
+  &__footer {
+    margin-top: 15px;
+
+    button:not(:last-child) {
+      margin-right: 12px;
+    }
+  }
+}

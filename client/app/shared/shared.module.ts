@@ -47,6 +47,7 @@ import {
   CPUploadButtonComponent,
   CPUploadModalBodyComponent,
   CPUploadModalComponent,
+  CPImageCropperComponent,
   CPUploadModalFooterComponent,
   CPUploadModalHeaderComponent,
   CPWorkingComponent,
@@ -55,7 +56,7 @@ import {
 import { CPLineChartUtilsService } from './components/cp-line-chart/cp-line-chart.utils.service';
 import { CPRangePickerUtilsService } from './components/cp-range-picker/cp-range-picker.utils.service';
 import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
-import { CPTrackerDirective, CPColorPickerDirective } from './directives';
+import { CPTrackerDirective, CPColorPickerDirective, CPHostDirective } from './directives';
 import { CPDatePipe, CPFilterPipe, CPI18nPipe, CPFIlterByLength } from './pipes';
 import {
   CPLocationsService,
@@ -68,6 +69,8 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
 
 @NgModule({
   declarations: [
+    CPHostDirective,
+    CPImageCropperComponent,
     CPColorPickerDirective,
     CPTabComponent,
     CPTabsComponent,
@@ -126,6 +129,8 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
     CPRangePickerComponent,
     CPLineChartComponent
   ],
+
+  entryComponents: [CPImageCropperComponent],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule, PopoverModule.forRoot()],
 
@@ -141,6 +146,7 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
   ],
 
   exports: [
+    CPHostDirective,
     CPColorPickerDirective,
     CPTabComponent,
     CPTabsComponent,
@@ -197,7 +203,8 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
     CPHeaderLinkComponent,
     CPSortingHeaderComponent,
     CPRangePickerComponent,
-    CPLineChartComponent
+    CPLineChartComponent,
+    CPImageCropperComponent
   ]
 })
 export class SharedModule {}
