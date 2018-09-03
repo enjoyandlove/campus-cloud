@@ -18,10 +18,10 @@
       <div class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
         <i class="material-icons" data-toggle="dropdown">expand_more</i>
         <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
-          <li
-            class="list-as-anchor hover"
-            [routerLink]="[eventCheckinRoute + event.encrypted_id]">
+          <li>
+            <a [routerLink]="[eventCheckinRoute + event.encrypted_id]">
               {{ 't_event_assessment_web_checkin_page' | cpI18n }}
+            </a>
           </li>
           <li
             (click)="onEnableDisableQR()"
