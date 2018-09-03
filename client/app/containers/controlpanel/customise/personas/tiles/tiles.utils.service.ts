@@ -10,6 +10,8 @@ import { TileCategoryRank, TileFeatureRank, TileVisibility } from './tiles.statu
 import { CPSession } from '../../../../../session';
 import { IPersona } from '../persona.interface';
 
+const threeHundrendKb = 3e5;
+
 @Injectable()
 export class TilesUtilsService {
   static webAppSupportedLinkUrls = [
@@ -120,10 +122,8 @@ export class TilesUtilsService {
     });
   }
 
-  async validateTileImage(file: File): Promise<string> {
+  async validateTileImage(file: File, maxImageSize = threeHundrendKb): Promise<string> {
     let error;
-    const threeHundrendKb = 3e5;
-    const maxImageSize = threeHundrendKb;
     const validExtension = (media) => ['image/jpeg', 'image/jpg', 'image/png'].includes(media.type);
     const validSize = FileUploadService.validFileSize(file, maxImageSize);
 

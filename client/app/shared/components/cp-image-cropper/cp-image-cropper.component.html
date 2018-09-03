@@ -1,0 +1,27 @@
+<cp-modal
+  [centered]="true"
+  [type]="modalWide"
+  modalId="imageCropper">
+  <div class="widget">
+    <div class="widget__wrapper">
+      <div class="widget__body">
+        <div #canvas></div>
+      </div>
+      <div class="widget__footer">
+        <button
+          type="button"
+          (click)="onCancel()"
+          class="cpbtn cpbtn--cancel">
+            {{ 'cancel' | cpI18n }}
+        </button>
+
+        <button
+          type="button"
+          (click)="onSave()"
+          class="cpbtn cpbtn--primary">
+            {{ 'save' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </div>
+</cp-modal>

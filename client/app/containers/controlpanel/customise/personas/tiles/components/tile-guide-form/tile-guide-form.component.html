@@ -23,6 +23,7 @@
       <label>{{'t_shared_image' | cpI18n }}</label>
       <cp-upload-button
         [id]="uploadButtonId"
+        [busy]="state.uploading"
         [buttonText]="uploadImageBtn"
         buttonClass="cpbtn cpbtn--link"
         (fileUpload)="onFileChanged($event)">
@@ -47,3 +48,5 @@
     </cp-personas-tile-base>
   </div>
 </form>
+
+<ng-template cpHost></ng-template>

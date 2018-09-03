@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 
 const Croppie = require('croppie');
 
-type Size = 'viewport' | 'original';
+type Size = 'viewport' | 'original' | { width: number; height: number };
 type Format = 'jpeg' | 'png' | 'webp';
 type Type = 'canvas' | 'base64' | 'html' | 'blob' | 'rawcanvas';
 
