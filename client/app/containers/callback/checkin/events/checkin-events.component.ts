@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CPSession } from '../../../../session';
 import { CheckinService } from '../checkin.service';
 import { BaseComponent } from '../../../../base/base.component';
+import { CheckInOutTime, CheckInType } from '../../callback.status';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService, ErrorService } from './../../../../shared/services';
 
@@ -22,13 +23,13 @@ const state: IState = {
   styleUrls: ['./checkin-events.component.scss']
 })
 export class CheckinEventsComponent extends BaseComponent implements OnInit {
+  @Input() isOrientation: boolean;
+
   loading;
   isEvent = true;
   eventId: string;
-  state: IState = state;
   search: HttpParams;
-
-  @Input() isOrientation: boolean;
+  state: IState = state;
 
   constructor(
     public router: Router,
@@ -47,15 +48,22 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
 
   onSubmit(data) {
     this.checkinService.doEventCheckin(data, this.search).subscribe(
-      (_) => {
-        this.updateAttendeesList(data);
+      (res) => {
+        this.updateAttendeesList(data, res);
         this.trackAmplitudeEvent(true);
       },
       (_) => this.errorService.handleError(this.cpI18n.translate('something_went_wrong'))
     );
   }
 
-  updateAttendeesList(data) {
+  updateAttendeesList(data, res) {
+    data = {
+      ...data,
+      attendance_id: res.attendance_id,
+      check_in_type: CheckInType.web,
+      check_out_time_epoch: CheckInOutTime.empty
+    };
+
     this.state.events = Object.assign({}, this.state.events, {
       attendees: [data, ...this.state.events['attendees']]
     });

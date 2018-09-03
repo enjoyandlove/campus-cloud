@@ -1,13 +1,15 @@
 <div class="attendees">
-  <div class="attendees__header">
+  <!-- temporary code for services will be removed once service check in done -->
+  <div class="attendees__header" *ngIf="isService">
     <div class="row">
       <div class="col-12">
-        <p i18n>{{ 'checkin_attendance_list' | cpI18n }} ({{ attendees.length}})</p>
+        <p>{{ 'checkin_attendance_list' | cpI18n }} ({{ data.attendees.length}})</p>
       </div>
     </div>
   </div>
-  <ul class="attendees__list">
-    <li class="attendees__item" *ngFor="let attendee of attendees">
+
+  <ul class="attendees__list" *ngIf="isService">
+    <li class="attendees__item" *ngFor="let attendee of data.attendees">
       <span class="attendees__name">{{ attendee.firstname }} {{ attendee.lastname }}</span>
       <br>
       <span class="attendees__email">{{ attendee.email }}</span>
@@ -17,4 +19,63 @@
       </span>
     </li>
   </ul>
+  <!-- END-->
+
+  <div class="attendees__header" *ngIf="!isService">
+    <div class="row">
+      <div [class]="data.has_checkout ? 'col-4' : 'col-6'">
+        <p>{{ 'checkin_attendance_list' | cpI18n }}</p>
+      </div>
+      <div class="col-2">
+        <p>{{ 't_external_checkin_method' | cpI18n }}</p>
+      </div>
+      <div [class]="data.has_checkout ? 'col-3' : 'col-4'">
+        <p>{{ 't_external_checkin_checkin' | cpI18n }}</p>
+      </div>
+      <div class="col-3" *ngIf="data.has_checkout">
+        <p>{{ 't_external_checkin_chechout' | cpI18n }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="attendees__list" *ngIf="!isService">
+    <div class="row attendees__item" *ngFor="let attendee of data.attendees">
+      <div
+        class="text-truncate"
+        [class]="data.has_checkout ? 'col-4' : 'col-6'">
+        <strong>
+          {{ attendee.firstname }}
+          {{ attendee.lastname }}
+        </strong>
+        <br>
+        <small class="text-muted">{{ attendee.email }}</small>
+      </div>
+      <div class="col-2">
+        <i class="material-icons">{{ attendee.check_in_type === checkInType ? 'computer' : 'smartphone' }}</i>
+      </div>
+      <div [class]="data.has_checkout ? 'col-3' : 'col-4'">
+        {{ attendee.check_in_time_epoch | cpDatePipe:dateFormat }}
+      </div>
+      <div class="col-3" *ngIf="data.has_checkout">
+        <span *ngIf="attendee.check_out_time_epoch && attendee.check_out_time_epoch !== empty">
+          {{ attendee.check_out_time_epoch | cpDatePipe:dateFormat }}
+        </span>
+
+        <button
+          class="cpbtn cpbtn--cancel"
+          (click)="onCheckOutModal(attendee)"
+          *ngIf="showCheckOutButton(attendee)">
+          {{ 't_external_check_in_check_out_button' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
+
+<cp-modal modalId="checkOutModal" *ngIf="launchCheckOutModal">
+  <cp-check-out-modal
+    [attendee]="attendee"
+    [timezone]="data.tz_zoneinfo_str"
+    (checkout)="onCheckOut($event)"
+    (teardown)="launchCheckOutModal = false">
+  </cp-check-out-modal>
+</cp-modal>

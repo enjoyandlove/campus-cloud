@@ -17,9 +17,9 @@ export class OrientationCheckinService extends CheckinService {
     return super.get(url, search, silent);
   }
 
-  doEventCheckin(data: any, search: HttpParams) {
+  doEventCheckin(data: any, search: HttpParams, silent = false) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EXTERNAL_USER_EVENT_CHECKIN}/`;
 
-    return super.update(url, data, search);
+    return super.update(url, data, search, silent);
   }
 }

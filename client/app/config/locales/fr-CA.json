@@ -2438,10 +2438,10 @@
     "message": "Contacter les participants"
   },
   "t_events_assessment_qr_enabled_no": {
-    "message": "Non"
+    "message": "Inactif"
   },
   "t_events_assessment_qr_enabled_yes": {
-    "message": "Oui"
+    "message": "Actif"
   },
   "t_events_attendance_add_check_in_delete_modal_body": {
     "message": "Voulez-vous supprimer %s?"
@@ -2473,9 +2473,6 @@
   "t_events_attendance_add_edit_check_in_last_name": {
     "message": "Nom"
   },
-  "t_events_attendance_no_attendees_tooltip_text": {
-    "message": "Il n'y a aucun utilisateur"
-  },
   "t_events_attendance_no_permission_tooltip_text": {
     "message": "Permission de notification requise"
   },
@@ -2483,7 +2480,7 @@
     "message": "Type de présence"
   },
   "t_events_event_qr_enabled": {
-    "message": "QR activé"
+    "message": "Code QR"
   },
   "t_events_import_import_events": {
     "message": "Importer des événements"
