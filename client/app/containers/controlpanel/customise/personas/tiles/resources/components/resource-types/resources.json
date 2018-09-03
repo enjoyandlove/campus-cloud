@@ -47,50 +47,6 @@
     }
   },
   {
-    "id": "user_attended_events",
-    "login_required": true,
-    "label": "t_personas_tile_create_resource_type_user_attended_events",
-    "meta": {
-      "is_system": 1,
-      "link_params": {},
-      "open_in_browser": 0,
-      "link_url": "oohlala://attended_event_list"
-    }
-  },
-  {
-    "id": "camera_qr",
-    "login_required": true,
-    "label": "t_personas_tile_create_resource_type_camera_qr",
-    "meta": {
-      "is_system": 1,
-      "link_params": {},
-      "open_in_browser": 0,
-      "link_url": "oohlala://camera_qr"
-    }
-  },
-  {
-    "id": "exams",
-    "login_required": true,
-    "label": "t_personas_tile_create_resource_type_exams",
-    "meta": {
-      "is_system": 1,
-      "link_params": {},
-      "open_in_browser": 0,
-      "link_url": "oohlala://exam_search"
-    }
-  },
-  {
-    "id": "advisor_list",
-    "login_required": true,
-    "label": "t_personas_tile_create_resource_type_advisor_list",
-    "meta": {
-      "is_system": 1,
-      "link_params": {},
-      "open_in_browser": 0,
-      "link_url": "oohlala://advisor_list"
-    }
-  },
-  {
     "id": "timetable",
     "login_required": true,
     "label": "t_personas_tile_create_resource_type_timetable",
@@ -113,17 +69,6 @@
     }
   },
   {
-    "id": "user_school_course_material_list",
-    "login_required": true,
-    "label": "t_personas_tile_create_resource_type_user_school_course_material_list",
-    "meta": {
-      "is_system": 1,
-      "link_params": {},
-      "open_in_browser": 0,
-      "link_url": "oohlala://user_school_course_material_list"
-    }
-  },
-  {
     "id": "campus_poi_list",
     "login_required": false,
     "label": "t_personas_tile_create_resource_type_campus_poi_list",
@@ -132,28 +77,6 @@
       "link_params": {},
       "open_in_browser": 0,
       "link_url": "oohlala://campus_poi_list"
-    }
-  },
-  {
-    "id": "campus_tour_list",
-    "login_required": false,
-    "label": "t_personas_tile_create_resource_type_campus_tour_list",
-    "meta": {
-      "is_system": 1,
-      "link_params": {},
-      "open_in_browser": 0,
-      "link_url": "oohlala://campus_tour_list"
-    }
-  },
-  {
-    "id": "in_app_feedback",
-    "login_required": false,
-    "label": "t_personas_tile_create_resource_type_in_app_feedback",
-    "meta": {
-      "is_system": 1,
-      "link_params": {},
-      "open_in_browser": 0,
-      "link_url": "oohlala://in_app_feedback"
     }
   },
   {

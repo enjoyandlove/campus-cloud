@@ -2699,7 +2699,7 @@
     "message": "New Tile"
   },
   "t_personas_tile_create_resource_type_academic_calendar": {
-    "message": "Academic Calendar"
+    "message": "Academic Calendars"
   },
   "t_personas_tile_create_resource_type_advisor_list": {
     "message": "Advisor List"
@@ -2707,35 +2707,23 @@
   "t_personas_tile_create_resource_type_athletics_club": {
     "message": "Athletic Clubs"
   },
-  "t_personas_tile_create_resource_type_camera_qr": {
-    "message": "Scan QR"
-  },
   "t_personas_tile_create_resource_type_campus_poi_list": {
-    "message": "Campus Map"
+    "message": "Maps"
   },
   "t_personas_tile_create_resource_type_campus_service": {
     "message": "Campus Service"
   },
-  "t_personas_tile_create_resource_type_campus_tour_list": {
-    "message": "Campus Tour List"
-  },
   "t_personas_tile_create_resource_type_courses": {
-    "message": "Courses"
+    "message": "Course Catalogue"
   },
   "t_personas_tile_create_resource_type_deal_store_list": {
     "message": "Deals"
   },
   "t_personas_tile_create_resource_type_default_campus_link_list": {
-    "message": "Campus Links List"
+    "message": "Links"
   },
   "t_personas_tile_create_resource_type_event_list": {
     "message": "Events"
-  },
-  "t_personas_tile_create_resource_type_exams": {
-    "message": "Exams"
-  },
-  "t_personas_tile_create_resource_type_in_app_feedback": {
-    "message": "In-App feedback"
   },
   "t_personas_tile_create_resource_type_job_list": {
     "message": "Jobs"
@@ -2744,34 +2732,28 @@
     "message": "Orientation"
   },
   "t_personas_tile_create_resource_type_service_by_category_id": {
-    "message": "Services by Category"
+    "message": "List of Services by Category"
   },
   "t_personas_tile_create_resource_type_store": {
     "message": "Stores"
   },
   "t_personas_tile_create_resource_type_store_list": {
-    "message": "Stores List"
+    "message": "Group or Club"
   },
   "t_personas_tile_create_resource_type_subscribable_calendar": {
-    "message": "Subscribable Calendar"
+    "message": "Calendar"
   },
   "t_personas_tile_create_resource_type_timetable": {
-    "message": "Timetable"
-  },
-  "t_personas_tile_create_resource_type_user_attended_events": {
-    "message": "User Attended Events"
+    "message": "My Calendar"
   },
   "t_personas_tile_create_resource_type_user_orientation_calendar_list": {
-    "message": "User subscribed orientation calendar"
-  },
-  "t_personas_tile_create_resource_type_user_school_course_material_list": {
-    "message": "User school course material list"
+    "message": "My Orientation Calendars"
   },
   "t_personas_tile_create_store_list_groups_and_clubs": {
     "message": "Groups and Clubs"
   },
   "t_personas_tile_create_type_resource_external_link": {
-    "message": "External Link"
+    "message": "External Web Link"
   },
   "t_personas_tile_create_type_resource_resource": {
     "message": "Resource"
@@ -2780,7 +2762,7 @@
     "message": "Resource List"
   },
   "t_personas_tile_create_type_resource_web_link": {
-    "message": "Web Link"
+    "message": "In-App Web Link"
   },
   "t_personas_tile_form_categories_excludes": {
     "message": "Excludes"
