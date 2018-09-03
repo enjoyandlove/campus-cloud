@@ -23,10 +23,10 @@ export class CheckinService extends CallbackService {
     return super.get(url, search, silent);
   }
 
-  doEventCheckin(data: any, search: HttpParams) {
+  doEventCheckin(data: any, search: HttpParams, silent = false) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EXTERNAL_EVENT_CHECKIN}/`;
 
-    return super.update(url, data, search);
+    return super.update(url, data, search, silent);
   }
 
   doServiceCheckin(data: any, search: HttpParams) {

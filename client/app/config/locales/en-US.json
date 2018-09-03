@@ -735,7 +735,7 @@
     "message": "Change School"
   },
   "checkins": {
-    "message": "Check-Ins"
+    "message": "Check-ins"
   },
   "checkin_attendance_list": {
     "message": "Attendance List"
@@ -985,7 +985,7 @@
     "message": "Announcements"
   },
   "dashboard_assessment_event_checkins": {
-    "message": "Event Check-Ins",
+    "message": "Event Check-ins",
     "description": "Dashboard Assessment tile"
   },
   "dashboard_assessment_feedback_rate": {
@@ -995,7 +995,7 @@
     "message": "LMS"
   },
   "dashboard_assessment_service_checkins": {
-    "message": "Service Check-Ins"
+    "message": "Service Check-ins"
   },
   "dashboard_assessment_student": {
     "message": "Student"
@@ -2327,7 +2327,7 @@
     "message": "Engagement(s)"
   },
   "t_assess_checkout_date": {
-    "message": "Check-Out Date"
+    "message": "Check-out Date"
   },
   "t_assess_no_orientation_data": {
     "message": "No Orientation Data"
@@ -2355,6 +2355,9 @@
   },
   "t_audience_save_modal_button_submit": {
     "message": "Save"
+  },
+  "t_check_in_date_placeholder_text": {
+    "message": "Now"
   },
   "t_customise_personas": {
     "message": "App Experiences"
@@ -2423,55 +2426,55 @@
     "message": "Store"
   },
   "t_events_assessment_add_checkin_modal_title": {
-    "message": "Check-In"
+    "message": "Check-in"
   },
   "t_events_assessment_add_check_in": {
-    "message": "Add Check-In"
+    "message": "Add Check-in"
   },
   "t_events_assessment_check_in_and_checkout": {
-    "message": "Check-In and Check-Out"
+    "message": "Check-in\\Check-out"
   },
   "t_events_assessment_check_in_only": {
-    "message": "Check-In Only"
+    "message": "Check-in Only"
   },
   "t_events_assessment_disable_qr_check_in": {
-    "message": "Disable QR Check-In"
+    "message": "Disable QR Check-in"
   },
   "t_events_assessment_enable_qr_check_in": {
-    "message": "Enable QR Check-In"
+    "message": "Enable QR Check-in"
   },
   "t_events_assessment_message_attendees": {
     "message": "Message Attendees"
   },
   "t_events_assessment_no_check_in": {
-    "message": "No Check-In"
+    "message": "No Check-in"
   },
   "t_events_assessment_qr_enabled_no": {
-    "message": "No"
+    "message": "Inactive"
   },
   "t_events_assessment_qr_enabled_yes": {
-    "message": "Yes"
+    "message": "Active"
   },
   "t_events_attendance_add_check_in_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
   "t_events_attendance_add_check_in_delete_modal_title": {
-    "message": "Delete Check-In"
+    "message": "Delete Check-in"
   },
   "t_events_attendance_add_check_in_error_check_in_time_after_now": {
-    "message": "Check-In Time must be in future"
+    "message": "Check-in time must be in future."
   },
   "t_events_attendance_add_check_in_error_check_out_time_after_check_in": {
-    "message": "Check-Out  must be later than Check-In"
+    "message": "Check-out time must be later than check-in time."
   },
   "t_events_attendance_add_check_in_error_fill_out_all_fields": {
     "message": "Please fill out the marked fields"
   },
   "t_events_attendance_add_edit_check_in_check_in_time": {
-    "message": "Check-In Time"
+    "message": "Check-in Time"
   },
   "t_events_attendance_add_edit_check_in_check_out_time": {
-    "message": "Check-Out Time"
+    "message": "Check-out Time"
   },
   "t_events_attendance_add_edit_check_in_email": {
     "message": "Email"
@@ -2482,9 +2485,6 @@
   "t_events_attendance_add_edit_check_in_last_name": {
     "message": "Last Name"
   },
-  "t_events_attendance_no_attendees_tooltip_text": {
-    "message": "There are no users"
-  },
   "t_events_attendance_no_permission_tooltip_text": {
     "message": "Notify permission required"
   },
@@ -2494,8 +2494,14 @@
   "t_events_attendance_type": {
     "message": "Attendance Type"
   },
+  "t_events_event_attendance_type_tooltip": {
+    "message": "\"Check-in\" records an attendee's name and email, and the time of the QR scan. \"Check-in/Check-out\" lets you scan attendees twice, and tracks start and finish time. Both options let you gather feedback."
+  },
+  "t_events_event_qr_code_tooltip": {
+    "message": "Make your event's QR code active to let students scan it, or you can deactivate the code."
+  },
   "t_events_event_qr_enabled": {
-    "message": "QR Enabled"
+    "message": "QR Code"
   },
   "t_events_import_import_events": {
     "message": "Import Events"
@@ -2504,49 +2510,58 @@
     "message": "Upload Image"
   },
   "t_event_assessment_check_in_date": {
-    "message": "Check-In"
+    "message": "Check-in"
   },
   "t_event_assessment_check_out_date": {
-    "message": "Check-Out"
+    "message": "Check-out"
   },
   "t_event_assessment_qr_code_disabled_success_message": {
-    "message": "QR Check-In successfully disabled"
+    "message": "QR Check-in successfully disabled"
   },
   "t_event_assessment_qr_code_enable_success_message": {
-    "message": "QR Check-In successfully enabled"
+    "message": "QR Check-in successfully enabled"
   },
   "t_event_assessment_time_spend": {
     "message": "Time Spend"
   },
   "t_event_assessment_web_checkin_page": {
-    "message": "Web Check-In Page"
+    "message": "Web Check-in Page"
   },
   "t_external_checkin_chechout": {
-    "message": "Check-Out"
+    "message": "Check-out"
   },
   "t_external_checkin_checkin": {
-    "message": "Check-In"
+    "message": "Check-in"
   },
   "t_external_checkin_method": {
     "message": "Method"
   },
   "t_external_checkin_time": {
-    "message": "Check-In Time"
+    "message": "Check-in Time"
+  },
+  "t_external_check_in_bad_request_error": {
+    "message": "Error in the parameters"
   },
   "t_external_check_in_check_out_button": {
-    "message": "Check-Out"
+    "message": "Check-out"
   },
   "t_external_check_in_check_out_modal_title": {
-    "message": "Check-Out"
+    "message": "Check-out"
   },
   "t_external_check_in_check_out_time": {
-    "message": "Check-Out Time"
+    "message": "Check-out Time"
   },
   "t_external_check_in_error_fill_out_all_fields": {
     "message": "Please fill out the marked fields"
   },
+  "t_external_check_in_forbidden_error": {
+    "message": " External event check-in not allowed"
+  },
   "t_external_check_in_greater_than_checkout_error": {
-    "message": "Check-Out must be > Check-In"
+    "message": "Check-out time must be later than check-in time."
+  },
+  "t_external_check_in_not_found_error": {
+    "message": "The requested campus event cannot be found"
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"

@@ -13,6 +13,7 @@ import { CallbackService } from './callback.service';
 import { SharedModule } from '../../shared/shared.module';
 import { CheckinService } from './checkin/checkin.service';
 import { FeedbackService } from './feedback/feedback.service';
+import { CheckinUtilsService } from './checkin/checkin.utils.service';
 
 import {
   BaseFeedbackComponent,
@@ -75,7 +76,8 @@ import {
     AuthService,
     CheckinService,
     FeedbackService,
-    CallbackService
+    CallbackService,
+    CheckinUtilsService
   ]
 })
 

@@ -50,7 +50,7 @@
         <small class="text-muted">{{ attendee.email }}</small>
       </div>
       <div class="col-2">
-        <i class="material-icons">{{ checkInMethodType(attendee.check_in_type) }}</i>
+        <i class="material-icons">{{ attendee.check_in_type === checkInType ? 'computer' : 'smartphone' }}</i>
       </div>
       <div [class]="data.has_checkout ? 'col-3' : 'col-4'">
         {{ attendee.check_in_time_epoch | cpDatePipe:dateFormat }}

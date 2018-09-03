@@ -15,6 +15,7 @@ import {
 import IAttendee from '../attendee.interface';
 import { CPDate } from '../../../../../shared/utils';
 import { CheckinService } from '../../checkin.service';
+import { CheckinUtilsService } from '../../checkin.utils.service';
 import { CPI18nService } from '../../../../../shared/services/i18n.service';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
@@ -50,7 +51,8 @@ export class CheckOutModalComponent implements OnInit {
     public fb: FormBuilder,
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
-    public service: CheckinService
+    public service: CheckinService,
+    public utils: CheckinUtilsService
   ) {
     this.eventId = this.route.snapshot.params['event'];
   }
@@ -93,7 +95,7 @@ export class CheckOutModalComponent implements OnInit {
     const search = new HttpParams()
       .append('event_id', this.eventId.toString());
 
-    this.service.doEventCheckin(this.form.value, search).subscribe(
+    this.service.doEventCheckin(this.form.value, search, true).subscribe(
       (_) => {
         this.attendee = {
           ...this.attendee,
@@ -103,8 +105,9 @@ export class CheckOutModalComponent implements OnInit {
         this.checkout.emit(this.attendee);
         this.resetModal();
       },
-      (_) => {
-        this.errorMessage = this.cpI18n.translate('something_went_wrong');
+      (err) => {
+        this.formErrors = true;
+        this.errorMessage = this.utils.getErrorMessage(err.status);
       });
   }
 

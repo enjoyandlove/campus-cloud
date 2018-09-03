@@ -3,6 +3,6 @@ export enum CheckInOutTime {
 }
 
 export enum CheckInType {
-  app = 'qr',
+  qr = 'qr',
   web = 'web'
 }

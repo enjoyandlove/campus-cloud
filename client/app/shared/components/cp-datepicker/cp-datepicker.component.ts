@@ -27,7 +27,7 @@ export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
 
   @Input() options: any;
   @Input() error: boolean;
-  @Input() placeholder: string;
+  @Input() placeholder = '';
 
   el;
   locale;

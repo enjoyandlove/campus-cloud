@@ -19,10 +19,7 @@ export class CheckinAttendeesListComponent {
   launchCheckOutModal = false;
   dateFormat = FORMAT.DATETIME;
   empty = CheckInOutTime.empty;
-
-  checkInMethodType(method) {
-    return method === CheckInType.web ? 'computer' : 'smartphone';
-  }
+  checkInType = CheckInType.web;
 
   onCheckOutModal(attendee: IAttendee) {
     this.attendee = attendee;
@@ -38,9 +35,12 @@ export class CheckinAttendeesListComponent {
   }
 
   showCheckOutButton(attendee: IAttendee) {
-    return (!attendee.check_out_time_epoch
-      || attendee.check_out_time_epoch === this.empty)
-      && attendee.check_in_type === CheckInType.web;
+    const webCheckIn = attendee.check_in_type === CheckInType.web;
+
+    const noCheckOutDate =  (!attendee.check_out_time_epoch
+      || attendee.check_out_time_epoch === this.empty);
+
+    return webCheckIn && noCheckOutDate;
   }
 
   onCheckOut(newAttendee: IAttendee) {

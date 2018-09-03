@@ -28,8 +28,8 @@ export class CheckinRegisterComponent implements OnInit {
   @Output() send: EventEmitter<IAttendee> = new EventEmitter();
 
   buttonData;
+  placeholder;
   datePickerOptions;
-  placeholder = 'Now';
   disableCheckInTooltip = '';
   registrationForm: FormGroup;
 
@@ -99,5 +99,7 @@ export class CheckinRegisterComponent implements OnInit {
         disabled: !this.registrationForm.valid || isDisabledManualCheckIn
       };
     });
+
+    this.placeholder = this.cpI18n.translate('t_check_in_date_placeholder_text');
   }
 }
