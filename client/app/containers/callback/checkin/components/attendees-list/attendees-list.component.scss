@@ -11,11 +11,11 @@
 .attendees {
   @include card-shadow();
   border-radius: 4px;
+  margin-bottom: 20px;
 
   &__header {
     @include card-padding();
 
-    border-bottom: none;
     border-radius: 4px 4px 0 0;
     background: $color-text-alt;
     border: 1px solid $border-color;
@@ -48,6 +48,7 @@
     }
   }
 
+  // todo remove
   &__name {
     @include font-semi-bold();
   }

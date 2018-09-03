@@ -14,7 +14,7 @@ import { EventsAttendanceActionBoxComponent } from './events-attendance-action-b
 
 const mockAttendees = require('../../../__mock__/eventAttendees.json');
 
-fdescribe('EventsAttendanceActionBoxComponent', () => {
+describe('EventsAttendanceActionBoxComponent', () => {
   let component: EventsAttendanceActionBoxComponent;
   let fixture: ComponentFixture<EventsAttendanceActionBoxComponent>;
 
