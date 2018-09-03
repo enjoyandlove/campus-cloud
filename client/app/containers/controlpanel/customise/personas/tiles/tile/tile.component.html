@@ -30,8 +30,8 @@
               (toggleVisibility)="onToggleTile()"
               [visible]="utils.isTileVisible(tile)"
               (deleteClick)="deleteClick.emit(tile)"
-              [editable]="!utils.isCampaignTile(tile)"
-              [defaultTile]="utils.isTileDefault(tile)">
+              [defaultTile]="utils.isTileDefault(tile)"
+              [editable]="!utils.isCampaignTile(tile) && !utils.isDeprecated(tile)">
             </cp-personas-tile-hover>
           </div>
         </div>

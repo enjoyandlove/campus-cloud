@@ -27,6 +27,16 @@ export class TilesUtilsService {
     'oohlala://campus_link_list'
   ];
 
+  static deprecatedTiles = [
+    'oohlala://camera_qr',
+    'oohlala://exam_search',
+    'oohlala://advisor_list',
+    'oohlala://in_app_feedback',
+    'oohlala://campus_tour_list',
+    'oohlala://attended_event_list',
+    'oohlala://user_school_course_material_list'
+  ];
+
   defaultTileCategoryIds = [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13];
 
   constructor(
@@ -51,6 +61,10 @@ export class TilesUtilsService {
       tile.related_link_data.link_url === 'oohlala://school_campaign' ||
       tile.related_link_data.link_url === 'oohlala://campaign_list'
     );
+  }
+
+  isDeprecated(tile: ITile) {
+    return TilesUtilsService.deprecatedTiles.includes(tile.related_link_data.link_url);
   }
 
   isFeatured(tile: ITile) {
