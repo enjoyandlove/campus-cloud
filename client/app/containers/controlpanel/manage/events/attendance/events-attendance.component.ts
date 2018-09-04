@@ -257,7 +257,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     this.messageData = {
       userIds,
       name: this.event.title,
-      store_id: this.event.store_id
+      storeId: this.event.store_id
     };
 
     this.loadModal();
@@ -272,7 +272,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
     this.messageData = {
       userIds: [attendee.user_id],
-      store_id: this.event.store_id,
+      storeId: this.event.store_id,
       name: `${attendee.firstname} ${attendee.lastname}`
     };
 

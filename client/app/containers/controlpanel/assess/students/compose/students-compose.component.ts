@@ -7,8 +7,9 @@ import {
   EventEmitter,
   HostListener
 } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/internal/operators';
+import { HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from '../../../../../session';
@@ -26,21 +27,19 @@ declare var $;
   styleUrls: ['./students-compose.component.scss']
 })
 export class StudentsComposeComponent implements OnInit {
-  @Input() props: { name: string; userIds: Array<number>, store_id: number };
+  @Input() props: { name: string; userIds: Array<number>, storeId: number };
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() success: EventEmitter<{ hostType: string }> = new EventEmitter();
 
   isError;
   stores$;
-  store_id;
   hostType;
   buttonData;
   sendAsName;
   errorMessage;
   selectedStore;
   form: FormGroup;
-  disableStore = false;
   resetStores$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -107,36 +106,36 @@ export class StudentsComposeComponent implements OnInit {
     const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
     this.selectedStore = this.session.defaultHost;
-    this.stores$ = this.storeService.getStores(search);
+    this.stores$ = this.storeService.getStores(search).pipe(
+      map((stores) => this.props.storeId ? this.getSelectedStore(stores) : stores
+    ));
+  }
 
-    this.hostType = this.session.defaultHost ? this.session.defaultHost.hostType : null;
-    this.store_id = this.session.defaultHost ? this.session.defaultHost.value : null;
+  getSelectedStore(stores) {
+    return stores.filter((store) => {
+      if (store.value === this.props.storeId) {
+        this.selectedStore = store;
+        this.sendAsName = store.label;
 
-    if (this.store_id) {
-      this.sendAsName = this.session.defaultHost.label;
-    }
-
-    if (this.props.store_id) {
-      this.disableStore = true;
-      this.store_id = this.props.store_id;
-
-      this.stores$.subscribe((stores) =>
-        stores.filter((store) => {
-          if (store.value && store.value === this.props.store_id) {
-            this.selectedStore = store;
-            this.sendAsName = store.label;
-          }
-        }));
-    }
+        return store;
+      }
+    });
   }
 
   ngOnInit() {
+    this.hostType = this.session.defaultHost ? this.session.defaultHost.hostType : null;
+    const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
+
+    if (defaultHost) {
+      this.sendAsName = this.session.defaultHost.label;
+    }
+
     this.loadStores();
 
     this.form = this.fb.group({
       user_ids: [this.props.userIds],
       is_school_wide: false,
-      store_id: [this.store_id, Validators.required],
+      store_id: [this.props.storeId ? this.props.storeId : defaultHost, Validators.required],
       subject: [null, [Validators.required, Validators.maxLength(128)]],
       message: [null, [Validators.required, Validators.maxLength(400)]],
       priority: [2, Validators.required]
