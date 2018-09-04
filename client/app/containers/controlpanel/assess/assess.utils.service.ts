@@ -15,6 +15,11 @@ const EventType = {
 
 @Injectable()
 export class AssessUtilsService {
+  timeFormat = 'h:mm a';
+  dateFormat = 'MMMM Do YYYY';
+  timeDurationFormat = 'DDD:h:mm:s';
+  dateTimeFormat = 'MMMM Do YYYY - h:mm a';
+
   constructor(public cpI18n: CPI18nService, public session: CPSession) {}
 
   getEventProperties(filterState) {
@@ -80,23 +85,23 @@ export class AssessUtilsService {
           [this.cpI18n.translate('assess_checkin_date')]: CPDate.fromEpoch(
             item.time_epoch,
             this.session.tz
-          ).format('MMMM Do YYYY'),
+          ).format(this.dateFormat),
 
           [this.cpI18n.translate('t_assess_checkin_time_in')]: CPDate.fromEpoch(
-            item.time_epoch, this.session.tz).format('h:mm a'),
+            item.time_epoch, this.session.tz).format(this.timeFormat),
 
           [this.cpI18n.translate('t_assess_checkout_date')]:
             hasCheckOutTimeSpent
               ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz
-              ).format('MMMM Do YYYY') : '',
+              ).format(this.dateFormat) : '',
 
           [this.cpI18n.translate('t_assess_checkout_time_out')]:
             hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              item.check_out_time_epoch, this.session.tz).format('h:mm a') : '',
+              item.check_out_time_epoch, this.session.tz).format(this.timeFormat) : '',
 
           [this.cpI18n.translate('t_assess_time_spent')]:
             hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              timeSpentSeconds, this.session.tz).format('DDD:h:mm:s') : '',
+              timeSpentSeconds, this.session.tz).format(this.timeDurationFormat) : '',
 
           [this.cpI18n.translate('t_assess_time_spent_seconds')]:
             hasCheckOutTimeSpent ? timeSpentSeconds : '',
@@ -105,7 +110,7 @@ export class AssessUtilsService {
             item.feedback_time_epoch === 0
               ? 'No Feedback Provided'
               : CPDate.fromEpoch(item.feedback_time_epoch, this.session.tz).format(
-              'MMMM Do YYYY - h:mm a'
+              this.dateTimeFormat
               ),
 
           [this.cpI18n.translate('rating')]:

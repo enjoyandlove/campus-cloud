@@ -22,6 +22,10 @@ import {
 
 @Injectable()
 export class EventUtilService {
+  timeFormat = 'h:mm a';
+  dateFormat = 'MMMM Do YYYY';
+  timeDurationFormat = 'DDD:h:mm:s';
+
   constructor(public session: CPSession, public cpI18n: CPI18nService) {}
   isPastEvent(event: IEvent): boolean {
     return event.end < CPDate.now(this.session.tz).unix();
@@ -252,25 +256,23 @@ export class EventUtilService {
 
           [this.cpI18n.translate('events_attendee_email')]: item.email,
 
-          [this.cpI18n.translate('t_events_csv_column_check_in_date')]: CPDate.fromEpoch(
-            item.check_in_time,
-            this.session.tz
-          ).format('MMMM Do YYYY'),
+          [this.cpI18n.translate('t_events_csv_column_check_in_date')]:
+            CPDate.fromEpoch(item.check_in_time, this.session.tz).format(this.dateFormat),
 
           [this.cpI18n.translate('t_events_csv_column_time_in')]: CPDate.fromEpoch(
-            item.check_in_time, this.session.tz).format('h:mm a'),
+            item.check_in_time, this.session.tz).format(this.timeFormat),
 
           [this.cpI18n.translate('t_events_csv_column_check_out_date')]:
             hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              item.check_out_time_epoch, this.session.tz).format('MMMM Do YYYY') : '',
+              item.check_out_time_epoch, this.session.tz).format(this.dateFormat) : '',
 
           [this.cpI18n.translate('t_events_csv_column_time_out')]:
             hasCheckOutTimeSpent ? CPDate.fromEpoch(
-            item.check_out_time_epoch, this.session.tz).format('h:mm a') : '',
+            item.check_out_time_epoch, this.session.tz).format(this.timeFormat) : '',
 
           [this.cpI18n.translate('t_events_csv_column_time_spent')]:
             hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              timeSpentSeconds, this.session.tz).format('DDD:h:mm:s') : '',
+              timeSpentSeconds, this.session.tz).format(this.timeDurationFormat) : '',
 
           [this.cpI18n.translate('t_events_csv_column_time_spent_seconds')]:
             hasCheckOutTimeSpent ? timeSpentSeconds : '',
