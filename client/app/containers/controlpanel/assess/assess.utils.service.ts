@@ -50,8 +50,11 @@ export class AssessUtilsService {
       this.cpI18n.translate('assess_check_in_time'),
       this.cpI18n.translate('type'),
       this.cpI18n.translate('assess_checkin_date'),
+      this.cpI18n.translate('t_assess_checkin_time_in'),
       this.cpI18n.translate('t_assess_checkout_date'),
-      this.cpI18n.translate('t_assess_time_spend'),
+      this.cpI18n.translate('t_assess_checkout_time_out'),
+      this.cpI18n.translate('t_assess_time_spent'),
+      this.cpI18n.translate('t_assess_time_spent_seconds'),
       this.cpI18n.translate('assess_response_date'),
       this.cpI18n.translate('rating'),
       this.cpI18n.translate('response')
@@ -64,7 +67,9 @@ export class AssessUtilsService {
 
     stream.toPromise().then((data: any) => {
       data = data.map((item) => {
-        const hasCheckOutTimeSpend = item.check_out_time_epoch
+        const timeSpentSeconds = (item.check_out_time_epoch - item.time_epoch);
+
+        const hasCheckOutTimeSpent = item.check_out_time_epoch
           && item.check_out_time_epoch !== CheckInOutTime.empty;
 
         return {
@@ -75,15 +80,26 @@ export class AssessUtilsService {
           [this.cpI18n.translate('assess_checkin_date')]: CPDate.fromEpoch(
             item.time_epoch,
             this.session.tz
-          ).format('MMMM Do YYYY - h:mm a'),
+          ).format('MMMM Do YYYY'),
+
+          [this.cpI18n.translate('t_assess_checkin_time_in')]: CPDate.fromEpoch(
+            item.time_epoch, this.session.tz).format('h:mm a'),
 
           [this.cpI18n.translate('t_assess_checkout_date')]:
-            hasCheckOutTimeSpend
+            hasCheckOutTimeSpent
               ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz
-              ).format('MMMM Do YYYY - h:mm a') : '',
+              ).format('MMMM Do YYYY') : '',
 
-          [this.cpI18n.translate('t_assess_time_spend')]:
-            hasCheckOutTimeSpend ? (item.check_out_time_epoch - item.time_epoch) : '',
+          [this.cpI18n.translate('t_assess_checkout_time_out')]:
+            hasCheckOutTimeSpent ? CPDate.fromEpoch(
+              item.check_out_time_epoch, this.session.tz).format('h:mm a') : '',
+
+          [this.cpI18n.translate('t_assess_time_spent')]:
+            hasCheckOutTimeSpent ? CPDate.fromEpoch(
+              timeSpentSeconds, this.session.tz).format('DDD:h:mm:s') : '',
+
+          [this.cpI18n.translate('t_assess_time_spent_seconds')]:
+            hasCheckOutTimeSpent ? timeSpentSeconds : '',
 
           [this.cpI18n.translate('assess_response_date')]:
             item.feedback_time_epoch === 0

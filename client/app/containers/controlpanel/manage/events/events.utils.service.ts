@@ -223,9 +223,12 @@ export class EventUtilService {
       const columns = [
         this.cpI18n.translate('events_attendant'),
         this.cpI18n.translate('events_attendee_email'),
-        this.cpI18n.translate('events_checked_in_time'),
-        this.cpI18n.translate('t_events_attendance_add_edit_check_in_check_out_time'),
-        this.cpI18n.translate('t_event_assessment_time_spend'),
+        this.cpI18n.translate('t_events_csv_column_check_in_date'),
+        this.cpI18n.translate('t_events_csv_column_time_in'),
+        this.cpI18n.translate('t_events_csv_column_check_out_date'),
+        this.cpI18n.translate('t_events_csv_column_time_out'),
+        this.cpI18n.translate('t_events_csv_column_time_spent'),
+        this.cpI18n.translate('t_events_csv_column_time_spent_seconds'),
         this.cpI18n.translate('rating'),
         this.cpI18n.translate('events_user_feedback'),
         this.cpI18n.translate('events_checked_in_method'),
@@ -238,7 +241,9 @@ export class EventUtilService {
       };
 
       attendees = attendees.map((item) => {
-        const hasCheckOutTimeSpend = hasCheckOut
+        const timeSpentSeconds = (item.check_out_time_epoch - item.check_in_time);
+
+        const hasCheckOutTimeSpent = hasCheckOut
           && item.check_out_time_epoch
           && item.check_out_time_epoch !== CheckInOutTime.empty;
 
@@ -247,19 +252,28 @@ export class EventUtilService {
 
           [this.cpI18n.translate('events_attendee_email')]: item.email,
 
-          [this.cpI18n.translate('events_checked_in_time')]: CPDate.fromEpoch(
+          [this.cpI18n.translate('t_events_csv_column_check_in_date')]: CPDate.fromEpoch(
             item.check_in_time,
             this.session.tz
-          ).format('MMMM Do YYYY - h:mm a'),
+          ).format('MMMM Do YYYY'),
 
-          [this.cpI18n.translate('t_events_attendance_add_edit_check_in_check_out_time')]:
-            hasCheckOutTimeSpend
-              ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz)
-                .format('MMMM Do YYYY - h:mm a')
-              : '',
+          [this.cpI18n.translate('t_events_csv_column_time_in')]: CPDate.fromEpoch(
+            item.check_in_time, this.session.tz).format('h:mm a'),
 
-          [this.cpI18n.translate('t_event_assessment_time_spend')]:
-            hasCheckOutTimeSpend ? (item.check_out_time_epoch - item.check_in_time) : '',
+          [this.cpI18n.translate('t_events_csv_column_check_out_date')]:
+            hasCheckOutTimeSpent ? CPDate.fromEpoch(
+              item.check_out_time_epoch, this.session.tz).format('MMMM Do YYYY') : '',
+
+          [this.cpI18n.translate('t_events_csv_column_time_out')]:
+            hasCheckOutTimeSpent ? CPDate.fromEpoch(
+            item.check_out_time_epoch, this.session.tz).format('h:mm a') : '',
+
+          [this.cpI18n.translate('t_events_csv_column_time_spent')]:
+            hasCheckOutTimeSpent ? CPDate.fromEpoch(
+              timeSpentSeconds, this.session.tz).format('DDD:h:mm:s') : '',
+
+          [this.cpI18n.translate('t_events_csv_column_time_spent_seconds')]:
+            hasCheckOutTimeSpent ? timeSpentSeconds : '',
 
           [this.cpI18n.translate('rating')]:
             item.feedback_rating === -1 ? '' : (item.feedback_rating * 5 / 100).toFixed(2),
