@@ -7,8 +7,9 @@ import {
   EventEmitter,
   HostListener
 } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { map } from 'rxjs/internal/operators';
+import { HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from '../../../../../session';
@@ -26,7 +27,8 @@ declare var $;
   styleUrls: ['./students-compose.component.scss']
 })
 export class StudentsComposeComponent implements OnInit {
-  @Input() props: { name: string; userIds: Array<number> };
+  @Input() props: { name: string; userIds: Array<number>, storeId: number };
+
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() success: EventEmitter<{ hostType: string }> = new EventEmitter();
 
@@ -36,6 +38,7 @@ export class StudentsComposeComponent implements OnInit {
   buttonData;
   sendAsName;
   errorMessage;
+  selectedStore;
   form: FormGroup;
   resetStores$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
@@ -46,12 +49,7 @@ export class StudentsComposeComponent implements OnInit {
     private cpI18n: CPI18nService,
     private service: StudentsService,
     private storeService: StoreService
-  ) {
-    const school = this.session.g.get('school');
-    const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
-
-    this.stores$ = this.storeService.getStores(search);
-  }
+  ) {}
 
   @HostListener('document:click', ['$event'])
   onClick(event) {
@@ -103,6 +101,27 @@ export class StudentsComposeComponent implements OnInit {
     this.resetStores$.next(true);
   }
 
+  loadStores() {
+    const school = this.session.g.get('school');
+    const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
+
+    this.selectedStore = this.session.defaultHost;
+    this.stores$ = this.storeService.getStores(search).pipe(
+      map((stores) => this.props.storeId ? this.getSelectedStore(stores) : stores
+    ));
+  }
+
+  getSelectedStore(stores) {
+    return stores.filter((store) => {
+      if (store.value === this.props.storeId) {
+        this.selectedStore = store;
+        this.sendAsName = store.label;
+
+        return store;
+      }
+    });
+  }
+
   ngOnInit() {
     this.hostType = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
@@ -111,10 +130,12 @@ export class StudentsComposeComponent implements OnInit {
       this.sendAsName = this.session.defaultHost.label;
     }
 
+    this.loadStores();
+
     this.form = this.fb.group({
       user_ids: [this.props.userIds],
       is_school_wide: false,
-      store_id: [defaultHost, Validators.required],
+      store_id: [this.props.storeId ? this.props.storeId : defaultHost, Validators.required],
       subject: [null, [Validators.required, Validators.maxLength(128)]],
       message: [null, [Validators.required, Validators.maxLength(400)]],
       priority: [2, Validators.required]
