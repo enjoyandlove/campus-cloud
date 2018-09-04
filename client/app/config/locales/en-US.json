@@ -1227,9 +1227,6 @@
   "events_checked_in_method": {
     "message": "Check-in Method"
   },
-  "events_checked_in_time": {
-    "message": "Check-in Time"
-  },
   "events_check_in": {
     "message": "Check-in"
   },
@@ -2326,8 +2323,14 @@
   "t_assess_chart_tooltip_label_engagements": {
     "message": "Engagement(s)"
   },
+  "t_assess_checkin_time_in": {
+    "message": "Time In"
+  },
   "t_assess_checkout_date": {
     "message": "Check-out Date"
+  },
+  "t_assess_checkout_time_out": {
+    "message": "Time Out"
   },
   "t_assess_no_orientation_data": {
     "message": "No Orientation Data"
@@ -2338,8 +2341,11 @@
   "t_assess_orientation_programs": {
     "message": "Orientation Programs"
   },
-  "t_assess_time_spend": {
-    "message": "Time Spend"
+  "t_assess_time_spent": {
+    "message": "Time Spent"
+  },
+  "t_assess_time_spent_seconds": {
+    "message": "Time Spent Seconds"
   },
   "t_assess_top_orientation_programs": {
     "message": "Top Programs"
@@ -2494,6 +2500,24 @@
   "t_events_attendance_type": {
     "message": "Attendance Type"
   },
+  "t_events_csv_column_check_in_date": {
+    "message": "Check-in Date"
+  },
+  "t_events_csv_column_check_out_date": {
+    "message": "Check-Out Date"
+  },
+  "t_events_csv_column_time_in": {
+    "message": "Time In"
+  },
+  "t_events_csv_column_time_out": {
+    "message": "Time Out"
+  },
+  "t_events_csv_column_time_spent": {
+    "message": "Time Spent"
+  },
+  "t_events_csv_column_time_spent_seconds": {
+    "message": "Time Spent Seconds"
+  },
   "t_events_event_attendance_type_tooltip": {
     "message": "\"Check-in\" records an attendee's name and email, and the time of the QR scan. \"Check-in/Check-out\" lets you scan attendees twice, and tracks start and finish time. Both options let you gather feedback."
   },
@@ -2520,9 +2544,6 @@
   },
   "t_event_assessment_qr_code_enable_success_message": {
     "message": "QR Check-in successfully enabled"
-  },
-  "t_event_assessment_time_spend": {
-    "message": "Time Spend"
   },
   "t_event_assessment_web_checkin_page": {
     "message": "Web Check-in Page"

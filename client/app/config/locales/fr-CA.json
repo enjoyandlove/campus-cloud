@@ -1227,9 +1227,6 @@
   "events_checked_in_method": {
     "message": "Méthode de vérification de présence"
   },
-  "events_checked_in_time": {
-    "message": "Heure de vérification de présence"
-  },
   "events_check_in": {
     "message": "Vérification de présence"
   },
