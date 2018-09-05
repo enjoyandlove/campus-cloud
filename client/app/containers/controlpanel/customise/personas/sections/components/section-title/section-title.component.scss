@@ -1,20 +1,31 @@
 @import '~styles/core/colors';
 @import '~styles/core/typography';
+@import '~styles/components/button';
 
-input {
-  @include font-24px();
+.input__wrapper {
+  position: relative;
 
-  width: 100%;
-  text-transform: uppercase;
-  border: 1px solid transparent;
+  input {
+    @include font-24px();
 
-  &:disabled {
-    background: transparent;
+    width: calc(100% - 15px);
+    text-transform: uppercase;
     border: 1px solid transparent;
-    border-bottom: 1px dotted #ccc;
+
+    &:disabled {
+      background: transparent;
+      border: 1px solid transparent;
+      border-bottom: 1px dotted #ccc;
+    }
+
+    &.invalid {
+      border-bottom: 1px solid $color-danger;
+    }
   }
 
-  &.error {
-    border-bottom: 1px solid $color-danger;
+  &__spinner {
+    top: 4px;
+    right: 0;
+    position: absolute;
   }
 }
