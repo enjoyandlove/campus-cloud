@@ -2548,6 +2548,9 @@
   "t_event_assessment_web_checkin_page": {
     "message": "Web Check-in Page"
   },
+  "t_external_checkin_already_checked_in": {
+    "message": "Already Checked-In"
+  },
   "t_external_checkin_chechout": {
     "message": "Check-out"
   },
@@ -2571,6 +2574,9 @@
   },
   "t_external_check_in_check_out_time": {
     "message": "Check-out Time"
+  },
+  "t_external_check_in_disable_manual_check_in": {
+    "message": "Manual Check-In disabled"
   },
   "t_external_check_in_disable_qr": {
     "message": "QR Disabled"
