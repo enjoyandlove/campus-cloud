@@ -12,15 +12,15 @@
   <div class="registration__form">
     <div class="row">
       <div class="col-6">
-        <div class="registration__overlay_parent">
-          <div class="registration__overlay" *ngIf="disabledQRCode">
+        <div class="registration__form__overlay_wrapper">
+          <div class="registration__form__overlay" *ngIf="disabledQRCode">
             <span>
               <i class="material-icons">block</i>
                {{ 't_external_check_in_disable_qr' | cpI18n }}
             </span>
           </div>
           <div
-            class="registration__qrcode"
+            class="registration__form__qr_image"
             [ngStyle]="{'background-image': 'url(' + data.qr_img_url + ')'}"></div>
         </div>
       </div>
