@@ -56,8 +56,12 @@ export class PersonasResourceTypesComponent implements OnInit {
     }
 
     if (this.persona.platform === PersonaType.web) {
+      const webOrExternalLink = (r) => !('link_url' in r.meta);
+      const isResourceSupportedByWebApp = (r) =>
+        this.utils.isResourceSupportedByWebApp(r.meta.link_url);
+
       this.resources = this.resources.filter(
-        (r) => (r.id ? this.utils.isResourceSupportedByWebApp(r.meta.link_url) : r)
+        (r) => (r.id ? webOrExternalLink(r) || isResourceSupportedByWebApp(r) : r)
       );
     }
 
