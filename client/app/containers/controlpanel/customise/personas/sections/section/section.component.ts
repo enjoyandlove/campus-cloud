@@ -247,6 +247,7 @@ export class PersonasSectionComponent implements OnInit {
 
     this.sortableOptions = {
       scroll: false,
+      draggable: '.is_draggable',
       group: {
         name: 'studio',
         put: true,

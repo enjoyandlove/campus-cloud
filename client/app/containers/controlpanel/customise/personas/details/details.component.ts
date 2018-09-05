@@ -137,7 +137,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         sticky: true,
         autoClose: true,
         class: 'success',
-        body: this.cpI18n.translate('t_personas_tile_moved_success')
+        body: this.cpI18n.translate('t_changes_saved_ok')
       }
     });
   }
@@ -155,14 +155,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       };
     });
 
-    this.tileService.bulkUpdateTiles(search, body).subscribe(
-      () => this.fetch(),
-      (err) => {
-        this.fetch();
-
-        this.errorHandler(err);
-      }
-    );
+    this.tileService
+      .bulkUpdateTiles(search, body)
+      .subscribe(() => this.handleSuccess(), (err) => this.errorHandler(err));
   }
 
   onDeleteTileFromSection(tile: ITile) {
@@ -351,6 +346,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
 
       const tilesToUpdate = this.sectionUtils.updateGuideTileRank(newCategory, school_id, 'rank');
+
       this.doBulkUpdate(tilesToUpdate);
     }
   }

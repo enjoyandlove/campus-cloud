@@ -2362,6 +2362,9 @@
   "t_audience_save_modal_button_submit": {
     "message": "Save"
   },
+  "t_changes_saved_ok": {
+    "message": "Changes saved successfully"
+  },
   "t_check_in_date_placeholder_text": {
     "message": "Now"
   },
@@ -2576,7 +2579,7 @@
     "message": "Check-out Time"
   },
   "t_external_check_in_disable_manual_check_in": {
-    "message": "Manual Check-In disabled"
+    "message": "Manual Check-in Disabled"
   },
   "t_external_check_in_disable_qr": {
     "message": "QR Disabled"

@@ -44,15 +44,15 @@
         <cp-personas-tile
           class="tile"
           [tile]="tile"
+          class="is_draggable"
           (edit)="onEditTile(tile)"
           [attr.data-tile]="tile.id"
           [class.sorting]="state.sorting"
           (edited)="onEditedTile($event)"
           [ngClass]="['col-' + tileWidth]"
-          [class.draggable]="!state.sorting"
           (deleteClick)="deleteTileClick.emit($event)"
           *ngFor="let tile of guide.tiles; let i = index"
-          [class.mb-4]="guide.tiles.length >= (12 / +tileWidth)">
+          [class.mb-4]="i % tileWidth === 0">
         </cp-personas-tile>
         <div [ngClass]="['col-' + tileWidth]">
           <cp-personas-tile-add-button
