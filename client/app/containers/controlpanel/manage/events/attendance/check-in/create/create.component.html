@@ -27,13 +27,15 @@
 
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
-      <div class="col-12 text-right">
+      <div class="col-12">
         <label class="error" *ngIf="formErrors">
           <i class="material-icons">
             warning
           </i>
-          {{ errorMessage ?errorMessage : cpI18n.translate('t_events_attendance_add_check_in_error_fill_out_all_fields') }}
+          {{ errorMessage ? errorMessage : cpI18n.translate('t_events_attendance_add_check_in_error_fill_out_all_fields') }}
         </label>
+      </div>
+      <div class="col-12 text-right">
         <button
           type="button"
           (click)="resetModal()"
