@@ -99,6 +99,10 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
   updateValues(items, link_url) {
     const resourceId = this.resource.link_params.id;
 
+    if (!items.length) {
+      return [{ label: '---' }];
+    }
+
     return items.map((item: any) => {
       if (item.value) {
         item = {

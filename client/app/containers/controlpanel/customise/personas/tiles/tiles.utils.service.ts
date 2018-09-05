@@ -54,8 +54,9 @@ export class TilesUtilsService {
 
   isTileSupportedByWebApp(tile: ITile) {
     const supportedLinkUrls = TilesUtilsService.webAppSupportedLinkUrls;
+    const webOrExternalLink = tile.related_link_data.link_url.startsWith('http');
 
-    return supportedLinkUrls.includes(tile.related_link_data.link_url);
+    return webOrExternalLink || supportedLinkUrls.includes(tile.related_link_data.link_url);
   }
 
   isCampaignTile(tile: ITile) {
