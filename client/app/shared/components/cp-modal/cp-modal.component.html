@@ -1,3 +1,11 @@
+<!--
+removed tabindex="-1" because it was throwing
+[maximum call stack] error when we use datepicker
+inside modal for reference see below url.
+
+https://github.com/flatpickr/flatpickr/issues/248
+-->
+
 <div
   #cpModal
   role="dialog"
