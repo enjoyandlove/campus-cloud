@@ -13,6 +13,7 @@ import { EventUtilService } from '../events.utils.service';
 import { CPI18nService } from '../../../../../shared/services';
 import { mockSchool } from '../../../../../session/mock/school';
 import { EventsAttendanceComponent } from './events-attendance.component';
+import { isClubAthletic } from '../../../settings/team/team.utils.service';
 
 class MockService {
   dummy;
@@ -259,5 +260,60 @@ describe('EventAttendanceComponent', () => {
     expect(component.allStudents).toBeTruthy();
     expect(component.isSendMessageModal).toBeTruthy();
     expect(component.messageData).toEqual(messageData);
+  });
+
+  it('should set showStudentIds true', () => {
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 33: {r: true, w: true } } }
+    });
+    component.session.g.set('school', {
+      id: 157,
+      has_sso_integration: true
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(true);
+
+    component.isClub = true;
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 22: {r: true, w: true } } }
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(true);
+
+    component.isClub = false;
+    component.isService = true;
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 24: {r: true, w: true } } }
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(true);
+
+    component.isService = false;
+    component.isAthletic = isClubAthletic.athletic;
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 28: {r: true, w: true } } }
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(true);
+
+    component.isAthletic = isClubAthletic.club;
+    component.isOrientation = true;
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 17: {r: true, w: true } } }
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(true);
+  });
+
+  it('should set showStudentIds false', () => {
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 22: {r: true, w: true } } }
+    });
+    component.session.g.set('school', {
+      id: 157,
+      has_sso_integration: true
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(false);
   });
 });
