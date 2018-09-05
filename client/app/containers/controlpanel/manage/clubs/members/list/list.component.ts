@@ -1,5 +1,5 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { flatMap } from 'rxjs/operators';
 
@@ -170,7 +170,11 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
     this.fetch();
 
-    this.showStudentIds = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs)
+    const clubPrivilege =
+      (this.isAthletic === isClubAthletic.athletic ? CP_PRIVILEGES_MAP.athletics :
+      (this.isOrientation ? CP_PRIVILEGES_MAP.orientation :
+        CP_PRIVILEGES_MAP.clubs));
+    this.showStudentIds = canSchoolReadResource(this.session.g, clubPrivilege)
       && this.session.hasSSO;
     this.executiveLeader = this.utils.getMemberType(this.isOrientation);
     this.sortingLabels = {

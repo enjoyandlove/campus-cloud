@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute } from '@angular/router';
+import { TestBed } from '@angular/core/testing';
 
 import { of as observableOf } from 'rxjs';
 
@@ -8,6 +8,7 @@ import { MembersService } from '../members.service';
 import { CPSession } from "../../../../../../session";
 import { ClubsMembersModule } from '../members.module';
 import { ClubsMembersComponent } from './list.component';
+import { isClubAthletic } from '../../clubs.athletics.labels';
 import { ClubsUtilsService } from '../../clubs.utils.service';
 import { MembersUtilsService } from '../members.utils.service';
 import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
@@ -53,7 +54,7 @@ describe('ClubsMembersComponent', () => {
 
   it('should set showStudentIds true', () => {
     component.session.g.set('user', {
-      school_level_privileges: { 157: { 22: {r: true, w: true} } }
+      school_level_privileges: { 157: { 22: {r: true, w: true } } }
     });
     component.session.g.set('school', {
       id: 157,
@@ -61,11 +62,44 @@ describe('ClubsMembersComponent', () => {
     });
     component.ngOnInit();
     expect(component.showStudentIds).toBe(true);
+
+    component.isAthletic = isClubAthletic.athletic;
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 28: {r: true, w: true } } }
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(true);
+
+    component.isAthletic = isClubAthletic.club;
+    component.isOrientation = true;
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 17: {r: true, w: true } } }
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(true);
+  });
+
+  it('should set showStudentIds false if wrong club type', () => {
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 22: {r: true, w: true } } }
+    });
+    component.session.g.set('school', {
+      id: 157,
+      has_sso_integration: true
+    });
+
+    component.isAthletic = isClubAthletic.athletic;
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(false);
+
+    component.isAthletic = isClubAthletic.club;
+    component.isOrientation = true;
+    expect(component.showStudentIds).toBe(false);
   });
 
   it('should set showStudentIds false if hasSSO is false', () => {
     component.session.g.set('user', {
-      school_level_privileges: { 157: { 22: {r: true, w: true} } }
+      school_level_privileges: { 157: { 22: {r: true, w: true } } }
     });
     component.session.g.set('school', {
       id: 157,
