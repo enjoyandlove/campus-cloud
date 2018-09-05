@@ -2548,6 +2548,9 @@
   "t_event_assessment_web_checkin_page": {
     "message": "Web Check-in Page"
   },
+  "t_external_checkin_already_checked_in": {
+    "message": "Already Checked-In"
+  },
   "t_external_checkin_chechout": {
     "message": "Check-out"
   },
@@ -2571,6 +2574,9 @@
   },
   "t_external_check_in_check_out_time": {
     "message": "Check-out Time"
+  },
+  "t_external_check_in_disable_qr": {
+    "message": "QR Disabled"
   },
   "t_external_check_in_error_fill_out_all_fields": {
     "message": "Please fill out the marked fields"
@@ -2756,10 +2762,10 @@
     "message": "List of Services by Category"
   },
   "t_personas_tile_create_resource_type_store": {
-    "message": "Stores"
+    "message": "Service or Club"
   },
   "t_personas_tile_create_resource_type_store_list": {
-    "message": "Group or Club"
+    "message": "List of Clubs by Type"
   },
   "t_personas_tile_create_resource_type_subscribable_calendar": {
     "message": "Calendar"
