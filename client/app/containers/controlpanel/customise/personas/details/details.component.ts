@@ -516,7 +516,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     const tileCategories$ = this.service
       .getTilesCategories(schoolIdSearch)
       .pipe(map((categories) => categories.filter((c) => c.id !== 0)));
-    const tilesByPersonaZero$ = this.service.getTilesByPersona(schoolIdSearch);
+
     const persona$ = this.service.getPersonaById(this.personaId, schoolIdSearch);
 
     const request$ = persona$.pipe(
@@ -525,14 +525,12 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         this.isWebPersona = persona.platform === PersonasType.web;
         this.updateHeader(persona.localized_name_map[key]);
 
-        return combineLatest([tilesByPersona$, tileCategories$, tilesByPersonaZero$]);
+        return combineLatest([tilesByPersona$, tileCategories$]);
       })
     );
 
     const stream$ = request$.pipe(
-      map(([tiles, categories, tilesByPersonaZero]) => {
-        tiles = this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero);
-
+      map(([tiles, categories]) => {
         if (this.isWebPersona) {
           tiles = tiles.filter((tile) => this.tileUtils.isTileSupportedByWebApp(tile));
         }
