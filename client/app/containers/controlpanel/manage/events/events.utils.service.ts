@@ -22,9 +22,9 @@ import {
 
 @Injectable()
 export class EventUtilService {
-  timeFormat = 'h:mm a';
-  dateFormat = 'MMMM Do YYYY';
-  timeDurationFormat = 'DDD:h:mm:s';
+  timeFormat = 'h:mm A';
+  dateFormat = 'M/DD/YYYY';
+  timeDurationFormat = 'd hh:mm:ss';
 
   constructor(public session: CPSession, public cpI18n: CPI18nService) {}
   isPastEvent(event: IEvent): boolean {
@@ -273,8 +273,8 @@ export class EventUtilService {
             item.check_out_time_epoch, this.session.tz).format(this.timeFormat) : '',
 
           [this.cpI18n.translate('t_events_csv_column_time_spent')]:
-            hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              timeSpentSeconds, this.session.tz).format(this.timeDurationFormat) : '',
+            hasCheckOutTimeSpent ?
+              CPDate.getTimeDuration(timeSpentSeconds).format(this.timeDurationFormat) : '',
 
           [this.cpI18n.translate('t_events_csv_column_time_spent_seconds')]:
             hasCheckOutTimeSpent ? timeSpentSeconds : '',

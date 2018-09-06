@@ -15,10 +15,10 @@ const EventType = {
 
 @Injectable()
 export class AssessUtilsService {
-  timeFormat = 'h:mm a';
-  dateFormat = 'MMMM Do YYYY';
-  timeDurationFormat = 'DDD:h:mm:s';
-  dateTimeFormat = 'MMMM Do YYYY - h:mm a';
+  timeFormat = 'h:mm A';
+  dateFormat = 'M/DD/YYYY';
+  timeDurationFormat = 'd hh:mm:ss';
+  dateTimeFormat = 'M/DD/YYYY h:mm A';
 
   constructor(public cpI18n: CPI18nService, public session: CPSession) {}
 
@@ -100,8 +100,8 @@ export class AssessUtilsService {
               item.check_out_time_epoch, this.session.tz).format(this.timeFormat) : '',
 
           [this.cpI18n.translate('t_assess_time_spent')]:
-            hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              timeSpentSeconds, this.session.tz).format(this.timeDurationFormat) : '',
+            hasCheckOutTimeSpent ?
+              CPDate.getTimeDuration(timeSpentSeconds).format(this.timeDurationFormat) : '',
 
           [this.cpI18n.translate('t_assess_time_spent_seconds')]:
             hasCheckOutTimeSpent ? timeSpentSeconds : '',
