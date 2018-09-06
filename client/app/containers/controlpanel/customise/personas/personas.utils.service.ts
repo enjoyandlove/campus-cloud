@@ -124,7 +124,7 @@ export class PersonasUtilsService {
       }
     ];
   }
-  // test
+
   mergeRelatedLinkData(tilesByPersonaId: ITile[], tilesByPersonaZero: ITile[]) {
     return tilesByPersonaId.map((tile: ITile) => {
       return {

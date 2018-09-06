@@ -532,13 +532,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
     const stream$ = request$.pipe(
       map(([tiles, categories, tilesByPersonaZero]) => {
-        if (isProd) {
-          tiles = this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero);
-        }
+        tiles = this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero);
 
-        console.log(tiles);
-
-        if (this.isWebPersona) {
+        if (this.isWebPersona && isProd) {
           tiles = tiles.filter((tile) => this.tileUtils.isTileSupportedByWebApp(tile));
         }
 
