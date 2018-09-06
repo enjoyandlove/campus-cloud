@@ -9,12 +9,10 @@ import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
-  utc: true,
   altInput: true,
   enableTime: true,
   altFormat: 'F j, Y h:i K'
 };
-
 @Component({
   selector: 'cp-deals-form',
   templateUrl: './deals-form.component.html',
