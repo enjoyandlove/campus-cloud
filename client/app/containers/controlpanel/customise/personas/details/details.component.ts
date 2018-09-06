@@ -538,7 +538,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
         console.log(tiles);
 
-        if (this.isWebPersona) {
+        if (this.isWebPersona && isProd) {
           tiles = tiles.filter((tile) => this.tileUtils.isTileSupportedByWebApp(tile));
         }
 

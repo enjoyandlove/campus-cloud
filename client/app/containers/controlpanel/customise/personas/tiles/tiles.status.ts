@@ -11,3 +11,8 @@ export enum TileVisibility {
   visible = 1,
   invisible = -1
 }
+
+export enum TileType {
+  base = 8,
+  abstract = 7
+}
