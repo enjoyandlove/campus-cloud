@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { flatten, get as _get } from 'lodash';
 import { combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { isProd } from './../../../../../config/env/index';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import {
   ISnackbar,
@@ -13,7 +14,7 @@ import {
 } from './../../../../../reducers/snackbar.reducer';
 import { IPersona } from './../persona.interface';
 import { PersonasService } from './../personas.service';
-import { PersonaValidationErrors, PersonasType } from './../personas.status';
+import { PersonasType, PersonaValidationErrors } from './../personas.status';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
@@ -530,7 +531,13 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     );
 
     const stream$ = request$.pipe(
-      map(([tiles, categories]) => {
+      map(([tiles, categories, tilesByPersonaZero]) => {
+        if (isProd) {
+          tiles = this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero);
+        }
+
+        console.log(tiles);
+
         if (this.isWebPersona) {
           tiles = tiles.filter((tile) => this.tileUtils.isTileSupportedByWebApp(tile));
         }
