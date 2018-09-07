@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import IAttendee from '../attendee.interface';
@@ -22,6 +22,8 @@ const COMMON_DATE_PICKER_OPTIONS = {
   styleUrls: ['./checkin-register.component.scss']
 })
 export class CheckinRegisterComponent implements OnInit {
+  @ViewChild('selectedDate') selectedDate;
+
   @Input() data: ICheckIn;
   @Input() isService: boolean;
 
@@ -45,6 +47,7 @@ export class CheckinRegisterComponent implements OnInit {
       data.check_in_time_epoch = Math.round(CPDate.now(this.session.tz).unix());
     }
 
+    this.selectedDate.clearDate();
     this.registrationForm.reset();
     this.send.emit(data);
   }
