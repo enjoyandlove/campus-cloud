@@ -2,6 +2,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import ICheckIn from '../checkin.interface';
 import { CPTrackingService } from '../../../../shared/services';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 
@@ -38,6 +39,7 @@ export class BaseCheckinComponent implements OnInit {
   @Input() isService: boolean;
   @Input() isOrientation: boolean;
   @Output() send: EventEmitter<any> = new EventEmitter();
+  @Output() checkout: EventEmitter<ICheckIn> = new EventEmitter();
 
   isInternal;
   isDownload;
