@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
 import { maxAllowed } from './list-recipients.constant';
+import { IList, IUser } from '../../../announcements.interface';
 import { CPI18nPipe } from '../../../../../../../shared/pipes/i18n/i18n.pipe';
 
 const i18n = new CPI18nPipe();
@@ -10,8 +12,8 @@ const i18n = new CPI18nPipe();
   styleUrls: ['./list-recipients.component.scss']
 })
 export class AnnouncementsListRecipientsComponent implements OnInit {
-  @Input() lists: Array<{ id: number; name: string }>;
-  @Input() users: Array<{ id: number; firstname: string; lastname: string }>;
+  @Input() lists: Array<IList>;
+  @Input() users: Array<IUser>;
 
   @Output() viewMoreModal: EventEmitter<null> = new EventEmitter();
 
