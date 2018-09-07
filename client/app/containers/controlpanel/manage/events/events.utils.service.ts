@@ -2,6 +2,7 @@ import IEvent from './event.interface';
 import { Injectable } from '@angular/core';
 
 import { CPSession } from '../../../../session';
+import { Formats } from '../../../../shared/utils/csv';
 import { CPI18nService } from '../../../../shared/services';
 import { CPDate } from './../../../../shared/utils/date/date';
 import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
@@ -22,10 +23,6 @@ import {
 
 @Injectable()
 export class EventUtilService {
-  timeFormat = 'h:mm a';
-  dateFormat = 'MMMM Do YYYY';
-  timeDurationFormat = 'DDD:h:mm:s';
-
   constructor(public session: CPSession, public cpI18n: CPI18nService) {}
   isPastEvent(event: IEvent): boolean {
     return event.end < CPDate.now(this.session.tz).unix();
@@ -259,22 +256,22 @@ export class EventUtilService {
           [this.cpI18n.translate('events_attendee_email')]: item.email,
 
           [this.cpI18n.translate('t_events_csv_column_check_in_date')]:
-            CPDate.fromEpoch(item.check_in_time, this.session.tz).format(this.dateFormat),
+            CPDate.fromEpoch(item.check_in_time, this.session.tz).format(Formats.dateFormat),
 
           [this.cpI18n.translate('t_events_csv_column_time_in')]: CPDate.fromEpoch(
-            item.check_in_time, this.session.tz).format(this.timeFormat),
+            item.check_in_time, this.session.tz).format(Formats.timeFormat),
 
           [this.cpI18n.translate('t_events_csv_column_check_out_date')]:
             hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              item.check_out_time_epoch, this.session.tz).format(this.dateFormat) : '',
+              item.check_out_time_epoch, this.session.tz).format(Formats.dateFormat) : '',
 
           [this.cpI18n.translate('t_events_csv_column_time_out')]:
             hasCheckOutTimeSpent ? CPDate.fromEpoch(
-            item.check_out_time_epoch, this.session.tz).format(this.timeFormat) : '',
+            item.check_out_time_epoch, this.session.tz).format(Formats.timeFormat) : '',
 
           [this.cpI18n.translate('t_events_csv_column_time_spent')]:
-            hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              timeSpentSeconds, this.session.tz).format(this.timeDurationFormat) : '',
+            hasCheckOutTimeSpent ?
+              CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat) : '',
 
           [this.cpI18n.translate('t_events_csv_column_time_spent_seconds')]:
             hasCheckOutTimeSpent ? timeSpentSeconds : '',

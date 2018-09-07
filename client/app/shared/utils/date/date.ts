@@ -1,4 +1,7 @@
 import * as moment from 'moment-timezone';
+import momentDurationFormatSetup = require('moment-duration-format');
+
+momentDurationFormatSetup(moment);
 
 function now(tz): moment.Moment {
   return moment.tz(moment(), tz);
@@ -20,9 +23,16 @@ function getMonth(date, tz) {
   return moment(epochDate).format('MMMM');
 }
 
+function getTimeDuration(time, unit = null) {
+  unit = unit ? unit : 'seconds';
+
+  return moment.duration(time, unit);
+}
+
 export const CPDate = {
   now,
   toEpoch,
   getMonth,
-  fromEpoch
+  fromEpoch,
+  getTimeDuration
 };
