@@ -1,6 +1,13 @@
 import { saveAs } from 'file-saver';
 import { unparse } from 'papaparse';
 
+export enum Formats {
+  timeFormat = 'h:mm A',
+  dateFormat = 'M/DD/YYYY',
+  timeDurationFormat = 'd hh:mm:ss',
+  dateTimeFormat = 'M/DD/YYYY h:mm A'
+}
+
 export const createSpreadSheet = (data: any[], fields: Array<string>, filename = 'download') => {
   const parseData = unparse({
     fields,

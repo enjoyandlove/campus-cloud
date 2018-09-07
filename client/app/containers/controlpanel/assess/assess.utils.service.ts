@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { CPSession } from '../../../session';
+import { Formats } from '../../../shared/utils/csv';
 import { CPDate } from '../../../shared/utils/date';
 import { CPI18nService } from '../../../shared/services';
 import { CheckInOutTime } from '../manage/events/event.status';
@@ -15,11 +16,6 @@ const EventType = {
 
 @Injectable()
 export class AssessUtilsService {
-  timeFormat = 'h:mm A';
-  dateFormat = 'M/DD/YYYY';
-  timeDurationFormat = 'd hh:mm:ss';
-  dateTimeFormat = 'M/DD/YYYY h:mm A';
-
   constructor(public cpI18n: CPI18nService, public session: CPSession) {}
 
   getEventProperties(filterState) {
@@ -85,23 +81,23 @@ export class AssessUtilsService {
           [this.cpI18n.translate('assess_checkin_date')]: CPDate.fromEpoch(
             item.time_epoch,
             this.session.tz
-          ).format(this.dateFormat),
+          ).format(Formats.dateFormat),
 
           [this.cpI18n.translate('t_assess_checkin_time_in')]: CPDate.fromEpoch(
-            item.time_epoch, this.session.tz).format(this.timeFormat),
+            item.time_epoch, this.session.tz).format(Formats.timeFormat),
 
           [this.cpI18n.translate('t_assess_checkout_date')]:
             hasCheckOutTimeSpent
               ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz
-              ).format(this.dateFormat) : '',
+              ).format(Formats.dateFormat) : '',
 
           [this.cpI18n.translate('t_assess_checkout_time_out')]:
             hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              item.check_out_time_epoch, this.session.tz).format(this.timeFormat) : '',
+              item.check_out_time_epoch, this.session.tz).format(Formats.timeFormat) : '',
 
           [this.cpI18n.translate('t_assess_time_spent')]:
             hasCheckOutTimeSpent ?
-              CPDate.getTimeDuration(timeSpentSeconds).format(this.timeDurationFormat) : '',
+              CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat) : '',
 
           [this.cpI18n.translate('t_assess_time_spent_seconds')]:
             hasCheckOutTimeSpent ? timeSpentSeconds : '',
@@ -110,7 +106,7 @@ export class AssessUtilsService {
             item.feedback_time_epoch === 0
               ? 'No Feedback Provided'
               : CPDate.fromEpoch(item.feedback_time_epoch, this.session.tz).format(
-              this.dateTimeFormat
+              Formats.dateTimeFormat
               ),
 
           [this.cpI18n.translate('rating')]:
