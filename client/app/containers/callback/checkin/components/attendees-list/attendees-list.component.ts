@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import ICheckIn from '../../checkin.interface';
 import IAttendee from '../attendee.interface';
@@ -13,6 +13,8 @@ import { CheckInOutTime, CheckInType } from '../../../callback.status';
 export class CheckinAttendeesListComponent {
   @Input() data: ICheckIn;
   @Input() isService: boolean;
+
+  @Output() checkout: EventEmitter<ICheckIn> = new EventEmitter();
 
   timezone: string;
   attendee: IAttendee;
@@ -55,5 +57,7 @@ export class CheckinAttendeesListComponent {
       ...this.data,
       attendees
     };
+
+    this.checkout.emit(this.data);
   }
 }

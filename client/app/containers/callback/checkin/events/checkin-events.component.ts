@@ -61,6 +61,13 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
     );
   }
 
+  onCheckout(events) {
+    this.state.events = {
+      ...this.state.events,
+      ...events
+    };
+  }
+
   updateAttendeesList(data, res) {
     if (!res.attendance_id) {
       this.handleError();

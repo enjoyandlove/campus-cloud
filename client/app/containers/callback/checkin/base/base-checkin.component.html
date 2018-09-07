@@ -48,6 +48,7 @@
           class="card-margin"
           [data]="data"
           [isService]="isService"
+          (checkout)="checkout.emit($event)"
           *ngIf="data.attendees.length">
         </cp-attendees-list>
       </div>
