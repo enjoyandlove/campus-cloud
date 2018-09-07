@@ -165,8 +165,8 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
 
     const { filterBy } = filter;
 
-    const isAudience = filterBy.queryParam === StudentListFilter.audienceId;
-    const isExperience = filterBy.queryParam === StudentListFilter.experienceId;
+    const isAudience = filterBy ? filterBy.queryParam === StudentListFilter.audienceId : null;
+    const isExperience = filterBy ? filterBy.queryParam === StudentListFilter.experienceId : null;
 
     this.state = {
       ...this.state,
@@ -189,7 +189,8 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.ASSESS_SENT_ANNOUNCEMENT,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

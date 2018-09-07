@@ -8,7 +8,9 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { CPI18nService } from '../../services/index';
+
+import { BehaviorSubject } from 'rxjs';
+import { CPI18nService } from '../../services';
 /**
  * https://chmln.github.io/flatpickr/
  */
@@ -28,6 +30,7 @@ export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() options: any;
   @Input() error: boolean;
   @Input() placeholder = '';
+  @Input() clearDate = new BehaviorSubject(false);
 
   el;
   locale;
@@ -67,6 +70,8 @@ export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
       }
       this.el.altInput.classList.remove('error');
     }
+
+    this.clearDate.subscribe((clearDate) => clearDate ? this.el.clear() : null);
   }
 
   ngOnInit() {}

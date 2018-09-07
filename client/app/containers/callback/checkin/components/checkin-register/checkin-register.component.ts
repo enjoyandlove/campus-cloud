@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject } from 'rxjs';
 
 import IAttendee from '../attendee.interface';
 import ICheckIn from '../../checkin.interface';
@@ -33,6 +34,7 @@ export class CheckinRegisterComponent implements OnInit {
   disabledQRCode = false;
   disableCheckInTooltip = '';
   registrationForm: FormGroup;
+  clearDate = new BehaviorSubject(false);
 
   constructor(
     private fb: FormBuilder,
@@ -46,6 +48,7 @@ export class CheckinRegisterComponent implements OnInit {
     }
 
     this.registrationForm.reset();
+    this.clearDate.next(true);
     this.send.emit(data);
   }
 
