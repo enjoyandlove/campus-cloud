@@ -1,5 +1,5 @@
-<cp-personas-tile-base>
-  <div class="row">
+<cp-personas-tile-base #base>
+  <div class="row" [ngStyle]="{'height': base.tileHeight + 'px'}">
     <div class="col-12">
       <button
         type="button"
