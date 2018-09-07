@@ -10,12 +10,16 @@ import { FORMAT } from '../../../../../shared/pipes';
 import { EventUtilService } from './../events.utils.service';
 import { CheckInMethod, CheckInOutTime } from '../event.status';
 import { BaseComponent } from '../../../../../base/base.component';
+import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { canSchoolWriteResource } from '../../../../../shared/utils/privileges/privileges';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
+import {
+  canSchoolReadResource,
+  canSchoolWriteResource
+} from '../../../../../shared/utils/privileges/privileges';
 
 interface IState {
   sort_field: string;
@@ -51,6 +55,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   sortingLabels;
   attendees = [];
   loading = true;
+  showStudentIds;
   eventId: number;
   allStudents = false;
   state: IState = state;
@@ -215,7 +220,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
     this.trackAmplitudeEvent();
 
-    this.utils.createExcel(stream$, this.event.has_checkout);
+    this.utils.createExcel(stream$, this.event.has_checkout, this.showStudentIds);
   }
 
   trackAmplitudeEvent() {
@@ -442,6 +447,15 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     this.canMessage = canSchoolWriteResource(
       this.session.g,
       CP_PRIVILEGES_MAP.campus_announcements);
+
+    const attendancePrivilege =
+      (this.isAthletic === isClubAthletic.athletic ? CP_PRIVILEGES_MAP.athletics :
+      (this.isOrientation ? CP_PRIVILEGES_MAP.orientation :
+      (this.isService ? CP_PRIVILEGES_MAP.services :
+      (this.isClub ? CP_PRIVILEGES_MAP.clubs :
+        CP_PRIVILEGES_MAP.event_attendance))));
+    this.showStudentIds = canSchoolReadResource(this.session.g, attendancePrivilege)
+      && this.session.hasSSO;
 
     this.messageAttendeesTooltipText = !this.canMessage
       ? this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text')

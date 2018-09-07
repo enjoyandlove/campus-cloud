@@ -9,12 +9,13 @@
             <div class="col-12">
               <cp-resource-banner [resourceBanner]="resourceBanner"></cp-resource-banner>
               <div class="row event__buttons">
-                <div class="col-12" *ngIf="!utils.isPastEvent(event)">
+                <div class="col-12">
                   <a
                     cpTracker
                     [eventData]="eventData"
                     [routerLink]="['../edit']"
-                    class="cpbtn cpbtn--primary">
+                    class="cpbtn cpbtn--primary"
+                    *ngIf="!utils.isPastEvent(event)">
                     {{ 'edit' | cpI18n }}
                   </a>
                   <a

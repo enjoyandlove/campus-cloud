@@ -222,7 +222,7 @@ export class EventUtilService {
     };
   }
 
-  createExcel(stream, hasCheckOut) {
+  createExcel(stream, hasCheckOut, showStudentIds = false) {
     stream.toPromise().then((attendees: Array<any>) => {
       const columns = [
         this.cpI18n.translate('events_attendant'),
@@ -235,9 +235,11 @@ export class EventUtilService {
         this.cpI18n.translate('t_events_csv_column_time_spent_seconds'),
         this.cpI18n.translate('rating'),
         this.cpI18n.translate('events_user_feedback'),
-        this.cpI18n.translate('events_checked_in_method'),
-        this.cpI18n.translate('student_id')
+        this.cpI18n.translate('events_checked_in_method')
       ];
+      if (showStudentIds) {
+        columns.push(this.cpI18n.translate('student_id'));
+      }
 
       const check_in_method = {
         1: 'Web',
@@ -251,7 +253,7 @@ export class EventUtilService {
           && item.check_out_time_epoch
           && item.check_out_time_epoch !== CheckInOutTime.empty;
 
-        return {
+        const row = {
           [this.cpI18n.translate('events_attendant')]: `${item.firstname} ${item.lastname}`,
 
           [this.cpI18n.translate('events_attendee_email')]: item.email,
@@ -284,10 +286,13 @@ export class EventUtilService {
 
           [this.cpI18n.translate('events_checked_in_method')]: check_in_method[
             item.check_in_method
-            ],
-
-          [this.cpI18n.translate('student_id')]: item.student_identifier
+            ]
         };
+        if (showStudentIds) {
+          row[this.cpI18n.translate('student_id')] = item.student_identifier;
+        }
+
+        return row;
       });
 
       createSpreadSheet(attendees, columns);

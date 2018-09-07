@@ -73,7 +73,6 @@ export class CheckOutModalComponent implements OnInit {
 
   onSubmit() {
     this.formErrors = false;
-    this.errorMessage = null;
     const checkOutTime = this.form.controls['check_out_time_epoch'];
 
     if (!this.form.valid) {

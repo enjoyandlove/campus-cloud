@@ -36,7 +36,7 @@ export class PersonaResourceCreateComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.tileUtils
         .validateTileImage(file)
-        .then(() => resolve({ valid: true }))
+        .then(() => resolve({ valid: true, errors: [] }))
         .catch((err) => reject({ valid: false, errors: [err] }));
     });
   }

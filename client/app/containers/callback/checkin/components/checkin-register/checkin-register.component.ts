@@ -31,6 +31,7 @@ export class CheckinRegisterComponent implements OnInit {
   buttonData;
   placeholder;
   datePickerOptions;
+  disabledQRCode = false;
   disableCheckInTooltip = '';
   registrationForm: FormGroup;
   clearDate = new BehaviorSubject(false);
@@ -104,5 +105,6 @@ export class CheckinRegisterComponent implements OnInit {
     });
 
     this.placeholder = this.cpI18n.translate('t_check_in_date_placeholder_text');
+    this.disabledQRCode = !this.data.attend_verification_methods.includes(CheckInMethod.app);
   }
 }

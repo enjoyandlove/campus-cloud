@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { flatten, get as _get } from 'lodash';
 import { combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { isProd } from './../../../../../config/env/index';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import {
   ISnackbar,
@@ -13,7 +14,7 @@ import {
 } from './../../../../../reducers/snackbar.reducer';
 import { IPersona } from './../persona.interface';
 import { PersonasService } from './../personas.service';
-import { PersonaValidationErrors, PersonasType } from './../personas.status';
+import { PersonasType, PersonaValidationErrors } from './../personas.status';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
@@ -137,7 +138,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         sticky: true,
         autoClose: true,
         class: 'success',
-        body: this.cpI18n.translate('t_personas_tile_moved_success')
+        body: this.cpI18n.translate('t_changes_saved_ok')
       }
     });
   }
@@ -155,14 +156,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       };
     });
 
-    this.tileService.bulkUpdateTiles(search, body).subscribe(
-      () => this.fetch(),
-      (err) => {
-        this.fetch();
-
-        this.errorHandler(err);
-      }
-    );
+    this.tileService
+      .bulkUpdateTiles(search, body)
+      .subscribe(() => this.handleSuccess(), (err) => this.errorHandler(err));
   }
 
   onDeleteTileFromSection(tile: ITile) {
@@ -351,6 +347,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
 
       const tilesToUpdate = this.sectionUtils.updateGuideTileRank(newCategory, school_id, 'rank');
+
       this.doBulkUpdate(tilesToUpdate);
     }
   }
@@ -520,7 +517,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     const tileCategories$ = this.service
       .getTilesCategories(schoolIdSearch)
       .pipe(map((categories) => categories.filter((c) => c.id !== 0)));
-    const tilesByPersonaZero$ = this.service.getTilesByPersona(schoolIdSearch);
+
     const persona$ = this.service.getPersonaById(this.personaId, schoolIdSearch);
 
     const request$ = persona$.pipe(
@@ -529,15 +526,19 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         this.isWebPersona = persona.platform === PersonasType.web;
         this.updateHeader(persona.localized_name_map[key]);
 
-        return combineLatest([tilesByPersona$, tileCategories$, tilesByPersonaZero$]);
+        return combineLatest([tilesByPersona$, tileCategories$]);
       })
     );
 
     const stream$ = request$.pipe(
       map(([tiles, categories, tilesByPersonaZero]) => {
-        tiles = this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero);
+        if (isProd) {
+          tiles = this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero);
+        }
 
-        if (this.isWebPersona) {
+        console.log(tiles);
+
+        if (this.isWebPersona && isProd) {
           tiles = tiles.filter((tile) => this.tileUtils.isTileSupportedByWebApp(tile));
         }
 
