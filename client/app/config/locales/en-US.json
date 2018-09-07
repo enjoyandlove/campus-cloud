@@ -2434,6 +2434,10 @@
   "t_deals_list_grid_column_store": {
     "message": "Store"
   },
+  "t_deals_ongoing": {
+    "message": "Ongoing",
+    "description": "Indicates that a deal is posted without an end date"
+  },
   "t_events_assessment_add_checkin_modal_title": {
     "message": "Check-in"
   },
@@ -2595,6 +2599,10 @@
   },
   "t_external_check_in_not_found_error": {
     "message": "The requested campus event cannot be found"
+  },
+  "t_jobs_ongoing": {
+    "message": "Ongoing",
+    "description": "Indicates that a job posting has no end date"
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
@@ -2804,7 +2812,7 @@
     "message": "Includes"
   },
   "t_personas_tile_image_requirements": {
-    "message": "Image size: 720 pixels by 400 pixels.  File must be smaller than 300KB. Use JPG or PNG format."
+    "message": "300kB or less. Use JPEG or PNG."
   },
   "t_personas_tile_modal_create_appearance": {
     "message": "Appearance"

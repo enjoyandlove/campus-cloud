@@ -2413,6 +2413,10 @@
   "t_deals_list_grid_column_store": {
     "message": "Magasin"
   },
+  "t_deals_ongoing": {
+    "message": "Ongoing",
+    "description": "Indicates that a deal is posted without an end date"
+  },
   "t_events_assessment_add_checkin_modal_title": {
     "message": "Vérification de présence"
   },
@@ -2493,6 +2497,10 @@
   },
   "t_event_assessment_web_checkin_page": {
     "message": "Page de vérification de présence web"
+  },
+  "t_jobs_ongoing": {
+    "message": "Ongoing",
+    "description": "Indicates that a job posting has no end date"
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "Mes expériences"
@@ -2687,7 +2695,7 @@
     "message": "Inclut"
   },
   "t_personas_tile_image_requirements": {
-    "message": "Taille de l'image: 720 pixels par 400 pixels. Le fichier doit être plus petit que 300Ko. Utilisez les format JPG ou PNG."
+    "message": "300Ko ou moins. Format JPEG ou PNG."
   },
   "t_personas_tile_modal_create_appearance": {
     "message": "Apparence"
