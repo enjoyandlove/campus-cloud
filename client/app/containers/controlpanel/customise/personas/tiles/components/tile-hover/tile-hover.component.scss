@@ -3,13 +3,7 @@
 @import '~styles/components/button';
 
 .content {
-  height: 100%;
   background-color: rgba(0, 0, 0, 0.6);
-
-  &__wrapper {
-    top: 24px;
-    position: relative;
-  }
 }
 
 button {

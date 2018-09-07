@@ -1,12 +1,14 @@
 /* tslint:disable:max-line-length */
 import {
+  ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
   EventEmitter,
   Input,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
+  AfterViewInit
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -24,10 +26,11 @@ import { FileUploadService } from '../../../../../../../shared/services';
   templateUrl: './tile-guide-form.component.html',
   styleUrls: ['./tile-guide-form.component.scss']
 })
-export class PersonasTileGuideFormComponent implements OnInit {
+export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
   @Input() form: FormGroup;
   @Input() uploadButtonId: number;
 
+  @ViewChild('base') base;
   @ViewChild(CPHostDirective) cpHost: CPHostDirective;
 
   @Output() formChange: EventEmitter<FormGroup> = new EventEmitter();
@@ -44,6 +47,7 @@ export class PersonasTileGuideFormComponent implements OnInit {
     public store: Store<ISnackbar>,
     public utils: TilesUtilsService,
     public fileService: FileUploadService,
+    public changeDetectorRef: ChangeDetectorRef,
     public componentFactoryResolver: ComponentFactoryResolver
   ) {}
 
@@ -109,6 +113,10 @@ export class PersonasTileGuideFormComponent implements OnInit {
         }
       });
     });
+  }
+
+  ngAfterViewInit() {
+    this.changeDetectorRef.detectChanges();
   }
 
   ngOnInit(): void {

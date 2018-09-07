@@ -38,13 +38,15 @@
   </div>
 
   <div class="row form__row">
-    <cp-personas-tile-base class="col-5">
-      <cp-personas-tile-content
-        [visible]=[true]
-        [name]="form.controls['name'].value"
-        [color]="form.controls['color'].value"
-        [image]="form.controls['img_url'].value">
-      </cp-personas-tile-content>
+    <cp-personas-tile-base #base class="col-5">
+      <div [ngStyle]="{'height': base.tileHeight + 2 + 'px'}">
+        <cp-personas-tile-content
+          [visible]=[true]
+          [name]="form.controls['name'].value"
+          [color]="form.controls['color'].value"
+          [image]="form.controls['img_url'].value">
+        </cp-personas-tile-content>
+      </div>
     </cp-personas-tile-base>
   </div>
 </form>
