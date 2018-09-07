@@ -137,4 +137,20 @@ describe('DealsEditComponent', () => {
       expect(spyFetchDeals).toHaveBeenCalledWith(component.dealId, search);
     })
   );
+
+  it('should set ongoing true', () => {
+    const data = {
+      expiration: -1
+    };
+    component.buildDealsForm(data);
+    expect(component.form.controls.ongoing.value).toBe(true);
+  });
+
+  it('should set ongoing false', () => {
+    const data = {
+      expiration: 1234567890
+    };
+    component.buildDealsForm(data);
+    expect(component.form.controls.ongoing.value).toBe(false);
+  });
 });

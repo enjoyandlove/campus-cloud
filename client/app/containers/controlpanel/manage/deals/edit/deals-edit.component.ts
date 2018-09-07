@@ -7,7 +7,8 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
-import { DateStatus, DealsService } from '../deals.service';
+import { dealOngoingValidator } from '../deals.utils';
+import { DealsService, DateStatus } from '../deals.service';
 import { DealsStoreService } from './../stores/store.service';
 import { CPI18nService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
@@ -133,17 +134,19 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
   }
 
   buildDealsForm(data) {
-    const expiration = data.expiration !== DateStatus.forever ? data.expiration : DateStatus.noDate;
-
-    this.form = this.fb.group({
-      title: [data.title, [Validators.required, Validators.maxLength(120)]],
-      store_id: [data.store_id, Validators.required],
-      image_url: [data.image_url, Validators.required],
-      image_thumb_url: [data.image_thumb_url],
-      description: [data.description],
-      start: [data.start],
-      expiration: [expiration]
-    });
+    this.form = this.fb.group(
+      {
+        title: [data.title, [Validators.required, Validators.maxLength(120)]],
+        store_id: [data.store_id, Validators.required],
+        image_url: [data.image_url, Validators.required],
+        image_thumb_url: [data.image_thumb_url],
+        description: [data.description],
+        start: [data.start, Validators.required],
+        expiration: [data.expiration],
+        ongoing: [data.expiration === DateStatus.forever]
+      },
+      { validator: dealOngoingValidator }
+    );
   }
 
   ngOnInit() {
