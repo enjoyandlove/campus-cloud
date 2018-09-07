@@ -14,7 +14,8 @@ import { AudienceSharedModule } from './../../audience/shared/audience.shared.mo
 
 import {
   AnnouncementsListActionBoxComponent,
-  AnnouncementsListRecipientsComponent
+  AnnouncementsListRecipientsComponent,
+  AnnouncementsListSummaryComponent
 } from './list/components';
 
 import { AnnouncementsRoutingModule } from './announcements.routing.module';
@@ -28,7 +29,8 @@ import { AnnouncementsService } from './announcements.service';
     AnnouncementsComposeComponent,
     AnnouncementsConfirmComponent,
     AnnouncementDeleteComponent,
-    AnnouncementsListRecipientsComponent
+    AnnouncementsListRecipientsComponent,
+    AnnouncementsListSummaryComponent
   ],
 
   exports: [

@@ -39,20 +39,10 @@
         <li class="cp-form__item col-12" *ngFor="let message of state.messages">
           <div class="row">
             <span class="col-5">
-              <strong *ngIf="message.is_school_wide">{{ 'campus_wide' | cpI18n }}<br></strong>
-
-              <strong>
-                <cp-list-recipients
-                  [lists]="message.list_details"
-                  [users]="message.user_details"
-                  *ngIf="!message.is_school_wide"
-                  (viewMoreModal)="onViewMoreModal($event)">
-                </cp-list-recipients>
-              </strong>
-
-              {{ message.subject }}
-              <br>
-              <span class="text-muted">{{ message.message }}</span>
+              <cp-announcement-summary
+                [message]="message"
+                (viewMoreModal)="onViewMoreModal($event)">
+              </cp-announcement-summary>
             </span>
 
             <span class="col-3">
