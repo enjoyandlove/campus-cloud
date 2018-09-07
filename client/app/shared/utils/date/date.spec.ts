@@ -1,8 +1,9 @@
 import { CPDate } from './date';
+import { Formats } from '../csv';
 
 const mockDuration = 1301418;
 const mockEpochDate = 1522347737;
-const durationFormat = 'd hh:mm:ss';
+const durationFormat = Formats.timeDurationFormat;
 const dateStr = '2018-03-29T14:22:17.592Z';
 
 describe('CPDate', () => {
