@@ -44,6 +44,7 @@
           <div class="form-group item-details">
             <label>{{ 't_external_checkin_time' | cpI18n }}</label>
             <cp-datepicker
+              #selectedDate
               [placeholder]="placeholder"
               [options]="datePickerOptions">
             </cp-datepicker>

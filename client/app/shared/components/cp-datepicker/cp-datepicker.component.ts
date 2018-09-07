@@ -8,7 +8,8 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import { CPI18nService } from '../../services/index';
+
+import { CPI18nService } from '../../services';
 /**
  * https://chmln.github.io/flatpickr/
  */
@@ -52,6 +53,10 @@ export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
   toggleTime() {
     this.el.set('dateFormat', this.options.dateFormat);
     this.el.set('enableTime', this.options.enableTime);
+  }
+
+  clearDate() {
+    this.el.clear();
   }
 
   ngOnChanges() {
