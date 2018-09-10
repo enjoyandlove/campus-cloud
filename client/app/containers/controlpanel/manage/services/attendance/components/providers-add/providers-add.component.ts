@@ -1,12 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 import { Feedback } from '../../../services.status';
 import { ProvidersService } from '../../../providers.service';
-import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
+import { EventUtilService } from '../../../../events/events.utils.service';
+import { attendanceType, CheckInMethod } from '../../../../events/event.status';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
 
 declare var $: any;
 
@@ -17,10 +19,13 @@ declare var $: any;
 })
 export class ServicesProviderAddComponent implements OnInit {
   @Input() serviceId: number;
-  @Input() serviceWithFeedback: Observable<boolean>;
+  @Input() serviceWithFeedback = new BehaviorSubject(false);
+
   @Output() created: EventEmitter<any> = new EventEmitter();
 
   formErrors;
+  serviceQRCodes;
+  attendanceTypes;
   form: FormGroup;
   serviceAcceptsFeedback;
 
@@ -31,10 +36,11 @@ export class ServicesProviderAddComponent implements OnInit {
   };
 
   constructor(
-    private fb: FormBuilder,
-    private cpI18n: CPI18nService,
-    private cpTracking: CPTrackingService,
-    private providersService: ProvidersService
+    public fb: FormBuilder,
+    public cpI18n: CPI18nService,
+    public utils: EventUtilService,
+    public cpTracking: CPTrackingService,
+    public providersService: ProvidersService
   ) {}
 
   onSubmit() {
@@ -71,14 +77,33 @@ export class ServicesProviderAddComponent implements OnInit {
     return val ? Feedback.enabled : Feedback.disabled;
   }
 
+  onSelectedAttendanceType(hasCheckout: boolean): void {
+    this.form.controls['has_checkout'].setValue(hasCheckout);
+  }
+
+  onSelectedQRCode(isEnabled: boolean): void {
+    const verificationMethods = this.form.controls['checkin_verification_methods'].value;
+
+    if (isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.push(CheckInMethod.app);
+    } else if (!isEnabled && verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.pop(CheckInMethod.app);
+    }
+  }
+
   ngOnInit() {
     this.serviceWithFeedback.subscribe((feedback) => {
       this.serviceAcceptsFeedback = feedback;
 
+      this.serviceQRCodes = this.utils.getQROptions();
+      this.attendanceTypes = this.utils.getAttendanceTypeOptions();
+
       this.form = this.fb.group({
-        provider_name: [null, Validators.required],
         email: [null, Validators.required],
-        custom_basic_feedback_label: [null, Validators.required]
+        has_checkout: [attendanceType.checkInOnly],
+        provider_name: [null, Validators.required],
+        custom_basic_feedback_label: [null, Validators.required],
+        checkin_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
       });
 
       if (!this.serviceAcceptsFeedback) {

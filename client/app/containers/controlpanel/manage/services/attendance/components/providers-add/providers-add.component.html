@@ -46,6 +46,23 @@
                 formControlName="custom_basic_feedback_label">
             </div>
           </div>
+
+          <div class="row form-group">
+            <div class="col-6">
+              <label>{{ 't_events_attendance_type' | cpI18n }}</label>
+              <cp-dropdown
+                [items]="attendanceTypes"
+                (selected)="onSelectedAttendanceType($event.action)">
+              </cp-dropdown>
+            </div>
+            <div class="col-6">
+              <label>{{ 't_events_event_qr_enabled' | cpI18n }}</label>
+              <cp-dropdown
+                [items]="serviceQRCodes"
+                (selected)="onSelectedQRCode($event.action)">
+              </cp-dropdown>
+            </div>
+          </div>
         </form>
       </div>
     </div>
