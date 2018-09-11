@@ -2324,13 +2324,13 @@
     "message": "Engagement(s)"
   },
   "t_assess_checkin_time_in": {
-    "message": "Time In"
+    "message": "Check-in Time"
   },
   "t_assess_checkout_date": {
     "message": "Check-out Date"
   },
   "t_assess_checkout_time_out": {
-    "message": "Time Out"
+    "message": "Check-out Time"
   },
   "t_assess_no_orientation_data": {
     "message": "No Orientation Data"
@@ -2345,7 +2345,7 @@
     "message": "Time Spent"
   },
   "t_assess_time_spent_seconds": {
-    "message": "Time Spent Seconds"
+    "message": "Time Spent (Seconds)"
   },
   "t_assess_top_orientation_programs": {
     "message": "Top Programs"
@@ -2438,6 +2438,12 @@
     "message": "Ongoing",
     "description": "Indicates that a deal is posted without an end date"
   },
+  "t_deals_valid_from": {
+    "message": "Valid From"
+  },
+  "t_deals_valid_until": {
+    "message": "Valid Until"
+  },
   "t_events_assessment_add_checkin_modal_title": {
     "message": "Check-in"
   },
@@ -2445,7 +2451,7 @@
     "message": "Add Check-in"
   },
   "t_events_assessment_check_in_and_checkout": {
-    "message": "Check-in\\Check-out"
+    "message": "Check-in & Check-out"
   },
   "t_events_assessment_check_in_only": {
     "message": "Check-in Only"
@@ -2502,7 +2508,7 @@
     "message": "Notify permission required"
   },
   "t_events_attendance_no_students_tooltip_text": {
-    "message": "No App user to send message"
+    "message": "There are no attendees to send a message to."
   },
   "t_events_attendance_type": {
     "message": "Attendance Type"
@@ -2511,22 +2517,22 @@
     "message": "Check-in Date"
   },
   "t_events_csv_column_check_out_date": {
-    "message": "Check-Out Date"
+    "message": "Check-out time"
   },
   "t_events_csv_column_time_in": {
-    "message": "Time In"
+    "message": "Check-in Time"
   },
   "t_events_csv_column_time_out": {
-    "message": "Time Out"
+    "message": "Check-out time"
   },
   "t_events_csv_column_time_spent": {
     "message": "Time Spent"
   },
   "t_events_csv_column_time_spent_seconds": {
-    "message": "Time Spent Seconds"
+    "message": "Time Spent (Seconds)"
   },
   "t_events_event_attendance_type_tooltip": {
-    "message": "\"Check-in\" records an attendee's name and email, and the time of the QR scan. \"Check-in/Check-out\" lets you scan attendees twice, and tracks start and finish time. Both options let you gather feedback."
+    "message": "\"Check-in\" records an attendee's name and email, and the time of the QR scan. \"Check-in & Check-out\" lets you scan attendees twice, and tracks start and finish time. Both options let you gather feedback."
   },
   "t_events_event_qr_code_tooltip": {
     "message": "Make your event's QR code active to let students scan it, or you can deactivate the code."
@@ -2556,10 +2562,10 @@
     "message": "Web Check-in Page"
   },
   "t_event_check_in_attendee_already_exist": {
-    "message": "User already exist"
+    "message": "This person has already checked in."
   },
   "t_external_checkin_already_checked_in": {
-    "message": "Already Checked-In"
+    "message": "This person has already checked in."
   },
   "t_external_checkin_chechout": {
     "message": "Check-out"
@@ -2589,19 +2595,19 @@
     "message": "Manual Check-in Disabled"
   },
   "t_external_check_in_disable_qr": {
-    "message": "QR Disabled"
+    "message": "QR Disabled Successfully"
   },
   "t_external_check_in_error_fill_out_all_fields": {
     "message": "Please fill out the marked fields"
   },
   "t_external_check_in_forbidden_error": {
-    "message": " External event check-in not allowed"
+    "message": "Cannot check user in to event as you do not have the proper privileges. "
   },
   "t_external_check_in_greater_than_checkout_error": {
     "message": "Check-out time must be later than check-in time."
   },
   "t_external_check_in_not_found_error": {
-    "message": "The requested campus event cannot be found"
+    "message": "The event cannot be found"
   },
   "t_jobs_ongoing": {
     "message": "Ongoing",
