@@ -1,8 +1,8 @@
-<cp-personas-tile-base>
+<cp-personas-tile-base #base>
   <ng-container [ngSwitch]="state.working">
     <ng-container *ngSwitchCase="true">
-      <div class="row h-100">
-        <div class="col-12 d-flex align-items-center justify-content-center">
+      <div class="row" [ngStyle]="{'height': base.tileHeight + 'px'}">
+        <div class="col-12 h-100 d-flex align-items-center justify-content-center">
           <cp-working></cp-working>
         </div>
       </div>
@@ -12,8 +12,9 @@
       <div
         class="wrapper"
         (mouseenter)="toggleHover(true)"
-        (mouseleave)="toggleHover(false)">
-        <div class="row" *ngIf="!state.hover">
+        (mouseleave)="toggleHover(false)"
+        [ngStyle]="{'height': base.tileHeight + 2 + 'px'}">
+        <div class="row h-100" *ngIf="!state.hover">
           <div class="col-12">
             <cp-personas-tile-content
               [name]="tile.name"
@@ -23,7 +24,7 @@
             </cp-personas-tile-content>
           </div>
         </div>
-        <div class="row" *ngIf="state.hover">
+        <div class="row h-100" *ngIf="state.hover">
           <div class="col-12">
             <cp-personas-tile-hover
               (editClick)="edit.emit()"
