@@ -45,8 +45,15 @@
   </div>
   <div class="col-4 text-center">
     <div class="cp-card cp-card--half-padding">
-      <p class="header__digit" *ngIf="service.enable_feedback !== feedbackEnabled">N/A</p>
-      <p class="header__digit" *ngIf="service.enable_feedback === feedbackEnabled">
+      <p
+        class="header__digit"
+        *ngIf="service.enable_feedback !== feedbackEnabled">
+        N/A
+      </p>
+
+      <p
+        class="header__digit"
+        *ngIf="service.enable_feedback === feedbackEnabled">
         <cp-stars
           [size]="detailStarSize"
           [avgRate]="service.avg_rating_percent"
