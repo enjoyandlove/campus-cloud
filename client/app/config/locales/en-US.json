@@ -2562,7 +2562,7 @@
     "message": "Web Check-in Page"
   },
   "t_event_check_in_attendee_already_exist": {
-    "message": "User already exist"
+    "message": "This person has already checked in."
   },
   "t_external_checkin_already_checked_in": {
     "message": "This person has already checked in."
