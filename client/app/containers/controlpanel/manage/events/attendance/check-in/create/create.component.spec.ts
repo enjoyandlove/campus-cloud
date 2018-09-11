@@ -25,7 +25,7 @@ class MockService {
   }
 }
 
-fdescribe('EventCheckInCreateComponent', () => {
+describe('EventCheckInCreateComponent', () => {
   let spy;
   let component: CheckInCreateComponent;
   let fixture: ComponentFixture<CheckInCreateComponent>;
