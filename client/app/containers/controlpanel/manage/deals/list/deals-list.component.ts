@@ -140,8 +140,8 @@ export class DealsListComponent extends BaseComponent implements OnInit {
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),
       store_name: this.cpI18n.translate('t_deals_list_grid_column_store'),
-      start: this.cpI18n.translate('t_deals_valid_from'),
-      expiration: this.cpI18n.translate('t_deals_valid_until')
+      start: this.cpI18n.translate('t_deals_form_posting_start_date'),
+      expiration: this.cpI18n.translate('t_deals_form_posting_end_date')
     };
   }
 }

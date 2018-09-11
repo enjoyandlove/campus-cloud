@@ -81,10 +81,10 @@
             <span
               class="col-2"
               [ngClass]="{ 'pre-tab': deal.start <= 0 }">
-              {{ deal.start <= 0 ? '&#9;--' : (deal.start | cpDatePipe:dateFormat) }}
+              {{ deal.start <= 0 ? '--' : (deal.start | cpDatePipe:dateFormat) }}
             </span>
             <span class="col-2">
-              {{ deal.expiration < 0 ? 'Ongoing' : (deal.expiration | cpDatePipe:dateFormat) }}
+              {{ deal.expiration < 0 ? ('t_deals_ongoing' | cpI18n) : (deal.expiration | cpDatePipe:dateFormat) }}
             </span>
             <span class="col-3">
               {{ deal.store_name }}
