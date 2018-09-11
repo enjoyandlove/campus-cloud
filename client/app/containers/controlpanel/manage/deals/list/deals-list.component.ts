@@ -7,6 +7,7 @@ import { DealsService } from '../deals.service';
 import { ManageHeaderService } from '../../utils';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
+import { FORMAT } from '../../../../../shared/pipes';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
@@ -40,6 +41,7 @@ export class DealsListComponent extends BaseComponent implements OnInit {
   sortingLabels;
   state: IState = state;
   launchDeleteModal = false;
+  dateFormat = FORMAT.SHORT;
 
   constructor(
     public session: CPSession,
@@ -137,7 +139,9 @@ export class DealsListComponent extends BaseComponent implements OnInit {
 
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),
-      store_name: this.cpI18n.translate('t_deals_list_grid_column_store')
+      store_name: this.cpI18n.translate('t_deals_list_grid_column_store'),
+      start: this.cpI18n.translate('t_deals_valid_from'),
+      expiration: this.cpI18n.translate('t_deals_valid_until')
     };
   }
 }

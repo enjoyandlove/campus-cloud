@@ -22,10 +22,26 @@
         <li class="cp-form__header col-12">
           <div class="row">
             <cp-sorting-header
-              class="col-8"
+              class="col-4"
               sortLabel="title"
               (click)="doSort('title')"
               [label]="sortingLabels.name"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction">
+            </cp-sorting-header>
+
+            <cp-sorting-header
+              class="col-2"
+              sortLabel="start"
+              [label]="sortingLabels.start"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction">
+            </cp-sorting-header>
+
+            <cp-sorting-header
+              class="col-2"
+              sortLabel="expiration"
+              [label]="sortingLabels.expiration"
               [sortField]="state.sort_field"
               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
@@ -42,9 +58,11 @@
           </div>
         </li>
 
-        <li class="cp-form__item col-12" *ngFor="let deal of state.deals;">
+        <li
+          class="cp-form__item col-12"
+          *ngFor="let deal of state.deals;">
           <div class="row">
-            <span class="col-8 text-truncate cp-form__thumbnail">
+            <span class="col-4 text-truncate cp-form__thumbnail">
               <img
                 *ngIf="deal.image_url"
                 [src]="deal.image_url"
@@ -60,12 +78,21 @@
               <br>
               {{ deal.description }}
             </span>
+            <span
+              class="col-2"
+              [ngClass]="{ 'pre-tab': deal.start <= 0 }">
+              {{ deal.start <= 0 ? '&#9;--' : (deal.start | cpDatePipe:dateFormat) }}
+            </span>
+            <span class="col-2">
+              {{ deal.expiration < 0 ? 'Ongoing' : (deal.expiration | cpDatePipe:dateFormat) }}
+            </span>
             <span class="col-3">
               {{ deal.store_name }}
             </span>
             <span
               (click)="deleteDeal = deal; launchDeleteModal = true"
-              data-toggle="modal" data-target="#deleteModal"
+              data-toggle="modal"
+              data-target="#deleteModal"
               class="col-1 hover text-truncate delete-deal text-center">
               &times;
             </span>
@@ -84,7 +111,9 @@
   </div>
 </div>
 
-<cp-modal modalId="deleteModal" *ngIf="launchDeleteModal">
+<cp-modal
+  modalId="deleteModal"
+  *ngIf="launchDeleteModal">
   <cp-deals-delete
     [deal]="deleteDeal"
     (deleted)="onDeleted($event)"
