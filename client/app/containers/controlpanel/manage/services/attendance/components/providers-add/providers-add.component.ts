@@ -1,4 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  Output,
+  EventEmitter,
+  HostListener,
+  ElementRef
+} from '@angular/core';
+
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
@@ -18,7 +27,9 @@ declare var $: any;
 export class ServicesProviderAddComponent implements OnInit {
   @Input() serviceId: number;
   @Input() serviceWithFeedback: Observable<boolean>;
+
   @Output() created: EventEmitter<any> = new EventEmitter();
+  @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   formErrors;
   form: FormGroup;
@@ -31,11 +42,20 @@ export class ServicesProviderAddComponent implements OnInit {
   };
 
   constructor(
+    private el: ElementRef,
     private fb: FormBuilder,
     private cpI18n: CPI18nService,
     private cpTracking: CPTrackingService,
     private providersService: ProvidersService
   ) {}
+
+  @HostListener('document:click', ['$event'])
+  onClick(event) {
+    // out of modal reset form
+    if (event.target.contains(this.el.nativeElement)) {
+      this.resetModal();
+    }
+  }
 
   onSubmit() {
     const search = new HttpParams().append('service_id', this.serviceId.toString());
@@ -69,6 +89,11 @@ export class ServicesProviderAddComponent implements OnInit {
 
   getFeedbackStatus(val) {
     return val ? Feedback.enabled : Feedback.disabled;
+  }
+
+  resetModal() {
+    this.teardown.emit();
+    $('#createProvider').modal('hide');
   }
 
   ngOnInit() {

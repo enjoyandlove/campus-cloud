@@ -97,6 +97,14 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
   onLaunchProviderAdd() {
     this.isProviderAdd = true;
+
+    setTimeout(
+      () => {
+        $('#createProvider').modal();
+      },
+
+      1
+    );
   }
 
   onSearch(search_text) {
