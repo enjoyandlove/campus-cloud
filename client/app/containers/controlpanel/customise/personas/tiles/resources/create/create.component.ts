@@ -1,6 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { IPersona } from './../../../persona.interface';
 import { TilesUtilsService } from './../../tiles.utils.service';
 import { ResourceService } from './../resource.service';
 
@@ -10,6 +11,8 @@ import { ResourceService } from './../resource.service';
   styleUrls: ['./create.component.scss']
 })
 export class PersonaResourceCreateComponent implements OnInit {
+  @Input() persona: IPersona;
+
   @Output() error: EventEmitter<any> = new EventEmitter();
   @Output() success: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
@@ -33,7 +36,7 @@ export class PersonaResourceCreateComponent implements OnInit {
     return new Promise((resolve, reject) => {
       this.tileUtils
         .validateTileImage(file)
-        .then(() => resolve({ valid: true }))
+        .then(() => resolve({ valid: true, errors: [] }))
         .catch((err) => reject({ valid: false, errors: [err] }));
     });
   }

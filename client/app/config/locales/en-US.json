@@ -336,7 +336,7 @@
     "message": "Attendance Tracking"
   },
   "assess_demo_footer_bottom": {
-    "message": "to set up OOHLALA Assessment on your campus"
+    "message": "to set up Ready Education Assessment on your campus"
   },
   "assess_demo_footer_cta": {
     "message": "Get Started Today"
@@ -348,10 +348,10 @@
     "message": "Schedule a Demo Today!"
   },
   "assess_demo_hero_cta_help": {
-    "message": "or email us at cm@oohlalamobile.com"
+    "message": "or email us at cm@readyeducation.com"
   },
   "assess_demo_hero_description": {
-    "message": "OOHLALA Assessment enables you to measure and assess student activity outside of the classroom"
+    "message": "READY Education Assessment enables you to measure and assess student activity outside of the classroom"
   },
   "assess_demo_hero_title": {
     "message": "Measure Student Engagement Anywhere on Campus"
@@ -735,7 +735,7 @@
     "message": "Change School"
   },
   "checkins": {
-    "message": "Check-Ins"
+    "message": "Check-ins"
   },
   "checkin_attendance_list": {
     "message": "Attendance List"
@@ -985,7 +985,7 @@
     "message": "Announcements"
   },
   "dashboard_assessment_event_checkins": {
-    "message": "Event Check-Ins",
+    "message": "Event Check-ins",
     "description": "Dashboard Assessment tile"
   },
   "dashboard_assessment_feedback_rate": {
@@ -995,7 +995,7 @@
     "message": "LMS"
   },
   "dashboard_assessment_service_checkins": {
-    "message": "Service Check-Ins"
+    "message": "Service Check-ins"
   },
   "dashboard_assessment_student": {
     "message": "Student"
@@ -1227,9 +1227,6 @@
   "events_checked_in_method": {
     "message": "Check-in Method"
   },
-  "events_checked_in_time": {
-    "message": "Check-in Time"
-  },
   "events_check_in": {
     "message": "Check-in"
   },
@@ -1291,7 +1288,7 @@
     "message": "Import Events from Facebook"
   },
   "events_facebook_help": {
-    "message": "Provide the link to the Facebook event page (e.g., https://www.facebook.com/oohlalamobileapp/events/)."
+    "message": "Provide the link to the Facebook event page (e.g., https://www.facebook.com/readyeducation/events/)."
   },
   "events_facebook_label_host": {
     "message": "Select Host"
@@ -1972,7 +1969,7 @@
     "message": "New as of June 2, 2017:"
   },
   "release_notes_p_four": {
-    "message": "The OOHLALA Team."
+    "message": "Ready Education"
   },
   "release_notes_p_two": {
     "message": "Should you wish to return to the old Campus Cloud, you can always do so by clicking on the banner at the top of the screen. If you wish to provide any feedback on your experience with the new Campus Cloud, please contact us at "
@@ -2326,6 +2323,15 @@
   "t_assess_chart_tooltip_label_engagements": {
     "message": "Engagement(s)"
   },
+  "t_assess_checkin_time_in": {
+    "message": "Check-in Time"
+  },
+  "t_assess_checkout_date": {
+    "message": "Check-out Date"
+  },
+  "t_assess_checkout_time_out": {
+    "message": "Check-out Time"
+  },
   "t_assess_no_orientation_data": {
     "message": "No Orientation Data"
   },
@@ -2334,6 +2340,12 @@
   },
   "t_assess_orientation_programs": {
     "message": "Orientation Programs"
+  },
+  "t_assess_time_spent": {
+    "message": "Time Spent"
+  },
+  "t_assess_time_spent_seconds": {
+    "message": "Time Spent (Seconds)"
   },
   "t_assess_top_orientation_programs": {
     "message": "Top Programs"
@@ -2349,6 +2361,12 @@
   },
   "t_audience_save_modal_button_submit": {
     "message": "Save"
+  },
+  "t_changes_saved_ok": {
+    "message": "Changes saved successfully"
+  },
+  "t_check_in_date_placeholder_text": {
+    "message": "Now"
   },
   "t_customise_personas": {
     "message": "App Experiences"
@@ -2416,47 +2434,66 @@
   "t_deals_list_grid_column_store": {
     "message": "Store"
   },
+  "t_deals_ongoing": {
+    "message": "Ongoing",
+    "description": "Indicates that a deal is posted without an end date"
+  },
+  "t_deals_valid_from": {
+    "message": "Valid From"
+  },
+  "t_deals_valid_until": {
+    "message": "Valid Until"
+  },
   "t_events_assessment_add_checkin_modal_title": {
-    "message": "Check-In"
+    "message": "Check-in"
   },
   "t_events_assessment_add_check_in": {
-    "message": "Add Check-In"
+    "message": "Add Check-in"
   },
   "t_events_assessment_check_in_and_checkout": {
-    "message": "Check-In and Check-Out"
+    "message": "Check-in & Check-out"
   },
   "t_events_assessment_check_in_only": {
-    "message": "Check-In Only"
+    "message": "Check-in Only"
+  },
+  "t_events_assessment_disable_qr_check_in": {
+    "message": "Disable QR Check-in"
+  },
+  "t_events_assessment_enable_qr_check_in": {
+    "message": "Enable QR Check-in"
   },
   "t_events_assessment_message_attendees": {
     "message": "Message Attendees"
   },
+  "t_events_assessment_no_check_in": {
+    "message": "No Check-in"
+  },
   "t_events_assessment_qr_enabled_no": {
-    "message": "No"
+    "message": "Inactive"
   },
   "t_events_assessment_qr_enabled_yes": {
-    "message": "Yes"
+    "message": "Active"
   },
   "t_events_attendance_add_check_in_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
   "t_events_attendance_add_check_in_delete_modal_title": {
-    "message": "Delete Check-In"
+    "message": "Delete Check-in"
   },
   "t_events_attendance_add_check_in_error_check_in_time_after_now": {
-    "message": "Check-In Time must be in future"
+    "message": "Check-in time must be in future."
   },
   "t_events_attendance_add_check_in_error_check_out_time_after_check_in": {
-    "message": "Check-Out  must be later than Check-In"
+    "message": "Check-out time must be later than check-in time."
   },
   "t_events_attendance_add_check_in_error_fill_out_all_fields": {
     "message": "Please fill out the marked fields"
   },
   "t_events_attendance_add_edit_check_in_check_in_time": {
-    "message": "Check-In Time"
+    "message": "Check-in Time"
   },
   "t_events_attendance_add_edit_check_in_check_out_time": {
-    "message": "Check-Out Time"
+    "message": "Check-out Time"
   },
   "t_events_attendance_add_edit_check_in_email": {
     "message": "Email"
@@ -2467,17 +2504,41 @@
   "t_events_attendance_add_edit_check_in_last_name": {
     "message": "Last Name"
   },
-  "t_events_attendance_no_attendees_tooltip_text": {
-    "message": "There are no users"
-  },
   "t_events_attendance_no_permission_tooltip_text": {
     "message": "Notify permission required"
+  },
+  "t_events_attendance_no_students_tooltip_text": {
+    "message": "There are no attendees to send a message to."
   },
   "t_events_attendance_type": {
     "message": "Attendance Type"
   },
+  "t_events_csv_column_check_in_date": {
+    "message": "Check-in Date"
+  },
+  "t_events_csv_column_check_out_date": {
+    "message": "Check-out time"
+  },
+  "t_events_csv_column_time_in": {
+    "message": "Check-in Time"
+  },
+  "t_events_csv_column_time_out": {
+    "message": "Check-out time"
+  },
+  "t_events_csv_column_time_spent": {
+    "message": "Time Spent"
+  },
+  "t_events_csv_column_time_spent_seconds": {
+    "message": "Time Spent (Seconds)"
+  },
+  "t_events_event_attendance_type_tooltip": {
+    "message": "\"Check-in\" records an attendee's name and email, and the time of the QR scan. \"Check-in & Check-out\" lets you scan attendees twice, and tracks start and finish time. Both options let you gather feedback."
+  },
+  "t_events_event_qr_code_tooltip": {
+    "message": "Make your event's QR code active to let students scan it, or you can deactivate the code."
+  },
   "t_events_event_qr_enabled": {
-    "message": "QR Enabled"
+    "message": "QR Code"
   },
   "t_events_import_import_events": {
     "message": "Import Events"
@@ -2486,13 +2547,71 @@
     "message": "Upload Image"
   },
   "t_event_assessment_check_in_date": {
-    "message": "Check-In"
+    "message": "Check-in"
   },
   "t_event_assessment_check_out_date": {
-    "message": "Check-Out"
+    "message": "Check-out"
+  },
+  "t_event_assessment_qr_code_disabled_success_message": {
+    "message": "QR Check-in successfully disabled"
+  },
+  "t_event_assessment_qr_code_enable_success_message": {
+    "message": "QR Check-in successfully enabled"
   },
   "t_event_assessment_web_checkin_page": {
-    "message": "Web Check-In Page"
+    "message": "Web Check-in Page"
+  },
+  "t_event_check_in_attendee_already_exist": {
+    "message": "This person has already checked in."
+  },
+  "t_external_checkin_already_checked_in": {
+    "message": "This person has already checked in."
+  },
+  "t_external_checkin_chechout": {
+    "message": "Check-out"
+  },
+  "t_external_checkin_checkin": {
+    "message": "Check-in"
+  },
+  "t_external_checkin_method": {
+    "message": "Method"
+  },
+  "t_external_checkin_time": {
+    "message": "Check-in Time"
+  },
+  "t_external_check_in_bad_request_error": {
+    "message": "Error in the parameters"
+  },
+  "t_external_check_in_check_out_button": {
+    "message": "Check-out"
+  },
+  "t_external_check_in_check_out_modal_title": {
+    "message": "Check-out"
+  },
+  "t_external_check_in_check_out_time": {
+    "message": "Check-out Time"
+  },
+  "t_external_check_in_disable_manual_check_in": {
+    "message": "Manual Check-in Disabled"
+  },
+  "t_external_check_in_disable_qr": {
+    "message": "QR Disabled Successfully"
+  },
+  "t_external_check_in_error_fill_out_all_fields": {
+    "message": "Please fill out the marked fields"
+  },
+  "t_external_check_in_forbidden_error": {
+    "message": "Cannot check user in to event as you do not have the proper privileges. "
+  },
+  "t_external_check_in_greater_than_checkout_error": {
+    "message": "Check-out time must be later than check-in time."
+  },
+  "t_external_check_in_not_found_error": {
+    "message": "The event cannot be found"
+  },
+  "t_jobs_ongoing": {
+    "message": "Ongoing",
+    "description": "Indicates that a job posting has no end date"
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
@@ -2573,7 +2692,7 @@
     "message": "Delete Experience"
   },
   "t_personas_form_dropdown_login_forbidden": {
-    "message": "Forbidden"
+    "message": "Not required"
   },
   "t_personas_form_dropdown_login_optional": {
     "message": "Optional"
@@ -2617,6 +2736,9 @@
   "t_personas_list_dropdown_web_experiences": {
     "message": "Web"
   },
+  "t_personas_no_results_found": {
+    "message": "No experiences found"
+  },
   "t_personas_resource_create_modal_title": {
     "message": "New Resource"
   },
@@ -2627,7 +2749,7 @@
     "message": "New Tile"
   },
   "t_personas_tile_create_resource_type_academic_calendar": {
-    "message": "Academic Calendar"
+    "message": "Academic Calendars"
   },
   "t_personas_tile_create_resource_type_advisor_list": {
     "message": "Advisor List"
@@ -2635,35 +2757,23 @@
   "t_personas_tile_create_resource_type_athletics_club": {
     "message": "Athletic Clubs"
   },
-  "t_personas_tile_create_resource_type_camera_qr": {
-    "message": "Scan QR"
-  },
   "t_personas_tile_create_resource_type_campus_poi_list": {
-    "message": "Campus Map"
+    "message": "Maps"
   },
   "t_personas_tile_create_resource_type_campus_service": {
     "message": "Campus Service"
   },
-  "t_personas_tile_create_resource_type_campus_tour_list": {
-    "message": "Campus Tour List"
-  },
   "t_personas_tile_create_resource_type_courses": {
-    "message": "Courses"
+    "message": "Course Catalogue"
   },
   "t_personas_tile_create_resource_type_deal_store_list": {
     "message": "Deals"
   },
   "t_personas_tile_create_resource_type_default_campus_link_list": {
-    "message": "Campus Links List"
+    "message": "Links"
   },
   "t_personas_tile_create_resource_type_event_list": {
     "message": "Events"
-  },
-  "t_personas_tile_create_resource_type_exams": {
-    "message": "Exams"
-  },
-  "t_personas_tile_create_resource_type_in_app_feedback": {
-    "message": "In-App feedback"
   },
   "t_personas_tile_create_resource_type_job_list": {
     "message": "Jobs"
@@ -2672,34 +2782,28 @@
     "message": "Orientation"
   },
   "t_personas_tile_create_resource_type_service_by_category_id": {
-    "message": "Services by Category"
+    "message": "List of Services by Category"
   },
   "t_personas_tile_create_resource_type_store": {
-    "message": "Stores"
+    "message": "Service or Club"
   },
   "t_personas_tile_create_resource_type_store_list": {
-    "message": "Stores List"
+    "message": "List of Clubs by Type"
   },
   "t_personas_tile_create_resource_type_subscribable_calendar": {
-    "message": "Subscribable Calendar"
+    "message": "Calendar"
   },
   "t_personas_tile_create_resource_type_timetable": {
-    "message": "Timetable"
-  },
-  "t_personas_tile_create_resource_type_user_attended_events": {
-    "message": "User Attended Events"
+    "message": "My Calendar"
   },
   "t_personas_tile_create_resource_type_user_orientation_calendar_list": {
-    "message": "User subscribed orientation calendar"
-  },
-  "t_personas_tile_create_resource_type_user_school_course_material_list": {
-    "message": "User school course material list"
+    "message": "My Orientation Calendars"
   },
   "t_personas_tile_create_store_list_groups_and_clubs": {
     "message": "Groups and Clubs"
   },
   "t_personas_tile_create_type_resource_external_link": {
-    "message": "External Link"
+    "message": "External Web Link"
   },
   "t_personas_tile_create_type_resource_resource": {
     "message": "Resource"
@@ -2708,13 +2812,16 @@
     "message": "Resource List"
   },
   "t_personas_tile_create_type_resource_web_link": {
-    "message": "Web Link"
+    "message": "In-App Web Link"
   },
   "t_personas_tile_form_categories_excludes": {
     "message": "Excludes"
   },
   "t_personas_tile_form_categories_includes": {
     "message": "Includes"
+  },
+  "t_personas_tile_image_requirements": {
+    "message": "300kB or less. Use JPEG or PNG."
   },
   "t_personas_tile_modal_create_appearance": {
     "message": "Appearance"
@@ -2796,6 +2903,12 @@
   },
   "t_shared_wrong_dimensions": {
     "message": "Must be JPG or PNG, 720*400px, smaller than 300KB "
+  },
+  "t_students_profile_students": {
+    "message": "Students"
+  },
+  "t_studio": {
+    "message": "Studio"
   },
   "t_tile_button_default": {
     "message": "Default"

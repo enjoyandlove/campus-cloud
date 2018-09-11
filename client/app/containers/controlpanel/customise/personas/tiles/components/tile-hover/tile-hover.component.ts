@@ -6,8 +6,8 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
   styleUrls: ['./tile-hover.component.scss']
 })
 export class PersonasTileHoverComponent implements OnInit {
-  @Input() noEdit;
   @Input() visible;
+  @Input() editable;
   @Input() defaultTile: boolean;
 
   @Output() editClick: EventEmitter<null> = new EventEmitter();

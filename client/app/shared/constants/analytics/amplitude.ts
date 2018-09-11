@@ -41,8 +41,6 @@ export const amplitudeEvents = {
 
   ENABLED: 'Enabled',
 
-  NEW_AUDIENCE: 'New',
-
   EXISTING: 'Existing',
 
   PROVIDER: 'Provider',
@@ -63,13 +61,13 @@ export const amplitudeEvents = {
 
   EXECUTIVE: 'Executive',
 
+  EXPERIENCE: 'Experience',
+
   ATHLETICS: 'Athletics',
 
   NO_ACCESS: 'No Access',
 
   LOGGED_IN: 'Logged In',
-
-  SAVED_AUDIENCE: 'Saved',
 
   ATTENDANCE: 'Attendance',
 
@@ -89,8 +87,6 @@ export const amplitudeEvents = {
 
   FULL_ACCESS: 'Full Access',
 
-  CUSTOM_LIST: 'Custom List',
-
   VIEWED_ITEM: 'Viewed Item',
 
   ALL_STUDENTS: 'All Students',
@@ -99,13 +95,13 @@ export const amplitudeEvents = {
 
   ANNOUNCEMENT: 'Announcement',
 
-  DYNAMIC_LIST: 'Dynamic List',
-
   CAROUSEL_WHEEL: 'Carousel Wheel',
 
   SELECT_ACCESS: 'Select Access',
 
   NO_ENGAGEMENT: 'No Engagement',
+
+  CUSTOM_AUDIENCE: 'Custom Audience',
 
   UPLOADED_PHOTO: 'Uploaded Photo',
 
@@ -124,6 +120,8 @@ export const amplitudeEvents = {
   ALL_ENGAGEMENT: 'All Engagement',
 
   CHANGED_SCHOOL: 'Changed School',
+
+  DYNAMIC_AUDIENCE: 'Dynamic Audience',
 
   CLICKED_MENU: 'Clicked Menu Item',
 
@@ -157,15 +155,13 @@ export const amplitudeEvents = {
 
   WALL_VIEWED_COMMENT: 'Wall - Viewed Comment',
 
-  ASSESS_SENT_MESSAGE: 'Assess - Sent Message',
-
-  MENAGE_SENT_MESSAGE: 'Menage - Sent Message',
-
   WALL_SUBMITTED_POST: 'Wall - Submitted Post',
 
   MANAGE_CREATED_LINK: 'Manage - Created Link',
 
   MANAGE_UPDATED_LINK: 'Manage - Updated Link',
+
+  MULTIPLE_ENGAGEMENTS: 'Multiple Engagements',
 
   MANAGE_CREATED_CLUB: 'Manage - Created Club',
 
@@ -185,8 +181,6 @@ export const amplitudeEvents = {
 
   WALL_UPDATED_SETTINGS: 'Wall - Updated Settings',
 
-  NOTIFY_SAVED_TEMPLATE: 'Notify - Saved Template',
-
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
 
   MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
@@ -195,7 +189,15 @@ export const amplitudeEvents = {
 
   MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
 
+  NOTIFY_DELETED_LISTING: 'Notify - Deleted Listing',
+
   WALL_SUBMITTED_COMMENT: 'Wall - Submitted Comment',
+
+  NOTIFY_CREATED_TEMPLATE: 'Notify - Created Template',
+
+  MANAGE_SENT_ANNOUNCEMENT: 'Menage - Sent Announcement',
+
+  ASSESS_SENT_ANNOUNCEMENT: 'Assess - Sent Announcement',
 
   MANAGE_CREATED_SERVICE: 'Manage - Created Service',
 

@@ -1,23 +1,26 @@
-import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { By } from '@angular/platform-browser';
+import { FormBuilder } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
-import { EventsEditComponent } from './events-edit.component';
-import { reducers } from '../../../../../reducers';
+
+import { EventsModule } from '../events.module';
+import { EventAttendance } from '../event.status';
+import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
+import { reducers } from '../../../../../reducers';
+import { EventUtilService } from '../events.utils.service';
+import { EventsEditComponent } from './events-edit.component';
 import { mockSchool } from '../../../../../session/mock/school';
+
 import {
   AdminService,
   CPI18nService,
   ErrorService,
   StoreService
 } from '../../../../../shared/services';
-import { EventAttendance } from '../event.status';
-import { EventsModule } from '../events.module';
-import { EventsService } from '../events.service';
-import { EventUtilService } from '../events.utils.service';
 
 class MockService {
   dummy;
@@ -54,11 +57,16 @@ describe('EventEditComponent', () => {
     event_feedback: 0,
     extra_data_id: 0,
     address: '',
-    event_attendance: 0,
+    event_attendance: 1,
     longitude: 0.0,
     poster_url: 'https://d25cbba5lf1nun.cloudfront.net/AsmFS.png',
     poster_thumb_url: 'https://d25cbba5lf1nun.cloudfront.net/AsmFSxT1V.png'
   };
+
+  const mockStore = [{
+    label: '---',
+    value: null
+  }];
 
   beforeEach(
     async(() => {
@@ -90,13 +98,13 @@ describe('EventEditComponent', () => {
           component = fixture.componentInstance;
           component.eventId = 1002;
           component.session.g.set('school', mockSchool);
-
+          component.isFormReady = true;
           component.ngOnInit();
 
           spyOn(component, 'router');
           spyOn(component, 'buildHeader');
           spyOn(component.service, 'getEventById').and.returnValue(observableOf(mockEvent));
-          spyOn(component.storeService, 'getStores').and.returnValue(observableOf({}));
+          spyOn(component.storeService, 'getStores').and.returnValue(observableOf(mockStore));
           spy = spyOn(component.service, 'updateEvent').and.returnValue(observableOf({}));
         });
     })
@@ -110,26 +118,125 @@ describe('EventEditComponent', () => {
     expect(component.form.controls['is_all_day'].value).toBeFalsy();
   });
 
-  it('should have event manager tooltip', () => {
-    const eventManager = component.cpI18n.translate('events_event_manager_tooltip');
-    expect(component.eventManagerToolTip.content).toEqual(eventManager);
-  });
+  it('should have event attendance type tooltip', fakeAsync(() => {
+    component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
+    fixture.detectChanges();
+    tick();
 
-  it('should have attendance Manager tooltip', () => {
-    const attendanceManager = component.cpI18n.translate('events_attendance_manager_tooltip');
-    expect(component.attendanceManagerToolTip.content).toEqual(attendanceManager);
-  });
+    const toolTipInfoIcon = fixture.debugElement
+      .query(By.css('.row .attendance-type-tooltip button')).nativeElement;
+    toolTipInfoIcon.click();
+    tick();
 
-  it('should have student feedback tooltip', () => {
-    const studentFeedback = component.cpI18n.translate('events_event_feedback_tooltip');
-    expect(component.studentFeedbackToolTip.content).toEqual(studentFeedback);
-  });
+    fixture.detectChanges();
+
+    tick();
+    const toolTipContent = fixture.debugElement
+      .query(By.css('.row .attendance-type-tooltip .popover .popover-content div'))
+      .nativeElement;
+
+    const utilsEventAttendanceTypeTooltip = component.utils
+      .getToolTipContent('t_events_event_attendance_type_tooltip');
+
+    expect(toolTipContent.textContent).toEqual(utilsEventAttendanceTypeTooltip.content);
+  }));
+
+  it('should have event QR enabled tooltip', fakeAsync(() => {
+    component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
+    fixture.detectChanges();
+    tick();
+
+    const toolTipInfoIcon = fixture.debugElement
+      .query(By.css('.row .event-qr-enable-tooltip button')).nativeElement;
+    toolTipInfoIcon.click();
+    tick();
+
+    fixture.detectChanges();
+
+    tick();
+    const toolTipContent = fixture.debugElement
+      .query(By.css('.row .event-qr-enable-tooltip .popover .popover-content div'))
+      .nativeElement;
+
+    const utilsEventQREnableTooltip = component.utils
+      .getToolTipContent('t_events_event_qr_code_tooltip');
+
+    expect(toolTipContent.textContent).toEqual(utilsEventQREnableTooltip.content);
+  }));
+
+  it('should have event manager tooltip', fakeAsync(() => {
+    component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
+    fixture.detectChanges();
+    tick();
+
+    const toolTipInfoIcon = fixture.debugElement
+      .query(By.css('.row .event-manager-tooltip button')).nativeElement;
+    toolTipInfoIcon.click();
+    tick();
+
+    fixture.detectChanges();
+
+    tick();
+    const toolTipContent = fixture.debugElement
+      .query(By.css('.row .event-manager-tooltip .popover .popover-content div')).nativeElement;
+
+    const utilsEventManagerTooltip = component.utils
+      .getToolTipContent('events_event_manager_tooltip');
+
+    expect(toolTipContent.textContent).toEqual(utilsEventManagerTooltip.content);
+  }));
+
+  it('should have attendance Manager tooltip', fakeAsync(() => {
+    component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
+    fixture.detectChanges();
+    tick();
+
+    const toolTipInfoIcon = fixture.debugElement
+      .query(By.css('.row .attendance-manager-tooltip button')).nativeElement;
+    toolTipInfoIcon.click();
+    tick();
+
+    fixture.detectChanges();
+
+    tick();
+    const toolTipContent = fixture.debugElement
+      .query(By.css('.row .attendance-manager-tooltip .popover .popover-content div'))
+      .nativeElement;
+
+    const utilsAttendanceManagerTooltip = component.utils
+      .getToolTipContent('events_attendance_manager_tooltip');
+
+    expect(toolTipContent.textContent).toEqual(utilsAttendanceManagerTooltip.content);
+  }));
+
+  it('should have student feedback tooltip', fakeAsync(() => {
+    component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
+    fixture.detectChanges();
+    tick();
+
+    const toolTipInfoIcon = fixture.debugElement
+      .query(By.css('.row .student-feedback-tooltip button')).nativeElement;
+    toolTipInfoIcon.click();
+    tick();
+
+    fixture.detectChanges();
+
+    tick();
+    const toolTipContent = fixture.debugElement
+      .query(By.css('.row .student-feedback-tooltip .popover .popover-content div')).nativeElement;
+
+    const utilsStudentFeedbackTooltip = component.utils
+      .getToolTipContent('events_event_feedback_tooltip');
+
+    expect(toolTipContent.textContent).toEqual(utilsStudentFeedbackTooltip.content);
+  }));
 
   it('form validation should fail required fields missing', () => {
     component.form.controls['title'].setValue(null);
     component.form.controls['end'].setValue(null);
     component.form.controls['start'].setValue(null);
     component.form.controls['poster_url'].setValue(null);
+    component.form.controls['event_attendance'].setValue(EventAttendance.disabled);
     component.onSubmit(observableOf({}));
 
     expect(component.form.valid).toBeFalsy();
@@ -154,7 +261,10 @@ describe('EventEditComponent', () => {
       component.fetch();
       tick();
 
-      component.form.controls['end'].setValue(1492342527);
+      const eventEndDateBeforeStart = 1492342527;
+
+      component.form.controls['end'].setValue(eventEndDateBeforeStart);
+      component.form.controls['event_attendance'].setValue(EventAttendance.disabled);
       component.onSubmit(observableOf({}));
 
       expect(component.formMissingFields).toBeTruthy();
@@ -173,8 +283,12 @@ describe('EventEditComponent', () => {
       component.fetch();
       tick();
 
-      component.form.controls['start'].setValue(1460806527);
-      component.form.controls['end'].setValue(1492342527);
+      const eventStartDate = 1460806527;
+      const eventEndDateInPast = 1492342527;
+
+      component.form.controls['start'].setValue(eventStartDate);
+      component.form.controls['end'].setValue(eventEndDateInPast);
+      component.form.controls['event_attendance'].setValue(EventAttendance.disabled);
       component.onSubmit(observableOf({}));
 
       expect(component.formMissingFields).toBeTruthy();
@@ -191,6 +305,8 @@ describe('EventEditComponent', () => {
       component.isOrientation = true;
       component.fetch();
       tick();
+
+      component.form.controls['event_attendance'].setValue(EventAttendance.disabled);
 
       component.onSubmit(observableOf({}));
       expect(spy).toHaveBeenCalled();

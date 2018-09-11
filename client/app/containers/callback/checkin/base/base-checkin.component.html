@@ -39,13 +39,16 @@
 
         <cp-checkin-register
           [data]="data"
+          [isService]="isService"
           class="card-margin"
           (send)="send.emit($event)">
         </cp-checkin-register>
 
         <cp-attendees-list
           class="card-margin"
-          [attendees]="data.attendees"
+          [data]="data"
+          [isService]="isService"
+          (checkout)="checkout.emit($event)"
           *ngIf="data.attendees.length">
         </cp-attendees-list>
       </div>

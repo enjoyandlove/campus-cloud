@@ -10,8 +10,35 @@ import { TileCategoryRank, TileFeatureRank, TileVisibility } from './tiles.statu
 import { CPSession } from '../../../../../session';
 import { IPersona } from '../persona.interface';
 
+const threeHundrendKb = 3e5;
+
 @Injectable()
 export class TilesUtilsService {
+  static webAppSupportedLinkUrls = [
+    'oohlala://campus_service',
+    'oohlala://store',
+    'oohlala://job_list',
+    'oohlala://store_list',
+    'oohlala://school_campaign',
+    'oohlala://event_list',
+    'oohlala://campaign_list',
+    'oohlala://deal_store_list',
+    'oohlala://campus_service_list',
+    'oohlala://campus_poi_list',
+    'oohlala://campus_security_service',
+    'oohlala://campus_link_list'
+  ];
+
+  static deprecatedTiles = [
+    'oohlala://camera_qr',
+    'oohlala://exam_search',
+    'oohlala://advisor_list',
+    'oohlala://in_app_feedback',
+    'oohlala://campus_tour_list',
+    'oohlala://attended_event_list',
+    'oohlala://user_school_course_material_list'
+  ];
+
   defaultTileCategoryIds = [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13];
 
   constructor(
@@ -25,11 +52,22 @@ export class TilesUtilsService {
     return this.defaultTileCategoryIds.includes(tile.tile_category_id);
   }
 
+  isTileSupportedByWebApp(tile: ITile) {
+    const supportedLinkUrls = TilesUtilsService.webAppSupportedLinkUrls;
+    const webOrExternalLink = tile.related_link_data.link_url.startsWith('http');
+
+    return webOrExternalLink || supportedLinkUrls.includes(tile.related_link_data.link_url);
+  }
+
   isCampaignTile(tile: ITile) {
     return (
       tile.related_link_data.link_url === 'oohlala://school_campaign' ||
       tile.related_link_data.link_url === 'oohlala://campaign_list'
     );
+  }
+
+  isDeprecated(tile: ITile) {
+    return TilesUtilsService.deprecatedTiles.includes(tile.related_link_data.link_url);
   }
 
   isFeatured(tile: ITile) {
@@ -85,10 +123,8 @@ export class TilesUtilsService {
     });
   }
 
-  async validateTileImage(file: File): Promise<string> {
+  async validateTileImage(file: File, maxImageSize = threeHundrendKb): Promise<string> {
     let error;
-    const threeHundrendKb = 3e5;
-    const maxImageSize = threeHundrendKb;
     const validExtension = (media) => ['image/jpeg', 'image/jpg', 'image/png'].includes(media.type);
     const validSize = FileUploadService.validFileSize(file, maxImageSize);
 

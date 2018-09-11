@@ -6,10 +6,14 @@ import { Store } from '@ngrx/store';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { BannerService } from '../banner.service';
-import { CPTrackingService, ZendeskService } from '../../../../../shared/services';
-import { ISnackbar, SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { CPI18nService, CPCroppieService } from '../../../../../shared/services/index';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { ISnackbar, SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
+import {
+  CPI18nService,
+  CPCroppieService,
+  CPTrackingService,
+  ZendeskService
+} from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-banner-list',

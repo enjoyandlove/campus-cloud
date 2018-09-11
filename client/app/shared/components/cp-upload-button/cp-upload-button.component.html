@@ -21,7 +21,12 @@
       name="file"
       class="inputfile"
       (change)="onChange($event)" />
-    <label [for]="id" [class]="[props?.class]">{{ buttonText ? buttonText : 'Choose a file' }}</label>
+    <label
+      [for]="id"
+      [class]="[props?.class]">
+      {{ buttonText ? buttonText : 'Choose a file' }}
+      <cp-working *ngIf="busy" class="busy"></cp-working>
+    </label>
   </div>
 </ng-container>
 

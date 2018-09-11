@@ -3,8 +3,8 @@
     <div class="row">
       <div class="col-12">
         <div class="row">
-          <div class="col-6"><span i18n>{{ 'checkin_scannable_qr_code' | cpI18n }}</span></div>
-          <div class="col-6"><span i18n>{{ 'checkin_manual_checkin' | cpI18n }}</span></div>
+          <div class="col-6"><span>{{ 'checkin_scannable_qr_code' | cpI18n }}</span></div>
+          <div class="col-6"><span>{{ 'checkin_manual_checkin' | cpI18n }}</span></div>
         </div>
       </div>
     </div>
@@ -12,36 +12,53 @@
   <div class="registration__form">
     <div class="row">
       <div class="col-6">
-        <div
-          class="registration__qrcode"
-          [ngStyle]="{'background-image': 'url(' + data.qr_img_url + ')'}"></div>
+        <div class="registration__form__overlay_wrapper">
+          <div class="registration__form__overlay" *ngIf="disabledQRCode">
+            <span>
+              <i class="material-icons">block</i>
+               {{ 't_external_check_in_disable_qr' | cpI18n }}
+            </span>
+          </div>
+          <div
+            class="registration__form__qr_image"
+            [ngStyle]="{'background-image': 'url(' + data.qr_img_url + ')'}"></div>
+        </div>
       </div>
       <div class="col-6">
-        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit(registrationForm.value)">
+        <form [formGroup]="registrationForm">
           <div class="form-group">
-            <label i18n>{{ 'first_name' | cpI18n }}</label>
+            <label>{{ 'first_name' | cpI18n }}</label>
             <input type="text" class="form-control" formControlName="firstname">
           </div>
 
           <div class="form-group">
-            <label i18n>{{ 'last_name' | cpI18n }}</label>
+            <label>{{ 'last_name' | cpI18n }}</label>
             <input type="text" class="form-control" formControlName="lastname">
           </div>
 
           <div class="form-group">
-            <label i18n>{{ 'email' | cpI18n }}</label>
+            <label>{{ 'email' | cpI18n }}</label>
             <input type="email" class="form-control" formControlName="email">
+          </div>
+
+          <div class="form-group item-details">
+            <label>{{ 't_external_checkin_time' | cpI18n }}</label>
+            <cp-datepicker
+              #selectedDate
+              [placeholder]="placeholder"
+              [options]="datePickerOptions">
+            </cp-datepicker>
           </div>
 
           <div class="form-group">
             <div class="row">
               <div class="col-12">
-                <button
-                  type="submit"
-                  [disabled]="!registrationForm.valid"
-                  class="cpbtn cpbtn--tall cpbtn--full-width cpbtn--primary" i18n>
-                  {{ 'confirm' | cpI18n }}
-                </button>
+                <cp-button
+                  [props]="buttonData"
+                  [attr.data-toggle]="'tooltip'"
+                  [attr.title]="disableCheckInTooltip"
+                  (buttonClick)="onSubmit(registrationForm.value)">
+                </cp-button>
               </div>
             </div>
           </div>

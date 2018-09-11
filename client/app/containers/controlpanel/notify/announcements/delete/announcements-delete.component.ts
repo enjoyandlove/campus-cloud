@@ -4,6 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { CPSession } from '../../../../../session';
 import { STATUS } from '../../../../../shared/constants';
 import { AnnouncementsService } from '../announcements.service';
+import { NotifyUtilsService } from '../../notify.utils.service';
 import { CPTrackingService } from '../../../../../shared/services';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
@@ -23,11 +24,18 @@ export class AnnouncementDeleteComponent implements OnInit {
   isError;
   buttonData;
   errorMessage;
-  eventProperties;
+
+  eventProperties = {
+    sub_menu_name: null,
+    audience_type: null,
+    announcement_id: null,
+    announcement_type: null
+  };
 
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
+    private utils: NotifyUtilsService,
     private service: AnnouncementsService,
     private cpTracking: CPTrackingService
   ) {}
@@ -43,7 +51,7 @@ export class AnnouncementDeleteComponent implements OnInit {
 
     this.service.deleteAnnouncement(this.item.id, search).subscribe(
       (_) => {
-        this.trackDeleteEvent();
+        this.trackDeleteEvent(this.item);
         this.teardown.emit();
         this.deleted.emit(this.item.id);
         $('#deleteAnnouncementModal').modal('hide');
@@ -61,13 +69,19 @@ export class AnnouncementDeleteComponent implements OnInit {
     );
   }
 
-  trackDeleteEvent() {
+  trackDeleteEvent(data) {
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.cpTracking.getEventProperties());
+
     this.eventProperties = {
       ...this.eventProperties,
-      ...this.cpTracking.getEventProperties()
+      ...this.utils.setEventProperties(data, amplitudeEvents.ANNOUNCEMENT)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.NOTIFY_DELETED_LISTING,
+      this.eventProperties);
   }
 
   ngOnInit() {

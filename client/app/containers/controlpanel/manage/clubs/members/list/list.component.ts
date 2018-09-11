@@ -1,5 +1,5 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { flatMap } from 'rxjs/operators';
 
@@ -10,8 +10,10 @@ import { isClubAthletic } from '../../clubs.athletics.labels';
 import { MembersUtilsService } from '../members.utils.service';
 import { ClubsUtilsService } from './../../clubs.utils.service';
 import { BaseComponent } from '../../../../../../base/base.component';
+import { CP_PRIVILEGES_MAP } from '../../../../../../shared/constants';
 import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
+import { canSchoolReadResource } from '../../../../../../shared/utils/privileges';
 import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
 
 declare var $: any;
@@ -49,7 +51,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   eventData;
   query = null;
   sortingLabels;
-  hasSSO = false;
+  showStudentIds;
   executiveLeader;
   editMember = '';
   deleteMember = '';
@@ -59,7 +61,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   defaultImage = require('public/default/user.png');
 
   constructor(
-    private session: CPSession,
+    public session: CPSession,
     public cpI18n: CPI18nService,
     private route: ActivatedRoute,
     public helper: ClubsUtilsService,
@@ -168,7 +170,12 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
     this.fetch();
 
-    this.hasSSO = this.session.hasSSO;
+    const clubPrivilege =
+      (this.isAthletic === isClubAthletic.athletic ? CP_PRIVILEGES_MAP.athletics :
+      (this.isOrientation ? CP_PRIVILEGES_MAP.orientation :
+        CP_PRIVILEGES_MAP.clubs));
+    this.showStudentIds = canSchoolReadResource(this.session.g, clubPrivilege)
+      && this.session.hasSSO;
     this.executiveLeader = this.utils.getMemberType(this.isOrientation);
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),

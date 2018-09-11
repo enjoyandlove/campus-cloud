@@ -59,6 +59,16 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     }
   }
 
+  onClickDuplicate(program) {
+    this.selectedProgram = program;
+    this.launchDuplicateModal = true;
+  }
+
+  onClickDelete(program) {
+    this.selectedProgram = program;
+    this.launchDeleteModal = true;
+  }
+
   onLaunchCreateModal() {
     this.launchCreateModal = true;
 

@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { flatten, get as _get } from 'lodash';
 import { combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
+import { isProd } from './../../../../../config/env/index';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import {
   ISnackbar,
@@ -13,12 +14,12 @@ import {
 } from './../../../../../reducers/snackbar.reducer';
 import { IPersona } from './../persona.interface';
 import { PersonasService } from './../personas.service';
-import { PersonaValidationErrors } from './../personas.status';
+import { PersonasType, PersonaValidationErrors } from './../personas.status';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
 import { ITile } from './../tiles/tile.interface';
-import { TileCategoryRank, TileFeatureRank } from './../tiles/tiles.status';
+import { TileCategoryRank, TileFeatureRank, TileType } from './../tiles/tiles.status';
 import { TilesUtilsService } from './../tiles/tiles.utils.service';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
@@ -45,6 +46,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   personaId;
   guideNames;
   tileToDelete: ITile;
+  isWebPersona = false;
   sectionToDelete: ICampusGuide;
   tileDeleteModalId = 'tileDeleteModal';
   sectionDeleteModalId = 'sectionDeleteModal';
@@ -136,13 +138,13 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         sticky: true,
         autoClose: true,
         class: 'success',
-        body: this.cpI18n.translate('t_personas_tile_moved_success')
+        body: this.cpI18n.translate('t_changes_saved_ok')
       }
     });
   }
 
   doBulkUpdate(tileUpdates) {
-    const search = new HttpParams().set('persona_id', this.personaId);
+    const search = new HttpParams().set('school_persona_id', this.personaId);
 
     const body = tileUpdates.map((t) => {
       return {
@@ -154,14 +156,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       };
     });
 
-    this.tileService.bulkUpdateTiles(search, body).subscribe(
-      () => this.fetch(),
-      (err) => {
-        this.fetch();
-
-        this.errorHandler(err);
-      }
-    );
+    this.tileService
+      .bulkUpdateTiles(search, body)
+      .subscribe(() => this.handleSuccess(), (err) => this.errorHandler(err));
   }
 
   onDeleteTileFromSection(tile: ITile) {
@@ -350,6 +347,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
 
       const tilesToUpdate = this.sectionUtils.updateGuideTileRank(newCategory, school_id, 'rank');
+
       this.doBulkUpdate(tilesToUpdate);
     }
   }
@@ -519,22 +517,26 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     const tileCategories$ = this.service
       .getTilesCategories(schoolIdSearch)
       .pipe(map((categories) => categories.filter((c) => c.id !== 0)));
-    const tilesByPersonaZero$ = this.service.getTilesByPersona(schoolIdSearch);
+
     const persona$ = this.service.getPersonaById(this.personaId, schoolIdSearch);
 
     const request$ = persona$.pipe(
       switchMap((persona: IPersona) => {
         const key = CPI18nService.getLocale().startsWith('fr') ? 'fr' : 'en';
-
+        this.isWebPersona = persona.platform === PersonasType.web;
         this.updateHeader(persona.localized_name_map[key]);
 
-        return combineLatest([tilesByPersona$, tileCategories$, tilesByPersonaZero$]);
+        return combineLatest([tilesByPersona$, tileCategories$]);
       })
     );
 
     const stream$ = request$.pipe(
-      map(([tiles, categories, tilesByPersonaZero]) => {
-        tiles = this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero);
+      map(([tiles, categories]) => {
+        tiles = tiles.filter((t: ITile) => t.type === TileType.abstract);
+
+        if (this.isWebPersona && isProd) {
+          tiles = tiles.filter((tile) => this.tileUtils.isTileSupportedByWebApp(tile));
+        }
 
         return {
           featured: this.utils.getFeatureTiles(tiles),

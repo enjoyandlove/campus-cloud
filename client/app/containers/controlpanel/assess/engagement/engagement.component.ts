@@ -20,7 +20,8 @@ import {
   groupByWeek,
   groupByMonth,
   groupByQuarter,
-  CPLineChartUtilsService
+  CPLineChartUtilsService,
+  groupByYear
 } from '../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 declare var $;
@@ -30,6 +31,7 @@ const ZERO_ENGAGEMENT = 3;
 const REPEAT_ENGAGEMENT = 1;
 
 const year = 365;
+const sixMonths = 180;
 const threeMonths = 90;
 const twoYears = year * 2;
 
@@ -131,12 +133,18 @@ export class EngagementComponent extends BaseComponent implements OnInit {
         });
 
         if (res.data.series.length >= twoYears) {
+          this.divider = DivideBy.yearly;
+
+          return Promise.all([groupByYear(res.data.labels, res.data.series)]);
+        }
+
+        if (res.data.series.length >= year) {
           this.divider = DivideBy.quarter;
 
           return Promise.all([groupByQuarter(res.data.labels, res.data.series)]);
         }
 
-        if (res.data.series.length >= year) {
+        if (res.data.series.length >= sixMonths) {
           this.divider = DivideBy.monthly;
 
           return Promise.all([groupByMonth(res.data.labels, res.data.series)]);
@@ -295,7 +303,9 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       host_type: data.hostType,
       engagement_type: data.props.label
     };
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_SENT_MESSAGE, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ASSESS_SENT_ANNOUNCEMENT,
+      this.eventProperties);
   }
 
   trackDownloadEvent(engagement_type) {

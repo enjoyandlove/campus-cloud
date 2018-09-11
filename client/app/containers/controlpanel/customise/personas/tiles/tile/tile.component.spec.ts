@@ -22,7 +22,7 @@ class MockTilesService {
 
 const initialState = { working: false, hover: false };
 
-fdescribe('PersonasTileComponent', () => {
+describe('PersonasTileComponent', () => {
   let comp: PersonasTileComponent;
   let fixture: ComponentFixture<PersonasTileComponent>;
 
@@ -64,7 +64,7 @@ fdescribe('PersonasTileComponent', () => {
     expect(comp.store.dispatch).toHaveBeenCalled();
   });
 
-  xit('onToggleTile', () => {
+  it('onToggleTile', () => {
     comp.onToggleTile();
 
     expect(comp.state.working).toBeTruthy();

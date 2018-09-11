@@ -1,14 +1,16 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { switchMap } from 'rxjs/operators';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
+
 import { DealsService } from '../deals.service';
+import { CPSession } from '../../../../../session';
+import { dealOngoingValidator } from '../deals.utils';
 import { DealsStoreService } from '../stores/store.service';
+import { CPI18nService } from '../../../../../shared/services';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-deals-create',
@@ -32,7 +34,7 @@ export class DealsCreateComponent implements OnInit {
     public store: Store<IHeader>,
     public cpI18n: CPI18nService,
     public storeService: DealsStoreService
-  ) {}
+  ) { }
 
   onSubmit() {
     this.error = false;
@@ -116,15 +118,19 @@ export class DealsCreateComponent implements OnInit {
   }
 
   buildDealsForm() {
-    this.form = this.fb.group({
-      title: [null, [Validators.required, Validators.maxLength(120)]],
-      store_id: [null, Validators.required],
-      image_url: [null, Validators.required],
-      image_thumb_url: [null],
-      description: [null],
-      start: [null],
-      expiration: [null]
-    });
+    this.form = this.fb.group(
+      {
+        title: [null, [Validators.required, Validators.maxLength(120)]],
+        store_id: [null, Validators.required],
+        image_url: [null, Validators.required],
+        image_thumb_url: [null],
+        description: [null],
+        start: [null, Validators.required],
+        expiration: [null],
+        ongoing: [false]
+      },
+      { validator: dealOngoingValidator }
+    );
   }
 
   ngOnInit() {

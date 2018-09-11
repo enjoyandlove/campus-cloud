@@ -1,22 +1,29 @@
 import IEvent from './event.interface';
-
 import { Injectable } from '@angular/core';
+
 import { CPSession } from '../../../../session';
+import { Formats } from '../../../../shared/utils/csv';
+import { CPI18nService } from '../../../../shared/services';
 import { CPDate } from './../../../../shared/utils/date/date';
 import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import { createSpreadSheet } from '../../../../shared/utils/csv/parser';
+
 import {
+  qrCode,
   Location,
   Feedback,
   Assessment,
   UploadedPhoto,
   EventFeedback,
+  attendanceType,
+  CheckInOutTime,
   EventAttendance
 } from './event.status';
 
 @Injectable()
 export class EventUtilService {
-  constructor(public session: CPSession) {}
+  constructor(public session: CPSession, public cpI18n: CPI18nService) {}
   isPastEvent(event: IEvent): boolean {
     return event.end < CPDate.now(this.session.tz).unix();
   }
@@ -135,6 +142,51 @@ export class EventUtilService {
     return sourcePage;
   }
 
+  getAttendanceTypeOptions() {
+    return [
+      {
+        label: this.cpI18n.translate('t_events_assessment_check_in_only'),
+        action: attendanceType.checkInOnly
+      },
+      {
+        label: this.cpI18n.translate('t_events_assessment_check_in_and_checkout'),
+        action: attendanceType.checkInCheckOut
+      },
+    ];
+  }
+
+  getQROptions() {
+    return [
+      {
+        label: this.cpI18n.translate('t_events_assessment_qr_enabled_yes'),
+        action: qrCode.enabled
+      },
+      {
+        label: this.cpI18n.translate('t_events_assessment_qr_enabled_no'),
+        action: qrCode.disabled
+      },
+    ];
+  }
+
+  getAttendanceFeedback() {
+    return [
+      {
+        label: this.cpI18n.translate('event_enabled'),
+        action: EventAttendance.enabled
+      },
+      {
+        label: this.cpI18n.translate('events_disabled'),
+        action: EventAttendance.disabled
+      }
+    ];
+  }
+
+  getToolTipContent(label) {
+    return {
+      content: this.cpI18n.translate(label)
+    };
+  }
+
   hasLocation(location) {
     return location ? Location.yes : Location.no;
   }
@@ -165,5 +217,82 @@ export class EventUtilService {
       location: this.hasLocation(data['location'].value),
       feedback: this.getFeedbackStatus(data['event_feedback'].value)
     };
+  }
+
+  createExcel(stream, hasCheckOut, showStudentIds = false) {
+    stream.toPromise().then((attendees: Array<any>) => {
+      const columns = [
+        this.cpI18n.translate('events_attendant'),
+        this.cpI18n.translate('events_attendee_email'),
+        this.cpI18n.translate('t_events_csv_column_check_in_date'),
+        this.cpI18n.translate('t_events_csv_column_time_in'),
+        this.cpI18n.translate('t_events_csv_column_check_out_date'),
+        this.cpI18n.translate('t_events_csv_column_time_out'),
+        this.cpI18n.translate('t_events_csv_column_time_spent'),
+        this.cpI18n.translate('t_events_csv_column_time_spent_seconds'),
+        this.cpI18n.translate('rating'),
+        this.cpI18n.translate('events_user_feedback'),
+        this.cpI18n.translate('events_checked_in_method')
+      ];
+      if (showStudentIds) {
+        columns.push(this.cpI18n.translate('student_id'));
+      }
+
+      const check_in_method = {
+        1: 'Web',
+        3: 'QR Code'
+      };
+
+      attendees = attendees.map((item) => {
+        const timeSpentSeconds = (item.check_out_time_epoch - item.check_in_time);
+
+        const hasCheckOutTimeSpent = hasCheckOut
+          && item.check_out_time_epoch
+          && item.check_out_time_epoch !== CheckInOutTime.empty;
+
+        const row = {
+          [this.cpI18n.translate('events_attendant')]: `${item.firstname} ${item.lastname}`,
+
+          [this.cpI18n.translate('events_attendee_email')]: item.email,
+
+          [this.cpI18n.translate('t_events_csv_column_check_in_date')]:
+            CPDate.fromEpoch(item.check_in_time, this.session.tz).format(Formats.dateFormat),
+
+          [this.cpI18n.translate('t_events_csv_column_time_in')]: CPDate.fromEpoch(
+            item.check_in_time, this.session.tz).format(Formats.timeFormat),
+
+          [this.cpI18n.translate('t_events_csv_column_check_out_date')]:
+            hasCheckOutTimeSpent ? CPDate.fromEpoch(
+              item.check_out_time_epoch, this.session.tz).format(Formats.dateFormat) : '',
+
+          [this.cpI18n.translate('t_events_csv_column_time_out')]:
+            hasCheckOutTimeSpent ? CPDate.fromEpoch(
+            item.check_out_time_epoch, this.session.tz).format(Formats.timeFormat) : '',
+
+          [this.cpI18n.translate('t_events_csv_column_time_spent')]:
+            hasCheckOutTimeSpent ?
+              CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat) : '',
+
+          [this.cpI18n.translate('t_events_csv_column_time_spent_seconds')]:
+            hasCheckOutTimeSpent ? timeSpentSeconds : '',
+
+          [this.cpI18n.translate('rating')]:
+            item.feedback_rating === -1 ? '' : (item.feedback_rating * 5 / 100).toFixed(2),
+
+          [this.cpI18n.translate('events_user_feedback')]: item.feedback_text,
+
+          [this.cpI18n.translate('events_checked_in_method')]: check_in_method[
+            item.check_in_method
+            ]
+        };
+        if (showStudentIds) {
+          row[this.cpI18n.translate('student_id')] = item.student_identifier;
+        }
+
+        return row;
+      });
+
+      createSpreadSheet(attendees, columns);
+    });
   }
 }

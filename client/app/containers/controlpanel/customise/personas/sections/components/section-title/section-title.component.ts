@@ -1,3 +1,4 @@
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
   Component,
   OnInit,
@@ -10,7 +11,7 @@ import {
   EventEmitter
 } from '@angular/core';
 import { fromEvent } from 'rxjs';
-import { takeWhile, debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { takeWhile, map } from 'rxjs/operators';
 
 @Component({
   selector: 'cp-personas-section-title',
@@ -21,6 +22,7 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
   @Input()
   set name(name) {
     this._name = name;
+    this.state = { ...this.state, saving: false };
   }
 
   @Input() isEditing = true;
@@ -31,33 +33,49 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
 
   _name;
   isAlive = true;
+  form: FormGroup;
 
-  constructor() {}
+  state = {
+    saving: false,
+    invalid: false
+  };
 
-  listenToInputChanges() {
-    const stream$ = fromEvent(this.inputEl.nativeElement, 'keydown');
+  constructor(public fb: FormBuilder) {}
+
+  listenToInputBlur() {
+    const stream$ = fromEvent(this.inputEl.nativeElement, 'blur');
 
     stream$
-      .pipe(
-        takeWhile(() => this.isAlive),
-        debounceTime(500),
-        distinctUntilChanged(),
-        map((e: any) => e.target.value)
-      )
+      .pipe(takeWhile(() => this.isAlive), map((e: any) => e.target.value))
       .subscribe((title) => {
-        if (title) {
-          this.nameChanged.emit(title);
-        }
+        this.form.get('name').setValue(title);
+        this.onSubmit();
       });
   }
 
+  onSubmit() {
+    this.state = { ...this.state, invalid: !this.form.valid };
+
+    if (this.state.invalid) {
+      return;
+    }
+
+    this.state = { ...this.state, saving: true };
+
+    this.nameChanged.emit(this.form.get('name').value);
+  }
+
   ngAfterViewInit() {
-    this.listenToInputChanges();
+    this.listenToInputBlur();
   }
 
   ngOnDestroy() {
     this.isAlive = false;
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      name: [this._name, Validators.required]
+    });
+  }
 }

@@ -221,7 +221,7 @@ export class PersonasSectionComponent implements OnInit {
       })
     };
 
-    const search = new HttpParams().set('persona_id', this.personaId.toString());
+    const search = new HttpParams().set('school_persona_id', this.personaId.toString());
     const updatedTiles = this.utils.updateGuideTileRank(bulkContent, schoolId, 'rank');
 
     this.tilesService.bulkUpdateTiles(search, updatedTiles).subscribe(
@@ -247,6 +247,7 @@ export class PersonasSectionComponent implements OnInit {
 
     this.sortableOptions = {
       scroll: false,
+      draggable: '.is_draggable',
       group: {
         name: 'studio',
         put: true,

@@ -4,20 +4,22 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/index';
 import { Store } from '@ngrx/store';
 
-import { CheckInMethod } from '../event.status';
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes';
 import { EventUtilService } from './../events.utils.service';
-import { CPDate } from '../../../../../shared/utils/date/date';
+import { CheckInMethod, CheckInOutTime } from '../event.status';
 import { BaseComponent } from '../../../../../base/base.component';
+import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { createSpreadSheet } from '../../../../../shared/utils/csv/parser';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { canSchoolWriteResource } from '../../../../../shared/utils/privileges/privileges';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
+import {
+  canSchoolReadResource,
+  canSchoolWriteResource
+} from '../../../../../shared/utils/privileges/privileges';
 
 interface IState {
   sort_field: string;
@@ -47,21 +49,29 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
   event;
   urlPrefix;
+  canMessage;
   messageData;
+  checkInData;
   sortingLabels;
   attendees = [];
   loading = true;
+  showStudentIds;
   eventId: number;
   allStudents = false;
   state: IState = state;
   attendeesLoading = true;
   downloadEventProperties;
+  isAddCheckInModal = false;
+  isEditCheckInModal = false;
   isSendMessageModal = false;
   messageAttendeesTooltipText;
+  isDeleteCheckInModal = false;
   dateFormat = FORMAT.DATETIME;
-  totalAttendees = new BehaviorSubject(null);
   appCheckIn = CheckInMethod.app;
-  canMessage;
+  webCheckIn = CheckInMethod.web;
+  emptyCheckOutTime = CheckInOutTime.empty;
+  updateQrCode = new BehaviorSubject(null);
+  totalAttendees = new BehaviorSubject(null);
 
   eventProperties = {
     host_type: null,
@@ -98,6 +108,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       this.fetchAttendees();
       this.buildHeader(event.data);
       this.loading = false;
+      this.updateQrCode.next(this.event.attend_verification_methods);
     });
   }
 
@@ -148,7 +159,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       .fetchData(stream$)
       .then((res) => {
         this.attendees = res.data;
-        this.totalAttendees.next(res.data.length);
+        this.totalAttendees.next(res.data);
         setTimeout(
           () => {
             $(function() {
@@ -209,48 +220,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
     this.trackAmplitudeEvent();
 
-    stream$.toPromise().then((attendees: Array<any>) => {
-      const columns = [
-        this.cpI18n.translate('events_attendant'),
-        this.cpI18n.translate('events_attendee_email'),
-        this.cpI18n.translate('events_checked_in_time'),
-        this.cpI18n.translate('rating'),
-        this.cpI18n.translate('events_user_feedback'),
-        this.cpI18n.translate('events_checked_in_method'),
-        this.cpI18n.translate('student_id')
-      ];
-
-      const check_in_method = {
-        1: 'Web',
-        3: 'QR Code'
-      };
-
-      attendees = attendees.map((item) => {
-        return {
-          [this.cpI18n.translate('events_attendant')]: `${item.firstname} ${item.lastname}`,
-
-          [this.cpI18n.translate('events_attendee_email')]: item.email,
-
-          [this.cpI18n.translate('events_checked_in_time')]: CPDate.fromEpoch(
-            item.check_in_time,
-            this.session.tz
-          ).format('MMMM Do YYYY - h:mm a'),
-
-          [this.cpI18n.translate('rating')]:
-            item.feedback_rating === -1 ? '' : (item.feedback_rating * 5 / 100).toFixed(2),
-
-          [this.cpI18n.translate('events_user_feedback')]: item.feedback_text,
-
-          [this.cpI18n.translate('events_checked_in_method')]: check_in_method[
-            item.check_in_method
-          ],
-
-          [this.cpI18n.translate('student_id')]: item.student_identifier
-        };
-      });
-
-      createSpreadSheet(attendees, columns);
-    });
+    this.utils.createExcel(stream$, this.event.has_checkout, this.showStudentIds);
   }
 
   trackAmplitudeEvent() {
@@ -290,8 +260,9 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       .map((attendee) => attendee.user_id);
 
     this.messageData = {
+      userIds,
       name: this.event.title,
-      userIds
+      storeId: this.event.store_id
     };
 
     this.loadModal();
@@ -305,8 +276,9 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     this.allStudents = false;
 
     this.messageData = {
-      name: `${attendee.firstname} ${attendee.lastname}`,
-      userIds: [attendee.user_id]
+      userIds: [attendee.user_id],
+      storeId: this.event.store_id,
+      name: `${attendee.firstname} ${attendee.lastname}`
     };
 
     this.loadModal();
@@ -317,6 +289,41 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     setTimeout(
       () => {
         $('#sendMessageModal').modal();
+      },
+
+      1
+    );
+  }
+
+  onAddCheckIn() {
+    this.isAddCheckInModal = true;
+    setTimeout(
+      () => {
+        $('#addCheckInModal').modal();
+      },
+
+      1
+    );
+  }
+
+  onEditCheckIn(attendee) {
+    this.checkInData = attendee;
+    this.isEditCheckInModal = true;
+    setTimeout(
+      () => {
+        $('#editCheckInModal').modal();
+      },
+
+      1
+    );
+  }
+
+  onDeleteCheckIn(attendee) {
+    this.checkInData = attendee;
+    this.isDeleteCheckInModal = true;
+    setTimeout(
+      () => {
+        $('#deleteCheckInModal').modal();
       },
 
       1
@@ -336,15 +343,94 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MENAGE_SENT_MESSAGE, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_SENT_ANNOUNCEMENT,
+      this.eventProperties);
+  }
+
+  onCreated() {
+    this.isAddCheckInModal = false;
+    this.fetchAttendees();
+  }
+
+  onEdited() {
+    this.checkInData = null;
+    this.isEditCheckInModal = false;
+    this.fetchAttendees();
+  }
+
+  onDeleted(id: number) {
+    this.checkInData = null;
+    this.isDeleteCheckInModal = false;
+
+    this.attendees = this.attendees.filter((attendee) => attendee.id !== id);
+
+    if (this.attendees.length === 0 && this.pageNumber > 1) {
+      this.resetPagination();
+      this.fetchAttendees();
+    }
+  }
+
+  onToggleQr(isEnabled: boolean) {
+    const verificationMethods = this.event.attend_verification_methods;
+
+    if (!isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.push(CheckInMethod.app);
+    } else if (isEnabled && verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.pop(CheckInMethod.app);
+    }
+
+    const data = {
+      ...this.event,
+      attend_verification_methods: verificationMethods
+    };
+
+    this.updateQrCode.next(verificationMethods);
+
+    let search = new HttpParams();
+    if (this.orientationId) {
+      search = search
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.orientationId.toString());
+    }
+
+    this.service.updateEvent(data, this.eventId, search).subscribe(
+      (res) => {
+        this.event = res;
+        this.onSuccessQRCheckInMessage(isEnabled);
+      },
+      (_) => {
+        this.onErrorQRCheckInMessage();
+      });
+  }
+
+  onSuccessQRCheckInMessage(isEnabled: boolean) {
+    const message = isEnabled
+      ? 't_event_assessment_qr_code_disabled_success_message'
+      : 't_event_assessment_qr_code_enable_success_message';
+
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        body: this.cpI18n.translate(message),
+        autoClose: true,
+        class: 'success'
+      }
+    });
+  }
+
+  onErrorQRCheckInMessage() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        class: 'danger',
+        body: this.cpI18n.translate('something_went_wrong'),
+        autoClose: true
+      }
+    });
   }
 
   ngOnInit() {
-    this.canMessage = canSchoolWriteResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.campus_announcements
-    );
-
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,
       this.serviceId,
@@ -357,6 +443,19 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       name: this.cpI18n.translate('attendee'),
       method: this.cpI18n.translate('events_checked_in_method')
     };
+
+    this.canMessage = canSchoolWriteResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.campus_announcements);
+
+    const attendancePrivilege =
+      (this.isAthletic === isClubAthletic.athletic ? CP_PRIVILEGES_MAP.athletics :
+      (this.isOrientation ? CP_PRIVILEGES_MAP.orientation :
+      (this.isService ? CP_PRIVILEGES_MAP.services :
+      (this.isClub ? CP_PRIVILEGES_MAP.clubs :
+        CP_PRIVILEGES_MAP.event_attendance))));
+    this.showStudentIds = canSchoolReadResource(this.session.g, attendancePrivilege)
+      && this.session.hasSSO;
 
     this.messageAttendeesTooltipText = !this.canMessage
       ? this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text')

@@ -13,9 +13,16 @@ import { EventUtilService } from '../events.utils.service';
 import { CPI18nService } from '../../../../../shared/services';
 import { mockSchool } from '../../../../../session/mock/school';
 import { EventsAttendanceComponent } from './events-attendance.component';
+import { isClubAthletic } from '../../../settings/team/team.utils.service';
 
 class MockService {
   dummy;
+
+  updateEvent(body: any, id: number, search: any) {
+    this.dummy = [body, id, search];
+
+    return observableOf({});
+  }
 
   getEventById(id: number, search: any) {
     this.dummy = [id, search];
@@ -75,7 +82,8 @@ describe('EventAttendanceComponent', () => {
           component.session.g.set('user', { school_level_privileges: {} });
 
           component.event = {
-            id: 5125
+            id: 5125,
+            title: 'Hello World!'
           };
 
           search = new HttpParams()
@@ -94,7 +102,6 @@ describe('EventAttendanceComponent', () => {
   );
 
   it('HttpParams does not include calendar_id or school_id', () => {
-    console.log(component.session, component.session.g);
     component.fetch();
     const _search = new HttpParams();
     expect(spy).toHaveBeenCalledWith(component.eventId, _search);
@@ -137,5 +144,176 @@ describe('EventAttendanceComponent', () => {
 
     expect(spyAttendee).toHaveBeenCalledTimes(1);
     expect(spyAttendee).toHaveBeenCalledWith(component.startRange, component.endRange, _search);
+  });
+
+  it('onToggleQr - Enable QR', () => {
+    spyOn(component, 'onSuccessQRCheckInMessage');
+    const spyToggle = spyOn(component.service, 'updateEvent').and.returnValue(observableOf({}));
+
+    component.event = {
+      ...component.event,
+      attend_verification_methods: [1, 2]
+    };
+
+    const data = {
+      ...component.event,
+      attend_verification_methods: [1, 2, 3]
+    };
+
+    search = new HttpParams();
+
+    component.onToggleQr(false);
+
+    expect(spyToggle).toHaveBeenCalled();
+    expect(spyToggle).toHaveBeenCalledTimes(1);
+    expect(component.onSuccessQRCheckInMessage).toHaveBeenCalled();
+    expect(spyToggle).toHaveBeenCalledWith(data, component.eventId, search);
+    expect(component.onSuccessQRCheckInMessage).toHaveBeenCalledTimes(1);
+  });
+
+  it('onToggleQr - Disable QR', () => {
+    spyOn(component, 'onSuccessQRCheckInMessage');
+    spy = spyOn(component.service, 'updateEvent').and.returnValue(observableOf({}));
+
+    component.event = {
+      ...component.event,
+      attend_verification_methods: [1, 2, 3]
+    };
+
+    const data = {
+      ...component.event,
+      attend_verification_methods: [1, 2]
+    };
+
+    search = new HttpParams();
+
+    component.onToggleQr(true);
+
+    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(component.onSuccessQRCheckInMessage).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledWith(data, component.eventId, search);
+    expect(component.onSuccessQRCheckInMessage).toHaveBeenCalledTimes(1);
+
+  });
+
+  it('messageAttendee', () => {
+    component.ngOnInit();
+    component.canMessage = false;
+
+    const tooltipText = component.cpI18n
+      .translate('t_events_attendance_no_permission_tooltip_text');
+
+    component.messageAttendee(null);
+
+    expect(component.messageAttendeesTooltipText).toBe(tooltipText);
+
+    component.canMessage = true;
+
+    const data = {
+      firstname: 'Hello',
+      lastname: 'World!',
+      user_id: 1254
+    };
+
+    const messageData = {
+      name: 'Hello World!',
+      userIds: [1254]
+    };
+
+    component.messageAttendee(data);
+
+    expect(component.allStudents).toBeFalsy();
+    expect(component.isSendMessageModal).toBeTruthy();
+    expect(component.messageData).toEqual(messageData);
+  });
+
+  it('messageAllAttendees', () => {
+    component.ngOnInit();
+    component.canMessage = false;
+
+    const tooltipText = component.cpI18n
+      .translate('t_events_attendance_no_permission_tooltip_text');
+
+    component.messageAttendee(null);
+
+    expect(component.messageAttendeesTooltipText).toBe(tooltipText);
+
+    component.canMessage = true;
+
+    component.attendees = [
+      {
+        user_id: 1234
+      },
+      {
+        user_id: 1245
+      }
+    ];
+
+    const messageData = {
+      name: 'Hello World!',
+      userIds: [1234, 1245]
+    };
+
+    component.messageAllAttendees();
+
+    expect(component.allStudents).toBeTruthy();
+    expect(component.isSendMessageModal).toBeTruthy();
+    expect(component.messageData).toEqual(messageData);
+  });
+
+  it('should set showStudentIds true', () => {
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 33: {r: true, w: true } } }
+    });
+    component.session.g.set('school', {
+      id: 157,
+      has_sso_integration: true
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(true);
+
+    component.isClub = true;
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 22: {r: true, w: true } } }
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(true);
+
+    component.isClub = false;
+    component.isService = true;
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 24: {r: true, w: true } } }
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(true);
+
+    component.isService = false;
+    component.isAthletic = isClubAthletic.athletic;
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 28: {r: true, w: true } } }
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(true);
+
+    component.isAthletic = isClubAthletic.club;
+    component.isOrientation = true;
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 17: {r: true, w: true } } }
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(true);
+  });
+
+  it('should set showStudentIds false', () => {
+    component.session.g.set('user', {
+      school_level_privileges: { 157: { 22: {r: true, w: true } } }
+    });
+    component.session.g.set('school', {
+      id: 157,
+      has_sso_integration: true
+    });
+    component.ngOnInit();
+    expect(component.showStudentIds).toBe(false);
   });
 });

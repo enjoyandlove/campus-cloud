@@ -1,3 +1,4 @@
+import { IPersona } from './../../persona.interface';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -25,6 +26,7 @@ import { TilesUtilsService } from '../tiles.utils.service';
 export class PersonasTileCreateComponent extends BaseComponent implements OnInit, OnDestroy {
   loading;
   buttonData;
+  persona: IPersona;
   personaId: number;
   guide: ICampusGuide;
   campusLinkForm: FormGroup;
@@ -206,6 +208,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       .fetchData(personas$)
       .then(({ data }: any) => {
         this.buildForm();
+        this.persona = data;
         this.buildHeader(this.utils.getPersonaNameByLocale(data));
       })
       .catch(() => this.erroHandler());

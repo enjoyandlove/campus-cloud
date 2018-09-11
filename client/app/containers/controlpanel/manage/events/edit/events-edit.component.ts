@@ -12,7 +12,7 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from '../events.utils.service';
 import { CPDate, CPMap } from '../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../session';
-import { EventAttendance, EventFeedback } from '../event.status';
+import { CheckInMethod, EventAttendance, EventFeedback } from '../event.status';
 import { BaseComponent } from '../../../../../base/base.component';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
@@ -56,8 +56,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   serverError;
   isDateError;
   originalHost;
-  booleanOptions;
+  eventQRCodes;
+  selectedQRCode;
   loading = true;
+  attendanceTypes;
+  isQrCodeEnabled;
   school: ISchool;
   eventId: number;
   form: FormGroup;
@@ -65,15 +68,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   dateErrorMessage;
   enddatePickerOpts;
   attendanceEnabled;
+  attendanceFeedback;
   attendance = false;
   isFormReady = false;
   startdatePickerOpts;
   originalAttnFeedback;
   eventFeedbackEnabled;
-  eventManagerToolTip;
   production = isProd;
-  studentFeedbackToolTip;
-  attendanceManagerToolTip;
+  selectedAttendanceType;
   formMissingFields = false;
   showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
@@ -98,7 +100,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     private store: Store<IHeader>,
     private route: ActivatedRoute,
-    private utils: EventUtilService,
+    public utils: EventUtilService,
     private adminService: AdminService,
     public storeService: StoreService,
     private errorService: ErrorService,
@@ -236,6 +238,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       postal_code: [res.postal_code],
       latitude: [res.latitude],
       longitude: [res.longitude],
+      has_checkout: [res.has_checkout],
       event_attendance: [res.event_attendance],
       start: [res.start, Validators.required],
       end: [res.end, Validators.required],
@@ -246,6 +249,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       event_manager_id: [res.event_manager_id],
       attendance_manager_email: [res.attendance_manager_email],
       custom_basic_feedback_label: [res.custom_basic_feedback_label],
+      attend_verification_methods: [res.attend_verification_methods],
       is_all_day: [res.is_all_day]
     });
 
@@ -253,9 +257,20 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.fetchManagersBySelectedStore(res.store_id);
 
     this.originalAttnFeedback = this.getFromArray(
-      this.booleanOptions,
+      this.attendanceFeedback,
       'action',
       res.event_feedback
+    );
+
+    this.selectedAttendanceType = this.getFromArray(
+      this.utils.getAttendanceTypeOptions(),
+      'action',
+      res.has_checkout);
+
+    this.selectedQRCode = this.getFromArray(
+      this.utils.getQROptions(),
+      'action',
+      this.getQRCodeStatus(res.attend_verification_methods)
     );
 
     this.originalHost = this.getFromArray(this.stores, 'value', res.store_id);
@@ -268,6 +283,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     };
 
     this.isFormReady = true;
+  }
+
+  getQRCodeStatus(qrCodes) {
+    return qrCodes.includes(CheckInMethod.app);
   }
 
   updateDatePicker() {
@@ -322,6 +341,20 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   onSelectedManager(manager): void {
     this.form.controls['event_manager_id'].setValue(manager.value);
+  }
+
+  onSelectedAttendanceType(type): void {
+    this.form.controls['has_checkout'].setValue(type.action);
+  }
+
+  onSelectedQRCode(isEnabled: boolean): void {
+    const verificationMethods = this.form.controls['attend_verification_methods'].value;
+
+    if (isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.push(CheckInMethod.app);
+    } else if (!isEnabled && verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.pop(CheckInMethod.app);
+    }
   }
 
   onAllDayToggle(value) {
@@ -424,7 +457,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   enableStudentFeedbackOnAttendanceToggle(value) {
     this.form.controls['event_feedback'].setValue(value);
-    this.originalAttnFeedback = this.getFromArray(this.booleanOptions, 'action', value);
+    this.originalAttnFeedback = this.getFromArray(this.attendanceFeedback, 'action', value);
   }
 
   toggleEventAttendance(value) {
@@ -433,6 +466,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.enableStudentFeedbackOnAttendanceToggle(value);
 
     this.form.controls['event_attendance'].setValue(value);
+
+    this.form.controls['attend_verification_methods']
+      .setValue([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
   }
 
   onResetMap() {
@@ -509,17 +545,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.eventManagerToolTip = Object.assign({}, this.eventManagerToolTip, {
-      content: this.cpI18n.translate('events_event_manager_tooltip')
-    });
-    this.attendanceManagerToolTip = Object.assign({}, this.attendanceManagerToolTip, {
-      content: this.cpI18n.translate('events_attendance_manager_tooltip')
-    });
-
-    this.studentFeedbackToolTip = Object.assign({}, this.studentFeedbackToolTip, {
-      content: this.cpI18n.translate('events_event_feedback_tooltip')
-    });
-
     this.buttonData = {
       text: this.cpI18n.translate('save'),
       class: 'primary'
@@ -534,19 +559,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     );
 
     this.dateFormat = FORMAT.DATETIME;
-    this.booleanOptions = [
-      {
-        label: this.cpI18n.translate('event_enabled'),
-        action: EventAttendance.enabled
-      },
-      {
-        label: this.cpI18n.translate('events_disabled'),
-        action: EventAttendance.disabled
-      }
-    ];
-
     this.attendanceEnabled = EventAttendance.enabled;
     this.eventFeedbackEnabled = EventFeedback.enabled;
+    this.eventQRCodes = this.utils.getQROptions();
+    this.attendanceTypes = this.utils.getAttendanceTypeOptions();
+    this.attendanceFeedback = this.utils.getAttendanceFeedback();
     this.fetch();
     this.buildHeader();
   }

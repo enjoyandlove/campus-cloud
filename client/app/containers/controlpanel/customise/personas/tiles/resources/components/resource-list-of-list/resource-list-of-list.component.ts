@@ -1,12 +1,13 @@
-import { SNACKBAR_SHOW } from './../../../../../../../../reducers/snackbar.reducer';
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { SNACKBAR_SHOW } from './../../../../../../../../reducers/snackbar.reducer';
+import { IPersona } from './../../../../persona.interface';
 import { ResourceService } from './../../resource.service';
-import { CPSession } from '../../../../../../../../session';
-import { TilesService } from '../../../tiles.service';
-import { ISnackbar } from '../../../../../../../../reducers/snackbar.reducer';
 import { Store } from '../../../../../../../../../../node_modules/@ngrx/store';
+import { ISnackbar } from '../../../../../../../../reducers/snackbar.reducer';
+import { CPSession } from '../../../../../../../../session';
 import { CPI18nService } from '../../../../../../../../shared/services';
+import { TilesService } from '../../../tiles.service';
 
 @Component({
   selector: 'cp-personas-resource-list-of-list',
@@ -14,11 +15,14 @@ import { CPI18nService } from '../../../../../../../../shared/services';
   styleUrls: ['./resource-list-of-list.component.scss']
 })
 export class PersonasResourceListOfListComponent implements OnInit {
+  @Input() persona: IPersona;
   @Input() selectedIds: Number[];
 
   @Output() resourceAdded: EventEmitter<any> = new EventEmitter();
 
   links$;
+  sortableOptions;
+
   meta = {
     is_system: 1,
     link_params: {
@@ -111,10 +115,14 @@ export class PersonasResourceListOfListComponent implements OnInit {
 
     stream$.subscribe(
       (resources: any) => {
+        const sortedResources = this.selectedIds.map(
+          (id) => resources.filter((r) => r.id === id)[0]
+        );
+
         this.state = {
           ...this.state,
           loading: false,
-          resources: [...resources]
+          resources: sortedResources
         };
       },
       () => this.errorHandler()
@@ -130,7 +138,16 @@ export class PersonasResourceListOfListComponent implements OnInit {
     this.udpateMetaAndEmit();
   }
 
+  onDragged() {
+    this.udpateMetaAndEmit();
+  }
+
   ngOnInit(): void {
+    this.sortableOptions = {
+      scroll: false,
+      onUpdate: this.onDragged.bind(this)
+    };
+
     if (this.selectedIds) {
       this.fetchLinks();
     }

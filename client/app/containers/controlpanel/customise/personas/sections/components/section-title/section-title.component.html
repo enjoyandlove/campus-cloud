@@ -1,10 +1,14 @@
 <div class="row">
   <div class="col-12 text-truncate">
-    <input 
-      #inputEl
-      type="text" 
-      [attr.value]="_name"
-      [disabled]="!isEditing"
-      [class.error]=!_name.length>
+    <div class="input__wrapper">
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <input
+          #inputEl
+          type="text"
+          formControlName="name"
+          [class.invalid]="state.invalid" />
+        <cp-working class="input__spinner" *ngIf="state.saving"></cp-working>
+      </form>
+    </div>
   </div>
 </div>

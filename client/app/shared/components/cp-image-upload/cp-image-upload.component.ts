@@ -29,7 +29,7 @@ export class CPImageUploadComponent implements OnInit {
 
   constructor(public cpI18n: CPI18nService, private fileUploadService: FileUploadService) {}
 
-  onFileUpload(file, asPromise?: boolean) {
+  async onFileUpload(file, asPromise?: boolean) {
     this.error = null;
 
     if (!file) {
@@ -41,19 +41,11 @@ export class CPImageUploadComponent implements OnInit {
     let validate = this.fileUploadService.validImage(file);
 
     if (this.validationFn) {
-      this.validationFn(file)
-        .then(() => {
-          validate = {
-            valid: true,
-            errors: []
-          };
-        })
-        .catch((err) => {
-          validate = {
-            valid: false,
-            errors: [err]
-          };
-        });
+      try {
+        validate = await this.validationFn(file);
+      } catch (error) {
+        validate = error;
+      }
     }
 
     if (!validate.valid) {

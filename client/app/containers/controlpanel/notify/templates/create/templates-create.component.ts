@@ -105,10 +105,6 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   doSubmit() {
     this.isError = false;
 
-    this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties,
-      audience_type: amplitudeEvents.CAMPUS_WIDE
-    };
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     let data = {
@@ -121,25 +117,22 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
-      this.amplitudeEventProperties = {
-        ...this.amplitudeEventProperties,
-        audience_type: amplitudeEvents.USER
-      };
       data = Object.assign({}, data, { user_ids: this.form.value.user_ids });
     }
 
     if (this.state.isToLists && !this.state.isCampusWide) {
-      this.amplitudeEventProperties = {
-        ...this.amplitudeEventProperties,
-        audience_type: amplitudeEvents.LIST
-      };
       data = Object.assign({}, data, { list_ids: this.form.value.list_ids });
     }
 
     this.childService.createTemplate(search, data).subscribe(
-      () => {
+      (res: any) => {
+        this.amplitudeEventProperties = {
+          ...this.amplitudeEventProperties,
+          announcement_id: res.id
+        };
+
         this.cpTracking.amplitudeEmitEvent(
-          amplitudeEvents.NOTIFY_SAVED_TEMPLATE,
+          amplitudeEvents.NOTIFY_CREATED_TEMPLATE,
           this.amplitudeEventProperties
         );
         this.form.reset();

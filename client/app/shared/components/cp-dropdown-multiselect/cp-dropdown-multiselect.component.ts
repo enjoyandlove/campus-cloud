@@ -19,12 +19,20 @@ export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
 
   @Output() selection: EventEmitter<Array<number>> = new EventEmitter();
 
+  query = null;
+  isSearching = false;
+  MIN_RESULTS_FOR_SEARCH = 40;
+
   state = {
     open: false,
     label: null
   };
 
   constructor(public el: ElementRef) {}
+
+  onSearch(query) {
+    this.query = query;
+  }
 
   ngOnChanges() {
     if (!this.items.filter((item) => item.selected).length) {

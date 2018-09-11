@@ -38,7 +38,7 @@
                 <span class="col-2">
                   {{ 'members' | cpI18n }}
                 </span>
-                <span class="col-2">
+                <span class="col-1">
                   {{ 'events' | cpI18n }}
                 </span>
                 <span class="col-1 hover"></span>
@@ -72,31 +72,19 @@
                 </span>
                 <span class="col-1 action">
                   <button
-                    data-toggle="dropdown"
+                    data-toggle="modal"
+                    data-target="#programDuplicate"
                     class="cpbtn cpbtn--link-dark"
-                    (click)="selectedProgram = program">
-                    <i class="material-icons">more_horiz</i>
+                    (click)="onClickDuplicate(program)">
+                    <i class="material-icons">control_point_duplicate</i>
                   </button>
-                  <div class="orientation__dropdown dropdown-menu dropdown-menu-right">
-                    <ul>
-                      <li
-                        (click)="launchDuplicateModal = true;"
-                        class="col-12"
-                        data-toggle="modal"
-                        data-target="#programDuplicate">
-                          <i class="material-icons col-2">control_point_duplicate</i>
-                          <span class="col-10">{{ 'orientation_duplicate_program' | cpI18n }}</span>
-                      </li>
-                      <li
-                        (click)="launchDeleteModal = true;"
-                        class="col-12"
-                        data-toggle="modal"
-                        data-target="#programDelete">
-                          <i class="material-icons col-2">close</i>
-                          <span class="col-10">{{ 'orientation_delete_program' | cpI18n }}</span>
-                      </li>
-                    </ul>
-                  </div>
+                  <button
+                    data-toggle="modal"
+                    data-target="#programDelete"
+                    class="cpbtn cpbtn--link-dark"
+                    (click)="onClickDelete(program)">
+                    <i class="material-icons">close</i>
+                  </button>
                 </span>
               </div>
             </li>

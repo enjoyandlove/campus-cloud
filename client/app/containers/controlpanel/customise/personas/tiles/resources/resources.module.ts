@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SortablejsModule } from 'angular-sortablejs';
 import {
   PersonasResourceFormComponent,
   PersonasResourceListOfListComponent,
@@ -27,7 +28,7 @@ import { TilesUtilsService } from '../tiles.utils.service';
     PersonasResourceListOfListComponent,
     PersonasResourceServiceByCategoryComponent
   ],
-  imports: [CommonModule, SharedModule, ReactiveFormsModule],
+  imports: [CommonModule, SharedModule, ReactiveFormsModule, SortablejsModule],
   providers: [TilesUtilsService, ResourceService, ResourcesUtilsService],
   exports: [
     PersonasResourceFormComponent,

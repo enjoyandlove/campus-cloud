@@ -13,8 +13,15 @@ import { CPSession, ISchool } from '../../../../../session';
 import { CPDate, CPMap } from '../../../../../shared/utils';
 import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { EventAttendance, EventFeedback, isAllDay } from '../event.status';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import {
+  attendanceType,
+  CheckInMethod,
+  EventAttendance,
+  EventFeedback,
+  isAllDay
+} from '../event.status';
+
 import {
   AdminService,
   CPI18nService,
@@ -52,19 +59,18 @@ export class EventsCreateComponent implements OnInit {
   urlPrefix;
   buttonData;
   isDateError;
-  booleanOptions;
+  eventQRCodes;
   school: ISchool;
   form: FormGroup;
+  attendanceTypes;
   dateErrorMessage;
   formError = false;
+  attendanceFeedback;
   attendance = false;
   enddatePickerOpts;
   startdatePickerOpts;
   eventFeedbackEnabled;
-  eventManagerToolTip;
   production = isProd;
-  studentFeedbackToolTip;
-  attendanceManagerToolTip;
   showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
   managers: Array<any> = [{ label: '---' }];
@@ -89,7 +95,7 @@ export class EventsCreateComponent implements OnInit {
     public cpI18n: CPI18nService,
     public storeHeader: Store<any>,
     public service: EventsService,
-    private utils: EventUtilService,
+    public utils: EventUtilService,
     public adminService: AdminService,
     public storeService: StoreService,
     public errorService: ErrorService,
@@ -112,6 +118,20 @@ export class EventsCreateComponent implements OnInit {
 
   onSelectedManager(manager): void {
     this.form.controls['event_manager_id'].setValue(manager.value);
+  }
+
+  onSelectedAttendanceType(type): void {
+    this.form.controls['has_checkout'].setValue(type.action);
+  }
+
+  onSelectedQRCode(isEnabled: boolean): void {
+    const verificationMethods = this.form.controls['attend_verification_methods'].value;
+
+    if (isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.push(CheckInMethod.app);
+    } else if (!isEnabled && verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.pop(CheckInMethod.app);
+    }
   }
 
   onSelectedHost(host): void {
@@ -405,18 +425,6 @@ export class EventsCreateComponent implements OnInit {
 
     this.stores$ = this.storeService.getStores(search);
 
-    this.eventManagerToolTip = Object.assign({}, this.eventManagerToolTip, {
-      content: this.cpI18n.translate('events_event_manager_tooltip')
-    });
-
-    this.attendanceManagerToolTip = Object.assign({}, this.attendanceManagerToolTip, {
-      content: this.cpI18n.translate('events_attendance_manager_tooltip')
-    });
-
-    this.studentFeedbackToolTip = Object.assign({}, this.studentFeedbackToolTip, {
-      content: this.cpI18n.translate('events_event_feedback_tooltip')
-    });
-
     let store_id = this.session.defaultHost ? this.session.defaultHost.value : null;
 
     // fetch managers by service
@@ -442,21 +450,14 @@ export class EventsCreateComponent implements OnInit {
       text: this.cpI18n.translate('events_button_new')
     };
 
-    this.booleanOptions = [
-      {
-        label: this.cpI18n.translate('event_enabled'),
-        action: EventFeedback.enabled
-      },
-      {
-        label: this.cpI18n.translate('events_disabled'),
-        action: EventFeedback.disabled
-      }
-    ];
-
     this.mapCenter = new BehaviorSubject({
       lat: this.school.latitude,
       lng: this.school.longitude
     });
+
+    this.eventQRCodes = this.utils.getQROptions();
+    this.attendanceTypes = this.utils.getAttendanceTypeOptions();
+    this.attendanceFeedback = this.utils.getAttendanceFeedback();
 
     this.form = this.fb.group({
       title: [null, Validators.required],
@@ -470,6 +471,7 @@ export class EventsCreateComponent implements OnInit {
       postal_code: [null],
       latitude: [0],
       longitude: [0],
+      has_checkout: [attendanceType.checkInOnly],
       event_attendance: [EventAttendance.disabled],
       start: [null, Validators.required],
       poster_url: [null, Validators.required],
@@ -480,7 +482,8 @@ export class EventsCreateComponent implements OnInit {
       event_manager_id: [null],
       attendance_manager_email: [null],
       custom_basic_feedback_label: [null],
-      is_all_day: [isAllDay.disabled]
+      is_all_day: [isAllDay.disabled],
+      attend_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
     });
 
     const _self = this;

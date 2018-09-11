@@ -56,6 +56,28 @@ export class OrientationEventsService extends EventsService {
     return super.get(url, search);
   }
 
+  addEventCheckIn(body: any, search?: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT}/`;
+
+    return super.post(url, body, search);
+  }
+
+  updateEventCheckIn(body: any, attendeeId: number, search?: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT}/${attendeeId
+    }`;
+
+    return super.update(url, body, search);
+  }
+
+  deleteEventCheckInById(attendeeId: number, search?: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT}/${attendeeId
+    }`;
+
+    return super.delete(url, search);
+  }
+
   setModalEvents(events: any[]): void {
     this.stores.dispatch({
       type: EVENTS_MODAL_SET,

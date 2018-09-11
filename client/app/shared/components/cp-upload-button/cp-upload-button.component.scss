@@ -6,6 +6,12 @@
   display: inline-block;
 }
 
+.busy {
+  top: 1px;
+  left: 110%;
+  position: absolute;
+}
+
 .input.small {
   display: inline-block;
 
@@ -72,6 +78,7 @@
       font-size: 1em;
       margin-bottom: 0;
       user-select: none;
+      position: relative;
       border-radius: 4px;
       display: inline-block;
 

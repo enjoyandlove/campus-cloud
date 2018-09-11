@@ -42,6 +42,12 @@ export class TilesService extends HTTPService {
     );
   }
 
+  uploadBase64Image(body: any) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
+
+    return super.post(url, body);
+  }
+
   getServiceCategories(headers) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES_CATEGORY}/1;2000`;
 

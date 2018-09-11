@@ -1,11 +1,15 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../session';
 import { CheckinService } from '../checkin.service';
+import { CheckinUtilsService } from '../checkin.utils.service';
 import { BaseComponent } from '../../../../base/base.component';
+import { CheckInOutTime, CheckInType } from '../../callback.status';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import { ISnackbar, SNACKBAR_SHOW } from '../../../../reducers/snackbar.reducer';
 import { CPI18nService, CPTrackingService, ErrorService } from './../../../../shared/services';
 
 interface IState {
@@ -22,19 +26,21 @@ const state: IState = {
   styleUrls: ['./checkin-events.component.scss']
 })
 export class CheckinEventsComponent extends BaseComponent implements OnInit {
+  @Input() isOrientation: boolean;
+
   loading;
   isEvent = true;
   eventId: string;
-  state: IState = state;
   search: HttpParams;
-
-  @Input() isOrientation: boolean;
+  state: IState = state;
 
   constructor(
     public router: Router,
     public session: CPSession,
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
+    public store: Store<ISnackbar>,
+    public utils: CheckinUtilsService,
     public errorService: ErrorService,
     public cpTracking: CPTrackingService,
     public checkinService: CheckinService
@@ -47,17 +53,53 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
 
   onSubmit(data) {
     this.checkinService.doEventCheckin(data, this.search).subscribe(
-      (_) => {
-        this.updateAttendeesList(data);
+      (res) => {
+        this.updateAttendeesList(data, res);
         this.trackAmplitudeEvent(true);
       },
-      (_) => this.errorService.handleError(this.cpI18n.translate('something_went_wrong'))
+      (err) => this.handleError(err.status)
     );
   }
 
-  updateAttendeesList(data) {
+  onCheckout(events) {
+    this.state.events = {
+      ...this.state.events,
+      ...events
+    };
+  }
+
+  updateAttendeesList(data, res) {
+    if (!res.attendance_id) {
+      this.handleError();
+
+      return;
+    }
+
+    data = {
+      ...data,
+      attendance_id: res.attendance_id,
+      check_in_type: CheckInType.web,
+      check_out_time_epoch: CheckInOutTime.empty
+    };
+
     this.state.events = Object.assign({}, this.state.events, {
       attendees: [data, ...this.state.events['attendees']]
+    });
+  }
+
+  handleError(status = null) {
+    const body = status
+      ? this.utils.getErrorMessage(status)
+      : this.cpI18n.translate('t_external_checkin_already_checked_in');
+
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        body,
+        sticky: true,
+        autoClose: true,
+        class: 'danger'
+      }
     });
   }
 
