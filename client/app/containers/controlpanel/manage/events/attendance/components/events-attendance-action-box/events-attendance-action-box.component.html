@@ -19,7 +19,9 @@
         <i class="material-icons" data-toggle="dropdown">expand_more</i>
         <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
           <li>
-            <a [routerLink]="[eventCheckinRoute + event.encrypted_id]">
+            <a
+              target="_blank"
+              [routerLink]="[eventCheckinRoute + event.encrypted_id]">
               {{ 't_event_assessment_web_checkin_page' | cpI18n }}
             </a>
           </li>

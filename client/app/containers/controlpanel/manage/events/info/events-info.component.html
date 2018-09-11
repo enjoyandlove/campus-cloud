@@ -19,6 +19,7 @@
                     {{ 'edit' | cpI18n }}
                   </a>
                   <a
+                    target="_blank"
                     class="cpbtn cpbtn--primary"
                     *ngIf="event.event_attendance === attendanceEnabled"
                     [routerLink]="[eventCheckinRoute + event.encrypted_id]">

@@ -98,7 +98,15 @@ export class CheckInCreateComponent implements OnInit {
     }
 
     this.service.addEventCheckIn(this.form.value, search).subscribe(
-      () => {
+      (res: any) => {
+        if (!res.attendance_id) {
+          this.formErrors = true;
+          this.enableSaveButton();
+          this.errorMessage = this.cpI18n.translate('t_event_check_in_attendee_already_exist');
+
+          return;
+        }
+
         this.created.emit();
         this.resetModal();
       },
