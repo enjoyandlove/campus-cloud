@@ -2555,6 +2555,9 @@
   "t_event_assessment_web_checkin_page": {
     "message": "Web Check-in Page"
   },
+  "t_event_check_in_attendee_already_exist": {
+    "message": "User already exist"
+  },
   "t_external_checkin_already_checked_in": {
     "message": "Already Checked-In"
   },
