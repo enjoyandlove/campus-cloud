@@ -13,7 +13,7 @@ import { mockSchool } from '../../../../../../../session/mock';
 import { EventUtilService } from '../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../shared/services';
 
-const mockCheckIn = require('../../../__mock__/eventCheckIn.json');
+let mockCheckIn = require('../../../__mock__/eventCheckIn.json');
 
 class MockService {
   dummy;
@@ -25,7 +25,7 @@ class MockService {
   }
 }
 
-describe('EventCheckInCreateComponent', () => {
+fdescribe('EventCheckInCreateComponent', () => {
   let spy;
   let component: CheckInCreateComponent;
   let fixture: ComponentFixture<CheckInCreateComponent>;
@@ -91,9 +91,35 @@ describe('EventCheckInCreateComponent', () => {
     expect(component.errorMessage).toEqual(dateError);
   });
 
+  it('error - user already exist', () => {
+    spyOn(component.created, 'emit');
+    spyOn(component, 'resetModal');
+    spy = spyOn(component.service, 'addEventCheckIn')
+      .and.returnValue(observableOf(mockCheckIn));
+
+    const checkInTime = 1598918399;
+    const checkOutTimeInFuture = 1601549048;
+    const errorMessage = component.cpI18n.translate('t_event_check_in_attendee_already_exist');
+
+    component.form.controls['check_in_time'].setValue(checkInTime);
+    component.form.controls['check_out_time_epoch'].setValue(checkOutTimeInFuture);
+    component.onSubmit();
+
+    expect(spy).toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(component.formErrors).toBe(true);
+    expect(component.errorMessage).toEqual(errorMessage);
+  });
+
   it('should add event check-in', () => {
     spyOn(component.created, 'emit');
     spyOn(component, 'resetModal');
+
+    mockCheckIn = {
+      ...mockCheckIn,
+      attendance_id: 4525
+    };
+
     spy = spyOn(component.service, 'addEventCheckIn')
       .and.returnValue(observableOf(mockCheckIn));
 
