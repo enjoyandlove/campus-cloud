@@ -12,6 +12,8 @@ import { ProvidersService } from '../providers.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { ServicesUtilsService } from '../services.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
+import { EventUtilService } from '../../events/events.utils.service';
+import { attendanceType, CheckInMethod } from '../../events/event.status';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IServiceDeleteModal } from './components/service-edit-delete-modal';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
@@ -43,7 +45,9 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   categories;
   buttonData;
   hasFeedback;
+  serviceQRCodes;
   withAttendance;
+  attendanceTypes;
   serviceFeedback;
   school: ISchool;
   storeId: number;
@@ -52,6 +56,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   formError = false;
   serviceId: number;
   attendance = false;
+  selectedQRCode = [];
+  selectedAttendanceType = [];
   showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
@@ -83,6 +89,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     private cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private utils: ServicesUtilsService,
+    private eventUtils: EventUtilService,
     private cpTracking: CPTrackingService,
     private servicesService: ServicesService,
     private providersService: ProvidersService
@@ -174,7 +181,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
       if (providers.length) {
         const control = <FormArray>this.form.controls['providers'];
-        providers.forEach((provider) => control.push(this.buildServiceProviderControl(provider)));
+        providers.forEach((provider, index) =>
+          control.push(this.buildServiceProviderControl(provider, index)));
       }
     });
   }
@@ -280,12 +288,16 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     }
   }
 
-  buildServiceProviderControl(provider?: any) {
+  buildServiceProviderControl(provider?: any, index?) {
     if (provider) {
+      this.setSelectedDropDownValue(provider, index);
+
       return this.fb.group({
         id: [provider.id],
         provider_name: [provider.provider_name],
         email: [provider.email],
+        has_checkout: [provider.has_checkout],
+        checkin_verification_methods: [provider.checkin_verification_methods],
         custom_basic_feedback_label: [provider.custom_basic_feedback_label]
       });
     }
@@ -293,8 +305,31 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     return this.fb.group({
       provider_name: [null],
       email: [null],
-      custom_basic_feedback_label: [null]
+      custom_basic_feedback_label: [null],
+      has_checkout: [attendanceType.checkInOnly],
+      checkin_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
     });
+  }
+
+  setSelectedDropDownValue(provider, index) {
+    this.selectedAttendanceType[index] = this.getFromArray(
+      this.eventUtils.getAttendanceTypeOptions(),
+      'action',
+      provider.has_checkout);
+
+    this.selectedQRCode[index] = this.getFromArray(
+      this.eventUtils.getQROptions(),
+      'action',
+      this.getQRCodeStatus(provider.checkin_verification_methods)
+    );
+  }
+
+  getQRCodeStatus(qrCodes) {
+    return qrCodes.includes(CheckInMethod.app);
+  }
+
+  getFromArray(arr: Array<any>, key: string, val: any) {
+    return arr.filter((item) => item[key] === val)[0];
   }
 
   buildForm() {
@@ -366,6 +401,25 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     }
   }
 
+  onSelectedAttendanceType(hasCheckout: boolean, index: number): void {
+    const controls = <FormArray>this.form.controls['providers'];
+    const control = <FormGroup>controls.controls[index];
+
+    control.controls['has_checkout'].setValue(hasCheckout);
+  }
+
+  onSelectedQRCode(isEnabled: boolean, index: number): void {
+    const controls = <FormArray>this.form.controls['providers'];
+    const control = <FormGroup>controls.controls[index];
+    const verificationMethods = control.controls['checkin_verification_methods'].value;
+
+    if (isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.push(CheckInMethod.app);
+    } else if (!isEnabled && verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.pop(CheckInMethod.app);
+    }
+  }
+
   onSubmit() {
     this.formError = false;
 
@@ -428,9 +482,11 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
           providersControls.forEach((provider: FormGroup) => {
             providers.push({
               id: provider.controls['id'].value,
-              provider_name: provider.controls['provider_name'].value,
               email: provider.controls['email'].value,
-              custom_basic_feedback_label: provider.controls['custom_basic_feedback_label'].value
+              has_checkout: provider.controls['has_checkout'].value,
+              provider_name: provider.controls['provider_name'].value,
+              custom_basic_feedback_label: provider.controls['custom_basic_feedback_label'].value,
+              checkin_verification_methods: provider.controls['checkin_verification_methods'].value
             });
           });
 
@@ -465,6 +521,9 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.serviceQRCodes = this.eventUtils.getQROptions();
+    this.attendanceTypes = this.eventUtils.getAttendanceTypeOptions();
+
     this.feedback = Object.assign({}, this.feedback, {
       content: this.cpI18n.translate('manage_create_service_feedback_tooltip')
     });
@@ -475,7 +534,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
     this.buttonData = {
       class: 'primary',
-      text: 'Save'
+      text: this.cpI18n.translate('save')
     };
   }
 }

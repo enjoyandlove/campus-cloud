@@ -217,6 +217,25 @@
                               [class.error]="formError && form.controls.service_attendance.value && provider.controls['custom_basic_feedback_label'].hasError('required')">
                           </div>
                         </div>
+
+                        <div class="row form-group">
+                          <div class="col-6">
+                            <label>{{ 't_events_attendance_type' | cpI18n }}</label>
+                            <cp-dropdown
+                              [items]="attendanceTypes"
+                              [selectedItem]="selectedAttendanceType[i]"
+                              (selected)="onSelectedAttendanceType($event.action, i)">
+                            </cp-dropdown>
+                          </div>
+                          <div class="col-6">
+                            <label>{{ 't_events_event_qr_enabled' | cpI18n }}</label>
+                            <cp-dropdown
+                              [items]="serviceQRCodes"
+                              [selectedItem]="selectedQRCode[i]"
+                              (selected)="onSelectedQRCode($event.action, i)">
+                            </cp-dropdown>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
