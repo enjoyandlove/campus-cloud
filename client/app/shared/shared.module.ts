@@ -56,7 +56,12 @@ import {
 import { CPLineChartUtilsService } from './components/cp-line-chart/cp-line-chart.utils.service';
 import { CPRangePickerUtilsService } from './components/cp-range-picker/cp-range-picker.utils.service';
 import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
-import { CPTrackerDirective, CPColorPickerDirective, CPHostDirective } from './directives';
+import {
+  CPTrackerDirective,
+  CPColorPickerDirective,
+  CPHostDirective,
+  CPImageRatioDirective
+} from './directives';
 import { CPDatePipe, CPFilterPipe, CPI18nPipe, CPFIlterByLength } from './pipes';
 import {
   CPLocationsService,
@@ -69,6 +74,7 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
 
 @NgModule({
   declarations: [
+    CPImageRatioDirective,
     CPHostDirective,
     CPImageCropperComponent,
     CPColorPickerDirective,
@@ -147,6 +153,7 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
 
   exports: [
     CPHostDirective,
+    CPImageRatioDirective,
     CPColorPickerDirective,
     CPTabComponent,
     CPTabsComponent,

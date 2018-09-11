@@ -19,7 +19,7 @@ import { PersonasUtilsService } from './../personas.utils.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
 import { ITile } from './../tiles/tile.interface';
-import { TileCategoryRank, TileFeatureRank } from './../tiles/tiles.status';
+import { TileCategoryRank, TileFeatureRank, TileType } from './../tiles/tiles.status';
 import { TilesUtilsService } from './../tiles/tiles.utils.service';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
@@ -531,12 +531,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     );
 
     const stream$ = request$.pipe(
-      map(([tiles, categories, tilesByPersonaZero]) => {
-        if (isProd) {
-          tiles = this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero);
-        }
-
-        console.log(tiles);
+      map(([tiles, categories]) => {
+        tiles = tiles.filter((t: ITile) => t.type === TileType.abstract);
 
         if (this.isWebPersona && isProd) {
           tiles = tiles.filter((tile) => this.tileUtils.isTileSupportedByWebApp(tile));

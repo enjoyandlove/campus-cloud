@@ -105,6 +105,10 @@ export class CheckinRegisterComponent implements OnInit {
     });
 
     this.placeholder = this.cpI18n.translate('t_check_in_date_placeholder_text');
-    this.disabledQRCode = !this.data.attend_verification_methods.includes(CheckInMethod.app);
+
+    // todo remove this check once service check in part done
+    if (!this.isService) {
+      this.disabledQRCode = !this.data.attend_verification_methods.includes(CheckInMethod.app);
+    }
   }
 }
