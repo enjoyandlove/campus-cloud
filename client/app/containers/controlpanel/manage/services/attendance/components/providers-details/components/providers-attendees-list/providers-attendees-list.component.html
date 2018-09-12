@@ -62,7 +62,11 @@
                   </cp-stars>
                 </div>
                 <div class="col-2">
-                  <span><i class="material-icons">{{ checkInMethodType(assessment.check_in_method) }}</i></span>
+                  <span>
+                    <i class="material-icons">
+                      {{ assessment.check_in_method === webCheckInMethod ? 'computer' : 'smartphone' }}
+                    </i>
+                  </span>
                 </div>
                 <div class="col-3">
                   <span>{{ assessment.check_in_time | cpDatePipe:dateFormat }}</span>

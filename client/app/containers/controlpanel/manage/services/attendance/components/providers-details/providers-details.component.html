@@ -3,23 +3,22 @@
 
   <ng-container *ngSwitchCase="false">
     <cp-providers-attendees-stats
-     [provider]="provider"
-     [eventRating]="eventRating">
+      [provider]="provider"
+      [eventRating]="eventRating">
     </cp-providers-attendees-stats>
 
     <cp-providers-attendees-action-box
-     [provider]="provider"
-     [eventData]="eventData"
-     (search)="query$.next($event)"
-     (download)="download$.next(true)">
+      [provider]="provider"
+      [eventData]="eventData"
+      (download)="onDownload()"
+      (search)="onSearch($event)">
     </cp-providers-attendees-action-box>
 
     <div class="row">
       <div class="col-12">
         <cp-providers-attendees-list
+        #providerAttendees
         [serviceId]="serviceId"
-        [query]="query$"
-        [download]="download$"
         [providerId]="providerId">
         </cp-providers-attendees-list>
       </div>
