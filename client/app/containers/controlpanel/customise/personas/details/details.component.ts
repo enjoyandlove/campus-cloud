@@ -542,7 +542,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         }
 
         return {
-          featured: this.utils.getFeatureTiles(tiles),
+          featured: this.utils.getFeaturedTiles(tiles),
           categoryZero: this.utils.getCategoryZeroTiles(tiles),
           guides: this.utils.groupTilesWithTileCategories(categories, tiles)
         };
