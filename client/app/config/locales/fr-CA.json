@@ -2438,12 +2438,6 @@
     "message": "Ongoing",
     "description": "Indicates that a deal is posted without an end date"
   },
-  "t_deals_valid_from": {
-    "message": "Valid From"
-  },
-  "t_deals_valid_until": {
-    "message": "Valid Until"
-  },
   "t_events_assessment_add_checkin_modal_title": {
     "message": "Vérification de présence"
   },
@@ -2870,6 +2864,15 @@
   },
   "t_persona_list_button_notify": {
     "message": "Notifier"
+  },
+  "t_services_assessment_web_checkin_page": {
+    "message": "Page de vérification de présence web"
+  },
+  "t_services_attendance_type": {
+    "message": "Type de présence"
+  },
+  "t_services_service_qr_enabled": {
+    "message": "Code QR"
   },
   "t_shared_cancel": {
     "message": "Annuler"
