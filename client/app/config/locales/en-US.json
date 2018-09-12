@@ -2411,10 +2411,10 @@
     "message": "Edit Deal"
   },
   "t_deals_form_posting_end_date": {
-    "message": "Posting End"
+    "message": "Valid Until"
   },
   "t_deals_form_posting_start_date": {
-    "message": "Posting Start"
+    "message": "Valid From"
   },
   "t_deals_form_store_details": {
     "message": "Store Details"
@@ -2437,12 +2437,6 @@
   "t_deals_ongoing": {
     "message": "Ongoing",
     "description": "Indicates that a deal is posted without an end date"
-  },
-  "t_deals_valid_from": {
-    "message": "Valid From"
-  },
-  "t_deals_valid_until": {
-    "message": "Valid Until"
   },
   "t_events_assessment_add_checkin_modal_title": {
     "message": "Check-in"
@@ -2870,6 +2864,12 @@
   },
   "t_persona_list_button_notify": {
     "message": "Notify"
+  },
+  "t_services_attendance_type": {
+    "message": "Attendance Type"
+  },
+  "t_services_service_qr_enabled": {
+    "message": "QR Code"
   },
   "t_shared_cancel": {
     "message": "Cancel"
