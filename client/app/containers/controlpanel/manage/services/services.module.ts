@@ -39,9 +39,11 @@ import { ServicesExcelModalComponent, ServicesImportTopBarComponent } from './ex
 
 import {
   ServicesProviderAddComponent,
+  ServicesProviderStatsComponent,
   ServicesProvidersListComponent,
   ServicesProviderDeleteComponent,
-  ServicesProviderDetailsComponent
+  ServicesProviderDetailsComponent,
+  ServicesProviderActionBoxComponent
 } from './attendance/components';
 
 import { ServicesProvidersAttendeesListComponent } from './attendance/components/providers-details/components';
@@ -52,6 +54,8 @@ import { ServicesUtilsService } from './services.utils.service';
 @NgModule({
   declarations: [
     ServicesListComponent,
+    ServicesProviderStatsComponent,
+    ServicesProviderActionBoxComponent,
     ServicesListActionBoxComponent,
     ServicesDeleteComponent,
     ServicesExcelModalComponent,

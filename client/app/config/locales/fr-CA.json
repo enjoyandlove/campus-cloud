@@ -2323,6 +2323,15 @@
   "t_assess_chart_tooltip_label_engagements": {
     "message": "Implication(s)"
   },
+  "t_assess_checkin_time_in": {
+    "message": "Heure d'entrée"
+  },
+  "t_assess_checkout_date": {
+    "message": "Date the sortie"
+  },
+  "t_assess_checkout_time_out": {
+    "message": "Heure de sortie"
+  },
   "t_assess_no_orientation_data": {
     "message": "Aucune donnée d'orientation"
   },
@@ -2331,6 +2340,12 @@
   },
   "t_assess_orientation_programs": {
     "message": "Programmes d'orientation"
+  },
+  "t_assess_time_spent": {
+    "message": "Temps passé"
+  },
+  "t_assess_time_spent_seconds": {
+    "message": "Temps passé (secondes)"
   },
   "t_assess_top_orientation_programs": {
     "message": "Programmes populaires"
@@ -2346,6 +2361,12 @@
   },
   "t_audience_save_modal_button_submit": {
     "message": "Enregistrer"
+  },
+  "t_changes_saved_ok": {
+    "message": "Changements enregistrés avec succès"
+  },
+  "t_check_in_date_placeholder_text": {
+    "message": "Maintenant"
   },
   "t_customise_personas": {
     "message": "Expériences d'application"
@@ -2417,6 +2438,12 @@
     "message": "Ongoing",
     "description": "Indicates that a deal is posted without an end date"
   },
+  "t_deals_valid_from": {
+    "message": "Valid From"
+  },
+  "t_deals_valid_until": {
+    "message": "Valid Until"
+  },
   "t_events_assessment_add_checkin_modal_title": {
     "message": "Vérification de présence"
   },
@@ -2437,6 +2464,9 @@
   },
   "t_events_assessment_message_attendees": {
     "message": "Contacter les participants"
+  },
+  "t_events_assessment_no_check_in": {
+    "message": "Aucune vérification de présence"
   },
   "t_events_assessment_qr_enabled_no": {
     "message": "Inactif"
@@ -2477,8 +2507,35 @@
   "t_events_attendance_no_permission_tooltip_text": {
     "message": "Permission de notification requise"
   },
+  "t_events_attendance_no_students_tooltip_text": {
+    "message": "Il n'y a aucun invité à qui envoyer un message."
+  },
   "t_events_attendance_type": {
     "message": "Type de présence"
+  },
+  "t_events_csv_column_check_in_date": {
+    "message": "Heure de vérification de présence"
+  },
+  "t_events_csv_column_check_out_date": {
+    "message": "Heure de sortie"
+  },
+  "t_events_csv_column_time_in": {
+    "message": "Heure d'entrée"
+  },
+  "t_events_csv_column_time_out": {
+    "message": "Heure de sortie"
+  },
+  "t_events_csv_column_time_spent": {
+    "message": "Temps passé"
+  },
+  "t_events_csv_column_time_spent_seconds": {
+    "message": "Temps passé (secondes)"
+  },
+  "t_events_event_attendance_type_tooltip": {
+    "message": "\"Présence\" enregistre le nom et courriel d'un invité, et l'heure du scan QR. \"Présence & sortie\" vous permet de scanner les invités deux fois, et suit les heures de début et de fin. Les deux options vous laissent récupérer un avis."
+  },
+  "t_events_event_qr_code_tooltip": {
+    "message": "Rendez votre code QR d'événement actif pour laisser les étudiants le scanner, ou vous pouvez désactiver le code."
   },
   "t_events_event_qr_enabled": {
     "message": "Code QR"
@@ -2495,8 +2552,62 @@
   "t_event_assessment_check_out_date": {
     "message": "Sortie"
   },
+  "t_event_assessment_qr_code_disabled_success_message": {
+    "message": "Code QR désactivé avec succès"
+  },
+  "t_event_assessment_qr_code_enable_success_message": {
+    "message": "Code QR d'entrée activé avec succès"
+  },
   "t_event_assessment_web_checkin_page": {
     "message": "Page de vérification de présence web"
+  },
+  "t_event_check_in_attendee_already_exist": {
+    "message": "Cette personne s'est déjà enregistrée."
+  },
+  "t_external_checkin_already_checked_in": {
+    "message": "Cette personne s'est déjà enregistrée."
+  },
+  "t_external_checkin_chechout": {
+    "message": "Sortie"
+  },
+  "t_external_checkin_checkin": {
+    "message": "Présence"
+  },
+  "t_external_checkin_method": {
+    "message": "Méthode"
+  },
+  "t_external_checkin_time": {
+    "message": "Heure d'entrée"
+  },
+  "t_external_check_in_bad_request_error": {
+    "message": "Erreur dans les paramètres"
+  },
+  "t_external_check_in_check_out_button": {
+    "message": "Sortie"
+  },
+  "t_external_check_in_check_out_modal_title": {
+    "message": "Sortie"
+  },
+  "t_external_check_in_check_out_time": {
+    "message": "Heure de sortie"
+  },
+  "t_external_check_in_disable_manual_check_in": {
+    "message": "Enregistrement manuel désactivé"
+  },
+  "t_external_check_in_disable_qr": {
+    "message": "Code QR désactivé"
+  },
+  "t_external_check_in_error_fill_out_all_fields": {
+    "message": "Veuillez remplir les champs marqués"
+  },
+  "t_external_check_in_forbidden_error": {
+    "message": "Vous ne pouvez pas enregistrer l'utilisateur à l'événement car vous n'avez pas le privilège approprié."
+  },
+  "t_external_check_in_greater_than_checkout_error": {
+    "message": "L'heure de sortie doit être plus tard que l'heure d'entrée."
+  },
+  "t_external_check_in_not_found_error": {
+    "message": "Cet événement ne peut pas être trouvé"
   },
   "t_jobs_ongoing": {
     "message": "Ongoing",
@@ -2652,6 +2763,9 @@
   "t_personas_tile_create_resource_type_campus_service": {
     "message": "Service du campus"
   },
+  "t_personas_tile_create_resource_type_courses": {
+    "message": "Catalogue des cours"
+  },
   "t_personas_tile_create_resource_type_deal_store_list": {
     "message": "Emplois"
   },
@@ -2667,14 +2781,23 @@
   "t_personas_tile_create_resource_type_orientation_calendar_list": {
     "message": "Orientation"
   },
+  "t_personas_tile_create_resource_type_service_by_category_id": {
+    "message": "Liste des services par catégories"
+  },
   "t_personas_tile_create_resource_type_store": {
     "message": "Service ou club"
+  },
+  "t_personas_tile_create_resource_type_store_list": {
+    "message": "Liste des clubs par type"
   },
   "t_personas_tile_create_resource_type_subscribable_calendar": {
     "message": "Calendrier"
   },
   "t_personas_tile_create_resource_type_timetable": {
     "message": "Mon Calendrier"
+  },
+  "t_personas_tile_create_resource_type_user_orientation_calendar_list": {
+    "message": "Mes calendriers d'orientation"
   },
   "t_personas_tile_create_store_list_groups_and_clubs": {
     "message": "Groupes et clubs"
@@ -2687,6 +2810,9 @@
   },
   "t_personas_tile_create_type_resource_resource_list": {
     "message": "Liste des ressources"
+  },
+  "t_personas_tile_create_type_resource_web_link": {
+    "message": "Lien web dans l'application"
   },
   "t_personas_tile_form_categories_excludes": {
     "message": "Exclut"
