@@ -14,12 +14,18 @@ export class CPColorPickerDirective implements OnInit {
 
   constructor(public el: ElementRef) {}
 
-  onSave(hexColor) {
-    this.changed.emit(hexColor);
+  setHSVA(h, s, v, a) {
+    this.picker.setHSVA(h, s, v, a);
+    this.show();
   }
 
-  setHSVA(hsvaColorStr) {
-    this.picker.setHSVA(hsvaColorStr);
+  show() {
+    this.picker.show();
+  }
+
+  setColor(colorString) {
+    this.picker.setColor(colorString);
+    this.show();
   }
 
   initPicker() {
@@ -35,16 +41,18 @@ export class CPColorPickerDirective implements OnInit {
 
       components: {
         hue: true,
-        opacity: true,
+        opacity: false,
 
         output: {
           hex: true,
-          input: true
+          input: false
         }
       },
 
       onSave(hsva) {
-        _self.onSave(hsva.toHEX().toString());
+        if (_self.picker) {
+          _self.changed.emit(hsva.toHEX().toString());
+        }
       }
     });
   }
