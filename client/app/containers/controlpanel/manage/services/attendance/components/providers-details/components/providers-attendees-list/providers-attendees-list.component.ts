@@ -41,6 +41,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   eventProperties;
   state: IState = state;
   dateFormat = FORMAT.DATETIME;
+  webCheckInMethod = CheckInMethod.web;
   defaultImage = require('public/default/user.png');
 
   constructor(
@@ -116,15 +117,12 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
   }
 
-  checkInMethodType(method) {
-    return method === CheckInMethod.web ? 'computer' : 'smartphone';
-  }
-
   ngOnInit() {
     this.download.subscribe((download) => {
       if (download && this.assessments.length) {
         this.trackAmplitudeEvent();
-        this.utils.exportServiceProvidersAttendees(this.fetchAllRecords());
+        this.fetchAllRecords().then((attendees) =>
+          this.utils.exportServiceProvidersAttendees(attendees));
       }
     });
 

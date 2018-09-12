@@ -44,8 +44,7 @@ export class ServicesUtilsService {
     };
   }
 
-  exportServiceProvidersAttendees(providers) {
-    providers.then((assessments) => {
+  exportServiceProvidersAttendees(assessments) {
       const columns = [
         this.cpI18n.translate('services_label_attendee_name'),
         this.cpI18n.translate('email'),
@@ -88,6 +87,5 @@ export class ServicesUtilsService {
       });
 
       createSpreadSheet(assessments, columns);
-    });
   }
 }
