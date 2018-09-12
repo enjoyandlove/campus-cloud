@@ -57,6 +57,7 @@
 
       <span class="col-3 text-truncate">
         <a
+          target="_blank"
           (click)="trackCheckinEvent(event.encrypted_id)"
           [routerLink]="[eventCheckinRoute + event.encrypted_id]"
           *ngIf="event.event_attendance === attendanceEnabled"

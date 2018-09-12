@@ -1,4 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  AfterViewInit,
+  ChangeDetectorRef
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { CPSession } from './../../../../../../session/index';
 import { ITile } from './../tile.interface';
@@ -13,8 +22,10 @@ import { TilesUtilsService } from '../tiles.utils.service';
   templateUrl: './tile.component.html',
   styleUrls: ['./tile.component.scss']
 })
-export class PersonasTileComponent implements OnInit {
+export class PersonasTileComponent implements AfterViewInit, OnInit {
   @Input() tile: ITile;
+
+  @ViewChild('base') base;
 
   @Output() edit: EventEmitter<ITile> = new EventEmitter();
   @Output() edited: EventEmitter<ITile> = new EventEmitter();
@@ -30,7 +41,8 @@ export class PersonasTileComponent implements OnInit {
     public service: TilesService,
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
-    public utils: TilesUtilsService
+    public utils: TilesUtilsService,
+    public changeDetectorRef: ChangeDetectorRef
   ) {}
 
   toggleHover(hover) {
@@ -84,6 +96,10 @@ export class PersonasTileComponent implements OnInit {
       },
       () => this.errorHandler()
     );
+  }
+
+  ngAfterViewInit() {
+    this.changeDetectorRef.detectChanges();
   }
 
   ngOnInit(): void {}

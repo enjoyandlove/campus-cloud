@@ -19,7 +19,7 @@ import { PersonasUtilsService } from './../personas.utils.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
 import { ITile } from './../tiles/tile.interface';
-import { TileCategoryRank, TileFeatureRank } from './../tiles/tiles.status';
+import { TileCategoryRank, TileFeatureRank, TileType } from './../tiles/tiles.status';
 import { TilesUtilsService } from './../tiles/tiles.utils.service';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
@@ -518,6 +518,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       .getTilesCategories(schoolIdSearch)
       .pipe(map((categories) => categories.filter((c) => c.id !== 0)));
 
+    const tilesByPersonaZero$ = this.service.getTilesByPersona(schoolIdSearch);
     const persona$ = this.service.getPersonaById(this.personaId, schoolIdSearch);
 
     const request$ = persona$.pipe(
@@ -526,19 +527,17 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         this.isWebPersona = persona.platform === PersonasType.web;
         this.updateHeader(persona.localized_name_map[key]);
 
-        return combineLatest([tilesByPersona$, tileCategories$]);
+        return combineLatest([tilesByPersona$, tileCategories$, tilesByPersonaZero$]);
       })
     );
 
     const stream$ = request$.pipe(
       map(([tiles, categories, tilesByPersonaZero]) => {
-        if (isProd) {
-          tiles = this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero);
-        }
+        tiles = isProd
+          ? this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero)
+          : tiles.filter((t: ITile) => t.type === TileType.abstract);
 
-        console.log(tiles);
-
-        if (this.isWebPersona && isProd) {
+        if (this.isWebPersona) {
           tiles = tiles.filter((tile) => this.tileUtils.isTileSupportedByWebApp(tile));
         }
 

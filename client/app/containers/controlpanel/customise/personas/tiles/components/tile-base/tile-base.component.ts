@@ -16,8 +16,8 @@ import settings from '../../../../../../../config/settings';
     }`
   ]
 })
-export class PseronasTileBaseComponent implements AfterViewInit, OnInit {
-  @Input() ratio = settings.tileRatio;
+export class PersonasTileBaseComponent implements AfterViewInit, OnInit {
+  @Input() ratio = settings.imageRatio;
 
   @ViewChild('host') host: ElementRef;
 

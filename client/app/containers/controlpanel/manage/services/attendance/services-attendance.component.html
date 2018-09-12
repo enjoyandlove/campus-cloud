@@ -2,99 +2,17 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <div class="row">
-      <div class="col-4 text-center">
-        <div class="cp-card cp-card--half-padding visits">
-          <div class="row justify-content-center">
-            <div class="col-8">
-              <span>
-                <div class="row">
-                  <div class="col-9 text-truncate">
-                    {{ 'services_total_visits' | cpI18n }}
-                  </div>
-                  <div class="col-3">
-                    <strong>{{ service.total_visits }}</strong>
-                  </div>
-                </div>
-              </span>
-              <span>
-                <div class="row">
-                  <div class="col-9 text-truncate">
-                    {{ 'services_unique_visits' | cpI18n }}
-                  </div>
-                  <div class="col-3">
-                    <strong>{{ service.unique_visits }}</strong>
-                  </div>
-                </div>
-              </span>
-              <span>
-                <div class="row">
-                  <div class="col-9 text-truncate">
-                    {{ 'services_repeat_visits' | cpI18n }}
-                  </div>
-                  <div class="col-3">
-                    <strong>{{ service.total_visits - service.unique_visits }}</strong>
-                  </div>
-                </div>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-4 text-center">
-        <div class="cp-card cp-card--half-padding">
-          <p class="header__digit">{{ service.num_ratings || 'N/A' }}</p>
-          <p>{{ 'services_total_responses' | cpI18n }}</p>
-        </div>
-      </div>
-      <div class="col-4 text-center">
-        <div class="cp-card cp-card--half-padding">
-          <p class="header__digit" *ngIf="service.enable_feedback === 0">
-            N/A
-          </p>
-          <p class="header__digit" *ngIf="service.enable_feedback === 1">
-            <cp-stars [size]="detailStarSize" [avgRate]="service.avg_rating_percent" [maxRate]="service.rating_scale_maximum">
-            </cp-stars>
-          </p>
-          <p>
-            {{ 'average_rating' | cpI18n }}
-          </p>
-        </div>
-      </div>
-    </div>
+    <cp-providers-stats
+      [service]="service">
+    </cp-providers-stats>
 
-    <div class="row">
-      <div class="col-12">
-        <div class="cp-card actions">
-          <div class="row">
-            <div class="col-4">
-              <cp-searchbox 
-                (query)=onSearch($event) 
-                [placeholder]="cpI18n.translate('services_provider_search_tootlip')">
-              </cp-searchbox>
-            </div>
-            <div class="col-8 text-right float-right">
-              <button 
-                [disabled]="noProviders" 
-                (click)="download$.next(true)" 
-                class="cpbtn cpbtn--secondary">
-                {{ 'services_button_download_assessment_data' | cpI18n }}
-              </button>
-              <button
-                cpTracker
-                type="button"
-                data-toggle="modal"
-                class="cpbtn cpbtn--primary"
-                data-target="#createProvider"
-                [eventData]="eventData"
-                (click)="onLaunchProviderAdd()">
-                {{ 'services_button_add_service_provider' | cpI18n }}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <cp-providers-action-box
+      [eventData]="eventData"
+      [noProviders]="noProviders"
+      (search)="onSearch($event)"
+      (download)="download$.next(true)"
+      (launchAddProviderModal)="onLaunchProviderAdd()">
+    </cp-providers-action-box>
 
     <div class="row">
       <div class="col-12">
@@ -113,6 +31,10 @@
 
 
 <cp-modal modalId="createProvider" *ngIf="isProviderAdd">
-  <cp-providers-add [serviceId]="serviceId" (created)="onProviderAdded()" [serviceWithFeedback]="enableFeedback$">
+  <cp-providers-add
+    [serviceId]="serviceId"
+    (created)="onProviderAdded()"
+    (teardown)="isProviderAdd = false"
+    [serviceWithFeedback]="enableFeedback$">
   </cp-providers-add>
 </cp-modal>

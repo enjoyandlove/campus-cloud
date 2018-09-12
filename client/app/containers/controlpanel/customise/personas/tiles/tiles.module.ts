@@ -7,7 +7,7 @@ import {
   PersonasTileContentComponent,
   PersonasTileGuideFormComponent,
   PersonasTileHoverComponent,
-  PseronasTileBaseComponent
+  PersonasTileBaseComponent
 } from './components';
 import { PersonasTileCreateComponent } from './create';
 import { PersonasTileDeleteComponent } from './delete';
@@ -27,7 +27,7 @@ import { SectionsService } from '../sections/sections.service';
     PersonasTileDeleteComponent,
     PersonasTileEditComponent,
     PersonasTileGuideFormComponent,
-    PseronasTileBaseComponent,
+    PersonasTileBaseComponent,
     PersonasTileCreateComponent,
     PersonasTileComponent,
     PersonasTileHoverComponent,
@@ -40,7 +40,7 @@ import { SectionsService } from '../sections/sections.service';
     PersonasTileEditComponent,
     PersonasTileGuideFormComponent,
     PersonasTileContentComponent,
-    PseronasTileBaseComponent,
+    PersonasTileBaseComponent,
     PersonasTileCreateComponent,
     PersonasTileComponent,
     PersonasTileHoverComponent,

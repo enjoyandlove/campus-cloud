@@ -1,0 +1,30 @@
+<div class="row">
+  <div class="col-12">
+    <div class="cp-card actions">
+      <div class="row">
+        <div class="col-4">
+          <cp-searchbox
+            (query)=onSearch($event)
+            [placeholder]="cpI18n.translate('services_provider_search_tootlip')">
+          </cp-searchbox>
+        </div>
+        <div class="col-8 text-right float-right">
+          <button
+            [disabled]="noProviders"
+            (click)="onDownload()"
+            class="cpbtn cpbtn--secondary">
+            {{ 'services_button_download_assessment_data' | cpI18n }}
+          </button>
+          <button
+            cpTracker
+            type="button"
+            class="cpbtn cpbtn--primary"
+            [eventData]="eventData"
+            (click)="onLaunchProviderAdd()">
+            {{ 'services_button_add_service_provider' | cpI18n }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
