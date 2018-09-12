@@ -1,6 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 import { CPSession } from './../../../../../../../../../session';
 import { ProvidersService } from '../../../../../providers.service';
@@ -32,8 +31,6 @@ const state: IState = {
 export class ServicesProvidersAttendeesListComponent extends BaseComponent implements OnInit {
   @Input() serviceId: number;
   @Input() providerId: number;
-  @Input() query: Observable<string>;
-  @Input() download: Observable<boolean>;
 
   loading;
   assessments;
@@ -109,6 +106,23 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.fetch();
   }
 
+  doSearch(search_text) {
+    this.state = {
+      ...this.state,
+      search_text
+    };
+
+    this.fetch();
+  }
+
+  downloadProvidersCSV() {
+    if (this.assessments.length) {
+      this.trackAmplitudeEvent();
+      this.fetchAllRecords().then((attendees) =>
+        this.utils.exportServiceProvidersAttendees(attendees));
+    }
+  }
+
   trackAmplitudeEvent() {
     this.eventProperties = {
       data_type: amplitudeEvents.ATTENDANCE
@@ -118,18 +132,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   }
 
   ngOnInit() {
-    this.download.subscribe((download) => {
-      if (download && this.assessments.length) {
-        this.trackAmplitudeEvent();
-        this.fetchAllRecords().then((attendees) =>
-          this.utils.exportServiceProvidersAttendees(attendees));
-      }
-    });
-
-    this.query.subscribe((search_text) => {
-      this.state = Object.assign({}, this.state, { search_text });
-      this.fetch();
-    });
+    this.fetch();
 
     this.sortingLabels = {
       checkin_time: this.cpI18n.translate('services_label_checkin_time'),
