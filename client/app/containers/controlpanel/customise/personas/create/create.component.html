@@ -4,7 +4,7 @@
       <div class="row">
         <div class="col-12">
           <p class="title">{{'t_personas_create_form_title' | cpI18n}}</p>
-          <cp-personas-form 
+          <cp-personas-form
             #createForm
             [form]="form"
             (valueChanges)="onFormValueChanges($event)">
@@ -15,7 +15,7 @@
       <div class="row">
         <div class="col-6">
           <label>{{ 't_personas_create_label_campus_security' | cpI18n }}</label>
-          <cp-dropdown 
+          <cp-dropdown
             [items]="services$ | async"
             (selected)="onSecurityServiceChanged($event)">
           </cp-dropdown>
@@ -31,7 +31,7 @@
       <div class="row">
         <div class="col-12">
           <div class="text-right">
-            <a [routerLink]="['/customize/personas']"
+            <a [routerLink]="['/studio/experiences']"
                 class="cpbtn cpbtn--cancel">
               {{ 't_persona_create_cancel_button' | cpI18n }}
             </a>

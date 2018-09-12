@@ -83,7 +83,7 @@ export class PersonasSectionComponent implements OnInit {
 
   onEditTile(tile: ITile) {
     this.service.guide = this.guide;
-    this.router.navigate([`/customize/personas/${this.personaId}/tiles/${tile.id}/edit`]);
+    this.router.navigate([`/studio/experiences/${this.personaId}/tiles/${tile.id}/edit`]);
   }
 
   goToCreateTile() {
@@ -96,7 +96,7 @@ export class PersonasSectionComponent implements OnInit {
     }
 
     this.service.guide = this.guide;
-    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
+    this.router.navigate([`/studio/experiences/${this.personaId}/tiles`]);
   }
 
   createFeatureTile() {
@@ -106,7 +106,7 @@ export class PersonasSectionComponent implements OnInit {
     };
     this.service.guide = tempGuide;
 
-    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
+    this.router.navigate([`/studio/experiences/${this.personaId}/tiles`]);
   }
 
   createCategoryZeroTile() {
@@ -116,7 +116,7 @@ export class PersonasSectionComponent implements OnInit {
     };
     this.service.guide = tempGuide;
 
-    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
+    this.router.navigate([`/studio/experiences/${this.personaId}/tiles`]);
   }
 
   onMove(direction) {

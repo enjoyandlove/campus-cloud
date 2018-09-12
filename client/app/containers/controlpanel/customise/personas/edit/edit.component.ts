@@ -1,23 +1,24 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { get as _get } from 'lodash';
-import { combineLatest, Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
-import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
-import { SNACKBAR_HIDE } from './../../../../../reducers/snackbar.reducer';
-import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
-import { PersonasService } from './../personas.service';
-import { PersonaValidationErrors } from './../personas.status';
-import { PersonasUtilsService } from './../personas.utils.service';
-import { BaseComponent } from '../../../../../base';
-import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
+import { get as _get } from 'lodash';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
 import { IPersona } from '../persona.interface';
 import { ITile } from '../tiles/tile.interface';
+import { CPSession } from '../../../../../session';
+import { BaseComponent } from '../../../../../base';
+import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
+import { PersonasService } from './../personas.service';
+import { CPI18nService } from '../../../../../shared/services';
+import { PersonaValidationErrors } from './../personas.status';
+import { PersonasUtilsService } from './../personas.utils.service';
+import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
+import { SNACKBAR_HIDE } from './../../../../../reducers/snackbar.reducer';
+import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-personas-edit',
@@ -106,26 +107,33 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     const extra_info = <FormGroup>guideTileForm.controls['extra_info'];
     extra_info.controls['id'].setValue(campusLinkId);
 
-    const guideTileFormPersonaZero = {
+    const data = {
       ...guideTileForm.value,
-      school_persona_id: 0
+      school_persona_id: personaId
     };
 
-    const guidePersonaZero$ = this.service.createGuideTile(guideTileFormPersonaZero);
+    return this.service.createGuideTile(data);
 
-    return guidePersonaZero$.pipe(
-      switchMap((guide: any) => {
-        const body = {
-          ...guideTileFormPersonaZero,
-          school_persona_id: personaId,
-          extra_info: {
-            id: guide.id
-          }
-        };
+    // const guideTileFormPersonaZero = {
+    //   ...guideTileForm.value,
+    //   school_persona_id: 0
+    // };
 
-        return this.service.createGuideTile(body);
-      })
-    );
+    // const guidePersonaZero$ = this.service.createGuideTile(guideTileFormPersonaZero);
+
+    // return guidePersonaZero$.pipe(
+    //   switchMap((guide: any) => {
+    //     const body = {
+    //       ...guideTileFormPersonaZero,
+    //       school_persona_id: personaId,
+    //       extra_info: {
+    //         id: guide.id
+    //       }
+    //     };
+
+    //     return this.service.createGuideTile(body);
+    //   })
+    // );
   }
 
   createSecurityTile(personaId): Observable<any> {
@@ -142,39 +150,20 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     return tile.related_link_data.link_url === 'oohlala://campus_security_service';
   }
 
-  zipTiles(baseTiles: Array<any>, personaTiles: Array<any>): Array<any> {
-    return personaTiles.map((tile: ITile) => {
-      const relatedLinkDataEmpty = Object.keys(tile.related_link_data).length === 0;
-
-      return relatedLinkDataEmpty
-        ? {
-            ...tile,
-            related_link_data: this.lookupExtraData(tile.extra_info.id, baseTiles)
-          }
-        : tile;
-    });
-  }
-
   async getCampusSecurity() {
-    const [baseTiles, personaTiles] = await this.getTiles();
-    const zipTiles = this.zipTiles(baseTiles, personaTiles);
+    const tiles = await this.getTiles();
 
-    return zipTiles.filter(this.isCampusSecurity)[0];
+    console.log(tiles);
+
+    return tiles.filter(this.isCampusSecurity)[0];
   }
 
   getTiles(): Promise<any> {
-    const searchPersonaZero = new HttpParams().set('school_id', this.session.g.get('school').id);
-
-    const searchPersonaId = new HttpParams()
+    const search = new HttpParams()
       .set('school_id', this.session.g.get('school').id)
       .set('school_persona_id', this.personaId.toString());
 
-    const baseTiles$ = this.service.getTilesByPersona(searchPersonaZero);
-    const tilesByPersonaId$ = this.service.getTilesByPersona(searchPersonaId);
-
-    const stream$ = combineLatest(baseTiles$, tilesByPersonaId$);
-
-    return stream$.toPromise();
+    return this.service.getTilesByPersona(search).toPromise();
   }
 
   async onSubmit() {
@@ -196,7 +185,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     const stream$ = shouldCreateSecurityTile ? updatePersonaAndLink$ : updatePersona$;
 
     stream$.subscribe(
-      () => this.router.navigate(['/customize/personas']),
+      () => this.router.navigate(['/studio/experiences']),
       (err) => {
         let snackBarClass = 'danger';
         const error = err.error.response;
@@ -253,7 +242,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     }
 
     if (err.status === 404) {
-      this.router.navigate(['/customize/personas']);
+      this.router.navigate(['/studio/experiences']);
     }
 
     this.store.dispatch({
@@ -321,7 +310,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   }
 
   onDeleted() {
-    this.router.navigate(['/customize/personas']);
+    this.router.navigate(['/studio/experiences']);
   }
 
   ngOnDestroy() {

@@ -131,7 +131,7 @@ export class PersonasCreateComponent implements OnInit {
       : createPersona$.pipe(map(({ id }: any) => (this.createdPersonaId = id)));
 
     stream$.subscribe(
-      () => this.router.navigate([`/customize/personas/${this.createdPersonaId}`]),
+      () => this.router.navigate([`/studio/experiences/${this.createdPersonaId}`]),
       (err) => {
         this.buttonData = { ...this.buttonData, disabled: false };
 
