@@ -113,27 +113,6 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     };
 
     return this.service.createGuideTile(data);
-
-    // const guideTileFormPersonaZero = {
-    //   ...guideTileForm.value,
-    //   school_persona_id: 0
-    // };
-
-    // const guidePersonaZero$ = this.service.createGuideTile(guideTileFormPersonaZero);
-
-    // return guidePersonaZero$.pipe(
-    //   switchMap((guide: any) => {
-    //     const body = {
-    //       ...guideTileFormPersonaZero,
-    //       school_persona_id: personaId,
-    //       extra_info: {
-    //         id: guide.id
-    //       }
-    //     };
-
-    //     return this.service.createGuideTile(body);
-    //   })
-    // );
   }
 
   createSecurityTile(personaId): Observable<any> {
@@ -152,8 +131,6 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
 
   async getCampusSecurity() {
     const tiles = await this.getTiles();
-
-    console.log(tiles);
 
     return tiles.filter(this.isCampusSecurity)[0];
   }
