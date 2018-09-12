@@ -2,61 +2,18 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <ng-container *ngSwitchCase="false">
-    <div class="row">
-      <div class="col-4 text-center">
-        <div class="cp-card cp-card--half-padding">
-          <p class="header__digit">{{ provider.num_ratings }}</p>
-          <p>{{ 'total_ratings' | cpI18n }}</p>
-        </div>
-      </div>
-      <div class="col-4 text-center">
-        <div class="cp-card cp-card--half-padding">
-          <p class="header__digit">{{ provider.total_visits }}</p>
-          <p>{{ 'services_total_visits' | cpI18n }}</p>
-        </div>
-      </div>
-      <div class="col-4 text-center">
-        <div class="cp-card cp-card--half-padding rating-box">
-          <cp-stars
-            [size]="starSize"
-            class="rating-box__star"
-            [avgRate]="provider.avg_rating_percent"
-            [maxRate]="MAX_RATE">
-          </cp-stars>
-          <p>{{ 'average_rating' | cpI18n }}
-            {{ provider.avg_rating_percent !== -1 ? eventRating : '0.0' }}
-          </p>
-        </div>
-      </div>
-    </div>
+    <cp-providers-attendees-stats
+     [provider]="provider"
+     [eventRating]="eventRating">
+    </cp-providers-attendees-stats>
 
-    <div class="row">
-      <div class="col-12">
-        <div class="cp-card actions">
-          <div class="row">
-            <div class="col-4">
-              <cp-searchbox (query)=query$.next($event)></cp-searchbox>
-            </div>
-            <div class="col-6 offset-2 text-right">
-              <button
-                (click)="download$.next(true)"
-                class="cpbtn cpbtn--secondary">
-                {{ 'services_button_download_attendance_data' | cpI18n }}
-              </button>
-              <a
-                cpTracker
-                target="_blank"
-                [eventData]="eventData"
-                class="cpbtn cpbtn--no-border cpbtn--primary"
-                [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]">
-                {{ 'services_label_check_in_details' | cpI18n }}
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    
+    <cp-providers-attendees-action-box
+     [provider]="provider"
+     [eventData]="eventData"
+     (search)="query$.next($event)"
+     (download)="download$.next(true)">
+    </cp-providers-attendees-action-box>
+
     <div class="row">
       <div class="col-12">
         <cp-providers-attendees-list

@@ -5,11 +5,11 @@ import { Observable } from 'rxjs';
 import { CPSession } from './../../../../../../../../../session';
 import { ProvidersService } from '../../../../../providers.service';
 import { FORMAT } from '../../../../../../../../../shared/pipes/date';
-import { CPDate } from './../../../../../../../../../shared/utils/date/date';
+import { CheckInMethod } from '../../../../../../events/event.status';
+import { ServicesUtilsService } from '../../../../../services.utils.service';
 import { CPTrackingService } from '../../../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../../../base/base.component';
 import { amplitudeEvents } from '../../../../../../../../../shared/constants/analytics';
-import { createSpreadSheet } from './../../../../../../../../../shared/utils/csv/parser';
 import { CPI18nService } from './../../../../../../../../../shared/services/i18n.service';
 
 interface IState {
@@ -38,7 +38,6 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   loading;
   assessments;
   sortingLabels;
-  checkinMethods;
   eventProperties;
   state: IState = state;
   dateFormat = FORMAT.DATETIME;
@@ -47,6 +46,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   constructor(
     public session: CPSession,
     private cpI18n: CPI18nService,
+    private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
     private providersService: ProvidersService
   ) {
@@ -116,54 +116,15 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
   }
 
+  checkInMethodType(method) {
+    return method === CheckInMethod.web ? 'computer' : 'smartphone';
+  }
+
   ngOnInit() {
     this.download.subscribe((download) => {
       if (download && this.assessments.length) {
         this.trackAmplitudeEvent();
-        this.fetchAllRecords().then((assessments) => {
-          const columns = [
-            this.cpI18n.translate('services_label_attendee_name'),
-            this.cpI18n.translate('email'),
-            this.cpI18n.translate('average_rating'),
-            this.cpI18n.translate('feedback'),
-            this.cpI18n.translate('services_label_checked_in_method'),
-            this.cpI18n.translate('services_label_checked_in_time'),
-            this.cpI18n.translate('student_id')
-          ];
-
-          const check_in_method = {
-            1: 'Web check-in',
-            3: 'App check-in'
-          };
-
-          assessments = assessments.map((item) => {
-            return {
-              [this.cpI18n.translate('services_label_attendee_name')]: `${item.firstname} ${
-                item.lastname
-              }`,
-
-              [this.cpI18n.translate('email')]: item.email,
-
-              [this.cpI18n.translate('average_rating')]:
-                item.feedback_rating === -1 ? 'N/A' : item.feedback_rating / 100 * 5,
-
-              [this.cpI18n.translate('feedback')]: item.feedback_text,
-
-              [this.cpI18n.translate('services_label_checked_in_method')]: check_in_method[
-                item.check_in_method
-              ],
-
-              [this.cpI18n.translate('services_label_checked_in_time')]: CPDate.fromEpoch(
-                item.check_in_time,
-                this.session.tz
-              ).format('MMMM Do YYYY - h:mm a'),
-
-              [this.cpI18n.translate('student_id')]: item.student_identifier
-            };
-          });
-
-          createSpreadSheet(assessments, columns);
-        });
+        this.utils.exportServiceProvidersAttendees(this.fetchAllRecords());
       }
     });
 
@@ -171,18 +132,6 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       this.state = Object.assign({}, this.state, { search_text });
       this.fetch();
     });
-
-    this.checkinMethods = {
-      '1': {
-        label: 'Web check-in'
-      },
-      '2': {
-        label: 'Web Based QR scan'
-      },
-      '3': {
-        label: 'App check-in'
-      }
-    };
 
     this.sortingLabels = {
       checkin_time: this.cpI18n.translate('services_label_checkin_time'),

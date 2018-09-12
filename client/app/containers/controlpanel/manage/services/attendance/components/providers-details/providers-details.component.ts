@@ -8,7 +8,6 @@ import { switchMap } from 'rxjs/operators';
 import { ServicesService } from './../../../services.service';
 import { ProvidersService } from '../../../providers.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
-import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
 import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
@@ -27,7 +26,6 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   MAX_RATE = 5;
   eventRating;
   serviceName: string;
-  starSize = STAR_SIZE.LARGE;
   query$: BehaviorSubject<string> = new BehaviorSubject(null);
   download$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
