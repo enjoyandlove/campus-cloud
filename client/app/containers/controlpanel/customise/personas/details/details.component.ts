@@ -375,7 +375,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     }
 
     if (err.status === 404) {
-      this.router.navigate(['/customize/personas']);
+      this.router.navigate(['/studio/experiences']);
 
       return;
     }
@@ -590,7 +590,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         subheading: null,
         em: null,
         crumbs: {
-          url: 'personas',
+          url: 'experiences',
           label: 't_personas'
         },
         children: []

@@ -116,7 +116,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
           disabled: false
         };
 
-        this.router.navigate(['/customize/personas', this.personaId]);
+        this.router.navigate(['/studio/experiences', this.personaId]);
       },
       (_) => {
         this.buttonData = {
@@ -199,7 +199,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     this.guide = this.guideService.guide;
 
     if (!this.guide) {
-      this.router.navigate(['/customize/personas/', this.personaId]);
+      this.router.navigate(['/studio/experiences/', this.personaId]);
 
       return;
     }
