@@ -137,7 +137,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
         subheading: null,
         em: null,
         crumbs: {
-          url: `personas/${this.personaId}`,
+          url: `experiences/${this.personaId}`,
           label: `[NOTRANSLATE]${personaName}[NOTRANSLATE]`
         },
         children: []

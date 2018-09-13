@@ -15,21 +15,21 @@
   <fieldset [disabled]="state.working">
     <section
       class="section-details"
-      [class.no_margin_top]="hideName">
+      [class.no_margin_top]="noMarginTop">
       <div class="row">
-        <div class="col-8" *ngIf="guide.name">
+        <div class="col-8" *ngIf="!noTitle">
           <cp-personas-section-title
-            [name]="guide.name"
+            [name]="[guide.name, guide.rank]"
             (nameChanged)="onNameChange($event, guide)"
             [disableNameChange]="utils.isTemporaryGuide(guide)">
           </cp-personas-section-title>
         </div>
         <div class="col-4 text-right" *ngIf="!noControls">
           <cp-personas-section-controls
-            [disableUp]="first"
-            [disableDown]="last"
+            [disableUp]="!canMoveUp"
             (moveUp)="onMove('up')"
             (moveDown)="onMove('down')"
+            [disableDown]="!canMoveDown"
             (deleteClick)="deleteSectionClick.emit(guide)">
           </cp-personas-section-controls>
         </div>

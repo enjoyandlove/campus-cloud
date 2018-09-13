@@ -19,15 +19,15 @@ import { SectionsService } from '../sections.service';
   styleUrls: ['./section.component.scss']
 })
 export class PersonasSectionComponent implements OnInit {
-  @Input() last: boolean;
-  @Input() first: boolean;
   @Input() tileWidth = '3';
-  @Input() hideName: boolean;
+  @Input() noTitle = false;
   @Input() personaId: number;
   @Input() addSection = true;
   @Input() noControls = false;
+  @Input() canMoveUp: boolean;
   @Input() guide: ICampusGuide;
-  @Input() guideNames: String[];
+  @Input() noMarginTop: boolean;
+  @Input() canMoveDown: boolean;
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
   @Output() deleted: EventEmitter<ICampusGuide> = new EventEmitter();
@@ -87,33 +87,22 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   goToCreateTile() {
-    if (this.guide._categoryZero) {
-      return this.createCategoryZeroTile();
-    }
-
-    if (this.guide._featureTile) {
+    if (this.guide._featuredTile) {
       return this.createFeatureTile();
     }
 
-    this.service.guide = this.guide;
+    this.service.guide = {
+      ...this.guide
+    };
     this.router.navigate([`/studio/experiences/${this.personaId}/tiles`]);
   }
 
   createFeatureTile() {
     const tempGuide = {
       ...this.guide,
-      featureTile: true
+      _featuredTile: true
     };
-    this.service.guide = tempGuide;
 
-    this.router.navigate([`/studio/experiences/${this.personaId}/tiles`]);
-  }
-
-  createCategoryZeroTile() {
-    const tempGuide = {
-      ...this.guide,
-      categoryZero: true
-    };
     this.service.guide = tempGuide;
 
     this.router.navigate([`/studio/experiences/${this.personaId}/tiles`]);
@@ -228,13 +217,7 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.guide._featureTile) {
-      this.sectionId = 'featured';
-    } else if (this.guide._categoryZero) {
-      this.sectionId = 'category_zero';
-    } else {
-      this.sectionId = this.guide.id;
-    }
+    this.sectionId = this.guide._featuredTile ? 'featured' : this.guide.id;
 
     this.sortableOptions = {
       scroll: false,

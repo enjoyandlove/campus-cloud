@@ -13,6 +13,7 @@ import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 import { PersonasService } from './../personas.service';
+import { TileVisibility } from './../tiles/tiles.status';
 import { CPI18nService } from '../../../../../shared/services';
 import { PersonaValidationErrors } from './../personas.status';
 import { PersonasUtilsService } from './../personas.utils.service';
@@ -34,9 +35,9 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   loading: boolean;
   persona: IPersona;
   personaId: number;
-  securityTileChanged;
-  selectedSecurityService;
   originalSecurityService;
+  selectedSecurityService;
+  securityTileChanged = false;
 
   constructor(
     public router: Router,
@@ -131,8 +132,15 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
 
   async getCampusSecurity() {
     const tiles = await this.getTiles();
+    const secTile: ITile = tiles
+      .filter((t: ITile) => t.visibility_status === TileVisibility.visible)
+      .filter(this.isCampusSecurity)[0];
 
-    return tiles.filter(this.isCampusSecurity)[0];
+    if (!secTile) {
+      return null;
+    }
+
+    return secTile.visibility_status === TileVisibility.visible ? secTile : null;
   }
 
   getTiles(): Promise<any> {
@@ -146,12 +154,12 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   async onSubmit() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
     const body = this.utils.parseLocalFormToApi(this.editForm.form.value);
-    const shouldDeleteOldTile = this.securityTileChanged && this.originalSecurityService;
     const updatePersona$ = this.service.updatePersona(this.personaId, search, body);
+    const shouldDeleteOldSecTile = this.securityTileChanged && this.originalSecurityService;
     const shouldCreateSecurityTile =
       this.securityTileChanged && this.selectedSecurityService.action;
 
-    if (shouldDeleteOldTile) {
+    if (shouldDeleteOldSecTile) {
       await this.deleteCampusSecurityTile();
     }
 

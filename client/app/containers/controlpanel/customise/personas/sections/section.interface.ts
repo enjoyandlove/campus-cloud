@@ -4,18 +4,18 @@ export interface ICampusGuide {
   id?: number;
   name: string;
   rank: number;
-  _disabled?: boolean;
   tiles?: ITile[];
-  _featureTile?: boolean;
-  _categoryZero?: boolean;
+  _temporary?: boolean;
+  _disabled?: boolean;
+  _featuredTile?: boolean;
 }
 
 export interface ICampusGuideBulk {
   id?: number;
   name: string;
   rank: number;
-  _disabled?: boolean;
   tiles?: ITileBulk[];
-  _featureTile?: boolean;
-  _categoryZero?: boolean;
+  _temporary?: boolean;
+  _disabled?: boolean;
+  _featuredTile?: boolean;
 }
