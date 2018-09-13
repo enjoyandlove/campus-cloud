@@ -192,7 +192,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         ...this.state,
         featureTiles: {
           ...this.state.featureTiles,
-          tiles: this.state.categoryZero.tiles.filter((t: ITile) => t.id !== tile.id)
+          tiles: this.state.featureTiles.tiles.filter((t: ITile) => t.id !== tile.id)
         }
       };
     } else {

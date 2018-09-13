@@ -163,18 +163,7 @@ export class PersonasSectionComponent implements OnInit {
     this.createNewSection.emit(this.utils.temporaryGuide(this.guide.rank - 1));
   }
 
-  onNameChange(name, updatedGuide: ICampusGuide) {
-    if (this.utils.isTemporaryGuide(updatedGuide)) {
-      this.guide = {
-        ...this.guide,
-        name
-      };
-
-      this.service.guide = this.guide;
-
-      return;
-    }
-
+  onNameChange(name) {
     const body = {
       name,
       school_id: this.session.g.get('school').id
@@ -200,7 +189,9 @@ export class PersonasSectionComponent implements OnInit {
     const tile = Number(event.item.dataset.tile);
     const section = event.target.dataset.section;
 
-    this.shuffle.emit({ tile, section, position });
+    if (section) {
+      this.shuffle.emit({ tile, section, position });
+    }
   }
 
   onDragged() {
@@ -247,7 +238,6 @@ export class PersonasSectionComponent implements OnInit {
 
     this.sortableOptions = {
       scroll: false,
-      draggable: '.is_draggable',
       group: {
         name: 'studio',
         put: true,

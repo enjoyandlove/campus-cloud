@@ -26,6 +26,7 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
   }
 
   @Input() isEditing = true;
+  @Input() disableNameChange = false;
 
   @ViewChild('inputEl') inputEl: ElementRef;
 
@@ -54,6 +55,10 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
   }
 
   onSubmit() {
+    if (this.disableNameChange) {
+      return;
+    }
+
     this.state = { ...this.state, invalid: !this.form.valid };
 
     if (this.state.invalid) {
@@ -66,7 +71,9 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
   }
 
   ngAfterViewInit() {
-    this.listenToInputBlur();
+    if (!this.disableNameChange) {
+      this.listenToInputBlur();
+    }
   }
 
   ngOnDestroy() {

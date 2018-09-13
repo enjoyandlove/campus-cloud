@@ -71,8 +71,8 @@ export class TilesService extends HTTPService {
     return super.get(url, search, true).pipe(
       startWith([{ label: '---' }]),
       map((services) => {
-        return services.map((service: any, index) => {
-          if (index === 0) {
+        return services.map((service: any) => {
+          if (service.id) {
             return {
               label: '---',
               value: null
@@ -94,8 +94,8 @@ export class TilesService extends HTTPService {
     return super.get(url, headers, true).pipe(
       startWith([{ label: '---' }]),
       map((calendars) => {
-        return calendars.map((calendar: any, index) => {
-          if (index === 0) {
+        return calendars.map((calendar: any) => {
+          if (!calendar.id) {
             return {
               label: '---',
               value: null
