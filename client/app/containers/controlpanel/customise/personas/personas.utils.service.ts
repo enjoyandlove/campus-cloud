@@ -32,15 +32,8 @@ export class PersonasUtilsService {
   filterTileByCategory(tiles, categoryId) {
     return tiles
       .filter((tile: ITile) => tile.tile_category_id === categoryId)
-      .filter((tile: ITile) => tile.rank !== -1);
-  }
-
-  getCategoryZeroTiles(tiles: ITile[]) {
-    const categoryZeroTiles = tiles.filter(
-      (tile: ITile) => tile.tile_category_id === 0 && tile.featured_rank === -1
-    );
-
-    return sortBy(flatten(categoryZeroTiles), (i) => i.rank);
+      .filter((tile: ITile) => tile.rank !== -1)
+      .filter((tile: ITile) => tile.featured_rank === -1);
   }
 
   getFeaturedTiles(tiles: ITile[]) {

@@ -121,48 +121,6 @@ describe('PersonasUtilsService', () => {
     expect(result[0].name).toBe('featuredTileOne');
   });
 
-  it('should return category zero tiles', () => {
-    const catZeroTileNonFeaturedOne = {
-      ...mockTile,
-      rank: 1,
-      featured_rank: -1,
-      tile_category_id: 0,
-      name: 'catZeroTileNonFeaturedOne'
-    };
-
-    const catZeroTileNonFeaturedTwo = {
-      ...mockTile,
-      rank: 2,
-      featured_rank: -1,
-      tile_category_id: 0,
-      name: 'catZeroTileNonFeaturedTwo'
-    };
-
-    const catZeroTileFeatured = {
-      ...mockTile,
-      tile_category_id: 0,
-      featured_rank: 1
-    };
-
-    const nonCatZero = {
-      ...mockTile,
-      tile_category_id: 1,
-      featured_rank: -1
-    };
-
-    const tiles = [
-      catZeroTileNonFeaturedOne,
-      catZeroTileNonFeaturedTwo,
-      catZeroTileFeatured,
-      nonCatZero
-    ];
-
-    const result = service.getCategoryZeroTiles(tiles);
-
-    expect(result.length).toBe(2);
-    expect(result[0].name).toBe('catZeroTileNonFeaturedOne');
-  });
-
   it('requiresCredentialsMenu', () => {
     const result = service.requiresCredentialsMenu();
     const personaLogins = result.map((p) => p.id);

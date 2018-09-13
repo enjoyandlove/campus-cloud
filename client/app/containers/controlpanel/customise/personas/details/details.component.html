@@ -12,9 +12,10 @@
         <div class="col-12">
           <cp-personas-section
             tileWidth="4"
-            [hideName]="true"
+            [noTitle]="true"
             [noControls]="true"
             [addSection]="false"
+            [noMarginTop]="true"
             [personaId]="personaId"
             [guide]="state.featureTiles"
             (shuffle)="onTileMoved($event)"
@@ -25,27 +26,16 @@
     </div>
 
     <div class="cp-card">
-      <div class="row">
-        <div class="col-12">
-          <cp-personas-section
-            [hideName]="true"
-            [noControls]="true"
-            [addSection]="false"
-            [personaId]="personaId"
-            [guide]="state.categoryZero"
-            (shuffle)="onTileMoved($event)"
-            (deleteTileClick)="onDeleteTileFromSection($event)">
-          </cp-personas-section>
-        </div>
-      </div>
       <div
         class="row"
         *ngFor="let guide of state.guides; let first = first; let last = last; let i = index">
         <div class="col-12">
           <cp-personas-section
-            [last]="last"
             [guide]="guide"
-            [first]="first"
+            [canMoveUp]="!first"
+            [noMarginTop]="first"
+            [canMoveDown]="!last"
+            [addSection]="!first"
             [personaId]="personaId"
             (shuffle)="onTileMoved($event)"
             (deleted)="onDeletedSection($event)"

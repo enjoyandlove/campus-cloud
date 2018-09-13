@@ -30,7 +30,6 @@ import { TilesService } from '../tiles/tiles.service';
 interface IState {
   working: boolean;
   featureTiles: ICampusGuide;
-  categoryZero: ICampusGuide;
   guides: Array<ICampusGuide>;
   showTileDeleteModal: boolean;
   showSectionDeleteModal: boolean;
@@ -44,7 +43,6 @@ interface IState {
 export class PersonasDetailsComponent extends BaseComponent implements OnDestroy, OnInit {
   loading;
   personaId;
-  guideNames;
   tileToDelete: ITile;
   isWebPersona = false;
   sectionToDelete: ICampusGuide;
@@ -55,7 +53,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     working: false,
     guides: [],
     featureTiles: null,
-    categoryZero: null,
     showTileDeleteModal: false,
     showSectionDeleteModal: false
   };
@@ -110,25 +107,13 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   nonFeaturedTileToFeatureSection(movingTile: ITile, newCategory: ICampusGuide) {
     const isFeatured = this.tileUtils.isFeatured(movingTile);
 
-    return !isFeatured && newCategory._featureTile;
+    return !isFeatured && newCategory._featuredTile;
   }
 
   featuredTileToNonFeatureSection(movingTile: ITile, newCategory: ICampusGuide) {
     const isFeatured = this.tileUtils.isFeatured(movingTile);
 
-    return isFeatured && !newCategory._featureTile;
-  }
-
-  nonCategoryZeroTileToCategoryZeroSection(movingTile: ITile, newCategory: ICampusGuide) {
-    const isCategoryZero = this.tileUtils.isCategoryZero(movingTile);
-
-    return !isCategoryZero && newCategory._categoryZero;
-  }
-
-  categoryZeroTileToNonCategoryZeroSection(movingTile: ITile, newCategory: ICampusGuide) {
-    const isCategoryZero = this.tileUtils.isCategoryZero(movingTile);
-
-    return isCategoryZero && !newCategory._categoryZero;
+    return isFeatured && !newCategory._featuredTile;
   }
 
   handleSuccess() {
@@ -179,15 +164,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   }
 
   onTileDeleted(tile: ITile) {
-    if (this.tileUtils.isCategoryZero(tile)) {
-      this.state = {
-        ...this.state,
-        categoryZero: {
-          ...this.state.categoryZero,
-          tiles: this.state.categoryZero.tiles.filter((t: ITile) => t.id !== tile.id)
-        }
-      };
-    } else if (this.tileUtils.isFeatured(tile)) {
+    if (this.tileUtils.isFeatured(tile)) {
       this.state = {
         ...this.state,
         featureTiles: {
@@ -267,20 +244,15 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
   onTileMoved({ tile, section }) {
     const guideTiles = flatten(this.state.guides.map((g) => g.tiles));
-    const allTiles = [
-      ...guideTiles,
-      ...this.state.featureTiles.tiles,
-      ...this.state.categoryZero.tiles
-    ];
-    const allGuides = [...this.state.guides, this.state.categoryZero, this.state.featureTiles];
+    const allTiles = [...guideTiles, ...this.state.featureTiles.tiles];
+    const allGuides = [...this.state.guides, this.state.featureTiles];
 
     const movingTile = allTiles.filter((t: ITile) => t.id === tile)[0];
-    const featureOrCategoryZero = (s) =>
-      s === 'featured' ? this.state.featureTiles : this.state.categoryZero;
 
-    let newCategory: ICampusGuide = isNaN(section)
-      ? featureOrCategoryZero(section)
-      : allGuides.filter((g) => g.id === +section)[0];
+    let newCategory: ICampusGuide =
+      section === 'featured'
+        ? this.state.featureTiles
+        : allGuides.filter((g) => g.id === +section)[0];
 
     const school_id = this.session.g.get('school').id;
 
@@ -305,31 +277,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         ...movingTile,
         school_id,
         featured_rank: TileFeatureRank.notFeatured,
-        tile_category_id: newCategory._categoryZero ? 0 : newCategory.id
-      };
-
-      newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
-
-      const tilesToUpdate = this.sectionUtils.updateGuideTileRank(newCategory, school_id, 'rank');
-      this.doBulkUpdate(tilesToUpdate);
-    } else if (this.nonCategoryZeroTileToCategoryZeroSection(movingTile, newCategory)) {
-      const body = {
-        ...movingTile,
-        school_id,
-        tile_category_id: 0,
-        featured_rank: TileFeatureRank.notFeatured
-      };
-
-      newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
-
-      const tilesToUpdate = this.sectionUtils.updateGuideTileRank(newCategory, school_id, 'rank');
-      this.doBulkUpdate(tilesToUpdate);
-    } else if (this.categoryZeroTileToNonCategoryZeroSection(movingTile, newCategory)) {
-      const body = {
-        ...movingTile,
-        school_id,
-        tile_category_id: newCategory.id,
-        featured_rank: TileFeatureRank.notFeatured
+        tile_category_id: newCategory.id
       };
 
       newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
@@ -543,7 +491,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
         return {
           featured: this.utils.getFeaturedTiles(tiles),
-          categoryZero: this.utils.getCategoryZeroTiles(tiles),
           guides: this.utils.groupTilesWithTileCategories(categories, tiles)
         };
       })
@@ -558,8 +505,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
         const guides = filteredTiles.length ? filteredTiles : temporaryTile;
 
-        this.guideNames = ['featured', 'category_zero', ...guides.map((g: ICampusGuide) => g.name)];
-
         this.state = {
           ...this.state,
           guides,
@@ -567,15 +512,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
             id: null,
             rank: 1,
             name: null,
-            _featureTile: true,
+            _featuredTile: true,
             tiles: [...data.featured]
-          },
-          categoryZero: {
-            id: null,
-            rank: 1,
-            name: null,
-            _categoryZero: true,
-            tiles: [...data.categoryZero]
           }
         };
       })
