@@ -19,7 +19,7 @@
       <div class="row">
         <div class="col-8" *ngIf="!noTitle">
           <cp-personas-section-title
-            [name]="[guide.name, guide.rank]"
+            [name]="guide.name"
             (nameChanged)="onNameChange($event, guide)"
             [disableNameChange]="utils.isTemporaryGuide(guide)">
           </cp-personas-section-title>
