@@ -91,8 +91,14 @@ export class TilesUtilsService {
   campusGuideTileForm(personaId, guide: ICampusGuide, tileToEdit = null) {
     const isTemporaryGuide = this.sectionUtils.isTemporaryGuide(guide);
 
-    const lastFeaturedRank = sortBy(guide.tiles, (t: ITile) => -t.featured_rank)[0].rank + 1;
-    const lastRank = isTemporaryGuide ? 1 : sortBy(guide.tiles, (t: ITile) => -t.rank)[0].rank + 1;
+    const lastFeaturedRank = guide.tiles.length
+      ? sortBy(guide.tiles, (t: ITile) => -t.featured_rank)[0].rank + 1
+      : 1;
+
+    const lastRank =
+      isTemporaryGuide || !guide.tiles.length
+        ? 1
+        : sortBy(guide.tiles, (t: ITile) => -t.rank)[0].rank + 1;
 
     const _tile = tileToEdit
       ? { ...tileToEdit }
