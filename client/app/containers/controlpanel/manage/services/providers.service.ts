@@ -32,6 +32,12 @@ export class ProvidersService extends HTTPService {
     return super.update(url, data, search);
   }
 
+  updateServiceProvider(data: any, providerId: number, search?: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_PROVIDER}/${providerId}`;
+
+    return super.update(url, data, search);
+  }
+
   deleteProvider(providerId: number, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_PROVIDER}/${providerId}`;
 

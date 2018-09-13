@@ -2865,6 +2865,18 @@
   "t_persona_list_button_notify": {
     "message": "Notifier"
   },
+  "t_services_assessment_disable_qr_check_in": {
+    "message": "Désactiver la vérification de présence"
+  },
+  "t_services_assessment_enable_qr_check_in": {
+    "message": "Activer vérification de présence QR"
+  },
+  "t_services_assessment_qr_code_disabled_success_message": {
+    "message": "Code QR désactivé avec succès"
+  },
+  "t_services_assessment_qr_code_enable_success_message": {
+    "message": "Code QR d'entrée activé avec succès"
+  },
   "t_services_assessment_web_checkin_page": {
     "message": "Page de vérification de présence web"
   },

@@ -10,8 +10,10 @@
     <cp-providers-attendees-action-box
       [provider]="provider"
       [eventData]="eventData"
+      [updateQrCode]="updateQrCode"
       (download)="onDownload()"
-      (search)="onSearch($event)">
+      (search)="onSearch($event)"
+      (onToggleQr)="onToggleQr($event)">
     </cp-providers-attendees-action-box>
 
     <div class="row">
