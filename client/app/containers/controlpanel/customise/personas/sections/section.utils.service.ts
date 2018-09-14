@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { ICampusGuide, ICampusGuideBulk } from './section.interface';
+import { get as _get } from 'lodash';
+
 import { ITile } from '../tiles/tile.interface';
+import { ICampusGuide, ICampusGuideBulk } from './section.interface';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 @Injectable()
 export class SectionUtilsService {
   constructor(public cpI18n: CPI18nService) {}
 
   isTemporaryGuide(guide: ICampusGuide) {
-    return !guide.tiles.length;
+    return _get(guide, '_temporary', false);
   }
 
   tileAtIndex(tiles: ITile[], index) {
@@ -36,6 +38,7 @@ export class SectionUtilsService {
       rank,
       id: null,
       tiles: [],
+      _temporary: true,
       name: this.cpI18n.translate('t_personas_create_section_default_name')
     };
   }

@@ -1,20 +1,21 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+import { map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { get as _get } from 'lodash';
 import { Observable } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
-import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
-import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
+
+import { CPSession } from '../../../../../session';
+import { CPDate } from '../../../../../shared/utils';
 import { PersonasService } from './../personas.service';
-import { PersonasLoginRequired, PersonasType, PersonaValidationErrors } from './../personas.status';
+import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
+import { CPI18nService } from '../../../../../shared/services';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
-import { CPDate } from '../../../../../shared/utils';
+import { PersonasLoginRequired, PersonasType, PersonaValidationErrors } from './../personas.status';
+import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-personas-create',
@@ -84,26 +85,12 @@ export class PersonasCreateComponent implements OnInit {
     const extra_info = <FormGroup>guideTileForm.controls['extra_info'];
     extra_info.controls['id'].setValue(campusLinkId);
 
-    const guideTileFormPersonaZero = {
+    const data = {
       ...guideTileForm.value,
-      school_persona_id: 0
+      school_persona_id: personaId
     };
 
-    const guidePersonaZero$ = this.service.createGuideTile(guideTileFormPersonaZero);
-
-    return guidePersonaZero$.pipe(
-      switchMap((guide: any) => {
-        const body = {
-          ...guideTileFormPersonaZero,
-          school_persona_id: personaId,
-          extra_info: {
-            id: guide.id
-          }
-        };
-
-        return this.service.createGuideTile(body);
-      })
-    );
+    return this.service.createGuideTile(data);
   }
 
   createSecurityTile(personaId): Observable<any> {
@@ -131,7 +118,7 @@ export class PersonasCreateComponent implements OnInit {
       : createPersona$.pipe(map(({ id }: any) => (this.createdPersonaId = id)));
 
     stream$.subscribe(
-      () => this.router.navigate([`/customize/personas/${this.createdPersonaId}`]),
+      () => this.router.navigate([`/studio/experiences/${this.createdPersonaId}`]),
       (err) => {
         this.buttonData = { ...this.buttonData, disabled: false };
 

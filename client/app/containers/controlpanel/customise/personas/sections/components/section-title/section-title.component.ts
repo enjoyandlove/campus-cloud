@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import {
   Component,
   OnInit,
@@ -26,6 +26,7 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
   }
 
   @Input() isEditing = true;
+  @Input() disableNameChange = false;
 
   @ViewChild('inputEl') inputEl: ElementRef;
 
@@ -54,9 +55,7 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
   }
 
   onSubmit() {
-    this.state = { ...this.state, invalid: !this.form.valid };
-
-    if (this.state.invalid) {
+    if (this.disableNameChange) {
       return;
     }
 
@@ -66,7 +65,9 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
   }
 
   ngAfterViewInit() {
-    this.listenToInputBlur();
+    if (!this.disableNameChange) {
+      this.listenToInputBlur();
+    }
   }
 
   ngOnDestroy() {
@@ -75,7 +76,7 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: [this._name, Validators.required]
+      name: [this._name]
     });
   }
 }
