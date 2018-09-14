@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 import {
   HasData,
@@ -8,15 +9,23 @@ import {
   ServiceAttendance
 } from './services.status';
 
+import {
+  canSchoolReadResource,
+  canStoreReadAndWriteResource
+} from '../../../../shared/utils/privileges';
+
 import { CPSession } from '../../../../session';
 import { CPDate } from '../../../../shared/utils/date/date';
 import { CPI18nService } from '../../../../shared/services';
+import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 import { createSpreadSheet } from '../../../../shared/utils/csv/parser';
+import { HEADER_UPDATE, IHeader } from '../../../../reducers/header.reducer';
 
 @Injectable()
 export class ServicesUtilsService {
   constructor(
     public session: CPSession,
+    public store: Store<IHeader>,
     public cpI18n: CPI18nService
   ) {}
 
@@ -42,6 +51,36 @@ export class ServicesUtilsService {
       feedback: this.getFeedbackStatus(data.enable_feedback),
       assessment: this.getAssessmentStatus(data.service_attendance)
     };
+  }
+
+  exportServiceProviders(providers) {
+    const columns = [
+      this.cpI18n.translate('service_provider'),
+      this.cpI18n.translate('email'),
+      this.cpI18n.translate('average_rating'),
+      this.cpI18n.translate('total_ratings'),
+      this.cpI18n.translate('services_total_visits')
+    ];
+
+    providers = providers.map((data) => {
+      return {
+        [this.cpI18n.translate('service_provider')]: data.provider_name,
+
+        [this.cpI18n.translate('email')]: data.email,
+
+        [this.cpI18n.translate('average_rating')]: (
+          data.avg_rating_percent *
+          5 /
+          100
+        ).toFixed(1),
+
+        [this.cpI18n.translate('total_ratings')]: data.num_ratings,
+
+        [this.cpI18n.translate('services_total_visits')]: data.total_visits
+      };
+    });
+
+    createSpreadSheet(providers, columns, 'providers_data');
   }
 
   exportServiceProvidersAttendees(assessments) {
@@ -87,5 +126,52 @@ export class ServicesUtilsService {
       });
 
       createSpreadSheet(assessments, columns);
+  }
+
+  buildServiceProviderHeader(service) {
+    let children = [
+      {
+        label: 'info',
+        url: `/manage/services/${service.id}/info`
+      }
+    ];
+
+    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
+    const eventsAccountLevel = canStoreReadAndWriteResource(
+      this.session.g,
+      service.store_id,
+      CP_PRIVILEGES_MAP.events
+    );
+
+    if (eventsSchoolLevel || eventsAccountLevel) {
+      const events = {
+        label: 'events',
+        url: `/manage/services/${service.id}/events`
+      };
+
+      children = [...children, events];
+    }
+
+    if (service.service_attendance) {
+      const attendance = {
+        label: 'assessment',
+        url: `/manage/services/${service.id}`
+      };
+
+      children = [...children, attendance];
+    }
+
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: {
+        heading: `[NOTRANSLATE]${service.name}[NOTRANSLATE]`,
+        subheading: '',
+        crumbs: {
+          url: 'services',
+          label: 'services'
+        },
+        children: [...children]
+      }
+    });
   }
 }

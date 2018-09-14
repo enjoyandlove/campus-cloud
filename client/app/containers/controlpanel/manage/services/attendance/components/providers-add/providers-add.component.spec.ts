@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of as observableOf, BehaviorSubject } from 'rxjs';
+import { of as observableOf } from 'rxjs';
 
 import { CPSession } from '../../../../../../../session';
 import { ServicesModule } from '../../../services.module';
@@ -18,6 +18,11 @@ class MockService {
     return observableOf({});
   }
 }
+
+const mockService = {
+  id: 1253,
+  enable_feedback: 0
+};
 
 const mockProvider = {
   has_checkout: false,
@@ -47,8 +52,8 @@ describe('ServicesProviderAddComponent', () => {
           fixture = TestBed.createComponent(ServicesProviderAddComponent);
 
           component = fixture.componentInstance;
-          component.serviceWithFeedback = new BehaviorSubject(null);
-          component.serviceWithFeedback.next(true);
+          component.service = mockService;
+
           component.ngOnInit();
         });
     })
@@ -64,7 +69,6 @@ describe('ServicesProviderAddComponent', () => {
     spy = spyOn(component.providersService, 'createProvider')
       .and.returnValue(observableOf(mockProvider));
 
-    component.serviceId = 1542;
     component.form.controls['email'].setValue(mockProvider.email);
     component.form.controls['has_checkout'].setValue(mockProvider.has_checkout);
     component.form.controls['provider_name'].setValue(mockProvider.provider_name);

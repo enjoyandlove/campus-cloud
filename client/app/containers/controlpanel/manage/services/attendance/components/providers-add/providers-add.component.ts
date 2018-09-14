@@ -10,10 +10,9 @@ import {
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
 
-import { Feedback } from '../../../services.status';
 import { ProvidersService } from '../../../providers.service';
+import { Feedback, ServiceFeedback } from '../../../services.status';
 import { EventUtilService } from '../../../../events/events.utils.service';
 import { attendanceType, CheckInMethod } from '../../../../events/event.status';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
@@ -27,13 +26,11 @@ declare var $: any;
   styleUrls: ['./providers-add.component.scss']
 })
 export class ServicesProviderAddComponent implements OnInit {
-  @Input() serviceId: number;
-  @Input() serviceWithFeedback = new BehaviorSubject(false);
+  @Input() service;
 
   @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
-  formErrors;
   serviceQRCodes;
   attendanceTypes;
   form: FormGroup;
@@ -63,7 +60,7 @@ export class ServicesProviderAddComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new HttpParams().append('service_id', this.serviceId.toString());
+    const search = new HttpParams().append('service_id', this.service.id.toString());
 
     this.providersService.createProvider(this.form.value, search).subscribe((res) => {
       this.trackEvent(res);
@@ -73,15 +70,10 @@ export class ServicesProviderAddComponent implements OnInit {
     });
   }
 
-  doReset() {
-    this.form.reset();
-    this.formErrors = false;
-  }
-
   trackEvent(data) {
     this.eventProperties = {
       ...this.eventProperties,
-      service_id: this.serviceId,
+      service_id: this.service.id,
       service_provider_id: data.id,
       feedback: this.getFeedbackStatus(data.custom_basic_feedback_label)
     };
@@ -116,25 +108,23 @@ export class ServicesProviderAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.serviceWithFeedback.subscribe((feedback) => {
-      this.serviceAcceptsFeedback = feedback;
+    this.serviceQRCodes = this.utils.getQROptions();
+    this.attendanceTypes = this.utils.getAttendanceTypeOptions();
 
-      this.serviceQRCodes = this.utils.getQROptions();
-      this.attendanceTypes = this.utils.getAttendanceTypeOptions();
-
-      this.form = this.fb.group({
-        email: [null, Validators.required],
-        has_checkout: [attendanceType.checkInOnly],
-        provider_name: [null, Validators.required],
-        custom_basic_feedback_label: [null, Validators.required],
-        checkin_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
-      });
-
-      if (!this.serviceAcceptsFeedback) {
-        this.form.controls['custom_basic_feedback_label'].setValue(
-          this.cpI18n.translate('services_default_feedback_question')
-        );
-      }
+    this.form = this.fb.group({
+      email: [null, Validators.required],
+      has_checkout: [attendanceType.checkInOnly],
+      provider_name: [null, Validators.required],
+      custom_basic_feedback_label: [null, Validators.required],
+      checkin_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
     });
+
+    this.serviceAcceptsFeedback = this.service.enable_feedback === ServiceFeedback.enabled;
+
+    if (!this.serviceAcceptsFeedback) {
+      this.form.controls['custom_basic_feedback_label'].setValue(
+        this.cpI18n.translate('services_default_feedback_question')
+      );
+    }
   }
 }

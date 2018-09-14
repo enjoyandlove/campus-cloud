@@ -1,11 +1,11 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
+import { ServiceFeedback } from '../../../services.status';
 import { ProvidersService } from '../../../providers.service';
+import { ServicesUtilsService } from '../../../services.utils.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { createSpreadSheet } from './../../../../../../../shared/utils/csv/parser';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { CPTrackingService } from './../../../../../../../shared/services/tracking.service';
 import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
@@ -30,10 +30,9 @@ const state: IState = {
   styleUrls: ['./providers-list.component.scss']
 })
 export class ServicesProvidersListComponent extends BaseComponent implements OnInit {
-  @Input() serviceId: number;
-  @Input() download: Observable<boolean>;
-  @Input() serviceWithFeedback: Observable<boolean>;
-  @Output() providersLength$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  @Input() service;
+
+  @Output() providersLength: EventEmitter<boolean> = new EventEmitter();
 
   loading;
   eventData;
@@ -45,6 +44,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
   constructor(
     private cpI18n: CPI18nService,
+    private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
     private providersService: ProvidersService
   ) {
@@ -74,7 +74,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   fetch() {
     const search = new HttpParams()
       .append('search_text', this.state.search_text)
-      .append('service_id', this.serviceId.toString())
+      .append('service_id', this.service.id.toString())
       .append('sort_field', this.state.sort_field)
       .append('sort_direction', this.state.sort_direction);
 
@@ -82,7 +82,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       .fetchData(this.providersService.getProviders(this.startRange, this.endRange, search))
       .then((res) => {
         this.state = Object.assign({}, this.state, { providers: res.data });
-        this.providersLength$.next(res.data.length > 0);
+        this.providersLength.emit(res.data.length > 0);
       })
       .catch((_) => {});
   }
@@ -91,6 +91,8 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.state = Object.assign({}, this.state, {
       providers: this.state.providers.filter((provider) => provider.id !== providerId)
     });
+
+    this.providersLength.emit(this.state.providers.length > 0);
   }
 
   trackDownloadEvent() {
@@ -110,7 +112,17 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CLICKED_CHECKIN, eventProperties);
   }
 
-  ngOnInit() {
+  downloadProvidersCSV() {
+    const search = new HttpParams()
+      .append('service_id', this.service.id.toString())
+      .append('all', '1');
+
+    const stream$ = this.providersService.getProviders(this.startRange, this.endRange, search);
+
+    stream$.toPromise().then((providers: any) => this.utils.exportServiceProviders(providers));
+  }
+
+  trackProviderViewEvent() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: amplitudeEvents.PROVIDER
@@ -121,56 +133,17 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       eventName: amplitudeEvents.VIEWED_ITEM,
       eventProperties
     };
+  }
 
-    this.serviceWithFeedback.subscribe((withRating) => (this.displayRatingColumn = withRating));
-
-    this.download.subscribe((download) => {
-      if (download) {
-        this.trackDownloadEvent();
-
-        const search = new HttpParams()
-          .append('service_id', this.serviceId.toString())
-          .append('all', '1');
-
-        const stream$ = this.providersService.getProviders(this.startRange, this.endRange, search);
-
-        stream$.toPromise().then((providers: any) => {
-          const columns = [
-            this.cpI18n.translate('service_provider'),
-            this.cpI18n.translate('email'),
-            this.cpI18n.translate('average_rating'),
-            this.cpI18n.translate('total_ratings'),
-            this.cpI18n.translate('services_total_visits')
-          ];
-
-          providers = providers.map((data) => {
-            return {
-              [this.cpI18n.translate('service_provider')]: data.provider_name,
-
-              [this.cpI18n.translate('email')]: data.email,
-
-              [this.cpI18n.translate('average_rating')]: (
-                data.avg_rating_percent *
-                5 /
-                100
-              ).toFixed(1),
-
-              [this.cpI18n.translate('total_ratings')]: data.num_ratings,
-
-              [this.cpI18n.translate('services_total_visits')]: data.total_visits
-            };
-          });
-
-          createSpreadSheet(providers, columns, 'providers_data');
-        });
-      }
-    });
-
+  ngOnInit() {
     this.fetch();
+    this.trackProviderViewEvent();
 
     this.sortingLabels = {
       rating: this.cpI18n.translate('rating'),
       provider_name: this.cpI18n.translate('service_provider')
     };
+
+    this.displayRatingColumn = this.service.enable_feedback === ServiceFeedback.enabled;
   }
 }
