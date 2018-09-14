@@ -24,7 +24,7 @@ const appRoutes: Routes = [
       { path: 'audience', loadChildren: './audience/audience.module#AudienceModule' },
 
       {
-        path: 'customize',
+        path: 'studio',
         loadChildren: './customise/customise.module#CustomiseModule'
       },
 

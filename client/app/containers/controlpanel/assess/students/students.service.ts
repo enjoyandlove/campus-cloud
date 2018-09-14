@@ -57,7 +57,7 @@ export class StudentsService extends HTTPService {
         personas.map((p) => {
           return {
             id: p.id,
-            label: this.personaUtils.localaizedPersonaName(p)
+            label: this.personaUtils.localizedPersonaName(p)
           };
         })
       )
