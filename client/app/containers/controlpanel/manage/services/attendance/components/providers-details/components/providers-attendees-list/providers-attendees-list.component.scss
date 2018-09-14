@@ -3,25 +3,37 @@
 @import '~styles/components/table';
 @import '~styles/components/button';
 
-.cp-table__header {
-  span.hover {
-    position: relative;
-
-    > span i {
-      top: 1px;
-      font-size: 17px;
-      position: absolute;
-      padding-left: 6px;
+.cp-table {
+  &__item {
+    span i.action-button {
+      color: $color-secondary-text;
     }
   }
-}
 
-.avatar {
-  width: 30px;
-  height: 30px;
-  margin-right: 10px;
-}
+  &__header {
+    span.hover {
+      position: relative;
 
-.meta {
-  margin-left: 40px;
+      > span i {
+        top: 1px;
+        font-size: 17px;
+        position: absolute;
+        padding-left: 6px;
+      }
+    }
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+
+  .meta {
+    margin-left: 40px;
+  }
+
+  .margin-right {
+    margin-right: 10px;
+  }
 }

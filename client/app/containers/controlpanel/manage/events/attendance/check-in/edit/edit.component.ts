@@ -23,7 +23,7 @@ import { CPI18nService } from '../../../../../../../shared/services';
   styleUrls: ['./edit.component.scss']
 })
 export class CheckInEditComponent implements OnInit {
-  @Input() event: any;
+  @Input() data: any;
   @Input() checkIn: ICheckIn;
   @Input() orientationId: number;
 
@@ -76,7 +76,7 @@ export class CheckInEditComponent implements OnInit {
       this.checkInUtils.checkoutTimeBeforeCheckinTime(
         checkInTime,
         checkOutTime,
-        this.event.has_checkout);
+        this.data.has_checkout);
 
     if (checkoutTimeBeforeCheckinTime) {
       this.formErrors = true;
@@ -98,7 +98,7 @@ export class CheckInEditComponent implements OnInit {
         .append('calendar_id', this.orientationId.toString());
     }
 
-    this.service.updateEventCheckIn(this.form.value, this.checkIn.id, search).subscribe(
+    this.service.updateCheckIn(this.form.value, this.checkIn.id, search).subscribe(
       () => {
         this.edited.emit();
         this.resetModal();
@@ -118,7 +118,7 @@ export class CheckInEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.checkInUtils.getCheckInForm(this.checkIn, this.event);
+    this.form = this.checkInUtils.getCheckInForm(this.checkIn, this.data);
 
     this.buttonData = {
       class: 'primary',

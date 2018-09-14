@@ -2883,6 +2883,9 @@
   "t_services_attendance_type": {
     "message": "Type de présence"
   },
+  "t_services_label_checkout_time": {
+    "message": "Heure de sortie"
+  },
   "t_services_service_qr_enabled": {
     "message": "Code QR"
   },

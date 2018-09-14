@@ -967,7 +967,7 @@
     "message": "Branding"
   },
   "customization_description": {
-    "message": "(High resolution images work best.  JPEG or PNG format, 5 MB or smaller. You can scroll with your mouse to zoom in or out.)"
+    "message": "(JPEG or PNG format, 5 MB or smaller. You can scroll with your mouse to zoom in or out.)"
   },
   "customization_image_upload_error": {
     "message": "Something went wrong while uploading your image"
@@ -2882,6 +2882,9 @@
   },
   "t_services_attendance_type": {
     "message": "Attendance Type"
+  },
+  "t_services_label_checkout_time": {
+    "message": "Check-out Time"
   },
   "t_services_service_qr_enabled": {
     "message": "QR Code"

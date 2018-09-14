@@ -11,9 +11,7 @@ import { CheckInMethod } from '../../../../events/event.status';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { SNACKBAR_SHOW } from '../../../../../../../reducers/snackbar.reducer';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
-import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
 
 @Component({
   selector: 'cp-providers-details',
@@ -64,7 +62,6 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
       this.provider = res.data;
       this.updateQrCode.next(this.provider.checkin_verification_methods);
       this.eventRating = (this.provider.avg_rating_percent * this.MAX_RATE / 100).toFixed(1);
-      this.trackCheckinEvent(this.provider.encrypted_campus_service_id);
       this.buildHeader();
     });
   }
@@ -85,25 +82,16 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     });
   }
 
-  trackCheckinEvent(service_id) {
-    const eventProperties = {
-      service_id,
-      source_page: amplitudeEvents.SERVICE
-    };
-
-    this.eventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
-      eventProperties
-    };
-  }
-
   onDownload() {
     this.providerAttendees.downloadProvidersCSV();
   }
 
   onSearch(query) {
     this.providerAttendees.doSearch(query);
+  }
+
+  onAddCheckIn() {
+    this.providerAttendees.onCreateCheckIn();
   }
 
   onToggleQr(isEnabled: boolean) {
@@ -123,7 +111,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     const search = new HttpParams()
       .append('service_id', this.serviceId.toString());
 
-    this.providersService.updateServiceProvider(data, this.providerId, search).subscribe(
+    this.providersService.updateProvider(data, search, this.providerId).subscribe(
       (_) => {
         this.onSuccessQRCheckInMessage(isEnabled);
         this.updateQrCode.next(verificationMethods);

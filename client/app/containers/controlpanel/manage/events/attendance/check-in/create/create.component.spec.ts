@@ -57,9 +57,10 @@ describe('EventCheckInCreateComponent', () => {
 
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
-          component.event = mockEvent;
+          component.data = mockEvent;
           component.ngOnInit();
-          component.form = component.checkInUtils.getCheckInForm(mockCheckIn, component.event);
+          component.form = component.checkInUtils
+            .getCheckInForm(mockCheckIn, component.data);
         });
     })
   );
@@ -94,7 +95,7 @@ describe('EventCheckInCreateComponent', () => {
   it('error - user already exist', () => {
     spyOn(component.created, 'emit');
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'addEventCheckIn')
+    spy = spyOn(component.service, 'addCheckIn')
       .and.returnValue(observableOf(mockCheckIn));
 
     const checkInTime = 1598918399;
@@ -120,7 +121,7 @@ describe('EventCheckInCreateComponent', () => {
       attendance_id: 4525
     };
 
-    spy = spyOn(component.service, 'addEventCheckIn')
+    spy = spyOn(component.service, 'addCheckIn')
       .and.returnValue(observableOf(mockCheckIn));
 
     const checkInTime = 1598918399;

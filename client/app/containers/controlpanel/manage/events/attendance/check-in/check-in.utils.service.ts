@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services';
@@ -7,6 +7,8 @@ import { CheckInMethod, CheckInOutTime } from '../../event.status';
 
 @Injectable()
 export class CheckInUtilsService {
+
+  form;
 
   constructor(
     public fb: FormBuilder,
@@ -21,18 +23,30 @@ export class CheckInUtilsService {
     return hasCheckOutTime ? isCheckOutLessThanCheckIn : hasCheckOutTime;
   }
 
-  getCheckInForm(formData, eventData) {
+  getCheckInForm(formData, data) {
     const checkOutValue = formData ? formData.check_out_time_epoch : CheckInOutTime.empty;
-    const checkOutTime = eventData.has_checkout ? checkOutValue : CheckInOutTime.empty;
+    const checkOutTime = data.has_checkout ? checkOutValue : CheckInOutTime.empty;
 
-    return this.fb.group({
-      event_id: [eventData.id, Validators.required],
+    this.form = this.fb.group({
+      check_out_time_epoch: [checkOutTime],
+      event_id: [data.id, Validators.required],
       email: [formData ? formData.email : null, Validators.required],
       lastname: [formData ? formData.lastname : null, Validators.required],
       firstname: [formData ? formData.firstname : null, Validators.required],
       check_in_method: [formData ? formData.check_in_method : CheckInMethod.web],
-      check_in_time: [formData ? formData.check_in_time : null, Validators.required],
-      check_out_time_epoch: [checkOutTime]
+      check_in_time: [formData ? formData.check_in_time : null, Validators.required]
     });
+
+    if (data.campus_service_id) {
+      this.form.removeControl('event_id');
+
+      this.form.addControl('service_id', new FormControl
+      (data.campus_service_id, Validators.required));
+
+      this.form.addControl('service_provider_id', new FormControl
+      (data.id, Validators.required));
+    }
+
+    return this.form;
   }
 }

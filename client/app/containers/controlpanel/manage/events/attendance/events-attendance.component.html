@@ -186,7 +186,7 @@
   modalId="editCheckInModal"
   *ngIf="isEditCheckInModal">
   <cp-edit-check-in
-    [event]="event"
+    [data]="event"
     [checkIn]="checkInData"
     [orientationId]="orientationId"
     (edited)="onEdited()"
@@ -198,7 +198,7 @@
   modalId="deleteCheckInModal"
   *ngIf="isDeleteCheckInModal">
   <cp-delete-check-in
-    [event]="event"
+    [data]="event"
     [checkIn]="checkInData"
     [orientationId]="orientationId"
     (deleted)="onDeleted($event)"
@@ -211,7 +211,7 @@
   modalId="addCheckInModal"
   *ngIf="isAddCheckInModal">
   <cp-create-check-in
-    [event]="event"
+    [data]="event"
     [orientationId]="orientationId"
     (created)="onCreated()"
     (teardown)="isAddCheckInModal = false">

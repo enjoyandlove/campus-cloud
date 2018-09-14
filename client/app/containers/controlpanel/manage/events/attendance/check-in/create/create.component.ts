@@ -23,7 +23,7 @@ import { CPI18nService } from '../../../../../../../shared/services';
   styleUrls: ['./create.component.scss']
 })
 export class CheckInCreateComponent implements OnInit {
-  @Input() event: any;
+  @Input() data: any;
   @Input() orientationId: number;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
@@ -75,7 +75,7 @@ export class CheckInCreateComponent implements OnInit {
       this.checkInUtils.checkoutTimeBeforeCheckinTime(
         checkInTime,
         checkOutTime,
-        this.event.has_checkout);
+        this.data.has_checkout);
 
     if (checkoutTimeBeforeCheckinTime) {
       this.formErrors = true;
@@ -97,7 +97,7 @@ export class CheckInCreateComponent implements OnInit {
         .append('calendar_id', this.orientationId.toString());
     }
 
-    this.service.addEventCheckIn(this.form.value, search).subscribe(
+    this.service.addCheckIn(this.form.value, search).subscribe(
       (res: any) => {
         if (!res.attendance_id) {
           this.formErrors = true;
@@ -125,7 +125,7 @@ export class CheckInCreateComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.checkInUtils.getCheckInForm(null, this.event);
+    this.form = this.checkInUtils.getCheckInForm(null, this.data);
 
     this.buttonData = {
       class: 'primary',

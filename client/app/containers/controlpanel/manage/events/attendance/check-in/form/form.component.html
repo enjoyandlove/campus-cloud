@@ -36,7 +36,7 @@
         [error]="formErrors && form.controls['check_in_time'].hasError('required')">
       </cp-datepicker>
     </div>
-    <div class="col-6" *ngIf="event.has_checkout">
+    <div class="col-6" *ngIf="data.has_checkout">
       <label>{{ 't_events_attendance_add_edit_check_in_check_out_time' | cpI18n }}</label>
       <cp-datepicker
         [options]="checkOutDatePickerOptions"

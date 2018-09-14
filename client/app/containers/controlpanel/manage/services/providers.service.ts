@@ -26,13 +26,8 @@ export class ProvidersService extends HTTPService {
     return super.post(url, data, search);
   }
 
-  updateProvider(data: any, search?: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_PROVIDER}/`;
-
-    return super.update(url, data, search);
-  }
-
-  updateServiceProvider(data: any, providerId: number, search?: HttpParams) {
+  updateProvider(data: any, search?: HttpParams, id?: number) {
+    const providerId = id ? id : '';
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_PROVIDER}/${providerId}`;
 
     return super.update(url, data, search);
@@ -55,5 +50,25 @@ export class ProvidersService extends HTTPService {
     const url = `${common}/${startRange};${endRange}`;
 
     return super.get(url, search);
+  }
+
+  addCheckIn(body: any, search?: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_ASSESSMENT}/`;
+
+    return super.post(url, body, search);
+  }
+
+  updateCheckIn(body: any, attendeeId: number, search?: HttpParams) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_ASSESSMENT}`;
+    const url = `${common}/${attendeeId}`;
+
+    return super.update(url, body, search);
+  }
+
+  deleteCheckInById(attendeeId: number, search?: HttpParams) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_ASSESSMENT}`;
+    const url = `${common}/${attendeeId}`;
+
+    return super.delete(url, search);
   }
 }

@@ -12,7 +12,7 @@ import { CPI18nService } from '../../../../../../../shared/services';
   styleUrls: ['./delete.component.scss']
 })
 export class CheckInDeleteComponent implements OnInit {
-  @Input() event;
+  @Input() data;
   @Input() checkIn: ICheckIn;
   @Input() orientationId: number;
 
@@ -33,7 +33,7 @@ export class CheckInDeleteComponent implements OnInit {
   onDelete() {
     this.errors = false;
     let search = new HttpParams()
-      .append('event_id', this.event.id.toString());
+      .append('event_id', this.data.id.toString());
 
     if (this.orientationId) {
       search = search
@@ -41,7 +41,13 @@ export class CheckInDeleteComponent implements OnInit {
         .append('calendar_id', this.orientationId.toString());
     }
 
-    this.service.deleteEventCheckInById(this.checkIn.id, search).subscribe(
+    if (this.data.campus_service_id) {
+      search = new HttpParams()
+        .append('service_provider_id', this.data.id.toString())
+        .append('service_id', this.data.campus_service_id.toString());
+    }
+
+    this.service.deleteCheckInById(this.checkIn.id, search).subscribe(
       (_) => {
         this.deleted.emit(this.checkIn.id);
         this.teardown.emit();
