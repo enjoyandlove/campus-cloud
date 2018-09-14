@@ -12,5 +12,6 @@ export class ServicesProvidersCheckInEditComponent {
   @Input() data;
   @Input() checkIn;
 
+  @Output() edited: EventEmitter<null> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 }
