@@ -33,6 +33,7 @@
             <cp-sorting-header
               class="col-2"
               sortLabel="start"
+              (click)="doSort('start')"
               [label]="sortingLabels.start"
               [sortField]="state.sort_field"
               [sortDirection]="state.sort_direction">
@@ -41,6 +42,7 @@
             <cp-sorting-header
               class="col-2"
               sortLabel="expiration"
+              (click)="doSort('expiration')"
               [label]="sortingLabels.expiration"
               [sortField]="state.sort_field"
               [sortDirection]="state.sort_direction">
