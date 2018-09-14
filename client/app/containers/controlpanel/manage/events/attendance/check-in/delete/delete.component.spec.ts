@@ -15,7 +15,7 @@ const mockCheckIn = require('../../../__mock__/eventCheckIn.json');
 
 class MockService {
   dummy;
-  deleteEventCheckInById(id: number, search: any) {
+  deleteCheckInById(id: number, search: any) {
     this.dummy = [id, search];
 
     return observableOf({});

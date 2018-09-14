@@ -18,7 +18,7 @@ let mockCheckIn = require('../../../__mock__/eventCheckIn.json');
 class MockService {
   dummy;
 
-  addEventCheckIn(body: any, search: any) {
+  addCheckIn(body: any, search: any) {
     this.dummy = [search];
 
     return observableOf({ body });
