@@ -55,7 +55,7 @@
           *ngFor="let tile of guide.tiles; let i = index"
           [class.mb-4]="i % tileWidth === 0">
         </cp-personas-tile>
-        <div [ngClass]="['col-' + tileWidth]">
+        <div class="do_not_drag" [ngClass]="['col-' + tileWidth]">
           <cp-personas-tile-add-button
             [disabled]="guide._disabled"
             (buttonClick)="goToCreateTile()">

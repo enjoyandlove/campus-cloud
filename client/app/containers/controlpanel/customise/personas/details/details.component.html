@@ -32,7 +32,6 @@
         <div class="col-12">
           <cp-personas-section
             [guide]="guide"
-            [canDelete]="!first"
             [canMoveUp]="!first"
             [noMarginTop]="first"
             [canMoveDown]="!last"
@@ -40,6 +39,7 @@
             (shuffle)="onTileMoved($event)"
             (deleted)="onDeletedSection($event)"
             (swap)="onSwapSection($event, guide)"
+            [canDelete]="state.guides.length > 1"
             (removeSection)="onRemoveSection($event)"
             (deleteSectionClick)="onDeleteSectionClick($event)"
             (deleteTileClick)="onDeleteTileFromSection($event)"

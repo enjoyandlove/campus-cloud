@@ -222,6 +222,7 @@ export class PersonasSectionComponent implements OnInit {
 
     this.sortableOptions = {
       scroll: false,
+      filter: '.do_not_drag',
       group: {
         name: 'studio',
         put: true,
