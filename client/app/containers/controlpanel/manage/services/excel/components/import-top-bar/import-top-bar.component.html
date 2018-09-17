@@ -3,15 +3,16 @@
     <div class="row">
       <div class="col-2">
         <cp-checkbox
+          [isChecked]="isChecked"
           class="checkbox float-left"
           (toggle)="checkAll.emit($event)">
         </cp-checkbox>
       </div>
       <div class="col-6">
         <cp-upload-button
-          buttonClass="cpbtn cpbtn--cancel"
-          (fileUpload)="onFileUpload($event)"
-          [buttonText]="cpI18n.translate('upload_picture')">
+          [buttonClass]="['cpbtn cpbtn--' + props.class]"
+          [buttonText]="cpI18n.translate('upload_picture')"
+          (fileUpload)="onFileUpload($event)">
         </cp-upload-button>
       </div>
     </div>
@@ -20,6 +21,7 @@
   <div class="col-2 no-left-padding">
     <cp-dropdown
       [items]="categories"
+      [disabled]="props.disabled"
       (selected)="categoryChange.emit($event)">
     </cp-dropdown>
   </div>

@@ -5,9 +5,10 @@
     <div class="row">
       <div class="col-12">
         <cp-services-import-top-bar
-          (checkAll)="onCheckAll($event)"
-          (deleteServices)="onBulkDelete()"
+          [props]="topButtonData"
           [categories]="categories"
+          [isChecked]="isParentCheckBoxChecked"
+          (checkAll)="onCheckAll($event)"
           (imageChange)="onImageBulkChange($event)"
           (categoryChange)="onCategoryBulkChange($event)">
         </cp-services-import-top-bar>
@@ -44,15 +45,23 @@
                           </div>
                           <div class="col-6">
                             <div class="service__avatar">
-                              <div
-                                *ngIf="!service.controls.logo_url.value"
-                                class="placeholder placeholder--small text-center">
-                                <i class="material-icons">image</i>
-                              </div>
+                              <span
+                                class="deleteButton hover"
+                                (click)="onRemoveImage(i)"
+                                *ngIf="service.controls['logo_url'].value">
+                                &times;
+                              </span>
+                              <cp-upload-button
+                                [id]="'id'+ i"
+                                theme="small"
+                                (fileUpload)="onImageUpload($event, i)"
+                                *ngIf="!service.controls['logo_url'].value"
+                                (click)="resetAllCheckboxes($event, i)">
+                              </cp-upload-button>
                               <img
-                                *ngIf="service.controls.logo_url.value"
-                                class="img-fluid rounded"
-                                [src]="service.controls.logo_url.value">
+                                class="rounded img-fit-cover"
+                                *ngIf="service.controls['logo_url'].value"
+                                [src]="service.controls['logo_url'].value">
                             </div>
                           </div>
                         </div>
@@ -73,8 +82,8 @@
                     <label>{{ 'category' | cpI18n }}</label>
                     <cp-dropdown
                       [items]="categories"
-                      (selected)="onSingleCategorySelected($event, i)"
-                      [selectedItem]="service.controls['category'].value">
+                      [selectedItem]="selectedCategory[i]"
+                      (selected)="onSingleCategorySelected($event, i)">
                     </cp-dropdown>
                   </div>
                 </div>

@@ -1,17 +1,19 @@
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { map, startWith } from 'rxjs/operators';
-import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
-import { BaseComponent } from '../../../../../base/base.component';
+
 import { isDev } from '../../../../../config/env';
-import { HEADER_DEFAULT, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { SERVICES_MODAL_RESET } from '../../../../../reducers/services-modal.reducer';
 import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
 import { ServicesService } from '../services.service';
+import { BaseComponent } from '../../../../../base/base.component';
+import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
+import { CPImageUploadComponent } from '../../../../../shared/components';
+import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { CPI18nService, FileUploadService } from '../../../../../shared/services';
+import { SERVICES_MODAL_RESET } from '../../../../../reducers/services-modal.reducer';
+import { HEADER_DEFAULT, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 const i18n = new CPI18nPipe();
 
@@ -25,11 +27,13 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   services;
   buttonData;
   categories;
+  topButtonData;
   isChecked = [];
   loading = false;
   form: FormGroup;
   isFormReady = false;
-  eventAttendanceFeedback;
+  selectedCategory: string[] = [];
+  isParentCheckBoxChecked = false;
 
   constructor(
     private router: Router,
@@ -37,7 +41,8 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     private store: Store<any>,
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private servicesService: ServicesService
+    private servicesService: ServicesService,
+    private fileUploadService: FileUploadService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -161,7 +166,12 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
         const ctrl = <FormGroup>control.controls[item.index];
 
         Object.keys(actions).forEach((key) => {
-          ctrl.controls[key].setValue(actions[key]);
+          if (key === 'logo_url') {
+            ctrl.controls[key].setValue(actions[key]);
+          } else if (key === 'category') {
+            this.selectedCategory[item.index] = actions[key];
+            ctrl.controls[key].setValue(actions[key].action);
+          }
         });
       }
 
@@ -173,7 +183,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     const controls = <FormArray>this.form.controls['services'];
     const control = <FormGroup>controls.controls[index];
 
-    control.controls['category'].setValue(category);
+    control.controls['category'].setValue(category.action);
   }
 
   onSingleCheck(checked, index) {
@@ -186,7 +196,14 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
 
       return item;
     });
+
+    const getOnlyChecked = _isChecked.filter((item) => item.checked);
+    const isParentChecked = _isChecked.length === getOnlyChecked.length;
+    const totalChecked = getOnlyChecked.length > 0;
+
     this.isChecked = [..._isChecked];
+    this.updateTopHeaderButtonsStatus(totalChecked);
+    this.updateParentCheckBoxStatus(isParentChecked);
   }
 
   onCheckAll(checked) {
@@ -197,6 +214,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     });
 
     this.isChecked = [..._isChecked];
+    this.updateTopHeaderButtonsStatus(checked);
   }
 
   onCategoryBulkChange(category) {
@@ -208,27 +226,61 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   onSubmit() {
-    const parsedServices = [];
-    const _data = Object.assign({}, this.form.value.services);
-
-    Object.keys(_data).forEach((key) => {
-      parsedServices.push(Object.assign({}, _data[key], { category: _data[key].category.action }));
-    });
-
     this.servicesService
-      .createService(parsedServices)
+      .createService(this.form.value.services)
       .subscribe((_) => this.router.navigate(['/manage/services']), () => this.handleError());
   }
 
-  handleError() {
+  handleError(err?: string) {
     this.store.dispatch({
       type: SNACKBAR_SHOW,
       payload: {
         class: 'danger',
         sticky: true,
-        body: this.cpI18n.translate('something_went_wrong')
+        body: err ? err : this.cpI18n.translate('something_went_wrong')
       }
     });
+  }
+
+  onImageUpload(image: string, index: number) {
+    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
+    const promise = imageUpload.onFileUpload(image, true);
+
+    promise
+      .then((res: any) => {
+        const controls = <FormArray>this.form.controls['services'];
+        const control = <FormGroup>controls.controls[index];
+        control.controls['logo_url'].setValue(res.image_url);
+      })
+      .catch((err) => {
+        this.handleError(err);
+      });
+  }
+
+  onRemoveImage(index: number) {
+    const eventControl = <FormArray>this.form.controls['services'];
+    const control = <FormGroup>eventControl.at(index);
+    control.controls['logo_url'].setValue(null);
+  }
+
+  resetAllCheckboxes(checked, index) {
+    this.onCheckAll(false);
+    this.onSingleCheck(checked, index);
+  }
+
+  updateTopHeaderButtonsStatus(checked) {
+    const className = checked ? 'cancel' : 'disabled';
+
+    this.topButtonData = {
+      class: className,
+      disabled: !checked
+    };
+
+    this.isParentCheckBoxChecked = checked;
+  }
+
+  updateParentCheckBoxStatus(checked) {
+    this.isParentCheckBoxChecked = checked;
   }
 
   ngOnDestroy() {
@@ -237,6 +289,11 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   ngOnInit() {
+    this.topButtonData = {
+      class: 'disabled',
+      disabled: true
+    };
+
     this.buttonData = {
       disabled: true,
       class: 'primary',
