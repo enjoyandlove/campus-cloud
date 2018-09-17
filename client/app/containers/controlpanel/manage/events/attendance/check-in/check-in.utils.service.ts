@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from '../../../../../../session';
 import { CPI18nService } from '../../../../../../shared/services';
@@ -8,7 +8,7 @@ import { CheckInMethod, CheckInOutTime } from '../../event.status';
 @Injectable()
 export class CheckInUtilsService {
 
-  form;
+  form: FormGroup;
 
   constructor(
     public fb: FormBuilder,
