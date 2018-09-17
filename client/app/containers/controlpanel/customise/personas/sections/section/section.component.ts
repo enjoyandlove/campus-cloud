@@ -19,15 +19,15 @@ import { SectionsService } from '../sections.service';
   styleUrls: ['./section.component.scss']
 })
 export class PersonasSectionComponent implements OnInit {
-  @Input() last: boolean;
-  @Input() first: boolean;
   @Input() tileWidth = '3';
-  @Input() hideName: boolean;
+  @Input() noTitle = false;
   @Input() personaId: number;
   @Input() addSection = true;
   @Input() noControls = false;
+  @Input() canMoveUp: boolean;
   @Input() guide: ICampusGuide;
-  @Input() guideNames: String[];
+  @Input() noMarginTop: boolean;
+  @Input() canMoveDown: boolean;
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
   @Output() deleted: EventEmitter<ICampusGuide> = new EventEmitter();
@@ -83,40 +83,29 @@ export class PersonasSectionComponent implements OnInit {
 
   onEditTile(tile: ITile) {
     this.service.guide = this.guide;
-    this.router.navigate([`/customize/personas/${this.personaId}/tiles/${tile.id}/edit`]);
+    this.router.navigate([`/studio/experiences/${this.personaId}/tiles/${tile.id}/edit`]);
   }
 
   goToCreateTile() {
-    if (this.guide._categoryZero) {
-      return this.createCategoryZeroTile();
-    }
-
-    if (this.guide._featureTile) {
+    if (this.guide._featuredTile) {
       return this.createFeatureTile();
     }
 
-    this.service.guide = this.guide;
-    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
+    this.service.guide = {
+      ...this.guide
+    };
+    this.router.navigate([`/studio/experiences/${this.personaId}/tiles`]);
   }
 
   createFeatureTile() {
     const tempGuide = {
       ...this.guide,
-      featureTile: true
+      _featuredTile: true
     };
+
     this.service.guide = tempGuide;
 
-    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
-  }
-
-  createCategoryZeroTile() {
-    const tempGuide = {
-      ...this.guide,
-      categoryZero: true
-    };
-    this.service.guide = tempGuide;
-
-    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
+    this.router.navigate([`/studio/experiences/${this.personaId}/tiles`]);
   }
 
   onMove(direction) {
@@ -163,18 +152,7 @@ export class PersonasSectionComponent implements OnInit {
     this.createNewSection.emit(this.utils.temporaryGuide(this.guide.rank - 1));
   }
 
-  onNameChange(name, updatedGuide: ICampusGuide) {
-    if (this.utils.isTemporaryGuide(updatedGuide)) {
-      this.guide = {
-        ...this.guide,
-        name
-      };
-
-      this.service.guide = this.guide;
-
-      return;
-    }
-
+  onNameChange(name) {
     const body = {
       name,
       school_id: this.session.g.get('school').id
@@ -200,7 +178,9 @@ export class PersonasSectionComponent implements OnInit {
     const tile = Number(event.item.dataset.tile);
     const section = event.target.dataset.section;
 
-    this.shuffle.emit({ tile, section, position });
+    if (section) {
+      this.shuffle.emit({ tile, section, position });
+    }
   }
 
   onDragged() {
@@ -237,17 +217,10 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.guide._featureTile) {
-      this.sectionId = 'featured';
-    } else if (this.guide._categoryZero) {
-      this.sectionId = 'category_zero';
-    } else {
-      this.sectionId = this.guide.id;
-    }
+    this.sectionId = this.guide._featuredTile ? 'featured' : this.guide.id;
 
     this.sortableOptions = {
       scroll: false,
-      draggable: '.is_draggable',
       group: {
         name: 'studio',
         put: true,

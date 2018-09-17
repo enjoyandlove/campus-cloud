@@ -1,24 +1,23 @@
-import { Router, ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
+/*tslint:disable:max-line-length */
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { BehaviorSubject } from 'rxjs';
 
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-
+import { CPSession } from './../../../../../session';
+import { ServicesService } from '../services.service';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import {
   canSchoolReadResource,
   canStoreReadAndWriteResource
 } from './../../../../../shared/utils/privileges';
-
-import { ServicesService } from '../services.service';
-import { CPSession } from './../../../../../session/index';
+import { ServicesProvidersListComponent } from './components/providers-list/providers-list.component';
 import { BaseComponent } from '../../../../../base/base.component';
 import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
-import { CPI18nService } from '../../../../../shared/services/index';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { CPTrackingService } from '../../../../../shared/services';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CPTrackingService, CPI18nService } from '../../../../../shared/services';
 
 const FEEDBACK_ENABLED = 1;
 
@@ -28,18 +27,18 @@ const FEEDBACK_ENABLED = 1;
   styleUrls: ['./services-attendance.component.scss']
 })
 export class ServicesAttendanceComponent extends BaseComponent implements OnInit {
+  @ViewChild('providersList') providersList: ServicesProvidersListComponent;
+
   loading;
   service;
   storeId;
   eventData;
   noProviders;
-  serviceId: number;
   isProviderAdd;
+  serviceId: number;
   detailStarSize = STAR_SIZE.LARGE;
   listStarSize = STAR_SIZE.DEFAULT;
-  reload$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   download$: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  search_text$: BehaviorSubject<string> = new BehaviorSubject(null);
   enableFeedback$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
@@ -91,7 +90,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   }
 
   onProviderAdded() {
-    this.reload$.next(true);
+    this.providersList.fetch();
     this.isProviderAdd = false;
   }
 
@@ -108,7 +107,12 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   }
 
   onSearch(search_text) {
-    this.search_text$.next(search_text);
+    this.providersList.state = {
+      ...this.providersList.state,
+      search_text
+    };
+
+    this.providersList.fetch();
   }
 
   private buildHeader() {

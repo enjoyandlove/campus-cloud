@@ -54,16 +54,14 @@ describe('CPPageHeaderComponent', () => {
       ...comp.data,
       children: [
         {
-          amplitude: 'Banner',
-          label: 'customise_banner',
-          url: '/customize/banner'
+          amplitude: 'Experiences',
+          label: 't_customise_personas',
+          url: '/studio/experiences'
         },
         {
-          hidden: true,
-          allow_internal: true,
-          amplitude: 'Studio',
-          label: 't_customise_personas',
-          url: '/customize/personas'
+          amplitude: 'Banner',
+          label: 'customise_banner',
+          url: '/studio/branding'
         }
       ]
     };
@@ -85,15 +83,14 @@ describe('CPPageHeaderComponent', () => {
       ...comp.data,
       children: [
         {
-          amplitude: 'Banner',
-          label: 'customise_banner',
-          url: '/customize/banner'
+          amplitude: 'Experiences',
+          label: 't_customise_personas',
+          url: '/studio/experiences'
         },
         {
-          hidden: true,
-          amplitude: 'Studio',
-          label: 't_customise_personas',
-          url: '/customize/personas'
+          amplitude: 'Banner',
+          label: 'customise_banner',
+          url: '/studio/branding'
         }
       ]
     };

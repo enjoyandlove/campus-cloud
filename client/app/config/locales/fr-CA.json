@@ -2865,6 +2865,9 @@
   "t_persona_list_button_notify": {
     "message": "Notifier"
   },
+  "t_services_assessment_web_checkin_page": {
+    "message": "Page de vérification de présence web"
+  },
   "t_services_attendance_type": {
     "message": "Type de présence"
   },

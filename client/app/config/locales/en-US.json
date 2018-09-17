@@ -964,7 +964,7 @@
     "message": "Customize"
   },
   "customise_banner": {
-    "message": "Banner"
+    "message": "Branding"
   },
   "customization_description": {
     "message": "(High resolution images work best.  JPEG or PNG format, 5 MB or smaller. You can scroll with your mouse to zoom in or out.)"
@@ -2864,6 +2864,9 @@
   },
   "t_persona_list_button_notify": {
     "message": "Notify"
+  },
+  "t_services_assessment_web_checkin_page": {
+    "message": "Web Check-in Page"
   },
   "t_services_attendance_type": {
     "message": "Attendance Type"
