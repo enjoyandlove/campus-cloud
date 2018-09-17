@@ -32,10 +32,10 @@
         <div class="col-12">
           <cp-personas-section
             [guide]="guide"
+            [canDelete]="!first"
             [canMoveUp]="!first"
             [noMarginTop]="first"
             [canMoveDown]="!last"
-            [addSection]="!first"
             [personaId]="personaId"
             (shuffle)="onTileMoved($event)"
             (deleted)="onDeletedSection($event)"

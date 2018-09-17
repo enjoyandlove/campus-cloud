@@ -28,6 +28,7 @@
           <cp-personas-section-controls
             [disableUp]="!canMoveUp"
             (moveUp)="onMove('up')"
+            [canDelete]="canDelete"
             (moveDown)="onMove('down')"
             [disableDown]="!canMoveDown"
             (deleteClick)="deleteSectionClick.emit(guide)">

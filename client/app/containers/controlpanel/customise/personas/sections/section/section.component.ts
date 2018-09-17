@@ -25,6 +25,7 @@ export class PersonasSectionComponent implements OnInit {
   @Input() addSection = true;
   @Input() noControls = false;
   @Input() canMoveUp: boolean;
+  @Input() canDelete: boolean;
   @Input() guide: ICampusGuide;
   @Input() noMarginTop: boolean;
   @Input() canMoveDown: boolean;
