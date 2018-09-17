@@ -56,10 +56,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   formError = false;
   serviceId: number;
   attendance = false;
-  selectedQRCode = [];
-  selectedAttendanceType = [];
+  selectedQRCode: string[] = [];
   showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
+  selectedAttendanceType: string[] = [];
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
 
@@ -288,7 +288,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     }
   }
 
-  buildServiceProviderControl(provider?: any, index?) {
+  buildServiceProviderControl(provider: any, index: number) {
     if (provider) {
       this.setSelectedDropDownValue(provider, index);
 
@@ -328,7 +328,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     return qrCodes.includes(CheckInMethod.app);
   }
 
-  getFromArray(arr: Array<any>, key: string, val: any) {
+  getFromArray(arr: Array<any>, key: string, val: boolean) {
     return arr.filter((item) => item[key] === val)[0];
   }
 
