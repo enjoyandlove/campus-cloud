@@ -25,7 +25,6 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
     this.state = { ...this.state, saving: false };
   }
 
-  @Input() isEditing = true;
   @Input() disableNameChange = false;
 
   @ViewChild('inputEl') inputEl: ElementRef;
@@ -59,9 +58,13 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
       return;
     }
 
-    this.state = { ...this.state, saving: true };
+    const nameChanged = this._name !== this.form.get('name').value;
 
-    this.nameChanged.emit(this.form.get('name').value);
+    if (nameChanged) {
+      this.state = { ...this.state, saving: true };
+
+      this.nameChanged.emit(this.form.get('name').value);
+    }
   }
 
   ngAfterViewInit() {

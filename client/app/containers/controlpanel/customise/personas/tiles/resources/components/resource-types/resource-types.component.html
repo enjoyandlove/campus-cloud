@@ -34,7 +34,6 @@
   class="row form-group"
   *ngIf="typeSearchComponent.includes(resourceSelection)">
   <div class="col-12">
-    <label>{{ 't_personas_tile_modal_create_resource_type' | cpI18n }}</label>
     <cp-personas-resource-type-search
       [resource]="resource"
       [resourceId]="resourceSelection"
