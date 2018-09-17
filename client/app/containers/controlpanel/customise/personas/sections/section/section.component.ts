@@ -13,6 +13,14 @@ import { ICampusGuide } from '../section.interface';
 import { SectionUtilsService } from '../section.utils.service';
 import { SectionsService } from '../sections.service';
 
+interface ISetSectionName {
+  guideId: number;
+  body: {
+    name: string;
+    school_id: number;
+  };
+}
+
 @Component({
   selector: 'cp-personas-section',
   templateUrl: './section.component.html',
@@ -22,19 +30,21 @@ export class PersonasSectionComponent implements OnInit {
   @Input() tileWidth = '3';
   @Input() noTitle = false;
   @Input() personaId: number;
-  @Input() addSection = true;
   @Input() noControls = false;
   @Input() canMoveUp: boolean;
   @Input() canDelete: boolean;
   @Input() guide: ICampusGuide;
   @Input() noMarginTop: boolean;
   @Input() canMoveDown: boolean;
+  @Input() showAddSection = true;
+  @Input() disableAddSection = false;
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
   @Output() deleted: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output() removeSection: EventEmitter<number> = new EventEmitter();
   @Output() deleteTileClick: EventEmitter<ITile> = new EventEmitter();
   @Output() createNewSection: EventEmitter<ICampusGuide> = new EventEmitter();
+  @Output() setSectionName: EventEmitter<ISetSectionName> = new EventEmitter();
   @Output() deleteSectionClick: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output()
   shuffle: EventEmitter<{
@@ -159,19 +169,7 @@ export class PersonasSectionComponent implements OnInit {
       school_id: this.session.g.get('school').id
     };
 
-    this.setWorkingState(true);
-
-    this.service.updateSectionTileCategory(this.guide.id, body).subscribe(
-      (guide: ICampusGuide) => {
-        this.guide = {
-          ...this.guide,
-          name: guide.name
-        };
-
-        this.setWorkingState(false);
-      },
-      (err) => this.errorHandler(err)
-    );
+    this.setSectionName.emit({ guideId: this.guide.id, body });
   }
 
   onAdd(event) {
