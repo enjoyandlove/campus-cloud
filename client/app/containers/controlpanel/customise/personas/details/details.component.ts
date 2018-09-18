@@ -176,14 +176,16 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     this.tileService
       .bulkUpdateTiles(search, body)
       .toPromise()
-      .then(() => this.fetch())
+      .then(() => this.fetch(() => this.handleSuccess()))
       .then(() => {
         this.zone.run(() => {
           this.state = { ...this.state, working: false };
         });
       })
       .catch((err) => {
-        this.state = { ...this.state, working: false };
+        this.zone.run(() => {
+          this.state = { ...this.state, working: false };
+        });
         this.errorHandler(err);
       });
   }
@@ -501,7 +503,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     }
   }
 
-  fetch() {
+  fetch(callback = null) {
     const schoolIdSearch = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     const tilesSearch = schoolIdSearch.append('school_persona_id', this.personaId);
@@ -556,6 +558,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
             tiles: [...data.featured]
           }
         };
+
+        if (callback) {
+          callback();
+        }
 
         return this.state;
       })
