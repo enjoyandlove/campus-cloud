@@ -1,11 +1,10 @@
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { flatten, get as _get } from 'lodash';
 import { combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { isProd } from './../../../../../config/env/index';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import {
   ISnackbar,
@@ -58,6 +57,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   };
 
   constructor(
+    public zone: NgZone,
     public router: Router,
     public session: CPSession,
     public route: ActivatedRoute,
@@ -171,9 +171,21 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       };
     });
 
+    this.state = { ...this.state, working: true };
+
     this.tileService
       .bulkUpdateTiles(search, body)
-      .subscribe(() => this.handleSuccess(), (err) => this.errorHandler(err));
+      .toPromise()
+      .then(() => this.fetch())
+      .then(() => {
+        this.zone.run(() => {
+          this.state = { ...this.state, working: false };
+        });
+      })
+      .catch((err) => {
+        this.state = { ...this.state, working: false };
+        this.errorHandler(err);
+      });
   }
 
   onDeleteTileFromSection(tile: ITile) {
@@ -495,11 +507,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     const tilesSearch = schoolIdSearch.append('school_persona_id', this.personaId);
 
     const tilesByPersona$ = this.service.getTilesByPersona(tilesSearch);
-    const tileCategories$ = this.service
-      .getTilesCategories(schoolIdSearch)
-      .pipe(map((categories) => categories.filter((c) => c.id !== 0)));
+    const tileCategories$ = this.service.getTilesCategories(schoolIdSearch);
 
-    const tilesByPersonaZero$ = this.service.getTilesByPersona(schoolIdSearch);
     const persona$ = this.service.getPersonaById(this.personaId, schoolIdSearch);
 
     const request$ = persona$.pipe(
@@ -508,15 +517,13 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         this.isWebPersona = persona.platform === PersonasType.web;
         this.updateHeader(persona.localized_name_map[key]);
 
-        return combineLatest([tilesByPersona$, tileCategories$, tilesByPersonaZero$]);
+        return combineLatest([tilesByPersona$, tileCategories$]);
       })
     );
 
     const stream$ = request$.pipe(
-      map(([tiles, categories, tilesByPersonaZero]) => {
-        tiles = isProd
-          ? this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero)
-          : tiles.filter((t: ITile) => t.type === TileType.abstract);
+      map(([tiles, categories]) => {
+        tiles = tiles.filter((t: ITile) => t.type === TileType.abstract);
 
         if (this.isWebPersona) {
           tiles = tiles.filter((tile) => this.tileUtils.isTileSupportedByWebApp(tile));
@@ -529,7 +536,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       })
     );
 
-    super
+    return super
       .fetchData(stream$)
       .then(({ data }) => {
         const filteredTiles = data.guides.filter((g: ICampusGuide) => g.tiles.length);
@@ -549,6 +556,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
             tiles: [...data.featured]
           }
         };
+
+        return this.state;
       })
       .catch((err: HttpErrorResponse) => this.errorHandler(err));
   }
