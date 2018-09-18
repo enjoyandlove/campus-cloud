@@ -50,8 +50,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   sectionDeleteModalId = 'sectionDeleteModal';
 
   state: IState = {
-    working: false,
     guides: [],
+    working: false,
     featureTiles: null,
     showTileDeleteModal: false,
     showSectionDeleteModal: false
@@ -74,6 +74,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     this.personaId = this.route.snapshot.params['personaId'];
   }
 
+  get temporaryGuides() {
+    return this.state.guides.filter((g) => g._temporary).length;
+  }
+
   onAddSectionBefore(newGuide: ICampusGuide, guideId: number) {
     const nextGuide = (guide: ICampusGuide) => guide.id === guideId;
     const nextGuideIndex = this.state.guides.findIndex(nextGuide);
@@ -83,12 +87,38 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     this.state.guides.splice(nextGuideIndex, 0, newGuide);
   }
 
+  onSetSectionName({ guideId, body }) {
+    this.setGuideDisabledStatus(true);
+
+    this.service.updateSectionTileCategory(guideId, body).subscribe(
+      (guide: ICampusGuide) => {
+        this.setGuideDisabledStatus(false);
+        this.state = {
+          ...this.state,
+          guides: this.state.guides.map((g) => {
+            return g.id === guide.id
+              ? {
+                  ...g,
+                  name: guide.name
+                }
+              : g;
+          })
+        };
+      },
+      (err) => {
+        this.errorHandler(err);
+        this.setGuideDisabledStatus(false);
+      }
+    );
+  }
+
   onRemoveSection(g: ICampusGuide) {
     this.setGuideDisabledStatus(false);
+    const filteredGuides = this.state.guides.filter((guide) => guide.id !== g.id);
 
     this.state = {
       ...this.state,
-      guides: this.state.guides.filter((guide) => guide.id !== g.id)
+      guides: filteredGuides
     };
   }
 
@@ -301,7 +331,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   }
 
   onDeletedSection(section: ICampusGuide) {
-    this.state.guides = this.state.guides.filter((guide: ICampusGuide) => guide.id !== section.id);
+    this.state = {
+      ...this.state,
+      guides: this.state.guides.filter((guide: ICampusGuide) => guide.id !== section.id)
+    };
 
     if (this.sectionUtils.isTemporaryGuide(section)) {
       this.setGuideDisabledStatus(false);

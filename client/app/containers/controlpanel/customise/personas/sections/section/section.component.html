@@ -1,12 +1,12 @@
 <fieldset [disabled]="guide._disabled || state.sorting">
   <section
-    *ngIf="addSection"
-    class="new-section">
+    class="new-section"
+    *ngIf="showAddSection">
     <div class="row">
       <div class="col-12">
         <cp-personas-section-add-button
           (addSection)="onAddSection()"
-          [disabled]="state.working || utils.isTemporaryGuide(guide)">
+          [disabled]="state.working || disableAddSection">
         </cp-personas-section-add-button>
       </div>
     </div>
@@ -21,13 +21,14 @@
           <cp-personas-section-title
             [name]="guide.name"
             (nameChanged)="onNameChange($event, guide)"
-            [disableNameChange]="utils.isTemporaryGuide(guide)">
+            [noNameChange]="utils.isTemporaryGuide(guide)">
           </cp-personas-section-title>
         </div>
         <div class="col-4 text-right" *ngIf="!noControls">
           <cp-personas-section-controls
-            [disableUp]="!canMoveUp"
             (moveUp)="onMove('up')"
+            [canDelete]="canDelete"
+            [disableUp]="!canMoveUp"
             (moveDown)="onMove('down')"
             [disableDown]="!canMoveDown"
             (deleteClick)="deleteSectionClick.emit(guide)">
@@ -54,7 +55,7 @@
           *ngFor="let tile of guide.tiles; let i = index"
           [class.mb-4]="i % tileWidth === 0">
         </cp-personas-tile>
-        <div [ngClass]="['col-' + tileWidth]">
+        <div class="do_not_drag" [ngClass]="['col-' + tileWidth]">
           <cp-personas-tile-add-button
             [disabled]="guide._disabled"
             (buttonClick)="goToCreateTile()">
