@@ -25,8 +25,7 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
     this.state = { ...this.state, saving: false };
   }
 
-  @Input() isEditing = true;
-  @Input() disableNameChange = false;
+  @Input() noNameChange = false;
 
   @ViewChild('inputEl') inputEl: ElementRef;
 
@@ -37,8 +36,7 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
   form: FormGroup;
 
   state = {
-    saving: false,
-    invalid: false
+    saving: false
   };
 
   constructor(public fb: FormBuilder) {}
@@ -55,17 +53,21 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
   }
 
   onSubmit() {
-    if (this.disableNameChange) {
+    if (this.noNameChange) {
       return;
     }
 
-    this.state = { ...this.state, saving: true };
+    const nameChanged = this._name !== this.form.get('name').value;
 
-    this.nameChanged.emit(this.form.get('name').value);
+    if (nameChanged) {
+      this.state = { ...this.state, saving: true };
+
+      this.nameChanged.emit(this.form.get('name').value);
+    }
   }
 
   ngAfterViewInit() {
-    if (!this.disableNameChange) {
+    if (!this.noNameChange) {
       this.listenToInputBlur();
     }
   }
