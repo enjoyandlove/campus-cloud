@@ -158,6 +158,18 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     });
   }
 
+  displayWarning() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        autoClose: true,
+        class: 'info',
+        body: `${this.cpI18n.translate('t_saving')}...`
+      }
+    });
+  }
+
   doBulkUpdate(tileUpdates) {
     const search = new HttpParams().set('school_persona_id', this.personaId);
 
@@ -172,6 +184,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     });
 
     this.state = { ...this.state, working: true };
+    this.displayWarning();
 
     this.tileService
       .bulkUpdateTiles(search, body)

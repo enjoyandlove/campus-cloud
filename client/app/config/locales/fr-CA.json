@@ -2865,6 +2865,9 @@
   "t_persona_list_button_notify": {
     "message": "Notifier"
   },
+  "t_saving": {
+    "message": "Enregistrement"
+  },
   "t_services_assessment_disable_qr_check_in": {
     "message": "Désactiver la vérification de présence"
   },

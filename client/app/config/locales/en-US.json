@@ -2865,6 +2865,9 @@
   "t_persona_list_button_notify": {
     "message": "Notify"
   },
+  "t_saving": {
+    "message": "Saving"
+  },
   "t_services_assessment_disable_qr_check_in": {
     "message": "Disable QR Check-in"
   },

@@ -205,7 +205,8 @@ export class PersonasSectionComponent implements OnInit {
       })
     };
 
-    const updatedTiles = this.utils.updateGuideTileRank(bulkContent, schoolId, 'rank');
+    const guideRank = this.guide._featuredTile ? 'featured_rank' : 'rank';
+    const updatedTiles = this.utils.updateGuideTileRank(bulkContent, schoolId, guideRank);
 
     this.moveWithinSection.emit(updatedTiles);
   }
