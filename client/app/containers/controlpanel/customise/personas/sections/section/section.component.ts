@@ -175,7 +175,7 @@ export class PersonasSectionComponent implements OnInit {
     this.setSectionName.emit({ guideId: this.guide.id, body });
   }
 
-  onAdd(event) {
+  onMoveToSection(event) {
     const position = event.newIndex;
     const tile = Number(event.item.dataset.tile);
     const section = event.target.dataset.section;
@@ -185,7 +185,7 @@ export class PersonasSectionComponent implements OnInit {
     }
   }
 
-  onDragged() {
+  onMoveWithinSection() {
     this.state = { ...this.state, sorting: true };
     const schoolId = this.session.g.get('school').id;
     const bulkContent = {
@@ -223,14 +223,20 @@ export class PersonasSectionComponent implements OnInit {
 
     this.sortableOptions = {
       scroll: false,
-      filter: '.do_not_drag',
       group: {
         name: 'studio',
+        // ability to move from the list
         put: true,
-        pull: true
+
+        // whether elements can be added from other lists
+        pull: function({ el }) {
+          const { classList } = el;
+
+          return !classList.contains('js_do_not_drag');
+        }
       },
-      onAdd: this.onAdd.bind(this),
-      onUpdate: this.onDragged.bind(this)
+      onAdd: this.onMoveToSection.bind(this),
+      onUpdate: this.onMoveWithinSection.bind(this)
     };
   }
 }
