@@ -17,8 +17,9 @@
             [noMarginTop]="true"
             [personaId]="personaId"
             [showAddSection]="false"
-            [guide]="state.featureTiles"
-            (shuffle)="onTileMoved($event)"
+            [guide]="state.featuredTiles"
+            (moveToSection)="onTileMoved($event)"
+            (moveWithinSection)="doBulkUpdate($event)"
             (deleteTileClick)="onDeleteTileFromSection($event)">
           </cp-personas-section>
         </div>
@@ -36,11 +37,12 @@
             [noMarginTop]="first"
             [canMoveDown]="!last"
             [personaId]="personaId"
-            (shuffle)="onTileMoved($event)"
             (deleted)="onDeletedSection($event)"
+            (moveToSection)="onTileMoved($event)"
             (swap)="onSwapSection($event, guide)"
             [canDelete]="state.guides.length > 1"
             (removeSection)="onRemoveSection($event)"
+            (moveWithinSection)="doBulkUpdate($event)"
             [disableAddSection]="temporaryGuides === 1"
             (setSectionName)="onSetSectionName($event)"
             (deleteSectionClick)="onDeleteSectionClick($event)"

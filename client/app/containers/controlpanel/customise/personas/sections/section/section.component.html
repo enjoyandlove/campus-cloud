@@ -52,9 +52,9 @@
           [class.sorting]="state.sorting"
           (edited)="onEditedTile($event)"
           [ngClass]="['col-' + tileWidth]"
+          [class.mb-4]="i % tileWidth === 0"
           (deleteClick)="deleteTileClick.emit($event)"
-          *ngFor="let tile of guide.tiles; let i = index"
-          [class.mb-4]="i % tileWidth === 0">
+          *ngFor="let tile of guide.tiles; let i = index">
         </cp-personas-tile>
         <div class="js_do_not_drag" [ngClass]="['col-' + tileWidth]">
           <cp-personas-tile-add-button
