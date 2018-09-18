@@ -1,10 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
+import IEvent from '../../../event.interface';
 import { ICheckIn } from '../check-in.interface';
 import { EventsService } from '../../../events.service';
 import { CPSession } from '../../../../../../../session';
 import { CPI18nService } from '../../../../../../../shared/services';
+import IServiceProvider from '../../../../services/providers.interface';
 
 @Component({
   selector: 'cp-delete-check-in',
@@ -12,9 +14,9 @@ import { CPI18nService } from '../../../../../../../shared/services';
   styleUrls: ['./delete.component.scss']
 })
 export class CheckInDeleteComponent implements OnInit {
-  @Input() data;
   @Input() checkIn: ICheckIn;
   @Input() orientationId: number;
+  @Input() data: IEvent | IServiceProvider;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
@@ -41,10 +43,10 @@ export class CheckInDeleteComponent implements OnInit {
         .append('calendar_id', this.orientationId.toString());
     }
 
-    if (this.data.campus_service_id) {
+    if (this.data['campus_service_id']) {
       search = new HttpParams()
         .append('service_provider_id', this.data.id.toString())
-        .append('service_id', this.data.campus_service_id.toString());
+        .append('service_id', this.data['campus_service_id'].toString());
     }
 
     this.service.deleteCheckInById(this.checkIn.id, search).subscribe(

@@ -10,12 +10,14 @@ import {
 
 import { HttpParams } from '@angular/common/http';
 
+import IEvent from '../../../event.interface';
 import { ICheckIn } from '../check-in.interface';
 import { EventsService } from '../../../events.service';
 import { CPSession } from './../../../../../../../session';
 import { CheckInUtilsService } from '../check-in.utils.service';
 import { EventUtilService } from '../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../shared/services';
+import IServiceProvider from '../../../../services/providers.interface';
 
 @Component({
   selector: 'cp-create-check-in',
@@ -23,8 +25,8 @@ import { CPI18nService } from '../../../../../../../shared/services';
   styleUrls: ['./create.component.scss']
 })
 export class CheckInCreateComponent implements OnInit {
-  @Input() data: any;
   @Input() orientationId: number;
+  @Input() data: IEvent | IServiceProvider;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() created: EventEmitter<ICheckIn> = new EventEmitter();

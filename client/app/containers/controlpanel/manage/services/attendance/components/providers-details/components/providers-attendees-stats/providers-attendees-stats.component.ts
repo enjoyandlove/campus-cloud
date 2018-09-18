@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 
+import IServiceProvider from '../../../../../providers.interface';
 import { STAR_SIZE } from '../../../../../../../../../shared/components/cp-stars';
 
 @Component({
@@ -8,8 +9,8 @@ import { STAR_SIZE } from '../../../../../../../../../shared/components/cp-stars
   styleUrls: ['./providers-attendees-stats.component.scss']
 })
 export class ServicesProvidersAttendeesStatsComponent {
-  @Input() provider;
   @Input() eventRating;
+  @Input() provider: IServiceProvider;
 
   MAX_RATE = 5;
   starSize = STAR_SIZE.LARGE;

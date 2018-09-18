@@ -58,7 +58,10 @@ describe('EventCheckInEditComponent', () => {
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
           component.checkIn = mockCheckIn;
-          component.data = mockEvent;
+          component.data = {
+            ...component.data,
+            ...mockEvent
+          };
           component.ngOnInit();
         });
     })

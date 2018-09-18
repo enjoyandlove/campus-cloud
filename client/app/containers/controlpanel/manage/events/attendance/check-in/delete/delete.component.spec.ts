@@ -48,7 +48,10 @@ describe('EventCheckInDeleteComponent', () => {
           fixture = TestBed.createComponent(CheckInDeleteComponent);
           component = fixture.componentInstance;
 
-          component.data = mockEvent;
+          component.data = {
+            ...component.data,
+            ...mockEvent
+          };
           component.checkIn = mockCheckIn;
           component.session.g.set('school', mockSchool);
           search = new HttpParams().append('event_id', component.data.id.toString());

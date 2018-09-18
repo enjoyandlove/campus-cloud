@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from './../../../../../../../../../session';
+import IServiceProvider from '../../../../../providers.interface';
 import { ProvidersService } from '../../../../../providers.service';
 import { FORMAT } from '../../../../../../../../../shared/pipes/date';
 import { ServicesUtilsService } from '../../../../../services.utils.service';
@@ -29,9 +30,9 @@ const state: IState = {
   styleUrls: ['./providers-attendees-list.component.scss']
 })
 export class ServicesProvidersAttendeesListComponent extends BaseComponent implements OnInit {
-  @Input() provider;
   @Input() serviceId: number;
   @Input() providerId: number;
+  @Input() provider: IServiceProvider;
 
   loading;
   checkInData;

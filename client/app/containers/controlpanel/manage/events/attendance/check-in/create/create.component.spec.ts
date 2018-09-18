@@ -57,7 +57,10 @@ describe('EventCheckInCreateComponent', () => {
 
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
-          component.data = mockEvent;
+          component.data = {
+            ...component.data,
+            ...mockEvent
+          };
           component.ngOnInit();
           component.form = component.checkInUtils
             .getCheckInForm(mockCheckIn, component.data);
