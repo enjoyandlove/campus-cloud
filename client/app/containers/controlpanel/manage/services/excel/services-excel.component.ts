@@ -27,13 +27,14 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   services;
   buttonData;
   categories;
-  topButtonData;
   isChecked = [];
   loading = false;
   form: FormGroup;
   isFormReady = false;
   selectedCategory: string[] = [];
   isParentCheckBoxChecked = false;
+  categoryDropDownStatus = true;
+  uploadImageButtonClass = 'disabled';
 
   constructor(
     private router: Router,
@@ -269,14 +270,9 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   updateTopHeaderButtonsStatus(checked) {
-    const className = checked ? 'cancel' : 'disabled';
-
-    this.topButtonData = {
-      class: className,
-      disabled: !checked
-    };
-
+    this.categoryDropDownStatus = !checked;
     this.isParentCheckBoxChecked = checked;
+    this.uploadImageButtonClass = checked ? 'cancel' : 'disabled';
   }
 
   updateParentCheckBoxStatus(checked) {
@@ -289,11 +285,6 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   ngOnInit() {
-    this.topButtonData = {
-      class: 'disabled',
-      disabled: true
-    };
-
     this.buttonData = {
       disabled: true,
       class: 'primary',

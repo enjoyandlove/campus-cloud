@@ -10,7 +10,7 @@
       </div>
       <div class="col-6">
         <cp-upload-button
-          [buttonClass]="['cpbtn cpbtn--' + props.class]"
+          [buttonClass]="['cpbtn cpbtn--' + uploadImageButtonClass]"
           [buttonText]="cpI18n.translate('upload_picture')"
           (fileUpload)="onFileUpload($event)">
         </cp-upload-button>
@@ -21,7 +21,7 @@
   <div class="col-2 no-left-padding">
     <cp-dropdown
       [items]="categories"
-      [disabled]="props.disabled"
+      [disabled]="categoryDropDownStatus"
       (selected)="categoryChange.emit($event)">
     </cp-dropdown>
   </div>

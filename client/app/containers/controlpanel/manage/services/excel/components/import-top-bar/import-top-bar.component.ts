@@ -14,9 +14,10 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./import-top-bar.component.scss']
 })
 export class ServicesImportTopBarComponent implements OnInit {
-  @Input() props: any;
   @Input() isChecked: boolean;
   @Input() categories: Observable<any>;
+  @Input() uploadImageButtonClass: string;
+  @Input() categoryDropDownStatus: boolean;
 
   @Output() checkAll: EventEmitter<boolean> = new EventEmitter();
   @Output() imageChange: EventEmitter<string> = new EventEmitter();
