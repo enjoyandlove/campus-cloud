@@ -9,8 +9,8 @@ import { CheckinUtilsService } from '../checkin.utils.service';
 import { BaseComponent } from '../../../../base/base.component';
 import { CheckInOutTime, CheckInType } from '../../callback.status';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../shared/services';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../reducers/snackbar.reducer';
-import { CPI18nService, CPTrackingService, ErrorService } from '../../../../shared/services';
 
 interface IState {
   services: Array<any>;
@@ -41,7 +41,6 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
     public utils: CheckinUtilsService,
-    public errorService: ErrorService,
     public cpTracking: CPTrackingService,
     public checkinService: CheckinService
   ) {
@@ -54,26 +53,17 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
 
   onSubmit(data) {
     this.checkinService.doServiceCheckin(data, this.search).subscribe(
-      (res) => {
-        this.updateAttendeesList(data, res);
+      (_) => {
+        this.updateAttendeesList(data);
         this.trackAmplitudeEvent(true);
       },
-      (_) => {
-        this.errorService.handleError(this.cpI18n.translate('something_went_wrong'));
-      }
+      (err) => this.handleError(err.status)
     );
   }
 
-  updateAttendeesList(data, res) {
-    if (!res.attendance_id) {
-      this.handleError();
-
-      return;
-    }
-
+  updateAttendeesList(data) {
     data = {
       ...data,
-      attendance_id: res.attendance_id,
       check_in_type: CheckInType.web,
       check_out_time_epoch: CheckInOutTime.empty
     };
