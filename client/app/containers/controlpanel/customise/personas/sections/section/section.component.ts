@@ -1,17 +1,18 @@
-import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { get as _get } from 'lodash';
-import { TilesService } from './../../tiles/tiles.service';
-import { TilesUtilsService } from './../../tiles/tiles.utils.service';
-import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
-import { CPSession } from '../../../../../../session';
-import { CPI18nService } from '../../../../../../shared/services';
+import { Store } from '@ngrx/store';
+
 import { ITile } from '../../tiles/tile.interface';
 import { ICampusGuide } from '../section.interface';
-import { SectionUtilsService } from '../section.utils.service';
 import { SectionsService } from '../sections.service';
+import { CPSession } from '../../../../../../session';
+import { TilesService } from './../../tiles/tiles.service';
+import { SectionUtilsService } from '../section.utils.service';
+import { CPI18nService } from '../../../../../../shared/services';
+import { TilesUtilsService } from './../../tiles/tiles.utils.service';
+import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
 
 interface ISetSectionName {
   guideId: number;
@@ -43,11 +44,12 @@ export class PersonasSectionComponent implements OnInit {
   @Output() deleted: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output() removeSection: EventEmitter<number> = new EventEmitter();
   @Output() deleteTileClick: EventEmitter<ITile> = new EventEmitter();
+  @Output() moveWithinSection: EventEmitter<any> = new EventEmitter();
   @Output() createNewSection: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output() setSectionName: EventEmitter<ISetSectionName> = new EventEmitter();
   @Output() deleteSectionClick: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output()
-  shuffle: EventEmitter<{
+  moveToSection: EventEmitter<{
     tile: number;
     section: number | string;
     position: number;
@@ -160,7 +162,10 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   onAddSection() {
-    this.createNewSection.emit(this.utils.temporaryGuide(this.guide.rank - 1));
+    const previousRank = this.guide.rank - 1;
+    const rank = previousRank === 0 ? 1 : previousRank;
+
+    this.createNewSection.emit(this.utils.temporaryGuide(rank));
   }
 
   onNameChange(name) {
@@ -172,47 +177,37 @@ export class PersonasSectionComponent implements OnInit {
     this.setSectionName.emit({ guideId: this.guide.id, body });
   }
 
-  onAdd(event) {
+  onMoveToSection(event) {
     const position = event.newIndex;
     const tile = Number(event.item.dataset.tile);
     const section = event.target.dataset.section;
 
     if (section) {
-      this.shuffle.emit({ tile, section, position });
+      this.moveToSection.emit({ tile, section, position });
     }
   }
 
-  onDragged() {
+  onMoveWithinSection() {
     this.state = { ...this.state, sorting: true };
     const schoolId = this.session.g.get('school').id;
     const bulkContent = {
       ...this.guide,
       tiles: this.guide.tiles.map((t) => {
-        const { rank, featured_rank, tile_category_id } = t;
+        const { id, rank, featured_rank, tile_category_id } = t;
 
         return {
-          rank: rank,
+          id,
+          rank,
           featured_rank,
-          tile_id: t.id,
           tile_category_id,
           school_id: schoolId
         };
       })
     };
 
-    const search = new HttpParams().set('school_persona_id', this.personaId.toString());
     const updatedTiles = this.utils.updateGuideTileRank(bulkContent, schoolId, 'rank');
 
-    this.tilesService.bulkUpdateTiles(search, updatedTiles).subscribe(
-      () => {
-        this.state = { ...this.state, sorting: false };
-        this.handleSuccess();
-      },
-      (err) => {
-        this.state = { ...this.state, sorting: false };
-        this.errorHandler(err);
-      }
-    );
+    this.moveWithinSection.emit(updatedTiles);
   }
 
   ngOnInit(): void {
@@ -220,14 +215,21 @@ export class PersonasSectionComponent implements OnInit {
 
     this.sortableOptions = {
       scroll: false,
-      filter: '.do_not_drag',
+      filter: '.js_do_not_drag',
       group: {
         name: 'studio',
+        // ability to move from the list
         put: true,
-        pull: true
+
+        // whether elements can be added from other lists
+        pull: function({ el }) {
+          const { classList } = el;
+
+          return !classList.contains('js_do_not_drag');
+        }
       },
-      onAdd: this.onAdd.bind(this),
-      onUpdate: this.onDragged.bind(this)
+      onAdd: this.onMoveToSection.bind(this),
+      onUpdate: this.onMoveWithinSection.bind(this)
     };
   }
 }

@@ -40,9 +40,10 @@
     <section class="section-tiles">
       <div
         class="row"
+        [sortablejs]="guide.tiles"
         [attr.data-section]="sectionId"
-        [sortablejs]="guide.tiles.length ? guide.tiles : false"
-        [sortablejsOptions]="guide.tiles.length ? sortableOptions : {}">
+        [sortablejsOptions]="sortableOptions"
+        [class.js_do_not_drag]="!guide.tiles.length">
         <cp-personas-tile
           class="tile"
           [tile]="tile"
@@ -51,11 +52,11 @@
           [class.sorting]="state.sorting"
           (edited)="onEditedTile($event)"
           [ngClass]="['col-' + tileWidth]"
+          [class.mb-4]="i % tileWidth === 0"
           (deleteClick)="deleteTileClick.emit($event)"
-          *ngFor="let tile of guide.tiles; let i = index"
-          [class.mb-4]="i % tileWidth === 0">
+          *ngFor="let tile of guide.tiles; let i = index">
         </cp-personas-tile>
-        <div class="do_not_drag" [ngClass]="['col-' + tileWidth]">
+        <div class="js_do_not_drag" [ngClass]="['col-' + tileWidth]">
           <cp-personas-tile-add-button
             [disabled]="guide._disabled"
             (buttonClick)="goToCreateTile()">
