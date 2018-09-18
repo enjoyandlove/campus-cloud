@@ -40,6 +40,8 @@ export class CheckOutModalComponent implements OnInit {
   @Output() checkout: EventEmitter<IAttendee> = new EventEmitter();
 
   eventId;
+  serviceId;
+  providerId;
   formErrors;
   buttonData;
   errorMessage;
@@ -55,6 +57,8 @@ export class CheckOutModalComponent implements OnInit {
     public utils: CheckinUtilsService
   ) {
     this.eventId = this.route.snapshot.params['event'];
+    this.serviceId = this.route.snapshot.params['service'];
+    this.providerId = this.route.snapshot.params['provider'];
   }
 
   @HostListener('document:click', ['$event'])
@@ -91,23 +95,25 @@ export class CheckOutModalComponent implements OnInit {
       return;
     }
 
-    const search = new HttpParams()
-      .append('event_id', this.eventId.toString());
+    let search = new HttpParams();
 
-    this.service.doEventCheckin(this.form.value, search, true).subscribe(
-      (_) => {
-        this.attendee = {
-          ...this.attendee,
-          check_out_time_epoch: checkOutTime.value
-        };
+    if (this.eventId) {
+      search = search.append('event_id', this.eventId.toString());
 
-        this.checkout.emit(this.attendee);
-        this.resetModal();
-      },
-      (err) => {
-        this.formErrors = true;
-        this.errorMessage = this.utils.getErrorMessage(err.status);
-      });
+      this.service.doEventCheckin(this.form.value, search, true).subscribe(
+        (_) => this.handleSuccess(checkOutTime),
+        (err) => this.handleError(err));
+    }
+
+    if (this.serviceId) {
+      search = search
+        .append('service_id', this.serviceId.toString())
+        .append('provider_id', this.providerId.toString());
+
+      this.service.doServiceCheckin(this.form.value, search, true).subscribe(
+        (_) => this.handleSuccess(checkOutTime),
+        (err) => this.handleError(err));
+    }
   }
 
   enableCheckOutButton() {
@@ -115,6 +121,21 @@ export class CheckOutModalComponent implements OnInit {
       ...this.buttonData,
       disabled: false
     };
+  }
+
+  handleSuccess(checkOutTime) {
+    this.attendee = {
+      ...this.attendee,
+      check_out_time_epoch: checkOutTime.value
+    };
+
+    this.checkout.emit(this.attendee);
+    this.resetModal();
+  }
+
+  handleError(err) {
+    this.formErrors = true;
+    this.errorMessage = this.utils.getErrorMessage(err.status);
   }
 
   ngOnInit() {
@@ -138,8 +159,8 @@ export class CheckOutModalComponent implements OnInit {
       check_out_time_epoch: [null, Validators.required],
       lastname: [this.attendee.lastname, Validators.required],
       firstname: [this.attendee.firstname, Validators.required],
-      attendance_id: [this.attendee.attendance_id, Validators.required],
       check_in_time_epoch: [this.attendee.check_in_time_epoch, Validators.required],
+      attendance_id: [this.attendee.attendance_id, this.eventId ? Validators.required : null],
     });
   }
 }
