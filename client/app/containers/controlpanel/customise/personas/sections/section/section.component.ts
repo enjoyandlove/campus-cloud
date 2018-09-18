@@ -160,7 +160,10 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   onAddSection() {
-    this.createNewSection.emit(this.utils.temporaryGuide(this.guide.rank - 1));
+    const previousRank = this.guide.rank - 1;
+    const rank = previousRank === 0 ? 1 : previousRank;
+
+    this.createNewSection.emit(this.utils.temporaryGuide(rank));
   }
 
   onNameChange(name) {
