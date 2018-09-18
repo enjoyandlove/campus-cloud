@@ -2928,6 +2928,9 @@
   "t_studio": {
     "message": "Studio"
   },
+  "t_studio_section_delete_no_name": {
+    "message": "Untitled"
+  },
   "t_tile_button_default": {
     "message": "Default"
   },
