@@ -32,7 +32,7 @@ const state: IState = {
 export class ServicesProvidersListComponent extends BaseComponent implements OnInit {
   @Input() service;
 
-  @Output() providersLength: EventEmitter<boolean> = new EventEmitter();
+  @Output() hasProviders: EventEmitter<boolean> = new EventEmitter();
 
   loading;
   eventData;
@@ -82,9 +82,8 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       .fetchData(this.providersService.getProviders(this.startRange, this.endRange, search))
       .then((res) => {
         this.state = Object.assign({}, this.state, { providers: res.data });
-        this.providersLength.emit(res.data.length > 0);
-      })
-      .catch((_) => {});
+        this.hasProviders.emit(res.data.length > 0);
+      });
   }
 
   onDeleted(providerId) {
@@ -92,7 +91,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       providers: this.state.providers.filter((provider) => provider.id !== providerId)
     });
 
-    this.providersLength.emit(this.state.providers.length > 0);
+    this.hasProviders.emit(this.state.providers.length > 0);
   }
 
   trackDownloadEvent() {
