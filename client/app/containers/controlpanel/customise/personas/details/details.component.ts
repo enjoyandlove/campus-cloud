@@ -29,7 +29,7 @@ import { TilesService } from '../tiles/tiles.service';
 
 interface IState {
   working: boolean;
-  featureTiles: ICampusGuide;
+  featuredTiles: ICampusGuide;
   guides: Array<ICampusGuide>;
   showTileDeleteModal: boolean;
   showSectionDeleteModal: boolean;
@@ -52,7 +52,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   state: IState = {
     guides: [],
     working: false,
-    featureTiles: null,
+    featuredTiles: null,
     showTileDeleteModal: false,
     showSectionDeleteModal: false
   };
@@ -197,9 +197,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     if (this.tileUtils.isFeatured(tile)) {
       this.state = {
         ...this.state,
-        featureTiles: {
-          ...this.state.featureTiles,
-          tiles: this.state.featureTiles.tiles.filter((t: ITile) => t.id !== tile.id)
+        featuredTiles: {
+          ...this.state.featuredTiles,
+          tiles: this.state.featuredTiles.tiles.filter((t: ITile) => t.id !== tile.id)
         }
       };
     } else {
@@ -274,14 +274,14 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
   onTileMoved({ tile, section }) {
     const guideTiles = flatten(this.state.guides.map((g) => g.tiles));
-    const allTiles = [...guideTiles, ...this.state.featureTiles.tiles];
-    const allGuides = [...this.state.guides, this.state.featureTiles];
+    const allTiles = [...guideTiles, ...this.state.featuredTiles.tiles];
+    const allGuides = [...this.state.guides, this.state.featuredTiles];
 
     const movingTile = allTiles.filter((t: ITile) => t.id === tile)[0];
 
     let newCategory: ICampusGuide =
       section === 'featured'
-        ? this.state.featureTiles
+        ? this.state.featuredTiles
         : allGuides.filter((g) => g.id === +section)[0];
 
     const school_id = this.session.g.get('school').id;
@@ -541,7 +541,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         this.state = {
           ...this.state,
           guides,
-          featureTiles: {
+          featuredTiles: {
             id: null,
             rank: 1,
             name: null,
