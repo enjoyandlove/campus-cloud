@@ -53,17 +53,18 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
 
   onSubmit(data) {
     this.checkinService.doServiceCheckin(data, this.search).subscribe(
-      (_) => {
-        this.updateAttendeesList(data);
+      (res) => {
+        this.updateAttendeesList(data, res);
         this.trackAmplitudeEvent(true);
       },
       (err) => this.handleError(err.status)
     );
   }
 
-  updateAttendeesList(data) {
+  updateAttendeesList(data, res) {
     data = {
       ...data,
+      attendance_id: res.attendance_id,
       check_in_type: CheckInType.web,
       check_out_time_epoch: CheckInOutTime.empty
     };
