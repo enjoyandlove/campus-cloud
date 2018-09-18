@@ -89,6 +89,13 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     });
   }
 
+  onCheckout(service) {
+    this.state.services = {
+      ...this.state.services,
+      ...service
+    };
+  }
+
   fetch() {
     super
       .fetchData(this.checkinService.getServiceData(this.search, true))

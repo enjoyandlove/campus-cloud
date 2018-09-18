@@ -159,8 +159,8 @@ export class CheckOutModalComponent implements OnInit {
       check_out_time_epoch: [null, Validators.required],
       lastname: [this.attendee.lastname, Validators.required],
       firstname: [this.attendee.firstname, Validators.required],
+      attendance_id: [this.attendee.attendance_id, Validators.required],
       check_in_time_epoch: [this.attendee.check_in_time_epoch, Validators.required],
-      attendance_id: [this.attendee.attendance_id, this.eventId ? Validators.required : null],
     });
   }
 }
