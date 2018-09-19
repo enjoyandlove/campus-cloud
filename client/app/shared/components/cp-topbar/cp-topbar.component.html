@@ -31,7 +31,7 @@
           *ngIf="canCustomise"
           routerLinkActive="active"
           (click)="trackMenu(amplitudeEvents.menu_studio)">
-          <a [routerLink]="['/studio']">{{ 't_studio' | cpI18n }}</a>
+          <a [routerLink]="['/customize']">{{ 'customise' | cpI18n }}</a>
         </li>
         <li
           *ngIf="canAudience"

@@ -1,19 +1,19 @@
 {
-  "heading": "t_studio",
+  "heading": "customise",
   "subheading": null,
   "em": null,
   "children": [
+    {
+      "amplitude": "Banner",
+      "label": "customise_banner",
+      "url": "/customize/banner"
+    },
     {
       "hidden": true,
       "allow_internal": true,
       "amplitude": "Experiences",
       "label": "t_customise_personas",
-      "url": "/studio/experiences"
-    },
-    {
-      "amplitude": "Banner",
-      "label": "customise_banner",
-      "url": "/studio/branding"
+      "url": "/customize/personas"
     }
   ]
 }

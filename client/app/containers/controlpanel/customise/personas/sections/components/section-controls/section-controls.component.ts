@@ -8,7 +8,6 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 export class PersonasSectionControlsComponent implements OnInit {
   @Input() disabled: boolean;
   @Input() disableUp: boolean;
-  @Input() canDelete: boolean;
   @Input() disableDown: boolean;
 
   @Output() moveUp: EventEmitter<null> = new EventEmitter();

@@ -1,12 +1,12 @@
 <fieldset [disabled]="guide._disabled || state.sorting">
   <section
-    class="new-section"
-    *ngIf="showAddSection">
+    *ngIf="addSection"
+    class="new-section">
     <div class="row">
       <div class="col-12">
         <cp-personas-section-add-button
           (addSection)="onAddSection()"
-          [disabled]="state.working || disableAddSection">
+          [disabled]="state.working || utils.isTemporaryGuide(guide)">
         </cp-personas-section-add-button>
       </div>
     </div>
@@ -15,22 +15,20 @@
   <fieldset [disabled]="state.working">
     <section
       class="section-details"
-      [class.no_margin_top]="noMarginTop">
+      [class.no_margin_top]="hideName">
       <div class="row">
-        <div class="col-8" *ngIf="!noTitle">
+        <div class="col-8" *ngIf="guide.name">
           <cp-personas-section-title
             [name]="guide.name"
-            (nameChanged)="onNameChange($event, guide)"
-            [noNameChange]="utils.isTemporaryGuide(guide)">
+            (nameChanged)="onNameChange($event, guide)">
           </cp-personas-section-title>
         </div>
         <div class="col-4 text-right" *ngIf="!noControls">
           <cp-personas-section-controls
+            [disableUp]="first"
+            [disableDown]="last"
             (moveUp)="onMove('up')"
-            [canDelete]="canDelete"
-            [disableUp]="!canMoveUp"
             (moveDown)="onMove('down')"
-            [disableDown]="!canMoveDown"
             (deleteClick)="deleteSectionClick.emit(guide)">
           </cp-personas-section-controls>
         </div>
@@ -42,21 +40,21 @@
         class="row"
         [sortablejs]="guide.tiles"
         [attr.data-section]="sectionId"
-        [sortablejsOptions]="sortableOptions"
-        [class.js_do_not_drag]="!guide.tiles.length">
+        [sortablejsOptions]="sortableOptions">
         <cp-personas-tile
           class="tile"
           [tile]="tile"
+          class="is_draggable"
           (edit)="onEditTile(tile)"
           [attr.data-tile]="tile.id"
           [class.sorting]="state.sorting"
           (edited)="onEditedTile($event)"
           [ngClass]="['col-' + tileWidth]"
-          [class.mb-4]="i % tileWidth === 0"
           (deleteClick)="deleteTileClick.emit($event)"
-          *ngFor="let tile of guide.tiles; let i = index">
+          *ngFor="let tile of guide.tiles; let i = index"
+          [class.mb-4]="i % tileWidth === 0">
         </cp-personas-tile>
-        <div class="js_do_not_drag" [ngClass]="['col-' + tileWidth]">
+        <div [ngClass]="['col-' + tileWidth]">
           <cp-personas-tile-add-button
             [disabled]="guide._disabled"
             (buttonClick)="goToCreateTile()">

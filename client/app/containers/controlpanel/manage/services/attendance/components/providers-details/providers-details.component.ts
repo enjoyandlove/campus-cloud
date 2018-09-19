@@ -1,12 +1,14 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+import { BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 
 import { ServicesService } from './../../../services.service';
 import { ProvidersService } from '../../../providers.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
+import { STAR_SIZE } from '../../../../../../../shared/components/cp-stars';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
 import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
@@ -17,8 +19,6 @@ import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/t
   styleUrls: ['./providers-details.component.scss']
 })
 export class ServicesProviderDetailsComponent extends BaseComponent implements OnInit {
-  @ViewChild('providerAttendees') providerAttendees;
-
   loading;
   provider;
   eventData;
@@ -27,6 +27,9 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   MAX_RATE = 5;
   eventRating;
   serviceName: string;
+  starSize = STAR_SIZE.LARGE;
+  query$: BehaviorSubject<string> = new BehaviorSubject(null);
+  download$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private route: ActivatedRoute,
@@ -89,14 +92,6 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
       eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
       eventProperties
     };
-  }
-
-  onDownload() {
-    this.providerAttendees.downloadProvidersCSV();
-  }
-
-  onSearch(query) {
-    this.providerAttendees.doSearch(query);
   }
 
   ngOnInit() {
