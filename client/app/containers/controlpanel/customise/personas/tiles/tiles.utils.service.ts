@@ -54,18 +54,19 @@ export class TilesUtilsService {
 
   isTileSupportedByWebApp(tile: ITile) {
     const supportedLinkUrls = TilesUtilsService.webAppSupportedLinkUrls;
-    const linkUrl = _get('tile', ['related_link_data', 'link_url'], null);
+    const linkUrl = _get(tile, ['related_link_data', 'link_url'], null);
 
     if (!linkUrl) {
       return false;
     }
-    const webOrExternalLink = tile.related_link_data.link_url.startsWith('http');
 
-    return webOrExternalLink || supportedLinkUrls.includes(tile.related_link_data.link_url);
+    const webOrExternalLink = linkUrl.startsWith('http');
+
+    return webOrExternalLink || supportedLinkUrls.includes(linkUrl);
   }
 
   isCampaignTile(tile: ITile) {
-    const linkUrl = _get('tile', ['related_link_data', 'link_url'], null);
+    const linkUrl = _get(tile, ['related_link_data', 'link_url'], null);
 
     if (!linkUrl) {
       return false;
@@ -78,7 +79,7 @@ export class TilesUtilsService {
   }
 
   isDeprecated(tile: ITile) {
-    const linkUrl = _get('tile', ['related_link_data', 'link_url'], null);
+    const linkUrl = _get(tile, ['related_link_data', 'link_url'], null);
 
     if (!linkUrl) {
       return false;
