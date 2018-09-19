@@ -6,7 +6,6 @@ import { flatten, sortBy, get as _get } from 'lodash';
 import { CPSession } from './../../../../session/index';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
 import { PersonasLoginRequired, PersonasType } from './personas.status';
-import { ICampusGuide } from './sections/section.interface';
 import { ITile } from './tiles/tile.interface';
 
 @Injectable()
@@ -33,18 +32,11 @@ export class PersonasUtilsService {
   filterTileByCategory(tiles, categoryId) {
     return tiles
       .filter((tile: ITile) => tile.tile_category_id === categoryId)
-      .filter((tile: ITile) => tile.rank !== -1);
+      .filter((tile: ITile) => tile.rank !== -1)
+      .filter((tile: ITile) => tile.featured_rank === -1);
   }
 
-  getCategoryZeroTiles(tiles: ITile[]) {
-    const categoryZeroTiles = tiles.filter(
-      (tile: ITile) => tile.tile_category_id === 0 && tile.featured_rank === -1
-    );
-
-    return sortBy(flatten(categoryZeroTiles), (i) => i.rank);
-  }
-
-  getFeatureTiles(tiles: ITile[]) {
+  getFeaturedTiles(tiles: ITile[]) {
     const featureTiles = tiles.filter(
       (tile: ITile) =>
         tile.featured_rank > -1 &&
@@ -56,18 +48,6 @@ export class PersonasUtilsService {
 
   getCampusSecurityServiceId(campusSecurity) {
     return _get(campusSecurity, ['related_link_data', 'link_params', 'id'], null);
-  }
-
-  filterTiles(guides: Array<ICampusGuide>) {
-    return guides.map((guide: ICampusGuide) => {
-      return {
-        ...guide,
-        tiles: guide.tiles
-          // filter category zero && featured
-          .filter((tile: ITile) => tile.tile_category_id !== 0)
-          .filter((tile: ITile) => tile.rank > -1)
-      };
-    });
   }
 
   groupTilesWithTileCategories(tileCategories, tiles) {
@@ -124,19 +104,8 @@ export class PersonasUtilsService {
       }
     ];
   }
-  // test
-  mergeRelatedLinkData(tilesByPersonaId: ITile[], tilesByPersonaZero: ITile[]) {
-    return tilesByPersonaId.map((tile: ITile) => {
-      return {
-        ...tile,
-        related_link_data: tilesByPersonaZero
-          .filter((t: ITile) => t.id === tile.extra_info.id)
-          .map((t: ITile) => t.related_link_data)[0]
-      };
-    });
-  }
 
-  localaizedPersonaName(persona: IPersona) {
+  localizedPersonaName(persona: IPersona) {
     const locale = CPI18nService.getLocale().startsWith('fr') ? 'fr' : 'en';
 
     return persona.localized_name_map[locale];

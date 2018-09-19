@@ -5,8 +5,7 @@
         <input
           #inputEl
           type="text"
-          formControlName="name"
-          [class.invalid]="state.invalid" />
+          formControlName="name"/>
         <cp-working class="input__spinner" *ngIf="state.saving"></cp-working>
       </form>
     </div>

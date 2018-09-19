@@ -1,11 +1,12 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 
+import { isProd } from './../../../config/env';
 import { CustomiseComponent } from './customise.component';
 import { AuthGuard, PrivilegesGuard } from '../../../config/guards';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'banner', pathMatch: 'full' },
+  { path: '', redirectTo: isProd ? 'branding' : 'experiences', pathMatch: 'full' },
   {
     path: '',
     component: CustomiseComponent,
@@ -13,12 +14,12 @@ const appRoutes: Routes = [
     canActivateChild: [PrivilegesGuard],
     children: [
       {
-        path: 'personas',
+        path: 'experiences',
         data: { zendesk: 'customize' },
         loadChildren: './personas/personas.module#PersonasModule'
       },
       {
-        path: 'banner',
+        path: 'branding',
         data: { zendesk: 'customize' },
         loadChildren: './banner/banner.module#BannerModule'
       }

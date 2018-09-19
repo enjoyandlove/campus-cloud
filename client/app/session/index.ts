@@ -59,7 +59,11 @@ export class CPSession {
   get isInternal() {
     const email = this.g.get('user').email.toLowerCase();
 
-    return email.endsWith('@oohlalamobile.com') || email.endsWith('@dublabs.com');
+    return (
+      email.endsWith('@oohlalamobile.com') ||
+      email.endsWith('@dublabs.com') ||
+      email.endsWith('@readyeducation.com')
+    );
   }
 
   get school() {

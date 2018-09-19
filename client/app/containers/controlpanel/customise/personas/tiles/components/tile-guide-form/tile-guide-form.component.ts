@@ -1,5 +1,6 @@
 /* tslint:disable:max-line-length */
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   ComponentFactoryResolver,
@@ -8,10 +9,12 @@ import {
   OnInit,
   Output,
   ViewChild,
-  AfterViewInit
+  ElementRef
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { map, filter } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+import { CPColorPickerDirective } from './../../../../../../../shared/directives/color-picker/color-picker.directive';
 import { SNACKBAR_SHOW } from './../../../../../../../reducers/snackbar.reducer';
 import { CPImageCropperComponent } from './../../../../../../../shared/components/cp-image-cropper/cp-image-cropper.component';
 import { CPHostDirective } from './../../../../../../../shared/directives/cp-host/cp-host.directive';
@@ -20,6 +23,7 @@ import { TilesService } from './../../tiles.service';
 import { TilesUtilsService } from './../../tiles.utils.service';
 import { ISnackbar } from '../../../../../../../reducers/snackbar.reducer';
 import { FileUploadService } from '../../../../../../../shared/services';
+import { fromEvent } from 'rxjs';
 
 @Component({
   selector: 'cp-personas-tile-guide-form',
@@ -31,7 +35,9 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
   @Input() uploadButtonId: number;
 
   @ViewChild('base') base;
+  @ViewChild('hexInput') hexInput: ElementRef;
   @ViewChild(CPHostDirective) cpHost: CPHostDirective;
+  @ViewChild(CPColorPickerDirective) cpColorPicker: CPColorPickerDirective;
 
   @Output() formChange: EventEmitter<FormGroup> = new EventEmitter();
 
@@ -115,7 +121,25 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
     });
   }
 
+  addSubscribers() {
+    const hexInput$ = fromEvent(this.hexInput.nativeElement, 'keyup');
+    hexInput$
+      .pipe(
+        map((event: any) => event.target.value),
+        map((hexString: string) => {
+          hexString = hexString.startsWith('#') ? hexString : `#${hexString}`;
+
+          const validHex = /(^#[0-9A-F]{6}$)|(^#[0-9A-F]{3}$)/i;
+
+          return validHex.test(hexString) ? hexString : null;
+        }),
+        filter((val) => !!val)
+      )
+      .subscribe((colorString) => this.cpColorPicker.setColor(`${colorString}`));
+  }
+
   ngAfterViewInit() {
+    this.addSubscribers();
     this.changeDetectorRef.detectChanges();
   }
 
