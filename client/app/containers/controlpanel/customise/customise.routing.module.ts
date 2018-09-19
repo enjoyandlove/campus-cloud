@@ -1,12 +1,11 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { isProd } from './../../../config/env';
 import { CustomiseComponent } from './customise.component';
 import { AuthGuard, PrivilegesGuard } from '../../../config/guards';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: isProd ? 'branding' : 'experiences', pathMatch: 'full' },
+  { path: '', redirectTo: 'experiences', pathMatch: 'full' },
   {
     path: '',
     component: CustomiseComponent,
