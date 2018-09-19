@@ -16,10 +16,11 @@
 
     <div class="row">
       <div class="col-12">
-        <cp-providers-list
-          #providersList
-          [download]="download$"
-          [serviceId]="serviceId"
+        <cp-providers-list 
+          [reload]="reload$" 
+          [download]="download$" 
+          [query]="search_text$" 
+          [serviceId]="serviceId" 
           [serviceWithFeedback]="enableFeedback$"
           (providersLength$)="onProvidersResult($event)">
         </cp-providers-list>

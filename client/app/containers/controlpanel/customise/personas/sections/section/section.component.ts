@@ -1,26 +1,17 @@
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
-
-import { ITile } from '../../tiles/tile.interface';
-import { ICampusGuide } from '../section.interface';
-import { SectionsService } from '../sections.service';
-import { CPSession } from '../../../../../../session';
+import { get as _get } from 'lodash';
 import { TilesService } from './../../tiles/tiles.service';
-import { SectionUtilsService } from '../section.utils.service';
-import { CPI18nService } from '../../../../../../shared/services';
 import { TilesUtilsService } from './../../tiles/tiles.utils.service';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
-
-interface ISetSectionName {
-  guideId: number;
-  body: {
-    name: string;
-    school_id: number;
-  };
-}
+import { CPSession } from '../../../../../../session';
+import { CPI18nService } from '../../../../../../shared/services';
+import { ITile } from '../../tiles/tile.interface';
+import { ICampusGuide } from '../section.interface';
+import { SectionUtilsService } from '../section.utils.service';
+import { SectionsService } from '../sections.service';
 
 @Component({
   selector: 'cp-personas-section',
@@ -28,28 +19,24 @@ interface ISetSectionName {
   styleUrls: ['./section.component.scss']
 })
 export class PersonasSectionComponent implements OnInit {
+  @Input() last: boolean;
+  @Input() first: boolean;
   @Input() tileWidth = '3';
-  @Input() noTitle = false;
+  @Input() hideName: boolean;
   @Input() personaId: number;
+  @Input() addSection = true;
   @Input() noControls = false;
-  @Input() canMoveUp: boolean;
-  @Input() canDelete: boolean;
   @Input() guide: ICampusGuide;
-  @Input() noMarginTop: boolean;
-  @Input() canMoveDown: boolean;
-  @Input() showAddSection = true;
-  @Input() disableAddSection = false;
+  @Input() guideNames: String[];
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
   @Output() deleted: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output() removeSection: EventEmitter<number> = new EventEmitter();
   @Output() deleteTileClick: EventEmitter<ITile> = new EventEmitter();
-  @Output() moveWithinSection: EventEmitter<any> = new EventEmitter();
   @Output() createNewSection: EventEmitter<ICampusGuide> = new EventEmitter();
-  @Output() setSectionName: EventEmitter<ISetSectionName> = new EventEmitter();
   @Output() deleteSectionClick: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output()
-  moveToSection: EventEmitter<{
+  shuffle: EventEmitter<{
     tile: number;
     section: number | string;
     position: number;
@@ -96,29 +83,40 @@ export class PersonasSectionComponent implements OnInit {
 
   onEditTile(tile: ITile) {
     this.service.guide = this.guide;
-    this.router.navigate([`/studio/experiences/${this.personaId}/tiles/${tile.id}/edit`]);
+    this.router.navigate([`/customize/personas/${this.personaId}/tiles/${tile.id}/edit`]);
   }
 
   goToCreateTile() {
-    if (this.guide._featuredTile) {
+    if (this.guide._categoryZero) {
+      return this.createCategoryZeroTile();
+    }
+
+    if (this.guide._featureTile) {
       return this.createFeatureTile();
     }
 
-    this.service.guide = {
-      ...this.guide
-    };
-    this.router.navigate([`/studio/experiences/${this.personaId}/tiles`]);
+    this.service.guide = this.guide;
+    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
   }
 
   createFeatureTile() {
     const tempGuide = {
       ...this.guide,
-      _featuredTile: true
+      featureTile: true
     };
-
     this.service.guide = tempGuide;
 
-    this.router.navigate([`/studio/experiences/${this.personaId}/tiles`]);
+    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
+  }
+
+  createCategoryZeroTile() {
+    const tempGuide = {
+      ...this.guide,
+      categoryZero: true
+    };
+    this.service.guide = tempGuide;
+
+    this.router.navigate([`/customize/personas/${this.personaId}/tiles`]);
   }
 
   onMove(direction) {
@@ -162,75 +160,101 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   onAddSection() {
-    const previousRank = this.guide.rank - 1;
-    const rank = previousRank === 0 ? 1 : previousRank;
-
-    this.createNewSection.emit(this.utils.temporaryGuide(rank));
+    this.createNewSection.emit(this.utils.temporaryGuide(this.guide.rank - 1));
   }
 
-  onNameChange(name) {
+  onNameChange(name, updatedGuide: ICampusGuide) {
+    if (this.utils.isTemporaryGuide(updatedGuide)) {
+      this.guide = {
+        ...this.guide,
+        name
+      };
+
+      this.service.guide = this.guide;
+
+      return;
+    }
+
     const body = {
       name,
       school_id: this.session.g.get('school').id
     };
 
-    this.setSectionName.emit({ guideId: this.guide.id, body });
+    this.setWorkingState(true);
+
+    this.service.updateSectionTileCategory(this.guide.id, body).subscribe(
+      (guide: ICampusGuide) => {
+        this.guide = {
+          ...this.guide,
+          name: guide.name
+        };
+
+        this.setWorkingState(false);
+      },
+      (err) => this.errorHandler(err)
+    );
   }
 
-  onMoveToSection(event) {
+  onAdd(event) {
     const position = event.newIndex;
     const tile = Number(event.item.dataset.tile);
     const section = event.target.dataset.section;
 
-    if (section) {
-      this.moveToSection.emit({ tile, section, position });
-    }
+    this.shuffle.emit({ tile, section, position });
   }
 
-  onMoveWithinSection() {
+  onDragged() {
     this.state = { ...this.state, sorting: true };
     const schoolId = this.session.g.get('school').id;
     const bulkContent = {
       ...this.guide,
       tiles: this.guide.tiles.map((t) => {
-        const { id, rank, featured_rank, tile_category_id } = t;
+        const { rank, featured_rank, tile_category_id } = t;
 
         return {
-          id,
-          rank,
+          rank: rank,
           featured_rank,
+          tile_id: t.id,
           tile_category_id,
           school_id: schoolId
         };
       })
     };
 
-    const guideRank = this.guide._featuredTile ? 'featured_rank' : 'rank';
-    const updatedTiles = this.utils.updateGuideTileRank(bulkContent, schoolId, guideRank);
+    const search = new HttpParams().set('school_persona_id', this.personaId.toString());
+    const updatedTiles = this.utils.updateGuideTileRank(bulkContent, schoolId, 'rank');
 
-    this.moveWithinSection.emit(updatedTiles);
+    this.tilesService.bulkUpdateTiles(search, updatedTiles).subscribe(
+      () => {
+        this.state = { ...this.state, sorting: false };
+        this.handleSuccess();
+      },
+      (err) => {
+        this.state = { ...this.state, sorting: false };
+        this.errorHandler(err);
+      }
+    );
   }
 
   ngOnInit(): void {
-    this.sectionId = this.guide._featuredTile ? 'featured' : this.guide.id;
+    if (this.guide._featureTile) {
+      this.sectionId = 'featured';
+    } else if (this.guide._categoryZero) {
+      this.sectionId = 'category_zero';
+    } else {
+      this.sectionId = this.guide.id;
+    }
 
     this.sortableOptions = {
       scroll: false,
-      filter: '.js_do_not_drag',
+      draggable: '.is_draggable',
       group: {
         name: 'studio',
-        // ability to move from the list
         put: true,
-
-        // whether elements can be added from other lists
-        pull: function({ el }) {
-          const { classList } = el;
-
-          return !classList.contains('js_do_not_drag');
-        }
+        pull: true
       },
-      onAdd: this.onMoveToSection.bind(this),
-      onUpdate: this.onMoveWithinSection.bind(this)
+      onAdd: this.onAdd.bind(this),
+      onUpdate: this.onDragged.bind(this)
     };
   }
 }

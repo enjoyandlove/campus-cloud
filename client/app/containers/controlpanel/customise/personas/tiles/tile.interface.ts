@@ -15,8 +15,8 @@ export interface ITile {
 }
 
 export interface ITileBulk {
-  id: number;
   rank: number;
+  tile_id: number;
   school_id: number;
   featured_rank: number;
   tile_category_id: number;

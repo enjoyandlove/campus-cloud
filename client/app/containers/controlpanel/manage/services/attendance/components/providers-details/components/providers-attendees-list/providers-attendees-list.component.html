@@ -46,9 +46,16 @@
                 <div class="col-4">
                   <img
                     class="rounded img-fit-cover float-left avatar"
-                    [src]="assessment.avatar_thumb_url ? assessment.avatar_thumb_url : defaultImage">
+                    [src]="assessment.avatar_thumb_url"
+                    *ngIf="assessment.avatar_thumb_url !== ''">
+                  <img
+                    [src]="defaultImage"
+                    class="rounded img-fit-cover float-left avatar"
+                    *ngIf="assessment.avatar_thumb_url === ''">
                   <div class="meta">
-                    <strong>{{ assessment.firstname }} {{ assessment.lastname }}</strong>
+                    <strong>
+                      {{ assessment.firstname }} {{ assessment.lastname }}
+                    </strong>
                     <br>
                     {{ assessment.email }}
                     <br>
@@ -62,11 +69,7 @@
                   </cp-stars>
                 </div>
                 <div class="col-2">
-                  <span>
-                    <i class="material-icons">
-                      {{ assessment.check_in_method === webCheckInMethod ? 'computer' : 'smartphone' }}
-                    </i>
-                  </span>
+                  <span>{{ checkinMethods[assessment.check_in_method].label }}</span>
                 </div>
                 <div class="col-3">
                   <span>{{ assessment.check_in_time | cpDatePipe:dateFormat }}</span>

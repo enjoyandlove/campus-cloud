@@ -12,14 +12,12 @@
         <div class="col-12">
           <cp-personas-section
             tileWidth="4"
-            [noTitle]="true"
+            [hideName]="true"
             [noControls]="true"
-            [noMarginTop]="true"
+            [addSection]="false"
             [personaId]="personaId"
-            [showAddSection]="false"
-            [guide]="state.featuredTiles"
-            (moveToSection)="onTileMoved($event)"
-            (moveWithinSection)="doBulkUpdate($event)"
+            [guide]="state.featureTiles"
+            (shuffle)="onTileMoved($event)"
             (deleteTileClick)="onDeleteTileFromSection($event)">
           </cp-personas-section>
         </div>
@@ -27,24 +25,32 @@
     </div>
 
     <div class="cp-card">
+      <div class="row">
+        <div class="col-12">
+          <cp-personas-section
+            [hideName]="true"
+            [noControls]="true"
+            [addSection]="false"
+            [personaId]="personaId"
+            [guide]="state.categoryZero"
+            (shuffle)="onTileMoved($event)"
+            (deleteTileClick)="onDeleteTileFromSection($event)">
+          </cp-personas-section>
+        </div>
+      </div>
       <div
         class="row"
         *ngFor="let guide of state.guides; let first = first; let last = last; let i = index">
         <div class="col-12">
           <cp-personas-section
+            [last]="last"
             [guide]="guide"
-            [canMoveUp]="!first"
-            [noMarginTop]="first"
-            [canMoveDown]="!last"
+            [first]="first"
             [personaId]="personaId"
+            (shuffle)="onTileMoved($event)"
             (deleted)="onDeletedSection($event)"
-            (moveToSection)="onTileMoved($event)"
             (swap)="onSwapSection($event, guide)"
-            [canDelete]="state.guides.length > 1"
             (removeSection)="onRemoveSection($event)"
-            (moveWithinSection)="doBulkUpdate($event)"
-            [disableAddSection]="temporaryGuides === 1"
-            (setSectionName)="onSetSectionName($event)"
             (deleteSectionClick)="onDeleteSectionClick($event)"
             (deleteTileClick)="onDeleteTileFromSection($event)"
             (createNewSection)="onAddSectionBefore($event, guide.id)">

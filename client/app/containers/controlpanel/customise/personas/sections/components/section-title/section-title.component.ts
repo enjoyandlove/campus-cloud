@@ -1,4 +1,4 @@
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {
   Component,
   OnInit,
@@ -25,7 +25,7 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
     this.state = { ...this.state, saving: false };
   }
 
-  @Input() noNameChange = false;
+  @Input() isEditing = true;
 
   @ViewChild('inputEl') inputEl: ElementRef;
 
@@ -36,7 +36,8 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
   form: FormGroup;
 
   state = {
-    saving: false
+    saving: false,
+    invalid: false
   };
 
   constructor(public fb: FormBuilder) {}
@@ -53,23 +54,19 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
   }
 
   onSubmit() {
-    if (this.noNameChange) {
+    this.state = { ...this.state, invalid: !this.form.valid };
+
+    if (this.state.invalid) {
       return;
     }
 
-    const nameChanged = this._name !== this.form.get('name').value;
+    this.state = { ...this.state, saving: true };
 
-    if (nameChanged) {
-      this.state = { ...this.state, saving: true };
-
-      this.nameChanged.emit(this.form.get('name').value);
-    }
+    this.nameChanged.emit(this.form.get('name').value);
   }
 
   ngAfterViewInit() {
-    if (!this.noNameChange) {
-      this.listenToInputBlur();
-    }
+    this.listenToInputBlur();
   }
 
   ngOnDestroy() {
@@ -78,7 +75,7 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: [this._name]
+      name: [this._name, Validators.required]
     });
   }
 }
