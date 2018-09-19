@@ -1,0 +1,13 @@
+@import '~styles/core/colors';
+@import '~styles/components/card';
+@import '~styles/components/button';
+
+.actions {
+  @include card-margin();
+}
+
+.actions {
+  button {
+    margin-right: 10px;
+  }
+}

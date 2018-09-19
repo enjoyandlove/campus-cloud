@@ -964,10 +964,10 @@
     "message": "Customize"
   },
   "customise_banner": {
-    "message": "Banner"
+    "message": "Branding"
   },
   "customization_description": {
-    "message": "(High resolution images work best.  JPEG or PNG format, 5 MB or smaller. You can scroll with your mouse to zoom in or out.)"
+    "message": "(JPEG or PNG format, 5 MB or smaller. You can scroll with your mouse to zoom in or out.)"
   },
   "customization_image_upload_error": {
     "message": "Something went wrong while uploading your image"
@@ -2411,10 +2411,10 @@
     "message": "Edit Deal"
   },
   "t_deals_form_posting_end_date": {
-    "message": "Posting End"
+    "message": "Valid Until"
   },
   "t_deals_form_posting_start_date": {
-    "message": "Posting Start"
+    "message": "Valid From"
   },
   "t_deals_form_store_details": {
     "message": "Store Details"
@@ -2437,12 +2437,6 @@
   "t_deals_ongoing": {
     "message": "Ongoing",
     "description": "Indicates that a deal is posted without an end date"
-  },
-  "t_deals_valid_from": {
-    "message": "Valid From"
-  },
-  "t_deals_valid_until": {
-    "message": "Valid Until"
   },
   "t_events_assessment_add_checkin_modal_title": {
     "message": "Check-in"
@@ -2595,7 +2589,7 @@
     "message": "Manual Check-in Disabled"
   },
   "t_external_check_in_disable_qr": {
-    "message": "QR Disabled Successfully"
+    "message": "QR Disabled"
   },
   "t_external_check_in_error_fill_out_all_fields": {
     "message": "Please fill out the marked fields"
@@ -2692,7 +2686,7 @@
     "message": "Delete Experience"
   },
   "t_personas_form_dropdown_login_forbidden": {
-    "message": "Not required"
+    "message": "No login"
   },
   "t_personas_form_dropdown_login_optional": {
     "message": "Optional"
@@ -2713,7 +2707,7 @@
     "message": "Platform"
   },
   "t_personas_form_label_requires_credentials": {
-    "message": "Requires Credentials"
+    "message": "Requires Login"
   },
   "t_personas_form_personalized_page": {
     "message": "Personalized Home Page"
@@ -2871,6 +2865,33 @@
   "t_persona_list_button_notify": {
     "message": "Notify"
   },
+  "t_saving": {
+    "message": "Saving"
+  },
+  "t_services_assessment_disable_qr_check_in": {
+    "message": "Disable QR Check-in"
+  },
+  "t_services_assessment_enable_qr_check_in": {
+    "message": "Enable QR Check-in"
+  },
+  "t_services_assessment_qr_code_disabled_success_message": {
+    "message": "QR Check-in successfully disabled"
+  },
+  "t_services_assessment_qr_code_enable_success_message": {
+    "message": "QR Check-in successfully enabled"
+  },
+  "t_services_assessment_web_checkin_page": {
+    "message": "Web Check-in Page"
+  },
+  "t_services_attendance_type": {
+    "message": "Attendance Type"
+  },
+  "t_services_label_checkout_time": {
+    "message": "Check-out Time"
+  },
+  "t_services_service_qr_enabled": {
+    "message": "QR Code"
+  },
   "t_shared_cancel": {
     "message": "Cancel"
   },
@@ -2909,6 +2930,9 @@
   },
   "t_studio": {
     "message": "Studio"
+  },
+  "t_studio_section_delete_no_name": {
+    "message": "Untitled"
   },
   "t_tile_button_default": {
     "message": "Default"
