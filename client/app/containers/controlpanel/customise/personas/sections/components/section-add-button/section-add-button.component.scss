@@ -12,7 +12,9 @@
   }
 
   button {
-    cursor: pointer;
+    &:not(:disabled) {
+      cursor: pointer;
+    }
 
     i {
       line-height: 1;

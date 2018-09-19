@@ -31,8 +31,6 @@ const state: IState = {
 })
 export class ServicesProvidersListComponent extends BaseComponent implements OnInit {
   @Input() serviceId: number;
-  @Input() query: Observable<string>;
-  @Input() reload: Observable<boolean>;
   @Input() download: Observable<boolean>;
   @Input() serviceWithFeedback: Observable<boolean>;
   @Output() providersLength$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -73,7 +71,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.fetch();
   }
 
-  private fetch() {
+  fetch() {
     const search = new HttpParams()
       .append('search_text', this.state.search_text)
       .append('service_id', this.serviceId.toString())
@@ -125,17 +123,6 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     };
 
     this.serviceWithFeedback.subscribe((withRating) => (this.displayRatingColumn = withRating));
-
-    this.query.subscribe((search_text) => {
-      this.state = Object.assign({}, this.state, { search_text });
-      this.fetch();
-    });
-
-    this.reload.subscribe((reload) => {
-      if (reload) {
-        this.fetch();
-      }
-    });
 
     this.download.subscribe((download) => {
       if (download) {

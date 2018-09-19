@@ -1,22 +1,23 @@
-import { IPersona } from './../../persona.interface';
-import { HttpParams } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { HttpParams } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
-import { SNACKBAR_HIDE } from './../../../../../../reducers/snackbar.reducer';
+import { Store } from '@ngrx/store';
+
+import { TilesService } from '../tiles.service';
+import { IPersona } from './../../persona.interface';
+import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base';
+import { PersonasService } from '../../personas.service';
+import { TilesUtilsService } from '../tiles.utils.service';
+import { ICampusGuide } from '../../sections/section.interface';
+import { SectionsService } from '../../sections/sections.service';
+import { SectionUtilsService } from '../../sections/section.utils.service';
+import { SNACKBAR_HIDE } from './../../../../../../reducers/snackbar.reducer';
+import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
 import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
-import { CPSession } from '../../../../../../session';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
-import { PersonasService } from '../../personas.service';
-import { ICampusGuide } from '../../sections/section.interface';
-import { SectionUtilsService } from '../../sections/section.utils.service';
-import { SectionsService } from '../../sections/sections.service';
-import { TilesService } from '../tiles.service';
-import { TilesUtilsService } from '../tiles.utils.service';
 
 @Component({
   selector: 'cp-personas-tile-create',
@@ -56,19 +57,9 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       ...this.campusGuideTileForm.value
     };
 
-    let guideTilePersonaZero = {
-      ...this.campusGuideTileForm.value,
-      school_persona_id: 0
-    };
-
     if (newCategoryId) {
       cloneGuideTileForm = {
         ...cloneGuideTileForm,
-        tile_category_id: newCategoryId
-      };
-
-      guideTilePersonaZero = {
-        ...guideTilePersonaZero,
         tile_category_id: newCategoryId
       };
     }
@@ -76,16 +67,6 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     const createLink$ = this.service.createCampusLink(this.campusLinkForm.value);
 
     return createLink$.pipe(
-      switchMap(({ id }: any) => {
-        const extra_info = { id };
-
-        const data = {
-          ...guideTilePersonaZero,
-          extra_info
-        };
-
-        return this.service.createCampusTile(data);
-      }),
       switchMap(({ id }: any) => {
         const extra_info = { id };
 
@@ -114,7 +95,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     let stream$ = this.createGuideLink();
     const emptySection = this.guideUtils.isTemporaryGuide(this.guide);
 
-    if (emptySection && !this.guide._categoryZero && !this.guide._featureTile) {
+    if (emptySection && !this.guide._featuredTile) {
       const body = {
         ...this.guide,
         school_id: this.session.g.get('school').id
@@ -135,7 +116,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
           disabled: false
         };
 
-        this.router.navigate(['/customize/personas', this.personaId]);
+        this.router.navigate(['/studio/experiences', this.personaId]);
       },
       (_) => {
         this.buttonData = {
@@ -165,7 +146,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
         subheading: null,
         em: null,
         crumbs: {
-          url: `personas/${this.personaId}`,
+          url: `experiences/${this.personaId}`,
           label: `[NOTRANSLATE]${personaName}[NOTRANSLATE]`
         },
         children: []
@@ -218,7 +199,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     this.guide = this.guideService.guide;
 
     if (!this.guide) {
-      this.router.navigate(['/customize/personas/', this.personaId]);
+      this.router.navigate(['/studio/experiences/', this.personaId]);
 
       return;
     }

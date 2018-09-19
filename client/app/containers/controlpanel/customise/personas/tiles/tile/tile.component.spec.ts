@@ -1,14 +1,17 @@
-import { of } from 'rxjs';
-import { StoreModule } from '@ngrx/store';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { StoreModule } from '@ngrx/store';
+import { of } from 'rxjs';
+
+import { mockTile } from './../__mock__';
 import { TilesService } from './../tiles.service';
-import { TilesUtilsService } from './../tiles.utils.service';
-import { PersonasTileComponent } from './tile.component';
 import { CPSession } from '../../../../../../session';
-import { CPI18nService } from '../../../../../../shared/services';
-import { SharedModule } from '../../../../../../shared/shared.module';
 import { PersonasTilesModule } from '../tiles.module';
+import { PersonasTileComponent } from './tile.component';
+import { TilesUtilsService } from './../tiles.utils.service';
+import { CPI18nService } from '../../../../../../shared/services';
+import { mockSchool } from './../../../../../../session/mock/school';
+import { SharedModule } from '../../../../../../shared/shared.module';
 
 class MockTilesService {
   dummy;
@@ -16,7 +19,7 @@ class MockTilesService {
   updateTile(tileId, search) {
     this.dummy = { tileId, search };
 
-    return of(tileId);
+    return of(mockTile);
   }
 }
 
@@ -40,6 +43,9 @@ describe('PersonasTileComponent', () => {
 
       fixture = TestBed.createComponent(PersonasTileComponent);
       comp = fixture.componentInstance;
+      comp.tile = mockTile;
+      comp.session.g.set('school', mockSchool);
+      fixture.detectChanges();
     })
   );
 
@@ -65,8 +71,16 @@ describe('PersonasTileComponent', () => {
   });
 
   it('onToggleTile', () => {
+    spyOn(comp.edited, 'emit');
+    spyOn(comp, 'errorHandler');
+    spyOn(comp.service, 'updateTile').and.callThrough();
+
     comp.onToggleTile();
 
-    expect(comp.state.working).toBeTruthy();
+    expect(comp.edited.emit).toHaveBeenCalled();
+    expect(comp.edited.emit).toHaveBeenCalledWith(mockTile);
+    expect(comp.errorHandler).not.toHaveBeenCalled();
+
+    fixture.detectChanges();
   });
 });
