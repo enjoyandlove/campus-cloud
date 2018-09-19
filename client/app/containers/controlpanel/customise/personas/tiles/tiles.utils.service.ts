@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { sortBy } from 'lodash';
+import { sortBy, get as _get } from 'lodash';
 import { FileUploadService } from './../../../../../shared/services/file-upload.service';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { ICampusGuide } from './../sections/section.interface';
@@ -54,12 +54,23 @@ export class TilesUtilsService {
 
   isTileSupportedByWebApp(tile: ITile) {
     const supportedLinkUrls = TilesUtilsService.webAppSupportedLinkUrls;
+    const linkUrl = _get('tile', ['related_link_data', 'link_url'], null);
+
+    if (!linkUrl) {
+      return false;
+    }
     const webOrExternalLink = tile.related_link_data.link_url.startsWith('http');
 
     return webOrExternalLink || supportedLinkUrls.includes(tile.related_link_data.link_url);
   }
 
   isCampaignTile(tile: ITile) {
+    const linkUrl = _get('tile', ['related_link_data', 'link_url'], null);
+
+    if (!linkUrl) {
+      return false;
+    }
+
     return (
       tile.related_link_data.link_url === 'oohlala://school_campaign' ||
       tile.related_link_data.link_url === 'oohlala://campaign_list'
@@ -67,6 +78,12 @@ export class TilesUtilsService {
   }
 
   isDeprecated(tile: ITile) {
+    const linkUrl = _get('tile', ['related_link_data', 'link_url'], null);
+
+    if (!linkUrl) {
+      return false;
+    }
+
     return TilesUtilsService.deprecatedTiles.includes(tile.related_link_data.link_url);
   }
 
@@ -90,23 +107,27 @@ export class TilesUtilsService {
 
   campusGuideTileForm(personaId, guide: ICampusGuide, tileToEdit = null) {
     const isTemporaryGuide = this.sectionUtils.isTemporaryGuide(guide);
-    const lastRank = isTemporaryGuide ? 1 : sortBy(guide.tiles, (t: ITile) => -t.rank)[0].rank + 1;
 
-    const lastFeaturedRank = isTemporaryGuide
-      ? 1
-      : sortBy(guide.tiles, (t: ITile) => -t.featured_rank)[0].rank + 1;
+    const lastFeaturedRank = guide.tiles.length
+      ? sortBy(guide.tiles, (t: ITile) => -t.featured_rank)[0].rank + 1
+      : 1;
+
+    const lastRank =
+      isTemporaryGuide || !guide.tiles.length
+        ? 1
+        : sortBy(guide.tiles, (t: ITile) => -t.rank)[0].rank + 1;
 
     const _tile = tileToEdit
       ? { ...tileToEdit }
       : {
           name: null,
-          rank: guide._featureTile ? TileCategoryRank.hidden : lastRank,
+          rank: guide._featuredTile ? TileCategoryRank.hidden : lastRank,
           img_url: null,
           color: 'FFFFFF',
           extra_info: null,
           visibility_status: TileVisibility.visible,
-          tile_category_id: guide._featureTile || guide._categoryZero ? 0 : guide.id,
-          featured_rank: guide._featureTile ? lastFeaturedRank : TileFeatureRank.notFeatured
+          tile_category_id: guide._featuredTile ? 0 : guide.id,
+          featured_rank: guide._featuredTile ? lastFeaturedRank : TileFeatureRank.notFeatured
         };
 
     return this.fb.group({
