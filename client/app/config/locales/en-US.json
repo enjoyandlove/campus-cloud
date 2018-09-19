@@ -2112,9 +2112,6 @@
   "services_label_checked_in_method": {
     "message": "Check-in Method"
   },
-  "services_label_checked_in_time": {
-    "message": "Check-in Time"
-  },
   "services_label_checkin_time": {
     "message": "Check-in Time"
   },
@@ -2891,6 +2888,24 @@
   },
   "t_services_service_qr_enabled": {
     "message": "QR Code"
+  },
+  "t_service_provider_csv_column_check_in_date": {
+    "message": "Check-in Date"
+  },
+  "t_service_provider_csv_column_check_out_date": {
+    "message": "Check-out Time"
+  },
+  "t_service_provider_csv_column_time_in": {
+    "message": "Check-in Time"
+  },
+  "t_service_provider_csv_column_time_out": {
+    "message": "Check-out Time"
+  },
+  "t_service_provider_csv_column_time_spent": {
+    "message": "Time Spent"
+  },
+  "t_service_provider_csv_column_time_spent_seconds": {
+    "message": "Time Spent (Seconds)"
   },
   "t_shared_cancel": {
     "message": "Cancel"
