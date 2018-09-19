@@ -1,3 +1,4 @@
+import { CPSession } from './../index';
 /**
  * USER => Currently logged in User
  * SCHOOLS => Array of schools that the logged in user has access to, this is often 1
@@ -28,7 +29,7 @@ export const accountsToStoreMap = (accountsMap: Array<number>, accountPrivileges
 };
 
 // @Injectable()
-export class MockCPSession {
+export class MockCPSession extends CPSession {
   public g = new Map();
 
   get tz() {

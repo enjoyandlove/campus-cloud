@@ -2438,12 +2438,6 @@
     "message": "Ongoing",
     "description": "Indicates that a deal is posted without an end date"
   },
-  "t_deals_valid_from": {
-    "message": "Valid From"
-  },
-  "t_deals_valid_until": {
-    "message": "Valid Until"
-  },
   "t_events_assessment_add_checkin_modal_title": {
     "message": "Vérification de présence"
   },
@@ -2871,6 +2865,33 @@
   "t_persona_list_button_notify": {
     "message": "Notifier"
   },
+  "t_saving": {
+    "message": "Enregistrement"
+  },
+  "t_services_assessment_disable_qr_check_in": {
+    "message": "Désactiver la vérification de présence"
+  },
+  "t_services_assessment_enable_qr_check_in": {
+    "message": "Activer vérification de présence QR"
+  },
+  "t_services_assessment_qr_code_disabled_success_message": {
+    "message": "Code QR désactivé avec succès"
+  },
+  "t_services_assessment_qr_code_enable_success_message": {
+    "message": "Code QR d'entrée activé avec succès"
+  },
+  "t_services_assessment_web_checkin_page": {
+    "message": "Page de vérification de présence web"
+  },
+  "t_services_attendance_type": {
+    "message": "Type de présence"
+  },
+  "t_services_label_checkout_time": {
+    "message": "Heure de sortie"
+  },
+  "t_services_service_qr_enabled": {
+    "message": "Code QR"
+  },
   "t_shared_cancel": {
     "message": "Annuler"
   },
@@ -2909,6 +2930,9 @@
   },
   "t_studio": {
     "message": "Studio"
+  },
+  "t_studio_section_delete_no_name": {
+    "message": "Sans Titre"
   },
   "t_tile_button_default": {
     "message": "Défaut"

@@ -19,6 +19,7 @@ export class PersonasSectioDeleteComponent implements OnInit {
   @Output() error: EventEmitter<HttpErrorResponse> = new EventEmitter();
 
   buttonData;
+  deleteNoNameCategory: string;
 
   constructor(
     public session: CPSession,
@@ -50,6 +51,8 @@ export class PersonasSectioDeleteComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.deleteNoNameCategory = this.cpI18n.translate('t_studio_section_delete_no_name');
+
     this.buttonData = {
       text: this.cpI18n.translate('delete'),
       class: 'danger'
