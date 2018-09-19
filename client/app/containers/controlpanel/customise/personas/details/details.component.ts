@@ -306,6 +306,16 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
     const movingTile = allTiles.filter((t: ITile) => t.id === tile)[0];
 
+    if (!movingTile) {
+      this.fetch(() => this.errorHandler()).then(() => {
+        this.zone.run(() => {
+          this.state = { ...this.state, working: false };
+        });
+      });
+
+      return;
+    }
+
     let newCategory: ICampusGuide =
       section === 'featured'
         ? this.state.featuredTiles
