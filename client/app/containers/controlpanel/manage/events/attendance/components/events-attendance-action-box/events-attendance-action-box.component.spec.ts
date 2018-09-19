@@ -70,8 +70,7 @@ describe('EventsAttendanceActionBoxComponent', () => {
     expect(component.messageAttendeesTooltipText).toBe(noPermissionTooltip);
   });
 
-  // todo fix broken test it throws “[object ErrorEvent] thrown” debugging required.
-  xit('no students to message', () => {
+  it('no students to message', () => {
     component.totalAttendees.next(mockAttendees);
 
     const noStudentTooltip = component.cpI18n.
