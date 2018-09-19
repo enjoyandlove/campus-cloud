@@ -46,11 +46,7 @@ import {
   ServicesProviderActionBoxComponent
 } from './attendance/components';
 
-import {
-  ServicesProvidersAttendeesListComponent,
-  ServicesProvidersAttendeesStatsComponent,
-  ServicesProvidersAttendeesActionBoxComponent,
-} from './attendance/components/providers-details/components';
+import { ServicesProvidersAttendeesListComponent } from './attendance/components/providers-details/components';
 
 import { EventsModule } from '../events/events.module';
 import { ServicesUtilsService } from './services.utils.service';
@@ -81,9 +77,7 @@ import { ServicesUtilsService } from './services.utils.service';
     ServicesEventsEditComponent,
     ServicesEventsExcelComponent,
     ServicesEditDeleteModalComponent,
-    ServicesEditCreateProviderComponent,
-    ServicesProvidersAttendeesStatsComponent,
-    ServicesProvidersAttendeesActionBoxComponent,
+    ServicesEditCreateProviderComponent
   ],
 
   imports: [

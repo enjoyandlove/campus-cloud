@@ -5,7 +5,7 @@ import { CustomiseComponent } from './customise.component';
 import { AuthGuard, PrivilegesGuard } from '../../../config/guards';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'experiences', pathMatch: 'full' },
+  { path: '', redirectTo: 'banner', pathMatch: 'full' },
   {
     path: '',
     component: CustomiseComponent,
@@ -13,12 +13,12 @@ const appRoutes: Routes = [
     canActivateChild: [PrivilegesGuard],
     children: [
       {
-        path: 'experiences',
+        path: 'personas',
         data: { zendesk: 'customize' },
         loadChildren: './personas/personas.module#PersonasModule'
       },
       {
-        path: 'branding',
+        path: 'banner',
         data: { zendesk: 'customize' },
         loadChildren: './banner/banner.module#BannerModule'
       }

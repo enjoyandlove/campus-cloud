@@ -71,16 +71,19 @@ export class TilesService extends HTTPService {
     return super.get(url, search, true).pipe(
       startWith([{ label: '---' }]),
       map((services) => {
-        return [
-          { label: '---', value: null, heading: true },
-
-          ...services.filter((s: any) => s.id).map((service: any) => {
+        return services.map((service: any, index) => {
+          if (index === 0) {
             return {
-              value: service.id,
-              label: service.name
+              label: '---',
+              value: null
             };
-          })
-        ];
+          }
+
+          return {
+            value: service.id,
+            label: service.name
+          };
+        });
       })
     );
   }
@@ -91,15 +94,19 @@ export class TilesService extends HTTPService {
     return super.get(url, headers, true).pipe(
       startWith([{ label: '---' }]),
       map((calendars) => {
-        return [
-          { label: '---', value: null, heading: true },
-          ...calendars.filter((c: any) => c.id).map((calendar: any) => {
+        return calendars.map((calendar: any, index) => {
+          if (index === 0) {
             return {
-              value: calendar.id,
-              label: calendar.name
+              label: '---',
+              value: null
             };
-          })
-        ];
+          }
+
+          return {
+            value: calendar.id,
+            label: calendar.name
+          };
+        });
       })
     );
   }

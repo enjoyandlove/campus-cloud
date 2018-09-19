@@ -86,7 +86,7 @@ describe('PersonasEditComponent', () => {
 
     comp.onDeleted();
 
-    expect(comp.router.navigate).toHaveBeenCalledWith(['/studio/experiences']);
+    expect(comp.router.navigate).toHaveBeenCalledWith(['/customize/personas']);
   });
 
   it('onDeleteError', () => {

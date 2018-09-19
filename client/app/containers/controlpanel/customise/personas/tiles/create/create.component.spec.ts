@@ -109,7 +109,7 @@ describe('PersonasTileCreateComponent', () => {
     spyOnProperty(comp.guideService, 'guide', 'get').and.returnValue(null);
     spyOn(comp.router, 'navigate').and.returnValue(Promise.resolve());
 
-    const expected = ['/studio/experiences/', comp.personaId];
+    const expected = ['/customize/personas/', comp.personaId];
 
     comp.ngOnInit();
 

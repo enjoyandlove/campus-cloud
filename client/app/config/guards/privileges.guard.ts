@@ -62,8 +62,7 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
       'locations',
       'announcements',
       'templates',
-      'branding',
-      'studio',
+      'banner',
       'dashboard',
       'students',
       'orientation'
@@ -92,9 +91,7 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
 
       templates: CP_PRIVILEGES_MAP.campus_announcements,
 
-      branding: CP_PRIVILEGES_MAP.app_customization,
-
-      studio: CP_PRIVILEGES_MAP.app_customization,
+      banner: CP_PRIVILEGES_MAP.app_customization,
 
       dashboard: CP_PRIVILEGES_MAP.assessment,
 
