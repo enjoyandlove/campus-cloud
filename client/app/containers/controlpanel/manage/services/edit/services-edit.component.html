@@ -9,7 +9,7 @@
             <div class="cp-card">
               <div class="row">
                 <div class="col-12">
-                  <p class="title" i18n>{{ 'services_label_banner' | cpI18n }}</p>
+                  <p class="title">{{ 'services_label_banner' | cpI18n }}</p>
                   <div class="margin-top row">
                     <cp-image-upload
                       class="col-12"
@@ -23,9 +23,9 @@
   
               <div class="row margin-top">
                 <div class="col-12">
-                  <p class="title" i18n>{{ 'services_label_details' | cpI18n }}</p>
+                  <p class="title">{{ 'services_label_details' | cpI18n }}</p>
                   <div class="form-group margin-top">
-                    <label i18n>{{ 'services_label_name' | cpI18n }}</label>
+                    <label>{{ 'services_label_name' | cpI18n }}</label>
                     <input
                       type="text"
                       class="form-control"
@@ -35,7 +35,7 @@
   
                   <div class="row form-group">
                     <div class="col-6">
-                      <label i18n>{{ 'select_category' | cpI18n }}
+                      <label>{{ 'select_category' | cpI18n }}
                         <cp-tooltip
                           [toolTipContent]="category">
                         </cp-tooltip>
@@ -51,7 +51,7 @@
   
                   <div class="row form-group">
                     <div class="col-6">
-                      <label i18n>{{ 'phone_number' | cpI18n }}</label>
+                      <label>{{ 'phone_number' | cpI18n }}</label>
                       <input
                         type="text"
                         class="form-control"
@@ -61,7 +61,7 @@
   
                   <div class="row form-group">
                     <div class="col-6">
-                      <label i18n>{{ 'email' | cpI18n }}</label>
+                      <label>{{ 'email' | cpI18n }}</label>
                       <input
                         type="email"
                         class="form-control"
@@ -71,7 +71,7 @@
   
                   <div class="row form-group">
                     <div class="col-6">
-                      <label i18n>{{ 'website' | cpI18n }}</label>
+                      <label>{{ 'website' | cpI18n }}</label>
                       <input
                         type="text"
                         class="form-control"
@@ -80,7 +80,7 @@
                   </div>
   
                   <div class="form-group form-group">
-                    <label i18n>{{ 'services_label_description' | cpI18n }}</label>
+                    <label>{{ 'services_label_description' | cpI18n }}</label>
                     <textarea formControlName="description"></textarea>
                   </div>
 
@@ -98,7 +98,7 @@
                   <div *ngIf="showLocationDetails">
                     <div class="row">
                       <div class="col-12">
-                        <label i18n>{{ 'location' | cpI18n }}</label>
+                        <label>{{ 'location' | cpI18n }}</label>
                         <div class="row form-group">
                           <div class="col-12">
                             <cp-place-autocomplete
@@ -111,7 +111,7 @@
                         </div>
                         <div class="row form-group">
                           <div class="col-6">
-                            <label i18n>{{ 'building' | cpI18n }}</label>
+                            <label>{{ 'building' | cpI18n }}</label>
                             <input
                               type="text"
                               class="form-control"
@@ -120,7 +120,7 @@
 
                           <div class="col-6">
                             <div class="form-group">
-                              <label i18n>{{ 'room' | cpI18n }}</label>
+                              <label>{{ 'room' | cpI18n }}</label>
                               <input
                                 type="text"
                                 class="form-control"
@@ -152,7 +152,7 @@
             <div class="cp-card">
               <div class="row">
                 <div class="col-8">
-                  <p class="title" i18n>{{ 'services_label_service_assessment' | cpI18n }}</p>
+                  <p class="title">{{ 'services_label_service_assessment' | cpI18n }}</p>
                 </div>
                 <div class="col-4 float-right">
                   <span class="float-right">
@@ -169,7 +169,7 @@
                 <fieldset disabled>
                   <div class="row">
                     <div class="col-6">
-                      <label i18n>{{ 'services_label_enable_service_feedback' | cpI18n }}
+                      <label>{{ 'services_label_enable_service_feedback' | cpI18n }}
                         <cp-tooltip
                           [toolTipContent]="feedback">
                         </cp-tooltip>
@@ -193,14 +193,14 @@
                         </div>
                         <div class="row form-group">
                           <div class="col-6">
-                            <label i18n>{{ 'name' | cpI18n }}</label>
+                            <label>{{ 'name' | cpI18n }}</label>
                             <input
                               type="text"
                               formControlName="provider_name"
                               [class.error]="formError && form.controls.service_attendance.value && provider.controls['provider_name'].hasError('required')">
                           </div>
                           <div class="col-6">
-                            <label i18n>{{ 'email' | cpI18n }}</label>
+                            <label>{{ 'email' | cpI18n }}</label>
                             <input
                               type="email"
                               formControlName="email"
@@ -210,11 +210,30 @@
   
                         <div class="row form-group" *ngIf="hasFeedback">
                           <div class="col-12">
-                            <label i18n>{{ 'services_label_default_question' | cpI18n }}</label>
+                            <label>{{ 'services_label_default_question' | cpI18n }}</label>
                             <input
                               type="text"
                               formControlName="custom_basic_feedback_label"
                               [class.error]="formError && form.controls.service_attendance.value && provider.controls['custom_basic_feedback_label'].hasError('required')">
+                          </div>
+                        </div>
+
+                        <div class="row form-group">
+                          <div class="col-6">
+                            <label>{{ 't_services_attendance_type' | cpI18n }}</label>
+                            <cp-dropdown
+                              [items]="attendanceTypes"
+                              [selectedItem]="selectedAttendanceType[i]"
+                              (selected)="onSelectedAttendanceType($event.action, i)">
+                            </cp-dropdown>
+                          </div>
+                          <div class="col-6">
+                            <label>{{ 't_services_service_qr_enabled' | cpI18n }}</label>
+                            <cp-dropdown
+                              [items]="serviceQRCodes"
+                              [selectedItem]="selectedQRCode[i]"
+                              (selected)="onSelectedQRCode($event.action, i)">
+                            </cp-dropdown>
                           </div>
                         </div>
                       </div>
@@ -234,11 +253,11 @@
           <div class="row">
             <div class="col-12">
               <div class="text-right">
-                <label class="error" *ngIf="formError" i18n>
+                <label class="error" *ngIf="formError">
                     <span>&#x26A0;</span> {{ 'error_fill_out_marked_fields' | cpI18n }}
                 </label>
                 <a [routerLink]="['/manage/services']"
-                  class="cpbtn cpbtn--cancel" i18n>
+                  class="cpbtn cpbtn--cancel">
                   {{ 'cancel' | cpI18n }}
                 </a>
 

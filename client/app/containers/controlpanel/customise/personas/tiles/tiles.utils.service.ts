@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { sortBy } from 'lodash';
+import { sortBy, get as _get } from 'lodash';
 import { FileUploadService } from './../../../../../shared/services/file-upload.service';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { ICampusGuide } from './../sections/section.interface';
@@ -54,12 +54,24 @@ export class TilesUtilsService {
 
   isTileSupportedByWebApp(tile: ITile) {
     const supportedLinkUrls = TilesUtilsService.webAppSupportedLinkUrls;
-    const webOrExternalLink = tile.related_link_data.link_url.startsWith('http');
+    const linkUrl = _get(tile, ['related_link_data', 'link_url'], null);
 
-    return webOrExternalLink || supportedLinkUrls.includes(tile.related_link_data.link_url);
+    if (!linkUrl) {
+      return false;
+    }
+
+    const webOrExternalLink = linkUrl.startsWith('http');
+
+    return webOrExternalLink || supportedLinkUrls.includes(linkUrl);
   }
 
   isCampaignTile(tile: ITile) {
+    const linkUrl = _get(tile, ['related_link_data', 'link_url'], null);
+
+    if (!linkUrl) {
+      return false;
+    }
+
     return (
       tile.related_link_data.link_url === 'oohlala://school_campaign' ||
       tile.related_link_data.link_url === 'oohlala://campaign_list'
@@ -67,6 +79,12 @@ export class TilesUtilsService {
   }
 
   isDeprecated(tile: ITile) {
+    const linkUrl = _get(tile, ['related_link_data', 'link_url'], null);
+
+    if (!linkUrl) {
+      return false;
+    }
+
     return TilesUtilsService.deprecatedTiles.includes(tile.related_link_data.link_url);
   }
 

@@ -12,7 +12,6 @@ import { CheckInOutTime, CheckInType } from '../../../callback.status';
 })
 export class CheckinAttendeesListComponent {
   @Input() data: ICheckIn;
-  @Input() isService: boolean;
 
   @Output() checkout: EventEmitter<ICheckIn> = new EventEmitter();
 

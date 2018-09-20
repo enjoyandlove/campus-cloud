@@ -1,10 +1,12 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 import { map, startWith } from 'rxjs/operators';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { CPSession } from '../../../../../../../session';
+import { sortBy } from 'lodash';
+import { Observable } from 'rxjs';
+
 import { FeedsService } from '../../../feeds.service';
+import { CPSession } from '../../../../../../../session';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 const campusWall = {
   label: 'Campus Wall',
@@ -87,7 +89,9 @@ export class FeedFiltersComponent implements OnInit {
           }
         ];
 
-        groupWalls.forEach((wall: any) => {
+        const alphabeticallySortedWalls = sortBy(groupWalls, (wall: any) => wall.name);
+
+        alphabeticallySortedWalls.forEach((wall: any) => {
           const _wall = {
             label: wall.name,
             action: wall.id,
@@ -95,7 +99,9 @@ export class FeedFiltersComponent implements OnInit {
             postingMemberType: wall.min_posting_member_type,
             group_id: wall.related_obj_id
           };
+
           this.socialGroups.push(_wall);
+
           _walls.push(_wall);
         });
 
