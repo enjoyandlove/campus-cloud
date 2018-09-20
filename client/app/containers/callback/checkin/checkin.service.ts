@@ -29,9 +29,9 @@ export class CheckinService extends CallbackService {
     return super.update(url, data, search, silent);
   }
 
-  doServiceCheckin(data: any, search: HttpParams) {
+  doServiceCheckin(data: any, search: HttpParams, silent = false) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EXTERNAL_SERVICE_CHECKIN}/`;
 
-    return super.update(url, data, search);
+    return super.update(url, data, search, silent);
   }
 }

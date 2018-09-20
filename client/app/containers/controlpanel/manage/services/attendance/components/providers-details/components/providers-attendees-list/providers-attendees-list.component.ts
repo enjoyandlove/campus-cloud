@@ -29,8 +29,7 @@ const state: IState = {
   styleUrls: ['./providers-attendees-list.component.scss']
 })
 export class ServicesProvidersAttendeesListComponent extends BaseComponent implements OnInit {
-  @Input() serviceId: number;
-  @Input() providerId: number;
+  @Input() provider;
 
   loading;
   assessments;
@@ -55,8 +54,8 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   fetch() {
     const search = new HttpParams()
       .append('search_text', this.state.search_text)
-      .append('service_id', this.serviceId.toString())
-      .append('service_provider_id', this.providerId.toString())
+      .append('service_id', this.provider.campus_service_id.toString())
+      .append('service_provider_id', this.provider.id.toString())
       .append('sort_field', this.state.sort_field)
       .append('sort_direction', this.state.sort_direction);
 
@@ -84,8 +83,8 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   fetchAllRecords(): Promise<any> {
     const search = new HttpParams()
       .append('all', '1')
-      .append('service_id', this.serviceId.toString())
-      .append('service_provider_id', this.providerId.toString());
+      .append('service_id', this.provider.campus_service_id.toString())
+      .append('service_provider_id', this.provider.id.toString());
 
     const stream$ = this.providersService.getProviderAssessments(
       this.startRange,
@@ -119,7 +118,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     if (this.assessments.length) {
       this.trackAmplitudeEvent();
       this.fetchAllRecords().then((attendees) =>
-        this.utils.exportServiceProvidersAttendees(attendees));
+        this.utils.exportServiceProvidersAttendees(attendees, this.provider.has_checkout));
     }
   }
 

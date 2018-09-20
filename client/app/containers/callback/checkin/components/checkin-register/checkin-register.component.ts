@@ -32,6 +32,7 @@ export class CheckinRegisterComponent implements OnInit {
   buttonData;
   placeholder;
   datePickerOptions;
+  verificationMethods;
   disabledQRCode = false;
   disableCheckInTooltip = '';
   registrationForm: FormGroup;
@@ -53,12 +54,7 @@ export class CheckinRegisterComponent implements OnInit {
   }
 
   disableManualCheckIn() {
-    // todo temporary remove when service check-in done
-    if (this.isService) {
-      return;
-    }
-
-    const disabled = !this.data.attend_verification_methods.includes(CheckInMethod.web);
+    const disabled = !this.verificationMethods.includes(CheckInMethod.web);
 
     if (disabled) {
       $(function() {
@@ -73,6 +69,10 @@ export class CheckinRegisterComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.verificationMethods = this.isService
+      ? this.data['checkin_verification_methods']
+      : this.data['attend_verification_methods'];
+
     this.registrationForm = this.fb.group({
       check_in_time_epoch: [null],
       email: [null, Validators.required],
@@ -104,11 +104,7 @@ export class CheckinRegisterComponent implements OnInit {
       };
     });
 
+    this.disabledQRCode = !this.verificationMethods.includes(CheckInMethod.app);
     this.placeholder = this.cpI18n.translate('t_check_in_date_placeholder_text');
-
-    // todo remove this check once service check in part done
-    if (!this.isService) {
-      this.disabledQRCode = !this.data.attend_verification_methods.includes(CheckInMethod.app);
-    }
   }
 }

@@ -2112,9 +2112,6 @@
   "services_label_checked_in_method": {
     "message": "Méthode de vérification de présence"
   },
-  "services_label_checked_in_time": {
-    "message": "Heure d'enregistrement"
-  },
   "services_label_checkin_time": {
     "message": "Heure d'enregistrement"
   },
@@ -2865,6 +2862,9 @@
   "t_persona_list_button_notify": {
     "message": "Notifier"
   },
+  "t_saving": {
+    "message": "Enregistrement"
+  },
   "t_services_assessment_disable_qr_check_in": {
     "message": "Désactiver la vérification de présence"
   },
@@ -2888,6 +2888,24 @@
   },
   "t_services_service_qr_enabled": {
     "message": "Code QR"
+  },
+  "t_service_provider_csv_column_check_in_date": {
+    "message": "Heure de vérification de présence"
+  },
+  "t_service_provider_csv_column_check_out_date": {
+    "message": "Heure de sortie"
+  },
+  "t_service_provider_csv_column_time_in": {
+    "message": "Heure d'entrée"
+  },
+  "t_service_provider_csv_column_time_out": {
+    "message": "Heure de sortie"
+  },
+  "t_service_provider_csv_column_time_spent": {
+    "message": "Temps passé"
+  },
+  "t_service_provider_csv_column_time_spent_seconds": {
+    "message": "Temps passé (secondes)"
   },
   "t_shared_cancel": {
     "message": "Annuler"

@@ -4,8 +4,6 @@
   "em": null,
   "children": [
     {
-      "hidden": true,
-      "allow_internal": true,
       "amplitude": "Experiences",
       "label": "t_customise_personas",
       "url": "/studio/experiences"

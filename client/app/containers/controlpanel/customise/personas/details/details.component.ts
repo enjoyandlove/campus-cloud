@@ -1,11 +1,10 @@
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, NgZone } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { flatten, get as _get } from 'lodash';
 import { combineLatest } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
-import { isProd } from './../../../../../config/env/index';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import {
   ISnackbar,
@@ -29,7 +28,7 @@ import { TilesService } from '../tiles/tiles.service';
 
 interface IState {
   working: boolean;
-  featureTiles: ICampusGuide;
+  featuredTiles: ICampusGuide;
   guides: Array<ICampusGuide>;
   showTileDeleteModal: boolean;
   showSectionDeleteModal: boolean;
@@ -52,12 +51,13 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   state: IState = {
     guides: [],
     working: false,
-    featureTiles: null,
+    featuredTiles: null,
     showTileDeleteModal: false,
     showSectionDeleteModal: false
   };
 
   constructor(
+    public zone: NgZone,
     public router: Router,
     public session: CPSession,
     public route: ActivatedRoute,
@@ -158,6 +158,18 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     });
   }
 
+  displayWarning() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        autoClose: true,
+        class: 'info',
+        body: `${this.cpI18n.translate('t_saving')}...`
+      }
+    });
+  }
+
   doBulkUpdate(tileUpdates) {
     const search = new HttpParams().set('school_persona_id', this.personaId);
 
@@ -171,9 +183,24 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       };
     });
 
+    this.state = { ...this.state, working: true };
+    this.displayWarning();
+
     this.tileService
       .bulkUpdateTiles(search, body)
-      .subscribe(() => this.handleSuccess(), (err) => this.errorHandler(err));
+      .toPromise()
+      .then(() => this.fetch(() => this.handleSuccess()))
+      .then(() => {
+        this.zone.run(() => {
+          this.state = { ...this.state, working: false };
+        });
+      })
+      .catch((err) => {
+        this.zone.run(() => {
+          this.state = { ...this.state, working: false };
+        });
+        this.errorHandler(err);
+      });
   }
 
   onDeleteTileFromSection(tile: ITile) {
@@ -197,9 +224,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     if (this.tileUtils.isFeatured(tile)) {
       this.state = {
         ...this.state,
-        featureTiles: {
-          ...this.state.featureTiles,
-          tiles: this.state.featureTiles.tiles.filter((t: ITile) => t.id !== tile.id)
+        featuredTiles: {
+          ...this.state.featuredTiles,
+          tiles: this.state.featuredTiles.tiles.filter((t: ITile) => t.id !== tile.id)
         }
       };
     } else {
@@ -274,14 +301,24 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
   onTileMoved({ tile, section }) {
     const guideTiles = flatten(this.state.guides.map((g) => g.tiles));
-    const allTiles = [...guideTiles, ...this.state.featureTiles.tiles];
-    const allGuides = [...this.state.guides, this.state.featureTiles];
+    const allTiles = [...guideTiles, ...this.state.featuredTiles.tiles];
+    const allGuides = [...this.state.guides, this.state.featuredTiles];
 
     const movingTile = allTiles.filter((t: ITile) => t.id === tile)[0];
 
+    if (!movingTile) {
+      this.fetch(() => this.errorHandler()).then(() => {
+        this.zone.run(() => {
+          this.state = { ...this.state, working: false };
+        });
+      });
+
+      return;
+    }
+
     let newCategory: ICampusGuide =
       section === 'featured'
-        ? this.state.featureTiles
+        ? this.state.featuredTiles
         : allGuides.filter((g) => g.id === +section)[0];
 
     const school_id = this.session.g.get('school').id;
@@ -489,17 +526,14 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     }
   }
 
-  fetch() {
+  fetch(callback = null) {
     const schoolIdSearch = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     const tilesSearch = schoolIdSearch.append('school_persona_id', this.personaId);
 
     const tilesByPersona$ = this.service.getTilesByPersona(tilesSearch);
-    const tileCategories$ = this.service
-      .getTilesCategories(schoolIdSearch)
-      .pipe(map((categories) => categories.filter((c) => c.id !== 0)));
+    const tileCategories$ = this.service.getTilesCategories(schoolIdSearch);
 
-    const tilesByPersonaZero$ = this.service.getTilesByPersona(schoolIdSearch);
     const persona$ = this.service.getPersonaById(this.personaId, schoolIdSearch);
 
     const request$ = persona$.pipe(
@@ -508,15 +542,13 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         this.isWebPersona = persona.platform === PersonasType.web;
         this.updateHeader(persona.localized_name_map[key]);
 
-        return combineLatest([tilesByPersona$, tileCategories$, tilesByPersonaZero$]);
+        return combineLatest([tilesByPersona$, tileCategories$]);
       })
     );
 
     const stream$ = request$.pipe(
-      map(([tiles, categories, tilesByPersonaZero]) => {
-        tiles = isProd
-          ? this.utils.mergeRelatedLinkData(tiles, tilesByPersonaZero)
-          : tiles.filter((t: ITile) => t.type === TileType.abstract);
+      map(([tiles, categories]) => {
+        tiles = tiles.filter((t: ITile) => t.type === TileType.abstract);
 
         if (this.isWebPersona) {
           tiles = tiles.filter((tile) => this.tileUtils.isTileSupportedByWebApp(tile));
@@ -529,7 +561,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       })
     );
 
-    super
+    return super
       .fetchData(stream$)
       .then(({ data }) => {
         const filteredTiles = data.guides.filter((g: ICampusGuide) => g.tiles.length);
@@ -541,7 +573,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         this.state = {
           ...this.state,
           guides,
-          featureTiles: {
+          featuredTiles: {
             id: null,
             rank: 1,
             name: null,
@@ -549,6 +581,12 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
             tiles: [...data.featured]
           }
         };
+
+        if (callback) {
+          callback();
+        }
+
+        return this.state;
       })
       .catch((err: HttpErrorResponse) => this.errorHandler(err));
   }
