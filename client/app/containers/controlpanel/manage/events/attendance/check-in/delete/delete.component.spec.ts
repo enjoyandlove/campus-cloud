@@ -15,7 +15,7 @@ const mockCheckIn = require('../../../__mock__/eventCheckIn.json');
 
 class MockService {
   dummy;
-  deleteEventCheckInById(id: number, search: any) {
+  deleteCheckInById(id: number, search: any) {
     this.dummy = [id, search];
 
     return observableOf({});
@@ -48,10 +48,13 @@ describe('EventCheckInDeleteComponent', () => {
           fixture = TestBed.createComponent(CheckInDeleteComponent);
           component = fixture.componentInstance;
 
-          component.event = mockEvent;
+          component.data = {
+            ...component.data,
+            ...mockEvent
+          };
           component.checkIn = mockCheckIn;
           component.session.g.set('school', mockSchool);
-          search = new HttpParams().append('event_id', component.event.id.toString());
+          search = new HttpParams().append('event_id', component.data.id.toString());
         });
     })
   );
@@ -59,7 +62,7 @@ describe('EventCheckInDeleteComponent', () => {
   it('should delete check-in', () => {
     spyOn(component.deleted, 'emit');
     spyOn(component.teardown, 'emit');
-    spy = spyOn(component.service, 'deleteEventCheckInById').and.returnValue(observableOf({}));
+    spy = spyOn(component.service, 'deleteCheckInById').and.returnValue(observableOf({}));
 
     component.onDelete();
     expect(spy).toHaveBeenCalledTimes(1);
@@ -77,7 +80,7 @@ describe('EventCheckInDeleteComponent', () => {
 
     spyOn(component.deleted, 'emit');
     spyOn(component.teardown, 'emit');
-    spy = spyOn(component.service, 'deleteEventCheckInById').and.returnValue(observableOf({}));
+    spy = spyOn(component.service, 'deleteCheckInById').and.returnValue(observableOf({}));
 
     search = search
       .append('school_id', component.session.g.get('school').id)

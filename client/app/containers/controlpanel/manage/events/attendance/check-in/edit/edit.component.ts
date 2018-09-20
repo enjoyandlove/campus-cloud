@@ -10,12 +10,14 @@ import {
 
 import { HttpParams } from '@angular/common/http';
 
+import IEvent from '../../../event.interface';
 import { ICheckIn } from '../check-in.interface';
 import { EventsService } from '../../../events.service';
 import { CPSession } from './../../../../../../../session';
 import { CheckInUtilsService } from '../check-in.utils.service';
 import { EventUtilService } from '../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../shared/services';
+import IServiceProvider from '../../../../services/providers.interface';
 
 @Component({
   selector: 'cp-edit-check-in',
@@ -23,9 +25,9 @@ import { CPI18nService } from '../../../../../../../shared/services';
   styleUrls: ['./edit.component.scss']
 })
 export class CheckInEditComponent implements OnInit {
-  @Input() event: any;
   @Input() checkIn: ICheckIn;
   @Input() orientationId: number;
+  @Input() data: IEvent | IServiceProvider;
 
   @Output() edited: EventEmitter<null> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
@@ -76,7 +78,7 @@ export class CheckInEditComponent implements OnInit {
       this.checkInUtils.checkoutTimeBeforeCheckinTime(
         checkInTime,
         checkOutTime,
-        this.event.has_checkout);
+        this.data.has_checkout);
 
     if (checkoutTimeBeforeCheckinTime) {
       this.formErrors = true;
@@ -98,7 +100,7 @@ export class CheckInEditComponent implements OnInit {
         .append('calendar_id', this.orientationId.toString());
     }
 
-    this.service.updateEventCheckIn(this.form.value, this.checkIn.id, search).subscribe(
+    this.service.updateCheckIn(this.form.value, this.checkIn.id, search).subscribe(
       () => {
         this.edited.emit();
         this.resetModal();
@@ -118,7 +120,7 @@ export class CheckInEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.checkInUtils.getCheckInForm(this.checkIn, this.event);
+    this.form = this.checkInUtils.getCheckInForm(this.checkIn, this.data);
 
     this.buttonData = {
       class: 'primary',

@@ -71,19 +71,19 @@ export class EventsService extends HTTPService {
     return super.delete(url);
   }
 
-  addEventCheckIn(body: any, search?: HttpParams) {
+  addCheckIn(body: any, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_ASSESMENT}/`;
 
     return super.post(url, body, search);
   }
 
-  updateEventCheckIn(body: any, attendeeId: number, search?: HttpParams) {
+  updateCheckIn(body: any, attendeeId: number, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_ASSESMENT}/${attendeeId}`;
 
     return super.update(url, body, search);
   }
 
-  deleteEventCheckInById(attendeeId: number, search?: HttpParams) {
+  deleteCheckInById(attendeeId: number, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_ASSESMENT}/${attendeeId}`;
 
     return super.delete(url, search);

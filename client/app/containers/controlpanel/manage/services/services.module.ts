@@ -38,6 +38,12 @@ import { ServicesListActionBoxComponent } from './list/components';
 import { ServicesExcelModalComponent, ServicesImportTopBarComponent } from './excel/components';
 
 import {
+  ServicesProvidersCheckInEditComponent,
+  ServicesProvidersCheckInCreateComponent,
+  ServicesProvidersCheckInDeleteComponent
+} from './attendance/components/providers-details/check-in';
+
+import {
   ServicesProviderAddComponent,
   ServicesProviderStatsComponent,
   ServicesProvidersListComponent,
@@ -54,6 +60,7 @@ import {
 
 import { EventsModule } from '../events/events.module';
 import { ServicesUtilsService } from './services.utils.service';
+import { CheckInModule } from '../events/attendance/check-in/check-in.module';
 
 @NgModule({
   declarations: [
@@ -84,6 +91,9 @@ import { ServicesUtilsService } from './services.utils.service';
     ServicesEditCreateProviderComponent,
     ServicesProvidersAttendeesStatsComponent,
     ServicesProvidersAttendeesActionBoxComponent,
+    ServicesProvidersCheckInCreateComponent,
+    ServicesProvidersCheckInEditComponent,
+    ServicesProvidersCheckInDeleteComponent
   ],
 
   imports: [
@@ -92,6 +102,7 @@ import { ServicesUtilsService } from './services.utils.service';
     ServicesRoutingModule,
     RouterModule,
     ReactiveFormsModule,
+    CheckInModule,
     EventsModule
   ],
 

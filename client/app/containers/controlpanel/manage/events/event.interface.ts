@@ -17,6 +17,8 @@ export default interface IEvent {
 
   end: Number;
 
+  has_checkout: boolean;
+
   room_data?: String;
 
   location?: String;
@@ -66,4 +68,4 @@ export default interface IEvent {
   attendance_manager_email?: String;
 
   qr_img_url?: String;
-};
+}
