@@ -70,11 +70,7 @@ export class ServicesUtilsService {
 
         [this.cpI18n.translate('email')]: data.email,
 
-        [this.cpI18n.translate('average_rating')]: (
-          data.avg_rating_percent *
-          5 /
-          100
-        ).toFixed(1),
+        [this.cpI18n.translate('average_rating')]: (data.avg_rating_percent * 5 / 100).toFixed(1),
 
         [this.cpI18n.translate('total_ratings')]: data.num_ratings,
 
@@ -85,75 +81,83 @@ export class ServicesUtilsService {
     createSpreadSheet(providers, columns, 'providers_data');
   }
 
-  exportServiceProvidersAttendees(assessments) {
-      const columns = [
-        this.cpI18n.translate('services_label_attendee_name'),
-        this.cpI18n.translate('email'),
-        this.cpI18n.translate('t_service_provider_csv_column_check_in_date'),
-        this.cpI18n.translate('t_service_provider_csv_column_time_in'),
-        this.cpI18n.translate('t_service_provider_csv_column_check_out_date'),
-        this.cpI18n.translate('t_service_provider_csv_column_time_out'),
-        this.cpI18n.translate('t_service_provider_csv_column_time_spent'),
-        this.cpI18n.translate('t_service_provider_csv_column_time_spent_seconds'),
-        this.cpI18n.translate('services_label_checked_in_method'),
-        this.cpI18n.translate('student_id'),
-        this.cpI18n.translate('average_rating'),
-        this.cpI18n.translate('feedback'),
-      ];
+  exportServiceProvidersAttendees(assessments, hasCheckOut) {
+    const columns = [
+      this.cpI18n.translate('services_label_attendee_name'),
+      this.cpI18n.translate('email'),
+      this.cpI18n.translate('t_service_provider_csv_column_check_in_date'),
+      this.cpI18n.translate('t_service_provider_csv_column_time_in'),
+      this.cpI18n.translate('t_service_provider_csv_column_check_out_date'),
+      this.cpI18n.translate('t_service_provider_csv_column_time_out'),
+      this.cpI18n.translate('t_service_provider_csv_column_time_spent'),
+      this.cpI18n.translate('t_service_provider_csv_column_time_spent_seconds'),
+      this.cpI18n.translate('services_label_checked_in_method'),
+      this.cpI18n.translate('student_id'),
+      this.cpI18n.translate('average_rating'),
+      this.cpI18n.translate('feedback')
+    ];
 
-      const check_in_method = {
-        1: 'Web check-in',
-        3: 'App check-in'
+    const check_in_method = {
+      1: 'Web check-in',
+      3: 'App check-in'
+    };
+
+    assessments = assessments.map((item) => {
+      const timeSpentSeconds = item.check_out_time_epoch - item.check_in_time;
+      const hasCheckOutTimeSpent =
+        hasCheckOut &&
+        item.check_out_time_epoch &&
+        item.check_out_time_epoch !== CheckInOutTime.empty;
+
+      return {
+        [this.cpI18n.translate('services_label_attendee_name')]: `${item.firstname} ${
+          item.lastname
+        }`,
+
+        [this.cpI18n.translate('email')]: item.email,
+
+        [this.cpI18n.translate('t_service_provider_csv_column_check_in_date')]: CPDate.fromEpoch(
+          item.check_in_time,
+          this.session.tz
+        ).format(Formats.dateFormat),
+
+        [this.cpI18n.translate('t_service_provider_csv_column_time_in')]: CPDate.fromEpoch(
+          item.check_in_time,
+          this.session.tz
+        ).format(Formats.timeFormat),
+
+        [this.cpI18n.translate(
+          't_service_provider_csv_column_check_out_date'
+        )]: hasCheckOutTimeSpent
+          ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(Formats.dateFormat)
+          : '',
+
+        [this.cpI18n.translate('t_service_provider_csv_column_time_out')]: hasCheckOutTimeSpent
+          ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(Formats.timeFormat)
+          : '',
+
+        [this.cpI18n.translate('t_service_provider_csv_column_time_spent')]: hasCheckOutTimeSpent
+          ? CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat)
+          : '',
+
+        [this.cpI18n.translate(
+          't_service_provider_csv_column_time_spent_seconds'
+        )]: hasCheckOutTimeSpent ? timeSpentSeconds : '',
+
+        [this.cpI18n.translate('average_rating')]:
+          item.feedback_rating === -1 ? 'N/A' : item.feedback_rating / 100 * 5,
+
+        [this.cpI18n.translate('feedback')]: item.feedback_text,
+
+        [this.cpI18n.translate('services_label_checked_in_method')]: check_in_method[
+          item.check_in_method
+        ],
+
+        [this.cpI18n.translate('student_id')]: item.student_identifier
       };
+    });
 
-      assessments = assessments.map((item) => {
-        const timeSpentSeconds = (item.check_out_time_epoch - item.check_in_time);
-        const hasCheckOutTimeSpent = hasCheckOut
-          && item.check_out_time_epoch
-          && item.check_out_time_epoch !== CheckInOutTime.empty;
-
-        return {
-          [this.cpI18n.translate('services_label_attendee_name')]: `${item.firstname} ${
-            item.lastname
-            }`,
-
-          [this.cpI18n.translate('email')]: item.email,
-
-          [this.cpI18n.translate('t_service_provider_csv_column_check_in_date')]:
-            CPDate.fromEpoch(item.check_in_time, this.session.tz).format(Formats.dateFormat),
-
-          [this.cpI18n.translate('t_service_provider_csv_column_time_in')]: CPDate.fromEpoch(
-            item.check_in_time, this.session.tz).format(Formats.timeFormat),
-
-          [this.cpI18n.translate('t_service_provider_csv_column_check_out_date')]:
-            hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              item.check_out_time_epoch, this.session.tz).format(Formats.dateFormat) : '',
-
-          [this.cpI18n.translate('t_service_provider_csv_column_time_out')]:
-            hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              item.check_out_time_epoch, this.session.tz).format(Formats.timeFormat) : '',
-
-          [this.cpI18n.translate('t_service_provider_csv_column_time_spent')]:
-            hasCheckOutTimeSpent ?
-              CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat) : '',
-
-          [this.cpI18n.translate('t_service_provider_csv_column_time_spent_seconds')]:
-            hasCheckOutTimeSpent ? timeSpentSeconds : '',
-
-          [this.cpI18n.translate('average_rating')]:
-            item.feedback_rating === -1 ? 'N/A' : item.feedback_rating / 100 * 5,
-
-          [this.cpI18n.translate('feedback')]: item.feedback_text,
-
-          [this.cpI18n.translate('services_label_checked_in_method')]: check_in_method[
-            item.check_in_method
-            ],
-
-          [this.cpI18n.translate('student_id')]: item.student_identifier
-        };
-      });
-
-      createSpreadSheet(assessments, columns);
+    createSpreadSheet(assessments, columns);
   }
 
   buildServiceProviderHeader(service) {
