@@ -1,10 +1,13 @@
-import { PersonasLoginRequired } from './../../../../personas.status';
-import { PersonaType } from './../../../../../../assess/engagement/engagement.status';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { sortBy } from 'lodash';
+
+import { ITile } from './../../../tile.interface';
 import { IPersona } from './../../../../persona.interface';
-import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
+import { TilesUtilsService } from './../../../tiles.utils.service';
 import { ResourcesUtilsService } from '../../resources.utils.service';
+import { PersonasLoginRequired } from './../../../../personas.status';
+import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
+import { PersonaType } from './../../../../../../assess/engagement/engagement.status';
 
 @Component({
   selector: 'cp-personas-resource-types',
@@ -14,6 +17,7 @@ import { ResourcesUtilsService } from '../../resources.utils.service';
 export class PersonasResourceTypesComponent implements OnInit {
   @Input() resource;
   @Input() editView;
+  @Input() tile: ITile;
   @Input() persona: IPersona;
 
   @Output() selected: EventEmitter<any> = new EventEmitter();
@@ -27,7 +31,11 @@ export class PersonasResourceTypesComponent implements OnInit {
 
   typeSearchComponent = ['store', 'campus_service', 'subscribable_calendar'];
 
-  constructor(public cpI18n: CPI18nService, public utils: ResourcesUtilsService) {}
+  constructor(
+    public cpI18n: CPI18nService,
+    public utils: ResourcesUtilsService,
+    public tileUtils: TilesUtilsService
+  ) {}
 
   onUrlChange(url) {
     this.linkUrl.emit(url);
@@ -70,10 +78,6 @@ export class PersonasResourceTypesComponent implements OnInit {
     }
   }
 
-  isTypeUrl(link_url: string) {
-    return link_url ? link_url.startsWith('http') : false;
-  }
-
   setUrlType() {
     const urlIds = ['web_link', 'external_link'];
 
@@ -94,8 +98,9 @@ export class PersonasResourceTypesComponent implements OnInit {
   }
 
   updateState() {
-    const isTypeUrl = this.isTypeUrl(this.resource.link_url);
-    this.resourceSelection = isTypeUrl ? this.setUrlType() : this.setGeneralType();
+    const isWebLink = this.tileUtils.isTileWebLink(this.tile.related_link_data.link_type);
+
+    this.resourceSelection = isWebLink ? this.setUrlType() : this.setGeneralType();
 
     this.updateResourceType();
   }
