@@ -36,10 +36,10 @@ export class SectionUtilsService {
   temporaryGuide(rank = 1): ICampusGuide {
     return {
       rank,
+      name: '',
       tiles: [],
       _temporary: true,
-      id: new Date().getUTCMilliseconds(),
-      name: this.cpI18n.translate('t_personas_create_section_default_name')
+      id: new Date().getUTCMilliseconds()
     };
   }
 }
