@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span i18n><strong>{{ 'services_provider_label_add_service_provider' | cpI18n }}</strong></span>
+        <span><strong>{{ 'services_provider_label_add_service_provider' | cpI18n }}</strong></span>
 
         <span
           (click)="doReset()"
@@ -20,7 +20,7 @@
         <form [formGroup]="form">
           <div class="row form-group">
             <div class="col-6">
-              <label i18n>{{ 'name' | cpI18n }}</label>
+              <label>{{ 'name' | cpI18n }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -28,7 +28,7 @@
                 [class.error]="formErrors && form.controls.name.hasError('required')">
             </div>
             <div class="col-6">
-              <label i18n>{{ 'email' | cpI18n }}</label>
+              <label>{{ 'email' | cpI18n }}</label>
               <input
                 type="text"
                 class="form-control"
@@ -39,11 +39,28 @@
 
           <div class="row form-group" *ngIf="serviceAcceptsFeedback">
             <div class="col-12">
-              <label i18n>{{ 'services_provider_label_default_question' | cpI18n }}</label>
+              <label>{{ 'services_provider_label_default_question' | cpI18n }}</label>
               <input
                 type="text"
                 class="form-control"
                 formControlName="custom_basic_feedback_label">
+            </div>
+          </div>
+
+          <div class="row form-group">
+            <div class="col-6">
+              <label>{{ 't_services_attendance_type' | cpI18n }}</label>
+              <cp-dropdown
+                [items]="attendanceTypes"
+                (selected)="onSelectedAttendanceType($event.action)">
+              </cp-dropdown>
+            </div>
+            <div class="col-6">
+              <label>{{ 't_services_service_qr_enabled' | cpI18n }}</label>
+              <cp-dropdown
+                [items]="serviceQRCodes"
+                (selected)="onSelectedQRCode($event.action)">
+              </cp-dropdown>
             </div>
           </div>
         </form>
@@ -56,9 +73,9 @@
       <div class="col-6 text-right">
         <button
           type="button"
-          (click)="doReset()"
+          (click)="resetModal()"
           class="cpbtn cpbtn--cancel"
-          data-dismiss="modal" i18n>
+          data-dismiss="modal">
           {{ 'cancel' | cpI18n }}
         </button>
 
@@ -66,7 +83,7 @@
           type="button"
           (click)="onSubmit()"
           [disabled]="!form.valid"
-          class="cpbtn cpbtn--primary"i18n>
+          class="cpbtn cpbtn--primary">
           {{ 'save' | cpI18n }}
         </button>
       </div>

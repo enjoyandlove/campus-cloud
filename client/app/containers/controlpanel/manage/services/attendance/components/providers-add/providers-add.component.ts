@@ -10,12 +10,13 @@ import {
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
-import { Feedback } from '../../../services.status';
 import { ProvidersService } from '../../../providers.service';
-import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
+import { Feedback, ServiceFeedback } from '../../../services.status';
+import { EventUtilService } from '../../../../events/events.utils.service';
+import { attendanceType, CheckInMethod } from '../../../../events/event.status';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
 
 declare var $: any;
 
@@ -25,13 +26,13 @@ declare var $: any;
   styleUrls: ['./providers-add.component.scss']
 })
 export class ServicesProviderAddComponent implements OnInit {
-  @Input() serviceId: number;
-  @Input() serviceWithFeedback: Observable<boolean>;
+  @Input() service;
 
   @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
-  formErrors;
+  serviceQRCodes;
+  attendanceTypes;
   form: FormGroup;
   serviceAcceptsFeedback;
 
@@ -43,10 +44,11 @@ export class ServicesProviderAddComponent implements OnInit {
 
   constructor(
     private el: ElementRef,
-    private fb: FormBuilder,
-    private cpI18n: CPI18nService,
-    private cpTracking: CPTrackingService,
-    private providersService: ProvidersService
+    public fb: FormBuilder,
+    public cpI18n: CPI18nService,
+    public utils: EventUtilService,
+    public cpTracking: CPTrackingService,
+    public providersService: ProvidersService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -58,7 +60,7 @@ export class ServicesProviderAddComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new HttpParams().append('service_id', this.serviceId.toString());
+    const search = new HttpParams().append('service_id', this.service.id.toString());
 
     this.providersService.createProvider(this.form.value, search).subscribe((res) => {
       this.trackEvent(res);
@@ -68,15 +70,10 @@ export class ServicesProviderAddComponent implements OnInit {
     });
   }
 
-  doReset() {
-    this.form.reset();
-    this.formErrors = false;
-  }
-
   trackEvent(data) {
     this.eventProperties = {
       ...this.eventProperties,
-      service_id: this.serviceId,
+      service_id: this.service.id,
       service_provider_id: data.id,
       feedback: this.getFeedbackStatus(data.custom_basic_feedback_label)
     };
@@ -96,21 +93,38 @@ export class ServicesProviderAddComponent implements OnInit {
     $('#createProvider').modal('hide');
   }
 
+  onSelectedAttendanceType(hasCheckout: boolean): void {
+    this.form.controls['has_checkout'].setValue(hasCheckout);
+  }
+
+  onSelectedQRCode(isEnabled: boolean): void {
+    const verificationMethods = this.form.controls['checkin_verification_methods'].value;
+
+    if (isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.push(CheckInMethod.app);
+    } else if (!isEnabled && verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.pop(CheckInMethod.app);
+    }
+  }
+
   ngOnInit() {
-    this.serviceWithFeedback.subscribe((feedback) => {
-      this.serviceAcceptsFeedback = feedback;
+    this.serviceQRCodes = this.utils.getQROptions();
+    this.attendanceTypes = this.utils.getAttendanceTypeOptions();
 
-      this.form = this.fb.group({
-        provider_name: [null, Validators.required],
-        email: [null, Validators.required],
-        custom_basic_feedback_label: [null, Validators.required]
-      });
-
-      if (!this.serviceAcceptsFeedback) {
-        this.form.controls['custom_basic_feedback_label'].setValue(
-          this.cpI18n.translate('services_default_feedback_question')
-        );
-      }
+    this.form = this.fb.group({
+      email: [null, Validators.required],
+      has_checkout: [attendanceType.checkInOnly],
+      provider_name: [null, Validators.required],
+      custom_basic_feedback_label: [null, Validators.required],
+      checkin_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
     });
+
+    this.serviceAcceptsFeedback = this.service.enable_feedback === ServiceFeedback.enabled;
+
+    if (!this.serviceAcceptsFeedback) {
+      this.form.controls['custom_basic_feedback_label'].setValue(
+        this.cpI18n.translate('services_default_feedback_question')
+      );
+    }
   }
 }
