@@ -3,6 +3,11 @@ export enum TileCategoryRank {
   hidden = -1
 }
 
+export enum CampusLinkType {
+  webLink = 0,
+  inAppLink = 3
+}
+
 export enum TileFeatureRank {
   notFeatured = -1
 }

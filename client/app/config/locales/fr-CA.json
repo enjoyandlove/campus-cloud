@@ -2112,9 +2112,6 @@
   "services_label_checked_in_method": {
     "message": "Méthode de vérification de présence"
   },
-  "services_label_checked_in_time": {
-    "message": "Heure d'enregistrement"
-  },
   "services_label_checkin_time": {
     "message": "Heure d'enregistrement"
   },
@@ -2892,6 +2889,24 @@
   "t_services_service_qr_enabled": {
     "message": "Code QR"
   },
+  "t_service_provider_csv_column_check_in_date": {
+    "message": "Heure de vérification de présence"
+  },
+  "t_service_provider_csv_column_check_out_date": {
+    "message": "Heure de sortie"
+  },
+  "t_service_provider_csv_column_time_in": {
+    "message": "Heure d'entrée"
+  },
+  "t_service_provider_csv_column_time_out": {
+    "message": "Heure de sortie"
+  },
+  "t_service_provider_csv_column_time_spent": {
+    "message": "Temps passé"
+  },
+  "t_service_provider_csv_column_time_spent_seconds": {
+    "message": "Temps passé (secondes)"
+  },
   "t_shared_cancel": {
     "message": "Annuler"
   },
@@ -2909,6 +2924,9 @@
   },
   "t_shared_image": {
     "message": "Image"
+  },
+  "t_shared_invalid_url": {
+    "message": "URL invalide (https://google.com)"
   },
   "t_shared_label_location_toggle": {
     "message": "Ajouter un lieu"

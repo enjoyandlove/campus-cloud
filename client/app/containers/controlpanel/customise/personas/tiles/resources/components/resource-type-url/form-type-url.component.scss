@@ -1,1 +1,11 @@
 @import '~styles/components/form';
+
+input {
+  display: block;
+  position: relative;
+}
+
+small {
+  top: 38px;
+  position: absolute;
+}

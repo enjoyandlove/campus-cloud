@@ -71,6 +71,9 @@ export class PersonasResourceTypesComponent implements OnInit {
   }
 
   isTypeUrl(link_url: string) {
+    console.log(this.resource);
+    // Web Link Non HTTP
+    // this.resource.link_type === 0;
     return link_url ? link_url.startsWith('http') : false;
   }
 
@@ -94,6 +97,7 @@ export class PersonasResourceTypesComponent implements OnInit {
   }
 
   updateState() {
+    console.log(this.resource);
     const isTypeUrl = this.isTypeUrl(this.resource.link_url);
     this.resourceSelection = isTypeUrl ? this.setUrlType() : this.setGeneralType();
 
