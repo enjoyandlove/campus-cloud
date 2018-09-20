@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { sortBy, get as _get } from 'lodash';
-import { FileUploadService } from './../../../../../shared/services/file-upload.service';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { Injectable } from '@angular/core';
+
+import { ITile } from './tile.interface';
+import { IPersona } from '../persona.interface';
+import { CPSession } from '../../../../../session';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
-import { ITile } from './tile.interface';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { TileCategoryRank, TileFeatureRank, TileVisibility, CampusLinkType } from './tiles.status';
-import { CPSession } from '../../../../../session';
-import { IPersona } from '../persona.interface';
+import { FileUploadService } from './../../../../../shared/services/file-upload.service';
 
 const threeHundrendKb = 3e5;
 
@@ -52,6 +53,10 @@ export class TilesUtilsService {
     return this.defaultTileCategoryIds.includes(tile.tile_category_id);
   }
 
+  isTileWebLink(linkType: number) {
+    return linkType === CampusLinkType.webLink;
+  }
+
   isTileSupportedByWebApp(tile: ITile) {
     const supportedLinkUrls = TilesUtilsService.webAppSupportedLinkUrls;
     const linkUrl = _get(tile, ['related_link_data', 'link_url'], null);
@@ -61,7 +66,7 @@ export class TilesUtilsService {
       return false;
     }
 
-    const webOrExternalLink = linkType === CampusLinkType.webLink;
+    const webOrExternalLink = this.isTileWebLink(linkType);
 
     return webOrExternalLink || supportedLinkUrls.includes(linkUrl);
   }
