@@ -1,30 +1,33 @@
+import { SectionsService } from './../sections/sections.service';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
-import { Component, OnDestroy, OnInit, NgZone } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { map, switchMap } from 'rxjs/operators';
 import { flatten, get as _get } from 'lodash';
 import { combineLatest } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
-import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { Store } from '@ngrx/store';
+
+import { IPersona } from './../persona.interface';
+import { ITile } from './../tiles/tile.interface';
+import { CPSession } from '../../../../../session';
+import { BaseComponent } from '../../../../../base';
 import {
   ISnackbar,
   SNACKBAR_HIDE,
   SNACKBAR_SHOW
 } from './../../../../../reducers/snackbar.reducer';
-import { IPersona } from './../persona.interface';
-import { PersonasService } from './../personas.service';
-import { PersonasType, PersonaValidationErrors } from './../personas.status';
-import { PersonasUtilsService } from './../personas.utils.service';
-import { ICampusGuide } from './../sections/section.interface';
-import { SectionUtilsService } from './../sections/section.utils.service';
-import { ITile } from './../tiles/tile.interface';
-import { TileCategoryRank, TileFeatureRank, TileType } from './../tiles/tiles.status';
-import { TilesUtilsService } from './../tiles/tiles.utils.service';
-import { BaseComponent } from '../../../../../base';
-import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
-import { CategoryDeleteErrors } from '../sections/section.status';
 import { TilesService } from '../tiles/tiles.service';
+import { PersonasService } from './../personas.service';
+import { CPI18nService } from '../../../../../shared/services';
+import { ICampusGuide } from './../sections/section.interface';
+import { CampusGuideType } from './../sections/section.status';
+import { CategoryDeleteErrors } from '../sections/section.status';
+import { TilesUtilsService } from './../tiles/tiles.utils.service';
+import { PersonasUtilsService } from './../personas.utils.service';
+import { SectionUtilsService } from './../sections/section.utils.service';
+import { PersonasType, PersonaValidationErrors } from './../personas.status';
+import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { TileCategoryRank, TileFeatureRank, TileType } from './../tiles/tiles.status';
 
 interface IState {
   working: boolean;
@@ -66,6 +69,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     public tileService: TilesService,
     public utils: PersonasUtilsService,
     public tileUtils: TilesUtilsService,
+    public sectionService: SectionsService,
     public store: Store<IHeader | ISnackbar>,
     public sectionUtils: SectionUtilsService
   ) {
@@ -299,7 +303,18 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     };
   }
 
-  onTileMoved({ tile, section }) {
+  createNewCategory() {
+    this.displayWarning();
+    this.state = { ...this.state, working: true };
+
+    const school_id = this.session.g.get('school').id;
+    const { name, rank } = this.state.guides.filter((g: ICampusGuide) => g._temporary)[0];
+    const body = { school_id, name, rank, tiles: [] };
+
+    return this.sectionService.createSectionTileCategory(body).toPromise();
+  }
+
+  async onTileMoved({ tile, section }) {
     const guideTiles = flatten(this.state.guides.map((g) => g.tiles));
     const allTiles = [...guideTiles, ...this.state.featuredTiles.tiles];
     const allGuides = [...this.state.guides, this.state.featuredTiles];
@@ -315,11 +330,27 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
       return;
     }
+    
+    let newCategory: ICampusGuide;
 
-    let newCategory: ICampusGuide =
-      section === 'featured'
-        ? this.state.featuredTiles
-        : allGuides.filter((g) => g.id === +section)[0];
+    if (section === CampusGuideType.featured) {
+      newCategory = this.state.featuredTiles;
+    } else if (section === CampusGuideType.temporary) {
+      let _category;
+
+      try {
+        _category = await this.createNewCategory();
+      } catch (error) {
+        return this.zone.run(() => this.errorHandler(error));
+      }
+
+      newCategory = {
+        ..._category,
+        tiles: [movingTile]
+      };
+    } else {
+      newCategory = allGuides.filter((g) => g.id === +section)[0];
+    }
 
     const school_id = this.session.g.get('school').id;
 

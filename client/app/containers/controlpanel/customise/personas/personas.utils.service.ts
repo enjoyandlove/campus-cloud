@@ -1,12 +1,13 @@
-import { IPersona } from './persona.interface';
-import { TileCategoryRank } from './tiles/tiles.status';
 import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { flatten, sortBy, get as _get } from 'lodash';
+import { flatten, get as _get, sortBy } from 'lodash';
 import { CPSession } from './../../../../session/index';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { CPDate } from './../../../../shared/utils/date/date';
+import { IPersona } from './persona.interface';
 import { PersonasLoginRequired, PersonasType } from './personas.status';
 import { ITile } from './tiles/tile.interface';
+import { TileCategoryRank } from './tiles/tiles.status';
 
 @Injectable()
 export class PersonasUtilsService {
@@ -71,6 +72,30 @@ export class PersonasUtilsService {
       name: [null, Validators.required],
       open_in_browser: [0],
       school_id: [this.session.g.get('school').id, Validators.required]
+    });
+  }
+
+  getPersonasForm(persona: IPersona = null) {
+    const _persona = {
+      school_id: this.session.g.get('school').id,
+      name: persona ? persona.localized_name_map.en : null,
+      platform: persona ? persona.platform : PersonasType.mobile,
+      rank: persona ? persona.rank : CPDate.now(this.session.tz).unix(),
+      login_requirement: persona ? persona.login_requirement : PersonasLoginRequired.optional,
+      pretour_enabled: persona ? persona.pretour_enabled : false,
+      cre_enabled: persona ? persona.cre_enabled : false,
+      clone_tiles: false
+    };
+
+    return this.fb.group({
+      school_id: [_persona.school_id, Validators.required],
+      name: [_persona.name, [Validators.required, Validators.maxLength(255)]],
+      platform: [_persona.platform, Validators.required],
+      rank: [_persona.rank, Validators.required],
+      login_requirement: [_persona.login_requirement],
+      pretour_enabled: [_persona.pretour_enabled],
+      cre_enabled: [_persona.cre_enabled],
+      clone_tiles: [_persona.clone_tiles]
     });
   }
 
