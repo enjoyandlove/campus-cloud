@@ -71,8 +71,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
   onImportError(err) {
     let message = this.cpI18n.translate('something_went_wrong');
 
-    const error = JSON.parse(err._body).error;
-    if (error === 'Database Error') {
+    if (err === 'Database Error') {
       message = this.cpI18n.translate('audience_create_error_duplicate_audience');
     }
 
@@ -110,10 +109,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
   }
 
   downloadAudience({ id }) {
-    const columns = [
-      this.cpI18n.translate('name'),
-      this.cpI18n.translate('email')
-    ];
+    const columns = [this.cpI18n.translate('name'), this.cpI18n.translate('email')];
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service
