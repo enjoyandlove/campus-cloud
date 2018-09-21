@@ -116,7 +116,7 @@ describe('PersonasEditComponent', () => {
       login_requirement: 1,
       pretour_enabled: false,
       cre_enabled: false,
-      clone_tiles: null
+      clone_tiles: false
     };
 
     comp.buildForm(mockPersonas[0]);
