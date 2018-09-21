@@ -597,7 +597,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       .then(({ data }) => {
         const filteredTiles = data.guides.filter((g: ICampusGuide) => g.tiles.length);
 
-        const temporaryTile = [this.sectionUtils.temporaryGuide(100)];
+        const temporaryTile = [this.sectionUtils.temporaryGuide(9e4)];
 
         const guides = filteredTiles.length ? filteredTiles : temporaryTile;
 
