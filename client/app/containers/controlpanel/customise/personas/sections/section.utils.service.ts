@@ -40,8 +40,7 @@ export class SectionUtilsService {
       name: '',
       tiles: [],
       _temporary: true,
-      id: CampusGuideId.temporary,
-      name: this.cpI18n.translate('t_personas_create_section_default_name')
+      id: CampusGuideId.temporary
     };
   }
 }
