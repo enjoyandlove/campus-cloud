@@ -71,9 +71,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
   onImportError(err) {
     let message = this.cpI18n.translate('something_went_wrong');
 
-    const error = err.error.response;
-
-    if (error === 'Database Error') {
+    if (err === 'Database Error') {
       message = this.cpI18n.translate('audience_create_error_duplicate_audience');
     }
 
