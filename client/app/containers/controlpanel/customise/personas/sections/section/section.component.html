@@ -42,7 +42,8 @@
         class="row"
         [sortablejs]="guide.tiles"
         [attr.data-section]="sectionId"
-        [sortablejsOptions]="sortableOptions">
+        [sortablejsOptions]="sortableOptions"
+        [class.js_do_not_drag]="!guide.tiles.length">
         <cp-personas-tile
           class="tile"
           [tile]="tile"

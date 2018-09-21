@@ -223,7 +223,11 @@ export class PersonasSectionComponent implements OnInit {
         put: true,
 
         // whether elements can be added from other lists
-        pull: true
+        pull: function({ el }) {
+          const { classList } = el;
+
+          return !classList.contains('js_do_not_drag');
+        }
       },
       onAdd: this.onMoveToSection.bind(this),
       onUpdate: this.onMoveWithinSection.bind(this)
