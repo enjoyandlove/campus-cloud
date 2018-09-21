@@ -61,8 +61,6 @@ export class CPTopBarComponent implements OnInit {
       return 'locations';
     } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.links)) {
       return 'links';
-    } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.app_customization)) {
-      return 'customization';
     } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.orientation)) {
       return 'orientation';
     } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.jobs)) {
