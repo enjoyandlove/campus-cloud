@@ -33,7 +33,7 @@ export class CPDropdownComponent implements OnInit {
   query = null;
   searchFixed = true;
   isSearching = false;
-  MIN_RESULTS_FOR_SEARCH = 40;
+  MIN_RESULTS_FOR_SEARCH = 15;
 
   constructor() {}
 

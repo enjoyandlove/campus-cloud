@@ -330,7 +330,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
       return;
     }
-    
+
     let newCategory: ICampusGuide;
 
     if (section === CampusGuideType.featured) {
