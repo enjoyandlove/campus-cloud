@@ -59,19 +59,13 @@
             </span>
 
             <span class="col-3">
-              {{ student.events }} {{ 'events' | cpI18n }} {{ 'and' | cpI18n }} {{ student.services }} {{ 'services' | cpI18n }}
+              {{ student.events + student.services + student.orientation_events }} {{ 't_assess_students_engagements' | cpI18n }}
             </span>
 
             <span class="col-3">
-              <ng-container *ngIf="student.last_event === 0 && student.last_service === 0">{{ cpI18n.translate('announcements_no_engagement_data') }}</ng-container>
-              <ng-container *ngIf="student.last_event !== 0 || student.last_service !== 0">
-                <ng-container *ngIf="student.last_service >= student.last_event">
-                  {{ student.last_service | cpDatePipe:dateFormat }}
-                </ng-container>
-                <ng-container *ngIf="student.last_event > student.last_service">
-                  {{ student.last_event | cpDatePipe:dateFormat }}
-                </ng-container>
-              </ng-container>
+              <cp-student-last-engagement
+                [student]="student">
+              </cp-student-last-engagement>
             </span>
 
             <span class="col-2 text-center offset-1">

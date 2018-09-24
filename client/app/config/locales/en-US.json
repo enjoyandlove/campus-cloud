@@ -961,7 +961,7 @@
     "message": "Upload CSV File"
   },
   "customise": {
-    "message": "Customize"
+    "message": "Studio"
   },
   "customise_banner": {
     "message": "Branding"
@@ -2338,6 +2338,9 @@
   "t_assess_orientation_programs": {
     "message": "Orientation Programs"
   },
+  "t_assess_students_engagements": {
+    "message": "Engagements"
+  },
   "t_assess_time_spent": {
     "message": "Time Spent"
   },
@@ -2508,13 +2511,13 @@
     "message": "Check-in Date"
   },
   "t_events_csv_column_check_out_date": {
-    "message": "Check-out time"
+    "message": "Check-out Date"
   },
   "t_events_csv_column_time_in": {
     "message": "Check-in Time"
   },
   "t_events_csv_column_time_out": {
-    "message": "Check-out time"
+    "message": "Check-out Time"
   },
   "t_events_csv_column_time_spent": {
     "message": "Time Spent"
@@ -2621,9 +2624,6 @@
   },
   "t_personas_create_label_campus_security": {
     "message": "Campus Security Service"
-  },
-  "t_personas_create_section_default_name": {
-    "message": "Untitled"
   },
   "t_personas_create_submit_button": {
     "message": "Save Changes"
@@ -2893,7 +2893,7 @@
     "message": "Check-in Date"
   },
   "t_service_provider_csv_column_check_out_date": {
-    "message": "Check-out Time"
+    "message": "Check-out Date"
   },
   "t_service_provider_csv_column_time_in": {
     "message": "Check-in Time"

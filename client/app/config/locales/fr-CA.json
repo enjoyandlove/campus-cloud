@@ -2338,6 +2338,9 @@
   "t_assess_orientation_programs": {
     "message": "Programmes d'orientation"
   },
+  "t_assess_students_engagements": {
+    "message": "Implications"
+  },
   "t_assess_time_spent": {
     "message": "Temps passé"
   },
@@ -2508,7 +2511,7 @@
     "message": "Heure de vérification de présence"
   },
   "t_events_csv_column_check_out_date": {
-    "message": "Heure de sortie"
+    "message": "Date the sortie"
   },
   "t_events_csv_column_time_in": {
     "message": "Heure d'entrée"
@@ -2621,9 +2624,6 @@
   },
   "t_personas_create_label_campus_security": {
     "message": "Service de sécurité du campus"
-  },
-  "t_personas_create_section_default_name": {
-    "message": "Sans titre"
   },
   "t_personas_create_submit_button": {
     "message": "Enregistrer les changements"
@@ -2893,7 +2893,7 @@
     "message": "Heure de vérification de présence"
   },
   "t_service_provider_csv_column_check_out_date": {
-    "message": "Heure de sortie"
+    "message": "Date the sortie"
   },
   "t_service_provider_csv_column_time_in": {
     "message": "Heure d'entrée"

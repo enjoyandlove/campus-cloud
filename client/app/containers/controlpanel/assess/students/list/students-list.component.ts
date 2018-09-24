@@ -6,7 +6,6 @@ import { Store } from '@ngrx/store';
 
 import { StudentsService } from './../students.service';
 import { CPSession } from './../../../../../session/index';
-import { FORMAT } from './../../../../../shared/pipes/date';
 import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from './../../../../../base/base.component';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
@@ -50,7 +49,6 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   eventData;
   messageData;
   listIdFromUrl;
-  dateFormat = FORMAT.DATETIME;
   isStudentComposeModal = false;
   avatarCustomCodeThreshold = 3;
   defaultImage = require('public/default/user.png');
