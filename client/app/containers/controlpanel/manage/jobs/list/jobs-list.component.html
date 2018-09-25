@@ -75,8 +75,11 @@
             <span class="col-2">
               {{ job.posting_start | cpDatePipe:dateFormat }}
             </span>
-            <span class="col-2">
+            <span class="col-2" *ngIf="!utils.isOnGoing(job)">
               {{ job.posting_end | cpDatePipe:dateFormat }}
+            </span>
+            <span class="col-2" *ngIf="utils.isOnGoing(job)">
+              {{ 't_jobs_ongoing' | cpI18n }}
             </span>
             <span
               (click)="deleteJob = job; launchDeleteModal = true"

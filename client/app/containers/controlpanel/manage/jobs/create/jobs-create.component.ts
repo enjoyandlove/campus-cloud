@@ -1,17 +1,19 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { switchMap } from 'rxjs/operators';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
-import { CPDate } from '../../../../../shared/utils';
-import { EmployerService } from '../employers/employer.service';
+
 import { JobsService } from '../jobs.service';
+import { CPSession } from '../../../../../session';
+import { CPDate } from '../../../../../shared/utils';
 import { JobsTypeDesireStudy } from '../jobs.status';
+import { JobsUtilsService } from '../jobs.utils.service';
+import { CPI18nService } from '../../../../../shared/services';
+import { EmployerService } from '../employers/employer.service';
+import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-jobs-create',
@@ -34,24 +36,27 @@ export class JobsCreateComponent implements OnInit {
     public service: JobsService,
     public store: Store<IHeader>,
     public cpI18n: CPI18nService,
+    public utils: JobsUtilsService,
     public employerService: EmployerService
   ) {}
 
   onSubmit() {
     this.formError = false;
 
-    if (this.data.job.posting_end <= this.data.job.posting_start) {
-      this.formError = true;
-      this.dateErrorMessage = this.cpI18n.translate('jobs_error_end_date_before_start');
+    if (!this.utils.isOnGoing(this.data.job)) {
+      if (this.data.job.posting_end <= this.data.job.posting_start) {
+        this.formError = true;
+        this.dateErrorMessage = this.cpI18n.translate('jobs_error_end_date_before_start');
 
-      return;
-    }
+        return;
+      }
 
-    if (this.data.job.posting_end <= Math.round(CPDate.now(this.session.tz).unix())) {
-      this.formError = true;
-      this.dateErrorMessage = this.cpI18n.translate('jobs_error_end_date_after_now');
+      if (this.data.job.posting_end <= Math.round(CPDate.now(this.session.tz).unix())) {
+        this.formError = true;
+        this.dateErrorMessage = this.cpI18n.translate('jobs_error_end_date_after_now');
 
-      return;
+        return;
+      }
     }
 
     if (this.isNewEmployer) {
@@ -130,30 +135,34 @@ export class JobsCreateComponent implements OnInit {
   }
 
   buildForm() {
-    this.form = this.fb.group({
-      title: [null, [Validators.required, Validators.maxLength(120)]],
-      store_id: [null, Validators.required],
-      description: [null],
-      how_to_apply: [null],
-      posting_start: [null, Validators.required],
-      posting_end: [null, Validators.required],
-      contract_start: [null],
-      application_deadline: [null],
-      location: [null],
-      is_ug_y1: [JobsTypeDesireStudy.disabled],
-      is_ug_y2: [JobsTypeDesireStudy.disabled],
-      is_ug_y3: [JobsTypeDesireStudy.disabled],
-      is_ug_y4: [JobsTypeDesireStudy.disabled],
-      is_masters: [JobsTypeDesireStudy.disabled],
-      is_phd: [JobsTypeDesireStudy.disabled],
-      is_full_time: [JobsTypeDesireStudy.disabled],
-      is_part_time: [JobsTypeDesireStudy.disabled],
-      is_summer: [JobsTypeDesireStudy.disabled],
-      is_internship: [JobsTypeDesireStudy.disabled],
-      is_credited: [JobsTypeDesireStudy.disabled],
-      is_volunteer: [JobsTypeDesireStudy.disabled],
-      is_oncampus: [JobsTypeDesireStudy.disabled]
-    });
+    this.form = this.fb.group(
+      {
+        title: [null, [Validators.required, Validators.maxLength(120)]],
+        store_id: [null, Validators.required],
+        description: [null],
+        how_to_apply: [null],
+        posting_start: [null, Validators.required],
+        posting_end: [null, Validators.required],
+        contract_start: [null],
+        application_deadline: [null],
+        location: [null],
+        is_ug_y1: [JobsTypeDesireStudy.disabled],
+        is_ug_y2: [JobsTypeDesireStudy.disabled],
+        is_ug_y3: [JobsTypeDesireStudy.disabled],
+        is_ug_y4: [JobsTypeDesireStudy.disabled],
+        is_masters: [JobsTypeDesireStudy.disabled],
+        is_phd: [JobsTypeDesireStudy.disabled],
+        is_full_time: [JobsTypeDesireStudy.disabled],
+        is_part_time: [JobsTypeDesireStudy.disabled],
+        is_summer: [JobsTypeDesireStudy.disabled],
+        is_internship: [JobsTypeDesireStudy.disabled],
+        is_credited: [JobsTypeDesireStudy.disabled],
+        is_volunteer: [JobsTypeDesireStudy.disabled],
+        is_oncampus: [JobsTypeDesireStudy.disabled],
+        ongoing: [false]
+      },
+      { validator: this.utils.jobOngoingValidator }
+    );
   }
 
   ngOnInit() {

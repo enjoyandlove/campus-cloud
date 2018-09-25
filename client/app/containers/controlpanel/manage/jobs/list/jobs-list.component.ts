@@ -7,6 +7,7 @@ import { JobsService } from '../jobs.service';
 import { ManageHeaderService } from '../../utils';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
+import { JobsUtilsService } from './../jobs.utils.service';
 import { FORMAT } from '../../../../../shared/pipes/date/date.pipe';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
@@ -48,6 +49,7 @@ export class JobsListComponent extends BaseComponent implements OnInit {
     public service: JobsService,
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
+    public utils: JobsUtilsService,
     public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService
   ) {
