@@ -17,6 +17,7 @@ import {
   CPDropdownMultiSelectComponent,
   CPHeaderLinkComponent,
   CPImageUploadComponent,
+  CPLightboxComponent,
   CPLineChartComponent,
   CPListModalComponent,
   CPMapsComponent,
@@ -60,7 +61,8 @@ import {
   CPTrackerDirective,
   CPColorPickerDirective,
   CPHostDirective,
-  CPImageRatioDirective
+  CPImageRatioDirective,
+  CPLightboxDirective
 } from './directives';
 import { CPDatePipe, CPFilterPipe, CPI18nPipe, CPFIlterByLength } from './pipes';
 import {
@@ -133,10 +135,12 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
     CPHeaderLinkComponent,
     CPSortingHeaderComponent,
     CPRangePickerComponent,
-    CPLineChartComponent
+    CPLineChartComponent,
+    CPLightboxComponent,
+    CPLightboxDirective
   ],
 
-  entryComponents: [CPImageCropperComponent],
+  entryComponents: [CPImageCropperComponent, CPLightboxComponent],
 
   imports: [CommonModule, RouterModule, ReactiveFormsModule, PopoverModule.forRoot()],
 
@@ -211,7 +215,9 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
     CPSortingHeaderComponent,
     CPRangePickerComponent,
     CPLineChartComponent,
-    CPImageCropperComponent
+    CPImageCropperComponent,
+    CPLightboxComponent,
+    CPLightboxDirective
   ]
 })
 export class SharedModule {}
