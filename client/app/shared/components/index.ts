@@ -16,6 +16,7 @@ export * from './cp-snackbar';
 export * from './cp-trackers';
 export * from './cp-dropdown';
 export * from './cp-checkbox';
+export * from './cp-lightbox';
 export * from './cp-searchbox';
 export * from './cp-list-modal';
 export * from './cp-typeahead';

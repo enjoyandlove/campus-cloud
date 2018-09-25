@@ -1,4 +1,12 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  EventEmitter,
+  ViewChild,
+  ElementRef,
+  Output
+} from '@angular/core';
 
 export const MODAL_TYPE = {
   DEFAULT: 'modal-sm',
@@ -15,6 +23,10 @@ export class CPModalComponent implements OnInit {
   @Input() type: string;
   @Input() centered = false;
 
+  @Output() modalClose: EventEmitter<null> = new EventEmitter();
+
+  @ViewChild('cpModal') cpModal: ElementRef;
+
   class;
 
   constructor() {}
@@ -27,5 +39,6 @@ export class CPModalComponent implements OnInit {
     classes = [...classes, type, centered];
 
     this.class = classes.join(' ').trim();
+    $(this.cpModal.nativeElement).on('hidden.bs.modal', () => this.modalClose.emit());
   }
 }
