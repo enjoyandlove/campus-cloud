@@ -2,8 +2,6 @@
   {{ 'announcements_no_engagement_data' | cpI18n }}
 </span>
 
-<span *ngIf="hasEngagement">
-  <span *ngIf="lastEngaged">
-    {{ lastEngaged | cpDatePipe:dateFormat }}
-  </span>
+<span *ngIf="hasEngagement && lastEngaged">
+  {{ lastEngaged | cpDatePipe:dateFormat }}
 </span>
