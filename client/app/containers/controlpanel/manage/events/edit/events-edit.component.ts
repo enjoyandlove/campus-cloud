@@ -469,6 +469,12 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.form.controls['attend_verification_methods']
       .setValue([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
+
+    if (!value) {
+      const eventManager = this.form.controls['event_manager_id'];
+      eventManager.clearValidators();
+      eventManager.updateValueAndValidity();
+    }
   }
 
   onResetMap() {
