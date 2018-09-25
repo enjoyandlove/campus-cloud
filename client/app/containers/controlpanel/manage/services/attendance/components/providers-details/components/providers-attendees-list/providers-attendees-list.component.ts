@@ -43,7 +43,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   isAddCheckInModal = false;
   isEditCheckInModal = false;
   isDeleteCheckInModal = false;
-  dateFormat = FORMAT.DATETIME;
+  dateFormat = FORMAT.DATETIME_SHORT;
   webCheckInMethod = CheckInMethod.web;
   emptyCheckOutTime = CheckInOutTime.empty;
   defaultImage = require('public/default/user.png');
