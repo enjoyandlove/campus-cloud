@@ -63,9 +63,13 @@
             </span>
 
             <span class="col-3">
-              <cp-student-last-engagement
-                [student]="student">
-              </cp-student-last-engagement>
+              <span *ngIf="!utils.getLastEngaged(student)">
+                {{ 'announcements_no_engagement_data' | cpI18n }}
+              </span>
+
+              <span *ngIf="utils.getLastEngaged(student)">
+                {{ utils.getLastEngaged(student) | cpDatePipe:dateFormat }}
+              </span>
             </span>
 
             <span class="col-2 text-center offset-1">

@@ -15,8 +15,8 @@ import { PersonasUtilsService } from './../../customise/personas/personas.utils.
 
 import { StudentsListComponent } from './list';
 import { StudentsProfileComponent } from './profile';
+import { StudentsTopBarComponent } from './list/components';
 import { StudentsComposeComponent } from './compose/students-compose.component';
-import { StudentsTopBarComponent, StudentsLastEngagementComponent } from './list/components';
 
 @NgModule({
   declarations: [
@@ -25,8 +25,7 @@ import { StudentsTopBarComponent, StudentsLastEngagementComponent } from './list
     StudentsComposeComponent,
     StudentsProfileComponent,
     StudentsProfileHeaderComponent,
-    StudentsProfileTopBarComponent,
-    StudentsLastEngagementComponent
+    StudentsProfileTopBarComponent
   ],
 
   imports: [

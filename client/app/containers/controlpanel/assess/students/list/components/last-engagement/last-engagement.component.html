@@ -1,7 +1,0 @@
-<span *ngIf="!hasEngagement">
-  {{ 'announcements_no_engagement_data' | cpI18n }}
-</span>
-
-<span *ngIf="hasEngagement && lastEngaged">
-  {{ lastEngaged | cpDatePipe:dateFormat }}
-</span>
