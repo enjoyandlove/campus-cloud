@@ -1,11 +1,10 @@
-/*tslint:disable:max-line-length*/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
+import { JobDate } from './../../jobs.status';
 import { CPSession } from '../../../../../../session';
+import { CPI18nService } from '../../../../../../shared/services';
 import { CPDate } from '../../../../../../shared/utils';
 import { JobsUtilsService } from '../../jobs.utils.service';
-import { CPI18nService } from '../../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
@@ -52,6 +51,20 @@ export class JobsFormComponent implements OnInit {
 
   onJobTypeDesiredStudyToggle(name, value) {
     this.form.controls[name].setValue(value);
+  }
+
+  toggleOngoing(): void {
+    const deadline = this.form.controls['posting_end'].value;
+
+    this.form.controls['ongoing'].setValue(!this.form.controls['ongoing'].value);
+
+    if (this.form.controls['ongoing'].value) {
+      this.form.controls['posting_end'].setValue(JobDate.forever);
+    } else {
+      this.form.controls['posting_end'].setValue(deadline);
+      this.postingEndDatePickerOptions.defaultDate =
+        deadline > 0 ? CPDate.fromEpoch(deadline, this.session.tz).format() : null;
+    }
   }
 
   ngOnInit() {
