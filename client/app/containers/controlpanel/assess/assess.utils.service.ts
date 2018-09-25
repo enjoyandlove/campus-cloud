@@ -36,6 +36,19 @@ export class AssessUtilsService {
     return cohort['cohort_type'] ? cohort['cohort_type'] : amplitudeEvents.ALL_STUDENTS;
   }
 
+  getLastEngaged(student) {
+    let lastEvent = student.last_event;
+    let lastService = student.last_service;
+    let lastOrientation = student.last_orientation_event;
+
+    lastEvent = lastEvent > lastService && lastEvent > lastOrientation ? lastEvent : null;
+    lastService = lastService > lastEvent && lastService > lastOrientation ? lastService :  null;
+    lastOrientation = lastOrientation > lastEvent && lastOrientation > lastService
+      ? lastOrientation : null;
+
+    return lastEvent ? lastEvent : lastService ? lastService : lastOrientation;
+  }
+
   getEventType(type) {
     if (type === EventType.event) {
       return this.cpI18n.translate('event');
