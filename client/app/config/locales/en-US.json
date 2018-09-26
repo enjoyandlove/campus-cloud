@@ -2513,6 +2513,9 @@
   "t_events_csv_column_check_out_date": {
     "message": "Check-out Date"
   },
+  "t_events_csv_column_feedback_question": {
+    "message": "Feedback Question"
+  },
   "t_events_csv_column_time_in": {
     "message": "Check-in Time"
   },
@@ -2524,6 +2527,9 @@
   },
   "t_events_csv_column_time_spent_seconds": {
     "message": "Time Spent (Seconds)"
+  },
+  "t_events_default_feedback_question": {
+    "message": "How did you like the event?"
   },
   "t_events_event_attendance_type_tooltip": {
     "message": "\"Check-in\" records an attendee's name and email, and the time of the QR scan. \"Check-in & Check-out\" lets you scan attendees twice, and tracks start and finish time. Both options let you gather feedback."

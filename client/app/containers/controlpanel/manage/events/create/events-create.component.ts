@@ -487,9 +487,9 @@ export class EventsCreateComponent implements OnInit {
       event_feedback: [EventFeedback.enabled],
       event_manager_id: [null],
       attendance_manager_email: [null],
-      custom_basic_feedback_label: [null],
       is_all_day: [isAllDay.disabled],
-      attend_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
+      attend_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]],
+      custom_basic_feedback_label: [this.cpI18n.translate('t_events_default_feedback_question')]
     });
 
     const _self = this;

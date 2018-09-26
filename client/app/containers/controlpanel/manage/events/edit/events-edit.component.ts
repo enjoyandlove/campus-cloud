@@ -224,33 +224,36 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   public buildForm(res) {
     const poster_url = res.poster_url ? res.poster_url : res.store_logo_url;
     const thumb_url = res.poster_thumb_url ? res.poster_thumb_url : res.store_logo_url;
+    const feedbackQuestion = res.custom_basic_feedback_label
+      ? res.custom_basic_feedback_label
+      : this.cpI18n.translate('t_events_default_feedback_question');
 
     this.form = this.fb.group({
-      title: [res.title, Validators.required],
-      store_id: [res.store_id, !this.isOrientation ? Validators.required : null],
-      calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null],
-      location: [res.location],
-      room_data: [res.room_data],
       city: [res.city],
-      province: [res.province],
       country: [res.country],
       address: [res.address],
-      postal_code: [res.postal_code],
       latitude: [res.latitude],
+      location: [res.location],
+      province: [res.province],
+      room_data: [res.room_data],
       longitude: [res.longitude],
-      has_checkout: [res.has_checkout],
-      event_attendance: [res.event_attendance],
-      start: [res.start, Validators.required],
-      end: [res.end, Validators.required],
-      poster_url: [poster_url, Validators.required],
-      poster_thumb_url: [thumb_url, Validators.required],
+      is_all_day: [res.is_all_day],
       description: [res.description],
+      postal_code: [res.postal_code],
+      has_checkout: [res.has_checkout],
+      end: [res.end, Validators.required],
       event_feedback: [res.event_feedback],
+      title: [res.title, Validators.required],
+      start: [res.start, Validators.required],
+      event_attendance: [res.event_attendance],
       event_manager_id: [res.event_manager_id],
+      poster_url: [poster_url, Validators.required],
+      custom_basic_feedback_label: [feedbackQuestion],
+      poster_thumb_url: [thumb_url, Validators.required],
       attendance_manager_email: [res.attendance_manager_email],
-      custom_basic_feedback_label: [res.custom_basic_feedback_label],
       attend_verification_methods: [res.attend_verification_methods],
-      is_all_day: [res.is_all_day]
+      store_id: [res.store_id, !this.isOrientation ? Validators.required : null],
+      calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null]
     });
 
     this.updateDatePicker();
