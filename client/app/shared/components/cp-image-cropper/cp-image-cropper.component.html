@@ -15,12 +15,10 @@
             {{ 'cancel' | cpI18n }}
         </button>
 
-        <button
-          type="button"
-          (click)="onSave()"
-          class="cpbtn cpbtn--primary">
-            {{ 'save' | cpI18n }}
-        </button>
+        <cp-button
+          [props]="buttonData"
+          (buttonClick)="onSave()">
+        </cp-button>
       </div>
     </div>
   </div>

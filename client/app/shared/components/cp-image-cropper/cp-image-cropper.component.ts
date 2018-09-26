@@ -32,7 +32,7 @@ export class CPImageCropperComponent implements AfterViewInit, OnInit {
 
   constructor(public cpI18n: CPI18nService) {}
 
-  initCanvas() {
+  initCanvas(): Promise<void> {
     const hostEl = this.canvas.nativeElement;
 
     const canvasOptions = {
@@ -40,11 +40,12 @@ export class CPImageCropperComponent implements AfterViewInit, OnInit {
       enableResize: false,
       enableOrientation: true,
       viewport: { width: 540, height: 300 },
-      boundary: { width: 770, height: 300 },
-      url: `${this.imageUrl}?disableCache=true`
+      boundary: { width: 770, height: 300 }
     };
 
     this.croppie = new CPCroppieService(hostEl, canvasOptions);
+
+    return this.croppie.bind({url: `${this.imageUrl}?disableCache=true`});
   }
 
   onCancel() {
@@ -53,15 +54,10 @@ export class CPImageCropperComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
+    $('#imageCropper').on('show.bs.modal', () => {
+      this.initCanvas().then(() => { this.buttonData.disabled = false; });
+    });
     $('#imageCropper').modal();
-
-    setTimeout(
-      () => {
-        this.initCanvas();
-      },
-
-      1
-    );
   }
 
   imageToBase64(): Promise<any> {
@@ -90,6 +86,7 @@ export class CPImageCropperComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
     this.buttonData = {
+      disabled: true,
       class: 'primary',
       text: this.cpI18n.translate('save')
     };
