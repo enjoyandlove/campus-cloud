@@ -2513,6 +2513,9 @@
   "t_events_csv_column_check_out_date": {
     "message": "Check-out Date"
   },
+  "t_events_csv_column_feedback_question": {
+    "message": "Feedback Question"
+  },
   "t_events_csv_column_time_in": {
     "message": "Check-in Time"
   },

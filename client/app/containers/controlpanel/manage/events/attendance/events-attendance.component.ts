@@ -220,7 +220,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
     this.trackAmplitudeEvent();
 
-    this.utils.createExcel(stream$, this.event.has_checkout, this.showStudentIds);
+    this.utils.createExcel(stream$, this.event.has_checkout, this.showStudentIds, this.event);
   }
 
   trackAmplitudeEvent() {
