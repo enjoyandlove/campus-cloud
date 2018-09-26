@@ -17,6 +17,7 @@ export class ClubsMembersActionBoxComponent implements OnInit {
   @Input() isAthletic = isClubAthletic.club;
   @Output() create: EventEmitter<null> = new EventEmitter();
   @Output() search: EventEmitter<string> = new EventEmitter();
+  @Output() download: EventEmitter<null> = new EventEmitter();
 
   clubId;
   eventData;

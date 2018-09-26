@@ -5,7 +5,13 @@
         <div class="col-3">
           <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
         </div>
-        <div class="col-3 float-right">
+        <div class="col-4 float-right">
+          <button
+            type="button"
+            class="cpbtn cpbtn--cancel"
+            (click)="download.emit()">
+            {{ 'download_csv' | cpI18n }}
+          </button>
           <button
             cpTracker
             [eventData]="eventData"
