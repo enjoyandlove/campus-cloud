@@ -219,7 +219,7 @@ export class EventUtilService {
     };
   }
 
-  createExcel(stream, hasCheckOut, showStudentIds = false) {
+  createExcel(stream, hasCheckOut, showStudentIds = false, event) {
     stream.toPromise().then((attendees: Array<any>) => {
       const columns = [
         this.cpI18n.translate('events_attendant'),
@@ -231,8 +231,9 @@ export class EventUtilService {
         this.cpI18n.translate('t_events_csv_column_time_spent'),
         this.cpI18n.translate('t_events_csv_column_time_spent_seconds'),
         this.cpI18n.translate('rating'),
+        this.cpI18n.translate('events_checked_in_method'),
         this.cpI18n.translate('events_user_feedback'),
-        this.cpI18n.translate('events_checked_in_method')
+        this.cpI18n.translate('t_events_csv_column_feedback_question')
       ];
       if (showStudentIds) {
         columns.push(this.cpI18n.translate('student_id'));
@@ -279,12 +280,15 @@ export class EventUtilService {
           [this.cpI18n.translate('rating')]:
             item.feedback_rating === -1 ? '' : (item.feedback_rating * 5 / 100).toFixed(2),
 
+          [this.cpI18n.translate('events_checked_in_method')]:
+            check_in_method[item.check_in_method],
+
           [this.cpI18n.translate('events_user_feedback')]: item.feedback_text,
 
-          [this.cpI18n.translate('events_checked_in_method')]: check_in_method[
-            item.check_in_method
-            ]
+          [this.cpI18n.translate('t_events_csv_column_feedback_question')]:
+            event.custom_basic_feedback_label
         };
+
         if (showStudentIds) {
           row[this.cpI18n.translate('student_id')] = item.student_identifier;
         }
