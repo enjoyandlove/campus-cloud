@@ -23,6 +23,8 @@ interface ISetSectionName {
   };
 }
 
+const DO_NOT_DRAG = 'js_do_not_drag';
+
 @Component({
   selector: 'cp-personas-section',
   templateUrl: './section.component.html',
@@ -199,6 +201,12 @@ export class PersonasSectionComponent implements OnInit {
     this.moveWithinSection.emit(updatedTiles);
   }
 
+  onMoveCheckDraggable(event) {
+    if (event.related) {
+      return !event.related.classList.contains(DO_NOT_DRAG);
+    }
+  }
+
   ngOnInit(): void {
     if (this.guide._featuredTile) {
       this.sectionId = CampusGuideType.featured;
@@ -210,7 +218,7 @@ export class PersonasSectionComponent implements OnInit {
 
     this.sortableOptions = {
       scroll: false,
-      filter: '.js_do_not_drag',
+      filter: `.${DO_NOT_DRAG}`,
       group: {
         name: 'studio',
         // ability to move from the list
@@ -220,7 +228,8 @@ export class PersonasSectionComponent implements OnInit {
         pull: true
       },
       onAdd: this.onMoveToSection.bind(this),
-      onUpdate: this.onMoveWithinSection.bind(this)
+      onUpdate: this.onMoveWithinSection.bind(this),
+      onMove: this.onMoveCheckDraggable
     };
   }
 }
