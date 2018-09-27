@@ -196,11 +196,11 @@ export class EventsCreateComponent implements OnInit {
     value = value ? EventAttendance.enabled : EventAttendance.disabled;
     this.form.controls['event_attendance'].setValue(value);
 
-    if (!value) {
-      const eventManager = this.form.controls['event_manager_id'];
-      eventManager.clearValidators();
-      eventManager.updateValueAndValidity();
-    }
+    const controls = ['event_manager_id', 'custom_basic_feedback_label'];
+
+    value
+      ? this.utils.setValidators(this.form, controls)
+      : this.utils.clearValidators(this.form, controls);
   }
 
   onResetMap() {
@@ -259,12 +259,11 @@ export class EventsCreateComponent implements OnInit {
   onSubmit() {
     this.formError = false;
     this.isDateError = false;
-    this.form.controls['start'].setErrors(null);
-    this.form.controls['end'].setErrors(null);
+    this.clearDateErrors();
 
     if (!this.form.valid) {
       this.formError = true;
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+      this.enableSaveButton();
 
       return;
     }
@@ -274,10 +273,8 @@ export class EventsCreateComponent implements OnInit {
 
       if (!managerId.value) {
         this.formError = true;
+        this.enableSaveButton();
         managerId.setErrors({ required: true });
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
-        });
 
         return;
       }
@@ -290,9 +287,9 @@ export class EventsCreateComponent implements OnInit {
     if (this.form.controls['end'].value <= this.form.controls['start'].value) {
       this.isDateError = true;
       this.formError = true;
+      this.enableSaveButton();
       this.form.controls['end'].setErrors({ required: true });
       this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_before_start');
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
     }
@@ -300,9 +297,9 @@ export class EventsCreateComponent implements OnInit {
     if (this.form.controls['end'].value <= Math.round(CPDate.now(this.session.tz).unix())) {
       this.isDateError = true;
       this.formError = true;
+      this.enableSaveButton();
       this.form.controls['end'].setErrors({ required: true });
       this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_after_now');
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
     }
@@ -331,12 +328,27 @@ export class EventsCreateComponent implements OnInit {
         this.router.navigate([this.urlPrefix]);
       },
       (err) => {
+        this.enableSaveButton();
         this.errorService.handleError(err);
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
-        });
       }
     );
+  }
+
+  clearDateErrors() {
+    if (this.form.controls['start'].value) {
+      this.form.controls['start'].setErrors(null);
+    }
+
+    if (this.form.controls['end'].value) {
+      this.form.controls['end'].setErrors(null);
+    }
+  }
+
+  enableSaveButton() {
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: false
+    };
   }
 
   getUrlPrefix(eventId) {
@@ -351,6 +363,10 @@ export class EventsCreateComponent implements OnInit {
 
   onEventFeedbackChange(option) {
     this.form.controls['event_feedback'].setValue(option.action);
+
+    option.action
+      ? this.utils.setValidators(this.form, ['custom_basic_feedback_label'])
+      : this.utils.clearValidators(this.form, ['custom_basic_feedback_label']);
   }
 
   toggleDatePickerTime(checked) {
@@ -464,32 +480,33 @@ export class EventsCreateComponent implements OnInit {
     this.eventQRCodes = this.utils.getQROptions();
     this.attendanceTypes = this.utils.getAttendanceTypeOptions();
     this.attendanceFeedback = this.utils.getAttendanceFeedback();
+    const defaultFeedbackQuestion = this.cpI18n.translate('t_events_default_feedback_question');
 
     this.form = this.fb.group({
-      title: [null, Validators.required],
-      store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
-      location: [null],
-      room_data: [null],
       city: [null],
-      province: [null],
-      country: [null],
-      address: [null],
-      postal_code: [null],
       latitude: [0],
       longitude: [0],
+      country: [null],
+      address: [null],
+      location: [null],
+      province: [null],
+      room_data: [null],
+      postal_code: [null],
+      description: [null],
+      event_manager_id: [null],
+      is_all_day: [isAllDay.disabled],
+      end: [null, Validators.required],
+      attendance_manager_email: [null],
+      start: [null, Validators.required],
+      title: [null, Validators.required],
+      poster_url: [null, Validators.required],
+      event_feedback: [EventFeedback.enabled],
       has_checkout: [attendanceType.checkInOnly],
       event_attendance: [EventAttendance.disabled],
-      start: [null, Validators.required],
-      poster_url: [null, Validators.required],
       poster_thumb_url: [null, Validators.required],
-      end: [null, Validators.required],
-      description: [null],
-      event_feedback: [EventFeedback.enabled],
-      event_manager_id: [null],
-      attendance_manager_email: [null],
-      is_all_day: [isAllDay.disabled],
-      attend_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]],
-      custom_basic_feedback_label: [this.cpI18n.translate('t_events_default_feedback_question')]
+      custom_basic_feedback_label: [defaultFeedbackQuestion],
+      store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
+      attend_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
     });
 
     const _self = this;

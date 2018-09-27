@@ -2529,7 +2529,7 @@
     "message": "Time Spent (Seconds)"
   },
   "t_events_default_feedback_question": {
-    "message": "How did you like the event?"
+    "message": "How was your experience?"
   },
   "t_events_event_attendance_type_tooltip": {
     "message": "\"Check-in\" records an attendee's name and email, and the time of the QR scan. \"Check-in & Check-out\" lets you scan attendees twice, and tracks start and finish time. Both options let you gather feedback."

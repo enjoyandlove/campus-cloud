@@ -1,5 +1,6 @@
 import IEvent from './event.interface';
 import { Injectable } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from '../../../../session';
 import { Formats } from '../../../../shared/utils/csv';
@@ -201,6 +202,27 @@ export class EventUtilService {
 
   getAssessmentStatus(assessment) {
     return assessment === EventAttendance.enabled ? Assessment.on : Assessment.off;
+  }
+
+  clearErrors() {
+
+  }
+
+  clearValidators(form: FormGroup, keys: string[]) {
+    if (keys) {
+      keys.map((key: string) => {
+        form.controls[key].clearValidators();
+        form.controls[key].updateValueAndValidity();
+      });
+    }
+  }
+
+  setValidators(form: FormGroup, keys: string[]) {
+    if (keys) {
+      keys.map((key: string) => {
+        form.controls[key].setValidators([Validators.required]);
+      });
+    }
   }
 
   setEventProperties(data) {
