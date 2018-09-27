@@ -18,9 +18,9 @@ export class CheckinAttendeesListComponent {
   timezone: string;
   attendee: IAttendee;
   launchCheckOutModal = false;
-  dateFormat = FORMAT.DATETIME;
   empty = CheckInOutTime.empty;
   checkInType = CheckInType.web;
+  dateFormat = FORMAT.DATETIME_SHORT;
 
   onCheckOutModal(attendee: IAttendee) {
     this.attendee = attendee;
