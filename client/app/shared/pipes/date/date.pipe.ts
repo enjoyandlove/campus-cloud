@@ -18,7 +18,7 @@ const FORMAT_FR = {
   SHORT: 'D MMMM YYYY',
   LONG: 'dddd D MMMM YYYY',
   DATETIME: 'D MMMM YYYY HH:mm',
-  DATETIME_SHORT: 'D/MM/YYYY, HH:mm'
+  DATETIME_SHORT: 'D/MM/YYYY, HH[h]mm'
 };
 
 const locale = CPI18nService.getLocale();
