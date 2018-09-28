@@ -132,7 +132,7 @@ export class ServicesUtilsService {
           item.check_in_method
         ],
 
-        [this.cpI18n.translate('student_id')]: item.student_identifier,
+        [this.cpI18n.translate('student_id')]: item.student_identifier
       };
     });
 
