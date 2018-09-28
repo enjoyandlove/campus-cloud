@@ -70,7 +70,7 @@ export class ServicesUtilsService {
       this.cpI18n.translate('services_label_checked_in_method'),
       this.cpI18n.translate('average_rating'),
       this.cpI18n.translate('feedback'),
-      this.cpI18n.translate('student_id'),
+      this.cpI18n.translate('student_id')
     ];
 
     const check_in_method = {
