@@ -61,7 +61,6 @@ export class ServicesUtilsService {
       this.cpI18n.translate('t_service_provider_csv_column_first_name'),
       this.cpI18n.translate('t_service_provider_csv_column_last_name'),
       this.cpI18n.translate('email'),
-      this.cpI18n.translate('student_id'),
       this.cpI18n.translate('t_service_provider_csv_column_check_in_date'),
       this.cpI18n.translate('t_service_provider_csv_column_time_in'),
       this.cpI18n.translate('t_service_provider_csv_column_check_out_date'),
@@ -70,7 +69,8 @@ export class ServicesUtilsService {
       this.cpI18n.translate('t_service_provider_csv_column_time_spent_seconds'),
       this.cpI18n.translate('services_label_checked_in_method'),
       this.cpI18n.translate('average_rating'),
-      this.cpI18n.translate('feedback')
+      this.cpI18n.translate('feedback'),
+      this.cpI18n.translate('student_id'),
     ];
 
     const check_in_method = {
@@ -94,8 +94,6 @@ export class ServicesUtilsService {
         [this.cpI18n.translate('t_service_provider_csv_column_last_name')]: item.lastname,
 
         [this.cpI18n.translate('email')]: item.email,
-
-        [this.cpI18n.translate('student_id')]: item.student_identifier,
 
         [this.cpI18n.translate('t_service_provider_csv_column_check_in_date')]: CPDate.fromEpoch(
           item.check_in_time,
@@ -132,7 +130,9 @@ export class ServicesUtilsService {
 
         [this.cpI18n.translate('services_label_checked_in_method')]: check_in_method[
           item.check_in_method
-        ]
+        ],
+
+        [this.cpI18n.translate('student_id')]: item.student_identifier,
       };
     });
 
