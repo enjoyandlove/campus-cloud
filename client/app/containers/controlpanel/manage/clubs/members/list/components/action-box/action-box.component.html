@@ -7,6 +7,7 @@
         </div>
         <div class="col-4 float-right">
           <button
+            *ngIf="hasMembers"
             type="button"
             class="cpbtn cpbtn--cancel"
             (click)="download.emit()">
