@@ -122,8 +122,9 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       search
     );
 
-    stream$.toPromise().then((providers: any) =>
-      this.utils.exportServiceProvidersAttendees(providers));
+    stream$.toPromise().then((providers: any) => {
+      this.utils.exportServiceProvidersAttendees(providers);
+    });
   }
 
   trackProviderViewEvent() {
