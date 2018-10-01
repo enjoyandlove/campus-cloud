@@ -130,36 +130,14 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onSubmit(data) {
+    this.clearDateErrors();
     this.isDateError = false;
     this.formMissingFields = false;
-
-    if (this.form.controls['event_attendance'].value === 1) {
-      const managerId = this.form.controls['event_manager_id'];
-      const eventFeedback = this.form.controls['event_feedback'];
-
-      if (managerId.value === null) {
-        this.formMissingFields = true;
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
-        });
-        managerId.setErrors({ required: true });
-      }
-
-      if (eventFeedback.value === null) {
-        this.formMissingFields = true;
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
-        });
-        eventFeedback.setErrors({ required: true });
-      }
-    }
+    this.utils.validateEventManager(this.form);
 
     if (!this.form.valid) {
-      if (!this.form.controls['poster_url'].valid) {
-        this.form.controls['poster_url'].setErrors({ required: true });
-      }
+      this.enableSaveButton();
       this.formMissingFields = true;
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
     }
@@ -169,23 +147,21 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     }
 
     if (this.form.controls['end'].value <= this.form.controls['start'].value) {
+      this.enableSaveButton();
       this.isDateError = true;
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ required: true });
-      this.form.controls['start'].setErrors({ required: true });
       this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_before_start');
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
     }
 
     if (this.form.controls['end'].value <= CPDate.now(this.session.tz).unix()) {
+      this.enableSaveButton();
       this.isDateError = true;
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ required: true });
-      this.form.controls['start'].setErrors({ required: true });
       this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_after_now');
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
     }
@@ -214,11 +190,26 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       },
       (_) => {
         this.serverError = true;
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
-        });
+        this.enableSaveButton();
       }
     );
+  }
+
+  enableSaveButton() {
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: false
+    };
+  }
+
+  clearDateErrors() {
+    if (this.form.controls['start'].value) {
+      this.form.controls['start'].setErrors(null);
+    }
+
+    if (this.form.controls['end'].value) {
+      this.form.controls['end'].setErrors(null);
+    }
   }
 
   public buildForm(res) {
@@ -535,6 +526,15 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   onEventFeedbackChange(option) {
     this.form.controls['event_feedback'].setValue(option.action);
+
+    !option.action
+      ? this.resetFeedbackQuestion()
+      : this.utils.setValidators(this.form, ['custom_basic_feedback_label']);
+  }
+
+  resetFeedbackQuestion() {
+    this.form.controls['custom_basic_feedback_label'].setValue('');
+    this.utils.clearValidators(this.form, ['custom_basic_feedback_label']);
   }
 
   onLocationToggle(value) {

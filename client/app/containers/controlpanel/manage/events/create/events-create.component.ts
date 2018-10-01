@@ -260,24 +260,13 @@ export class EventsCreateComponent implements OnInit {
     this.formError = false;
     this.isDateError = false;
     this.clearDateErrors();
+    this.utils.validateEventManager(this.form);
 
     if (!this.form.valid) {
       this.formError = true;
       this.enableSaveButton();
 
       return;
-    }
-
-    if (this.form.controls['event_attendance'].value === EventAttendance.enabled) {
-      const managerId = this.form.controls['event_manager_id'];
-
-      if (!managerId.value) {
-        this.formError = true;
-        this.enableSaveButton();
-        managerId.setErrors({ required: true });
-
-        return;
-      }
     }
 
     if (this.form.controls['is_all_day'].value) {

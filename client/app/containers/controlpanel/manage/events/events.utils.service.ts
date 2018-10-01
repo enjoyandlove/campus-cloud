@@ -204,8 +204,15 @@ export class EventUtilService {
     return assessment === EventAttendance.enabled ? Assessment.on : Assessment.off;
   }
 
-  clearErrors() {
+  validateEventManager(form: FormGroup) {
+    const managerId = form.controls['event_manager_id'];
+    const eventAttendance = form.controls['event_attendance'].value;
 
+    if (eventAttendance === EventAttendance.enabled) {
+      if (!managerId.value) {
+        managerId.setErrors({ required: true });
+      }
+    }
   }
 
   clearValidators(form: FormGroup, keys: string[]) {

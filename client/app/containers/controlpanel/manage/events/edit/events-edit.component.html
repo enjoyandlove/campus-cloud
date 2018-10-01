@@ -241,7 +241,8 @@
                   <input
                     type="text"
                     class="form-control"
-                    formControlName="custom_basic_feedback_label">
+                    formControlName="custom_basic_feedback_label"
+                    [class.error]="formMissingFields && form.controls['custom_basic_feedback_label'].hasError('required')">
                 </div>
               </div>
             </div>
