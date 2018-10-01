@@ -428,7 +428,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       adminControls.controls.forEach((control: FormGroup) => {
         if (control.dirty && control.touched) {
           Object.keys(control.controls).forEach((key) => {
-            if (!control.controls[key].value) {
+            if (!control.controls[key].value && control.controls[key].value === null) {
               this.formError = true;
               control.controls[key].setErrors({ required: true });
             }
