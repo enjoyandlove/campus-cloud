@@ -10,7 +10,7 @@ const FORMAT_EN = {
   SHORT: 'MMM Do, YYYY',
   LONG: 'dddd, MMMM Do, YYYY',
   DATETIME: 'MMMM Do YYYY, h:mm a',
-  DATETIME_SHORT: 'MM/DD/YYYY, hh:mm a'
+  DATETIME_SHORT: 'MM/DD/YYYY, h:mm a'
 };
 
 const FORMAT_FR = {

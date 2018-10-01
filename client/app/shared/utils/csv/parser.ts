@@ -4,7 +4,8 @@ import { unparse } from 'papaparse';
 export enum Formats {
   timeFormat = 'h:mm A',
   dateFormat = 'M/DD/YYYY',
-  timeDurationFormat = 'd hh:mm:ss',
+  timeFormatLong = 'h:mm:ss A',
+  timeDurationFormat = 'HH:mm:ss',
   dateTimeFormat = 'M/DD/YYYY h:mm A'
 }
 

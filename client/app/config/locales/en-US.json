@@ -1215,12 +1215,6 @@
   "events_attendance_manager_tooltip": {
     "message": "Any valid email address.  The Attendance Manager receives email instructions about setting up check-ins for the event."
   },
-  "events_attendant": {
-    "message": "Attendant"
-  },
-  "events_attendee_email": {
-    "message": "Attendee Email"
-  },
   "events_button_new": {
     "message": "Create Event"
   },
@@ -2513,8 +2507,17 @@
   "t_events_csv_column_check_out_date": {
     "message": "Check-out Date"
   },
+  "t_events_csv_column_email": {
+    "message": "Email"
+  },
   "t_events_csv_column_feedback_question": {
     "message": "Feedback Question"
+  },
+  "t_events_csv_column_first_name": {
+    "message": "First Name"
+  },
+  "t_events_csv_column_last_name": {
+    "message": "Last Name"
   },
   "t_events_csv_column_time_in": {
     "message": "Check-in Time"
@@ -2527,6 +2530,9 @@
   },
   "t_events_csv_column_time_spent_seconds": {
     "message": "Time Spent (Seconds)"
+  },
+  "t_events_default_feedback_question": {
+    "message": "How was your experience?"
   },
   "t_events_event_attendance_type_tooltip": {
     "message": "\"Check-in\" records an attendee's name and email, and the time of the QR scan. \"Check-in & Check-out\" lets you scan attendees twice, and tracks start and finish time. Both options let you gather feedback."
@@ -2736,6 +2742,9 @@
   "t_personas_resource_create_modal_title": {
     "message": "New Resource"
   },
+  "t_personas_resource_edit_modal_title": {
+    "message": "Edit Resource"
+  },
   "t_personas_section_button_add_section": {
     "message": "Add Section"
   },
@@ -2897,6 +2906,15 @@
   },
   "t_service_provider_csv_column_check_out_date": {
     "message": "Check-out Date"
+  },
+  "t_service_provider_csv_column_first_name": {
+    "message": "First Name"
+  },
+  "t_service_provider_csv_column_last_name": {
+    "message": "Last Name"
+  },
+  "t_service_provider_csv_column_provider_name": {
+    "message": "Service Provider Name"
   },
   "t_service_provider_csv_column_time_in": {
     "message": "Check-in Time"
