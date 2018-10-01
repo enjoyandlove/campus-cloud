@@ -55,12 +55,15 @@
           (deleteClick)="deleteTileClick.emit($event)"
           *ngFor="let tile of guide.tiles; let i = index">
         </cp-personas-tile>
-        <div class="js_do_not_drag" [ngClass]="['col-' + tileWidth]">
+        <div
+          class="js_do_not_drag tile"
+          [ngClass]="['col-' + tileWidth]">
           <cp-personas-tile-add-button
             [disabled]="guide._disabled"
             (buttonClick)="goToCreateTile()">
           </cp-personas-tile-add-button>
         </div>
+        <div class="tile"></div>
       </div>
     </section>
   </fieldset>

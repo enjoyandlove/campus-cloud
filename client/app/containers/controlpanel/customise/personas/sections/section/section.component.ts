@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
+import * as Sortable from 'sortablejs';
 import { ITile } from '../../tiles/tile.interface';
 import { ICampusGuide } from '../section.interface';
 import { SectionsService } from '../sections.service';
@@ -22,8 +23,6 @@ interface ISetSectionName {
     school_id: number;
   };
 }
-
-const DO_NOT_DRAG = 'js_do_not_drag';
 
 @Component({
   selector: 'cp-personas-section',
@@ -202,9 +201,14 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   onMoveCheckDraggable(event) {
-    if (event.related) {
-      return !event.related.classList.contains(DO_NOT_DRAG);
-    }
+    const toLength = event.to.childElementCount - 2;
+    const toIndex = Sortable.utils.index(event.related, '.tile');
+
+    const toEmpty = toLength === 0;
+    const toFirst = toIndex === 0;
+    const toSelf = event.to === event.from && toLength === 1 && toIndex === 1;
+
+    return toEmpty ? toFirst : toSelf || toIndex < toLength;
   }
 
   ngOnInit(): void {
@@ -218,7 +222,7 @@ export class PersonasSectionComponent implements OnInit {
 
     this.sortableOptions = {
       scroll: false,
-      filter: `.${DO_NOT_DRAG}`,
+      filter: '.js_do_not_drag',
       group: {
         name: 'studio',
         // ability to move from the list
