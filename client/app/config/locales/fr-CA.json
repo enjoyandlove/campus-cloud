@@ -1324,7 +1324,7 @@
     "message": "Aucun événements trouvés"
   },
   "events_user_feedback": {
-    "message": "Retour d'utilisateur"
+    "message": "Retour"
   },
   "event_enabled": {
     "message": "Activé"
@@ -2733,6 +2733,9 @@
   "t_personas_no_results_found": {
     "message": "Aucune expérience trouvée"
   },
+  "t_personas_resource_add_resource": {
+    "message": "Add Resource"
+  },
   "t_personas_resource_create_modal_title": {
     "message": "Nouvelle ressource"
   },
@@ -2820,6 +2823,9 @@
   "t_personas_tile_image_requirements": {
     "message": "300Ko ou moins. Format JPEG ou PNG."
   },
+  "t_personas_tile_locked_tooltip": {
+    "message": "Contact your Customer Support representative to make changes to this tile"
+  },
   "t_personas_tile_modal_create_appearance": {
     "message": "Apparence"
   },
@@ -2906,6 +2912,9 @@
   },
   "t_service_provider_csv_column_last_name": {
     "message": "Nom de famille"
+  },
+  "t_service_provider_csv_column_ratings": {
+    "message": "Notes"
   },
   "t_service_provider_csv_column_time_in": {
     "message": "Heure d'entrée"
