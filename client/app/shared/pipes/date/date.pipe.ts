@@ -10,7 +10,7 @@ const FORMAT_EN = {
   SHORT: 'MMM Do, YYYY',
   LONG: 'dddd, MMMM Do, YYYY',
   DATETIME: 'MMMM Do YYYY, h:mm a',
-  DATETIME_SHORT: 'MM/DD/YYYY, hh:mm a'
+  DATETIME_SHORT: 'MM/DD/YYYY, h:mm a'
 };
 
 const FORMAT_FR = {
@@ -18,7 +18,7 @@ const FORMAT_FR = {
   SHORT: 'D MMMM YYYY',
   LONG: 'dddd D MMMM YYYY',
   DATETIME: 'D MMMM YYYY HH:mm',
-  DATETIME_SHORT: 'D/MM/YYYY, HH:mm'
+  DATETIME_SHORT: 'D/MM/YYYY, HH[h]mm'
 };
 
 const locale = CPI18nService.getLocale();

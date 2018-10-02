@@ -116,9 +116,15 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       .append('service_id', this.service.id.toString())
       .append('all', '1');
 
-    const stream$ = this.providersService.getProviders(this.startRange, this.endRange, search);
+    const stream$ = this.providersService.getProviderAssessments(
+      this.startRange,
+      this.endRange,
+      search
+    );
 
-    stream$.toPromise().then((providers: any) => this.utils.exportServiceProviders(providers));
+    stream$.toPromise().then((providers: any) => {
+      this.utils.exportServiceProvidersAttendees(providers);
+    });
   }
 
   trackProviderViewEvent() {

@@ -55,35 +55,11 @@ export class ServicesUtilsService {
     };
   }
 
-  exportServiceProviders(providers) {
+  exportServiceProvidersAttendees(assessments) {
     const columns = [
-      this.cpI18n.translate('service_provider'),
-      this.cpI18n.translate('email'),
-      this.cpI18n.translate('average_rating'),
-      this.cpI18n.translate('total_ratings'),
-      this.cpI18n.translate('services_total_visits')
-    ];
-
-    providers = providers.map((data) => {
-      return {
-        [this.cpI18n.translate('service_provider')]: data.provider_name,
-
-        [this.cpI18n.translate('email')]: data.email,
-
-        [this.cpI18n.translate('average_rating')]: (data.avg_rating_percent * 5 / 100).toFixed(1),
-
-        [this.cpI18n.translate('total_ratings')]: data.num_ratings,
-
-        [this.cpI18n.translate('services_total_visits')]: data.total_visits
-      };
-    });
-
-    createSpreadSheet(providers, columns, 'providers_data');
-  }
-
-  exportServiceProvidersAttendees(assessments, hasCheckOut) {
-    const columns = [
-      this.cpI18n.translate('services_label_attendee_name'),
+      this.cpI18n.translate('t_service_provider_csv_column_provider_name'),
+      this.cpI18n.translate('t_service_provider_csv_column_first_name'),
+      this.cpI18n.translate('t_service_provider_csv_column_last_name'),
       this.cpI18n.translate('email'),
       this.cpI18n.translate('t_service_provider_csv_column_check_in_date'),
       this.cpI18n.translate('t_service_provider_csv_column_time_in'),
@@ -92,9 +68,9 @@ export class ServicesUtilsService {
       this.cpI18n.translate('t_service_provider_csv_column_time_spent'),
       this.cpI18n.translate('t_service_provider_csv_column_time_spent_seconds'),
       this.cpI18n.translate('services_label_checked_in_method'),
-      this.cpI18n.translate('student_id'),
       this.cpI18n.translate('average_rating'),
-      this.cpI18n.translate('feedback')
+      this.cpI18n.translate('feedback'),
+      this.cpI18n.translate('student_id')
     ];
 
     const check_in_method = {
@@ -105,14 +81,17 @@ export class ServicesUtilsService {
     assessments = assessments.map((item) => {
       const timeSpentSeconds = item.check_out_time_epoch - item.check_in_time;
       const hasCheckOutTimeSpent =
-        hasCheckOut &&
         item.check_out_time_epoch &&
+        item.service_provider_has_checkout &&
         item.check_out_time_epoch !== CheckInOutTime.empty;
 
       return {
-        [this.cpI18n.translate('services_label_attendee_name')]: `${item.firstname} ${
-          item.lastname
-        }`,
+        [this.cpI18n.translate('t_service_provider_csv_column_provider_name')]:
+        item.service_provider_name,
+
+        [this.cpI18n.translate('t_service_provider_csv_column_first_name')]: item.firstname,
+
+        [this.cpI18n.translate('t_service_provider_csv_column_last_name')]: item.lastname,
 
         [this.cpI18n.translate('email')]: item.email,
 
@@ -124,7 +103,7 @@ export class ServicesUtilsService {
         [this.cpI18n.translate('t_service_provider_csv_column_time_in')]: CPDate.fromEpoch(
           item.check_in_time,
           this.session.tz
-        ).format(Formats.timeFormat),
+        ).format(Formats.timeFormatLong),
 
         [this.cpI18n.translate(
           't_service_provider_csv_column_check_out_date'
@@ -133,12 +112,12 @@ export class ServicesUtilsService {
           : '',
 
         [this.cpI18n.translate('t_service_provider_csv_column_time_out')]: hasCheckOutTimeSpent
-          ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(Formats.timeFormat)
-          : '',
+          ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz)
+            .format(Formats.timeFormatLong) : '',
 
         [this.cpI18n.translate('t_service_provider_csv_column_time_spent')]: hasCheckOutTimeSpent
-          ? CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat)
-          : '',
+          ? CPDate.getTimeDuration(timeSpentSeconds)
+            .format(Formats.timeDurationFormat, {trim: false}) : '',
 
         [this.cpI18n.translate(
           't_service_provider_csv_column_time_spent_seconds'

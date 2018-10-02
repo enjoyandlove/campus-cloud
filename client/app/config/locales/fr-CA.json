@@ -1215,12 +1215,6 @@
   "events_attendance_manager_tooltip": {
     "message": "N'importe quelle adresse courriel valide. Le gestionnaire de présence reçoit des instructions par courriel pour mettre en place les vérifications de présence pour l'événement."
   },
-  "events_attendant": {
-    "message": "Présent"
-  },
-  "events_attendee_email": {
-    "message": "Courriel du participant"
-  },
   "events_button_new": {
     "message": "Créer événement"
   },
@@ -2513,6 +2507,15 @@
   "t_events_csv_column_check_out_date": {
     "message": "Date the sortie"
   },
+  "t_events_csv_column_email": {
+    "message": "Courriel"
+  },
+  "t_events_csv_column_first_name": {
+    "message": "Prénom"
+  },
+  "t_events_csv_column_last_name": {
+    "message": "Nom de famille"
+  },
   "t_events_csv_column_time_in": {
     "message": "Heure d'entrée"
   },
@@ -2733,6 +2736,9 @@
   "t_personas_resource_create_modal_title": {
     "message": "Nouvelle ressource"
   },
+  "t_personas_resource_edit_modal_title": {
+    "message": "Edit Resource"
+  },
   "t_personas_section_button_add_section": {
     "message": "Ajouter section"
   },
@@ -2894,6 +2900,12 @@
   },
   "t_service_provider_csv_column_check_out_date": {
     "message": "Date the sortie"
+  },
+  "t_service_provider_csv_column_first_name": {
+    "message": "Prénom"
+  },
+  "t_service_provider_csv_column_last_name": {
+    "message": "Nom de famille"
   },
   "t_service_provider_csv_column_time_in": {
     "message": "Heure d'entrée"

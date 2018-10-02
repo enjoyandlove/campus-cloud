@@ -97,7 +97,7 @@ export class AssessUtilsService {
           ).format(Formats.dateFormat),
 
           [this.cpI18n.translate('t_assess_checkin_time_in')]: CPDate.fromEpoch(
-            item.time_epoch, this.session.tz).format(Formats.timeFormat),
+            item.time_epoch, this.session.tz).format(Formats.timeFormatLong),
 
           [this.cpI18n.translate('t_assess_checkout_date')]:
             hasCheckOutTimeSpent
@@ -106,11 +106,12 @@ export class AssessUtilsService {
 
           [this.cpI18n.translate('t_assess_checkout_time_out')]:
             hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              item.check_out_time_epoch, this.session.tz).format(Formats.timeFormat) : '',
+              item.check_out_time_epoch, this.session.tz).format(Formats.timeFormatLong) : '',
 
           [this.cpI18n.translate('t_assess_time_spent')]:
             hasCheckOutTimeSpent ?
-              CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat) : '',
+              CPDate.getTimeDuration(timeSpentSeconds)
+                .format(Formats.timeDurationFormat, {trim: false}) : '',
 
           [this.cpI18n.translate('t_assess_time_spent_seconds')]:
             hasCheckOutTimeSpent ? timeSpentSeconds : '',
