@@ -525,16 +525,15 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onEventFeedbackChange(option) {
+    const feedbackQuestion = !option.action ? ''
+      : this.cpI18n.translate('t_events_default_feedback_question');
+
     this.form.controls['event_feedback'].setValue(option.action);
+    this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
 
-    !option.action
-      ? this.resetFeedbackQuestion()
-      : this.utils.setValidators(this.form, ['custom_basic_feedback_label']);
-  }
-
-  resetFeedbackQuestion() {
-    this.form.controls['custom_basic_feedback_label'].setValue('');
-    this.utils.clearValidators(this.form, ['custom_basic_feedback_label']);
+    option.action
+      ? this.utils.setValidators(this.form, ['custom_basic_feedback_label'])
+      : this.utils.clearValidators(this.form, ['custom_basic_feedback_label']);
   }
 
   onLocationToggle(value) {
