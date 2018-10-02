@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
 import { ITile } from '../tiles/tile.interface';
+import { CampusGuideId } from './section.status';
 import { ICampusGuide, ICampusGuideBulk } from './section.interface';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
@@ -36,10 +37,10 @@ export class SectionUtilsService {
   temporaryGuide(rank = 1): ICampusGuide {
     return {
       rank,
+      name: '',
       tiles: [],
       _temporary: true,
-      id: new Date().getUTCMilliseconds(),
-      name: this.cpI18n.translate('t_personas_create_section_default_name')
+      id: CampusGuideId.temporary
     };
   }
 }

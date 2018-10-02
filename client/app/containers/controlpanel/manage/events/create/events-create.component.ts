@@ -195,6 +195,12 @@ export class EventsCreateComponent implements OnInit {
   toggleEventAttendance(value) {
     value = value ? EventAttendance.enabled : EventAttendance.disabled;
     this.form.controls['event_attendance'].setValue(value);
+
+    if (!value) {
+      const eventManager = this.form.controls['event_manager_id'];
+      eventManager.clearValidators();
+      eventManager.updateValueAndValidity();
+    }
   }
 
   onResetMap() {

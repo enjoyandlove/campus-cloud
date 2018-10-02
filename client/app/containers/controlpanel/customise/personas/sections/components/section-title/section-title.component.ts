@@ -78,7 +78,7 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: [this._name]
+      name: [{ value: this._name, disabled: this.noNameChange }]
     });
   }
 }

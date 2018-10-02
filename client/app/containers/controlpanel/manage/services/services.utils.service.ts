@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 import {
   HasData,
@@ -8,15 +9,25 @@ import {
   ServiceAttendance
 } from './services.status';
 
+import {
+  canSchoolReadResource,
+  canStoreReadAndWriteResource
+} from '../../../../shared/utils/privileges';
+
 import { CPSession } from '../../../../session';
+import { Formats } from '../../../../shared/utils/csv';
+import { CheckInOutTime } from '../events/event.status';
 import { CPDate } from '../../../../shared/utils/date/date';
 import { CPI18nService } from '../../../../shared/services';
+import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 import { createSpreadSheet } from '../../../../shared/utils/csv/parser';
+import { HEADER_UPDATE, IHeader } from '../../../../reducers/header.reducer';
 
 @Injectable()
 export class ServicesUtilsService {
   constructor(
     public session: CPSession,
+    public store: Store<IHeader>,
     public cpI18n: CPI18nService
   ) {}
 
@@ -45,47 +56,132 @@ export class ServicesUtilsService {
   }
 
   exportServiceProvidersAttendees(assessments) {
-      const columns = [
-        this.cpI18n.translate('services_label_attendee_name'),
-        this.cpI18n.translate('email'),
-        this.cpI18n.translate('average_rating'),
-        this.cpI18n.translate('feedback'),
-        this.cpI18n.translate('services_label_checked_in_method'),
-        this.cpI18n.translate('services_label_checked_in_time'),
-        this.cpI18n.translate('student_id')
-      ];
+    const columns = [
+      this.cpI18n.translate('t_service_provider_csv_column_provider_name'),
+      this.cpI18n.translate('t_service_provider_csv_column_first_name'),
+      this.cpI18n.translate('t_service_provider_csv_column_last_name'),
+      this.cpI18n.translate('email'),
+      this.cpI18n.translate('services_label_checked_in_method'),
+      this.cpI18n.translate('t_service_provider_csv_column_check_in_date'),
+      this.cpI18n.translate('t_service_provider_csv_column_time_in'),
+      this.cpI18n.translate('t_service_provider_csv_column_check_out_date'),
+      this.cpI18n.translate('t_service_provider_csv_column_time_out'),
+      this.cpI18n.translate('t_service_provider_csv_column_time_spent'),
+      this.cpI18n.translate('t_service_provider_csv_column_time_spent_seconds'),
+      this.cpI18n.translate('t_service_provider_csv_column_ratings'),
+      this.cpI18n.translate('feedback'),
+      this.cpI18n.translate('student_id')
+    ];
 
-      const check_in_method = {
-        1: 'Web check-in',
-        3: 'App check-in'
+    const check_in_method = {
+      1: 'Web check-in',
+      3: 'App check-in'
+    };
+
+    assessments = assessments.map((item) => {
+      const timeSpentSeconds = item.check_out_time_epoch - item.check_in_time;
+      const hasCheckOutTimeSpent =
+        item.check_out_time_epoch &&
+        item.service_provider_has_checkout &&
+        item.check_out_time_epoch !== CheckInOutTime.empty;
+
+      return {
+        [this.cpI18n.translate('t_service_provider_csv_column_provider_name')]:
+        item.service_provider_name,
+
+        [this.cpI18n.translate('t_service_provider_csv_column_first_name')]: item.firstname,
+
+        [this.cpI18n.translate('t_service_provider_csv_column_last_name')]: item.lastname,
+
+        [this.cpI18n.translate('email')]: item.email,
+
+        [this.cpI18n.translate('services_label_checked_in_method')]
+          : check_in_method[item.check_in_method],
+
+        [this.cpI18n.translate('t_service_provider_csv_column_check_in_date')]: CPDate.fromEpoch(
+          item.check_in_time,
+          this.session.tz
+        ).format(Formats.dateFormat),
+
+        [this.cpI18n.translate('t_service_provider_csv_column_time_in')]: CPDate.fromEpoch(
+          item.check_in_time,
+          this.session.tz
+        ).format(Formats.timeFormatLong),
+
+        [this.cpI18n.translate(
+          't_service_provider_csv_column_check_out_date'
+        )]: hasCheckOutTimeSpent
+          ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(Formats.dateFormat)
+          : '',
+
+        [this.cpI18n.translate('t_service_provider_csv_column_time_out')]: hasCheckOutTimeSpent
+          ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz)
+            .format(Formats.timeFormatLong) : '',
+
+        [this.cpI18n.translate('t_service_provider_csv_column_time_spent')]: hasCheckOutTimeSpent
+          ? CPDate.getTimeDuration(timeSpentSeconds)
+            .format(Formats.timeDurationFormat, {trim: false, useGrouping: false}) : '',
+
+        [this.cpI18n.translate(
+          't_service_provider_csv_column_time_spent_seconds'
+        )]: hasCheckOutTimeSpent ? timeSpentSeconds : '',
+
+        [this.cpI18n.translate('t_service_provider_csv_column_ratings')]:
+          item.feedback_rating === -1 ? 'N/A' : item.feedback_rating / 100 * 5,
+
+        [this.cpI18n.translate('feedback')]: item.feedback_text,
+
+        [this.cpI18n.translate('student_id')]: item.student_identifier
+      };
+    });
+
+    createSpreadSheet(assessments, columns);
+  }
+
+  buildServiceProviderHeader(service) {
+    let children = [
+      {
+        label: 'info',
+        url: `/manage/services/${service.id}/info`
+      }
+    ];
+
+    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
+    const eventsAccountLevel = canStoreReadAndWriteResource(
+      this.session.g,
+      service.store_id,
+      CP_PRIVILEGES_MAP.events
+    );
+
+    if (eventsSchoolLevel || eventsAccountLevel) {
+      const events = {
+        label: 'events',
+        url: `/manage/services/${service.id}/events`
       };
 
-      assessments = assessments.map((item) => {
-        return {
-          [this.cpI18n.translate('services_label_attendee_name')]: `${item.firstname} ${
-            item.lastname
-            }`,
+      children = [...children, events];
+    }
 
-          [this.cpI18n.translate('email')]: item.email,
+    if (service.service_attendance) {
+      const attendance = {
+        label: 'assessment',
+        url: `/manage/services/${service.id}`
+      };
 
-          [this.cpI18n.translate('average_rating')]:
-            item.feedback_rating === -1 ? 'N/A' : item.feedback_rating / 100 * 5,
+      children = [...children, attendance];
+    }
 
-          [this.cpI18n.translate('feedback')]: item.feedback_text,
-
-          [this.cpI18n.translate('services_label_checked_in_method')]: check_in_method[
-            item.check_in_method
-            ],
-
-          [this.cpI18n.translate('services_label_checked_in_time')]: CPDate.fromEpoch(
-            item.check_in_time,
-            this.session.tz
-          ).format('MMMM Do YYYY - h:mm a'),
-
-          [this.cpI18n.translate('student_id')]: item.student_identifier
-        };
-      });
-
-      createSpreadSheet(assessments, columns);
+    this.store.dispatch({
+      type: HEADER_UPDATE,
+      payload: {
+        heading: `[NOTRANSLATE]${service.name}[NOTRANSLATE]`,
+        subheading: '',
+        crumbs: {
+          url: 'services',
+          label: 'services'
+        },
+        children: [...children]
+      }
+    });
   }
 }

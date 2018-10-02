@@ -1,14 +1,15 @@
-import { Injectable } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, ValidationErrors, FormGroup } from '@angular/forms';
 import { sortBy, get as _get } from 'lodash';
-import { FileUploadService } from './../../../../../shared/services/file-upload.service';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { Injectable } from '@angular/core';
+
+import { ITile } from './tile.interface';
+import { IPersona } from '../persona.interface';
+import { CPSession } from '../../../../../session';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
-import { ITile } from './tile.interface';
-import { TileCategoryRank, TileFeatureRank, TileVisibility } from './tiles.status';
-import { CPSession } from '../../../../../session';
-import { IPersona } from '../persona.interface';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { TileCategoryRank, TileFeatureRank, TileVisibility, CampusLinkType } from './tiles.status';
+import { FileUploadService } from './../../../../../shared/services/file-upload.service';
 
 const threeHundrendKb = 3e5;
 
@@ -52,15 +53,20 @@ export class TilesUtilsService {
     return this.defaultTileCategoryIds.includes(tile.tile_category_id);
   }
 
+  isTileWebLink(linkType: number) {
+    return linkType === CampusLinkType.webLink;
+  }
+
   isTileSupportedByWebApp(tile: ITile) {
     const supportedLinkUrls = TilesUtilsService.webAppSupportedLinkUrls;
     const linkUrl = _get(tile, ['related_link_data', 'link_url'], null);
+    const linkType = _get(tile, ['related_link_data', 'link_type'], null);
 
     if (!linkUrl) {
       return false;
     }
 
-    const webOrExternalLink = linkUrl.startsWith('http');
+    const webOrExternalLink = this.isTileWebLink(linkType);
 
     return webOrExternalLink || supportedLinkUrls.includes(linkUrl);
   }
@@ -159,6 +165,23 @@ export class TilesUtilsService {
     return error ? Promise.reject(error) : Promise.resolve(null);
   }
 
+  linkParamsValidator(control: FormGroup): ValidationErrors | null {
+    const linkParams = control.get('link_params').value;
+    const linkUrl = control.get('link_url').value;
+
+    if (linkUrl === 'oohlala://campus_service_list') {
+      const entries: any = Object.values(linkParams)[0];
+
+      if (!entries) {
+        return { invalid: true };
+      }
+
+      return entries.length ? null : { invalid: true };
+    }
+
+    return null;
+  }
+
   campusLinkForm(nameRequired = true, imageRequired = true, link = null) {
     const _link = link
       ? { ...link }
@@ -172,14 +195,17 @@ export class TilesUtilsService {
           school_id: this.session.g.get('school').id
         };
 
-    return this.fb.group({
-      name: [_link.name, nameRequired ? Validators.required : null],
-      link_url: [_link.link_url, Validators.required],
-      link_params: [_link.link_params, Validators.required],
-      img_url: [_link.img_url, imageRequired ? Validators.required : null],
-      open_in_browser: [_link.open_in_browser],
-      is_system: [_link.is_system],
-      school_id: [_link.school_id, Validators.required]
-    });
+    return this.fb.group(
+      {
+        name: [_link.name, nameRequired ? Validators.required : null],
+        link_url: [_link.link_url, Validators.required],
+        link_params: [_link.link_params, Validators.required],
+        img_url: [_link.img_url, imageRequired ? Validators.required : null],
+        open_in_browser: [_link.open_in_browser],
+        is_system: [_link.is_system],
+        school_id: [_link.school_id, Validators.required]
+      },
+      { validator: this.linkParamsValidator }
+    );
   }
 }

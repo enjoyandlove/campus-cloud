@@ -5,14 +5,21 @@
         <div class="col-3">
           <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
         </div>
-        <div class="col-3 float-right">
+        <div class="col text-right">
+          <button
+            *ngIf="hasMembers"
+            type="button"
+            class="cpbtn cpbtn--cancel margin-right"
+            (click)="download.emit()">
+            {{ 'download_csv' | cpI18n }}
+          </button>
           <button
             cpTracker
             [eventData]="eventData"
             type="button"
             *ngIf="!limitedAdmin"
             (click)="create.emit()"
-            class="cpbtn cpbtn--primary float-right" i18n>
+            class="cpbtn cpbtn--primary">
             {{ 'clubs_member_button_create' | cpI18n }}
           </button>
         </div>

@@ -2,12 +2,13 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from './../../../../../../../../../session';
+import IServiceProvider from '../../../../../providers.interface';
 import { ProvidersService } from '../../../../../providers.service';
 import { FORMAT } from '../../../../../../../../../shared/pipes/date';
-import { CheckInMethod } from '../../../../../../events/event.status';
 import { ServicesUtilsService } from '../../../../../services.utils.service';
 import { CPTrackingService } from '../../../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../../../base/base.component';
+import { CheckInMethod, CheckInOutTime } from '../../../../../../events/event.status';
 import { amplitudeEvents } from '../../../../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../../../../shared/services/i18n.service';
 
@@ -31,14 +32,20 @@ const state: IState = {
 export class ServicesProvidersAttendeesListComponent extends BaseComponent implements OnInit {
   @Input() serviceId: number;
   @Input() providerId: number;
+  @Input() provider: IServiceProvider;
 
   loading;
+  checkInData;
   assessments;
   sortingLabels;
   eventProperties;
   state: IState = state;
-  dateFormat = FORMAT.DATETIME;
+  isAddCheckInModal = false;
+  isEditCheckInModal = false;
+  isDeleteCheckInModal = false;
+  dateFormat = FORMAT.DATETIME_SHORT;
   webCheckInMethod = CheckInMethod.web;
+  emptyCheckOutTime = CheckInOutTime.empty;
   defaultImage = require('public/default/user.png');
 
   constructor(
@@ -55,8 +62,8 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   fetch() {
     const search = new HttpParams()
       .append('search_text', this.state.search_text)
-      .append('service_id', this.serviceId.toString())
-      .append('service_provider_id', this.providerId.toString())
+      .append('service_id', this.provider.campus_service_id.toString())
+      .append('service_provider_id', this.provider.id.toString())
       .append('sort_field', this.state.sort_field)
       .append('sort_direction', this.state.sort_direction);
 
@@ -84,8 +91,8 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   fetchAllRecords(): Promise<any> {
     const search = new HttpParams()
       .append('all', '1')
-      .append('service_id', this.serviceId.toString())
-      .append('service_provider_id', this.providerId.toString());
+      .append('service_id', this.provider.campus_service_id.toString())
+      .append('service_provider_id', this.provider.id.toString());
 
     const stream$ = this.providersService.getProviderAssessments(
       this.startRange,
@@ -115,11 +122,70 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.fetch();
   }
 
+  onCreateCheckIn() {
+    this.isAddCheckInModal = true;
+    setTimeout(
+      () => {
+        $('#addCheckInModal').modal();
+      },
+
+      1
+    );
+  }
+
+  onEditCheckIn(attendee) {
+    this.checkInData = attendee;
+    this.isEditCheckInModal = true;
+    setTimeout(
+      () => {
+        $('#editCheckInModal').modal();
+      },
+
+      1
+    );
+  }
+
+  onDeleteCheckIn(attendee) {
+    this.checkInData = attendee;
+    this.isDeleteCheckInModal = true;
+    setTimeout(
+      () => {
+        $('#deleteCheckInModal').modal();
+      },
+
+      1
+    );
+  }
+
+  onCreated() {
+    this.isAddCheckInModal = false;
+    this.fetch();
+  }
+
+  onEdited() {
+    this.checkInData = null;
+    this.isEditCheckInModal = false;
+    this.fetch();
+  }
+
+  onDeleted(id: number) {
+    this.checkInData = null;
+    this.isDeleteCheckInModal = false;
+
+    this.assessments = this.assessments.filter((attendee) => attendee.id !== id);
+
+    if (this.assessments.length === 0 && this.pageNumber > 1) {
+      this.resetPagination();
+      this.fetch();
+    }
+  }
+
   downloadProvidersCSV() {
     if (this.assessments.length) {
       this.trackAmplitudeEvent();
       this.fetchAllRecords().then((attendees) =>
-        this.utils.exportServiceProvidersAttendees(attendees));
+        this.utils.exportServiceProvidersAttendees(attendees)
+      );
     }
   }
 
@@ -136,6 +202,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
     this.sortingLabels = {
       checkin_time: this.cpI18n.translate('services_label_checkin_time'),
+      checkout_time: this.cpI18n.translate('t_services_label_checkout_time'),
       checkin_method: this.cpI18n.translate('services_label_all_checkin_methods')
     };
   }

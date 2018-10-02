@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
+
+import { ITile } from './../../../tile.interface';
 import { IPersona } from './../../../../persona.interface';
 import { ResourcesUtilsService } from './../../resources.utils.service';
 import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
@@ -13,6 +15,7 @@ export class PersonasResourceFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() editView = false;
   @Input() persona: IPersona;
+  @Input() tile: ITile = null;
   @Input() hideTypeSelector = false;
 
   @Output() formChange: EventEmitter<FormGroup> = new EventEmitter();

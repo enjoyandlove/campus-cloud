@@ -36,6 +36,19 @@ export class AssessUtilsService {
     return cohort['cohort_type'] ? cohort['cohort_type'] : amplitudeEvents.ALL_STUDENTS;
   }
 
+  getLastEngaged(student) {
+    let lastEvent = student.last_event;
+    let lastService = student.last_service;
+    let lastOrientation = student.last_orientation_event;
+
+    lastEvent = lastEvent > lastService && lastEvent > lastOrientation ? lastEvent : null;
+    lastService = lastService > lastEvent && lastService > lastOrientation ? lastService :  null;
+    lastOrientation = lastOrientation > lastEvent && lastOrientation > lastService
+      ? lastOrientation : null;
+
+    return lastEvent ? lastEvent : lastService ? lastService : lastOrientation;
+  }
+
   getEventType(type) {
     if (type === EventType.event) {
       return this.cpI18n.translate('event');
@@ -84,7 +97,7 @@ export class AssessUtilsService {
           ).format(Formats.dateFormat),
 
           [this.cpI18n.translate('t_assess_checkin_time_in')]: CPDate.fromEpoch(
-            item.time_epoch, this.session.tz).format(Formats.timeFormat),
+            item.time_epoch, this.session.tz).format(Formats.timeFormatLong),
 
           [this.cpI18n.translate('t_assess_checkout_date')]:
             hasCheckOutTimeSpent
@@ -93,11 +106,12 @@ export class AssessUtilsService {
 
           [this.cpI18n.translate('t_assess_checkout_time_out')]:
             hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              item.check_out_time_epoch, this.session.tz).format(Formats.timeFormat) : '',
+              item.check_out_time_epoch, this.session.tz).format(Formats.timeFormatLong) : '',
 
           [this.cpI18n.translate('t_assess_time_spent')]:
             hasCheckOutTimeSpent ?
-              CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat) : '',
+              CPDate.getTimeDuration(timeSpentSeconds)
+                .format(Formats.timeDurationFormat, {trim: false, useGrouping: false}) : '',
 
           [this.cpI18n.translate('t_assess_time_spent_seconds')]:
             hasCheckOutTimeSpent ? timeSpentSeconds : '',

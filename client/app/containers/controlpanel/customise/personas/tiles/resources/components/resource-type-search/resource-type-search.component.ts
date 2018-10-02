@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
@@ -59,8 +59,10 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
     }
   }
 
-  handleError() {
-    return (this.items$ = of([{ label: 'ERROR' }]));
+  handleError(err: HttpErrorResponse) {
+    const label = err.status === 403 ? '---' : 'Error';
+
+    return (this.items$ = of([{ label }]));
   }
 
   loadServices() {
@@ -69,7 +71,7 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
       .getSchoolServices(headers)
       .pipe(
         map((stores) => this.updateValues(stores, 'oohlala://campus_service')),
-        catchError(() => this.handleError())
+        catchError((err) => this.handleError(err))
       );
   }
 
@@ -92,7 +94,7 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
       .getSchoolCalendars(headers)
       .pipe(
         map((stores) => this.updateValues(stores, 'oohlala://subscribable_calendar')),
-        catchError(() => this.handleError())
+        catchError((err) => this.handleError(err))
       );
   }
 
@@ -132,7 +134,7 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
       .getStores(headers)
       .pipe(
         map((stores) => this.updateValues(stores, 'oohlala://store')),
-        catchError(() => this.handleError())
+        catchError((err) => this.handleError(err))
       );
   }
 

@@ -83,6 +83,7 @@ describe('EventAttendanceComponent', () => {
 
           component.event = {
             id: 5125,
+            store_id: 125,
             title: 'Hello World!'
           };
 
@@ -217,8 +218,9 @@ describe('EventAttendanceComponent', () => {
     };
 
     const messageData = {
-      name: 'Hello World!',
-      userIds: [1254]
+      userIds: [1254],
+      storeId: 125,
+      name: 'Hello World!'
     };
 
     component.messageAttendee(data);
@@ -252,7 +254,8 @@ describe('EventAttendanceComponent', () => {
 
     const messageData = {
       name: 'Hello World!',
-      userIds: [1234, 1245]
+      userIds: [1234, 1245],
+      storeId: 125
     };
 
     component.messageAllAttendees();

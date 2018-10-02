@@ -5,8 +5,9 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { StudentsService } from './../students.service';
+import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession } from './../../../../../session/index';
-import { FORMAT } from './../../../../../shared/pipes/date';
+import { AssessUtilsService } from '../../assess.utils.service';
 import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from './../../../../../base/base.component';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
@@ -61,6 +62,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     private service: StudentsService,
+    public utils: AssessUtilsService,
     private cpTracking: CPTrackingService
   ) {
     super();

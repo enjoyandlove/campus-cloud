@@ -1,6 +1,8 @@
-/*tslint:disable:max-line-length*/
+import { FormGroup, ValidationErrors } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
+import { JobDate } from './jobs.status';
+import { IJob } from './jobs.interface';
 import { CPI18nService } from '../../../../shared/services';
 
 @Injectable()
@@ -127,5 +129,18 @@ export class JobsUtilsService {
     }
 
     return jobTypes;
+  }
+
+  isOnGoing(job: IJob) {
+    return job.posting_end === JobDate.forever;
+  }
+
+  jobOngoingValidator(control: FormGroup): ValidationErrors | null {
+    const ongoing = control.get('ongoing').value;
+    const posting_end = control.get('posting_end').value;
+
+    const postingEndValid = ongoing ? posting_end === JobDate.forever : posting_end > 0;
+
+    return postingEndValid ? null : { datesInvalid: true };
   }
 }

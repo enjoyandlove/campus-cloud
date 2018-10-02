@@ -1,10 +1,13 @@
-import { map, tap } from 'rxjs/operators';
+/*tslint:disable:max-line-length */
+import { Component, EventEmitter, OnInit, Output, Input, ViewChild } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output, Input } from '@angular/core';
+import { map, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { CPSession } from '../../../../../../../../session';
+
 import { TilesService } from '../../../tiles.service';
+import { CPSession } from '../../../../../../../../session';
 import { CPI18nService } from '../../../../../../../../shared/services';
+import { CPDropdownMultiSelectComponent } from './../../../../../../../../shared/components/cp-dropdown-multiselect/cp-dropdown-multiselect.component';
 
 @Component({
   selector: 'cp-personas-resource-service-by-category',
@@ -13,6 +16,8 @@ import { CPI18nService } from '../../../../../../../../shared/services';
 })
 export class PersonasResourceServiceByCategoryComponent implements OnInit {
   @Input() params;
+
+  @ViewChild('multiSelect') multiSelect: CPDropdownMultiSelectComponent;
 
   @Output() selected: EventEmitter<any> = new EventEmitter();
 
@@ -63,9 +68,21 @@ export class PersonasResourceServiceByCategoryComponent implements OnInit {
   }
 
   onSelected({ action }) {
+    const include = action === 'category_ids';
+
+    if (include !== this.state.include) {
+      this.state = {
+        ...this.state,
+        selection: []
+      };
+
+      this.multiSelectPlaceholder = null;
+      this.multiSelect.reset();
+    }
+
     this.state = {
       ...this.state,
-      include: action === 'category_ids'
+      include
     };
 
     this.doEmit();

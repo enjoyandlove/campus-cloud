@@ -1,17 +1,20 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { JobDate } from './../jobs.status';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Store } from '@ngrx/store';
+import { HttpParams } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
-import { BaseComponent } from '../../../../../base';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
-import { CPDate } from '../../../../../shared/utils';
-import { EmployerService } from '../employers/employer.service';
+import { Store } from '@ngrx/store';
+
 import { JobsService } from '../jobs.service';
+import { CPSession } from '../../../../../session';
+import { BaseComponent } from '../../../../../base';
+import { CPDate } from '../../../../../shared/utils';
+import { JobsUtilsService } from './../jobs.utils.service';
+import { CPI18nService } from '../../../../../shared/services';
+import { EmployerService } from '../employers/employer.service';
+import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
+import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-jobs-edit',
@@ -37,6 +40,7 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
     public route: ActivatedRoute,
     public store: Store<IHeader>,
     public cpI18n: CPI18nService,
+    public utils: JobsUtilsService,
     public employerService: EmployerService
   ) {
     super();
@@ -55,18 +59,20 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
   onSubmit() {
     this.formError = false;
 
-    if (this.data.job.posting_end <= this.data.job.posting_start) {
-      this.formError = true;
-      this.dateErrorMessage = this.cpI18n.translate('jobs_error_end_date_before_start');
+    if (!this.utils.isOnGoing(this.data.job)) {
+      if (this.data.job.posting_end <= this.data.job.posting_start) {
+        this.formError = true;
+        this.dateErrorMessage = this.cpI18n.translate('jobs_error_end_date_before_start');
 
-      return;
-    }
+        return;
+      }
 
-    if (this.data.job.posting_end <= Math.round(CPDate.now(this.session.tz).unix())) {
-      this.formError = true;
-      this.dateErrorMessage = this.cpI18n.translate('jobs_error_end_date_after_now');
+      if (this.data.job.posting_end <= Math.round(CPDate.now(this.session.tz).unix())) {
+        this.formError = true;
+        this.dateErrorMessage = this.cpI18n.translate('jobs_error_end_date_after_now');
 
-      return;
+        return;
+      }
     }
 
     if (this.isNewEmployer) {
@@ -148,30 +154,34 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
   }
 
   buildForm(job) {
-    this.form = this.fb.group({
-      title: [job.title, [Validators.required, Validators.maxLength(120)]],
-      store_id: [job.store_id, Validators.required],
-      description: [job.description],
-      how_to_apply: [job.how_to_apply],
-      posting_start: [job.posting_start, Validators.required],
-      posting_end: [job.posting_end, Validators.required],
-      contract_start: [job.contract_start],
-      application_deadline: [job.application_deadline],
-      location: [job.location],
-      is_ug_y1: [job.is_ug_y1],
-      is_ug_y2: [job.is_ug_y2],
-      is_ug_y3: [job.is_ug_y3],
-      is_ug_y4: [job.is_ug_y4],
-      is_masters: [job.is_masters],
-      is_phd: [job.is_phd],
-      is_full_time: [job.is_full_time],
-      is_part_time: [job.is_part_time],
-      is_summer: [job.is_summer],
-      is_internship: [job.is_internship],
-      is_credited: [job.is_credited],
-      is_volunteer: [job.is_volunteer],
-      is_oncampus: [job.is_oncampus]
-    });
+    this.form = this.fb.group(
+      {
+        title: [job.title, [Validators.required, Validators.maxLength(120)]],
+        store_id: [job.store_id, Validators.required],
+        description: [job.description],
+        how_to_apply: [job.how_to_apply],
+        posting_start: [job.posting_start, Validators.required],
+        posting_end: [job.posting_end, Validators.required],
+        contract_start: [job.contract_start],
+        application_deadline: [job.application_deadline],
+        location: [job.location],
+        is_ug_y1: [job.is_ug_y1],
+        is_ug_y2: [job.is_ug_y2],
+        is_ug_y3: [job.is_ug_y3],
+        is_ug_y4: [job.is_ug_y4],
+        is_masters: [job.is_masters],
+        is_phd: [job.is_phd],
+        is_full_time: [job.is_full_time],
+        is_part_time: [job.is_part_time],
+        is_summer: [job.is_summer],
+        is_internship: [job.is_internship],
+        is_credited: [job.is_credited],
+        is_volunteer: [job.is_volunteer],
+        is_oncampus: [job.is_oncampus],
+        ongoing: [job.posting_end === JobDate.forever]
+      },
+      { validator: this.utils.jobOngoingValidator }
+    );
   }
 
   ngOnInit() {

@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
 import { get as _get } from 'lodash';
@@ -205,16 +205,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   }
 
   buildForm(persona) {
-    this.form = this.fb.group({
-      school_id: [this.session.g.get('school').id, Validators.required],
-      name: [persona.localized_name_map.en, [Validators.required, Validators.maxLength(255)]],
-      platform: [persona.platform, Validators.required],
-      rank: [persona.rank, Validators.required],
-      login_requirement: [persona.login_requirement],
-      pretour_enabled: [persona.pretour_enabled],
-      cre_enabled: [persona.cre_enabled],
-      clone_tiles: [persona.clone_tiles]
-    });
+    this.form = this.utils.getPersonasForm(persona);
   }
 
   errorHandler(err = null) {

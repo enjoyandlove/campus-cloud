@@ -2,14 +2,16 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { ServicesService } from './../../../services.service';
 import { ProvidersService } from '../../../providers.service';
+import { CheckInMethod } from '../../../../events/event.status';
+import { CPI18nService } from '../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../base/base.component';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { SNACKBAR_SHOW } from '../../../../../../../reducers/snackbar.reducer';
 import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
-import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
 
 @Component({
   selector: 'cp-providers-details',
@@ -27,10 +29,12 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   MAX_RATE = 5;
   eventRating;
   serviceName: string;
+  updateQrCode = new BehaviorSubject(null);
 
   constructor(
     private route: ActivatedRoute,
     private store: Store<IHeader>,
+    private cpI18n: CPI18nService,
     private serviceService: ServicesService,
     private providersService: ProvidersService
   ) {
@@ -56,8 +60,8 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
 
     super.fetchData(stream$).then((res) => {
       this.provider = res.data;
+      this.updateQrCode.next(this.provider.checkin_verification_methods);
       this.eventRating = (this.provider.avg_rating_percent * this.MAX_RATE / 100).toFixed(1);
-      this.trackCheckinEvent(this.provider.encrypted_campus_service_id);
       this.buildHeader();
     });
   }
@@ -78,25 +82,69 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     });
   }
 
-  trackCheckinEvent(service_id) {
-    const eventProperties = {
-      service_id,
-      source_page: amplitudeEvents.SERVICE
-    };
-
-    this.eventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
-      eventProperties
-    };
-  }
-
   onDownload() {
     this.providerAttendees.downloadProvidersCSV();
   }
 
   onSearch(query) {
     this.providerAttendees.doSearch(query);
+  }
+
+  onAddCheckIn() {
+    this.providerAttendees.onCreateCheckIn();
+  }
+
+  onToggleQr(isEnabled: boolean) {
+    const verificationMethods = this.provider.checkin_verification_methods;
+
+    if (!isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.push(CheckInMethod.app);
+    } else if (isEnabled && verificationMethods.includes(CheckInMethod.app)) {
+      verificationMethods.pop(CheckInMethod.app);
+    }
+
+    const data = {
+      ...this.provider,
+      attend_verification_methods: verificationMethods
+    };
+
+    const search = new HttpParams()
+      .append('service_id', this.serviceId.toString());
+
+    this.providersService.updateProvider(data, search, this.providerId).subscribe(
+      (_) => {
+        this.onSuccessQRCheckInMessage(isEnabled);
+        this.updateQrCode.next(verificationMethods);
+      },
+      (_) => {
+        this.onErrorQRCheckInMessage();
+      });
+  }
+
+  onSuccessQRCheckInMessage(isEnabled: boolean) {
+    const message = isEnabled
+      ? 't_services_assessment_qr_code_disabled_success_message'
+      : 't_services_assessment_qr_code_enable_success_message';
+
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        body: this.cpI18n.translate(message),
+        autoClose: true,
+        class: 'success'
+      }
+    });
+  }
+
+  onErrorQRCheckInMessage() {
+    this.store.dispatch({
+      type: SNACKBAR_SHOW,
+      payload: {
+        class: 'danger',
+        body: this.cpI18n.translate('something_went_wrong'),
+        autoClose: true
+      }
+    });
   }
 
   ngOnInit() {

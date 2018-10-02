@@ -9,17 +9,11 @@
     @include font-24px();
 
     width: calc(100% - 15px);
-    text-transform: uppercase;
     border: 1px solid transparent;
 
     &:disabled {
+      cursor: not-allowed;
       background: transparent;
-      border: 1px solid transparent;
-      border-bottom: 1px dotted #ccc;
-    }
-
-    &.invalid {
-      border-bottom: 1px solid $color-danger;
     }
   }
 

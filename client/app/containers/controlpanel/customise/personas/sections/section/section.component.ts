@@ -4,10 +4,12 @@ import { Router } from '@angular/router';
 import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
+import * as Sortable from 'sortablejs';
 import { ITile } from '../../tiles/tile.interface';
 import { ICampusGuide } from '../section.interface';
 import { SectionsService } from '../sections.service';
 import { CPSession } from '../../../../../../session';
+import { CampusGuideType } from './../section.status';
 import { TilesService } from './../../tiles/tiles.service';
 import { SectionUtilsService } from '../section.utils.service';
 import { CPI18nService } from '../../../../../../shared/services';
@@ -100,23 +102,10 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   goToCreateTile() {
-    if (this.guide._featuredTile) {
-      return this.createFeatureTile();
-    }
-
     this.service.guide = {
-      ...this.guide
-    };
-    this.router.navigate([`/studio/experiences/${this.personaId}/tiles`]);
-  }
-
-  createFeatureTile() {
-    const tempGuide = {
       ...this.guide,
-      _featuredTile: true
+      _featuredTile: this.guide._featuredTile
     };
-
-    this.service.guide = tempGuide;
 
     this.router.navigate([`/studio/experiences/${this.personaId}/tiles`]);
   }
@@ -211,8 +200,25 @@ export class PersonasSectionComponent implements OnInit {
     this.moveWithinSection.emit(updatedTiles);
   }
 
+  onMoveCheckDraggable(event) {
+    const toLength = event.to.childElementCount - 2;
+    const toIndex = Sortable.utils.index(event.related, '.tile');
+
+    const toEmpty = toLength === 0;
+    const toFirst = toIndex === 0;
+    const toSelf = event.to === event.from && toLength === 1 && toIndex === 1;
+
+    return toEmpty ? toFirst : toSelf || toIndex < toLength;
+  }
+
   ngOnInit(): void {
-    this.sectionId = this.guide._featuredTile ? 'featured' : this.guide.id;
+    if (this.guide._featuredTile) {
+      this.sectionId = CampusGuideType.featured;
+    } else if (this.guide._temporary) {
+      this.sectionId = CampusGuideType.temporary;
+    } else {
+      this.sectionId = this.guide.id;
+    }
 
     this.sortableOptions = {
       scroll: false,
@@ -223,14 +229,11 @@ export class PersonasSectionComponent implements OnInit {
         put: true,
 
         // whether elements can be added from other lists
-        pull: function({ el }) {
-          const { classList } = el;
-
-          return !classList.contains('js_do_not_drag');
-        }
+        pull: true
       },
       onAdd: this.onMoveToSection.bind(this),
-      onUpdate: this.onMoveWithinSection.bind(this)
+      onUpdate: this.onMoveWithinSection.bind(this),
+      onMove: this.onMoveCheckDraggable
     };
   }
 }

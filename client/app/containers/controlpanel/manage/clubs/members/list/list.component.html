@@ -1,5 +1,7 @@
 <cp-clubs-members-action-box
+  [hasMembers]="state.members.length"
   (search)="onSearch($event)"
+  (download)="onDownloadCsvFile()"
   (create)="onLaunchCreateModal()">
 </cp-clubs-members-action-box>
 

@@ -5,6 +5,7 @@ import IEvent from '../../../event.interface';
 import { CheckInOutTime } from '../../../event.status';
 import { CPSession } from '../../../../../../../session';
 import { CPDate } from '../../../../../../../shared/utils';
+import IServiceProvider from '../../../../services/providers.interface';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   altInput: true,
@@ -18,10 +19,10 @@ const COMMON_DATE_PICKER_OPTIONS = {
   styleUrls: ['./form.component.scss']
 })
 export class CheckInFormComponent implements OnInit {
-  @Input() event: IEvent;
   @Input() isEdit = false;
   @Input() form: FormGroup;
   @Input() formErrors: string;
+  @Input() data: IEvent | IServiceProvider;
 
   checkInDatePickerOptions;
   checkOutDatePickerOptions;

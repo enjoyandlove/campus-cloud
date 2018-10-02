@@ -66,9 +66,9 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   isSendMessageModal = false;
   messageAttendeesTooltipText;
   isDeleteCheckInModal = false;
-  dateFormat = FORMAT.DATETIME;
   appCheckIn = CheckInMethod.app;
   webCheckIn = CheckInMethod.web;
+  dateFormat = FORMAT.DATETIME_SHORT;
   emptyCheckOutTime = CheckInOutTime.empty;
   updateQrCode = new BehaviorSubject(null);
   totalAttendees = new BehaviorSubject(null);
@@ -220,7 +220,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
     this.trackAmplitudeEvent();
 
-    this.utils.createExcel(stream$, this.event.has_checkout, this.showStudentIds);
+    this.utils.createExcel(stream$, this.showStudentIds, this.event);
   }
 
   trackAmplitudeEvent() {

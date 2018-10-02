@@ -12,16 +12,15 @@ import { CheckInOutTime, CheckInType } from '../../../callback.status';
 })
 export class CheckinAttendeesListComponent {
   @Input() data: ICheckIn;
-  @Input() isService: boolean;
 
   @Output() checkout: EventEmitter<ICheckIn> = new EventEmitter();
 
   timezone: string;
   attendee: IAttendee;
   launchCheckOutModal = false;
-  dateFormat = FORMAT.DATETIME;
   empty = CheckInOutTime.empty;
   checkInType = CheckInType.web;
+  dateFormat = FORMAT.DATETIME_SHORT;
 
   onCheckOutModal(attendee: IAttendee) {
     this.attendee = attendee;

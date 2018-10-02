@@ -8,6 +8,12 @@ import {
   ElementRef
 } from '@angular/core';
 
+interface IItem {
+  action: number;
+  label: string;
+  selected: boolean;
+}
+
 @Component({
   selector: 'cp-dropdown-multiselect',
   templateUrl: './cp-dropdown-multiselect.component.html',
@@ -15,13 +21,13 @@ import {
 })
 export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
   @Input() placeholder = '...';
-  @Input() items: Array<{ action: number; label: string; selected: boolean }> = [];
+  @Input() items: IItem[] = [];
 
   @Output() selection: EventEmitter<Array<number>> = new EventEmitter();
 
   query = null;
   isSearching = false;
-  MIN_RESULTS_FOR_SEARCH = 40;
+  MIN_RESULTS_FOR_SEARCH = 15;
 
   state = {
     open: false,
@@ -32,6 +38,11 @@ export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
 
   onSearch(query) {
     this.query = query;
+  }
+
+  reset() {
+    this.items.map((i: IItem) => (i.selected = false));
+    this.state = { ...this.state, label: null };
   }
 
   ngOnChanges() {

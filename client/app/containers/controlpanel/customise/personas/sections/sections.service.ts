@@ -24,14 +24,6 @@ export class SectionsService extends HTTPService {
     Object.setPrototypeOf(this, SectionsService.prototype);
   }
 
-  updateSectionTileCategory(tileCategoryId: number, body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.GUIDE_TILE_CATEGORY
-    }/${tileCategoryId}`;
-
-    return super.update(url, body, null, true);
-  }
-
   deleteSectionTileCategory(tileCategoryId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.GUIDE_TILE_CATEGORY

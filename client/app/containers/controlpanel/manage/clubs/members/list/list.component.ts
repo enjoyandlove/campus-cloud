@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { flatMap } from 'rxjs/operators';
 
 import { MemberType } from '../member.status';
+import { IMember } from '../members.interface';
 import { MembersService } from '../members.service';
 import { CPSession } from '../../../../../../session';
 import { isClubAthletic } from '../../clubs.athletics.labels';
@@ -19,7 +20,7 @@ import { CPI18nService, CPTrackingService } from '../../../../../../shared/servi
 declare var $: any;
 
 interface IState {
-  members: Array<any>;
+  members: Array<IMember>;
   sort_field: string;
   search_str: string;
   sort_direction: string;
@@ -137,6 +138,10 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     this.resetPagination();
 
     this.fetch();
+  }
+
+  onDownloadCsvFile() {
+    this.utils.createExcel(this.state.members);
   }
 
   onLaunchCreateModal() {

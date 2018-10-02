@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 import { FeedsUtilsService } from '../../../feeds.utils.service';
-import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services/index';
+import { CPHostDirective } from '../../../../../../../shared/directives';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-feed-body',
@@ -19,6 +20,8 @@ export class FeedBodyComponent implements OnInit {
 
   @Output() viewComments: EventEmitter<boolean> = new EventEmitter();
   @Output() toggleReplies: EventEmitter<boolean> = new EventEmitter();
+
+  @ViewChild(CPHostDirective) cpHost: CPHostDirective;
 
   eventProperties = {
     post_id: null,
@@ -47,6 +50,10 @@ export class FeedBodyComponent implements OnInit {
 
       this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_VIEWED_COMMENT, this.eventProperties);
     }
+  }
+
+  mapImages(feedImages): string[] {
+    return feedImages.map((imgObj) => imgObj.url);
   }
 
   ngOnInit() {}

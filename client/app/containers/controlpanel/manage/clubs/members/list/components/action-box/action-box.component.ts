@@ -14,9 +14,11 @@ import { amplitudeEvents } from '../../../../../../../../shared/constants/analyt
   styleUrls: ['./action-box.component.scss']
 })
 export class ClubsMembersActionBoxComponent implements OnInit {
+  @Input() hasMembers: boolean;
   @Input() isAthletic = isClubAthletic.club;
   @Output() create: EventEmitter<null> = new EventEmitter();
   @Output() search: EventEmitter<string> = new EventEmitter();
+  @Output() download: EventEmitter<null> = new EventEmitter();
 
   clubId;
   eventData;

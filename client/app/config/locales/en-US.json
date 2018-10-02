@@ -961,7 +961,7 @@
     "message": "Upload CSV File"
   },
   "customise": {
-    "message": "Customize"
+    "message": "Studio"
   },
   "customise_banner": {
     "message": "Branding"
@@ -1215,12 +1215,6 @@
   "events_attendance_manager_tooltip": {
     "message": "Any valid email address.  The Attendance Manager receives email instructions about setting up check-ins for the event."
   },
-  "events_attendant": {
-    "message": "Attendant"
-  },
-  "events_attendee_email": {
-    "message": "Attendee Email"
-  },
   "events_button_new": {
     "message": "Create Event"
   },
@@ -1330,7 +1324,7 @@
     "message": "No events found"
   },
   "events_user_feedback": {
-    "message": "User Feedback"
+    "message": "Feedback"
   },
   "event_enabled": {
     "message": "Enabled"
@@ -2112,9 +2106,6 @@
   "services_label_checked_in_method": {
     "message": "Check-in Method"
   },
-  "services_label_checked_in_time": {
-    "message": "Check-in Time"
-  },
   "services_label_checkin_time": {
     "message": "Check-in Time"
   },
@@ -2341,6 +2332,9 @@
   "t_assess_orientation_programs": {
     "message": "Orientation Programs"
   },
+  "t_assess_students_engagements": {
+    "message": "Engagements"
+  },
   "t_assess_time_spent": {
     "message": "Time Spent"
   },
@@ -2511,19 +2505,34 @@
     "message": "Check-in Date"
   },
   "t_events_csv_column_check_out_date": {
-    "message": "Check-out time"
+    "message": "Check-out Date"
+  },
+  "t_events_csv_column_email": {
+    "message": "Email"
+  },
+  "t_events_csv_column_feedback_question": {
+    "message": "Feedback Question"
+  },
+  "t_events_csv_column_first_name": {
+    "message": "First Name"
+  },
+  "t_events_csv_column_last_name": {
+    "message": "Last Name"
   },
   "t_events_csv_column_time_in": {
     "message": "Check-in Time"
   },
   "t_events_csv_column_time_out": {
-    "message": "Check-out time"
+    "message": "Check-out Time"
   },
   "t_events_csv_column_time_spent": {
     "message": "Time Spent"
   },
   "t_events_csv_column_time_spent_seconds": {
     "message": "Time Spent (Seconds)"
+  },
+  "t_events_default_feedback_question": {
+    "message": "How was your experience?"
   },
   "t_events_event_attendance_type_tooltip": {
     "message": "\"Check-in\" records an attendee's name and email, and the time of the QR scan. \"Check-in & Check-out\" lets you scan attendees twice, and tracks start and finish time. Both options let you gather feedback."
@@ -2624,9 +2633,6 @@
   },
   "t_personas_create_label_campus_security": {
     "message": "Campus Security Service"
-  },
-  "t_personas_create_section_default_name": {
-    "message": "Untitled"
   },
   "t_personas_create_submit_button": {
     "message": "Save Changes"
@@ -2733,8 +2739,14 @@
   "t_personas_no_results_found": {
     "message": "No experiences found"
   },
+  "t_personas_resource_add_resource": {
+    "message": "Add Resource"
+  },
   "t_personas_resource_create_modal_title": {
     "message": "New Resource"
+  },
+  "t_personas_resource_edit_modal_title": {
+    "message": "Edit Resource"
   },
   "t_personas_section_button_add_section": {
     "message": "Add Section"
@@ -2817,6 +2829,9 @@
   "t_personas_tile_image_requirements": {
     "message": "300kB or less. Use JPEG or PNG."
   },
+  "t_personas_tile_locked_tooltip": {
+    "message": "Contact your Customer Support representative to make changes to this tile"
+  },
   "t_personas_tile_modal_create_appearance": {
     "message": "Appearance"
   },
@@ -2892,6 +2907,36 @@
   "t_services_service_qr_enabled": {
     "message": "QR Code"
   },
+  "t_service_provider_csv_column_check_in_date": {
+    "message": "Check-in Date"
+  },
+  "t_service_provider_csv_column_check_out_date": {
+    "message": "Check-out Date"
+  },
+  "t_service_provider_csv_column_first_name": {
+    "message": "First Name"
+  },
+  "t_service_provider_csv_column_last_name": {
+    "message": "Last Name"
+  },
+  "t_service_provider_csv_column_provider_name": {
+    "message": "Service Provider"
+  },
+  "t_service_provider_csv_column_ratings": {
+    "message": "Ratings"
+  },
+  "t_service_provider_csv_column_time_in": {
+    "message": "Check-in Time"
+  },
+  "t_service_provider_csv_column_time_out": {
+    "message": "Check-out Time"
+  },
+  "t_service_provider_csv_column_time_spent": {
+    "message": "Time Spent"
+  },
+  "t_service_provider_csv_column_time_spent_seconds": {
+    "message": "Time Spent (Seconds)"
+  },
   "t_shared_cancel": {
     "message": "Cancel"
   },
@@ -2909,6 +2954,9 @@
   },
   "t_shared_image": {
     "message": "Image"
+  },
+  "t_shared_invalid_url": {
+    "message": "Invalid URL (eg: https://google.com)"
   },
   "t_shared_label_location_toggle": {
     "message": "Set Location"

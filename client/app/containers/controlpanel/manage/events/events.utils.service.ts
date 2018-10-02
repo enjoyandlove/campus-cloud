@@ -219,11 +219,13 @@ export class EventUtilService {
     };
   }
 
-  createExcel(stream, hasCheckOut, showStudentIds = false) {
+  createExcel(stream, showStudentIds = false, event) {
     stream.toPromise().then((attendees: Array<any>) => {
       const columns = [
-        this.cpI18n.translate('events_attendant'),
-        this.cpI18n.translate('events_attendee_email'),
+        this.cpI18n.translate('t_events_csv_column_first_name'),
+        this.cpI18n.translate('t_events_csv_column_last_name'),
+        this.cpI18n.translate('t_events_csv_column_email'),
+        this.cpI18n.translate('events_checked_in_method'),
         this.cpI18n.translate('t_events_csv_column_check_in_date'),
         this.cpI18n.translate('t_events_csv_column_time_in'),
         this.cpI18n.translate('t_events_csv_column_check_out_date'),
@@ -231,8 +233,8 @@ export class EventUtilService {
         this.cpI18n.translate('t_events_csv_column_time_spent'),
         this.cpI18n.translate('t_events_csv_column_time_spent_seconds'),
         this.cpI18n.translate('rating'),
-        this.cpI18n.translate('events_user_feedback'),
-        this.cpI18n.translate('events_checked_in_method')
+        this.cpI18n.translate('t_events_csv_column_feedback_question'),
+        this.cpI18n.translate('events_user_feedback')
       ];
       if (showStudentIds) {
         columns.push(this.cpI18n.translate('student_id'));
@@ -246,20 +248,25 @@ export class EventUtilService {
       attendees = attendees.map((item) => {
         const timeSpentSeconds = (item.check_out_time_epoch - item.check_in_time);
 
-        const hasCheckOutTimeSpent = hasCheckOut
+        const hasCheckOutTimeSpent = event.has_checkout
           && item.check_out_time_epoch
           && item.check_out_time_epoch !== CheckInOutTime.empty;
 
         const row = {
-          [this.cpI18n.translate('events_attendant')]: `${item.firstname} ${item.lastname}`,
+          [this.cpI18n.translate('t_events_csv_column_first_name')]: item.firstname,
 
-          [this.cpI18n.translate('events_attendee_email')]: item.email,
+          [this.cpI18n.translate('t_events_csv_column_last_name')]: item.lastname,
+
+          [this.cpI18n.translate('t_events_csv_column_email')]: item.email,
+
+          [this.cpI18n.translate('events_checked_in_method')]:
+            check_in_method[item.check_in_method],
 
           [this.cpI18n.translate('t_events_csv_column_check_in_date')]:
             CPDate.fromEpoch(item.check_in_time, this.session.tz).format(Formats.dateFormat),
 
           [this.cpI18n.translate('t_events_csv_column_time_in')]: CPDate.fromEpoch(
-            item.check_in_time, this.session.tz).format(Formats.timeFormat),
+            item.check_in_time, this.session.tz).format(Formats.timeFormatLong),
 
           [this.cpI18n.translate('t_events_csv_column_check_out_date')]:
             hasCheckOutTimeSpent ? CPDate.fromEpoch(
@@ -267,11 +274,12 @@ export class EventUtilService {
 
           [this.cpI18n.translate('t_events_csv_column_time_out')]:
             hasCheckOutTimeSpent ? CPDate.fromEpoch(
-            item.check_out_time_epoch, this.session.tz).format(Formats.timeFormat) : '',
+            item.check_out_time_epoch, this.session.tz).format(Formats.timeFormatLong) : '',
 
           [this.cpI18n.translate('t_events_csv_column_time_spent')]:
             hasCheckOutTimeSpent ?
-              CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat) : '',
+              CPDate.getTimeDuration(timeSpentSeconds)
+                .format(Formats.timeDurationFormat, {trim: false, useGrouping: false}) : '',
 
           [this.cpI18n.translate('t_events_csv_column_time_spent_seconds')]:
             hasCheckOutTimeSpent ? timeSpentSeconds : '',
@@ -279,12 +287,12 @@ export class EventUtilService {
           [this.cpI18n.translate('rating')]:
             item.feedback_rating === -1 ? '' : (item.feedback_rating * 5 / 100).toFixed(2),
 
-          [this.cpI18n.translate('events_user_feedback')]: item.feedback_text,
+          [this.cpI18n.translate('t_events_csv_column_feedback_question')]:
+            event.custom_basic_feedback_label,
 
-          [this.cpI18n.translate('events_checked_in_method')]: check_in_method[
-            item.check_in_method
-            ]
+          [this.cpI18n.translate('events_user_feedback')]: item.feedback_text
         };
+
         if (showStudentIds) {
           row[this.cpI18n.translate('student_id')] = item.student_identifier;
         }

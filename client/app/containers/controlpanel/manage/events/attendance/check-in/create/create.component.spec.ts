@@ -18,7 +18,7 @@ let mockCheckIn = require('../../../__mock__/eventCheckIn.json');
 class MockService {
   dummy;
 
-  addEventCheckIn(body: any, search: any) {
+  addCheckIn(body: any, search: any) {
     this.dummy = [search];
 
     return observableOf({ body });
@@ -57,9 +57,13 @@ describe('EventCheckInCreateComponent', () => {
 
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
-          component.event = mockEvent;
+          component.data = {
+            ...component.data,
+            ...mockEvent
+          };
           component.ngOnInit();
-          component.form = component.checkInUtils.getCheckInForm(mockCheckIn, component.event);
+          component.form = component.checkInUtils
+            .getCheckInForm(mockCheckIn, component.data);
         });
     })
   );
@@ -94,7 +98,7 @@ describe('EventCheckInCreateComponent', () => {
   it('error - user already exist', () => {
     spyOn(component.created, 'emit');
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'addEventCheckIn')
+    spy = spyOn(component.service, 'addCheckIn')
       .and.returnValue(observableOf(mockCheckIn));
 
     const checkInTime = 1598918399;
@@ -120,7 +124,7 @@ describe('EventCheckInCreateComponent', () => {
       attendance_id: 4525
     };
 
-    spy = spyOn(component.service, 'addEventCheckIn')
+    spy = spyOn(component.service, 'addCheckIn')
       .and.returnValue(observableOf(mockCheckIn));
 
     const checkInTime = 1598918399;

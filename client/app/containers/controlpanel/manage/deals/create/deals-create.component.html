@@ -25,12 +25,18 @@
           <div class="row">
             <div class="col-12">
               <div class="text-right">
-                <label class="error" *ngIf="error">
-                  <i class="material-icons">warning</i>
-                  {{ errorMessage }}
+                <label class="error" *ngIf="form.errors">
+                  <span *ngIf="form.errors.expirationBeforeNow">
+                    <i class="material-icons">warning</i>
+                    {{ 't_deals_form_error_end_date_after_now' | cpI18n }}
+                  </span>
+                  <span *ngIf="form.errors.expirationBeforeStart">
+                    <i class="material-icons">warning</i>
+                    {{ 't_deals_form_error_end_date_before_start' | cpI18n }}
+                  </span>
                 </label>
                 <a [routerLink]="['/manage/deals']"
-                   class="cpbtn cpbtn--cancel" i18n>
+                   class="cpbtn cpbtn--cancel">
                   {{ 'cancel' | cpI18n }}
                 </a>
                 <cp-button

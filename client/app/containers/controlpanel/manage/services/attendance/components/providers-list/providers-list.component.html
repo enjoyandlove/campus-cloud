@@ -76,6 +76,7 @@
                 </div>
                 <div class="col-2">
                   <a
+                    target="_blank"
                     (click)="trackCheckinEvent(provider.encrypted_campus_service_id)"
                     [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]"
                     class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary">
@@ -111,7 +112,7 @@
 
     <cp-modal modalId="deleteProvider">
       <cp-providers-delete
-        [serviceId]="serviceId"
+        [serviceId]="service.id"
         [provider]="deleteProvider"
         (deleted)="onDeleted($event)">
       </cp-providers-delete>

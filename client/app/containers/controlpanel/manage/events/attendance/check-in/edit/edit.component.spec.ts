@@ -18,7 +18,7 @@ const mockCheckIn = require('../../../__mock__/eventCheckIn.json');
 class MockService {
   dummy;
 
-  updateEventCheckIn(body: any, id: number, search: any) {
+  updateCheckIn(body: any, id: number, search: any) {
     this.dummy = [id, search];
 
     return observableOf({ body });
@@ -58,7 +58,10 @@ describe('EventCheckInEditComponent', () => {
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
           component.checkIn = mockCheckIn;
-          component.event = mockEvent;
+          component.data = {
+            ...component.data,
+            ...mockEvent
+          };
           component.ngOnInit();
         });
     })
@@ -94,7 +97,7 @@ describe('EventCheckInEditComponent', () => {
   it('should edit event check-in', () => {
     spyOn(component.edited, 'emit');
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'updateEventCheckIn')
+    spy = spyOn(component.service, 'updateCheckIn')
       .and.returnValue(observableOf(mockCheckIn));
 
     const checkInTime = 1598918399;

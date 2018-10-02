@@ -1,10 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import { ITile } from './../tile.interface';
 import { TilesService } from '../tiles.service';
 import { IPersona } from './../../persona.interface';
 import { CPSession } from '../../../../../../session';
@@ -29,6 +30,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   loading;
   buttonData;
   campusLinkId;
+  tile: ITile;
   persona: IPersona;
   personaId: number;
   guide: ICampusGuide;
@@ -117,15 +119,16 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
 
   buildForm() {
     const tileId = this.route.snapshot.params['tileId'];
-    const guideTile = this.guide.tiles.filter((i) => i.id === +tileId)[0];
+    this.tile = this.guide.tiles.filter((i) => i.id === +tileId)[0];
 
-    this.campusLinkForm = this.utils.campusLinkForm(false, false, guideTile.related_link_data);
-    this.campusLinkId = guideTile.related_link_data.id;
+    this.campusLinkForm = this.utils.campusLinkForm(false, false, this.tile.related_link_data);
+
+    this.campusLinkId = this.tile.related_link_data.id;
 
     this.campusGuideTileForm = this.utils.campusGuideTileForm(
       this.personaId,
       this.guide,
-      guideTile
+      this.tile
     );
   }
 

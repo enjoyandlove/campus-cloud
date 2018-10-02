@@ -1,5 +1,5 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { map, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -8,13 +8,12 @@ import { get as _get } from 'lodash';
 import { Observable } from 'rxjs';
 
 import { CPSession } from '../../../../../session';
-import { CPDate } from '../../../../../shared/utils';
-import { PersonasService } from './../personas.service';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
+import { PersonasService } from './../personas.service';
+import { PersonaValidationErrors } from './../personas.status';
 import { CPI18nService } from '../../../../../shared/services';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { PersonasLoginRequired, PersonasType, PersonaValidationErrors } from './../personas.status';
 import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 
 @Component({
@@ -148,16 +147,7 @@ export class PersonasCreateComponent implements OnInit {
   }
 
   buildForm() {
-    this.form = this.fb.group({
-      school_id: [this.session.g.get('school').id, Validators.required],
-      name: [null, [Validators.required, Validators.maxLength(255)]],
-      platform: [PersonasType.mobile, Validators.required],
-      rank: [CPDate.now(this.session.tz).unix(), Validators.required],
-      login_requirement: [PersonasLoginRequired.optional],
-      pretour_enabled: [false],
-      cre_enabled: [false],
-      clone_tiles: [false]
-    });
+    this.form = this.utils.getPersonasForm();
   }
 
   loadServices() {

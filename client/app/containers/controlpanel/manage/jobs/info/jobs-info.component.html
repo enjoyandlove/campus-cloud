@@ -46,7 +46,8 @@
                       <p class="meta__type">{{ 'jobs_posting_end_date' | cpI18n }}</p>
                     </div>
                     <div class="col-8 posting-end">
-                      <p>{{ job.posting_end |  cpDatePipe:dateFormat}}</p>
+                      <p *ngIf="utils.isOnGoing(job)">{{ 't_jobs_ongoing' | cpI18n }}</p>
+                      <p *ngIf="!utils.isOnGoing(job)">{{ job.posting_end | cpDatePipe:dateFormat }}</p>
                     </div>
                   </div>
 

@@ -104,7 +104,7 @@ def import_lists(request):
     parser = CSVParser(csv_as_string)
 
     try:
-        parsed_data = parser.all_fields_required('email')
+        parsed_data = parser.all_fields_required('email', data_len=10000)
     except KeyError as e:
         return JsonResponse({"error": e.args[0]},
                                 safe=False, status=400)

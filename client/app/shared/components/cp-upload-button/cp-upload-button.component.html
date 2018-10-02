@@ -1,13 +1,13 @@
 <ng-container *ngIf="theme === 'small'">
   <div class="input small">
     <input
-      id="file"
+      [attr.id]="id"
       type="file"
       name="file"
       class="inputfile"
       (change)="onChange($event)" />
     <label
-      for="file"
+      [for]="id"
       class="small"
       [class.isRequired]="isRequired" i18n><i class="material-icons">add_a_photo</i></label>
   </div>

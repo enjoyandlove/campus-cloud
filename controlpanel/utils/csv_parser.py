@@ -7,8 +7,7 @@ class CSVParser:
     def __init__(self, csv_file):
         self.csv_file = csv_file
 
-
-    def all_fields_required(self, *args):
+    def all_fields_required(self, *args, **kwargs):
         data = []
         column_titles = None
         reader = csv.reader(self.csv_file)
@@ -27,7 +26,8 @@ class CSVParser:
         if not data:
             raise KeyError('File is Empty')
 
-        if len(data) > 100:
+        data_len = kwargs.get('data_len', 100)
+        if len(data) > data_len:
             raise KeyError('File exceeds number of allowed rows')
 
         # zip data with columns
@@ -35,10 +35,13 @@ class CSVParser:
 
         for index, item in enumerate(data):
             entry = dict(zip(column_titles, item))
+            required_missing = set(args).difference(entry.keys())
             error = [k for k,v in entry.items() if k in args and v == '']
 
             if error:
                 raise KeyError(('Line {}, is missing {}').format(index + 1, error[0]))
+            if required_missing:
+                raise KeyError(('Line {}, is missing {}').format(index + 1, required_missing))
 
             result.append(entry)
 
