@@ -95,9 +95,8 @@ export class ServicesUtilsService {
 
         [this.cpI18n.translate('email')]: item.email,
 
-        [this.cpI18n.translate('services_label_checked_in_method')]: check_in_method[
-          item.check_in_method
-          ],
+        [this.cpI18n.translate('services_label_checked_in_method')]
+          : check_in_method[item.check_in_method],
 
         [this.cpI18n.translate('t_service_provider_csv_column_check_in_date')]: CPDate.fromEpoch(
           item.check_in_time,
