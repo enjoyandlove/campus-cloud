@@ -2920,7 +2920,7 @@
     "message": "Last Name"
   },
   "t_service_provider_csv_column_provider_name": {
-    "message": "Service Provider Name"
+    "message": "Service Provider"
   },
   "t_service_provider_csv_column_ratings": {
     "message": "Ratings"

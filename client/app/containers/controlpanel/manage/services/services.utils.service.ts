@@ -126,7 +126,7 @@ export class ServicesUtilsService {
           't_service_provider_csv_column_time_spent_seconds'
         )]: hasCheckOutTimeSpent ? timeSpentSeconds : '',
 
-        [this.cpI18n.translate('average_rating')]:
+        [this.cpI18n.translate('t_service_provider_csv_column_ratings')]:
           item.feedback_rating === -1 ? 'N/A' : item.feedback_rating / 100 * 5,
 
         [this.cpI18n.translate('feedback')]: item.feedback_text,
