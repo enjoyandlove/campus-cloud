@@ -194,13 +194,18 @@ export class EventsCreateComponent implements OnInit {
 
   toggleEventAttendance(value) {
     value = value ? EventAttendance.enabled : EventAttendance.disabled;
+
+    const feedbackQuestion = !value ? ''
+      : this.cpI18n.translate('t_events_default_feedback_question');
+
+    this.form.controls['event_feedback'].setValue(value);
     this.form.controls['event_attendance'].setValue(value);
+    this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
 
-    const controls = ['event_manager_id', 'custom_basic_feedback_label'];
-
-    value
-      ? this.utils.setValidators(this.form, controls)
-      : this.utils.clearValidators(this.form, controls);
+    if (!value) {
+      const controls = ['event_manager_id', 'custom_basic_feedback_label'];
+      this.utils.clearValidators(this.form, controls);
+    }
   }
 
   onResetMap() {
@@ -260,7 +265,7 @@ export class EventsCreateComponent implements OnInit {
     this.formError = false;
     this.isDateError = false;
     this.clearDateErrors();
-    this.utils.validateEventManager(this.form);
+    this.utils.customValidator(this.form);
 
     if (!this.form.valid) {
       this.formError = true;
@@ -357,9 +362,9 @@ export class EventsCreateComponent implements OnInit {
     this.form.controls['event_feedback'].setValue(option.action);
     this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
 
-    option.action
-      ? this.utils.setValidators(this.form, ['custom_basic_feedback_label'])
-      : this.utils.clearValidators(this.form, ['custom_basic_feedback_label']);
+    if (!option.action) {
+      this.utils.clearValidators(this.form, ['custom_basic_feedback_label']);
+    }
   }
 
   toggleDatePickerTime(checked) {

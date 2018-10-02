@@ -1,6 +1,6 @@
 import IEvent from './event.interface';
 import { Injectable } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { CPSession } from '../../../../session';
 import { Formats } from '../../../../shared/utils/csv';
@@ -204,13 +204,18 @@ export class EventUtilService {
     return assessment === EventAttendance.enabled ? Assessment.on : Assessment.off;
   }
 
-  validateEventManager(form: FormGroup) {
+  customValidator(form: FormGroup) {
     const managerId = form.controls['event_manager_id'];
     const eventAttendance = form.controls['event_attendance'].value;
+    const feedbackLabel = form.controls['custom_basic_feedback_label'];
 
     if (eventAttendance === EventAttendance.enabled) {
       if (!managerId.value) {
         managerId.setErrors({ required: true });
+      }
+
+      if (!feedbackLabel.value && form.controls['event_feedback'].value) {
+        feedbackLabel.setErrors({required: true});
       }
     }
   }
@@ -220,14 +225,6 @@ export class EventUtilService {
       keys.map((key: string) => {
         form.controls[key].clearValidators();
         form.controls[key].updateValueAndValidity();
-      });
-    }
-  }
-
-  setValidators(form: FormGroup, keys: string[]) {
-    if (keys) {
-      keys.map((key: string) => {
-        form.controls[key].setValidators([Validators.required]);
       });
     }
   }

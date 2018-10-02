@@ -133,7 +133,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.clearDateErrors();
     this.isDateError = false;
     this.formMissingFields = false;
-    this.utils.validateEventManager(this.form);
+    this.utils.customValidator(this.form);
 
     if (!this.form.valid) {
       this.enableSaveButton();
@@ -449,25 +449,21 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     return arr.filter((item) => item[key] === val)[0];
   }
 
-  enableStudentFeedbackOnAttendanceToggle(value) {
-    this.form.controls['event_feedback'].setValue(value);
-    this.originalAttnFeedback = this.getFromArray(this.attendanceFeedback, 'action', value);
-  }
-
   toggleEventAttendance(value) {
     value = value ? EventAttendance.enabled : EventAttendance.disabled;
 
-    this.enableStudentFeedbackOnAttendanceToggle(value);
+    const feedbackQuestion = !value ? ''
+      : this.cpI18n.translate('t_events_default_feedback_question');
 
+    this.form.controls['event_feedback'].setValue(value);
     this.form.controls['event_attendance'].setValue(value);
-
+    this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
     this.form.controls['attend_verification_methods']
       .setValue([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
 
     if (!value) {
-      const eventManager = this.form.controls['event_manager_id'];
-      eventManager.clearValidators();
-      eventManager.updateValueAndValidity();
+      const controls = ['event_manager_id', 'custom_basic_feedback_label'];
+      this.utils.clearValidators(this.form, controls);
     }
   }
 
@@ -531,9 +527,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.form.controls['event_feedback'].setValue(option.action);
     this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
 
-    option.action
-      ? this.utils.setValidators(this.form, ['custom_basic_feedback_label'])
-      : this.utils.clearValidators(this.form, ['custom_basic_feedback_label']);
+    if (!option.action) {
+      this.utils.clearValidators(this.form, ['custom_basic_feedback_label']);
+    }
   }
 
   onLocationToggle(value) {
