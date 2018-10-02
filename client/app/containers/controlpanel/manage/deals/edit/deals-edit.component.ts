@@ -6,8 +6,8 @@ import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
+import { dealDateValidator } from '../deals.utils';
 import { BaseComponent } from '../../../../../base';
-import { dealOngoingValidator } from '../deals.utils';
 import { DealsService, DateStatus } from '../deals.service';
 import { DealsStoreService } from './../stores/store.service';
 import { CPI18nService } from '../../../../../shared/services';
@@ -145,7 +145,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
         expiration: [data.expiration],
         ongoing: [data.expiration === DateStatus.forever]
       },
-      { validator: dealOngoingValidator }
+      { validator: dealDateValidator(this.session.tz) }
     );
   }
 
