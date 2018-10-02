@@ -2510,6 +2510,9 @@
   "t_events_csv_column_email": {
     "message": "Courriel"
   },
+  "t_events_csv_column_feedback_question": {
+    "message": "Question de commentaire"
+  },
   "t_events_csv_column_first_name": {
     "message": "Prénom"
   },
@@ -2527,6 +2530,9 @@
   },
   "t_events_csv_column_time_spent_seconds": {
     "message": "Temps passé (secondes)"
+  },
+  "t_events_default_feedback_question": {
+    "message": "Comment était votre expérience ?"
   },
   "t_events_event_attendance_type_tooltip": {
     "message": "\"Présence\" enregistre le nom et courriel d'un invité, et l'heure du scan QR. \"Présence & sortie\" vous permet de scanner les invités deux fois, et suit les heures de début et de fin. Les deux options vous laissent récupérer un avis."
@@ -2912,6 +2918,9 @@
   },
   "t_service_provider_csv_column_last_name": {
     "message": "Nom de famille"
+  },
+  "t_service_provider_csv_column_provider_name": {
+    "message": "Fournisseur de service"
   },
   "t_service_provider_csv_column_ratings": {
     "message": "Notes"
