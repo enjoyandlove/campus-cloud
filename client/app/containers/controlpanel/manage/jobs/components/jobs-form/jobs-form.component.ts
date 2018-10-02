@@ -9,8 +9,8 @@ import { JobsUtilsService } from '../../jobs.utils.service';
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
   altInput: true,
-  enableTime: true,
-  altFormat: 'F j, Y h:i K'
+  enableTime: false,
+  altFormat: 'F j, Y'
 };
 
 @Component({
