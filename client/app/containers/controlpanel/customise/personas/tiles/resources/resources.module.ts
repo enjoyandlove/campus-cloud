@@ -1,28 +1,34 @@
+import { SortablejsModule } from 'angular-sortablejs';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { SortablejsModule } from 'angular-sortablejs';
+
 import {
   PersonasResourceFormComponent,
-  PersonasResourceListOfListComponent,
-  PersonasResourceServiceByCategoryComponent,
-  PersonasResourceStoresListComponent,
   PersonasResourceTypesComponent,
+  PersonasResourceTypeUrlComponent,
+  PersonasResourceListFormComponent,
+  PersonasResourceListOfListComponent,
+  PersonasResourceStoresListComponent,
   PersonasResourceTypeSearchComponent,
-  PersonasResourceTypeUrlComponent
+  PersonasResourceServiceByCategoryComponent
 } from './components';
-import { PersonaResourceCreateComponent } from './create/create.component';
+
 import { ResourceService } from './resource.service';
+import { PersonaResourceEditComponent } from './edit';
+import { TilesUtilsService } from '../tiles.utils.service';
 import { ResourcesUtilsService } from './resources.utils.service';
 import { SharedModule } from '../../../../../../shared/shared.module';
-import { TilesUtilsService } from '../tiles.utils.service';
+import { PersonaResourceCreateComponent } from './create/create.component';
 
 @NgModule({
   declarations: [
+    PersonaResourceEditComponent,
     PersonasResourceFormComponent,
     PersonaResourceCreateComponent,
-    PersonasResourceTypeUrlComponent,
     PersonasResourceTypesComponent,
+    PersonasResourceTypeUrlComponent,
+    PersonasResourceListFormComponent,
     PersonasResourceStoresListComponent,
     PersonasResourceTypeSearchComponent,
     PersonasResourceListOfListComponent,
@@ -31,10 +37,12 @@ import { TilesUtilsService } from '../tiles.utils.service';
   imports: [CommonModule, SharedModule, ReactiveFormsModule, SortablejsModule],
   providers: [TilesUtilsService, ResourceService, ResourcesUtilsService],
   exports: [
+    PersonaResourceEditComponent,
     PersonasResourceFormComponent,
     PersonaResourceCreateComponent,
-    PersonasResourceTypeUrlComponent,
     PersonasResourceTypesComponent,
+    PersonasResourceTypeUrlComponent,
+    PersonasResourceListFormComponent,
     PersonasResourceStoresListComponent,
     PersonasResourceTypeSearchComponent,
     PersonasResourceListOfListComponent,

@@ -1,24 +1,47 @@
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  QueryList,
+  ElementRef,
+  EventEmitter,
+  ViewChildren,
+  AfterViewInit
+} from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { SNACKBAR_SHOW } from './../../../../../../../../reducers/snackbar.reducer';
+import { Store } from '@ngrx/store';
+
+import { TilesService } from '../../../tiles.service';
 import { IPersona } from './../../../../persona.interface';
 import { ResourceService } from './../../resource.service';
-import { Store } from '../../../../../../../../../../node_modules/@ngrx/store';
-import { ISnackbar } from '../../../../../../../../reducers/snackbar.reducer';
 import { CPSession } from '../../../../../../../../session';
+import { ILink } from '../../../../../../manage/links/link.interface';
+import { ResourcesUtilsService } from '../../resources.utils.service';
 import { CPI18nService } from '../../../../../../../../shared/services';
-import { TilesService } from '../../../tiles.service';
+import { ISnackbar } from '../../../../../../../../reducers/snackbar.reducer';
+import { SNACKBAR_SHOW } from './../../../../../../../../reducers/snackbar.reducer';
+
+interface IState {
+  loading: boolean;
+  resources: ILink[];
+  showEditModal: boolean;
+  showCreateModal: boolean;
+  editingResource: ILink;
+}
 
 @Component({
   selector: 'cp-personas-resource-list-of-list',
   templateUrl: './resource-list-of-list.component.html',
   styleUrls: ['./resource-list-of-list.component.scss']
 })
-export class PersonasResourceListOfListComponent implements OnInit {
+export class PersonasResourceListOfListComponent implements OnInit, AfterViewInit {
   @Input() persona: IPersona;
   @Input() selectedIds: Number[];
 
   @Output() resourceAdded: EventEmitter<any> = new EventEmitter();
+
+  @ViewChildren('tooltip') tooltips: QueryList<ElementRef>;
 
   links$;
   sortableOptions;
@@ -32,10 +55,12 @@ export class PersonasResourceListOfListComponent implements OnInit {
     link_url: 'oohlala://campus_link_list'
   };
 
-  state = {
+  state: IState = {
     loading: false,
     resources: [],
-    showModal: false
+    showEditModal: false,
+    showCreateModal: false,
+    editingResource: null
   };
 
   constructor(
@@ -43,18 +68,38 @@ export class PersonasResourceListOfListComponent implements OnInit {
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
     public service: ResourceService,
-    public tileService: TilesService
+    public tileService: TilesService,
+    public utils: ResourcesUtilsService
   ) {}
 
-  onShowModal() {
+  onCreateModal() {
     this.state = {
       ...this.state,
-      showModal: true
+      showCreateModal: true
     };
 
     setTimeout(
       () => {
         $('#resourceCreateModal').modal();
+      },
+
+      1
+    );
+  }
+
+  onEditModal(resource: ILink) {
+    if (this.utils.getType(this.persona, resource) === null) {
+      return;
+    }
+    this.state = {
+      ...this.state,
+      showEditModal: true,
+      editingResource: resource
+    };
+
+    setTimeout(
+      () => {
+        $('#resourceEditModal').modal();
       },
 
       1
@@ -75,9 +120,11 @@ export class PersonasResourceListOfListComponent implements OnInit {
   onTearDown() {
     this.state = {
       ...this.state,
-      showModal: false
+      showEditModal: false,
+      showCreateModal: false
     };
 
+    $('#resourceEditModal').modal('hide');
     $('#resourceCreateModal').modal('hide');
   }
 
@@ -85,6 +132,17 @@ export class PersonasResourceListOfListComponent implements OnInit {
     this.state = {
       ...this.state,
       resources: [newResource, ...this.state.resources]
+    };
+
+    this.udpateMetaAndEmit();
+  }
+
+  onEditedResource(editedResource: ILink) {
+    this.state = {
+      ...this.state,
+      resources: this.state.resources.map((res) => {
+        return res.id === editedResource.id ? editedResource : res;
+      })
     };
 
     this.udpateMetaAndEmit();
@@ -115,9 +173,14 @@ export class PersonasResourceListOfListComponent implements OnInit {
 
     stream$.subscribe(
       (resources: any) => {
-        const sortedResources = this.selectedIds.map(
-          (id) => resources.filter((r) => r.id === id)[0]
-        );
+        const sortedResources = this.selectedIds
+          .map((id) => resources.filter((r) => r.id === id)[0])
+          .map((r) => {
+            return {
+              ...r,
+              disabled: this.utils.getType(this.persona, r) === null
+            };
+          });
 
         this.state = {
           ...this.state,
@@ -140,6 +203,12 @@ export class PersonasResourceListOfListComponent implements OnInit {
 
   onDragged() {
     this.udpateMetaAndEmit();
+  }
+
+  ngAfterViewInit() {
+    this.tooltips.changes.subscribe((t: QueryList<ElementRef>) => {
+      t.forEach((r: ElementRef) => $(r.nativeElement).tooltip());
+    });
   }
 
   ngOnInit(): void {

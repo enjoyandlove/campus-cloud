@@ -17,8 +17,17 @@
       color: $color-med-grey;
     }
 
+    .name i {
+      top: 7px;
+      left: 3px;
+    }
+
     > div {
       line-height: 1;
+    }
+
+    span.disabled {
+      cursor: not-allowed;
     }
 
     &:not(:last-child) {
