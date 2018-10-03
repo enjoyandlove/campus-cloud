@@ -37,7 +37,7 @@
                     <div class="col-6">
                       <label>{{ 'select_category' | cpI18n }}
                         <cp-tooltip
-                          [toolTipContent]="category">
+                          [toolTipContent]="categoryTooltip">
                         </cp-tooltip>
                       </label>
                       <cp-dropdown
@@ -171,75 +171,13 @@
                     <div class="col-6">
                       <label>{{ 'services_label_enable_service_feedback' | cpI18n }}
                         <cp-tooltip
-                          [toolTipContent]="feedback">
+                          [toolTipContent]="feedbackTooltip">
                         </cp-tooltip>
                       </label>
                       <cp-dropdown [items]="serviceFeedback"></cp-dropdown>
                     </div>
                   </div>
                 </fieldset>
-                <div formArrayName="providers" class="providers-list">
-                  <div
-                    class="row form-box"
-                    *ngFor="let provider of form.controls.providers.controls; let i=index">
-                    <div [formGroupName]="i" class="col-12">
-                      <div class="cp-card cp-card--alt cp-card--half-padding cp-card--no-shadow">
-                        <div class="delete-provider">
-                          <button
-                            (click)="delteProviderControl(i)"
-                            class="cpbtn cpbtn--link-dark">
-                            &times;
-                          </button>
-                        </div>
-                        <div class="row form-group">
-                          <div class="col-6">
-                            <label>{{ 'name' | cpI18n }}</label>
-                            <input
-                              type="text"
-                              formControlName="provider_name"
-                              [class.error]="formError && form.controls.service_attendance.value && provider.controls['provider_name'].hasError('required')">
-                          </div>
-                          <div class="col-6">
-                            <label>{{ 'email' | cpI18n }}</label>
-                            <input
-                              type="email"
-                              formControlName="email"
-                              [class.error]="formError && form.controls.service_attendance.value && provider.controls['email'].hasError('required')">
-                          </div>
-                        </div>
-  
-                        <div class="row form-group" *ngIf="hasFeedback">
-                          <div class="col-12">
-                            <label>{{ 'services_label_default_question' | cpI18n }}</label>
-                            <input
-                              type="text"
-                              formControlName="custom_basic_feedback_label"
-                              [class.error]="formError && form.controls.service_attendance.value && provider.controls['custom_basic_feedback_label'].hasError('required')">
-                          </div>
-                        </div>
-
-                        <div class="row form-group">
-                          <div class="col-6">
-                            <label>{{ 't_services_attendance_type' | cpI18n }}</label>
-                            <cp-dropdown
-                              [items]="attendanceTypes"
-                              [selectedItem]="selectedAttendanceType[i]"
-                              (selected)="onSelectedAttendanceType($event.action, i)">
-                            </cp-dropdown>
-                          </div>
-                          <div class="col-6">
-                            <label>{{ 't_services_service_qr_enabled' | cpI18n }}</label>
-                            <cp-dropdown
-                              [items]="serviceQRCodes"
-                              [selectedItem]="selectedQRCode[i]"
-                              (selected)="onSelectedQRCode($event.action, i)">
-                            </cp-dropdown>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
               </ng-container>
             </div>
           </div>
@@ -271,11 +209,5 @@
         </div>
       </div>
     </div>
-
-    <cp-modal modalId="serviceEditDeleteModal">
-      <cp-service-edit-delete-modal
-        [item]="deletedItem"
-        (confirmed)="onDelete($event)"></cp-service-edit-delete-modal>
-    </cp-modal>
   </div>
 </div>
