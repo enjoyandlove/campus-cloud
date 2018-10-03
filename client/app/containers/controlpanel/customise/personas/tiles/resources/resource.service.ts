@@ -32,4 +32,10 @@ export class ResourceService extends HTTPService {
 
     return super.post(url, body, null, true);
   }
+
+  updateCampusLink(linkId, body) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${linkId}`;
+
+    return super.update(url, body, null, true);
+  }
 }

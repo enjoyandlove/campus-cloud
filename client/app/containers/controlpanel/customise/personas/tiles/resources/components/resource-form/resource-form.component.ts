@@ -3,6 +3,7 @@ import { FormGroup, Validators } from '@angular/forms';
 
 import { ITile } from './../../../tile.interface';
 import { IPersona } from './../../../../persona.interface';
+import { ILink } from '../../../../../../manage/links/link.interface';
 import { ResourcesUtilsService } from './../../resources.utils.service';
 import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
 
@@ -16,12 +17,14 @@ export class PersonasResourceFormComponent implements OnInit {
   @Input() editView = false;
   @Input() persona: IPersona;
   @Input() tile: ITile = null;
+  @Input() resource: ILink;
   @Input() hideTypeSelector = false;
 
   @Output() formChange: EventEmitter<FormGroup> = new EventEmitter();
 
   contentTypes;
   selectedItem = null;
+  selectedResource = null;
 
   state = {
     resource: false,
@@ -100,6 +103,10 @@ export class PersonasResourceFormComponent implements OnInit {
     this.form.valueChanges.subscribe(() => {
       this.formChange.emit(this.form);
     });
+
+    if (this.resource) {
+      this.selectedResource = this.utils.getType(this.persona, this.resource);
+    }
 
     if (this.hideTypeSelector) {
       this.state = {

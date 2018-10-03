@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
 import { sortBy } from 'lodash';
 
 import { ITile } from './../../../tile.interface';
 import { IPersona } from './../../../../persona.interface';
 import { TilesUtilsService } from './../../../tiles.utils.service';
 import { ResourcesUtilsService } from '../../resources.utils.service';
-import { PersonasLoginRequired } from './../../../../personas.status';
+import { PersonasLoginRequired, PersonasType } from './../../../../personas.status';
 import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
-import { PersonaType } from './../../../../../../assess/engagement/engagement.status';
 
 @Component({
   selector: 'cp-personas-resource-types',
@@ -19,13 +19,13 @@ export class PersonasResourceTypesComponent implements OnInit {
   @Input() editView;
   @Input() tile: ITile;
   @Input() persona: IPersona;
+  @Input() resourceSelection = null;
 
   @Output() selected: EventEmitter<any> = new EventEmitter();
   @Output() linkUrl: EventEmitter<string> = new EventEmitter();
 
   resources;
   selectedItem = null;
-  resourceSelection = null;
 
   textInputComponent = ['web_link', 'external_link'];
 
@@ -63,7 +63,7 @@ export class PersonasResourceTypesComponent implements OnInit {
       this.resources = this.resources.filter((r) => (r.id ? !r.login_required : r));
     }
 
-    if (this.persona.platform === PersonaType.web) {
+    if (this.persona.platform === PersonasType.web) {
       const webOrExternalLink = (r) => !('link_url' in r.meta);
       const isResourceSupportedByWebApp = (r) =>
         this.utils.isResourceSupportedByWebApp(r.meta.link_url);
@@ -107,5 +107,8 @@ export class PersonasResourceTypesComponent implements OnInit {
 
   ngOnInit(): void {
     this.populateDropdowns();
+    if (this.resourceSelection) {
+      this.updateResourceType();
+    }
   }
 }

@@ -4,15 +4,17 @@ import { FormGroup } from '@angular/forms';
 import { IPersona } from './../../../persona.interface';
 import { ResourceService } from './../resource.service';
 import { TilesUtilsService } from './../../tiles.utils.service';
+import { ILink } from '../../../../../manage/links/link.interface';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 @Component({
-  selector: 'cp-personas-resource-create',
-  templateUrl: './create.component.html',
-  styleUrls: ['./create.component.scss']
+  selector: 'cp-personas-resource-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.component.scss']
 })
-export class PersonaResourceCreateComponent implements OnInit {
+export class PersonaResourceEditComponent implements OnInit {
   @Input() persona: IPersona;
+  @Input() resource: ILink;
 
   @Output() error: EventEmitter<any> = new EventEmitter();
   @Output() success: EventEmitter<any> = new EventEmitter();
@@ -37,9 +39,12 @@ export class PersonaResourceCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    const post$ = this.resourceService.createCampusLink(this.campusLinkForm.value);
+    const update$ = this.resourceService.updateCampusLink(
+      this.resource.id,
+      this.campusLinkForm.value
+    );
 
-    post$.subscribe(
+    update$.subscribe(
       (createdTile) => {
         this.success.emit(createdTile);
         this.teardown.emit();
@@ -55,7 +60,7 @@ export class PersonaResourceCreateComponent implements OnInit {
       text: this.cpI18n.translate('t_shared_save')
     };
 
-    this.campusLinkForm = this.tileUtils.campusLinkForm();
+    this.campusLinkForm = this.tileUtils.campusLinkForm(true, true, this.resource);
     this.campusLinkForm.valueChanges.subscribe(() => {
       this.buttonData = {
         ...this.buttonData,
