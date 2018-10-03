@@ -201,11 +201,6 @@ export class EventsCreateComponent implements OnInit {
     this.form.controls['event_feedback'].setValue(value);
     this.form.controls['event_attendance'].setValue(value);
     this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
-
-    if (!value) {
-      const controls = ['event_manager_id', 'custom_basic_feedback_label'];
-      this.utils.clearValidators(this.form, controls);
-    }
   }
 
   onResetMap() {
@@ -265,7 +260,6 @@ export class EventsCreateComponent implements OnInit {
     this.formError = false;
     this.isDateError = false;
     this.clearDateErrors();
-    this.utils.customValidator(this.form);
 
     if (!this.form.valid) {
       this.formError = true;
@@ -361,10 +355,6 @@ export class EventsCreateComponent implements OnInit {
 
     this.form.controls['event_feedback'].setValue(option.action);
     this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
-
-    if (!option.action) {
-      this.utils.clearValidators(this.form, ['custom_basic_feedback_label']);
-    }
   }
 
   toggleDatePickerTime(checked) {
@@ -480,32 +470,35 @@ export class EventsCreateComponent implements OnInit {
     this.attendanceFeedback = this.utils.getAttendanceFeedback();
     const defaultFeedbackQuestion = this.cpI18n.translate('t_events_default_feedback_question');
 
-    this.form = this.fb.group({
-      city: [null],
-      latitude: [0],
-      longitude: [0],
-      country: [null],
-      address: [null],
-      location: [null],
-      province: [null],
-      room_data: [null],
-      postal_code: [null],
-      description: [null],
-      event_manager_id: [null],
-      is_all_day: [isAllDay.disabled],
-      end: [null, Validators.required],
-      attendance_manager_email: [null],
-      start: [null, Validators.required],
-      title: [null, Validators.required],
-      poster_url: [null, Validators.required],
-      event_feedback: [EventFeedback.enabled],
-      has_checkout: [attendanceType.checkInOnly],
-      event_attendance: [EventAttendance.disabled],
-      poster_thumb_url: [null, Validators.required],
-      custom_basic_feedback_label: [defaultFeedbackQuestion],
-      store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
-      attend_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
-    });
+    this.form = this.fb.group(
+      {
+        city: [null],
+        latitude: [0],
+        longitude: [0],
+        country: [null],
+        address: [null],
+        location: [null],
+        province: [null],
+        room_data: [null],
+        postal_code: [null],
+        description: [null],
+        event_manager_id: [null],
+        is_all_day: [isAllDay.disabled],
+        end: [null, Validators.required],
+        attendance_manager_email: [null],
+        start: [null, Validators.required],
+        title: [null, Validators.required],
+        poster_url: [null, Validators.required],
+        event_feedback: [EventFeedback.enabled],
+        has_checkout: [attendanceType.checkInOnly],
+        event_attendance: [EventAttendance.disabled],
+        poster_thumb_url: [null, Validators.required],
+        custom_basic_feedback_label: [defaultFeedbackQuestion],
+        store_id: [store_id ? store_id : null, !this.isOrientation ? Validators.required : null],
+        attend_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
+      },
+      { validator: this.utils.assessmentEnableCustomValidator }
+    );
 
     const _self = this;
 

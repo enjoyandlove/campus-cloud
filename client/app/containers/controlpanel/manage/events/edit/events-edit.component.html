@@ -200,7 +200,7 @@
                       [items]="managers"
                       [selectedItem]="selectedManager"
                       (selected)="onSelectedManager($event)"
-                      [isRequiredError]="formMissingFields && form.controls['event_manager_id'].hasError('required')">
+                      [isRequiredError]="formMissingFields && form.errors ? form.errors['eventManagerRequired'] : null">
                     </cp-dropdown>
                   </div>
                 </div>
@@ -242,7 +242,7 @@
                     type="text"
                     class="form-control"
                     formControlName="custom_basic_feedback_label"
-                    [class.error]="formMissingFields && form.controls['custom_basic_feedback_label'].hasError('required')">
+                    [class.error]="formMissingFields && form.errors ? form.errors['feedbackLabelRequired'] : null">
                 </div>
               </div>
             </div>

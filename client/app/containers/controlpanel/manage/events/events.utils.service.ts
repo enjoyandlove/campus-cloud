@@ -1,6 +1,6 @@
 import IEvent from './event.interface';
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, ValidationErrors } from '@angular/forms';
 
 import { CPSession } from '../../../../session';
 import { Formats } from '../../../../shared/utils/csv';
@@ -204,29 +204,27 @@ export class EventUtilService {
     return assessment === EventAttendance.enabled ? Assessment.on : Assessment.off;
   }
 
-  customValidator(form: FormGroup) {
-    const managerId = form.controls['event_manager_id'];
-    const eventAttendance = form.controls['event_attendance'].value;
-    const feedbackLabel = form.controls['custom_basic_feedback_label'];
+  assessmentEnableCustomValidator(controls: FormGroup): ValidationErrors | null {
+    const managerId = controls.get('event_manager_id').value;
+    const eventFeedback = controls.get('event_feedback').value;
+    const eventAttendance = controls.get('event_attendance').value;
+    const feedbackLabel = controls.get('custom_basic_feedback_label').value;
+
+    const errors = {};
 
     if (eventAttendance === EventAttendance.enabled) {
-      if (!managerId.value) {
-        managerId.setErrors({ required: true });
+      if (!managerId) {
+        errors['eventManagerRequired'] = true;
       }
 
-      if (!feedbackLabel.value && form.controls['event_feedback'].value) {
-        feedbackLabel.setErrors({required: true});
+      if (!feedbackLabel && eventFeedback) {
+        errors['feedbackLabelRequired'] = true;
       }
-    }
-  }
 
-  clearValidators(form: FormGroup, keys: string[]) {
-    if (keys) {
-      keys.map((key: string) => {
-        form.controls[key].clearValidators();
-        form.controls[key].updateValueAndValidity();
-      });
+      return errors;
     }
+
+    return null;
   }
 
   setEventProperties(data) {

@@ -133,7 +133,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.clearDateErrors();
     this.isDateError = false;
     this.formMissingFields = false;
-    this.utils.customValidator(this.form);
 
     if (!this.form.valid) {
       this.enableSaveButton();
@@ -219,33 +218,36 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       ? res.custom_basic_feedback_label
       : this.cpI18n.translate('t_events_default_feedback_question');
 
-    this.form = this.fb.group({
-      city: [res.city],
-      country: [res.country],
-      address: [res.address],
-      latitude: [res.latitude],
-      location: [res.location],
-      province: [res.province],
-      room_data: [res.room_data],
-      longitude: [res.longitude],
-      is_all_day: [res.is_all_day],
-      description: [res.description],
-      postal_code: [res.postal_code],
-      has_checkout: [res.has_checkout],
-      end: [res.end, Validators.required],
-      event_feedback: [res.event_feedback],
-      title: [res.title, Validators.required],
-      start: [res.start, Validators.required],
-      event_attendance: [res.event_attendance],
-      event_manager_id: [res.event_manager_id],
-      poster_url: [poster_url, Validators.required],
-      custom_basic_feedback_label: [feedbackQuestion],
-      poster_thumb_url: [thumb_url, Validators.required],
-      attendance_manager_email: [res.attendance_manager_email],
-      attend_verification_methods: [res.attend_verification_methods],
-      store_id: [res.store_id, !this.isOrientation ? Validators.required : null],
-      calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null]
-    });
+    this.form = this.fb.group(
+      {
+        city: [res.city],
+        country: [res.country],
+        address: [res.address],
+        latitude: [res.latitude],
+        location: [res.location],
+        province: [res.province],
+        room_data: [res.room_data],
+        longitude: [res.longitude],
+        is_all_day: [res.is_all_day],
+        description: [res.description],
+        postal_code: [res.postal_code],
+        has_checkout: [res.has_checkout],
+        end: [res.end, Validators.required],
+        event_feedback: [res.event_feedback],
+        title: [res.title, Validators.required],
+        start: [res.start, Validators.required],
+        event_attendance: [res.event_attendance],
+        event_manager_id: [res.event_manager_id],
+        poster_url: [poster_url, Validators.required],
+        custom_basic_feedback_label: [feedbackQuestion],
+        poster_thumb_url: [thumb_url, Validators.required],
+        attendance_manager_email: [res.attendance_manager_email],
+        attend_verification_methods: [res.attend_verification_methods],
+        store_id: [res.store_id, !this.isOrientation ? Validators.required : null],
+        calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null]
+      },
+      { validator: this.utils.assessmentEnableCustomValidator }
+    );
 
     this.updateDatePicker();
     this.fetchManagersBySelectedStore(res.store_id);
@@ -460,11 +462,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
     this.form.controls['attend_verification_methods']
       .setValue([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
-
-    if (!value) {
-      const controls = ['event_manager_id', 'custom_basic_feedback_label'];
-      this.utils.clearValidators(this.form, controls);
-    }
   }
 
   onResetMap() {
@@ -527,9 +524,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.form.controls['event_feedback'].setValue(option.action);
     this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
 
-    if (!option.action) {
-      this.utils.clearValidators(this.form, ['custom_basic_feedback_label']);
-    }
   }
 
   onLocationToggle(value) {

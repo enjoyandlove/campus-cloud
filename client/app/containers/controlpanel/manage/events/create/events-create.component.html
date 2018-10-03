@@ -187,7 +187,7 @@
                   <cp-dropdown
                     [items]="managers"
                     (selected)="onSelectedManager($event)"
-                    [isRequiredError]="formError && form.controls['event_manager_id'].hasError('required')">
+                    [isRequiredError]="formError && form.errors ? form.errors['eventManagerRequired'] : null">
                   </cp-dropdown>
                 </div>
               </div>
@@ -230,7 +230,7 @@
                   type="text"
                   class="form-control"
                   formControlName="custom_basic_feedback_label"
-                  [class.error]="formError && form.controls['custom_basic_feedback_label'].hasError('required')">
+                  [class.error]="formError && form.errors ? form.errors['feedbackLabelRequired'] : null">
               </div>
             </div>
           </div>
