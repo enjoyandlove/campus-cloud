@@ -2,8 +2,8 @@ import {
   Input,
   OnInit,
   Directive,
+  ElementRef,
   HostListener,
-  ViewContainerRef,
   ComponentFactoryResolver
 } from '@angular/core';
 
@@ -20,9 +20,12 @@ export class CPLightboxDirective implements OnInit {
   @Input() selectedImageIndex: number;
 
   constructor(
-    public viewContainerRef: ViewContainerRef,
+    public elementRef: ElementRef,
     private componentFactoryResolver: ComponentFactoryResolver
-  ) {}
+  ) {
+    this.elementRef.nativeElement.style.cursor = 'pointer';
+    this.elementRef.nativeElement.style.transition = '0.5s';
+  }
 
   @HostListener('click')
   openLightbox() {
@@ -38,6 +41,16 @@ export class CPLightboxDirective implements OnInit {
     component.lightboxId = this.cpLightbox;
     component.index = this.selectedImageIndex;
     component.lightboxClose.subscribe(() => componentRef.destroy());
+  }
+
+  @HostListener('mouseover')
+  showFeedback() {
+    this.elementRef.nativeElement.style.opacity = 0.5;
+  }
+
+  @HostListener('mouseleave')
+  hideFeedback() {
+    this.elementRef.nativeElement.style.opacity = 1;
   }
 
   ngOnInit() {}

@@ -111,7 +111,7 @@ export class AssessUtilsService {
           [this.cpI18n.translate('t_assess_time_spent')]:
             hasCheckOutTimeSpent ?
               CPDate.getTimeDuration(timeSpentSeconds)
-                .format(Formats.timeDurationFormat, {trim: false}) : '',
+                .format(Formats.timeDurationFormat, {trim: false, useGrouping: false}) : '',
 
           [this.cpI18n.translate('t_assess_time_spent_seconds')]:
             hasCheckOutTimeSpent ? timeSpentSeconds : '',

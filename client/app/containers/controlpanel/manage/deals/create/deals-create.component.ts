@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 
 import { DealsService } from '../deals.service';
 import { CPSession } from '../../../../../session';
-import { dealOngoingValidator } from '../deals.utils';
+import { dealDateValidator } from '../deals.utils';
 import { DealsStoreService } from '../stores/store.service';
 import { CPI18nService } from '../../../../../shared/services';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
@@ -129,7 +129,7 @@ export class DealsCreateComponent implements OnInit {
         expiration: [null],
         ongoing: [false]
       },
-      { validator: dealOngoingValidator }
+      { validator: dealDateValidator(this.session.tz) }
     );
   }
 
