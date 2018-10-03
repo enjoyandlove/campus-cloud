@@ -87,7 +87,7 @@ describe('ServicesProviderAddComponent', () => {
     expect(component.created.emit).toHaveBeenCalledWith(mockProvider);
   });
 
-  it('onSelectedAttendanceType', () => {
+/*  it('onSelectedAttendanceType', () => {
     component.onSelectedAttendanceType(false);
 
     expect(component.form.controls['has_checkout'].value).toBe(false);
@@ -111,5 +111,5 @@ describe('ServicesProviderAddComponent', () => {
     verificationMethods = component.form.controls['checkin_verification_methods'].value;
 
     expect(verificationMethods).toEqual([1, 2, 3]);
-  });
+  });*/
 });

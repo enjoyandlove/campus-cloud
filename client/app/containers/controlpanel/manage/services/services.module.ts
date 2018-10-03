@@ -40,6 +40,8 @@ import {
 
 import {
   ServicesProviderAddComponent,
+  ServiceProvidersEditComponent,
+  ServicesProvidersFormComponent,
   ServicesProviderStatsComponent,
   ServicesProvidersListComponent,
   ServicesProviderDeleteComponent,
@@ -82,6 +84,8 @@ import { CheckInModule } from '../events/attendance/check-in/check-in.module';
     ServicesEventsInfoComponent,
     ServicesEventsEditComponent,
     ServicesEventsExcelComponent,
+    ServiceProvidersEditComponent,
+    ServicesProvidersFormComponent,
     ServicesProvidersAttendeesStatsComponent,
     ServicesProvidersAttendeesActionBoxComponent,
     ServicesProvidersCheckInCreateComponent,

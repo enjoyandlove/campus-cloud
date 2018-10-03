@@ -9,6 +9,7 @@ import { amplitudeEvents } from '../../../../../../../shared/constants/analytics
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { CPTrackingService } from './../../../../../../../shared/services/tracking.service';
 import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
+import IServiceProvider from '../../../providers.interface';
 
 interface IState {
   search_text: string;
@@ -40,7 +41,9 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   eventProperties;
   deleteProvider = '';
   state: IState = state;
+  provider: IServiceProvider;
   displayRatingColumn = true;
+  showEditProviderModal = false;
 
   constructor(
     private cpI18n: CPI18nService,
@@ -92,6 +95,23 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     });
 
     this.hasProviders.emit(this.state.providers.length > 0);
+  }
+
+  showEditModal(provider: IServiceProvider) {
+    this.provider = provider;
+    this.showEditProviderModal = true;
+
+    setTimeout(
+      () => {
+        $('#editProvider').modal();
+      },
+
+      1
+    );
+  }
+
+  onEdited() {
+
   }
 
   trackDownloadEvent() {
