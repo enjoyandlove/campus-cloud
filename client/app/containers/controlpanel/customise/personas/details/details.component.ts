@@ -89,6 +89,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     this.setGuideDisabledStatus(true);
 
     this.state.guides.splice(nextGuideIndex, 0, newGuide);
+    this.state.guides = this.state.guides.map(
+      (guide, index) => (index > nextGuideIndex ? { ...guide, rank: guide.rank + 1 } : guide)
+    );
   }
 
   onSetSectionName({ guideId, body }) {
@@ -311,7 +314,25 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     const { name, rank } = this.state.guides.filter((g: ICampusGuide) => g._temporary)[0];
     const body = { school_id, name, rank, tiles: [] };
 
-    return this.sectionService.createSectionTileCategory(body).toPromise();
+    let updateCategories = [];
+    this.state.guides
+      .filter((guide: ICampusGuide) => guide.rank > rank)
+      .forEach((guide: ICampusGuide) => {
+        updateCategories = [
+          ...updateCategories,
+          this.service
+            .updateSectionTileCategory(guide.id, {
+              school_id: this.session.g.get('school').id,
+              rank: guide.rank
+            })
+            .toPromise()
+        ];
+      });
+
+    return Promise.all([
+      this.sectionService.createSectionTileCategory(body).toPromise(),
+      ...updateCategories
+    ]);
   }
 
   async onTileMoved({ tile, section }) {
@@ -339,7 +360,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       let _category;
 
       try {
-        _category = await this.createNewCategory();
+        _category = (await this.createNewCategory())[0];
       } catch (error) {
         return this.zone.run(() => this.errorHandler(error));
       }
