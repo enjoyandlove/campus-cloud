@@ -1,8 +1,7 @@
-import { SectionsService } from './../sections/sections.service';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { map, switchMap, finalize } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, switchMap } from 'rxjs/operators';
 import { flatten, get as _get } from 'lodash';
 import { combineLatest } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -11,6 +10,7 @@ import { IPersona } from './../persona.interface';
 import { ITile } from './../tiles/tile.interface';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
+import { SectionsService } from './../sections/sections.service';
 import {
   ISnackbar,
   SNACKBAR_HIDE,
@@ -96,27 +96,33 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
   onSetSectionName({ guideId, body }) {
     this.setGuideDisabledStatus(true);
-
-    this.service.updateSectionTileCategory(guideId, body).subscribe(
-      (guide: ICampusGuide) => {
-        this.setGuideDisabledStatus(false);
-        this.state = {
-          ...this.state,
-          guides: this.state.guides.map((g) => {
-            return g.id === guide.id
-              ? {
-                  ...g,
-                  name: guide.name
-                }
-              : g;
-          })
-        };
-      },
-      (err) => {
-        this.errorHandler(err);
-        this.setGuideDisabledStatus(false);
-      }
-    );
+    this.setLoadingStatus(true);
+    this.service
+      .updateSectionTileCategory(guideId, body)
+      .pipe(
+        finalize(() => {
+          this.setGuideDisabledStatus(false);
+          this.setLoadingStatus(false);
+        })
+      )
+      .subscribe(
+        (guide: ICampusGuide) => {
+          this.state = {
+            ...this.state,
+            guides: this.state.guides.map((g) => {
+              return g.id === guide.id
+                ? {
+                    ...g,
+                    name: guide.name
+                  }
+                : g;
+            })
+          };
+        },
+        (err) => {
+          this.errorHandler(err);
+        }
+      );
   }
 
   onRemoveSection(g: ICampusGuide) {
@@ -139,6 +145,22 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         };
       })
     };
+  }
+
+  setLoadingStatus(status) {
+    this.store.dispatch(
+      status
+        ? {
+            type: SNACKBAR_SHOW,
+            payload: {
+              sticky: true,
+              autoClose: false,
+              class: 'info',
+              body: this.cpI18n.translate('t_saving')
+            }
+          }
+        : { type: SNACKBAR_HIDE }
+    );
   }
 
   nonFeaturedTileToFeatureSection(movingTile: ITile, newCategory: ICampusGuide) {
