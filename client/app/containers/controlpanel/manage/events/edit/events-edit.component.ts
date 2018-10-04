@@ -76,6 +76,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   eventFeedbackEnabled;
   production = isProd;
   selectedAttendanceType;
+  attendanceFeedbackLabel;
   formMissingFields = false;
   showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
@@ -212,11 +213,12 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   public buildForm(res) {
-    const poster_url = res.poster_url ? res.poster_url : res.store_logo_url;
-    const thumb_url = res.poster_thumb_url ? res.poster_thumb_url : res.store_logo_url;
-    const feedbackQuestion = res.custom_basic_feedback_label
+    this.attendanceFeedbackLabel = res.custom_basic_feedback_label
       ? res.custom_basic_feedback_label
       : this.cpI18n.translate('t_events_default_feedback_question');
+
+    const poster_url = res.poster_url ? res.poster_url : res.store_logo_url;
+    const thumb_url = res.poster_thumb_url ? res.poster_thumb_url : res.store_logo_url;
 
     this.form = this.fb.group(
       {
@@ -239,9 +241,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
         event_attendance: [res.event_attendance],
         event_manager_id: [res.event_manager_id],
         poster_url: [poster_url, Validators.required],
-        custom_basic_feedback_label: [feedbackQuestion],
         poster_thumb_url: [thumb_url, Validators.required],
         attendance_manager_email: [res.attendance_manager_email],
+        custom_basic_feedback_label: [res.custom_basic_feedback_label],
         attend_verification_methods: [res.attend_verification_methods],
         store_id: [res.store_id, !this.isOrientation ? Validators.required : null],
         calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null]
@@ -451,9 +453,18 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     return arr.filter((item) => item[key] === val)[0];
   }
 
+  enableStudentFeedbackOnAttendanceToggle(value) {
+    const attendanceLabel = value ? this.attendanceFeedbackLabel : '';
+
+    this.form.controls['event_feedback'].setValue(value);
+    this.form.controls['custom_basic_feedback_label'].setValue(attendanceLabel);
+    this.originalAttnFeedback = this.getFromArray(this.attendanceFeedback, 'action', value);
+  }
+
   toggleEventAttendance(value) {
     value = value ? EventAttendance.enabled : EventAttendance.disabled;
 
+    this.enableStudentFeedbackOnAttendanceToggle(value);
     this.form.controls['event_attendance'].setValue(value);
     this.form.controls['attend_verification_methods']
       .setValue([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
