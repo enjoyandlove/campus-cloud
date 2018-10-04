@@ -1,0 +1,34 @@
+<form [formGroup]="form">
+  <div class="row form-group">
+      <div class="col-12">
+        <cp-image-upload
+          id="resource_image_upload_button"
+          (uploaded)="onUploadedImage($event)"
+          [description]="tileImageRequirements"
+          [validationFn]="validateTileImage.bind(this)"
+          [defaultImage]="defaultImg">
+        </cp-image-upload>
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <div class="col-12">
+        <label for="resourceName">{{ 'name' | cpI18n }}</label>
+        <input
+          type="text"
+          id="resourceName"
+          class="form-control"
+          formControlName="name">
+      </div>
+    </div>
+</form>
+<div class="row">
+  <div class="col-12">
+    <cp-personas-resource-form
+      [form]="form"
+      [persona]="persona"
+      [resource]="resource"
+      [hideTypeSelector]="[true]">
+    </cp-personas-resource-form>
+  </div>
+</div>
