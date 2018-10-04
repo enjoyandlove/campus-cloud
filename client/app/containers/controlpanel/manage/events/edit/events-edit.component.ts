@@ -76,6 +76,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   eventFeedbackEnabled;
   production = isProd;
   selectedAttendanceType;
+  attendanceFeedbackLabel;
   formMissingFields = false;
   showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
@@ -130,36 +131,13 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onSubmit(data) {
+    this.clearDateErrors();
     this.isDateError = false;
     this.formMissingFields = false;
 
-    if (this.form.controls['event_attendance'].value === 1) {
-      const managerId = this.form.controls['event_manager_id'];
-      const eventFeedback = this.form.controls['event_feedback'];
-
-      if (managerId.value === null) {
-        this.formMissingFields = true;
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
-        });
-        managerId.setErrors({ required: true });
-      }
-
-      if (eventFeedback.value === null) {
-        this.formMissingFields = true;
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
-        });
-        eventFeedback.setErrors({ required: true });
-      }
-    }
-
     if (!this.form.valid) {
-      if (!this.form.controls['poster_url'].valid) {
-        this.form.controls['poster_url'].setErrors({ required: true });
-      }
+      this.enableSaveButton();
       this.formMissingFields = true;
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
     }
@@ -169,23 +147,21 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     }
 
     if (this.form.controls['end'].value <= this.form.controls['start'].value) {
+      this.enableSaveButton();
       this.isDateError = true;
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ required: true });
-      this.form.controls['start'].setErrors({ required: true });
       this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_before_start');
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
     }
 
     if (this.form.controls['end'].value <= CPDate.now(this.session.tz).unix()) {
+      this.enableSaveButton();
       this.isDateError = true;
       this.formMissingFields = true;
       this.form.controls['end'].setErrors({ required: true });
-      this.form.controls['start'].setErrors({ required: true });
       this.dateErrorMessage = this.cpI18n.translate('events_error_end_date_after_now');
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
       return;
     }
@@ -214,44 +190,66 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
       },
       (_) => {
         this.serverError = true;
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
-        });
+        this.enableSaveButton();
       }
     );
   }
 
+  enableSaveButton() {
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: false
+    };
+  }
+
+  clearDateErrors() {
+    if (this.form.controls['start'].value) {
+      this.form.controls['start'].setErrors(null);
+    }
+
+    if (this.form.controls['end'].value) {
+      this.form.controls['end'].setErrors(null);
+    }
+  }
+
   public buildForm(res) {
+    this.attendanceFeedbackLabel = res.custom_basic_feedback_label
+      ? res.custom_basic_feedback_label
+      : this.cpI18n.translate('t_events_default_feedback_question');
+
     const poster_url = res.poster_url ? res.poster_url : res.store_logo_url;
     const thumb_url = res.poster_thumb_url ? res.poster_thumb_url : res.store_logo_url;
 
-    this.form = this.fb.group({
-      title: [res.title, Validators.required],
-      store_id: [res.store_id, !this.isOrientation ? Validators.required : null],
-      calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null],
-      location: [res.location],
-      room_data: [res.room_data],
-      city: [res.city],
-      province: [res.province],
-      country: [res.country],
-      address: [res.address],
-      postal_code: [res.postal_code],
-      latitude: [res.latitude],
-      longitude: [res.longitude],
-      has_checkout: [res.has_checkout],
-      event_attendance: [res.event_attendance],
-      start: [res.start, Validators.required],
-      end: [res.end, Validators.required],
-      poster_url: [poster_url, Validators.required],
-      poster_thumb_url: [thumb_url, Validators.required],
-      description: [res.description],
-      event_feedback: [res.event_feedback],
-      event_manager_id: [res.event_manager_id],
-      attendance_manager_email: [res.attendance_manager_email],
-      custom_basic_feedback_label: [res.custom_basic_feedback_label],
-      attend_verification_methods: [res.attend_verification_methods],
-      is_all_day: [res.is_all_day]
-    });
+    this.form = this.fb.group(
+      {
+        city: [res.city],
+        country: [res.country],
+        address: [res.address],
+        latitude: [res.latitude],
+        location: [res.location],
+        province: [res.province],
+        room_data: [res.room_data],
+        longitude: [res.longitude],
+        is_all_day: [res.is_all_day],
+        description: [res.description],
+        postal_code: [res.postal_code],
+        has_checkout: [res.has_checkout],
+        end: [res.end, Validators.required],
+        event_feedback: [res.event_feedback],
+        title: [res.title, Validators.required],
+        start: [res.start, Validators.required],
+        event_attendance: [res.event_attendance],
+        event_manager_id: [res.event_manager_id],
+        poster_url: [poster_url, Validators.required],
+        poster_thumb_url: [thumb_url, Validators.required],
+        attendance_manager_email: [res.attendance_manager_email],
+        custom_basic_feedback_label: [res.custom_basic_feedback_label],
+        attend_verification_methods: [res.attend_verification_methods],
+        store_id: [res.store_id, !this.isOrientation ? Validators.required : null],
+        calendar_id: [this.orientationId, this.isOrientation ? Validators.required : null]
+      },
+      { validator: this.utils.assessmentEnableCustomValidator }
+    );
 
     this.updateDatePicker();
     this.fetchManagersBySelectedStore(res.store_id);
@@ -456,7 +454,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   enableStudentFeedbackOnAttendanceToggle(value) {
+    const attendanceLabel = value ? this.attendanceFeedbackLabel : '';
+
     this.form.controls['event_feedback'].setValue(value);
+    this.form.controls['custom_basic_feedback_label'].setValue(attendanceLabel);
     this.originalAttnFeedback = this.getFromArray(this.attendanceFeedback, 'action', value);
   }
 
@@ -464,17 +465,9 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     value = value ? EventAttendance.enabled : EventAttendance.disabled;
 
     this.enableStudentFeedbackOnAttendanceToggle(value);
-
     this.form.controls['event_attendance'].setValue(value);
-
     this.form.controls['attend_verification_methods']
       .setValue([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
-
-    if (!value) {
-      const eventManager = this.form.controls['event_manager_id'];
-      eventManager.clearValidators();
-      eventManager.updateValueAndValidity();
-    }
   }
 
   onResetMap() {
@@ -531,7 +524,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onEventFeedbackChange(option) {
+    const feedbackQuestion = !option.action ? ''
+      : this.cpI18n.translate('t_events_default_feedback_question');
+
     this.form.controls['event_feedback'].setValue(option.action);
+    this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
   }
 
   onLocationToggle(value) {
