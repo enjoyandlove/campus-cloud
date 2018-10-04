@@ -10,7 +10,7 @@
 
 <div class="row form-group" *ngIf="resourceSelection === 'store_list'">
   <div class="col-12">
-    <label>{{ t_personas_tile_create_label_store_list }}</label>
+    <label>{{ 't_personas_tile_modal_create_label_type' | cpI18n }}</label>
     <cp-personas-resource-stores-list
       (storeListChange)="selected.emit($event)"
       [category]="resource.link_params.category_ids">
