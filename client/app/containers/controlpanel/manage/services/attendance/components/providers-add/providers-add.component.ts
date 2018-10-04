@@ -119,10 +119,7 @@ export class ServicesProviderAddComponent implements OnInit {
   }
 
   ngOnInit() {
-    const defaultQuestion = this.cpI18n.translate('t_events_default_feedback_question');
-
     this.form = this.utils.getProviderForm(null);
-    this.form.controls['custom_basic_feedback_label'].setValue(defaultQuestion);
 
     this.buttonData = {
       class: 'primary',

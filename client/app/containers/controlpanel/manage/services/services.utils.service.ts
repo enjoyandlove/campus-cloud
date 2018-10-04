@@ -74,22 +74,27 @@ export class ServicesUtilsService {
   }
 
   getProviderForm(formData: IServiceProvider) {
-    const feedbackLabel = formData ? formData.custom_basic_feedback_label : null;
     const verificationMethods = formData
       ? formData.checkin_verification_methods
       : [CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app];
 
     return this.fb.group(
       {
-        custom_basic_feedback_label: [feedbackLabel],
         checkin_verification_methods: [verificationMethods],
         email: [formData ? formData.email : null, Validators.required],
+        custom_basic_feedback_label: [this.getCustomFeedbackLabel(formData)],
         has_feedback: [formData ? formData.has_feedback : serviceFeedback.enabled],
         has_checkout: [formData ? formData.has_checkout : attendanceType.checkInOnly],
         provider_name: [formData ? formData.provider_name : null, Validators.required]
       },
       { validator: this.customValidator }
     );
+  }
+
+  getCustomFeedbackLabel(formData: IServiceProvider) {
+    return formData ? formData.custom_basic_feedback_label
+      ? formData.custom_basic_feedback_label : null
+      : this.cpI18n.translate('t_events_default_feedback_question');
   }
 
   exportServiceProvidersAttendees(assessments) {

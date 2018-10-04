@@ -43,7 +43,7 @@ export class ServicesProvidersFormComponent implements OnInit {
   onSelectedFeedback(hasFeedback: boolean): void {
     this.form.controls['has_feedback'].setValue(hasFeedback);
 
-    const feedbackQuestion = !hasFeedback ? ''
+    const feedbackQuestion = !hasFeedback ? null
       : this.cpI18n.translate('t_events_default_feedback_question');
 
     this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
