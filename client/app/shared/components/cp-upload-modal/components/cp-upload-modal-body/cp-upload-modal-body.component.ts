@@ -13,6 +13,7 @@ const FIVE_MB = 5e6;
 export class CPUploadModalBodyComponent implements OnInit {
   @Input() props;
   @Input() reset: Observable<boolean>;
+  @Input() instruction = 'csv_modal_instruction';
 
   @Output() ready: EventEmitter<null> = new EventEmitter();
 
