@@ -2940,6 +2940,9 @@
   "t_service_provider_csv_column_time_spent_seconds": {
     "message": "Time Spent (Seconds)"
   },
+  "t_service_provider_feedback_yes": {
+    "message": "Yes"
+  },
   "t_shared_cancel": {
     "message": "Cancel"
   },

@@ -52,7 +52,7 @@ export class ServicesUtilsService {
   getAttendanceFeedback() {
     return [
       {
-        label: this.cpI18n.translate('yes'),
+        label: this.cpI18n.translate('t_service_provider_feedback_yes'),
         action: serviceFeedback.enabled
       },
       {
