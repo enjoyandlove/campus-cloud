@@ -10,17 +10,10 @@ import { ServicesService } from '../services.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { ServicesUtilsService } from '../services.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
+import { RatingScale, ServiceAttendance } from '../services.status';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
-
-const FEEDBACK_ENABLED = 1;
-const FEEDBACK_DISABLED = 0;
-
-const SERVICE_FEEDBACK = {
-  [FEEDBACK_ENABLED]: 'Enabled',
-  [FEEDBACK_DISABLED]: 'Disabled'
-};
 
 @Component({
   selector: 'cp-services-edit',
@@ -32,9 +25,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   service;
   categories;
   buttonData;
-  feedbackTooltip;
+  errorMessage;
   categoryTooltip;
-  serviceFeedback;
   school: ISchool;
   form: FormGroup;
   selectedCategory;
@@ -102,18 +94,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
       this.buildForm(res.data[0]);
 
-      const label =
-        SERVICE_FEEDBACK[
-          'enable_feedback' in this.service ? this.service.enable_feedback : FEEDBACK_ENABLED
-          ];
-
-      this.serviceFeedback = [
-        {
-          label,
-          value: null
-        }
-      ];
-
       this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.school);
       this.drawMarker.next(this.showLocationDetails);
 
@@ -179,7 +159,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
           this.router.navigate(['/manage/services/' + this.serviceId + route]);
         },
         (_) => {
-          // const error = this.cpI18n.translate('something_went_wront');
+          this.enableSaveButton();
+          this.errorMessage = this.cpI18n.translate('something_went_wrong');
         });
   }
 
@@ -255,16 +236,19 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   onToggleAttendance(event) {
-    if (event) {
-      this.form.controls['default_basic_feedback_label'].setValue('How did you like the service?');
-      this.form.controls['service_attendance'].setValue(1);
-      this.form.controls['rating_scale_maximum'].setValue(5);
+    const serviceAttendance = event
+      ? ServiceAttendance.enabled
+      : ServiceAttendance.disabled;
 
-      return;
-    }
-    this.form.controls['default_basic_feedback_label'].setValue(null);
-    this.form.controls['service_attendance'].setValue(0);
-    this.form.controls['rating_scale_maximum'].setValue(-1);
+    const feedbackLabel = !event
+      ? null
+      : this.cpI18n.translate('services_default_feedback_question');
+
+    const maxScale = event ? RatingScale.maxScale : RatingScale.noScale;
+
+    this.form.controls['rating_scale_maximum'].setValue(maxScale);
+    this.form.controls['service_attendance'].setValue(serviceAttendance);
+    this.form.controls['default_basic_feedback_label'].setValue(feedbackLabel);
   }
 
   buildHeader() {
@@ -316,15 +300,17 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     );
   }
 
+  enableSaveButton() {
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: false
+    };
+  }
+
   ngOnInit() {
     this.buttonData = {
       class: 'primary',
       text: this.cpI18n.translate('save')
-    };
-
-    this.feedbackTooltip = {
-      ...this.feedbackTooltip,
-      content: this.cpI18n.translate('manage_create_service_feedback_tooltip')
     };
 
     this.categoryTooltip = {

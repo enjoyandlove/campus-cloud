@@ -26,8 +26,16 @@
   </div>
 
   <div class="cpmodal__footer">
+    <div class="col-12">
+      <label class="error" *ngIf="formErrors">
+        <i class="material-icons">
+          warning
+        </i>
+        {{ errorMessage ? errorMessage : cpI18n.translate('error_fill_out_marked_fields') }}
+      </label>
+    </div>
     <div class="row justify-content-end">
-      <div class="col-6 text-right">
+      <div class="col-12 text-right">
         <button
           type="button"
           (click)="resetModal()"

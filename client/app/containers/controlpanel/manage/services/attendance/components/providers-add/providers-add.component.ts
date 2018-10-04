@@ -10,12 +10,12 @@ import {
 } from '@angular/core';
 
 import { HttpParams } from '@angular/common/http';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
+import { Feedback } from '../../../services.status';
+import { IService } from '../../../service.interface';
 import { ProvidersService } from '../../../providers.service';
-import { Feedback, ServiceFeedback } from '../../../services.status';
-import { EventUtilService } from '../../../../events/events.utils.service';
-import { attendanceType, CheckInMethod } from '../../../../events/event.status';
+import { ServicesUtilsService } from '../../../services.utils.service';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
 
@@ -29,15 +29,15 @@ declare var $: any;
 export class ServicesProviderAddComponent implements OnInit {
   @ViewChild('createForm') createForm;
 
-  @Input() service;
+  @Input() service: IService;
 
   @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
-  errors;
+  formErrors;
   buttonData;
+  errorMessage;
   form: FormGroup;
-  serviceAcceptsFeedback;
 
   eventProperties = {
     feedback: null,
@@ -47,9 +47,8 @@ export class ServicesProviderAddComponent implements OnInit {
 
   constructor(
     private el: ElementRef,
-    public fb: FormBuilder,
     public cpI18n: CPI18nService,
-    public utils: EventUtilService,
+    public utils: ServicesUtilsService,
     public cpTracking: CPTrackingService,
     public providersService: ProvidersService
   ) {}
@@ -63,27 +62,30 @@ export class ServicesProviderAddComponent implements OnInit {
   }
 
   onSubmit() {
-    this.errors = false;
+    this.formErrors = false;
 
     if (!this.form.valid) {
+      this.formErrors = true;
+      this.enableSaveButton();
       this.createForm.showErrors(this.form);
-
-      this.buttonData = {
-        ...this.buttonData,
-        disabled: false
-      };
 
       return;
     }
 
     const search = new HttpParams().append('service_id', this.service.id.toString());
 
-    this.providersService.createProvider(this.form.value, search).subscribe((res) => {
+    this.providersService.createProvider(this.form.value, search).subscribe(
+      (res) => {
       this.trackEvent(res);
       this.form.reset();
       $('#createProvider').modal('hide');
       this.created.emit(res);
-    });
+    },
+      (_) => {
+        this.formErrors = true;
+        this.enableSaveButton();
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
+      });
   }
 
   trackEvent(data) {
@@ -109,22 +111,18 @@ export class ServicesProviderAddComponent implements OnInit {
     $('#createProvider').modal('hide');
   }
 
+  enableSaveButton() {
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: false
+    };
+  }
+
   ngOnInit() {
-    this.form = this.fb.group({
-      email: [null, Validators.required],
-      has_checkout: [attendanceType.checkInOnly],
-      provider_name: [null, Validators.required],
-      custom_basic_feedback_label: [null, Validators.required],
-      checkin_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
-    });
+    const defaultQuestion = this.cpI18n.translate('t_events_default_feedback_question');
 
-    this.serviceAcceptsFeedback = this.service.enable_feedback === ServiceFeedback.enabled;
-
-    if (!this.serviceAcceptsFeedback) {
-      this.form.controls['custom_basic_feedback_label'].setValue(
-        this.cpI18n.translate('services_default_feedback_question')
-      );
-    }
+    this.form = this.utils.getProviderForm(null);
+    this.form.controls['custom_basic_feedback_label'].setValue(defaultQuestion);
 
     this.buttonData = {
       class: 'primary',

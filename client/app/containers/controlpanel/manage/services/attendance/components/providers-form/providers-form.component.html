@@ -18,16 +18,6 @@
     </div>
   </div>
 
-  <div class="row form-group" *ngIf="serviceAcceptsFeedback">
-    <div class="col-12">
-      <label>{{ 'services_provider_label_default_question' | cpI18n }}</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="custom_basic_feedback_label">
-    </div>
-  </div>
-
   <div class="row form-group">
     <div class="col-6">
       <label>{{ 't_services_attendance_type' | cpI18n }}</label>
@@ -44,6 +34,26 @@
         [selectedItem]="selectedQrCode"
         (selected)="onSelectedQRCode($event.action)">
       </cp-dropdown>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 'feedback' | cpI18n }}</label>
+      <cp-dropdown
+        [items]="attendanceFeedback"
+        [selectedItem]="selectedAttendanceFeedback"
+        (selected)="onSelectedFeedback($event.action)">
+      </cp-dropdown>
+    </div>
+
+    <div class="col-12 margin-top" *ngIf="form.controls['has_feedback'].value">
+      <label>{{ 'services_provider_label_default_question' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="custom_basic_feedback_label"
+        [class.error]="formErrors?.errors?.feedbackLabelRequired">
     </div>
   </div>
 </form>

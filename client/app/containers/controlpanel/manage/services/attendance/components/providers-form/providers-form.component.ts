@@ -1,8 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 
 import { CheckInMethod } from '../../../../events/event.status';
 import { CPI18nService } from '../../../../../../../shared/services';
+import { ServicesUtilsService } from '../../../services.utils.service';
 import { EventUtilService } from '../../../../events/events.utils.service';
 
 @Component({
@@ -17,13 +18,14 @@ export class ServicesProvidersFormComponent implements OnInit {
   serviceQRCodes;
   attendanceTypes;
   selectedQrCode;
+  attendanceFeedback;
   selectedAttendanceType;
-  serviceAcceptsFeedback;
+  selectedAttendanceFeedback;
 
   constructor(
-    public fb: FormBuilder,
     public cpI18n: CPI18nService,
-    public utils: EventUtilService
+    public utils: EventUtilService,
+    public serviceUtils: ServicesUtilsService
   ) {}
 
   showErrors(errors) {
@@ -36,6 +38,15 @@ export class ServicesProvidersFormComponent implements OnInit {
 
   onSelectedAttendanceType(hasCheckout: boolean): void {
     this.form.controls['has_checkout'].setValue(hasCheckout);
+  }
+
+  onSelectedFeedback(hasFeedback: boolean): void {
+    this.form.controls['has_feedback'].setValue(hasFeedback);
+
+    const feedbackQuestion = !hasFeedback ? ''
+      : this.cpI18n.translate('t_events_default_feedback_question');
+
+    this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
   }
 
   getFromArray(arr: Array<any>, key: string, val: string) {
@@ -55,11 +66,17 @@ export class ServicesProvidersFormComponent implements OnInit {
   ngOnInit() {
     this.serviceQRCodes = this.utils.getQROptions();
     this.attendanceTypes = this.utils.getAttendanceTypeOptions();
+    this.attendanceFeedback = this.serviceUtils.getAttendanceFeedback();
 
     this.selectedAttendanceType = this.getFromArray(
       this.attendanceTypes,
       'action',
       this.form.controls['has_checkout'].value);
+
+    this.selectedAttendanceFeedback = this.getFromArray(
+      this.attendanceFeedback,
+      'action',
+      this.form.controls['has_feedback'].value);
 
     this.selectedQrCode = this.getFromArray(
       this.serviceQRCodes,

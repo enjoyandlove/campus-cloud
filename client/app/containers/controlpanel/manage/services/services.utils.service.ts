@@ -1,11 +1,11 @@
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import {
   HasData,
-  Feedback,
   Assessment,
-  ServiceFeedback,
+  serviceFeedback,
   ServiceAttendance
 } from './services.status';
 
@@ -15,17 +15,19 @@ import {
 } from '../../../../shared/utils/privileges';
 
 import { CPSession } from '../../../../session';
+import IServiceProvider from './providers.interface';
 import { Formats } from '../../../../shared/utils/csv';
-import { CheckInOutTime } from '../events/event.status';
 import { CPDate } from '../../../../shared/utils/date/date';
 import { CPI18nService } from '../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 import { createSpreadSheet } from '../../../../shared/utils/csv/parser';
 import { HEADER_UPDATE, IHeader } from '../../../../reducers/header.reducer';
+import { attendanceType, CheckInMethod, CheckInOutTime } from '../events/event.status';
 
 @Injectable()
 export class ServicesUtilsService {
   constructor(
+    public fb: FormBuilder,
     public session: CPSession,
     public store: Store<IHeader>,
     public cpI18n: CPI18nService
@@ -35,12 +37,29 @@ export class ServicesUtilsService {
     return data ? HasData.yes : HasData.no;
   }
 
-  getFeedbackStatus(feedback) {
-    return feedback === ServiceFeedback.enabled ? Feedback.enabled : Feedback.disabled;
-  }
-
   getAssessmentStatus(assessment) {
     return assessment === ServiceAttendance.enabled ? Assessment.on : Assessment.off;
+  }
+
+  customValidator(controls: FormGroup): ValidationErrors | null {
+    if (controls.get('has_feedback').value) {
+      return  controls.get('custom_basic_feedback_label').value
+        ? null
+        : { feedbackLabelRequired: true };
+    }
+  }
+
+  getAttendanceFeedback() {
+    return [
+      {
+        label: this.cpI18n.translate('yes'),
+        action: serviceFeedback.enabled
+      },
+      {
+        label: this.cpI18n.translate('no'),
+        action: serviceFeedback.disabled
+      },
+    ];
   }
 
   setEventProperties(data, service_id) {
@@ -50,9 +69,27 @@ export class ServicesUtilsService {
       phone: this.hasData(data.contactphone),
       website: this.hasData(data.website),
       location: this.hasData(data.location),
-      feedback: this.getFeedbackStatus(data.enable_feedback),
       assessment: this.getAssessmentStatus(data.service_attendance)
     };
+  }
+
+  getProviderForm(formData: IServiceProvider) {
+    const feedbackLabel = formData ? formData.custom_basic_feedback_label : null;
+    const verificationMethods = formData
+      ? formData.checkin_verification_methods
+      : [CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app];
+
+    return this.fb.group(
+      {
+        custom_basic_feedback_label: [feedbackLabel],
+        checkin_verification_methods: [verificationMethods],
+        email: [formData ? formData.email : null, Validators.required],
+        has_feedback: [formData ? formData.has_feedback : serviceFeedback.enabled],
+        has_checkout: [formData ? formData.has_checkout : attendanceType.checkInOnly],
+        provider_name: [formData ? formData.provider_name : null, Validators.required]
+      },
+      { validator: this.customValidator }
+    );
   }
 
   exportServiceProvidersAttendees(assessments) {

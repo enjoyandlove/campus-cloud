@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { ServiceFeedback } from '../../../services.status';
+import { IService } from '../../../service.interface';
+import IServiceProvider from '../../../providers.interface';
+import { ServiceAttendance } from '../../../services.status';
 import { ProvidersService } from '../../../providers.service';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
@@ -9,7 +11,6 @@ import { amplitudeEvents } from '../../../../../../../shared/constants/analytics
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { CPTrackingService } from './../../../../../../../shared/services/tracking.service';
 import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
-import IServiceProvider from '../../../providers.interface';
 
 interface IState {
   search_text: string;
@@ -31,7 +32,7 @@ const state: IState = {
   styleUrls: ['./providers-list.component.scss']
 })
 export class ServicesProvidersListComponent extends BaseComponent implements OnInit {
-  @Input() service;
+  @Input() service: IService;
 
   @Output() hasProviders: EventEmitter<boolean> = new EventEmitter();
 
@@ -110,8 +111,16 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     );
   }
 
-  onEdited() {
+  onEdited(editedProvider: IServiceProvider) {
+    this.provider = null;
+    this.showEditProviderModal = false;
 
+    this.state = {
+      ...this.state,
+      providers: this.state.providers.map((provider) => {
+        return (provider.id === editedProvider.id ? editedProvider : provider);
+      })
+    };
   }
 
   trackDownloadEvent() {
@@ -169,6 +178,6 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       provider_name: this.cpI18n.translate('service_provider')
     };
 
-    this.displayRatingColumn = this.service.enable_feedback === ServiceFeedback.enabled;
+    this.displayRatingColumn = this.service.service_attendance === ServiceAttendance.enabled;
   }
 }
