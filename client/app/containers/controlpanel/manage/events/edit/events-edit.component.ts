@@ -454,12 +454,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   toggleEventAttendance(value) {
     value = value ? EventAttendance.enabled : EventAttendance.disabled;
 
-    const feedbackQuestion = !value ? ''
-      : this.cpI18n.translate('t_events_default_feedback_question');
-
-    this.form.controls['event_feedback'].setValue(value);
     this.form.controls['event_attendance'].setValue(value);
-    this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
     this.form.controls['attend_verification_methods']
       .setValue([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
   }
@@ -523,7 +518,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.form.controls['event_feedback'].setValue(option.action);
     this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
-
   }
 
   onLocationToggle(value) {
