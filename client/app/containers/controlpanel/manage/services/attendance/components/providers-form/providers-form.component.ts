@@ -16,8 +16,8 @@ export class ServicesProvidersFormComponent implements OnInit {
 
   formErrors;
   serviceQRCodes;
-  attendanceTypes;
   selectedQrCode;
+  attendanceTypes;
   attendanceFeedback;
   selectedAttendanceType;
   selectedAttendanceFeedback;

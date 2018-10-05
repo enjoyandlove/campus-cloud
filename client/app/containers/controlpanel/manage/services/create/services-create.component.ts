@@ -185,9 +185,11 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   onToggleAttendance(event) {
-    event = event ? ServiceAttendance.enabled : ServiceAttendance.disabled;
+    const serviceAttendance = event
+      ? ServiceAttendance.enabled
+      : ServiceAttendance.disabled;
 
-    this.form.controls['service_attendance'].setValue(event);
+    this.form.controls['service_attendance'].setValue(serviceAttendance);
   }
 
   onLocationToggle(value) {

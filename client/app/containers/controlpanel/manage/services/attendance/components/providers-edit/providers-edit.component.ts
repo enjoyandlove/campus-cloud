@@ -78,7 +78,7 @@ export class ServiceProvidersEditComponent implements OnInit {
       .subscribe(
         (res) => {
           this.form.reset();
-          $('#editProvider').modal('hide');
+          this.resetModal();
           this.edited.emit(res);
         },
         () => {

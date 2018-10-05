@@ -7,8 +7,8 @@ import { CPSession } from '../../../../../../../session';
 import { ServicesModule } from '../../../services.module';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { ServicesUtilsService } from '../../../services.utils.service';
-import { ServicesProvidersFormComponent } from './providers-form.component';
 import { EventUtilService } from '../../../../events/events.utils.service';
+import { ServicesProvidersFormComponent } from './providers-form.component';
 
 describe('ServicesProviderFormComponent', () => {
   let component: ServicesProvidersFormComponent;
