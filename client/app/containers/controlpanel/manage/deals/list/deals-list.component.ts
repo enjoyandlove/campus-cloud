@@ -3,7 +3,7 @@ import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { IDeal } from '../deals.interface';
-import { DealsService, DateStatus } from '../deals.service';
+import { DealsService } from '../deals.service';
 import { ManageHeaderService } from '../../utils';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
@@ -117,21 +117,7 @@ export class DealsListComponent extends BaseComponent implements OnInit {
 
     super
       .fetchData(this.service.getDeals(this.startRange, this.endRange, search))
-      .then((res) => (this.state = { ...this.state, deals: res.data }))
-      .then(() => {
-        if (this.state.sort_field === 'expiration') {
-          const direction = this.state.sort_direction === 'asc' ? 1 : -1;
-          this.state.deals.sort((a, b) => {
-            if (a.expiration === DateStatus.forever) {
-              return direction * 1;
-            } else if (b.expiration === DateStatus.forever) {
-              return direction * -1;
-            } else {
-              return direction * (a.expiration - b.expiration);
-            }
-          });
-        }
-      });
+      .then((res) => (this.state = { ...this.state, deals: res.data }));
   }
 
   buildHeader() {

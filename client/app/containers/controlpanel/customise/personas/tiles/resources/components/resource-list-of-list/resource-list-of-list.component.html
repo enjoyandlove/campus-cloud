@@ -3,9 +3,9 @@
     <div class="row list__header">
       <div class="col-12">
         <button
-          (click)="onShowModal()"
+          (click)="onCreateModal()"
           class="cpbtn cpbtn--cancel">
-          Add resource
+          {{ 't_personas_resource_add_resource' | cpI18n }}
         </button>
       </div>
     </div>
@@ -20,15 +20,23 @@
           <div
             class="row list__item"
             *ngFor="let resource of state.resources">
-              <div class="col-11 text-truncate">
-                <i class="material-icons">drag_indicator</i>
-                <span class="image">
-                  <img [src]="resource.img_url" class="img-fluid rounded"/>
-                </span>
-                <span
-                  class="name"
-                  [attr.title]="resource.name">
-                  {{resource.name}}
+            <div
+              class="col-11 text-truncate"
+              (click)="onEditModal(resource)">
+              <i class="material-icons">drag_indicator</i>
+              <span class="image">
+                <img [src]="resource.img_url" class="img-fluid rounded"/>
+              </span>
+              <span
+                class="name"
+                [attr.title]="resource.name"
+                [class.disabled]="resource.disabled">
+                {{resource.name}}
+                <i
+                  #tooltip
+                  class="material-icons"
+                  *ngIf="resource.disabled"
+                  [attr.title]="cpI18n.translate('t_personas_tile_locked_tooltip')">lock</i>
               </span>
             </div>
             <div class="col-1" (click)="onDelete(resource)">
@@ -42,7 +50,19 @@
 </div>
 
 <cp-modal
-  *ngIf="state.showModal"
+  *ngIf="state.showEditModal"
+  modalId="resourceEditModal">
+  <cp-personas-resource-edit
+    [persona]="persona"
+    [resource]="state.editingResource"
+    (error)="onError($event)"
+    (teardown)="onTearDown()"
+    (success)="onEditedResource($event)">
+  </cp-personas-resource-edit>
+</cp-modal>
+
+<cp-modal
+  *ngIf="state.showCreateModal"
   modalId="resourceCreateModal">
   <cp-personas-resource-create
     [persona]="persona"

@@ -1,5 +1,6 @@
 import IEvent from './event.interface';
 import { Injectable } from '@angular/core';
+import { FormGroup, ValidationErrors } from '@angular/forms';
 
 import { CPSession } from '../../../../session';
 import { Formats } from '../../../../shared/utils/csv';
@@ -201,6 +202,29 @@ export class EventUtilService {
 
   getAssessmentStatus(assessment) {
     return assessment === EventAttendance.enabled ? Assessment.on : Assessment.off;
+  }
+
+  assessmentEnableCustomValidator(controls: FormGroup): ValidationErrors | null {
+    const managerId = controls.get('event_manager_id').value;
+    const eventFeedback = controls.get('event_feedback').value;
+    const eventAttendance = controls.get('event_attendance').value;
+    const feedbackLabel = controls.get('custom_basic_feedback_label').value;
+
+    const errors = {};
+
+    if (eventAttendance === EventAttendance.enabled) {
+      if (!managerId) {
+        errors['eventManagerRequired'] = true;
+      }
+
+      if (!feedbackLabel && eventFeedback) {
+        errors['feedbackLabelRequired'] = true;
+      }
+
+      return errors;
+    }
+
+    return null;
   }
 
   setEventProperties(data) {
