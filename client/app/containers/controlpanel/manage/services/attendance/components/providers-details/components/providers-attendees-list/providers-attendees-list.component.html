@@ -59,12 +59,10 @@
                   <img
                     class="rounded img-fit-cover float-left avatar"
                     [src]="assessment.avatar_thumb_url ? assessment.avatar_thumb_url : defaultImage">
-                  <div class="meta">
+                  <div class="meta text-truncate">
                     <strong>{{ assessment.firstname }} {{ assessment.lastname }}</strong>
                     <br>
-                    {{ assessment.email }}
-                    <br>
-                    <span class="text-muted">{{ assessment.feedback_text }}</span>
+                    <small class="text-muted">{{ assessment.email }}</small>
                   </div>
                 </div>
                 <div [class]="provider.has_checkout ? 'col-2' : 'col-3'">
@@ -101,6 +99,9 @@
                       class="material-icons hover action-button">close</i>
                   </span>
                 </div>
+              </div>
+              <div class="row cp-table__feedback" *ngIf="assessment.feedback_text.trim()">
+                <small class="text-wrap">{{ assessment.feedback_text }}</small>
               </div>
             </div>
           </div>
