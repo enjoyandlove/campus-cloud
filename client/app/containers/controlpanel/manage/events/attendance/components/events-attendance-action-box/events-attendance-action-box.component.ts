@@ -65,16 +65,16 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
 
   getStudentIds(attendees) {
     if (attendees) {
-
-      return attendees.filter((attendee) => attendee.user_id)
-        .map((attendee) => attendee.user_id).length;
+      return attendees.filter((attendee) => attendee.user_id).map((attendee) => attendee.user_id)
+        .length;
     }
   }
 
   ngOnInit() {
     this.canMessage = canSchoolWriteResource(
       this.session.g,
-      CP_PRIVILEGES_MAP.campus_announcements);
+      CP_PRIVILEGES_MAP.campus_announcements
+    );
 
     this.canDownload = this.session.canAttendance(this.event.store_id);
 
@@ -88,8 +88,7 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
     });
 
     this.totalAttendees.subscribe((attendees) => {
-      this.disableMessageAttendees = !this.canMessage
-        || !this.getStudentIds(attendees);
+      this.disableMessageAttendees = !this.canMessage || !this.getStudentIds(attendees);
 
       if (!this.canMessage) {
         this.messageAttendeesTooltipText = this.cpI18n.translate(
