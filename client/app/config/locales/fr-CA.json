@@ -2101,7 +2101,7 @@
     "message": "Méthode de vérification de présence"
   },
   "services_label_attendee_name": {
-    "message": "Liste des participants"
+    "message": "Nom"
   },
   "services_label_banner": {
     "message": "Bannière du service"
@@ -2110,7 +2110,7 @@
     "message": "Méthode de vérification de présence"
   },
   "services_label_checkin_time": {
-    "message": "Heure d'enregistrement"
+    "message": "Vérification de présence"
   },
   "services_label_check_in_details": {
     "message": "Vérification de présence",
@@ -2905,7 +2905,7 @@
     "message": "Type de présence"
   },
   "t_services_label_checkout_time": {
-    "message": "Heure de sortie"
+    "message": "Sortie"
   },
   "t_services_service_qr_enabled": {
     "message": "Code QR"
@@ -2939,6 +2939,9 @@
   },
   "t_service_provider_csv_column_time_spent_seconds": {
     "message": "Temps passé (secondes)"
+  },
+  "t_service_provider_feedback_yes": {
+    "message": "Oui"
   },
   "t_shared_cancel": {
     "message": "Annuler"
