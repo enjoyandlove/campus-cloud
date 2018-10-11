@@ -84,6 +84,16 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     this.providersList.fetch();
   }
 
+  onDateFilter(dateRange) {
+    this.providersList.state = {
+      ...this.providersList.state,
+      end: dateRange.end,
+      start: dateRange.start
+    };
+
+    this.providersList.fetch();
+  }
+
   onProvidersResult(data) {
     this.noProviders = !data;
   }

@@ -5,8 +5,9 @@
     aria-expanded="false"
     data-toggle="dropdown"
     [class]="'cpbtn cpbtn--' + class">
+    <i class="material-icons" *ngIf="icon && iconPosition === 'left'">{{ icon }}</i>
     {{ label }}
-    <i class="material-icons" *ngIf="icon">{{ icon }}</i>
+    <i class="material-icons" *ngIf="icon && iconPosition === 'right'">{{ icon }}</i>
   </button>
   <div
     aria-labelledby="dropdownMenuButton"

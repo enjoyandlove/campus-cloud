@@ -2,12 +2,21 @@
   <div class="col-12">
     <div class="cp-card actions">
       <div class="row">
-        <div class="col-4">
+        <div class="col-3">
           <cp-searchbox (query)=onSearch($event)></cp-searchbox>
         </div>
-        <div class="col-6 offset-2 text-right">
+        <div class="col-3">
+          <cp-range-picker
+            [class]="'cancel'"
+            [icon]="'date_range'"
+            [iconPosition]="'left'"
+            (rangeChange)="onDateChange($event)">
+          </cp-range-picker>
+        </div>
+        <div class="col-6 text-right">
           <button
             (click)="onDownload()"
+            [disabled]="!noAttendees"
             class="cpbtn cpbtn--secondary margin-right">
             {{ 'services_button_download_attendance_data' | cpI18n }}
           </button>

@@ -15,12 +15,14 @@ import { CP_TRACK_TO } from '../../../../../../../../../shared/directives/tracki
 export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
 
   @Input() provider;
+  @Input() noAttendees;
   @Input() updateQrCode = new BehaviorSubject(null);
 
   @Output() download: EventEmitter<null> = new EventEmitter();
   @Output() search: EventEmitter<null> = new EventEmitter();
   @Output() addCheckIn: EventEmitter<null> = new EventEmitter();
   @Output() onToggleQr: EventEmitter<boolean> = new EventEmitter();
+  @Output() filterByDates: EventEmitter<null> = new EventEmitter();
 
   hasQr;
   qrLabel;
@@ -42,6 +44,10 @@ export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
 
   onEnableDisableQR() {
     this.onToggleQr.emit(this.hasQr);
+  }
+
+  onDateChange(dateRange) {
+    this.filterByDates.emit(dateRange);
   }
 
   trackCheckinEvent() {

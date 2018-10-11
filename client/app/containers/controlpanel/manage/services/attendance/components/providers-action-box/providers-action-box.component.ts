@@ -14,6 +14,7 @@ export class ServicesProviderActionBoxComponent implements OnInit {
 
   @Output() download: EventEmitter<null> = new EventEmitter();
   @Output() search: EventEmitter<null> = new EventEmitter();
+  @Output() filterByDates: EventEmitter<null> = new EventEmitter();
   @Output() launchAddProviderModal: EventEmitter<null> = new EventEmitter();
 
   eventData;
@@ -33,6 +34,10 @@ export class ServicesProviderActionBoxComponent implements OnInit {
 
   onSearch(query) {
     this.search.emit(query);
+  }
+
+  onDateChange(dateRange) {
+    this.filterByDates.emit(dateRange);
   }
 
   trackAddProvider() {

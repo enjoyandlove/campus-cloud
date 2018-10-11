@@ -58,6 +58,7 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
   @Input() dateRanges;
   @Input() icon: string;
   @Input() class: string;
+  @Input() iconPosition: 'left' | 'right' | 'auto' = 'right';
   @Input() pickerOptions: IRangePickerOptions = rangeOptions;
   @Output() rangeChange: EventEmitter<IDateChange> = new EventEmitter();
 

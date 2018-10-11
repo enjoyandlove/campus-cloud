@@ -9,11 +9,13 @@
 
     <cp-providers-attendees-action-box
       [provider]="provider"
+      [noAttendees]="providerAttendees.hasAttendees"
       [updateQrCode]="updateQrCode"
       (download)="onDownload()"
       (search)="onSearch($event)"
       (addCheckIn)="onAddCheckIn()"
-      (onToggleQr)="onToggleQr($event)">
+      (onToggleQr)="onToggleQr($event)"
+      (filterByDates)="onDateFilter($event)">
     </cp-providers-attendees-action-box>
 
     <div class="row">

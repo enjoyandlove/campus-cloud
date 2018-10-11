@@ -11,6 +11,8 @@ import { CPTrackingService } from './../../../../../../../shared/services/tracki
 import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
 
 interface IState {
+  end: string;
+  start: string;
   search_text: string;
   providers: Array<any>;
   sort_field: string;
@@ -18,6 +20,8 @@ interface IState {
 }
 
 const state: IState = {
+  end: null,
+  start: null,
   providers: [],
   search_text: null,
   sort_direction: 'asc',
@@ -73,6 +77,8 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
   fetch() {
     const search = new HttpParams()
+      .append('end', this.state.end)
+      .append('start', this.state.start)
       .append('search_text', this.state.search_text)
       .append('service_id', this.service.id.toString())
       .append('sort_field', this.state.sort_field)
@@ -113,6 +119,8 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
   downloadProvidersCSV() {
     const search = new HttpParams()
+      .append('end', this.state.end)
+      .append('start', this.state.start)
       .append('service_id', this.service.id.toString())
       .append('all', '1');
 
