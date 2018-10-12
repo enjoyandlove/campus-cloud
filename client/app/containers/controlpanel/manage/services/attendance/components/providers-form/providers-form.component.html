@@ -6,7 +6,7 @@
         type="text"
         class="form-control"
         formControlName="provider_name"
-        [class.error]="formErrors?.controls['provider_name'].hasError('required')">
+        [class.error]="formErrors && form.controls['provider_name'].hasError('required')">
     </div>
     <div class="col-6">
       <label>{{ 'email' | cpI18n }}</label>
@@ -14,7 +14,7 @@
         type="text"
         class="form-control"
         formControlName="email"
-        [class.error]="formErrors?.controls['email'].hasError('required')">
+        [class.error]="formErrors && form.controls['email'].hasError('required')">
     </div>
   </div>
 
@@ -53,7 +53,7 @@
         type="text"
         class="form-control"
         formControlName="custom_basic_feedback_label"
-        [class.error]="formErrors?.errors?.feedbackLabelRequired">
+        [class.error]="formErrors && form.errors?.feedbackLabelRequired">
     </div>
   </div>
 </form>

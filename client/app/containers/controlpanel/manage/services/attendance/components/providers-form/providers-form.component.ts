@@ -12,9 +12,9 @@ import { EventUtilService } from '../../../../events/events.utils.service';
   styleUrls: ['./providers-form.component.scss']
 })
 export class ServicesProvidersFormComponent implements OnInit {
+  @Input() formErrors;
   @Input() form: FormGroup;
 
-  formErrors;
   serviceQRCodes;
   selectedQrCode;
   attendanceTypes;
@@ -27,10 +27,6 @@ export class ServicesProvidersFormComponent implements OnInit {
     public utils: EventUtilService,
     public serviceUtils: ServicesUtilsService
   ) {}
-
-  showErrors(errors) {
-    this.formErrors = errors;
-  }
 
   getQRCodeStatus(qrCodes) {
     return qrCodes.includes(CheckInMethod.app);

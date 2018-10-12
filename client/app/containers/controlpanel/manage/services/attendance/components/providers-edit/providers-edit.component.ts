@@ -56,7 +56,6 @@ export class ServiceProvidersEditComponent implements OnInit {
     if (!this.form.valid) {
       this.formErrors = true;
       this.enableSaveButton();
-      this.editForm.showErrors(this.form);
 
       return;
     }
