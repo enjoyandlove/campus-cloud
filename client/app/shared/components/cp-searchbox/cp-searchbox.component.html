@@ -3,6 +3,7 @@
   <input
     #q
     type="text"
+    autocomplete="off"
     id="search-disable-lastpass"
     [placeholder]="placeholder ? placeholder : cpI18n.translate('search') + '...'">
   <ng-container *ngIf="isSearch$ | async">
