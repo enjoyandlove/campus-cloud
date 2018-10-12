@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import { IService } from '../service.interface';
 import { ServicesService } from '../services.service';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { CPTrackingService } from '../../../../../shared/services';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 declare var $: any;
 
@@ -13,7 +14,7 @@ declare var $: any;
   styleUrls: ['./services-delete.component.scss']
 })
 export class ServicesDeleteComponent implements OnInit {
-  @Input() service: any;
+  @Input() service: IService;
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   buttonData;
@@ -22,7 +23,7 @@ export class ServicesDeleteComponent implements OnInit {
   constructor(
     private cpI18n: CPI18nService,
     private cpTracking: CPTrackingService,
-    private servicesService: ServicesService
+    public servicesService: ServicesService
   ) {}
 
   onDelete() {

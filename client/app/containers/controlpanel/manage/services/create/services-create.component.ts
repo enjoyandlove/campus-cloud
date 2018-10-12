@@ -5,6 +5,7 @@ import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { IService } from '../service.interface';
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
 import { ServiceAttendance } from '../services.status';
@@ -45,14 +46,14 @@ export class ServicesCreateComponent implements OnInit {
   };
 
   constructor(
-    private router: Router,
+    public router: Router,
     private fb: FormBuilder,
-    private session: CPSession,
+    public session: CPSession,
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
     private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
-    private servicesService: ServicesService
+    public servicesService: ServicesService
   ) {
     this.buildHeader();
     this.categories$ = this.servicesService.getCategories().pipe(
@@ -172,7 +173,7 @@ export class ServicesCreateComponent implements OnInit {
     data['school_id'] = this.school.id;
 
     this.servicesService.createService(data).subscribe(
-      (service: any) => {
+      (service: IService) => {
         const url = service.service_attendance ? '/info' : '';
 
         this.trackEvent(service, service.id);

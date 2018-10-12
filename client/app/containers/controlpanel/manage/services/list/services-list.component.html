@@ -61,7 +61,7 @@
           <span class="col-2">{{ service.num_ratings }}</span>
           <span class="col-3">
             <cp-stars
-              *ngIf="service.service_attendance === 1"
+              *ngIf="service.service_attendance === attendanceEnabled"
               [maxRate]="service.rating_scale_maximum"
               [avgRate]="service.avg_rating_percent">
             </cp-stars>

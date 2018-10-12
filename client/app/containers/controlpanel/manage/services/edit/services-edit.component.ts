@@ -50,23 +50,19 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   };
 
   constructor(
-    private router: Router,
+    public router: Router,
     private fb: FormBuilder,
-    private session: CPSession,
+    public session: CPSession,
     private store: Store<IHeader>,
-    private cpI18n: CPI18nService,
+    public cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
-    private servicesService: ServicesService,
+    public servicesService: ServicesService,
   ) {
     super();
-    this.school = this.session.g.get('school');
     super.isLoading().subscribe((res) => (this.loading = res));
     this.serviceId = this.route.snapshot.params['serviceId'];
-
-    this.fetch();
-    this.buildHeader();
   }
 
   private fetch() {
@@ -308,6 +304,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.school = this.session.g.get('school');
+    this.fetch();
+    this.buildHeader();
+
     this.buttonData = {
       class: 'primary',
       text: this.cpI18n.translate('save')

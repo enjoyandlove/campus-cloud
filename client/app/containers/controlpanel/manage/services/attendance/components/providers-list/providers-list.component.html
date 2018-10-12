@@ -89,10 +89,10 @@
                       (click)="showEditModal(provider)"
                       class="material-icons hover margin-right action-button">edit</i>
                     <i
-                      (click)="deleteProvider = provider"
                       data-toggle="modal"
                       data-target="#deleteProvider"
-                      class="material-icons hover action-button">close</i>
+                      class="material-icons hover action-button"
+                      (click)="deleteProvider = provider">close</i>
                   </span>
                 </div>
               </div>
@@ -122,7 +122,10 @@
       </cp-providers-delete>
     </cp-modal>
 
-    <cp-modal modalId="editProvider" *ngIf="showEditProviderModal">
+    <cp-modal
+      *ngIf="showEditProviderModal"
+      modalId="editProvider"
+      (modalClose)="showEditProviderModal = false">
       <cp-providers-edit
         [service]="service"
         [provider]="provider"

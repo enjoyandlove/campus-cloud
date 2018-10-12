@@ -1,12 +1,10 @@
 import {
-  Component,
-  OnInit,
   Input,
+  OnInit,
   Output,
-  EventEmitter,
-  HostListener,
-  ElementRef,
-  ViewChild
+  Component,
+  ViewChild,
+  EventEmitter
 } from '@angular/core';
 
 import { HttpParams } from '@angular/common/http';
@@ -46,20 +44,11 @@ export class ServicesProviderAddComponent implements OnInit {
   };
 
   constructor(
-    private el: ElementRef,
     public cpI18n: CPI18nService,
     public utils: ServicesUtilsService,
     public cpTracking: CPTrackingService,
     public providersService: ProvidersService
   ) {}
-
-  @HostListener('document:click', ['$event'])
-  onClick(event) {
-    // out of modal reset form
-    if (event.target.contains(this.el.nativeElement)) {
-      this.resetModal();
-    }
-  }
 
   onSubmit() {
     this.formErrors = false;

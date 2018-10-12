@@ -42,10 +42,11 @@ export class ServicesUtilsService {
   }
 
   customValidator(controls: FormGroup): ValidationErrors | null {
-    if (controls.get('has_feedback').value) {
-      return  controls.get('custom_basic_feedback_label').value
-        ? null
-        : { feedbackLabelRequired: true };
+    const hasFeedback = controls.get('has_feedback').value;
+    const feedbackLabel = controls.get('custom_basic_feedback_label').value;
+
+    if (hasFeedback) {
+      return  feedbackLabel ? null : { feedbackLabelRequired: true };
     }
   }
 
