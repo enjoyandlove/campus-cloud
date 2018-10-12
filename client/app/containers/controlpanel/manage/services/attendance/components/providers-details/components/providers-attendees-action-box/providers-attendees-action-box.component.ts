@@ -7,6 +7,12 @@ import { CPI18nService } from '../../../../../../../../../shared/services';
 import { amplitudeEvents } from '../../../../../../../../../shared/constants/analytics';
 import { CP_TRACK_TO } from '../../../../../../../../../shared/directives/tracking/tracking.directive';
 
+interface IDateRange {
+  end: number;
+  start: number;
+  label: string;
+}
+
 @Component({
   selector: 'cp-providers-attendees-action-box',
   templateUrl: './providers-attendees-action-box.component.html',
@@ -22,7 +28,7 @@ export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<null> = new EventEmitter();
   @Output() addCheckIn: EventEmitter<null> = new EventEmitter();
   @Output() onToggleQr: EventEmitter<boolean> = new EventEmitter();
-  @Output() filterByDates: EventEmitter<null> = new EventEmitter();
+  @Output() filterByDates: EventEmitter<IDateRange> = new EventEmitter();
 
   hasQr;
   qrLabel;
@@ -46,7 +52,7 @@ export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
     this.onToggleQr.emit(this.hasQr);
   }
 
-  onDateChange(dateRange) {
+  onDateChange(dateRange: IDateRange) {
     this.filterByDates.emit(dateRange);
   }
 

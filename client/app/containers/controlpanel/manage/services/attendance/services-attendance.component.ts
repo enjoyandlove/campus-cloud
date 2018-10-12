@@ -75,23 +75,12 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     );
   }
 
-  onSearch(search_text) {
-    this.providersList.state = {
-      ...this.providersList.state,
-      search_text
-    };
-
-    this.providersList.fetch();
+  onSearch(query) {
+    this.providersList.doSearch(query);
   }
 
   onDateFilter(dateRange) {
-    this.providersList.state = {
-      ...this.providersList.state,
-      end: dateRange.end,
-      start: dateRange.start
-    };
-
-    this.providersList.fetch();
+    this.providersList.doDateFilter(dateRange);
   }
 
   onProvidersResult(data) {

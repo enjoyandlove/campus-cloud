@@ -9,8 +9,8 @@
 
     <cp-providers-attendees-action-box
       [provider]="provider"
-      [noAttendees]="providerAttendees.hasAttendees"
       [updateQrCode]="updateQrCode"
+      [noAttendees]="providerAttendees.hasAttendees"
       (download)="onDownload()"
       (search)="onSearch($event)"
       (addCheckIn)="onAddCheckIn()"

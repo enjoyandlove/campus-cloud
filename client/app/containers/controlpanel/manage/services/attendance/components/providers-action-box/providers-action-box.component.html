@@ -8,15 +8,15 @@
             [placeholder]="cpI18n.translate('services_provider_search_tootlip')">
           </cp-searchbox>
         </div>
-        <div class="col-3">
+        <div class="col-4">
           <cp-range-picker
             [class]="'cancel'"
             [icon]="'date_range'"
-            [iconPosition]="'left'"
+            [iconPositionLeft]="true"
             (rangeChange)="onDateChange($event)">
           </cp-range-picker>
         </div>
-        <div class="col-6 text-right float-right">
+        <div class="col-5 text-right float-right">
           <button
             [disabled]="noProviders"
             (click)="onDownload()"

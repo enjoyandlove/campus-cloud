@@ -5,15 +5,15 @@
         <div class="col-3">
           <cp-searchbox (query)=onSearch($event)></cp-searchbox>
         </div>
-        <div class="col-3">
+        <div class="col-4">
           <cp-range-picker
             [class]="'cancel'"
             [icon]="'date_range'"
-            [iconPosition]="'left'"
+            [iconPositionLeft]="true"
             (rangeChange)="onDateChange($event)">
           </cp-range-picker>
         </div>
-        <div class="col-6 text-right">
+        <div class="col-5 text-right">
           <button
             (click)="onDownload()"
             [disabled]="!noAttendees"

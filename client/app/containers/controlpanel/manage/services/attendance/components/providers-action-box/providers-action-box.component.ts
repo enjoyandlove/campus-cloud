@@ -4,6 +4,12 @@ import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
 
+interface IDateRange {
+  end: number;
+  start: number;
+  label: string;
+}
+
 @Component({
   selector: 'cp-providers-action-box',
   templateUrl: './providers-action-box.component.html',
@@ -14,7 +20,7 @@ export class ServicesProviderActionBoxComponent implements OnInit {
 
   @Output() download: EventEmitter<null> = new EventEmitter();
   @Output() search: EventEmitter<null> = new EventEmitter();
-  @Output() filterByDates: EventEmitter<null> = new EventEmitter();
+  @Output() filterByDates: EventEmitter<IDateRange> = new EventEmitter();
   @Output() launchAddProviderModal: EventEmitter<null> = new EventEmitter();
 
   eventData;
@@ -36,7 +42,7 @@ export class ServicesProviderActionBoxComponent implements OnInit {
     this.search.emit(query);
   }
 
-  onDateChange(dateRange) {
+  onDateChange(dateRange: IDateRange) {
     this.filterByDates.emit(dateRange);
   }
 

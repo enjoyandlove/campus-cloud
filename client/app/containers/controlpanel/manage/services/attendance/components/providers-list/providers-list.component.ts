@@ -75,6 +75,25 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.fetch();
   }
 
+  doSearch(search_text) {
+    this.state = {
+      ...this.state,
+      search_text
+    };
+
+    this.fetch();
+  }
+
+  doDateFilter(dateRange) {
+    this.state = {
+      ...this.state,
+      end: dateRange.end,
+      start: dateRange.start
+    };
+
+    this.fetch();
+  }
+
   fetch() {
     const search = new HttpParams()
       .append('end', this.state.end)
