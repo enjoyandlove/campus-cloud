@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { ServiceFeedback } from '../../../services.status';
+import { IService } from '../../../service.interface';
+import IServiceProvider from '../../../providers.interface';
+import { ServiceAttendance } from '../../../services.status';
 import { ProvidersService } from '../../../providers.service';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
@@ -30,7 +32,7 @@ const state: IState = {
   styleUrls: ['./providers-list.component.scss']
 })
 export class ServicesProvidersListComponent extends BaseComponent implements OnInit {
-  @Input() service;
+  @Input() service: IService;
 
   @Output() hasProviders: EventEmitter<boolean> = new EventEmitter();
 
@@ -40,7 +42,9 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   eventProperties;
   deleteProvider = '';
   state: IState = state;
+  provider: IServiceProvider;
   displayRatingColumn = true;
+  showEditProviderModal = false;
 
   constructor(
     private cpI18n: CPI18nService,
@@ -92,6 +96,25 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     });
 
     this.hasProviders.emit(this.state.providers.length > 0);
+  }
+
+  showEditModal(provider: IServiceProvider) {
+    this.provider = provider;
+    this.showEditProviderModal = true;
+
+    setTimeout(() => $('#editProvider').modal());
+  }
+
+  onEdited(editedProvider: IServiceProvider) {
+    this.provider = null;
+    this.showEditProviderModal = false;
+
+    this.state = {
+      ...this.state,
+      providers: this.state.providers.map((provider) => {
+        return (provider.id === editedProvider.id ? editedProvider : provider);
+      })
+    };
   }
 
   trackDownloadEvent() {
@@ -149,6 +172,6 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       provider_name: this.cpI18n.translate('service_provider')
     };
 
-    this.displayRatingColumn = this.service.enable_feedback === ServiceFeedback.enabled;
+    this.displayRatingColumn = this.service.service_attendance === ServiceAttendance.enabled;
   }
 }

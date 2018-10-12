@@ -32,7 +32,7 @@
                   <div class="col-6">
                     <label>{{ 'select_category' | cpI18n }}
                       <cp-tooltip
-                        [toolTipContent]="category">
+                        [toolTipContent]="categoryTooltip">
                       </cp-tooltip>
                     </label>
                     <cp-dropdown
@@ -157,21 +157,6 @@
                 </span>
               </div>
             </div>
-            <ng-container *ngIf="attendance">
-              <div class="row">
-                <div class="col-6">
-                  <label>{{ 'services_label_enable_service_feedback' | cpI18n }}
-                    <cp-tooltip
-                      [toolTipContent]="feedback">
-                    </cp-tooltip>
-                  </label>
-                  <cp-dropdown
-                    [items]="feedbackOptions"
-                    (selected)="onSelectedFeedback($event)">
-                  </cp-dropdown>
-                </div>
-              </div>
-            </ng-container>
           </div>
         </div>
     </div>
@@ -184,7 +169,7 @@
       <div class="col-12">
         <div class="text-right">
           <label class="error" *ngIf="formError">
-              <span>&#x26A0;</span> {{ 'error_fill_out_marked_fields' | cpI18n }}
+              <span>&#x26A0;</span> {{ errorMessage ? errorMessage : 'error_fill_out_marked_fields' | cpI18n }}
           </label>
           <a [routerLink]="['/manage/services']"
             class="cpbtn cpbtn--cancel">
