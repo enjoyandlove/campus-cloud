@@ -439,8 +439,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     );
 
     this.sortingLabels = {
+      name: this.cpI18n.translate('name'),
       rating: this.cpI18n.translate('rating'),
-      name: this.cpI18n.translate('attendee'),
       method: this.cpI18n.translate('events_checked_in_method')
     };
 

@@ -2101,7 +2101,7 @@
     "message": "Check-in method"
   },
   "services_label_attendee_name": {
-    "message": "Attendee Name"
+    "message": "Name"
   },
   "services_label_banner": {
     "message": "Service Banner"
@@ -2110,7 +2110,7 @@
     "message": "Check-in Method"
   },
   "services_label_checkin_time": {
-    "message": "Check-in Time"
+    "message": "Check-in"
   },
   "services_label_check_in_details": {
     "message": "Check-in",
@@ -2905,7 +2905,7 @@
     "message": "Attendance Type"
   },
   "t_services_label_checkout_time": {
-    "message": "Check-out Time"
+    "message": "Check-out"
   },
   "t_services_service_qr_enabled": {
     "message": "QR Code"
