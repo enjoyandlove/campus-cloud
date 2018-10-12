@@ -13,12 +13,16 @@ import { amplitudeEvents } from '../../../../../../../../../shared/constants/ana
 import { CPI18nService } from './../../../../../../../../../shared/services/i18n.service';
 
 interface IState {
+  end: string;
+  start: string;
   search_text: string;
   sort_field: string;
   sort_direction: string;
 }
 
 const state: IState = {
+  end: null,
+  start: null,
   search_text: null,
   sort_field: 'check_in_time',
   sort_direction: 'desc'
@@ -37,6 +41,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   loading;
   checkInData;
   assessments;
+  hasAttendees;
   sortingLabels;
   eventProperties;
   state: IState = state;
@@ -61,6 +66,8 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
   fetch() {
     const search = new HttpParams()
+      .append('end', this.state.end)
+      .append('start', this.state.start)
       .append('search_text', this.state.search_text)
       .append('service_id', this.provider.campus_service_id.toString())
       .append('service_provider_id', this.provider.id.toString())
@@ -75,6 +82,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
     super.fetchData(stream$).then((res) => {
       this.assessments = res.data;
+      this.hasAttendees = res.data.length > 0;
     });
   }
 
@@ -91,6 +99,9 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   fetchAllRecords(): Promise<any> {
     const search = new HttpParams()
       .append('all', '1')
+      .append('end', this.state.end)
+      .append('start', this.state.start)
+      .append('search_text', this.state.search_text)
       .append('service_id', this.provider.campus_service_id.toString())
       .append('service_provider_id', this.provider.id.toString());
 
@@ -117,6 +128,16 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.state = {
       ...this.state,
       search_text
+    };
+
+    this.fetch();
+  }
+
+  doDateFilter(dateRange) {
+    this.state = {
+      ...this.state,
+      start: dateRange.start,
+      end: dateRange.end
     };
 
     this.fetch();

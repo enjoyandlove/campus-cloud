@@ -94,6 +94,10 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     this.providerAttendees.onCreateCheckIn();
   }
 
+  onDateFilter(dateRange) {
+    this.providerAttendees.doDateFilter(dateRange);
+  }
+
   onToggleQr(isEnabled: boolean) {
     const verificationMethods = this.provider.checkin_verification_methods;
 
