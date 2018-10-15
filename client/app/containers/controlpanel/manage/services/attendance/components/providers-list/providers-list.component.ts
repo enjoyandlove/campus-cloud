@@ -195,7 +195,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.trackProviderViewEvent();
 
     this.sortingLabels = {
-      rating: this.cpI18n.translate('rating'),
+      rating: this.cpI18n.translate('ratings'),
       provider_name: this.cpI18n.translate('service_provider')
     };
 

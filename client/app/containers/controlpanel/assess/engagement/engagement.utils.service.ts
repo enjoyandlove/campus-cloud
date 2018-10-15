@@ -88,9 +88,10 @@ export class EngagementUtilsService {
     ];
 
     audiences.forEach((audience) => {
-      const cohort_type = audience.type === AudienceType.custom
-        ? amplitudeEvents.CUSTOM_AUDIENCE
-        : amplitudeEvents.DYNAMIC_AUDIENCE;
+      const cohort_type =
+        audience.type === AudienceType.custom
+          ? amplitudeEvents.CUSTOM_AUDIENCE
+          : amplitudeEvents.DYNAMIC_AUDIENCE;
 
       _audiences.push({
         route_id: audience.name
@@ -123,7 +124,7 @@ export class EngagementUtilsService {
           .join('_'),
         label: this.getLocalizedLabel(persona.localized_name_map),
         personaId: persona.id,
-        cohort_type: amplitudeEvents.EXPERIENCE,
+        cohort_type: amplitudeEvents.EXPERIENCE
       });
     });
 
@@ -236,7 +237,7 @@ export class EngagementUtilsService {
         action: FilterType.feedback
       },
       {
-        label: this.cpI18n.translate('rating'),
+        label: this.cpI18n.translate('ratings'),
         action: FilterType.rating
       }
     ];

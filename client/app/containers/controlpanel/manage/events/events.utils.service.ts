@@ -152,7 +152,7 @@ export class EventUtilService {
       {
         label: this.cpI18n.translate('t_events_assessment_check_in_and_checkout'),
         action: attendanceType.checkInCheckOut
-      },
+      }
     ];
   }
 
@@ -165,7 +165,7 @@ export class EventUtilService {
       {
         label: this.cpI18n.translate('t_events_assessment_qr_enabled_no'),
         action: qrCode.disabled
-      },
+      }
     ];
   }
 
@@ -256,7 +256,7 @@ export class EventUtilService {
         this.cpI18n.translate('t_events_csv_column_time_out'),
         this.cpI18n.translate('t_events_csv_column_time_spent'),
         this.cpI18n.translate('t_events_csv_column_time_spent_seconds'),
-        this.cpI18n.translate('rating'),
+        this.cpI18n.translate('ratings'),
         this.cpI18n.translate('t_events_csv_column_feedback_question'),
         this.cpI18n.translate('events_user_feedback')
       ];
@@ -270,11 +270,12 @@ export class EventUtilService {
       };
 
       attendees = attendees.map((item) => {
-        const timeSpentSeconds = (item.check_out_time_epoch - item.check_in_time);
+        const timeSpentSeconds = item.check_out_time_epoch - item.check_in_time;
 
-        const hasCheckOutTimeSpent = event.has_checkout
-          && item.check_out_time_epoch
-          && item.check_out_time_epoch !== CheckInOutTime.empty;
+        const hasCheckOutTimeSpent =
+          event.has_checkout &&
+          item.check_out_time_epoch &&
+          item.check_out_time_epoch !== CheckInOutTime.empty;
 
         const row = {
           [this.cpI18n.translate('t_events_csv_column_first_name')]: item.firstname,
@@ -283,36 +284,49 @@ export class EventUtilService {
 
           [this.cpI18n.translate('t_events_csv_column_email')]: item.email,
 
-          [this.cpI18n.translate('events_checked_in_method')]:
-            check_in_method[item.check_in_method],
+          [this.cpI18n.translate('events_checked_in_method')]: check_in_method[
+            item.check_in_method
+          ],
 
-          [this.cpI18n.translate('t_events_csv_column_check_in_date')]:
-            CPDate.fromEpoch(item.check_in_time, this.session.tz).format(Formats.dateFormat),
+          [this.cpI18n.translate('t_events_csv_column_check_in_date')]: CPDate.fromEpoch(
+            item.check_in_time,
+            this.session.tz
+          ).format(Formats.dateFormat),
 
           [this.cpI18n.translate('t_events_csv_column_time_in')]: CPDate.fromEpoch(
-            item.check_in_time, this.session.tz).format(Formats.timeFormatLong),
+            item.check_in_time,
+            this.session.tz
+          ).format(Formats.timeFormatLong),
 
-          [this.cpI18n.translate('t_events_csv_column_check_out_date')]:
-            hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              item.check_out_time_epoch, this.session.tz).format(Formats.dateFormat) : '',
+          [this.cpI18n.translate('t_events_csv_column_check_out_date')]: hasCheckOutTimeSpent
+            ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(
+                Formats.dateFormat
+              )
+            : '',
 
-          [this.cpI18n.translate('t_events_csv_column_time_out')]:
-            hasCheckOutTimeSpent ? CPDate.fromEpoch(
-            item.check_out_time_epoch, this.session.tz).format(Formats.timeFormatLong) : '',
+          [this.cpI18n.translate('t_events_csv_column_time_out')]: hasCheckOutTimeSpent
+            ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(
+                Formats.timeFormatLong
+              )
+            : '',
 
-          [this.cpI18n.translate('t_events_csv_column_time_spent')]:
-            hasCheckOutTimeSpent ?
-              CPDate.getTimeDuration(timeSpentSeconds)
-                .format(Formats.timeDurationFormat, {trim: false, useGrouping: false}) : '',
+          [this.cpI18n.translate('t_events_csv_column_time_spent')]: hasCheckOutTimeSpent
+            ? CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat, {
+                trim: false,
+                useGrouping: false
+              })
+            : '',
 
-          [this.cpI18n.translate('t_events_csv_column_time_spent_seconds')]:
-            hasCheckOutTimeSpent ? timeSpentSeconds : '',
+          [this.cpI18n.translate('t_events_csv_column_time_spent_seconds')]: hasCheckOutTimeSpent
+            ? timeSpentSeconds
+            : '',
 
-          [this.cpI18n.translate('rating')]:
+          [this.cpI18n.translate('ratings')]:
             item.feedback_rating === -1 ? '' : (item.feedback_rating * 5 / 100).toFixed(2),
 
-          [this.cpI18n.translate('t_events_csv_column_feedback_question')]:
-            event.custom_basic_feedback_label,
+          [this.cpI18n.translate(
+            't_events_csv_column_feedback_question'
+          )]: event.custom_basic_feedback_label,
 
           [this.cpI18n.translate('events_user_feedback')]: item.feedback_text
         };
