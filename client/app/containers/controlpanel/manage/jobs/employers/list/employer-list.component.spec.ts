@@ -1,3 +1,4 @@
+import { IEmployer } from './../employer.interface';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
@@ -32,7 +33,7 @@ describe('EmployersListComponent', () => {
 
   const mockEmployers = require('../mockEmployer.json');
   const employer = {
-    id: 1,
+    id: 3,
     name: 'Hello World!',
     description: 'Test description',
     logo_url: '',
@@ -62,12 +63,20 @@ describe('EmployersListComponent', () => {
           fixture = TestBed.createComponent(EmployerListComponent);
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
+          component.state = {
+            employers: [],
+            search_str: null,
+            sort_field: 'name',
+            sort_direction: 'asc'
+          };
 
           search = new HttpParams()
             .append('search_str', component.state.search_str)
             .append('sort_field', component.state.sort_field)
             .append('sort_direction', component.state.sort_direction)
             .append('school_id', component.session.g.get('school').id.toString());
+
+          fixture.detectChanges();
         });
     })
   );
@@ -78,24 +87,39 @@ describe('EmployersListComponent', () => {
   });
 
   it('onCreated', () => {
+    expect(component.state.employers.length).toBe(2);
+
     component.onCreated(employer);
 
     expect(component.launchCreateModal).toBeFalsy();
-    expect(component.state.employers).toEqual([employer]);
+    expect(component.state.employers.length).toBe(3);
+    expect(component.state.employers[0]).toEqual(employer);
   });
 
   it('onEdited', () => {
-    component.onEdited(employer);
+    const original: IEmployer = { ...component.state.employers[0] };
+
+    const edited = {
+      ...original,
+      email: 'edited'
+    };
+
+    component.onEdited(edited);
+
+    const actual = component.state.employers.filter((e) => e.id === original.id)[0];
 
     expect(component.launchEditModal).toBeFalsy();
     expect(component.selectedEmployer).toBeNull();
-    expect(component.state.employers).toEqual([employer]);
+    expect(actual).toEqual(edited);
   });
 
   it('onDeleted', () => {
+    const expected = component.state.employers.filter((e) => e.id === 2);
+
     component.onDeleted(1);
     expect(component.deleteEmployer).toBeNull();
-    expect(component.state.employers).toEqual([]);
+    expect(component.state.employers.length).toBe(1);
+    expect(component.state.employers).toEqual(expected);
   });
 
   it('should launch create modal', () => {

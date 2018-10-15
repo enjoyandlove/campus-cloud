@@ -1,8 +1,9 @@
+import { SharedModule } from './../../../../../../../../shared/shared.module';
+import { CPTrackingService } from './../../../../../../../../shared/services/tracking.service';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { StoreModule } from '../../../store.module';
 import { StoreActionBoxComponent } from './store-action-box.component';
 import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
 
@@ -14,24 +15,39 @@ describe('DealsStoreActionBoxComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [StoreModule, RouterTestingModule],
-        providers: [CPI18nService]
+        declarations: [StoreActionBoxComponent],
+        imports: [RouterTestingModule, SharedModule],
+        providers: [CPTrackingService, CPI18nService]
       })
         .compileComponents()
         .then(() => {
           fixture = TestBed.createComponent(StoreActionBoxComponent);
           component = fixture.componentInstance;
           spyOn(component.cpTracking, 'getEventProperties');
+
           fixture.detectChanges();
         });
     })
   );
 
+  // beforeEach(
+  //   async(async () => {
+  //     TestBed.configureTestingModule({
+  //       imports: [],
+  //       providers: []
+  //     }).compileComponents().then(() => {
+  //       fixture = TestBed.createComponent(StoreActionBoxComponent);
+  //       component = fixture.componentInstance;
+  //       spyOn(component.cpTracking, 'getEventProperties');
+  //       fixture.detectChanges();
+  //     })
+  //   })
+  // );
+
   it('onSearch', () => {
     spyOn(component.search, 'emit');
 
     component.onSearch('nothing');
-
     expect(component.search.emit).toHaveBeenCalledTimes(1);
     expect(component.search.emit).toHaveBeenCalledWith('nothing');
   });
