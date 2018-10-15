@@ -18,7 +18,9 @@ class MockEngagementService {
   getOrientationData(search: any) {
     this.dummy = [search];
 
-    return observableOf({});
+    return observableOf({
+      top_events: []
+    });
   }
 }
 
