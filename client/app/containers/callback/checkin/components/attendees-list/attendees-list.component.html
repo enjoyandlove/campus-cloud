@@ -2,7 +2,7 @@
   <div class="attendees__header">
     <div class="row">
       <div [class]="data.has_checkout ? 'col-4' : 'col-6'">
-        <p>{{ 'checkin_attendance_list' | cpI18n }}</p>
+        <p>{{ 'checkin_attendance_list' | cpI18n }} ({{data.attendees.length}})</p>
       </div>
       <div class="col-2">
         <p>{{ 't_external_checkin_method' | cpI18n }}</p>
