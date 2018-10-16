@@ -1221,9 +1221,6 @@
   "events_checked_in_method": {
     "message": "Méthode"
   },
-  "events_check_in": {
-    "message": "Vérification de présence"
-  },
   "events_create_heading": {
     "message": "Créer événement"
   },
