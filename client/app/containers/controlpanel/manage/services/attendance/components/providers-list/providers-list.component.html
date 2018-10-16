@@ -84,11 +84,15 @@
                   </a>
                 </div>
                 <div class="col-1">
-                  <span
-                    (click)="deleteProvider = provider"
-                    data-toggle="modal" data-target="#deleteProvider"
-                    class="col-1 text-center hover text-truncate delete-provider">
-                    &times;
+                  <span>
+                    <i
+                      (click)="showEditModal(provider)"
+                      class="material-icons hover margin-right action-button">edit</i>
+                    <i
+                      data-toggle="modal"
+                      data-target="#deleteProvider"
+                      class="material-icons hover action-button"
+                      (click)="deleteProvider = provider">close</i>
                   </span>
                 </div>
               </div>
@@ -116,6 +120,18 @@
         [provider]="deleteProvider"
         (deleted)="onDeleted($event)">
       </cp-providers-delete>
+    </cp-modal>
+
+    <cp-modal
+      *ngIf="showEditProviderModal"
+      modalId="editProvider"
+      (modalClose)="showEditProviderModal = false">
+      <cp-providers-edit
+        [service]="service"
+        [provider]="provider"
+        (edited)="onEdited($event)"
+        (teardown)="showEditProviderModal = false">
+      </cp-providers-edit>
     </cp-modal>
   </div>
 </div>

@@ -7,6 +7,12 @@ import { CPI18nService } from '../../../../../../../../../shared/services';
 import { amplitudeEvents } from '../../../../../../../../../shared/constants/analytics';
 import { CP_TRACK_TO } from '../../../../../../../../../shared/directives/tracking/tracking.directive';
 
+interface IDateRange {
+  end: number;
+  start: number;
+  label: string;
+}
+
 @Component({
   selector: 'cp-providers-attendees-action-box',
   templateUrl: './providers-attendees-action-box.component.html',
@@ -15,12 +21,14 @@ import { CP_TRACK_TO } from '../../../../../../../../../shared/directives/tracki
 export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
 
   @Input() provider;
+  @Input() noAttendees;
   @Input() updateQrCode = new BehaviorSubject(null);
 
   @Output() download: EventEmitter<null> = new EventEmitter();
   @Output() search: EventEmitter<null> = new EventEmitter();
   @Output() addCheckIn: EventEmitter<null> = new EventEmitter();
   @Output() onToggleQr: EventEmitter<boolean> = new EventEmitter();
+  @Output() filterByDates: EventEmitter<IDateRange> = new EventEmitter();
 
   hasQr;
   qrLabel;
@@ -42,6 +50,10 @@ export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
 
   onEnableDisableQR() {
     this.onToggleQr.emit(this.hasQr);
+  }
+
+  onDateChange(dateRange: IDateRange) {
+    this.filterByDates.emit(dateRange);
   }
 
   trackCheckinEvent() {

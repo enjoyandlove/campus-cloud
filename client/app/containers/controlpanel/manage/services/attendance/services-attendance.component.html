@@ -10,6 +10,7 @@
       [noProviders]="noProviders"
       (search)="onSearch($event)"
       (download)="onDownload()"
+      (filterByDates)="onDateFilter($event)"
       (launchAddProviderModal)="onLaunchProviderAdd()">
     </cp-providers-action-box>
 
@@ -26,7 +27,10 @@
 </div>
 
 
-<cp-modal modalId="createProvider" *ngIf="isProviderAdd">
+<cp-modal
+  *ngIf="isProviderAdd"
+  modalId="createProvider"
+  (modalClose)="isProviderAdd = false">
   <cp-providers-add
     [service]="service"
     (created)="onProviderAdded()"
