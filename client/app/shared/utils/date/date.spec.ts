@@ -18,6 +18,6 @@ describe('CPDate', () => {
   });
 
   it('Should convert time duration/seconds to comprehensive format', () => {
-      expect(CPDate.getTimeDuration(mockDuration).format(durationFormat)).toEqual('15 01:30:18');
+      expect(CPDate.getTimeDuration(mockDuration).format(durationFormat)).toEqual('361:30:18');
   });
 });
