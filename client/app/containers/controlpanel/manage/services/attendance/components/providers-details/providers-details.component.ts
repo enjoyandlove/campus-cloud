@@ -94,6 +94,10 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     this.providerAttendees.onCreateCheckIn();
   }
 
+  onDateFilter(dateRange) {
+    this.providerAttendees.doDateFilter(dateRange);
+  }
+
   onToggleQr(isEnabled: boolean) {
     const verificationMethods = this.provider.checkin_verification_methods;
 
@@ -108,17 +112,17 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
       attend_verification_methods: verificationMethods
     };
 
-    const search = new HttpParams()
-      .append('service_id', this.serviceId.toString());
+    const search = new HttpParams().append('service_id', this.serviceId.toString());
 
-    this.providersService.updateProvider(data, search, this.providerId).subscribe(
+    this.providersService.updateProvider(data, this.providerId, search).subscribe(
       (_) => {
         this.onSuccessQRCheckInMessage(isEnabled);
         this.updateQrCode.next(verificationMethods);
       },
       (_) => {
         this.onErrorQRCheckInMessage();
-      });
+      }
+    );
   }
 
   onSuccessQRCheckInMessage(isEnabled: boolean) {

@@ -23,6 +23,12 @@
     }
   }
 
+  &__feedback {
+    padding: 10px;
+    margin: 5px 0 0 0;
+    background-color: $color-light-grey;
+  }
+
   .avatar {
     width: 30px;
     height: 30px;

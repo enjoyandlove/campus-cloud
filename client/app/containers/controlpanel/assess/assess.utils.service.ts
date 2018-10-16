@@ -42,9 +42,9 @@ export class AssessUtilsService {
     let lastOrientation = student.last_orientation_event;
 
     lastEvent = lastEvent > lastService && lastEvent > lastOrientation ? lastEvent : null;
-    lastService = lastService > lastEvent && lastService > lastOrientation ? lastService :  null;
-    lastOrientation = lastOrientation > lastEvent && lastOrientation > lastService
-      ? lastOrientation : null;
+    lastService = lastService > lastEvent && lastService > lastOrientation ? lastService : null;
+    lastOrientation =
+      lastOrientation > lastEvent && lastOrientation > lastService ? lastOrientation : null;
 
     return lastEvent ? lastEvent : lastService ? lastService : lastOrientation;
   }
@@ -70,7 +70,7 @@ export class AssessUtilsService {
       this.cpI18n.translate('t_assess_time_spent'),
       this.cpI18n.translate('t_assess_time_spent_seconds'),
       this.cpI18n.translate('assess_response_date'),
-      this.cpI18n.translate('rating'),
+      this.cpI18n.translate('ratings'),
       this.cpI18n.translate('response')
     ];
 
@@ -81,10 +81,10 @@ export class AssessUtilsService {
 
     stream.toPromise().then((data: any) => {
       data = data.map((item) => {
-        const timeSpentSeconds = (item.check_out_time_epoch - item.time_epoch);
+        const timeSpentSeconds = item.check_out_time_epoch - item.time_epoch;
 
-        const hasCheckOutTimeSpent = item.check_out_time_epoch
-          && item.check_out_time_epoch !== CheckInOutTime.empty;
+        const hasCheckOutTimeSpent =
+          item.check_out_time_epoch && item.check_out_time_epoch !== CheckInOutTime.empty;
 
         return {
           [this.cpI18n.translate('assess_check_in_time')]: item.name,
@@ -97,33 +97,41 @@ export class AssessUtilsService {
           ).format(Formats.dateFormat),
 
           [this.cpI18n.translate('t_assess_checkin_time_in')]: CPDate.fromEpoch(
-            item.time_epoch, this.session.tz).format(Formats.timeFormatLong),
+            item.time_epoch,
+            this.session.tz
+          ).format(Formats.timeFormatLong),
 
-          [this.cpI18n.translate('t_assess_checkout_date')]:
-            hasCheckOutTimeSpent
-              ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz
-              ).format(Formats.dateFormat) : '',
+          [this.cpI18n.translate('t_assess_checkout_date')]: hasCheckOutTimeSpent
+            ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(
+                Formats.dateFormat
+              )
+            : '',
 
-          [this.cpI18n.translate('t_assess_checkout_time_out')]:
-            hasCheckOutTimeSpent ? CPDate.fromEpoch(
-              item.check_out_time_epoch, this.session.tz).format(Formats.timeFormatLong) : '',
+          [this.cpI18n.translate('t_assess_checkout_time_out')]: hasCheckOutTimeSpent
+            ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(
+                Formats.timeFormatLong
+              )
+            : '',
 
-          [this.cpI18n.translate('t_assess_time_spent')]:
-            hasCheckOutTimeSpent ?
-              CPDate.getTimeDuration(timeSpentSeconds)
-                .format(Formats.timeDurationFormat, {trim: false, useGrouping: false}) : '',
+          [this.cpI18n.translate('t_assess_time_spent')]: hasCheckOutTimeSpent
+            ? CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat, {
+                trim: false,
+                useGrouping: false
+              })
+            : '',
 
-          [this.cpI18n.translate('t_assess_time_spent_seconds')]:
-            hasCheckOutTimeSpent ? timeSpentSeconds : '',
+          [this.cpI18n.translate('t_assess_time_spent_seconds')]: hasCheckOutTimeSpent
+            ? timeSpentSeconds
+            : '',
 
           [this.cpI18n.translate('assess_response_date')]:
             item.feedback_time_epoch === 0
               ? 'No Feedback Provided'
               : CPDate.fromEpoch(item.feedback_time_epoch, this.session.tz).format(
-              Formats.dateTimeFormat
-              ),
+                  Formats.dateTimeFormat
+                ),
 
-          [this.cpI18n.translate('rating')]:
+          [this.cpI18n.translate('ratings')]:
             item.user_rating_percent === -1
               ? 'No Rating Provided'
               : (item.user_rating_percent / 100 * 5).toFixed(1),

@@ -2,9 +2,8 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span>
-          <strong>{{ 'services_provider_label_add_service_provider' | cpI18n }}</strong>
-        </span>
+        <span><strong>{{ 'services_provider_label_add_service_provider' | cpI18n }}</strong></span>
+
         <span
           (click)="resetModal()"
           data-dismiss="modal"
@@ -19,7 +18,7 @@
     <div class="row">
       <div class="col-12">
         <cp-providers-form
-          #createForm
+          #editForm
           [form]="form"
           [formErrors]="formErrors">
         </cp-providers-form>
@@ -28,15 +27,15 @@
   </div>
 
   <div class="cpmodal__footer">
-    <div class="col-12">
-      <label class="error" *ngIf="formErrors">
-        <i class="material-icons">
-          warning
-        </i>
-        {{ errorMessage ? errorMessage : cpI18n.translate('error_fill_out_marked_fields') }}
-      </label>
-    </div>
     <div class="row justify-content-end">
+      <div class="col-12">
+        <label class="error" *ngIf="formErrors">
+          <i class="material-icons">
+            warning
+          </i>
+          {{ errorMessage ? errorMessage : cpI18n.translate('error_fill_out_marked_fields') }}
+        </label>
+      </div>
       <div class="col-12 text-right">
         <button
           type="button"

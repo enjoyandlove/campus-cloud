@@ -1,28 +1,28 @@
 import { Input, OnInit, Output, Component, ViewChild, EventEmitter } from '@angular/core';
 
 import { HttpParams } from '@angular/common/http';
-import { FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { Feedback } from '../../../services.status';
 import { IService } from '../../../service.interface';
+import IServiceProvider from '../../../providers.interface';
 import { ProvidersService } from '../../../providers.service';
+import { CPI18nService } from '../../../../../../../shared/services';
 import { ServicesUtilsService } from '../../../services.utils.service';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
 
 declare var $: any;
 
 @Component({
-  selector: 'cp-providers-add',
-  templateUrl: './providers-add.component.html',
-  styleUrls: ['./providers-add.component.scss']
+  selector: 'cp-providers-edit',
+  templateUrl: './providers-edit.component.html',
+  styleUrls: ['./providers-edit.component.scss']
 })
-export class ServicesProviderAddComponent implements OnInit {
-  @ViewChild('createForm') createForm;
+export class ServiceProvidersEditComponent implements OnInit {
+  @ViewChild('editForm') editForm;
 
   @Input() service: IService;
+  @Input() provider: IServiceProvider;
 
-  @Output() created: EventEmitter<any> = new EventEmitter();
+  @Output() edited: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   formErrors;
@@ -37,9 +37,9 @@ export class ServicesProviderAddComponent implements OnInit {
   };
 
   constructor(
+    public fb: FormBuilder,
     public cpI18n: CPI18nService,
     public utils: ServicesUtilsService,
-    public cpTracking: CPTrackingService,
     public providersService: ProvidersService
   ) {}
 
@@ -55,42 +55,18 @@ export class ServicesProviderAddComponent implements OnInit {
 
     const search = new HttpParams().append('service_id', this.service.id.toString());
 
-    this.providersService.createProvider(this.form.value, search).subscribe(
+    this.providersService.updateProvider(this.form.value, this.provider.id, search).subscribe(
       (res) => {
-        this.trackEvent(res);
         this.form.reset();
-        $('#createProvider').modal('hide');
-        this.created.emit(res);
+        this.resetModal();
+        this.edited.emit(res);
       },
-      (_) => {
+      () => {
         this.formErrors = true;
         this.enableSaveButton();
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
       }
     );
-  }
-
-  trackEvent(data) {
-    this.eventProperties = {
-      ...this.eventProperties,
-      service_id: this.service.id,
-      service_provider_id: data.id,
-      feedback: this.getFeedbackStatus(data.custom_basic_feedback_label)
-    };
-
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CREATED_SERVICE_PROVIDER,
-      this.eventProperties
-    );
-  }
-
-  getFeedbackStatus(val) {
-    return val ? Feedback.enabled : Feedback.disabled;
-  }
-
-  resetModal() {
-    this.teardown.emit();
-    $('#createProvider').modal('hide');
   }
 
   enableSaveButton() {
@@ -100,8 +76,13 @@ export class ServicesProviderAddComponent implements OnInit {
     };
   }
 
+  resetModal() {
+    this.teardown.emit();
+    $('#editProvider').modal('hide');
+  }
+
   ngOnInit() {
-    this.form = this.utils.getProviderForm(null);
+    this.form = this.utils.getProviderForm(this.provider);
 
     this.buttonData = {
       class: 'primary',

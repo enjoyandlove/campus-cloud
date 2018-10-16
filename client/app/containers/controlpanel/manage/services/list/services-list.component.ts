@@ -3,6 +3,7 @@ import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { ServicesService } from '../services.service';
+import { ServiceAttendance } from '../services.status';
 import { CPSession } from './../../../../../session/index';
 import { ManageHeaderService } from './../../utils/header';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -39,6 +40,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
   sortingLabels;
   deleteService = '';
   state: IState = state;
+  attendanceEnabled = ServiceAttendance.enabled;
 
   constructor(
     private session: CPSession,

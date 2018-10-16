@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { ServiceFeedback } from '../../../services.status';
+import { IService } from '../../../service.interface';
+import IServiceProvider from '../../../providers.interface';
+import { ServiceAttendance } from '../../../services.status';
 import { ProvidersService } from '../../../providers.service';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
@@ -11,6 +13,8 @@ import { CPTrackingService } from './../../../../../../../shared/services/tracki
 import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
 
 interface IState {
+  end: string;
+  start: string;
   search_text: string;
   providers: Array<any>;
   sort_field: string;
@@ -18,6 +22,8 @@ interface IState {
 }
 
 const state: IState = {
+  end: null,
+  start: null,
   providers: [],
   search_text: null,
   sort_direction: 'asc',
@@ -30,7 +36,7 @@ const state: IState = {
   styleUrls: ['./providers-list.component.scss']
 })
 export class ServicesProvidersListComponent extends BaseComponent implements OnInit {
-  @Input() service;
+  @Input() service: IService;
 
   @Output() hasProviders: EventEmitter<boolean> = new EventEmitter();
 
@@ -40,7 +46,9 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   eventProperties;
   deleteProvider = '';
   state: IState = state;
+  provider: IServiceProvider;
   displayRatingColumn = true;
+  showEditProviderModal = false;
 
   constructor(
     private cpI18n: CPI18nService,
@@ -71,8 +79,29 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.fetch();
   }
 
+  doSearch(search_text) {
+    this.state = {
+      ...this.state,
+      search_text
+    };
+
+    this.fetch();
+  }
+
+  doDateFilter(dateRange) {
+    this.state = {
+      ...this.state,
+      end: dateRange.end,
+      start: dateRange.start
+    };
+
+    this.fetch();
+  }
+
   fetch() {
     const search = new HttpParams()
+      .append('end', this.state.end)
+      .append('start', this.state.start)
       .append('search_text', this.state.search_text)
       .append('service_id', this.service.id.toString())
       .append('sort_field', this.state.sort_field)
@@ -94,6 +123,25 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.hasProviders.emit(this.state.providers.length > 0);
   }
 
+  showEditModal(provider: IServiceProvider) {
+    this.provider = provider;
+    this.showEditProviderModal = true;
+
+    setTimeout(() => $('#editProvider').modal());
+  }
+
+  onEdited(editedProvider: IServiceProvider) {
+    this.provider = null;
+    this.showEditProviderModal = false;
+
+    this.state = {
+      ...this.state,
+      providers: this.state.providers.map((provider) => {
+        return provider.id === editedProvider.id ? editedProvider : provider;
+      })
+    };
+  }
+
   trackDownloadEvent() {
     this.eventProperties = {
       data_type: amplitudeEvents.ASSESSMENT
@@ -113,6 +161,8 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
   downloadProvidersCSV() {
     const search = new HttpParams()
+      .append('end', this.state.end)
+      .append('start', this.state.start)
       .append('service_id', this.service.id.toString())
       .append('all', '1');
 
@@ -145,10 +195,10 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.trackProviderViewEvent();
 
     this.sortingLabels = {
-      rating: this.cpI18n.translate('rating'),
+      rating: this.cpI18n.translate('ratings'),
       provider_name: this.cpI18n.translate('service_provider')
     };
 
-    this.displayRatingColumn = this.service.enable_feedback === ServiceFeedback.enabled;
+    this.displayRatingColumn = this.service.service_attendance === ServiceAttendance.enabled;
   }
 }

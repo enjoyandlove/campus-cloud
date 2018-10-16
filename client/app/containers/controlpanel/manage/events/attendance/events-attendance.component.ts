@@ -345,7 +345,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_SENT_ANNOUNCEMENT,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   onCreated() {
@@ -401,7 +402,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       },
       (_) => {
         this.onErrorQRCheckInMessage();
-      });
+      }
+    );
   }
 
   onSuccessQRCheckInMessage(isEnabled: boolean) {
@@ -439,23 +441,26 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     );
 
     this.sortingLabels = {
+      name: this.cpI18n.translate('name'),
       rating: this.cpI18n.translate('rating'),
-      name: this.cpI18n.translate('attendee'),
       method: this.cpI18n.translate('events_checked_in_method')
     };
 
     this.canMessage = canSchoolWriteResource(
       this.session.g,
-      CP_PRIVILEGES_MAP.campus_announcements);
+      CP_PRIVILEGES_MAP.campus_announcements
+    );
 
     const attendancePrivilege =
-      (this.isAthletic === isClubAthletic.athletic ? CP_PRIVILEGES_MAP.athletics :
-      (this.isOrientation ? CP_PRIVILEGES_MAP.orientation :
-      (this.isService ? CP_PRIVILEGES_MAP.services :
-      (this.isClub ? CP_PRIVILEGES_MAP.clubs :
-        CP_PRIVILEGES_MAP.event_attendance))));
-    this.showStudentIds = canSchoolReadResource(this.session.g, attendancePrivilege)
-      && this.session.hasSSO;
+      this.isAthletic === isClubAthletic.athletic
+        ? CP_PRIVILEGES_MAP.athletics
+        : this.isOrientation
+          ? CP_PRIVILEGES_MAP.orientation
+          : this.isService
+            ? CP_PRIVILEGES_MAP.services
+            : this.isClub ? CP_PRIVILEGES_MAP.clubs : CP_PRIVILEGES_MAP.event_attendance;
+    this.showStudentIds =
+      canSchoolReadResource(this.session.g, attendancePrivilege) && this.session.hasSSO;
 
     this.messageAttendeesTooltipText = !this.canMessage
       ? this.cpI18n.translate('t_events_attendance_no_permission_tooltip_text')

@@ -28,11 +28,6 @@ import {
   ServicesEventsAttendanceComponent
 } from './events/components';
 
-import {
-  ServicesEditDeleteModalComponent,
-  ServicesEditCreateProviderComponent
-} from './edit/components';
-
 import { ServicesListActionBoxComponent } from './list/components';
 
 import { ServicesExcelModalComponent, ServicesImportTopBarComponent } from './excel/components';
@@ -45,6 +40,8 @@ import {
 
 import {
   ServicesProviderAddComponent,
+  ServiceProvidersEditComponent,
+  ServicesProvidersFormComponent,
   ServicesProviderStatsComponent,
   ServicesProvidersListComponent,
   ServicesProviderDeleteComponent,
@@ -55,7 +52,7 @@ import {
 import {
   ServicesProvidersAttendeesListComponent,
   ServicesProvidersAttendeesStatsComponent,
-  ServicesProvidersAttendeesActionBoxComponent,
+  ServicesProvidersAttendeesActionBoxComponent
 } from './attendance/components/providers-details/components';
 
 import { EventsModule } from '../events/events.module';
@@ -87,8 +84,8 @@ import { CheckInModule } from '../events/attendance/check-in/check-in.module';
     ServicesEventsInfoComponent,
     ServicesEventsEditComponent,
     ServicesEventsExcelComponent,
-    ServicesEditDeleteModalComponent,
-    ServicesEditCreateProviderComponent,
+    ServiceProvidersEditComponent,
+    ServicesProvidersFormComponent,
     ServicesProvidersAttendeesStatsComponent,
     ServicesProvidersAttendeesActionBoxComponent,
     ServicesProvidersCheckInCreateComponent,

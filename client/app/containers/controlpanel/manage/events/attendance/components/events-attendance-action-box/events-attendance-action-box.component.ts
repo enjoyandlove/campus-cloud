@@ -64,7 +64,7 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   }
 
   getStudentIds(attendees) {
-    if (attendees) {
+    if (attendees && attendees instanceof Array) {
       return attendees.filter((attendee) => attendee.user_id).map((attendee) => attendee.user_id)
         .length;
     }

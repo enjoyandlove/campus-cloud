@@ -256,7 +256,7 @@ export class EventUtilService {
         this.cpI18n.translate('t_events_csv_column_time_out'),
         this.cpI18n.translate('t_events_csv_column_time_spent'),
         this.cpI18n.translate('t_events_csv_column_time_spent_seconds'),
-        this.cpI18n.translate('rating'),
+        this.cpI18n.translate('ratings'),
         this.cpI18n.translate('t_events_csv_column_feedback_question'),
         this.cpI18n.translate('events_user_feedback')
       ];
@@ -321,7 +321,7 @@ export class EventUtilService {
             ? timeSpentSeconds
             : '',
 
-          [this.cpI18n.translate('rating')]:
+          [this.cpI18n.translate('ratings')]:
             item.feedback_rating === -1 ? '' : (item.feedback_rating * 5 / 100).toFixed(2),
 
           [this.cpI18n.translate(

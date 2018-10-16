@@ -300,10 +300,10 @@
     "message": "All Students"
   },
   "assess_average_rating": {
-    "message": "Average Rating"
+    "message": "Rating"
   },
   "assess_button_download_engagement_data": {
-    "message": "Download Engagement Data"
+    "message": "Download Engagement"
   },
   "assess_checkin_date": {
     "message": "Check-in Date"
@@ -357,7 +357,7 @@
     "message": "Measure Student Engagement Anywhere on Campus"
   },
   "assess_download_transcript": {
-    "message": "Download CSV File"
+    "message": "Download Assessment"
   },
   "assess_engagements_last_seven_days": {
     "message": "Engagement (Last 7 Days)"
@@ -366,7 +366,7 @@
     "message": "Events Assessed"
   },
   "assess_event_rating_average": {
-    "message": "Event Average Rating"
+    "message": "Event Rating"
   },
   "assess_event_responses": {
     "message": "Event Responses"
@@ -459,7 +459,7 @@
     "message": "# of  Service Check-ins"
   },
   "assess_service_rating_average": {
-    "message": "Service Average Rating"
+    "message": "Service Rating"
   },
   "assess_service_responses": {
     "message": "Service Responses"
@@ -620,9 +620,6 @@
   "auth_reset_password": {
     "message": "Reset Password"
   },
-  "average_rating": {
-    "message": "Average Rating"
-  },
   "back": {
     "message": "Back"
   },
@@ -747,14 +744,14 @@
     "message": "Download QR Code"
   },
   "checkin_header_title": {
-    "message": "Check-in",
+    "message": "Web Check-in",
     "description": "Public Check-In Page (Title)\r\nhttps://ccstaging.oohlalamobile.com/#/cb/checkin/e/pNmRN94bVUbUI9qtz89i5A"
   },
   "checkin_instructions_one": {
-    "message": "We use QR codes to help attendees check in to an event. Be sure to print or share the QR  code with your event attendance organizer."
+    "message": "Use QR codes to help attendees check in to an event. Print or share the QR code with your event attendance organizer."
   },
   "checkin_instructions_three": {
-    "message": "You can view attendance statistics in Event Info. Be sure to come back to view feedback and ratings."
+    "message": "You can view assessment statistics in Event Info. Be sure to come back to view feedback and ratings."
   },
   "checkin_instructions_two": {
     "message": "Attendees can check in by scanning the QR code with the app. QR Codes can be printed or shown directly on a laptop, phone or tablet screen"
@@ -763,10 +760,10 @@
     "message": "Attendee List"
   },
   "checkin_manual_checkin": {
-    "message": "Manual Check-in"
+    "message": "Manual Check-In"
   },
   "checkin_scannable_qr_code": {
-    "message": "Automatic Check-in (Scan QR code)"
+    "message": "QR Code"
   },
   "clicks": {
     "message": "Clicks"
@@ -1112,7 +1109,7 @@
     "message": "Downloads"
   },
   "download_csv": {
-    "message": "Download CSV File"
+    "message": "Download Assessment"
   },
   "due_date": {
     "message": "Due Date"
@@ -1222,12 +1219,9 @@
     "message": "Create Event"
   },
   "events_checked_in_method": {
-    "message": "Check-in Method"
+    "message": "Method"
   },
   "events_check_in": {
-    "message": "Check-in"
-  },
-  "events_check_in_details": {
     "message": "Check-in"
   },
   "events_create_heading": {
@@ -1931,7 +1925,7 @@
     "message": "QR Code"
   },
   "rating": {
-    "message": "Ratings"
+    "message": "Rating"
   },
   "ratings": {
     "message": "Ratings"
@@ -2062,10 +2056,10 @@
     "message": "Create Service"
   },
   "services_button_download_assessment_data": {
-    "message": "Download Assessment Data"
+    "message": "Download Assessment"
   },
   "services_button_download_attendance_data": {
-    "message": "Download Attendance Data"
+    "message": "Download Assessment"
   },
   "services_create_button_create": {
     "message": "Create Service"
@@ -2098,29 +2092,25 @@
     "message": "File contains data for %s service(s)."
   },
   "services_label_all_checkin_methods": {
-    "message": "Check-in method"
+    "message": "Method"
   },
   "services_label_attendee_name": {
-    "message": "Attendee Name"
+    "message": "Name"
   },
   "services_label_banner": {
     "message": "Service Banner"
   },
   "services_label_checked_in_method": {
-    "message": "Check-in Method"
+    "message": "Method"
   },
   "services_label_checkin_time": {
-    "message": "Check-in Time"
-  },
-  "services_label_check_in_details": {
-    "message": "Check-in",
-    "description": "Noun"
+    "message": "Check-in"
   },
   "services_label_default_question": {
     "message": "Feedback Question"
   },
   "services_label_description": {
-    "message": "Service Description"
+    "message": "Description"
   },
   "services_label_details": {
     "message": "Service Details"
@@ -2139,7 +2129,7 @@
     "message": "No services found"
   },
   "services_providers_no_results": {
-    "message": "There are no service providers for this service.  Use \"Create Service Provider\" to create one. \n\nService Providers are used to track attendance check-ins and gather student feedback."
+    "message": "There are no service providers for this service.  Use \"Create Service Provider\" to create one. \n\nService Providers can use Assessment to take attendance and gather student feedback."
   },
   "services_provider_button_add_another": {
     "message": "Add another Service Provider"
@@ -2162,14 +2152,11 @@
   "services_repeat_visits": {
     "message": "Repeat Visits"
   },
-  "services_total_responses": {
-    "message": "Total Responses"
-  },
   "services_total_visits": {
-    "message": "Total Check-ins"
+    "message": "Check-ins"
   },
   "services_unique_visits": {
-    "message": "Unique Visitors"
+    "message": "Unique Visits"
   },
   "services_visits": {
     "message": "Visits"
@@ -2306,7 +2293,7 @@
     "message": "(%s) More"
   },
   "total_ratings": {
-    "message": "Total Ratings"
+    "message": "Ratings"
   },
   "type": {
     "message": "Type"
@@ -2377,6 +2364,9 @@
   "t_dashboard_top_orientation": {
     "message": "Top Orientation Programs"
   },
+  "t_datepicker_clear": {
+    "message": "Clear"
+  },
   "t_deals_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
@@ -2439,7 +2429,7 @@
     "message": "Check-in"
   },
   "t_events_assessment_add_check_in": {
-    "message": "Add Check-in"
+    "message": "Add Attendance"
   },
   "t_events_assessment_check_in_and_checkout": {
     "message": "Check-in & Check-out"
@@ -2448,10 +2438,10 @@
     "message": "Check-in Only"
   },
   "t_events_assessment_disable_qr_check_in": {
-    "message": "Disable QR Check-in"
+    "message": "Disable QR Code"
   },
   "t_events_assessment_enable_qr_check_in": {
-    "message": "Enable QR Check-in"
+    "message": "Enable QR Code"
   },
   "t_events_assessment_message_attendees": {
     "message": "Message Attendees"
@@ -2559,13 +2549,13 @@
     "message": "Check-out"
   },
   "t_event_assessment_qr_code_disabled_success_message": {
-    "message": "QR Check-in successfully disabled"
+    "message": "QR Code successfully disabled"
   },
   "t_event_assessment_qr_code_enable_success_message": {
-    "message": "QR Check-in successfully enabled"
+    "message": "QR Code successfully enabled"
   },
   "t_event_assessment_web_checkin_page": {
-    "message": "Web Check-in Page"
+    "message": "Web Check-in"
   },
   "t_event_check_in_attendee_already_exist": {
     "message": "This person has already checked in."
@@ -2598,7 +2588,7 @@
     "message": "Check-out Time"
   },
   "t_external_check_in_disable_manual_check_in": {
-    "message": "Manual Check-in Disabled"
+    "message": "Web Check-in Disabled"
   },
   "t_external_check_in_disable_qr": {
     "message": "QR Disabled"
@@ -2887,25 +2877,25 @@
     "message": "Saving"
   },
   "t_services_assessment_disable_qr_check_in": {
-    "message": "Disable QR Check-in"
+    "message": "Disable QR Code"
   },
   "t_services_assessment_enable_qr_check_in": {
-    "message": "Enable QR Check-in"
+    "message": "Enable QR Code"
   },
   "t_services_assessment_qr_code_disabled_success_message": {
-    "message": "QR Check-in successfully disabled"
+    "message": "QR Code successfully disabled"
   },
   "t_services_assessment_qr_code_enable_success_message": {
-    "message": "QR Check-in successfully enabled"
+    "message": "QR Code successfully enabled"
   },
   "t_services_assessment_web_checkin_page": {
-    "message": "Web Check-in Page"
+    "message": "Web Check-in"
   },
   "t_services_attendance_type": {
     "message": "Attendance Type"
   },
   "t_services_label_checkout_time": {
-    "message": "Check-out Time"
+    "message": "Check-out"
   },
   "t_services_service_qr_enabled": {
     "message": "QR Code"
@@ -2940,6 +2930,12 @@
   "t_service_provider_csv_column_time_spent_seconds": {
     "message": "Time Spent (Seconds)"
   },
+  "t_service_provider_feedback_yes": {
+    "message": "Yes"
+  },
+  "t_shared_average_rating": {
+    "message": "Average Rating"
+  },
   "t_shared_cancel": {
     "message": "Cancel"
   },
@@ -2972,6 +2968,9 @@
   },
   "t_shared_show": {
     "message": "Show"
+  },
+  "t_shared_web_checkin": {
+    "message": "Web Check-In"
   },
   "t_shared_wrong_dimensions": {
     "message": "Must be JPG or PNG, 720*400px, smaller than 300KB "

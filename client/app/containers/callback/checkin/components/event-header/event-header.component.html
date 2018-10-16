@@ -7,7 +7,9 @@
       </div>
       <div class="card__meta">
         <p class="card__title">{{ event.title }}</p>
-        <p class="card__date">{{ event.start | cpDatePipe:dateFormat }} - {{ event.end | cpDatePipe:dateFormat }}</p>
+        <p class="card__date">
+          {{ event.start | cpDatePipe:dateFormat : event.tz_zoneinfo_str }} - {{ event.end | cpDatePipe:dateFormat : event.tz_zoneinfo_str }}
+        </p>
       </div>
     </div>
   </div>

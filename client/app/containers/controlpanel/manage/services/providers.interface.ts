@@ -21,6 +21,8 @@ export default interface IServiceProvider {
 
   has_checkout: boolean;
 
+  has_feedback: boolean;
+
   campus_service_id: number;
 
   avg_rating_percent: number;
@@ -30,4 +32,4 @@ export default interface IServiceProvider {
   encrypted_campus_service_id: string;
 
   checkin_verification_methods: number[];
-}
+};
