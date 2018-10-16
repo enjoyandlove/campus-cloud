@@ -61,15 +61,16 @@
                     </span>
                   </a>
                 </div>
-                <div class="col-4" *ngIf="displayRatingColumn">
+                <div class="col-4">
                   <cp-stars
+                    [maxRate]="5"
                     [size]="listStarSize"
-                    [avgRate]="provider.avg_rating_percent"
-                    [maxRate]="5">
+                    *ngIf="provider.has_feedback"
+                    [avgRate]="provider.avg_rating_percent">
                   </cp-stars>
                 </div>
-                <div class="col-1" *ngIf="displayRatingColumn">
-                  <span>{{ provider.num_ratings }}</span>
+                <div class="col-1">
+                  <span>{{ provider.has_feedback ? provider.num_ratings : '---' }}</span>
                 </div>
                 <div [class]="[displayRatingColumn ? 'col-1' : 'col-1 offset-5']">
                   <span>{{ provider.total_visits }}</span>
