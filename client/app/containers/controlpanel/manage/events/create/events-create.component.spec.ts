@@ -68,34 +68,8 @@ describe('EventCreateComponent', () => {
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
           component.attendance = true;
+
           fixture.detectChanges();
-
-          // component.ngOnInit();
-
-          //   component.form = component.fb.group({
-          //     title: ['This is Event title'],
-          //     store_id: [2445],
-          //     location: ['Otto mass chemistry building'],
-          //     room_data: [802],
-          //     city: ['Montreal'],
-          //     province: [null],
-          //     country: [null],
-          //     address: [null],
-          //     postal_code: ['H3A'],
-          //     latitude: [component.school.latitude],
-          //     longitude: [component.school.longitude],
-          //     event_attendance: [EventAttendance.disabled],
-          //     start: [1523851200],
-          //     poster_url: ['image.jpeg'],
-          //     poster_thumb_url: ['image.jpeg'],
-          //     end: [1871304787],
-          //     description: ['This is event description.'],
-          //     event_feedback: [EventFeedback.enabled],
-          //     event_manager_id: [null],
-          //     attendance_manager_email: [null],
-          //     custom_basic_feedback_label: [null],
-          //     is_all_day: [isAllDay.disabled]
-          //   });
 
           spyOn(component, 'router');
           spyOn(component, 'buildHeader');

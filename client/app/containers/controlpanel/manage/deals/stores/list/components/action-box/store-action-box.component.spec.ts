@@ -30,20 +30,6 @@ describe('DealsStoreActionBoxComponent', () => {
     })
   );
 
-  // beforeEach(
-  //   async(async () => {
-  //     TestBed.configureTestingModule({
-  //       imports: [],
-  //       providers: []
-  //     }).compileComponents().then(() => {
-  //       fixture = TestBed.createComponent(StoreActionBoxComponent);
-  //       component = fixture.componentInstance;
-  //       spyOn(component.cpTracking, 'getEventProperties');
-  //       fixture.detectChanges();
-  //     })
-  //   })
-  // );
-
   it('onSearch', () => {
     spyOn(component.search, 'emit');
 
