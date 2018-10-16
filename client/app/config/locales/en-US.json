@@ -620,9 +620,6 @@
   "auth_reset_password": {
     "message": "Reset Password"
   },
-  "average_rating": {
-    "message": "Rating"
-  },
   "back": {
     "message": "Back"
   },
@@ -763,10 +760,10 @@
     "message": "Attendee List"
   },
   "checkin_manual_checkin": {
-    "message": "Web Check-in"
+    "message": "Manual Check-In"
   },
   "checkin_scannable_qr_code": {
-    "message": "QR code"
+    "message": "QR Code"
   },
   "clicks": {
     "message": "Clicks"
@@ -2559,7 +2556,7 @@
     "message": "Check-out"
   },
   "t_event_assessment_qr_code_disabled_success_message": {
-    "message": "QR Check-in successfully disabled"
+    "message": "QR Code successfully disabled"
   },
   "t_event_assessment_qr_code_enable_success_message": {
     "message": "QR Check-in successfully enabled"
@@ -2887,13 +2884,13 @@
     "message": "Saving"
   },
   "t_services_assessment_disable_qr_check_in": {
-    "message": "Disable QR Check-in"
+    "message": "Disable QR Code"
   },
   "t_services_assessment_enable_qr_check_in": {
-    "message": "Enable QR Check-in"
+    "message": "Enable QR Code"
   },
   "t_services_assessment_qr_code_disabled_success_message": {
-    "message": "QR Check-in successfully disabled"
+    "message": "QR Code successfully disabled"
   },
   "t_services_assessment_qr_code_enable_success_message": {
     "message": "QR Check-in successfully enabled"
@@ -2943,6 +2940,9 @@
   "t_service_provider_feedback_yes": {
     "message": "Yes"
   },
+  "t_shared_average_rating": {
+    "message": "Average Rating"
+  },
   "t_shared_cancel": {
     "message": "Cancel"
   },
@@ -2977,7 +2977,7 @@
     "message": "Show"
   },
   "t_shared_web_checkin": {
-    "message": "Web Check-in"
+    "message": "Web Check-In"
   },
   "t_shared_wrong_dimensions": {
     "message": "Must be JPG or PNG, 720*400px, smaller than 300KB "

@@ -620,9 +620,6 @@
   "auth_reset_password": {
     "message": "Réinitialiser mot de passe"
   },
-  "average_rating": {
-    "message": "Note"
-  },
   "back": {
     "message": "Retour"
   },
@@ -763,7 +760,7 @@
     "message": "Liste des présents"
   },
   "checkin_manual_checkin": {
-    "message": "Vérification de présence web"
+    "message": "Vérification de présence manuel"
   },
   "checkin_scannable_qr_code": {
     "message": "Code QR"
@@ -2889,9 +2886,6 @@
   "t_services_assessment_disable_qr_check_in": {
     "message": "Désactiver la vérification de présence"
   },
-  "t_services_assessment_enable_qr_check_in": {
-    "message": "Activer vérification de présence QR"
-  },
   "t_services_assessment_qr_code_disabled_success_message": {
     "message": "Code QR désactivé avec succès"
   },
@@ -2942,6 +2936,9 @@
   },
   "t_service_provider_feedback_yes": {
     "message": "Oui"
+  },
+  "t_shared_average_rating": {
+    "message": "Note"
   },
   "t_shared_cancel": {
     "message": "Annuler"
