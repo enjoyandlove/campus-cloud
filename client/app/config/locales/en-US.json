@@ -620,9 +620,6 @@
   "auth_reset_password": {
     "message": "Reset Password"
   },
-  "average_rating": {
-    "message": "Rating"
-  },
   "back": {
     "message": "Back"
   },
@@ -747,7 +744,7 @@
     "message": "Download QR Code"
   },
   "checkin_header_title": {
-    "message": "Check-in",
+    "message": "Web Check-in",
     "description": "Public Check-In Page (Title)\r\nhttps://ccstaging.oohlalamobile.com/#/cb/checkin/e/pNmRN94bVUbUI9qtz89i5A"
   },
   "checkin_instructions_one": {
@@ -763,10 +760,10 @@
     "message": "Attendee List"
   },
   "checkin_manual_checkin": {
-    "message": "Web Check-in"
+    "message": "Manual Check-In"
   },
   "checkin_scannable_qr_code": {
-    "message": "QR code"
+    "message": "QR Code"
   },
   "clicks": {
     "message": "Clicks"
@@ -1225,9 +1222,6 @@
     "message": "Method"
   },
   "events_check_in": {
-    "message": "Check-in"
-  },
-  "events_check_in_details": {
     "message": "Check-in"
   },
   "events_create_heading": {
@@ -2442,7 +2436,7 @@
     "message": "Check-in"
   },
   "t_events_assessment_add_check_in": {
-    "message": "Add Check-in"
+    "message": "Add Attendance"
   },
   "t_events_assessment_check_in_and_checkout": {
     "message": "Check-in & Check-out"
@@ -2451,10 +2445,10 @@
     "message": "Check-in Only"
   },
   "t_events_assessment_disable_qr_check_in": {
-    "message": "Disable QR Check-in"
+    "message": "Disable QR Code"
   },
   "t_events_assessment_enable_qr_check_in": {
-    "message": "Enable QR Check-in"
+    "message": "Enable QR Code"
   },
   "t_events_assessment_message_attendees": {
     "message": "Message Attendees"
@@ -2562,7 +2556,7 @@
     "message": "Check-out"
   },
   "t_event_assessment_qr_code_disabled_success_message": {
-    "message": "QR Check-in successfully disabled"
+    "message": "QR Code successfully disabled"
   },
   "t_event_assessment_qr_code_enable_success_message": {
     "message": "QR Check-in successfully enabled"
@@ -2890,13 +2884,13 @@
     "message": "Saving"
   },
   "t_services_assessment_disable_qr_check_in": {
-    "message": "Disable QR Check-in"
+    "message": "Disable QR Code"
   },
   "t_services_assessment_enable_qr_check_in": {
-    "message": "Enable QR Check-in"
+    "message": "Enable QR Code"
   },
   "t_services_assessment_qr_code_disabled_success_message": {
-    "message": "QR Check-in successfully disabled"
+    "message": "QR Code successfully disabled"
   },
   "t_services_assessment_qr_code_enable_success_message": {
     "message": "QR Check-in successfully enabled"
@@ -2946,6 +2940,9 @@
   "t_service_provider_feedback_yes": {
     "message": "Yes"
   },
+  "t_shared_average_rating": {
+    "message": "Average Rating"
+  },
   "t_shared_cancel": {
     "message": "Cancel"
   },
@@ -2978,6 +2975,9 @@
   },
   "t_shared_show": {
     "message": "Show"
+  },
+  "t_shared_web_checkin": {
+    "message": "Web Check-In"
   },
   "t_shared_wrong_dimensions": {
     "message": "Must be JPG or PNG, 720*400px, smaller than 300KB "

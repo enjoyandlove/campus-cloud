@@ -25,7 +25,7 @@
             </cp-stars>
           </p>
           <p>
-            {{ 'average_rating' | cpI18n }}:
+            {{ 't_shared_average_rating' | cpI18n }}:
             <strong *ngIf="event.rating_scale_maximum > -1">
               {{ ((event.rating_scale_maximum * event.avg_rating_percent) / 100).toFixed(1) }}
             </strong>
