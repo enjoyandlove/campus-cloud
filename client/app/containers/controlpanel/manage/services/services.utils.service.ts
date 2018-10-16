@@ -1,11 +1,11 @@
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import {
   HasData,
-  Feedback,
   Assessment,
-  ServiceFeedback,
+  serviceFeedback,
   ServiceAttendance
 } from './services.status';
 
@@ -15,17 +15,19 @@ import {
 } from '../../../../shared/utils/privileges';
 
 import { CPSession } from '../../../../session';
+import IServiceProvider from './providers.interface';
 import { Formats } from '../../../../shared/utils/csv';
-import { CheckInOutTime } from '../events/event.status';
 import { CPDate } from '../../../../shared/utils/date/date';
 import { CPI18nService } from '../../../../shared/services';
 import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 import { createSpreadSheet } from '../../../../shared/utils/csv/parser';
 import { HEADER_UPDATE, IHeader } from '../../../../reducers/header.reducer';
+import { attendanceType, CheckInMethod, CheckInOutTime } from '../events/event.status';
 
 @Injectable()
 export class ServicesUtilsService {
   constructor(
+    public fb: FormBuilder,
     public session: CPSession,
     public store: Store<IHeader>,
     public cpI18n: CPI18nService
@@ -35,12 +37,30 @@ export class ServicesUtilsService {
     return data ? HasData.yes : HasData.no;
   }
 
-  getFeedbackStatus(feedback) {
-    return feedback === ServiceFeedback.enabled ? Feedback.enabled : Feedback.disabled;
-  }
-
   getAssessmentStatus(assessment) {
     return assessment === ServiceAttendance.enabled ? Assessment.on : Assessment.off;
+  }
+
+  customValidator(controls: FormGroup): ValidationErrors | null {
+    const hasFeedback = controls.get('has_feedback').value;
+    const feedbackLabel = controls.get('custom_basic_feedback_label').value;
+
+    if (hasFeedback) {
+      return  feedbackLabel ? null : { feedbackLabelRequired: true };
+    }
+  }
+
+  getAttendanceFeedback() {
+    return [
+      {
+        label: this.cpI18n.translate('t_service_provider_feedback_yes'),
+        action: serviceFeedback.enabled
+      },
+      {
+        label: this.cpI18n.translate('no'),
+        action: serviceFeedback.disabled
+      },
+    ];
   }
 
   setEventProperties(data, service_id) {
@@ -50,9 +70,32 @@ export class ServicesUtilsService {
       phone: this.hasData(data.contactphone),
       website: this.hasData(data.website),
       location: this.hasData(data.location),
-      feedback: this.getFeedbackStatus(data.enable_feedback),
       assessment: this.getAssessmentStatus(data.service_attendance)
     };
+  }
+
+  getProviderForm(formData: IServiceProvider) {
+    const verificationMethods = formData
+      ? formData.checkin_verification_methods
+      : [CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app];
+
+    return this.fb.group(
+      {
+        checkin_verification_methods: [verificationMethods],
+        email: [formData ? formData.email : null, Validators.required],
+        custom_basic_feedback_label: [this.getCustomFeedbackLabel(formData)],
+        has_feedback: [formData ? formData.has_feedback : serviceFeedback.enabled],
+        has_checkout: [formData ? formData.has_checkout : attendanceType.checkInOnly],
+        provider_name: [formData ? formData.provider_name : null, Validators.required]
+      },
+      { validator: this.customValidator }
+    );
+  }
+
+  getCustomFeedbackLabel(formData: IServiceProvider) {
+    return formData ? formData.custom_basic_feedback_label
+      ? formData.custom_basic_feedback_label : null
+      : this.cpI18n.translate('t_events_default_feedback_question');
   }
 
   exportServiceProvidersAttendees(assessments) {
@@ -86,8 +129,9 @@ export class ServicesUtilsService {
         item.check_out_time_epoch !== CheckInOutTime.empty;
 
       return {
-        [this.cpI18n.translate('t_service_provider_csv_column_provider_name')]:
-        item.service_provider_name,
+        [this.cpI18n.translate(
+          't_service_provider_csv_column_provider_name'
+        )]: item.service_provider_name,
 
         [this.cpI18n.translate('t_service_provider_csv_column_first_name')]: item.firstname,
 
@@ -95,8 +139,9 @@ export class ServicesUtilsService {
 
         [this.cpI18n.translate('email')]: item.email,
 
-        [this.cpI18n.translate('services_label_checked_in_method')]
-          : check_in_method[item.check_in_method],
+        [this.cpI18n.translate('services_label_checked_in_method')]: check_in_method[
+          item.check_in_method
+        ],
 
         [this.cpI18n.translate('t_service_provider_csv_column_check_in_date')]: CPDate.fromEpoch(
           item.check_in_time,
@@ -115,12 +160,17 @@ export class ServicesUtilsService {
           : '',
 
         [this.cpI18n.translate('t_service_provider_csv_column_time_out')]: hasCheckOutTimeSpent
-          ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz)
-            .format(Formats.timeFormatLong) : '',
+          ? CPDate.fromEpoch(item.check_out_time_epoch, this.session.tz).format(
+              Formats.timeFormatLong
+            )
+          : '',
 
         [this.cpI18n.translate('t_service_provider_csv_column_time_spent')]: hasCheckOutTimeSpent
-          ? CPDate.getTimeDuration(timeSpentSeconds)
-            .format(Formats.timeDurationFormat, {trim: false, useGrouping: false}) : '',
+          ? CPDate.getTimeDuration(timeSpentSeconds).format(Formats.timeDurationFormat, {
+              trim: false,
+              useGrouping: false
+            })
+          : '',
 
         [this.cpI18n.translate(
           't_service_provider_csv_column_time_spent_seconds'
@@ -164,7 +214,7 @@ export class ServicesUtilsService {
 
     if (service.service_attendance) {
       const attendance = {
-        label: 'assessment',
+        label: 'service_provider',
         url: `/manage/services/${service.id}`
       };
 

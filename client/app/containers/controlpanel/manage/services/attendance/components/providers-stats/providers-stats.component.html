@@ -6,7 +6,7 @@
           <span>
             <div class="row">
               <div class="col-9 text-truncate">
-                {{ 'services_total_visits' | cpI18n }}
+                {{ 'services_visits' | cpI18n }}
               </div>
               <div class="col-3">
                 <strong>{{ service.total_visits }}</strong>
@@ -40,27 +40,27 @@
   <div class="col-4 text-center">
     <div class="cp-card cp-card--half-padding">
       <p class="header__digit">{{ service.num_ratings || 'N/A' }}</p>
-      <p>{{ 'services_total_responses' | cpI18n }}</p>
+      <p>{{ 'ratings' | cpI18n }}</p>
     </div>
   </div>
   <div class="col-4 text-center">
     <div class="cp-card cp-card--half-padding">
       <p
         class="header__digit"
-        *ngIf="service.enable_feedback !== feedbackEnabled">
-        N/A
+        *ngIf="service.service_attendance !== attendanceEnabled">
+        0
       </p>
 
       <p
         class="header__digit"
-        *ngIf="service.enable_feedback === feedbackEnabled">
+        *ngIf="service.service_attendance === attendanceEnabled">
         <cp-stars
           [size]="detailStarSize"
           [avgRate]="service.avg_rating_percent"
           [maxRate]="service.rating_scale_maximum">
         </cp-stars>
       </p>
-      <p>{{ 'average_rating' | cpI18n }}</p>
+      <p>{{ 't_shared_average_rating' | cpI18n }}</p>
     </div>
   </div>
 </div>

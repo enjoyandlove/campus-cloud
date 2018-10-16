@@ -19,7 +19,7 @@
         [avgRate]="provider.avg_rating_percent"
         [maxRate]="MAX_RATE">
       </cp-stars>
-      <p>{{ 'average_rating' | cpI18n }}
+      <p>{{ 't_shared_average_rating' | cpI18n }}
         {{ provider.avg_rating_percent !== -1 ? eventRating : '0.0' }}
       </p>
     </div>

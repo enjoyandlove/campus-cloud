@@ -300,10 +300,10 @@
     "message": "Évaluer étudiants"
   },
   "assess_average_rating": {
-    "message": "Note moyenne"
+    "message": "Note"
   },
   "assess_button_download_engagement_data": {
-    "message": "Télécharger les données d'implication"
+    "message": "Télécharger les implications"
   },
   "assess_checkin_date": {
     "message": "Date de présence"
@@ -357,7 +357,7 @@
     "message": "Mesurer l'engagement étudiant n'importe où sur le campus"
   },
   "assess_download_transcript": {
-    "message": "Télécharger fichier CSV"
+    "message": "Télécharger les données d'évaluation"
   },
   "assess_engagements_last_seven_days": {
     "message": "Implication (7 derniers jours)"
@@ -366,7 +366,7 @@
     "message": "Événements évalués"
   },
   "assess_event_rating_average": {
-    "message": "Note moyenne de l'événement"
+    "message": "Note de l'événement"
   },
   "assess_event_responses": {
     "message": "Réponses d'événements"
@@ -459,7 +459,7 @@
     "message": "# de présence aux services"
   },
   "assess_service_rating_average": {
-    "message": "Note moyenne du service"
+    "message": "Note du service"
   },
   "assess_service_responses": {
     "message": "Réponses de services"
@@ -620,9 +620,6 @@
   "auth_reset_password": {
     "message": "Réinitialiser mot de passe"
   },
-  "average_rating": {
-    "message": "Note moyenne"
-  },
   "back": {
     "message": "Retour"
   },
@@ -751,10 +748,10 @@
     "description": "Public Check-In Page (Title)\r\nhttps://ccstaging.oohlalamobile.com/#/cb/checkin/e/pNmRN94bVUbUI9qtz89i5A"
   },
   "checkin_instructions_one": {
-    "message": "Nous utilisons des codes QR pour aider les invités à enregistrer leur présence à un événement. Assurez-vous d'imprimer ou de partager le code QR avec votre organisateur de présence d'événement."
+    "message": "Utiliser des codes QR pour aider les invités à enregistrer leur présence à un événement. Imprimer ou partager le code QR avec l'organisateur de présence d'événement."
   },
   "checkin_instructions_three": {
-    "message": "Vous pouvez voir les statistiques de présence dans les informations de l'événement. Assurez-vous de revenir pour visualiser les retours et notes."
+    "message": "Vous pouvez voir les statistiques d'évaluation dans les informations de l'événement. Assurez-vous de revenir pour visualiser les retours et notes."
   },
   "checkin_instructions_two": {
     "message": "Les invités peuvent vérifier leur présence en scannant le code QR avec l'application. Les codes QR peuvent être imprimés ou affichés directement sur un ordinateur portable, un téléphone ou une tablette."
@@ -763,10 +760,10 @@
     "message": "Liste des présents"
   },
   "checkin_manual_checkin": {
-    "message": "Vérification de présence manuelle"
+    "message": "Vérification de présence manuel"
   },
   "checkin_scannable_qr_code": {
-    "message": "Vérification de présence automatique (Scanner code QR)"
+    "message": "Code QR"
   },
   "clicks": {
     "message": "Clics"
@@ -1112,7 +1109,7 @@
     "message": "Téléchargements"
   },
   "download_csv": {
-    "message": "Télécharger fichier CSV"
+    "message": "Télécharger les données d'évaluation"
   },
   "due_date": {
     "message": "Date limite"
@@ -1222,13 +1219,7 @@
     "message": "Créer événement"
   },
   "events_checked_in_method": {
-    "message": "Méthode de vérification de présence"
-  },
-  "events_check_in": {
-    "message": "Vérification de présence"
-  },
-  "events_check_in_details": {
-    "message": "Vérification de présence"
+    "message": "Méthode"
   },
   "events_create_heading": {
     "message": "Créer événement"
@@ -1931,7 +1922,7 @@
     "message": "Code QR"
   },
   "rating": {
-    "message": "Notes"
+    "message": "Note"
   },
   "ratings": {
     "message": "Notes"
@@ -2065,7 +2056,7 @@
     "message": "Télécharger les données d'évaluation"
   },
   "services_button_download_attendance_data": {
-    "message": "Télécharger les données de présence"
+    "message": "Télécharger les données d'évaluation"
   },
   "services_create_button_create": {
     "message": "Créer service"
@@ -2098,29 +2089,25 @@
     "message": "Le fichier contient des données pour %s service(s)"
   },
   "services_label_all_checkin_methods": {
-    "message": "Méthode de vérification de présence"
+    "message": "Méthode\n"
   },
   "services_label_attendee_name": {
-    "message": "Liste des participants"
+    "message": "Nom"
   },
   "services_label_banner": {
     "message": "Bannière du service"
   },
   "services_label_checked_in_method": {
-    "message": "Méthode de vérification de présence"
+    "message": "Méthode"
   },
   "services_label_checkin_time": {
-    "message": "Heure d'enregistrement"
-  },
-  "services_label_check_in_details": {
-    "message": "Vérification de présence",
-    "description": "Noun"
+    "message": "Vérification de présence"
   },
   "services_label_default_question": {
     "message": "Question de retour"
   },
   "services_label_description": {
-    "message": "Description du service"
+    "message": "Description"
   },
   "services_label_details": {
     "message": "Détails du service"
@@ -2139,7 +2126,7 @@
     "message": "Aucun services trouvés"
   },
   "services_providers_no_results": {
-    "message": "Il n'y a aucun fournisseur de service pour ce service. Utilisez \"Créer un fournisseur de service\" pour en créer un.\n\nLes fournisseurs de service sont utilisés pour suivre les vérifications de présence et rassembler le retour des étudiants."
+    "message": "Il n'y a aucun fournisseur de service pour ce service. Utilisez \"Créer un fournisseur de service\" pour en créer un.\n\nLes fournisseurs de service peuvent Évaler pour rassembler le retour des étudiants et suivre les vérifications de présence."
   },
   "services_provider_button_add_another": {
     "message": "Ajouter un autre fournisseur de service"
@@ -2160,13 +2147,10 @@
     "message": "Rechercher..."
   },
   "services_repeat_visits": {
-    "message": "Visites à répétition"
-  },
-  "services_total_responses": {
-    "message": "Total de réponses"
+    "message": "Vérifications de présence à répétition"
   },
   "services_total_visits": {
-    "message": "Total de vérification de présences"
+    "message": "Vérifications de présence"
   },
   "services_unique_visits": {
     "message": "Visiteurs uniques"
@@ -2306,7 +2290,7 @@
     "message": "(%s) Plus"
   },
   "total_ratings": {
-    "message": "Total de notes"
+    "message": "Notes"
   },
   "type": {
     "message": "Type"
@@ -2376,6 +2360,9 @@
   },
   "t_dashboard_top_orientation": {
     "message": "Palmarès des orientations"
+  },
+  "t_datepicker_clear": {
+    "message": "Clear"
   },
   "t_deals_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s?"
@@ -2565,7 +2552,7 @@
     "message": "Code QR d'entrée activé avec succès"
   },
   "t_event_assessment_web_checkin_page": {
-    "message": "Page de vérification de présence web"
+    "message": "Vérification de présence web"
   },
   "t_event_check_in_attendee_already_exist": {
     "message": "Cette personne s'est déjà enregistrée."
@@ -2598,7 +2585,7 @@
     "message": "Heure de sortie"
   },
   "t_external_check_in_disable_manual_check_in": {
-    "message": "Enregistrement manuel désactivé"
+    "message": "Enregistrement web désactivé"
   },
   "t_external_check_in_disable_qr": {
     "message": "Code QR désactivé"
@@ -2889,9 +2876,6 @@
   "t_services_assessment_disable_qr_check_in": {
     "message": "Désactiver la vérification de présence"
   },
-  "t_services_assessment_enable_qr_check_in": {
-    "message": "Activer vérification de présence QR"
-  },
   "t_services_assessment_qr_code_disabled_success_message": {
     "message": "Code QR désactivé avec succès"
   },
@@ -2899,13 +2883,13 @@
     "message": "Code QR d'entrée activé avec succès"
   },
   "t_services_assessment_web_checkin_page": {
-    "message": "Page de vérification de présence web"
+    "message": "Vérification de présence web"
   },
   "t_services_attendance_type": {
     "message": "Type de présence"
   },
   "t_services_label_checkout_time": {
-    "message": "Heure de sortie"
+    "message": "Sortie"
   },
   "t_services_service_qr_enabled": {
     "message": "Code QR"
@@ -2940,6 +2924,12 @@
   "t_service_provider_csv_column_time_spent_seconds": {
     "message": "Temps passé (secondes)"
   },
+  "t_service_provider_feedback_yes": {
+    "message": "Oui"
+  },
+  "t_shared_average_rating": {
+    "message": "Note"
+  },
   "t_shared_cancel": {
     "message": "Annuler"
   },
@@ -2972,6 +2962,9 @@
   },
   "t_shared_show": {
     "message": "Montrer"
+  },
+  "t_shared_web_checkin": {
+    "message": "Vérification de présence"
   },
   "t_shared_wrong_dimensions": {
     "message": "Doit être en JPG ou PNG, 720*400px, moins de 300Ko"

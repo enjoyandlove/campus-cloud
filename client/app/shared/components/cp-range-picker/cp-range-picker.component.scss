@@ -8,6 +8,10 @@
     vertical-align: -4px;
   }
 
+  i.position-left {
+    float: left;
+  }
+
   &--content {
     @include card-shadow();
 

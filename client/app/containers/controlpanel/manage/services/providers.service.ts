@@ -26,8 +26,7 @@ export class ProvidersService extends HTTPService {
     return super.post(url, data, search);
   }
 
-  updateProvider(data: any, search?: HttpParams, id?: number) {
-    const providerId = id ? id : '';
+  updateProvider(data: any, providerId: number, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_PROVIDER}/${providerId}`;
 
     return super.update(url, data, search);

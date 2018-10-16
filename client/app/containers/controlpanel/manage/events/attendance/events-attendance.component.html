@@ -6,13 +6,13 @@
       <div class="col-4 text-center">
         <div class="cp-card">
           <p class="header__digit">{{ event.verified_checkins }}</p>
-          <p>{{ 'events_check_in' | cpI18n }}</p>
+          <p>{{ 't_shared_web_checkin' | cpI18n }}</p>
         </div>
       </div>
       <div class="col-4 text-center">
         <div class="cp-card">
           <p class="header__digit">{{ event.num_ratings }}</p>
-          <p>{{ 'responses' | cpI18n }}</p>
+          <p>{{ 'ratings' | cpI18n }}</p>
         </div>
       </div>
       <div class="col-4 text-center">
@@ -25,7 +25,7 @@
             </cp-stars>
           </p>
           <p>
-            {{ 'average_rating' | cpI18n }}:
+            {{ 't_shared_average_rating' | cpI18n }}:
             <strong *ngIf="event.rating_scale_maximum > -1">
               {{ ((event.rating_scale_maximum * event.avg_rating_percent) / 100).toFixed(1) }}
             </strong>
