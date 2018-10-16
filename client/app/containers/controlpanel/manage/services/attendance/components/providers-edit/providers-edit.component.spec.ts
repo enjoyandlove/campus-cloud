@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
+import { StoreModule } from '@ngrx/store';
 
 import { reducers } from '../../../../../../../reducers';
 import { CPSession } from '../../../../../../../session';
@@ -9,13 +9,13 @@ import { ServicesModule } from '../../../services.module';
 import { ProvidersService } from '../../../providers.service';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { ServicesUtilsService } from '../../../services.utils.service';
-import { ServicesProviderAddComponent } from './providers-add.component';
+import { ServiceProvidersEditComponent } from './providers-edit.component';
 
 class MockService {
   dummy;
 
-  createProvider(body: any, search: any) {
-    this.dummy = [body, search];
+  updateProvider(body: any, providerId: number, search: any) {
+    this.dummy = [body, providerId, search];
 
     return observableOf({});
   }
@@ -23,16 +23,17 @@ class MockService {
 
 const mockProvider = {
   has_checkout: false,
+  has_feedback: true,
   provider_name: 'Hello World!',
   email: 'helloworld@gmail.com',
   checkin_verification_methods: [1, 2, 3],
   custom_basic_feedback_label: 'hello world'
 };
 
-describe('ServicesProviderAddComponent', () => {
+describe('ServicesProviderUpdateComponent', () => {
   let spy;
-  let component: ServicesProviderAddComponent;
-  let fixture: ComponentFixture<ServicesProviderAddComponent>;
+  let component: ServiceProvidersEditComponent;
+  let fixture: ComponentFixture<ServiceProvidersEditComponent>;
 
   beforeEach(
     async(() => {
@@ -53,12 +54,17 @@ describe('ServicesProviderAddComponent', () => {
       })
         .compileComponents()
         .then(() => {
-          fixture = TestBed.createComponent(ServicesProviderAddComponent);
+          fixture = TestBed.createComponent(ServiceProvidersEditComponent);
 
           component = fixture.componentInstance;
           component.service = {
             ...component.service,
             id: 1253
+          };
+
+          component.provider = {
+            ...component.provider,
+            ...mockProvider
           };
 
           component.ngOnInit();
@@ -67,30 +73,23 @@ describe('ServicesProviderAddComponent', () => {
   );
 
   it('form validation should fail required fields missing', () => {
+    component.form.controls['email'].setValue(null);
+    component.form.controls['provider_name'].setValue(null);
+
     expect(component.form.valid).toBe(false);
   });
 
-  it('should add service provider', () => {
-    spyOn(component, 'trackEvent');
-    spyOn(component.created, 'emit');
-    spy = spyOn(component.providersService, 'createProvider')
+  it('should update service provider', () => {
+    spyOn(component.edited, 'emit');
+    spy = spyOn(component.providersService, 'updateProvider')
       .and.returnValue(observableOf(mockProvider));
-
-    component.form.controls['email'].setValue(mockProvider.email);
-    component.form.controls['has_checkout'].setValue(mockProvider.has_checkout);
-    component.form.controls['provider_name'].setValue(mockProvider.provider_name);
-
-    component.form.controls['checkin_verification_methods']
-      .setValue(mockProvider.checkin_verification_methods);
-    component.form.controls['custom_basic_feedback_label']
-      .setValue(mockProvider.custom_basic_feedback_label);
 
     component.onSubmit();
 
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledTimes(1);
-    expect(component.created.emit).toHaveBeenCalled();
-    expect(component.created.emit).toHaveBeenCalledTimes(1);
-    expect(component.created.emit).toHaveBeenCalledWith(mockProvider);
+    expect(component.edited.emit).toHaveBeenCalled();
+    expect(component.edited.emit).toHaveBeenCalledTimes(1);
+    expect(component.edited.emit).toHaveBeenCalledWith(mockProvider);
   });
 });

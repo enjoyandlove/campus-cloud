@@ -1,20 +1,19 @@
 import {
-  Component,
-  OnInit,
   Input,
+  OnInit,
   Output,
-  EventEmitter,
-  HostListener,
-  ElementRef
+  Component,
+  ViewChild,
+  EventEmitter
 } from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { FormGroup } from '@angular/forms';
 
+import { Feedback } from '../../../services.status';
+import { IService } from '../../../service.interface';
 import { ProvidersService } from '../../../providers.service';
-import { Feedback, ServiceFeedback } from '../../../services.status';
-import { EventUtilService } from '../../../../events/events.utils.service';
-import { attendanceType, CheckInMethod } from '../../../../events/event.status';
+import { ServicesUtilsService } from '../../../services.utils.service';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
 
@@ -26,15 +25,17 @@ declare var $: any;
   styleUrls: ['./providers-add.component.scss']
 })
 export class ServicesProviderAddComponent implements OnInit {
-  @Input() service;
+  @ViewChild('createForm') createForm;
+
+  @Input() service: IService;
 
   @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
-  serviceQRCodes;
-  attendanceTypes;
+  formErrors;
+  buttonData;
+  errorMessage;
   form: FormGroup;
-  serviceAcceptsFeedback;
 
   eventProperties = {
     feedback: null,
@@ -43,31 +44,36 @@ export class ServicesProviderAddComponent implements OnInit {
   };
 
   constructor(
-    private el: ElementRef,
-    public fb: FormBuilder,
     public cpI18n: CPI18nService,
-    public utils: EventUtilService,
+    public utils: ServicesUtilsService,
     public cpTracking: CPTrackingService,
     public providersService: ProvidersService
   ) {}
 
-  @HostListener('document:click', ['$event'])
-  onClick(event) {
-    // out of modal reset form
-    if (event.target.contains(this.el.nativeElement)) {
-      this.resetModal();
-    }
-  }
-
   onSubmit() {
+    this.formErrors = false;
+
+    if (!this.form.valid) {
+      this.formErrors = true;
+      this.enableSaveButton();
+
+      return;
+    }
+
     const search = new HttpParams().append('service_id', this.service.id.toString());
 
-    this.providersService.createProvider(this.form.value, search).subscribe((res) => {
+    this.providersService.createProvider(this.form.value, search).subscribe(
+      (res) => {
       this.trackEvent(res);
       this.form.reset();
       $('#createProvider').modal('hide');
       this.created.emit(res);
-    });
+    },
+      (_) => {
+        this.formErrors = true;
+        this.enableSaveButton();
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
+      });
   }
 
   trackEvent(data) {
@@ -93,38 +99,20 @@ export class ServicesProviderAddComponent implements OnInit {
     $('#createProvider').modal('hide');
   }
 
-  onSelectedAttendanceType(hasCheckout: boolean): void {
-    this.form.controls['has_checkout'].setValue(hasCheckout);
-  }
-
-  onSelectedQRCode(isEnabled: boolean): void {
-    const verificationMethods = this.form.controls['checkin_verification_methods'].value;
-
-    if (isEnabled && !verificationMethods.includes(CheckInMethod.app)) {
-      verificationMethods.push(CheckInMethod.app);
-    } else if (!isEnabled && verificationMethods.includes(CheckInMethod.app)) {
-      verificationMethods.pop(CheckInMethod.app);
-    }
+  enableSaveButton() {
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: false
+    };
   }
 
   ngOnInit() {
-    this.serviceQRCodes = this.utils.getQROptions();
-    this.attendanceTypes = this.utils.getAttendanceTypeOptions();
+    this.form = this.utils.getProviderForm(null);
 
-    this.form = this.fb.group({
-      email: [null, Validators.required],
-      has_checkout: [attendanceType.checkInOnly],
-      provider_name: [null, Validators.required],
-      custom_basic_feedback_label: [null, Validators.required],
-      checkin_verification_methods: [[CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]]
-    });
-
-    this.serviceAcceptsFeedback = this.service.enable_feedback === ServiceFeedback.enabled;
-
-    if (!this.serviceAcceptsFeedback) {
-      this.form.controls['custom_basic_feedback_label'].setValue(
-        this.cpI18n.translate('services_default_feedback_question')
-      );
-    }
+    this.buttonData = {
+      class: 'primary',
+      disabled: false,
+      text: this.cpI18n.translate('save')
+    };
   }
 }

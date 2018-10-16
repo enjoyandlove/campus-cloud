@@ -1,24 +1,19 @@
-import { BehaviorSubject, Observable, throwError as observableThrowError } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { catchError, map, startWith } from 'rxjs/operators';
-import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { IService } from '../service.interface';
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
+import { ServiceAttendance } from '../services.status';
 import { CPSession, ISchool } from '../../../../../session';
 import { ServicesUtilsService } from '../services.utils.service';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
-
-const ATTENDANCE_ENABLED = 1;
-const ATTENDANCE_DISABLED = 0;
-
-const FEEDBACK_ENABLED = 1;
-const FEEDBACK_DISABLED = 0;
 
 @Component({
   selector: 'cp-services-create',
@@ -26,11 +21,9 @@ const FEEDBACK_DISABLED = 0;
   styleUrls: ['./services-create.component.scss']
 })
 export class ServicesCreateComponent implements OnInit {
-  @Input() toolTipContent: IToolTipContent;
-
-  feedback;
-  category;
   buttonData;
+  errorMessage;
+  categoryTooltip;
   storeId: number;
   school: ISchool;
   form: FormGroup;
@@ -46,33 +39,21 @@ export class ServicesCreateComponent implements OnInit {
     phone: null,
     email: null,
     website: null,
-    feedback: null,
     location: null,
     service_id: null,
     assessment: null,
     category_name: null
   };
 
-  feedbackOptions = [
-    {
-      label: this.cpI18n.translate('service_enabled'),
-      value: FEEDBACK_ENABLED
-    },
-    {
-      label: this.cpI18n.translate('services_disabled'),
-      value: FEEDBACK_DISABLED
-    }
-  ];
-
   constructor(
-    private router: Router,
+    public router: Router,
     private fb: FormBuilder,
-    private session: CPSession,
+    public session: CPSession,
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
     private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
-    private servicesService: ServicesService
+    public servicesService: ServicesService
   ) {
     this.buildHeader();
     this.categories$ = this.servicesService.getCategories().pipe(
@@ -188,64 +169,28 @@ export class ServicesCreateComponent implements OnInit {
       return;
     }
 
-    const data = Object.assign(this.form.value);
+    const data = this.form.value;
+    data['school_id'] = this.school.id;
 
-    const { service_attendance } = data;
+    this.servicesService.createService(data).subscribe(
+      (service: IService) => {
+        const url = service.service_attendance ? '/info' : '';
 
-    if (service_attendance === ATTENDANCE_DISABLED || service_attendance == null) {
-      data.enable_feedback = null;
-    }
-
-    this.servicesService
-      .createService({
-        school_id: this.school.id,
-        name: data.name,
-        logo_url: data.logo_url,
-        category: data.category,
-        description: data.description,
-        secondary_name: data.secondary_name,
-        email: data.email,
-        website: data.website,
-        contactphone: data.contactphone,
-        address: data.address,
-        city: data.city,
-        province: data.province,
-        country: data.country,
-        postal_code: data.postal_code,
-        latitude: data.latitude,
-        longitude: data.longitude,
-        location: data.location,
-        room_data: data.room_data,
-        enable_feedback: data.enable_feedback,
-        service_attendance: data.service_attendance,
-        rating_scale_maximum: data.rating_scale_maximum,
-        default_basic_feedback_label: data.default_basic_feedback_label
-      })
-      .pipe(catchError((err) => observableThrowError(err)))
-      .subscribe((service: any) => {
         this.trackEvent(service, service.id);
-        if (service.service_attendance) {
-          this.router.navigate(['/manage/services/' + service.id]);
-
-          return;
-        }
-
-        this.router.navigate(['/manage/services/' + service.id + '/info']);
+        this.router.navigate(['/manage/services/' + service.id + url]);
+      },
+      (_) => {
+        this.enableSaveButton();
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
       });
   }
 
   onToggleAttendance(event) {
-    if (event) {
-      this.form.controls['default_basic_feedback_label'].setValue(
-        this.cpI18n.translate('services_default_feedback_question')
-      );
-    } else {
-      this.form.controls['default_basic_feedback_label'].setValue(null);
-    }
+    const serviceAttendance = event
+      ? ServiceAttendance.enabled
+      : ServiceAttendance.disabled;
 
-    this.form.controls['service_attendance'].setValue(
-      event ? ATTENDANCE_ENABLED : ATTENDANCE_DISABLED
-    );
+    this.form.controls['service_attendance'].setValue(serviceAttendance);
   }
 
   onLocationToggle(value) {
@@ -285,16 +230,20 @@ export class ServicesCreateComponent implements OnInit {
     );
   }
 
+  enableSaveButton() {
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: false
+    };
+  }
+
   ngOnInit() {
-    this.feedback = Object.assign({}, this.feedback, {
-      content: this.cpI18n.translate('manage_create_service_feedback_tooltip')
-    });
-
-    this.category = Object.assign({}, this.category, {
-      content: this.cpI18n.translate('manage_create_service_category_tooltip')
-    });
-
     this.school = this.session.g.get('school');
+
+    this.categoryTooltip = {
+      ...this.categoryTooltip,
+      content: this.cpI18n.translate('manage_create_service_category_tooltip')
+    };
 
     this.buttonData = {
       disabled: true,
@@ -309,33 +258,33 @@ export class ServicesCreateComponent implements OnInit {
     });
 
     this.form = this.fb.group({
+      city: [null],
+      email: [null],
+      latitude: [0],
+      longitude: [0],
+      address: [null],
+      country: [null],
+      website: [null],
+      location: [null],
+      province: [null],
+      room_data: [null],
+      description: [null],
+      postal_code: [null],
+      contactphone: [null],
+      secondary_name: [null],
+      service_attendance: [null],
+      rating_scale_maximum: [null],
       name: [null, Validators.required],
       logo_url: [null, Validators.required],
       category: [null, Validators.required],
-      location: [null],
-      room_data: [null],
-      address: [null],
-      description: [null],
-      email: [null],
-      website: [null],
-      contactphone: [null],
-      secondary_name: [null],
-      city: [null],
-      province: [null],
-      country: [null],
-      postal_code: [null],
-      latitude: [0],
-      longitude: [0],
-      service_attendance: [null],
-      rating_scale_maximum: [null],
-      default_basic_feedback_label: [null],
-      enable_feedback: [FEEDBACK_ENABLED]
+      default_basic_feedback_label: [this.cpI18n.translate('services_default_feedback_question')]
     });
 
     this.form.valueChanges.subscribe((_) => {
-      this.buttonData = Object.assign({}, this.buttonData, {
+      this.buttonData = {
+        ...this.buttonData,
         disabled: !this.form.valid
-      });
+      };
     });
   }
 }

@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { ServiceFeedback } from '../../../services.status';
+import { IService } from '../../../service.interface';
+import { ServiceAttendance } from '../../../services.status';
 
 @Component({
   selector: 'cp-providers-stats',
@@ -8,10 +9,9 @@ import { ServiceFeedback } from '../../../services.status';
   styleUrls: ['./providers-stats.component.scss']
 })
 export class ServicesProviderStatsComponent {
+  @Input() service: IService;
 
-  @Input() service;
-
-  feedbackEnabled = ServiceFeedback.enabled;
+  attendanceEnabled = ServiceAttendance.enabled;
 
   constructor() {}
 }
