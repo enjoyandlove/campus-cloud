@@ -34,23 +34,5 @@ fdescribe('EngagementStatsComponent', () => {
     it('should init', () => {
       expect(component).toBeTruthy();
     });
-    it('should init', () => {
-      expect(component).toBeTruthy();
-    });
-    it('should init', () => {
-      expect(component).toBeTruthy();
-    });
-    it('should init', () => {
-      expect(component).toBeTruthy();
-    });
-    it('should init', () => {
-      expect(component).toBeTruthy();
-    });
-    it('should init', () => {
-      expect(component).toBeTruthy();
-    });
-    it('should init', () => {
-      expect(component).toBeTruthy();
-    });
   });
 });
