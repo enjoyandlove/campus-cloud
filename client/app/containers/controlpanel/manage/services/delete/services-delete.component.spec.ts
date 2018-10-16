@@ -26,15 +26,8 @@ describe('ServicesDeleteComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [
-          ServicesModule,
-          HttpClientModule,
-          RouterTestingModule
-        ],
-        providers: [
-          CPI18nService,
-          { provide: ServicesService, useClass: MockService }
-        ]
+        imports: [ServicesModule, HttpClientModule, RouterTestingModule],
+        providers: [CPI18nService, { provide: ServicesService, useClass: MockService }]
       })
         .compileComponents()
         .then(() => {
@@ -47,8 +40,7 @@ describe('ServicesDeleteComponent', () => {
           };
 
           spyOn(component.deleted, 'emit');
-          spy = spyOn(component.servicesService, 'deleteService')
-            .and.returnValue(observableOf({}));
+          spy = spyOn(component.servicesService, 'deleteService').and.returnValue(observableOf({}));
 
           component.ngOnInit();
         });

@@ -195,7 +195,8 @@ export class EventsCreateComponent implements OnInit {
   toggleEventAttendance(value) {
     value = value ? EventAttendance.enabled : EventAttendance.disabled;
 
-    const feedbackQuestion = !value ? ''
+    const feedbackQuestion = !value
+      ? ''
       : this.cpI18n.translate('t_events_default_feedback_question');
 
     this.form.controls['event_feedback'].setValue(value);
@@ -271,7 +272,6 @@ export class EventsCreateComponent implements OnInit {
     if (this.form.controls['is_all_day'].value) {
       this.updateTime();
     }
-
     if (this.form.controls['end'].value <= this.form.controls['start'].value) {
       this.isDateError = true;
       this.formError = true;
@@ -350,7 +350,8 @@ export class EventsCreateComponent implements OnInit {
   }
 
   onEventFeedbackChange(option) {
-    const feedbackQuestion = !option.action ? ''
+    const feedbackQuestion = !option.action
+      ? ''
       : this.cpI18n.translate('t_events_default_feedback_question');
 
     this.form.controls['event_feedback'].setValue(option.action);

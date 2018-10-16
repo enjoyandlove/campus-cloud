@@ -61,7 +61,7 @@ describe('ServicesCreateComponent', () => {
           CPI18nService,
           ServicesUtilsService,
           { provide: ServicesService, useClass: MockService }
-          ]
+        ]
       })
         .compileComponents()
         .then(() => {

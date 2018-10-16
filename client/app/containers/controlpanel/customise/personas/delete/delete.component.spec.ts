@@ -32,7 +32,6 @@ describe('PersonasDeleteComponent', () => {
 
       comp.session.g.set('school', { id: 157 });
       comp.persona = mockPersonas[0];
-
       fixture.detectChanges();
     })
   );
@@ -98,7 +97,7 @@ describe('PersonasDeleteComponent', () => {
     );
   });
 
-  xit('onDelete users persona non-empty', () => {
+  it('onDelete users persona non-empty', () => {
     const spyOnerrorEvent = spyOn(comp.errorEvent, 'emit');
 
     spyOn(comp.service, 'deletePersonaById').and.returnValue(
@@ -108,6 +107,8 @@ describe('PersonasDeleteComponent', () => {
     comp.onDelete();
 
     expect(spyOnerrorEvent).toHaveBeenCalled();
-    expect(spyOnerrorEvent).toHaveBeenCalledWith('sopa');
+    expect(spyOnerrorEvent).toHaveBeenCalledWith(
+      comp.cpI18n.translate('t_personas_delete_error_persona_non_empty')
+    );
   });
 });

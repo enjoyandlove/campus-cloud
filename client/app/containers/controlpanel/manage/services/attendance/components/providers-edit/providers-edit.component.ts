@@ -1,11 +1,4 @@
-import {
-  Input,
-  OnInit,
-  Output,
-  Component,
-  ViewChild,
-  EventEmitter
-} from '@angular/core';
+import { Input, OnInit, Output, Component, ViewChild, EventEmitter } from '@angular/core';
 
 import { HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -62,18 +55,18 @@ export class ServiceProvidersEditComponent implements OnInit {
 
     const search = new HttpParams().append('service_id', this.service.id.toString());
 
-    this.providersService.updateProvider(this.form.value, this.provider.id, search)
-      .subscribe(
-        (res) => {
-          this.form.reset();
-          this.resetModal();
-          this.edited.emit(res);
-        },
-        () => {
-          this.formErrors = true;
-          this.enableSaveButton();
-          this.errorMessage = this.cpI18n.translate('something_went_wrong');
-        });
+    this.providersService.updateProvider(this.form.value, this.provider.id, search).subscribe(
+      (res) => {
+        this.form.reset();
+        this.resetModal();
+        this.edited.emit(res);
+      },
+      () => {
+        this.formErrors = true;
+        this.enableSaveButton();
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
+      }
+    );
   }
 
   enableSaveButton() {

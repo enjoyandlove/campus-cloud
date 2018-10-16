@@ -195,15 +195,15 @@ describe('EventAttendanceComponent', () => {
     expect(component.onSuccessQRCheckInMessage).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledWith(data, component.eventId, search);
     expect(component.onSuccessQRCheckInMessage).toHaveBeenCalledTimes(1);
-
   });
 
   it('messageAttendee', () => {
     component.ngOnInit();
     component.canMessage = false;
 
-    const tooltipText = component.cpI18n
-      .translate('t_events_attendance_no_permission_tooltip_text');
+    const tooltipText = component.cpI18n.translate(
+      't_events_attendance_no_permission_tooltip_text'
+    );
 
     component.messageAttendee(null);
 
@@ -234,8 +234,9 @@ describe('EventAttendanceComponent', () => {
     component.ngOnInit();
     component.canMessage = false;
 
-    const tooltipText = component.cpI18n
-      .translate('t_events_attendance_no_permission_tooltip_text');
+    const tooltipText = component.cpI18n.translate(
+      't_events_attendance_no_permission_tooltip_text'
+    );
 
     component.messageAttendee(null);
 
@@ -267,7 +268,7 @@ describe('EventAttendanceComponent', () => {
 
   it('should set showStudentIds true', () => {
     component.session.g.set('user', {
-      school_level_privileges: { 157: { 33: {r: true, w: true } } }
+      school_level_privileges: { 157: { 33: { r: true, w: true } } }
     });
     component.session.g.set('school', {
       id: 157,
@@ -278,7 +279,7 @@ describe('EventAttendanceComponent', () => {
 
     component.isClub = true;
     component.session.g.set('user', {
-      school_level_privileges: { 157: { 22: {r: true, w: true } } }
+      school_level_privileges: { 157: { 22: { r: true, w: true } } }
     });
     component.ngOnInit();
     expect(component.showStudentIds).toBe(true);
@@ -286,7 +287,7 @@ describe('EventAttendanceComponent', () => {
     component.isClub = false;
     component.isService = true;
     component.session.g.set('user', {
-      school_level_privileges: { 157: { 24: {r: true, w: true } } }
+      school_level_privileges: { 157: { 24: { r: true, w: true } } }
     });
     component.ngOnInit();
     expect(component.showStudentIds).toBe(true);
@@ -294,7 +295,7 @@ describe('EventAttendanceComponent', () => {
     component.isService = false;
     component.isAthletic = isClubAthletic.athletic;
     component.session.g.set('user', {
-      school_level_privileges: { 157: { 28: {r: true, w: true } } }
+      school_level_privileges: { 157: { 28: { r: true, w: true } } }
     });
     component.ngOnInit();
     expect(component.showStudentIds).toBe(true);
@@ -302,7 +303,7 @@ describe('EventAttendanceComponent', () => {
     component.isAthletic = isClubAthletic.club;
     component.isOrientation = true;
     component.session.g.set('user', {
-      school_level_privileges: { 157: { 17: {r: true, w: true } } }
+      school_level_privileges: { 157: { 17: { r: true, w: true } } }
     });
     component.ngOnInit();
     expect(component.showStudentIds).toBe(true);
@@ -310,7 +311,7 @@ describe('EventAttendanceComponent', () => {
 
   it('should set showStudentIds false', () => {
     component.session.g.set('user', {
-      school_level_privileges: { 157: { 22: {r: true, w: true } } }
+      school_level_privileges: { 157: { 22: { r: true, w: true } } }
     });
     component.session.g.set('school', {
       id: 157,

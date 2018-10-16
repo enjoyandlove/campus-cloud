@@ -2,12 +2,7 @@ import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/f
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import {
-  HasData,
-  Assessment,
-  serviceFeedback,
-  ServiceAttendance
-} from './services.status';
+import { HasData, Assessment, serviceFeedback, ServiceAttendance } from './services.status';
 
 import {
   canSchoolReadResource,
@@ -46,7 +41,7 @@ export class ServicesUtilsService {
     const feedbackLabel = controls.get('custom_basic_feedback_label').value;
 
     if (hasFeedback) {
-      return  feedbackLabel ? null : { feedbackLabelRequired: true };
+      return feedbackLabel ? null : { feedbackLabelRequired: true };
     }
   }
 
@@ -59,7 +54,7 @@ export class ServicesUtilsService {
       {
         label: this.cpI18n.translate('no'),
         action: serviceFeedback.disabled
-      },
+      }
     ];
   }
 
@@ -93,8 +88,8 @@ export class ServicesUtilsService {
   }
 
   getCustomFeedbackLabel(formData: IServiceProvider) {
-    return formData ? formData.custom_basic_feedback_label
-      ? formData.custom_basic_feedback_label : null
+    return formData
+      ? formData.custom_basic_feedback_label ? formData.custom_basic_feedback_label : null
       : this.cpI18n.translate('t_events_default_feedback_question');
   }
 

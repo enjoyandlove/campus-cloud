@@ -19,7 +19,6 @@ interface IDateRange {
   styleUrls: ['./providers-attendees-action-box.component.scss']
 })
 export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
-
   @Input() provider;
   @Input() noAttendees;
   @Input() updateQrCode = new BehaviorSubject(null);

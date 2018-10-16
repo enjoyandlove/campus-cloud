@@ -58,7 +58,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     private route: ActivatedRoute,
     private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
-    public servicesService: ServicesService,
+    public servicesService: ServicesService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -125,7 +125,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       longitude: [service.longitude],
       service_attendance: [service.service_attendance],
       rating_scale_maximum: [service.rating_scale_maximum],
-      default_basic_feedback_label: [service.default_basic_feedback_label],
+      default_basic_feedback_label: [service.default_basic_feedback_label]
     });
 
     this.form.valueChanges.subscribe((_) => {
@@ -145,19 +145,18 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    this.servicesService
-      .updateService(this.form.value, this.serviceId)
-      .subscribe(
-        (service: any) => {
-          const route = !service.service_attendance ? '/info' : '';
+    this.servicesService.updateService(this.form.value, this.serviceId).subscribe(
+      (service: any) => {
+        const route = !service.service_attendance ? '/info' : '';
 
-          this.trackEvent(this.form.value);
-          this.router.navigate(['/manage/services/' + this.serviceId + route]);
-        },
-        (_) => {
-          this.enableSaveButton();
-          this.errorMessage = this.cpI18n.translate('something_went_wrong');
-        });
+        this.trackEvent(this.form.value);
+        this.router.navigate(['/manage/services/' + this.serviceId + route]);
+      },
+      (_) => {
+        this.enableSaveButton();
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
+      }
+    );
   }
 
   getFromArray(arr: Array<any>, key: string, val: string) {
@@ -232,9 +231,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   onToggleAttendance(event) {
-    const serviceAttendance = event
-      ? ServiceAttendance.enabled
-      : ServiceAttendance.disabled;
+    const serviceAttendance = event ? ServiceAttendance.enabled : ServiceAttendance.disabled;
 
     const feedbackLabel = !event
       ? null

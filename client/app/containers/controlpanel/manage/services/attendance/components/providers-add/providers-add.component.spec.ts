@@ -49,7 +49,8 @@ describe('ServicesProviderAddComponent', () => {
           CPSession,
           CPI18nService,
           ServicesUtilsService,
-          { provide: ProvidersService, useClass: MockService }]
+          { provide: ProvidersService, useClass: MockService }
+        ]
       })
         .compileComponents()
         .then(() => {
@@ -73,17 +74,20 @@ describe('ServicesProviderAddComponent', () => {
   it('should add service provider', () => {
     spyOn(component, 'trackEvent');
     spyOn(component.created, 'emit');
-    spy = spyOn(component.providersService, 'createProvider')
-      .and.returnValue(observableOf(mockProvider));
+    spy = spyOn(component.providersService, 'createProvider').and.returnValue(
+      observableOf(mockProvider)
+    );
 
     component.form.controls['email'].setValue(mockProvider.email);
     component.form.controls['has_checkout'].setValue(mockProvider.has_checkout);
     component.form.controls['provider_name'].setValue(mockProvider.provider_name);
 
-    component.form.controls['checkin_verification_methods']
-      .setValue(mockProvider.checkin_verification_methods);
-    component.form.controls['custom_basic_feedback_label']
-      .setValue(mockProvider.custom_basic_feedback_label);
+    component.form.controls['checkin_verification_methods'].setValue(
+      mockProvider.checkin_verification_methods
+    );
+    component.form.controls['custom_basic_feedback_label'].setValue(
+      mockProvider.custom_basic_feedback_label
+    );
 
     component.onSubmit();
 

@@ -182,13 +182,12 @@ export class ServicesCreateComponent implements OnInit {
       (_) => {
         this.enableSaveButton();
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
-      });
+      }
+    );
   }
 
   onToggleAttendance(event) {
-    const serviceAttendance = event
-      ? ServiceAttendance.enabled
-      : ServiceAttendance.disabled;
+    const serviceAttendance = event ? ServiceAttendance.enabled : ServiceAttendance.disabled;
 
     this.form.controls['service_attendance'].setValue(serviceAttendance);
   }
