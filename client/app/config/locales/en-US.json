@@ -1221,9 +1221,6 @@
   "events_checked_in_method": {
     "message": "Method"
   },
-  "events_check_in": {
-    "message": "Check-in"
-  },
   "events_create_heading": {
     "message": "Create Event"
   },
@@ -2429,7 +2426,7 @@
     "message": "Check-in"
   },
   "t_events_assessment_add_check_in": {
-    "message": "Add Attendance"
+    "message": "Add Check-in"
   },
   "t_events_assessment_check_in_and_checkout": {
     "message": "Check-in & Check-out"
