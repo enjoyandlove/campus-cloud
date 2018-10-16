@@ -6,7 +6,7 @@ import { EngagementStatsComponent } from './engagement-stats.component';
 
 import { configureTestSuite } from '../../../../../../shared/tests';
 
-fdescribe('EngagementStatsComponent', () => {
+describe('EngagementStatsComponent', () => {
   configureTestSuite();
 
   beforeAll((done) =>
@@ -22,7 +22,7 @@ fdescribe('EngagementStatsComponent', () => {
       .catch(done.fail)
   );
 
-  describe('a', () => {
+  describe('EngagementStatsComponent', () => {
     let component: EngagementStatsComponent;
     let fixture: ComponentFixture<EngagementStatsComponent>;
 
