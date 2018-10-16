@@ -2106,10 +2106,6 @@
   "services_label_checkin_time": {
     "message": "Vérification de présence"
   },
-  "services_label_check_in_details": {
-    "message": "Vérification de présence",
-    "description": "Noun"
-  },
   "services_label_default_question": {
     "message": "Question de retour"
   },
@@ -2155,9 +2151,6 @@
   },
   "services_repeat_visits": {
     "message": "Vérifications de présence à répétition"
-  },
-  "services_total_responses": {
-    "message": "Réponses"
   },
   "services_total_visits": {
     "message": "Vérifications de présence"

@@ -23,7 +23,7 @@
                   </cp-sorting-header>
                 </div>
                 <div class="col-4" *ngIf="displayRatingColumn">
-                  <span>{{ 'rating' | cpI18n }}</span>
+                  <span>{{ 't_shared_average_rating' | cpI18n }}</span>
                 </div>
                 <div class="col-1" *ngIf="displayRatingColumn">
                   <cp-sorting-header
@@ -80,7 +80,7 @@
                     (click)="trackCheckinEvent(provider.encrypted_campus_service_id)"
                     [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]"
                     class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary">
-                    {{ 'services_label_check_in_details' | cpI18n }}
+                    {{ 't_shared_web_checkin' | cpI18n }}
                   </a>
                 </div>
                 <div class="col-1">

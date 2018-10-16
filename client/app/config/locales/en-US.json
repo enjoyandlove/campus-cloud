@@ -2106,10 +2106,6 @@
   "services_label_checkin_time": {
     "message": "Check-in"
   },
-  "services_label_check_in_details": {
-    "message": "Check-in",
-    "description": "Noun"
-  },
   "services_label_default_question": {
     "message": "Feedback Question"
   },
@@ -2154,16 +2150,13 @@
     "message": "Search..."
   },
   "services_repeat_visits": {
-    "message": "Repeat Check-ins"
-  },
-  "services_total_responses": {
-    "message": "Responses"
+    "message": "Repeat Visits"
   },
   "services_total_visits": {
     "message": "Check-ins"
   },
   "services_unique_visits": {
-    "message": "Unique Check-ins"
+    "message": "Unique Visits"
   },
   "services_visits": {
     "message": "Visits"
@@ -2559,7 +2552,7 @@
     "message": "QR Code successfully disabled"
   },
   "t_event_assessment_qr_code_enable_success_message": {
-    "message": "QR Check-in successfully enabled"
+    "message": "QR Code successfully enabled"
   },
   "t_event_assessment_web_checkin_page": {
     "message": "Web Check-in"
@@ -2893,7 +2886,7 @@
     "message": "QR Code successfully disabled"
   },
   "t_services_assessment_qr_code_enable_success_message": {
-    "message": "QR Check-in successfully enabled"
+    "message": "QR Code successfully enabled"
   },
   "t_services_assessment_web_checkin_page": {
     "message": "Web Check-in"
