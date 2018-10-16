@@ -47,6 +47,8 @@ export const amplitudeEvents = {
 
   EMPLOYER: 'Employer',
 
+  SERVICES: 'Services',
+
   TEMPLATE: 'Template',
 
   DISABLED: 'Disabled',
@@ -155,6 +157,8 @@ export const amplitudeEvents = {
 
   WALL_VIEWED_COMMENT: 'Wall - Viewed Comment',
 
+  ORIENTATION_PROGRAMS: 'Orientation Programs',
+
   WALL_SUBMITTED_POST: 'Wall - Submitted Post',
 
   MANAGE_CREATED_LINK: 'Manage - Created Link',
@@ -164,6 +168,8 @@ export const amplitudeEvents = {
   MULTIPLE_ENGAGEMENTS: 'Multiple Engagements',
 
   MANAGE_CREATED_CLUB: 'Manage - Created Club',
+
+  ASSESS_VIEWED_CARDS: 'Assess - Viewed Cards',
 
   MANAGE_UPDATED_CLUB: 'Manage - Updated Club',
 
@@ -217,19 +223,13 @@ export const amplitudeEvents = {
 
   CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
 
-  ASSESS_VIEWED_TOP_EVENTS: 'Assess - Viewed Top Events',
-
   NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
 
   MANAGE_DOWNLOADED_QR_CODE: 'Manage - Downloaded QR Code',
 
   MANAGE_CHECKEDIN_MANUALLY: 'Manage - Checked In Manually',
 
-  ASSESS_VIEWED_TOP_SERVICES: 'Assess - Viewed Top Services',
-
   MANAGE_UPDATED_CALENDAR_EVENT: 'Manage - Updated Calendar Event',
-
-  ASSESS_VIEWED_TOP_ORIENTATIONS: 'Assess - Viewed Top Orientations',
 
   MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
 
