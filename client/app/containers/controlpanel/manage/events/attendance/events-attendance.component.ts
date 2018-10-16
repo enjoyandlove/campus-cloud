@@ -225,7 +225,9 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
   trackAmplitudeEvent() {
     this.downloadEventProperties = {
-      data_type: amplitudeEvents.EVENT
+      host_id: this.event.store_id,
+      data_source: amplitudeEvents.EVENT,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
     this.cpTracking.amplitudeEmitEvent(

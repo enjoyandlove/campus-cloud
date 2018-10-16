@@ -108,12 +108,12 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  downloadAudience({ id }) {
+  downloadAudience(audience) {
     const columns = [this.cpI18n.translate('name'), this.cpI18n.translate('email')];
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service
-      .getAudienceById(id, search)
+      .getAudienceById(audience.id, search)
       .toPromise()
       .then(({ users, name }) => {
         const data = users.map((user) => {
@@ -123,6 +123,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
           };
         });
         createSpreadSheet(data, columns, `${name}`);
+        this.trackDownloadAudience(audience.type);
       })
       .catch(() =>
         this.store.dispatch({
@@ -152,6 +153,22 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     super
       .fetchData(stream$)
       .then((res) => (this.state = Object.assign({}, this.state, { audiences: res.data })));
+  }
+
+  trackDownloadAudience(type) {
+    const audience_type = type === AudienceType.custom
+      ? amplitudeEvents.CUSTOM_AUDIENCE
+      : amplitudeEvents.DYNAMIC_AUDIENCE;
+
+    const eventProperties = {
+      data_source: amplitudeEvents.MENU_AUDIENCE,
+      audience_type
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
+      eventProperties
+    );
   }
 
   onSearch(search_str) {

@@ -6,11 +6,11 @@ import IServiceProvider from '../../../../../providers.interface';
 import { ProvidersService } from '../../../../../providers.service';
 import { FORMAT } from '../../../../../../../../../shared/pipes/date';
 import { ServicesUtilsService } from '../../../../../services.utils.service';
-import { CPTrackingService } from '../../../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../../../base/base.component';
 import { CheckInMethod, CheckInOutTime } from '../../../../../../events/event.status';
 import { amplitudeEvents } from '../../../../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../../../../shared/services/i18n.service';
+import { CPTrackingService, RouteLevel } from '../../../../../../../../../shared/services';
 
 interface IState {
   end: string;
@@ -212,7 +212,8 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
   trackAmplitudeEvent() {
     this.eventProperties = {
-      data_type: amplitudeEvents.ATTENDANCE
+      data_source: amplitudeEvents.SERVICE_PROVIDER,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);

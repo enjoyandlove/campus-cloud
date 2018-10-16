@@ -11,6 +11,7 @@ import { amplitudeEvents } from '../../../../../../../shared/constants/analytics
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { CPTrackingService } from './../../../../../../../shared/services/tracking.service';
 import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
+import { RouteLevel } from '../../../../../../../shared/services';
 
 interface IState {
   end: string;
@@ -174,7 +175,21 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
     stream$.toPromise().then((providers: any) => {
       this.utils.exportServiceProvidersAttendees(providers);
+      this.trackDownloadProviders();
     });
+  }
+
+  trackDownloadProviders() {
+    const eventProperties = {
+      host_id: this.service.store_id,
+      data_source: amplitudeEvents.SERVICE_PROVIDER,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
+      eventProperties
+    );
   }
 
   trackProviderViewEvent() {
