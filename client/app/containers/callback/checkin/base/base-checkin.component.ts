@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import ICheckIn from '../checkin.interface';
+import { CheckinUtilsService } from '../checkin.utils.service';
 import { CPTrackingService } from '../../../../shared/services';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 
@@ -43,8 +44,14 @@ export class BaseCheckinComponent implements OnInit {
 
   isInternal;
   isDownload;
+  checkInSource;
 
-  constructor(private route: ActivatedRoute, private cpTracking: CPTrackingService) {
+  constructor(
+    private route: ActivatedRoute,
+    private utils: CheckinUtilsService,
+    private cpTracking: CPTrackingService
+  ) {
+    this.checkInSource = this.route.snapshot.params['source'];
     this.isInternal = 'edit' in this.route.snapshot.queryParams;
     this.isDownload = 'download' in this.route.snapshot.queryParams;
 
@@ -251,42 +258,20 @@ export class BaseCheckinComponent implements OnInit {
   }
 
   trackDownloadQRCodeEvent() {
-    const eventProperties = this.getEventProperties(
-      this.isOrientation,
-      this.isService,
-      this.eventId,
-      this.serviceId
+    const check_in_type = this.checkInSource
+      ? this.utils.getCheckInSource(this.checkInSource)
+      : amplitudeEvents.SERVICE_PROVIDER;
+
+    const eventProperties = {
+      check_in_type,
+      access_type: amplitudeEvents.LOADED_CHECK_IN,
+      source_id: this.serviceId ? this.serviceId : this.eventId
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DOWNLOADED_QR_CODE,
+      eventProperties
     );
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOADED_QR_CODE, eventProperties);
-  }
-
-  getEventProperties(
-    isOrientation: boolean,
-    isService: boolean,
-    eventId: number,
-    serviceId: number
-  ) {
-    let eventProperties;
-
-    if (isOrientation) {
-      eventProperties = {
-        event_id: eventId,
-        check_in_type: amplitudeEvents.ORIENTATION
-      };
-    } else if (isService) {
-      eventProperties = {
-        service_id: serviceId,
-        check_in_type: amplitudeEvents.SERVICE
-      };
-    } else {
-      eventProperties = {
-        event_id: eventId,
-        check_in_type: amplitudeEvents.EVENT
-      };
-    }
-
-    return eventProperties;
   }
 
   ngOnInit() {
