@@ -39,6 +39,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   urlPrefix;
   dateFormat;
   isPastEvent;
+  checkInSource;
   loading = true;
   eventId: number;
   eventCheckinRoute;
@@ -125,17 +126,10 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   }
 
   trackCheckinEvent(source_id) {
-    const check_in_type = this.utils.getCheckinSourcePage(
-      this.isAthletic,
-      this.isService,
-      this.isClub,
-      this.isOrientation
-    );
-
     const eventProperties = {
       source_id,
-      check_in_type,
       check_in_source: amplitudeEvents.INFO_PAGE,
+      check_in_type: this.checkInSource.check_in_type,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
@@ -143,6 +137,13 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.checkInSource = this.utils.getCheckinSourcePage(
+      this.isAthletic,
+      this.isService,
+      this.isClub,
+      this.isOrientation
+    );
+
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
 
     const eventProperties = {

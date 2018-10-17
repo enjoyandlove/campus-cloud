@@ -15,6 +15,7 @@ import {
   Location,
   Feedback,
   Assessment,
+  CheckInSource,
   UploadedPhoto,
   EventFeedback,
   attendanceType,
@@ -126,21 +127,33 @@ export class EventUtilService {
     isClub: boolean,
     isOrientation: boolean
   ) {
-    let sourcePage;
 
     if (isAthletic) {
-      sourcePage = amplitudeEvents.ATHLETIC_EVENT;
+      return {
+        source_page: CheckInSource.athletics,
+        check_in_type: amplitudeEvents.ATHLETIC_EVENT
+      };
     } else if (isService) {
-      sourcePage = amplitudeEvents.SERVICE_EVENT;
+      return {
+        source_page: CheckInSource.services,
+        check_in_type: amplitudeEvents.SERVICE_EVENT
+      };
     } else if (isClub) {
-      sourcePage = amplitudeEvents.CLUB_EVENT;
+      return {
+        source_page: CheckInSource.club,
+        check_in_type: amplitudeEvents.CLUB_EVENT
+      };
     } else if (isOrientation) {
-      sourcePage = amplitudeEvents.ORIENTATION_EVENT;
+      return {
+        source_page: CheckInSource.orientation,
+        check_in_type: amplitudeEvents.ORIENTATION_EVENT
+      };
     } else {
-      sourcePage = amplitudeEvents.INSTITUTION_EVENT;
+      return {
+        source_page: CheckInSource.events,
+        check_in_type: amplitudeEvents.INSTITUTION_EVENT
+      };
     }
-
-    return sourcePage;
   }
 
   getAttendanceTypeOptions() {

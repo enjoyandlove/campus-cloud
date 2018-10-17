@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 
 import { CPI18nService } from '../../../shared/services';
+import { amplitudeEvents } from '../../../shared/constants/analytics';
+import { CheckInSource } from '../../controlpanel/manage/events/event.status';
 
 export enum ErrorCode {
   notFound = 404,
@@ -24,5 +26,23 @@ export class CheckinUtilsService {
     }
 
     return errorMessage;
+  }
+
+  getCheckInSource(source: string) {
+    if (source === CheckInSource.events) {
+      return amplitudeEvents.INSTITUTION_EVENT;
+
+    } else if (source === CheckInSource.club) {
+      return amplitudeEvents.CLUB_EVENT;
+
+    } else if (source === CheckInSource.orientation) {
+      return amplitudeEvents.ORIENTATION_EVENT;
+
+    } else if (source === CheckInSource.services) {
+      return amplitudeEvents.SERVICE_EVENT;
+
+    } else if (source === CheckInSource.athletics) {
+      return amplitudeEvents.ATHLETIC_EVENT;
+    }
   }
 }

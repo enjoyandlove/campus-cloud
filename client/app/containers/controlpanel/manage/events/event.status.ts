@@ -49,6 +49,14 @@ export enum CheckInOutTime {
   'empty' = -1
 }
 
+export enum CheckInSource {
+  'club' = 'club',
+  'events' = 'events',
+  'services' = 'services',
+  'athletics' = 'athletics',
+  'orientation' = 'orientation'
+}
+
 export const qrCode = {
   'enabled': true,
   'disabled': false

@@ -53,6 +53,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   canMessage;
   messageData;
   checkInData;
+  checkInSource;
   sortingLabels;
   attendees = [];
   loading = true;
@@ -436,17 +437,10 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   }
 
   trackCheckinEvent(source_id) {
-    const check_in_type = this.utils.getCheckinSourcePage(
-      this.isAthletic,
-      this.isService,
-      this.isClub,
-      this.isOrientation
-    );
-
     const eventProperties = {
       source_id,
-      check_in_type,
       check_in_source: amplitudeEvents.ASSESSMENT,
+      check_in_type: this.checkInSource.check_in_type,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
@@ -459,6 +453,13 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       this.serviceId,
       this.athleticId,
       this.orientationId
+    );
+
+    this.checkInSource = this.utils.getCheckinSourcePage(
+      this.isAthletic,
+      this.isService,
+      this.isClub,
+      this.isOrientation
     );
 
     this.sortingLabels = {

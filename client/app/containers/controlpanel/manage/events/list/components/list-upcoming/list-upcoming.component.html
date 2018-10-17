@@ -59,7 +59,7 @@
         <a
           target="_blank"
           (click)="trackCheckinEvent(event.encrypted_id)"
-          [routerLink]="[eventCheckinRoute + event.encrypted_id]"
+          [routerLink]="[eventCheckinRoute + event.encrypted_id + '/' + checkInSource.source_page]"
           *ngIf="event.event_attendance === attendanceEnabled"
           class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
           {{ 'events_check_in_details' | cpI18n }}

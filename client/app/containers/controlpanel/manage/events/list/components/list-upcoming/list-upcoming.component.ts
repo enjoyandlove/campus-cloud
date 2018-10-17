@@ -40,11 +40,12 @@ export class ListUpcomingComponent implements OnInit {
   @Output() deleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() sortList: EventEmitter<ISort> = new EventEmitter();
 
-  sort: ISort = sort;
   canDelete;
   eventData;
   sortingLabels;
+  checkInSource;
   eventCheckinRoute;
+  sort: ISort = sort;
   dateFormat = FORMAT.SHORT;
   attendanceEnabled = EventAttendance.enabled;
 
@@ -81,16 +82,9 @@ export class ListUpcomingComponent implements OnInit {
   }
 
   trackCheckinEvent(source_id) {
-    const check_in_type = this.utils.getCheckinSourcePage(
-      this.isAthletic,
-      this.isService,
-      this.isClub,
-      this.isOrientation
-    );
-
     const eventProperties = {
       source_id,
-      check_in_type,
+      check_in_type: this.checkInSource.check_in_type,
       check_in_source: amplitudeEvents.UPCOMING_EVENT,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
@@ -104,6 +98,13 @@ export class ListUpcomingComponent implements OnInit {
       eventName: amplitudeEvents.VIEWED_ITEM,
       eventProperties: this.setEventProperties()
     };
+
+    this.checkInSource = this.utils.getCheckinSourcePage(
+      this.isAthletic,
+      this.isService,
+      this.isClub,
+      this.isOrientation
+    );
 
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
     const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);

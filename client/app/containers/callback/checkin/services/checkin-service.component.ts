@@ -55,7 +55,6 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     this.checkinService.doServiceCheckin(data, this.search).subscribe(
       (res) => {
         this.updateAttendeesList(data, res);
-        this.trackAmplitudeEvent(true);
       },
       (err) => this.handleError(err.status)
     );
@@ -106,17 +105,16 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       .catch((_) => this.router.navigate(['/login']));
   }
 
-  trackAmplitudeEvent(checkedin = false) {
-    const eventName = checkedin
-      ? amplitudeEvents.MANAGE_CHECKEDIN_MANUALLY
-      : amplitudeEvents.MANAGE_LOADED_CHECKIN;
-
+  trackLoadCheckInEvent() {
     const eventProperties = {
-      service_id: this.serviceId,
-      check_in_type: amplitudeEvents.SERVICE
+      source_id: this.serviceId,
+      check_in_type: amplitudeEvents.SERVICE_PROVIDER
     };
 
-    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_LOADED_CHECKIN,
+      eventProperties
+    );
   }
 
   ngOnInit() {
@@ -124,7 +122,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       this.cpTracking.loadAmplitude();
     }
 
-    this.trackAmplitudeEvent();
+    this.trackLoadCheckInEvent();
     this.search = new HttpParams()
       .set('service_id', this.serviceId)
       .set('provider_id', this.serviceProviderId);
