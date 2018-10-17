@@ -58,8 +58,10 @@ export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
 
   trackCheckinEvent() {
     const eventProperties = {
-      source_page: amplitudeEvents.SERVICE,
-      service_id: this.provider.encrypted_campus_service_id
+      sub_menu_name: amplitudeEvents.PROVIDER,
+      check_in_type: amplitudeEvents.SERVICE_PROVIDER,
+      check_in_source: amplitudeEvents.SERVICE_PROVIDER,
+      source_id: this.provider.encrypted_campus_service_id
     };
 
     this.eventData = {

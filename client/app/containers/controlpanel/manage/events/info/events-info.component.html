@@ -21,6 +21,7 @@
                   <a
                     target="_blank"
                     class="cpbtn cpbtn--primary"
+                    (click)="trackCheckinEvent(event.encrypted_id)"
                     *ngIf="event.event_attendance === attendanceEnabled"
                     [routerLink]="[eventCheckinRoute + event.encrypted_id]">
                     {{ 'events_check_in_details' | cpI18n }}

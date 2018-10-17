@@ -63,6 +63,8 @@ export const amplitudeEvents = {
 
   EXECUTIVE: 'Executive',
 
+  INFO_PAGE: 'Info Page',
+
   EXPERIENCE: 'Experience',
 
   ATHLETICS: 'Athletics',
@@ -74,6 +76,8 @@ export const amplitudeEvents = {
   ATTENDANCE: 'Attendance',
 
   PAST_EVENT: 'Past Event',
+
+  CLUB_EVENT: 'Club Event',
 
   LOGGED_OUT: 'Logged Out',
 
@@ -102,6 +106,10 @@ export const amplitudeEvents = {
   SELECT_ACCESS: 'Select Access',
 
   NO_ENGAGEMENT: 'No Engagement',
+
+  SERVICE_EVENT: 'Service Event',
+
+  ATHLETIC_EVENT: 'Athletic Event',
 
   CUSTOM_AUDIENCE: 'Custom Audience',
 
@@ -138,6 +146,10 @@ export const amplitudeEvents = {
   CLICKED_PAGE_ITEM: 'Clicked Page Item',
 
   VISITED_HELP_DESK: 'Visited Help Desk',
+
+  ORIENTATION_EVENT: 'Orientation Event',
+
+  INSTITUTION_EVENT: 'Institution Event',
 
   WALL_DELETED_POST: 'Wall - Deleted Post',
 

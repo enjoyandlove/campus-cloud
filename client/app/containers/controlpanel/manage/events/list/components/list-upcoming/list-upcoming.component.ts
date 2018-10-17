@@ -80,8 +80,8 @@ export class ListUpcomingComponent implements OnInit {
     };
   }
 
-  trackCheckinEvent(event_id) {
-    const source_page = this.utils.getCheckinSourcePage(
+  trackCheckinEvent(source_id) {
+    const check_in_type = this.utils.getCheckinSourcePage(
       this.isAthletic,
       this.isService,
       this.isClub,
@@ -89,8 +89,10 @@ export class ListUpcomingComponent implements OnInit {
     );
 
     const eventProperties = {
-      event_id,
-      source_page
+      source_id,
+      check_in_type,
+      check_in_source: amplitudeEvents.UPCOMING_EVENT,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CLICKED_CHECKIN, eventProperties);

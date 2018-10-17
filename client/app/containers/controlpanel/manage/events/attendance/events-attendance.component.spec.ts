@@ -292,14 +292,14 @@ describe('EventAttendanceComponent', () => {
     expect(component.showStudentIds).toBe(true);
 
     component.isService = false;
-    component.isAthletic = isClubAthletic.athletic;
+    component.athleticId = isClubAthletic.athletic;
     component.session.g.set('user', {
       school_level_privileges: { 157: { 28: {r: true, w: true } } }
     });
     component.ngOnInit();
     expect(component.showStudentIds).toBe(true);
 
-    component.isAthletic = isClubAthletic.club;
+    component.athleticId = isClubAthletic.club;
     component.isOrientation = true;
     component.session.g.set('user', {
       school_level_privileges: { 157: { 17: {r: true, w: true } } }

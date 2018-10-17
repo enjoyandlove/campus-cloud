@@ -129,15 +129,15 @@ export class EventUtilService {
     let sourcePage;
 
     if (isAthletic) {
-      sourcePage = amplitudeEvents.ATHLETICS;
+      sourcePage = amplitudeEvents.ATHLETIC_EVENT;
     } else if (isService) {
-      sourcePage = amplitudeEvents.SERVICE;
+      sourcePage = amplitudeEvents.SERVICE_EVENT;
     } else if (isClub) {
-      sourcePage = amplitudeEvents.CLUB;
+      sourcePage = amplitudeEvents.CLUB_EVENT;
     } else if (isOrientation) {
-      sourcePage = amplitudeEvents.ORIENTATION;
+      sourcePage = amplitudeEvents.ORIENTATION_EVENT;
     } else {
-      sourcePage = amplitudeEvents.EVENT;
+      sourcePage = amplitudeEvents.INSTITUTION_EVENT;
     }
 
     return sourcePage;

@@ -25,9 +25,10 @@ import { IResourceBanner } from '../../../../../shared/components/cp-resource-ba
 export class EventsInfoComponent extends BaseComponent implements OnInit {
   @Input() isClub: boolean;
   @Input() clubId: number;
+  @Input() athleticId: number;
   @Input() serviceId: number;
   @Input() isService: boolean;
-  @Input() isAthletic: number;
+  @Input() isAthletic: boolean;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
   @Input() resourceBanner: IResourceBanner;
@@ -80,7 +81,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       this.urlPrefix = this.utils.buildUrlPrefix(
         this.clubId,
         this.serviceId,
-        this.isAthletic,
+        this.athleticId,
         this.orientationId
       );
 
@@ -121,6 +122,24 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       type: HEADER_UPDATE,
       payload
     });
+  }
+
+  trackCheckinEvent(source_id) {
+    const check_in_type = this.utils.getCheckinSourcePage(
+      this.isAthletic,
+      this.isService,
+      this.isClub,
+      this.isOrientation
+    );
+
+    const eventProperties = {
+      source_id,
+      check_in_type,
+      check_in_source: amplitudeEvents.INFO_PAGE,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CLICKED_CHECKIN, eventProperties);
   }
 
   ngOnInit() {

@@ -43,7 +43,8 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   @Input() clubId: number;
   @Input() serviceId: number;
   @Input() isService: boolean;
-  @Input() isAthletic: number;
+  @Input() athleticId: number;
+  @Input() isAthletic: boolean;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
 
@@ -434,11 +435,29 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     });
   }
 
+  trackCheckinEvent(source_id) {
+    const check_in_type = this.utils.getCheckinSourcePage(
+      this.isAthletic,
+      this.isService,
+      this.isClub,
+      this.isOrientation
+    );
+
+    const eventProperties = {
+      source_id,
+      check_in_type,
+      check_in_source: amplitudeEvents.ASSESSMENT,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CLICKED_CHECKIN, eventProperties);
+  }
+
   ngOnInit() {
     this.urlPrefix = this.utils.buildUrlPrefix(
       this.clubId,
       this.serviceId,
-      this.isAthletic,
+      this.athleticId,
       this.orientationId
     );
 
@@ -454,7 +473,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     );
 
     const attendancePrivilege =
-      this.isAthletic === isClubAthletic.athletic
+      this.athleticId === isClubAthletic.athletic
         ? CP_PRIVILEGES_MAP.athletics
         : this.isOrientation
           ? CP_PRIVILEGES_MAP.orientation
