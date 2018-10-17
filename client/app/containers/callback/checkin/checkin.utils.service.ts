@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { CPI18nService } from '../../../shared/services';
 import { amplitudeEvents } from '../../../shared/constants/analytics';
-import { CheckInSource } from '../../controlpanel/manage/events/event.status';
+import { CheckInMethod, CheckInSource } from '../../controlpanel/manage/events/event.status';
 
 export enum ErrorCode {
   notFound = 404,
@@ -44,5 +44,32 @@ export class CheckinUtilsService {
     } else if (source === CheckInSource.athletics) {
       return amplitudeEvents.ATHLETIC_EVENT;
     }
+  }
+
+  getCheckedInEventProperties(source_id, events, user_id, checkInSource = null) {
+    const verificatonMethod = checkInSource
+      ? events['attend_verification_methods']
+      : events['checkin_verification_methods'];
+
+    const check_in_type = checkInSource
+      ? this.getCheckInSource(checkInSource)
+      : amplitudeEvents.SERVICE_PROVIDER;
+
+    const check_out_status = events['has_checkout']
+      ? amplitudeEvents.ENABLED
+      : amplitudeEvents.DISABLED;
+
+    const qr_code_status = verificatonMethod.includes(CheckInMethod.app)
+        ? amplitudeEvents.ENABLED
+        : amplitudeEvents.DISABLED;
+
+    return {
+      user_id,
+      source_id,
+      check_in_type,
+      qr_code_status,
+      check_out_status,
+      access_type: amplitudeEvents.LOADED_CHECK_IN,
+    };
   }
 }

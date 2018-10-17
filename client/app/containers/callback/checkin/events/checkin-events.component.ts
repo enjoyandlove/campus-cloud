@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
@@ -26,8 +26,6 @@ const state: IState = {
   styleUrls: ['./checkin-events.component.scss']
 })
 export class CheckinEventsComponent extends BaseComponent implements OnInit {
-  @Input() isOrientation: boolean;
-
   loading;
   isEvent = true;
   eventId: string;
@@ -56,6 +54,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   onSubmit(data) {
     this.checkinService.doEventCheckin(data, this.search).subscribe(
       (res) => {
+        this.trackCheckedInEvent(res);
         this.updateAttendeesList(data, res);
       },
       (err) => this.handleError(err.status)
@@ -123,6 +122,20 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_LOADED_CHECKIN,
+      eventProperties
+    );
+  }
+
+  trackCheckedInEvent(response) {
+    const eventProperties = this.utils.getCheckedInEventProperties(
+      this.eventId,
+      this.state.events,
+      response.attendance_id,
+      this.checkInSource,
+    );
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CHECKEDIN,
       eventProperties
     );
   }

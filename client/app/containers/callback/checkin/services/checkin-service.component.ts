@@ -54,6 +54,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   onSubmit(data) {
     this.checkinService.doServiceCheckin(data, this.search).subscribe(
       (res) => {
+        this.trackCheckedInEvent(res);
         this.updateAttendeesList(data, res);
       },
       (err) => this.handleError(err.status)
@@ -113,6 +114,19 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_LOADED_CHECKIN,
+      eventProperties
+    );
+  }
+
+  trackCheckedInEvent(response) {
+    const eventProperties = this.utils.getCheckedInEventProperties(
+      this.serviceId,
+      this.state.services,
+      response.attendance_id
+    );
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CHECKEDIN,
       eventProperties
     );
   }

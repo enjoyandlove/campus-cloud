@@ -153,6 +153,8 @@ export const amplitudeEvents = {
 
   INSTITUTION_EVENT: 'Institution Event',
 
+  MANAGE_CHECKEDIN: 'Manage - Checked In',
+
   WALL_DELETED_POST: 'Wall - Deleted Post',
 
   CLICKED_CREATE_ITEM: 'Clicked Create Item',
@@ -242,8 +244,6 @@ export const amplitudeEvents = {
   NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
 
   MANAGE_DOWNLOADED_QR_CODE: 'Manage - Downloaded QR Code',
-
-  MANAGE_CHECKEDIN_MANUALLY: 'Manage - Checked In Manually',
 
   MANAGE_UPDATED_CALENDAR_EVENT: 'Manage - Updated Calendar Event',
 
