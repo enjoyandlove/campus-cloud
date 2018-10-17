@@ -8,9 +8,7 @@ import { CPDate } from '../../../../../../../shared/utils';
 import IServiceProvider from '../../../../services/providers.interface';
 
 const COMMON_DATE_PICKER_OPTIONS = {
-  altInput: true,
-  enableTime: true,
-  altFormat: 'F j, Y h:i K'
+  enableTime: true
 };
 
 @Component({
@@ -29,6 +27,14 @@ export class CheckInFormComponent implements OnInit {
 
   constructor(public session: CPSession) {}
 
+  setCheckin(date) {
+    this.form.controls['check_in_time'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
+  setCheckout(date) {
+    this.form.controls['check_out_time_epoch'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
   ngOnInit() {
     const _self = this;
     const checkInTime = this.form.controls['check_in_time'].value;
@@ -36,23 +42,15 @@ export class CheckInFormComponent implements OnInit {
 
     this.checkInDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: checkInTime
-        ? CPDate.fromEpoch(checkInTime, _self.session.tz).format()
-        : null,
-      onChange: function(_, dataStr) {
-        _self.form.controls['check_in_time'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
-      }
+      defaultDate: checkInTime ? CPDate.fromEpoch(checkInTime, _self.session.tz).format() : null
     };
 
     this.checkOutDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: checkOutTime !== CheckInOutTime.empty
-        ? CPDate.fromEpoch(checkOutTime, _self.session.tz).format()
-        : null,
-      onChange: function(_, dataStr) {
-        _self.form.controls['check_out_time_epoch']
-          .setValue(CPDate.toEpoch(dataStr, _self.session.tz));
-      }
+      defaultDate:
+        checkOutTime !== CheckInOutTime.empty
+          ? CPDate.fromEpoch(checkOutTime, _self.session.tz).format()
+          : null
     };
   }
 }

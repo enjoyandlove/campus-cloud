@@ -29,8 +29,13 @@ function getTimeDuration(time, unit = null) {
   return moment.duration(time, unit);
 }
 
+function format(date, formatStr) {
+  return moment(date).format(formatStr);
+}
+
 export const CPDate = {
   now,
+  format,
   toEpoch,
   getMonth,
   fromEpoch,
