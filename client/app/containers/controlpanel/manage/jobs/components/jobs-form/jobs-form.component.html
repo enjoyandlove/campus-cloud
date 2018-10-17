@@ -44,7 +44,8 @@
               <label>{{ 'jobs_posting_start_date' | cpI18n }}</label>
               <cp-datepicker
                 [options]="postingStartDatePickerOptions"
-                [error]="formError && form.controls['posting_start'].hasError('required')">
+                [error]="formError && form.controls['posting_start'].hasError('required')"
+                (dateSet)="setPostingStart($event)">
               </cp-datepicker>
             </div>
             <div
@@ -53,7 +54,8 @@
               <label>{{ 'jobs_posting_end_date' | cpI18n }}</label>
               <cp-datepicker
                 [options]="postingEndDatePickerOptions"
-                [error]="formError && form.controls['posting_end'].hasError('required')">
+                [error]="formError && form.controls['posting_end'].hasError('required')"
+                (dateSet)="setPostingEnd($event)">
               </cp-datepicker>
             </div>
           </div>
@@ -62,13 +64,19 @@
             <div class="col-6">
               <label>{{ 'jobs_job_start_date' | cpI18n }}</label>
               <cp-datepicker
-                [options]="contractStartDatePickerOptions">
+                [clearable]="true"
+                [options]="contractStartDatePickerOptions"
+                (dateSet)="setContractStart($event)"
+                (dateClear)="clearContractStart($event)">
               </cp-datepicker>
             </div>
             <div class="col-6">
               <label>{{ 'jobs_application_deadline' | cpI18n }}</label>
               <cp-datepicker
-                [options]="applicationDeadlineDatePickerOptions">
+                [clearable]="true"
+                [options]="applicationDeadlineDatePickerOptions"
+                (dateSet)="setApplicationDeadline($event)"
+                (dateClear)="clearApplicationDeadline($event)">
               </cp-datepicker>
             </div>
           </div>

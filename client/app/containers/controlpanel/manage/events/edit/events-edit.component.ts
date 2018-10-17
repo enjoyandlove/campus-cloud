@@ -28,9 +28,7 @@ import {
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
 const COMMON_DATE_PICKER_OPTIONS = {
-  altInput: true,
-  enableTime: true,
-  altFormat: 'F j, Y h:i K'
+  enableTime: true
 };
 
 @Component({
@@ -263,7 +261,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.selectedAttendanceType = this.getFromArray(
       this.utils.getAttendanceTypeOptions(),
       'action',
-      res.has_checkout);
+      res.has_checkout
+    );
 
     this.selectedQRCode = this.getFromArray(
       this.utils.getQROptions(),
@@ -287,22 +286,24 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     return qrCodes.includes(CheckInMethod.app);
   }
 
+  setStart(date) {
+    this.form.controls['start'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
+  setEnd(date) {
+    this.form.controls['end'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
   updateDatePicker() {
     const _self = this;
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format(),
-      onChange: function(_, dateStr) {
-        _self.form.controls['start'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
-      }
+      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format()
     };
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format(),
-      onChange: function(_, dateStr) {
-        _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
-      }
+      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format()
     };
   }
 
@@ -466,8 +467,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.enableStudentFeedbackOnAttendanceToggle(value);
     this.form.controls['event_attendance'].setValue(value);
-    this.form.controls['attend_verification_methods']
-      .setValue([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
+    this.form.controls['attend_verification_methods'].setValue([
+      CheckInMethod.web,
+      CheckInMethod.webQr,
+      CheckInMethod.app
+    ]);
   }
 
   onResetMap() {
@@ -524,7 +528,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onEventFeedbackChange(option) {
-    const feedbackQuestion = !option.action ? ''
+    const feedbackQuestion = !option.action
+      ? ''
       : this.cpI18n.translate('t_events_default_feedback_question');
 
     this.form.controls['event_feedback'].setValue(option.action);

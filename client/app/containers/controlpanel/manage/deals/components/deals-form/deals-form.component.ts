@@ -10,9 +10,7 @@ import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
-  altInput: true,
-  enableTime: true,
-  altFormat: 'F j, Y h:i K'
+  enableTime: true
 };
 @Component({
   selector: 'cp-deals-form',
@@ -63,9 +61,17 @@ export class DealsFormComponent implements OnInit {
       this.form.controls['expiration'].setValue(DateStatus.forever);
     } else {
       this.form.controls['expiration'].setValue(this.expiration);
-      this.postingEndDatePickerOptions.defaultDate = this.expiration > 0 ?
-        CPDate.fromEpoch(this.expiration, this.session.tz).format() : null;
+      this.postingEndDatePickerOptions.defaultDate =
+        this.expiration > 0 ? CPDate.fromEpoch(this.expiration, this.session.tz).format() : null;
     }
+  }
+
+  setPostingStart(date) {
+    this.form.controls['start'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
+  setPostingEnd(date) {
+    this.form.controls['expiration'].setValue(CPDate.toEpoch(date, this.session.tz));
   }
 
   ngOnInit() {
@@ -84,20 +90,12 @@ export class DealsFormComponent implements OnInit {
 
     this.postingStartDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: posting_start
-        ? CPDate.fromEpoch(posting_start, _self.session.tz).format()
-        : null,
-      onChange: function(_, dataStr) {
-        _self.form.controls['start'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
-      }
+      defaultDate: posting_start ? CPDate.fromEpoch(posting_start, _self.session.tz).format() : null
     };
 
     this.postingEndDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: posting_end ? CPDate.fromEpoch(posting_end, _self.session.tz).format() : null,
-      onChange: function(_, dataStr) {
-        _self.form.controls['expiration'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
-      }
+      defaultDate: posting_end ? CPDate.fromEpoch(posting_end, _self.session.tz).format() : null
     };
   }
 }

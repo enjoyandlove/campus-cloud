@@ -1,9 +1,9 @@
 /*tslint:disable:max-line-length */
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 import {
   CPAlertComponent,
   CPAvatarComponent,
@@ -142,7 +142,7 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
 
   entryComponents: [CPImageCropperComponent, CPLightboxComponent],
 
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, PopoverModule.forRoot()],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, PopoverModule.forRoot()],
 
   providers: [
     StoreService,

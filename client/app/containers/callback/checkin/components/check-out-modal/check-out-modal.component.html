@@ -23,7 +23,8 @@
           </label>
           <cp-datepicker
             [options]="checkOutOptions"
-            [error]="formErrors && form.controls['check_out_time_epoch'].hasError('required')">
+            [error]="formErrors && form.controls['check_out_time_epoch'].hasError('required')"
+            (dateSet)="setCheckout($event)">
           </cp-datepicker>
         </div>
       </div>

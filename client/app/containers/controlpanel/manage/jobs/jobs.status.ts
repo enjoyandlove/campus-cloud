@@ -4,5 +4,6 @@ export const JobsTypeDesireStudy = {
 };
 
 export enum JobDate {
-  forever = -1
+  forever = -1,
+  noDate = 0
 }

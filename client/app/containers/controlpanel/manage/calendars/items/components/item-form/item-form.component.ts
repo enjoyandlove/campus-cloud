@@ -12,9 +12,7 @@ const FORMAT_WITHOUT_TIME = 'F j, Y';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   // utc: true,
-  altInput: true,
-  enableTime: true,
-  altFormat: FORMAT_WITH_TIME
+  enableTime: true
 };
 
 @Component({
@@ -175,6 +173,14 @@ export class CalendarsItemFormComponent implements OnInit {
     this.submitted.emit(this.form.value);
   }
 
+  setStart(date) {
+    this.form.controls['start'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
+  setEnd(date) {
+    this.form.controls['end'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
   ngOnInit() {
     const _self = this;
     const lat = this.form.controls['latitude'].value;
@@ -187,10 +193,7 @@ export class CalendarsItemFormComponent implements OnInit {
     );
 
     this.startdatePickerOpts = {
-      ...COMMON_DATE_PICKER_OPTIONS,
-      onChange: function(_, dateStr) {
-        _self.form.controls['start'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
-      }
+      ...COMMON_DATE_PICKER_OPTIONS
     };
 
     if (this.form.controls['start'].value) {
@@ -201,10 +204,7 @@ export class CalendarsItemFormComponent implements OnInit {
     }
 
     this.enddatePickerOpts = {
-      ...COMMON_DATE_PICKER_OPTIONS,
-      onChange: function(_, dateStr) {
-        _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
-      }
+      ...COMMON_DATE_PICKER_OPTIONS
     };
 
     if (this.form.controls['end'].value) {

@@ -46,7 +46,8 @@
             <cp-datepicker
               #selectedDate
               [placeholder]="placeholder"
-              [options]="datePickerOptions">
+              [options]="datePickerOptions"
+              (dateSet)="setCheckin($event)">
             </cp-datepicker>
           </div>
 

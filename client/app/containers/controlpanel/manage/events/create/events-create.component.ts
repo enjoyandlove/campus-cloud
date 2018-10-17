@@ -34,9 +34,7 @@ const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
-  altInput: true,
-  enableTime: true,
-  altFormat: 'F j, Y h:i K'
+  enableTime: true
 };
 
 @Component({
@@ -420,6 +418,14 @@ export class EventsCreateComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CANCELED_EVENT, this.eventProperties);
   }
 
+  setStart(date) {
+    this.form.controls['start'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
+  setEnd(date) {
+    this.form.controls['end'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
   ngOnInit() {
     const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
 
@@ -501,20 +507,12 @@ export class EventsCreateComponent implements OnInit {
       { validator: this.utils.assessmentEnableCustomValidator }
     );
 
-    const _self = this;
-
     this.startdatePickerOpts = {
-      ...COMMON_DATE_PICKER_OPTIONS,
-      onChange: function(_, dataStr) {
-        _self.form.controls['start'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
-      }
+      ...COMMON_DATE_PICKER_OPTIONS
     };
 
     this.enddatePickerOpts = {
-      ...COMMON_DATE_PICKER_OPTIONS,
-      onChange: function(_, dataStr) {
-        _self.form.controls['end'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
-      }
+      ...COMMON_DATE_PICKER_OPTIONS
     };
   }
 }

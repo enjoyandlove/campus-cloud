@@ -53,14 +53,16 @@
                     <label>{{ 'start_date' | cpI18n }}</label>
                     <cp-datepicker
                       [options]="startdatePickerOpts"
-                      [error]="formMissingFields && form.controls['start'].hasError('required')">
+                      [error]="formMissingFields && form.controls['start'].hasError('required')"
+                      (dateSet)="setStart($event)">
                     </cp-datepicker>
                   </div>
                   <div class="col-6">
                     <label>{{ 'end_date' | cpI18n }}</label>
                     <cp-datepicker
                       [options]="enddatePickerOpts"
-                      [error]="formMissingFields && form.controls['end'].hasError('required')">
+                      [error]="formMissingFields && form.controls['end'].hasError('required')"
+                      (dateSet)="setEnd($event)">
                     </cp-datepicker>
                   </div>
                 </div>
