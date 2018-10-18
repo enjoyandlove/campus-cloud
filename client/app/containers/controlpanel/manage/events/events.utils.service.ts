@@ -1,11 +1,12 @@
-import IEvent from './event.interface';
 import { Injectable } from '@angular/core';
 import { FormGroup, ValidationErrors } from '@angular/forms';
 
+import IEvent from './event.interface';
 import { CPSession } from '../../../../session';
 import { Formats } from '../../../../shared/utils/csv';
 import { CPI18nService } from '../../../../shared/services';
 import { CPDate } from './../../../../shared/utils/date/date';
+import IServiceProvider from '../services/providers.interface';
 import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { createSpreadSheet } from '../../../../shared/utils/csv/parser';
@@ -15,6 +16,7 @@ import {
   Location,
   Feedback,
   Assessment,
+  CheckInMethod,
   CheckInSource,
   UploadedPhoto,
   EventFeedback,
@@ -253,6 +255,25 @@ export class EventUtilService {
       assessment: this.getAssessmentStatus(data['event_attendance'].value),
       location: this.hasLocation(data['location'].value),
       feedback: this.getFeedbackStatus(data['event_feedback'].value)
+    };
+  }
+
+  getQRCodeCheckOutStatus(data: IEvent | IServiceProvider, isEvent = false) {
+    const verificationMethod = isEvent
+      ? data['attend_verification_methods']
+      : data['checkin_verification_methods'];
+
+    const check_out_status = data['has_checkout']
+      ? amplitudeEvents.ENABLED
+      : amplitudeEvents.DISABLED;
+
+    const qr_code_status = verificationMethod.includes(CheckInMethod.app)
+      ? amplitudeEvents.ENABLED
+      : amplitudeEvents.DISABLED;
+
+    return {
+      qr_code_status,
+      check_out_status,
     };
   }
 

@@ -39,6 +39,11 @@ export enum Feedback {
   'disabled' = 'Disabled'
 }
 
+export enum CheckOut {
+  'no' = 'No',
+  'yes' = 'Yes'
+}
+
 export enum CheckInMethod {
   'web' = 1,
   'webQr' = 2,

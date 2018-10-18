@@ -7,12 +7,13 @@ import { Store } from '@ngrx/store';
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes';
+import { ICheckIn } from './check-in/check-in.interface';
 import { EventUtilService } from './../events.utils.service';
-import { CheckInMethod, CheckInOutTime } from '../event.status';
 import { BaseComponent } from '../../../../../base/base.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
+import { CheckInMethod, CheckInOutTime, CheckOut } from '../event.status';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
@@ -353,9 +354,10 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     );
   }
 
-  onCreated() {
+  onCreated(checkedInData: ICheckIn) {
     this.isAddCheckInModal = false;
     this.fetchAttendees();
+    this.trackAddedCheckInEvent(checkedInData);
   }
 
   onEdited() {
@@ -436,7 +438,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     });
   }
 
-  trackCheckinEvent(source_id) {
+  onTrackClickCheckinEvent(source_id) {
     const eventProperties = {
       source_id,
       check_in_source: amplitudeEvents.ASSESSMENT,
@@ -444,7 +446,25 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CLICKED_CHECKIN, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CLICKED_CHECKIN,
+      eventProperties
+    );
+  }
+
+  trackAddedCheckInEvent(checkedInData) {
+    const eventProperties = {
+      ...this.utils.getQRCodeCheckOutStatus(this.event, true),
+      source_id: this.event.encrypted_id,
+      check_in_type: this.checkInSource.check_in_type,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      check_out: checkedInData.check_out_time_epoch > 0 ? CheckOut.yes : CheckOut.no
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ADDED_CHECK_IN,
+      eventProperties
+    );
   }
 
   ngOnInit() {

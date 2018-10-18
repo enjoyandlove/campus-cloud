@@ -155,6 +155,8 @@ export const amplitudeEvents = {
 
   MANAGE_CHECKED_IN: 'Manage - Checked In',
 
+  ADDED_CHECK_IN: 'Manage - Added Check-In',
+
   MANAGE_CHECKED_OUT: 'Manage - Checked Out',
 
   WALL_DELETED_POST: 'Wall - Deleted Post',

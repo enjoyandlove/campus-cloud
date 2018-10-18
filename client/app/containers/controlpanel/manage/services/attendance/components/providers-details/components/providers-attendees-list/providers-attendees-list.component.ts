@@ -7,10 +7,11 @@ import { ProvidersService } from '../../../../../providers.service';
 import { FORMAT } from '../../../../../../../../../shared/pipes/date';
 import { ServicesUtilsService } from '../../../../../services.utils.service';
 import { BaseComponent } from '../../../../../../../../../base/base.component';
-import { CheckInMethod, CheckInOutTime } from '../../../../../../events/event.status';
+import { EventUtilService } from '../../../../../../events/events.utils.service';
 import { amplitudeEvents } from '../../../../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../../../../shared/services/i18n.service';
 import { CPTrackingService, RouteLevel } from '../../../../../../../../../shared/services';
+import { CheckInMethod, CheckInOutTime, CheckOut } from '../../../../../../events/event.status';
 
 interface IState {
   end: string;
@@ -57,6 +58,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     public session: CPSession,
     private cpI18n: CPI18nService,
     private utils: ServicesUtilsService,
+    private eventUtils: EventUtilService,
     private cpTracking: CPTrackingService,
     private providersService: ProvidersService
   ) {
@@ -178,9 +180,10 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     );
   }
 
-  onCreated() {
+  onCreated(checkedInData) {
     this.isAddCheckInModal = false;
     this.fetch();
+    this.trackAddedCheckInEvent(checkedInData);
   }
 
   onEdited() {
@@ -217,6 +220,21 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
+  }
+
+  trackAddedCheckInEvent(checkedInData) {
+    const eventProperties = {
+      ...this.eventUtils.getQRCodeCheckOutStatus(this.provider),
+      check_in_type: amplitudeEvents.SERVICE_PROVIDER,
+      source_id: this.provider.encrypted_campus_service_id,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      check_out: checkedInData.check_out_time_epoch > 0 ? CheckOut.yes : CheckOut.no
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.ADDED_CHECK_IN,
+      eventProperties
+    );
   }
 
   ngOnInit() {

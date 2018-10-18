@@ -109,7 +109,7 @@ export class CheckInCreateComponent implements OnInit {
           return;
         }
 
-        this.created.emit();
+        this.created.emit(this.form.value);
         this.resetModal();
       },
       (_) => {

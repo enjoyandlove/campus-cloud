@@ -48,7 +48,7 @@
           (querySearch)="doSearch($event)"
           (sendMessage)="messageAllAttendees()"
           (onToggleQr)="onToggleQr($event)"
-          (trackCheckIn)="trackCheckinEvent($event)">
+          (trackClickCheckIn)="onTrackClickCheckinEvent($event)">
         </cp-events-attendance-action-box>
       </div>
     </div>
@@ -215,7 +215,7 @@
   <cp-create-check-in
     [data]="event"
     [orientationId]="orientationId"
-    (created)="onCreated()"
+    (created)="onCreated($event)"
     (teardown)="isAddCheckInModal = false">
   </cp-create-check-in>
 </cp-modal>
