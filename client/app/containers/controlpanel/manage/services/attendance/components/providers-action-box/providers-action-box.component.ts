@@ -25,10 +25,7 @@ export class ServicesProviderActionBoxComponent implements OnInit {
 
   eventData;
 
-  constructor(
-    public cpI18n: CPI18nService,
-    public cpTracking: CPTrackingService
-  ) {}
+  constructor(public cpI18n: CPI18nService, public cpTracking: CPTrackingService) {}
 
   onDownload() {
     this.download.emit();

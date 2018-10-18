@@ -62,7 +62,7 @@
           [routerLink]="[eventCheckinRoute + event.encrypted_id + '/' + checkInSource.source_page]"
           *ngIf="event.event_attendance === attendanceEnabled"
           class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
-          {{ 'events_check_in_details' | cpI18n }}
+          {{ 't_shared_web_checkin' | cpI18n }}
         </a>
       </span>
 

@@ -8,9 +8,7 @@ import { JobsUtilsService } from '../../jobs.utils.service';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
-  altInput: true,
-  enableTime: false,
-  altFormat: 'F j, Y'
+  enableTime: false
 };
 
 @Component({
@@ -67,6 +65,30 @@ export class JobsFormComponent implements OnInit {
     }
   }
 
+  setPostingStart(date) {
+    this.form.controls['posting_start'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
+  setPostingEnd(date) {
+    this.form.controls['posting_end'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
+  setContractStart(date) {
+    this.form.controls['contract_start'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
+  setApplicationDeadline(date) {
+    this.form.controls['application_deadline'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
+  clearContractStart() {
+    this.form.controls['contract_start'].setValue(JobDate.forever);
+  }
+
+  clearApplicationDeadline() {
+    this.form.controls['application_deadline'].setValue(JobDate.forever);
+  }
+
   ngOnInit() {
     this.jobsType = this.utils.getJobsType(true);
     this.desiredStudy = this.utils.getDesiredStudy(true);
@@ -88,35 +110,28 @@ export class JobsFormComponent implements OnInit {
 
     this.postingStartDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: posting_start
+      defaultDate: this.utils.isDateSet(posting_start)
         ? CPDate.fromEpoch(posting_start, _self.session.tz).format()
-        : null,
-      onChange: function(_, dataStr) {
-        _self.form.controls['posting_start'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
-      }
+        : null
     };
 
     this.postingEndDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: posting_end ? CPDate.fromEpoch(posting_end, _self.session.tz).format() : null,
-      onChange: function(_, dataStr) {
-        _self.form.controls['posting_end'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
-      }
+      defaultDate: this.utils.isDateSet(posting_end)
+        ? CPDate.fromEpoch(posting_end, _self.session.tz).format()
+        : null
     };
 
     this.contractStartDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: contract_start
+      defaultDate: this.utils.isDateSet(contract_start)
         ? CPDate.fromEpoch(contract_start, _self.session.tz).format()
-        : null,
-      onChange: function(_, dataStr) {
-        _self.form.controls['contract_start'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
-      }
+        : null
     };
 
     this.applicationDeadlineDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: application_deadline
+      defaultDate: this.utils.isDateSet(application_deadline)
         ? CPDate.fromEpoch(application_deadline, _self.session.tz).format()
         : null,
       onChange: function(_, dataStr) {

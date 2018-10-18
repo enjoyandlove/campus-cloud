@@ -1,11 +1,4 @@
-import {
-  Input,
-  OnInit,
-  Output,
-  Component,
-  ViewChild,
-  EventEmitter
-} from '@angular/core';
+import { Input, OnInit, Output, Component, ViewChild, EventEmitter } from '@angular/core';
 
 import { HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
@@ -64,16 +57,17 @@ export class ServicesProviderAddComponent implements OnInit {
 
     this.providersService.createProvider(this.form.value, search).subscribe(
       (res) => {
-      this.trackEvent(res);
-      this.form.reset();
-      $('#createProvider').modal('hide');
-      this.created.emit(res);
-    },
+        this.trackEvent(res);
+        this.form.reset();
+        $('#createProvider').modal('hide');
+        this.created.emit(res);
+      },
       (_) => {
         this.formErrors = true;
         this.enableSaveButton();
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
-      });
+      }
+    );
   }
 
   trackEvent(data) {

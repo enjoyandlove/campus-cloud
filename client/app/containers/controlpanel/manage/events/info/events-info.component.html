@@ -24,7 +24,7 @@
                     (click)="trackCheckinEvent(event.encrypted_id)"
                     *ngIf="event.event_attendance === attendanceEnabled"
                     [routerLink]="[eventCheckinRoute + event.encrypted_id + '/' + checkInSource.source_page]">
-                    {{ 'events_check_in_details' | cpI18n }}
+                    {{ 't_shared_web_checkin' | cpI18n }}
                   </a>
                 </div>
               </div>

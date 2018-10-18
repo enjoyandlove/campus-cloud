@@ -138,7 +138,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.state = {
       ...this.state,
       providers: this.state.providers.map((provider) => {
-        return (provider.id === editedProvider.id ? editedProvider : provider);
+        return provider.id === editedProvider.id ? editedProvider : provider;
       })
     };
   }

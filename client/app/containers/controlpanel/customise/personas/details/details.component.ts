@@ -466,7 +466,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       body = this.cpI18n.translate('t_personas_edit_error_customization_off');
     }
 
-    if (err.status === 404) {
+    if (err && err.status === 404) {
       this.router.navigate(['/studio/experiences']);
 
       return;

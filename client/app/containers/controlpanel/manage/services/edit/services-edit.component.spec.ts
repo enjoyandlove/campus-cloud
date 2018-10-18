@@ -92,14 +92,15 @@ describe('ServicesUpdateComponent', () => {
           component.serviceId = 123;
 
           spyOn(component.router, 'navigate');
-          spyOn(component.servicesService, 'getCategories')
-            .and.returnValue(observableOf(mockCategories));
+          spyOn(component.servicesService, 'getCategories').and.returnValue(
+            observableOf(mockCategories)
+          );
 
-          spyOn(component.servicesService, 'getServiceById')
-            .and.returnValue(observableOf(mockService[0]));
+          spyOn(component.servicesService, 'getServiceById').and.returnValue(
+            observableOf(mockService[0])
+          );
 
-          spy = spyOn(component.servicesService, 'updateService')
-            .and.returnValue(observableOf({}));
+          spy = spyOn(component.servicesService, 'updateService').and.returnValue(observableOf({}));
 
           component.ngOnInit();
         });

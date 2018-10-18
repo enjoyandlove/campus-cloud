@@ -50,7 +50,8 @@ describe('ServicesProviderUpdateComponent', () => {
           CPSession,
           CPI18nService,
           ServicesUtilsService,
-          { provide: ProvidersService, useClass: MockService }]
+          { provide: ProvidersService, useClass: MockService }
+        ]
       })
         .compileComponents()
         .then(() => {
@@ -81,8 +82,9 @@ describe('ServicesProviderUpdateComponent', () => {
 
   it('should update service provider', () => {
     spyOn(component.edited, 'emit');
-    spy = spyOn(component.providersService, 'updateProvider')
-      .and.returnValue(observableOf(mockProvider));
+    spy = spyOn(component.providersService, 'updateProvider').and.returnValue(
+      observableOf(mockProvider)
+    );
 
     component.onSubmit();
 

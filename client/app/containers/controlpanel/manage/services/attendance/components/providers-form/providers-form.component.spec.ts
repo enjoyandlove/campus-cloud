@@ -25,12 +25,7 @@ describe('ServicesProviderFormComponent', () => {
             SNACKBAR: reducers.SNACKBAR
           })
         ],
-        providers: [
-          CPSession,
-          CPI18nService,
-          EventUtilService,
-          ServicesUtilsService
-        ]
+        providers: [CPSession, CPI18nService, EventUtilService, ServicesUtilsService]
       })
         .compileComponents()
         .then(() => {
