@@ -59,7 +59,8 @@
         <a
           target="_blank"
           (click)="trackCheckinEvent(event.encrypted_id)"
-          [routerLink]="[eventCheckinRoute + event.encrypted_id + '/' + checkInSource.source_page]"
+          [queryParams]="{source: checkInSource.source_page}"
+          [routerLink]="[eventCheckinRoute + event.encrypted_id]"
           *ngIf="event.event_attendance === attendanceEnabled"
           class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
           {{ 't_shared_web_checkin' | cpI18n }}

@@ -51,7 +51,7 @@ export class BaseCheckinComponent implements OnInit {
     private utils: CheckinUtilsService,
     private cpTracking: CPTrackingService
   ) {
-    this.checkInSource = this.route.snapshot.params['source'];
+    this.checkInSource = this.route.snapshot.queryParams['source'];
     this.isInternal = 'edit' in this.route.snapshot.queryParams;
     this.isDownload = 'download' in this.route.snapshot.queryParams;
 

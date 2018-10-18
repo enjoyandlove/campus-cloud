@@ -48,7 +48,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((res) => (this.loading = res));
 
     this.eventId = this.route.snapshot.params['event'];
-    this.checkInSource = this.route.snapshot.params['source'];
+    this.checkInSource = this.route.snapshot.queryParams['source'];
   }
 
   onSubmit(data) {

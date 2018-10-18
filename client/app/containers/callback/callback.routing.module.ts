@@ -50,12 +50,12 @@ const appRoutes: Routes = [
       },
 
       {
-        path: 'checkin/e/:event/:source',
+        path: 'checkin/e/:event',
         component: CheckinEventsComponent,
         data: { zendesk: 'assessment' }
       },
       {
-        path: 'checkin/o/:event/:source',
+        path: 'checkin/o/:event',
         component: CheckinOrientationEventsComponent,
         data: { zendesk: 'assessment' }
       },
