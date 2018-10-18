@@ -19,6 +19,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
+  RouteLevel,
   AdminService,
   CPTrackingService,
   ErrorService,
@@ -43,7 +44,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   @Input() isClub: boolean;
   @Input() clubId: number;
   @Input() isService: boolean;
-  @Input() isAthletic: number;
+  @Input() isAthletic: boolean;
+  @Input() athleticId: number;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
   @Input() toolTipContent: IToolTipContent;
@@ -57,6 +59,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   isDateError;
   originalHost;
   eventQRCodes;
+  checkInSource;
   selectedQRCode;
   loading = true;
   attendanceTypes;
@@ -175,6 +178,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.service.updateEvent(data, this.eventId, search).subscribe(
       (_) => {
+        this.trackQrCode(data);
+
         this.eventProperties = {
           ...this.eventProperties,
           ...this.utils.setEventProperties(this.form.controls),
@@ -547,6 +552,20 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     }
   }
 
+  trackQrCode(event) {
+    const eventProperties = {
+      ...this.utils.getQRCodeCheckOutStatus(event, true),
+      source_id: this.event.encrypted_id,
+      check_in_type: this.checkInSource.check_in_type,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CHANGED_QR_CODE,
+      eventProperties
+    );
+  }
+
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('save'),
@@ -556,9 +575,16 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.urlPrefix = this.utils.buildUrlPrefixEvents(
       this.clubId,
       this.storeId,
-      this.isAthletic,
+      this.athleticId,
       this.orientationId,
       this.eventId
+    );
+
+    this.checkInSource = this.utils.getCheckinSourcePage(
+      this.isAthletic,
+      this.isService,
+      this.isClub,
+      this.isOrientation
     );
 
     this.dateFormat = FORMAT.DATETIME;

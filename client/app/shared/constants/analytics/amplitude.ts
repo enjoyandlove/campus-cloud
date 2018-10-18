@@ -215,6 +215,8 @@ export const amplitudeEvents = {
 
   MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
 
+  MANAGE_CHANGED_QR_CODE: 'Manage - Changed QR Code',
+
   MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
 
   NOTIFY_DELETED_LISTING: 'Notify - Deleted Listing',

@@ -117,6 +117,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
 
     this.providersService.updateProvider(data, this.providerId, search).subscribe(
       (_) => {
+        this.providerAttendees.trackQrCodeEvent();
         this.onSuccessQRCheckInMessage(isEnabled);
         this.updateQrCode.next(verificationMethods);
       },

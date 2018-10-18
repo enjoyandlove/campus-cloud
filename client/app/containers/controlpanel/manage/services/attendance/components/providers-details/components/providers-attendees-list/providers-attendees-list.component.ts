@@ -215,6 +215,20 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     }
   }
 
+  trackQrCodeEvent() {
+    const eventProperties = {
+      ...this.eventUtils.getQRCodeCheckOutStatus(this.provider),
+      check_in_type: amplitudeEvents.SERVICE_PROVIDER,
+      source_id: this.provider.encrypted_campus_service_id,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CHANGED_QR_CODE,
+      eventProperties
+    );
+  }
+
   trackAmplitudeEvent() {
     this.eventProperties = {
       data_source: amplitudeEvents.SERVICE_PROVIDER,

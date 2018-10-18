@@ -405,6 +405,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     this.service.updateEvent(data, this.eventId, search).subscribe(
       (res) => {
         this.event = res;
+        this.trackQrCode(this.event);
         this.onSuccessQRCheckInMessage(isEnabled);
       },
       (_) => {
@@ -467,6 +468,20 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     };
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+  }
+
+  trackQrCode(event) {
+    const eventProperties = {
+      ...this.utils.getQRCodeCheckOutStatus(event, true),
+      source_id: this.event.encrypted_id,
+      check_in_type: this.checkInSource.check_in_type,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CHANGED_QR_CODE,
+      eventProperties
+    );
   }
 
   ngOnInit() {
