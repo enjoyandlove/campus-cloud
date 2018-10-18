@@ -357,13 +357,14 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   onCreated(checkedInData: ICheckIn) {
     this.isAddCheckInModal = false;
     this.fetchAttendees();
-    this.trackAddedCheckInEvent(checkedInData);
+    this.trackAddEditCheckInEvent(checkedInData);
   }
 
-  onEdited() {
+  onEdited(editedCheckIn: ICheckIn) {
     this.checkInData = null;
     this.isEditCheckInModal = false;
     this.fetchAttendees();
+    this.trackAddEditCheckInEvent(editedCheckIn, true);
   }
 
   onDeleted(id: number) {
@@ -452,7 +453,11 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     );
   }
 
-  trackAddedCheckInEvent(checkedInData) {
+  trackAddEditCheckInEvent(checkedInData, isEdit = false) {
+    const eventName = isEdit
+      ? amplitudeEvents.MANAGE_UPDATED_CHECK_IN
+      : amplitudeEvents.MANAGE_ADDED_CHECK_IN;
+
     const eventProperties = {
       ...this.utils.getQRCodeCheckOutStatus(this.event, true),
       source_id: this.event.encrypted_id,
@@ -461,10 +466,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       check_out: checkedInData.check_out_time_epoch > 0 ? CheckOut.yes : CheckOut.no
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.ADDED_CHECK_IN,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
 
   ngOnInit() {

@@ -139,7 +139,7 @@
   <cp-service-provider-edit-check-in
     [data]="provider"
     [checkIn]="checkInData"
-    (edited)="onEdited()"
+    (edited)="onEdited($event)"
     (teardown)="isEditCheckInModal = false">
   </cp-service-provider-edit-check-in>
 </cp-modal>

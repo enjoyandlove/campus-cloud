@@ -191,7 +191,7 @@
     [data]="event"
     [checkIn]="checkInData"
     [orientationId]="orientationId"
-    (edited)="onEdited()"
+    (edited)="onEdited($event)"
     (teardown)="isEditCheckInModal = false">
   </cp-edit-check-in>
 </cp-modal>

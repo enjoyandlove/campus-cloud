@@ -155,8 +155,6 @@ export const amplitudeEvents = {
 
   MANAGE_CHECKED_IN: 'Manage - Checked In',
 
-  ADDED_CHECK_IN: 'Manage - Added Check-In',
-
   MANAGE_CHECKED_OUT: 'Manage - Checked Out',
 
   WALL_DELETED_POST: 'Wall - Deleted Post',
@@ -211,6 +209,8 @@ export const amplitudeEvents = {
 
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
 
+  MANAGE_ADDED_CHECK_IN: 'Manage - Added Check-In',
+
   MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
 
   MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
@@ -220,6 +220,8 @@ export const amplitudeEvents = {
   NOTIFY_DELETED_LISTING: 'Notify - Deleted Listing',
 
   WALL_SUBMITTED_COMMENT: 'Wall - Submitted Comment',
+
+  MANAGE_UPDATED_CHECK_IN: 'Manage - Updated Check-In',
 
   NOTIFY_CREATED_TEMPLATE: 'Notify - Created Template',
 

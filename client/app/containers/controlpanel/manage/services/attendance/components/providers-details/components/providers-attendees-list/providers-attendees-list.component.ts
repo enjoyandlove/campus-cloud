@@ -11,6 +11,7 @@ import { EventUtilService } from '../../../../../../events/events.utils.service'
 import { amplitudeEvents } from '../../../../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../../../../shared/services/i18n.service';
 import { CPTrackingService, RouteLevel } from '../../../../../../../../../shared/services';
+import { ICheckIn } from '../../../../../../events/attendance/check-in/check-in.interface';
 import { CheckInMethod, CheckInOutTime, CheckOut } from '../../../../../../events/event.status';
 
 interface IState {
@@ -180,16 +181,17 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     );
   }
 
-  onCreated(checkedInData) {
+  onCreated(checkedInData: ICheckIn) {
     this.isAddCheckInModal = false;
     this.fetch();
-    this.trackAddedCheckInEvent(checkedInData);
+    this.trackAddEditCheckInEvent(checkedInData);
   }
 
-  onEdited() {
+  onEdited(editedCheckIn: ICheckIn) {
     this.checkInData = null;
     this.isEditCheckInModal = false;
     this.fetch();
+    this.trackAddEditCheckInEvent(editedCheckIn, true);
   }
 
   onDeleted(id: number) {
@@ -222,7 +224,11 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
   }
 
-  trackAddedCheckInEvent(checkedInData) {
+  trackAddEditCheckInEvent(checkedInData, isEdit = false) {
+    const eventName = isEdit
+      ? amplitudeEvents.MANAGE_UPDATED_CHECK_IN
+      : amplitudeEvents.MANAGE_ADDED_CHECK_IN;
+
     const eventProperties = {
       ...this.eventUtils.getQRCodeCheckOutStatus(this.provider),
       check_in_type: amplitudeEvents.SERVICE_PROVIDER,
@@ -231,10 +237,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       check_out: checkedInData.check_out_time_epoch > 0 ? CheckOut.yes : CheckOut.no
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.ADDED_CHECK_IN,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
 
   ngOnInit() {
