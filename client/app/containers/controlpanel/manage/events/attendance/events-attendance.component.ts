@@ -449,7 +449,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CLICKED_CHECKIN,
+      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
       eventProperties
     );
   }

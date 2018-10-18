@@ -27,6 +27,7 @@ const state: IState = {
 })
 export class CheckinServiceComponent extends BaseComponent implements OnInit {
   loading;
+  checkInSource;
   isExist = true;
   isService = true;
   serviceId: string;
@@ -48,6 +49,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((res) => (this.loading = res));
 
     this.serviceId = this.route.snapshot.params['service'];
+    this.checkInSource = this.route.snapshot.queryParams['source'];
     this.serviceProviderId = this.route.snapshot.params['provider'];
   }
 
@@ -126,7 +128,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_LOADED_CHECKIN,
+      amplitudeEvents.MANAGE_LOADED_WEB_CHECK_IN,
       eventProperties
     );
   }
@@ -149,7 +151,10 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       this.cpTracking.loadAmplitude();
     }
 
-    this.trackLoadCheckInEvent();
+    if (!this.checkInSource) {
+      this.trackLoadCheckInEvent();
+    }
+
     this.search = new HttpParams()
       .set('service_id', this.serviceId)
       .set('provider_id', this.serviceProviderId);

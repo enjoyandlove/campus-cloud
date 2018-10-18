@@ -213,8 +213,6 @@ export const amplitudeEvents = {
 
   MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
 
-  MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
-
   MANAGE_CHANGED_QR_CODE: 'Manage - Changed QR Code',
 
   MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
@@ -235,8 +233,6 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_SERVICE: 'Manage - Updated Service',
 
-  MANAGE_CLICKED_CHECKIN: 'Manage - Clicked Check-In',
-
   MANAGE_CREATED_LOCATION: 'Manage - Created Location',
 
   MANAGE_CREATED_CALENDAR: 'Manage - Created Calendar',
@@ -245,13 +241,17 @@ export const amplitudeEvents = {
 
   MANAGE_ADDED_CLUB_MEMBER: 'Manage - Added Club Member',
 
-  MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
-
   CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
 
   NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
 
   MANAGE_DOWNLOADED_QR_CODE: 'Manage - Downloaded QR Code',
+
+  MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
+
+  MANAGE_LOADED_WEB_CHECK_IN: 'Manage - Loaded Web Check-In',
+
+  MANAGE_CLICKED_WEB_CHECK_IN: 'Manage - Clicked Web Check-In',
 
   MANAGE_UPDATED_CALENDAR_EVENT: 'Manage - Updated Calendar Event',
 

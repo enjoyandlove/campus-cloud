@@ -135,7 +135,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_LOADED_CHECKIN,
+      amplitudeEvents.MANAGE_LOADED_WEB_CHECK_IN,
       eventProperties
     );
   }
@@ -159,7 +159,10 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       this.cpTracking.loadAmplitude();
     }
 
-    this.trackLoadCheckInEvent();
+    if (!this.checkInSource) {
+      this.trackLoadCheckInEvent();
+    }
+
     this.search = new HttpParams().append('event_id', this.eventId);
 
     if (!this.eventId) {
