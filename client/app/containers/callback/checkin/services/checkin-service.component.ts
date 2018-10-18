@@ -93,8 +93,21 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   onCheckout(service) {
     this.state.services = {
       ...this.state.services,
-      ...service
+      ...service.data
     };
+
+    const eventProperties = this.utils.getCheckedInEventProperties(
+      this.serviceId,
+      this.state.services,
+      service.attendance_id
+    );
+
+    delete eventProperties.check_out_status;
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CHECKED_OUT,
+      eventProperties
+    );
   }
 
   fetch() {
@@ -126,7 +139,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     );
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CHECKEDIN,
+      amplitudeEvents.MANAGE_CHECKED_IN,
       eventProperties
     );
   }

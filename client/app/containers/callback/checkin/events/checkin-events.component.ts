@@ -61,11 +61,25 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
     );
   }
 
-  onCheckout(events) {
+  onCheckout(event) {
     this.state.events = {
       ...this.state.events,
-      ...events
+      ...event.data
     };
+
+    const eventProperties = this.utils.getCheckedInEventProperties(
+      this.eventId,
+      this.state.events,
+      event.attendance_id,
+      this.checkInSource,
+    );
+
+    delete eventProperties.check_out_status;
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CHECKED_OUT,
+      eventProperties
+    );
   }
 
   updateAttendeesList(data, res) {
@@ -135,7 +149,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
     );
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CHECKEDIN,
+      amplitudeEvents.MANAGE_CHECKED_IN,
       eventProperties
     );
   }
