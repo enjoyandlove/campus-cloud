@@ -106,6 +106,19 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   fetchGoogleDetails(location) {
     this.service.getLocationDetails(location.value, this.hostEl.nativeElement).subscribe(
       (details) => {
+        /**
+         * @return {}
+         * on Error
+         */
+        const somethingWentWrong = !Object.keys(details).length;
+
+        if (somethingWentWrong) {
+          this.placeChange.emit(null);
+          this.state = Object.assign({}, this.state, { input: '' });
+
+          return;
+        }
+
         details = Object.assign({}, details, { name: location.full_label });
         this.placeChange.emit(details);
       },
