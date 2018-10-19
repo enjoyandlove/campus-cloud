@@ -77,8 +77,22 @@ export class EventsService extends HTTPService {
     return super.post(url, body, search);
   }
 
+  addOrientationCheckIn(body: any, search?: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT}/`;
+
+    return super.post(url, body, search);
+  }
+
   updateCheckIn(body: any, attendeeId: number, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_ASSESMENT}/${attendeeId}`;
+
+    return super.update(url, body, search);
+  }
+
+  updateOrienationCheckIn(body: any, attendeeId: number, search?: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT
+    }/${attendeeId}`;
 
     return super.update(url, body, search);
   }
