@@ -5,14 +5,14 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { ClubsService } from '../clubs.service';
-import { isDev } from '../../../../../config/env';
 import { CPSession } from '../../../../../session';
 import { CPI18nPipe } from '../../../../../shared/pipes';
 import { BaseComponent } from '../../../../../base/base.component';
-import { baseActions, getClubsState } from '../../../../../store/base';
 import { CPImageUploadComponent } from '../../../../../shared/components';
+import { CLUBS_MODAL_RESET } from '../../../../../reducers/clubs.reducer';
 import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
 import { CPI18nService, FileUploadService } from '../../../../../shared/services';
+import { HEADER_DEFAULT, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 const i18n = new CPI18nPipe();
 
@@ -41,8 +41,8 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
     private fileUploadService: FileUploadService
   ) {
     super();
-    this.store.select(getClubsState).subscribe((res) => {
-      this.clubs = !isDev ? res : require('./mock.json');
+    this.store.select('CLUBS').subscribe((res) => {
+      this.clubs = res;
     });
   }
 
