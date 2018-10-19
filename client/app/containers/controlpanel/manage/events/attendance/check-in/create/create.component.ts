@@ -100,7 +100,12 @@ export class CheckInCreateComponent implements OnInit {
         .append('calendar_id', this.orientationId.toString());
     }
 
-    this.service.addCheckIn(this.form.value, search).subscribe(
+    const eventCheckin$ = this.service.addCheckIn(this.form.value, search);
+    const orientationCheckin$ = this.service.addOrientationCheckIn(this.form.value, search);
+
+    const request$ = this.orientationId ? orientationCheckin$ : eventCheckin$;
+
+    request$.subscribe(
       (res: any) => {
         const duplicateUser = !res.attendance_id;
 
