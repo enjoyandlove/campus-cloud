@@ -3,17 +3,17 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '../../../session';
 import { AuthService } from '../auth.service';
+import { baseActions } from '../../../store/base';
 import { appStorage } from '../../../shared/utils';
-import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
+import { amplitudeEvents } from '../../../shared/constants/analytics';
 import {
   CPI18nService,
   CPTrackingService,
   ErrorService,
   ZendeskService
 } from '../../../shared/services';
-import { CPSession } from '../../../session';
-import { amplitudeEvents } from '../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-login',
@@ -88,7 +88,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch({ type: ALERT_DEFAULT });
+    this.store.dispatch({ type: baseActions.ALERT_DEFAULT });
   }
 
   loadAndTrackAmplitudeEvent() {

@@ -11,15 +11,13 @@ import { IPersona } from '../persona.interface';
 import { ITile } from '../tiles/tile.interface';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
-import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 import { PersonasService } from './../personas.service';
 import { TileVisibility } from './../tiles/tiles.status';
 import { CPI18nService } from '../../../../../shared/services';
 import { PersonaValidationErrors } from './../personas.status';
 import { PersonasUtilsService } from './../personas.utils.service';
-import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { SNACKBAR_HIDE } from './../../../../../reducers/snackbar.reducer';
-import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { baseActions, IHeader } from './../../../../../store/base';
+import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 
 @Component({
   selector: 'cp-personas-edit',
@@ -63,7 +61,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     };
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload
     });
   }
@@ -189,7 +187,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
         }
 
         this.store.dispatch({
-          type: SNACKBAR_SHOW,
+          type: baseActions.SNACKBAR_SHOW,
           payload: {
             sticky: true,
             class: snackBarClass,
@@ -222,7 +220,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     }
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         autoClose: true,
@@ -255,7 +253,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
 
   onDeleteError(message) {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         class: 'danger',
@@ -290,7 +288,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   }
 
   ngOnDestroy() {
-    this.store.dispatch({ type: SNACKBAR_HIDE });
+    this.store.dispatch({ type: baseActions.SNACKBAR_HIDE });
   }
 
   ngOnInit(): void {

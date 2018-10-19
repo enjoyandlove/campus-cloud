@@ -6,12 +6,12 @@ import { ServicesService } from '../services.service';
 import { ServiceAttendance } from '../services.status';
 import { CPSession } from './../../../../../session/index';
 import { ManageHeaderService } from './../../utils/header';
+import { baseActions, IHeader } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPTrackingService } from '../../../../../shared/services';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 interface IState {
   search_text: string;
@@ -85,7 +85,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
 
   private buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: this.headerService.filterByPrivileges()
     });
   }

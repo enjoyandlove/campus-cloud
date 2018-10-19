@@ -4,17 +4,16 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of as observableOf } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { reducers } from '../../../../reducers';
 import { CPSession } from './../../../../session';
+import { baseActions } from './../../../../store/base';
 import { EngagementService } from './engagement.service';
 import { mockUser } from './../../../../session/mock/user';
 import { EngagementComponent } from './engagement.component';
+import { AssessUtilsService } from '../assess.utils.service';
+import { baseReducers } from '../../../../store/base/reducers';
 import { mockSchool } from './../../../../session/mock/school';
 import { STATUS } from './../../../../shared/constants/status';
-import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
-import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 import { CPI18nService, CPTrackingService } from '../../../../shared/services';
-import { AssessUtilsService } from '../assess.utils.service';
 import { CPLineChartUtilsService } from '../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 const mockFilterState = {
@@ -77,8 +76,8 @@ describe('EngagementComponent', () => {
       imports: [
         // EngagementModule,
         StoreModule.forRoot({
-          HEADER: reducers.HEADER,
-          SNACKBAR: reducers.SNACKBAR
+          HEADER: baseReducers.HEADER,
+          SNACKBAR: baseReducers.SNACKBAR
         })
       ],
       declarations: [EngagementComponent],
@@ -126,7 +125,7 @@ describe('EngagementComponent', () => {
     component.onFlashMessage(null);
 
     const expected = {
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: STATUS.MESSAGE_SENT,
         autoClose: true
@@ -139,7 +138,7 @@ describe('EngagementComponent', () => {
     component.ngOnInit();
 
     const expected = {
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: require('../assess.header.json')
     };
     expect(storeSpy).toHaveBeenCalledWith(expected);

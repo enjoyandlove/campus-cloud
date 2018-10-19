@@ -1,27 +1,29 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
-import {
-  accountsToStoreMap,
-  canAccountLevelReadResource
-} from './../../../../../shared/utils/privileges/privileges';
-
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
+import { baseActions, IHeader } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+
 import {
   AdminService,
   ErrorService,
   CPI18nService,
   CPTrackingService
 } from '../../../../../shared/services';
+
+import {
+  accountsToStoreMap,
+  canAccountLevelReadResource
+} from './../../../../../shared/utils/privileges/privileges';
 
 import {
   clubMenu,
@@ -32,7 +34,6 @@ import {
   TeamUtilsService,
   audienceMenuStatus
 } from '../team.utils.service';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 declare var $: any;
 
@@ -269,7 +270,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   private buildHeader(name) {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `[NOTRANSLATE]${name}[NOTRANSLATE]`,
         crumbs: {

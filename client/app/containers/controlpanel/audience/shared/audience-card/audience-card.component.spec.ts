@@ -6,7 +6,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { AudienceCardComponent } from './audience-card.component';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
-import { reducer } from '../../../../../reducers/audience.reducer';
+import { reducer } from '../../../../../store/base/reducers/audience.reducer';
 
 describe('AudienceCardComponent', () => {
   let comp: AudienceCardComponent;

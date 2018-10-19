@@ -1,4 +1,3 @@
-import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
@@ -8,6 +7,7 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 import { AnnouncementsService } from '../announcements.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPTrackingService } from '../../../../../shared/services';
+import { baseActions, IHeader } from './../../../../../store/base';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
@@ -164,7 +164,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
 
   updateHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: require('../../notify.header.json')
     });
   }

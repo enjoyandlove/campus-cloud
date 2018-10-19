@@ -1,8 +1,21 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
+
+import { ClubStatus } from '../club.status';
+import { API } from '../../../../../config/api';
+import { ClubsService } from '../clubs.service';
+import { CPSession } from '../../../../../session';
+import { ClubsUtilsService } from '../clubs.utils.service';
+import { BaseComponent } from '../../../../../base/base.component';
+import { baseActions, ISnackbar } from '../../../../../store/base';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { appStorage } from './../../../../../shared/utils/storage/storage';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 
 import {
   CPI18nService,
@@ -10,20 +23,6 @@ import {
   FileUploadService,
   RouteLevel
 } from '../../../../../shared/services';
-
-import { switchMap } from 'rxjs/operators';
-import { ClubStatus } from '../club.status';
-import { API } from '../../../../../config/api';
-import { ClubsService } from '../clubs.service';
-import { CPSession } from '../../../../../session';
-import { ClubsUtilsService } from '../clubs.utils.service';
-import { BaseComponent } from '../../../../../base/base.component';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { appStorage } from './../../../../../shared/utils/storage/storage';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
-import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 
 @Component({
   selector: 'cp-clubs-info',
@@ -88,7 +87,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
         !!this.club.advisor_email;
 
       this.store.dispatch({
-        type: HEADER_UPDATE,
+        type: baseActions.HEADER_UPDATE,
         payload: this.buildHeader(res.data.name)
       });
     });
@@ -96,7 +95,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
   flashMessageSuccess() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         autoClose: true,
         body: this.cpI18n.translate('message_file_upload_success')
@@ -106,7 +105,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
   flashMessageError(body = this.cpI18n.translate('message_file_upload_error')) {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body,
         class: 'danger',

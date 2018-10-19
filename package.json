@@ -48,6 +48,7 @@
     "@angular/platform-server": "^6.0.2",
     "@angular/router": "^6.0.2",
     "@ngrx/core": "^1.2.0",
+    "@ngrx/effects": "6.0.1",
     "@ngrx/store": "6.0.1",
     "@types/moment-duration-format": "^2.2.2",
     "@types/moment-timezone": "0.5.4",

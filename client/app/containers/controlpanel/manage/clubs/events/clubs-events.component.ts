@@ -3,14 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
-import { BaseComponent } from '../../../../../base/base.component';
-import { CPSession } from '../../../../../session';
-import { ClubsService } from '../clubs.service';
-
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-
 import { IClub } from './../club.interface';
+import { ClubsService } from '../clubs.service';
+import { CPSession } from '../../../../../session';
+import { baseActions } from '../../../../../store/base';
 import { ClubsUtilsService } from './../clubs.utils.service';
+import { BaseComponent } from '../../../../../base/base.component';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 
 @Component({
@@ -56,7 +54,7 @@ export class ClubsEventsComponent extends BaseComponent implements OnInit {
     const payload = this.buildPayload();
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload
     });
   }

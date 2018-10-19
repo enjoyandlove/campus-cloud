@@ -5,14 +5,13 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { StudentsService } from './../students.service';
+import { baseActions } from './../../../../../store/base';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { CPSession } from './../../../../../session/index';
 import { AssessUtilsService } from '../../assess.utils.service';
 import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from './../../../../../base/base.component';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
@@ -133,7 +132,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     this.trackAmplitudeEvents(data.hostType);
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate('announcement_success_sent'),
         autoClose: true
@@ -199,7 +198,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     this.fetch();
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: require('../../assess.header.json')
     });
 

@@ -10,8 +10,8 @@ import { CPSession } from './../../../../../../session';
 import { CalendarsService } from '../../calendars.services';
 import { CalendarsItemsService } from '../item.utils.service';
 import { CPTrackingService } from '../../../../../../shared/services';
+import { IHeader, baseActions } from './../../../../../../store/base';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { IHeader, HEADER_UPDATE } from './../../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-calendars-items-edit',
@@ -55,7 +55,7 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: 'calendars_item_edit_heading',
         subheading: null,

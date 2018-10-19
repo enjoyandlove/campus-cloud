@@ -10,7 +10,7 @@ import { CPSession } from '../../../../../session';
 import { dealDateValidator } from '../deals.utils';
 import { DealsStoreService } from '../stores/store.service';
 import { CPI18nService } from '../../../../../shared/services';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { baseActions, IHeader } from '../../../../../store/base';
 
 @Component({
   selector: 'cp-deals-create',
@@ -34,7 +34,7 @@ export class DealsCreateComponent implements OnInit {
     public store: Store<IHeader>,
     public cpI18n: CPI18nService,
     public storeService: DealsStoreService
-  ) { }
+  ) {}
 
   onSubmit() {
     this.error = false;
@@ -81,7 +81,7 @@ export class DealsCreateComponent implements OnInit {
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `t_deals_form_heading_create_deal`,
         subheading: null,

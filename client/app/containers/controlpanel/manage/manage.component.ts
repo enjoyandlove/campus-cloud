@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 
 import { IUser } from '../../../session';
 import { ManageHeaderService } from './utils/header';
-import { IHeader, HEADER_UPDATE } from '../../../reducers/header.reducer';
+import { IHeader, baseActions, getHeaderState } from '../../../store/base';
 
 @Component({
   selector: 'cp-manage',
@@ -15,11 +15,11 @@ export class ManageComponent implements OnInit {
   headerData$: Observable<IHeader>;
 
   constructor(private store: Store<any>, private headerService: ManageHeaderService) {
-    this.headerData$ = this.store.select('HEADER');
+    this.headerData$ = this.store.select(getHeaderState);
   }
   ngOnInit() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: this.headerService.filterByPrivileges()
     });
   }

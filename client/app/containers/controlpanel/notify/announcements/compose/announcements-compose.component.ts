@@ -1,28 +1,24 @@
 /*tslint:disable:max-line-length*/
-import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import {
-  AUDIENCE_IMPORTED,
-  AUDIENCE_RESET_IMPORT_AUDIENCE
-} from './../../../../../reducers/audience.reducer';
-import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-import { canSchoolReadResource } from './../../../../../shared/utils/privileges/privileges';
+
 import { CPSession } from '../../../../../session';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { AnnouncementsService } from '../announcements.service';
+import { AudienceType } from '../../../audience/audience.status';
+import { baseActions, IHeader } from './../../../../../store/base';
 import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { canSchoolReadResource } from './../../../../../shared/utils/privileges/privileges';
+import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   CPI18nService,
   StoreService,
   CPTrackingService,
   ZendeskService
 } from '../../../../../shared/services';
-import { AnnouncementsService } from '../announcements.service';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { AudienceType } from '../../../audience/audience.status';
 
 interface IState {
   isUrgent: boolean;
@@ -108,7 +104,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   onImportError() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         class: 'danger',
@@ -119,7 +115,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   redirectToSaveTab({ id }) {
     this.store.dispatch({
-      type: AUDIENCE_IMPORTED,
+      type: baseActions.AUDIENCE_IMPORTED,
       payload: {
         audience_id: id,
         new_audience_active: false,
@@ -212,9 +208,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   getAudienceType(type) {
-    const audience_type = type === AudienceType.dynamic
-      ? amplitudeEvents.DYNAMIC_AUDIENCE
-      : amplitudeEvents.CUSTOM_AUDIENCE;
+    const audience_type =
+      type === AudienceType.dynamic
+        ? amplitudeEvents.DYNAMIC_AUDIENCE
+        : amplitudeEvents.CUSTOM_AUDIENCE;
 
     this.amplitudeEventProperties = {
       ...this.amplitudeEventProperties,
@@ -320,7 +317,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
             : this.cpI18n.translate('something_went_wrong');
 
         this.store.dispatch({
-          type: SNACKBAR_SHOW,
+          type: baseActions.SNACKBAR_SHOW,
           payload: {
             sticky: true,
             class: 'danger',
@@ -538,7 +535,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: 'announcements_heading_create',
         subheading: null,
@@ -571,7 +568,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch({ type: AUDIENCE_RESET_IMPORT_AUDIENCE });
+    this.store.dispatch({ type: baseActions.AUDIENCE_RESET_IMPORT_AUDIENCE });
   }
 
   ngOnInit() {

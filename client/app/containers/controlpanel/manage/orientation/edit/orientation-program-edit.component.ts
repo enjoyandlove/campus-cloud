@@ -1,4 +1,3 @@
-import { HttpParams } from '@angular/common/http';
 import {
   Component,
   ElementRef,
@@ -10,12 +9,14 @@ import {
   ViewChild
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
+
 import { CPSession } from './../../../../../session';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { CPI18nService } from '../../../../../shared/services/i18n.service';
+import { baseActions } from '../../../../../store/base';
 import { OrientationService } from '../orientation.services';
 import { OrientationUtilsService } from '../orientation.utils.service';
+import { CPI18nService } from '../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-orientation-program-edit',
@@ -70,7 +71,7 @@ export class OrientationProgramEditComponent implements OnInit {
       .editProgram(this.orientationProgram.id, this.form.value, search)
       .subscribe((editedProgram: any) => {
         this.store.dispatch({
-          type: HEADER_UPDATE,
+          type: baseActions.HEADER_UPDATE,
           payload: this.utils.buildHeader(editedProgram)
         });
         this.edited.emit(editedProgram);

@@ -12,8 +12,8 @@ import {
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 
+import { baseActions } from './../../../../../store/base';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { AUDIENCE_IMPORTED } from './../../../../../reducers/audience.reducer';
 import { CPTabComponent } from './../../../../../shared/components/cp-tabs/components/cp-tab/cp-tab.component';
 
 @Component({
@@ -62,7 +62,7 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
 
   onDestroyNewAudience() {
     this.store.dispatch({
-      type: AUDIENCE_IMPORTED,
+      type: baseActions.AUDIENCE_IMPORTED,
       payload: {
         audience_id: null,
         new_audience_active: false,
@@ -74,7 +74,7 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
 
   onDestroySavedAudience() {
     this.store.dispatch({
-      type: AUDIENCE_IMPORTED,
+      type: baseActions.AUDIENCE_IMPORTED,
       payload: {
         audience_id: null,
         new_audience_active: true,

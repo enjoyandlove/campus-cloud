@@ -8,13 +8,12 @@ import { Store } from '@ngrx/store';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
+import { baseActions } from '../../../../../store/base';
 import { ClubsUtilsService } from './../clubs.utils.service';
 import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
 import { advisorDataRequired } from './custom-validators.directive';
 import { membershipTypes, statusTypes } from '../create/permissions';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
@@ -180,7 +179,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
           disabled: false
         });
         this.store.dispatch({
-          type: SNACKBAR_SHOW,
+          type: baseActions.SNACKBAR_SHOW,
           payload: {
             body: this.cpI18n.translate('something_went_wrong'),
             sticky: true,
@@ -318,7 +317,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     };
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: this.labels.edit_button,
         subheading: null,

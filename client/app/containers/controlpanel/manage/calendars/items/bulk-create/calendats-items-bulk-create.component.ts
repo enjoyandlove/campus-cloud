@@ -13,8 +13,8 @@ import { CPSession } from './../../../../../../session';
 import { CPDate } from '../../../../../../shared/utils';
 import { CalendarsService } from '../../calendars.services';
 import { CPI18nPipe } from '../../../../../../shared/pipes';
+import { IHeader, baseActions } from './../../../../../../store/base';
 import { CPObj } from './../../../../../../shared/utils/object/object';
-import { IHeader, HEADER_UPDATE } from './../../../../../../reducers/header.reducer';
 
 const i18n = new CPI18nPipe();
 
@@ -75,7 +75,7 @@ export class CalendarsItemsBulkCreateComponent extends BaseComponent implements 
   buildHeader() {
     const subheading = i18n.transform('calendars_items_import_csv_sub_heading', this.items.length);
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: 'calendars_items_import_csv_heading',
         crumbs: {

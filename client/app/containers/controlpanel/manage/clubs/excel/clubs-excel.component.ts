@@ -1,20 +1,18 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { BaseComponent } from '../../../../../base/base.component';
-import { isDev } from '../../../../../config/env';
-import { CLUBS_MODAL_RESET } from '../../../../../reducers/clubs.reducer';
-import { CPSession } from '../../../../../session';
-import { CPImageUploadComponent } from '../../../../../shared/components';
-import { CPI18nPipe } from '../../../../../shared/pipes';
 import { ClubsService } from '../clubs.service';
+import { isDev } from '../../../../../config/env';
+import { CPSession } from '../../../../../session';
+import { CPI18nPipe } from '../../../../../shared/pipes';
+import { BaseComponent } from '../../../../../base/base.component';
+import { baseActions, getClubsState } from '../../../../../store/base';
+import { CPImageUploadComponent } from '../../../../../shared/components';
 import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
 import { CPI18nService, FileUploadService } from '../../../../../shared/services';
-
-import { HEADER_DEFAULT, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 const i18n = new CPI18nPipe();
 
@@ -43,7 +41,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
     private fileUploadService: FileUploadService
   ) {
     super();
-    this.store.select('CLUBS').subscribe((res) => {
+    this.store.select(getClubsState).subscribe((res) => {
       this.clubs = !isDev ? res : require('./mock.json');
     });
   }
@@ -57,7 +55,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   private buildHeader() {
     const subheading = i18n.transform(this.labels.import_items, this.clubs.length);
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: this.labels.import_heading,
         crumbs: {
@@ -103,8 +101,8 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   }
 
   ngOnDestroy() {
-    this.store.dispatch({ type: CLUBS_MODAL_RESET });
-    this.store.dispatch({ type: HEADER_DEFAULT });
+    this.store.dispatch({ type: baseActions.CLUBS_MODAL_RESET });
+    this.store.dispatch({ type: baseActions.HEADER_DEFAULT });
   }
 
   onImageUpload(image, index) {

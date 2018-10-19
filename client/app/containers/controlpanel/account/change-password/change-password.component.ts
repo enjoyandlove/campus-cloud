@@ -4,10 +4,10 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../session';
 import { AccountService } from '../account.service';
-import { CPTrackingService, ErrorService } from '../../../../shared/services';
-import { CPI18nService } from './../../../../shared/services/i18n.service';
-import { ALERT_DEFAULT, IAlert } from '../../../../reducers/alert.reducer';
+import { baseActions, IAlert } from '../../../../store/base';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { CPTrackingService, ErrorService } from '../../../../shared/services';
 
 @Component({
   selector: 'cp-change-password',
@@ -39,7 +39,7 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(data) {
-    this.store.dispatch({ type: ALERT_DEFAULT });
+    this.store.dispatch({ type: baseActions.ALERT_DEFAULT });
 
     if (!this.form.valid) {
       if (this.form.controls['current'].errors) {
@@ -145,6 +145,6 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch({ type: ALERT_DEFAULT });
+    this.store.dispatch({ type: baseActions.ALERT_DEFAULT });
   }
 }

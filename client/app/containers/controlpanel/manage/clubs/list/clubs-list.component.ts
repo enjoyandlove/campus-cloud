@@ -1,18 +1,17 @@
+import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { IClub } from '../club.interface';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
+import { baseActions } from '../../../../../store/base';
 import { ManageHeaderService } from './../../utils/header';
 import { ClubsUtilsService } from '../clubs.utils.service';
 import { ClubSocialGroup, ClubStatus } from '../club.status';
 import { BaseComponent } from '../../../../../base/base.component';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
@@ -175,7 +174,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
 
   onError(body) {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body,
         class: 'danger',
@@ -201,7 +200,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     };
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: this.headerService.filterByPrivileges()
     });
 

@@ -9,10 +9,10 @@ import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { ServicesUtilsService } from '../services.utils.service';
+import { baseActions, IHeader } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { RatingScale, ServiceAttendance } from '../services.status';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 @Component({
@@ -246,7 +246,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: 'services_edit_heading',
         subheading: null,
