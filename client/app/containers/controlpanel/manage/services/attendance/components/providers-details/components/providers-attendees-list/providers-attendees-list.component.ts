@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
+import { IService } from '../../../../../service.interface';
 import { CPSession } from './../../../../../../../../../session';
 import IServiceProvider from '../../../../../providers.interface';
 import { ProvidersService } from '../../../../../providers.service';
@@ -36,6 +37,7 @@ const state: IState = {
   styleUrls: ['./providers-attendees-list.component.scss']
 })
 export class ServicesProvidersAttendeesListComponent extends BaseComponent implements OnInit {
+  @Input() service: IService;
   @Input() serviceId: number;
   @Input() providerId: number;
   @Input() provider: IServiceProvider;
@@ -231,6 +233,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
   trackAmplitudeEvent() {
     this.eventProperties = {
+      host_id: this.service.store_id,
       data_source: amplitudeEvents.SERVICE_PROVIDER,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };

@@ -262,9 +262,13 @@ export class BaseCheckinComponent implements OnInit {
       ? this.utils.getCheckInSource(this.checkInSource)
       : amplitudeEvents.SERVICE_PROVIDER;
 
+    const access_type = this.checkInSource
+      ? amplitudeEvents.CLICKED_CHECK_IN
+      : amplitudeEvents.LOADED_CHECK_IN;
+
     const eventProperties = {
+      access_type,
       check_in_type,
-      access_type: amplitudeEvents.LOADED_CHECK_IN,
       source_id: this.serviceId ? this.serviceId : this.eventId
     };
 

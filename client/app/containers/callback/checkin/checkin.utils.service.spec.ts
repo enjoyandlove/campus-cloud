@@ -1,5 +1,6 @@
 import { CheckinUtilsService } from './checkin.utils.service';
 import { amplitudeEvents } from '../../../shared/constants/analytics';
+import { CheckInSource } from '../../controlpanel/manage/events/event.status';
 
 const service = new CheckinUtilsService(null);
 
@@ -13,12 +14,13 @@ describe('CheckInUtilsService', () => {
   it('getCheckedInEventProperties', () => {
     userId = 452;
     sourceId = 8874;
+    checkInSource = CheckInSource.services;
     events = {
       has_checkout: false,
       checkin_verification_methods: [1, 2, 3]
     };
 
-    eventProperties = service.getCheckedInEventProperties(sourceId, events, userId);
+    eventProperties = service.getCheckedInEventProperties(sourceId, events, userId, checkInSource);
 
     expect(eventProperties.user_id).toEqual(userId);
     expect(eventProperties.source_id).toEqual(sourceId);
@@ -28,7 +30,7 @@ describe('CheckInUtilsService', () => {
 
     userId = 154;
     sourceId = 8547;
-    checkInSource = 'services';
+    checkInSource = CheckInSource.events;
     events = {
       has_checkout: true,
       attend_verification_methods: [1, 2]

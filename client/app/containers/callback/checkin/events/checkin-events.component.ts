@@ -72,6 +72,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       this.state.events,
       event.attendance_id,
       this.checkInSource,
+      true
     );
 
     delete eventProperties.check_out_status;
@@ -146,6 +147,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       this.state.events,
       response.attendance_id,
       this.checkInSource,
+      true
     );
 
     this.cpTracking.amplitudeEmitEvent(

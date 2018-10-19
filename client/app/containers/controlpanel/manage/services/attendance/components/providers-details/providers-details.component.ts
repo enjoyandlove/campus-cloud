@@ -22,13 +22,13 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   @ViewChild('providerAttendees') providerAttendees;
 
   loading;
+  service;
   provider;
   eventData;
   serviceId;
   providerId;
   MAX_RATE = 5;
   eventRating;
-  serviceName: string;
   updateQrCode = new BehaviorSubject(null);
 
   constructor(
@@ -52,7 +52,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
 
     const stream$ = service$.pipe(
       switchMap((service: any) => {
-        this.serviceName = service.name;
+        this.service = service;
 
         return providers$;
       })
@@ -73,7 +73,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
         heading: `[NOTRANSLATE]${this.provider.provider_name}[NOTRANSLATE]`,
         crumbs: {
           url: `services/${this.serviceId}`,
-          label: `[NOTRANSLATE]${this.serviceName}[NOTRANSLATE]`
+          label: `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`
         },
         subheading: null,
         em: null,

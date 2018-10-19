@@ -8,10 +8,11 @@ import { reducers } from '../../../../reducers';
 import { CPSession } from '../../../../session';
 import { CheckinService } from '../checkin.service';
 import { CallbackModule } from '../../callback.module';
-import { CPTrackingService, ErrorService } from '../../../../shared/services';
 import { CheckinServiceComponent } from './checkin-service.component';
-import { CPI18nService } from './../../../../shared/services/i18n.service';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { CPTrackingService, ErrorService } from '../../../../shared/services';
+import { CheckInSource } from '../../../controlpanel/manage/events/event.status';
 
 class MockService {
   dummy;
@@ -69,12 +70,18 @@ describe('CheckinServiceComponent', () => {
   it('trackCheckedInEvent', () => {
     userId = 452;
     sourceId = 8874;
+    checkInSource = CheckInSource.services;
     services = {
       has_checkout: false,
       checkin_verification_methods: [1, 2, 3]
     };
 
-    eventProperties = component.utils.getCheckedInEventProperties(sourceId, services, userId);
+    eventProperties = component.utils.getCheckedInEventProperties(
+      sourceId,
+      services,
+      userId,
+      checkInSource
+    );
 
     expect(eventProperties.user_id).toEqual(userId);
     expect(eventProperties.source_id).toEqual(sourceId);
@@ -84,7 +91,7 @@ describe('CheckinServiceComponent', () => {
 
     userId = 154;
     sourceId = 8547;
-    checkInSource = 'events';
+    checkInSource = CheckInSource.events;
     services = {
       has_checkout: true,
       attend_verification_methods: [1, 2]

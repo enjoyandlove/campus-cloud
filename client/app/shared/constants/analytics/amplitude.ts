@@ -131,7 +131,9 @@ export const amplitudeEvents = {
 
   CHANGED_SCHOOL: 'Changed School',
 
-  LOADED_CHECK_IN: 'Loaded Check-In ',
+  LOADED_CHECK_IN: 'Loaded Check-In',
+
+  CLICKED_CHECK_IN: 'Clicked Check-In',
 
   DYNAMIC_AUDIENCE: 'Dynamic Audience',
 
