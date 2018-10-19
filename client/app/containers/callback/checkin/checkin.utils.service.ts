@@ -47,7 +47,7 @@ export class CheckinUtilsService {
   }
 
   getCheckedInEventProperties(source_id, events, user_id, checkInSource = null) {
-    const verificatonMethod = checkInSource
+    const verificationMethod = checkInSource
       ? events['attend_verification_methods']
       : events['checkin_verification_methods'];
 
@@ -59,7 +59,7 @@ export class CheckinUtilsService {
       ? amplitudeEvents.ENABLED
       : amplitudeEvents.DISABLED;
 
-    const qr_code_status = verificatonMethod.includes(CheckInMethod.app)
+    const qr_code_status = verificationMethod.includes(CheckInMethod.app)
         ? amplitudeEvents.ENABLED
         : amplitudeEvents.DISABLED;
 

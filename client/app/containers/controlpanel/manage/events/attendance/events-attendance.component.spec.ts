@@ -37,7 +37,7 @@ class MockService {
   }
 }
 
-describe('EventAttendanceComponent', () => {
+fdescribe('EventAttendanceComponent', () => {
   let spy;
   let search;
   let spyAttendee;
@@ -94,6 +94,7 @@ describe('EventAttendanceComponent', () => {
             .append('sort_direction', component.state.sort_direction);
 
           spyOn(component, 'buildHeader');
+          spyOn(component, 'trackQrCode');
           spy = spyOn(component.service, 'getEventById').and.returnValue(observableOf({}));
           spyAttendee = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
             observableOf({})
