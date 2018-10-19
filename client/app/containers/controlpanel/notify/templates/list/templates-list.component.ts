@@ -3,13 +3,13 @@ import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
+import { baseActions } from './../../../../../store/base';
 import { TemplatesService } from './../templates.service';
 import { CPSession } from './../../../../../session/index';
 import { base64 } from './../../../../../shared/utils/encrypt';
 import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from './../../../../../base/base.component';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
@@ -145,7 +145,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
   onComposed() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate('announcement_success_sent'),
         autoClose: true

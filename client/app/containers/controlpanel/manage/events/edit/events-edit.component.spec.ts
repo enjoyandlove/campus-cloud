@@ -10,10 +10,10 @@ import { EventsModule } from '../events.module';
 import { EventAttendance } from '../event.status';
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
-import { reducers } from '../../../../../reducers';
 import { EventUtilService } from '../events.utils.service';
 import { EventsEditComponent } from './events-edit.component';
 import { mockSchool } from '../../../../../session/mock/school';
+import { baseReducers } from '../../../../../store/base/reducers';
 
 import {
   AdminService,
@@ -63,10 +63,12 @@ describe('EventEditComponent', () => {
     poster_thumb_url: 'https://d25cbba5lf1nun.cloudfront.net/AsmFSxT1V.png'
   };
 
-  const mockStore = [{
-    label: '---',
-    value: null
-  }];
+  const mockStore = [
+    {
+      label: '---',
+      value: null
+    }
+  ];
 
   beforeEach(
     async(() => {
@@ -76,8 +78,8 @@ describe('EventEditComponent', () => {
           EventsModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [
@@ -118,118 +120,145 @@ describe('EventEditComponent', () => {
     expect(component.form.controls['is_all_day'].value).toBeFalsy();
   });
 
-  it('should have event attendance type tooltip', fakeAsync(() => {
-    component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
-    fixture.detectChanges();
-    tick();
+  it(
+    'should have event attendance type tooltip',
+    fakeAsync(() => {
+      component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
+      fixture.detectChanges();
+      tick();
 
-    const toolTipInfoIcon = fixture.debugElement
-      .query(By.css('.row .attendance-type-tooltip button')).nativeElement;
-    toolTipInfoIcon.click();
-    tick();
+      const toolTipInfoIcon = fixture.debugElement.query(
+        By.css('.row .attendance-type-tooltip button')
+      ).nativeElement;
+      toolTipInfoIcon.click();
+      tick();
 
-    fixture.detectChanges();
+      fixture.detectChanges();
 
-    tick();
-    const toolTipContent = fixture.debugElement
-      .query(By.css('.row .attendance-type-tooltip .popover .popover-content div'))
-      .nativeElement;
+      tick();
+      const toolTipContent = fixture.debugElement.query(
+        By.css('.row .attendance-type-tooltip .popover .popover-content div')
+      ).nativeElement;
 
-    const utilsEventAttendanceTypeTooltip = component.utils
-      .getToolTipContent('t_events_event_attendance_type_tooltip');
+      const utilsEventAttendanceTypeTooltip = component.utils.getToolTipContent(
+        't_events_event_attendance_type_tooltip'
+      );
 
-    expect(toolTipContent.textContent).toEqual(utilsEventAttendanceTypeTooltip.content);
-  }));
+      expect(toolTipContent.textContent).toEqual(utilsEventAttendanceTypeTooltip.content);
+    })
+  );
 
-  it('should have event QR enabled tooltip', fakeAsync(() => {
-    component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
-    fixture.detectChanges();
-    tick();
+  it(
+    'should have event QR enabled tooltip',
+    fakeAsync(() => {
+      component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
+      fixture.detectChanges();
+      tick();
 
-    const toolTipInfoIcon = fixture.debugElement
-      .query(By.css('.row .event-qr-enable-tooltip button')).nativeElement;
-    toolTipInfoIcon.click();
-    tick();
+      const toolTipInfoIcon = fixture.debugElement.query(
+        By.css('.row .event-qr-enable-tooltip button')
+      ).nativeElement;
+      toolTipInfoIcon.click();
+      tick();
 
-    fixture.detectChanges();
+      fixture.detectChanges();
 
-    tick();
-    const toolTipContent = fixture.debugElement
-      .query(By.css('.row .event-qr-enable-tooltip .popover .popover-content div'))
-      .nativeElement;
+      tick();
+      const toolTipContent = fixture.debugElement.query(
+        By.css('.row .event-qr-enable-tooltip .popover .popover-content div')
+      ).nativeElement;
 
-    const utilsEventQREnableTooltip = component.utils
-      .getToolTipContent('t_events_event_qr_code_tooltip');
+      const utilsEventQREnableTooltip = component.utils.getToolTipContent(
+        't_events_event_qr_code_tooltip'
+      );
 
-    expect(toolTipContent.textContent).toEqual(utilsEventQREnableTooltip.content);
-  }));
+      expect(toolTipContent.textContent).toEqual(utilsEventQREnableTooltip.content);
+    })
+  );
 
-  it('should have event manager tooltip', fakeAsync(() => {
-    component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
-    fixture.detectChanges();
-    tick();
+  it(
+    'should have event manager tooltip',
+    fakeAsync(() => {
+      component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
+      fixture.detectChanges();
+      tick();
 
-    const toolTipInfoIcon = fixture.debugElement
-      .query(By.css('.row .event-manager-tooltip button')).nativeElement;
-    toolTipInfoIcon.click();
-    tick();
+      const toolTipInfoIcon = fixture.debugElement.query(
+        By.css('.row .event-manager-tooltip button')
+      ).nativeElement;
+      toolTipInfoIcon.click();
+      tick();
 
-    fixture.detectChanges();
+      fixture.detectChanges();
 
-    tick();
-    const toolTipContent = fixture.debugElement
-      .query(By.css('.row .event-manager-tooltip .popover .popover-content div')).nativeElement;
+      tick();
+      const toolTipContent = fixture.debugElement.query(
+        By.css('.row .event-manager-tooltip .popover .popover-content div')
+      ).nativeElement;
 
-    const utilsEventManagerTooltip = component.utils
-      .getToolTipContent('events_event_manager_tooltip');
+      const utilsEventManagerTooltip = component.utils.getToolTipContent(
+        'events_event_manager_tooltip'
+      );
 
-    expect(toolTipContent.textContent).toEqual(utilsEventManagerTooltip.content);
-  }));
+      expect(toolTipContent.textContent).toEqual(utilsEventManagerTooltip.content);
+    })
+  );
 
-  it('should have attendance Manager tooltip', fakeAsync(() => {
-    component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
-    fixture.detectChanges();
-    tick();
+  it(
+    'should have attendance Manager tooltip',
+    fakeAsync(() => {
+      component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
+      fixture.detectChanges();
+      tick();
 
-    const toolTipInfoIcon = fixture.debugElement
-      .query(By.css('.row .attendance-manager-tooltip button')).nativeElement;
-    toolTipInfoIcon.click();
-    tick();
+      const toolTipInfoIcon = fixture.debugElement.query(
+        By.css('.row .attendance-manager-tooltip button')
+      ).nativeElement;
+      toolTipInfoIcon.click();
+      tick();
 
-    fixture.detectChanges();
+      fixture.detectChanges();
 
-    tick();
-    const toolTipContent = fixture.debugElement
-      .query(By.css('.row .attendance-manager-tooltip .popover .popover-content div'))
-      .nativeElement;
+      tick();
+      const toolTipContent = fixture.debugElement.query(
+        By.css('.row .attendance-manager-tooltip .popover .popover-content div')
+      ).nativeElement;
 
-    const utilsAttendanceManagerTooltip = component.utils
-      .getToolTipContent('events_attendance_manager_tooltip');
+      const utilsAttendanceManagerTooltip = component.utils.getToolTipContent(
+        'events_attendance_manager_tooltip'
+      );
 
-    expect(toolTipContent.textContent).toEqual(utilsAttendanceManagerTooltip.content);
-  }));
+      expect(toolTipContent.textContent).toEqual(utilsAttendanceManagerTooltip.content);
+    })
+  );
 
-  it('should have student feedback tooltip', fakeAsync(() => {
-    component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
-    fixture.detectChanges();
-    tick();
+  it(
+    'should have student feedback tooltip',
+    fakeAsync(() => {
+      component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
+      fixture.detectChanges();
+      tick();
 
-    const toolTipInfoIcon = fixture.debugElement
-      .query(By.css('.row .student-feedback-tooltip button')).nativeElement;
-    toolTipInfoIcon.click();
-    tick();
+      const toolTipInfoIcon = fixture.debugElement.query(
+        By.css('.row .student-feedback-tooltip button')
+      ).nativeElement;
+      toolTipInfoIcon.click();
+      tick();
 
-    fixture.detectChanges();
+      fixture.detectChanges();
 
-    tick();
-    const toolTipContent = fixture.debugElement
-      .query(By.css('.row .student-feedback-tooltip .popover .popover-content div')).nativeElement;
+      tick();
+      const toolTipContent = fixture.debugElement.query(
+        By.css('.row .student-feedback-tooltip .popover .popover-content div')
+      ).nativeElement;
 
-    const utilsStudentFeedbackTooltip = component.utils
-      .getToolTipContent('events_event_feedback_tooltip');
+      const utilsStudentFeedbackTooltip = component.utils.getToolTipContent(
+        'events_event_feedback_tooltip'
+      );
 
-    expect(toolTipContent.textContent).toEqual(utilsStudentFeedbackTooltip.content);
-  }));
+      expect(toolTipContent.textContent).toEqual(utilsStudentFeedbackTooltip.content);
+    })
+  );
 
   it('form validation should fail required fields missing', () => {
     component.form.controls['title'].setValue(null);

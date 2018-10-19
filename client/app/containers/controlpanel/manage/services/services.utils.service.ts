@@ -14,9 +14,9 @@ import IServiceProvider from './providers.interface';
 import { Formats } from '../../../../shared/utils/csv';
 import { CPDate } from '../../../../shared/utils/date/date';
 import { CPI18nService } from '../../../../shared/services';
+import { baseActions, IHeader } from '../../../../store/base';
 import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 import { createSpreadSheet } from '../../../../shared/utils/csv/parser';
-import { HEADER_UPDATE, IHeader } from '../../../../reducers/header.reducer';
 import { attendanceType, CheckInMethod, CheckInOutTime } from '../events/event.status';
 
 @Injectable()
@@ -217,7 +217,7 @@ export class ServicesUtilsService {
     }
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `[NOTRANSLATE]${service.name}[NOTRANSLATE]`,
         subheading: '',

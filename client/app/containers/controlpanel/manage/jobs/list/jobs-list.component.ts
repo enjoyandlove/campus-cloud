@@ -8,10 +8,10 @@ import { ManageHeaderService } from '../../utils';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { JobsUtilsService } from './../jobs.utils.service';
+import { baseActions, IHeader } from '../../../../../store/base';
 import { FORMAT } from '../../../../../shared/pipes/date/date.pipe';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 export interface IState {
@@ -123,7 +123,7 @@ export class JobsListComponent extends BaseComponent implements OnInit {
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: this.headerService.filterByPrivileges()
     });
   }

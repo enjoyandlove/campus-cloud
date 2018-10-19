@@ -9,9 +9,9 @@ import { ICalendar } from './../../calendars.interface';
 import { BaseComponent } from '../../../../../../base';
 import { FORMAT } from '../../../../../../shared/pipes';
 import { CalendarsService } from '../../calendars.services';
+import { baseActions, IHeader } from '../../../../../../store/base';
 import { CPTrackingService } from '../../../../../../shared/services';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
 import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking/tracking.directive';
 
 @Component({
@@ -49,7 +49,7 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `[NOTRANSLATE]${this.item.title}[NOTRANSLATE]`,
         subheading: null,

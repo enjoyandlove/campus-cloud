@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { HEADER_UPDATE, IHeader } from '../../../reducers/header.reducer';
+import { Observable } from 'rxjs';
+
+import { baseActions, IHeader, getHeaderState } from '../../../store/base';
 
 @Component({
   selector: 'cp-customise',
@@ -16,10 +17,10 @@ export class CustomiseComponent implements OnInit {
   headerData$: Observable<IHeader>;
 
   constructor(private store: Store<any>) {
-    this.headerData$ = this.store.select('HEADER');
+    this.headerData$ = this.store.select(getHeaderState);
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: require('./customise.header.json')
     });
   }

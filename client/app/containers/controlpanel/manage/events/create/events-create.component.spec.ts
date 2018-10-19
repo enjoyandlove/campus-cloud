@@ -8,12 +8,12 @@ import { of as observableOf } from 'rxjs';
 
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
+import { EventAttendance } from '../event.status';
 import { CPSession } from '../../../../../session';
-import { reducers } from '../../../../../reducers';
 import { EventUtilService } from '../events.utils.service';
 import { mockSchool } from '../../../../../session/mock/school';
 import { EventsCreateComponent } from './events-create.component';
-import { EventAttendance } from '../event.status';
+import { baseReducers } from '../../../../../store/base/reducers';
 
 import {
   AdminService,
@@ -46,8 +46,8 @@ describe('EventCreateComponent', () => {
           EventsModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [

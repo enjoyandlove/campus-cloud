@@ -1,12 +1,12 @@
-import { ISnackbar, SNACKBAR_SHOW } from './../../../../../../../reducers/snackbar.reducer';
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { API } from '../../../../../../../config/api';
 import { appStorage } from '../../../../../../../shared/utils';
+import { ISnackbar, baseActions } from './../../../../../../../store/base';
 import { FileUploadService, CPI18nService } from '../../../../../../../shared/services';
-import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'cp-services-import-top-bar',
@@ -36,7 +36,7 @@ export class ServicesImportTopBarComponent implements OnInit {
 
   errorHandler(body = this.cpI18n.translate('something_went_wrong')) {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body,
         sticky: true,

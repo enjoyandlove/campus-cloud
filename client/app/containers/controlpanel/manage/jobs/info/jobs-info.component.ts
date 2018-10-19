@@ -9,7 +9,7 @@ import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { JobsUtilsService } from '../jobs.utils.service';
 import { FORMAT } from '../../../../../shared/pipes/date';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { baseActions, IHeader } from '../../../../../store/base';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPTrackingService, RouteLevel } from '../../../../../shared/services';
@@ -76,7 +76,7 @@ export class JobsInfoComponent extends BaseComponent implements OnInit {
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `jobs_job_details`,
         subheading: null,

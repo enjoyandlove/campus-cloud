@@ -3,10 +3,11 @@ import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
-import { ISnackbar, SNACKBAR_SHOW } from './../../../../../../../../reducers/snackbar.reducer';
+
 import { TilesService } from './../../../tiles.service';
 import { CPSession } from './../../../../../../../../session';
 import { StoreService } from '../../../../../../../../shared/services';
+import { ISnackbar, baseActions } from './../../../../../../../../store/base';
 import { CPI18nService } from './../../../../../../../../shared/services/i18n.service';
 
 @Component({
@@ -77,7 +78,7 @@ export class PersonasResourceTypeSearchComponent implements OnInit {
 
   handleMissingResource() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         autoClose: true,
         class: 'warning',

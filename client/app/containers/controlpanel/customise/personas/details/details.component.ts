@@ -10,23 +10,18 @@ import { IPersona } from './../persona.interface';
 import { ITile } from './../tiles/tile.interface';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
-import { SectionsService } from './../sections/sections.service';
-import {
-  ISnackbar,
-  SNACKBAR_HIDE,
-  SNACKBAR_SHOW
-} from './../../../../../reducers/snackbar.reducer';
 import { TilesService } from '../tiles/tiles.service';
 import { PersonasService } from './../personas.service';
 import { CPI18nService } from '../../../../../shared/services';
 import { ICampusGuide } from './../sections/section.interface';
 import { CampusGuideType } from './../sections/section.status';
+import { SectionsService } from './../sections/sections.service';
 import { CategoryDeleteErrors } from '../sections/section.status';
 import { TilesUtilsService } from './../tiles/tiles.utils.service';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { SectionUtilsService } from './../sections/section.utils.service';
 import { PersonasType, PersonaValidationErrors } from './../personas.status';
-import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { baseActions, IHeader, ISnackbar } from './../../../../../store/base';
 import { TileCategoryRank, TileFeatureRank, TileType } from './../tiles/tiles.status';
 
 interface IState {
@@ -151,7 +146,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     this.store.dispatch(
       status
         ? {
-            type: SNACKBAR_SHOW,
+            type: baseActions.SNACKBAR_SHOW,
             payload: {
               sticky: true,
               autoClose: false,
@@ -159,7 +154,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
               body: this.cpI18n.translate('t_saving')
             }
           }
-        : { type: SNACKBAR_HIDE }
+        : { type: baseActions.SNACKBAR_HIDE }
     );
   }
 
@@ -177,7 +172,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
   handleSuccess() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         autoClose: true,
@@ -189,7 +184,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
   displayWarning() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         autoClose: true,
@@ -473,7 +468,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     }
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         autoClose: true,
@@ -667,7 +662,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
   updateHeader(personName) {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `[NOTRANSLATE]${personName}[NOTRANSLATE]`,
         subheading: null,
@@ -682,7 +677,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   }
 
   ngOnDestroy() {
-    this.store.dispatch({ type: SNACKBAR_HIDE });
+    this.store.dispatch({ type: baseActions.SNACKBAR_HIDE });
   }
 
   ngOnInit(): void {

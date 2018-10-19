@@ -1,16 +1,17 @@
-import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
-import { DealsCreateComponent } from './deals-create.component';
-import { reducers } from '../../../../../reducers';
-import { CPSession } from '../../../../../session';
-import { mockSchool } from '../../../../../session/mock/school';
-import { CPI18nService } from '../../../../../shared/services';
+
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
+import { CPSession } from '../../../../../session';
 import { DealsStoreService } from '../stores/store.service';
+import { CPI18nService } from '../../../../../shared/services';
+import { DealsCreateComponent } from './deals-create.component';
+import { mockSchool } from '../../../../../session/mock/school';
+import { baseReducers } from '../../../../../store/base/reducers';
 
 class MockDealsService {
   dummy;
@@ -46,8 +47,8 @@ describe('DealsCreateComponent', () => {
           HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [

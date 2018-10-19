@@ -1,17 +1,18 @@
-import { HttpClientModule } from '@angular/common/http';
-import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
+import { DebugElement } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
-import { JobsInfoComponent } from './jobs-info.component';
-import { reducers } from '../../../../../reducers';
-import { CPSession } from '../../../../../session';
-import { mockSchool } from '../../../../../session/mock/school';
-import { CPI18nService } from '../../../../../shared/services';
+
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
+import { CPSession } from '../../../../../session';
 import { JobsUtilsService } from '../jobs.utils.service';
+import { JobsInfoComponent } from './jobs-info.component';
+import { CPI18nService } from '../../../../../shared/services';
+import { mockSchool } from '../../../../../session/mock/school';
+import { baseReducers } from '../../../../../store/base/reducers';
 
 const mockJobs = require('../mockJobs.json');
 
@@ -39,8 +40,8 @@ describe('JobsInfoComponent', () => {
           HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [

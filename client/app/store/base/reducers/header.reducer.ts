@@ -1,20 +1,7 @@
+import { IHeader } from '../base.state';
+
 export const HEADER_UPDATE = 'HEADER_UPDATE';
 export const HEADER_DEFAULT = 'HEADER_DEFAULT';
-
-export interface IHeader {
-  heading: string;
-
-  subheading?: string;
-
-  em?: string;
-
-  crumbs?: {
-    url: string;
-    label: string;
-  };
-
-  children: { url: string; label: string }[];
-}
 
 const initialState: IHeader = {
   heading: '',

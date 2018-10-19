@@ -12,8 +12,7 @@ import { JobsTypeDesireStudy } from '../jobs.status';
 import { JobsUtilsService } from '../jobs.utils.service';
 import { CPI18nService } from '../../../../../shared/services';
 import { EmployerService } from '../employers/employer.service';
-import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { baseActions, IHeader } from '../../../../../store/base';
 
 @Component({
   selector: 'cp-jobs-create',
@@ -94,7 +93,7 @@ export class JobsCreateComponent implements OnInit {
 
   flashMessageError() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         class: 'danger',
         autoClose: true,
@@ -105,7 +104,7 @@ export class JobsCreateComponent implements OnInit {
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `jobs_create_job`,
         subheading: null,

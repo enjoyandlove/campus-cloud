@@ -14,7 +14,7 @@ import { TilesService } from './../../tiles/tiles.service';
 import { SectionUtilsService } from '../section.utils.service';
 import { CPI18nService } from '../../../../../../shared/services';
 import { TilesUtilsService } from './../../tiles/tiles.utils.service';
-import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
+import { ISnackbar, baseActions } from '../../../../../../store/base';
 
 interface ISetSectionName {
   guideId: number;
@@ -123,7 +123,7 @@ export class PersonasSectionComponent implements OnInit {
 
   handleSuccess() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         autoClose: true,
@@ -140,7 +140,7 @@ export class PersonasSectionComponent implements OnInit {
     this.setWorkingState(false);
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body,
         sticky: true,

@@ -1,23 +1,24 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+
+import { FeedsService } from '../../../feeds.service';
+import { API } from '../../../../../../../config/api';
+import { appStorage } from '../../../../../../../shared/utils';
+import { FeedsUtilsService } from '../../../feeds.utils.service';
+import { CPSession, ISchool } from '../../../../../../../session';
+import { ISnackbar, baseActions } from './../../../../../../../store/base';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 import {
   CPTrackingService,
   FileUploadService,
   StoreService
 } from '../../../../../../../shared/services';
-import { FeedsService } from '../../../feeds.service';
-import { API } from '../../../../../../../config/api';
-import { appStorage } from '../../../../../../../shared/utils';
-import { FeedsUtilsService } from '../../../feeds.utils.service';
-import { CPSession, ISchool } from '../../../../../../../session';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { ISnackbar, SNACKBAR_SHOW } from './../../../../../../../reducers/snackbar.reducer';
 
 @Component({
   selector: 'cp-feed-input-box',
@@ -144,7 +145,7 @@ export class FeedInputBoxComponent implements OnInit {
     const somethingWentWrong = this.cpI18n.translate('something_went_wrong');
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: status === 403 ? forbidden : somethingWentWrong,
         class: 'danger',
