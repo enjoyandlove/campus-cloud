@@ -49,7 +49,12 @@ export class CheckInDeleteComponent implements OnInit {
         .append('service_id', this.data['campus_service_id'].toString());
     }
 
-    this.service.deleteCheckInById(this.checkIn.id, search).subscribe(
+    const eventCheckIn$ =  this.service.deleteCheckInById(this.checkIn.id, search);
+    const orientationCheckIn$ =  this.service.deleteOrientationCheckInById(this.checkIn.id, search);
+
+    const request$ = this.orientationId ? orientationCheckIn$ : eventCheckIn$;
+
+    request$.subscribe(
       (_) => {
         this.deleted.emit(this.checkIn.id);
         this.teardown.emit();
