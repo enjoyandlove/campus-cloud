@@ -13,6 +13,12 @@ export class ProvidersService extends HTTPService {
     Object.setPrototypeOf(this, ProvidersService.prototype);
   }
 
+  addOrientationCheckIn() {}
+
+  updateOrientationCheckIn() {}
+
+  deleteOrientationCheckInById() {}
+
   getProviders(startRange: number, endRange: number, search?: HttpParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICE_PROVIDER}`;
     const url = `${common}/${startRange};${endRange}`;
