@@ -258,9 +258,9 @@ export class BaseCheckinComponent implements OnInit {
   }
 
   trackDownloadQRCodeEvent() {
-    const check_in_type = this.checkInSource
-      ? this.utils.getCheckInSource(this.checkInSource)
-      : amplitudeEvents.SERVICE_PROVIDER;
+    const check_in_type = this.checkInSource === 'service'
+      ? amplitudeEvents.SERVICE_PROVIDER
+      : this.utils.getCheckInSource(this.checkInSource);
 
     const access_type = this.checkInSource
       ? amplitudeEvents.CLICKED_CHECK_IN

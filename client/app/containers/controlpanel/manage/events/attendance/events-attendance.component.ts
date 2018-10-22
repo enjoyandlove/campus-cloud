@@ -13,8 +13,8 @@ import { IHeader, baseActions } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CheckInMethod, CheckInOutTime, CheckOut } from '../event.status';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import {
   canSchoolReadResource,

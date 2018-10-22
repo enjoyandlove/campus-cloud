@@ -5,13 +5,13 @@ import { IService } from '../../../service.interface';
 import IServiceProvider from '../../../providers.interface';
 import { ServiceAttendance } from '../../../services.status';
 import { ProvidersService } from '../../../providers.service';
+import { RouteLevel } from '../../../../../../../shared/services';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 import { CPTrackingService } from './../../../../../../../shared/services/tracking.service';
 import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
-import { RouteLevel } from '../../../../../../../shared/services';
 
 interface IState {
   end: string;

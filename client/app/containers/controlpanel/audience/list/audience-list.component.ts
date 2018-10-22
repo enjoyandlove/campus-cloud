@@ -108,12 +108,12 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  downloadAudience(audience) {
+  downloadAudience({id, type}) {
     const columns = [this.cpI18n.translate('name'), this.cpI18n.translate('email')];
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     this.service
-      .getAudienceById(audience.id, search)
+      .getAudienceById(id, search)
       .toPromise()
       .then(({ users, name }) => {
         const data = users.map((user) => {
@@ -123,7 +123,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
           };
         });
         createSpreadSheet(data, columns, `${name}`);
-        this.trackDownloadAudience(audience.type);
+        this.trackDownloadAudience(type);
       })
       .catch(() =>
         this.store.dispatch({
