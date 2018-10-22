@@ -6,11 +6,11 @@ import { StoreModule } from '@ngrx/store';
 import { mockResource } from '../../__mock__';
 import { TilesService } from '../../../tiles.service';
 import { ResourceService } from '../../resource.service';
-import { reducers } from '../../../../../../../../reducers';
 import { CPSession } from '../../../../../../../../session';
 import { PersonasResourceModule } from '../../resources.module';
 import { mockPersonas } from '../../../../__mock__/personas.mock';
 import { CPI18nService } from '../../../../../../../../shared/services';
+import { baseReducers } from '../../../../../../../../store/base/reducers';
 import { SharedModule } from '../../../../../../../../shared/shared.module';
 import { PersonasResourceListOfListComponent } from './resource-list-of-list.component';
 
@@ -28,8 +28,8 @@ describe('PersonasResourceListOfListComponent', () => {
         RouterTestingModule,
         PersonasResourceModule,
         StoreModule.forRoot({
-          HEADER: reducers.HEADER,
-          SNACKBAR: reducers.SNACKBAR
+          HEADER: baseReducers.HEADER,
+          SNACKBAR: baseReducers.SNACKBAR
         })
       ],
       providers: [CPSession, CPI18nService, ResourceService, TilesService]

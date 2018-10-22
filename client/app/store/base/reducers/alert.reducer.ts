@@ -1,3 +1,5 @@
+import { IAlert } from '../base.state';
+
 export const ALERT_PUSH = 'ALERT_PUSH';
 export const ALERT_DEFAULT = 'ALERT_DEFAULT';
 
@@ -7,12 +9,6 @@ export const ALERT_CLASS = {
   SUCCESS: 'success',
   WARNING: 'warning'
 };
-
-export interface IAlert {
-  body: string;
-  class: string;
-  isShow: boolean;
-}
 
 const initialState: IAlert = {
   body: '',

@@ -1,5 +1,5 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
@@ -9,9 +9,8 @@ import { ServicesService } from './../../../services.service';
 import { ProvidersService } from '../../../providers.service';
 import { CheckInMethod } from '../../../../events/event.status';
 import { CPI18nService } from '../../../../../../../shared/services';
+import { baseActions, IHeader } from '../../../../../../../store/base';
 import { BaseComponent } from '../../../../../../../base/base.component';
-import { SNACKBAR_SHOW } from '../../../../../../../reducers/snackbar.reducer';
-import { HEADER_UPDATE, IHeader } from '../../../../../../../reducers/header.reducer';
 
 @Component({
   selector: 'cp-providers-details',
@@ -68,7 +67,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `[NOTRANSLATE]${this.provider.provider_name}[NOTRANSLATE]`,
         crumbs: {
@@ -132,7 +131,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
       : 't_services_assessment_qr_code_enable_success_message';
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate(message),
         autoClose: true,
@@ -143,7 +142,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
 
   onErrorQRCheckInMessage() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         class: 'danger',
         body: this.cpI18n.translate('something_went_wrong'),

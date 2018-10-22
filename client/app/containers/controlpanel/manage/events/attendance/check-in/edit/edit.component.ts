@@ -74,11 +74,11 @@ export class CheckInEditComponent implements OnInit {
     const checkInTime = this.form.controls['check_in_time'].value;
     const checkOutTime = this.form.controls['check_out_time_epoch'].value;
 
-    const checkoutTimeBeforeCheckinTime =
-      this.checkInUtils.checkoutTimeBeforeCheckinTime(
-        checkInTime,
-        checkOutTime,
-        this.data.has_checkout);
+    const checkoutTimeBeforeCheckinTime = this.checkInUtils.checkoutTimeBeforeCheckinTime(
+      checkInTime,
+      checkOutTime,
+      this.data.has_checkout
+    );
 
     if (checkoutTimeBeforeCheckinTime) {
       this.formErrors = true;
@@ -86,8 +86,9 @@ export class CheckInEditComponent implements OnInit {
 
       this.form.controls['check_out_time_epoch'].setErrors({ required: true });
 
-      this.errorMessage = this.cpI18n.
-      translate('t_events_attendance_add_check_in_error_check_out_time_after_check_in');
+      this.errorMessage = this.cpI18n.translate(
+        't_events_attendance_add_check_in_error_check_out_time_after_check_in'
+      );
 
       return;
     }
@@ -100,7 +101,16 @@ export class CheckInEditComponent implements OnInit {
         .append('calendar_id', this.orientationId.toString());
     }
 
-    this.service.updateCheckIn(this.form.value, this.checkIn.id, search).subscribe(
+    const eventCheckin$ = this.service.updateCheckIn(this.form.value, this.checkIn.id, search);
+    const orientationCheckin$ = this.service.updateOrienationCheckIn(
+      this.form.value,
+      this.checkIn.id,
+      search
+    );
+
+    const request$ = this.orientationId ? orientationCheckin$ : eventCheckin$;
+
+    request$.subscribe(
       () => {
         this.edited.emit(this.form.value);
         this.resetModal();
@@ -109,7 +119,8 @@ export class CheckInEditComponent implements OnInit {
         this.formErrors = true;
         this.enableSaveButton();
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
-      });
+      }
+    );
   }
 
   enableSaveButton() {

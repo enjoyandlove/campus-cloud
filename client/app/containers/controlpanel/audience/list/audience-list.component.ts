@@ -6,11 +6,11 @@ import { CPSession } from '../../../../session';
 import { AudienceType } from './../audience.status';
 import { AudienceService } from '../audience.service';
 import { BaseComponent } from '../../../../base/base.component';
+import { ISnackbar, baseActions } from '../../../../store/base';
 import { CP_TRACK_TO } from '../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
 import { CPI18nService, CPTrackingService } from '../../../../shared/services';
-import { ISnackbar, SNACKBAR_SHOW } from '../../../../reducers/snackbar.reducer';
 
 interface IState {
   audiences: Array<any>;
@@ -76,7 +76,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     }
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         autoClose: true,
@@ -90,7 +90,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     this.state = { ...this.state, audiences: [newAudiences, ...this.state.audiences] };
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         autoClose: true,
@@ -127,7 +127,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
       })
       .catch(() =>
         this.store.dispatch({
-          type: SNACKBAR_SHOW,
+          type: baseActions.SNACKBAR_SHOW,
           payload: {
             sticky: true,
             class: 'danger',

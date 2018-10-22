@@ -7,8 +7,8 @@ import { CPSession } from './../../../../../session';
 import { PersonasModule } from './../personas.module';
 import { PersonasService } from './../personas.service';
 import { PersonasEditComponent } from './edit.component';
+import { baseActions } from './../../../../../store/base';
 import { PersonasUtilsService } from './../personas.utils.service';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { MockPersonasService, mockPersonas } from './../mock/personas.service.mock';
 
@@ -92,7 +92,7 @@ describe('PersonasEditComponent', () => {
   it('onDeleteError', () => {
     const message = 'hello world';
     const expected = {
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         class: 'danger',

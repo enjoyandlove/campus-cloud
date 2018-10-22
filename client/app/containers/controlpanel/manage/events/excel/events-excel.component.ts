@@ -8,14 +8,13 @@ import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
 import { CPDate } from '../../../../../shared/utils';
+import { baseActions } from '../../../../../store/base';
 import { STATUS } from '../../../../../shared/constants';
 import { EventUtilService } from '../events.utils.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { CPImageUploadComponent } from '../../../../../shared/components';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 
 import {
   isAllDay,
@@ -31,6 +30,7 @@ import {
   CPI18nService,
   FileUploadService
 } from '../../../../../shared/services';
+import { getEventsModalState } from '../../../../../store';
 
 const i18n = new CPI18nPipe();
 
@@ -103,7 +103,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   private buildHeader() {
     const subheading = i18n.transform('events_import_csv_sub_heading', this.events.length);
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: 'events_import_csv_heading',
         crumbs: {
@@ -141,8 +141,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
   private buildGroup() {
     const control = <FormArray>this.form.controls['events'];
-    const selectedCheckInOption = this.checkInOptions.filter((
-      selected) => selected.action === attendanceType.checkInOnly)[0];
+    const selectedCheckInOption = this.checkInOptions.filter(
+      (selected) => selected.action === attendanceType.checkInOnly
+    )[0];
 
     this.events.forEach((event, index) => {
       control.push(this.buildEventControl(event));
@@ -376,7 +377,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       })
       .catch((err) => {
         this.store.dispatch({
-          type: SNACKBAR_SHOW,
+          type: baseActions.SNACKBAR_SHOW,
           payload: {
             class: 'danger',
             autoClose: true,
@@ -516,16 +517,18 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       disabled: true
     };
 
-    const attendanceTypeOptions = [{
-      action: null,
-      label: this.cpI18n.translate('t_events_assessment_no_check_in')
-    }];
+    const attendanceTypeOptions = [
+      {
+        action: null,
+        label: this.cpI18n.translate('t_events_assessment_no_check_in')
+      }
+    ];
 
     this.eventAttendanceFeedback = this.utils.getAttendanceFeedback();
 
     this.checkInOptions = [...attendanceTypeOptions, ...this.utils.getAttendanceTypeOptions()];
 
-    this.store.select('EVENTS_MODAL').subscribe((res) => {
+    this.store.select(getEventsModalState).subscribe((res) => {
       this.events = res;
 
       if (!this.storeId && !this.clubId && !this.isOrientation) {

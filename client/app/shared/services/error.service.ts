@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { ALERT_CLASS, ALERT_DEFAULT, ALERT_PUSH } from '../../reducers/alert.reducer';
+import { ALERT_CLASS, ALERT_DEFAULT, ALERT_PUSH } from '../../store/base/reducers/alert.reducer';
 
 @Injectable()
 export class ErrorService {

@@ -3,15 +3,15 @@ import { Component, Input, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
 import { isProd } from './../../../../../config/env';
+import { baseActions } from '../../../../../store/base';
 import { EventUtilService } from '../events.utils.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPDate, CPMap } from '../../../../../shared/utils';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
@@ -109,7 +109,7 @@ export class EventsCreateComponent implements OnInit {
     };
 
     this.storeHeader.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload
     });
   }

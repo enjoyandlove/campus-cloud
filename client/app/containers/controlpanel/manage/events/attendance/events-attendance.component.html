@@ -214,8 +214,8 @@
   *ngIf="isAddCheckInModal">
   <cp-create-check-in
     [data]="event"
-    [orientationId]="orientationId"
     (created)="onCreated($event)"
+    [orientationId]="orientationId"
     (teardown)="isAddCheckInModal = false">
   </cp-create-check-in>
 </cp-modal>
@@ -226,7 +226,7 @@
   *ngIf="isSendMessageModal">
   <cp-students-compose
     [props]="messageData"
-    (success)="onFlashMessage($event)"
-    (teardown)="onComposeTeardown()">
+    (teardown)="onComposeTeardown()"
+    (success)="onFlashMessage($event)">
   </cp-students-compose>
 </cp-modal>

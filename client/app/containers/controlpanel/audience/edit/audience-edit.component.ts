@@ -13,11 +13,11 @@ import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../session';
+import { BaseComponent } from '../../../../base';
+import { ISnackbar } from '../../../../store/base';
 import { AudienceType } from './../audience.status';
 import { AudienceService } from '../audience.service';
-import { ISnackbar } from '../../../../reducers/snackbar.reducer';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
-import { BaseComponent } from '../../../../base';
 
 @Component({
   selector: 'cp-audience-edit',

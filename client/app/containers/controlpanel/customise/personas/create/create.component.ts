@@ -8,13 +8,12 @@ import { get as _get } from 'lodash';
 import { Observable } from 'rxjs';
 
 import { CPSession } from '../../../../../session';
-import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 import { PersonasService } from './../personas.service';
 import { PersonaValidationErrors } from './../personas.status';
 import { CPI18nService } from '../../../../../shared/services';
 import { PersonasUtilsService } from './../personas.utils.service';
-import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
+import { baseActions, IHeader } from './../../../../../store/base';
+import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 
 @Component({
   selector: 'cp-personas-create',
@@ -49,7 +48,7 @@ export class PersonasCreateComponent implements OnInit {
     };
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload
     });
   }
@@ -131,7 +130,7 @@ export class PersonasCreateComponent implements OnInit {
         }
 
         this.store.dispatch({
-          type: SNACKBAR_SHOW,
+          type: baseActions.SNACKBAR_SHOW,
           payload: {
             sticky: true,
             class: 'danger',

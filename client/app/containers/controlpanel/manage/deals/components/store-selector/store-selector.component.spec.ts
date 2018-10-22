@@ -1,11 +1,11 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-
 import { of as observableOf } from 'rxjs';
 
-import { StoreSelectorComponent } from './store-selector.component';
-import { DealsService } from '../../deals.service';
 import { DealsModule } from '../../deals.module';
+import { DealsService } from '../../deals.service';
+import { RootStoreModule } from '../../../../../../store';
+import { StoreSelectorComponent } from './store-selector.component';
 
 class MockDealsService {
   dummy;
@@ -24,7 +24,7 @@ describe('StoreSelectorComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [DealsModule],
+        imports: [DealsModule, RootStoreModule],
         providers: [{ provide: DealsService, useClass: MockDealsService }]
       })
         .compileComponents()

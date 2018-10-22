@@ -6,11 +6,11 @@ import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
 import { EmployerModule } from '../employer.module';
-import { reducers } from '../../../../../../reducers';
 import { CPSession } from '../../../../../../session';
 import { EmployerService } from '../employer.service';
 import { EmployerListComponent } from './employer-list.component';
 import { mockSchool } from '../../../../../../session/mock/school';
+import { baseReducers } from '../../../../../../store/base/reducers';
 import { CPTrackingService } from '../../../../../../shared/services';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
@@ -47,8 +47,8 @@ describe('EmployersListComponent', () => {
           EmployerModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [

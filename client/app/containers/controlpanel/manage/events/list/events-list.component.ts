@@ -4,9 +4,8 @@ import { Store } from '@ngrx/store';
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
 import { ManageHeaderService } from '../../utils/header';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-
 import { EventsComponent } from './base/events.component';
+import { baseActions, IHeader } from '../../../../../store/base';
 import { CPI18nService } from '../../../../../shared/services/index';
 
 @Component({
@@ -35,7 +34,7 @@ export class EventsListComponent extends EventsComponent implements OnInit {
 
   private buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: this.headerService.filterByPrivileges()
     });
   }

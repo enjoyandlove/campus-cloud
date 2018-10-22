@@ -1,20 +1,20 @@
 /*tslint:disable:max-line-length */
-import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { DateStatus, DealsService } from '../deals.service';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
+import { DateStatus, DealsService } from '../deals.service';
+import { IHeader, baseActions } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPI18nService } from '../../../../../shared/services/index';
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPTrackingService, RouteLevel } from '../../../../../shared/services';
+import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
   selector: 'cp-deals-info',
@@ -86,7 +86,7 @@ export class DealsInfoComponent extends BaseComponent implements OnInit {
     };
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload
     });
   }

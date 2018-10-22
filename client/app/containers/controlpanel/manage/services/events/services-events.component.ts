@@ -2,21 +2,20 @@ import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CPSession } from '../../../../../session';
+import { ServicesService } from '../services.service';
+import { EventsService } from '../../events/events.service';
+import { IHeader, baseActions } from '../../../../../store/base';
+import { CPI18nService } from '../../../../../shared/services/index';
+import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
+import { EventsComponent } from '../../events/list/base/events.component';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
 import {
   canSchoolReadResource,
   canStoreReadAndWriteResource
 } from './../../../../../shared/utils/privileges';
-
-import { CPSession } from '../../../../../session';
-import { ServicesService } from '../services.service';
-import { EventsService } from '../../events/events.service';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
-import { EventsComponent } from '../../events/list/base/events.component';
-import { CPI18nService } from '../../../../../shared/services/index';
-import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-services-events',
@@ -94,7 +93,7 @@ export class ServicesEventsComponent extends EventsComponent {
     }
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
         subheading: '',

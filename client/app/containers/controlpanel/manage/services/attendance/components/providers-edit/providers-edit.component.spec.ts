@@ -3,10 +3,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of as observableOf } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 
-import { reducers } from '../../../../../../../reducers';
 import { CPSession } from '../../../../../../../session';
 import { ServicesModule } from '../../../services.module';
 import { ProvidersService } from '../../../providers.service';
+import { baseReducers } from '../../../../../../../store/base';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { ServiceProvidersEditComponent } from './providers-edit.component';
@@ -42,8 +42,8 @@ describe('ServicesProviderUpdateComponent', () => {
           ServicesModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [

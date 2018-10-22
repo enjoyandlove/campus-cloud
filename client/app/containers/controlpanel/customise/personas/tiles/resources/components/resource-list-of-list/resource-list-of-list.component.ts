@@ -19,8 +19,7 @@ import { CPSession } from '../../../../../../../../session';
 import { ILink } from '../../../../../../manage/links/link.interface';
 import { ResourcesUtilsService } from '../../resources.utils.service';
 import { CPI18nService } from '../../../../../../../../shared/services';
-import { ISnackbar } from '../../../../../../../../reducers/snackbar.reducer';
-import { SNACKBAR_SHOW } from './../../../../../../../../reducers/snackbar.reducer';
+import { baseActions, ISnackbar } from '../../../../../../../../store/base';
 
 interface IState {
   loading: boolean;
@@ -108,7 +107,7 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
 
   errorHandler() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         class: 'danger',

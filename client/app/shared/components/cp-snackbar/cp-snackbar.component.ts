@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { SNACKBAR_HIDE } from './../../../reducers/snackbar.reducer';
+import { baseActions, ISnackbar, getSnackbarState } from './../../../store/base';
 
 @Component({
   selector: 'cp-snackbar',
@@ -11,8 +11,8 @@ import { SNACKBAR_HIDE } from './../../../reducers/snackbar.reducer';
 export class CPSnackBarComponent implements OnDestroy, OnInit {
   snack;
 
-  constructor(private store: Store<any>) {
-    this.store.select('SNACKBAR').subscribe((res: any) => {
+  constructor(private store: Store<ISnackbar>) {
+    this.store.select(getSnackbarState).subscribe((res: any) => {
       this.snack = res;
 
       if (this.snack.autoClose) {
@@ -28,7 +28,7 @@ export class CPSnackBarComponent implements OnDestroy, OnInit {
   }
 
   doClose() {
-    this.store.dispatch({ type: SNACKBAR_HIDE });
+    this.store.dispatch({ type: baseActions.SNACKBAR_HIDE });
   }
 
   ngOnDestroy() {

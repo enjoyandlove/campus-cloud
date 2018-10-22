@@ -9,13 +9,12 @@ import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes';
 import { ICheckIn } from './check-in/check-in.interface';
 import { EventUtilService } from './../events.utils.service';
+import { IHeader, baseActions } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { CheckInMethod, CheckInOutTime, CheckOut } from '../event.status';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { CheckInMethod, CheckInOutTime, CheckOut } from '../event.status';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import {
   canSchoolReadResource,
@@ -132,7 +131,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     };
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload
     });
   }
@@ -243,7 +242,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     this.trackSendMessageEvents(data.hostType);
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate('announcement_success_sent'),
         autoClose: true
@@ -420,7 +419,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       : 't_event_assessment_qr_code_enable_success_message';
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate(message),
         autoClose: true,
@@ -431,7 +430,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
   onErrorQRCheckInMessage() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         class: 'danger',
         body: this.cpI18n.translate('something_went_wrong'),

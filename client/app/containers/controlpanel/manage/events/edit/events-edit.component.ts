@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
-import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
 import { isProd } from './../../../../../config/env';
@@ -12,11 +12,11 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from '../events.utils.service';
 import { CPDate, CPMap } from '../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../session';
-import { CheckInMethod, EventAttendance, EventFeedback } from '../event.status';
+import { baseActions, IHeader } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CheckInMethod, EventAttendance, EventFeedback } from '../event.status';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   RouteLevel,
@@ -446,7 +446,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   public buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: 'events_edit_event',
         subheading: '',

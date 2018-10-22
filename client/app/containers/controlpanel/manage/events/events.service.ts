@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { API } from '../../../../config/api';
+import { baseActions } from '../../../../store/base';
 import { HTTPService } from '../../../../base/http.service';
-import { EVENTS_MODAL_SET } from '../../../../reducers/events-modal.reducer';
 
 @Injectable()
 export class EventsService extends HTTPService {
@@ -48,7 +48,7 @@ export class EventsService extends HTTPService {
 
   setModalEvents(events: any[]): void {
     this.store.dispatch({
-      type: EVENTS_MODAL_SET,
+      type: baseActions.EVENTS_MODAL_SET,
       payload: events
     });
   }
@@ -77,8 +77,22 @@ export class EventsService extends HTTPService {
     return super.post(url, body, search);
   }
 
+  addOrientationCheckIn(body: any, search?: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT}/`;
+
+    return super.post(url, body, search);
+  }
+
   updateCheckIn(body: any, attendeeId: number, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_ASSESMENT}/${attendeeId}`;
+
+    return super.update(url, body, search);
+  }
+
+  updateOrienationCheckIn(body: any, attendeeId: number, search?: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT
+    }/${attendeeId}`;
 
     return super.update(url, body, search);
   }

@@ -1,8 +1,8 @@
 /*tslint:disable:max-line-length */
 import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { EventAttendance } from '../event.status';
@@ -10,10 +10,10 @@ import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
+import { IHeader, baseActions } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
@@ -120,7 +120,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     };
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload
     });
   }

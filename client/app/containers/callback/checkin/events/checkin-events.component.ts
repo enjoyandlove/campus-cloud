@@ -7,9 +7,9 @@ import { CPSession } from '../../../../session';
 import { CheckinService } from '../checkin.service';
 import { CheckinUtilsService } from '../checkin.utils.service';
 import { BaseComponent } from '../../../../base/base.component';
+import { ISnackbar, baseActions } from '../../../../store/base';
 import { CheckInOutTime, CheckInType } from '../../callback.status';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
-import { ISnackbar, SNACKBAR_SHOW } from '../../../../reducers/snackbar.reducer';
 import { CPI18nService, CPTrackingService, ErrorService } from './../../../../shared/services';
 
 interface IState {
@@ -108,7 +108,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       : this.cpI18n.translate('t_external_checkin_already_checked_in');
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body,
         sticky: true,

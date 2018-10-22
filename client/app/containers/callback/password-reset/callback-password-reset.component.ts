@@ -1,11 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
+import { baseActions } from '../../../store/base';
 import { AuthService } from '../../auth/auth.service';
-
 import { CPI18nService, ErrorService } from '../../../shared/services';
 
 @Component({
@@ -43,7 +42,7 @@ export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
   }
 
   onSubmit(body) {
-    this.store.dispatch({ type: ALERT_DEFAULT });
+    this.store.dispatch({ type: baseActions.ALERT_DEFAULT });
 
     const new_password = this.form.controls['new_password'];
     const confirmPassword = this.form.controls['confirmPassword'];
@@ -77,7 +76,7 @@ export class CallbackPasswordResetComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy() {
-    this.store.dispatch({ type: ALERT_DEFAULT });
+    this.store.dispatch({ type: baseActions.ALERT_DEFAULT });
   }
 
   ngOnInit() {}
