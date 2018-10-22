@@ -20,6 +20,12 @@ class MockService {
 
     return observableOf({});
   }
+
+  deleteOrientationCheckInById(id: number, search: any) {
+    this.dummy = [id, search];
+
+    return observableOf({});
+  }
 }
 
 describe('EventCheckInDeleteComponent', () => {
@@ -37,11 +43,7 @@ describe('EventCheckInDeleteComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [EventsModule, RouterTestingModule],
-        providers: [
-          CPSession,
-          CPI18nService,
-          { provide: EventsService, useClass: MockService }
-        ]
+        providers: [CPSession, CPI18nService, { provide: EventsService, useClass: MockService }]
       })
         .compileComponents()
         .then(() => {
