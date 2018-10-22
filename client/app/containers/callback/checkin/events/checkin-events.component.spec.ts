@@ -100,7 +100,8 @@ describe('CheckinEventsComponent', () => {
       sourceId,
       events,
       userId,
-      checkInSource
+      checkInSource,
+      true
     );
 
     expect(eventProperties.user_id).toEqual(userId);

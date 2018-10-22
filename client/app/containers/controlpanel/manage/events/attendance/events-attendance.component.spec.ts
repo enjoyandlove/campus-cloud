@@ -37,7 +37,7 @@ class MockService {
   }
 }
 
-fdescribe('EventAttendanceComponent', () => {
+describe('EventAttendanceComponent', () => {
   let spy;
   let search;
   let spyAttendee;

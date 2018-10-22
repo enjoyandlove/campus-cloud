@@ -20,7 +20,12 @@ describe('CheckInUtilsService', () => {
       checkin_verification_methods: [1, 2, 3]
     };
 
-    eventProperties = service.getCheckedInEventProperties(sourceId, events, userId, checkInSource);
+    eventProperties = service.getCheckedInEventProperties(
+      sourceId,
+      events,
+      userId,
+      checkInSource
+    );
 
     expect(eventProperties.user_id).toEqual(userId);
     expect(eventProperties.source_id).toEqual(sourceId);
@@ -36,12 +41,18 @@ describe('CheckInUtilsService', () => {
       attend_verification_methods: [1, 2]
     };
 
-    eventProperties = service.getCheckedInEventProperties(sourceId, events, userId, checkInSource);
+    eventProperties = service.getCheckedInEventProperties(
+      sourceId,
+      events,
+      userId,
+      checkInSource,
+      true
+    );
 
     expect(eventProperties.user_id).toEqual(userId);
     expect(eventProperties.source_id).toEqual(sourceId);
     expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.DISABLED);
     expect(eventProperties.check_out_status).toEqual(amplitudeEvents.ENABLED);
-    expect(eventProperties.check_in_type).toEqual(amplitudeEvents.SERVICE_EVENT);
+    expect(eventProperties.check_in_type).toEqual(amplitudeEvents.INSTITUTION_EVENT);
   });
 });
