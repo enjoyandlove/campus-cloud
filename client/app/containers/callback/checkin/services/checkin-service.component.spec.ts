@@ -1,13 +1,14 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
-import { reducers } from '../../../../reducers';
 import { CPSession } from '../../../../session';
 import { CheckinService } from '../checkin.service';
 import { CallbackModule } from '../../callback.module';
+import { configureTestSuite } from '../../../../shared/tests';
+import { baseReducers } from '../../../../store/base/reducers';
 import { CheckinServiceComponent } from './checkin-service.component';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
@@ -25,25 +26,18 @@ class MockService {
 }
 
 describe('CheckinServiceComponent', () => {
-  let spy;
-  let userId;
-  let services;
-  let sourceId;
-  let checkInSource;
-  let eventProperties;
-  let component: CheckinServiceComponent;
-  let fixture: ComponentFixture<CheckinServiceComponent>;
+  configureTestSuite();
 
-  beforeEach(
-    async(() => {
+  beforeAll((done) =>
+    (async () => {
       TestBed.configureTestingModule({
         imports: [
           CallbackModule,
           HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [
@@ -54,79 +48,93 @@ describe('CheckinServiceComponent', () => {
           CPTrackingService,
           { provide: CheckinService, useClass: MockService }
         ]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(CheckinServiceComponent);
-          component = fixture.componentInstance;
-          component.serviceId = '47588';
-
-          spy = spyOn(component.checkinService, 'doServiceCheckin')
-            .and.returnValue(observableOf({}));
-        });
-    })
+      });
+      await TestBed.compileComponents();
+    })()
+      .then(done)
+      .catch(done.fail)
   );
 
-  it('trackCheckedInEvent', () => {
-    userId = 452;
-    sourceId = 8874;
-    checkInSource = CheckInSource.services;
-    services = {
-      has_checkout: false,
-      checkin_verification_methods: [1, 2, 3]
-    };
+  describe('CheckinServiceComponent', () => {
+    let spy;
+    let userId;
+    let services;
+    let sourceId;
+    let checkInSource;
+    let eventProperties;
+    let component: CheckinServiceComponent;
+    let fixture: ComponentFixture<CheckinServiceComponent>;
 
-    eventProperties = component.utils.getCheckedInEventProperties(
-      sourceId,
-      services,
-      userId,
-      checkInSource
-    );
+    beforeEach(() => {
+      fixture = TestBed.createComponent(CheckinServiceComponent);
+      component = fixture.componentInstance;
+      component.serviceId = '47588';
 
-    expect(eventProperties.user_id).toEqual(userId);
-    expect(eventProperties.source_id).toEqual(sourceId);
-    expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.ENABLED);
-    expect(eventProperties.check_out_status).toEqual(amplitudeEvents.DISABLED);
-    expect(eventProperties.check_in_type).toEqual(amplitudeEvents.SERVICE_PROVIDER);
+      spy = spyOn(component.checkinService, 'doServiceCheckin')
+        .and.returnValue(observableOf({}));
+    });
 
-    userId = 154;
-    sourceId = 8547;
-    checkInSource = CheckInSource.events;
-    services = {
-      has_checkout: true,
-      attend_verification_methods: [1, 2]
-    };
+    it('trackCheckedInEvent', () => {
+      userId = 452;
+      sourceId = 8874;
+      checkInSource = CheckInSource.services;
+      services = {
+        has_checkout: false,
+        checkin_verification_methods: [1, 2, 3]
+      };
 
-    eventProperties = component.utils.getCheckedInEventProperties(
-      sourceId,
-      services,
-      userId,
-      checkInSource,
-      true
-    );
+      eventProperties = component.utils.getCheckedInEventProperties(
+        sourceId,
+        services,
+        userId,
+        checkInSource
+      );
 
-    expect(eventProperties.user_id).toEqual(userId);
-    expect(eventProperties.source_id).toEqual(sourceId);
-    expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.DISABLED);
-    expect(eventProperties.check_out_status).toEqual(amplitudeEvents.ENABLED);
-    expect(eventProperties.check_in_type).toEqual(amplitudeEvents.INSTITUTION_EVENT);
-  });
+      expect(eventProperties.user_id).toEqual(userId);
+      expect(eventProperties.source_id).toEqual(sourceId);
+      expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.ENABLED);
+      expect(eventProperties.check_out_status).toEqual(amplitudeEvents.DISABLED);
+      expect(eventProperties.check_in_type).toEqual(amplitudeEvents.SERVICE_PROVIDER);
 
-  it('onSubmit', () => {
-    component.search = new HttpParams().append('event_id', component.serviceId);
+      userId = 154;
+      sourceId = 8547;
+      checkInSource = CheckInSource.events;
+      services = {
+        has_checkout: true,
+        attend_verification_methods: [1, 2]
+      };
 
-    const data = {
-      firstname: 'Hello',
-      lastname: 'World',
-      email: 'hello@world.com',
-      check_in_time_epoch: 525555485,
-      check_out_time_epoch: 525555485
-    };
+      eventProperties = component.utils.getCheckedInEventProperties(
+        sourceId,
+        services,
+        userId,
+        checkInSource,
+        true
+      );
 
-    component.onSubmit(data);
+      expect(eventProperties.user_id).toEqual(userId);
+      expect(eventProperties.source_id).toEqual(sourceId);
+      expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.DISABLED);
+      expect(eventProperties.check_out_status).toEqual(amplitudeEvents.ENABLED);
+      expect(eventProperties.check_in_type).toEqual(amplitudeEvents.INSTITUTION_EVENT);
+    });
 
-    expect(spy).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenCalledWith(data, component.search);
+    it('onSubmit', () => {
+      component.search = new HttpParams().append('event_id', component.serviceId);
+
+      const data = {
+        firstname: 'Hello',
+        lastname: 'World',
+        email: 'hello@world.com',
+        check_in_time_epoch: 525555485,
+        check_out_time_epoch: 525555485
+      };
+
+      component.onSubmit(data);
+
+      expect(spy).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledTimes(1);
+      expect(spy).toHaveBeenCalledWith(data, component.search);
+    });
   });
 });

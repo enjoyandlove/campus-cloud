@@ -4,10 +4,10 @@ import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
-import { reducers } from '../../../../reducers';
 import { CPSession } from '../../../../session';
 import { CheckinService } from '../checkin.service';
 import { CallbackModule } from '../../callback.module';
+import { baseReducers } from '../../../../store/base/reducers';
 import { CheckinEventsComponent } from './checkin-events.component';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
@@ -42,8 +42,8 @@ describe('CheckinEventsComponent', () => {
           HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [
