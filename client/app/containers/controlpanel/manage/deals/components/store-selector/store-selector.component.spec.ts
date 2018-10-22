@@ -6,6 +6,7 @@ import { DealsModule } from '../../deals.module';
 import { DealsService } from '../../deals.service';
 import { RootStoreModule } from '../../../../../../store';
 import { StoreSelectorComponent } from './store-selector.component';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 class MockDealsService {
   dummy;
@@ -25,7 +26,7 @@ describe('StoreSelectorComponent', () => {
     async(() => {
       TestBed.configureTestingModule({
         imports: [DealsModule, RootStoreModule],
-        providers: [{ provide: DealsService, useClass: MockDealsService }]
+        providers: [CPI18nService, { provide: DealsService, useClass: MockDealsService }]
       })
         .compileComponents()
         .then(() => {
@@ -43,6 +44,5 @@ describe('StoreSelectorComponent', () => {
   it('should call getDealStores once ngOnInit', () => {
     component.ngOnInit();
     expect(spyStores).toHaveBeenCalledTimes(1);
-    expect(spyStores).toHaveBeenCalledWith('select');
   });
 });

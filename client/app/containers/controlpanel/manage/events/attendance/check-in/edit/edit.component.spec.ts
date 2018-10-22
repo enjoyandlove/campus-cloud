@@ -23,6 +23,12 @@ class MockService {
 
     return observableOf({ body });
   }
+
+  updateOrientationCheckIn(body: any, id: number, search: any) {
+    this.dummy = [id, search];
+
+    return observableOf({ body });
+  }
 }
 
 describe('EventCheckInEditComponent', () => {
@@ -38,10 +44,7 @@ describe('EventCheckInEditComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [
-          EventsModule,
-          RouterTestingModule
-        ],
+        imports: [EventsModule, RouterTestingModule],
         providers: [
           CPSession,
           FormBuilder,
@@ -79,8 +82,9 @@ describe('EventCheckInEditComponent', () => {
   });
 
   it('form validation should fail- check-out time should be greater than check-in time', () => {
-    const dateError = component.cpI18n
-      .translate('t_events_attendance_add_check_in_error_check_out_time_after_check_in');
+    const dateError = component.cpI18n.translate(
+      't_events_attendance_add_check_in_error_check_out_time_after_check_in'
+    );
 
     const checkInTime = 1598918399;
     const checkOutTimeInPast = 1538390648;
@@ -97,8 +101,7 @@ describe('EventCheckInEditComponent', () => {
   it('should edit event check-in', () => {
     spyOn(component.edited, 'emit');
     spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'updateCheckIn')
-      .and.returnValue(observableOf(mockCheckIn));
+    spy = spyOn(component.service, 'updateCheckIn').and.returnValue(observableOf(mockCheckIn));
 
     const checkInTime = 1598918399;
     const checkOutTimeInFuture = 1601549048;
