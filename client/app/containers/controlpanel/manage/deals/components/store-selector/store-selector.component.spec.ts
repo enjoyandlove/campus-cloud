@@ -1,11 +1,15 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { of as observableOf } from 'rxjs';
 
 import { DealsModule } from '../../deals.module';
 import { DealsService } from '../../deals.service';
+import { CPSession } from '../../../../../../session';
 import { RootStoreModule } from '../../../../../../store';
 import { StoreSelectorComponent } from './store-selector.component';
+import { configureTestSuite } from '../../../../../../shared/tests';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 class MockDealsService {
@@ -18,26 +22,32 @@ class MockDealsService {
 }
 
 describe('StoreSelectorComponent', () => {
+  configureTestSuite();
+  beforeAll((done) => {
+    (async () => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientModule, RouterTestingModule, DealsModule, RootStoreModule],
+        providers: [CPSession, CPI18nService, { provide: DealsService, useClass: MockDealsService }]
+      });
+      await TestBed.compileComponents();
+    })()
+      .then(done)
+      .catch(done.fail);
+  });
+
   let spyStores;
   let component: StoreSelectorComponent;
   let fixture: ComponentFixture<StoreSelectorComponent>;
 
   beforeEach(
     async(() => {
-      TestBed.configureTestingModule({
-        imports: [DealsModule, RootStoreModule],
-        providers: [CPI18nService, { provide: DealsService, useClass: MockDealsService }]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(StoreSelectorComponent);
-          component = fixture.componentInstance;
-          component.form = new FormBuilder().group({
-            store_id: '47332'
-          });
+      fixture = TestBed.createComponent(StoreSelectorComponent);
+      component = fixture.componentInstance;
+      component.form = new FormBuilder().group({
+        store_id: '47332'
+      });
 
-          spyStores = spyOn(component.service, 'getDealStores').and.returnValue(observableOf({}));
-        });
+      spyStores = spyOn(component.service, 'getDealStores').and.returnValue(observableOf({}));
     })
   );
 

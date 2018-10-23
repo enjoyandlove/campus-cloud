@@ -1,10 +1,5 @@
 import * as actions from './deals.actions';
-
-export interface IDealsState {
-  stores: any[];
-  loaded: boolean;
-  loading: boolean;
-}
+import { IDealsState } from './deals.state';
 
 export const initialState: IDealsState = {
   stores: [],
