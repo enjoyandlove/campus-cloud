@@ -2,12 +2,16 @@
 import { Component, EventEmitter, OnInit, Output, Input, ViewChild } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
-import { of } from 'rxjs';
 
 import { TilesService } from '../../../tiles.service';
 import { CPSession } from '../../../../../../../../session';
 import { CPI18nService } from '../../../../../../../../shared/services';
 import { CPDropdownMultiSelectComponent } from './../../../../../../../../shared/components/cp-dropdown-multiselect/cp-dropdown-multiselect.component';
+
+enum LinkParam {
+  'includes' = 'category_ids',
+  'excludes' = 'x_category_ids'
+}
 
 @Component({
   selector: 'cp-personas-resource-service-by-category',
@@ -37,10 +41,6 @@ export class PersonasResourceServiceByCategoryComponent implements OnInit {
     public cpI18n: CPI18nService
   ) {}
 
-  handleError() {
-    return (this.items$ = of([{ label: 'ERROR' }]));
-  }
-
   onMultiSelect(selection) {
     this.state = {
       ...this.state,
@@ -51,7 +51,7 @@ export class PersonasResourceServiceByCategoryComponent implements OnInit {
   }
 
   doEmit() {
-    const key = this.state.include ? 'category_ids' : 'x_category_ids';
+    const key = this.state.include ? LinkParam.includes : LinkParam.excludes;
 
     const link_params = {
       [key]: [...this.state.selection]
@@ -68,7 +68,7 @@ export class PersonasResourceServiceByCategoryComponent implements OnInit {
   }
 
   onSelected({ action }) {
-    const include = action === 'category_ids';
+    const include = action === LinkParam.includes;
 
     if (include !== this.state.include) {
       this.state = {
@@ -122,6 +122,7 @@ export class PersonasResourceServiceByCategoryComponent implements OnInit {
 
   updateState() {
     const paramKeyName = Object.keys(this.params)[0];
+    this.state = { ...this.state, include: LinkParam.includes in this.params };
     this.selectedFilter = this.options.filter((o) => o.action === paramKeyName)[0];
   }
 
@@ -131,11 +132,11 @@ export class PersonasResourceServiceByCategoryComponent implements OnInit {
     this.options = [
       {
         label: this.cpI18n.translate('t_personas_tile_form_categories_includes'),
-        action: 'category_ids'
+        action: LinkParam.includes
       },
       {
         label: this.cpI18n.translate('t_personas_tile_form_categories_excludes'),
-        action: 'x_category_ids'
+        action: LinkParam.excludes
       }
     ];
     this.loadCategories();
