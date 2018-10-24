@@ -22,17 +22,15 @@ describe('EngagementStatsComponent', () => {
       .catch(done.fail)
   );
 
-  describe('EngagementStatsComponent', () => {
-    let component: EngagementStatsComponent;
-    let fixture: ComponentFixture<EngagementStatsComponent>;
+  let component: EngagementStatsComponent;
+  let fixture: ComponentFixture<EngagementStatsComponent>;
 
-    beforeEach(() => {
-      fixture = TestBed.createComponent(EngagementStatsComponent);
-      component = fixture.componentInstance;
-    });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(EngagementStatsComponent);
+    component = fixture.componentInstance;
+  });
 
-    it('should init', () => {
-      expect(component).toBeTruthy();
-    });
+  it('should init', () => {
+    expect(component).toBeTruthy();
   });
 });

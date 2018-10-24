@@ -1,5 +1,6 @@
+import { reducer } from './deals.reducer';
 import * as actions from './deals.actions';
-import { reducer, IDealsState } from './deals.reducer';
+import { IDealsState } from './deals.state';
 
 const mockStores = require('../../../containers/controlpanel/manage/deals/stores/mockStores.json');
 

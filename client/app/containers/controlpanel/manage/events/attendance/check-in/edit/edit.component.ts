@@ -102,7 +102,7 @@ export class CheckInEditComponent implements OnInit {
     }
 
     const eventCheckin$ = this.service.updateCheckIn(this.form.value, this.checkIn.id, search);
-    const orientationCheckin$ = this.service.updateOrienationCheckIn(
+    const orientationCheckin$ = this.service.updateOrientationCheckIn(
       this.form.value,
       this.checkIn.id,
       search

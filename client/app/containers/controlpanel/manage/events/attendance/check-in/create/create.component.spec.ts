@@ -23,6 +23,12 @@ class MockService {
 
     return observableOf({ body });
   }
+
+  addOrientationCheckIn(body: any, search: any) {
+    this.dummy = [search];
+
+    return observableOf({ body });
+  }
 }
 
 describe('EventCheckInCreateComponent', () => {
