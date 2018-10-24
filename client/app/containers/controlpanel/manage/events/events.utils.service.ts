@@ -15,6 +15,7 @@ import {
   qrCode,
   Location,
   Feedback,
+  EventType,
   Assessment,
   CheckInMethod,
   CheckInSource,
@@ -24,6 +25,12 @@ import {
   CheckInOutTime,
   EventAttendance
 } from './event.status';
+
+export interface IEventType {
+  event_id?: number;
+  event_type: number;
+  event_type_id?: number;
+}
 
 @Injectable()
 export class EventUtilService {
@@ -36,59 +43,43 @@ export class EventUtilService {
     return event.start > CPDate.now(this.session.tz).unix();
   }
 
-  buildUrlPrefix(
-    clubId: number = null,
-    serviceId: number = null,
-    athleticId: number = null,
-    orientationId: number = null
-  ) {
-    if (athleticId) {
-      return `/manage/athletics/${clubId}/events`;
-    } else if (clubId) {
-      return `/manage/clubs/${clubId}/events`;
-    } else if (serviceId) {
-      return `/manage/services/${serviceId}/events`;
-    } else if (orientationId) {
-      return `/manage/orientation/${orientationId}/events`;
+  buildUrlPrefix(eventType: IEventType) {
+    if (eventType.event_type === EventType.athletics) {
+      return `/manage/athletics/${eventType.event_type_id}/events`;
+    } else if (eventType.event_type === EventType.club) {
+      return `/manage/clubs/${eventType.event_type_id}/events`;
+    } else if (eventType.event_type === EventType.services) {
+      return `/manage/services/${eventType.event_type_id}/events`;
+    } else if (eventType.event_type === EventType.orientation) {
+      return `/manage/orientation/${eventType.event_type_id}/events`;
     }
 
     return '/manage/events';
   }
 
-  buildUrlPrefixEvents(
-    clubId: number = null,
-    serviceId: number = null,
-    athleticId: number = null,
-    orientationId: number = null,
-    eventId: number = null
-  ) {
-    if (athleticId) {
-      return `/manage/athletics/${clubId}/events/${eventId}/info`;
-    } else if (clubId) {
-      return `/manage/clubs/${clubId}/events/${eventId}/info`;
-    } else if (serviceId) {
-      return `/manage/services/${serviceId}/events/${eventId}/info`;
-    } else if (orientationId) {
-      return `/manage/orientation/${orientationId}/events/${eventId}/info`;
+  buildUrlPrefixEvents(eventType: IEventType) {
+    if (eventType.event_type === EventType.athletics) {
+      return `/manage/athletics/${eventType.event_type_id}/events/${eventType.event_id}/info`;
+    } else if (eventType.event_type === EventType.club) {
+      return `/manage/clubs/${eventType.event_type_id}/events/${eventType.event_id}/info`;
+    } else if (eventType.event_type === EventType.services) {
+      return `/manage/services/${eventType.event_type_id}/events/${eventType.event_id}/info`;
+    } else if (eventType.event_type === EventType.orientation) {
+      return `/manage/orientation/${eventType.event_type_id}/events/${eventType.event_id}/info`;
     }
 
-    return `/manage/events/${eventId}/info`;
+    return `/manage/events/${eventType.event_id}/info`;
   }
 
-  buildUrlPrefixExcel(
-    orientationId: number = null,
-    athleticId: number = null,
-    serviceId: number = null,
-    clubId: number = null
-  ) {
-    if (orientationId) {
-      return `/manage/orientation/${orientationId}/events/import/excel`;
-    } else if (athleticId) {
-      return `/manage/athletics/${clubId}/events/import/excel`;
-    } else if (serviceId) {
-      return `/manage/services/${serviceId}/events/import/excel`;
-    } else if (clubId) {
-      return `/manage/clubs/${clubId}/events/import/excel`;
+  buildUrlPrefixExcel(eventType: IEventType) {
+    if (eventType.event_type === EventType.orientation) {
+      return `/manage/orientation/${eventType.event_type_id}/events/import/excel`;
+    } else if (eventType.event_type === EventType.athletics) {
+      return `/manage/athletics/${eventType.event_type_id}/events/import/excel`;
+    } else if (eventType.event_type === EventType.services) {
+      return `/manage/services/${eventType.event_type_id}/events/import/excel`;
+    } else if (eventType.event_type === EventType.club) {
+      return `/manage/clubs/${eventType.event_type_id}/events/import/excel`;
     }
 
     return `/manage/events/import/excel`;
@@ -123,29 +114,23 @@ export class EventUtilService {
     return '/cb/checkin/e/';
   }
 
-  getCheckinSourcePage(
-    isAthletic: boolean,
-    isService: boolean,
-    isClub: boolean,
-    isOrientation: boolean
-  ) {
-
-    if (isAthletic) {
+  getCheckinSourcePage(eventType: IEventType) {
+    if (eventType.event_type === EventType.athletics) {
       return {
         source_page: CheckInSource.athletics,
         check_in_type: amplitudeEvents.ATHLETIC_EVENT
       };
-    } else if (isService) {
+    } else if (eventType.event_type === EventType.services) {
       return {
         source_page: CheckInSource.services,
         check_in_type: amplitudeEvents.SERVICE_EVENT
       };
-    } else if (isClub) {
+    } else if (eventType.event_type === EventType.club) {
       return {
         source_page: CheckInSource.club,
         check_in_type: amplitudeEvents.CLUB_EVENT
       };
-    } else if (isOrientation) {
+    } else if (eventType.event_type === EventType.orientation) {
       return {
         source_page: CheckInSource.orientation,
         check_in_type: amplitudeEvents.ORIENTATION_EVENT

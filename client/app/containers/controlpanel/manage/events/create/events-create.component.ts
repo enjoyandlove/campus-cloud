@@ -15,11 +15,12 @@ import { CPDate, CPMap } from '../../../../../shared/utils';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
-  attendanceType,
+  isAllDay,
+  EventType,
   CheckInMethod,
-  EventAttendance,
   EventFeedback,
-  isAllDay
+  attendanceType,
+  EventAttendance,
 } from '../event.status';
 
 import {
@@ -47,7 +48,7 @@ export class EventsCreateComponent implements OnInit {
   @Input() isClub: boolean;
   @Input() clubId: number;
   @Input() serviceId: number;
-  @Input() isAthletic: number;
+  @Input() isAthletic: boolean;
   @Input() isService: boolean;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
@@ -338,13 +339,43 @@ export class EventsCreateComponent implements OnInit {
   }
 
   getUrlPrefix(eventId) {
-    return this.utils.buildUrlPrefixEvents(
-      this.clubId,
-      this.serviceId,
-      this.isAthletic,
-      this.orientationId,
-      eventId
-    );
+    return this.utils.buildUrlPrefixEvents(this.getEventType(eventId));
+  }
+
+  getEventType(event_id) {
+    if (this.isAthletic) {
+      return {
+        event_id,
+        event_type_id: this.clubId,
+        event_type: EventType.athletics
+      };
+
+    } else if (this.isClub) {
+      return {
+        event_id,
+        event_type_id: this.clubId,
+        event_type: EventType.club
+      };
+
+    } else if (this.isService) {
+      return {
+        event_id,
+        event_type_id: this.serviceId,
+        event_type: EventType.services
+      };
+
+    } else if (this.isOrientation) {
+      return {
+        event_id,
+        event_type_id: this.orientationId,
+        event_type: EventType.orientation
+      };
+    } else {
+      return {
+        event_id,
+        event_type: EventType.event
+      };
+    }
   }
 
   onEventFeedbackChange(option) {

@@ -36,15 +36,13 @@ const state = {
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent extends BaseComponent {
+  @Input() clubId: number;
   @Input() storeId: number;
-  @Input() isAthletic: number;
-
+  @Input() isClub: boolean;
   @Input() serviceId: number;
   @Input() isService: boolean;
-
-  @Input() clubId: number;
-  @Input() isClub: boolean;
-
+  @Input() athleticId: number;
+  @Input() isAthletic: boolean;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
 

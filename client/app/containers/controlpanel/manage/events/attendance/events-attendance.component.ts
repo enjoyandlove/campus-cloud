@@ -13,7 +13,7 @@ import { IHeader, baseActions } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { CheckInMethod, CheckInOutTime, CheckOut } from '../event.status';
+import { CheckInMethod, CheckInOutTime, CheckOut, EventType } from '../event.status';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import {
@@ -483,20 +483,41 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
-    this.urlPrefix = this.utils.buildUrlPrefix(
-      this.clubId,
-      this.serviceId,
-      this.athleticId,
-      this.orientationId
-    );
+  getEventType() {
+    if (this.isAthletic) {
+      return {
+        event_type_id: this.athleticId,
+        event_type: EventType.athletics
+      };
 
-    this.checkInSource = this.utils.getCheckinSourcePage(
-      this.isAthletic,
-      this.isService,
-      this.isClub,
-      this.isOrientation
-    );
+    } else if (this.isClub) {
+      return {
+        event_type_id: this.clubId,
+        event_type: EventType.club
+      };
+
+    } else if (this.isService) {
+      return {
+        event_type_id: this.serviceId,
+        event_type: EventType.services
+      };
+
+    } else if (this.isOrientation) {
+      return {
+        event_type_id: this.orientationId,
+        event_type: EventType.orientation
+      };
+    } else {
+      return {
+        event_type: EventType.event
+      };
+    }
+  }
+
+  ngOnInit() {
+    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
+
+    this.urlPrefix = this.utils.buildUrlPrefix(this.getEventType());
 
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),

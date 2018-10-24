@@ -21,7 +21,7 @@ import {
   CheckInMethod,
   EventFeedback,
   attendanceType,
-  EventAttendance
+  EventAttendance, EventType
 } from '../event.status';
 
 import {
@@ -41,13 +41,13 @@ const i18n = new CPI18nPipe();
 })
 export class EventsExcelComponent extends BaseComponent implements OnInit {
   @Input() storeId: number;
-  @Input() isAthletic: number;
-
   @Input() clubId: number;
   @Input() isClub: boolean;
   @Input() serviceId: number;
   @Input() isService: boolean;
   @Input() isChecked: boolean;
+  @Input() athleticId: number;
+  @Input() isAthletic: boolean;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
 
@@ -55,8 +55,10 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   events;
   stores;
   urlPrefix;
+  eventType;
   formError;
   buttonData;
+  eventTypeId;
   checkInOptions = [];
   school: ISchool;
   loading = false;
@@ -497,13 +499,39 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     );
   }
 
+  getEventType() {
+    if (this.isAthletic) {
+      return {
+        event_type_id: this.athleticId,
+        event_type: EventType.athletics
+      };
+
+    } else if (this.isClub) {
+      return {
+        event_type_id: this.clubId,
+        event_type: EventType.club
+      };
+
+    } else if (this.isService) {
+      return {
+        event_type_id: this.serviceId,
+        event_type: EventType.services
+      };
+
+    } else if (this.isOrientation) {
+      return {
+        event_type_id: this.orientationId,
+        event_type: EventType.orientation
+      };
+    } else {
+      return {
+        event_type: EventType.event
+      };
+    }
+  }
+
   ngOnInit() {
-    this.urlPrefix = this.utils.buildUrlPrefix(
-      this.clubId,
-      this.serviceId,
-      this.isAthletic,
-      this.orientationId
-    );
+    this.urlPrefix = this.utils.buildUrlPrefix(this.getEventType());
 
     this.isChecked = false;
     this.uploadButtonData = {

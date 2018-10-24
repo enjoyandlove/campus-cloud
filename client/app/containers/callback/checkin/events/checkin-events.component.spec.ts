@@ -111,7 +111,7 @@ describe('CheckinEventsComponent', () => {
     expect(eventProperties.check_in_type).toEqual(amplitudeEvents.INSTITUTION_EVENT);
   });
 
-  it('onSubmit', () => {
+  it('Should add event check-in', () => {
     component.search = new HttpParams().append('event_id', component.eventId);
 
     const data = {

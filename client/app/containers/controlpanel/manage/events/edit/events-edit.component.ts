@@ -16,7 +16,7 @@ import { baseActions, IHeader } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { CheckInMethod, EventAttendance, EventFeedback } from '../event.status';
+import { CheckInMethod, EventAttendance, EventFeedback, EventType } from '../event.status';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   RouteLevel,
@@ -571,26 +571,51 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     );
   }
 
+  getEventType() {
+    if (this.isAthletic) {
+      return {
+        event_id: this.eventId,
+        event_type_id: this.clubId,
+        event_type: EventType.athletics
+      };
+
+    } else if (this.isClub) {
+      return {
+        event_id: this.eventId,
+        event_type_id: this.clubId,
+        event_type: EventType.club
+      };
+
+    } else if (this.isService) {
+      return {
+        event_id: this.eventId,
+        event_type_id: this.storeId,
+        event_type: EventType.services
+      };
+
+    } else if (this.isOrientation) {
+      return {
+        event_id: this.eventId,
+        event_type_id: this.orientationId,
+        event_type: EventType.orientation
+      };
+    } else {
+      return {
+        event_id: this.eventId,
+        event_type: EventType.event
+      };
+    }
+  }
+
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('save'),
       class: 'primary'
     };
 
-    this.urlPrefix = this.utils.buildUrlPrefixEvents(
-      this.clubId,
-      this.storeId,
-      this.athleticId,
-      this.orientationId,
-      this.eventId
-    );
+    this.urlPrefix = this.utils.buildUrlPrefixEvents(this.getEventType());
 
-    this.checkInSource = this.utils.getCheckinSourcePage(
-      this.isAthletic,
-      this.isService,
-      this.isClub,
-      this.isOrientation
-    );
+    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
 
     this.dateFormat = FORMAT.DATETIME;
     this.attendanceEnabled = EventAttendance.enabled;

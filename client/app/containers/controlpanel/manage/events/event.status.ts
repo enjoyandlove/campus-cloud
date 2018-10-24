@@ -54,6 +54,14 @@ export enum CheckInOutTime {
   'empty' = -1
 }
 
+export enum EventType {
+  'event' = 0,
+  'club' = 1,
+  'services' = 2,
+  'athletics' = 3,
+  'orientation' = 4
+}
+
 export enum CheckInSource {
   'club' = 'club',
   'events' = 'events',

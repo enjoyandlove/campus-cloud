@@ -5,10 +5,10 @@ import {
   canAccountLevelReadResource
 } from './../../../../../../../shared/utils/privileges/privileges';
 
-import { EventAttendance } from '../../../event.status';
 import { FORMAT } from '../../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../../session/index';
 import { EventUtilService } from '../../../events.utils.service';
+import { EventAttendance, EventType } from '../../../event.status';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
@@ -95,6 +95,23 @@ export class ListUpcomingComponent implements OnInit {
     );
   }
 
+  getEventType() {
+    if (this.isAthletic) {
+      return { event_type: EventType.athletics };
+
+    } else if (this.isClub) {
+      return { event_type: EventType.club };
+
+    } else if (this.isService) {
+      return { event_type: EventType.services };
+
+    } else if (this.isOrientation) {
+      return { event_type: EventType.orientation };
+    } else {
+      return { event_type: EventType.event };
+    }
+  }
+
   ngOnInit() {
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
@@ -102,12 +119,7 @@ export class ListUpcomingComponent implements OnInit {
       eventProperties: this.setEventProperties()
     };
 
-    this.checkInSource = this.utils.getCheckinSourcePage(
-      this.isAthletic,
-      this.isService,
-      this.isClub,
-      this.isOrientation
-    );
+    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
 
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
     const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);

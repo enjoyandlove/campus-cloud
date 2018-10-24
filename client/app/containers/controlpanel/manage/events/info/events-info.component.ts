@@ -5,10 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { EventAttendance } from '../event.status';
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
+import { EventAttendance, EventType } from '../event.status';
 import { EventUtilService } from './../events.utils.service';
 import { IHeader, baseActions } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -79,12 +79,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
       this.isPastEvent = this.utils.isPastEvent(this.event);
 
-      this.urlPrefix = this.utils.buildUrlPrefix(
-        this.clubId,
-        this.serviceId,
-        this.athleticId,
-        this.orientationId
-      );
+      this.urlPrefix = this.utils.buildUrlPrefix(this.getEventType());
 
       this.banner =
         this.event.poster_url === '' ? this.event.store_logo_url : this.event.poster_url;
@@ -139,13 +134,37 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     );
   }
 
+  getEventType() {
+    if (this.isAthletic) {
+      return {
+        event_type_id: this.clubId,
+        event_type: EventType.athletics
+      };
+
+    } else if (this.isClub) {
+      return {
+        event_type_id: this.clubId,
+        event_type: EventType.club
+      };
+
+    } else if (this.isService) {
+      return {
+        event_type_id: this.serviceId,
+        event_type: EventType.services
+      };
+
+    } else if (this.isOrientation) {
+      return {
+        event_type_id: this.orientationId,
+        event_type: EventType.orientation
+      };
+    } else {
+      return { event_type: EventType.event };
+    }
+  }
+
   ngOnInit() {
-    this.checkInSource = this.utils.getCheckinSourcePage(
-      this.isAthletic,
-      this.isService,
-      this.isClub,
-      this.isOrientation
-    );
+    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
 
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
 
