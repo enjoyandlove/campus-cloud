@@ -10,11 +10,9 @@ import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
+import { CPI18nService } from '../../../../../shared/services';
 import { IHeader, baseActions } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
@@ -34,7 +32,6 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
   event;
   banner;
-  eventData;
   urlPrefix;
   dateFormat;
   isPastEvent;
@@ -54,8 +51,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     public utils: EventUtilService,
-    public service: EventsService,
-    public cpTracking: CPTrackingService
+    public service: EventsService
   ) {
     super();
     this.dateFormat = FORMAT.DATETIME;
@@ -125,17 +121,6 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
-
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
-    };
-
-    this.eventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
-      eventProperties
-    };
 
     this.fetch();
   }

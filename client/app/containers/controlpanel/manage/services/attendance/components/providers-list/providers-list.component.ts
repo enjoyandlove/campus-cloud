@@ -180,7 +180,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   trackProviderViewEvent() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.PROVIDER
+      page_name: amplitudeEvents.SERVICE_PROVIDER
     };
 
     this.eventData = {
