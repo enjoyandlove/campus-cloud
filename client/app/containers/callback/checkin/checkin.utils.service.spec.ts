@@ -11,7 +11,17 @@ describe('CheckInUtilsService', () => {
   let checkInSource;
   let eventProperties;
 
-  it('getCheckedInEventProperties', () => {
+  it('should get check-in source name', () => {
+    let checkInSourceName = service.getCheckInSource(CheckInSource.events);
+
+    expect(checkInSourceName).toEqual(amplitudeEvents.INSTITUTION_EVENT);
+
+    checkInSourceName = service.getCheckInSource(CheckInSource.services);
+
+    expect(checkInSourceName).toEqual(amplitudeEvents.SERVICE_EVENT);
+  });
+
+  it('should get checked-in event properties', () => {
     userId = 452;
     sourceId = 8874;
     checkInSource = CheckInSource.services;
