@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
+import { CPI18nService } from '../../../../../../../shared/services';
 
 interface IDateRange {
   end: number;
@@ -23,9 +21,7 @@ export class ServicesProviderActionBoxComponent implements OnInit {
   @Output() filterByDates: EventEmitter<IDateRange> = new EventEmitter();
   @Output() launchAddProviderModal: EventEmitter<null> = new EventEmitter();
 
-  eventData;
-
-  constructor(public cpI18n: CPI18nService, public cpTracking: CPTrackingService) {}
+  constructor(public cpI18n: CPI18nService) {}
 
   onDownload() {
     this.download.emit();
@@ -43,20 +39,5 @@ export class ServicesProviderActionBoxComponent implements OnInit {
     this.filterByDates.emit(dateRange);
   }
 
-  trackAddProvider() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.ASSESSMENT
-    };
-
-    this.eventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
-      eventProperties
-    };
-  }
-
-  ngOnInit() {
-    this.trackAddProvider();
-  }
+  ngOnInit() {}
 }

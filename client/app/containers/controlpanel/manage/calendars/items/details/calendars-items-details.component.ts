@@ -10,9 +10,6 @@ import { BaseComponent } from '../../../../../../base';
 import { FORMAT } from '../../../../../../shared/pipes';
 import { CalendarsService } from '../../calendars.services';
 import { baseActions, IHeader } from '../../../../../../store/base';
-import { CPTrackingService } from '../../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking/tracking.directive';
 
 @Component({
   selector: 'cp-calendars-items-details',
@@ -21,7 +18,6 @@ import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking/tracki
 })
 export class CalendarsItemsDetailsComponent extends BaseComponent implements OnInit {
   item;
-  eventData;
   mapCenter;
   itemId: number;
   loading = true;
@@ -35,8 +31,7 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
     public session: CPSession,
     public route: ActivatedRoute,
     public store: Store<IHeader>,
-    public service: CalendarsService,
-    public cpTracking: CPTrackingService
+    public service: CalendarsService
   ) {
     super();
 
@@ -91,16 +86,5 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
     });
   }
 
-  ngOnInit() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.CALENDAR_EVENTS
-    };
-
-    this.eventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
-      eventProperties
-    };
-  }
+  ngOnInit() {}
 }
