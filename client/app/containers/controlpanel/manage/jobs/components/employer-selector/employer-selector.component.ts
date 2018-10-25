@@ -43,7 +43,7 @@ export class EmployerSelectorComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    const dropdownLabel = this.cpI18n.translate('employer_all_employers');
+    const dropdownLabel = this.cpI18n.translate('jobs_select_employer');
     this.employers$ = this.store
       .select(fromJobs.getJobsEmployers)
       .pipe(
