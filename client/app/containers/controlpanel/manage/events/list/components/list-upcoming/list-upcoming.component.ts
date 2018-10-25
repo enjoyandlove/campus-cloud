@@ -70,7 +70,13 @@ export class ListUpcomingComponent implements OnInit {
   }
 
   trackDeleteEvent() {
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.setEventProperties());
+    const eventProperties = this.setEventProperties();
+    delete eventProperties['page_type'];
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      eventProperties
+    );
   }
 
   setEventProperties() {

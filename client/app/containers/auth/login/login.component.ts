@@ -3,14 +3,12 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '../../../session';
 import { AuthService } from '../auth.service';
 import { baseActions } from '../../../store/base';
 import { appStorage } from '../../../shared/utils';
-import { amplitudeEvents } from '../../../shared/constants/analytics';
+
 import {
   CPI18nService,
-  CPTrackingService,
   ErrorService,
   ZendeskService
 } from '../../../shared/services';
@@ -30,12 +28,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
-    private session: CPSession,
     private error: ErrorService,
     private service: AuthService,
     private cpI18n: CPI18nService,
     private route: ActivatedRoute,
-    private cpTracking: CPTrackingService,
     public zendeskService: ZendeskService
   ) {
     this.goTo = this.route.snapshot.queryParams['goTo'];
@@ -53,19 +49,21 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.service.login(data.username, data.password).subscribe(
       (res: any) => {
         if (appStorage.storageAvailable()) {
+          const setUserLoginState = {
+            queryParams: { login: true }
+          };
+
           this.form.reset();
 
           appStorage.set(appStorage.keys.SESSION, res.id);
 
-          this.loadAndTrackAmplitudeEvent();
-
           if (this.goTo) {
-            this.router.navigateByUrl(`/${decodeURIComponent(this.goTo)}`);
+            this.router.navigate([`/${decodeURIComponent(this.goTo)}`], setUserLoginState);
 
             return;
           }
 
-          this.router.navigate(['/']);
+          this.router.navigate(['/'], setUserLoginState);
 
           return;
         }
@@ -89,11 +87,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.store.dispatch({ type: baseActions.ALERT_DEFAULT });
-  }
-
-  loadAndTrackAmplitudeEvent() {
-    this.cpTracking.loadAmplitude(this.session.g);
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.LOGGED_IN);
   }
 
   ngOnInit() {

@@ -174,9 +174,7 @@ export class ListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
-    const eventName = this.isSimple
-      ? amplitudeEvents.CLICKED_CHANGE_BUTTON
-      : amplitudeEvents.CLICKED_CREATE_ITEM;
+    const eventName = amplitudeEvents.CLICKED_CREATE_ITEM;
 
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),

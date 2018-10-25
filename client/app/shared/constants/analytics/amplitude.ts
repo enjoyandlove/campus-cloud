@@ -43,8 +43,6 @@ export const amplitudeEvents = {
 
   EXISTING: 'Existing',
 
-  PROVIDER: 'Provider',
-
   EMPLOYER: 'Employer',
 
   SERVICES: 'Services',
@@ -139,6 +137,8 @@ export const amplitudeEvents = {
 
   CLICKED_MENU: 'Clicked Menu Item',
 
+  SERVICE_PROVIDER: 'Service Provider',
+
   EVENT_ASSESSMENT: 'Event Assessment',
 
   CHANGE_PASSWORD: 'Changed Password',
@@ -194,8 +194,6 @@ export const amplitudeEvents = {
   ASSESS_VIEWED_CARDS: 'Assess - Viewed Cards',
 
   MANAGE_UPDATED_CLUB: 'Manage - Updated Club',
-
-  CLICKED_CHANGE_BUTTON: 'Clicked Change Button',
 
   MANAGE_APPROVED_CLUB: 'Manage - Approved Club',
 

@@ -9,16 +9,9 @@ import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
 import { baseActions, IHeader } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-
-import {
-  AdminService,
-  ErrorService,
-  CPI18nService,
-  CPTrackingService
-} from '../../../../../shared/services';
+import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
 
 import {
   accountsToStoreMap,
@@ -76,7 +69,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   servicesCount = null;
   athleticsCount = null;
   MODAL_TYPE = MODAL_TYPE.WIDE;
-  CP_PRIVILEGES = CP_PRIVILEGES;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
 
   resetClubsModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -92,8 +84,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     private cpI18n: CPI18nService,
     public utils: TeamUtilsService,
     private adminService: AdminService,
-    private errorService: ErrorService,
-    private cpTracking: CPTrackingService
+    private errorService: ErrorService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -345,14 +336,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       _data = { firstname, lastname };
     }
 
-    const eventProperties = this.utils.getAmplitudeEventProperties(
-      this.schoolPrivileges,
-      this.accountPrivileges
-    );
-
     this.adminService.updateAdmin(this.adminId, _data).subscribe(
       () => {
-        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPDATED_TEAM_MEMBER, eventProperties);
         this.router.navigate([this.currentUserCanManage ? '/settings/team' : '/dashboard']);
       },
       (err) => {
