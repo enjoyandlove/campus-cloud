@@ -187,7 +187,6 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
           amplitudeEvents.MANAGE_UPDATED_EVENT,
           this.eventProperties
         );
-
         this.router.navigate([this.urlPrefix]);
       },
       (_) => {

@@ -1,3 +1,4 @@
+import { CampusLink } from './../../../../../manage/links/tile';
 import { ILink } from '../../../../../manage/links/link.interface';
 
 export const mockResource: ILink = {
@@ -6,7 +7,7 @@ export const mockResource: ILink = {
   description: 'description',
   school_id: 1,
   link_type: 1,
-  link_url: 'oohlala://camera_qr',
+  link_url: CampusLink.cameraQr,
   link_params: {},
   img_url: 'image_url',
   open_in_browser: false,

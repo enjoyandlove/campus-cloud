@@ -1,3 +1,4 @@
+import { CampusLink } from './../../../manage/links/tile';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -125,7 +126,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   }
 
   isCampusSecurity(tile: ITile) {
-    return tile.related_link_data.link_url === 'oohlala://campus_security_service';
+    return tile.related_link_data.link_url === CampusLink.campusSecurityService;
   }
 
   async getCampusSecurity() {

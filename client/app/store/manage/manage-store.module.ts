@@ -1,3 +1,4 @@
+/* tslint:disable:max-line-length */
 import { StoreModule, ActionReducerMap } from '@ngrx/store';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';

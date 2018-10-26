@@ -1,3 +1,4 @@
+import { PersonasUtilsService } from './../../personas.utils.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -43,7 +44,8 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     public guideUtils: SectionUtilsService,
     public personaService: PersonasService,
     public store: Store<IHeader | ISnackbar>,
-    public sectionUtils: SectionUtilsService
+    public sectionUtils: SectionUtilsService,
+    public personasUtils: PersonasUtilsService
   ) {
     super();
     this.personaId = this.route.snapshot.params['personaId'];
@@ -188,7 +190,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       .then(({ data }: any) => {
         this.buildForm();
         this.persona = data;
-        this.buildHeader(this.utils.getPersonaNameByLocale(data));
+        this.buildHeader(this.personasUtils.localizedPersonaName(data));
       })
       .catch(() => this.erroHandler());
   }
