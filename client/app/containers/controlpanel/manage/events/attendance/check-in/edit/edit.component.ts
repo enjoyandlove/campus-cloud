@@ -112,7 +112,7 @@ export class CheckInEditComponent implements OnInit {
 
     request$.subscribe(
       () => {
-        this.edited.emit();
+        this.edited.emit(this.form.value);
         this.resetModal();
       },
       (_) => {

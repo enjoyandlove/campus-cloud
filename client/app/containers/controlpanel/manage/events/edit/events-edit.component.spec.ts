@@ -59,6 +59,7 @@ describe('EventEditComponent', () => {
     address: '',
     event_attendance: 1,
     longitude: 0.0,
+    attend_verification_methods: [1, 2, 3],
     poster_url: 'https://d25cbba5lf1nun.cloudfront.net/AsmFS.png',
     poster_thumb_url: 'https://d25cbba5lf1nun.cloudfront.net/AsmFSxT1V.png'
   };
@@ -103,8 +104,8 @@ describe('EventEditComponent', () => {
           component.isFormReady = true;
           component.ngOnInit();
 
-          spyOn(component, 'router');
           spyOn(component, 'buildHeader');
+          spyOn(component.router, 'navigate');
           spyOn(component.service, 'getEventById').and.returnValue(observableOf(mockEvent));
           spyOn(component.storeService, 'getStores').and.returnValue(observableOf(mockStore));
           spy = spyOn(component.service, 'updateEvent').and.returnValue(observableOf({}));
@@ -337,7 +338,8 @@ describe('EventEditComponent', () => {
 
       component.form.controls['event_attendance'].setValue(EventAttendance.disabled);
 
-      component.onSubmit(observableOf({}));
+      component.onSubmit(mockEvent);
+      tick(100);
       expect(spy).toHaveBeenCalled();
       expect(component.form.valid).toBeTruthy();
       expect(component.formMissingFields).toBeFalsy();

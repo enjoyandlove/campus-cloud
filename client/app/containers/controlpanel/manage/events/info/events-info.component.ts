@@ -5,14 +5,15 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { EventAttendance } from '../event.status';
 import { EventsService } from '../events.service';
+import { EventAttendance } from '../event.status';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
-import { CPI18nService } from '../../../../../shared/services';
+import { EventsComponent } from '../list/base/events.component';
 import { IHeader, baseActions } from '../../../../../store/base';
-import { BaseComponent } from '../../../../../base/base.component';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
@@ -20,12 +21,13 @@ import { IResourceBanner } from '../../../../../shared/components/cp-resource-ba
   templateUrl: './events-info.component.html',
   styleUrls: ['./events-info.component.scss']
 })
-export class EventsInfoComponent extends BaseComponent implements OnInit {
+export class EventsInfoComponent extends EventsComponent implements OnInit {
   @Input() isClub: boolean;
   @Input() clubId: number;
+  @Input() athleticId: number;
   @Input() serviceId: number;
   @Input() isService: boolean;
-  @Input() isAthletic: number;
+  @Input() isAthletic: boolean;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
   @Input() resourceBanner: IResourceBanner;
@@ -35,6 +37,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
   urlPrefix;
   dateFormat;
   isPastEvent;
+  checkInSource;
   loading = true;
   eventId: number;
   eventCheckinRoute;
@@ -51,9 +54,10 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     public utils: EventUtilService,
-    public service: EventsService
+    public service: EventsService,
+    public cpTracking: CPTrackingService
   ) {
-    super();
+    super(session, cpI18n, service);
     this.dateFormat = FORMAT.DATETIME;
     this.eventId = this.route.snapshot.params['eventId'];
   }
@@ -73,12 +77,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
       this.isPastEvent = this.utils.isPastEvent(this.event);
 
-      this.urlPrefix = this.utils.buildUrlPrefix(
-        this.clubId,
-        this.serviceId,
-        this.isAthletic,
-        this.orientationId
-      );
+      this.urlPrefix = this.utils.buildUrlPrefix(this.getEventType());
 
       this.banner =
         this.event.poster_url === '' ? this.event.store_logo_url : this.event.poster_url;
@@ -119,7 +118,23 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     });
   }
 
+  trackCheckinEvent(source_id) {
+    const eventProperties = {
+      source_id,
+      check_in_source: amplitudeEvents.INFO_PAGE,
+      check_in_type: this.checkInSource.check_in_type,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
+      eventProperties
+    );
+  }
+
   ngOnInit() {
+    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
+
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
 
     this.fetch();

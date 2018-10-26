@@ -94,6 +94,7 @@ describe('EventAttendanceComponent', () => {
             .append('sort_direction', component.state.sort_direction);
 
           spyOn(component, 'buildHeader');
+          spyOn(component, 'trackQrCode');
           spy = spyOn(component.service, 'getEventById').and.returnValue(observableOf({}));
           spyAttendee = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
             observableOf({})
@@ -293,14 +294,14 @@ describe('EventAttendanceComponent', () => {
     expect(component.showStudentIds).toBe(true);
 
     component.isService = false;
-    component.isAthletic = isClubAthletic.athletic;
+    component.athleticId = isClubAthletic.athletic;
     component.session.g.set('user', {
       school_level_privileges: { 157: { 28: { r: true, w: true } } }
     });
     component.ngOnInit();
     expect(component.showStudentIds).toBe(true);
 
-    component.isAthletic = isClubAthletic.club;
+    component.athleticId = isClubAthletic.club;
     component.isOrientation = true;
     component.session.g.set('user', {
       school_level_privileges: { 157: { 17: { r: true, w: true } } }

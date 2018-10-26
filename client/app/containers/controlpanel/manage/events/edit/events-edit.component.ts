@@ -12,13 +12,14 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from '../events.utils.service';
 import { CPDate, CPMap } from '../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../session';
+import { EventsComponent } from '../list/base/events.component';
 import { baseActions, IHeader } from '../../../../../store/base';
-import { BaseComponent } from '../../../../../base/base.component';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { CheckInMethod, EventAttendance, EventFeedback } from '../event.status';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
+  RouteLevel,
   AdminService,
   CPTrackingService,
   ErrorService,
@@ -36,12 +37,13 @@ const COMMON_DATE_PICKER_OPTIONS = {
   templateUrl: './events-edit.component.html',
   styleUrls: ['./events-edit.component.scss']
 })
-export class EventsEditComponent extends BaseComponent implements OnInit {
+export class EventsEditComponent extends EventsComponent implements OnInit {
   @Input() storeId: number;
   @Input() isClub: boolean;
   @Input() clubId: number;
   @Input() isService: boolean;
-  @Input() isAthletic: number;
+  @Input() isAthletic: boolean;
+  @Input() athleticId: number;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
   @Input() toolTipContent: IToolTipContent;
@@ -55,10 +57,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   isDateError;
   originalHost;
   eventQRCodes;
+  checkInSource;
   selectedQRCode;
   loading = true;
   attendanceTypes;
-  isQrCodeEnabled;
   school: ISchool;
   eventId: number;
   form: FormGroup;
@@ -106,7 +108,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     public service: EventsService,
     public cpTracking: CPTrackingService
   ) {
-    super();
+    super(session, cpI18n, service);
     this.school = this.session.g.get('school');
     this.eventId = this.route.snapshot.params['eventId'];
 
@@ -173,6 +175,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.service.updateEvent(data, this.eventId, search).subscribe(
       (_) => {
+        this.trackQrCode(data);
+
         this.eventProperties = {
           ...this.eventProperties,
           ...this.utils.setEventProperties(this.form.controls),
@@ -552,19 +556,34 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     }
   }
 
+  trackQrCode(event) {
+    const eventProperties = {
+      ...this.utils.getQRCodeCheckOutStatus(event, true),
+      source_id: this.event.encrypted_id,
+      check_in_type: this.checkInSource.check_in_type,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CHANGED_QR_CODE,
+      eventProperties
+    );
+  }
+
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('save'),
       class: 'primary'
     };
 
-    this.urlPrefix = this.utils.buildUrlPrefixEvents(
-      this.clubId,
-      this.storeId,
-      this.isAthletic,
-      this.orientationId,
-      this.eventId
-    );
+    const eventType = {
+      ...this.getEventType(),
+      event_id: this.eventId
+    };
+
+    this.urlPrefix = this.utils.buildUrlPrefixEvents(eventType);
+
+    this.checkInSource = this.utils.getCheckinSourcePage(eventType);
 
     this.dateFormat = FORMAT.DATETIME;
     this.attendanceEnabled = EventAttendance.enabled;

@@ -6,7 +6,8 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './clubs-events-attendance.html'
 })
 export class ClubsEventsAttendanceComponent implements OnInit {
-  @Input() isAthletic;
+  @Input() athleticId: number;
+  @Input() isAthletic: boolean;
 
   clubId;
   isClub = true;

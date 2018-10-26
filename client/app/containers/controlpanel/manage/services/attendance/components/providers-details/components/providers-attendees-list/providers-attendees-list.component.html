@@ -127,7 +127,7 @@
   *ngIf="isAddCheckInModal">
   <cp-service-provider-create-check-in
     [data]="provider"
-    (created)="onCreated()"
+    (created)="onCreated($event)"
     (teardown)="isAddCheckInModal = false">
   </cp-service-provider-create-check-in>
 </cp-modal>
@@ -139,7 +139,7 @@
   <cp-service-provider-edit-check-in
     [data]="provider"
     [checkIn]="checkInData"
-    (edited)="onEdited()"
+    (edited)="onEdited($event)"
     (teardown)="isEditCheckInModal = false">
   </cp-service-provider-edit-check-in>
 </cp-modal>

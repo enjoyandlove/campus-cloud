@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
+import { EventType } from '../../event.status';
 import { EventsService } from '../../events.service';
 import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base/base.component';
@@ -36,15 +37,13 @@ const state = {
   styleUrls: ['./events.component.scss']
 })
 export class EventsComponent extends BaseComponent {
+  @Input() clubId: number;
   @Input() storeId: number;
-  @Input() isAthletic: number;
-
+  @Input() isClub: boolean;
   @Input() serviceId: number;
   @Input() isService: boolean;
-
-  @Input() clubId: number;
-  @Input() isClub: boolean;
-
+  @Input() athleticId: number;
+  @Input() isAthletic: boolean;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
 
@@ -56,8 +55,8 @@ export class EventsComponent extends BaseComponent {
   pageNumber;
   isUpcoming;
   orientation;
-  deleteEvent = '';
-  state: IState = state;
+  deletedEvent = '';
+  eventState: IState = state;
 
   constructor(
     public session: CPSession,
@@ -69,14 +68,14 @@ export class EventsComponent extends BaseComponent {
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
-  private fetch(stream$) {
+  public fetch(stream$) {
     super.fetchData(stream$).then((res) => {
-      this.state = Object.assign({}, this.state, { events: res.data });
+      this.eventState = Object.assign({}, this.eventState, { events: res.data });
     });
   }
 
   onSortList(sort) {
-    this.state = Object.assign({}, this.state, {
+    this.eventState = Object.assign({}, this.eventState, {
       sort_field: sort.sort_field,
       sort_direction: sort.sort_direction
     });
@@ -100,7 +99,7 @@ export class EventsComponent extends BaseComponent {
       this.resetPagination();
     }
 
-    this.state = Object.assign({}, this.state, {
+    this.eventState = Object.assign({}, this.eventState, {
       end: filter.end,
       start: filter.start,
       sort_field: 'start',
@@ -112,7 +111,7 @@ export class EventsComponent extends BaseComponent {
     });
 
     if (!isUpcoming) {
-      this.state = Object.assign({}, this.state, {
+      this.eventState = Object.assign({}, this.eventState, {
         sort_field: 'end',
         exclude_current: 1,
         sort_direction: 'desc'
@@ -128,11 +127,11 @@ export class EventsComponent extends BaseComponent {
     const end = this.endRange;
     const start = this.startRange;
 
-    const exclude_current = this.state.exclude_current
-      ? this.state.exclude_current.toString()
+    const exclude_current = this.eventState.exclude_current
+      ? this.eventState.exclude_current.toString()
       : null;
 
-    let store_id = this.state.store_id ? this.state.store_id.toString() : null;
+    let store_id = this.eventState.store_id ? this.eventState.store_id.toString() : null;
     const calendar_id = this.orientationId ? this.orientationId.toString() : null;
 
     if (this.storeId) {
@@ -140,14 +139,14 @@ export class EventsComponent extends BaseComponent {
     }
 
     let search = new HttpParams()
-      .append('start', this.state.start.toString())
-      .append('end', this.state.end.toString())
+      .append('start', this.eventState.start.toString())
+      .append('end', this.eventState.end.toString())
       .append('school_id', this.session.g.get('school').id.toString())
-      .append('search_str', this.state.search_str)
-      .append('attendance_only', this.state.attendance_only.toString())
+      .append('search_str', this.eventState.search_str)
+      .append('attendance_only', this.eventState.attendance_only.toString())
 
-      .append('sort_field', this.state.sort_field)
-      .append('sort_direction', this.state.sort_direction);
+      .append('sort_field', this.eventState.sort_field)
+      .append('sort_direction', this.eventState.sort_direction);
 
     if (store_id) {
       search = search.append('store_id', store_id);
@@ -163,16 +162,16 @@ export class EventsComponent extends BaseComponent {
   }
 
   onDeleteEvent(event) {
-    this.deleteEvent = event;
+    this.deletedEvent = event;
     this.orientation = this.isOrientation;
   }
 
   onDeletedEvent(eventId) {
-    this.state = Object.assign({}, this.state, {
-      events: this.state.events.filter((event) => event.id !== eventId)
+    this.eventState = Object.assign({}, this.eventState, {
+      events: this.eventState.events.filter((event) => event.id !== eventId)
     });
 
-    if (this.state.events.length === 0 && this.pageNumber > 1) {
+    if (this.eventState.events.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
       this.buildHeaders();
     }
@@ -188,5 +187,36 @@ export class EventsComponent extends BaseComponent {
     super.goToPrevious();
 
     this.buildHeaders();
+  }
+
+  getEventType() {
+    if (this.isAthletic) {
+      return {
+        event_type_id: this.clubId,
+        event_type: EventType.athletics
+      };
+
+    } else if (this.isClub) {
+      return {
+        event_type_id: this.clubId,
+        event_type: EventType.club
+      };
+
+    } else if (this.isService) {
+      return {
+        event_type: EventType.services,
+        event_type_id: this.serviceId ? this.serviceId : this.storeId
+      };
+
+    } else if (this.isOrientation) {
+      return {
+        event_type_id: this.orientationId,
+        event_type: EventType.orientation
+      };
+    } else {
+      return {
+        event_type: EventType.event
+      };
+    }
   }
 }

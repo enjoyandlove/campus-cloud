@@ -5,6 +5,7 @@ import { IService } from '../../../service.interface';
 import IServiceProvider from '../../../providers.interface';
 import { ServiceAttendance } from '../../../services.status';
 import { ProvidersService } from '../../../providers.service';
+import { RouteLevel } from '../../../../../../../shared/services';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
@@ -150,13 +151,18 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
   }
 
-  trackCheckinEvent(service_id) {
+  trackCheckinEvent(source_id) {
     const eventProperties = {
-      service_id,
-      source_page: amplitudeEvents.SERVICE
+      source_id,
+      check_in_source: amplitudeEvents.ASSESSMENT,
+      check_in_type: amplitudeEvents.SERVICE_PROVIDER,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CLICKED_CHECKIN, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
+      eventProperties
+    );
   }
 
   downloadProvidersCSV() {
@@ -174,7 +180,21 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
     stream$.toPromise().then((providers: any) => {
       this.utils.exportServiceProvidersAttendees(providers);
+      this.trackDownloadProviders();
     });
+  }
+
+  trackDownloadProviders() {
+    const eventProperties = {
+      host_id: this.service.store_id,
+      data_source: amplitudeEvents.SERVICE_PROVIDER,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
+      eventProperties
+    );
   }
 
   trackProviderViewEvent() {
