@@ -109,6 +109,7 @@ describe('EventEditComponent', () => {
           spyOn(component.service, 'getEventById').and.returnValue(observableOf(mockEvent));
           spyOn(component.storeService, 'getStores').and.returnValue(observableOf(mockStore));
           spy = spyOn(component.service, 'updateEvent').and.returnValue(observableOf({}));
+          spyOn(component.router, 'navigate').and.returnValue(true);
         });
     })
   );
@@ -338,8 +339,7 @@ describe('EventEditComponent', () => {
 
       component.form.controls['event_attendance'].setValue(EventAttendance.disabled);
 
-      component.onSubmit(mockEvent);
-      tick(100);
+      component.onSubmit(component.form.value);
       expect(spy).toHaveBeenCalled();
       expect(component.form.valid).toBeTruthy();
       expect(component.formMissingFields).toBeFalsy();

@@ -1,43 +1,42 @@
-import { FormBuilder, Validators, ValidationErrors, FormGroup } from '@angular/forms';
-import { sortBy, get as _get } from 'lodash';
 import { Injectable } from '@angular/core';
-
-import { ITile } from './tile.interface';
-import { IPersona } from '../persona.interface';
-import { CPSession } from '../../../../../session';
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { get as _get, sortBy } from 'lodash';
+import { FileUploadService } from './../../../../../shared/services/file-upload.service';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { CampusLink } from './../../../manage/links/tile';
 import { ICampusGuide } from './../sections/section.interface';
 import { SectionUtilsService } from './../sections/section.utils.service';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { TileCategoryRank, TileFeatureRank, TileVisibility, CampusLinkType } from './tiles.status';
-import { FileUploadService } from './../../../../../shared/services/file-upload.service';
+import { ITile } from './tile.interface';
+import { CampusLinkType, TileCategoryRank, TileFeatureRank, TileVisibility } from './tiles.status';
+import { CPSession } from '../../../../../session';
 
 const threeHundrendKb = 3e5;
 
 @Injectable()
 export class TilesUtilsService {
   static webAppSupportedLinkUrls = [
-    'oohlala://campus_service',
-    'oohlala://store',
-    'oohlala://job_list',
-    'oohlala://store_list',
-    'oohlala://school_campaign',
-    'oohlala://event_list',
-    'oohlala://campaign_list',
-    'oohlala://deal_store_list',
-    'oohlala://campus_service_list',
-    'oohlala://campus_poi_list',
-    'oohlala://campus_security_service',
-    'oohlala://campus_link_list'
+    CampusLink.campusService,
+    CampusLink.store,
+    CampusLink.jobList,
+    CampusLink.storeList,
+    CampusLink.schoolCampaign,
+    CampusLink.eventList,
+    CampusLink.campaignList,
+    CampusLink.dealStoreList,
+    CampusLink.campusServiceList,
+    CampusLink.campusPoiList,
+    CampusLink.campusSecurityService,
+    CampusLink.campusLinkList
   ];
 
   static deprecatedTiles = [
-    'oohlala://camera_qr',
-    'oohlala://exam_search',
-    'oohlala://advisor_list',
-    'oohlala://in_app_feedback',
-    'oohlala://campus_tour_list',
-    'oohlala://attended_event_list',
-    'oohlala://user_school_course_material_list'
+    CampusLink.cameraQr,
+    CampusLink.examSearch,
+    CampusLink.advisorList,
+    CampusLink.inAppFeedback,
+    CampusLink.campusTourList,
+    CampusLink.attendedEventList,
+    CampusLink.userSchoolCourseMaterialList
   ];
 
   defaultTileCategoryIds = [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13];
@@ -79,8 +78,8 @@ export class TilesUtilsService {
     }
 
     return (
-      tile.related_link_data.link_url === 'oohlala://school_campaign' ||
-      tile.related_link_data.link_url === 'oohlala://campaign_list'
+      tile.related_link_data.link_url === CampusLink.schoolCampaign ||
+      tile.related_link_data.link_url === CampusLink.campaignList
     );
   }
 
@@ -98,31 +97,28 @@ export class TilesUtilsService {
     return tile.featured_rank > -1;
   }
 
-  isCategoryZero(tile: ITile) {
-    return tile.tile_category_id === 0 && tile.featured_rank === -1;
-  }
-
   isTileVisible(tile: ITile) {
     return tile.visibility_status === TileVisibility.visible;
   }
 
-  getPersonaNameByLocale(persona: IPersona) {
-    const name = persona.localized_name_map;
+  getLastFeaturedRank(guide: ICampusGuide) {
+    return guide.tiles.length
+      ? sortBy(guide.tiles, (t: ITile) => -t.featured_rank)[0].featured_rank + 1
+      : 1;
+  }
 
-    return CPI18nService.getLocale().startsWith('fr') ? name.fr : name.en;
+  getLastRank(guide: ICampusGuide) {
+    const isTemporaryGuide = this.sectionUtils.isTemporaryGuide(guide);
+
+    return isTemporaryGuide || !guide.tiles.length
+      ? 1
+      : sortBy(guide.tiles, (t: ITile) => -t.rank)[0].rank + 1;
   }
 
   campusGuideTileForm(personaId, guide: ICampusGuide, tileToEdit = null) {
-    const isTemporaryGuide = this.sectionUtils.isTemporaryGuide(guide);
+    const lastFeaturedRank = this.getLastFeaturedRank(guide);
 
-    const lastFeaturedRank = guide.tiles.length
-      ? sortBy(guide.tiles, (t: ITile) => -t.featured_rank)[0].rank + 1
-      : 1;
-
-    const lastRank =
-      isTemporaryGuide || !guide.tiles.length
-        ? 1
-        : sortBy(guide.tiles, (t: ITile) => -t.rank)[0].rank + 1;
+    const lastRank = this.getLastRank(guide);
 
     const _tile = tileToEdit
       ? { ...tileToEdit }
@@ -169,7 +165,7 @@ export class TilesUtilsService {
     const linkParams = control.get('link_params').value;
     const linkUrl = control.get('link_url').value;
 
-    if (linkUrl === 'oohlala://campus_service_list') {
+    if (linkUrl === CampusLink.campusServiceList) {
       const entries: any = Object.values(linkParams)[0];
 
       if (!entries) {

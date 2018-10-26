@@ -1,3 +1,4 @@
+import { CampusLink } from './../../../../../../manage/links/tile';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
 
@@ -64,11 +65,11 @@ export class PersonasResourceFormComponent implements OnInit {
 
   requiresLinkParams(linkUrl) {
     const requiresLinkParams = [
-      'oohlala://store',
-      'oohlala://store_list',
-      'oohlala://campus_service',
-      'oohlala://subscribable_calendar',
-      'oohlala://service_by_category_id'
+      CampusLink.store,
+      CampusLink.storeList,
+      CampusLink.campusService,
+      CampusLink.subscribableCalendar,
+      CampusLink.serviceByCategoryId
     ];
 
     return requiresLinkParams.includes(linkUrl);

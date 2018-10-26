@@ -16,6 +16,7 @@ import { SharedModule } from '../../../../../../shared/shared.module';
 import { baseReducers, baseActions } from './../../../../../../store/base';
 import { SectionUtilsService } from './../../sections/section.utils.service';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { PersonasUtilsService } from '../../personas.utils.service';
 
 class MockPersonasService {
   dummy;
@@ -84,6 +85,7 @@ describe('PersonasTileCreateComponent', () => {
           CPSession,
           SectionUtilsService,
           SectionUtilsService,
+          PersonasUtilsService,
           { provide: TilesService, useClass: MockTilesService },
           { provide: PersonasService, useClass: MockPersonasService },
           { provide: SectionsService, useClass: MockSectionsService }

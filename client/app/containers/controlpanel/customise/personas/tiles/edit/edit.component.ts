@@ -1,3 +1,4 @@
+import { PersonasUtilsService } from './../../personas.utils.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -47,7 +48,8 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     public guideUtils: SectionUtilsService,
     public personaService: PersonasService,
     public store: Store<IHeader | ISnackbar>,
-    public sectionUtils: SectionUtilsService
+    public sectionUtils: SectionUtilsService,
+    public personasUtils: PersonasUtilsService
   ) {
     super();
     this.tileId = this.route.snapshot.params['tileId'];
@@ -146,11 +148,15 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     });
   }
 
-  onCampusGuideTileFormChange() {
+  updateButtonDisableStatus() {
     this.buttonData = {
       ...this.buttonData,
       disabled: !(this.campusGuideTileForm.valid && this.campusLinkForm.valid)
     };
+  }
+
+  onCampusGuideTileFormChange() {
+    this.updateButtonDisableStatus();
 
     const name = this.campusGuideTileForm.controls['name'].value;
     const img_url = this.campusGuideTileForm.controls['img_url'].value;
@@ -160,10 +166,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   }
 
   onCampusLinkFormChange() {
-    this.buttonData = {
-      ...this.buttonData,
-      disabled: !(this.campusGuideTileForm.valid && this.campusLinkForm.valid)
-    };
+    this.updateButtonDisableStatus();
   }
 
   ngOnDestroy() {
@@ -180,11 +183,10 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
       .fetchData(persona$)
       .then(({ data }) => {
         const persona = data;
-
         this.buildForm();
         this.persona = persona;
 
-        this.buildHeader(this.utils.getPersonaNameByLocale(persona));
+        this.buildHeader(this.personasUtils.localizedPersonaName(persona));
       })
       .catch(() => this.erroHandler());
   }
