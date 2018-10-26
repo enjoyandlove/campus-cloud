@@ -1,20 +1,21 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
+/* tslint:disable:max-line-length */
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { of as observableOf } from 'rxjs';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-
+import { Store, StoreModule } from '@ngrx/store';
+import { of as observableOf } from 'rxjs';
 import { CPSession } from './../../../../session';
-import { baseActions } from './../../../../store/base';
-import { EngagementService } from './engagement.service';
-import { mockUser } from './../../../../session/mock/user';
-import { EngagementComponent } from './engagement.component';
-import { AssessUtilsService } from '../assess.utils.service';
-import { baseReducers } from '../../../../store/base/reducers';
 import { mockSchool } from './../../../../session/mock/school';
+import { mockUser } from './../../../../session/mock/user';
 import { STATUS } from './../../../../shared/constants/status';
-import { CPI18nService, CPTrackingService } from '../../../../shared/services';
+import { CPAmplitudeService } from './../../../../shared/services/amplitude.service';
+import { baseActions } from './../../../../store/base';
+import { EngagementComponent } from './engagement.component';
+import { EngagementService } from './engagement.service';
 import { CPLineChartUtilsService } from '../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
+import { CPI18nService, CPTrackingService } from '../../../../shared/services';
+import { baseReducers } from '../../../../store/base/reducers';
+import { AssessUtilsService } from '../assess.utils.service';
 
 const mockFilterState = {
   engagement: {
@@ -83,6 +84,7 @@ describe('EngagementComponent', () => {
       declarations: [EngagementComponent],
       providers: [
         CPI18nService,
+        CPAmplitudeService,
         CPTrackingService,
         AssessUtilsService,
         CPLineChartUtilsService,
