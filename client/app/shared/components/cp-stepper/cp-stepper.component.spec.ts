@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
-import { CPSession } from '../../../session';
+import { CPAmplitudeService } from './../../services/amplitude.service';
 import { CPStepperComponent } from './cp-stepper.component';
+import { CPSession } from '../../../session';
 import { AdminService, CPTrackingService } from '../../services';
 
 class MockAdminService {
@@ -38,6 +38,7 @@ describe('CPStepperComponent', () => {
         imports: [RouterTestingModule],
         providers: [
           CPSession,
+          CPAmplitudeService,
           CPTrackingService,
           { provide: AdminService, useClass: MockAdminService }
         ]

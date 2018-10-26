@@ -105,7 +105,6 @@ describe('EventEditComponent', () => {
           component.ngOnInit();
 
           spyOn(component, 'buildHeader');
-          spyOn(component.router, 'navigate');
           spyOn(component.service, 'getEventById').and.returnValue(observableOf(mockEvent));
           spyOn(component.storeService, 'getStores').and.returnValue(observableOf(mockStore));
           spy = spyOn(component.service, 'updateEvent').and.returnValue(observableOf({}));
