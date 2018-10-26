@@ -145,8 +145,6 @@ export const amplitudeEvents = {
 
   WALL_MOVED_POST: 'Wall - Moved Post',
 
-  SERVICE_PROVIDER: 'Service Provider',
-
   CLICKED_PAGE_ITEM: 'Clicked Page Item',
 
   VISITED_HELP_DESK: 'Visited Help Desk',

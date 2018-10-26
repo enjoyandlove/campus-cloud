@@ -6,13 +6,14 @@ import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
+import { EventAttendance } from '../event.status';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
-import { EventAttendance, EventType } from '../event.status';
 import { EventUtilService } from './../events.utils.service';
-import { CPI18nService } from '../../../../../shared/services';
+import { EventsComponent } from '../list/base/events.component';
 import { IHeader, baseActions } from '../../../../../store/base';
-import { BaseComponent } from '../../../../../base/base.component';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
@@ -20,7 +21,7 @@ import { IResourceBanner } from '../../../../../shared/components/cp-resource-ba
   templateUrl: './events-info.component.html',
   styleUrls: ['./events-info.component.scss']
 })
-export class EventsInfoComponent extends BaseComponent implements OnInit {
+export class EventsInfoComponent extends EventsComponent implements OnInit {
   @Input() isClub: boolean;
   @Input() clubId: number;
   @Input() athleticId: number;
@@ -53,9 +54,10 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     public utils: EventUtilService,
-    public service: EventsService
+    public service: EventsService,
+    public cpTracking: CPTrackingService
   ) {
-    super();
+    super(session, cpI18n, service);
     this.dateFormat = FORMAT.DATETIME;
     this.eventId = this.route.snapshot.params['eventId'];
   }
@@ -128,35 +130,6 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
       amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
       eventProperties
     );
-  }
-
-  getEventType() {
-    if (this.isAthletic) {
-      return {
-        event_type_id: this.clubId,
-        event_type: EventType.athletics
-      };
-
-    } else if (this.isClub) {
-      return {
-        event_type_id: this.clubId,
-        event_type: EventType.club
-      };
-
-    } else if (this.isService) {
-      return {
-        event_type_id: this.serviceId,
-        event_type: EventType.services
-      };
-
-    } else if (this.isOrientation) {
-      return {
-        event_type_id: this.orientationId,
-        event_type: EventType.orientation
-      };
-    } else {
-      return { event_type: EventType.event };
-    }
   }
 
   ngOnInit() {

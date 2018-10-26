@@ -1,10 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { EventType } from '../../../event.status';
 import { isDev } from '../../../../../../../config/env';
 import { EventsService } from '../../../events.service';
+import { CPSession } from '../../../../../../../session';
 import { EventUtilService } from '../../../events.utils.service';
+import { EventsComponent } from '../../../list/base/events.component';
 import { FileUploadService } from '../../../../../../../shared/services';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
@@ -13,7 +14,7 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
   templateUrl: './events-excel-modal.component.html',
   styleUrls: ['./events-excel-modal.component.scss']
 })
-export class EventsExcelModalComponent implements OnInit {
+export class EventsExcelModalComponent extends EventsComponent implements OnInit {
   @Input() storeId: number;
   @Input() clubId: number;
   @Input() isClub: boolean;
@@ -30,11 +31,14 @@ export class EventsExcelModalComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private cpI18n: CPI18nService,
-    private service: EventsService,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public service: EventsService,
     private utils: EventUtilService,
     private fileService: FileUploadService
-  ) {}
+  ) {
+    super(session, cpI18n, service);
+  }
 
   parser(file) {
     const url = !isDev ? '/events/excel' : 'http://localhost:8000/events/excel';
@@ -54,35 +58,6 @@ export class EventsExcelModalComponent implements OnInit {
           serverError ? serverError : this.cpI18n.translate('something_went_wrong')
         );
       });
-  }
-
-  getEventType() {
-    if (this.isAthletic) {
-      return {
-        event_type_id: this.clubId,
-        event_type: EventType.athletics
-      };
-
-    } else if (this.isClub) {
-      return {
-        event_type_id: this.clubId,
-        event_type: EventType.club
-      };
-
-    } else if (this.isService) {
-      return {
-        event_type_id: this.serviceId,
-        event_type: EventType.services
-      };
-
-    } else if (this.isOrientation) {
-      return {
-        event_type_id: this.orientationId,
-        event_type: EventType.orientation
-      };
-    } else {
-      return { event_type: EventType.event };
-    }
   }
 
   onNavigate() {

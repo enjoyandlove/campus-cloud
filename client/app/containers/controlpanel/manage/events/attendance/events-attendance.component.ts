@@ -9,11 +9,11 @@ import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes';
 import { ICheckIn } from './check-in/check-in.interface';
 import { EventUtilService } from './../events.utils.service';
+import { EventsComponent } from '../list/base/events.component';
 import { IHeader, baseActions } from '../../../../../store/base';
-import { BaseComponent } from '../../../../../base/base.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { CheckInMethod, CheckInOutTime, CheckOut, EventType } from '../event.status';
+import { CheckInMethod, CheckInOutTime, CheckOut } from '../event.status';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import {
@@ -38,7 +38,7 @@ const state = {
   templateUrl: './events-attendance.component.html',
   styleUrls: ['./events-attendance.component.scss']
 })
-export class EventsAttendanceComponent extends BaseComponent implements OnInit {
+export class EventsAttendanceComponent extends EventsComponent implements OnInit {
   @Input() isClub: boolean;
   @Input() clubId: number;
   @Input() serviceId: number;
@@ -91,7 +91,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     private utils: EventUtilService,
     public cpTracking: CPTrackingService
   ) {
-    super();
+    super(session, cpI18n, service);
     this.eventId = this.route.snapshot.params['eventId'];
     super.isLoading().subscribe((res) => (this.attendeesLoading = res));
   }
@@ -481,37 +481,6 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       amplitudeEvents.MANAGE_CHANGED_QR_CODE,
       eventProperties
     );
-  }
-
-  getEventType() {
-    if (this.isAthletic) {
-      return {
-        event_type_id: this.athleticId,
-        event_type: EventType.athletics
-      };
-
-    } else if (this.isClub) {
-      return {
-        event_type_id: this.clubId,
-        event_type: EventType.club
-      };
-
-    } else if (this.isService) {
-      return {
-        event_type_id: this.serviceId,
-        event_type: EventType.services
-      };
-
-    } else if (this.isOrientation) {
-      return {
-        event_type_id: this.orientationId,
-        event_type: EventType.orientation
-      };
-    } else {
-      return {
-        event_type: EventType.event
-      };
-    }
   }
 
   ngOnInit() {

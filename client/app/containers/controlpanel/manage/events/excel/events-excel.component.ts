@@ -10,9 +10,10 @@ import { EventsService } from '../events.service';
 import { CPDate } from '../../../../../shared/utils';
 import { baseActions } from '../../../../../store/base';
 import { STATUS } from '../../../../../shared/constants';
+import { getEventsModalState } from '../../../../../store';
 import { EventUtilService } from '../events.utils.service';
 import { CPSession, ISchool } from '../../../../../session';
-import { BaseComponent } from '../../../../../base/base.component';
+import { EventsComponent } from '../list/base/events.component';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { CPImageUploadComponent } from '../../../../../shared/components';
 
@@ -21,7 +22,7 @@ import {
   CheckInMethod,
   EventFeedback,
   attendanceType,
-  EventAttendance, EventType
+  EventAttendance
 } from '../event.status';
 
 import {
@@ -30,7 +31,6 @@ import {
   CPI18nService,
   FileUploadService
 } from '../../../../../shared/services';
-import { getEventsModalState } from '../../../../../store';
 
 const i18n = new CPI18nPipe();
 
@@ -39,7 +39,7 @@ const i18n = new CPI18nPipe();
   templateUrl: './events-excel.component.html',
   styleUrls: ['./events-excel.component.scss']
 })
-export class EventsExcelComponent extends BaseComponent implements OnInit {
+export class EventsExcelComponent extends EventsComponent implements OnInit {
   @Input() storeId: number;
   @Input() clubId: number;
   @Input() isClub: boolean;
@@ -55,10 +55,8 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   events;
   stores;
   urlPrefix;
-  eventType;
   formError;
   buttonData;
-  eventTypeId;
   checkInOptions = [];
   school: ISchool;
   loading = false;
@@ -77,20 +75,20 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
-    private session: CPSession,
-    private cpI18n: CPI18nService,
-    private service: EventsService,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public service: EventsService,
     private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
     private fileUploadService: FileUploadService
   ) {
-    super();
+    super(session, cpI18n, service);
     this.school = this.session.g.get('school');
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
-  private fetch() {
+  public fetch() {
     const search: HttpParams = new HttpParams().append('school_id', this.school.id.toString());
 
     const stores$ = this.storeService.getStores(search);
@@ -497,37 +495,6 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     control.controls['event_attendance'].setValue(
       item !== null ? EventAttendance.enabled : EventAttendance.disabled
     );
-  }
-
-  getEventType() {
-    if (this.isAthletic) {
-      return {
-        event_type_id: this.athleticId,
-        event_type: EventType.athletics
-      };
-
-    } else if (this.isClub) {
-      return {
-        event_type_id: this.clubId,
-        event_type: EventType.club
-      };
-
-    } else if (this.isService) {
-      return {
-        event_type_id: this.serviceId,
-        event_type: EventType.services
-      };
-
-    } else if (this.isOrientation) {
-      return {
-        event_type_id: this.orientationId,
-        event_type: EventType.orientation
-      };
-    } else {
-      return {
-        event_type: EventType.event
-      };
-    }
   }
 
   ngOnInit() {

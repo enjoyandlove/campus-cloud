@@ -12,11 +12,11 @@ import { baseActions } from '../../../../../store/base';
 import { EventUtilService } from '../events.utils.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPDate, CPMap } from '../../../../../shared/utils';
+import { EventsComponent } from '../list/base/events.component';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   isAllDay,
-  EventType,
   CheckInMethod,
   EventFeedback,
   attendanceType,
@@ -43,7 +43,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
   templateUrl: './events-create.component.html',
   styleUrls: ['./events-create.component.scss']
 })
-export class EventsCreateComponent implements OnInit {
+export class EventsCreateComponent extends EventsComponent implements OnInit {
   @Input() storeId: number;
   @Input() isClub: boolean;
   @Input() clubId: number;
@@ -99,7 +99,9 @@ export class EventsCreateComponent implements OnInit {
     public storeService: StoreService,
     public errorService: ErrorService,
     public cpTracking: CPTrackingService
-  ) {}
+  ) {
+    super(session, cpI18n, service);
+  }
 
   buildHeader() {
     const payload = {
@@ -338,44 +340,13 @@ export class EventsCreateComponent implements OnInit {
     };
   }
 
-  getUrlPrefix(eventId) {
-    return this.utils.buildUrlPrefixEvents(this.getEventType(eventId));
-  }
+  getUrlPrefix(event_id) {
+    const eventType = {
+      ...this.getEventType(),
+      event_id
+    };
 
-  getEventType(event_id) {
-    if (this.isAthletic) {
-      return {
-        event_id,
-        event_type_id: this.clubId,
-        event_type: EventType.athletics
-      };
-
-    } else if (this.isClub) {
-      return {
-        event_id,
-        event_type_id: this.clubId,
-        event_type: EventType.club
-      };
-
-    } else if (this.isService) {
-      return {
-        event_id,
-        event_type_id: this.serviceId,
-        event_type: EventType.services
-      };
-
-    } else if (this.isOrientation) {
-      return {
-        event_id,
-        event_type_id: this.orientationId,
-        event_type: EventType.orientation
-      };
-    } else {
-      return {
-        event_id,
-        event_type: EventType.event
-      };
-    }
+    return this.utils.buildUrlPrefixEvents(eventType);
   }
 
   onEventFeedbackChange(option) {

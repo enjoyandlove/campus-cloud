@@ -12,11 +12,11 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from '../events.utils.service';
 import { CPDate, CPMap } from '../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../session';
+import { EventsComponent } from '../list/base/events.component';
 import { baseActions, IHeader } from '../../../../../store/base';
-import { BaseComponent } from '../../../../../base/base.component';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { CheckInMethod, EventAttendance, EventFeedback, EventType } from '../event.status';
+import { CheckInMethod, EventAttendance, EventFeedback } from '../event.status';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   RouteLevel,
@@ -37,7 +37,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
   templateUrl: './events-edit.component.html',
   styleUrls: ['./events-edit.component.scss']
 })
-export class EventsEditComponent extends BaseComponent implements OnInit {
+export class EventsEditComponent extends EventsComponent implements OnInit {
   @Input() storeId: number;
   @Input() isClub: boolean;
   @Input() clubId: number;
@@ -61,7 +61,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   selectedQRCode;
   loading = true;
   attendanceTypes;
-  isQrCodeEnabled;
   school: ISchool;
   eventId: number;
   form: FormGroup;
@@ -109,7 +108,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     public service: EventsService,
     public cpTracking: CPTrackingService
   ) {
-    super();
+    super(session, cpI18n, service);
     this.school = this.session.g.get('school');
     this.eventId = this.route.snapshot.params['eventId'];
 
@@ -571,51 +570,20 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     );
   }
 
-  getEventType() {
-    if (this.isAthletic) {
-      return {
-        event_id: this.eventId,
-        event_type_id: this.clubId,
-        event_type: EventType.athletics
-      };
-
-    } else if (this.isClub) {
-      return {
-        event_id: this.eventId,
-        event_type_id: this.clubId,
-        event_type: EventType.club
-      };
-
-    } else if (this.isService) {
-      return {
-        event_id: this.eventId,
-        event_type_id: this.storeId,
-        event_type: EventType.services
-      };
-
-    } else if (this.isOrientation) {
-      return {
-        event_id: this.eventId,
-        event_type_id: this.orientationId,
-        event_type: EventType.orientation
-      };
-    } else {
-      return {
-        event_id: this.eventId,
-        event_type: EventType.event
-      };
-    }
-  }
-
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('save'),
       class: 'primary'
     };
 
-    this.urlPrefix = this.utils.buildUrlPrefixEvents(this.getEventType());
+    const eventType = {
+      ...this.getEventType(),
+      event_id: this.eventId
+    };
 
-    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
+    this.urlPrefix = this.utils.buildUrlPrefixEvents(eventType);
+
+    this.checkInSource = this.utils.getCheckinSourcePage(eventType);
 
     this.dateFormat = FORMAT.DATETIME;
     this.attendanceEnabled = EventAttendance.enabled;

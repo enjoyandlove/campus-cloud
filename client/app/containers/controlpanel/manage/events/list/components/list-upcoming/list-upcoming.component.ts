@@ -5,10 +5,12 @@ import {
   canAccountLevelReadResource
 } from './../../../../../../../shared/utils/privileges/privileges';
 
+import { EventAttendance } from '../../../event.status';
+import { EventsService } from '../../../events.service';
 import { FORMAT } from '../../../../../../../shared/pipes';
-import { CPSession } from './../../../../../../../session/index';
+import { CPSession } from './../../../../../../../session';
+import { EventsComponent } from '../../base/events.component';
 import { EventUtilService } from '../../../events.utils.service';
-import { EventAttendance, EventType } from '../../../event.status';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
@@ -29,7 +31,7 @@ const sort = {
   templateUrl: './list-upcoming.component.html',
   styleUrls: ['./list-upcoming.component.scss']
 })
-export class ListUpcomingComponent implements OnInit {
+export class ListUpcomingComponent extends EventsComponent implements OnInit {
   @Input() state: any;
   @Input() events: any;
   @Input() isClub: boolean;
@@ -50,11 +52,14 @@ export class ListUpcomingComponent implements OnInit {
   attendanceEnabled = EventAttendance.enabled;
 
   constructor(
-    private session: CPSession,
-    private cpI18n: CPI18nService,
-    private utils: EventUtilService,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public service: EventsService,
+    public utils: EventUtilService,
     private cpTracking: CPTrackingService
-  ) {}
+  ) {
+    super(session, cpI18n, service);
+  }
 
   onDelete(event) {
     this.deleteEvent.emit(event);
@@ -99,23 +104,6 @@ export class ListUpcomingComponent implements OnInit {
       amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
       eventProperties
     );
-  }
-
-  getEventType() {
-    if (this.isAthletic) {
-      return { event_type: EventType.athletics };
-
-    } else if (this.isClub) {
-      return { event_type: EventType.club };
-
-    } else if (this.isService) {
-      return { event_type: EventType.services };
-
-    } else if (this.isOrientation) {
-      return { event_type: EventType.orientation };
-    } else {
-      return { event_type: EventType.event };
-    }
   }
 
   ngOnInit() {
