@@ -584,6 +584,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     this.amplitudeEventProperties = {
       ...this.amplitudeEventProperties,
+      audience_type: amplitudeEvents.CAMPUS_WIDE,
       sub_menu_name: amplitudeEvents.ANNOUNCEMENT,
       host_type
     };
