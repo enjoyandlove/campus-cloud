@@ -6,6 +6,7 @@ export const getSnackbarState = createSelector(getBaseState, (state: IBaseState)
 export const getHeaderState = createSelector(getBaseState, (state: IBaseState) => state.HEADER);
 export const getClubsState = createSelector(getBaseState, (state: IBaseState) => state.CLUBS);
 export const getAlertState = createSelector(getBaseState, (state: IBaseState) => state.ALERT);
+export const getAudienceState = createSelector(getBaseState, (state: IBaseState) => state.AUDIENCE);
 export const getEventsModalState = createSelector(
   getBaseState,
   (state: IBaseState) => state.EVENTS_MODAL
