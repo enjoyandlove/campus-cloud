@@ -50,6 +50,28 @@ export enum manageAdminMenu {
 export class TeamUtilsService {
   constructor(public cpI18n: CPI18nService) {}
 
+  hasStudio(schoolPrivileges) {
+    return CP_PRIVILEGES_MAP.app_customization in schoolPrivileges;
+  }
+
+  hasLimitedStudioAccess(schoolPrivileges) {
+    const athleticSchoolWide = CP_PRIVILEGES_MAP.athletics in schoolPrivileges;
+    const clubsSchoolWide = CP_PRIVILEGES_MAP.clubs in schoolPrivileges;
+    const eventsSchoolWide = CP_PRIVILEGES_MAP.events in schoolPrivileges;
+    const serviceSchoolWide = CP_PRIVILEGES_MAP.services in schoolPrivileges;
+    const calendarSchoolWide = CP_PRIVILEGES_MAP.calendar in schoolPrivileges;
+    const orientationSchoolWide = CP_PRIVILEGES_MAP.orientation in schoolPrivileges;
+
+    return (
+      athleticSchoolWide &&
+      clubsSchoolWide &&
+      eventsSchoolWide &&
+      serviceSchoolWide &&
+      calendarSchoolWide &&
+      orientationSchoolWide
+    );
+  }
+
   eventsDropdown(
     eventPrivilege = { r: false, w: false },
     eventAssessmentPrivilege = { r: false, w: false }

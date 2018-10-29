@@ -2295,6 +2295,9 @@
   "type": {
     "message": "Type"
   },
+  "t_admin_invite_studio_limited_tooltip": {
+    "message": "Full access to Studio requires permission to Athletics, Events, Clubs, Services, Calendar and Orientation. Your access to add resources will be limited without those permissions"
+  },
   "t_assess_all_orientations": {
     "message": "All Orientation Programs"
   },
@@ -2894,6 +2897,9 @@
   "t_services_label_checkout_time": {
     "message": "Check-out"
   },
+  "t_services_no_service_provider_found": {
+    "message": "No Service Provider Found"
+  },
   "t_services_service_qr_enabled": {
     "message": "QR Code"
   },
@@ -2956,6 +2962,9 @@
   },
   "t_shared_label_location_toggle": {
     "message": "Set Location"
+  },
+  "t_shared_limited": {
+    "message": "Limited"
   },
   "t_shared_preview": {
     "message": "Preview"

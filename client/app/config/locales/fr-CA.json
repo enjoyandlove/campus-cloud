@@ -2954,6 +2954,9 @@
   "t_shared_label_location_toggle": {
     "message": "Ajouter un lieu"
   },
+  "t_shared_limited": {
+    "message": "Limité"
+  },
   "t_shared_preview": {
     "message": "Aperçu"
   },

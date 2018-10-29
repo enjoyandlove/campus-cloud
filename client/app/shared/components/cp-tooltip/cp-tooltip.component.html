@@ -1,11 +1,14 @@
-<ng-template #tooltipTemplate><div [innerHtml]="content"></div></ng-template>
-<button 
-  type="button" 
+<ng-template #tooltipTemplate>
+  <div [innerHtml]="content"></div>
+</ng-template>
+<button
+  type="button"
   [outsideClick]="true"
-  [triggers]="triggers"  
+  [triggers]="triggers"
   [placement]="placement"
   [popover]="tooltipTemplate"
-  class="cpbtn cpbtn--link">
+  class="cpbtn cpbtn--link"
+  [ngClass]="{'danger': toolTipContent.textClass === 'danger'}">
   <ng-container *ngIf="toolTipContent.text">{{toolTipContent.text}}</ng-container>
   <i class="material-icons" *ngIf="!toolTipContent.text">info_outline</i>
 </button>
