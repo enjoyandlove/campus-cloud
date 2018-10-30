@@ -241,7 +241,7 @@ describe('PersonasTileEditComponent', () => {
     expect(component.campusGuideTileForm.reset).toHaveBeenCalled();
   });
 
-  fit('should create forms', () => {
+  it('should create forms', () => {
     expect(component.campusLinkForm).not.toBeDefined();
     expect(component.campusGuideTileForm).not.toBeDefined();
 
@@ -253,7 +253,7 @@ describe('PersonasTileEditComponent', () => {
     expect(component.editable).toBe(true);
   });
 
-  fit('should set editable false', () => {
+  it('should set editable false', () => {
     component.route.snapshot.params.tileId = 12942;
     fixture.detectChanges();
     component.buildForm();
