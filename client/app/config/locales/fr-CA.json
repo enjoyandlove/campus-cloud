@@ -2678,6 +2678,9 @@
   "t_personas_edit_submit_button": {
     "message": "Enregistrer les changements"
   },
+  "t_personas_edit_tile_locked": {
+    "message": "To make changes to the content of this tile reach out to your customer success representative or contact us through our helpdesk."
+  },
   "t_personas_form_delete_button": {
     "message": "Supprimer expérience"
   },
@@ -2953,6 +2956,9 @@
   },
   "t_shared_label_location_toggle": {
     "message": "Ajouter un lieu"
+  },
+  "t_shared_limited": {
+    "message": "Limité"
   },
   "t_shared_preview": {
     "message": "Aperçu"
