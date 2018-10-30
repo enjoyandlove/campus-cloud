@@ -43,19 +43,22 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
   loading;
   eventData;
+  hasRecords;
   sortingLabels;
   eventProperties;
+  noProviderMessage;
   deleteProvider = '';
   state: IState = state;
   provider: IServiceProvider;
   displayRatingColumn = true;
+  noProviderAddProviderMessage;
   showEditProviderModal = false;
 
   constructor(
     private cpI18n: CPI18nService,
     private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
-    private providersService: ProvidersService
+    public providersService: ProvidersService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -99,7 +102,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.fetch();
   }
 
-  fetch() {
+  fetch(setHasRecords = false) {
     const search = new HttpParams()
       .append('end', this.state.end)
       .append('start', this.state.start)
@@ -113,6 +116,10 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       .then((res) => {
         this.state = Object.assign({}, this.state, { providers: res.data });
         this.hasProviders.emit(res.data.length > 0);
+
+        if (setHasRecords) {
+          this.hasRecords = res.data.length > 0;
+        }
       });
   }
 
@@ -121,6 +128,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       providers: this.state.providers.filter((provider) => provider.id !== providerId)
     });
 
+    this.hasRecords = !!this.state.providers.length;
     this.hasProviders.emit(this.state.providers.length > 0);
   }
 
@@ -211,7 +219,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   }
 
   ngOnInit() {
-    this.fetch();
+    this.fetch(true);
     this.trackProviderViewEvent();
 
     this.sortingLabels = {
@@ -220,5 +228,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     };
 
     this.displayRatingColumn = this.service.service_attendance === ServiceAttendance.enabled;
+    this.noProviderMessage = this.cpI18n.translate('t_services_no_service_provider_found');
+    this.noProviderAddProviderMessage = this.cpI18n.translate('services_providers_no_results');
   }
 }
