@@ -2894,6 +2894,9 @@
   "t_services_label_checkout_time": {
     "message": "Check-out"
   },
+  "t_services_no_service_provider_found": {
+    "message": "No Service Provider Found"
+  },
   "t_services_service_qr_enabled": {
     "message": "QR Code"
   },

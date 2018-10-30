@@ -4,7 +4,7 @@
   <div *ngSwitchCase="false">
     <cp-no-content
       *ngIf="!state.providers.length"
-      [noContentText]="cpI18n.translate('services_providers_no_results')">
+      [noContentText]="hasRecords ? noProviderMessage : noProviderAddProviderMessage">
     </cp-no-content>
 
     <ng-container *ngIf="state.providers.length">
