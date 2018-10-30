@@ -1,14 +1,13 @@
-import { PersonasUtilsService } from './../../personas.utils.service';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
+import mockSection from './mock';
 import { TilesService } from '../tiles.service';
-import { mockSection } from './../../sections/__mock__';
 import { CPSession } from './../../../../../../session';
 import { PersonasTilesModule } from './../tiles.module';
 import { PersonasService } from '../../personas.service';
@@ -18,6 +17,7 @@ import { mockPersonas } from './../../__mock__/personas.mock';
 import { CPI18nService } from '../../../../../../shared/services';
 import { SectionsService } from '../../sections/sections.service';
 import { mockSchool } from './../../../../../../session/mock/school';
+import { PersonasUtilsService } from './../../personas.utils.service';
 import { baseActions } from './../../../../../../store/base/reducers';
 import { SectionUtilsService } from '../../sections/section.utils.service';
 
@@ -241,7 +241,7 @@ describe('PersonasTileEditComponent', () => {
     expect(component.campusGuideTileForm.reset).toHaveBeenCalled();
   });
 
-  it('should create forms', () => {
+  fit('should create forms', () => {
     expect(component.campusLinkForm).not.toBeDefined();
     expect(component.campusGuideTileForm).not.toBeDefined();
 
@@ -250,6 +250,15 @@ describe('PersonasTileEditComponent', () => {
 
     expect(component.campusLinkForm).toBeDefined();
     expect(component.campusGuideTileForm).toBeDefined();
+    expect(component.editable).toBe(true);
+  });
+
+  fit('should set editable false', () => {
+    component.route.snapshot.params.tileId = 12942;
+    fixture.detectChanges();
+    component.buildForm();
+
+    expect(component.editable).toBe(false);
   });
 
   it('should display alert snackbar', () => {
