@@ -4,6 +4,7 @@ import { FeedsUtilsService } from '../../../feeds.utils.service';
 import { CPHostDirective } from '../../../../../../../shared/directives';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 
 @Component({
   selector: 'cp-feed-body',
@@ -14,6 +15,7 @@ export class FeedBodyComponent implements OnInit {
   @Input() feed: any;
   @Input() clubId: number;
   @Input() replyView: number;
+  @Input() isComment: boolean;
   @Input() athleticId: number;
   @Input() orientationId: number;
   @Input() isRemovedPosts: boolean;
@@ -30,6 +32,8 @@ export class FeedBodyComponent implements OnInit {
     wall_page: null,
     upload_image: null
   };
+
+  viewImageEventData;
 
   constructor(
     public cpI18n: CPI18nService,
@@ -56,5 +60,23 @@ export class FeedBodyComponent implements OnInit {
     return feedImages.map((imgObj) => imgObj.url);
   }
 
-  ngOnInit() {}
+  trackViewLightBoxEvent() {
+    const eventProperties = {
+      likes: this.utils.hasLikes(this.feed.likes),
+      post_id: this.isComment ? null : this.feed.id,
+      comment_id: this.isComment ? this.feed.id : null,
+      message_type: this.isComment ? amplitudeEvents.COMMENT : amplitudeEvents.POST,
+      wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
+    };
+
+    this.viewImageEventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.WALL_CLICKED_IMAGE,
+      eventProperties: eventProperties
+    };
+  }
+
+  ngOnInit() {
+    this.trackViewLightBoxEvent();
+  }
 }
