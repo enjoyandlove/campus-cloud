@@ -15,18 +15,9 @@
 
         <button
           type="button"
-          *ngIf="editable"
           (click)="editClick.emit()">
           <i class="material-icons">edit</i>
           <span>{{'t_shared_edit' | cpI18n}}</span>
-        </button>
-
-        <button
-          disabled
-          type="button"
-          *ngIf="!editable">
-          <i class="material-icons">lock</i>
-          <span>{{'t_tile_button_locked' | cpI18n}}</span>
         </button>
 
         <button

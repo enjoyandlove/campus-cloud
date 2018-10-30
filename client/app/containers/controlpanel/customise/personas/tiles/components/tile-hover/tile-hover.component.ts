@@ -7,7 +7,6 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 })
 export class PersonasTileHoverComponent implements OnInit {
   @Input() visible;
-  @Input() editable;
   @Input() defaultTile: boolean;
 
   @Output() editClick: EventEmitter<null> = new EventEmitter();
