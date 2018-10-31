@@ -4,7 +4,7 @@ import { CP_PRIVILEGES_MAP } from './../../../../shared/constants/privileges';
 
 const privilegeSet = { r: true, w: true };
 
-fdescribe('TeamUtilsService', () => {
+describe('TeamUtilsService', () => {
   let service: TeamUtilsService;
 
   beforeEach(() => {
