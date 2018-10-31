@@ -19,7 +19,11 @@
           <p class="title">
             {{ 't_personas_create_tile_heading_right' | cpI18n }}
           </p>
+          <div *ngIf="!editable">
+            {{ 't_personas_edit_tile_locked' | cpI18n }}
+          </div>
           <cp-personas-resource-form
+            *ngIf="editable"
             [tile]="tile"
             editView="true"
             [persona]="persona"
