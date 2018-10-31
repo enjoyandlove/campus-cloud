@@ -54,7 +54,7 @@ export class TeamUtilsService {
     return CP_PRIVILEGES_MAP.app_customization in schoolPrivileges;
   }
 
-  hasLimitedStudioAccess(schoolPrivileges) {
+  hasFullStudioPrivilege(schoolPrivileges) {
     const athleticSchoolWide = CP_PRIVILEGES_MAP.athletics in schoolPrivileges;
     const clubsSchoolWide = CP_PRIVILEGES_MAP.clubs in schoolPrivileges;
     const eventsSchoolWide = CP_PRIVILEGES_MAP.events in schoolPrivileges;

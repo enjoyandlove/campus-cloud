@@ -252,7 +252,7 @@
               </div>
 
               <div
-                class="col-4 with_toolip"
+                class="col-4 admin_studio_tooltip"
                 [class.isDisabled]="!formData.content.appCustomizaton.active">
                 <cp-checkbox
                   class="cpcheckbox"
@@ -263,7 +263,7 @@
                 </cp-checkbox>
                 <cp-tooltip
                   [toolTipContent]="studioLimitedTooltip"
-                  *ngIf="utils.hasStudio(schoolPrivileges) && !utils.hasLimitedStudioAccess(schoolPrivileges)">
+                  *ngIf="utils.hasStudio(schoolPrivileges) && !utils.hasFullStudioPrivilege(schoolPrivileges)">
                 </cp-tooltip>
               </div>
 

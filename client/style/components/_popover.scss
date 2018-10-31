@@ -2,9 +2,15 @@
 
 $content_bg: rgba(0, 0, 0, 0.8);
 
-.with_toolip popover-container {
-  width: 400px;
-  max-width: 400px;
+.admin_studio_tooltip {
+  cp-tooltip button {
+    text-decoration: underline;
+  }
+
+  popover-container {
+    width: 400px;
+    max-width: 400px;
+  }
 }
 
 .popover-content {
