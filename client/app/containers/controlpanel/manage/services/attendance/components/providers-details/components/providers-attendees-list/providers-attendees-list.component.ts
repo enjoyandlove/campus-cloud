@@ -186,19 +186,21 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   onCreated(checkedInData: ICheckIn) {
     this.isAddCheckInModal = false;
     this.fetch();
-    this.trackAddEditCheckInEvent(checkedInData);
+    this.trackAddEditDeleteCheckInEvent(checkedInData.check_out_time_epoch);
   }
 
   onEdited(editedCheckIn: ICheckIn) {
     this.checkInData = null;
     this.isEditCheckInModal = false;
     this.fetch();
-    this.trackAddEditCheckInEvent(editedCheckIn, true);
+    this.trackAddEditDeleteCheckInEvent(editedCheckIn.check_out_time_epoch, true);
   }
 
   onDeleted(id: number) {
     this.checkInData = null;
     this.isDeleteCheckInModal = false;
+
+    this.trackAddEditDeleteCheckInEvent(null, false, true);
 
     this.assessments = this.assessments.filter((attendee) => attendee.id !== id);
 
@@ -220,7 +222,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   trackQrCodeEvent() {
     const eventProperties = {
       ...this.eventUtils.getQRCodeCheckOutStatus(this.provider),
-      check_in_type: amplitudeEvents.SERVICE_PROVIDER,
+      assessment_type: amplitudeEvents.SERVICE_PROVIDER,
       source_id: this.provider.encrypted_campus_service_id,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
     };
@@ -241,18 +243,24 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
   }
 
-  trackAddEditCheckInEvent(checkedInData, isEdit = false) {
-    const eventName = isEdit
-      ? amplitudeEvents.MANAGE_UPDATED_CHECK_IN
-      : amplitudeEvents.MANAGE_ADDED_CHECK_IN;
+  trackAddEditDeleteCheckInEvent(checkOutTime, isEdit = false, isDelete = false) {
+    let eventName = isEdit
+      ? amplitudeEvents.MANAGE_UPDATED_ATTENDANCE
+      : amplitudeEvents.MANAGE_ADDED_ATTENDANCE;
+
+    eventName = isDelete ? amplitudeEvents.MANAGE_DELETED_ATTENDANCE : eventName;
 
     const eventProperties = {
       ...this.eventUtils.getQRCodeCheckOutStatus(this.provider),
-      check_in_type: amplitudeEvents.SERVICE_PROVIDER,
+      assessment_type: amplitudeEvents.SERVICE_PROVIDER,
       source_id: this.provider.encrypted_campus_service_id,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
-      check_out: checkedInData.check_out_time_epoch > 0 ? CheckOut.yes : CheckOut.no
+      check_out: checkOutTime > 0 ? CheckOut.yes : CheckOut.no,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
+
+    if (isDelete) {
+      delete eventProperties['check_out'];
+    }
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }

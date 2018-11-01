@@ -95,13 +95,12 @@ export class ListUpcomingComponent extends EventsComponent implements OnInit {
   trackCheckinEvent(source_id) {
     const eventProperties = {
       source_id,
-      check_in_type: this.checkInSource.check_in_type,
-      check_in_source: amplitudeEvents.UPCOMING_EVENT,
+      assessment_type: this.checkInSource.assessment_type,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
+      amplitudeEvents.MANAGE_CC_WEB_CHECK_IN,
       eventProperties
     );
   }

@@ -356,14 +356,14 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   onCreated(checkedInData: ICheckIn) {
     this.isAddCheckInModal = false;
     this.fetchAttendees();
-    this.trackAddEditCheckInEvent(checkedInData);
+    this.trackAddEditDeleteCheckInEvent(checkedInData.check_out_time_epoch);
   }
 
   onEdited(editedCheckIn: ICheckIn) {
     this.checkInData = null;
     this.isEditCheckInModal = false;
     this.fetchAttendees();
-    this.trackAddEditCheckInEvent(editedCheckIn, true);
+    this.trackAddEditDeleteCheckInEvent(editedCheckIn.check_out_time_epoch, true);
   }
 
   onDeleted(id: number) {
@@ -371,6 +371,8 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.isDeleteCheckInModal = false;
 
     this.attendees = this.attendees.filter((attendee) => attendee.id !== id);
+
+    this.trackAddEditDeleteCheckInEvent(null, false, true);
 
     if (this.attendees.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
@@ -442,29 +444,34 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   onTrackClickCheckinEvent(source_id) {
     const eventProperties = {
       source_id,
-      check_in_source: amplitudeEvents.ASSESSMENT,
-      check_in_type: this.checkInSource.check_in_type,
+      assessment_type: this.checkInSource.assessment_type,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
+      amplitudeEvents.MANAGE_CC_WEB_CHECK_IN,
       eventProperties
     );
   }
 
-  trackAddEditCheckInEvent(checkedInData, isEdit = false) {
-    const eventName = isEdit
-      ? amplitudeEvents.MANAGE_UPDATED_CHECK_IN
-      : amplitudeEvents.MANAGE_ADDED_CHECK_IN;
+  trackAddEditDeleteCheckInEvent(checkOutTime, isEdit = false, isDelete = false) {
+    let eventName = isEdit
+      ? amplitudeEvents.MANAGE_UPDATED_ATTENDANCE
+      : amplitudeEvents.MANAGE_ADDED_ATTENDANCE;
+
+    eventName = isDelete ? amplitudeEvents.MANAGE_DELETED_ATTENDANCE : eventName;
 
     const eventProperties = {
       ...this.utils.getQRCodeCheckOutStatus(this.event, true),
       source_id: this.event.encrypted_id,
-      check_in_type: this.checkInSource.check_in_type,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
-      check_out: checkedInData.check_out_time_epoch > 0 ? CheckOut.yes : CheckOut.no
+      assessment_type: this.checkInSource.assessment_type,
+      check_out: checkOutTime > 0 ? CheckOut.yes : CheckOut.no,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
+
+    if (isDelete) {
+      delete eventProperties['check_out'];
+    }
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
@@ -473,7 +480,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     const eventProperties = {
       ...this.utils.getQRCodeCheckOutStatus(event, true),
       source_id: this.event.encrypted_id,
-      check_in_type: this.checkInSource.check_in_type,
+      assessment_type: this.checkInSource.assessment_type,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 

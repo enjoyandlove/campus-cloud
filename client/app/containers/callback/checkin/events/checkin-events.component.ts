@@ -54,7 +54,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   onSubmit(data) {
     this.checkinService.doEventCheckin(data, this.search).subscribe(
       (res) => {
-        this.trackCheckedInEvent(res);
+        this.trackCheckedInEvent();
         this.updateAttendeesList(data, res);
       },
       (err) => this.handleError(err.status)
@@ -70,7 +70,6 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
     const eventProperties = this.utils.getCheckedInEventProperties(
       this.eventId,
       this.state.events,
-      event.attendance_id,
       this.checkInSource,
       true
     );
@@ -78,7 +77,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
     delete eventProperties.check_out_status;
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CHECKED_OUT,
+      amplitudeEvents.MANAGE_ADDED_WEB_CHECK_OUT,
       eventProperties
     );
   }
@@ -132,26 +131,25 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   trackLoadCheckInEvent() {
     const eventProperties = {
       source_id: this.eventId,
-      check_in_type: this.utils.getCheckInSource(this.checkInSource)
+      assessment_type: this.utils.getCheckInSource(this.checkInSource)
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_LOADED_WEB_CHECK_IN,
+      amplitudeEvents.MANAGE_EMAIL_WEB_CHECK_IN,
       eventProperties
     );
   }
 
-  trackCheckedInEvent(response) {
+  trackCheckedInEvent() {
     const eventProperties = this.utils.getCheckedInEventProperties(
       this.eventId,
       this.state.events,
-      response.attendance_id,
       this.checkInSource,
       true
     );
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CHECKED_IN,
+      amplitudeEvents.MANAGE_ADDED_WEB_CHECK_IN,
       eventProperties
     );
   }

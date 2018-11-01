@@ -559,7 +559,7 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
     const eventProperties = {
       ...this.utils.getQRCodeCheckOutStatus(event, true),
       source_id: this.event.encrypted_id,
-      check_in_type: this.checkInSource.check_in_type,
+      assessment_type: this.checkInSource.assessment_type,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 

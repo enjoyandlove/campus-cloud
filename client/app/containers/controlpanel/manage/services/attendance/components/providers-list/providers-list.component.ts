@@ -162,13 +162,12 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   trackCheckinEvent(source_id) {
     const eventProperties = {
       source_id,
-      check_in_source: amplitudeEvents.ASSESSMENT,
-      check_in_type: amplitudeEvents.SERVICE_PROVIDER,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      assessment_type: amplitudeEvents.SERVICE_PROVIDER,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.third)
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
+      amplitudeEvents.MANAGE_CC_WEB_CHECK_IN,
       eventProperties
     );
   }

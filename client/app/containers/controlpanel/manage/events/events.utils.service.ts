@@ -118,27 +118,27 @@ export class EventUtilService {
     if (eventType.event_type === EventType.athletics) {
       return {
         source_page: CheckInSource.athletics,
-        check_in_type: amplitudeEvents.ATHLETIC_EVENT
+        assessment_type: amplitudeEvents.ATHLETIC_EVENT
       };
     } else if (eventType.event_type === EventType.services) {
       return {
         source_page: CheckInSource.services,
-        check_in_type: amplitudeEvents.SERVICE_EVENT
+        assessment_type: amplitudeEvents.SERVICE_EVENT
       };
     } else if (eventType.event_type === EventType.club) {
       return {
         source_page: CheckInSource.club,
-        check_in_type: amplitudeEvents.CLUB_EVENT
+        assessment_type: amplitudeEvents.CLUB_EVENT
       };
     } else if (eventType.event_type === EventType.orientation) {
       return {
         source_page: CheckInSource.orientation,
-        check_in_type: amplitudeEvents.ORIENTATION_EVENT
+        assessment_type: amplitudeEvents.ORIENTATION_EVENT
       };
     } else {
       return {
         source_page: CheckInSource.events,
-        check_in_type: amplitudeEvents.INSTITUTION_EVENT
+        assessment_type: amplitudeEvents.INSTITUTION_EVENT
       };
     }
   }

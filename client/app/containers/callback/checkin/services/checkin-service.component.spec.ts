@@ -57,7 +57,6 @@ describe('CheckinServiceComponent', () => {
 
   describe('CheckinServiceComponent', () => {
     let spy;
-    let userId;
     let services;
     let sourceId;
     let checkInSource;
@@ -75,7 +74,6 @@ describe('CheckinServiceComponent', () => {
     });
 
     it('trackCheckedInEvent', () => {
-      userId = 452;
       sourceId = 8874;
       checkInSource = CheckInSource.services;
       services = {
@@ -86,17 +84,14 @@ describe('CheckinServiceComponent', () => {
       eventProperties = component.utils.getCheckedInEventProperties(
         sourceId,
         services,
-        userId,
         checkInSource
       );
 
-      expect(eventProperties.user_id).toEqual(userId);
       expect(eventProperties.source_id).toEqual(sourceId);
       expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.ENABLED);
       expect(eventProperties.check_out_status).toEqual(amplitudeEvents.DISABLED);
-      expect(eventProperties.check_in_type).toEqual(amplitudeEvents.SERVICE_PROVIDER);
+      expect(eventProperties.assessment_type).toEqual(amplitudeEvents.SERVICE_PROVIDER);
 
-      userId = 154;
       sourceId = 8547;
       checkInSource = CheckInSource.events;
       services = {
@@ -107,16 +102,14 @@ describe('CheckinServiceComponent', () => {
       eventProperties = component.utils.getCheckedInEventProperties(
         sourceId,
         services,
-        userId,
         checkInSource,
         true
       );
 
-      expect(eventProperties.user_id).toEqual(userId);
       expect(eventProperties.source_id).toEqual(sourceId);
       expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.DISABLED);
       expect(eventProperties.check_out_status).toEqual(amplitudeEvents.ENABLED);
-      expect(eventProperties.check_in_type).toEqual(amplitudeEvents.INSTITUTION_EVENT);
+      expect(eventProperties.assessment_type).toEqual(amplitudeEvents.INSTITUTION_EVENT);
     });
 
     it('onSubmit', () => {

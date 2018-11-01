@@ -46,12 +46,12 @@ export class CheckinUtilsService {
     }
   }
 
-  getCheckedInEventProperties(source_id, events, user_id, checkInSource, isEvent = false) {
+  getCheckedInEventProperties(source_id, events, checkInSource, isEvent = false) {
     const verificationMethod = isEvent
       ? events['attend_verification_methods']
       : events['checkin_verification_methods'];
 
-    const check_in_type = isEvent
+    const assessment_type = isEvent
       ? this.getCheckInSource(checkInSource)
       : amplitudeEvents.SERVICE_PROVIDER;
 
@@ -64,14 +64,13 @@ export class CheckinUtilsService {
         : amplitudeEvents.DISABLED;
 
     const access_type = checkInSource
-      ? amplitudeEvents.CLICKED_CHECK_IN
-      : amplitudeEvents.LOADED_CHECK_IN;
+      ? amplitudeEvents.CC_WEB_CHECK_IN
+      : amplitudeEvents.EMAIL_WEB_CHECK_IN;
 
     return {
-      user_id,
       source_id,
       access_type,
-      check_in_type,
+      assessment_type,
       qr_code_status,
       check_out_status
     };

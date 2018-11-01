@@ -61,8 +61,6 @@ export const amplitudeEvents = {
 
   EXECUTIVE: 'Executive',
 
-  INFO_PAGE: 'Info Page',
-
   EXPERIENCE: 'Experience',
 
   ATHLETICS: 'Athletics',
@@ -129,9 +127,7 @@ export const amplitudeEvents = {
 
   CHANGED_SCHOOL: 'Changed School',
 
-  LOADED_CHECK_IN: 'Loaded Check-In',
-
-  CLICKED_CHECK_IN: 'Clicked Check-In',
+  CC_WEB_CHECK_IN: 'CC Web Check-In',
 
   DYNAMIC_AUDIENCE: 'Dynamic Audience',
 
@@ -153,9 +149,7 @@ export const amplitudeEvents = {
 
   INSTITUTION_EVENT: 'Institution Event',
 
-  MANAGE_CHECKED_IN: 'Manage - Checked In',
-
-  MANAGE_CHECKED_OUT: 'Manage - Checked Out',
+  EMAIL_WEB_CHECK_IN: 'Email Web Check-In',
 
   WALL_DELETED_POST: 'Wall - Deleted Post',
 
@@ -207,8 +201,6 @@ export const amplitudeEvents = {
 
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
 
-  MANAGE_ADDED_CHECK_IN: 'Manage - Added Check-In',
-
   MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
 
   MANAGE_CHANGED_QR_CODE: 'Manage - Changed QR Code',
@@ -219,11 +211,13 @@ export const amplitudeEvents = {
 
   WALL_SUBMITTED_COMMENT: 'Wall - Submitted Comment',
 
-  MANAGE_UPDATED_CHECK_IN: 'Manage - Updated Check-In',
+  AUDIENCE_DOWNLOAD_DATA: 'Audience - Downloaded Data',
+
+  MANAGE_ADDED_ATTENDANCE: 'Manage - Added Attendance',
 
   NOTIFY_CREATED_TEMPLATE: 'Notify - Created Template',
 
-  MANAGE_SENT_ANNOUNCEMENT: 'Menage - Sent Announcement',
+  MANAGE_SENT_ANNOUNCEMENT: 'Manage - Sent Announcement',
 
   ASSESS_SENT_ANNOUNCEMENT: 'Assess - Sent Announcement',
 
@@ -232,6 +226,8 @@ export const amplitudeEvents = {
   MANAGE_UPDATED_SERVICE: 'Manage - Updated Service',
 
   MANAGE_CREATED_LOCATION: 'Manage - Created Location',
+
+  MANAGE_CC_WEB_CHECK_IN: 'Manage - CC  Web Check-In',
 
   MANAGE_CREATED_CALENDAR: 'Manage - Created Calendar',
 
@@ -243,13 +239,21 @@ export const amplitudeEvents = {
 
   NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
 
+  MANAGE_DELETED_ATTENDANCE: 'Manage - Deleted Attendance',
+
   MANAGE_DOWNLOADED_QR_CODE: 'Manage - Downloaded QR Code',
+
+  MANAGE_EMAIL_WEB_CHECK_IN: 'Manage - Email Web Check-In',
+
+  MANAGE_ADDED_WEB_CHECK_IN: 'Manage - Added Web Check-In',
+
+  MANAGE_UPDATED_ATTENDANCE: 'Manage - Updated Attendance',
+
+  MANAGE_ADDED_WEB_CHECK_OUT: 'Manage - Added Web Check-Out',
 
   MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
 
-  MANAGE_LOADED_WEB_CHECK_IN: 'Manage - Loaded Web Check-In',
-
-  MANAGE_CLICKED_WEB_CHECK_IN: 'Manage - Clicked Web Check-In',
+  MANAGE_DOWNLOAD_MEMBER_DATA: 'Manage - Downloaded Member Data',
 
   MANAGE_UPDATED_CALENDAR_EVENT: 'Manage - Updated Calendar Event',
 
