@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from './../../../../../session';
@@ -11,32 +12,28 @@ import { DashboardService } from './../../dashboard.service';
   styleUrls: ['./dashboard-general-information.component.scss']
 })
 export class DashboardGeneralInformationComponent extends BaseComponent implements OnInit {
-  @Output() ready: EventEmitter<boolean> = new EventEmitter();
+  @Input() personas;
 
   data;
-  _dates = null;
-
-  @Input()
-  set dates(dates) {
-    this._dates = dates;
-    this.fetch();
-  }
-
   loading;
+  selectedPersona;
 
-  constructor(private session: CPSession, private service: DashboardService) {
+  constructor(
+    private session: CPSession,
+    public route: ActivatedRoute,
+    private service: DashboardService
+  ) {
     super();
     super.isLoading().subscribe((loading) => {
       this.loading = loading;
-      this.ready.emit(!this.loading);
     });
   }
 
-  fetch(personaId = null) {
+  fetch(start, end, persona_id) {
     const search = new HttpParams()
-      .append('end', this._dates.end)
-      .append('start', this._dates.start)
-      .append('persona_id', personaId)
+      .append('end', end)
+      .append('start', start)
+      .append('persona_id', persona_id)
       .append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getGeneralInformation(search);
@@ -46,10 +43,10 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
     });
   }
 
-  onExperienceSelected(personaId) {
-    console.log('i want to fetch with', personaId, 'loading?', this.loading);
-    // this.fetch(personaId);
+  ngOnInit() {
+    this.route.queryParams.subscribe(({ start, end, gen_info_exp_id }) => {
+      this.selectedPersona = this.personas.filter((p) => p.action === +gen_info_exp_id)[0];
+      this.fetch(start, end, gen_info_exp_id);
+    });
   }
-
-  ngOnInit() {}
 }

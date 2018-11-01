@@ -35,7 +35,7 @@ export class DashboardService extends HTTPService {
   }
 
   getPersonas(search: HttpParams): Observable<any> {
-    const defaultValue = { label: 'Select an Experience', id: null };
+    const defaultValue = { label: 'Select an Experience', id: null, heading: true };
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/1;1000`;
 
     return super.get(url, search).pipe(
@@ -48,9 +48,11 @@ export class DashboardService extends HTTPService {
           };
         };
 
-        return [defaultValue, ...data.filter((p) => p.id).map(parsePersona)];
-      }),
-      map((parsedPersonas) => sortBy(parsedPersonas, (p: any) => p.label.toLowerCase()))
+        const parsedPersonas = data.filter((p) => p.id).map(parsePersona);
+        const sortedPersonas = sortBy(parsedPersonas, (p: any) => p.label.toLowerCase());
+
+        return [defaultValue, ...sortedPersonas];
+      })
     );
   }
 

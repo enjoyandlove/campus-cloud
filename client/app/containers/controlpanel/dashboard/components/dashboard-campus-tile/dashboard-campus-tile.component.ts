@@ -1,8 +1,10 @@
+import { Component, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { DashboardService } from './../../dashboard.service';
-import { BaseComponent } from '../../../../../base';
+
 import { CPSession } from '../../../../../session';
+import { BaseComponent } from '../../../../../base';
+import { DashboardService } from './../../dashboard.service';
 
 @Component({
   selector: 'cp-dashboard-campus-tile',
@@ -10,31 +12,29 @@ import { CPSession } from '../../../../../session';
   styleUrls: ['./dashboard-campus-tile.component.scss']
 })
 export class DashboardCampuTileComponent extends BaseComponent implements OnInit {
-  @Output() ready: EventEmitter<boolean> = new EventEmitter();
+  @Input() personas;
 
-  _dates;
   loading;
   items = [];
+  selectedPersona;
   defaultImage = require('public/default/user.png');
 
-  @Input()
-  set dates(dates) {
-    this._dates = dates;
-    this.fetch();
-  }
-
-  constructor(private session: CPSession, private service: DashboardService) {
+  constructor(
+    private session: CPSession,
+    private service: DashboardService,
+    public route: ActivatedRoute
+  ) {
     super();
     super.isLoading().subscribe((loading) => {
       this.loading = loading;
-      this.ready.emit(!this.loading);
     });
   }
 
-  fetch() {
+  fetch(start, end, experience_id) {
     const search = new HttpParams()
-      .set('end', this._dates.end)
-      .set('start', this._dates.start)
+      .set('end', end)
+      .set('start', start)
+      .set('experience_id', experience_id)
       .set('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getCampusTile(search);
@@ -42,5 +42,10 @@ export class DashboardCampuTileComponent extends BaseComponent implements OnInit
     super.fetchData(stream$).then((res) => (this.items = res.data));
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.route.queryParams.subscribe(({ start, end, c_activity_exp_id }) => {
+      this.selectedPersona = this.personas.filter((p) => p.action === +c_activity_exp_id)[0];
+      this.fetch(start, end, c_activity_exp_id);
+    });
+  }
 }

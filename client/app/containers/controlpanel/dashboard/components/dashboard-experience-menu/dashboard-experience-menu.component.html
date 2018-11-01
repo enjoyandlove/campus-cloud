@@ -1,4 +1,5 @@
 <cp-dropdown
-  [items]="experiences$ | async"
-  (selected)="selected.emit($event.action)">
+  [items]="personas"
+  (selected)="onSelected($event)"
+  [selectedItem]="selectedPersona">
 </cp-dropdown>

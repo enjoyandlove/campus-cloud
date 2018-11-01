@@ -7,7 +7,11 @@
           <p class="tile--title">{{ 'dashboard_campus_tile_title' | cpI18n }}</p>
         </div>
         <div class="col-5">
-          <cp-dashboard-experience-menu></cp-dashboard-experience-menu>
+          <cp-dashboard-experience-menu
+            [personas]="personas"
+            paramName="c_activity_exp_id"
+            [selectedPersona]="selectedPersona">
+          </cp-dashboard-experience-menu>
         </div>
       </div>
 
