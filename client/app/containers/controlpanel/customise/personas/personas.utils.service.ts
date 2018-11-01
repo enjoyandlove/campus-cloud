@@ -121,11 +121,11 @@ export class PersonasUtilsService {
     return [
       {
         id: PersonasType.mobile,
-        label: this.cpI18n.translate('t_personas_form_dropdown_platform_mobile')
+        label: this.cpI18n.translate('t_personas_platform_mobile')
       },
       {
         id: PersonasType.web,
-        label: this.cpI18n.translate('t_personas_form_dropdown_platform_web')
+        label: this.cpI18n.translate('t_personas_platform_web')
       }
     ];
   }

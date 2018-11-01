@@ -14,7 +14,7 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   data;
-  _dates;
+  _dates = null;
 
   @Input()
   set dates(dates) {
@@ -32,17 +32,24 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
     });
   }
 
-  fetch() {
+  fetch(personaId = null) {
     const search = new HttpParams()
       .append('end', this._dates.end)
       .append('start', this._dates.start)
+      .append('persona_id', personaId)
       .append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getGeneralInformation(search);
-    super.fetchData(stream$).then((res) => (this.data = res.data));
+
+    super.fetchData(stream$).then((res) => {
+      this.data = res.data;
+    });
   }
 
-  ngOnInit() {
-    this.fetch();
+  onExperienceSelected(personaId) {
+    console.log('i want to fetch with', personaId, 'loading?', this.loading);
+    // this.fetch(personaId);
   }
+
+  ngOnInit() {}
 }

@@ -3,8 +3,13 @@
 
   <div class="tile" *ngSwitchCase="false">
     <div class="row">
-      <div class="col-12">
+      <div class="col-7">
         <p class="tile--title">{{ 'dashboard_general_information' | cpI18n }}</p>
+      </div>
+      <div class="col-5">
+        <cp-dashboard-experience-menu
+          (selected)="onExperienceSelected($event)">
+        </cp-dashboard-experience-menu>
       </div>
     </div>
 
