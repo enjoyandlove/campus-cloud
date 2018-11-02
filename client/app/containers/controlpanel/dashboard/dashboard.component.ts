@@ -42,11 +42,6 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   ) {
     super();
     this.user = this.session.g.get('user');
-    route.queryParams.subscribe((params) => {
-      if (!Object.keys(params).length) {
-        this.setUp();
-      }
-    });
   }
 
   readStateFromUrl(): void {
@@ -130,7 +125,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   }
 
   setUp() {
-    const cleanState = !Object.keys(this.route.snapshot.queryParams).length;
+    const noParamsInUrl = !Object.keys(this.route.snapshot.queryParams).length;
 
     this.fetchPersonas()
       .then(({ data }) => {
@@ -138,7 +133,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
           ...this.state,
           personas: data
         };
-        if (cleanState) {
+        if (noParamsInUrl) {
           this.initState();
         } else {
           this.readStateFromUrl();
@@ -148,7 +143,6 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('init');
     this.dateRanges = [this.helper.last30Days(), this.helper.last90Days(), this.helper.lastYear()];
 
     this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
@@ -160,5 +154,12 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     this.setUp();
 
     this.updateHeader();
+
+    this.route.queryParams.subscribe((params) => {
+      const noParamsInUrl = !Object.keys(params).length;
+      if (noParamsInUrl) {
+        this.setUp();
+      }
+    });
   }
 }
