@@ -44,11 +44,15 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(({ start, end, gen_info_exp_id }) => {
-      if (start && end && gen_info_exp_id) {
-        this.selectedPersona = this.personas.filter((p) => p.action === +gen_info_exp_id)[0];
-        this.fetch(start, end, gen_info_exp_id);
+    this.route.queryParams.subscribe((params) => {
+      const noParamsInUrl = !Object.keys(params).length;
+      if (noParamsInUrl) {
+        return;
       }
+
+      const { start, end, gen_info_exp_id } = params;
+      this.selectedPersona = this.personas.filter((p) => p.action === +gen_info_exp_id)[0];
+      this.fetch(start, end, gen_info_exp_id);
     });
   }
 }
