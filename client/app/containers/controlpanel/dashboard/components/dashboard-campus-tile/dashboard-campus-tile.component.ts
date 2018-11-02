@@ -44,8 +44,10 @@ export class DashboardCampuTileComponent extends BaseComponent implements OnInit
 
   ngOnInit() {
     this.route.queryParams.subscribe(({ start, end, c_activity_exp_id }) => {
-      this.selectedPersona = this.personas.filter((p) => p.action === +c_activity_exp_id)[0];
-      this.fetch(start, end, c_activity_exp_id);
+      if (start && end && c_activity_exp_id) {
+        this.selectedPersona = this.personas.filter((p) => p.action === +c_activity_exp_id)[0];
+        this.fetch(start, end, c_activity_exp_id);
+      }
     });
   }
 }

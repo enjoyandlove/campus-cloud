@@ -42,6 +42,11 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   ) {
     super();
     this.user = this.session.g.get('user');
+    route.queryParams.subscribe((params) => {
+      if (!Object.keys(params).length) {
+        this.setUp();
+      }
+    });
   }
 
   readStateFromUrl(): void {
@@ -143,6 +148,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('init');
     this.dateRanges = [this.helper.last30Days(), this.helper.last90Days(), this.helper.lastYear()];
 
     this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
