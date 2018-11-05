@@ -1,6 +1,7 @@
 var path = require('path');
 
 var webpackConfig = require('./webpack.config');
+const jasmineSeedReporter = require('./jasmine-seed-reporter.js');
 
 var ENV = process.env.npm_lifecycle_event;
 var isTestWatch = ENV === 'test-watch';
@@ -9,6 +10,14 @@ module.exports = function(config) {
   var _config = {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
+
+    plugins: ['karma-*', jasmineSeedReporter],
+
+    client: {
+      jasmine: {
+        random: true
+      }
+    },
 
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
@@ -41,7 +50,7 @@ module.exports = function(config) {
     // test results reporter to use
     // possible values: 'dots', 'progress', 'mocha'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['mocha'],
+    reporters: ['mocha', 'jasmine-seed'],
 
     // web server port
     port: 9876,

@@ -1,11 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { API } from '../../../../../config/api';
+import { baseActions } from '../../../../../store/base';
 import { EventsService } from '../../events/events.service';
-import { EVENTS_MODAL_SET } from '../../../../../reducers/events-modal.reducer';
-import { Store } from '@ngrx/store';
 
 @Injectable()
 export class OrientationEventsService extends EventsService {
@@ -64,23 +64,23 @@ export class OrientationEventsService extends EventsService {
 
   updateEventCheckIn(body: any, attendeeId: number, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT}/${attendeeId
-    }`;
+      API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT
+    }/${attendeeId}`;
 
     return super.update(url, body, search);
   }
 
   deleteEventCheckInById(attendeeId: number, search?: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT}/${attendeeId
-    }`;
+      API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT
+    }/${attendeeId}`;
 
     return super.delete(url, search);
   }
 
   setModalEvents(events: any[]): void {
     this.stores.dispatch({
-      type: EVENTS_MODAL_SET,
+      type: baseActions.EVENTS_MODAL_SET,
       payload: events
     });
   }

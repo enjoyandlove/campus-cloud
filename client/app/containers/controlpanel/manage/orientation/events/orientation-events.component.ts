@@ -3,11 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
-import { OrientationService } from '../orientation.services';
+import { BaseComponent } from '../../../../../base';
+import { baseActions } from '../../../../../store/base';
 import { EventsService } from '../../events/events.service';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { OrientationService } from '../orientation.services';
 import { OrientationUtilsService } from '../orientation.utils.service';
 import { OrientationEventsService } from './orientation.events.service';
 
@@ -46,7 +46,7 @@ export class OrientationEventsComponent extends BaseComponent {
 
     super.fetchData(this.service.getProgramById(this.orientationId, search)).then((program) => {
       this.store.dispatch({
-        type: HEADER_UPDATE,
+        type: baseActions.HEADER_UPDATE,
         payload: this.utils.buildHeader(program.data)
       });
     });

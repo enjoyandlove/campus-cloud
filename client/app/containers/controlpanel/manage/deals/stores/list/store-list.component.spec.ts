@@ -1,15 +1,18 @@
-import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { StoreListComponent } from './store-list.component';
-import { reducers } from '../../../../../../reducers';
-import { CPSession } from '../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { StoreModule as DealsStoreModule } from '../store.module';
+
 import { DealsStoreService } from '../store.service';
+import { CPSession } from '../../../../../../session';
+import { StoreListComponent } from './store-list.component';
+import { StoreModule as DealsStoreModule } from '../store.module';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { baseReducers } from '../../../../../../store/base/reducers';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+
+const mockStores = require('../mockStores.json');
 
 class MockStoreService {
   dummy;
@@ -17,7 +20,7 @@ class MockStoreService {
   getStores(startRage: number, endRage: number, search: any) {
     this.dummy = [startRage, endRage, search];
 
-    return observableOf({});
+    return observableOf(mockStores);
   }
 }
 
@@ -27,8 +30,6 @@ describe('DealsStoreListComponent', () => {
   let component: StoreListComponent;
   let fixture: ComponentFixture<StoreListComponent>;
 
-  const mockStores = require('../mockStores.json');
-
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
@@ -36,8 +37,8 @@ describe('DealsStoreListComponent', () => {
           DealsStoreModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [
@@ -57,13 +58,39 @@ describe('DealsStoreListComponent', () => {
             .append('sort_field', component.state.sort_field)
             .append('sort_direction', component.state.sort_direction)
             .append('school_id', component.session.g.get('school').id.toString());
+
+          component.state = {
+            stores: [],
+            search_str: null,
+            sort_field: 'name',
+            sort_direction: 'asc'
+          };
+
+          fixture.detectChanges();
         });
     })
   );
 
-  it('onSearch', () => {
-    component.onSearch('hello world');
-    expect(component.state.search_str).toEqual('hello world');
+  it('onDeleted', () => {
+    expect(component.state.stores.length).toBe(mockStores.length);
+
+    component.onDeleted(1);
+
+    expect(component.deleteStore).toBeNull();
+    expect(component.state.stores.length).toBe(1);
+  });
+
+  it('onEdited', () => {
+    const original = { ...component.state.stores[0] };
+    const edited = { ...original, name: 'Edited' };
+
+    component.onEdited(edited);
+
+    expect(component.launchEditModal).toBeFalsy();
+    expect(component.selectedStore).toBeNull();
+
+    const result = component.state.stores.filter((s) => s.id === original.id)[0];
+    expect(result).toEqual(edited);
   });
 
   it('doSort', () => {
@@ -72,30 +99,12 @@ describe('DealsStoreListComponent', () => {
   });
 
   it('onCreated', () => {
+    expect(component.state.stores.length).toBe(2);
+
     component.onCreated(mockStores[0]);
 
     expect(component.launchCreateModal).toBeFalsy();
-    expect(component.state.stores).toEqual([mockStores[0]]);
-  });
-
-  it('onEdited', () => {
-    component.onEdited(mockStores[0]);
-
-    expect(component.launchEditModal).toBeFalsy();
-    expect(component.selectedStore).toBeNull();
-    expect(component.state.stores).toEqual([mockStores[0]]);
-  });
-
-  it('onDeleted', () => {
-    component.onDeleted(1);
-    expect(component.deleteStore).toBeNull();
-    expect(component.state.stores).toEqual([]);
-  });
-
-  it('should launch create modal', () => {
-    expect(component.launchCreateModal).toBeFalsy();
-    component.onLaunchCreateModal();
-    expect(component.launchCreateModal).toBeTruthy();
+    expect(component.state.stores.length).toBe(3);
   });
 
   it(
@@ -110,4 +119,15 @@ describe('DealsStoreListComponent', () => {
       expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
     })
   );
+
+  it('onSearch', () => {
+    component.onSearch('hello world');
+    expect(component.state.search_str).toEqual('hello world');
+  });
+
+  it('should launch create modal', () => {
+    expect(component.launchCreateModal).toBeFalsy();
+    component.onLaunchCreateModal();
+    expect(component.launchCreateModal).toBeTruthy();
+  });
 });

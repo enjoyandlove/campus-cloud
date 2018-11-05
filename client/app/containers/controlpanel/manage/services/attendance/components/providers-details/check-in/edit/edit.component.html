@@ -1,6 +1,6 @@
 <cp-edit-check-in
   [data]="data"
   [checkIn]="checkIn"
-  (edited)="edited.emit()"
-  (teardown)="teardown.emit()">
+  (teardown)="teardown.emit()"
+  (edited)="edited.emit($event)">
 </cp-edit-check-in>

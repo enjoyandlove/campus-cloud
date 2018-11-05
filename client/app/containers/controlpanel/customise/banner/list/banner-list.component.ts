@@ -1,13 +1,12 @@
-import { HEADER_UPDATE } from './../../../../../reducers/header.reducer';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
+import { BannerService } from '../banner.service';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
-import { BannerService } from '../banner.service';
+import { baseActions, ISnackbar } from './../../../../../store/base';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { ISnackbar, SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
 import {
   CPI18nService,
   CPCroppieService,
@@ -61,7 +60,7 @@ export class BannerListComponent extends BaseComponent implements OnInit {
 
   onSuccess(message = this.cpI18n.translate('customization_image_upload_success')) {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: message,
         autoClose: true
@@ -71,7 +70,7 @@ export class BannerListComponent extends BaseComponent implements OnInit {
 
   onError(message = this.cpI18n.translate('customization_image_upload_error')) {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         autoClose: true,
         class: 'danger',
@@ -143,7 +142,7 @@ export class BannerListComponent extends BaseComponent implements OnInit {
 
   updateHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: require('../../customise.header.json')
     });
   }

@@ -8,9 +8,9 @@ import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
 import { ManageHeaderService } from '../../utils';
 import { CPSession } from '../../../../../session';
-import { reducers } from '../../../../../reducers';
 import { JobsListComponent } from './jobs-list.component';
 import { mockSchool } from '../../../../../session/mock/school';
+import { baseReducers } from '../../../../../store/base/reducers';
 import { CPTrackingService } from '../../../../../shared/services';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
@@ -40,8 +40,8 @@ describe('JobsListComponent', () => {
           HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [

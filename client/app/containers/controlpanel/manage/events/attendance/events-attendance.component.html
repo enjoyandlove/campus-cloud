@@ -42,11 +42,13 @@
           [updateQrCode]="updateQrCode"
           [totalAttendees]="totalAttendees"
           [isOrientation]="isOrientation"
+          [checkInSource]="checkInSource.source_page"
           (addCheckIn)="onAddCheckIn()"
           (createExcel)="onCreateExcel()"
           (querySearch)="doSearch($event)"
           (sendMessage)="messageAllAttendees()"
-          (onToggleQr)="onToggleQr($event)">
+          (onToggleQr)="onToggleQr($event)"
+          (trackClickCheckIn)="onTrackClickCheckinEvent($event)">
         </cp-events-attendance-action-box>
       </div>
     </div>
@@ -189,7 +191,7 @@
     [data]="event"
     [checkIn]="checkInData"
     [orientationId]="orientationId"
-    (edited)="onEdited()"
+    (edited)="onEdited($event)"
     (teardown)="isEditCheckInModal = false">
   </cp-edit-check-in>
 </cp-modal>
@@ -212,8 +214,8 @@
   *ngIf="isAddCheckInModal">
   <cp-create-check-in
     [data]="event"
+    (created)="onCreated($event)"
     [orientationId]="orientationId"
-    (created)="onCreated()"
     (teardown)="isAddCheckInModal = false">
   </cp-create-check-in>
 </cp-modal>
@@ -224,7 +226,7 @@
   *ngIf="isSendMessageModal">
   <cp-students-compose
     [props]="messageData"
-    (success)="onFlashMessage($event)"
-    (teardown)="onComposeTeardown()">
+    (teardown)="onComposeTeardown()"
+    (success)="onFlashMessage($event)">
   </cp-students-compose>
 </cp-modal>

@@ -1,13 +1,7 @@
+import { ISnackbar } from '../base.state';
+
 export const SNACKBAR_SHOW = 'SNACKBAR_SHOW';
 export const SNACKBAR_HIDE = 'SNACKBAR_HIDE';
-
-export interface ISnackbar {
-  body: string;
-  class: string;
-  sticky?: boolean;
-  autoClose?: boolean;
-  autoCloseDelay?: number;
-}
 
 const initialState: ISnackbar = {
   body: null,

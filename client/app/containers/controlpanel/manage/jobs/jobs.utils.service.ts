@@ -135,6 +135,10 @@ export class JobsUtilsService {
     return job.posting_end === JobDate.forever;
   }
 
+  isDateSet(date: number): boolean {
+    return date > JobDate.noDate;
+  }
+
   jobOngoingValidator(control: FormGroup): ValidationErrors | null {
     const ongoing = control.get('ongoing').value;
     const posting_end = control.get('posting_end').value;

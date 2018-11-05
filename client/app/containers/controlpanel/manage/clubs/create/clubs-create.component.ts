@@ -1,21 +1,21 @@
-import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { ClubStatus } from '../club.status';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
+import { baseActions } from '../../../../../store/base';
+import { ClubsUtilsService } from '../clubs.utils.service';
 import { membershipTypes, statusTypes } from './permissions';
 import { CPTrackingService } from '../../../../../shared/services';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
-import { ClubsUtilsService } from '../clubs.utils.service';
 
 @Component({
   selector: 'cp-clubs-create',
@@ -214,7 +214,7 @@ export class ClubsCreateComponent implements OnInit {
     });
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: this.labels.create_button,
         subheading: null,

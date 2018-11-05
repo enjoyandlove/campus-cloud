@@ -6,16 +6,25 @@ import {
   OnChanges,
   OnInit,
   ViewChild,
-  ViewEncapsulation
+  ViewEncapsulation,
+  Output,
+  EventEmitter
 } from '@angular/core';
 
+import { CPDate } from '../../utils';
 import { CPI18nService } from '../../services';
+import * as French from 'flatpickr/dist/l10n/fr.js';
 /**
  * https://chmln.github.io/flatpickr/
  */
 
 declare var $: any;
-import * as French from 'flatpickr/dist/l10n/fr.js';
+
+const ALT_FORMAT = 'F j, Y';
+const ALT_FORMAT_TIME = 'F j, Y h:i K';
+
+const DATE_FORMAT = 'MMMM D, YYYY';
+const DATETIME_FORMAT = 'MMMM D, YYYY h:mm A';
 
 @Component({
   selector: 'cp-datepicker',
@@ -25,12 +34,18 @@ import * as French from 'flatpickr/dist/l10n/fr.js';
 })
 export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
   @ViewChild('input') input: ElementRef;
+  @ViewChild('calendarEl') calendarEl: ElementRef;
 
   @Input() options: any;
   @Input() error: boolean;
   @Input() placeholder = '';
+  @Input() clearable = false;
+
+  @Output() dateSet = new EventEmitter<string>();
+  @Output() dateClear = new EventEmitter<null>();
 
   el;
+  date;
   locale;
   flatPicker;
 
@@ -40,14 +55,28 @@ export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   ngAfterViewInit() {
-    const el = this.input.nativeElement;
-    this.options = { ...this.options };
+    const host = this.calendarEl.nativeElement;
+    const enableTime = this.options.enableTime;
+
+    this.options = {
+      ...this.options,
+      inline: true,
+      altInput: true,
+      altFormat: enableTime ? ALT_FORMAT_TIME : ALT_FORMAT,
+      onChange: (_, date) => {
+        this.date = CPDate.format(date, enableTime ? DATETIME_FORMAT : DATE_FORMAT);
+        if (!enableTime) {
+          $(this.input.nativeElement).dropdown('toggle');
+        }
+        this.dateSet.emit(date);
+      }
+    };
 
     if (this.locale === 'fr-CA') {
       this.flatPicker.localize(French.fr);
     }
 
-    this.el = $(el).flatpickr(this.options);
+    this.el = $(host).flatpickr(this.options);
   }
 
   toggleTime() {
@@ -56,7 +85,8 @@ export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   clearDate() {
-    this.el.clear();
+    this.date = '';
+    this.dateClear.emit(null);
   }
 
   ngOnChanges() {
@@ -74,5 +104,12 @@ export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.date = this.options.defaultDate
+      ? CPDate.format(
+          this.options.defaultDate,
+          this.options.enableTime ? DATETIME_FORMAT : DATE_FORMAT
+        )
+      : '';
+  }
 }

@@ -4,25 +4,32 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { JobsModule } from '../../../jobs.module';
 import { CPSession } from '../../../../../../../session';
+import { RootStoreModule } from '../../../../../../../store';
 import { JobsUtilsService } from '../../../jobs.utils.service';
 import { CPI18nService } from '../../../../../../../shared/services';
+import { configureTestSuite } from '../../../../../../../shared/tests';
 import { JobsListActionBoxComponent } from './jobs.list.action-box.component';
 
 describe('JobsListActionBoxComponent', () => {
+  configureTestSuite();
+  beforeAll((done) => {
+    (async () => {
+      TestBed.configureTestingModule({
+        imports: [JobsModule, HttpClientModule, RouterTestingModule, RootStoreModule],
+        providers: [CPSession, CPI18nService, JobsUtilsService]
+      });
+    })()
+      .then(done)
+      .catch(done.fail);
+  });
+
   let component: JobsListActionBoxComponent;
   let fixture: ComponentFixture<JobsListActionBoxComponent>;
 
   beforeEach(
     async(() => {
-      TestBed.configureTestingModule({
-        imports: [JobsModule, HttpClientModule, RouterTestingModule],
-        providers: [CPSession, CPI18nService, JobsUtilsService]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(JobsListActionBoxComponent);
-          component = fixture.componentInstance;
-        });
+      fixture = TestBed.createComponent(JobsListActionBoxComponent);
+      component = fixture.componentInstance;
     })
   );
 

@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
-import { OrientationService } from '../orientation.services';
-import { CPSession } from './../../../../../session';
 import { BaseComponent } from '../../../../../base';
-import { HttpParams } from '@angular/common/http';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPTrackingService, RouteLevel } from '../../../../../shared/services';
+import { CPSession } from './../../../../../session';
+import { OrientationService } from '../orientation.services';
 
 @Component({
   selector: 'cp-orientation-info',
@@ -16,7 +13,6 @@ import { CPTrackingService, RouteLevel } from '../../../../../shared/services';
 })
 export class OrientationInfoComponent extends BaseComponent implements OnInit {
   loading;
-  eventData;
   selectedProgram;
   orientationId: number;
   launchEditModal = false;
@@ -24,8 +20,7 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
   constructor(
     public session: CPSession,
     private route: ActivatedRoute,
-    public service: OrientationService,
-    public cpTracking: CPTrackingService
+    public service: OrientationService
   ) {
     super();
     this.orientationId = this.route.parent.snapshot.params['orientationId'];
@@ -58,17 +53,6 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
-    };
-
-    this.eventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
-      eventProperties
-    };
-
     this.fetch();
   }
 }

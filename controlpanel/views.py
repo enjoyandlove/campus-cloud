@@ -118,10 +118,16 @@ Parse Clubs Mass Upload
 @csrf_exempt
 def import_clubs(request):
     csv_file = request.FILES['file']
+    column_names = ['Club Name', 'Description', 'Email', 'Phone Number', 'Website']
 
     csv_as_string = []
 
     for index, row in enumerate(csv_file):
+        if index == 0:
+            file_columns = [col for col in UnicodeDammit(row).unicode_markup.strip('\r\n').split(',')]
+
+        if column_names != file_columns:
+            return JsonResponse({"error": "Wrong Column Names"}, safe=False, status=400)
         try:
             csv_as_string.append(UnicodeDammit(row).unicode_markup)
         except UnicodeError as e:
@@ -130,7 +136,7 @@ def import_clubs(request):
     parser = CSVParser(csv_as_string)
 
     try:
-        parsed_data = parser.all_fields_required('name')
+        parsed_data = parser.all_fields_required('club_name')
     except KeyError as e:
         return JsonResponse({"error": e.args[0]},
                                 safe=False, status=400)

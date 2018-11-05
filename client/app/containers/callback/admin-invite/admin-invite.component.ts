@@ -1,10 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { baseActions } from '../../../store/base/';
 import { AuthService } from '../../auth/auth.service';
-import { ALERT_DEFAULT } from '../../../reducers/alert.reducer';
 import { amplitudeEvents } from '../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService, ErrorService } from '../../../shared/services';
 
@@ -59,7 +59,7 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.store.dispatch({ type: ALERT_DEFAULT });
+    this.store.dispatch({ type: baseActions.ALERT_DEFAULT });
   }
 
   ngOnInit() {

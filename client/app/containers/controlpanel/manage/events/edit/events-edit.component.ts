@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
-import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
 import { isProd } from './../../../../../config/env';
@@ -12,13 +12,14 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from '../events.utils.service';
 import { CPDate, CPMap } from '../../../../../shared/utils';
 import { CPSession, ISchool } from '../../../../../session';
-import { CheckInMethod, EventAttendance, EventFeedback } from '../event.status';
-import { BaseComponent } from '../../../../../base/base.component';
+import { EventsComponent } from '../list/base/events.component';
+import { baseActions, IHeader } from '../../../../../store/base';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { CheckInMethod, EventAttendance, EventFeedback } from '../event.status';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
+  RouteLevel,
   AdminService,
   CPTrackingService,
   ErrorService,
@@ -28,9 +29,7 @@ import {
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
 const COMMON_DATE_PICKER_OPTIONS = {
-  altInput: true,
-  enableTime: true,
-  altFormat: 'F j, Y h:i K'
+  enableTime: true
 };
 
 @Component({
@@ -38,12 +37,13 @@ const COMMON_DATE_PICKER_OPTIONS = {
   templateUrl: './events-edit.component.html',
   styleUrls: ['./events-edit.component.scss']
 })
-export class EventsEditComponent extends BaseComponent implements OnInit {
+export class EventsEditComponent extends EventsComponent implements OnInit {
   @Input() storeId: number;
   @Input() isClub: boolean;
   @Input() clubId: number;
   @Input() isService: boolean;
-  @Input() isAthletic: number;
+  @Input() isAthletic: boolean;
+  @Input() athleticId: number;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
   @Input() toolTipContent: IToolTipContent;
@@ -57,10 +57,10 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   isDateError;
   originalHost;
   eventQRCodes;
+  checkInSource;
   selectedQRCode;
   loading = true;
   attendanceTypes;
-  isQrCodeEnabled;
   school: ISchool;
   eventId: number;
   form: FormGroup;
@@ -108,7 +108,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     public service: EventsService,
     public cpTracking: CPTrackingService
   ) {
-    super();
+    super(session, cpI18n, service);
     this.school = this.session.g.get('school');
     this.eventId = this.route.snapshot.params['eventId'];
 
@@ -175,6 +175,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.service.updateEvent(data, this.eventId, search).subscribe(
       (_) => {
+        this.trackQrCode(data);
+
         this.eventProperties = {
           ...this.eventProperties,
           ...this.utils.setEventProperties(this.form.controls),
@@ -185,7 +187,6 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
           amplitudeEvents.MANAGE_UPDATED_EVENT,
           this.eventProperties
         );
-
         this.router.navigate([this.urlPrefix]);
       },
       (_) => {
@@ -263,7 +264,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     this.selectedAttendanceType = this.getFromArray(
       this.utils.getAttendanceTypeOptions(),
       'action',
-      res.has_checkout);
+      res.has_checkout
+    );
 
     this.selectedQRCode = this.getFromArray(
       this.utils.getQROptions(),
@@ -287,22 +289,24 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     return qrCodes.includes(CheckInMethod.app);
   }
 
+  setStart(date) {
+    this.form.controls['start'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
+  setEnd(date) {
+    this.form.controls['end'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
   updateDatePicker() {
     const _self = this;
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format(),
-      onChange: function(_, dateStr) {
-        _self.form.controls['start'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
-      }
+      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format()
     };
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format(),
-      onChange: function(_, dateStr) {
-        _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
-      }
+      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format()
     };
   }
 
@@ -440,7 +444,7 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
   public buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: 'events_edit_event',
         subheading: '',
@@ -466,8 +470,11 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
 
     this.enableStudentFeedbackOnAttendanceToggle(value);
     this.form.controls['event_attendance'].setValue(value);
-    this.form.controls['attend_verification_methods']
-      .setValue([CheckInMethod.web, CheckInMethod.webQr, CheckInMethod.app]);
+    this.form.controls['attend_verification_methods'].setValue([
+      CheckInMethod.web,
+      CheckInMethod.webQr,
+      CheckInMethod.app
+    ]);
   }
 
   onResetMap() {
@@ -524,7 +531,8 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
   }
 
   onEventFeedbackChange(option) {
-    const feedbackQuestion = !option.action ? ''
+    const feedbackQuestion = !option.action
+      ? ''
       : this.cpI18n.translate('t_events_default_feedback_question');
 
     this.form.controls['event_feedback'].setValue(option.action);
@@ -547,19 +555,34 @@ export class EventsEditComponent extends BaseComponent implements OnInit {
     }
   }
 
+  trackQrCode(event) {
+    const eventProperties = {
+      ...this.utils.getQRCodeCheckOutStatus(event, true),
+      source_id: this.event.encrypted_id,
+      check_in_type: this.checkInSource.check_in_type,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CHANGED_QR_CODE,
+      eventProperties
+    );
+  }
+
   ngOnInit() {
     this.buttonData = {
       text: this.cpI18n.translate('save'),
       class: 'primary'
     };
 
-    this.urlPrefix = this.utils.buildUrlPrefixEvents(
-      this.clubId,
-      this.storeId,
-      this.isAthletic,
-      this.orientationId,
-      this.eventId
-    );
+    const eventType = {
+      ...this.getEventType(),
+      event_id: this.eventId
+    };
+
+    this.urlPrefix = this.utils.buildUrlPrefixEvents(eventType);
+
+    this.checkInSource = this.utils.getCheckinSourcePage(eventType);
 
     this.dateFormat = FORMAT.DATETIME;
     this.attendanceEnabled = EventAttendance.enabled;

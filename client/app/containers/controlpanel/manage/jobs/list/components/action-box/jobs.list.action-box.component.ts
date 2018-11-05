@@ -1,12 +1,15 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { map, startWith } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 import { IJob } from '../../../jobs.interface';
 import { JobsService } from '../../../jobs.service';
 import { CPSession } from '../../../../../../../session';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService } from '../../../../../../../shared/services/i18n.service';
+import * as fromJobs from '../../../../../../../store/manage';
 import { CPTrackingService } from '../../../../../../../shared/services';
 import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPI18nService } from '../../../../../../../shared/services/i18n.service';
 
 export interface IState {
   jobs: Array<IJob>;
@@ -43,7 +46,8 @@ export class JobsListActionBoxComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public jobsService: JobsService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    private store: Store<fromJobs.IJobsState>
   ) {}
 
   onSearch(query) {
@@ -64,7 +68,18 @@ export class JobsListActionBoxComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.employers$ = this.jobsService.getEmployers('all');
+    const dropdownLabel = this.cpI18n.translate('employer_all_employers');
+    this.employers$ = this.store
+      .select(fromJobs.getJobsEmployers)
+      .pipe(
+        startWith([{ label: dropdownLabel }]),
+        map((employers) => [{ label: dropdownLabel, action: null }, ...employers])
+      );
+    this.store.select(fromJobs.getJobsLoaded).subscribe((loaded: boolean) => {
+      if (!loaded) {
+        this.store.dispatch(new fromJobs.LoadEmployers());
+      }
+    });
 
     this.eventPageItemData = {
       type: CP_TRACK_TO.AMPLITUDE,

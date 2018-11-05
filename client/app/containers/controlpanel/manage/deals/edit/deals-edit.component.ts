@@ -11,7 +11,7 @@ import { BaseComponent } from '../../../../../base';
 import { DealsService, DateStatus } from '../deals.service';
 import { DealsStoreService } from './../stores/store.service';
 import { CPI18nService } from '../../../../../shared/services';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { baseActions, IHeader } from '../../../../../store/base';
 
 @Component({
   selector: 'cp-deals-edit',
@@ -97,7 +97,7 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `t_deals_form_heading_edit_deal`,
         subheading: null,

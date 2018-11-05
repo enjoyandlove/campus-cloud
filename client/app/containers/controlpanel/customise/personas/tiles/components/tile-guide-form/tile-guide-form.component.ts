@@ -11,19 +11,19 @@ import {
   ViewChild,
   ElementRef
 } from '@angular/core';
-import { FormGroup } from '@angular/forms';
 import { map, filter } from 'rxjs/operators';
+import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { CPColorPickerDirective } from './../../../../../../../shared/directives/color-picker/color-picker.directive';
-import { SNACKBAR_SHOW } from './../../../../../../../reducers/snackbar.reducer';
-import { CPImageCropperComponent } from './../../../../../../../shared/components/cp-image-cropper/cp-image-cropper.component';
-import { CPHostDirective } from './../../../../../../../shared/directives/cp-host/cp-host.directive';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { fromEvent } from 'rxjs';
+
 import { TilesService } from './../../tiles.service';
 import { TilesUtilsService } from './../../tiles.utils.service';
-import { ISnackbar } from '../../../../../../../reducers/snackbar.reducer';
 import { FileUploadService } from '../../../../../../../shared/services';
-import { fromEvent } from 'rxjs';
+import { baseActions, ISnackbar } from '../../../../../../../store/base';
+import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { CPHostDirective } from './../../../../../../../shared/directives/cp-host/cp-host.directive';
+import { CPColorPickerDirective } from './../../../../../../../shared/directives/color-picker/color-picker.directive';
+import { CPImageCropperComponent } from './../../../../../../../shared/components/cp-image-cropper/cp-image-cropper.component';
 
 @Component({
   selector: 'cp-personas-tile-guide-form',
@@ -111,7 +111,7 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
 
     validateTileImage.then(() => this.uploadImage(file)).catch((body) => {
       this.store.dispatch({
-        type: SNACKBAR_SHOW,
+        type: baseActions.SNACKBAR_SHOW,
         payload: {
           autoClose: true,
           class: 'warning',

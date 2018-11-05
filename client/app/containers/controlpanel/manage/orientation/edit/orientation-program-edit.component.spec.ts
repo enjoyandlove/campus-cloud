@@ -1,16 +1,17 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { FormBuilder } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
+
 import { CPSession } from './../../../../../session';
-import { OrientationProgramEditComponent } from './orientation-program-edit.component';
-import { reducers } from '../../../../../reducers';
+import { OrientationService } from '../orientation.services';
 import { mockSchool } from '../../../../../session/mock/school';
+import { baseReducers } from '../../../../../store/base/reducers';
+import { OrientationUtilsService } from '../orientation.utils.service';
 import { CPI18nService } from '../../../../../shared/services/i18n.service';
 import { OrientationDetailsModule } from '../details/orientation-details.module';
-import { OrientationService } from '../orientation.services';
-import { OrientationUtilsService } from '../orientation.utils.service';
+import { OrientationProgramEditComponent } from './orientation-program-edit.component';
 
 class MockOrientationService {
   dummy;
@@ -45,8 +46,8 @@ describe('OrientationProgramEditComponent', () => {
           OrientationDetailsModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [

@@ -1,12 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { map, startWith } from 'rxjs/operators';
-import { EmployerService } from './employers/employer.service';
-import { HTTPService } from '../../../../base';
+import { map } from 'rxjs/operators';
+
 import { API } from '../../../../config/api';
+import { HTTPService } from '../../../../base';
 import { CPSession } from '../../../../session';
 import { CPI18nService } from '../../../../shared/services';
+import { EmployerService } from './employers/employer.service';
 
 @Injectable()
 export class JobsService extends HTTPService {
@@ -22,19 +23,12 @@ export class JobsService extends HTTPService {
     Object.setPrototypeOf(this, JobsService.prototype);
   }
 
-  getEmployers(label) {
-    const key = label === 'new' ? 'employers_new_employer' : 'employer_all_employers';
+  getEmployers() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     return this.employerService.getEmployers(1, 10000, search).pipe(
-      startWith([{ label: this.cpI18n.translate(key) }]),
-      map((employers) => {
-        const _employers = [
-          {
-            label: this.cpI18n.translate(key),
-            action: null
-          }
-        ];
+      map((employers: any[]) => {
+        const _employers = [];
 
         employers.forEach((employer: any) => {
           const _employer = {

@@ -19,7 +19,6 @@ interface IDateRange {
   styleUrls: ['./providers-attendees-action-box.component.scss']
 })
 export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
-
   @Input() provider;
   @Input() noAttendees;
   @Input() updateQrCode = new BehaviorSubject(null);
@@ -58,13 +57,15 @@ export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
 
   trackCheckinEvent() {
     const eventProperties = {
-      source_page: amplitudeEvents.SERVICE,
-      service_id: this.provider.encrypted_campus_service_id
+      sub_menu_name: amplitudeEvents.SERVICES,
+      check_in_type: amplitudeEvents.SERVICE_PROVIDER,
+      check_in_source: amplitudeEvents.SERVICE_PROVIDER,
+      source_id: this.provider.encrypted_campus_service_id
     };
 
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.MANAGE_CLICKED_CHECKIN,
+      eventName: amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
       eventProperties
     };
   }

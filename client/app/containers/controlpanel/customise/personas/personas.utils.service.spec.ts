@@ -60,7 +60,7 @@ describe('PersonasUtilsService', () => {
       },
       featured_rank: 0,
       img_url: null,
-      school_id: 2806,
+      school_id: 157,
       school_persona_id: null,
       tile_category_id: 0,
       visibility_status: 1,
@@ -85,7 +85,7 @@ describe('PersonasUtilsService', () => {
       link_url: 'oohlala://campus_security_service',
       name: null,
       open_in_browser: 0,
-      school_id: 2806
+      school_id: 157
     };
 
     expect(result instanceof FormGroup).toBe(true);

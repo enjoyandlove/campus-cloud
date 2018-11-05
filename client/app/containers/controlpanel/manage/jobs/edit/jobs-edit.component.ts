@@ -1,4 +1,3 @@
-import { JobDate } from './../jobs.status';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
@@ -6,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import { JobDate } from './../jobs.status';
 import { JobsService } from '../jobs.service';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
@@ -13,8 +13,7 @@ import { CPDate } from '../../../../../shared/utils';
 import { JobsUtilsService } from './../jobs.utils.service';
 import { CPI18nService } from '../../../../../shared/services';
 import { EmployerService } from '../employers/employer.service';
-import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
+import { baseActions, IHeader } from '../../../../../store/base';
 
 @Component({
   selector: 'cp-jobs-edit',
@@ -113,7 +112,7 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
 
   flashMessageError() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         class: 'danger',
         autoClose: true,
@@ -124,7 +123,7 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `jobs_job_edit`,
         subheading: null,

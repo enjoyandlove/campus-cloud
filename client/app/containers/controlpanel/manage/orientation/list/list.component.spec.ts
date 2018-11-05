@@ -5,12 +5,12 @@ import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
 import { ManageHeaderService } from '../../utils';
-import { reducers } from '../../../../../reducers';
 import { CPSession } from '../../../../../session';
 import { OrientationModule } from '../orientation.module';
 import { OrientationListComponent } from './list.component';
 import { OrientationService } from '../orientation.services';
 import { mockSchool } from '../../../../../session/mock/school';
+import { baseReducers } from '../../../../../store/base/reducers';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 class MockOrientationService {
@@ -38,8 +38,8 @@ describe('OrientationListComponent', () => {
           OrientationModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [

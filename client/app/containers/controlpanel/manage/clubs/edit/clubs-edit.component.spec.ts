@@ -119,6 +119,8 @@ describe('ClubsEditComponent', () => {
   });
 
   it('Form Inputs are disabled if limited access', () => {
+    spyOn(comp.helper, 'limitedAdmin').and.returnValue(true);
+
     let formValueName;
     let formValueStatus;
     let formValueAdvisorFirstName;

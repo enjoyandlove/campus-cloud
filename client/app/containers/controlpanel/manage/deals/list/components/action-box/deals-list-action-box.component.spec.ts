@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { DealsModule } from '../../../deals.module';
 import { CPSession } from '../../../../../../../session';
+import { RootStoreModule } from '../../../../../../../store';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { DealsListActionBoxComponent } from './deals-list-action-box.component';
 
@@ -14,7 +15,7 @@ describe('DealsListActionBoxComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [DealsModule, HttpClientModule, RouterTestingModule],
+        imports: [DealsModule, HttpClientModule, RouterTestingModule, RootStoreModule],
         providers: [CPSession, CPI18nService]
       })
         .compileComponents()

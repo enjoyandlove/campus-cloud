@@ -2,12 +2,12 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { reducers } from '../../../../../reducers';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from './../../../../../session';
 import { PersonasModule } from './../personas.module';
 import { PersonasService } from './../personas.service';
 import { PersonasListComponent } from './list.component';
+import { baseReducers } from '../../../../../store/base/reducers';
 import { MockPersonasService } from './../mock/personas.service.mock';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
@@ -23,8 +23,8 @@ describe('PersonasListComponent', () => {
           RouterTestingModule,
           PersonasModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [

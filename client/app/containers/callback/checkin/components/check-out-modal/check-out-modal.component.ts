@@ -18,12 +18,8 @@ import { CheckinService } from '../../checkin.service';
 import { CheckinUtilsService } from '../../checkin.utils.service';
 import { CPI18nService } from '../../../../../shared/services/i18n.service';
 
-const FORMAT_WITH_TIME = 'F j, Y h:i K';
-
 const COMMON_DATE_PICKER_OPTIONS = {
-  altInput: true,
-  enableTime: true,
-  altFormat: FORMAT_WITH_TIME
+  enableTime: true
 };
 
 @Component({
@@ -31,7 +27,6 @@ const COMMON_DATE_PICKER_OPTIONS = {
   templateUrl: './check-out-modal.component.html',
   styleUrls: ['./check-out-modal.component.scss']
 })
-
 export class CheckOutModalComponent implements OnInit {
   @Input() timezone: string;
   @Input() attendee: IAttendee;
@@ -100,9 +95,9 @@ export class CheckOutModalComponent implements OnInit {
     if (this.eventId) {
       search = search.append('event_id', this.eventId.toString());
 
-      this.service.doEventCheckin(this.form.value, search, true).subscribe(
-        (_) => this.handleSuccess(checkOutTime),
-        (err) => this.handleError(err));
+      this.service
+        .doEventCheckin(this.form.value, search, true)
+        .subscribe((_) => this.handleSuccess(checkOutTime), (err) => this.handleError(err));
     }
 
     if (this.serviceId) {
@@ -110,9 +105,9 @@ export class CheckOutModalComponent implements OnInit {
         .append('service_id', this.serviceId.toString())
         .append('provider_id', this.providerId.toString());
 
-      this.service.doServiceCheckin(this.form.value, search, true).subscribe(
-        (_) => this.handleSuccess(checkOutTime),
-        (err) => this.handleError(err));
+      this.service
+        .doServiceCheckin(this.form.value, search, true)
+        .subscribe((_) => this.handleSuccess(checkOutTime), (err) => this.handleError(err));
     }
   }
 
@@ -138,6 +133,10 @@ export class CheckOutModalComponent implements OnInit {
     this.errorMessage = this.utils.getErrorMessage(err.status);
   }
 
+  setCheckout(date) {
+    this.form.controls['check_out_time_epoch'].setValue(CPDate.toEpoch(date, this.timezone));
+  }
+
   ngOnInit() {
     this.buttonData = {
       class: 'primary',
@@ -145,13 +144,8 @@ export class CheckOutModalComponent implements OnInit {
       text: this.cpI18n.translate('t_external_check_in_check_out_button')
     };
 
-    const _self = this;
     this.checkOutOptions = {
-      ...COMMON_DATE_PICKER_OPTIONS,
-      onChange: function(_, dateStr) {
-        _self.form.controls['check_out_time_epoch']
-          .setValue(CPDate.toEpoch(dateStr, _self.timezone));
-      }
+      ...COMMON_DATE_PICKER_OPTIONS
     };
 
     this.form = this.fb.group({
@@ -160,7 +154,7 @@ export class CheckOutModalComponent implements OnInit {
       lastname: [this.attendee.lastname, Validators.required],
       firstname: [this.attendee.firstname, Validators.required],
       attendance_id: [this.attendee.attendance_id, Validators.required],
-      check_in_time_epoch: [this.attendee.check_in_time_epoch, Validators.required],
+      check_in_time_epoch: [this.attendee.check_in_time_epoch, Validators.required]
     });
   }
 }

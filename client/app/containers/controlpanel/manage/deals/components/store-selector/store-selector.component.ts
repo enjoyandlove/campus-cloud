@@ -1,9 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { tap, startWith, map } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
 
 import { DealsService } from '../../deals.service';
 import { BaseComponent } from '../../../../../../base';
-import { tap } from 'rxjs/operators';
+import * as fromDeals from '../../../../../../store/manage';
+import { CPI18nService } from '../../../../../../shared/services';
 
 @Component({
   selector: 'cp-store-selector',
@@ -16,7 +19,11 @@ export class StoreSelectorComponent extends BaseComponent implements OnInit {
   stores$;
   selectedStore;
 
-  constructor(public service: DealsService) {
+  constructor(
+    public cpI18n: CPI18nService,
+    public service: DealsService,
+    private store: Store<fromDeals.IDealsState>
+  ) {
     super();
   }
 
@@ -32,8 +39,18 @@ export class StoreSelectorComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.stores$ = this.service.getDealStores('select').pipe(
-      tap((stores) => this.getSelectedStore(stores))
-    );
+    const dropdownLabel = this.cpI18n.translate('t_deals_list_dropdown_label_select_store');
+    this.stores$ = this.store
+      .select(fromDeals.getDealsStores)
+      .pipe(
+        startWith([{ label: dropdownLabel }]),
+        map((stores) => [{ label: dropdownLabel, action: null }, ...stores]),
+        tap((stores) => this.getSelectedStore(stores))
+      );
+    this.store.select(fromDeals.getDealsLoaded).subscribe((loaded: boolean) => {
+      if (!loaded) {
+        this.store.dispatch(new fromDeals.LoadStores());
+      }
+    });
   }
 }

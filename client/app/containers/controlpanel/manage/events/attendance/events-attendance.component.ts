@@ -7,14 +7,14 @@ import { Store } from '@ngrx/store';
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes';
+import { ICheckIn } from './check-in/check-in.interface';
 import { EventUtilService } from './../events.utils.service';
-import { CheckInMethod, CheckInOutTime } from '../event.status';
-import { BaseComponent } from '../../../../../base/base.component';
+import { EventsComponent } from '../list/base/events.component';
+import { IHeader, baseActions } from '../../../../../store/base';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { SNACKBAR_SHOW } from '../../../../../reducers/snackbar.reducer';
+import { CheckInMethod, CheckInOutTime, CheckOut } from '../event.status';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import {
   canSchoolReadResource,
@@ -38,12 +38,13 @@ const state = {
   templateUrl: './events-attendance.component.html',
   styleUrls: ['./events-attendance.component.scss']
 })
-export class EventsAttendanceComponent extends BaseComponent implements OnInit {
+export class EventsAttendanceComponent extends EventsComponent implements OnInit {
   @Input() isClub: boolean;
   @Input() clubId: number;
   @Input() serviceId: number;
   @Input() isService: boolean;
-  @Input() isAthletic: number;
+  @Input() athleticId: number;
+  @Input() isAthletic: boolean;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
 
@@ -52,6 +53,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
   canMessage;
   messageData;
   checkInData;
+  checkInSource;
   sortingLabels;
   attendees = [];
   loading = true;
@@ -89,7 +91,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     private utils: EventUtilService,
     public cpTracking: CPTrackingService
   ) {
-    super();
+    super(session, cpI18n, service);
     this.eventId = this.route.snapshot.params['eventId'];
     super.isLoading().subscribe((res) => (this.attendeesLoading = res));
   }
@@ -129,7 +131,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     };
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload
     });
   }
@@ -225,7 +227,9 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
   trackAmplitudeEvent() {
     this.downloadEventProperties = {
-      data_type: amplitudeEvents.EVENT
+      host_id: this.event.store_id,
+      data_source: amplitudeEvents.EVENT,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
     this.cpTracking.amplitudeEmitEvent(
@@ -238,7 +242,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     this.trackSendMessageEvents(data.hostType);
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate('announcement_success_sent'),
         autoClose: true
@@ -349,15 +353,17 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     );
   }
 
-  onCreated() {
+  onCreated(checkedInData: ICheckIn) {
     this.isAddCheckInModal = false;
     this.fetchAttendees();
+    this.trackAddEditCheckInEvent(checkedInData);
   }
 
-  onEdited() {
+  onEdited(editedCheckIn: ICheckIn) {
     this.checkInData = null;
     this.isEditCheckInModal = false;
     this.fetchAttendees();
+    this.trackAddEditCheckInEvent(editedCheckIn, true);
   }
 
   onDeleted(id: number) {
@@ -398,6 +404,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     this.service.updateEvent(data, this.eventId, search).subscribe(
       (res) => {
         this.event = res;
+        this.trackQrCode(this.event);
         this.onSuccessQRCheckInMessage(isEnabled);
       },
       (_) => {
@@ -412,7 +419,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
       : 't_event_assessment_qr_code_enable_success_message';
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate(message),
         autoClose: true,
@@ -423,7 +430,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
 
   onErrorQRCheckInMessage() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         class: 'danger',
         body: this.cpI18n.translate('something_went_wrong'),
@@ -432,13 +439,54 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.urlPrefix = this.utils.buildUrlPrefix(
-      this.clubId,
-      this.serviceId,
-      this.isAthletic,
-      this.orientationId
+  onTrackClickCheckinEvent(source_id) {
+    const eventProperties = {
+      source_id,
+      check_in_source: amplitudeEvents.ASSESSMENT,
+      check_in_type: this.checkInSource.check_in_type,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
+      eventProperties
     );
+  }
+
+  trackAddEditCheckInEvent(checkedInData, isEdit = false) {
+    const eventName = isEdit
+      ? amplitudeEvents.MANAGE_UPDATED_CHECK_IN
+      : amplitudeEvents.MANAGE_ADDED_CHECK_IN;
+
+    const eventProperties = {
+      ...this.utils.getQRCodeCheckOutStatus(this.event, true),
+      source_id: this.event.encrypted_id,
+      check_in_type: this.checkInSource.check_in_type,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      check_out: checkedInData.check_out_time_epoch > 0 ? CheckOut.yes : CheckOut.no
+    };
+
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+  }
+
+  trackQrCode(event) {
+    const eventProperties = {
+      ...this.utils.getQRCodeCheckOutStatus(event, true),
+      source_id: this.event.encrypted_id,
+      check_in_type: this.checkInSource.check_in_type,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CHANGED_QR_CODE,
+      eventProperties
+    );
+  }
+
+  ngOnInit() {
+    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
+
+    this.urlPrefix = this.utils.buildUrlPrefix(this.getEventType());
 
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),
@@ -452,7 +500,7 @@ export class EventsAttendanceComponent extends BaseComponent implements OnInit {
     );
 
     const attendancePrivilege =
-      this.isAthletic === isClubAthletic.athletic
+      this.athleticId === isClubAthletic.athletic
         ? CP_PRIVILEGES_MAP.athletics
         : this.isOrientation
           ? CP_PRIVILEGES_MAP.orientation

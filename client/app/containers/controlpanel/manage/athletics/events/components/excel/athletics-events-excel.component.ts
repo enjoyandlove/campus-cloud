@@ -1,18 +1,19 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+
 import { isClubAthletic } from '../../../../clubs/clubs.athletics.labels';
 
 @Component({
   selector: 'cp-athletics-events-excel',
   template: `<cp-clubs-events-excel
-              [isAthletic]="isAthletic">
+              [isAthletic]="isAthletic"
+              [athleticId]="athleticId">
              </cp-clubs-events-excel>`
 })
 export class AthleticsEventsExcelComponent implements OnInit {
-  @Input() isAthletic;
+  isAthletic = true;
+  athleticId = isClubAthletic.athletic;
 
   constructor() {}
 
-  ngOnInit() {
-    this.isAthletic = isClubAthletic.athletic;
-  }
+  ngOnInit() {}
 }

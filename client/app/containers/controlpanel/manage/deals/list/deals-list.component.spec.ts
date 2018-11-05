@@ -1,16 +1,17 @@
-import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { DealsListComponent } from './deals-list.component';
-import { reducers } from '../../../../../reducers';
-import { CPSession } from '../../../../../session';
-import { mockSchool } from '../../../../../session/mock/school';
-import { ManageHeaderService } from '../../utils';
+
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
+import { ManageHeaderService } from '../../utils';
+import { CPSession } from '../../../../../session';
+import { DealsListComponent } from './deals-list.component';
+import { mockSchool } from '../../../../../session/mock/school';
+import { baseReducers } from '../../../../../store/base/reducers';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 class MockDealsService {
   dummy;
@@ -38,8 +39,8 @@ describe('DealsListComponent', () => {
           HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [

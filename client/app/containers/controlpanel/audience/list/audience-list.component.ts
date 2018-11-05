@@ -6,11 +6,11 @@ import { CPSession } from '../../../../session';
 import { AudienceType } from './../audience.status';
 import { AudienceService } from '../audience.service';
 import { BaseComponent } from '../../../../base/base.component';
+import { ISnackbar, baseActions } from '../../../../store/base';
 import { CP_TRACK_TO } from '../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
 import { CPI18nService, CPTrackingService } from '../../../../shared/services';
-import { ISnackbar, SNACKBAR_SHOW } from '../../../../reducers/snackbar.reducer';
 
 interface IState {
   audiences: Array<any>;
@@ -76,7 +76,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     }
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         autoClose: true,
@@ -90,7 +90,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     this.state = { ...this.state, audiences: [newAudiences, ...this.state.audiences] };
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         autoClose: true,
@@ -108,7 +108,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  downloadAudience({ id }) {
+  downloadAudience({id, type}) {
     const columns = [this.cpI18n.translate('name'), this.cpI18n.translate('email')];
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
@@ -123,10 +123,11 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
           };
         });
         createSpreadSheet(data, columns, `${name}`);
+        this.trackDownloadAudience(type);
       })
       .catch(() =>
         this.store.dispatch({
-          type: SNACKBAR_SHOW,
+          type: baseActions.SNACKBAR_SHOW,
           payload: {
             sticky: true,
             class: 'danger',
@@ -152,6 +153,22 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     super
       .fetchData(stream$)
       .then((res) => (this.state = Object.assign({}, this.state, { audiences: res.data })));
+  }
+
+  trackDownloadAudience(type) {
+    const audience_type = type === AudienceType.custom
+      ? amplitudeEvents.CUSTOM_AUDIENCE
+      : amplitudeEvents.DYNAMIC_AUDIENCE;
+
+    const eventProperties = {
+      data_source: amplitudeEvents.MENU_AUDIENCE,
+      audience_type
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
+      eventProperties
+    );
   }
 
   onSearch(search_str) {

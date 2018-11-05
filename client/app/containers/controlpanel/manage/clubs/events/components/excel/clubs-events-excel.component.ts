@@ -7,6 +7,7 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ClubsEventsExcelComponent implements OnInit {
   @Input() isAthletic;
+  @Input() athleticId;
 
   clubId;
   isClub = true;

@@ -30,7 +30,7 @@ describe('EventsAttendanceActionBoxComponent', () => {
           component = fixture.componentInstance;
           component.session.g.set('user', mockUser);
           component.session.g.set('school', mockSchool);
-          component.updateQrCode = new BehaviorSubject(null);
+          component.updateQrCode = new BehaviorSubject([]);
           component.totalAttendees = new BehaviorSubject(null);
 
           component.event = {
@@ -60,8 +60,9 @@ describe('EventsAttendanceActionBoxComponent', () => {
     component.totalAttendees.next(mockAttendees);
     component.session.g.set('user', { school_level_privileges: {} });
 
-    const noPermissionTooltip = component.cpI18n.
-    translate('t_events_attendance_no_permission_tooltip_text');
+    const noPermissionTooltip = component.cpI18n.translate(
+      't_events_attendance_no_permission_tooltip_text'
+    );
 
     component.ngOnInit();
 
@@ -73,13 +74,9 @@ describe('EventsAttendanceActionBoxComponent', () => {
   it('no students to message', () => {
     component.totalAttendees.next(mockAttendees);
 
-    const noStudentTooltip = component.cpI18n.
-    translate('t_events_attendance_no_students_tooltip_text');
-
     component.ngOnInit();
 
     expect(component.canMessage).toBe(true);
     expect(component.disableMessageAttendees).toBe(true);
-    expect(component.messageAttendeesTooltipText).toBe(noStudentTooltip);
   });
 });
