@@ -2,9 +2,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
+import { ISnackbar, baseActions } from '../../../../../../../store/base';
 import { FileUploadService, CPI18nService } from '../../../../../../../shared/services';
-import { ISnackbar } from '../../../../../../../reducers/snackbar.reducer';
-import { SNACKBAR_SHOW } from './../../../../../../../reducers/snackbar.reducer';
 import { CPImageUploadComponent } from './../../../../../../../shared/components/cp-image-upload/cp-image-upload.component';
 
 @Component({
@@ -42,7 +41,7 @@ export class EventsImportTopBarComponent implements OnInit {
 
     promise.then((res: any) => this.imageChange.emit(res.image_url)).catch((err) =>
       this.store.dispatch({
-        type: SNACKBAR_SHOW,
+        type: baseActions.SNACKBAR_SHOW,
         payload: {
           class: 'danger',
           autoClose: true,

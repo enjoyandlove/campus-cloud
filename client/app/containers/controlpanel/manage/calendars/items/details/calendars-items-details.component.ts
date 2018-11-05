@@ -9,10 +9,7 @@ import { ICalendar } from './../../calendars.interface';
 import { BaseComponent } from '../../../../../../base';
 import { FORMAT } from '../../../../../../shared/pipes';
 import { CalendarsService } from '../../calendars.services';
-import { CPTrackingService } from '../../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
-import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking/tracking.directive';
+import { baseActions, IHeader } from '../../../../../../store/base';
 
 @Component({
   selector: 'cp-calendars-items-details',
@@ -21,7 +18,6 @@ import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking/tracki
 })
 export class CalendarsItemsDetailsComponent extends BaseComponent implements OnInit {
   item;
-  eventData;
   mapCenter;
   itemId: number;
   loading = true;
@@ -35,8 +31,7 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
     public session: CPSession,
     public route: ActivatedRoute,
     public store: Store<IHeader>,
-    public service: CalendarsService,
-    public cpTracking: CPTrackingService
+    public service: CalendarsService
   ) {
     super();
 
@@ -49,7 +44,7 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `[NOTRANSLATE]${this.item.title}[NOTRANSLATE]`,
         subheading: null,
@@ -91,16 +86,5 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
     });
   }
 
-  ngOnInit() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.CALENDAR_EVENTS
-    };
-
-    this.eventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
-      eventProperties
-    };
-  }
+  ngOnInit() {}
 }

@@ -13,7 +13,7 @@ import { CheckInOutTime, CheckInType } from '../../../callback.status';
 export class CheckinAttendeesListComponent {
   @Input() data: ICheckIn;
 
-  @Output() checkout: EventEmitter<ICheckIn> = new EventEmitter();
+  @Output() checkout: EventEmitter<{ data: ICheckIn, userId: number}> = new EventEmitter();
 
   timezone: string;
   attendee: IAttendee;
@@ -57,6 +57,6 @@ export class CheckinAttendeesListComponent {
       attendees
     };
 
-    this.checkout.emit(this.data);
+    this.checkout.emit({ data: this.data, userId: newAttendee.attendance_id });
   }
 }

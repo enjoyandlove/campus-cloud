@@ -15,6 +15,7 @@ import { canSchoolWriteResource } from './../../../../../../../shared/utils/priv
 })
 export class EventsAttendanceActionBoxComponent implements OnInit {
   @Input() event: any;
+  @Input() checkInSource: string;
   @Input() isOrientation: boolean;
   @Input() updateQrCode = new BehaviorSubject(null);
   @Input() totalAttendees = new BehaviorSubject(null);
@@ -24,6 +25,7 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   @Output() sendMessage: EventEmitter<null> = new EventEmitter();
   @Output() addCheckIn: EventEmitter<null> = new EventEmitter();
   @Output() onToggleQr: EventEmitter<boolean> = new EventEmitter();
+  @Output() trackClickCheckIn: EventEmitter<string> = new EventEmitter();
 
   hasQr;
   qrLabel;

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-import { IHeader, HEADER_UPDATE } from '../../../reducers/header.reducer';
+import { IHeader, baseActions, getHeaderState } from '../../../store/base';
 
 @Component({
   selector: 'cp-notify',
@@ -17,10 +17,10 @@ export class NotifyComponent implements OnInit {
   headerData$: Observable<IHeader>;
 
   constructor(private store: Store<any>) {
-    this.headerData$ = this.store.select('HEADER');
+    this.headerData$ = this.store.select(getHeaderState);
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: require('./notify.header.json')
     });
   }

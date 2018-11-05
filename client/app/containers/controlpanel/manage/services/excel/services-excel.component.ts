@@ -10,10 +10,8 @@ import { ServicesService } from '../services.service';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { CPImageUploadComponent } from '../../../../../shared/components';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { baseActions, getServicesModalState } from './../../../../../store/base';
 import { CPI18nService, FileUploadService } from '../../../../../shared/services';
-import { SERVICES_MODAL_RESET } from '../../../../../reducers/services-modal.reducer';
-import { HEADER_DEFAULT, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 
 const i18n = new CPI18nPipe();
 
@@ -48,7 +46,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
 
-    this.store.select('SERVICES_MODAL').subscribe((res) => {
+    this.store.select(getServicesModalState).subscribe((res) => {
       this.services = !isDev ? res : require('./mock.json');
       this.buildForm();
       this.buildHeader();
@@ -59,7 +57,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     const subheading = i18n.transform('services_import_items_to_import', this.services.length);
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: 'services_imports_heading',
         crumbs: {
@@ -234,7 +232,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
 
   handleError(err?: string) {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         class: 'danger',
         sticky: true,
@@ -280,8 +278,8 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   ngOnDestroy() {
-    this.store.dispatch({ type: HEADER_DEFAULT });
-    this.store.dispatch({ type: SERVICES_MODAL_RESET });
+    this.store.dispatch({ type: baseActions.HEADER_DEFAULT });
+    this.store.dispatch({ type: baseActions.SERVICES_MODAL_RESET });
   }
 
   ngOnInit() {

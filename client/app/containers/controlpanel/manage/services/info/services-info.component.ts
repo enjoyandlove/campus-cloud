@@ -1,23 +1,24 @@
 /*tslint:disable:max-line-length */
-import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { BehaviorSubject, combineLatest } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+
+import { ServicesService } from '../services.service';
+import { CPSession, ISchool } from '../../../../../session';
+import { AdminService } from '../../../../../shared/services';
+import { baseActions, IHeader } from '../../../../../store/base';
+import { BaseComponent } from '../../../../../base/base.component';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
+
 import {
   canSchoolReadResource,
   canStoreReadAndWriteResource
 } from './../../../../../shared/utils/privileges';
-import { ServicesService } from '../services.service';
-import { CPSession, ISchool } from '../../../../../session';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { AdminService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
-import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
   selector: 'cp-services-info',
@@ -30,7 +31,6 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   admins;
   service;
   storeId;
-  eventData;
   loading = true;
   school: ISchool;
   serviceId: number;
@@ -44,7 +44,6 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     private adminService: AdminService,
-    private cpTracking: CPTrackingService,
     private serviceService: ServicesService
   ) {
     super();
@@ -142,7 +141,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     }
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
         crumbs: {
@@ -155,16 +154,5 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
-    };
-
-    this.eventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
-      eventProperties
-    };
-  }
+  ngOnInit() {}
 }

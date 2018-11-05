@@ -1,27 +1,22 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
+
+import { TEAM_ACCESS } from '../utils';
+import { CPSession } from '../../../../../session';
+import { baseActions, IHeader } from '../../../../../store/base';
+import { BaseComponent } from '../../../../../base/base.component';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
+import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
 
 import {
   accountsToStoreMap,
   canAccountLevelReadResource
 } from './../../../../../shared/utils/privileges/privileges';
-
-import { TEAM_ACCESS } from '../utils';
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base/base.component';
-import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import {
-  AdminService,
-  ErrorService,
-  CPI18nService,
-  CPTrackingService
-} from '../../../../../shared/services';
 
 import {
   clubMenu,
@@ -32,7 +27,6 @@ import {
   TeamUtilsService,
   audienceMenuStatus
 } from '../team.utils.service';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 declare var $: any;
 
@@ -75,7 +69,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   servicesCount = null;
   athleticsCount = null;
   MODAL_TYPE = MODAL_TYPE.WIDE;
-  CP_PRIVILEGES = CP_PRIVILEGES;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
 
   resetClubsModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -91,8 +84,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     private cpI18n: CPI18nService,
     public utils: TeamUtilsService,
     private adminService: AdminService,
-    private errorService: ErrorService,
-    private cpTracking: CPTrackingService
+    private errorService: ErrorService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -269,7 +261,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
   private buildHeader(name) {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `[NOTRANSLATE]${name}[NOTRANSLATE]`,
         crumbs: {
@@ -344,14 +336,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       _data = { firstname, lastname };
     }
 
-    const eventProperties = this.utils.getAmplitudeEventProperties(
-      this.schoolPrivileges,
-      this.accountPrivileges
-    );
-
     this.adminService.updateAdmin(this.adminId, _data).subscribe(
       () => {
-        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPDATED_TEAM_MEMBER, eventProperties);
         this.router.navigate([this.currentUserCanManage ? '/settings/team' : '/dashboard']);
       },
       (err) => {

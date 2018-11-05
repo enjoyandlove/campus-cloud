@@ -12,8 +12,9 @@ import {
 import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
 
+import { baseActions } from './../../../../../store/base';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { AUDIENCE_IMPORTED } from './../../../../../reducers/audience.reducer';
+import { getAudienceState } from './../../../../../store/base/base.selectors';
 import { CPTabComponent } from './../../../../../shared/components/cp-tabs/components/cp-tab/cp-tab.component';
 
 @Component({
@@ -40,7 +41,7 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
   message;
   newAudienceTitle;
   savedAudienceTitle;
-  importedAudience$: BehaviorSubject<{ label: string; action: number }> = new BehaviorSubject(null);
+  importedAudience$: BehaviorSubject<number> = new BehaviorSubject(null);
 
   // this will ensure ngOnDestroy is
   // called on these components
@@ -62,7 +63,7 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
 
   onDestroyNewAudience() {
     this.store.dispatch({
-      type: AUDIENCE_IMPORTED,
+      type: baseActions.AUDIENCE_IMPORTED,
       payload: {
         audience_id: null,
         new_audience_active: false,
@@ -74,7 +75,7 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
 
   onDestroySavedAudience() {
     this.store.dispatch({
-      type: AUDIENCE_IMPORTED,
+      type: baseActions.AUDIENCE_IMPORTED,
       payload: {
         audience_id: null,
         new_audience_active: true,
@@ -85,7 +86,7 @@ export class AudienceCardComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.store
-      .select('AUDIENCE')
+      .select(getAudienceState)
       .subscribe(({ audience_id, new_audience_active, saved_audience_active }) => {
         this.importedAudience$.next(audience_id);
 

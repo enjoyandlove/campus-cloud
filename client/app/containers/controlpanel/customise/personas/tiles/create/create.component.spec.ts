@@ -1,21 +1,22 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpErrorResponse } from '@angular/common/http';
+import { FormBuilder } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { of, throwError } from 'rxjs';
-import { reducers } from './../../../../../../reducers';
-import { CPSession } from './../../../../../../session/index';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { mockPersonas } from './../../mock/personas.service.mock';
-import { PersonasService } from './../../personas.service';
-import { SectionUtilsService } from './../../sections/section.utils.service';
-import { SectionsService } from './../../sections/sections.service';
-import { PersonasTilesModule } from './../tiles.module';
+
 import { TilesService } from './../tiles.service';
+import { PersonasTilesModule } from './../tiles.module';
+import { PersonasService } from './../../personas.service';
+import { CPSession } from './../../../../../../session/index';
 import { PersonasTileCreateComponent } from './create.component';
+import { mockPersonas } from './../../mock/personas.service.mock';
+import { SectionsService } from './../../sections/sections.service';
 import { SharedModule } from '../../../../../../shared/shared.module';
-import { SNACKBAR_HIDE } from '../../../../../../reducers/snackbar.reducer';
+import { baseReducers, baseActions } from './../../../../../../store/base';
+import { SectionUtilsService } from './../../sections/section.utils.service';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { PersonasUtilsService } from '../../personas.utils.service';
 
 class MockPersonasService {
   dummy;
@@ -74,8 +75,8 @@ describe('PersonasTileCreateComponent', () => {
           SharedModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [
@@ -84,6 +85,7 @@ describe('PersonasTileCreateComponent', () => {
           CPSession,
           SectionUtilsService,
           SectionUtilsService,
+          PersonasUtilsService,
           { provide: TilesService, useClass: MockTilesService },
           { provide: PersonasService, useClass: MockPersonasService },
           { provide: SectionsService, useClass: MockSectionsService }
@@ -175,7 +177,7 @@ describe('PersonasTileCreateComponent', () => {
 
     expect(comp.guideService.guide).toBeNull();
     expect(comp.store.dispatch).toHaveBeenCalled();
-    expect(comp.store.dispatch).toHaveBeenCalledWith({ type: SNACKBAR_HIDE });
+    expect(comp.store.dispatch).toHaveBeenCalledWith({ type: baseActions.SNACKBAR_HIDE });
   });
 
   it('createGuideLink', () => {

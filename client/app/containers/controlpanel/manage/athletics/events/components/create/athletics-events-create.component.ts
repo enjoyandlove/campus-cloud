@@ -1,5 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { isClubAthletic } from '../../../../clubs/clubs.athletics.labels';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'cp-athletics-events-create',
@@ -8,11 +7,9 @@ import { isClubAthletic } from '../../../../clubs/clubs.athletics.labels';
              </cp-clubs-events-create>`
 })
 export class AthleticsEventsCreateComponent implements OnInit {
-  @Input() isAthletic;
+  isAthletic = true;
 
   constructor() {}
 
-  ngOnInit() {
-    this.isAthletic = isClubAthletic.athletic;
-  }
+  ngOnInit() {}
 }

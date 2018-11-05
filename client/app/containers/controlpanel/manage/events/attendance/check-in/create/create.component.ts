@@ -73,11 +73,11 @@ export class CheckInCreateComponent implements OnInit {
     const checkInTime = this.form.controls['check_in_time'].value;
     const checkOutTime = this.form.controls['check_out_time_epoch'].value;
 
-    const checkoutTimeBeforeCheckinTime =
-      this.checkInUtils.checkoutTimeBeforeCheckinTime(
-        checkInTime,
-        checkOutTime,
-        this.data.has_checkout);
+    const checkoutTimeBeforeCheckinTime = this.checkInUtils.checkoutTimeBeforeCheckinTime(
+      checkInTime,
+      checkOutTime,
+      this.data.has_checkout
+    );
 
     if (checkoutTimeBeforeCheckinTime) {
       this.formErrors = true;
@@ -85,8 +85,9 @@ export class CheckInCreateComponent implements OnInit {
 
       this.form.controls['check_out_time_epoch'].setErrors({ required: true });
 
-      this.errorMessage = this.cpI18n.
-      translate('t_events_attendance_add_check_in_error_check_out_time_after_check_in');
+      this.errorMessage = this.cpI18n.translate(
+        't_events_attendance_add_check_in_error_check_out_time_after_check_in'
+      );
 
       return;
     }
@@ -99,9 +100,16 @@ export class CheckInCreateComponent implements OnInit {
         .append('calendar_id', this.orientationId.toString());
     }
 
-    this.service.addCheckIn(this.form.value, search).subscribe(
+    const eventCheckin$ = this.service.addCheckIn(this.form.value, search);
+    const orientationCheckin$ = this.service.addOrientationCheckIn(this.form.value, search);
+
+    const request$ = this.orientationId ? orientationCheckin$ : eventCheckin$;
+
+    request$.subscribe(
       (res: any) => {
-        if (!res.attendance_id) {
+        const duplicateUser = !res.attendance_id;
+
+        if (duplicateUser) {
           this.formErrors = true;
           this.enableSaveButton();
           this.errorMessage = this.cpI18n.translate('t_event_check_in_attendee_already_exist');
@@ -109,14 +117,15 @@ export class CheckInCreateComponent implements OnInit {
           return;
         }
 
-        this.created.emit();
+        this.created.emit(this.form.value);
         this.resetModal();
       },
       (_) => {
         this.formErrors = true;
         this.enableSaveButton();
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
-      });
+      }
+    );
   }
 
   enableSaveButton() {

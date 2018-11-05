@@ -1,29 +1,20 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import {
-  CPI18nService,
-  CPTrackingService,
-  FileUploadService,
-  RouteLevel
-} from '../../../../../shared/services';
-
-import { switchMap } from 'rxjs/operators';
 import { ClubStatus } from '../club.status';
 import { API } from '../../../../../config/api';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '../../../../../session';
 import { ClubsUtilsService } from '../clubs.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { baseActions, ISnackbar } from '../../../../../store/base';
 import { appStorage } from './../../../../../shared/utils/storage/storage';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
-import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
+import { CPI18nService, FileUploadService } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-clubs-info',
@@ -36,7 +27,6 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   club;
   labels;
   loading;
-  eventData;
   clubStatus;
   buttonText;
   clubId: number;
@@ -54,8 +44,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     public store: Store<ISnackbar>,
     public clubsService: ClubsService,
     public helper: ClubsUtilsService,
-    public fileService: FileUploadService,
-    public cpTracking: CPTrackingService
+    public fileService: FileUploadService
   ) {
     super();
     this.clubId = this.route.parent.snapshot.params['clubId'];
@@ -88,7 +77,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
         !!this.club.advisor_email;
 
       this.store.dispatch({
-        type: HEADER_UPDATE,
+        type: baseActions.HEADER_UPDATE,
         payload: this.buildHeader(res.data.name)
       });
     });
@@ -96,7 +85,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
   flashMessageSuccess() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         autoClose: true,
         body: this.cpI18n.translate('message_file_upload_success')
@@ -106,7 +95,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
   flashMessageError(body = this.cpI18n.translate('message_file_upload_error')) {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body,
         class: 'danger',
@@ -183,17 +172,6 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
-    };
-
-    this.eventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
-      eventProperties
-    };
-
     this.buttonText = this.cpI18n.translate('reupload');
     this.limitedAdmin =
       this.isAthletic === isClubAthletic.club

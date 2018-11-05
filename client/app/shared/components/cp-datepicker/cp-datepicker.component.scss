@@ -2,6 +2,29 @@
 @import '~styles/components/form';
 @import '~styles/components/button';
 
+.picker {
+  i {
+    font-size: 18px;
+    vertical-align: -4px;
+  }
+
+  &--content {
+    top: 115%;
+    padding: 0;
+    box-shadow: 1px 0 0 #eee, -1px 0 0 #eee, 0 1px 0 #eee, 0 -1px 0 #eee,
+      0 3px 13px rgba(0, 0, 0, 0.08);
+  }
+
+  &--controls {
+    display: flex;
+    padding: 15px 0;
+    justify-content: center;
+    button {
+      @include font-semi-bold();
+    }
+  }
+}
+
 .flatpickr-calendar {
   background: transparent;
   overflow: hidden;
@@ -16,7 +39,6 @@
   border: 0;
   font-size: 14px;
   line-height: 24px;
-  border-radius: 5px;
   position: absolute;
   width: 315px;
   box-sizing: border-box;
@@ -24,8 +46,7 @@
   transition: top 0.1s cubic-bezier(0, 1, 0.5, 1);
   z-index: 999999;
   background: #fff;
-  box-shadow: 1px 0 0 #eee, -1px 0 0 #eee, 0 1px 0 #eee, 0 -1px 0 #eee,
-    0 3px 13px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid #eee;
 }
 .flatpickr-calendar.inline,
 .flatpickr-calendar.open {
@@ -499,6 +520,9 @@ span.flatpickr-weekday {
 }
 .flatpickr-time.time24hr .numInputWrapper {
   width: 49%;
+}
+.calendar .flatpickr-input.flatpickr-input.form-control.input {
+  display: none;
 }
 .flatpickr-time input {
   background: transparent;

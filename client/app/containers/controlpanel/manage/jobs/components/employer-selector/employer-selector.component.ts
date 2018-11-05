@@ -1,8 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { startWith, map } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
+import { Store } from '@ngrx/store';
 
 import { JobsService } from '../../jobs.service';
 import { BaseComponent } from '../../../../../../base';
+import * as fromJobs from '../../../../../../store/manage';
+import { CPI18nService } from '../../../../../../shared/services';
 
 @Component({
   selector: 'cp-employer-selector',
@@ -15,7 +19,11 @@ export class EmployerSelectorComponent extends BaseComponent implements OnInit {
   employers$;
   selectedEmployer;
 
-  constructor(public jobsService: JobsService) {
+  constructor(
+    public cpI18n: CPI18nService,
+    public jobsService: JobsService,
+    private store: Store<fromJobs.IJobsState>
+  ) {
     super();
   }
 
@@ -35,7 +43,18 @@ export class EmployerSelectorComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.employers$ = this.jobsService.getEmployers('new');
+    const dropdownLabel = this.cpI18n.translate('jobs_select_employer');
+    this.employers$ = this.store
+      .select(fromJobs.getJobsEmployers)
+      .pipe(
+        startWith([{ label: dropdownLabel }]),
+        map((employers) => [{ label: dropdownLabel, action: null }, ...employers])
+      );
+    this.store.select(fromJobs.getJobsLoaded).subscribe((loaded: boolean) => {
+      if (!loaded) {
+        this.store.dispatch(new fromJobs.LoadEmployers());
+      }
+    });
     this.getSelectedEmployer();
   }
 }

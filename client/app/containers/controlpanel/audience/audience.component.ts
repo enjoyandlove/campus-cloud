@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-import { IHeader, HEADER_UPDATE } from '../../../reducers/header.reducer';
+import { getHeaderState } from '../../../store';
+import { IHeader, baseActions } from '../../../store/base';
 
 @Component({
   selector: 'cp-audience',
@@ -17,10 +18,10 @@ export class AudienceComponent implements OnInit {
   headerData$: Observable<IHeader>;
 
   constructor(private store: Store<any>) {
-    this.headerData$ = this.store.select('HEADER');
+    this.headerData$ = this.store.select(getHeaderState);
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: require('./audience.header.json')
     });
   }

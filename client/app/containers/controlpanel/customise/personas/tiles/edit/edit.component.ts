@@ -1,3 +1,4 @@
+import { PersonasUtilsService } from './../../personas.utils.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,10 +16,8 @@ import { TilesUtilsService } from '../tiles.utils.service';
 import { ICampusGuide } from '../../sections/section.interface';
 import { SectionsService } from '../../sections/sections.service';
 import { SectionUtilsService } from '../../sections/section.utils.service';
-import { SNACKBAR_HIDE } from './../../../../../../reducers/snackbar.reducer';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
-import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
-import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
+import { baseActions, IHeader, ISnackbar } from '../../../../../../store/base';
 
 @Component({
   selector: 'cp-personas-tile-edit',
@@ -28,6 +27,7 @@ import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.re
 export class PersonasTileEditComponent extends BaseComponent implements OnInit, OnDestroy {
   tileId;
   loading;
+  editable;
   buttonData;
   campusLinkId;
   tile: ITile;
@@ -49,7 +49,8 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     public guideUtils: SectionUtilsService,
     public personaService: PersonasService,
     public store: Store<IHeader | ISnackbar>,
-    public sectionUtils: SectionUtilsService
+    public sectionUtils: SectionUtilsService,
+    public personasUtils: PersonasUtilsService
   ) {
     super();
     this.tileId = this.route.snapshot.params['tileId'];
@@ -81,7 +82,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
 
   erroHandler() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         class: 'danger',
@@ -130,11 +131,12 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
       this.guide,
       this.tile
     );
+    this.editable = !this.utils.isCampaignTile(this.tile) && !this.utils.isDeprecated(this.tile);
   }
 
   buildHeader(personaName: string) {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: 't_personas_tile_update_header',
         subheading: null,
@@ -148,11 +150,15 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     });
   }
 
-  onCampusGuideTileFormChange() {
+  updateButtonDisableStatus() {
     this.buttonData = {
       ...this.buttonData,
       disabled: !(this.campusGuideTileForm.valid && this.campusLinkForm.valid)
     };
+  }
+
+  onCampusGuideTileFormChange() {
+    this.updateButtonDisableStatus();
 
     const name = this.campusGuideTileForm.controls['name'].value;
     const img_url = this.campusGuideTileForm.controls['img_url'].value;
@@ -162,15 +168,12 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   }
 
   onCampusLinkFormChange() {
-    this.buttonData = {
-      ...this.buttonData,
-      disabled: !(this.campusGuideTileForm.valid && this.campusLinkForm.valid)
-    };
+    this.updateButtonDisableStatus();
   }
 
   ngOnDestroy() {
     this.guideService.guide = null;
-    this.store.dispatch({ type: SNACKBAR_HIDE });
+    this.store.dispatch({ type: baseActions.SNACKBAR_HIDE });
   }
 
   fetch() {
@@ -182,11 +185,10 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
       .fetchData(persona$)
       .then(({ data }) => {
         const persona = data;
-
         this.buildForm();
         this.persona = persona;
 
-        this.buildHeader(this.utils.getPersonaNameByLocale(persona));
+        this.buildHeader(this.personasUtils.localizedPersonaName(persona));
       })
       .catch(() => this.erroHandler());
   }

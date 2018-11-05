@@ -1,11 +1,7 @@
+import { IAudience } from '../base.state';
+
 export const AUDIENCE_IMPORTED = 'AUDIENCE_IMPORTED';
 export const AUDIENCE_RESET_IMPORT_AUDIENCE = 'AUDIENCE_RESET_IMPORT_AUDIENCE';
-
-export interface IAudience {
-  audience_id: number;
-  new_audience_active: boolean;
-  saved_audience_active: boolean;
-}
 
 const initialState: IAudience = {
   audience_id: null,

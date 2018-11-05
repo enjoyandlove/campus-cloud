@@ -6,9 +6,9 @@ import { IEmployer } from '../employer.interface';
 import { CPSession } from '../../../../../../session';
 import { EmployerService } from '../employer.service';
 import { BaseComponent } from '../../../../../../base';
+import { baseActions, IHeader } from '../../../../../../store/base';
 import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
 import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
 
 export interface IState {
@@ -136,7 +136,7 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `employers_manage_employer`,
         subheading: null,

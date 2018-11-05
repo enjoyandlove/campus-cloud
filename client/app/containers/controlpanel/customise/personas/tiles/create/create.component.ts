@@ -1,3 +1,4 @@
+import { PersonasUtilsService } from './../../personas.utils.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -14,10 +15,8 @@ import { TilesUtilsService } from '../tiles.utils.service';
 import { ICampusGuide } from '../../sections/section.interface';
 import { SectionsService } from '../../sections/sections.service';
 import { SectionUtilsService } from '../../sections/section.utils.service';
-import { SNACKBAR_HIDE } from './../../../../../../reducers/snackbar.reducer';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
-import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
-import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
+import { baseActions, IHeader, ISnackbar } from './../../../../../../store/base';
 
 @Component({
   selector: 'cp-personas-tile-create',
@@ -45,7 +44,8 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     public guideUtils: SectionUtilsService,
     public personaService: PersonasService,
     public store: Store<IHeader | ISnackbar>,
-    public sectionUtils: SectionUtilsService
+    public sectionUtils: SectionUtilsService,
+    public personasUtils: PersonasUtilsService
   ) {
     super();
     this.personaId = this.route.snapshot.params['personaId'];
@@ -82,7 +82,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
   erroHandler() {
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         class: 'danger',
@@ -140,7 +140,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
   buildHeader(personaName: string) {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: 't_personas_tile_create_header',
         subheading: null,
@@ -177,7 +177,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
   ngOnDestroy() {
     this.guideService.guide = null;
-    this.store.dispatch({ type: SNACKBAR_HIDE });
+    this.store.dispatch({ type: baseActions.SNACKBAR_HIDE });
   }
 
   fetch() {
@@ -190,7 +190,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       .then(({ data }: any) => {
         this.buildForm();
         this.persona = data;
-        this.buildHeader(this.utils.getPersonaNameByLocale(data));
+        this.buildHeader(this.personasUtils.localizedPersonaName(data));
       })
       .catch(() => this.erroHandler());
   }

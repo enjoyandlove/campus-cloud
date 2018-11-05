@@ -14,8 +14,6 @@
             {{ 'download_csv' | cpI18n }}
           </button>
           <button
-            cpTracker
-            [eventData]="eventData"
             type="button"
             *ngIf="!limitedAdmin"
             (click)="create.emit()"

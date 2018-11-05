@@ -2,16 +2,15 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { CPSession } from './../../../../session/index';
 import { EngagementService } from './engagement.service';
+import { baseActions } from '../../../../store/base/index';
 import { AssessUtilsService } from '../assess.utils.service';
 import { CPTrackingService } from '../../../../shared/services';
 import { BaseComponent } from '../../../../base/base.component';
-import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
-import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
@@ -289,7 +288,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   onFlashMessage(data) {
     this.trackMessageEvent(data);
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate('announcement_success_sent'),
         autoClose: true
@@ -305,7 +304,8 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     };
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.ASSESS_SENT_ANNOUNCEMENT,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   trackDownloadEvent(engagement_type) {
@@ -318,7 +318,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: require('../assess.header.json')
     });
   }

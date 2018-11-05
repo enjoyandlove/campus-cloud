@@ -8,9 +8,9 @@ import { ManageHeaderService } from '../../utils';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { FORMAT } from '../../../../../shared/pipes';
+import { baseActions, IHeader } from '../../../../../store/base';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 export interface IState {
@@ -122,7 +122,7 @@ export class DealsListComponent extends BaseComponent implements OnInit {
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: this.headerService.filterByPrivileges()
     });
   }

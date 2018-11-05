@@ -1,9 +1,9 @@
-import { Observable } from 'rxjs';
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-import { IHeader } from '../../../reducers/header.reducer';
-import { HEADER_UPDATE } from './../../../reducers/header.reducer';
+import { getHeaderState } from '../../../store';
+import { baseActions, IHeader } from './../../../store/base';
 
 @Component({
   selector: 'cp-assess',
@@ -18,10 +18,10 @@ export class AssessComponent {
   headerData$: Observable<IHeader>;
 
   constructor(private store: Store<any>) {
-    this.headerData$ = this.store.select('HEADER');
+    this.headerData$ = this.store.select(getHeaderState);
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: require('./assess.header.json')
     });
   }

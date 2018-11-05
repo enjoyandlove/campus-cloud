@@ -82,11 +82,12 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
   trackAmplitudeEvent(sort_type) {
     this.eventProperties = {
       ...this.utils.getEventProperties(this.filters),
+      card_type: amplitudeEvents.SERVICES,
       sort_type
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.ASSESS_VIEWED_TOP_SERVICES,
+      amplitudeEvents.ASSESS_VIEWED_CARDS,
       this.eventProperties
     );
   }

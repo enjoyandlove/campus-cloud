@@ -11,8 +11,6 @@
               <div class="row event__buttons">
                 <div class="col-12">
                   <a
-                    cpTracker
-                    [eventData]="eventData"
                     [routerLink]="['../edit']"
                     class="cpbtn cpbtn--primary"
                     *ngIf="!utils.isPastEvent(event)">
@@ -21,6 +19,8 @@
                   <a
                     target="_blank"
                     class="cpbtn cpbtn--primary"
+                    (click)="trackCheckinEvent(event.encrypted_id)"
+                    [queryParams]="{source: checkInSource.source_page}"
                     *ngIf="event.event_attendance === attendanceEnabled"
                     [routerLink]="[eventCheckinRoute + event.encrypted_id]">
                     {{ 't_shared_web_checkin' | cpI18n }}

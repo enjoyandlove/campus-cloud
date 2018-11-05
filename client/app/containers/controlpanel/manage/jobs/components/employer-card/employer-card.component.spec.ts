@@ -1,42 +1,49 @@
-import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 
 import { JobsModule } from '../../jobs.module';
 import { CPSession } from '../../../../../../session';
+import { RootStoreModule } from '../../../../../../store';
 import { JobsUtilsService } from '../../jobs.utils.service';
 import { EmployerCardComponent } from './employer-card.component';
 import { CPI18nService } from '../../../../../../shared/services';
+import { configureTestSuite } from '../../../../../../shared/tests';
 
 describe('EmployerCardComponent', () => {
+  configureTestSuite();
+  beforeAll((done) => {
+    (async () => {
+      TestBed.configureTestingModule({
+        imports: [JobsModule, HttpClientModule, RouterTestingModule, RootStoreModule],
+        providers: [CPSession, CPI18nService, JobsUtilsService]
+      });
+
+      await TestBed.compileComponents();
+    })()
+      .then(done)
+      .catch(done.fail);
+  });
+
   let component: EmployerCardComponent;
   let fixture: ComponentFixture<EmployerCardComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [JobsModule, HttpClientModule, RouterTestingModule],
-        providers: [CPSession, CPI18nService, JobsUtilsService]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(EmployerCardComponent);
-          component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = TestBed.createComponent(EmployerCardComponent);
+    component = fixture.componentInstance;
 
-          const fb = new FormBuilder();
+    const fb = new FormBuilder();
 
-          component.form = fb.group({
-            store_id: [null]
-          });
+    component.form = fb.group({
+      store_id: [null]
+    });
 
-          component.employerForm = fb.group({
-            name: [null],
-            logo_url: [null]
-          });
-        });
-    })
-  );
+    component.employerForm = fb.group({
+      name: [null],
+      logo_url: [null]
+    });
+  });
 
   it('onTabClick - existing employer', () => {
     const id = 'existing';

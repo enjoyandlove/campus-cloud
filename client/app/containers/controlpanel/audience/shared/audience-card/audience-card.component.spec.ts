@@ -1,26 +1,43 @@
-import { SharedModule } from './../../../../../shared/shared.module';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { StoreModule } from '@ngrx/store';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
+import { of } from 'rxjs';
 
 import { AudienceCardComponent } from './audience-card.component';
+import { baseReducers } from './../../../../../store/base/reducers';
+import { SharedModule } from './../../../../../shared/shared.module';
+import { getAudienceState } from './../../../../../store/base/base.selectors';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
-import { reducer } from '../../../../../reducers/audience.reducer';
-
 describe('AudienceCardComponent', () => {
+  let storeSpy: jasmine.Spy;
   let comp: AudienceCardComponent;
   let fixture: ComponentFixture<AudienceCardComponent>;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule, StoreModule.forRoot({}), StoreModule.forFeature('AUDIENCE', reducer)],
+      imports: [SharedModule, StoreModule.forRoot({ AUDIENCE: baseReducers.AUDIENCE })],
       declarations: [AudienceCardComponent],
       providers: [CPI18nService],
       schemas: [NO_ERRORS_SCHEMA]
     });
     fixture = TestBed.createComponent(AudienceCardComponent);
     comp = fixture.componentInstance;
+    storeSpy = spyOn(comp.store, 'select');
+  });
+
+  it('should init', () => {
+    expect(comp).toBeTruthy();
+  });
+
+  it('should listen for audience changes', () => {
+    storeSpy.and.returnValue(
+      of({ audience_id: 1, new_audience_active: false, saved_audience_active: true })
+    );
+
+    fixture.detectChanges();
+
+    expect(storeSpy).toHaveBeenCalled();
+    expect(storeSpy).toHaveBeenCalledWith(getAudienceState);
   });
 
   it('onFilters should emit selectedFilters', () => {

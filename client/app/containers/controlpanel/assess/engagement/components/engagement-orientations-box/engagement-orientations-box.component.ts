@@ -82,11 +82,12 @@ export class EngagementOrientationsBoxComponent extends BaseComponent implements
   trackAmplitudeEvent(sort_type) {
     this.eventProperties = {
       ...this.utils.getEventProperties(this.filters),
+      card_type: amplitudeEvents.ORIENTATION_PROGRAMS,
       sort_type
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.ASSESS_VIEWED_TOP_ORIENTATIONS,
+      amplitudeEvents.ASSESS_VIEWED_CARDS,
       this.eventProperties
     );
   }

@@ -2,6 +2,7 @@ import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
+import { of } from 'rxjs';
 
 import { CPSession } from './../../../../../session';
 import { PersonasModule } from './../personas.module';
@@ -168,7 +169,7 @@ describe('PersonasCreateComponent', () => {
     const fakeService = { id: 1, name: 'name', img_url: 'image' };
     comp.campusSecurityTile = fakeService;
 
-    const spyOncreateCampusTile = spyOn(comp, 'createCampusTile');
+    const spyOncreateCampusTile = spyOn(comp, 'createCampusTile').and.returnValue(of({ id: 1 }));
 
     comp.createSecurityTile(1).subscribe(() => {
       expect(spyOncreateCampusTile).toHaveBeenCalledTimes(1);

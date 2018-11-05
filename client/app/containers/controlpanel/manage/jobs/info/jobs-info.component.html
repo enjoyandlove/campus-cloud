@@ -10,8 +10,6 @@
               <div class="row">
                 <div class="col-12">
                   <a
-                    cpTracker
-                    [eventData]="eventData"
                     [routerLink]="['../edit']"
                     class="cpbtn cpbtn--primary float-right">
                     {{ 'jobs_job_edit' | cpI18n }}
@@ -51,7 +49,9 @@
                     </div>
                   </div>
 
-                  <div class="row meta__item" *ngIf="job.contract_start">
+                  <div
+                    *ngIf="utils.isDateSet(job.contract_start)"
+                    class="row meta__item" >
                     <div class="col-4">
                       <p class="meta__type">{{ 'jobs_job_start_date' | cpI18n }}</p>
                     </div>
@@ -60,7 +60,9 @@
                     </div>
                   </div>
 
-                  <div class="row meta__item" *ngIf="job.application_deadline">
+                  <div
+                    *ngIf="utils.isDateSet(job.application_deadline)"
+                    class="row meta__item">
                     <div class="col-4">
                       <p class="meta__type">{{ 'jobs_application_deadline' | cpI18n }}</p>
                     </div>

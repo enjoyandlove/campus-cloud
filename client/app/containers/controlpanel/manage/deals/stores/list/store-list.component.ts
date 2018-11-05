@@ -6,9 +6,9 @@ import { IStore } from '../store.interface';
 import { DealsStoreService } from '../store.service';
 import { CPSession } from '../../../../../../session';
 import { BaseComponent } from '../../../../../../base';
+import { baseActions, IHeader } from '../../../../../../store/base';
 import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { HEADER_UPDATE, IHeader } from '../../../../../../reducers/header.reducer';
 import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
 
 export interface IState {
@@ -134,7 +134,7 @@ export class StoreListComponent extends BaseComponent implements OnInit {
 
   buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `stores_manage_store`,
         subheading: null,

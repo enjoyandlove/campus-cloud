@@ -1,3 +1,4 @@
+import { CampusLink } from './../../../../manage/links/tile';
 import { ResourcesUtilsService } from './resources.utils.service';
 import { mockPersonas } from '../../__mock__/personas.mock';
 import { PersonasType } from '../../personas.status';
@@ -18,7 +19,7 @@ describe('ResourcesUtilsService', () => {
       { ...mockPersonas[0] },
       {
         ...mockResource,
-        link_url: 'oohlala://academic_calendar_list'
+        link_url: CampusLink.academicCalendarList
       }
     );
     expect(calendarType).toBe('academic_calendar');
@@ -47,7 +48,7 @@ describe('ResourcesUtilsService', () => {
       { ...mockPersonas[0] },
       {
         ...mockResource,
-        link_url: 'oohlala://campus_link_list'
+        link_url: CampusLink.campusLinkList
       }
     );
     expect(listType).toBe(null);
@@ -61,7 +62,7 @@ describe('ResourcesUtilsService', () => {
       },
       {
         ...mockResource,
-        link_url: 'oohlala://course_search'
+        link_url: CampusLink.courseSearch
       }
     );
     expect(courseType).toBe(null);
@@ -73,7 +74,7 @@ describe('ResourcesUtilsService', () => {
       },
       {
         ...mockResource,
-        link_url: 'oohlala://campus_service'
+        link_url: CampusLink.campusService
       }
     );
     expect(serviceType).toBe('campus_service');
@@ -85,7 +86,7 @@ describe('ResourcesUtilsService', () => {
       },
       {
         ...mockResource,
-        link_url: 'oohlala://campus_link_list'
+        link_url: CampusLink.campusLinkList
       }
     );
     expect(listType).toBe(null);

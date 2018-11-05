@@ -1,16 +1,19 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
+import { IService } from '../../../../../service.interface';
 import { CPSession } from './../../../../../../../../../session';
 import IServiceProvider from '../../../../../providers.interface';
 import { ProvidersService } from '../../../../../providers.service';
 import { FORMAT } from '../../../../../../../../../shared/pipes/date';
 import { ServicesUtilsService } from '../../../../../services.utils.service';
-import { CPTrackingService } from '../../../../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../../../../base/base.component';
-import { CheckInMethod, CheckInOutTime } from '../../../../../../events/event.status';
+import { EventUtilService } from '../../../../../../events/events.utils.service';
 import { amplitudeEvents } from '../../../../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../../../../shared/services/i18n.service';
+import { CPTrackingService, RouteLevel } from '../../../../../../../../../shared/services';
+import { ICheckIn } from '../../../../../../events/attendance/check-in/check-in.interface';
+import { CheckInMethod, CheckInOutTime, CheckOut } from '../../../../../../events/event.status';
 
 interface IState {
   end: string;
@@ -34,6 +37,7 @@ const state: IState = {
   styleUrls: ['./providers-attendees-list.component.scss']
 })
 export class ServicesProvidersAttendeesListComponent extends BaseComponent implements OnInit {
+  @Input() service: IService;
   @Input() serviceId: number;
   @Input() providerId: number;
   @Input() provider: IServiceProvider;
@@ -57,6 +61,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     public session: CPSession,
     private cpI18n: CPI18nService,
     private utils: ServicesUtilsService,
+    private eventUtils: EventUtilService,
     private cpTracking: CPTrackingService,
     private providersService: ProvidersService
   ) {
@@ -178,15 +183,17 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     );
   }
 
-  onCreated() {
+  onCreated(checkedInData: ICheckIn) {
     this.isAddCheckInModal = false;
     this.fetch();
+    this.trackAddEditCheckInEvent(checkedInData);
   }
 
-  onEdited() {
+  onEdited(editedCheckIn: ICheckIn) {
     this.checkInData = null;
     this.isEditCheckInModal = false;
     this.fetch();
+    this.trackAddEditCheckInEvent(editedCheckIn, true);
   }
 
   onDeleted(id: number) {
@@ -210,12 +217,44 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     }
   }
 
+  trackQrCodeEvent() {
+    const eventProperties = {
+      ...this.eventUtils.getQRCodeCheckOutStatus(this.provider),
+      check_in_type: amplitudeEvents.SERVICE_PROVIDER,
+      source_id: this.provider.encrypted_campus_service_id,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CHANGED_QR_CODE,
+      eventProperties
+    );
+  }
+
   trackAmplitudeEvent() {
     this.eventProperties = {
-      data_type: amplitudeEvents.ATTENDANCE
+      host_id: this.service.store_id,
+      data_source: amplitudeEvents.SERVICE_PROVIDER,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
+  }
+
+  trackAddEditCheckInEvent(checkedInData, isEdit = false) {
+    const eventName = isEdit
+      ? amplitudeEvents.MANAGE_UPDATED_CHECK_IN
+      : amplitudeEvents.MANAGE_ADDED_CHECK_IN;
+
+    const eventProperties = {
+      ...this.eventUtils.getQRCodeCheckOutStatus(this.provider),
+      check_in_type: amplitudeEvents.SERVICE_PROVIDER,
+      source_id: this.provider.encrypted_campus_service_id,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      check_out: checkedInData.check_out_time_epoch > 0 ? CheckOut.yes : CheckOut.no
+    };
+
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
 
   ngOnInit() {

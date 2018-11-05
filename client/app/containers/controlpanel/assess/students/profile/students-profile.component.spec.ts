@@ -9,15 +9,16 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 
-import { reducers } from '../../../../../reducers';
 import { CPSession } from './../../../../../session';
 import { StudentsService } from './../students.service';
 import { mockUser } from './../../../../../session/mock/user';
 import { AssessUtilsService } from '../../assess.utils.service';
+import { baseReducers } from '../../../../../store/base/reducers';
 import { mockSchool } from './../../../../../session/mock/school';
-import { MockCPSession } from './../../../../../session/mock/session';
 import { SharedModule } from './../../../../../shared/shared.module';
+import { MockCPSession } from './../../../../../session/mock/session';
 import { StudentsProfileComponent } from './students-profile.component';
+import { getSnackbarState, getHeaderState } from '../../../../../store';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 const mockStudentsService = {
@@ -67,8 +68,8 @@ describe('StudentsProfileComponent', () => {
         SharedModule,
         RouterTestingModule,
         StoreModule.forRoot({
-          HEADER: reducers.HEADER,
-          SNACKBAR: reducers.SNACKBAR
+          HEADER: baseReducers.HEADER,
+          SNACKBAR: baseReducers.SNACKBAR
         })
       ],
       providers: [
@@ -121,7 +122,7 @@ describe('StudentsProfileComponent', () => {
 
     comp.onFlashMessage({ hostType: null });
 
-    store.select('SNACKBAR').subscribe((payload) => expect(payload).toEqual(expected));
+    store.select(getSnackbarState).subscribe((payload) => expect(payload).toEqual(expected));
   });
 
   it('should launchMessageModal', () => {
@@ -160,7 +161,7 @@ describe('StudentsProfileComponent', () => {
     };
     comp.fetchStudentData();
 
-    store.select('HEADER').subscribe((payload) => {
+    store.select(getHeaderState).subscribe((payload) => {
       expect(payload).toEqual(expected);
     });
   });

@@ -1,11 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { map, startWith } from 'rxjs/operators';
-import { DealsStoreService } from './stores/store.service';
-import { HTTPService } from '../../../../base';
+import { map } from 'rxjs/operators';
+
 import { API } from '../../../../config/api';
+import { HTTPService } from '../../../../base';
 import { CPSession } from '../../../../session';
+import { DealsStoreService } from './stores/store.service';
 import { CPI18nService } from '../../../../shared/services';
 
 export enum DateStatus {
@@ -27,22 +28,12 @@ export class DealsService extends HTTPService {
     Object.setPrototypeOf(this, DealsService.prototype);
   }
 
-  getDealStores(label = null) {
-    const key =
-      label === 'select'
-        ? 't_deals_list_dropdown_label_select_store'
-        : 't_deals_list_dropdown_label_all_stores';
+  getDealStores() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     return this.storeService.getStores(1, 10000, search).pipe(
-      startWith([{ label: this.cpI18n.translate(key) }]),
-      map((stores) => {
-        const _stores = [
-          {
-            label: this.cpI18n.translate(key),
-            action: null
-          }
-        ];
+      map((stores: any[]) => {
+        const _stores = [];
 
         stores.forEach((store: any) => {
           const _store = {

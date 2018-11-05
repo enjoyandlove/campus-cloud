@@ -1,19 +1,18 @@
 /*tslint:disable:max-line-length */
 import { Component, OnInit, Input } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { EventAttendance } from '../event.status';
 import { EventsService } from '../events.service';
+import { EventAttendance } from '../event.status';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { EventsComponent } from '../list/base/events.component';
+import { IHeader, baseActions } from '../../../../../store/base';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { IHeader, HEADER_UPDATE } from '../../../../../reducers/header.reducer';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
 
@@ -22,22 +21,23 @@ import { IResourceBanner } from '../../../../../shared/components/cp-resource-ba
   templateUrl: './events-info.component.html',
   styleUrls: ['./events-info.component.scss']
 })
-export class EventsInfoComponent extends BaseComponent implements OnInit {
+export class EventsInfoComponent extends EventsComponent implements OnInit {
   @Input() isClub: boolean;
   @Input() clubId: number;
+  @Input() athleticId: number;
   @Input() serviceId: number;
   @Input() isService: boolean;
-  @Input() isAthletic: number;
+  @Input() isAthletic: boolean;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
   @Input() resourceBanner: IResourceBanner;
 
   event;
   banner;
-  eventData;
   urlPrefix;
   dateFormat;
   isPastEvent;
+  checkInSource;
   loading = true;
   eventId: number;
   eventCheckinRoute;
@@ -57,7 +57,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     public service: EventsService,
     public cpTracking: CPTrackingService
   ) {
-    super();
+    super(session, cpI18n, service);
     this.dateFormat = FORMAT.DATETIME;
     this.eventId = this.route.snapshot.params['eventId'];
   }
@@ -77,12 +77,7 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
 
       this.isPastEvent = this.utils.isPastEvent(this.event);
 
-      this.urlPrefix = this.utils.buildUrlPrefix(
-        this.clubId,
-        this.serviceId,
-        this.isAthletic,
-        this.orientationId
-      );
+      this.urlPrefix = this.utils.buildUrlPrefix(this.getEventType());
 
       this.banner =
         this.event.poster_url === '' ? this.event.store_logo_url : this.event.poster_url;
@@ -118,24 +113,29 @@ export class EventsInfoComponent extends BaseComponent implements OnInit {
     };
 
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload
     });
   }
 
-  ngOnInit() {
-    this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
-
+  trackCheckinEvent(source_id) {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
+      source_id,
+      check_in_source: amplitudeEvents.INFO_PAGE,
+      check_in_type: this.checkInSource.check_in_type,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
-    this.eventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.CLICKED_CHANGE_BUTTON,
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
       eventProperties
-    };
+    );
+  }
+
+  ngOnInit() {
+    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
+
+    this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
 
     this.fetch();
   }

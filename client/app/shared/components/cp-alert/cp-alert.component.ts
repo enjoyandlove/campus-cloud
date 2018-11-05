@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { ALERT_DEFAULT, IAlert } from '../../../reducers/alert.reducer';
+import { baseActions, IAlert, getAlertState } from '../../../store/base';
 
 @Component({
   selector: 'cp-alert',
@@ -12,13 +12,13 @@ export class CPAlertComponent implements OnInit {
   message: IAlert;
 
   constructor(private store: Store<any>) {
-    this.store.select('ALERT').subscribe((res: IAlert) => {
+    this.store.select(getAlertState).subscribe((res: IAlert) => {
       this.message = res;
     });
   }
 
   onClose() {
-    this.store.dispatch({ type: ALERT_DEFAULT });
+    this.store.dispatch({ type: baseActions.ALERT_DEFAULT });
   }
 
   ngOnInit() {}

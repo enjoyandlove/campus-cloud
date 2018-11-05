@@ -12,10 +12,10 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
   <div *ngSwitchCase="false">
 
-    <div *ngIf="state.events.length">
+    <div *ngIf="eventState.events.length">
       <cp-list-past
-        [state]="state"
-        [events]="state.events"
+        [state]="eventState"
+        [events]="eventState.events"
         *ngIf="!isUpcoming"
         [isOrientation]="isOrientation"
         (sortList)="onSortList($event)"
@@ -23,8 +23,8 @@
       </cp-list-past>
 
       <cp-list-upcoming
-        [state]="state"
-        [events]="state.events"
+        [state]="eventState"
+        [events]="eventState.events"
         *ngIf="isUpcoming"
         [isClub]="isClub"
         [isService]="isService"
@@ -49,7 +49,7 @@
 
     <cp-no-content
       class="add-margin"
-      *ngIf="!state.events.length"
+      *ngIf="!eventState.events.length"
       [noContentText]="cpI18n.translate('events_no_events_found')">
     </cp-no-content>
   </div>
@@ -57,7 +57,7 @@
 
 <cp-modal modalId="deleteEventsModal">
   <cp-events-delete
-    [event]="deleteEvent"
+    [event]="deletedEvent"
     [orientationId]="orientationId"
     [isOrientation]="orientation"
     (deletedEvent)="onDeletedEvent($event)">
@@ -72,6 +72,7 @@
     [serviceId]="serviceId"
     [isService]="isService"
     [isAthletic]="isAthletic"
+    [athleticId]="athleticId"
     [orientationId]="orientationId"
     [isOrientation]="isOrientation">
   </cp-events-excel-modal>
