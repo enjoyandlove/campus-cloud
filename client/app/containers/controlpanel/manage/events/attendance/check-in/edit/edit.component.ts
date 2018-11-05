@@ -12,13 +12,13 @@ import { HttpParams } from '@angular/common/http';
 
 import IEvent from '../../../event.interface';
 import { ICheckIn } from '../check-in.interface';
+import { CheckInOut } from '../../../event.status';
 import { EventsService } from '../../../events.service';
 import { CPSession } from './../../../../../../../session';
 import { CheckInUtilsService } from '../check-in.utils.service';
 import { EventUtilService } from '../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../shared/services';
 import IServiceProvider from '../../../../services/providers.interface';
-import { CheckInOut } from '../../../event.status';
 
 @Component({
   selector: 'cp-edit-check-in',
