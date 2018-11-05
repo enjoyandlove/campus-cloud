@@ -39,7 +39,7 @@ export enum Feedback {
   'disabled' = 'Disabled'
 }
 
-export enum CheckOut {
+export enum CheckInOut {
   'no' = 'No',
   'yes' = 'Yes'
 }

@@ -18,6 +18,7 @@ import { CheckInUtilsService } from '../check-in.utils.service';
 import { EventUtilService } from '../../../events.utils.service';
 import { CPI18nService } from '../../../../../../../shared/services';
 import IServiceProvider from '../../../../services/providers.interface';
+import { CheckInOut } from '../../../event.status';
 
 @Component({
   selector: 'cp-edit-check-in',
@@ -29,13 +30,15 @@ export class CheckInEditComponent implements OnInit {
   @Input() orientationId: number;
   @Input() data: IEvent | IServiceProvider;
 
-  @Output() edited: EventEmitter<null> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
+  @Output() edited: EventEmitter<{checkIn: string, checkOut: string}> = new EventEmitter();
 
   form;
   formErrors;
   buttonData;
   errorMessage;
+  checkedIn = CheckInOut.no;
+  checkedOut = CheckInOut.no;
 
   constructor(
     public el: ElementRef,
@@ -112,7 +115,7 @@ export class CheckInEditComponent implements OnInit {
 
     request$.subscribe(
       () => {
-        this.edited.emit(this.form.value);
+        this.edited.emit({checkIn: this.checkedIn, checkOut: this.checkedOut});
         this.resetModal();
       },
       (_) => {
@@ -130,8 +133,19 @@ export class CheckInEditComponent implements OnInit {
     };
   }
 
+  onValueChanges() {
+    this.form.controls['check_in_time'].valueChanges.subscribe((_) => {
+      this.checkedIn = CheckInOut.yes;
+    });
+
+    this.form.controls['check_out_time_epoch'].valueChanges.subscribe((_) => {
+      this.checkedOut = CheckInOut.yes;
+    });
+  }
+
   ngOnInit() {
     this.form = this.checkInUtils.getCheckInForm(this.checkIn, this.data);
+    this.onValueChanges();
 
     this.buttonData = {
       class: 'primary',

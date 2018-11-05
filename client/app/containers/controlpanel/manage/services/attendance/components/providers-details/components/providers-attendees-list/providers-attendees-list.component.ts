@@ -13,7 +13,7 @@ import { amplitudeEvents } from '../../../../../../../../../shared/constants/ana
 import { CPI18nService } from './../../../../../../../../../shared/services/i18n.service';
 import { CPTrackingService, RouteLevel } from '../../../../../../../../../shared/services';
 import { ICheckIn } from '../../../../../../events/attendance/check-in/check-in.interface';
-import { CheckInMethod, CheckInOutTime, CheckOut } from '../../../../../../events/event.status';
+import { CheckInMethod, CheckInOutTime, CheckInOut } from '../../../../../../events/event.status';
 
 interface IState {
   end: string;
@@ -49,6 +49,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   sortingLabels;
   eventProperties;
   state: IState = state;
+  checkInEventProperties;
   isAddCheckInModal = false;
   isEditCheckInModal = false;
   isDeleteCheckInModal = false;
@@ -186,23 +187,43 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   onCreated(checkedInData: ICheckIn) {
     this.isAddCheckInModal = false;
     this.fetch();
-    this.trackAddEditDeleteCheckInEvent(checkedInData.check_out_time_epoch);
+
+    const check_out = checkedInData.check_out_time_epoch > 0 ? CheckInOut.yes : CheckInOut.no;
+    const eventProperties = {
+      ...this.checkInEventProperties,
+      check_out
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_ADDED_ATTENDANCE,
+      eventProperties);
   }
 
-  onEdited(editedCheckIn: ICheckIn) {
+  onEdited(checkInOut) {
     this.checkInData = null;
     this.isEditCheckInModal = false;
     this.fetch();
-    this.trackAddEditDeleteCheckInEvent(editedCheckIn.check_out_time_epoch, true);
+
+    const eventProperties = {
+      ...this.checkInEventProperties,
+      check_in: checkInOut.checkIn,
+      check_out: checkInOut.checkOut
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_UPDATED_ATTENDANCE,
+      eventProperties);
   }
 
   onDeleted(id: number) {
     this.checkInData = null;
     this.isDeleteCheckInModal = false;
 
-    this.trackAddEditDeleteCheckInEvent(null, false, true);
-
     this.assessments = this.assessments.filter((attendee) => attendee.id !== id);
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DELETED_ATTENDANCE,
+      this.checkInEventProperties);
 
     if (this.assessments.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
@@ -243,30 +264,18 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
   }
 
-  trackAddEditDeleteCheckInEvent(checkOutTime, isEdit = false, isDelete = false) {
-    let eventName = isEdit
-      ? amplitudeEvents.MANAGE_UPDATED_ATTENDANCE
-      : amplitudeEvents.MANAGE_ADDED_ATTENDANCE;
-
-    eventName = isDelete ? amplitudeEvents.MANAGE_DELETED_ATTENDANCE : eventName;
-
-    const eventProperties = {
+  setCheckInEventProperties() {
+    this.checkInEventProperties = {
       ...this.eventUtils.getQRCodeCheckOutStatus(this.provider),
-      assessment_type: amplitudeEvents.SERVICE_PROVIDER,
       source_id: this.provider.encrypted_campus_service_id,
-      check_out: checkOutTime > 0 ? CheckOut.yes : CheckOut.no,
+      assessment_type: amplitudeEvents.SERVICE_PROVIDER,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
-
-    if (isDelete) {
-      delete eventProperties['check_out'];
-    }
-
-    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
 
   ngOnInit() {
     this.fetch();
+    this.setCheckInEventProperties();
 
     this.sortingLabels = {
       checkin_time: this.cpI18n.translate('services_label_checkin_time'),
