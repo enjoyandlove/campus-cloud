@@ -54,7 +54,7 @@ const mockStudentsService = {
   }
 };
 
-describe('StudentsProfileComponent', () => {
+xdescribe('StudentsProfileComponent', () => {
   let store: Store<any>;
   let service;
   let fixture: ComponentFixture<StudentsProfileComponent>;
