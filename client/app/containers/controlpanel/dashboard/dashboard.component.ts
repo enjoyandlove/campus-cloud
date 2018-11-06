@@ -1,14 +1,15 @@
-import { PersonaType } from './../audience/audience.status';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
-import { DashboardService } from './dashboard.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { DashboardUtilsService } from './dashboard.utils.service';
-import { CPSession, IUser } from '../../../session';
-import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
-import { CPI18nService } from '../../../shared/services';
-import { canSchoolReadResource } from '../../../shared/utils/privileges';
+
 import { BaseComponent } from '../../../base';
+import { CPSession, IUser } from '../../../session';
+import { DashboardService } from './dashboard.service';
+import { CPI18nService } from '../../../shared/services';
+import { PersonaType } from './../audience/audience.status';
+import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
+import { DashboardUtilsService } from './dashboard.utils.service';
+import { canSchoolReadResource } from '../../../shared/utils/privileges';
 
 @Component({
   selector: 'cp-dashboard',
@@ -26,10 +27,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   datePickerClass = 'primary dropdown-toggle';
 
   state = {
-    personas: [],
-    currentDate: null,
-    campusAppCardEperience: null,
-    generalInfoCardExperience: null
+    experiences: []
   };
 
   constructor(
@@ -47,56 +45,50 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   readStateFromUrl(): void {
     const routeParams: any = this.route.snapshot.queryParams;
 
-    const campusAppCardEperience = this.state.personas.filter(
-      (p) => p.action === +routeParams.c_activity_exp_id
-    );
-
-    const generalInfoCardExperience = this.state.personas.filter(
-      (p) => p.action === +routeParams.gen_info_exp_id
-    );
-
-    this.state = {
-      ...this.state,
-      campusAppCardEperience,
-      generalInfoCardExperience
-    };
-
-    this.currentDate = Object.assign({}, this.currentDate, {
+    this.currentDate = {
+      ...this.currentDate,
       start: +routeParams.start,
       end: +routeParams.end,
       label: routeParams.label
-    });
+    };
   }
 
   initState() {
-    this.state = {
-      ...this.state,
-      campusAppCardEperience: this.state.personas[1],
-      generalInfoCardExperience: this.state.personas[1]
+    const defaultDate = this.helper.last30Days();
+    const firstExperiences = this.state.experiences[1];
+
+    this.currentDate = {
+      ...this.currentDate,
+      ...defaultDate
     };
 
-    const defaultDate = this.helper.last30Days();
-
-    this.currentDate = Object.assign({}, this.currentDate, { ...defaultDate });
-
-    this.updateUrl();
+    this.updateUrl({
+      start: this.currentDate.start,
+      end: this.currentDate.end,
+      label: this.currentDate.label,
+      gen_info_exp_id: firstExperiences.action,
+      c_activity_exp_id: firstExperiences.action
+    });
   }
 
-  updateUrl(): void {
+  updateUrl(params: Params): void {
     this.router.navigate(['/dashboard'], {
-      queryParams: {
-        start: this.currentDate.start,
-        end: this.currentDate.end,
-        label: this.currentDate.label,
-        gen_info_exp_id: this.state.generalInfoCardExperience.action,
-        c_activity_exp_id: this.state.campusAppCardEperience.action
-      }
+      queryParamsHandling: 'merge',
+      queryParams: { params }
     });
   }
 
   onDateChange(newDate) {
-    this.currentDate = newDate;
-    this.updateUrl();
+    this.currentDate = {
+      ...this.currentDate,
+      ...newDate
+    };
+
+    this.updateUrl({
+      start: this.currentDate.start,
+      end: this.currentDate.end,
+      label: this.currentDate.label
+    });
   }
 
   updateHeader() {
@@ -125,26 +117,18 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   }
 
   setUp() {
-    const {
-      start,
-      end,
-      label,
-      gen_info_exp_id,
-      c_activity_exp_id
-    } = this.route.snapshot.queryParams;
-
-    const cleanState = !start && !end && !label && !gen_info_exp_id && !c_activity_exp_id;
+    const hasValidParams = this.helper.validParams(this.route.snapshot.queryParams);
 
     this.fetchPersonas()
       .then(({ data }) => {
         this.state = {
           ...this.state,
-          personas: data
+          experiences: data
         };
-        if (cleanState) {
-          this.initState();
-        } else {
+        if (hasValidParams) {
           this.readStateFromUrl();
+        } else {
+          this.initState();
         }
       })
       .then(() => (this.loading = false));

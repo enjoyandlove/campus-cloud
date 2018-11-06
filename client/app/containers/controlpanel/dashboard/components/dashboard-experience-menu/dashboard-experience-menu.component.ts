@@ -10,7 +10,7 @@ import { DashboardService } from './../../dashboard.service';
   styleUrls: ['./dashboard-experience-menu.component.scss']
 })
 export class DashboardExperienceMenuComponent implements OnInit {
-  @Input() personas;
+  @Input() experiences;
   @Input() paramName;
   @Input() selectedPersona;
 

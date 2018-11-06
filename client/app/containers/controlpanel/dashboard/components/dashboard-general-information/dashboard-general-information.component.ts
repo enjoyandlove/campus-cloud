@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from './../../../../../session';
 import { DashboardService } from './../../dashboard.service';
+import { DashboardUtilsService } from './../../dashboard.utils.service';
 
 @Component({
   selector: 'cp-dashboard-general-information',
@@ -12,7 +13,7 @@ import { DashboardService } from './../../dashboard.service';
   styleUrls: ['./dashboard-general-information.component.scss']
 })
 export class DashboardGeneralInformationComponent extends BaseComponent implements OnInit {
-  @Input() personas;
+  @Input() experiences;
 
   data;
   loading;
@@ -21,7 +22,8 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
   constructor(
     private session: CPSession,
     public route: ActivatedRoute,
-    private service: DashboardService
+    private service: DashboardService,
+    public utils: DashboardUtilsService
   ) {
     super();
     super.isLoading().subscribe((loading) => {
@@ -43,16 +45,29 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
     });
   }
 
-  ngOnInit() {
+  getSelectedPersona(selectedPersonaId) {
+    return this.experiences.filter((p) => p.action === selectedPersonaId)[0];
+  }
+
+  listenForQueryParamChanges() {
+    // instead of passing @Input(s) we update the queryParams
+    // and call the fetch event whenever we those value change
     this.route.queryParams.subscribe((params) => {
-      const noParamsInUrl = !Object.keys(params).length;
-      if (noParamsInUrl) {
+      const validParams = this.utils.validParams(params);
+
+      if (!validParams) {
         return;
       }
 
       const { start, end, gen_info_exp_id } = params;
-      this.selectedPersona = this.personas.filter((p) => p.action === +gen_info_exp_id)[0];
+
+      this.selectedPersona = this.getSelectedPersona(+gen_info_exp_id);
+
       this.fetch(start, end, gen_info_exp_id);
     });
+  }
+
+  ngOnInit() {
+    this.listenForQueryParamChanges();
   }
 }

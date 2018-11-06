@@ -1,3 +1,4 @@
+import { DashboardUtilsService } from './../../dashboard.utils.service';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
@@ -12,7 +13,7 @@ import { DashboardService } from './../../dashboard.service';
   styleUrls: ['./dashboard-campus-tile.component.scss']
 })
 export class DashboardCampuTileComponent extends BaseComponent implements OnInit {
-  @Input() personas;
+  @Input() experiences;
 
   loading;
   items = [];
@@ -21,8 +22,9 @@ export class DashboardCampuTileComponent extends BaseComponent implements OnInit
 
   constructor(
     private session: CPSession,
+    public route: ActivatedRoute,
     private service: DashboardService,
-    public route: ActivatedRoute
+    public utils: DashboardUtilsService
   ) {
     super();
     super.isLoading().subscribe((loading) => {
@@ -42,18 +44,30 @@ export class DashboardCampuTileComponent extends BaseComponent implements OnInit
     super.fetchData(stream$).then((res) => (this.items = res.data));
   }
 
-  ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      const noParamsInUrl = !Object.keys(params).length;
+  getSelectedPersona(selectedPersonaId) {
+    return this.experiences.filter((p) => p.action === selectedPersonaId)[0];
+  }
 
-      if (noParamsInUrl) {
+  listenForQueryParamChanges() {
+    // instead of passing @Input(s) we update the queryParams
+    // and call the fetch event whenever we those value change
+
+    this.route.queryParams.subscribe((params) => {
+      const validParams = this.utils.validParams(params);
+
+      if (!validParams) {
         return;
       }
 
       const { start, end, c_activity_exp_id } = params;
 
-      this.selectedPersona = this.personas.filter((p) => p.action === +c_activity_exp_id)[0];
+      this.selectedPersona = this.getSelectedPersona(+c_activity_exp_id);
+
       this.fetch(start, end, c_activity_exp_id);
     });
+  }
+
+  ngOnInit() {
+    this.listenForQueryParamChanges();
   }
 }
