@@ -58,8 +58,10 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
   @Input() dateRanges;
   @Input() icon: string;
   @Input() class: string;
+  @Input() clearable = false;
   @Input() iconPositionLeft = false;
   @Input() pickerOptions: IRangePickerOptions = rangeOptions;
+
   @Output() rangeChange: EventEmitter<IDateChange> = new EventEmitter();
 
   picker;
@@ -115,6 +117,17 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
 
   setLabel(date) {
     this.label = date.label;
+  }
+
+  clearDates() {
+    const date = {
+      start: null,
+      end: null,
+      label: null
+    };
+    this.setLabel(date);
+    this.resetCalendar();
+    this.triggerChange(date);
   }
 
   ngOnDestroy() {
