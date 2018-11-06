@@ -2696,12 +2696,6 @@
   "t_personas_form_dropdown_login_required": {
     "message": "Required"
   },
-  "t_personas_form_dropdown_platform_mobile": {
-    "message": "Mobile"
-  },
-  "t_personas_form_dropdown_platform_web": {
-    "message": "Web"
-  },
   "t_personas_form_label_persona_name": {
     "message": "Experience Name"
   },
@@ -2734,6 +2728,12 @@
   },
   "t_personas_no_results_found": {
     "message": "No experiences found"
+  },
+  "t_personas_platform_mobile": {
+    "message": "Mobile"
+  },
+  "t_personas_platform_web": {
+    "message": "Web"
   },
   "t_personas_resource_add_resource": {
     "message": "Add Resource"
@@ -2824,6 +2824,9 @@
   },
   "t_personas_tile_image_requirements": {
     "message": "300kB or less. Use JPEG or PNG."
+  },
+  "t_personas_tile_link_donation_message": {
+    "message": "Certain links including donations will result in the app being rejected in the App Review Process. Use External Web Link instead."
   },
   "t_personas_tile_locked_tooltip": {
     "message": "Contact your Customer Support representative to make changes to this tile"
