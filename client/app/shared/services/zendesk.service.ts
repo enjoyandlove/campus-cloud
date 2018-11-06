@@ -39,6 +39,12 @@ export class ZendeskService {
     return locale === 'fr-CA' ? `${root}/${french}` : `${root}/${english}`;
   }
 
+  static getUrl(path: string): string {
+    const root = this.zdRoot();
+
+    return `${root}/${path}`;
+  }
+
   constructor() {
     this.isLoaded = false;
     this.visibilityDelay = 500; // Milliseconds.
