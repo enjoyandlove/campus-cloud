@@ -2,6 +2,9 @@
 @import '~styles/core/typography';
 @import '~styles/components/button';
 @import '~styles/components/card';
+@import '~bootstrap/functions';
+@import '~bootstrap/variables';
+@import '~bootstrap/mixins/breakpoints';;
 
 .card-margin {
   @include card-margin();
@@ -31,5 +34,13 @@
     margin-bottom: 0;
     color: $color-white;
     display: inline-block;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .page {
+    &__nav {
+      display: none;
+    }
   }
 }

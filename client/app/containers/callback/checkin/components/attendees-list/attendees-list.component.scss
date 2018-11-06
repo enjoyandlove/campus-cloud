@@ -3,6 +3,9 @@
 @import '~styles/core/typography';
 @import '~styles/components/form';
 @import '~styles/components/button';
+@import '~bootstrap/functions';
+@import '~bootstrap/variables';
+@import '~bootstrap/mixins/breakpoints';
 
 :host {
   display: block;
@@ -57,5 +60,26 @@
     display: block;
     margin-top: -10px;
     color: $color-success;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .attendees {
+    &__header {
+      display: none;
+    }
+
+    strong {
+      @include font-12px();
+      @include font-semi-bold();
+
+      margin-top: 5px;
+    }
+
+    strong.check-in-out-label {
+      @include font-bold();
+
+      display: block;
+    }
   }
 }
