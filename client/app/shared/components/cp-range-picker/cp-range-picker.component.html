@@ -9,18 +9,14 @@
     <i
       *ngIf="icon"
       class="material-icons"
-      [class.position-left]="iconPositionLeft">
-      {{ icon }}
-    </i>
+      [class.position-left]="iconPositionLeft">{{ icon }}</i>
   </button>
   <div
     aria-labelledby="dropdownMenuButton"
     class="dropdown-menu picker--content">
     <div class="row">
       <div class="col-12">
-        <div
-          class="picker--calendars"
-          (click)="$event.stopPropagation()">
+        <div class="picker--calendars" (click)="$event.stopPropagation()">
           <div class="calendar">
             <div #calendarEl></div>
           </div>
@@ -28,32 +24,15 @@
       </div>
     </div>
 
-    <div 
-      *ngIf="dateRanges?.length"
-      class="row">
+    <div class="row" *ngIf="dateRanges && dateRanges.length">
       <div class="col-12">
-        <div class="picker--options">
+        <div class="picker--controls">
           <button
             type="button"
             class="cpbtn cpbtn--link"
             (click)="handleCustomDate(date)"
             *ngFor="let date of dateRanges">
             {{ date.label }}
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <div
-      *ngIf="clearable"
-      class="row">
-      <div class="col-12">
-        <div class="picker--controls">
-          <button
-            type="button"
-            class="cpbtn cpbtn--link"
-            (click)="clearDates()">
-            {{ 't_datepicker_clear' | cpI18n }}
           </button>
         </div>
       </div>
