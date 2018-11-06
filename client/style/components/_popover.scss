@@ -2,6 +2,17 @@
 
 $content_bg: rgba(0, 0, 0, 0.8);
 
+.admin_studio_tooltip {
+  cp-tooltip button {
+    text-decoration: underline;
+  }
+
+  popover-container {
+    width: 400px;
+    max-width: 400px;
+  }
+}
+
 .popover-content {
   color: $color-white;
 }
