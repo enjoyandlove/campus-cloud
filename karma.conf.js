@@ -18,7 +18,6 @@ module.exports = function(config) {
     client: {
       jasmine: {
         random: true
-        // seed: '35883'
       }
     },
 
