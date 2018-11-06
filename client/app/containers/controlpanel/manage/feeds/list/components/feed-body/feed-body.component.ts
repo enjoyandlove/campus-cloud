@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 
 import { FeedsUtilsService } from '../../../feeds.utils.service';
 import { CPHostDirective } from '../../../../../../../shared/directives';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
-import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 
 @Component({
   selector: 'cp-feed-body',
