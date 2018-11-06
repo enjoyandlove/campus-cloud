@@ -16,12 +16,10 @@
     @include card-shadow();
 
     top: 115%;
-    padding: 10px 20px;
   }
 
   &--calendars {
-    height: 340px;
-    margin-bottom: 30px;
+    height: 345px;
 
     &.calendar {
       margin-right: 15px;
@@ -32,15 +30,26 @@
     }
   }
 
-  &--controls {
+  &--options {
+    padding: 20px 20px 10px 20px;
     button {
       @include font-semi-bold();
 
       margin-right: 18px;
-
+      
       &:last-child {
         margin-right: 0;
       }
+    }
+  }
+
+  &--controls {
+    display: flex;
+    padding: 15px 0;
+    justify-content: center;
+    border-top: 1px solid #eee;
+    button {
+      @include font-semi-bold();
     }
   }
 }
