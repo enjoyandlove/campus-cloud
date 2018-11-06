@@ -5,6 +5,7 @@ import { FormBuilder } from '@angular/forms';
 
 import { DealsModule } from '../../deals.module';
 import { CPSession } from '../../../../../../session';
+import { RootStoreModule } from '../../../../../../store';
 import { StoreCardComponent } from './store-card.component';
 import { CPI18nService } from '../../../../../../shared/services';
 
@@ -15,7 +16,7 @@ describe('StoreCardComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [DealsModule, HttpClientModule, RouterTestingModule],
+        imports: [DealsModule, HttpClientModule, RouterTestingModule, RootStoreModule],
         providers: [CPSession, CPI18nService]
       })
         .compileComponents()

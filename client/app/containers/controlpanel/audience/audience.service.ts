@@ -1,14 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { API } from '../../../config/api';
+import { baseActions } from '../../../store/base';
 import { PersonaPermission } from './audience.status';
 import { HTTPService } from '../../../base/http.service';
-import { SERVICES_MODAL_SET } from '../../../reducers/services-modal.reducer';
 
 @Injectable()
 export class AudienceService extends HTTPService {
@@ -72,7 +72,7 @@ export class AudienceService extends HTTPService {
 
   setModalServices(services: any[]): void {
     this.store.dispatch({
-      type: SERVICES_MODAL_SET,
+      type: baseActions.SERVICES_MODAL_SET,
       payload: services
     });
   }

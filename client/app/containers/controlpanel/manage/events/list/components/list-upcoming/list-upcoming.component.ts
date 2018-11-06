@@ -6,8 +6,10 @@ import {
 } from './../../../../../../../shared/utils/privileges/privileges';
 
 import { EventAttendance } from '../../../event.status';
+import { EventsService } from '../../../events.service';
 import { FORMAT } from '../../../../../../../shared/pipes';
-import { CPSession } from './../../../../../../../session/index';
+import { CPSession } from './../../../../../../../session';
+import { EventsComponent } from '../../base/events.component';
 import { EventUtilService } from '../../../events.utils.service';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
@@ -29,7 +31,7 @@ const sort = {
   templateUrl: './list-upcoming.component.html',
   styleUrls: ['./list-upcoming.component.scss']
 })
-export class ListUpcomingComponent implements OnInit {
+export class ListUpcomingComponent extends EventsComponent implements OnInit {
   @Input() state: any;
   @Input() events: any;
   @Input() isClub: boolean;
@@ -40,20 +42,24 @@ export class ListUpcomingComponent implements OnInit {
   @Output() deleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() sortList: EventEmitter<ISort> = new EventEmitter();
 
-  sort: ISort = sort;
   canDelete;
   eventData;
   sortingLabels;
+  checkInSource;
   eventCheckinRoute;
+  sort: ISort = sort;
   dateFormat = FORMAT.SHORT;
   attendanceEnabled = EventAttendance.enabled;
 
   constructor(
-    private session: CPSession,
-    private cpI18n: CPI18nService,
-    private utils: EventUtilService,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public service: EventsService,
+    public utils: EventUtilService,
     private cpTracking: CPTrackingService
-  ) {}
+  ) {
+    super(session, cpI18n, service);
+  }
 
   onDelete(event) {
     this.deleteEvent.emit(event);
@@ -69,7 +75,10 @@ export class ListUpcomingComponent implements OnInit {
   }
 
   trackDeleteEvent() {
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.setEventProperties());
+    const eventProperties = this.setEventProperties();
+    delete eventProperties['page_type'];
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, eventProperties);
   }
 
   setEventProperties() {
@@ -80,20 +89,18 @@ export class ListUpcomingComponent implements OnInit {
     };
   }
 
-  trackCheckinEvent(event_id) {
-    const source_page = this.utils.getCheckinSourcePage(
-      this.isAthletic,
-      this.isService,
-      this.isClub,
-      this.isOrientation
-    );
-
+  trackCheckinEvent(source_id) {
     const eventProperties = {
-      event_id,
-      source_page
+      source_id,
+      check_in_type: this.checkInSource.check_in_type,
+      check_in_source: amplitudeEvents.UPCOMING_EVENT,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CLICKED_CHECKIN, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
+      eventProperties
+    );
   }
 
   ngOnInit() {
@@ -102,6 +109,8 @@ export class ListUpcomingComponent implements OnInit {
       eventName: amplitudeEvents.VIEWED_ITEM,
       eventProperties: this.setEventProperties()
     };
+
+    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
 
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
     const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);

@@ -1,21 +1,15 @@
-import { BehaviorSubject } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '../../../../../session';
+import { baseActions, IHeader } from '../../../../../store/base';
+import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
 import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
-import { CP_PRIVILEGES, CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import {
-  ErrorService,
-  AdminService,
-  CPI18nService,
-  CPTrackingService
-} from '../../../../../shared/services';
+import { ErrorService, AdminService, CPI18nService } from '../../../../../shared/services';
 
 import {
   accountsToStoreMap,
@@ -69,7 +63,6 @@ export class TeamCreateComponent implements OnInit {
   athleticsCount = null;
   schoolPrivileges = {};
   MODAL_TYPE = MODAL_TYPE.WIDE;
-  CP_PRIVILEGES = CP_PRIVILEGES;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
 
   resetClubsModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -84,13 +77,12 @@ export class TeamCreateComponent implements OnInit {
     private cpI18n: CPI18nService,
     public utils: TeamUtilsService,
     private teamService: AdminService,
-    private errorService: ErrorService,
-    private cpTracking: CPTrackingService
+    private errorService: ErrorService
   ) {}
 
   private buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: require('../../settings.header.json')
     });
   }
@@ -165,14 +157,8 @@ export class TeamCreateComponent implements OnInit {
       return;
     }
 
-    const eventProperties = this.utils.getAmplitudeEventProperties(
-      this.schoolPrivileges,
-      this.accountPrivileges
-    );
-
     this.teamService.createAdmin(_data).subscribe(
       () => {
-        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.INVITED_TEAM_MEMBER, eventProperties);
         this.router.navigate(['/settings/team']);
       },
       (err) => {

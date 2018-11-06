@@ -9,13 +9,14 @@ import {
   ChangeDetectorRef
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { CPSession } from './../../../../../../session/index';
+
 import { ITile } from './../tile.interface';
 import { TilesService } from './../tiles.service';
 import { TileVisibility } from './../tiles.status';
-import { ISnackbar, SNACKBAR_SHOW } from '../../../../../../reducers/snackbar.reducer';
-import { CPI18nService } from '../../../../../../shared/services';
 import { TilesUtilsService } from '../tiles.utils.service';
+import { CPSession } from './../../../../../../session/index';
+import { CPI18nService } from '../../../../../../shared/services';
+import { ISnackbar, baseActions } from '../../../../../../store/base';
 
 @Component({
   selector: 'cp-personas-tile',
@@ -59,7 +60,7 @@ export class PersonasTileComponent implements AfterViewInit, OnInit {
     };
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate('something_went_wrong'),
         class: 'danger',

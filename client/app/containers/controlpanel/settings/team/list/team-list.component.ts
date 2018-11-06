@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
 import { AdminService } from '../../../../../shared/services';
+import { baseActions, IHeader } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { HEADER_UPDATE, IHeader } from '../../../../../reducers/header.reducer';
 
 interface IState {
   admins: Array<any>;
@@ -81,7 +81,7 @@ export class TeamListComponent extends BaseComponent implements OnInit {
 
   private buildHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: require('../../settings.header.json')
     });
   }

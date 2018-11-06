@@ -2679,7 +2679,7 @@
     "message": "Enregistrer les changements"
   },
   "t_personas_edit_tile_locked": {
-    "message": "To make changes to the content of this tile reach out to your customer success representative or contact us through our helpdesk."
+    "message": "To make changes to the content of this tile reach out to your customer success representative or contact us through the helpdesk."
   },
   "t_personas_form_delete_button": {
     "message": "Supprimer expérience"
@@ -2822,8 +2822,11 @@
   "t_personas_tile_image_requirements": {
     "message": "300Ko ou moins. Format JPEG ou PNG."
   },
+  "t_personas_tile_link_donation_message": {
+    "message": "Certains types de liens, y compris des dons, entraîneront le rejet de l'application dans le processus de révision des applications. Utilisez plutôt un lien Web externe."
+  },
   "t_personas_tile_locked_tooltip": {
-    "message": "Contact your Customer Support representative to make changes to this tile"
+    "message": "Contactez votre représentant du service clientèle pour modifier cette tuile."
   },
   "t_personas_tile_modal_create_appearance": {
     "message": "Apparence"

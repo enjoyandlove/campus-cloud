@@ -43,9 +43,9 @@ export const amplitudeEvents = {
 
   EXISTING: 'Existing',
 
-  PROVIDER: 'Provider',
-
   EMPLOYER: 'Employer',
+
+  SERVICES: 'Services',
 
   TEMPLATE: 'Template',
 
@@ -61,6 +61,8 @@ export const amplitudeEvents = {
 
   EXECUTIVE: 'Executive',
 
+  INFO_PAGE: 'Info Page',
+
   EXPERIENCE: 'Experience',
 
   ATHLETICS: 'Athletics',
@@ -72,6 +74,8 @@ export const amplitudeEvents = {
   ATTENDANCE: 'Attendance',
 
   PAST_EVENT: 'Past Event',
+
+  CLUB_EVENT: 'Club Event',
 
   LOGGED_OUT: 'Logged Out',
 
@@ -101,6 +105,10 @@ export const amplitudeEvents = {
 
   NO_ENGAGEMENT: 'No Engagement',
 
+  SERVICE_EVENT: 'Service Event',
+
+  ATHLETIC_EVENT: 'Athletic Event',
+
   CUSTOM_AUDIENCE: 'Custom Audience',
 
   UPLOADED_PHOTO: 'Uploaded Photo',
@@ -121,9 +129,15 @@ export const amplitudeEvents = {
 
   CHANGED_SCHOOL: 'Changed School',
 
+  LOADED_CHECK_IN: 'Loaded Check-In',
+
+  CLICKED_CHECK_IN: 'Clicked Check-In',
+
   DYNAMIC_AUDIENCE: 'Dynamic Audience',
 
   CLICKED_MENU: 'Clicked Menu Item',
+
+  SERVICE_PROVIDER: 'Service Provider',
 
   EVENT_ASSESSMENT: 'Event Assessment',
 
@@ -134,6 +148,14 @@ export const amplitudeEvents = {
   CLICKED_PAGE_ITEM: 'Clicked Page Item',
 
   VISITED_HELP_DESK: 'Visited Help Desk',
+
+  ORIENTATION_EVENT: 'Orientation Event',
+
+  INSTITUTION_EVENT: 'Institution Event',
+
+  MANAGE_CHECKED_IN: 'Manage - Checked In',
+
+  MANAGE_CHECKED_OUT: 'Manage - Checked Out',
 
   WALL_DELETED_POST: 'Wall - Deleted Post',
 
@@ -155,6 +177,8 @@ export const amplitudeEvents = {
 
   WALL_VIEWED_COMMENT: 'Wall - Viewed Comment',
 
+  ORIENTATION_PROGRAMS: 'Orientation Programs',
+
   WALL_SUBMITTED_POST: 'Wall - Submitted Post',
 
   MANAGE_CREATED_LINK: 'Manage - Created Link',
@@ -165,9 +189,9 @@ export const amplitudeEvents = {
 
   MANAGE_CREATED_CLUB: 'Manage - Created Club',
 
-  MANAGE_UPDATED_CLUB: 'Manage - Updated Club',
+  ASSESS_VIEWED_CARDS: 'Assess - Viewed Cards',
 
-  CLICKED_CHANGE_BUTTON: 'Clicked Change Button',
+  MANAGE_UPDATED_CLUB: 'Manage - Updated Club',
 
   MANAGE_APPROVED_CLUB: 'Manage - Approved Club',
 
@@ -183,15 +207,19 @@ export const amplitudeEvents = {
 
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
 
+  MANAGE_ADDED_CHECK_IN: 'Manage - Added Check-In',
+
   MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
 
-  MANAGE_LOADED_CHECKIN: 'Manage - Loaded Check-In',
+  MANAGE_CHANGED_QR_CODE: 'Manage - Changed QR Code',
 
   MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
 
   NOTIFY_DELETED_LISTING: 'Notify - Deleted Listing',
 
   WALL_SUBMITTED_COMMENT: 'Wall - Submitted Comment',
+
+  MANAGE_UPDATED_CHECK_IN: 'Manage - Updated Check-In',
 
   NOTIFY_CREATED_TEMPLATE: 'Notify - Created Template',
 
@@ -203,8 +231,6 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_SERVICE: 'Manage - Updated Service',
 
-  MANAGE_CLICKED_CHECKIN: 'Manage - Clicked Check-In',
-
   MANAGE_CREATED_LOCATION: 'Manage - Created Location',
 
   MANAGE_CREATED_CALENDAR: 'Manage - Created Calendar',
@@ -213,23 +239,19 @@ export const amplitudeEvents = {
 
   MANAGE_ADDED_CLUB_MEMBER: 'Manage - Added Club Member',
 
-  MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
-
   CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
-
-  ASSESS_VIEWED_TOP_EVENTS: 'Assess - Viewed Top Events',
 
   NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
 
   MANAGE_DOWNLOADED_QR_CODE: 'Manage - Downloaded QR Code',
 
-  MANAGE_CHECKEDIN_MANUALLY: 'Manage - Checked In Manually',
+  MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
 
-  ASSESS_VIEWED_TOP_SERVICES: 'Assess - Viewed Top Services',
+  MANAGE_LOADED_WEB_CHECK_IN: 'Manage - Loaded Web Check-In',
+
+  MANAGE_CLICKED_WEB_CHECK_IN: 'Manage - Clicked Web Check-In',
 
   MANAGE_UPDATED_CALENDAR_EVENT: 'Manage - Updated Calendar Event',
-
-  ASSESS_VIEWED_TOP_ORIENTATIONS: 'Assess - Viewed Top Orientations',
 
   MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
 

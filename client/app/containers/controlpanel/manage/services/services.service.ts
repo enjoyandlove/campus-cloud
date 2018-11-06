@@ -4,8 +4,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { API } from '../../../../config/api';
+import { baseActions } from '../../../../store/base';
 import { HTTPService } from '../../../../base/http.service';
-import { SERVICES_MODAL_SET } from '../../../../reducers/services-modal.reducer';
 
 @Injectable()
 export class ServicesService extends HTTPService {
@@ -54,7 +54,7 @@ export class ServicesService extends HTTPService {
 
   setModalServices(services: any[]): void {
     this.store.dispatch({
-      type: SERVICES_MODAL_SET,
+      type: baseActions.SERVICES_MODAL_SET,
       payload: services
     });
   }

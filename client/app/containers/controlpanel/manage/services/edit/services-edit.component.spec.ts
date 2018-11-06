@@ -4,10 +4,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
-import { reducers } from '../../../../../reducers';
 import { CPSession } from '../../../../../session';
 import { ServicesModule } from '../services.module';
 import { ServicesService } from '../services.service';
+import { baseReducers } from '../../../../../store/base';
 import { CPI18nService } from '../../../../../shared/services';
 import { mockSchool } from '../../../../../session/mock/school';
 import { ServicesUtilsService } from '../services.utils.service';
@@ -72,8 +72,8 @@ describe('ServicesUpdateComponent', () => {
           HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [
@@ -92,14 +92,15 @@ describe('ServicesUpdateComponent', () => {
           component.serviceId = 123;
 
           spyOn(component.router, 'navigate');
-          spyOn(component.servicesService, 'getCategories')
-            .and.returnValue(observableOf(mockCategories));
+          spyOn(component.servicesService, 'getCategories').and.returnValue(
+            observableOf(mockCategories)
+          );
 
-          spyOn(component.servicesService, 'getServiceById')
-            .and.returnValue(observableOf(mockService[0]));
+          spyOn(component.servicesService, 'getServiceById').and.returnValue(
+            observableOf(mockService[0])
+          );
 
-          spy = spyOn(component.servicesService, 'updateService')
-            .and.returnValue(observableOf({}));
+          spy = spyOn(component.servicesService, 'updateService').and.returnValue(observableOf({}));
 
           component.ngOnInit();
         });

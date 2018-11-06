@@ -3,22 +3,25 @@ import { Router } from '@angular/router';
 
 import { isDev } from '../../../../../../../config/env';
 import { EventsService } from '../../../events.service';
+import { CPSession } from '../../../../../../../session';
+import { EventUtilService } from '../../../events.utils.service';
+import { EventsComponent } from '../../../list/base/events.component';
 import { FileUploadService } from '../../../../../../../shared/services';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { EventUtilService } from '../../../events.utils.service';
 
 @Component({
   selector: 'cp-events-excel-modal',
   templateUrl: './events-excel-modal.component.html',
   styleUrls: ['./events-excel-modal.component.scss']
 })
-export class EventsExcelModalComponent implements OnInit {
+export class EventsExcelModalComponent extends EventsComponent implements OnInit {
   @Input() storeId: number;
-  @Input() isAthletic: number;
   @Input() clubId: number;
   @Input() isClub: boolean;
   @Input() serviceId: number;
+  @Input() athleticId: number;
   @Input() isService: boolean;
+  @Input() isAthletic: boolean;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
 
@@ -28,11 +31,14 @@ export class EventsExcelModalComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private cpI18n: CPI18nService,
-    private service: EventsService,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public service: EventsService,
     private utils: EventUtilService,
     private fileService: FileUploadService
-  ) {}
+  ) {
+    super(session, cpI18n, service);
+  }
 
   parser(file) {
     const url = !isDev ? '/events/excel' : 'http://localhost:8000/events/excel';
@@ -55,12 +61,7 @@ export class EventsExcelModalComponent implements OnInit {
   }
 
   onNavigate() {
-    this.urlPrefix = this.utils.buildUrlPrefixExcel(
-      this.orientationId,
-      this.isAthletic,
-      this.serviceId,
-      this.clubId
-    );
+    this.urlPrefix = this.utils.buildUrlPrefixExcel(this.getEventType());
 
     this.router.navigate([this.urlPrefix]);
   }

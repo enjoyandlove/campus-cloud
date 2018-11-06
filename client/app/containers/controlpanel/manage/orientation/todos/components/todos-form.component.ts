@@ -5,12 +5,8 @@ import { CPSession } from '../../../../../../session';
 import { CPDate } from '../../../../../../shared/utils';
 import { ITodo } from '../../../orientation/todos/todos.interface';
 
-const FORMAT_WITH_TIME = 'F j, Y h:i K';
-
 const COMMON_DATE_PICKER_OPTIONS = {
-  altInput: true,
-  enableTime: true,
-  altFormat: FORMAT_WITH_TIME
+  enableTime: true
 };
 
 @Component({
@@ -32,6 +28,10 @@ export class TodosFormComponent implements OnInit {
 
   constructor(private session: CPSession) {}
 
+  setEnd(date) {
+    this.form.controls['end'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
   ngOnInit() {
     const _self = this;
     const due_date = this.form.controls['end'].value;
@@ -39,10 +39,7 @@ export class TodosFormComponent implements OnInit {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: due_date
         ? CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format()
-        : null,
-      onChange: function(_, dateStr) {
-        _self.form.controls['end'].setValue(CPDate.toEpoch(dateStr, _self.session.tz));
-      }
+        : null
     };
   }
 }

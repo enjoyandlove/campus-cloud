@@ -39,6 +39,11 @@ export enum Feedback {
   'disabled' = 'Disabled'
 }
 
+export enum CheckOut {
+  'no' = 'No',
+  'yes' = 'Yes'
+}
+
 export enum CheckInMethod {
   'web' = 1,
   'webQr' = 2,
@@ -49,9 +54,25 @@ export enum CheckInOutTime {
   'empty' = -1
 }
 
+export enum EventType {
+  'event' = 0,
+  'club' = 1,
+  'services' = 2,
+  'athletics' = 3,
+  'orientation' = 4
+}
+
+export enum CheckInSource {
+  'club' = 'club',
+  'events' = 'events',
+  'services' = 'services',
+  'athletics' = 'athletics',
+  'orientation' = 'orientation'
+}
+
 export const qrCode = {
-  'enabled': true,
-  'disabled': false
+  enabled: true,
+  disabled: false
 };
 
 export const isAllDay = {
@@ -60,6 +81,6 @@ export const isAllDay = {
 };
 
 export const attendanceType = {
-  'checkInOnly': false,
-  'checkInCheckOut': true
+  checkInOnly: false,
+  checkInCheckOut: true
 };

@@ -4,7 +4,7 @@
   <div *ngSwitchCase="false">
     <cp-no-content
       *ngIf="!state.providers.length"
-      [noContentText]="cpI18n.translate('services_providers_no_results')">
+      [noContentText]="hasRecords ? noProviderMessage : noProviderAddProviderMessage">
     </cp-no-content>
 
     <ng-container *ngIf="state.providers.length">
@@ -78,6 +78,7 @@
                 <div class="col-2">
                   <a
                     target="_blank"
+                    [queryParams]="{source:'service'}"
                     (click)="trackCheckinEvent(provider.encrypted_campus_service_id)"
                     [routerLink]="['/cb/checkin/s/' + provider.encrypted_campus_service_id + '/' + provider.encrypted_id]"
                     class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary">

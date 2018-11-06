@@ -83,13 +83,11 @@ export class EngagementEventsBoxComponent extends BaseComponent implements OnIni
   trackAmplitudeEvent(sort_type) {
     this.eventProperties = {
       ...this.utils.getEventProperties(this.filters),
+      card_type: amplitudeEvents.EVENTS,
       sort_type
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.ASSESS_VIEWED_TOP_EVENTS,
-      this.eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_VIEWED_CARDS, this.eventProperties);
   }
 
   fetch() {

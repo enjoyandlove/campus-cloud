@@ -11,11 +11,10 @@ import { FORMAT } from './../../../../../shared/pipes/date';
 import { AssessUtilsService } from '../../assess.utils.service';
 import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from './../../../../../base/base.component';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
-import { SNACKBAR_SHOW, ISnackbar } from './../../../../../reducers/snackbar.reducer';
-import { STAR_SIZE } from './../../../../../shared/components/cp-stars/cp-stars.component';
 import { CheckInOutTime } from '../../../manage/events/event.status';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { baseActions, IHeader, ISnackbar } from './../../../../../store/base';
+import { STAR_SIZE } from './../../../../../shared/components/cp-stars/cp-stars.component';
 
 declare var $;
 
@@ -155,7 +154,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
   buildHeader(student) {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `[NOTRANSLATE]${student.firstname} ${student.lastname}[NOTRANSLATE]`,
         subheading: null,
@@ -191,9 +190,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
       engagement_type: amplitudeEvents.SINGLE_STUDENT
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.ASSESS_DOWNLOAD_DATA,
-      eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_DOWNLOAD_DATA, eventProperties);
   }
 
   onComposeTeardown() {
@@ -221,7 +218,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     this.trackSendMessageEvents(data.hostType);
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: this.cpI18n.translate('announcement_success_sent'),
         autoClose: true
@@ -238,7 +235,8 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.ASSESS_SENT_ANNOUNCEMENT,
-      this.eventProperties);
+      this.eventProperties
+    );
   }
 
   ngOnInit() {

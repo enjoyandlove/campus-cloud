@@ -2682,7 +2682,7 @@
     "message": "Save Changes"
   },
   "t_personas_edit_tile_locked": {
-    "message": "To make changes to the content of this tile reach out to your customer success representative or contact us through our helpdesk."
+    "message": "To make changes to the content of this tile reach out to your customer success representative or contact us through the helpdesk."
   },
   "t_personas_form_delete_button": {
     "message": "Delete Experience"
@@ -2824,6 +2824,9 @@
   },
   "t_personas_tile_image_requirements": {
     "message": "300kB or less. Use JPEG or PNG."
+  },
+  "t_personas_tile_link_donation_message": {
+    "message": "Certain types of links including donations will result in the app being rejected in the App Review Process. Use External Web Link instead."
   },
   "t_personas_tile_locked_tooltip": {
     "message": "Contact your Customer Support representative to make changes to this tile"

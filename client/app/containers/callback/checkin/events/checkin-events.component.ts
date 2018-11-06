@@ -1,5 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
@@ -7,9 +7,9 @@ import { CPSession } from '../../../../session';
 import { CheckinService } from '../checkin.service';
 import { CheckinUtilsService } from '../checkin.utils.service';
 import { BaseComponent } from '../../../../base/base.component';
+import { ISnackbar, baseActions } from '../../../../store/base';
 import { CheckInOutTime, CheckInType } from '../../callback.status';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
-import { ISnackbar, SNACKBAR_SHOW } from '../../../../reducers/snackbar.reducer';
 import { CPI18nService, CPTrackingService, ErrorService } from './../../../../shared/services';
 
 interface IState {
@@ -26,12 +26,11 @@ const state: IState = {
   styleUrls: ['./checkin-events.component.scss']
 })
 export class CheckinEventsComponent extends BaseComponent implements OnInit {
-  @Input() isOrientation: boolean;
-
   loading;
   isEvent = true;
   eventId: string;
   search: HttpParams;
+  checkInSource: string;
   state: IState = state;
 
   constructor(
@@ -49,23 +48,36 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((res) => (this.loading = res));
 
     this.eventId = this.route.snapshot.params['event'];
+    this.checkInSource = this.route.snapshot.queryParams['source'];
   }
 
   onSubmit(data) {
     this.checkinService.doEventCheckin(data, this.search).subscribe(
       (res) => {
+        this.trackCheckedInEvent(res);
         this.updateAttendeesList(data, res);
-        this.trackAmplitudeEvent(true);
       },
       (err) => this.handleError(err.status)
     );
   }
 
-  onCheckout(events) {
+  onCheckout(event) {
     this.state.events = {
       ...this.state.events,
-      ...events
+      ...event.data
     };
+
+    const eventProperties = this.utils.getCheckedInEventProperties(
+      this.eventId,
+      this.state.events,
+      event.attendance_id,
+      this.checkInSource,
+      true
+    );
+
+    delete eventProperties.check_out_status;
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHECKED_OUT, eventProperties);
   }
 
   updateAttendeesList(data, res) {
@@ -93,7 +105,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       : this.cpI18n.translate('t_external_checkin_already_checked_in');
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body,
         sticky: true,
@@ -114,19 +126,25 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       });
   }
 
-  trackAmplitudeEvent(checkedin = false) {
-    const check_in_type = this.isOrientation ? amplitudeEvents.ORIENTATION : amplitudeEvents.EVENT;
-
-    const eventName = checkedin
-      ? amplitudeEvents.MANAGE_CHECKEDIN_MANUALLY
-      : amplitudeEvents.MANAGE_LOADED_CHECKIN;
-
+  trackLoadCheckInEvent() {
     const eventProperties = {
-      event_id: this.eventId,
-      check_in_type
+      source_id: this.eventId,
+      check_in_type: this.utils.getCheckInSource(this.checkInSource)
     };
 
-    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_LOADED_WEB_CHECK_IN, eventProperties);
+  }
+
+  trackCheckedInEvent(response) {
+    const eventProperties = this.utils.getCheckedInEventProperties(
+      this.eventId,
+      this.state.events,
+      response.attendance_id,
+      this.checkInSource,
+      true
+    );
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHECKED_IN, eventProperties);
   }
 
   ngOnInit() {
@@ -134,7 +152,10 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       this.cpTracking.loadAmplitude();
     }
 
-    this.trackAmplitudeEvent();
+    if (!this.checkInSource) {
+      this.trackLoadCheckInEvent();
+    }
+
     this.search = new HttpParams().append('event_id', this.eventId);
 
     if (!this.eventId) {

@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { reducers } from '../../../../../../../reducers';
 import { CPSession } from '../../../../../../../session';
 import { ServicesModule } from '../../../services.module';
+import { baseReducers } from '../../../../../../../store/base';
 import { CPI18nService } from '../../../../../../../shared/services';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { EventUtilService } from '../../../../events/events.utils.service';
@@ -21,16 +21,11 @@ describe('ServicesProviderFormComponent', () => {
           ServicesModule,
           RouterTestingModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
-        providers: [
-          CPSession,
-          CPI18nService,
-          EventUtilService,
-          ServicesUtilsService
-        ]
+        providers: [CPSession, CPI18nService, EventUtilService, ServicesUtilsService]
       })
         .compileComponents()
         .then(() => {

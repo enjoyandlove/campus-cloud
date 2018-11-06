@@ -39,7 +39,8 @@ export class ServicesProvidersFormComponent implements OnInit {
   onSelectedFeedback(hasFeedback: boolean): void {
     this.form.controls['has_feedback'].setValue(hasFeedback);
 
-    const feedbackQuestion = !hasFeedback ? null
+    const feedbackQuestion = !hasFeedback
+      ? null
       : this.cpI18n.translate('t_events_default_feedback_question');
 
     this.form.controls['custom_basic_feedback_label'].setValue(feedbackQuestion);
@@ -67,16 +68,19 @@ export class ServicesProvidersFormComponent implements OnInit {
     this.selectedAttendanceType = this.getFromArray(
       this.attendanceTypes,
       'action',
-      this.form.controls['has_checkout'].value);
+      this.form.controls['has_checkout'].value
+    );
 
     this.selectedAttendanceFeedback = this.getFromArray(
       this.attendanceFeedback,
       'action',
-      this.form.controls['has_feedback'].value);
+      this.form.controls['has_feedback'].value
+    );
 
     this.selectedQrCode = this.getFromArray(
       this.serviceQRCodes,
       'action',
-      this.getQRCodeStatus(this.form.controls['checkin_verification_methods'].value));
+      this.getQRCodeStatus(this.form.controls['checkin_verification_methods'].value)
+    );
   }
 }

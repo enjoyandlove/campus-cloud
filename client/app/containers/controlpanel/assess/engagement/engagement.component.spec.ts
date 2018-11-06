@@ -1,21 +1,21 @@
-import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { Store, StoreModule } from '@ngrx/store';
+/* tslint:disable:max-line-length */
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { of as observableOf } from 'rxjs';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
-
-import { reducers } from '../../../../reducers';
+import { Store, StoreModule } from '@ngrx/store';
+import { of as observableOf } from 'rxjs';
 import { CPSession } from './../../../../session';
-import { EngagementService } from './engagement.service';
-import { mockUser } from './../../../../session/mock/user';
-import { EngagementComponent } from './engagement.component';
 import { mockSchool } from './../../../../session/mock/school';
+import { mockUser } from './../../../../session/mock/user';
 import { STATUS } from './../../../../shared/constants/status';
-import { HEADER_UPDATE } from './../../../../reducers/header.reducer';
-import { SNACKBAR_SHOW } from './../../../../reducers/snackbar.reducer';
-import { CPI18nService, CPTrackingService } from '../../../../shared/services';
-import { AssessUtilsService } from '../assess.utils.service';
+import { CPAmplitudeService } from './../../../../shared/services/amplitude.service';
+import { baseActions } from './../../../../store/base';
+import { EngagementComponent } from './engagement.component';
+import { EngagementService } from './engagement.service';
 import { CPLineChartUtilsService } from '../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
+import { CPI18nService, CPTrackingService } from '../../../../shared/services';
+import { baseReducers } from '../../../../store/base/reducers';
+import { AssessUtilsService } from '../assess.utils.service';
 
 const mockFilterState = {
   engagement: {
@@ -77,13 +77,14 @@ describe('EngagementComponent', () => {
       imports: [
         // EngagementModule,
         StoreModule.forRoot({
-          HEADER: reducers.HEADER,
-          SNACKBAR: reducers.SNACKBAR
+          HEADER: baseReducers.HEADER,
+          SNACKBAR: baseReducers.SNACKBAR
         })
       ],
       declarations: [EngagementComponent],
       providers: [
         CPI18nService,
+        CPAmplitudeService,
         CPTrackingService,
         AssessUtilsService,
         CPLineChartUtilsService,
@@ -126,7 +127,7 @@ describe('EngagementComponent', () => {
     component.onFlashMessage(null);
 
     const expected = {
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body: STATUS.MESSAGE_SENT,
         autoClose: true
@@ -139,7 +140,7 @@ describe('EngagementComponent', () => {
     component.ngOnInit();
 
     const expected = {
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: require('../assess.header.json')
     };
     expect(storeSpy).toHaveBeenCalledWith(expected);

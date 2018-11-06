@@ -3,23 +3,24 @@ import { Component, Input, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { Store } from '@ngrx/store';
 import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
 import { isProd } from './../../../../../config/env';
+import { baseActions } from '../../../../../store/base';
 import { EventUtilService } from '../events.utils.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPDate, CPMap } from '../../../../../shared/utils';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { EventsComponent } from '../list/base/events.component';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
-  attendanceType,
+  isAllDay,
   CheckInMethod,
-  EventAttendance,
   EventFeedback,
-  isAllDay
+  attendanceType,
+  EventAttendance
 } from '../event.status';
 
 import {
@@ -34,9 +35,7 @@ const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
 const COMMON_DATE_PICKER_OPTIONS = {
   utc: true,
-  altInput: true,
-  enableTime: true,
-  altFormat: 'F j, Y h:i K'
+  enableTime: true
 };
 
 @Component({
@@ -44,12 +43,12 @@ const COMMON_DATE_PICKER_OPTIONS = {
   templateUrl: './events-create.component.html',
   styleUrls: ['./events-create.component.scss']
 })
-export class EventsCreateComponent implements OnInit {
+export class EventsCreateComponent extends EventsComponent implements OnInit {
   @Input() storeId: number;
   @Input() isClub: boolean;
   @Input() clubId: number;
   @Input() serviceId: number;
-  @Input() isAthletic: number;
+  @Input() isAthletic: boolean;
   @Input() isService: boolean;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
@@ -100,7 +99,9 @@ export class EventsCreateComponent implements OnInit {
     public storeService: StoreService,
     public errorService: ErrorService,
     public cpTracking: CPTrackingService
-  ) {}
+  ) {
+    super(session, cpI18n, service);
+  }
 
   buildHeader() {
     const payload = {
@@ -111,7 +112,7 @@ export class EventsCreateComponent implements OnInit {
     };
 
     this.storeHeader.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload
     });
   }
@@ -195,7 +196,8 @@ export class EventsCreateComponent implements OnInit {
   toggleEventAttendance(value) {
     value = value ? EventAttendance.enabled : EventAttendance.disabled;
 
-    const feedbackQuestion = !value ? ''
+    const feedbackQuestion = !value
+      ? ''
       : this.cpI18n.translate('t_events_default_feedback_question');
 
     this.form.controls['event_feedback'].setValue(value);
@@ -271,7 +273,6 @@ export class EventsCreateComponent implements OnInit {
     if (this.form.controls['is_all_day'].value) {
       this.updateTime();
     }
-
     if (this.form.controls['end'].value <= this.form.controls['start'].value) {
       this.isDateError = true;
       this.formError = true;
@@ -339,18 +340,18 @@ export class EventsCreateComponent implements OnInit {
     };
   }
 
-  getUrlPrefix(eventId) {
-    return this.utils.buildUrlPrefixEvents(
-      this.clubId,
-      this.serviceId,
-      this.isAthletic,
-      this.orientationId,
-      eventId
-    );
+  getUrlPrefix(event_id) {
+    const eventType = {
+      ...this.getEventType(),
+      event_id
+    };
+
+    return this.utils.buildUrlPrefixEvents(eventType);
   }
 
   onEventFeedbackChange(option) {
-    const feedbackQuestion = !option.action ? ''
+    const feedbackQuestion = !option.action
+      ? ''
       : this.cpI18n.translate('t_events_default_feedback_question');
 
     this.form.controls['event_feedback'].setValue(option.action);
@@ -417,6 +418,14 @@ export class EventsCreateComponent implements OnInit {
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CANCELED_EVENT, this.eventProperties);
+  }
+
+  setStart(date) {
+    this.form.controls['start'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
+  setEnd(date) {
+    this.form.controls['end'].setValue(CPDate.toEpoch(date, this.session.tz));
   }
 
   ngOnInit() {
@@ -500,20 +509,12 @@ export class EventsCreateComponent implements OnInit {
       { validator: this.utils.assessmentEnableCustomValidator }
     );
 
-    const _self = this;
-
     this.startdatePickerOpts = {
-      ...COMMON_DATE_PICKER_OPTIONS,
-      onChange: function(_, dataStr) {
-        _self.form.controls['start'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
-      }
+      ...COMMON_DATE_PICKER_OPTIONS
     };
 
     this.enddatePickerOpts = {
-      ...COMMON_DATE_PICKER_OPTIONS,
-      onChange: function(_, dataStr) {
-        _self.form.controls['end'].setValue(CPDate.toEpoch(dataStr, _self.session.tz));
-      }
+      ...COMMON_DATE_PICKER_OPTIONS
     };
   }
 }

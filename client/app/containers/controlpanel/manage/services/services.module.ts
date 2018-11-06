@@ -52,7 +52,7 @@ import {
 import {
   ServicesProvidersAttendeesListComponent,
   ServicesProvidersAttendeesStatsComponent,
-  ServicesProvidersAttendeesActionBoxComponent,
+  ServicesProvidersAttendeesActionBoxComponent
 } from './attendance/components/providers-details/components';
 
 import { EventsModule } from '../events/events.module';

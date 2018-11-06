@@ -5,6 +5,7 @@ import { IService } from '../../../service.interface';
 import IServiceProvider from '../../../providers.interface';
 import { ServiceAttendance } from '../../../services.status';
 import { ProvidersService } from '../../../providers.service';
+import { RouteLevel } from '../../../../../../../shared/services';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { BaseComponent } from '../../../../../../../base/base.component';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
@@ -42,19 +43,22 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
   loading;
   eventData;
+  hasRecords;
   sortingLabels;
   eventProperties;
+  noProviderMessage;
   deleteProvider = '';
   state: IState = state;
   provider: IServiceProvider;
   displayRatingColumn = true;
+  noProviderAddProviderMessage;
   showEditProviderModal = false;
 
   constructor(
     private cpI18n: CPI18nService,
     private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
-    private providersService: ProvidersService
+    public providersService: ProvidersService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -98,7 +102,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.fetch();
   }
 
-  fetch() {
+  fetch(setHasRecords = false) {
     const search = new HttpParams()
       .append('end', this.state.end)
       .append('start', this.state.start)
@@ -112,6 +116,10 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       .then((res) => {
         this.state = Object.assign({}, this.state, { providers: res.data });
         this.hasProviders.emit(res.data.length > 0);
+
+        if (setHasRecords) {
+          this.hasRecords = res.data.length > 0;
+        }
       });
   }
 
@@ -120,6 +128,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       providers: this.state.providers.filter((provider) => provider.id !== providerId)
     });
 
+    this.hasRecords = !!this.state.providers.length;
     this.hasProviders.emit(this.state.providers.length > 0);
   }
 
@@ -137,7 +146,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.state = {
       ...this.state,
       providers: this.state.providers.map((provider) => {
-        return (provider.id === editedProvider.id ? editedProvider : provider);
+        return provider.id === editedProvider.id ? editedProvider : provider;
       })
     };
   }
@@ -150,13 +159,18 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
   }
 
-  trackCheckinEvent(service_id) {
+  trackCheckinEvent(source_id) {
     const eventProperties = {
-      service_id,
-      source_page: amplitudeEvents.SERVICE
+      source_id,
+      check_in_source: amplitudeEvents.ASSESSMENT,
+      check_in_type: amplitudeEvents.SERVICE_PROVIDER,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CLICKED_CHECKIN, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
+      eventProperties
+    );
   }
 
   downloadProvidersCSV() {
@@ -174,13 +188,24 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
     stream$.toPromise().then((providers: any) => {
       this.utils.exportServiceProvidersAttendees(providers);
+      this.trackDownloadProviders();
     });
+  }
+
+  trackDownloadProviders() {
+    const eventProperties = {
+      host_id: this.service.store_id,
+      data_source: amplitudeEvents.SERVICE_PROVIDER,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, eventProperties);
   }
 
   trackProviderViewEvent() {
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.PROVIDER
+      page_name: amplitudeEvents.SERVICE_PROVIDER
     };
 
     this.eventData = {
@@ -191,7 +216,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   }
 
   ngOnInit() {
-    this.fetch();
+    this.fetch(true);
     this.trackProviderViewEvent();
 
     this.sortingLabels = {
@@ -200,5 +225,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     };
 
     this.displayRatingColumn = this.service.service_attendance === ServiceAttendance.enabled;
+    this.noProviderMessage = this.cpI18n.translate('t_services_no_service_provider_found');
+    this.noProviderAddProviderMessage = this.cpI18n.translate('services_providers_no_results');
   }
 }

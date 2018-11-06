@@ -1,8 +1,10 @@
-import { CPSession } from './../../session/index';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, AfterViewInit } from '@angular/core';
 
 import { isProd } from '../../config/env';
+import { CPSession } from './../../session';
+import { userType } from '../../shared/services';
+import { amplitudeEvents } from '../../shared/constants/analytics';
 import { CPTrackingService } from './../../shared/services/tracking.service';
 
 @Component({
@@ -17,8 +19,18 @@ export class ControlPanelComponent implements AfterViewInit {
   constructor(
     private router: Router,
     private session: CPSession,
+    private route: ActivatedRoute,
     private cpTrackingService: CPTrackingService
   ) {}
+
+  trackLoggedInEvent() {
+    const isLogin = 'login' in this.route.snapshot.queryParams;
+    const user_type = this.is_onboarded ? userType.existing : userType.new;
+
+    if (isLogin) {
+      this.cpTrackingService.amplitudeEmitEvent(amplitudeEvents.LOGGED_IN, { user_type });
+    }
+  }
 
   ngAfterViewInit() {
     this.is_onboarded = this.session.g.get('user').flags.is_onboarding;
@@ -38,7 +50,8 @@ export class ControlPanelComponent implements AfterViewInit {
      * this gets initilized only once
      * so we track the first page load here
      */
-    this.cpTrackingService.loadAmplitude(this.session.g);
+    this.cpTrackingService.loadAmplitude(this.session);
     this.cpTrackingService.gaTrackPage(this.router.url);
+    this.trackLoggedInEvent();
   }
 }

@@ -7,10 +7,10 @@ import { of as observableOf } from 'rxjs';
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
-import { reducers } from '../../../../../reducers';
 import { EventUtilService } from '../events.utils.service';
 import { EventsInfoComponent } from './events-info.component';
 import { mockSchool } from '../../../../../session/mock/school';
+import { baseReducers } from '../../../../../store/base/reducers';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 class MockService {
@@ -40,8 +40,8 @@ describe('EventInfoComponent', () => {
           HttpClientModule,
           EventsModule,
           StoreModule.forRoot({
-            HEADER: reducers.HEADER,
-            SNACKBAR: reducers.SNACKBAR
+            HEADER: baseReducers.HEADER,
+            SNACKBAR: baseReducers.SNACKBAR
           })
         ],
         providers: [

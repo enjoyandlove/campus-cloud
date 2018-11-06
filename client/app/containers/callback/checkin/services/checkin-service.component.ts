@@ -7,10 +7,10 @@ import { CPSession } from '../../../../session';
 import { CheckinService } from '../checkin.service';
 import { CheckinUtilsService } from '../checkin.utils.service';
 import { BaseComponent } from '../../../../base/base.component';
+import { ISnackbar, baseActions } from '../../../../store/base';
 import { CheckInOutTime, CheckInType } from '../../callback.status';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../shared/services';
-import { ISnackbar, SNACKBAR_SHOW } from '../../../../reducers/snackbar.reducer';
 
 interface IState {
   services: Array<any>;
@@ -27,6 +27,7 @@ const state: IState = {
 })
 export class CheckinServiceComponent extends BaseComponent implements OnInit {
   loading;
+  checkInSource;
   isExist = true;
   isService = true;
   serviceId: string;
@@ -48,14 +49,15 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((res) => (this.loading = res));
 
     this.serviceId = this.route.snapshot.params['service'];
+    this.checkInSource = this.route.snapshot.queryParams['source'];
     this.serviceProviderId = this.route.snapshot.params['provider'];
   }
 
   onSubmit(data) {
     this.checkinService.doServiceCheckin(data, this.search).subscribe(
       (res) => {
+        this.trackCheckedInEvent(res);
         this.updateAttendeesList(data, res);
-        this.trackAmplitudeEvent(true);
       },
       (err) => this.handleError(err.status)
     );
@@ -80,7 +82,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       : this.cpI18n.translate('t_external_checkin_already_checked_in');
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         body,
         sticky: true,
@@ -93,8 +95,19 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   onCheckout(service) {
     this.state.services = {
       ...this.state.services,
-      ...service
+      ...service.data
     };
+
+    const eventProperties = this.utils.getCheckedInEventProperties(
+      this.serviceId,
+      this.state.services,
+      service.attendance_id,
+      this.checkInSource
+    );
+
+    delete eventProperties.check_out_status;
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHECKED_OUT, eventProperties);
   }
 
   fetch() {
@@ -106,17 +119,24 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       .catch((_) => this.router.navigate(['/login']));
   }
 
-  trackAmplitudeEvent(checkedin = false) {
-    const eventName = checkedin
-      ? amplitudeEvents.MANAGE_CHECKEDIN_MANUALLY
-      : amplitudeEvents.MANAGE_LOADED_CHECKIN;
-
+  trackLoadCheckInEvent() {
     const eventProperties = {
-      service_id: this.serviceId,
-      check_in_type: amplitudeEvents.SERVICE
+      source_id: this.serviceId,
+      check_in_type: amplitudeEvents.SERVICE_PROVIDER
     };
 
-    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_LOADED_WEB_CHECK_IN, eventProperties);
+  }
+
+  trackCheckedInEvent(response) {
+    const eventProperties = this.utils.getCheckedInEventProperties(
+      this.serviceId,
+      this.state.services,
+      response.attendance_id,
+      this.checkInSource
+    );
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHECKED_IN, eventProperties);
   }
 
   ngOnInit() {
@@ -124,7 +144,10 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       this.cpTracking.loadAmplitude();
     }
 
-    this.trackAmplitudeEvent();
+    if (!this.checkInSource) {
+      this.trackLoadCheckInEvent();
+    }
+
     this.search = new HttpParams()
       .set('service_id', this.serviceId)
       .set('provider_id', this.serviceProviderId);

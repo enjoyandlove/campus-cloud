@@ -1,19 +1,19 @@
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { pullAt } from 'lodash';
-import { HEADER_UPDATE, IHeader } from './../../../../../reducers/header.reducer';
-import { ISnackbar, SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+
 import { IPersona } from './../persona.interface';
+import { CPSession } from '../../../../../session';
+import { BaseComponent } from '../../../../../base';
 import { PersonasService } from './../personas.service';
 import { PersonaValidationErrors } from './../personas.status';
-import { BaseComponent } from '../../../../../base';
-import { CPSession } from '../../../../../session';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { CPTrackingService } from '../../../../../shared/services';
-import { map } from 'rxjs/operators';
+import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { baseActions, IHeader, ISnackbar } from './../../../../../store/base';
 
 @Component({
   selector: 'cp-personas-list',
@@ -85,7 +85,7 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
     this.state = { ...this.state, updating: false };
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         autoClose: true,
         class: 'danger',
@@ -218,7 +218,7 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
     }
 
     this.store.dispatch({
-      type: SNACKBAR_SHOW,
+      type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
         class: snackBarClass,
@@ -229,7 +229,7 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
 
   updateHeader() {
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: require('../../customise.header.json')
     });
   }

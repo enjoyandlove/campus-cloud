@@ -7,9 +7,9 @@ import {
   EventEmitter,
   HostListener
 } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { CPSession } from '../../../../../../session';
 import { EngagementService } from './../../engagement.service';
@@ -45,12 +45,7 @@ export class EngagementComposeComponent implements OnInit {
     private cpI18n: CPI18nService,
     private service: EngagementService,
     private storeService: StoreService
-  ) {
-    const school = this.session.g.get('school');
-    const search = new HttpParams().append('school_id', school.id.toString());
-
-    this.stores$ = this.storeService.getStores(search);
-  }
+  ) {}
 
   @HostListener('document:click', ['$event'])
   onClick(event) {
@@ -104,6 +99,10 @@ export class EngagementComposeComponent implements OnInit {
   }
 
   ngOnInit() {
+    const school = this.session.g.get('school');
+    const search = new HttpParams().append('school_id', school.id.toString());
+    this.stores$ = this.storeService.getStores(search);
+
     this.hostType = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 

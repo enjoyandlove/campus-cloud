@@ -8,12 +8,8 @@ import { CPDate } from '../../../../../shared/utils';
 import { CPI18nService } from '../../../../../shared/services';
 import { CheckInMethod } from '../../../../controlpanel/manage/events/event.status';
 
-const FORMAT_WITH_TIME = 'F j, Y h:i K';
-
 const COMMON_DATE_PICKER_OPTIONS = {
-  altInput: true,
-  enableTime: true,
-  altFormat: FORMAT_WITH_TIME
+  enableTime: true
 };
 
 @Component({
@@ -37,11 +33,7 @@ export class CheckinRegisterComponent implements OnInit {
   disableCheckInTooltip = '';
   registrationForm: FormGroup;
 
-  constructor(
-    private fb: FormBuilder,
-    private session: CPSession,
-    private cpI18n: CPI18nService
-  ) {}
+  constructor(private fb: FormBuilder, private session: CPSession, private cpI18n: CPI18nService) {}
 
   onSubmit(data) {
     if (!data.check_in_time_epoch) {
@@ -61,11 +53,18 @@ export class CheckinRegisterComponent implements OnInit {
         $('[data-toggle="tooltip"]').tooltip();
       });
 
-      this.disableCheckInTooltip = this.cpI18n.
-      translate('t_external_check_in_disable_manual_check_in');
+      this.disableCheckInTooltip = this.cpI18n.translate(
+        't_external_check_in_disable_manual_check_in'
+      );
 
       return disabled;
     }
+  }
+
+  setCheckin(date) {
+    this.registrationForm.controls['check_in_time_epoch'].setValue(
+      CPDate.toEpoch(date, this.session.tz)
+    );
   }
 
   ngOnInit() {
@@ -80,13 +79,8 @@ export class CheckinRegisterComponent implements OnInit {
       lastname: [null, Validators.required]
     });
 
-    const _self = this;
     this.datePickerOptions = {
-      ...COMMON_DATE_PICKER_OPTIONS,
-      onChange: function(_, dateStr) {
-        _self.registrationForm.controls['check_in_time_epoch']
-          .setValue(CPDate.toEpoch(dateStr, _self.session.tz));
-      }
+      ...COMMON_DATE_PICKER_OPTIONS
     };
 
     this.buttonData = {

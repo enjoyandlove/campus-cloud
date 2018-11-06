@@ -8,14 +8,14 @@ import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
 import { CPDate } from '../../../../../shared/utils';
+import { baseActions } from '../../../../../store/base';
 import { STATUS } from '../../../../../shared/constants';
+import { getEventsModalState } from '../../../../../store';
 import { EventUtilService } from '../events.utils.service';
 import { CPSession, ISchool } from '../../../../../session';
-import { BaseComponent } from '../../../../../base/base.component';
-import { HEADER_UPDATE } from '../../../../../reducers/header.reducer';
+import { EventsComponent } from '../list/base/events.component';
 import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
 import { CPImageUploadComponent } from '../../../../../shared/components';
-import { SNACKBAR_SHOW } from './../../../../../reducers/snackbar.reducer';
 
 import {
   isAllDay,
@@ -39,15 +39,15 @@ const i18n = new CPI18nPipe();
   templateUrl: './events-excel.component.html',
   styleUrls: ['./events-excel.component.scss']
 })
-export class EventsExcelComponent extends BaseComponent implements OnInit {
+export class EventsExcelComponent extends EventsComponent implements OnInit {
   @Input() storeId: number;
-  @Input() isAthletic: number;
-
   @Input() clubId: number;
   @Input() isClub: boolean;
   @Input() serviceId: number;
   @Input() isService: boolean;
   @Input() isChecked: boolean;
+  @Input() athleticId: number;
+  @Input() isAthletic: boolean;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
 
@@ -75,20 +75,20 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private store: Store<any>,
-    private session: CPSession,
-    private cpI18n: CPI18nService,
-    private service: EventsService,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public service: EventsService,
     private utils: EventUtilService,
     private adminService: AdminService,
     private storeService: StoreService,
     private fileUploadService: FileUploadService
   ) {
-    super();
+    super(session, cpI18n, service);
     this.school = this.session.g.get('school');
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
-  private fetch() {
+  public fetch() {
     const search: HttpParams = new HttpParams().append('school_id', this.school.id.toString());
 
     const stores$ = this.storeService.getStores(search);
@@ -103,7 +103,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   private buildHeader() {
     const subheading = i18n.transform('events_import_csv_sub_heading', this.events.length);
     this.store.dispatch({
-      type: HEADER_UPDATE,
+      type: baseActions.HEADER_UPDATE,
       payload: {
         heading: 'events_import_csv_heading',
         crumbs: {
@@ -141,8 +141,9 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
 
   private buildGroup() {
     const control = <FormArray>this.form.controls['events'];
-    const selectedCheckInOption = this.checkInOptions.filter((
-      selected) => selected.action === attendanceType.checkInOnly)[0];
+    const selectedCheckInOption = this.checkInOptions.filter(
+      (selected) => selected.action === attendanceType.checkInOnly
+    )[0];
 
     this.events.forEach((event, index) => {
       control.push(this.buildEventControl(event));
@@ -376,7 +377,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       })
       .catch((err) => {
         this.store.dispatch({
-          type: SNACKBAR_SHOW,
+          type: baseActions.SNACKBAR_SHOW,
           payload: {
             class: 'danger',
             autoClose: true,
@@ -497,12 +498,7 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.urlPrefix = this.utils.buildUrlPrefix(
-      this.clubId,
-      this.serviceId,
-      this.isAthletic,
-      this.orientationId
-    );
+    this.urlPrefix = this.utils.buildUrlPrefix(this.getEventType());
 
     this.isChecked = false;
     this.uploadButtonData = {
@@ -516,16 +512,18 @@ export class EventsExcelComponent extends BaseComponent implements OnInit {
       disabled: true
     };
 
-    const attendanceTypeOptions = [{
-      action: null,
-      label: this.cpI18n.translate('t_events_assessment_no_check_in')
-    }];
+    const attendanceTypeOptions = [
+      {
+        action: null,
+        label: this.cpI18n.translate('t_events_assessment_no_check_in')
+      }
+    ];
 
     this.eventAttendanceFeedback = this.utils.getAttendanceFeedback();
 
     this.checkInOptions = [...attendanceTypeOptions, ...this.utils.getAttendanceTypeOptions()];
 
-    this.store.select('EVENTS_MODAL').subscribe((res) => {
+    this.store.select(getEventsModalState).subscribe((res) => {
       this.events = res;
 
       if (!this.storeId && !this.clubId && !this.isOrientation) {

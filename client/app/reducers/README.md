@@ -1,3 +1,0 @@
-### Reducers
-
-> Application's reducers

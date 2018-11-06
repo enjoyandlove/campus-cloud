@@ -32,4 +32,4 @@ export default interface IServiceProvider {
   encrypted_campus_service_id: string;
 
   checkin_verification_methods: number[];
-}
+};
