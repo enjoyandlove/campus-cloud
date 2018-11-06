@@ -17,6 +17,7 @@ export class FeedDeleteCommentModalComponent implements OnInit {
   @Input() feed: any;
   @Input() clubId: number;
   @Input() athleticId: number;
+  @Input() wallCategory: string;
   @Input() orientationId: number;
   @Input() isCampusWallView: Observable<number>;
 
@@ -30,7 +31,8 @@ export class FeedDeleteCommentModalComponent implements OnInit {
     comment_id: null,
     likes: null,
     wall_page: null,
-    upload_image: null
+    upload_image: null,
+    campus_wall_category: null
   };
 
   constructor(
@@ -55,8 +57,11 @@ export class FeedDeleteCommentModalComponent implements OnInit {
   }
 
   trackAmplitudeEvent(comment) {
+    const campus_wall_category = this.wallCategory ? this.wallCategory : null;
+
     this.eventProperties = {
       ...this.eventProperties,
+      campus_wall_category,
       comment_id: comment.id,
       likes: this.utils.hasLikes(comment.likes),
       upload_image: this.utils.hasImage(comment.has_image),

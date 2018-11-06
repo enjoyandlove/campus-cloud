@@ -17,6 +17,7 @@ export class FeedBodyComponent implements OnInit {
   @Input() replyView: number;
   @Input() isComment: boolean;
   @Input() athleticId: number;
+  @Input() wallCategory: string;
   @Input() orientationId: number;
   @Input() isRemovedPosts: boolean;
 
@@ -30,7 +31,8 @@ export class FeedBodyComponent implements OnInit {
     likes: null,
     comments: null,
     wall_page: null,
-    upload_image: null
+    upload_image: null,
+    campus_wall_category: null
   };
 
   viewImageEventData;
@@ -43,8 +45,11 @@ export class FeedBodyComponent implements OnInit {
 
   trackEvent(isCommentsOpen) {
     if (isCommentsOpen) {
+      const campus_wall_category = this.feed.channelName ? this.feed.channelName : null;
+
       this.eventProperties = {
         ...this.eventProperties,
+        campus_wall_category,
         post_id: this.feed.id,
         likes: this.utils.hasLikes(this.feed.likes),
         upload_image: this.utils.hasImage(this.feed.has_image),
@@ -61,11 +66,15 @@ export class FeedBodyComponent implements OnInit {
   }
 
   trackViewLightBoxEvent() {
+    const campus_wall_category = this.feed.channelName
+      ? this.feed.channelName : this.wallCategory ? this.wallCategory : null;
+
+    const message_type = this.isComment ? amplitudeEvents.COMMENT : amplitudeEvents.POST;
+
     const eventProperties = {
+      message_type,
+      campus_wall_category,
       likes: this.utils.hasLikes(this.feed.likes),
-      post_id: this.isComment ? null : this.feed.id,
-      comment_id: this.isComment ? this.feed.id : null,
-      message_type: this.isComment ? amplitudeEvents.COMMENT : amplitudeEvents.POST,
       wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
     };
 

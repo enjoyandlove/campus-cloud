@@ -26,8 +26,12 @@
             <div class="col-12">
               <cp-feed-body
                 [feed]="comment"
+                [clubId]="clubId"
                 [isComment]="true"
-                [replyView]="replyView">
+                [replyView]="replyView"
+                [athleticId]="athleticId"
+                [wallCategory]="wallCategory"
+                [orientationId]="orientationId">
               </cp-feed-body>
             </div>
           </div>
@@ -44,6 +48,7 @@
     [feed]="comment"
     [clubId]="clubId"
     [athleticId]="athleticId"
+    [wallCategory]="wallCategory"
     [orientationId]="orientationId"
     (deleted)="deleted.emit($event)"
     (teardown)="isDeleteModal = false"
