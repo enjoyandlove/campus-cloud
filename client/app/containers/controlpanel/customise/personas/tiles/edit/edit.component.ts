@@ -27,6 +27,7 @@ import { baseActions, IHeader, ISnackbar } from '../../../../../../store/base';
 export class PersonasTileEditComponent extends BaseComponent implements OnInit, OnDestroy {
   tileId;
   loading;
+  editable;
   buttonData;
   campusLinkId;
   tile: ITile;
@@ -130,6 +131,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
       this.guide,
       this.tile
     );
+    this.editable = !this.utils.isCampaignTile(this.tile) && !this.utils.isDeprecated(this.tile);
   }
 
   buildHeader(personaName: string) {

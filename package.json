@@ -130,6 +130,7 @@
     "prettier": "1.11.1",
     "pretty-quick": "1.4.1",
     "protractor": "5.1.2",
+    "puppeteer": "1.10.0",
     "raw-loader": "0.5.1",
     "remap-istanbul": "0.9.5",
     "rimraf": "^2.5.1",

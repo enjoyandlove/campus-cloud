@@ -61,6 +61,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   onProviderAdded() {
     this.providersList.fetch();
     this.isProviderAdd = false;
+    this.providersList.hasRecords = true;
   }
 
   onLaunchProviderAdd() {
