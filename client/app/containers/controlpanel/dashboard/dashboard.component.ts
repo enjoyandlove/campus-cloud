@@ -125,7 +125,15 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   }
 
   setUp() {
-    const noParamsInUrl = !Object.keys(this.route.snapshot.queryParams).length;
+    const {
+      start,
+      end,
+      label,
+      gen_info_exp_id,
+      c_activity_exp_id
+    } = this.route.snapshot.queryParams;
+
+    const cleanState = !start && !end && !label && !gen_info_exp_id && !c_activity_exp_id;
 
     this.fetchPersonas()
       .then(({ data }) => {
@@ -133,7 +141,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
           ...this.state,
           personas: data
         };
-        if (noParamsInUrl) {
+        if (cleanState) {
           this.initState();
         } else {
           this.readStateFromUrl();

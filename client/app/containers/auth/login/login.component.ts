@@ -1,6 +1,6 @@
+import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { AuthService } from '../auth.service';
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.service.login(data.username, data.password).subscribe(
       (res: any) => {
         if (appStorage.storageAvailable()) {
-          const setUserLoginState = {
+          const setUserLoginState: NavigationExtras = {
             queryParams: { login: true }
           };
 

@@ -1,4 +1,6 @@
-var path = require('path');
+process.env.CHROME_BIN = require('puppeteer').executablePath();
+process.env.CHROME_DEVEL_SANDBOX =
+  '/home/oohlala/oohlalamobile/node_modules/puppeteer/.local-chromium/linux-599821/chrome-linux/chrome_sandbox';
 
 var webpackConfig = require('./webpack.config');
 const jasmineSeedReporter = require('./jasmine-seed-reporter.js');
@@ -67,7 +69,7 @@ module.exports = function(config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome'],
+    browsers: ['ChromeHeadless'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits

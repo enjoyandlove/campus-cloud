@@ -11,7 +11,7 @@
   </div>
   <div class="registration__form">
     <div class="row">
-      <div class="col-6">
+      <div class="col-sm-12 col-md-6">
         <div class="registration__form__overlay_wrapper">
           <div class="registration__form__overlay" *ngIf="disabledQRCode">
             <span>
@@ -24,7 +24,7 @@
             [ngStyle]="{'background-image': 'url(' + data.qr_img_url + ')'}"></div>
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-sm-12 col-md-6">
         <form [formGroup]="registrationForm">
           <div class="form-group">
             <label>{{ 'first_name' | cpI18n }}</label>

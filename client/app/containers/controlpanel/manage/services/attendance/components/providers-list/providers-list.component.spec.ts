@@ -51,7 +51,7 @@ const mockProvider = [
   }
 ];
 
-fdescribe('ProvidersListComponent', () => {
+describe('ProvidersListComponent', () => {
   configureTestSuite();
 
   beforeAll((done) => {
