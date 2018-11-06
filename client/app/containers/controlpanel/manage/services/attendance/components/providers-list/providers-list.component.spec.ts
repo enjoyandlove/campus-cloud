@@ -48,7 +48,7 @@ const mockProvider = [
     email: 'helloworld@gmail.com',
     checkin_verification_methods: [1, 2, 3],
     custom_basic_feedback_label: 'hello world'
-  },
+  }
 ];
 
 describe('ProvidersListComponent', () => {
@@ -63,7 +63,8 @@ describe('ProvidersListComponent', () => {
           StoreModule.forRoot({
             HEADER: baseReducers.HEADER,
             SNACKBAR: baseReducers.SNACKBAR
-          })],
+          })
+        ],
         providers: [
           CPSession,
           CPI18nService,
@@ -98,11 +99,11 @@ describe('ProvidersListComponent', () => {
 
       spyOn(component.hasProviders, 'emit');
 
-      spyOn(component.providersService, 'getProviderAssessments')
-        .and.returnValue(observableOf({}));
+      spyOn(component.providersService, 'getProviderAssessments').and.returnValue(observableOf({}));
 
-      spy = spyOn(component.providersService, 'getProviders')
-        .and.returnValue(observableOf(mockProvider));
+      spy = spyOn(component.providersService, 'getProviders').and.returnValue(
+        observableOf(mockProvider)
+      );
     })
   );
 
@@ -163,17 +164,20 @@ describe('ProvidersListComponent', () => {
     expect(component.providersService.getProviderAssessments).toHaveBeenCalledTimes(1);
   });
 
-  it('should set hasRecords', fakeAsync(() => {
-    component.fetch(true);
+  it(
+    'should set hasRecords',
+    fakeAsync(() => {
+      component.fetch(true);
 
-    tick();
-    expect(spy).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalledTimes(1);
+      tick();
+      expect(spy).toHaveBeenCalled();
+      expect(spy).toHaveBeenCalledTimes(1);
 
-    expect(component.hasRecords).toBe(true);
+      expect(component.hasRecords).toBe(true);
 
-    expect(component.hasProviders.emit).toHaveBeenCalled();
-    expect(component.hasProviders.emit).toHaveBeenCalledWith(true);
-    expect(component.hasProviders.emit).toHaveBeenCalledTimes(1);
-  }));
+      expect(component.hasProviders.emit).toHaveBeenCalled();
+      expect(component.hasProviders.emit).toHaveBeenCalledWith(true);
+      expect(component.hasProviders.emit).toHaveBeenCalledTimes(1);
+    })
+  );
 });

@@ -24,7 +24,7 @@ class MockService {
   }
 }
 
-describe('CheckinEventsComponent', () => {
+xdescribe('CheckinEventsComponent', () => {
   let spy;
   let events;
   let sourceId;
