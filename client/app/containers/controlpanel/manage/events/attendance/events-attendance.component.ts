@@ -74,6 +74,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   emptyCheckOutTime = CheckInOutTime.empty;
   updateQrCode = new BehaviorSubject(null);
   totalAttendees = new BehaviorSubject(null);
+  defaultImage = require('public/default/user.png');
 
   eventProperties = {
     host_type: null,
