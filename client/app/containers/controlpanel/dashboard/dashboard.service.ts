@@ -34,13 +34,15 @@ export class DashboardService extends HTTPService {
     );
   }
 
-  getPersonas(search: HttpParams): Observable<any> {
-    const defaultValue = { label: '---', id: null, heading: true };
+  getExperiences(
+    search: HttpParams
+  ): Observable<Array<{ label: string; action: number; heading?: boolean }>> {
+    const defaultValue = { label: '---', action: null, heading: true };
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/1;1000`;
 
     return super.get(url, search).pipe(
       startWith([defaultValue]),
-      map((data: any) => {
+      map((data: IPersona[]) => {
         const parsePersona = (persona: IPersona) => {
           return {
             label: persona.localized_name_map.en,

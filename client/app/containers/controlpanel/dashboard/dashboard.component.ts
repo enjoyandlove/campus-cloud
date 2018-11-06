@@ -113,7 +113,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
       .set('school_id', this.session.g.get('school').id)
       .set('platform', PersonaType.app.toString());
 
-    return super.fetchData(this.service.getPersonas(search));
+    return super.fetchData(this.service.getExperiences(search));
   }
 
   setUp() {
