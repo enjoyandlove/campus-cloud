@@ -74,7 +74,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   updateUrl(params: Params): void {
     this.router.navigate(['/dashboard'], {
       queryParamsHandling: 'merge',
-      queryParams: { params }
+      queryParams: { ...params }
     });
   }
 
@@ -125,11 +125,8 @@ export class DashboardComponent extends BaseComponent implements OnInit {
           ...this.state,
           experiences: data
         };
-        if (hasValidParams) {
-          this.readStateFromUrl();
-        } else {
-          this.initState();
-        }
+
+        return hasValidParams ? this.readStateFromUrl() : this.initState();
       })
       .then(() => (this.loading = false));
   }
