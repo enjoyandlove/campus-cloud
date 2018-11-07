@@ -8,6 +8,10 @@ export class MockRouter {
     return this._queryParams;
   }
 
+  snapshot = {
+    queryParams: 1
+  };
+
   _setParam(params: Params) {
     this._queryParams.next({ ...params });
   }

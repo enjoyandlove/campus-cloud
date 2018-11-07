@@ -1,14 +1,17 @@
+/*tslint:disable:max-line-length */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, NavigationExtras } from '@angular/router';
+import { By } from '@angular/platform-browser';
 
-import { MockRouter } from '../../__tests__/dashboard.activatedroute';
-import { MockDashboardService } from '../../__tests__/dashboard.service';
 import { CPSession } from '../../../../../session';
-import { configureTestSuite } from '../../../../../shared/tests';
-import { DashboardUtilsService } from '../../dashboard.utils.service';
 import { DashboardModule } from '../../dashboard.module';
 import { DashboardService } from '../../dashboard.service';
+import { configureTestSuite } from '../../../../../shared/tests';
+import { DashboardUtilsService } from '../../dashboard.utils.service';
+import { MockRouter } from '../../__tests__/dashboard.activatedroute';
+import { MockDashboardService } from '../../__tests__/dashboard.service';
 import { DashboardExperienceMenuComponent } from './dashboard-experience-menu.component';
+import { CPDropdownComponent } from './../../../../../shared/components/cp-dropdown/cp-dropdown.component';
 
 describe('DashboardExperienceMenuComponent', () => {
   configureTestSuite();
@@ -44,6 +47,16 @@ describe('DashboardExperienceMenuComponent', () => {
 
   it('shoudld init', () => {
     expect(comp).toBeTruthy();
+  });
+
+  it('should update router on cp-dropdown selected event', () => {
+    const de = fixture.debugElement;
+    spyOn(comp, 'updateRouter');
+    const cpDropdown = de.query(By.directive(CPDropdownComponent));
+    const cpDropdownComp: CPDropdownComponent = cpDropdown.componentInstance;
+    cpDropdownComp.selected.emit({ label: 'hello', event: '2' });
+
+    expect(comp.updateRouter).toHaveBeenCalled();
   });
 
   it('should append query params to route', () => {

@@ -31,15 +31,14 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   };
 
   constructor(
-    private router: Router,
-    private session: CPSession,
-    private route: ActivatedRoute,
-    private cpI18n: CPI18nService,
+    public router: Router,
+    public session: CPSession,
+    public route: ActivatedRoute,
+    public cpI18n: CPI18nService,
     public service: DashboardService,
-    private helper: DashboardUtilsService
+    public helper: DashboardUtilsService
   ) {
     super();
-    this.user = this.session.g.get('user');
   }
 
   readStateFromUrl(): void {
@@ -128,10 +127,14 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
         return hasValidParams ? this.readStateFromUrl() : this.initState();
       })
-      .then(() => (this.loading = false));
+      .then(() => {
+        this.loading = false;
+      });
   }
 
   ngOnInit() {
+    this.user = this.session.g.get('user');
+
     this.dateRanges = [this.helper.last30Days(), this.helper.last90Days(), this.helper.lastYear()];
 
     this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);

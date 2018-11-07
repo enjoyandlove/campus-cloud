@@ -4,4 +4,8 @@ export class MockDashboardService {
   getGeneralInformation() {
     return of({});
   }
+
+  getExperiences() {
+    return of([]);
+  }
 }

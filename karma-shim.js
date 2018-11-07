@@ -28,11 +28,7 @@ require('node_modules/bootstrap/dist/js/bootstrap.bundle.min');
  /\.spec\.ts/ <== ALL FILES
  /dashboard-general-information\.component\.spec\.ts/ <== ONE FILE
  */
-var appContext = require.context(
-  './client',
-  true,
-  /dashboard-experience-menu\.component\.spec\.ts/
-);
+var appContext = require.context('./client', true, /\.spec\.ts/);
 
 // get all the files, for each file, call the context function
 // that will require the file and load it up here. Context will
