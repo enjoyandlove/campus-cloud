@@ -15,10 +15,15 @@
       0 3px 13px rgba(0, 0, 0, 0.08);
   }
 
+  &--calendars {
+    height: 345px;
+  }
+
   &--controls {
     display: flex;
     padding: 15px 0;
     justify-content: center;
+    border-top: 1px solid #eee;
     button {
       @include font-semi-bold();
     }
@@ -46,7 +51,6 @@
   transition: top 0.1s cubic-bezier(0, 1, 0.5, 1);
   z-index: 999999;
   background: #fff;
-  border-bottom: 1px solid #eee;
 }
 .flatpickr-calendar.inline,
 .flatpickr-calendar.open {
