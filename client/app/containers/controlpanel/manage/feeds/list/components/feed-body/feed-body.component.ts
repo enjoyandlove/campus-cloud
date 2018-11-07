@@ -66,8 +66,9 @@ export class FeedBodyComponent implements OnInit {
   }
 
   trackViewLightBoxEvent() {
-    const campus_wall_category = this.feed.channelName
-      ? this.feed.channelName : this.wallCategory ? this.wallCategory : null;
+    const wallCategory =  this.wallCategory ? this.wallCategory : null;
+    const channelName = this.feed.channelName ? this.feed.channelName : null;
+    const campus_wall_category = channelName ? channelName : wallCategory;
 
     const message_type = this.isComment ? amplitudeEvents.COMMENT : amplitudeEvents.POST;
 
