@@ -109,6 +109,9 @@
                  *ngFor="let attendee of attendees">
               <div class="row">
                 <div class="col-3 text-truncate">
+                  <img
+                    class="rounded float-left avatar"
+                    [src]="attendee.avatar_thumb_url ? attendee.avatar_thumb_url : defaultImage">
                   <strong>
                     {{ attendee.firstname }}
                     {{ attendee.lastname }}

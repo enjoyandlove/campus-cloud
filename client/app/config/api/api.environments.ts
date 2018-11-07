@@ -9,7 +9,7 @@ const CP_API_URL = {
 
   DEV: 'https://usstagingapi.studentlifemobile.com/cc'
 
-  // DEV: 'http://ec2-54-205-194-67.compute-1.amazonaws.com:5008/cc'
+  // DEV: 'http://ec2-54-146-246-81.compute-1.amazonaws.com:5005/cc'
 };
 
 export const getUrlByEnv = () => {

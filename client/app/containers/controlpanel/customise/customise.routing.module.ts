@@ -14,12 +14,12 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'experiences',
-        data: { zendesk: 'customize' },
+        data: { zendesk: 'experiences' },
         loadChildren: './personas/personas.module#PersonasModule'
       },
       {
         path: 'branding',
-        data: { zendesk: 'customize' },
+        data: { zendesk: 'studio' },
         loadChildren: './banner/banner.module#BannerModule'
       }
     ]
