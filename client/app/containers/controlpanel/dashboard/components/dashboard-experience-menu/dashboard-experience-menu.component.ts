@@ -16,15 +16,11 @@ export class DashboardExperienceMenuComponent implements OnInit {
 
   constructor(public service: DashboardService, public session: CPSession, public router: Router) {}
 
-  onSelected({ action }) {
-    this.updateRouter(action);
-  }
-
-  updateRouter(experience_id) {
+  updateRouter({ action }) {
     this.router.navigate(['/dashboard'], {
       queryParamsHandling: 'merge',
       queryParams: {
-        [this.paramName]: experience_id
+        [this.paramName]: action
       }
     });
   }

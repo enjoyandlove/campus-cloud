@@ -7,7 +7,7 @@ import { DashboardUtilsService } from './dashboard.utils.service';
 
 import {
   DashboardTopClubsComponent,
-  DashboardCampuTileComponent,
+  DashboardCampusTileComponent,
   DashboardTopEventsComponent,
   DashboardAssessmentComponent,
   DashboardTopResourceComponent,
@@ -36,7 +36,7 @@ import { EngagementModule } from './../assess/engagement/engagement.module';
     DashboardTopResourceComponent,
     DashboardAssessmentComponent,
     DashboardIntegrationsComponent,
-    DashboardCampuTileComponent,
+    DashboardCampusTileComponent,
     DashboardTopClubsComponent,
     DashboardDownloadsRegistrationComponent,
     DashboardSocialActivyComponent,

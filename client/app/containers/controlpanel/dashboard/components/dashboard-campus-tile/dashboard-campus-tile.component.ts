@@ -12,7 +12,7 @@ import { DashboardService } from './../../dashboard.service';
   templateUrl: './dashboard-campus-tile.component.html',
   styleUrls: ['./dashboard-campus-tile.component.scss']
 })
-export class DashboardCampuTileComponent extends BaseComponent implements OnInit {
+export class DashboardCampusTileComponent extends BaseComponent implements OnInit {
   @Input() experiences;
 
   loading;
@@ -50,7 +50,7 @@ export class DashboardCampuTileComponent extends BaseComponent implements OnInit
 
   listenForQueryParamChanges() {
     // instead of passing @Input(s) we update the queryParams
-    // and call the fetch event whenever we those value change
+    // and call the fetch event whenever any of those values change
 
     this.route.queryParams.subscribe((params) => {
       const validParams = this.utils.validParams(params);

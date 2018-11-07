@@ -51,10 +51,9 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
 
   listenForQueryParamChanges() {
     // instead of passing @Input(s) we update the queryParams
-    // and call the fetch event whenever we those value change
+    // and call the fetch event whenever any of those values change
     this.route.queryParams.subscribe((params) => {
       const validParams = this.utils.validParams(params);
-
       if (!validParams) {
         return;
       }
