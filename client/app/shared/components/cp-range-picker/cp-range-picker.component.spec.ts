@@ -1,5 +1,7 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import 'flatpickr';
 
+import { CPI18nPipe } from '../../pipes';
 import { CPRangePickerComponent } from '../';
 import { CPSession } from './../../../session';
 import { CPDate } from './../../utils/date/date';
@@ -28,7 +30,6 @@ const pickerOptions = {
 };
 
 declare var $: any;
-import 'flatpickr';
 
 describe('CPRangePickerComponent', () => {
   let comp: CPRangePickerComponent;
@@ -43,7 +44,7 @@ describe('CPRangePickerComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        declarations: [CPRangePickerComponent],
+        declarations: [CPRangePickerComponent, CPI18nPipe],
         providers: [CPRangePickerUtilsService, { provide: CPSession, useClass: MockCPSession }]
       });
     })
@@ -102,5 +103,23 @@ describe('CPRangePickerComponent', () => {
     expect(comp.setLabel).toHaveBeenCalledWith(expected);
 
     expect(comp.triggerChange).toHaveBeenCalled();
+  });
+
+  it('should call clearDates', () => {
+    const noDate = {
+      start: null,
+      end: null,
+      label: null
+    };
+
+    spyOn(comp, 'setLabel');
+    spyOn(comp, 'triggerChange');
+    spyOn(comp, 'resetCalendar');
+
+    comp.clearDates();
+
+    expect(comp.setLabel).toHaveBeenCalledWith(noDate);
+    expect(comp.triggerChange).toHaveBeenCalledWith(noDate);
+    expect(comp.resetCalendar).toHaveBeenCalled();
   });
 });
