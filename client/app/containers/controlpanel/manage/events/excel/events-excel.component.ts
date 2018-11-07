@@ -421,39 +421,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     }
 
     Object.keys(events).forEach((key) => {
-      let store_id;
-
-      if (this.storeId) {
-        store_id = this.storeId;
-      }
-
-      if (this.clubId) {
-        store_id = this.clubId;
-      }
-      let _event = {
-        title: events[key].title,
-        is_all_day: isAllDay.disabled,
-        store_id: store_id ? store_id : events[key].store_id,
-        description: events[key].description,
-        end: events[key].end,
-        room: events[key].room,
-        start: events[key].start,
-        location: events[key].location,
-        poster_url: events[key].poster_url,
-        has_checkout: events[key].has_checkout,
-        poster_thumb_url: events[key].poster_thumb_url,
-        event_attendance: events[key].event_attendance
-      };
-
-      if (events[key].event_attendance === EventAttendance.enabled) {
-        _event = Object.assign({}, _event, {
-          event_feedback: events[key].event_feedback,
-          event_manager_id: events[key].event_manager_id,
-          attendance_manager_email: events[key].attendance_manager_email
-        });
-      }
-
-      _events.push(_event);
+      _events.push(this.buildEvent(events[key]));
     });
 
     let search = new HttpParams();
@@ -484,6 +452,46 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
         this.error = STATUS.SOMETHING_WENT_WRONG;
       }
     );
+  }
+
+  buildEvent(event) {
+    let store_id;
+
+    if (this.storeId) {
+      store_id = this.storeId;
+    }
+
+    if (this.clubId) {
+      store_id = this.clubId;
+    }
+    let _event = {
+      title: event.title,
+      is_all_day: isAllDay.disabled,
+      store_id: store_id ? store_id : event.store_id,
+      description: event.description,
+      end: event.end,
+      room: event.room,
+      start: event.start,
+      location: event.location,
+      poster_url: event.poster_url,
+      has_checkout: event.has_checkout,
+      poster_thumb_url: event.poster_thumb_url,
+      event_attendance: event.event_attendance
+    };
+
+    if (event.event_attendance === EventAttendance.enabled) {
+      _event = Object.assign({}, _event, {
+        event_feedback: event.event_feedback,
+        event_manager_id: event.event_manager_id
+      });
+      if (event.attendance_manager_email) {
+        _event = Object.assign({}, _event, {
+          attendance_manager_email: event.attendance_manager_email
+        });
+      }
+    }
+
+    return _event;
   }
 
   updateCheckInOption(item, index) {
