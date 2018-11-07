@@ -7,7 +7,7 @@ import { IPersona } from './../../../../persona.interface';
 import { TilesUtilsService } from './../../../tiles.utils.service';
 import { ResourcesUtilsService } from '../../resources.utils.service';
 import { PersonasLoginRequired, PersonasType } from './../../../../personas.status';
-import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
+import { CPI18nService, ZendeskService } from '../../../../../../../../shared/services';
 
 @Component({
   selector: 'cp-personas-resource-types',
@@ -26,6 +26,7 @@ export class PersonasResourceTypesComponent implements OnInit {
 
   resources;
   selectedItem = null;
+  inappLinkMessage: string;
 
   textInputComponent = ['web_link', 'external_link'];
 
@@ -110,5 +111,7 @@ export class PersonasResourceTypesComponent implements OnInit {
     if (this.resourceSelection) {
       this.updateResourceType();
     }
+
+    this.inappLinkMessage = ZendeskService.getUrl('articles/360011676854');
   }
 }

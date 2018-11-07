@@ -75,6 +75,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   emptyCheckOutTime = CheckInOutTime.empty;
   updateQrCode = new BehaviorSubject(null);
   totalAttendees = new BehaviorSubject(null);
+  defaultImage = require('public/default/user.png');
 
   eventProperties = {
     host_type: null,
@@ -485,10 +486,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CHANGED_QR_CODE,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHANGED_QR_CODE, eventProperties);
   }
 
   setCheckInEventProperties() {

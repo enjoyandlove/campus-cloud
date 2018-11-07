@@ -6,7 +6,7 @@ import { BannerListComponent } from './list';
 const appRoutes: Routes = [
   {
     path: '',
-    data: { zendesk: 'customize' },
+    data: { zendesk: 'studio' },
     component: BannerListComponent
   }
 ];

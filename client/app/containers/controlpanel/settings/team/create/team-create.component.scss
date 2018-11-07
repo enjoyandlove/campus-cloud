@@ -97,3 +97,15 @@ p {
     margin-right: 5px;
   }
 }
+
+.admin_studio_tooltip {
+  > :first-child {
+    margin-right: 10px;
+  }
+
+  > * {
+    width: auto;
+    vertical-align: 1px;
+    display: inline-block;
+  }
+}

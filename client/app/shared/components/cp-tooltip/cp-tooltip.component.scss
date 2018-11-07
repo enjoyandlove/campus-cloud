@@ -7,3 +7,9 @@ button i {
   position: relative;
   color: $color-secondary-text;
 }
+
+.cpbtn {
+  &.danger {
+    color: $color-danger;
+  }
+}

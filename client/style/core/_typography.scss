@@ -122,6 +122,10 @@ a {
   font-weight: 400;
 }
 
+@mixin font-12px() {
+  font-size: 0.9em;
+}
+
 @mixin font-14px() {
   font-size: 1em;
 }
