@@ -14,6 +14,7 @@ export class FeedCommentComponent implements OnInit {
   @Input() clubId: number;
   @Input() replyView: number;
   @Input() athleticId: number;
+  @Input() wallCategory: string;
   @Input() orientationId: number;
 
   @Input() isCampusWallView: Observable<number>;

@@ -13,6 +13,8 @@ export const amplitudeEvents = {
 
   WALL: 'Wall',
 
+  POST: 'Post',
+
   CLUB: 'Club',
 
   INFO: 'Info',
@@ -32,6 +34,8 @@ export const amplitudeEvents = {
   MEMBER: 'Member',
 
   ACTIVE: 'Active',
+
+  COMMENT: 'Comment',
 
   REGULAR: 'Regular',
 
@@ -168,6 +172,8 @@ export const amplitudeEvents = {
   INVITED_TEAM_MEMBER: 'Invited Team Member',
 
   WALL_APPROVED_POST: 'Wall - Approved Post',
+
+  WALL_CLICKED_IMAGE: 'Wall - Clicked Image',
 
   MULTIPLE_ENGAGEMENT: 'Multiple Engagement',
 

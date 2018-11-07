@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 
 import { FeedsUtilsService } from '../../../feeds.utils.service';
 import { CPHostDirective } from '../../../../../../../shared/directives';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
 
@@ -14,7 +15,9 @@ export class FeedBodyComponent implements OnInit {
   @Input() feed: any;
   @Input() clubId: number;
   @Input() replyView: number;
+  @Input() isComment: boolean;
   @Input() athleticId: number;
+  @Input() wallCategory: string;
   @Input() orientationId: number;
   @Input() isRemovedPosts: boolean;
 
@@ -28,8 +31,11 @@ export class FeedBodyComponent implements OnInit {
     likes: null,
     comments: null,
     wall_page: null,
-    upload_image: null
+    upload_image: null,
+    campus_wall_category: null
   };
+
+  viewImageEventData;
 
   constructor(
     public cpI18n: CPI18nService,
@@ -39,8 +45,11 @@ export class FeedBodyComponent implements OnInit {
 
   trackEvent(isCommentsOpen) {
     if (isCommentsOpen) {
+      const campus_wall_category = this.feed.channelName ? this.feed.channelName : null;
+
       this.eventProperties = {
         ...this.eventProperties,
+        campus_wall_category,
         post_id: this.feed.id,
         likes: this.utils.hasLikes(this.feed.likes),
         upload_image: this.utils.hasImage(this.feed.has_image),
@@ -56,5 +65,28 @@ export class FeedBodyComponent implements OnInit {
     return feedImages.map((imgObj) => imgObj.url);
   }
 
-  ngOnInit() {}
+  trackViewLightBoxEvent() {
+    const wallCategory =  this.wallCategory ? this.wallCategory : null;
+    const channelName = this.feed.channelName ? this.feed.channelName : null;
+    const campus_wall_category = channelName ? channelName : wallCategory;
+
+    const message_type = this.isComment ? amplitudeEvents.COMMENT : amplitudeEvents.POST;
+
+    const eventProperties = {
+      message_type,
+      campus_wall_category,
+      likes: this.utils.hasLikes(this.feed.likes),
+      wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
+    };
+
+    this.viewImageEventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.WALL_CLICKED_IMAGE,
+      eventProperties: eventProperties
+    };
+  }
+
+  ngOnInit() {
+    this.trackViewLightBoxEvent();
+  }
 }

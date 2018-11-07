@@ -9,6 +9,7 @@
       [clubId]="clubId"
       [athleticId]="athleticId"
       [orientationId]="orientationId"
+      [wallCategory]="feed.channelName"
       (deleted)="onDeletedComment($event)"
       [isCampusWallView]="isCampusWallView"
       *ngFor="let comment of state.comments; let last = last">
@@ -25,6 +26,7 @@
       [postType]="feed.post_type"
       [replyView]="isReplyView"
       [orientationId]="orientationId"
+      [wallCategory]="feed.channelName"
       [isCampusWallView]="isCampusWallView"
       (created)="onReplied($event)">
     </cp-feed-input-box>
