@@ -188,7 +188,8 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.isAddCheckInModal = false;
     this.fetch();
 
-    const check_out = checkedInData.check_out_time_epoch > 0 ? CheckInOut.yes : CheckInOut.no;
+    const hasCheckOut = checkedInData.check_out_time_epoch > 0;
+    const check_out = hasCheckOut ? CheckInOut.yes : CheckInOut.no;
     const eventProperties = {
       ...this.checkInEventProperties,
       check_out
