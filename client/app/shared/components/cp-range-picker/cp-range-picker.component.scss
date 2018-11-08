@@ -19,7 +19,7 @@
   }
 
   &--calendars {
-    height: 350px;
+    height: 345px;
 
     &.calendar {
       margin-right: 15px;
@@ -45,7 +45,7 @@
 
   &--controls {
     display: flex;
-    padding: 15px 0 10px 0;
+    padding: 15px 0;
     justify-content: center;
     border-top: 1px solid #eee;
     button {
