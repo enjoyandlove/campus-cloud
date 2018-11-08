@@ -93,11 +93,15 @@ export const amplitudeEvents = {
 
   ALL_STUDENTS: 'All Students',
 
+  ONE_PROVIDER: 'One Provider',
+
   DELETED_ITEM: 'Deleted Item',
 
   ANNOUNCEMENT: 'Announcement',
 
   CAROUSEL_WHEEL: 'Carousel Wheel',
+
+  ALL_PROVIDERS: 'All Providers',
 
   SELECT_ACCESS: 'Select Access',
 
@@ -201,8 +205,6 @@ export const amplitudeEvents = {
 
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
 
-  MANAGE_DOWNLOAD_DATA: 'Manage - Downloaded Data',
-
   MANAGE_CHANGED_QR_CODE: 'Manage - Changed QR Code',
 
   MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
@@ -261,5 +263,9 @@ export const amplitudeEvents = {
 
   MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
 
-  MANAGE_CREATED_SERVICE_PROVIDER: 'Manage - Created Service Provider'
+  MANAGE_CREATED_SERVICE_PROVIDER: 'Manage - Created Service Provider',
+
+  MANAGE_DOWNLOAD_EVENT_ASSESS_DATA: 'Manage - Downloaded Event Assessment Data',
+
+  MANAGE_DOWNLOAD_SERVICE_ASSESS_DATA: 'Manage - Downloaded Service Assessment Data'
 };

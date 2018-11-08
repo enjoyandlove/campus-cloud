@@ -229,14 +229,19 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   }
 
   trackAmplitudeEvent() {
+    const check_out_status = this.event.has_checkout
+      ? amplitudeEvents.ENABLED
+      : amplitudeEvents.DISABLED;
+
     this.downloadEventProperties = {
-      host_id: this.event.store_id,
-      data_source: amplitudeEvents.EVENT,
+      check_out_status,
+      source_id: this.event.encrypted_id,
+      assessment_type: this.checkInSource.assessment_type,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
+      amplitudeEvents.MANAGE_DOWNLOAD_EVENT_ASSESS_DATA,
       this.downloadEventProperties
     );
   }

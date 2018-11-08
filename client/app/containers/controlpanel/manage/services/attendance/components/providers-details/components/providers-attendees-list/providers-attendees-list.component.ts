@@ -256,13 +256,21 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   }
 
   trackAmplitudeEvent() {
+    const check_out_status = this.provider.has_checkout
+      ? amplitudeEvents.ENABLED
+      : amplitudeEvents.DISABLED;
+
     this.eventProperties = {
-      host_id: this.service.store_id,
-      data_source: amplitudeEvents.SERVICE_PROVIDER,
+      check_out_status,
+      source_id: this.provider.encrypted_id,
+      provider_type: amplitudeEvents.ONE_PROVIDER,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DOWNLOAD_SERVICE_ASSESS_DATA,
+      this.eventProperties
+    );
   }
 
   setCheckInEventProperties() {
