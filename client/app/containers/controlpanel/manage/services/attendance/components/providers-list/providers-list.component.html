@@ -22,12 +22,12 @@
                     [sortDirection]="state.sort_direction">
                   </cp-sorting-header>
                 </div>
-                <div [class]="[displayRatingColumn ? 'col-1' : 'col-1 offset-4']">
+                <div class="col-1">
                   <span>
                     {{ 'services_visits' | cpI18n }}
                   </span>
                 </div>
-                <div class="col-1" *ngIf="displayRatingColumn">
+                <div class="col-1">
                   <cp-sorting-header
                     sortLabel="num_ratings"
                     (click)="doSort('num_ratings')"
@@ -36,7 +36,7 @@
                     [sortDirection]="state.sort_direction">
                   </cp-sorting-header>
                 </div>
-                <div class="col-3" *ngIf="displayRatingColumn">
+                <div class="col-3">
                   <span>{{ 't_shared_average_rating' | cpI18n }}</span>
                 </div>
                 <div class="col-2">
@@ -61,13 +61,13 @@
                     </span>
                   </a>
                 </div>
-                <div [class]="[displayRatingColumn ? 'col-1' : 'col-1 offset-4']">
+                <div class="col-1">
                   <span>{{ provider.total_visits }}</span>
                 </div>
-                <div class="col-1" *ngIf="displayRatingColumn">
+                <div class="col-1">
                   <span>{{ provider.has_feedback ? provider.num_ratings : '---' }}</span>
                 </div>
-                <div class="col-3" *ngIf="displayRatingColumn">
+                <div class="col-3">
                   <cp-stars
                     [maxRate]="5"
                     [size]="listStarSize"
