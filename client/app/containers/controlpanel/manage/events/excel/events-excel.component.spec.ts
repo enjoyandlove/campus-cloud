@@ -79,7 +79,7 @@ describe('EventsExcelComponent', () => {
     component = fixture.componentInstance;
   });
 
-  it('should create event onSubmit', () => {
+  xit('should create event onSubmit', () => {
     const fb = new FormBuilder();
 
     spyOn(component.service, 'createEvent').and.callThrough();
