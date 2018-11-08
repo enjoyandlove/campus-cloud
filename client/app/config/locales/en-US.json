@@ -731,9 +731,6 @@
   "change_school": {
     "message": "Change School"
   },
-  "checkins": {
-    "message": "Check-ins"
-  },
   "checkin_attendance_list": {
     "message": "Attendance List"
   },
@@ -2149,9 +2146,6 @@
   "services_repeat_visits": {
     "message": "Repeat Visits"
   },
-  "services_total_visits": {
-    "message": "Check-ins"
-  },
   "services_unique_visits": {
     "message": "Unique Visits"
   },
@@ -2566,9 +2560,6 @@
   "t_external_checkin_chechout": {
     "message": "Check-out"
   },
-  "t_external_checkin_checkin": {
-    "message": "Check-in"
-  },
   "t_external_checkin_method": {
     "message": "Method"
   },
@@ -2826,7 +2817,7 @@
     "message": "300kB or less. Use JPEG or PNG."
   },
   "t_personas_tile_link_donation_message": {
-    "message": "Certain links including donations will result in the app being rejected in the App Review Process. Use External Web Link instead."
+    "message": "Certain types of links including donations will result in the app being rejected in the App Review Process. Use External Web Link instead."
   },
   "t_personas_tile_locked_tooltip": {
     "message": "Contact your Customer Support representative to make changes to this tile"
@@ -2947,6 +2938,12 @@
   },
   "t_shared_cancel": {
     "message": "Cancel"
+  },
+  "t_shared_checkin": {
+    "message": "Check-in"
+  },
+  "t_shared_checkins": {
+    "message": "Check-ins"
   },
   "t_shared_color": {
     "message": "Color"

@@ -8,7 +8,7 @@
         <p>{{ 't_external_checkin_method' | cpI18n }}</p>
       </div>
       <div [class]="data.has_checkout ? 'col-3' : 'col-4'">
-        <p>{{ 't_external_checkin_checkin' | cpI18n }}</p>
+        <p>{{ 't_shared_checkin' | cpI18n }}</p>
       </div>
       <div class="col-3" *ngIf="data.has_checkout">
         <p>{{ 't_external_checkin_chechout' | cpI18n }}</p>
@@ -31,7 +31,7 @@
         <i class="material-icons">{{ attendee.check_in_type === checkInType ? 'computer' : 'smartphone' }}</i>
       </div>
       <div [class]="data.has_checkout ? 'col col-md-3' : 'col col-md-4'">
-        <strong class="d-lg-none check-in-out-label">{{ 't_external_checkin_checkin' | cpI18n }}</strong>
+        <strong class="d-lg-none check-in-out-label">{{ 't_shared_checkin' | cpI18n }}</strong>
         {{ attendee.check_in_time_epoch | cpDatePipe:dateFormat }}
       </div>
       <div class="col col-md-3" *ngIf="data.has_checkout">

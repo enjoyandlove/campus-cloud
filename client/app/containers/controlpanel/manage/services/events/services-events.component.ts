@@ -83,7 +83,7 @@ export class ServicesEventsComponent extends EventsComponent {
 
     if (this.service.service_attendance) {
       const attendance = {
-        label: 'assessment',
+        label: 'service_provider',
         isSubMenuItem: true,
         amplitude: amplitudeEvents.ASSESSMENT,
         url: `/manage/services/${this.serviceId}`
