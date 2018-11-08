@@ -46,6 +46,10 @@ export class CPTrackingService {
   }
 
   setIdentity(school, user, is_oohlala) {
+    if (!this._isAmplitudeAvailable()) {
+      return;
+    }
+
     if (school && user) {
       const accountLevelPrivileges = user.account_level_privileges;
       const schoolLevelPrivileges = user.school_level_privileges[school.id];
@@ -142,6 +146,10 @@ export class CPTrackingService {
       return;
     }
 
+    if (!this._isAmplitudeAvailable()) {
+      return;
+    }
+
     window.amplitude.getInstance().logEvent(eventName, eventProperties);
   }
 
@@ -170,5 +178,9 @@ export class CPTrackingService {
       eventAction: eventAction,
       eventValue: eventValue
     });
+  }
+
+  _isAmplitudeAvailable() {
+    return !!window.amplitude;
   }
 }

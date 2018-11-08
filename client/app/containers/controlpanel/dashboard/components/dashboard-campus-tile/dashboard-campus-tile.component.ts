@@ -36,7 +36,7 @@ export class DashboardCampusTileComponent extends BaseComponent implements OnIni
     const search = new HttpParams()
       .set('end', end)
       .set('start', start)
-      .set('experience_id', experience_id)
+      .set('persona_id', experience_id)
       .set('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getCampusTile(search);
