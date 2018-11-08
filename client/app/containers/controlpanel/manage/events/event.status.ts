@@ -62,12 +62,10 @@ export enum EventType {
   'orientation' = 4
 }
 
-export enum CheckInSource {
-  'club' = 'club',
-  'events' = 'events',
-  'services' = 'services',
-  'athletics' = 'athletics',
-  'orientation' = 'orientation'
+export enum EventCategory {
+  'club' = 0,
+  'athletics' = 16,
+  'services' = 19
 }
 
 export const qrCode = {

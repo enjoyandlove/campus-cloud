@@ -13,7 +13,6 @@ import { CheckinServiceComponent } from './checkin-service.component';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
 import { CPTrackingService, ErrorService } from '../../../../shared/services';
-import { CheckInSource } from '../../../controlpanel/manage/events/event.status';
 
 class MockService {
   dummy;
@@ -59,7 +58,6 @@ xdescribe('CheckinServiceComponent', () => {
     let spy;
     let services;
     let sourceId;
-    let checkInSource;
     let eventProperties;
     let component: CheckinServiceComponent;
     let fixture: ComponentFixture<CheckinServiceComponent>;
@@ -74,7 +72,6 @@ xdescribe('CheckinServiceComponent', () => {
 
     it('trackCheckedInEvent', () => {
       sourceId = 8874;
-      checkInSource = CheckInSource.services;
       services = {
         has_checkout: false,
         checkin_verification_methods: [1, 2, 3]
@@ -82,8 +79,7 @@ xdescribe('CheckinServiceComponent', () => {
 
       eventProperties = component.utils.getCheckedInEventProperties(
         sourceId,
-        services,
-        checkInSource
+        services
       );
 
       expect(eventProperties.source_id).toEqual(sourceId);
@@ -92,7 +88,6 @@ xdescribe('CheckinServiceComponent', () => {
       expect(eventProperties.assessment_type).toEqual(amplitudeEvents.SERVICE_PROVIDER);
 
       sourceId = 8547;
-      checkInSource = CheckInSource.events;
       services = {
         has_checkout: true,
         attend_verification_methods: [1, 2]
@@ -101,7 +96,6 @@ xdescribe('CheckinServiceComponent', () => {
       eventProperties = component.utils.getCheckedInEventProperties(
         sourceId,
         services,
-        checkInSource,
         true
       );
 

@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/index';
 import { Store } from '@ngrx/store';
 
+import IEvent from '../event.interface';
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes';
@@ -53,7 +54,6 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   canMessage;
   messageData;
   checkInData;
-  checkInSource;
   sortingLabels;
   attendees = [];
   loading = true;
@@ -236,8 +236,8 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.downloadEventProperties = {
       check_out_status,
       source_id: this.event.encrypted_id,
-      assessment_type: this.checkInSource.assessment_type,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      assessment_type: this.utils.getEventCategoryType(this.event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(
@@ -470,11 +470,11 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     });
   }
 
-  onTrackClickCheckinEvent(source_id) {
+  onTrackClickCheckinEvent(event: IEvent) {
     const eventProperties = {
-      source_id,
-      assessment_type: this.checkInSource.assessment_type,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      source_id: event.encrypted_id,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      assessment_type: this.utils.getEventCategoryType(event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(
@@ -487,8 +487,8 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     const eventProperties = {
       ...this.utils.getQRCodeCheckOutStatus(event, true),
       source_id: this.event.encrypted_id,
-      assessment_type: this.checkInSource.assessment_type,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      assessment_type: this.utils.getEventCategoryType(this.event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHANGED_QR_CODE, eventProperties);
@@ -498,14 +498,12 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.checkInEventProperties = {
       ...this.utils.getQRCodeCheckOutStatus(this.event, true),
       source_id: this.event.encrypted_id,
-      assessment_type: this.checkInSource.assessment_type,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      assessment_type: this.utils.getEventCategoryType(this.event.store_category)
     };
   }
 
   ngOnInit() {
-    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
-
     this.urlPrefix = this.utils.buildUrlPrefix(this.getEventType());
 
     this.sortingLabels = {

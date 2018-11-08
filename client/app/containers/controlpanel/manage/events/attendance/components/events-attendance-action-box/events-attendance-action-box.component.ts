@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs/index';
 
+import IEvent from '../../../event.interface';
 import { CheckInMethod } from '../../../event.status';
 import { CPSession } from './../../../../../../../session';
 import { EventUtilService } from '../../../events.utils.service';
@@ -14,8 +15,7 @@ import { canSchoolWriteResource } from './../../../../../../../shared/utils/priv
   styleUrls: ['./events-attendance-action-box.component.scss']
 })
 export class EventsAttendanceActionBoxComponent implements OnInit {
-  @Input() event: any;
-  @Input() checkInSource: string;
+  @Input() event: IEvent;
   @Input() isOrientation: boolean;
   @Input() updateQrCode = new BehaviorSubject(null);
   @Input() totalAttendees = new BehaviorSubject(null);

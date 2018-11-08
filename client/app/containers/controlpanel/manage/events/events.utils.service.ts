@@ -18,7 +18,7 @@ import {
   EventType,
   Assessment,
   CheckInMethod,
-  CheckInSource,
+  EventCategory,
   UploadedPhoto,
   EventFeedback,
   attendanceType,
@@ -114,32 +114,18 @@ export class EventUtilService {
     return '/cb/checkin/e/';
   }
 
-  getCheckinSourcePage(eventType: IEventType) {
-    if (eventType.event_type === EventType.athletics) {
-      return {
-        source_page: CheckInSource.athletics,
-        assessment_type: amplitudeEvents.ATHLETIC_EVENT
-      };
-    } else if (eventType.event_type === EventType.services) {
-      return {
-        source_page: CheckInSource.services,
-        assessment_type: amplitudeEvents.SERVICE_EVENT
-      };
-    } else if (eventType.event_type === EventType.club) {
-      return {
-        source_page: CheckInSource.club,
-        assessment_type: amplitudeEvents.CLUB_EVENT
-      };
-    } else if (eventType.event_type === EventType.orientation) {
-      return {
-        source_page: CheckInSource.orientation,
-        assessment_type: amplitudeEvents.ORIENTATION_EVENT
-      };
+  getEventCategoryType(category: Number) {
+    if (category === EventCategory.athletics) {
+      return amplitudeEvents.ATHLETIC_EVENT;
+
+    } else if (category === EventCategory.club) {
+      return amplitudeEvents.CLUB_EVENT;
+
+    } else if (category === EventCategory.services) {
+      return amplitudeEvents.SERVICE_EVENT;
+
     } else {
-      return {
-        source_page: CheckInSource.events,
-        assessment_type: amplitudeEvents.INSTITUTION_EVENT
-      };
+      return amplitudeEvents.ORIENTATION_EVENT;
     }
   }
 

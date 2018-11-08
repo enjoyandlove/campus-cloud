@@ -258,13 +258,13 @@ export class BaseCheckinComponent implements OnInit {
   }
 
   trackDownloadQRCodeEvent() {
-    const assessment_type = this.checkInSource === 'service'
+    const assessment_type = !this.isEvent
       ? amplitudeEvents.SERVICE_PROVIDER
-      : this.utils.getCheckInSource(this.checkInSource);
+      : this.utils.getCheckInSource(this.data.store_category);
 
     const access_type = this.checkInSource
-      ? amplitudeEvents.CC_WEB_CHECK_IN
-      : amplitudeEvents.EMAIL_WEB_CHECK_IN;
+      ? amplitudeEvents.EMAIL_WEB_CHECK_IN
+      : amplitudeEvents.CC_WEB_CHECK_IN;
 
     const eventProperties = {
       access_type,

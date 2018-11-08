@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { CPI18nService } from '../../../shared/services';
 import { amplitudeEvents } from '../../../shared/constants/analytics';
-import { CheckInMethod, CheckInSource } from '../../controlpanel/manage/events/event.status';
+import { CheckInMethod, EventCategory } from '../../controlpanel/manage/events/event.status';
 
 export enum ErrorCode {
   notFound = 404,
@@ -28,31 +28,28 @@ export class CheckinUtilsService {
     return errorMessage;
   }
 
-  getCheckInSource(source: string) {
-    if (source === CheckInSource.events) {
-      return amplitudeEvents.INSTITUTION_EVENT;
-
-    } else if (source === CheckInSource.club) {
+  getCheckInSource(category: Number) {
+    if (category === EventCategory.club) {
       return amplitudeEvents.CLUB_EVENT;
 
-    } else if (source === CheckInSource.orientation) {
-      return amplitudeEvents.ORIENTATION_EVENT;
-
-    } else if (source === CheckInSource.services) {
+    } else if (category === EventCategory.services) {
       return amplitudeEvents.SERVICE_EVENT;
 
-    } else if (source === CheckInSource.athletics) {
+    } else if (category === EventCategory.athletics) {
       return amplitudeEvents.ATHLETIC_EVENT;
+
+    } else {
+      return amplitudeEvents.ORIENTATION_EVENT;
     }
   }
 
-  getCheckedInEventProperties(source_id, events, checkInSource, isEvent = false) {
+  getCheckedInEventProperties(source_id, events, isEvent = false) {
     const verificationMethod = isEvent
       ? events['attend_verification_methods']
       : events['checkin_verification_methods'];
 
     const assessment_type = isEvent
-      ? this.getCheckInSource(checkInSource)
+      ? this.getCheckInSource(events['store_category'])
       : amplitudeEvents.SERVICE_PROVIDER;
 
     const check_out_status = events['has_checkout']
@@ -63,13 +60,8 @@ export class CheckinUtilsService {
         ? amplitudeEvents.ENABLED
         : amplitudeEvents.DISABLED;
 
-    const access_type = checkInSource
-      ? amplitudeEvents.CC_WEB_CHECK_IN
-      : amplitudeEvents.EMAIL_WEB_CHECK_IN;
-
     return {
       source_id,
-      access_type,
       assessment_type,
       qr_code_status,
       check_out_status

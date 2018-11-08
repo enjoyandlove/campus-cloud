@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import IEvent from '../event.interface';
 import { EventsService } from '../events.service';
 import { EventAttendance } from '../event.status';
 import { CPSession } from '../../../../../session';
@@ -37,7 +38,6 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
   urlPrefix;
   dateFormat;
   isPastEvent;
-  checkInSource;
   loading = true;
   eventId: number;
   eventCheckinRoute;
@@ -118,11 +118,11 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
     });
   }
 
-  trackCheckinEvent(source_id) {
+  trackCheckinEvent(event: IEvent) {
     const eventProperties = {
-      source_id,
-      assessment_type: this.checkInSource.assessment_type,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      source_id: event.encrypted_id,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      assessment_type: this.utils.getEventCategoryType(event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(
@@ -132,8 +132,6 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
-
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
 
     this.fetch();

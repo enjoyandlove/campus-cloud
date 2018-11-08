@@ -67,12 +67,20 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       ...event.data
     };
 
-    const eventProperties = this.utils.getCheckedInEventProperties(
+    const properties = this.utils.getCheckedInEventProperties(
       this.eventId,
       this.state.events,
-      this.checkInSource,
       true
     );
+
+    const access_type = this.checkInSource
+      ? amplitudeEvents.EMAIL_WEB_CHECK_IN
+      : amplitudeEvents.CC_WEB_CHECK_IN;
+
+    const eventProperties = {
+      ...properties,
+      access_type
+    };
 
     delete eventProperties.check_out_status;
 
@@ -122,6 +130,10 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       .fetchData(this.checkinService.getEventData(this.search, true))
       .then((res) => {
         this.state = Object.assign({}, this.state, { events: res.data });
+
+        if (this.checkInSource) {
+          this.trackLoadCheckInEvent();
+        }
       })
       .catch((_) => {
         this.router.navigate(['/login']);
@@ -131,7 +143,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   trackLoadCheckInEvent() {
     const eventProperties = {
       source_id: this.eventId,
-      assessment_type: this.utils.getCheckInSource(this.checkInSource)
+      assessment_type: this.utils.getCheckInSource(this.state.events['store_category'])
     };
 
     this.cpTracking.amplitudeEmitEvent(
@@ -141,12 +153,20 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   }
 
   trackCheckedInEvent() {
-    const eventProperties = this.utils.getCheckedInEventProperties(
+    const properties = this.utils.getCheckedInEventProperties(
       this.eventId,
       this.state.events,
-      this.checkInSource,
       true
     );
+
+    const access_type = this.checkInSource
+      ? amplitudeEvents.EMAIL_WEB_CHECK_IN
+      : amplitudeEvents.CC_WEB_CHECK_IN;
+
+    const eventProperties = {
+      ...properties,
+      access_type
+    };
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_ADDED_WEB_CHECK_IN,
@@ -157,10 +177,6 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   ngOnInit() {
     if (!this.session.g.get('user')) {
       this.cpTracking.loadAmplitude();
-    }
-
-    if (!this.checkInSource) {
-      this.trackLoadCheckInEvent();
     }
 
     this.search = new HttpParams().append('event_id', this.eventId);
