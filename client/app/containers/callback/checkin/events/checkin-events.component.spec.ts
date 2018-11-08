@@ -66,7 +66,6 @@ xdescribe('CheckinEventsComponent', () => {
   it('trackCheckedInEvent', () => {
     sourceId = 8874;
     events = {
-      store_category: 16,
       has_checkout: false,
       checkin_verification_methods: [1, 2, 3]
     };
@@ -97,7 +96,7 @@ xdescribe('CheckinEventsComponent', () => {
     expect(eventProperties.source_id).toEqual(sourceId);
     expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.DISABLED);
     expect(eventProperties.check_out_status).toEqual(amplitudeEvents.ENABLED);
-    expect(eventProperties.assessment_type).toEqual(amplitudeEvents.INSTITUTION_EVENT);
+    expect(eventProperties.assessment_type).toEqual(amplitudeEvents.CLUB_EVENT);
   });
 
   it('Should add event check-in', () => {

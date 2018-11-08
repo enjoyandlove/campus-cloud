@@ -89,6 +89,7 @@ xdescribe('CheckinServiceComponent', () => {
 
       sourceId = 8547;
       services = {
+        store_category: 16,
         has_checkout: true,
         attend_verification_methods: [1, 2]
       };
@@ -102,7 +103,7 @@ xdescribe('CheckinServiceComponent', () => {
       expect(eventProperties.source_id).toEqual(sourceId);
       expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.DISABLED);
       expect(eventProperties.check_out_status).toEqual(amplitudeEvents.ENABLED);
-      expect(eventProperties.assessment_type).toEqual(amplitudeEvents.INSTITUTION_EVENT);
+      expect(eventProperties.assessment_type).toEqual(amplitudeEvents.ATHLETIC_EVENT);
     });
 
     it('onSubmit', () => {
