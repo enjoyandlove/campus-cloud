@@ -10,37 +10,37 @@ import { PersonasTileEditComponent } from './tiles/edit/edit.component';
 const appRoutes: Routes = [
   {
     path: '',
-    data: { zendesk: 'personas' },
+    data: { zendesk: 'experiences' },
     component: PersonasListComponent
   },
   {
     path: 'create',
-    data: { zendesk: 'personas' },
+    data: { zendesk: 'experiences' },
     component: PersonasCreateComponent
   },
   {
     path: ':personaId',
-    data: { zendesk: 'personas' },
+    data: { zendesk: 'experiences' },
     component: PersonasDetailsComponent
   },
   {
     path: ':personaId/edit',
-    data: { zendesk: 'personas' },
+    data: { zendesk: 'experiences' },
     component: PersonasEditComponent
   },
   {
     path: ':personaId/tiles',
-    data: { zendesk: 'personas' },
+    data: { zendesk: 'experiences' },
     component: PersonasTileCreateComponent
   },
   {
     path: ':personaId/tiles/:tileId/edit',
-    data: { zendesk: 'personas' },
+    data: { zendesk: 'experiences' },
     component: PersonasTileEditComponent
   },
   {
     path: ':personaId/tiles/:tileId',
-    data: { zendesk: 'personas' },
+    data: { zendesk: 'experiences' },
     component: PersonasEditComponent
   }
 ];

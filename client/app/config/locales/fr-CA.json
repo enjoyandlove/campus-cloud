@@ -731,9 +731,6 @@
   "change_school": {
     "message": "Changer d'école"
   },
-  "checkins": {
-    "message": "Vérifications de présence"
-  },
   "checkin_attendance_list": {
     "message": "Liste de présence"
   },
@@ -2149,9 +2146,6 @@
   "services_repeat_visits": {
     "message": "Vérifications de présence à répétition"
   },
-  "services_total_visits": {
-    "message": "Vérifications de présence"
-  },
   "services_unique_visits": {
     "message": "Visiteurs uniques"
   },
@@ -2563,9 +2557,6 @@
   "t_external_checkin_chechout": {
     "message": "Sortie"
   },
-  "t_external_checkin_checkin": {
-    "message": "Présence"
-  },
   "t_external_checkin_method": {
     "message": "Méthode"
   },
@@ -2938,6 +2929,12 @@
   },
   "t_shared_cancel": {
     "message": "Annuler"
+  },
+  "t_shared_checkin": {
+    "message": "Présence"
+  },
+  "t_shared_checkins": {
+    "message": "Vérifications de présence"
   },
   "t_shared_color": {
     "message": "Couleur"

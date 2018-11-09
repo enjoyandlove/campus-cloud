@@ -71,7 +71,6 @@ export class FeedMoveComponent implements OnInit {
     this.eventProperties = {
       ...this.eventProperties,
       post_id: feed.id,
-      wall_page: amplitudeEvents.WALL,
       likes: this.utils.hasLikes(feed.likes),
       upload_image: this.utils.hasImage(feed.has_image),
       comments: this.utils.hasComments(feed.comment_count)
