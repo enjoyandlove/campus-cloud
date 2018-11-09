@@ -31,6 +31,7 @@ export class FeedInputBoxComponent implements OnInit {
   @Input() postType: number;
   @Input() athleticId: number;
   @Input() replyView: boolean;
+  @Input() wallCategory: string;
   @Input() orientationId: number;
   @Input() disablePost: boolean; // TODO REMOVE
   @Input() isCampusWallView: Observable<any>;
@@ -276,7 +277,8 @@ export class FeedInputBoxComponent implements OnInit {
       this.eventProperties = {
         ...this.eventProperties,
         post_id: null,
-        comment_id: data.id
+        comment_id: data.id,
+        campus_wall_category: this.wallCategory
       };
     }
 

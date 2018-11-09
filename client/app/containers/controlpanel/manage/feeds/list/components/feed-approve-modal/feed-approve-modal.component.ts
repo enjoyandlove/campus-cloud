@@ -32,7 +32,8 @@ export class FeedApproveModalComponent implements OnInit {
     likes: null,
     comments: null,
     wall_page: null,
-    upload_image: null
+    upload_image: null,
+    campus_wall_category: null
   };
 
   constructor(
@@ -61,9 +62,12 @@ export class FeedApproveModalComponent implements OnInit {
   }
 
   trackAmplitudeEvent(feed) {
+    const campus_wall_category = feed.channelName ? feed.channelName : null;
+
     this.eventProperties = {
       ...this.eventProperties,
       post_id: feed.id,
+      campus_wall_category,
       likes: this.utils.hasLikes(feed.likes),
       upload_image: this.utils.hasImage(feed.has_image),
       comments: this.utils.hasComments(feed.comment_count),

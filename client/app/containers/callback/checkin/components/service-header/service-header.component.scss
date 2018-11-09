@@ -1,6 +1,9 @@
 @import '~styles/core/colors';
 @import '~styles/components/card';
 @import '~styles/core/typography';
+@import '~bootstrap/functions';
+@import '~bootstrap/variables';
+@import '~bootstrap/mixins/breakpoints';
 
 .card {
   @include card-margin();
@@ -35,5 +38,39 @@
 
   &__host {
     @include font-16px();
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .card {
+    padding: 0;
+
+    &__meta {
+      position: relative;
+      left: inherit;
+      bottom: inherit;
+      padding: 24px;
+
+      p {
+        margin-bottom: 5px;
+        color: $color-black;
+      }
+
+      p.card__host {
+        color: $color-secondary-text;
+      }
+    }
+
+    &__title {
+      @include font-16px();
+      @include font-bold();
+
+      line-height: 20px;
+      margin-bottom: 10px;
+    }
+
+    &__host {
+      @include font-12px();
+    }
   }
 }
