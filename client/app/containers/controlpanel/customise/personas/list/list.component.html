@@ -44,7 +44,8 @@
                 </button>
                 <a
                   [routerLink]="[persona.id]"
-                  class="cpbtn cpbtn--link">
+                  class="cpbtn cpbtn--link"
+                  (click)="trackViewedMovedExperience(persona, true)">
                   <i class="material-icons">settings_applications</i>
                   {{'t_persona_list_button_customize' | cpI18n }}
                 </a>
