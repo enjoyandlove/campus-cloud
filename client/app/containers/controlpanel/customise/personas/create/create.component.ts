@@ -9,10 +9,11 @@ import { Observable } from 'rxjs';
 
 import { CPSession } from '../../../../../session';
 import { PersonasService } from './../personas.service';
-import { PersonaValidationErrors } from './../personas.status';
-import { CPI18nService } from '../../../../../shared/services';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { baseActions, IHeader } from './../../../../../store/base';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { credentialType, PersonasType, PersonaValidationErrors } from './../personas.status';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 
 @Component({
@@ -36,7 +37,8 @@ export class PersonasCreateComponent implements OnInit {
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
     public service: PersonasService,
-    public utils: PersonasUtilsService
+    public utils: PersonasUtilsService,
+    public cpTracking: CPTrackingService
   ) {}
 
   buildHeader() {
@@ -101,7 +103,8 @@ export class PersonasCreateComponent implements OnInit {
   }
 
   onSubmit() {
-    const body = this.utils.parseLocalFormToApi(this.createForm.form.value);
+    const formData = this.createForm.form.value;
+    const body = this.utils.parseLocalFormToApi(formData);
     const createPersona$ = this.service.createPersona(body);
 
     const stream$ = this.campusSecurityTile
@@ -116,7 +119,10 @@ export class PersonasCreateComponent implements OnInit {
       : createPersona$.pipe(map(({ id }: any) => (this.createdPersonaId = id)));
 
     stream$.subscribe(
-      () => this.router.navigate([`/studio/experiences/${this.createdPersonaId}`]),
+      () => {
+        this.trackCreateExperienceEvent(formData, this.createdPersonaId, this.campusSecurityTile);
+        this.router.navigate([`/studio/experiences/${this.createdPersonaId}`]);
+      },
       (err) => {
         this.buttonData = { ...this.buttonData, disabled: false };
 
@@ -153,6 +159,26 @@ export class PersonasCreateComponent implements OnInit {
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
 
     this.services$ = this.service.getServices(search);
+  }
+
+  trackCreateExperienceEvent(data, experience_id, isSecurityService) {
+    const experience_type = data.platform === PersonasType.web
+      ? amplitudeEvents.WEB
+      : amplitudeEvents.MOBILE;
+
+    const campus_security = isSecurityService ? amplitudeEvents.YES : amplitudeEvents.NO;
+
+    const eventProperties = {
+      experience_id,
+      experience_type,
+      campus_security,
+      credential_type: credentialType[data.login_requirement]
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.STUDIO_CREATED_EXPERIENCE,
+      eventProperties
+    );
   }
 
   ngOnInit(): void {

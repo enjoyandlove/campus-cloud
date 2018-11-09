@@ -1,4 +1,3 @@
-import { CampusLink } from './../../../manage/links/tile';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
@@ -14,10 +13,13 @@ import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { PersonasService } from './../personas.service';
 import { TileVisibility } from './../tiles/tiles.status';
-import { CPI18nService } from '../../../../../shared/services';
+import { CampusLink } from './../../../manage/links/tile';
 import { PersonaValidationErrors } from './../personas.status';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { baseActions, IHeader } from './../../../../../store/base';
+import { credentialType, PersonasType } from '../personas.status';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 
 @Component({
@@ -46,7 +48,8 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     public store: Store<IHeader>,
     public route: ActivatedRoute,
     public service: PersonasService,
-    public utils: PersonasUtilsService
+    public utils: PersonasUtilsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -151,8 +154,10 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   }
 
   async onSubmit() {
+    const formData = this.editForm.form.value;
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
-    const body = this.utils.parseLocalFormToApi(this.editForm.form.value);
+    const body = this.utils.parseLocalFormToApi(formData);
+    const securityService = _get(this.selectedSecurityService, 'action', null);
     const updatePersona$ = this.service.updatePersona(this.personaId, search, body);
     const shouldDeleteOldSecTile = this.securityTileChanged && this.originalSecurityService;
     const shouldCreateSecurityTile =
@@ -169,7 +174,10 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     const stream$ = shouldCreateSecurityTile ? updatePersonaAndLink$ : updatePersona$;
 
     stream$.subscribe(
-      () => this.router.navigate(['/studio/experiences']),
+      () => {
+        this.trackEditExperienceEvent(formData, this.personaId, securityService);
+        this.router.navigate(['/studio/experiences']);
+      },
       (err) => {
         let snackBarClass = 'danger';
         const error = err.error.response;
@@ -281,6 +289,26 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
 
         return services;
       })
+    );
+  }
+
+  trackEditExperienceEvent(data, experience_id, securityService) {
+    const experience_type = data.platform === PersonasType.web
+      ? amplitudeEvents.WEB
+      : amplitudeEvents.MOBILE;
+
+    const campus_security = securityService ? amplitudeEvents.YES : amplitudeEvents.NO;
+
+    const eventProperties = {
+      experience_id,
+      experience_type,
+      campus_security,
+      credential_type: credentialType[data.login_requirement]
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.STUDIO_UPDATED_EXPERIENCE,
+      eventProperties
     );
   }
 

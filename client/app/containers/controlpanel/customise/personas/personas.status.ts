@@ -1,3 +1,5 @@
+import { amplitudeEvents } from '../../../../shared/constants/analytics';
+
 export enum PersonasType {
   mobile = 0,
   web = 1
@@ -16,3 +18,9 @@ export enum PersonaValidationErrors {
   customization_off = 'customization off',
   persona_non_empty = 'persona non-empty'
 }
+
+export const credentialType = {
+  [PersonasLoginRequired.optional]: amplitudeEvents.OPTIONAL,
+  [PersonasLoginRequired.required]: amplitudeEvents.REQUIRED,
+  [PersonasLoginRequired.forbidden]: amplitudeEvents.NO_LOGIN
+};

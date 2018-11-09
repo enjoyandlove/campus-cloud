@@ -9,7 +9,13 @@ export const cpTrackAmplitude = {
 };
 
 export const amplitudeEvents = {
+  NO: 'No',
+
+  YES: 'Yes',
+
   NEW: 'New',
+
+  WEB: 'Web',
 
   WALL: 'Wall',
 
@@ -29,6 +35,8 @@ export const amplitudeEvents = {
 
   TODOS: 'To-Dos',
 
+  MOBILE: 'Mobile',
+
   EVENTS: 'Events',
 
   MEMBER: 'Member',
@@ -45,6 +53,8 @@ export const amplitudeEvents = {
 
   ENABLED: 'Enabled',
 
+  REQUIRED: 'Required',
+
   EXISTING: 'Existing',
 
   EMPLOYER: 'Employer',
@@ -52,6 +62,10 @@ export const amplitudeEvents = {
   SERVICES: 'Services',
 
   TEMPLATE: 'Template',
+
+  NO_LOGIN: 'No Login',
+
+  OPTIONAL: 'Optional',
 
   DISABLED: 'Disabled',
 
@@ -241,6 +255,8 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_LOCATION: 'Manage - Updated Location',
 
+  STUDIO_MOVED_EXPERIENCE: 'Studio - Moved Experience',
+
   MANAGE_ADDED_CLUB_MEMBER: 'Manage - Added Club Member',
 
   CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
@@ -248,6 +264,12 @@ export const amplitudeEvents = {
   NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
 
   MANAGE_DELETED_ATTENDANCE: 'Manage - Deleted Attendance',
+
+  STUDIO_CREATED_EXPERIENCE: 'Studio - Created Experience',
+
+  STUDIO_UPDATED_EXPERIENCE: 'Studio - Updated Experience',
+
+  STUDIO_DELETED_EXPERIENCE: 'Studio - Deleted Experience',
 
   MANAGE_DOWNLOADED_QR_CODE: 'Manage - Downloaded QR Code',
 
@@ -270,6 +292,8 @@ export const amplitudeEvents = {
   MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
 
   MANAGE_CREATED_SERVICE_PROVIDER: 'Manage - Created Service Provider',
+
+  STUDIO_VIEWED_CUSTOMIZATION_EXPERIENCE: 'Studio -  Viewed App Customization',
 
   MANAGE_DOWNLOAD_EVENT_ASSESS_DATA: 'Manage - Downloaded Event Assessment Data',
 

@@ -3,7 +3,6 @@ import { HttpParams } from '@angular/common/http';
 
 import { IService } from '../../../service.interface';
 import IServiceProvider from '../../../providers.interface';
-import { ServiceAttendance } from '../../../services.status';
 import { ProvidersService } from '../../../providers.service';
 import { RouteLevel } from '../../../../../../../shared/services';
 import { ServicesUtilsService } from '../../../services.utils.service';
@@ -50,7 +49,6 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   deleteProvider = '';
   state: IState = state;
   provider: IServiceProvider;
-  displayRatingColumn = true;
   noProviderAddProviderMessage;
   showEditProviderModal = false;
 
@@ -217,7 +215,6 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       provider_name: this.cpI18n.translate('service_provider')
     };
 
-    this.displayRatingColumn = this.service.service_attendance === ServiceAttendance.enabled;
     this.noProviderMessage = this.cpI18n.translate('t_services_no_service_provider_found');
     this.noProviderAddProviderMessage = this.cpI18n.translate('services_providers_no_results');
   }

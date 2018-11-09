@@ -9,8 +9,8 @@ import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { PersonasService } from './../personas.service';
 import { PersonaValidationErrors } from './../personas.status';
+import { credentialType, PersonasType } from '../personas.status';
 import { CPTrackingService } from '../../../../../shared/services';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { baseActions, IHeader, ISnackbar } from './../../../../../store/base';
@@ -22,7 +22,6 @@ import { baseActions, IHeader, ISnackbar } from './../../../../../store/base';
 })
 export class PersonasListComponent extends BaseComponent implements OnInit {
   loading;
-  eventData;
   state = {
     updating: false,
     platform: null,
@@ -127,6 +126,7 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
 
     updatePersonas
       .then(() => {
+        this.trackViewedMovedExperience(persona);
         this.state = { ...this.state, updating: false };
 
         const personas = this.movePersonaToIndex(persona, currentIndex, currentIndex - 1);
@@ -159,6 +159,7 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
 
     updatePersonas
       .then(() => {
+        this.trackViewedMovedExperience(persona);
         this.state = { ...this.state, updating: false };
 
         const personas = this.movePersonaToIndex(persona, currentIndex, currentIndex + 1);
@@ -234,14 +235,26 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
     });
   }
 
+  trackViewedMovedExperience(persona: IPersona, isViewed = false) {
+    const eventName = !isViewed
+      ? amplitudeEvents.STUDIO_MOVED_EXPERIENCE
+      : amplitudeEvents.STUDIO_VIEWED_CUSTOMIZATION_EXPERIENCE;
+
+    const experience_type = persona.platform === PersonasType.web
+      ? amplitudeEvents.WEB
+      : amplitudeEvents.MOBILE;
+
+    const eventProperties = {
+      experience_type,
+      experience_id : persona.id,
+      credential_type: credentialType[persona.login_requirement]
+    };
+
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+  }
+
   ngOnInit(): void {
     this.updateHeader();
     this.fetch();
-
-    this.eventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties: this.cpTracking.getEventProperties()
-    };
   }
 }
