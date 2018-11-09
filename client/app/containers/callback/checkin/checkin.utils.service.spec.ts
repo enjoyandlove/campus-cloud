@@ -22,8 +22,8 @@ describe('CheckInUtilsService', () => {
   it('should get checked-in event properties', () => {
     sourceId = 8874;
     events = {
-      store_category: 16,
       has_checkout: false,
+      store_category: EventCategory.athletics,
       checkin_verification_methods: [1, 2, 3]
     };
 
@@ -39,7 +39,7 @@ describe('CheckInUtilsService', () => {
 
     sourceId = 8547;
     events = {
-      store_category: 0,
+      store_category: EventCategory.club,
       has_checkout: true,
       attend_verification_methods: [1, 2]
     };

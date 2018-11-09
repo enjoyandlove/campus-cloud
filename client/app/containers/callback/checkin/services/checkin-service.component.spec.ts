@@ -13,6 +13,7 @@ import { CheckinServiceComponent } from './checkin-service.component';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
 import { CPTrackingService, ErrorService } from '../../../../shared/services';
+import { EventCategory } from '../../../controlpanel/manage/events/event.status';
 
 class MockService {
   dummy;
@@ -89,9 +90,9 @@ xdescribe('CheckinServiceComponent', () => {
 
       sourceId = 8547;
       services = {
-        store_category: 16,
         has_checkout: true,
-        attend_verification_methods: [1, 2]
+        attend_verification_methods: [1, 2],
+        store_category: EventCategory.athletics
       };
 
       eventProperties = component.utils.getCheckedInEventProperties(
