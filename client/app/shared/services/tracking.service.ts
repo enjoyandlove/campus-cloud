@@ -4,7 +4,7 @@ import { get as _get } from 'lodash';
 import { PRIMARY_OUTLET, Router } from '@angular/router';
 
 import { CPAmplitudeService } from './amplitude.service';
-import { isCanada, isProd, isSea, isUsa, isStaging } from './../../config/env/index';
+import { isCanada, isProd, isSea, isUsa, isStaging } from './../../config/env';
 
 /**
  * i.e url = /manage/events/123/info
@@ -36,7 +36,7 @@ export class CPTrackingService {
     const isInternal = session ? session.isInternal : null;
     const api_key = isProd
       ? '6c5441a7008b413b8d3d29f8130afae1'
-      : 'be78bb81dd7f98c7cf8d1a7994e07c85';
+      : '434caff2f839c60ab12edd1119ec7641';
 
     require('node_modules/amplitude-js/src/amplitude-snippet.js');
 
