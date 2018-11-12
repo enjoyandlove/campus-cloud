@@ -15,7 +15,7 @@ import { CP_PRIVILEGES_MAP } from '../../../../../../shared/constants';
 import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { canSchoolReadResource } from '../../../../../../shared/utils/privileges';
-import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
+import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../../shared/services';
 
 declare var $: any;
 
@@ -141,6 +141,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   }
 
   onDownloadCsvFile() {
+    this.trackDownloadedMembers();
     this.utils.createExcel(this.state.members);
   }
 
@@ -152,6 +153,15 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
   onTearDown(modal) {
     this[modal] = false;
+  }
+
+  trackDownloadedMembers() {
+    const sub_menu_name = this.cpTracking.activatedRoute(RouteLevel.second);
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DOWNLOAD_MEMBER_DATA,
+      { sub_menu_name }
+    );
   }
 
   ngOnInit() {

@@ -149,24 +149,15 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     };
   }
 
-  trackDownloadEvent() {
-    this.eventProperties = {
-      data_type: amplitudeEvents.ASSESSMENT
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_DATA, this.eventProperties);
-  }
-
   trackCheckinEvent(source_id) {
     const eventProperties = {
       source_id,
-      check_in_source: amplitudeEvents.ASSESSMENT,
-      check_in_type: amplitudeEvents.SERVICE_PROVIDER,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      assessment_type: amplitudeEvents.SERVICE_PROVIDER,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.third)
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
+      amplitudeEvents.MANAGE_CC_WEB_CHECK_IN,
       eventProperties
     );
   }
@@ -192,13 +183,12 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
   trackDownloadProviders() {
     const eventProperties = {
-      host_id: this.service.store_id,
-      data_source: amplitudeEvents.SERVICE_PROVIDER,
+      provider_type: amplitudeEvents.ALL_PROVIDERS,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
+      amplitudeEvents.MANAGE_DOWNLOAD_SERVICE_ASSESS_DATA,
       eventProperties
     );
   }

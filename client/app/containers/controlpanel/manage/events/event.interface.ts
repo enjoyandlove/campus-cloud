@@ -57,6 +57,8 @@ export default interface IEvent {
 
   postal_code?: String;
 
+  store_category: Number;
+
   event_attendance?: Number;
 
   event_feedback?: Number;

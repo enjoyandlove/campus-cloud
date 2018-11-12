@@ -58,8 +58,7 @@
       <span class="col-3 text-truncate">
         <a
           target="_blank"
-          (click)="trackCheckinEvent(event.encrypted_id)"
-          [queryParams]="{source: checkInSource.source_page}"
+          (click)="trackCheckinEvent(event)"
           [routerLink]="[eventCheckinRoute + event.encrypted_id]"
           *ngIf="event.event_attendance === attendanceEnabled"
           class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
