@@ -78,4 +78,16 @@ describe('FeedHeaderComponent', () => {
 
     expect(emailSpan.textContent.trim()).not.toEqual(`(${mockFeed.email})`);
   });
+
+  it('should display email address when user status is active but the email is unverified', () => {
+    const feedWithDisabledUser = { ...mockFeed, user_status: UserStatus.activeWithUnverifiedEmail };
+    comp.feed = feedWithDisabledUser;
+
+    fixture.detectChanges();
+
+    const emailField = fixture.debugElement.query(By.css('.email'));
+    const emailSpan: HTMLElement = emailField.nativeElement;
+
+    expect(emailSpan.textContent.trim()).toEqual(`(${mockFeed.email})`);
+  });
 });
