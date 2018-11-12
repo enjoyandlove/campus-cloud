@@ -34,6 +34,7 @@ describe('EventsAttendanceActionBoxComponent', () => {
           component.totalAttendees = new BehaviorSubject(null);
 
           component.event = {
+            ...component.event,
             store_id: 12548
           };
         });

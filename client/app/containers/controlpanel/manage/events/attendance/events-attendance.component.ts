@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/index';
 import { Store } from '@ngrx/store';
 
+import IEvent from '../event.interface';
 import { EventsService } from '../events.service';
 import { CPSession } from '../../../../../session';
 import { FORMAT } from '../../../../../shared/pipes';
@@ -13,7 +14,7 @@ import { EventsComponent } from '../list/base/events.component';
 import { IHeader, baseActions } from '../../../../../store/base';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { CheckInMethod, CheckInOutTime, CheckOut } from '../event.status';
+import { CheckInMethod, CheckInOutTime, CheckInOut } from '../event.status';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import {
@@ -53,7 +54,6 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   canMessage;
   messageData;
   checkInData;
-  checkInSource;
   sortingLabels;
   attendees = [];
   loading = true;
@@ -61,6 +61,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   eventId: number;
   allStudents = false;
   state: IState = state;
+  checkInEventProperties;
   attendeesLoading = true;
   downloadEventProperties;
   isAddCheckInModal = false;
@@ -111,6 +112,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
       this.fetchAttendees();
       this.buildHeader(event.data);
       this.loading = false;
+      this.setCheckInEventProperties();
       this.updateQrCode.next(this.event.attend_verification_methods);
     });
   }
@@ -227,14 +229,19 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   }
 
   trackAmplitudeEvent() {
+    const check_out_status = this.event.has_checkout
+      ? amplitudeEvents.ENABLED
+      : amplitudeEvents.DISABLED;
+
     this.downloadEventProperties = {
-      host_id: this.event.store_id,
-      data_source: amplitudeEvents.EVENT,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      check_out_status,
+      source_id: this.event.encrypted_id,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      assessment_type: this.utils.getEventCategoryType(this.event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
+      amplitudeEvents.MANAGE_DOWNLOAD_EVENT_ASSESS_DATA,
       this.downloadEventProperties
     );
   }
@@ -357,14 +364,33 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   onCreated(checkedInData: ICheckIn) {
     this.isAddCheckInModal = false;
     this.fetchAttendees();
-    this.trackAddEditCheckInEvent(checkedInData);
+
+    const hasCheckOut = checkedInData.check_out_time_epoch > 0;
+    const check_out = hasCheckOut ? CheckInOut.yes : CheckInOut.no;
+    const eventProperties = {
+      ...this.checkInEventProperties,
+      check_out
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_ADDED_ATTENDANCE,
+      eventProperties);
   }
 
-  onEdited(editedCheckIn: ICheckIn) {
+  onEdited(checkInOut) {
     this.checkInData = null;
     this.isEditCheckInModal = false;
     this.fetchAttendees();
-    this.trackAddEditCheckInEvent(editedCheckIn, true);
+
+    const eventProperties = {
+      ...this.checkInEventProperties,
+      check_in: checkInOut.checkIn,
+      check_out: checkInOut.checkOut
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_UPDATED_ATTENDANCE,
+      eventProperties);
   }
 
   onDeleted(id: number) {
@@ -372,6 +398,10 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.isDeleteCheckInModal = false;
 
     this.attendees = this.attendees.filter((attendee) => attendee.id !== id);
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DELETED_ATTENDANCE,
+      this.checkInEventProperties);
 
     if (this.attendees.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
@@ -440,50 +470,40 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     });
   }
 
-  onTrackClickCheckinEvent(source_id) {
+  onTrackClickCheckinEvent(event: IEvent) {
     const eventProperties = {
-      source_id,
-      check_in_source: amplitudeEvents.ASSESSMENT,
-      check_in_type: this.checkInSource.check_in_type,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      source_id: event.encrypted_id,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      assessment_type: this.utils.getEventCategoryType(event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
+      amplitudeEvents.MANAGE_CC_WEB_CHECK_IN,
       eventProperties
     );
-  }
-
-  trackAddEditCheckInEvent(checkedInData, isEdit = false) {
-    const eventName = isEdit
-      ? amplitudeEvents.MANAGE_UPDATED_CHECK_IN
-      : amplitudeEvents.MANAGE_ADDED_CHECK_IN;
-
-    const eventProperties = {
-      ...this.utils.getQRCodeCheckOutStatus(this.event, true),
-      source_id: this.event.encrypted_id,
-      check_in_type: this.checkInSource.check_in_type,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
-      check_out: checkedInData.check_out_time_epoch > 0 ? CheckOut.yes : CheckOut.no
-    };
-
-    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
 
   trackQrCode(event) {
     const eventProperties = {
       ...this.utils.getQRCodeCheckOutStatus(event, true),
       source_id: this.event.encrypted_id,
-      check_in_type: this.checkInSource.check_in_type,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      assessment_type: this.utils.getEventCategoryType(this.event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHANGED_QR_CODE, eventProperties);
   }
 
-  ngOnInit() {
-    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
+  setCheckInEventProperties() {
+    this.checkInEventProperties = {
+      ...this.utils.getQRCodeCheckOutStatus(this.event, true),
+      source_id: this.event.encrypted_id,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      assessment_type: this.utils.getEventCategoryType(this.event.store_category)
+    };
+  }
 
+  ngOnInit() {
     this.urlPrefix = this.utils.buildUrlPrefix(this.getEventType());
 
     this.sortingLabels = {

@@ -12,7 +12,7 @@ import { CheckinEventsComponent } from './checkin-events.component';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
 import { CPTrackingService, ErrorService } from '../../../../shared/services';
-import { CheckInSource } from '../../../controlpanel/manage/events/event.status';
+import { EventCategory } from '../../../controlpanel/manage/events/event.status';
 
 class MockService {
   dummy;
@@ -26,10 +26,8 @@ class MockService {
 
 xdescribe('CheckinEventsComponent', () => {
   let spy;
-  let userId;
   let events;
   let sourceId;
-  let checkInSource;
   let eventProperties;
   let component: CheckinEventsComponent;
   let fixture: ComponentFixture<CheckinEventsComponent>;
@@ -67,9 +65,7 @@ xdescribe('CheckinEventsComponent', () => {
   );
 
   it('trackCheckedInEvent', () => {
-    userId = 452;
     sourceId = 8874;
-    checkInSource = CheckInSource.services;
     events = {
       has_checkout: false,
       checkin_verification_methods: [1, 2, 3]
@@ -77,38 +73,31 @@ xdescribe('CheckinEventsComponent', () => {
 
     eventProperties = component.utils.getCheckedInEventProperties(
       sourceId,
-      events,
-      userId,
-      checkInSource
+      events
     );
 
-    expect(eventProperties.user_id).toEqual(userId);
     expect(eventProperties.source_id).toEqual(sourceId);
     expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.ENABLED);
     expect(eventProperties.check_out_status).toEqual(amplitudeEvents.DISABLED);
-    expect(eventProperties.check_in_type).toEqual(amplitudeEvents.SERVICE_PROVIDER);
+    expect(eventProperties.assessment_type).toEqual(amplitudeEvents.SERVICE_PROVIDER);
 
-    userId = 154;
     sourceId = 8547;
-    checkInSource = CheckInSource.events;
     events = {
       has_checkout: true,
+      store_category: EventCategory.club,
       attend_verification_methods: [1, 2]
     };
 
     eventProperties = component.utils.getCheckedInEventProperties(
       sourceId,
       events,
-      userId,
-      checkInSource,
       true
     );
 
-    expect(eventProperties.user_id).toEqual(userId);
     expect(eventProperties.source_id).toEqual(sourceId);
     expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.DISABLED);
     expect(eventProperties.check_out_status).toEqual(amplitudeEvents.ENABLED);
-    expect(eventProperties.check_in_type).toEqual(amplitudeEvents.INSTITUTION_EVENT);
+    expect(eventProperties.assessment_type).toEqual(amplitudeEvents.CLUB_EVENT);
   });
 
   it('Should add event check-in', () => {
