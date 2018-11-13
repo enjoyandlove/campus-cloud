@@ -3,9 +3,79 @@ import { Injectable } from '@angular/core';
 
 import { amplitudeEvents } from '../constants/analytics';
 import { CP_PRIVILEGES_MAP } from '../constants/privileges';
+import { isCanada, isProd, isSea, isUsa } from '../../config/env';
+
+declare var window: any;
 
 @Injectable()
 export class CPAmplitudeService {
+  loadAmplitude(session = null) {
+    const user = session ? session.g.get('user') : null;
+    const school = session ? session.g.get('school') : null;
+    const isInternal = session ? session.isInternal : null;
+    const api_key = isProd
+      ? '6c5441a7008b413b8d3d29f8130afae1'
+      : '434caff2f839c60ab12edd1119ec7641';
+
+    require('node_modules/amplitude-js/src/amplitude-snippet.js');
+
+    window.amplitude.getInstance().init(api_key, this.getSchoolUserID(user));
+
+    this.setIdentity(school, user, isInternal);
+  }
+
+  setIdentity(school, user, is_oohlala) {
+    if (school && user) {
+      const accountLevelPrivileges = user.account_level_privileges;
+      const schoolLevelPrivileges = user.school_level_privileges[school.id];
+
+      const userPermissions = this.getUserPermissionsEventProperties(
+        schoolLevelPrivileges,
+        accountLevelPrivileges
+      );
+
+      const userProperties = {
+        is_oohlala,
+        school_name: school.name,
+        jobs: userPermissions.jobs_permission,
+        links: userPermissions.links_permission,
+        deals: userPermissions.deals_permission,
+        school_id: this.getSchoolUserID(school),
+        walls: userPermissions.walls_permission,
+        events: userPermissions.event_permission,
+        notify: userPermissions.notify_permission,
+        assess: userPermissions.assess_permission,
+        studio: userPermissions.studio_permission,
+        calendar: userPermissions.calendar_permission,
+        audiences: userPermissions.audience_permission,
+        team_member: userPermissions.invite_permission,
+        locations: userPermissions.locations_permission,
+        club_executive: userPermissions.club_permission,
+        orientation: userPermissions.orientation_permission,
+        service_executive: userPermissions.service_permission,
+        athletics_executive: userPermissions.athletic_permission
+      };
+
+      window.amplitude.getInstance().setUserProperties(userProperties);
+    }
+  }
+
+  getSchoolUserID(user) {
+    if (!user) {
+      return;
+    }
+
+    if (isCanada) {
+      return `CAN${user.id}`;
+    } else if (isSea) {
+      return `SEA${user.id}`;
+    } else if (isUsa) {
+      return `US${user.id}`;
+    } else {
+      // default for dev
+      return `US${user.id}`;
+    }
+  }
 
   getUserPermissionsEventProperties(schoolPrivileges, accountPrivileges) {
     const eventPermission = this.getEventPermissions(schoolPrivileges);
