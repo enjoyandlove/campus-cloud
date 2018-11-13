@@ -10,7 +10,7 @@ import { BaseComponent } from '../../../../base/base.component';
 import { ISnackbar, baseActions } from '../../../../store/base';
 import { CheckInOutTime, CheckInType } from '../../callback.status';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../shared/services';
+import { CPAmplitudeService, CPI18nService, CPTrackingService } from '../../../../shared/services';
 
 interface IState {
   services: Array<any>;
@@ -43,7 +43,8 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     public store: Store<ISnackbar>,
     public utils: CheckinUtilsService,
     public cpTracking: CPTrackingService,
-    public checkinService: CheckinService
+    public checkinService: CheckinService,
+    public cpAmplitude: CPAmplitudeService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -164,7 +165,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     if (!this.session.g.get('user')) {
-      this.cpTracking.loadAmplitude();
+      this.cpAmplitude.loadAmplitude();
     }
 
     if (this.checkInSource) {
