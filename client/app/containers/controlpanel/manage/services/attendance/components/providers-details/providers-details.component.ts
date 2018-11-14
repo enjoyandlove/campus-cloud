@@ -5,6 +5,7 @@ import { switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import { IDateRange } from '../providers-action-box';
 import { ServicesService } from './../../../services.service';
 import { ProvidersService } from '../../../providers.service';
 import { CheckInMethod } from '../../../../events/event.status';
@@ -34,8 +35,8 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     private route: ActivatedRoute,
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
-    private serviceService: ServicesService,
-    private providersService: ProvidersService
+    public serviceService: ServicesService,
+    public providersService: ProvidersService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -44,25 +45,34 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   }
 
   private fetch() {
-    const search = new HttpParams().append('service_id', this.serviceId);
+    const stream$ = this.getProvider();
+
+    super.fetchData(stream$).then((res) => {
+      this.provider = res.data;
+      this.updateQrCode.next(this.provider.checkin_verification_methods);
+      this.eventRating = this.getEventRating(this.provider.avg_rating_percent);
+      this.buildHeader();
+    });
+  }
+
+  private getProvider(dateRange?: IDateRange) {
+    let search = new HttpParams().append('service_id', this.serviceId);
+    const start = dateRange ? dateRange.start : null;
+    const end = dateRange ? dateRange.end : null;
+    if (start && end) {
+      search = search.append('start', start.toString()).append('end', end.toString());
+    }
 
     const service$ = this.serviceService.getServiceById(this.serviceId);
     const providers$ = this.providersService.getProviderByProviderId(this.providerId, search);
 
-    const stream$ = service$.pipe(
+    return service$.pipe(
       switchMap((service: any) => {
         this.service = service;
 
         return providers$;
       })
     );
-
-    super.fetchData(stream$).then((res) => {
-      this.provider = res.data;
-      this.updateQrCode.next(this.provider.checkin_verification_methods);
-      this.eventRating = (this.provider.avg_rating_percent * this.MAX_RATE / 100).toFixed(1);
-      this.buildHeader();
-    });
   }
 
   buildHeader() {
@@ -93,8 +103,17 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     this.providerAttendees.onCreateCheckIn();
   }
 
-  onDateFilter(dateRange) {
+  onDateFilter(dateRange: IDateRange) {
     this.providerAttendees.doDateFilter(dateRange);
+
+    this.getProvider(dateRange).subscribe((res) => {
+      this.provider = res;
+      this.eventRating = this.getEventRating(this.provider.avg_rating_percent);
+    });
+  }
+
+  getEventRating(avgRating: number) {
+    return (avgRating * this.MAX_RATE / 100).toFixed(1);
   }
 
   onToggleQr(isEnabled: boolean) {
