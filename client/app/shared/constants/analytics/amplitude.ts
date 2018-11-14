@@ -221,6 +221,8 @@ export const amplitudeEvents = {
 
   ASSESS_DOWNLOAD_DATA: 'Assess Downloaded Data',
 
+  STUDIO_MOVED_SECTION: 'Studio - Moved Section',
+
   WALL_UPDATED_SETTINGS: 'Wall - Updated Settings',
 
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',

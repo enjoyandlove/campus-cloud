@@ -12,7 +12,6 @@ import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { TilesService } from '../tiles/tiles.service';
 import { PersonasService } from './../personas.service';
-import { CPI18nService } from '../../../../../shared/services';
 import { ICampusGuide } from './../sections/section.interface';
 import { CampusGuideType } from './../sections/section.status';
 import { SectionsService } from './../sections/sections.service';
@@ -20,8 +19,10 @@ import { CategoryDeleteErrors } from '../sections/section.status';
 import { TilesUtilsService } from './../tiles/tiles.utils.service';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { SectionUtilsService } from './../sections/section.utils.service';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { PersonasType, PersonaValidationErrors } from './../personas.status';
 import { baseActions, IHeader, ISnackbar } from './../../../../../store/base';
+import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 import { TileCategoryRank, TileFeatureRank, TileType } from './../tiles/tiles.status';
 
 interface IState {
@@ -64,6 +65,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     public tileService: TilesService,
     public utils: PersonasUtilsService,
     public tileUtils: TilesUtilsService,
+    public cpTracking: CPTrackingService,
     public sectionService: SectionsService,
     public store: Store<IHeader | ISnackbar>,
     public sectionUtils: SectionUtilsService
@@ -593,6 +595,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     } else {
       this.moveDown(guide);
     }
+
+    this.trackMovedSection(guide);
   }
 
   fetch(callback = null) {
@@ -678,6 +682,20 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
   ngOnDestroy() {
     this.store.dispatch({ type: baseActions.SNACKBAR_HIDE });
+  }
+
+  trackMovedSection(guide: ICampusGuide) {
+    const tiles = guide.tiles.length ? amplitudeEvents.YES : amplitudeEvents.NO;
+
+    const eventProperties = {
+      tiles,
+      section_id: guide.id,
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.STUDIO_MOVED_SECTION,
+      eventProperties
+    );
   }
 
   ngOnInit(): void {
