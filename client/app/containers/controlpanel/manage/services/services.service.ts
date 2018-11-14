@@ -28,10 +28,15 @@ export class ServicesService extends HTTPService {
     return super.get(url);
   }
 
-  getServiceById(serviceId: number) {
+  getServiceById(serviceId: number, start?: number, end?: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
 
-    return super.get(url);
+    let dates;
+    if (start && end) {
+      dates = new HttpParams().append('start', start.toString()).append('end', end.toString());
+    }
+
+    return super.get(url, dates);
   }
 
   deleteService(serviceId: number) {
