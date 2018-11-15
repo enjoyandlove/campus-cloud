@@ -299,6 +299,8 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_ATTENDANCE: 'Manage - Updated Attendance',
 
+  STUDIO_CHANGED_TILE_STATUS: 'Studio - Changed Tile Status',
+
   MANAGE_ADDED_WEB_CHECK_OUT: 'Manage - Added Web Check-Out',
 
   MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',

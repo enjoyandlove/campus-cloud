@@ -43,6 +43,7 @@ export class PersonasSectionComponent implements OnInit {
   @Input() disableAddSection = false;
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
+  @Output() tileVisibility: EventEmitter<ITile> = new EventEmitter();
   @Output() deleted: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output() removeSection: EventEmitter<number> = new EventEmitter();
   @Output() deleteTileClick: EventEmitter<ITile> = new EventEmitter();
@@ -94,6 +95,8 @@ export class PersonasSectionComponent implements OnInit {
       ...this.guide,
       tiles: this.guide.tiles.map((tile: ITile) => (tile.id === editedTile.id ? editedTile : tile))
     };
+
+    this.tileVisibility.emit(editedTile);
   }
 
   onEditTile(tile: ITile) {
