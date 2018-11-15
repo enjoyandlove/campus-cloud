@@ -6,6 +6,7 @@ import { HttpParams } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import { ITile } from '../tile.interface';
 import { TilesService } from '../tiles.service';
 import { IPersona } from './../../persona.interface';
 import { CPSession } from '../../../../../../session';
@@ -14,9 +15,11 @@ import { PersonasService } from '../../personas.service';
 import { TilesUtilsService } from '../tiles.utils.service';
 import { ICampusGuide } from '../../sections/section.interface';
 import { SectionsService } from '../../sections/sections.service';
+import { CPTrackingService } from '../../../../../../shared/services';
 import { SectionUtilsService } from '../../sections/section.utils.service';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { baseActions, IHeader, ISnackbar } from './../../../../../../store/base';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-personas-tile-create',
@@ -41,6 +44,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     public route: ActivatedRoute,
     public utils: TilesUtilsService,
     public guideService: SectionsService,
+    public cpTracking: CPTrackingService,
     public guideUtils: SectionUtilsService,
     public personaService: PersonasService,
     public store: Store<IHeader | ISnackbar>,
@@ -110,12 +114,13 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     }
 
     stream$.subscribe(
-      () => {
+      (tile: ITile) => {
         this.buttonData = {
           ...this.buttonData,
           disabled: false
         };
 
+        this.trackCreatedTile(tile);
         this.router.navigate(['/studio/experiences', this.personaId]);
       },
       (_) => {
@@ -193,6 +198,19 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
         this.buildHeader(this.personasUtils.localizedPersonaName(data));
       })
       .catch(() => this.erroHandler());
+  }
+
+  trackCreatedTile(tile: ITile) {
+    const eventProperties = {
+      ...this.personasUtils.getTileAmplitudeProperties(tile)
+    };
+
+    delete eventProperties.status;
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.STUDIO_CREATED_TILE,
+      eventProperties
+    );
   }
 
   ngOnInit(): void {
