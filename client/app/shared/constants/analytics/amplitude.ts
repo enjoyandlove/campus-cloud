@@ -31,15 +31,21 @@ export const amplitudeEvents = {
 
   STORE: 'Store',
 
+  SHOWN: 'Shown',
+
   EVENT: 'Event',
 
   TODOS: 'To-Dos',
+
+  NORMAL: 'Normal',
 
   MOBILE: 'Mobile',
 
   EVENTS: 'Events',
 
   MEMBER: 'Member',
+
+  HIDDEN: 'Hidden',
 
   ACTIVE: 'Active',
 
@@ -52,6 +58,10 @@ export const amplitudeEvents = {
   PENDING: 'Pending',
 
   ENABLED: 'Enabled',
+
+  FEATURED: 'Featured',
+
+  RESOURCE: 'Resource',
 
   REQUIRED: 'Required',
 
@@ -109,6 +119,8 @@ export const amplitudeEvents = {
 
   VIEWED_ITEM: 'Viewed Item',
 
+  SAME_SECTION: 'Same Section',
+
   ALL_STUDENTS: 'All Students',
 
   ONE_PROVIDER: 'One Provider',
@@ -116,6 +128,8 @@ export const amplitudeEvents = {
   DELETED_ITEM: 'Deleted Item',
 
   ANNOUNCEMENT: 'Announcement',
+
+  RESOURCE_LIST: 'Resource List',
 
   CAROUSEL_WHEEL: 'Carousel Wheel',
 
@@ -162,6 +176,8 @@ export const amplitudeEvents = {
   CHANGE_PASSWORD: 'Changed Password',
 
   WALL_MOVED_POST: 'Wall - Moved Post',
+
+  EXISTING_SECTION: 'Existing Section',
 
   CLICKED_PAGE_ITEM: 'Clicked Page Item',
 
@@ -226,6 +242,8 @@ export const amplitudeEvents = {
   WALL_UPDATED_SETTINGS: 'Wall - Updated Settings',
 
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
+
+  STUDIO_DRAG_DROP_TILE: 'Studio - Drag & Drop Tile',
 
   MANAGE_CHANGED_QR_CODE: 'Manage - Changed QR Code',
 

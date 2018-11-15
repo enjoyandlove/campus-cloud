@@ -23,6 +23,7 @@ import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { PersonasType, PersonaValidationErrors } from './../personas.status';
 import { baseActions, IHeader, ISnackbar } from './../../../../../store/base';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { ResourcesUtilsService } from '../tiles/resources/resources.utils.service';
 import { TileCategoryRank, TileFeatureRank, TileType } from './../tiles/tiles.status';
 
 interface IState {
@@ -68,7 +69,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     public cpTracking: CPTrackingService,
     public sectionService: SectionsService,
     public store: Store<IHeader | ISnackbar>,
-    public sectionUtils: SectionUtilsService
+    public sectionUtils: SectionUtilsService,
+    public resourceUtils: ResourcesUtilsService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -199,7 +201,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   doBulkUpdate(tileUpdates) {
     const search = new HttpParams().set('school_persona_id', this.personaId);
 
-    const body = tileUpdates.map((t) => {
+    const body = tileUpdates.tilesToUpdate.map((t) => {
       return {
         rank: t.rank,
         tile_id: t.id,
@@ -217,6 +219,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       .toPromise()
       .then(() => this.fetch(() => this.handleSuccess()))
       .then(() => {
+        this.trackMovedTile(tileUpdates.movingTile);
         this.zone.run(() => {
           this.state = { ...this.state, working: false };
         });
@@ -409,7 +412,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         school_id,
         'featured_rank'
       );
-      this.doBulkUpdate(tilesToUpdate);
+      this.doBulkUpdate({ tilesToUpdate, movingTile });
     } else if (this.featuredTileToNonFeatureSection(movingTile, newCategory)) {
       const body = {
         ...movingTile,
@@ -421,7 +424,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       newCategory = this.updateTileBodyAfterDrop(newCategory, movingTile, body);
 
       const tilesToUpdate = this.sectionUtils.updateGuideTileRank(newCategory, school_id, 'rank');
-      this.doBulkUpdate(tilesToUpdate);
+      this.doBulkUpdate({ tilesToUpdate, movingTile });
     } else {
       const body = {
         ...movingTile,
@@ -434,7 +437,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
       const tilesToUpdate = this.sectionUtils.updateGuideTileRank(newCategory, school_id, 'rank');
 
-      this.doBulkUpdate(tilesToUpdate);
+      this.doBulkUpdate({ tilesToUpdate, movingTile });
     }
   }
 
@@ -694,6 +697,29 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.STUDIO_MOVED_SECTION,
+      eventProperties
+    );
+  }
+
+  trackMovedTile(tile: ITile) {
+    const status = this.tileUtils.isTileVisible(tile)
+      ? amplitudeEvents.SHOWN : amplitudeEvents.HIDDEN;
+
+    const tile_type = this.tileUtils.isFeatured(tile)
+      ? amplitudeEvents.FEATURED : amplitudeEvents.NORMAL;
+
+    const content_type = this.resourceUtils.isListOfLists(tile.related_link_data)
+      ? amplitudeEvents.RESOURCE_LIST : amplitudeEvents.RESOURCE;
+
+    const eventProperties = {
+      status,
+      tile_type,
+      content_type,
+      tile_id: tile.id,
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.STUDIO_DRAG_DROP_TILE,
       eventProperties
     );
   }
