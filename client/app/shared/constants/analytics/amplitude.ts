@@ -229,6 +229,8 @@ export const amplitudeEvents = {
 
   STUDIO_CREATED_TILE: 'Studio - Created Tile',
 
+  STUDIO_DELETED_TILE: 'Studio - Deleted Tile',
+
   MANAGE_APPROVED_CLUB: 'Manage - Approved Club',
 
   WALL_DELETED_COMMENT: 'Wall - Deleted Comment',

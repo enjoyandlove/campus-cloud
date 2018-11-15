@@ -248,6 +248,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   }
 
   onTileDeleted(tile: ITile) {
+    this.trackDeleteTile(tile);
+
     if (this.tileUtils.isFeatured(tile)) {
       this.state = {
         ...this.state,
@@ -695,6 +697,13 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   trackMovedTile(tile: ITile) {
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.STUDIO_DRAG_DROP_TILE,
+      this.utils.getTileAmplitudeProperties(tile)
+    );
+  }
+
+  trackDeleteTile(tile: ITile) {
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.STUDIO_DELETED_TILE,
       this.utils.getTileAmplitudeProperties(tile)
     );
   }
