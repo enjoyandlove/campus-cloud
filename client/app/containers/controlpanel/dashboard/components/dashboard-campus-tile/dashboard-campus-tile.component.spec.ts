@@ -67,8 +67,7 @@ describe('DashboardCampusTileComponent', () => {
       start: 1,
       end: 1,
       label: 'hello',
-      gen_info_exp_id: 1,
-      c_activity_exp_id: 1
+      cga_exp_id: 1
     };
 
     spyOn(comp, 'fetch');
@@ -81,7 +80,7 @@ describe('DashboardCampusTileComponent', () => {
     expect(comp.fetch).toHaveBeenCalledWith(
       rightParams.start,
       rightParams.end,
-      rightParams.gen_info_exp_id
+      rightParams.cga_exp_id
     );
   });
 });

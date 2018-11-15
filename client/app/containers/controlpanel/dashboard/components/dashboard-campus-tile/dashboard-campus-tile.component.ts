@@ -59,11 +59,11 @@ export class DashboardCampusTileComponent extends BaseComponent implements OnIni
         return;
       }
 
-      const { start, end, c_activity_exp_id } = params;
+      const { start, end, cga_exp_id } = params;
 
-      this.selectedPersona = this.getSelectedPersona(+c_activity_exp_id);
+      this.selectedPersona = this.getSelectedPersona(+cga_exp_id);
 
-      this.fetch(start, end, c_activity_exp_id);
+      this.fetch(start, end, cga_exp_id);
     });
   }
 

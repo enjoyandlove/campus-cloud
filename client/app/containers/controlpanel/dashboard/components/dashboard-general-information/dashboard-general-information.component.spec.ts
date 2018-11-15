@@ -39,8 +39,6 @@ describe('DashboardGeneralInformationComponent', () => {
     fixture = TestBed.createComponent(DashboardGeneralInformationComponent);
     comp = fixture.componentInstance;
 
-    comp.experiences = [{ action: 1, label: 'dummy' }];
-
     route = TestBed.get(ActivatedRoute);
   });
 
@@ -67,21 +65,14 @@ describe('DashboardGeneralInformationComponent', () => {
       start: 1,
       end: 1,
       label: 'hello',
-      gen_info_exp_id: 1,
-      c_activity_exp_id: 1
+      cga_exp_id: 1
     };
 
     spyOn(comp, 'fetch');
     comp.listenForQueryParamChanges();
-    expect(comp.selectedPersona).not.toBeDefined();
 
     route._setParam(rightParams);
     expect(comp.fetch).toHaveBeenCalled();
-    expect(comp.selectedPersona).toEqual(comp.experiences[0]);
-    expect(comp.fetch).toHaveBeenCalledWith(
-      rightParams.start,
-      rightParams.end,
-      rightParams.gen_info_exp_id
-    );
+    expect(comp.fetch).toHaveBeenCalledWith(rightParams.start, rightParams.end);
   });
 });

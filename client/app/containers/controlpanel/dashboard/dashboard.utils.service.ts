@@ -29,9 +29,9 @@ export class DashboardUtilsService {
   }
 
   validParams(params: Params) {
-    const { start, end, label, gen_info_exp_id, c_activity_exp_id } = params;
+    const { start, end, label, cga_exp_id } = params;
 
-    return start && end && label && gen_info_exp_id && c_activity_exp_id;
+    return start && end && label && cga_exp_id;
   }
 
   dayEnd(date) {

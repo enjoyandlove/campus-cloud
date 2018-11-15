@@ -65,8 +65,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
       start: this.currentDate.start,
       end: this.currentDate.end,
       label: this.currentDate.label,
-      gen_info_exp_id: firstExperiences.action,
-      c_activity_exp_id: firstExperiences.action
+      cga_exp_id: firstExperiences.action
     });
   }
 

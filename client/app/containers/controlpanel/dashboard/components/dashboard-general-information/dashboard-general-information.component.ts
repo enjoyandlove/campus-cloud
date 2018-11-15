@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
@@ -13,11 +13,8 @@ import { DashboardUtilsService } from './../../dashboard.utils.service';
   styleUrls: ['./dashboard-general-information.component.scss']
 })
 export class DashboardGeneralInformationComponent extends BaseComponent implements OnInit {
-  @Input() experiences;
-
   data;
   loading;
-  selectedPersona;
 
   constructor(
     private session: CPSession,
@@ -31,11 +28,10 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
     });
   }
 
-  fetch(start, end, persona_id) {
+  fetch(start, end) {
     const search = new HttpParams()
       .append('end', end)
       .append('start', start)
-      .append('persona_id', persona_id)
       .append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getGeneralInformation(search);
@@ -43,10 +39,6 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
     super.fetchData(stream$).then((res) => {
       this.data = res.data;
     });
-  }
-
-  getSelectedPersona(selectedPersonaId) {
-    return this.experiences.filter((p) => p.action === selectedPersonaId)[0];
   }
 
   listenForQueryParamChanges() {
@@ -58,11 +50,9 @@ export class DashboardGeneralInformationComponent extends BaseComponent implemen
         return;
       }
 
-      const { start, end, gen_info_exp_id } = params;
+      const { start, end } = params;
 
-      this.selectedPersona = this.getSelectedPersona(+gen_info_exp_id);
-
-      this.fetch(start, end, gen_info_exp_id);
+      this.fetch(start, end);
     });
   }
 

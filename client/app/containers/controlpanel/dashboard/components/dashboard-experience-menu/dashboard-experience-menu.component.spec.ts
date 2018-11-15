@@ -42,7 +42,7 @@ describe('DashboardExperienceMenuComponent', () => {
     comp = fixture.componentInstance;
 
     comp.experiences = [{ action: 1, label: 'dummy' }];
-    comp.paramName = 'c_activity_exp_id';
+    comp.paramName = 'cga_exp_id';
   });
 
   it('shoudld init', () => {
