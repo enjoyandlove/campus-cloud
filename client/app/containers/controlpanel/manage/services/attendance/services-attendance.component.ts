@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { ServicesService } from '../services.service';
+import { IDateRange } from './components/providers-action-box';
 import { CPI18nService } from '../../../../../shared/services';
 import { ServicesUtilsService } from '../services.utils.service';
 import { BaseComponent } from '../../../../../base/base.component';
@@ -31,7 +32,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     public cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private utils: ServicesUtilsService,
-    private serviceService: ServicesService
+    public serviceService: ServicesService
   ) {
     super();
     this.serviceId = this.route.snapshot.params['serviceId'];
@@ -80,8 +81,14 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     this.providersList.doSearch(query);
   }
 
-  onDateFilter(dateRange) {
+  onDateFilter(dateRange: IDateRange) {
     this.providersList.doDateFilter(dateRange);
+
+    const start = dateRange ? dateRange.start : null;
+    const end = dateRange ? dateRange.end : null;
+    this.serviceService.getServiceById(this.serviceId, start, end).subscribe((res) => {
+      this.service = res;
+    });
   }
 
   onProvidersResult(data) {
