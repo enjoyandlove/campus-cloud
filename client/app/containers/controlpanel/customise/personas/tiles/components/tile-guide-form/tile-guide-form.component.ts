@@ -39,6 +39,7 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
   @ViewChild(CPHostDirective) cpHost: CPHostDirective;
   @ViewChild(CPColorPickerDirective) cpColorPicker: CPColorPickerDirective;
 
+  @Output() imageChanged: EventEmitter<boolean> = new EventEmitter();
   @Output() formChange: EventEmitter<FormGroup> = new EventEmitter();
 
   uploadImageBtn;
@@ -79,6 +80,7 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
     this.state = { ...this.state, uploading: true };
     this.fileService.uploadFile(image).subscribe(
       ({ image_url }: any) => {
+        this.imageChanged.emit(true);
         this.state = { ...this.state, uploading: false };
         this.loadImageCropperComponent(image_url);
       },

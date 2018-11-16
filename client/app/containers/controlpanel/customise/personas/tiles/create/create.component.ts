@@ -6,6 +6,7 @@ import { HttpParams } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import { ITile } from '../tile.interface';
 import { TilesService } from '../tiles.service';
 import { IPersona } from './../../persona.interface';
 import { CPSession } from '../../../../../../session';
@@ -14,7 +15,9 @@ import { PersonasService } from '../../personas.service';
 import { TilesUtilsService } from '../tiles.utils.service';
 import { ICampusGuide } from '../../sections/section.interface';
 import { SectionsService } from '../../sections/sections.service';
+import { CPTrackingService } from '../../../../../../shared/services';
 import { SectionUtilsService } from '../../sections/section.utils.service';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { baseActions, IHeader, ISnackbar } from './../../../../../../store/base';
 
@@ -32,6 +35,13 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   campusLinkForm: FormGroup;
   campusGuideTileForm: FormGroup;
 
+  canceledTileEventProperties = {
+    tile_type: amplitudeEvents.NORMAL,
+    added_content: amplitudeEvents.NO,
+    added_resource: amplitudeEvents.NO,
+    uploaded_image: amplitudeEvents.NO
+  };
+
   constructor(
     public router: Router,
     public fb: FormBuilder,
@@ -41,6 +51,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     public route: ActivatedRoute,
     public utils: TilesUtilsService,
     public guideService: SectionsService,
+    public cpTracking: CPTrackingService,
     public guideUtils: SectionUtilsService,
     public personaService: PersonasService,
     public store: Store<IHeader | ISnackbar>,
@@ -110,12 +121,13 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     }
 
     stream$.subscribe(
-      () => {
+      (tile: ITile) => {
         this.buttonData = {
           ...this.buttonData,
           disabled: false
         };
 
+        this.trackCreatedTile(tile);
         this.router.navigate(['/studio/experiences', this.personaId]);
       },
       (_) => {
@@ -159,6 +171,8 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       ...this.buttonData,
       disabled: !(this.campusGuideTileForm.valid && this.campusLinkForm.valid)
     };
+
+    this.setCanceledTileProperties(this.campusLinkForm.value);
   }
 
   onCampusGuideTileFormChange() {
@@ -173,6 +187,15 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
   onCampusLinkFormChange() {
     this.updateSubmitState();
+  }
+
+  onChangedContent(resourceType: number) {
+    const added_content = resourceType ? amplitudeEvents.YES : amplitudeEvents.NO;
+
+    this.canceledTileEventProperties = {
+      ...this.canceledTileEventProperties,
+      added_content
+    };
   }
 
   ngOnDestroy() {
@@ -193,6 +216,46 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
         this.buildHeader(this.personasUtils.localizedPersonaName(data));
       })
       .catch(() => this.erroHandler());
+  }
+
+  trackCreatedTile(tile: ITile) {
+    const eventProperties = {
+      ...this.personasUtils.getTileAmplitudeProperties(tile)
+    };
+
+    delete eventProperties.status;
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.STUDIO_CREATED_TILE,
+      eventProperties
+    );
+  }
+
+  trackCanceledTile() {
+    const tile_type = this.guide._featuredTile
+      ? amplitudeEvents.FEATURED
+      : amplitudeEvents.NORMAL;
+
+    this.canceledTileEventProperties = {
+      ...this.canceledTileEventProperties,
+      tile_type
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.STUDIO_CANCELED_TILE,
+      this.canceledTileEventProperties
+    );
+  }
+
+  setCanceledTileProperties(linkForm) {
+    const uploaded_image = linkForm.img_url ? amplitudeEvents.YES : amplitudeEvents.NO;
+    const added_resource = linkForm.link_url ? amplitudeEvents.YES : amplitudeEvents.NO;
+
+    this.canceledTileEventProperties = {
+      ...this.canceledTileEventProperties,
+      added_resource,
+      uploaded_image
+    };
   }
 
   ngOnInit(): void {

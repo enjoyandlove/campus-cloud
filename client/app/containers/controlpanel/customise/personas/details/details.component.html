@@ -20,6 +20,7 @@
             [guide]="state.featuredTiles"
             (moveToSection)="onTileMoved($event)"
             (moveWithinSection)="doBulkUpdate($event)"
+            (tileVisibility)="trackTileVisibility($event)"
             (deleteTileClick)="onDeleteTileFromSection($event)">
           </cp-personas-section>
         </div>
@@ -45,6 +46,7 @@
             (moveWithinSection)="doBulkUpdate($event)"
             [disableAddSection]="temporaryGuides === 1"
             (setSectionName)="onSetSectionName($event)"
+            (tileVisibility)="trackTileVisibility($event)"
             (deleteSectionClick)="onDeleteSectionClick($event)"
             (deleteTileClick)="onDeleteTileFromSection($event)"
             (createNewSection)="onAddSectionBefore($event, guide.id)">
