@@ -14,7 +14,7 @@ export class CPAmplitudeService {
     const school = session ? session.g.get('school') : null;
     const isInternal = session ? session.isInternal : null;
     const api_key = isProd
-      ? '6c5441a7008b413b8d3d29f8130afae1'
+      ? '24c823bab76344e912538ef6a942f517'
       : '434caff2f839c60ab12edd1119ec7641';
 
     require('node_modules/amplitude-js/src/amplitude-snippet.js');
