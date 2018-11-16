@@ -9,7 +9,8 @@
           </p>
           <cp-personas-tile-guide-form
             [form]="campusGuideTileForm"
-            uploadButtonId="tile_guide_upload_button"
+            (imageChanged)="onChangedImage($event)"
+            [uploadButtonId]="'tile_guide_upload_button'"
             (formChange)="onCampusGuideTileFormChange(campusGuideTileForm)">
           </cp-personas-tile-guide-form>
         </div>
@@ -28,6 +29,8 @@
             editView="true"
             [persona]="persona"
             [form]="campusLinkForm"
+            (changedContent)="onChangedContent($event)"
+            (changedResource)="onChangedResource($event)"
             (formChange)="onCampusLinkFormChange(campusLinkForm)">
           </cp-personas-resource-form>
         </div>
