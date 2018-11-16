@@ -243,6 +243,8 @@ export const amplitudeEvents = {
 
   STUDIO_MOVED_SECTION: 'Studio - Moved Section',
 
+  STUDIO_CANCELED_TILE: 'Studio - Cancelled Tile',
+
   WALL_UPDATED_SETTINGS: 'Wall - Updated Settings',
 
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',

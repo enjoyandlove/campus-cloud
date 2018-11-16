@@ -22,6 +22,7 @@ export class PersonasResourceFormComponent implements OnInit {
   @Input() hideTypeSelector = false;
 
   @Output() formChange: EventEmitter<FormGroup> = new EventEmitter();
+  @Output() changedContent: EventEmitter<boolean> = new EventEmitter();
 
   contentTypes;
   selectedItem = null;
@@ -49,6 +50,8 @@ export class PersonasResourceFormComponent implements OnInit {
   }
 
   onContentTypeChange(selected) {
+    this.changedContent.emit(selected.extra_field_type);
+
     this.form.controls['link_url'].setValue(null);
     this.form.controls['link_params'].setValue({});
 
