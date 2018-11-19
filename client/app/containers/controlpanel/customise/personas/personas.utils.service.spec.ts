@@ -39,7 +39,7 @@ describe('PersonasUtilsService', () => {
   it('should get localized persona name', () => {
     const persona = mockPersonas[0];
     const expected = persona.localized_name_map['en'];
-    const result = service.localizedPersonaName(persona);
+    const result = PersonasUtilsService.localizedPersonaName(persona);
 
     expect(result).toEqual(expected);
   });

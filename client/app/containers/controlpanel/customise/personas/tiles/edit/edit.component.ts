@@ -1,4 +1,3 @@
-import { PersonasUtilsService } from './../../personas.utils.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,6 +15,7 @@ import { TilesUtilsService } from '../tiles.utils.service';
 import { ICampusGuide } from '../../sections/section.interface';
 import { SectionsService } from '../../sections/sections.service';
 import { CPTrackingService } from '../../../../../../shared/services';
+import { PersonasUtilsService } from './../../personas.utils.service';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { baseActions, IHeader, ISnackbar } from '../../../../../../store/base';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
@@ -58,8 +58,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     public cpTracking: CPTrackingService,
     public guideService: SectionsService,
     public personaService: PersonasService,
-    public store: Store<IHeader | ISnackbar>,
-    public personasUtils: PersonasUtilsService
+    public store: Store<IHeader | ISnackbar>
   ) {
     super();
     this.tileId = this.route.snapshot.params['tileId'];
@@ -112,7 +111,8 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
 
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.STUDIO_UPDATED_TILE,
-          this.editedTileEventProperties);
+          this.editedTileEventProperties
+        );
 
         this.router.navigate(['/studio/experiences', this.personaId]);
       },
@@ -218,9 +218,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
       ? amplitudeEvents.SHOWN
       : amplitudeEvents.HIDDEN;
 
-    const tile_type = this.guide._featuredTile
-      ? amplitudeEvents.FEATURED
-      : amplitudeEvents.NORMAL;
+    const tile_type = this.guide._featuredTile ? amplitudeEvents.FEATURED : amplitudeEvents.NORMAL;
 
     this.editedTileEventProperties = {
       ...this.editedTileEventProperties,
@@ -247,7 +245,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
         this.buildForm();
         this.persona = persona;
 
-        this.buildHeader(this.personasUtils.localizedPersonaName(persona));
+        this.buildHeader(PersonasUtilsService.localizedPersonaName(persona));
       })
       .catch(() => this.erroHandler());
   }

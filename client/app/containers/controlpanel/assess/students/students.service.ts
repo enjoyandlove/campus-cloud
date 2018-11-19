@@ -11,7 +11,7 @@ import { API } from '../../../../config/api';
 
 @Injectable()
 export class StudentsService extends HTTPService {
-  constructor(http: HttpClient, router: Router, public personaUtils: PersonasUtilsService) {
+  constructor(http: HttpClient, router: Router) {
     super(http, router);
 
     Object.setPrototypeOf(this, StudentsService.prototype);
@@ -57,7 +57,7 @@ export class StudentsService extends HTTPService {
         personas.map((p) => {
           return {
             id: p.id,
-            label: this.personaUtils.localizedPersonaName(p)
+            label: PersonasUtilsService.localizedPersonaName(p)
           };
         })
       )

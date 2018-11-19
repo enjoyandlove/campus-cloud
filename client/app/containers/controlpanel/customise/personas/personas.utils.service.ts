@@ -15,6 +15,12 @@ import { ResourcesUtilsService } from './tiles/resources/resources.utils.service
 
 @Injectable()
 export class PersonasUtilsService {
+  static localizedPersonaName(persona: IPersona) {
+    const locale = CPI18nService.getLocale().startsWith('fr') ? 'fr' : 'en';
+
+    return persona.localized_name_map[locale];
+  }
+
   constructor(
     public fb: FormBuilder,
     public session: CPSession,
@@ -140,12 +146,6 @@ export class PersonasUtilsService {
     ];
   }
 
-  localizedPersonaName(persona: IPersona) {
-    const locale = CPI18nService.getLocale().startsWith('fr') ? 'fr' : 'en';
-
-    return persona.localized_name_map[locale];
-  }
-
   parseLocalFormToApi(data) {
     data = {
       ...data,
@@ -162,19 +162,22 @@ export class PersonasUtilsService {
 
   getTileAmplitudeProperties(tile: ITile) {
     const status = this.tileUtils.isTileVisible(tile)
-      ? amplitudeEvents.SHOWN : amplitudeEvents.HIDDEN;
+      ? amplitudeEvents.SHOWN
+      : amplitudeEvents.HIDDEN;
 
     const tile_type = this.tileUtils.isFeatured(tile)
-      ? amplitudeEvents.FEATURED : amplitudeEvents.NORMAL;
+      ? amplitudeEvents.FEATURED
+      : amplitudeEvents.NORMAL;
 
     const content_type = this.resourceUtils.isListOfLists(tile.related_link_data)
-      ? amplitudeEvents.RESOURCE_LIST : amplitudeEvents.RESOURCE;
+      ? amplitudeEvents.RESOURCE_LIST
+      : amplitudeEvents.RESOURCE;
 
     return {
       status,
       tile_type,
       content_type,
-      tile_id: tile.id,
+      tile_id: tile.id
     };
   }
 }
