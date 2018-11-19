@@ -1,4 +1,3 @@
-import { PersonasUtilsService } from './../../personas.utils.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,6 +15,7 @@ import { TilesUtilsService } from '../tiles.utils.service';
 import { ICampusGuide } from '../../sections/section.interface';
 import { SectionsService } from '../../sections/sections.service';
 import { CPTrackingService } from '../../../../../../shared/services';
+import { PersonasUtilsService } from './../../personas.utils.service';
 import { SectionUtilsService } from '../../sections/section.utils.service';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
@@ -213,7 +213,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       .then(({ data }: any) => {
         this.buildForm();
         this.persona = data;
-        this.buildHeader(this.personasUtils.localizedPersonaName(data));
+        this.buildHeader(PersonasUtilsService.localizedPersonaName(data));
       })
       .catch(() => this.erroHandler());
   }
@@ -225,16 +225,11 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
     delete eventProperties.status;
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.STUDIO_CREATED_TILE,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_CREATED_TILE, eventProperties);
   }
 
   trackCanceledTile() {
-    const tile_type = this.guide._featuredTile
-      ? amplitudeEvents.FEATURED
-      : amplitudeEvents.NORMAL;
+    const tile_type = this.guide._featuredTile ? amplitudeEvents.FEATURED : amplitudeEvents.NORMAL;
 
     this.canceledTileEventProperties = {
       ...this.canceledTileEventProperties,

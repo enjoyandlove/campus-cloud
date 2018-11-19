@@ -29,10 +29,7 @@ export class ControlPanelComponent implements AfterViewInit {
     const user_type = this.is_onboarded ? userType.existing : userType.new;
 
     if (isLogin) {
-      this.cpTrackingService.amplitudeEmitEvent(
-        amplitudeEvents.LOGGED_IN,
-        { user_type }
-      );
+      this.cpTrackingService.amplitudeEmitEvent(amplitudeEvents.LOGGED_IN, { user_type });
     }
   }
 
@@ -54,7 +51,7 @@ export class ControlPanelComponent implements AfterViewInit {
      * this gets initilized only once
      * so we track the first page load here
      */
-    this.cpAmplitudeService.loadAmplitude(this.session);
+    this.cpAmplitudeService.loadAmplitude();
     this.cpTrackingService.gaTrackPage(this.router.url);
     this.trackLoggedInEvent();
   }

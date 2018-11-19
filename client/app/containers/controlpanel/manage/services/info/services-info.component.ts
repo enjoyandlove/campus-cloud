@@ -62,18 +62,9 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
 
     const service$ = this.serviceService.getServiceById(this.serviceId);
 
-    const admins$ = this.adminService.getAdminByStoreId(search).pipe(
-      map((admins: Array<any>) => {
-        const _admins = [];
-        admins.forEach((admin) => {
-          if (!admin.is_school_level) {
-            _admins.push(admin);
-          }
-        });
-
-        return _admins;
-      })
-    );
+    const admins$ = this.adminService
+      .getAdminByStoreId(search)
+      .pipe(map((admins: Array<any>) => admins.filter((admin) => !admin.is_school_level)));
 
     const stream$ = combineLatest(service$, admins$);
     super.fetchData(stream$).then((res) => {
