@@ -28,20 +28,10 @@ import { StudentsComposeComponent } from './compose/students-compose.component';
     StudentsProfileTopBarComponent
   ],
 
-  imports: [
-    SharedModule,
-    CommonModule,
-    ReactiveFormsModule,
-    StudentsRoutingModule
-  ],
+  imports: [SharedModule, CommonModule, ReactiveFormsModule, StudentsRoutingModule],
 
-  providers: [
-    StudentsService,
-    PersonasUtilsService
-  ],
+  providers: [StudentsService, PersonasUtilsService],
 
-  exports: [
-    StudentsComposeComponent
-  ]
+  exports: [StudentsComposeComponent]
 })
 export class EngagementStudentsModule {}
