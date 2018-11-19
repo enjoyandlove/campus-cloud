@@ -45,7 +45,7 @@ export class CPSession {
   }
 
   get hasSSO() {
-    return this.g.get('school').has_sso_integration;
+    return _get(this.g.get('school'), 'has_sso_integration', false);
   }
 
   set defaultHost(storeId) {
@@ -57,7 +57,7 @@ export class CPSession {
   }
 
   get isInternal() {
-    const email = this.g.get('user').email.toLowerCase();
+    const email = _get(this.g.get('user'), 'email', '').toLocaleLowerCase();
 
     return (
       email.endsWith('@oohlalamobile.com') ||
@@ -86,6 +86,6 @@ export class CPSession {
   }
 
   get hasGuideCustomization() {
-    return this.g.get('school').has_guide_customization;
+    return _get(this.g.get('school'), 'has_guide_customization', false);
   }
 }

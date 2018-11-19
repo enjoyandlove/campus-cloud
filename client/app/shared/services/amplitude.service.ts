@@ -13,9 +13,10 @@ export class CPAmplitudeService {
   constructor(private session: CPSession) {}
 
   loadAmplitude() {
-    const user = this.session ? this.session.g.get('user') : null;
-    const school = this.session ? this.session.g.get('school') : null;
-    const isInternal = this.session ? this.session.isInternal : null;
+    const user = _get(this.session.g.get('user'), null);
+    const school = _get(this.session.g.get('school'), null);
+    const isInternal = this.session.isInternal;
+
     const api_key = isProd
       ? '24c823bab76344e912538ef6a942f517'
       : '434caff2f839c60ab12edd1119ec7641';
