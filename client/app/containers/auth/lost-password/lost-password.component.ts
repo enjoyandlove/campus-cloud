@@ -5,7 +5,13 @@ import { Store } from '@ngrx/store';
 import { AuthService } from '../auth.service';
 import { baseActions } from '../../../store/base';
 import { amplitudeEvents } from '../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService, ErrorService } from '../../../shared/services';
+
+import {
+  ErrorService,
+  CPI18nService,
+  CPTrackingService,
+  CPAmplitudeService
+} from '../../../shared/services';
 
 @Component({
   selector: 'cp-lost-password',
@@ -23,7 +29,8 @@ export class LostPasswordComponent implements OnInit, OnDestroy {
     private error: ErrorService,
     private service: AuthService,
     private cpI18n: CPI18nService,
-    private cpTracking: CPTrackingService
+    private cpTracking: CPTrackingService,
+    private cpAmplitude: CPAmplitudeService
   ) {
     this.form = this.fb.group({
       request_password_reset: [1],
@@ -59,6 +66,6 @@ export class LostPasswordComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.cpTracking.loadAmplitude();
+    this.cpAmplitude.loadAmplitude();
   }
 }

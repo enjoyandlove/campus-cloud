@@ -5,7 +5,9 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { mockPersonas } from './__mock__/personas.mock';
 import mockSession from '../../../../session/mock/session';
 import { PersonasUtilsService } from './personas.utils.service';
+import { TilesUtilsService } from './tiles/tiles.utils.service';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { ResourcesUtilsService } from './tiles/resources/resources.utils.service';
 
 describe('PersonasUtilsService', () => {
   let service: PersonasUtilsService;
@@ -14,8 +16,10 @@ describe('PersonasUtilsService', () => {
     const cpI18n = new CPI18nService();
     const fb = new FormBuilder();
     const cpSession = mockSession;
+    const resourceUtils = new ResourcesUtilsService();
+    const tileUtils = new TilesUtilsService(fb, cpSession, cpI18n, null);
 
-    service = new PersonasUtilsService(cpI18n, fb, cpSession);
+    service = new PersonasUtilsService(fb, cpSession, cpI18n, tileUtils, resourceUtils);
   });
 
   it('should remove name key when parsing form data', () => {

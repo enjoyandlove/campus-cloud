@@ -10,7 +10,7 @@ import { BaseComponent } from '../../../../base/base.component';
 import { ISnackbar, baseActions } from '../../../../store/base';
 import { CheckInOutTime, CheckInType } from '../../callback.status';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../shared/services';
+import { CPAmplitudeService, CPI18nService, CPTrackingService } from '../../../../shared/services';
 
 interface IState {
   services: Array<any>;
@@ -43,7 +43,8 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     public store: Store<ISnackbar>,
     public utils: CheckinUtilsService,
     public cpTracking: CPTrackingService,
-    public checkinService: CheckinService
+    public checkinService: CheckinService,
+    public cpAmplitude: CPAmplitudeService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -56,7 +57,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   onSubmit(data) {
     this.checkinService.doServiceCheckin(data, this.search).subscribe(
       (res) => {
-        this.trackCheckedInEvent(res);
+        this.trackCheckedInEvent();
         this.updateAttendeesList(data, res);
       },
       (err) => this.handleError(err.status)
@@ -98,17 +99,24 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       ...service.data
     };
 
-    const eventProperties = this.utils.getCheckedInEventProperties(
+    const properties = this.utils.getCheckedInEventProperties(
       this.serviceId,
-      this.state.services,
-      service.attendance_id,
-      this.checkInSource
+      this.state.services
     );
+
+    const access_type = this.checkInSource
+      ? amplitudeEvents.EMAIL_WEB_CHECK_IN
+      : amplitudeEvents.CC_WEB_CHECK_IN;
+
+    const eventProperties = {
+      ...properties,
+      access_type
+    };
 
     delete eventProperties.check_out_status;
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CHECKED_OUT,
+      amplitudeEvents.MANAGE_ADDED_WEB_CHECK_OUT,
       eventProperties
     );
   }
@@ -125,35 +133,42 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   trackLoadCheckInEvent() {
     const eventProperties = {
       source_id: this.serviceId,
-      check_in_type: amplitudeEvents.SERVICE_PROVIDER
+      assessment_type: amplitudeEvents.SERVICE_PROVIDER
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_LOADED_WEB_CHECK_IN,
+      amplitudeEvents.MANAGE_EMAIL_WEB_CHECK_IN,
       eventProperties
     );
   }
 
-  trackCheckedInEvent(response) {
-    const eventProperties = this.utils.getCheckedInEventProperties(
+  trackCheckedInEvent() {
+    const properties = this.utils.getCheckedInEventProperties(
       this.serviceId,
-      this.state.services,
-      response.attendance_id,
-      this.checkInSource
+      this.state.services
     );
 
+    const access_type = this.checkInSource
+      ? amplitudeEvents.EMAIL_WEB_CHECK_IN
+      : amplitudeEvents.CC_WEB_CHECK_IN;
+
+    const eventProperties = {
+      ...properties,
+      access_type
+    };
+
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CHECKED_IN,
+      amplitudeEvents.MANAGE_ADDED_WEB_CHECK_IN,
       eventProperties
     );
   }
 
   ngOnInit() {
     if (!this.session.g.get('user')) {
-      this.cpTracking.loadAmplitude();
+      this.cpAmplitude.loadAmplitude();
     }
 
-    if (!this.checkInSource) {
+    if (this.checkInSource) {
       this.trackLoadCheckInEvent();
     }
 

@@ -5,11 +5,11 @@ import {
   canAccountLevelReadResource
 } from './../../../../../../../shared/utils/privileges/privileges';
 
+import IEvent from '../../../event.interface';
 import { EventAttendance } from '../../../event.status';
 import { EventsService } from '../../../events.service';
 import { FORMAT } from '../../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../../session';
-import { EventsComponent } from '../../base/events.component';
 import { EventUtilService } from '../../../events.utils.service';
 import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
 import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
@@ -31,7 +31,7 @@ const sort = {
   templateUrl: './list-upcoming.component.html',
   styleUrls: ['./list-upcoming.component.scss']
 })
-export class ListUpcomingComponent extends EventsComponent implements OnInit {
+export class ListUpcomingComponent implements OnInit {
   @Input() state: any;
   @Input() events: any;
   @Input() isClub: boolean;
@@ -45,7 +45,6 @@ export class ListUpcomingComponent extends EventsComponent implements OnInit {
   canDelete;
   eventData;
   sortingLabels;
-  checkInSource;
   eventCheckinRoute;
   sort: ISort = sort;
   dateFormat = FORMAT.SHORT;
@@ -57,9 +56,7 @@ export class ListUpcomingComponent extends EventsComponent implements OnInit {
     public service: EventsService,
     public utils: EventUtilService,
     private cpTracking: CPTrackingService
-  ) {
-    super(session, cpI18n, service);
-  }
+  ) {}
 
   onDelete(event) {
     this.deleteEvent.emit(event);
@@ -92,16 +89,15 @@ export class ListUpcomingComponent extends EventsComponent implements OnInit {
     };
   }
 
-  trackCheckinEvent(source_id) {
+  trackCheckinEvent(event: IEvent) {
     const eventProperties = {
-      source_id,
-      check_in_type: this.checkInSource.check_in_type,
-      check_in_source: amplitudeEvents.UPCOMING_EVENT,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      source_id: event.encrypted_id,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      assessment_type: this.utils.getEventCategoryType(event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
+      amplitudeEvents.MANAGE_CC_WEB_CHECK_IN,
       eventProperties
     );
   }
@@ -112,8 +108,6 @@ export class ListUpcomingComponent extends EventsComponent implements OnInit {
       eventName: amplitudeEvents.VIEWED_ITEM,
       eventProperties: this.setEventProperties()
     };
-
-    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
 
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
     const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);

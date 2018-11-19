@@ -11,6 +11,8 @@
 
 .actions {
   @include card-margin();
+
+  margin-top: 0;
 }
 
 .margin-right {

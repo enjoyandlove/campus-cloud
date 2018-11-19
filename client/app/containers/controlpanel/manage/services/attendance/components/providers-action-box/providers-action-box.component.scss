@@ -8,6 +8,8 @@
 .actions {
   @include card-margin();
 
+  margin-top: 0;
+
   button {
     &:first-child {
       margin-right: 8px;

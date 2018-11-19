@@ -160,14 +160,9 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
       ? amplitudeEvents.CUSTOM_AUDIENCE
       : amplitudeEvents.DYNAMIC_AUDIENCE;
 
-    const eventProperties = {
-      data_source: amplitudeEvents.MENU_AUDIENCE,
-      audience_type
-    };
-
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_DOWNLOAD_DATA,
-      eventProperties
+      amplitudeEvents.AUDIENCE_DOWNLOAD_DATA,
+      {audience_type}
     );
   }
 

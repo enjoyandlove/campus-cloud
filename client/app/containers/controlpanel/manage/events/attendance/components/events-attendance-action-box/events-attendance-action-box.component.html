@@ -21,8 +21,7 @@
           <li>
             <a
               target="_blank"
-              [queryParams]="{source: checkInSource}"
-              (click)="trackClickCheckIn.emit(event.encrypted_id)"
+              (click)="trackClickCheckIn.emit(event)"
               [routerLink]="[eventCheckinRoute + event.encrypted_id]">
               {{ 't_event_assessment_web_checkin_page' | cpI18n }}
             </a>

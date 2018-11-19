@@ -51,7 +51,8 @@
 
 <cp-modal
   *ngIf="state.showEditModal"
-  modalId="resourceEditModal">
+  modalId="resourceEditModal"
+  (modalClose)="onModalClose()">
   <cp-personas-resource-edit
     [persona]="persona"
     [resource]="state.editingResource"
@@ -63,7 +64,8 @@
 
 <cp-modal
   *ngIf="state.showCreateModal"
-  modalId="resourceCreateModal">
+  modalId="resourceCreateModal"
+  (modalClose)="onModalClose()">
   <cp-personas-resource-create
     [persona]="persona"
     (error)="onError($event)"
