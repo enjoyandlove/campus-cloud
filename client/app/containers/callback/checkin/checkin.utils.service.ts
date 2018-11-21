@@ -31,13 +31,10 @@ export class CheckinUtilsService {
   getCheckInSource(category: Number) {
     if (category === EventCategory.club) {
       return amplitudeEvents.CLUB_EVENT;
-
     } else if (category === EventCategory.services) {
       return amplitudeEvents.SERVICE_EVENT;
-
     } else if (category === EventCategory.athletics) {
       return amplitudeEvents.ATHLETIC_EVENT;
-
     } else {
       return amplitudeEvents.ORIENTATION_EVENT;
     }
@@ -57,8 +54,8 @@ export class CheckinUtilsService {
       : amplitudeEvents.DISABLED;
 
     const qr_code_status = verificationMethod.includes(CheckInMethod.app)
-        ? amplitudeEvents.ENABLED
-        : amplitudeEvents.DISABLED;
+      ? amplitudeEvents.ENABLED
+      : amplitudeEvents.DISABLED;
 
     return {
       source_id,

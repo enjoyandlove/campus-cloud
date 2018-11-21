@@ -272,10 +272,7 @@ export class BaseCheckinComponent implements OnInit {
       source_id: this.serviceId ? this.serviceId : this.eventId
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_DOWNLOADED_QR_CODE,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOADED_QR_CODE, eventProperties);
   }
 
   ngOnInit() {

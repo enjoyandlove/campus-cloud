@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
-import { isProd } from './../../../../../config/env';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from '../events.utils.service';
 import { CPDate, CPMap } from '../../../../../shared/utils';
@@ -73,7 +72,6 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
   startdatePickerOpts;
   originalAttnFeedback;
   eventFeedbackEnabled;
-  production = isProd;
   selectedAttendanceType;
   attendanceFeedbackLabel;
   formMissingFields = false;
@@ -562,10 +560,7 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
       assessment_type: this.utils.getEventCategoryType(this.event.store_category)
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CHANGED_QR_CODE,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHANGED_QR_CODE, eventProperties);
   }
 
   ngOnInit() {

@@ -41,7 +41,7 @@ interface IState {
 })
 export class EngagementTopBarComponent implements OnInit {
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
-  @Output() download: EventEmitter<boolean> = new EventEmitter();
+  @Output() download: EventEmitter<null> = new EventEmitter();
 
   hasRouteData;
   state: IState;
@@ -53,8 +53,8 @@ export class EngagementTopBarComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    private route: ActivatedRoute,
-    private utils: EngagementUtilsService
+    public route: ActivatedRoute,
+    public utils: EngagementUtilsService
   ) {}
 
   onDateRangeChange(payload) {

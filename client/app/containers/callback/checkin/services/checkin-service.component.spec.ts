@@ -78,10 +78,7 @@ xdescribe('CheckinServiceComponent', () => {
         checkin_verification_methods: [1, 2, 3]
       };
 
-      eventProperties = component.utils.getCheckedInEventProperties(
-        sourceId,
-        services
-      );
+      eventProperties = component.utils.getCheckedInEventProperties(sourceId, services);
 
       expect(eventProperties.source_id).toEqual(sourceId);
       expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.ENABLED);
@@ -95,11 +92,7 @@ xdescribe('CheckinServiceComponent', () => {
         store_category: EventCategory.athletics
       };
 
-      eventProperties = component.utils.getCheckedInEventProperties(
-        sourceId,
-        services,
-        true
-      );
+      eventProperties = component.utils.getCheckedInEventProperties(sourceId, services, true);
 
       expect(eventProperties.source_id).toEqual(sourceId);
       expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.DISABLED);

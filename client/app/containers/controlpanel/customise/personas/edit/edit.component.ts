@@ -293,9 +293,8 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   }
 
   trackEditExperienceEvent(data, experience_id, securityService) {
-    const experience_type = data.platform === PersonasType.web
-      ? amplitudeEvents.WEB
-      : amplitudeEvents.MOBILE;
+    const experience_type =
+      data.platform === PersonasType.web ? amplitudeEvents.WEB : amplitudeEvents.MOBILE;
 
     const campus_security = securityService ? amplitudeEvents.YES : amplitudeEvents.NO;
 
@@ -306,10 +305,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
       credential_type: credentialType[data.login_requirement]
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.STUDIO_UPDATED_EXPERIENCE,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_UPDATED_EXPERIENCE, eventProperties);
   }
 
   onDeleted() {

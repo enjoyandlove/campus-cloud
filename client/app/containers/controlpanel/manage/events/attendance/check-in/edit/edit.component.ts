@@ -31,7 +31,7 @@ export class CheckInEditComponent implements OnInit {
   @Input() data: IEvent | IServiceProvider;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() edited: EventEmitter<{checkIn: string, checkOut: string}> = new EventEmitter();
+  @Output() edited: EventEmitter<{ checkIn: string; checkOut: string }> = new EventEmitter();
 
   form;
   formErrors;
@@ -115,7 +115,7 @@ export class CheckInEditComponent implements OnInit {
 
     request$.subscribe(
       () => {
-        this.edited.emit({checkIn: this.checkedIn, checkOut: this.checkedOut});
+        this.edited.emit({ checkIn: this.checkedIn, checkOut: this.checkedOut });
         this.resetModal();
       },
       (_) => {

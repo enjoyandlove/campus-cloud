@@ -67,7 +67,7 @@
                 [clearable]="true"
                 [options]="contractStartDatePickerOptions"
                 (dateSet)="setContractStart($event)"
-                (dateClear)="clearContractStart($event)">
+                (dateClear)="clearContractStart()">
               </cp-datepicker>
             </div>
             <div class="col-6">
@@ -76,7 +76,7 @@
                 [clearable]="true"
                 [options]="applicationDeadlineDatePickerOptions"
                 (dateSet)="setApplicationDeadline($event)"
-                (dateClear)="clearApplicationDeadline($event)">
+                (dateClear)="clearApplicationDeadline()">
               </cp-datepicker>
             </div>
           </div>

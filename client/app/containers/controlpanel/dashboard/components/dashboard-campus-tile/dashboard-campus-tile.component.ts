@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DashboardService } from './../../dashboard.service';
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from '../../../../../session';
+import { environment } from './../../../../../../environments/environment';
 
 @Component({
   selector: 'cp-dashboard-campus-tile',
@@ -15,7 +16,7 @@ export class DashboardCampuTileComponent extends BaseComponent implements OnInit
   _dates;
   loading;
   items = [];
-  defaultImage = require('public/default/user.png');
+  defaultImage = `${environment.root}public/default/user.png`;
 
   @Input()
   set dates(dates) {

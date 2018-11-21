@@ -1,7 +1,7 @@
 
 <div class="row margin-bottom">
   <div class="col-8 offset-2">
-    <cp-audience-card 
+    <cp-audience-card
       (count)="onUsersCount($event)"
       (importClick)="onImportClick()"
       [canReadAudience]="canReadAudience"
@@ -27,7 +27,6 @@
                       <label>{{ 'from' | cpI18n }}</label>
                       <cp-dropdown
                         [items]="stores$ | async"
-                        [reset]="resetCustomFields$"
                         [selectedItem]="session.defaultHost"
                         (selected)="onSelectedStore($event)">
                       </cp-dropdown>
@@ -40,7 +39,6 @@
                     <div class="col-12">
                       <cp-check-dropdown
                         [items]="types"
-                        [reset]="resetCustomFields$"
                         [selectedItem]="selectedType"
                         buttonClass="cpbtn cpbtn--cancel"
                         (selected)="onTypeChanged($event)">
@@ -105,10 +103,6 @@
         <div class="row">
           <div class="col-12">
             <div class="text-right">
-              <label class="error" *ngIf="formError">
-                <span>&#x26A0;</span>
-                {{ isDateError ? dateErrorMessage : cpI18n.translate('error_fill_out_marked_fields') }}
-              </label>
               <a [routerLink]="['../']"
                   class="cpbtn cpbtn--cancel">
                 {{ 'cancel' | cpI18n }}
@@ -136,13 +130,13 @@
 </cp-modal>
 
 <cp-modal modalId="audienceSaveModal">
-  <cp-audience-save-modal 
+  <cp-audience-save-modal
     (onSubmit)="onAudienceNamed($event)"
     (teardown)="onTeardownAudienceSaveModal()">
   </cp-audience-save-modal>
 </cp-modal>
 
-<cp-modal 
+<cp-modal
   *ngIf="shouldConfirm"
   modalId="announcementConfirmModal" >
   <cp-announcements-confirm

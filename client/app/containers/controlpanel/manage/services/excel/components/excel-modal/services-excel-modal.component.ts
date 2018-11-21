@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { isDev } from '../../../../../../../config/env';
 import { ServicesService } from '../../../services.service';
 import { FileUploadService, CPI18nService } from '../../../../../../../shared/services';
+import { environment } from '../../../../../../../../environments/environment';
 
 @Component({
   selector: 'cp-services-excel-modal',
@@ -48,7 +49,9 @@ export class ServicesExcelModalComponent implements OnInit {
   ngOnInit() {
     this.fileName = 'mass_service_invite_sample.csv';
 
-    const templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
+    const templateUrl = isDev
+      ? `/public/templates/${this.fileName}`
+      : `${environment.root}public/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,

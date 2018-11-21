@@ -39,12 +39,12 @@ export class EngagementComposeComponent implements OnInit {
   resetStores$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
-    private el: ElementRef,
-    private fb: FormBuilder,
-    private session: CPSession,
-    private cpI18n: CPI18nService,
-    private service: EngagementService,
-    private storeService: StoreService
+    public el: ElementRef,
+    public fb: FormBuilder,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public service: EngagementService,
+    public storeService: StoreService
   ) {}
 
   @HostListener('document:click', ['$event'])

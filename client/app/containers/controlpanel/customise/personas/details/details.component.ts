@@ -713,13 +713,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
     const eventProperties = {
       tiles,
-      section_id: guide.id,
+      section_id: guide.id
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.STUDIO_MOVED_SECTION,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_MOVED_SECTION, eventProperties);
   }
 
   ngOnInit(): void {

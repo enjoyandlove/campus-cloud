@@ -162,9 +162,8 @@ export class PersonasCreateComponent implements OnInit {
   }
 
   trackCreateExperienceEvent(data, experience_id, isSecurityService) {
-    const experience_type = data.platform === PersonasType.web
-      ? amplitudeEvents.WEB
-      : amplitudeEvents.MOBILE;
+    const experience_type =
+      data.platform === PersonasType.web ? amplitudeEvents.WEB : amplitudeEvents.MOBILE;
 
     const campus_security = isSecurityService ? amplitudeEvents.YES : amplitudeEvents.NO;
 
@@ -175,10 +174,7 @@ export class PersonasCreateComponent implements OnInit {
       credential_type: credentialType[data.login_requirement]
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.STUDIO_CREATED_EXPERIENCE,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_CREATED_EXPERIENCE, eventProperties);
   }
 
   ngOnInit(): void {

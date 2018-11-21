@@ -7,6 +7,7 @@ import { isDev } from '../../../../config/env';
 import { CPSession } from '../../../../session';
 import { AudienceService } from './../audience.service';
 import { FileUploadService, CPI18nService } from '../../../../shared/services';
+import { environment } from '../../../../../environments/environment';
 
 @Component({
   selector: 'cp-audience-import',
@@ -87,7 +88,9 @@ export class AudienceImportComponent implements OnInit {
 
     this.fileName = 'mass_user_upload.csv';
 
-    const templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
+    const templateUrl = isDev
+      ? `/public/templates/${this.fileName}`
+      : `${environment.root}public/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,

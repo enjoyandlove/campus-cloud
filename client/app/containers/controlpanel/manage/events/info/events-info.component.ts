@@ -13,6 +13,7 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
 import { EventsComponent } from '../list/base/events.component';
 import { IHeader, baseActions } from '../../../../../store/base';
+import { environment } from './../../../../../../environments/environment';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
@@ -46,7 +47,7 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
   attendanceEnabled = EventAttendance.enabled;
 
-  defaultImage = require('public/default/image.png');
+  defaultImage = `${environment.root}public/public/default/image.png`;
 
   constructor(
     public session: CPSession,
@@ -125,10 +126,7 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
       assessment_type: this.utils.getEventCategoryType(event.store_category)
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CC_WEB_CHECK_IN,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_WEB_CHECK_IN, eventProperties);
   }
 
   ngOnInit() {

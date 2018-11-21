@@ -1,3 +1,4 @@
+import { environment } from './../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,11 +8,7 @@ import { AuthService } from '../auth.service';
 import { baseActions } from '../../../store/base';
 import { appStorage } from '../../../shared/utils';
 
-import {
-  CPI18nService,
-  ErrorService,
-  ZendeskService
-} from '../../../shared/services';
+import { CPI18nService, ErrorService, ZendeskService } from '../../../shared/services';
 
 @Component({
   selector: 'cp-login',
@@ -22,7 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   buttonData;
   goTo: string;
   form: FormGroup;
-  logo = require('public/svg/full-logo.svg');
+  logo = `${environment.root}public/svg/full-logo.svg`;
 
   constructor(
     private router: Router,
@@ -63,7 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             return;
           }
 
-          this.router.navigate(['/'], setUserLoginState);
+          this.router.navigate(['/dashboard'], setUserLoginState);
 
           return;
         }

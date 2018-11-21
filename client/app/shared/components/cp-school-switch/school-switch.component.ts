@@ -6,6 +6,7 @@ import { CPSession, ISchool, IUser } from '../../../session';
 import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
 import { CPTrackingService, RouteLevel } from '../../services';
 import { ZendeskService } from './../../services/zendesk.service';
+import { environment } from './../../../../environments/environment';
 
 @Component({
   selector: 'cp-school-switch',
@@ -21,7 +22,7 @@ export class SchoolSwitchComponent implements OnInit {
   amplitudeEvents;
   selectedSchool: ISchool;
   schools: Array<ISchool> = [];
-  defaultImage = require('public/default/user.png');
+  defaultImage = `${environment.root}public/default/user.png`;
 
   constructor(public session: CPSession, public cpTracking: CPTrackingService) {}
 

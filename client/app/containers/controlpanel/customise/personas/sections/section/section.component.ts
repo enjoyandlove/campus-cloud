@@ -202,7 +202,7 @@ export class PersonasSectionComponent implements OnInit {
     const tilesToUpdate = this.utils.updateGuideTileRank(bulkContent, schoolId, guideRank);
     const movingTile = this.guide.tiles.filter((tile: ITile) => tile.id === tileId)[0];
 
-    this.moveWithinSection.emit({tilesToUpdate, movingTile});
+    this.moveWithinSection.emit({ tilesToUpdate, movingTile });
   }
 
   onMoveCheckDraggable(event) {
