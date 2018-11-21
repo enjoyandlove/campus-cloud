@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { CPI18nService } from '../../../../../../../shared/services';
 
-interface IDateRange {
+export interface IDateRange {
   end: number;
   start: number;
   label: string;

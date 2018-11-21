@@ -26,7 +26,7 @@
           <div class="feed-form__body" formArrayName="walls">
             <div
               class="feed-form__item row"
-              *ngFor="let wall of form.controls.walls.controls; let i=index">
+              *ngFor="let wall of form['controls'].walls['controls']; let i=index">
               <div class="col-4 title">
                 <span>{{ wall.controls.name.value }}</span>
               </div>

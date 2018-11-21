@@ -13,7 +13,7 @@ import { CheckinServiceComponent } from './checkin-service.component';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../shared/services/i18n.service';
 import { CPTrackingService, ErrorService } from '../../../../shared/services';
-import { CheckInSource } from '../../../controlpanel/manage/events/event.status';
+import { EventCategory } from '../../../controlpanel/manage/events/event.status';
 
 class MockService {
   dummy;
@@ -57,10 +57,8 @@ xdescribe('CheckinServiceComponent', () => {
 
   describe('CheckinServiceComponent', () => {
     let spy;
-    let userId;
     let services;
     let sourceId;
-    let checkInSource;
     let eventProperties;
     let component: CheckinServiceComponent;
     let fixture: ComponentFixture<CheckinServiceComponent>;
@@ -74,48 +72,32 @@ xdescribe('CheckinServiceComponent', () => {
     });
 
     it('trackCheckedInEvent', () => {
-      userId = 452;
       sourceId = 8874;
-      checkInSource = CheckInSource.services;
       services = {
         has_checkout: false,
         checkin_verification_methods: [1, 2, 3]
       };
 
-      eventProperties = component.utils.getCheckedInEventProperties(
-        sourceId,
-        services,
-        userId,
-        checkInSource
-      );
+      eventProperties = component.utils.getCheckedInEventProperties(sourceId, services);
 
-      expect(eventProperties.user_id).toEqual(userId);
       expect(eventProperties.source_id).toEqual(sourceId);
       expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.ENABLED);
       expect(eventProperties.check_out_status).toEqual(amplitudeEvents.DISABLED);
-      expect(eventProperties.check_in_type).toEqual(amplitudeEvents.SERVICE_PROVIDER);
+      expect(eventProperties.assessment_type).toEqual(amplitudeEvents.SERVICE_PROVIDER);
 
-      userId = 154;
       sourceId = 8547;
-      checkInSource = CheckInSource.events;
       services = {
         has_checkout: true,
-        attend_verification_methods: [1, 2]
+        attend_verification_methods: [1, 2],
+        store_category: EventCategory.athletics
       };
 
-      eventProperties = component.utils.getCheckedInEventProperties(
-        sourceId,
-        services,
-        userId,
-        checkInSource,
-        true
-      );
+      eventProperties = component.utils.getCheckedInEventProperties(sourceId, services, true);
 
-      expect(eventProperties.user_id).toEqual(userId);
       expect(eventProperties.source_id).toEqual(sourceId);
       expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.DISABLED);
       expect(eventProperties.check_out_status).toEqual(amplitudeEvents.ENABLED);
-      expect(eventProperties.check_in_type).toEqual(amplitudeEvents.INSTITUTION_EVENT);
+      expect(eventProperties.assessment_type).toEqual(amplitudeEvents.ATHLETIC_EVENT);
     });
 
     it('onSubmit', () => {

@@ -1,5 +1,5 @@
-@import '~styles/components/card';
-@import '~styles/components/button';
+@import '~client/style/components/card';
+@import '~client/style/components/button';
 
 .delete-provider {
   font-size: 2em;
@@ -7,6 +7,8 @@
 
 .actions {
   @include card-margin();
+
+  margin-top: 0;
 
   button {
     &:first-child {

@@ -1,4 +1,5 @@
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { environment } from './../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -18,7 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   buttonData;
   goTo: string;
   form: FormGroup;
-  logo = require('public/svg/full-logo.svg');
+  logo = `${environment.root}public/svg/full-logo.svg`;
 
   constructor(
     private router: Router,
@@ -59,7 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             return;
           }
 
-          this.router.navigate(['/'], setUserLoginState);
+          this.router.navigate(['/dashboard'], setUserLoginState);
 
           return;
         }

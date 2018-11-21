@@ -57,6 +57,8 @@ export default interface IEvent {
 
   postal_code?: String;
 
+  store_category: Number;
+
   event_attendance?: Number;
 
   event_feedback?: Number;
@@ -68,4 +70,4 @@ export default interface IEvent {
   attendance_manager_email?: String;
 
   qr_img_url?: String;
-}
+};

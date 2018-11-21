@@ -43,6 +43,7 @@ export class PersonasSectionComponent implements OnInit {
   @Input() disableAddSection = false;
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
+  @Output() tileVisibility: EventEmitter<ITile> = new EventEmitter();
   @Output() deleted: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output() removeSection: EventEmitter<number> = new EventEmitter();
   @Output() deleteTileClick: EventEmitter<ITile> = new EventEmitter();
@@ -94,6 +95,8 @@ export class PersonasSectionComponent implements OnInit {
       ...this.guide,
       tiles: this.guide.tiles.map((tile: ITile) => (tile.id === editedTile.id ? editedTile : tile))
     };
+
+    this.tileVisibility.emit(editedTile);
   }
 
   onEditTile(tile: ITile) {
@@ -176,7 +179,7 @@ export class PersonasSectionComponent implements OnInit {
     }
   }
 
-  onMoveWithinSection() {
+  onMoveWithinSection(event) {
     this.state = { ...this.state, sorting: true };
     const schoolId = this.session.g.get('school').id;
     const bulkContent = {
@@ -194,10 +197,12 @@ export class PersonasSectionComponent implements OnInit {
       })
     };
 
+    const tileId = Number(event.item.dataset.tile);
     const guideRank = this.guide._featuredTile ? 'featured_rank' : 'rank';
-    const updatedTiles = this.utils.updateGuideTileRank(bulkContent, schoolId, guideRank);
+    const tilesToUpdate = this.utils.updateGuideTileRank(bulkContent, schoolId, guideRank);
+    const movingTile = this.guide.tiles.filter((tile: ITile) => tile.id === tileId)[0];
 
-    this.moveWithinSection.emit(updatedTiles);
+    this.moveWithinSection.emit({ tilesToUpdate, movingTile });
   }
 
   onMoveCheckDraggable(event) {

@@ -3,8 +3,8 @@ import { Component, AfterViewInit } from '@angular/core';
 
 import { isProd } from '../../config/env';
 import { CPSession } from './../../session';
-import { userType } from '../../shared/services';
 import { amplitudeEvents } from '../../shared/constants/analytics';
+import { CPAmplitudeService, userType } from '../../shared/services';
 import { CPTrackingService } from './../../shared/services/tracking.service';
 
 @Component({
@@ -20,7 +20,8 @@ export class ControlPanelComponent implements AfterViewInit {
     private router: Router,
     private session: CPSession,
     private route: ActivatedRoute,
-    private cpTrackingService: CPTrackingService
+    private cpTrackingService: CPTrackingService,
+    private cpAmplitudeService: CPAmplitudeService
   ) {}
 
   trackLoggedInEvent() {
@@ -50,7 +51,7 @@ export class ControlPanelComponent implements AfterViewInit {
      * this gets initilized only once
      * so we track the first page load here
      */
-    this.cpTrackingService.loadAmplitude(this.session);
+    this.cpAmplitudeService.loadAmplitude();
     this.cpTrackingService.gaTrackPage(this.router.url);
     this.trackLoggedInEvent();
   }

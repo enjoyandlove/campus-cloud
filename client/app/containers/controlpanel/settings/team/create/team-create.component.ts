@@ -76,14 +76,14 @@ export class TeamCreateComponent implements OnInit {
   resetAthleticsModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    private session: CPSession,
-    private store: Store<IHeader>,
-    private cpI18n: CPI18nService,
+    public router: Router,
+    public fb: FormBuilder,
+    public session: CPSession,
+    public store: Store<IHeader>,
+    public cpI18n: CPI18nService,
     public utils: TeamUtilsService,
-    private teamService: AdminService,
-    private errorService: ErrorService
+    public teamService: AdminService,
+    public errorService: ErrorService
   ) {}
 
   private buildHeader() {

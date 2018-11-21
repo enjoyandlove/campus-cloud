@@ -13,9 +13,10 @@ import { ClubsUtilsService } from './../../clubs.utils.service';
 import { BaseComponent } from '../../../../../../base/base.component';
 import { CP_PRIVILEGES_MAP } from '../../../../../../shared/constants';
 import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking';
+import { environment } from './../../../../../../../environments/environment';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { canSchoolReadResource } from '../../../../../../shared/utils/privileges';
-import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
+import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../../shared/services';
 
 declare var $: any;
 
@@ -59,7 +60,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   limitedAdmin = true;
   state: IState = state;
   executiveLeaderType = MemberType.executive_leader;
-  defaultImage = require('public/default/user.png');
+  defaultImage = `${environment.root}public/default/user.png`;
 
   constructor(
     public session: CPSession,
@@ -141,6 +142,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   }
 
   onDownloadCsvFile() {
+    this.trackDownloadedMembers();
     this.utils.createExcel(this.state.members);
   }
 
@@ -152,6 +154,14 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
   onTearDown(modal) {
     this[modal] = false;
+  }
+
+  trackDownloadedMembers() {
+    const sub_menu_name = this.cpTracking.activatedRoute(RouteLevel.second);
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_MEMBER_DATA, {
+      sub_menu_name
+    });
   }
 
   ngOnInit() {
@@ -176,11 +186,11 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     this.fetch();
 
     const clubPrivilege =
-      (this.isAthletic === isClubAthletic.athletic ? CP_PRIVILEGES_MAP.athletics :
-      (this.isOrientation ? CP_PRIVILEGES_MAP.orientation :
-        CP_PRIVILEGES_MAP.clubs));
-    this.showStudentIds = canSchoolReadResource(this.session.g, clubPrivilege)
-      && this.session.hasSSO;
+      this.isAthletic === isClubAthletic.athletic
+        ? CP_PRIVILEGES_MAP.athletics
+        : this.isOrientation ? CP_PRIVILEGES_MAP.orientation : CP_PRIVILEGES_MAP.clubs;
+    this.showStudentIds =
+      canSchoolReadResource(this.session.g, clubPrivilege) && this.session.hasSSO;
     this.executiveLeader = this.utils.getMemberType(this.isOrientation);
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),

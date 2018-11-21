@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import IEvent from '../event.interface';
 import { EventsService } from '../events.service';
 import { EventAttendance } from '../event.status';
 import { CPSession } from '../../../../../session';
@@ -12,6 +13,7 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
 import { EventsComponent } from '../list/base/events.component';
 import { IHeader, baseActions } from '../../../../../store/base';
+import { environment } from './../../../../../../environments/environment';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
 import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
@@ -37,7 +39,6 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
   urlPrefix;
   dateFormat;
   isPastEvent;
-  checkInSource;
   loading = true;
   eventId: number;
   eventCheckinRoute;
@@ -46,7 +47,7 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
   attendanceEnabled = EventAttendance.enabled;
 
-  defaultImage = require('public/default/image.png');
+  defaultImage = `${environment.root}public/public/default/image.png`;
 
   constructor(
     public session: CPSession,
@@ -118,23 +119,17 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
     });
   }
 
-  trackCheckinEvent(source_id) {
+  trackCheckinEvent(event: IEvent) {
     const eventProperties = {
-      source_id,
-      check_in_source: amplitudeEvents.INFO_PAGE,
-      check_in_type: this.checkInSource.check_in_type,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      source_id: event.encrypted_id,
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      assessment_type: this.utils.getEventCategoryType(event.store_category)
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CLICKED_WEB_CHECK_IN,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_WEB_CHECK_IN, eventProperties);
   }
 
   ngOnInit() {
-    this.checkInSource = this.utils.getCheckinSourcePage(this.getEventType());
-
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
 
     this.fetch();

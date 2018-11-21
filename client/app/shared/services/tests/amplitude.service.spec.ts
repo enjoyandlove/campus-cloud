@@ -1,8 +1,14 @@
+import { CPSession } from './../../../session';
 import { CPAmplitudeService } from '../amplitude.service';
 import { amplitudeEvents } from '../../constants/analytics';
+import { mockSchool, mockUser } from '../../../session/mock';
 import { CP_PRIVILEGES_MAP } from '../../constants/privileges';
 
-const service = new CPAmplitudeService();
+const session = new CPSession();
+session.g.set('school', mockSchool);
+session.g.set('user', mockUser);
+
+const service = new CPAmplitudeService(session);
 
 const account_level_privileges = {
   '587': {

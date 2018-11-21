@@ -10,7 +10,13 @@ import { BaseComponent } from '../../../../base/base.component';
 import { ISnackbar, baseActions } from '../../../../store/base';
 import { CheckInOutTime, CheckInType } from '../../callback.status';
 import { amplitudeEvents } from '../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService, ErrorService } from './../../../../shared/services';
+
+import {
+  ErrorService,
+  CPI18nService,
+  CPTrackingService,
+  CPAmplitudeService
+} from './../../../../shared/services';
 
 interface IState {
   events: Array<any>;
@@ -42,7 +48,8 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
     public utils: CheckinUtilsService,
     public errorService: ErrorService,
     public cpTracking: CPTrackingService,
-    public checkinService: CheckinService
+    public checkinService: CheckinService,
+    public cpAmplitude: CPAmplitudeService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -54,7 +61,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   onSubmit(data) {
     this.checkinService.doEventCheckin(data, this.search).subscribe(
       (res) => {
-        this.trackCheckedInEvent(res);
+        this.trackCheckedInEvent();
         this.updateAttendeesList(data, res);
       },
       (err) => this.handleError(err.status)
@@ -67,17 +74,24 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       ...event.data
     };
 
-    const eventProperties = this.utils.getCheckedInEventProperties(
+    const properties = this.utils.getCheckedInEventProperties(
       this.eventId,
       this.state.events,
-      event.attendance_id,
-      this.checkInSource,
       true
     );
 
+    const access_type = this.checkInSource
+      ? amplitudeEvents.EMAIL_WEB_CHECK_IN
+      : amplitudeEvents.CC_WEB_CHECK_IN;
+
+    const eventProperties = {
+      ...properties,
+      access_type
+    };
+
     delete eventProperties.check_out_status;
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHECKED_OUT, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_ADDED_WEB_CHECK_OUT, eventProperties);
   }
 
   updateAttendeesList(data, res) {
@@ -120,6 +134,10 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       .fetchData(this.checkinService.getEventData(this.search, true))
       .then((res) => {
         this.state = Object.assign({}, this.state, { events: res.data });
+
+        if (this.checkInSource) {
+          this.trackLoadCheckInEvent();
+        }
       })
       .catch((_) => {
         this.router.navigate(['/login']);
@@ -129,31 +147,34 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   trackLoadCheckInEvent() {
     const eventProperties = {
       source_id: this.eventId,
-      check_in_type: this.utils.getCheckInSource(this.checkInSource)
+      assessment_type: this.utils.getCheckInSource(this.state.events['store_category'])
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_LOADED_WEB_CHECK_IN, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_EMAIL_WEB_CHECK_IN, eventProperties);
   }
 
-  trackCheckedInEvent(response) {
-    const eventProperties = this.utils.getCheckedInEventProperties(
+  trackCheckedInEvent() {
+    const properties = this.utils.getCheckedInEventProperties(
       this.eventId,
       this.state.events,
-      response.attendance_id,
-      this.checkInSource,
       true
     );
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHECKED_IN, eventProperties);
+    const access_type = this.checkInSource
+      ? amplitudeEvents.EMAIL_WEB_CHECK_IN
+      : amplitudeEvents.CC_WEB_CHECK_IN;
+
+    const eventProperties = {
+      ...properties,
+      access_type
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_ADDED_WEB_CHECK_IN, eventProperties);
   }
 
   ngOnInit() {
     if (!this.session.g.get('user')) {
-      this.cpTracking.loadAmplitude();
-    }
-
-    if (!this.checkInSource) {
-      this.trackLoadCheckInEvent();
+      this.cpAmplitude.loadAmplitude();
     }
 
     this.search = new HttpParams().append('event_id', this.eventId);

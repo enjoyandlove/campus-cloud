@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { CP_TRACK_TO } from '../../directives/index';
-import { isCanada } from './../../../config/env/index';
+
+import { CP_TRACK_TO } from '../../directives';
+import { isCanada } from './../../../config/env';
+import { environment } from './../../../../environments/environment';
 
 @Component({
   selector: 'cp-top-ga-modal',
@@ -18,7 +20,7 @@ export class CPTopGaModalComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.brandingImage = require('public/png/branding-image/brand-image.png');
+    this.brandingImage = `${environment.root}public/png/branding-image/brand-image.png`;
 
     this.goToOldCPEventData = {
       type: CP_TRACK_TO.GA,

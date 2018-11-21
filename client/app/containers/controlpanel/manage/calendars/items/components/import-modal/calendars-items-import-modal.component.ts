@@ -5,6 +5,7 @@ import { isDev } from '../../../../../../../config/env';
 import { CalendarsService } from '../../../calendars.services';
 import { FileUploadService } from '../../../../../../../shared/services';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { environment } from '../../../../../../../../environments/environment';
 
 @Component({
   selector: 'cp-calendars-items-import-modal',
@@ -53,7 +54,9 @@ export class CalendarsItemsImportModalComponent implements OnInit {
   ngOnInit() {
     this.fileName = 'mass_calendar_item_invite_sample.csv';
 
-    const templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
+    const templateUrl = isDev
+      ? `/public/templates/${this.fileName}`
+      : `${environment.root}public/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,

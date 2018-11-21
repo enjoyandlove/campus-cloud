@@ -35,7 +35,7 @@ export class FeedHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.emailTextContent =
-      this.feed.user_status === UserStatus.active
+      this.feed.user_status >= UserStatus.activeWithUnverifiedEmail
         ? `(${this.feed.email})`
         : `(${this.cpI18n.translate('feeds_card_header_deleted_user')})`;
   }

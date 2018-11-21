@@ -1,6 +1,6 @@
-@import '~styles/core/typography';
-@import '~styles/components/card';
-@import '~styles/components/button';
+@import '~client/style/core/typography';
+@import '~client/style/components/card';
+@import '~client/style/components/button';
 
 .picker {
   i {
@@ -36,7 +36,7 @@
       @include font-semi-bold();
 
       margin-right: 18px;
-      
+
       &:last-child {
         margin-right: 0;
       }

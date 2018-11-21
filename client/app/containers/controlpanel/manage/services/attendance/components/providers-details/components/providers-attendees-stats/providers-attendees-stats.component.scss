@@ -1,6 +1,6 @@
-@import '~styles/core/colors';
-@import '~styles/components/card';
-@import '~styles/components/button';
+@import '~client/style/core/colors';
+@import '~client/style/components/card';
+@import '~client/style/components/button';
 
 .rating-box {
   height: 129px;
@@ -34,11 +34,13 @@
   }
 }
 
-.header {
+.content .cp-card {
   @include card-margin();
-  
-  margin-top: 0;
 
+  margin-top: 0;
+}
+
+.header {
   &__digit {
     @include font-semi-bold();
 

@@ -1,6 +1,6 @@
-@import '~styles/core/colors';
-@import '~styles/components/card';
-@import '~styles/components/button';
+@import '~client/style/core/colors';
+@import '~client/style/components/card';
+@import '~client/style/components/button';
 
 .visits {
   span {
@@ -20,11 +20,13 @@
   }
 }
 
-.header {
+.content .cp-card {
   @include card-margin();
 
   margin-top: 0;
+}
 
+.header {
   &__digit {
     @include font-semi-bold();
 

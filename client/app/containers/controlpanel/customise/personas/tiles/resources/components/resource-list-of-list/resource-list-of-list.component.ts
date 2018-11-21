@@ -116,13 +116,15 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
     });
   }
 
-  onTearDown() {
+  onModalClose() {
     this.state = {
       ...this.state,
       showEditModal: false,
       showCreateModal: false
     };
+  }
 
+  onTearDown() {
     $('#resourceEditModal').modal('hide');
     $('#resourceCreateModal').modal('hide');
   }

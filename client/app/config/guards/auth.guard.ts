@@ -1,12 +1,14 @@
+import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import * as Raven from 'raven-js';
 import { map } from 'rxjs/operators';
-import { base64 } from './../../shared/utils/encrypt/encrypt';
+
 import { CPSession } from '../../session';
-import { AdminService, SchoolService, StoreService, ZendeskService } from '../../shared/services';
 import { appStorage } from '../../shared/utils';
+import { base64 } from './../../shared/utils/encrypt/encrypt';
+import { environment } from './../../../environments/environment';
+import { AdminService, SchoolService, StoreService, ZendeskService } from '../../shared/services';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -27,7 +29,10 @@ export class AuthGuard implements CanActivate {
       .pipe(
         map((users) => {
           this.session.g.set('user', users[0]);
-          this.setUserContext();
+
+          if (environment.production) {
+            this.setUserContext();
+          }
 
           return users;
         })
@@ -120,7 +125,7 @@ export class AuthGuard implements CanActivate {
     return false;
   }
 
-  canActivate(activatedRoute, state) {
+  async canActivate(activatedRoute, state) {
     this.setZendesk(activatedRoute.data);
 
     const sessionKey = appStorage.storageAvailable()
@@ -129,12 +134,16 @@ export class AuthGuard implements CanActivate {
 
     if (sessionKey) {
       if (!this.session.g.size) {
-        return this.preLoadSchool(activatedRoute)
-          .then((_) => this.preLoadUser())
-          .then((_) => this.fetchStores())
-          .then((stores) => this.setDefaultHost(stores))
-          .then((_) => true)
-          .catch((_) => false);
+        try {
+          await this.preLoadSchool(activatedRoute);
+          await this.preLoadUser();
+          const stores = await this.fetchStores();
+          await this.setDefaultHost(stores);
+        } catch {
+          return false;
+        }
+
+        return true;
       }
 
       return true;

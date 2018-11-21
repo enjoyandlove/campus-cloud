@@ -49,14 +49,14 @@ export class ClubsCreateComponent implements OnInit {
   };
 
   constructor(
-    private router: Router,
-    private fb: FormBuilder,
-    private store: Store<any>,
-    private session: CPSession,
-    private cpI18n: CPI18nService,
-    private utils: ClubsUtilsService,
-    private clubsService: ClubsService,
-    private cpTracking: CPTrackingService
+    public router: Router,
+    public fb: FormBuilder,
+    public store: Store<any>,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public utils: ClubsUtilsService,
+    public clubsService: ClubsService,
+    public cpTracking: CPTrackingService
   ) {}
 
   onSubmit() {

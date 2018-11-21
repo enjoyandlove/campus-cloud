@@ -1,17 +1,33 @@
-import { Injectable } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { flatten, get as _get, sortBy } from 'lodash';
-import { CPSession } from './../../../../session/index';
-import { CPI18nService } from './../../../../shared/services/i18n.service';
-import { CPDate } from './../../../../shared/utils/date/date';
+import { Injectable } from '@angular/core';
+
 import { IPersona } from './persona.interface';
-import { PersonasLoginRequired, PersonasType } from './personas.status';
 import { ITile } from './tiles/tile.interface';
+import { CPSession } from './../../../../session';
 import { TileCategoryRank } from './tiles/tiles.status';
+import { CPDate } from './../../../../shared/utils/date/date';
+import { TilesUtilsService } from './tiles/tiles.utils.service';
+import { PersonasLoginRequired, PersonasType } from './personas.status';
+import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { ResourcesUtilsService } from './tiles/resources/resources.utils.service';
 
 @Injectable()
 export class PersonasUtilsService {
-  constructor(public cpI18n: CPI18nService, public fb: FormBuilder, public session: CPSession) {}
+  static localizedPersonaName(persona: IPersona) {
+    const locale = CPI18nService.getLocale().startsWith('fr') ? 'fr' : 'en';
+
+    return persona.localized_name_map[locale];
+  }
+
+  constructor(
+    public fb: FormBuilder,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public tileUtils: TilesUtilsService,
+    public resourceUtils: ResourcesUtilsService
+  ) {}
 
   requiresCredentialsMenu() {
     return [
@@ -130,12 +146,6 @@ export class PersonasUtilsService {
     ];
   }
 
-  localizedPersonaName(persona: IPersona) {
-    const locale = CPI18nService.getLocale().startsWith('fr') ? 'fr' : 'en';
-
-    return persona.localized_name_map[locale];
-  }
-
   parseLocalFormToApi(data) {
     data = {
       ...data,
@@ -148,5 +158,26 @@ export class PersonasUtilsService {
     delete data['name'];
 
     return data;
+  }
+
+  getTileAmplitudeProperties(tile: ITile) {
+    const status = this.tileUtils.isTileVisible(tile)
+      ? amplitudeEvents.SHOWN
+      : amplitudeEvents.HIDDEN;
+
+    const tile_type = this.tileUtils.isFeatured(tile)
+      ? amplitudeEvents.FEATURED
+      : amplitudeEvents.NORMAL;
+
+    const content_type = this.resourceUtils.isListOfLists(tile.related_link_data)
+      ? amplitudeEvents.RESOURCE_LIST
+      : amplitudeEvents.RESOURCE;
+
+    return {
+      status,
+      tile_type,
+      content_type,
+      tile_id: tile.id
+    };
   }
 }

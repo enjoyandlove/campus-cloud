@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
-import { isProd } from './../../../../../config/env';
 import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from '../events.utils.service';
 import { CPDate, CPMap } from '../../../../../shared/utils';
@@ -57,7 +56,6 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
   isDateError;
   originalHost;
   eventQRCodes;
-  checkInSource;
   selectedQRCode;
   loading = true;
   attendanceTypes;
@@ -74,7 +72,6 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
   startdatePickerOpts;
   originalAttnFeedback;
   eventFeedbackEnabled;
-  production = isProd;
   selectedAttendanceType;
   attendanceFeedbackLabel;
   formMissingFields = false;
@@ -559,8 +556,8 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
     const eventProperties = {
       ...this.utils.getQRCodeCheckOutStatus(event, true),
       source_id: this.event.encrypted_id,
-      check_in_type: this.checkInSource.check_in_type,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      assessment_type: this.utils.getEventCategoryType(this.event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHANGED_QR_CODE, eventProperties);
@@ -578,8 +575,6 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
     };
 
     this.urlPrefix = this.utils.buildUrlPrefixEvents(eventType);
-
-    this.checkInSource = this.utils.getCheckinSourcePage(eventType);
 
     this.dateFormat = FORMAT.DATETIME;
     this.attendanceEnabled = EventAttendance.enabled;

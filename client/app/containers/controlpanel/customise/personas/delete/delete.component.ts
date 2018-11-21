@@ -1,10 +1,13 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CPSession } from './../../../../../session';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+
 import { IPersona } from './../persona.interface';
+import { CPSession } from './../../../../../session';
 import { PersonasService } from './../personas.service';
-import { PersonaValidationErrors } from '../personas.status';
+import { CPTrackingService } from '../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { credentialType, PersonasType, PersonaValidationErrors } from '../personas.status';
 
 @Component({
   selector: 'cp-personas-delete',
@@ -24,7 +27,8 @@ export class PersonasDeleteComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: PersonasService
+    public service: PersonasService,
+    public cpTracking: CPTrackingService
   ) {}
 
   onDelete() {
@@ -36,6 +40,7 @@ export class PersonasDeleteComponent implements OnInit {
       () => {
         this.resetModal();
         this.deleted.emit();
+        this.trackDeleteExperienceEvent();
       },
       (err) => {
         const error = err.error.response;
@@ -62,6 +67,19 @@ export class PersonasDeleteComponent implements OnInit {
     this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
 
     this.teardown.emit();
+  }
+
+  trackDeleteExperienceEvent() {
+    const experience_type =
+      this.persona.platform === PersonasType.web ? amplitudeEvents.WEB : amplitudeEvents.MOBILE;
+
+    const eventProperties = {
+      experience_type,
+      experience_id: this.persona.id,
+      credential_type: credentialType[this.persona.login_requirement]
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_DELETED_EXPERIENCE, eventProperties);
   }
 
   ngOnInit() {

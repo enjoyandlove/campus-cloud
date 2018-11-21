@@ -7,7 +7,6 @@ import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
-import { isProd } from './../../../../../config/env';
 import { baseActions } from '../../../../../store/base';
 import { EventUtilService } from '../events.utils.service';
 import { CPSession, ISchool } from '../../../../../session';
@@ -69,7 +68,6 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
   enddatePickerOpts;
   startdatePickerOpts;
   eventFeedbackEnabled;
-  production = isProd;
   showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
   managers: Array<any> = [{ label: '---' }];

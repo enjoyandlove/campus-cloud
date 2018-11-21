@@ -1,8 +1,7 @@
-@import '~styles/components/card';
-@import '~styles/components/table';
-@import '~styles/components/button';
-@import '~styles/components/dropdown';
-
+@import '~client/style/components/card';
+@import '~client/style/components/table';
+@import '~client/style/components/button';
+@import '~client/style/components/dropdown';
 
 .dropdown-menu,
 .action-dropdown-list {
@@ -11,6 +10,8 @@
 
 .actions {
   @include card-margin();
+
+  margin-top: 0;
 }
 
 .margin-right {

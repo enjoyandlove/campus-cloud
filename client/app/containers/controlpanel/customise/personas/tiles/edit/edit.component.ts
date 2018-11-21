@@ -1,4 +1,3 @@
-import { PersonasUtilsService } from './../../personas.utils.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -15,9 +14,11 @@ import { PersonasService } from '../../personas.service';
 import { TilesUtilsService } from '../tiles.utils.service';
 import { ICampusGuide } from '../../sections/section.interface';
 import { SectionsService } from '../../sections/sections.service';
-import { SectionUtilsService } from '../../sections/section.utils.service';
+import { CPTrackingService } from '../../../../../../shared/services';
+import { PersonasUtilsService } from './../../personas.utils.service';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { baseActions, IHeader, ISnackbar } from '../../../../../../store/base';
+import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-personas-tile-edit',
@@ -37,6 +38,15 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   campusLinkForm: FormGroup;
   campusGuideTileForm: FormGroup;
 
+  editedTileEventProperties = {
+    status: null,
+    tile_id: null,
+    tile_type: amplitudeEvents.NORMAL,
+    added_content: amplitudeEvents.NO,
+    added_resource: amplitudeEvents.NO,
+    uploaded_image: amplitudeEvents.NO
+  };
+
   constructor(
     public router: Router,
     public fb: FormBuilder,
@@ -45,12 +55,10 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     public service: TilesService,
     public route: ActivatedRoute,
     public utils: TilesUtilsService,
+    public cpTracking: CPTrackingService,
     public guideService: SectionsService,
-    public guideUtils: SectionUtilsService,
     public personaService: PersonasService,
-    public store: Store<IHeader | ISnackbar>,
-    public sectionUtils: SectionUtilsService,
-    public personasUtils: PersonasUtilsService
+    public store: Store<IHeader | ISnackbar>
   ) {
     super();
     this.tileId = this.route.snapshot.params['tileId'];
@@ -101,6 +109,11 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
           disabled: false
         };
 
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.STUDIO_UPDATED_TILE,
+          this.editedTileEventProperties
+        );
+
         this.router.navigate(['/studio/experiences', this.personaId]);
       },
       (_) => {
@@ -131,6 +144,8 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
       this.guide,
       this.tile
     );
+
+    this.setEditedTileEventProperties();
     this.editable = !this.utils.isCampaignTile(this.tile) && !this.utils.isDeprecated(this.tile);
   }
 
@@ -171,6 +186,48 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     this.updateButtonDisableStatus();
   }
 
+  onChangedImage(isChanged: boolean) {
+    const uploaded_image = isChanged ? amplitudeEvents.YES : amplitudeEvents.NO;
+
+    this.editedTileEventProperties = {
+      ...this.editedTileEventProperties,
+      uploaded_image
+    };
+  }
+
+  onChangedContent(contentType: number) {
+    const added_content = contentType ? amplitudeEvents.YES : amplitudeEvents.NO;
+
+    this.editedTileEventProperties = {
+      ...this.editedTileEventProperties,
+      added_content
+    };
+  }
+
+  onChangedResource(resourceType: boolean) {
+    const added_resource = resourceType ? amplitudeEvents.YES : amplitudeEvents.NO;
+
+    this.editedTileEventProperties = {
+      ...this.editedTileEventProperties,
+      added_resource
+    };
+  }
+
+  setEditedTileEventProperties() {
+    const status = this.utils.isTileVisible(this.tile)
+      ? amplitudeEvents.SHOWN
+      : amplitudeEvents.HIDDEN;
+
+    const tile_type = this.guide._featuredTile ? amplitudeEvents.FEATURED : amplitudeEvents.NORMAL;
+
+    this.editedTileEventProperties = {
+      ...this.editedTileEventProperties,
+      status,
+      tile_type,
+      tile_id: this.tile.id
+    };
+  }
+
   ngOnDestroy() {
     this.guideService.guide = null;
     this.store.dispatch({ type: baseActions.SNACKBAR_HIDE });
@@ -188,7 +245,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
         this.buildForm();
         this.persona = persona;
 
-        this.buildHeader(this.personasUtils.localizedPersonaName(persona));
+        this.buildHeader(PersonasUtilsService.localizedPersonaName(persona));
       })
       .catch(() => this.erroHandler());
   }

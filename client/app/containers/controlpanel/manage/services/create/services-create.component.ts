@@ -47,12 +47,12 @@ export class ServicesCreateComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private fb: FormBuilder,
+    public fb: FormBuilder,
     public session: CPSession,
-    private store: Store<IHeader>,
-    private cpI18n: CPI18nService,
-    private utils: ServicesUtilsService,
-    private cpTracking: CPTrackingService,
+    public store: Store<IHeader>,
+    public cpI18n: CPI18nService,
+    public utils: ServicesUtilsService,
+    public cpTracking: CPTrackingService,
     public servicesService: ServicesService
   ) {
     this.buildHeader();

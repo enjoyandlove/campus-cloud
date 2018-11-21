@@ -6,6 +6,7 @@ import { HttpParams } from '@angular/common/http';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { DashboardService } from './../../dashboard.service';
+import { environment } from './../../../../../../environments/environment';
 
 @Component({
   selector: 'cp-dashboard-campus-tile',
@@ -18,7 +19,7 @@ export class DashboardCampusTileComponent extends BaseComponent implements OnIni
   loading;
   items = [];
   selectedPersona;
-  defaultImage = require('public/default/user.png');
+  defaultImage = `${environment.root}public/default/user.png`;
 
   constructor(
     private session: CPSession,

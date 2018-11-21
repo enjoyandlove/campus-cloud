@@ -2,10 +2,6 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <cp-providers-stats
-      [service]="service">
-    </cp-providers-stats>
-
     <cp-providers-action-box
       [noProviders]="noProviders"
       (search)="onSearch($event)"
@@ -13,6 +9,10 @@
       (filterByDates)="onDateFilter($event)"
       (launchAddProviderModal)="onLaunchProviderAdd()">
     </cp-providers-action-box>
+
+    <cp-providers-stats
+      [service]="service">
+    </cp-providers-stats>
 
     <div class="row">
       <div class="col-12">
