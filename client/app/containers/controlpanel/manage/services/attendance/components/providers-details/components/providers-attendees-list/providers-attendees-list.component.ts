@@ -10,6 +10,7 @@ import { ServicesUtilsService } from '../../../../../services.utils.service';
 import { BaseComponent } from '../../../../../../../../../base/base.component';
 import { EventUtilService } from '../../../../../../events/events.utils.service';
 import { amplitudeEvents } from '../../../../../../../../../shared/constants/analytics';
+import { environment } from './../../../../../../../../../../environments/environment';
 import { CPI18nService } from './../../../../../../../../../shared/services/i18n.service';
 import { CPTrackingService, RouteLevel } from '../../../../../../../../../shared/services';
 import { ICheckIn } from '../../../../../../events/attendance/check-in/check-in.interface';
@@ -56,7 +57,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   dateFormat = FORMAT.DATETIME_SHORT;
   webCheckInMethod = CheckInMethod.web;
   emptyCheckOutTime = CheckInOutTime.empty;
-  defaultImage = require('public/default/user.png');
+  defaultImage = `${environment.root}public/default/user.png`;
 
   constructor(
     public session: CPSession,
@@ -195,9 +196,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       check_out
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_ADDED_ATTENDANCE,
-      eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_ADDED_ATTENDANCE, eventProperties);
   }
 
   onEdited(checkInOut) {
@@ -211,9 +210,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       check_out: checkInOut.checkOut
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_UPDATED_ATTENDANCE,
-      eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_UPDATED_ATTENDANCE, eventProperties);
   }
 
   onDeleted(id: number) {
@@ -224,7 +221,8 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_DELETED_ATTENDANCE,
-      this.checkInEventProperties);
+      this.checkInEventProperties
+    );
 
     if (this.assessments.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
@@ -246,13 +244,10 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       ...this.eventUtils.getQRCodeCheckOutStatus(this.provider),
       assessment_type: amplitudeEvents.SERVICE_PROVIDER,
       source_id: this.provider.encrypted_campus_service_id,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CHANGED_QR_CODE,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHANGED_QR_CODE, eventProperties);
   }
 
   trackAmplitudeEvent() {

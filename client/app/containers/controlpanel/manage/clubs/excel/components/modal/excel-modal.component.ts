@@ -5,6 +5,7 @@ import { ClubsService } from '../../../clubs.service';
 import { isClubAthletic, clubAthleticLabels } from '../../../clubs.athletics.labels';
 import { isDev } from '../../../../../../../config/env';
 import { CPI18nService, FileUploadService } from '../../../../../../../shared/services';
+import { environment } from '../../../../../../../../environments/environment';
 
 @Component({
   selector: 'cp-clubs-excel-modal',
@@ -54,7 +55,9 @@ export class ClubsExcelModalComponent implements OnInit {
   ngOnInit() {
     this.fileName = 'mass_club_invite_sample.csv';
 
-    const templateUrl = isDev ? `/templates/${this.fileName}` : `/dist/templates/${this.fileName}`;
+    const templateUrl = isDev
+      ? `/public/templates/${this.fileName}`
+      : `${environment.root}public/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,

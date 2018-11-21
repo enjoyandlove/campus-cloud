@@ -27,10 +27,7 @@ describe('CheckInUtilsService', () => {
       checkin_verification_methods: [1, 2, 3]
     };
 
-    eventProperties = service.getCheckedInEventProperties(
-      sourceId,
-      events
-    );
+    eventProperties = service.getCheckedInEventProperties(sourceId, events);
 
     expect(eventProperties.source_id).toEqual(sourceId);
     expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.ENABLED);
@@ -44,11 +41,7 @@ describe('CheckInUtilsService', () => {
       attend_verification_methods: [1, 2]
     };
 
-    eventProperties = service.getCheckedInEventProperties(
-      sourceId,
-      events,
-      true
-    );
+    eventProperties = service.getCheckedInEventProperties(sourceId, events, true);
 
     expect(eventProperties.source_id).toEqual(sourceId);
     expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.DISABLED);

@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as Raven from 'raven-js';
 
-import { ENV as environment } from './config/env';
-
-import '../style/app.scss';
+import { environment } from './../environments/environment';
 
 @Component({
   selector: 'cp-app',
@@ -12,7 +10,7 @@ import '../style/app.scss';
 export class AppComponent implements OnInit {
   ravenInit() {
     Raven.setTagsContext({
-      environment
+      environment: environment.envName
     });
   }
   ngOnInit() {

@@ -91,10 +91,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
 
     delete eventProperties.check_out_status;
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_ADDED_WEB_CHECK_OUT,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_ADDED_WEB_CHECK_OUT, eventProperties);
   }
 
   updateAttendeesList(data, res) {
@@ -153,10 +150,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       assessment_type: this.utils.getCheckInSource(this.state.events['store_category'])
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_EMAIL_WEB_CHECK_IN,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_EMAIL_WEB_CHECK_IN, eventProperties);
   }
 
   trackCheckedInEvent() {
@@ -175,10 +169,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
       access_type
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_ADDED_WEB_CHECK_IN,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_ADDED_WEB_CHECK_IN, eventProperties);
   }
 
   ngOnInit() {
