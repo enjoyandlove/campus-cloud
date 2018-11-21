@@ -33,6 +33,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   loading;
   eventData;
   sortingLabels;
+  isLocationsUpdate;
   isLocationsCreate;
   deleteLocation = '';
   updateLocation = '';

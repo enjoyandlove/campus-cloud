@@ -108,7 +108,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  downloadAudience({id, type}) {
+  downloadAudience({ id, type }) {
     const columns = [this.cpI18n.translate('name'), this.cpI18n.translate('email')];
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
@@ -156,14 +156,12 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
   }
 
   trackDownloadAudience(type) {
-    const audience_type = type === AudienceType.custom
-      ? amplitudeEvents.CUSTOM_AUDIENCE
-      : amplitudeEvents.DYNAMIC_AUDIENCE;
+    const audience_type =
+      type === AudienceType.custom
+        ? amplitudeEvents.CUSTOM_AUDIENCE
+        : amplitudeEvents.DYNAMIC_AUDIENCE;
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.AUDIENCE_DOWNLOAD_DATA,
-      {audience_type}
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.AUDIENCE_DOWNLOAD_DATA, { audience_type });
   }
 
   onSearch(search_str) {

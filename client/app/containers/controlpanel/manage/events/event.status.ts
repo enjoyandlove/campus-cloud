@@ -69,8 +69,8 @@ export enum EventCategory {
 }
 
 export const qrCode = {
-  'enabled': true,
-  'disabled': false
+  enabled: true,
+  disabled: false
 };
 
 export const isAllDay = {
@@ -79,6 +79,6 @@ export const isAllDay = {
 };
 
 export const attendanceType = {
-  'checkInOnly': false,
-  'checkInCheckOut': true
+  checkInOnly: false,
+  checkInCheckOut: true
 };

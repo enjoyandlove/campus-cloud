@@ -189,7 +189,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     );
   }
 
-  onDownload(cohort) {
+  onDownload(cohort = null) {
     let engagement_type = amplitudeEvents.ALL_ENGAGEMENT;
     let fileName = 'all_download_data';
     let search = this.buildSearchHeaders();

@@ -6,6 +6,7 @@ import { LinksService } from '../links.service';
 import { CPSession } from './../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { environment } from './../../../../../../environments/environment';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
@@ -41,7 +42,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   loading = true;
   deleteLink = '';
   state: IState = state;
-  defaultImage = require('public/default/user.png');
+  defaultImage = `${environment.root}public/default/user.png`;
 
   constructor(
     private session: CPSession,

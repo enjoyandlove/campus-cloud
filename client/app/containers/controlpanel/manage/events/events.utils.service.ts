@@ -117,13 +117,10 @@ export class EventUtilService {
   getEventCategoryType(category: Number) {
     if (category === EventCategory.athletics) {
       return amplitudeEvents.ATHLETIC_EVENT;
-
     } else if (category === EventCategory.club) {
       return amplitudeEvents.CLUB_EVENT;
-
     } else if (category === EventCategory.services) {
       return amplitudeEvents.SERVICE_EVENT;
-
     } else {
       return amplitudeEvents.ORIENTATION_EVENT;
     }
@@ -244,7 +241,7 @@ export class EventUtilService {
 
     return {
       qr_code_status,
-      check_out_status,
+      check_out_status
     };
   }
 

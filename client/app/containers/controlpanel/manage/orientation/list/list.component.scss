@@ -1,8 +1,8 @@
-@import '~styles/core/colors';
-@import '~styles/components/form';
-@import '~styles/components/card';
-@import '~styles/components/button';
-@import '~styles/components/dropdown';
+@import '~client/style/core/colors';
+@import '~client/style/components/form';
+@import '~client/style/components/card';
+@import '~client/style/components/button';
+@import '~client/style/components/dropdown';
 
 .no-content {
   @include card-margin();
@@ -25,12 +25,12 @@
 
 .action {
   text-align: center;
-  
-  button {    
+
+  button {
     &:first-child {
       float: left;
     }
-    
+
     &:last-child {
       float: right;
     }

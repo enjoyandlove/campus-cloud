@@ -1,5 +1,5 @@
-@import '~styles/core/typography';
-@import '~styles/components/card';
+@import '~client/style/core/typography';
+@import '~client/style/components/card';
 
 .chart {
   @include card-margin();

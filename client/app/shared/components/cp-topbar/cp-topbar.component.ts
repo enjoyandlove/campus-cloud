@@ -6,6 +6,7 @@ import { canAccountLevelReadResource, canSchoolReadResource } from './../../util
 import { CPSession, ISchool, IUser } from '../../../session';
 import { amplitudeEvents } from '../../constants/analytics';
 import { CPTrackingService } from '../../services';
+import { environment } from './../../../../environments/environment';
 
 @Component({
   selector: 'cp-topbar',
@@ -25,8 +26,8 @@ export class CPTopBarComponent implements OnInit {
   manageHomePage: string;
 
   isManageActiveRoute;
-  logo = require('public/svg/logo.svg');
-  defaultImage = require('public/default/user.png');
+  logo = `${environment.root}public/svg/logo.svg`;
+  defaultImage = `${environment.root}public/default/user.png`;
 
   constructor(
     public el: ElementRef,

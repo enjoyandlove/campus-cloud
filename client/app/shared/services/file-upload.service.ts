@@ -31,7 +31,7 @@ export class FileUploadService {
 
       fileReader.onload = () => {
         const img = new Image();
-        img.src = fileReader.result;
+        img.src = <string>fileReader.result;
 
         img.onload = () => resolve({ width: img.width, height: img.height });
       };

@@ -30,6 +30,7 @@ export class FeedItemComponent implements OnInit {
   CPDate = CPDate;
   _isCampusWallView;
   FORMAT = FORMAT.SHORT;
+  isCommentsOpen: boolean;
   requiresApproval$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor() {}

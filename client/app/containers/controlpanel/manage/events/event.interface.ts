@@ -70,4 +70,4 @@ export default interface IEvent {
   attendance_manager_email?: String;
 
   qr_img_url?: String;
-}
+};

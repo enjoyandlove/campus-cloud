@@ -156,10 +156,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.third)
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CC_WEB_CHECK_IN,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_WEB_CHECK_IN, eventProperties);
   }
 
   downloadProvidersCSV() {

@@ -14,6 +14,7 @@ import { EventsComponent } from '../list/base/events.component';
 import { IHeader, baseActions } from '../../../../../store/base';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { environment } from './../../../../../../environments/environment';
 import { CheckInMethod, CheckInOutTime, CheckInOut } from '../event.status';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
@@ -75,7 +76,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   emptyCheckOutTime = CheckInOutTime.empty;
   updateQrCode = new BehaviorSubject(null);
   totalAttendees = new BehaviorSubject(null);
-  defaultImage = require('public/default/user.png');
+  defaultImage = `${environment.root}public/default/user.png`;
 
   eventProperties = {
     host_type: null,
@@ -372,9 +373,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
       check_out
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_ADDED_ATTENDANCE,
-      eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_ADDED_ATTENDANCE, eventProperties);
   }
 
   onEdited(checkInOut) {
@@ -388,9 +387,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
       check_out: checkInOut.checkOut
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_UPDATED_ATTENDANCE,
-      eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_UPDATED_ATTENDANCE, eventProperties);
   }
 
   onDeleted(id: number) {
@@ -401,7 +398,8 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_DELETED_ATTENDANCE,
-      this.checkInEventProperties);
+      this.checkInEventProperties
+    );
 
     if (this.attendees.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
@@ -477,10 +475,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
       assessment_type: this.utils.getEventCategoryType(event.store_category)
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CC_WEB_CHECK_IN,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_WEB_CHECK_IN, eventProperties);
   }
 
   trackQrCode(event) {

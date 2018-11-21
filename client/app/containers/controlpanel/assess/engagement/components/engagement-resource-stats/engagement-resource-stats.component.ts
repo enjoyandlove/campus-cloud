@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+
 import { EngagementUtilsService } from '../../engagement.utils.service';
+import { environment } from './../../../../../../../environments/environment';
 
 @Component({
   selector: 'cp-engagement-resource-stats',
@@ -17,7 +19,7 @@ export class EngagementResourceStatsComponent implements OnInit {
   @Output() sortBy: EventEmitter<null> = new EventEmitter();
 
   sortyBy;
-  defaultImage = require('public/default/user.png');
+  defaultImage = `${environment.root}public/default/user.png`;
 
   constructor(public utils: EngagementUtilsService) {}
 
