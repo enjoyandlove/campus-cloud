@@ -26,12 +26,10 @@
             <div class="col-12">
               <cp-feed-body
                 [feed]="comment"
-                [clubId]="clubId"
                 [isComment]="true"
+                [groupType]="groupType"
                 [replyView]="replyView"
-                [athleticId]="athleticId"
-                [wallCategory]="wallCategory"
-                [orientationId]="orientationId">
+                [wallCategory]="wallCategory">
               </cp-feed-body>
             </div>
           </div>
@@ -46,13 +44,11 @@
   modalId="deleteFeedCommentModal">
   <cp-feed-delete-comment-modal
     [feed]="comment"
-    [clubId]="clubId"
-    [athleticId]="athleticId"
+    [groupType]="groupType"
     [wallCategory]="wallCategory"
-    [orientationId]="orientationId"
+    [isCampusWallView]="isCampusWallView"
     (deleted)="deleted.emit($event)"
-    (teardown)="isDeleteModal = false"
-    [isCampusWallView]="isCampusWallView">
+    (teardown)="isDeleteModal = false">
   </cp-feed-delete-comment-modal>
 </cp-modal>
 

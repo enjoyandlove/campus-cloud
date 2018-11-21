@@ -40,6 +40,7 @@ const state: IState = {
   styleUrls: ['./list.component.scss']
 })
 export class ClubsMembersComponent extends BaseComponent implements OnInit {
+  @Input() storeId: number;
   @Input() isOrientation: boolean;
   @Input() orientationId: number;
   @Input() isAthletic = isClubAthletic.club;
@@ -111,7 +112,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     } else {
       groupSearch = groupSearch
         .append('category_id', this.isAthletic.toString())
-        .append('store_id', this.clubId);
+        .append('store_id', this.clubId ? this.clubId : this.storeId);
     }
 
     const socialGroupDetails$ = this.membersService.getSocialGroupDetails(groupSearch);

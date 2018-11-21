@@ -1,10 +1,12 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { BaseComponent } from '../../../../../../base/base.component';
-import { CPSession } from '../../../../../../session';
+
 import { FeedsService } from '../../feeds.service';
+import { CPSession } from '../../../../../../session';
+import { GroupType } from '../../feeds.utils.service';
+import { BaseComponent } from '../../../../../../base/base.component';
 
 interface ICurrentView {
   label: string;
@@ -42,15 +44,10 @@ const state: IState = {
   styleUrls: ['./feeds.component.scss']
 })
 export class FeedsComponent extends BaseComponent implements OnInit {
-  @Input() clubId: number;
-  @Input() athleticId: number;
+  @Input() groupId: number;
   @Input() selectedItem: any;
-  @Input() isClubsView: boolean;
-  @Input() orientationId: number;
+  @Input() groupType: GroupType;
 
-  feeds;
-  groups;
-  isSimple;
   channels;
   loading = true;
   disablePost = 100;
@@ -241,7 +238,5 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     this.state = Object.assign({}, this.state, { feeds: _state.feeds });
   }
 
-  ngOnInit() {
-    this.isSimple = this.isClubsView;
-  }
+  ngOnInit() {}
 }

@@ -51,7 +51,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
         return;
       }
 
-      this.utils.buildServiceProviderHeader(this.service);
+      this.utils.buildServiceHeader(this.service);
     });
   }
 

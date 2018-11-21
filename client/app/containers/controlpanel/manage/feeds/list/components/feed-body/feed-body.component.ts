@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
-import { FeedsUtilsService } from '../../../feeds.utils.service';
 import { CPHostDirective } from '../../../../../../../shared/directives';
+import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
@@ -13,12 +13,10 @@ import { CPI18nService, CPTrackingService } from '../../../../../../../shared/se
 })
 export class FeedBodyComponent implements OnInit {
   @Input() feed: any;
-  @Input() clubId: number;
   @Input() replyView: number;
   @Input() isComment: boolean;
-  @Input() athleticId: number;
   @Input() wallCategory: string;
-  @Input() orientationId: number;
+  @Input() groupType: GroupType;
   @Input() isRemovedPosts: boolean;
 
   @Output() viewComments: EventEmitter<boolean> = new EventEmitter();
@@ -54,7 +52,7 @@ export class FeedBodyComponent implements OnInit {
         likes: this.utils.hasLikes(this.feed.likes),
         upload_image: this.utils.hasImage(this.feed.has_image),
         comments: this.utils.hasComments(this.feed.comment_count),
-        wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
+        wall_page: this.utils.wallPage(this.groupType)
       };
 
       this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_VIEWED_COMMENT, this.eventProperties);
@@ -66,7 +64,7 @@ export class FeedBodyComponent implements OnInit {
   }
 
   trackViewLightBoxEvent() {
-    const wallCategory =  this.wallCategory ? this.wallCategory : null;
+    const wallCategory = this.wallCategory ? this.wallCategory : null;
     const channelName = this.feed.channelName ? this.feed.channelName : null;
     const campus_wall_category = channelName ? channelName : wallCategory;
 
@@ -76,7 +74,7 @@ export class FeedBodyComponent implements OnInit {
       message_type,
       campus_wall_category,
       likes: this.utils.hasLikes(this.feed.likes),
-      wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
+      wall_page: this.utils.wallPage(this.groupType)
     };
 
     this.viewImageEventData = {

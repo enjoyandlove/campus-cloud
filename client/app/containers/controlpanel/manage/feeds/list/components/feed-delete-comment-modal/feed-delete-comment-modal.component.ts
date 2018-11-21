@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { FeedsService } from '../../../feeds.service';
-import { FeedsUtilsService } from '../../../feeds.utils.service';
+import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services/index';
 
@@ -15,10 +15,8 @@ declare var $: any;
 })
 export class FeedDeleteCommentModalComponent implements OnInit {
   @Input() feed: any;
-  @Input() clubId: number;
-  @Input() athleticId: number;
+  @Input() groupType: GroupType;
   @Input() wallCategory: string;
-  @Input() orientationId: number;
   @Input() isCampusWallView: Observable<number>;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
@@ -65,7 +63,7 @@ export class FeedDeleteCommentModalComponent implements OnInit {
       comment_id: comment.id,
       likes: this.utils.hasLikes(comment.likes),
       upload_image: this.utils.hasImage(comment.has_image),
-      wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
+      wall_page: this.utils.wallPage(this.groupType)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_DELETED_COMMENT, this.eventProperties);

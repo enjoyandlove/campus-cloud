@@ -22,9 +22,7 @@
     <div class="col-12">
       <cp-feed-body
         [feed]="feed"
-        [clubId]="clubId"
-        [athleticId]="athleticId"
-        [orientationId]="orientationId"
+        [groupType]="groupType"
         [isRemovedPosts]="isRemovedPosts"
         (viewComments)="isCommentsOpen = $event"
         (toggleReplies)="isCommentsOpen = $event">
@@ -39,12 +37,11 @@
       <div class="col-12">
         <cp-feed-comments
           [feed]="feed"
-          [clubId]="clubId"
-          [athleticId]="athleticId"
-          [orientationId]="orientationId"
+          [groupId]="groupId"
+          [groupType]="groupType"
+          [isCampusWallView]="isCampusWallView"
           (replied)="onReplied()"
-          (deleted)="onDeletedComment()"
-          [isCampusWallView]="isCampusWallView">
+          (deleted)="onDeletedComment()">
         </cp-feed-comments>
       </div>
     </div>
@@ -62,11 +59,9 @@
 <cp-modal modalId="deleteFeedModal" *ngIf="isDeleteModal">
   <cp-feed-delete-modal
     [feed]="feed"
-    [clubId]="clubId"
-    [athleticId]="athleticId"
-    [orientationId]="orientationId"
-    (deleted)="deleted.emit($event)"
+    [groupType]="groupType"
     [isCampusWallView]="isCampusWallView"
+    (deleted)="deleted.emit($event)"
     (teardown)="isDeleteModal = false">
   </cp-feed-delete-modal>
 </cp-modal>
@@ -74,9 +69,7 @@
 <cp-modal modalId="approveFeedModal" *ngIf="isApproveModal">
   <cp-feed-approve-modal
     [feed]="feed"
-    [clubId]="clubId"
-    [athleticId]="athleticId"
-    [orientationId]="orientationId"
+    [groupType]="groupType"
     [isCampusWallView]="isCampusWallView"
     (teardown)="isApproveModal = false"
     (approved)="onApprovedPost($event)">

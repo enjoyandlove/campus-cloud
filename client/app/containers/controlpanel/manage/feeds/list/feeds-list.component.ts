@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FeedsComponent } from './base';
 import { FeedsService } from '../feeds.service';
 import { CPSession } from '../../../../../session';
+import { GroupType } from '../feeds.utils.service';
 
 @Component({
   selector: 'cp-feeds-list',
@@ -18,5 +19,7 @@ export class FeedsListComponent extends FeedsComponent implements OnInit {
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.groupType = GroupType.campus;
+  }
 }
