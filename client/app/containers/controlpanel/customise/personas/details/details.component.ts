@@ -261,16 +261,18 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     } else {
       this.state = {
         ...this.state,
-        guides: this.state.guides.map((g: ICampusGuide) => {
-          if (g.id === tile.tile_category_id) {
-            g = {
-              ...g,
-              tiles: g.tiles.filter((t: ITile) => t.id !== tile.id)
-            };
-          }
+        guides: this.state.guides
+          .map((g: ICampusGuide) => {
+            if (g.id === tile.tile_category_id) {
+              g = {
+                ...g,
+                tiles: g.tiles.filter((t: ITile) => t.id !== tile.id)
+              };
+            }
 
-          return g;
-        })
+            return g;
+          })
+          .filter((g: ICampusGuide) => g.tiles.length)
       };
     }
   }
