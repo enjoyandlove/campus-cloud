@@ -2,17 +2,15 @@
   <div class="row justify-content-around" lazy-load-images>
     <div class="col-8">
       <cp-feed-filters
-        [clubId]="clubId"
-        [athleticId]="athleticId"
-        [orientationId]="orientationId"
+        [groupId]="groupId"
+        [groupType]="groupType"
         [selectedItem]="selectedItem"
         (doFilter)="onDoFilter($event)">
       </cp-feed-filters>
 
       <cp-feed-input-box
-        [clubId]="clubId"
-        [athleticId]="athleticId"
-        [orientationId]="orientationId"
+        [groupId]="groupId"
+        [groupType]="groupType"
         [isCampusWallView]="isCampusWallView$"
         [disablePost]="state.currentView ? state.currentView.postingMemberType === disablePost : false"
         (created)="onCreated($event)">
@@ -22,15 +20,14 @@
 
       <ng-container *ngSwitchCase="false">
         <cp-feed-item
-          [feed]="feed"
-          (moved)="fetch()"
-          [clubId]="clubId"
-          [athleticId]="athleticId"
-          (deleted)="onDeleted($event)"
-          [orientationId]="orientationId"
           *ngFor="let feed of state.feeds"
+          [feed]="feed"
+          [groupId]="groupId"
+          [groupType]="groupType"
           [isCampusWallView]="isCampusWallView$"
           [isFilteredByRemovedPosts]="isFilteredByRemovedPosts$"
+          (moved)="fetch()"
+          (deleted)="onDeleted($event)"
           (filterByCategory)="onFilterByCategory($event)">
         </cp-feed-item>
 

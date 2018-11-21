@@ -1,42 +1,30 @@
 /* tslint:disable:max-line-length */
-import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../../../../shared/shared.module';
+import { NgModule } from '@angular/core';
 
 import { ServicesEditComponent } from './edit';
 import { ServicesListComponent } from './list';
 import { ServicesInfoComponent } from './info';
 import { ServicesExcelComponent } from './excel';
-import { ServicesEventsComponent } from './events';
 import { ServicesDeleteComponent } from './delete';
 import { ServicesCreateComponent } from './create';
 import { ServicesAttendanceComponent } from './attendance';
+import { ServicesListActionBoxComponent } from './list/components';
+import { ServicesExcelModalComponent, ServicesImportTopBarComponent } from './excel/components';
 
 import { ServicesService } from './services.service';
 import { ProvidersService } from './providers.service';
-import { AdminService } from '../../../../shared/services/admin.service';
-
+import { ServicesResolver } from './services.resolver';
+import { SharedModule } from '../../../../shared/shared.module';
+import { ServicesUtilsService } from './services.utils.service';
 import { ServicesRoutingModule } from './services.routing.module';
-
-import {
-  ServicesEventsEditComponent,
-  ServicesEventsInfoComponent,
-  ServicesEventsExcelComponent,
-  ServicesEventsCreateComponent,
-  ServicesEventsAttendanceComponent
-} from './events/components';
-
-import { ServicesListActionBoxComponent } from './list/components';
-
-import { ServicesExcelModalComponent, ServicesImportTopBarComponent } from './excel/components';
-
-import {
-  ServicesProvidersCheckInEditComponent,
-  ServicesProvidersCheckInCreateComponent,
-  ServicesProvidersCheckInDeleteComponent
-} from './attendance/components/providers-details/check-in';
+import { ServicesFeedsModule } from './feeds/services-feeds.module';
+import { ServicesEventsModule } from './events/services-events.module';
+import { AdminService } from '../../../../shared/services/admin.service';
+import { ServicesMembersModule } from './members/services-members.module';
+import { CheckInModule } from '../events/attendance/check-in/check-in.module';
 
 import {
   ServicesProviderAddComponent,
@@ -50,14 +38,16 @@ import {
 } from './attendance/components';
 
 import {
+  ServicesProvidersCheckInEditComponent,
+  ServicesProvidersCheckInCreateComponent,
+  ServicesProvidersCheckInDeleteComponent
+} from './attendance/components/providers-details/check-in';
+
+import {
   ServicesProvidersAttendeesListComponent,
   ServicesProvidersAttendeesStatsComponent,
   ServicesProvidersAttendeesActionBoxComponent
 } from './attendance/components/providers-details/components';
-
-import { EventsModule } from '../events/events.module';
-import { ServicesUtilsService } from './services.utils.service';
-import { CheckInModule } from '../events/attendance/check-in/check-in.module';
 
 @NgModule({
   declarations: [
@@ -71,7 +61,6 @@ import { CheckInModule } from '../events/attendance/check-in/check-in.module';
     ServicesCreateComponent,
     ServicesEditComponent,
     ServicesInfoComponent,
-    ServicesEventsComponent,
     ServicesProviderAddComponent,
     ServicesProviderDeleteComponent,
     ServicesExcelComponent,
@@ -79,11 +68,6 @@ import { CheckInModule } from '../events/attendance/check-in/check-in.module';
     ServicesProvidersListComponent,
     ServicesProviderDetailsComponent,
     ServicesProvidersAttendeesListComponent,
-    ServicesEventsCreateComponent,
-    ServicesEventsAttendanceComponent,
-    ServicesEventsInfoComponent,
-    ServicesEventsEditComponent,
-    ServicesEventsExcelComponent,
     ServiceProvidersEditComponent,
     ServicesProvidersFormComponent,
     ServicesProvidersAttendeesStatsComponent,
@@ -94,15 +78,23 @@ import { CheckInModule } from '../events/attendance/check-in/check-in.module';
   ],
 
   imports: [
+    ServicesRoutingModule,
     CommonModule,
     SharedModule,
-    ServicesRoutingModule,
     RouterModule,
-    ReactiveFormsModule,
     CheckInModule,
-    EventsModule
+    ReactiveFormsModule,
+    ServicesFeedsModule,
+    ServicesEventsModule,
+    ServicesMembersModule
   ],
 
-  providers: [ServicesService, ProvidersService, AdminService, ServicesUtilsService]
+  providers: [
+    AdminService,
+    ServicesService,
+    ProvidersService,
+    ServicesResolver,
+    ServicesUtilsService
+  ]
 })
 export class ServicesModule {}

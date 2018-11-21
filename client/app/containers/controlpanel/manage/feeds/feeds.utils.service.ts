@@ -12,6 +12,14 @@ export enum WallPage {
   no = 'No'
 }
 
+export enum GroupType {
+  campus = 0,
+  club = 1,
+  athletics = 2,
+  orientation = 3,
+  service = 4
+}
+
 @Injectable()
 export class FeedsUtilsService {
   constructor() {}
@@ -20,12 +28,12 @@ export class FeedsUtilsService {
     return image ? hasData.yes : hasData.no;
   }
 
-  wallPage(athleticId: number, orientationId: number, clubId: number) {
-    if (athleticId) {
+  wallPage(groupType: GroupType) {
+    if (groupType === GroupType.athletics) {
       return amplitudeEvents.ATHLETICS;
-    } else if (orientationId) {
+    } else if (groupType === GroupType.orientation) {
       return amplitudeEvents.ORIENTATION;
-    } else if (clubId) {
+    } else if (groupType === GroupType.club) {
       return amplitudeEvents.CLUB;
     }
 

@@ -2894,6 +2894,15 @@
   "t_services_label_checkout_time": {
     "message": "Check-out"
   },
+  "t_services_label_membership_wall": {
+    "message": "Membership and Wall"
+  },
+  "t_services_membership_disabled": {
+    "message": "User can view the service but cannot join or message other members"
+  },
+  "t_services_membership_enabled": {
+    "message": "Allow users to register and message other members"
+  },
   "t_services_no_service_provider_found": {
     "message": "No Service Provider Found"
   },

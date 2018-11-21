@@ -5,6 +5,7 @@ import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import { membershipTypes } from '../create';
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
 import { CPSession, ISchool } from '../../../../../session';
@@ -32,9 +33,11 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   selectedCategory;
   formError = false;
   serviceId: number;
+  defaultMembership;
   attendance = false;
   showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
+  membershipTypes = membershipTypes;
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
 
@@ -101,6 +104,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         ...this.eventProperties,
         category_name: this.selectedCategory.label
       };
+
+      this.defaultMembership = this.membershipTypes.find(
+        (type) => type.action === this.service.has_membership
+      );
     });
   }
 
@@ -125,7 +132,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       longitude: [service.longitude],
       service_attendance: [service.service_attendance],
       rating_scale_maximum: [service.rating_scale_maximum],
-      default_basic_feedback_label: [service.default_basic_feedback_label]
+      default_basic_feedback_label: [service.default_basic_feedback_label],
+      has_membership: [service.has_membership]
     });
 
     this.form.valueChanges.subscribe((_) => {
@@ -134,6 +142,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         disabled: !this.form.valid
       };
     });
+  }
+
+  onSelectedMembership(type) {
+    this.form.controls['has_membership'].setValue(type.action);
   }
 
   onSubmit() {

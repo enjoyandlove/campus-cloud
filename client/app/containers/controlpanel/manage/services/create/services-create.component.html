@@ -78,6 +78,18 @@
                   <textarea formControlName="description"></textarea>
                 </div>
 
+                <div class="row from-group">
+                  <div class="col-6">
+                    <label>{{ 't_services_label_membership_wall' | cpI18n }}</label>
+                    <cp-check-dropdown
+                      [items]="membershipTypes"
+                      [selectedItem]="defaultMembership"
+                      buttonClass="cpbtn cpbtn--cancel"
+                      (selected)="onSelectedMembership($event)">
+                    </cp-check-dropdown>
+                  </div>
+                </div>
+
                 <div class="row form-group">
                   <div class="col-12">
                     <cp-checkbox

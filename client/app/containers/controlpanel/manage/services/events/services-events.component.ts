@@ -1,21 +1,13 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
 import { ServicesService } from '../services.service';
 import { EventsService } from '../../events/events.service';
-import { IHeader, baseActions } from '../../../../../store/base';
+import { ServicesUtilsService } from '../services.utils.service';
 import { CPI18nService } from '../../../../../shared/services/index';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants';
 import { EventsComponent } from '../../events/list/base/events.component';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
-
-import {
-  canSchoolReadResource,
-  canStoreReadAndWriteResource
-} from './../../../../../shared/utils/privileges';
 
 @Component({
   selector: 'cp-services-events',
@@ -33,8 +25,8 @@ export class ServicesEventsComponent extends EventsComponent {
     public session: CPSession,
     public cpI18n: CPI18nService,
     private route: ActivatedRoute,
-    private store: Store<IHeader>,
     public eventsService: EventsService,
+    private utils: ServicesUtilsService,
     private serviceService: ServicesService,
     public orientationEventService: OrientationEventsService
   ) {
@@ -48,61 +40,8 @@ export class ServicesEventsComponent extends EventsComponent {
     this.serviceService.getServiceById(this.serviceId).subscribe((res) => {
       this.service = res;
       this.serviceStoreId = this.service.store_id;
-      this.buildHeader();
+      this.utils.buildServiceHeader(this.service);
       this.loading = false;
-    });
-  }
-
-  private buildHeader() {
-    let children = [
-      {
-        label: 'info',
-        isSubMenuItem: true,
-        amplitude: amplitudeEvents.INFO,
-        url: `/manage/services/${this.serviceId}/info`
-      }
-    ];
-
-    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
-    const eventsAccountLevel = canStoreReadAndWriteResource(
-      this.session.g,
-      this.serviceStoreId,
-      CP_PRIVILEGES_MAP.events
-    );
-
-    if (eventsSchoolLevel || eventsAccountLevel) {
-      const events = {
-        label: 'events',
-        isSubMenuItem: true,
-        amplitude: amplitudeEvents.EVENTS,
-        url: `/manage/services/${this.serviceId}/events`
-      };
-
-      children = [...children, events];
-    }
-
-    if (this.service.service_attendance) {
-      const attendance = {
-        label: 'service_provider',
-        isSubMenuItem: true,
-        amplitude: amplitudeEvents.ASSESSMENT,
-        url: `/manage/services/${this.serviceId}`
-      };
-
-      children = [...children, attendance];
-    }
-
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: {
-        heading: `[NOTRANSLATE]${this.service.name}[NOTRANSLATE]`,
-        subheading: '',
-        crumbs: {
-          url: 'services',
-          label: 'services'
-        },
-        children: [...children]
-      }
     });
   }
 }

@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+import { GroupType } from '../../../feeds.utils.service';
+
 declare var $: any;
 
 @Component({
@@ -11,11 +13,9 @@ declare var $: any;
 export class FeedCommentComponent implements OnInit {
   @Input() comment: any;
   @Input() last: boolean;
-  @Input() clubId: number;
   @Input() replyView: number;
-  @Input() athleticId: number;
   @Input() wallCategory: string;
-  @Input() orientationId: number;
+  @Input() groupType: GroupType;
 
   @Input() isCampusWallView: Observable<number>;
   @Output() deleted: EventEmitter<number> = new EventEmitter();
