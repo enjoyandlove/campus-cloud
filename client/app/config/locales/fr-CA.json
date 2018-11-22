@@ -2969,6 +2969,9 @@
   "t_shared_show": {
     "message": "Montrer"
   },
+  "t_shared_url": {
+    "message": "Lien"
+  },
   "t_shared_web_checkin": {
     "message": "Vérification de présence"
   },
