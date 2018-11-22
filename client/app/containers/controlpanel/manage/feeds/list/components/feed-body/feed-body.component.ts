@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { CPHostDirective } from '../../../../../../../shared/directives';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
@@ -18,6 +19,7 @@ export class FeedBodyComponent implements OnInit {
   @Input() wallCategory: string;
   @Input() groupType: GroupType;
   @Input() isRemovedPosts: boolean;
+  @Input() isCampusWallView: Observable<number>;
 
   @Output() viewComments: EventEmitter<boolean> = new EventEmitter();
   @Output() toggleReplies: EventEmitter<boolean> = new EventEmitter();
@@ -29,10 +31,12 @@ export class FeedBodyComponent implements OnInit {
     likes: null,
     comments: null,
     wall_page: null,
+    wall_source: null,
     upload_image: null,
     campus_wall_category: null
   };
 
+  _isCampusWallView;
   viewImageEventData;
 
   constructor(
@@ -44,9 +48,13 @@ export class FeedBodyComponent implements OnInit {
   trackEvent(isCommentsOpen) {
     if (isCommentsOpen) {
       const campus_wall_category = this.feed.channelName ? this.feed.channelName : null;
+      const wall_source = this._isCampusWallView
+        ? amplitudeEvents.CAMPUS_WALL
+        : amplitudeEvents.OTHER_WALLS;
 
       this.eventProperties = {
         ...this.eventProperties,
+        wall_source,
         campus_wall_category,
         post_id: this.feed.id,
         likes: this.utils.hasLikes(this.feed.likes),
@@ -70,8 +78,13 @@ export class FeedBodyComponent implements OnInit {
 
     const message_type = this.isComment ? amplitudeEvents.COMMENT : amplitudeEvents.POST;
 
+    const wall_source = this._isCampusWallView
+      ? amplitudeEvents.CAMPUS_WALL
+      : amplitudeEvents.OTHER_WALLS;
+
     const eventProperties = {
       message_type,
+      wall_source,
       campus_wall_category,
       likes: this.utils.hasLikes(this.feed.likes),
       wall_page: this.utils.wallPage(this.groupType)
@@ -86,5 +99,9 @@ export class FeedBodyComponent implements OnInit {
 
   ngOnInit() {
     this.trackViewLightBoxEvent();
+
+    this.isCampusWallView.subscribe((res: any) => {
+      this._isCampusWallView = res.type === 1;
+    });
   }
 }

@@ -5,7 +5,8 @@
         [groupId]="groupId"
         [groupType]="groupType"
         [selectedItem]="selectedItem"
-        (doFilter)="onDoFilter($event)">
+        (doFilter)="onDoFilter($event)"
+        [isCampusWallView]="isCampusWallView$">
       </cp-feed-filters>
 
       <cp-feed-input-box

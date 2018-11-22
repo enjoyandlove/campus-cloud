@@ -54,6 +54,7 @@ export class FeedInputBoxComponent implements OnInit {
     wall_page: null,
     host_type: null,
     comment_id: null,
+    wall_source: null,
     upload_image: null,
     campus_wall_category: null
   };
@@ -263,8 +264,13 @@ export class FeedInputBoxComponent implements OnInit {
 
     eventName = amplitudeEvents.WALL_SUBMITTED_POST;
 
+    const wall_source = this._isCampusWallView
+      ? amplitudeEvents.OTHER_WALLS
+      : amplitudeEvents.CAMPUS_WALL;
+
     this.eventProperties = {
       ...this.eventProperties,
+      wall_source,
       post_id: data.id,
       upload_image: this.utils.hasImage(data.has_image),
       wall_page: this.utils.wallPage(this.groupType)
