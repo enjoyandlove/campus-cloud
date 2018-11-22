@@ -6,6 +6,7 @@ import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { DashboardService } from './../../dashboard.service';
 import { DashboardUtilsService } from './../../dashboard.utils.service';
+import { environment } from './../../../../../../environments/environment';
 
 @Component({
   selector: 'cp-dashboard-top-clubs',
@@ -19,7 +20,7 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
   loading;
   items = [];
   isSuperAdmin;
-  defaultImage = require('public/default/user.png');
+  defaultImage = `${environment.root}public/default/user.png`;
 
   @Input()
   set dates(dates) {

@@ -12,6 +12,7 @@ import { ClubsUtilsService } from '../clubs.utils.service';
 import { ClubSocialGroup, ClubStatus } from '../club.status';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { environment } from './../../../../../../environments/environment';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
@@ -50,7 +51,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   ACTIVE_STATUS = ClubStatus.active;
   PENDING_STATUS = ClubStatus.pending;
   disabledWall = ClubSocialGroup.disabled;
-  defaultImage = require('public/default/user.png');
+  defaultImage = `${environment.root}public/default/user.png`;
 
   eventProperties = {
     club_id: null,

@@ -12,6 +12,7 @@ import { AssessUtilsService } from '../../assess.utils.service';
 import { CPTrackingService } from '../../../../../shared/services';
 import { BaseComponent } from './../../../../../base/base.component';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { environment } from './../../../../../../environments/environment';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
@@ -53,7 +54,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   dateFormat = FORMAT.DATETIME;
   isStudentComposeModal = false;
   avatarCustomCodeThreshold = 3;
-  defaultImage = require('public/default/user.png');
+  defaultImage = `${environment.root}public/default/user.png`;
 
   constructor(
     private router: Router,

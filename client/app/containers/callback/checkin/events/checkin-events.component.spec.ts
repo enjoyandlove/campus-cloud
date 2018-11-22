@@ -71,10 +71,7 @@ xdescribe('CheckinEventsComponent', () => {
       checkin_verification_methods: [1, 2, 3]
     };
 
-    eventProperties = component.utils.getCheckedInEventProperties(
-      sourceId,
-      events
-    );
+    eventProperties = component.utils.getCheckedInEventProperties(sourceId, events);
 
     expect(eventProperties.source_id).toEqual(sourceId);
     expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.ENABLED);
@@ -88,11 +85,7 @@ xdescribe('CheckinEventsComponent', () => {
       attend_verification_methods: [1, 2]
     };
 
-    eventProperties = component.utils.getCheckedInEventProperties(
-      sourceId,
-      events,
-      true
-    );
+    eventProperties = component.utils.getCheckedInEventProperties(sourceId, events, true);
 
     expect(eventProperties.source_id).toEqual(sourceId);
     expect(eventProperties.qr_code_status).toEqual(amplitudeEvents.DISABLED);

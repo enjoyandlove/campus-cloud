@@ -1,8 +1,14 @@
+import { CPSession } from './../../../session';
 import { CPAmplitudeService } from '../amplitude.service';
 import { amplitudeEvents } from '../../constants/analytics';
+import { mockSchool, mockUser } from '../../../session/mock';
 import { CP_PRIVILEGES_MAP } from '../../constants/privileges';
 
-const service = new CPAmplitudeService();
+const session = new CPSession();
+session.g.set('school', mockSchool);
+session.g.set('user', mockUser);
+
+const service = new CPAmplitudeService(session);
 
 const account_level_privileges = {
   '587': {
@@ -42,7 +48,7 @@ const school_level_privileges = {
     '25': {
       r: true,
       w: true
-    },
+    }
   }
 };
 
@@ -56,7 +62,8 @@ describe('AmplitudeEventTrackingService', () => {
   it('should get user permissions access', () => {
     const userPermissionsAccess = service.getUserPermissionsAccessType(
       school_level_privileges[157],
-      CP_PRIVILEGES_MAP.jobs);
+      CP_PRIVILEGES_MAP.jobs
+    );
 
     expect(userPermissionsAccess).toEqual(amplitudeEvents.FULL_ACCESS);
   });
@@ -64,7 +71,8 @@ describe('AmplitudeEventTrackingService', () => {
   it('should get user permissions status', () => {
     const userPermissionsStatus = service.getUserPermissionsStatus(
       school_level_privileges[157],
-      CP_PRIVILEGES_MAP.manage_admin);
+      CP_PRIVILEGES_MAP.manage_admin
+    );
 
     expect(userPermissionsStatus).toEqual(amplitudeEvents.DISABLED);
   });
@@ -94,7 +102,6 @@ describe('AmplitudeEventTrackingService', () => {
   });
 
   it('getUserPermissionsEventProperties', () => {
-
     const permissions = service.getUserPermissionsEventProperties(
       school_level_privileges[157],
       account_level_privileges
@@ -116,6 +123,5 @@ describe('AmplitudeEventTrackingService', () => {
     expect(permissions.service_permission).toEqual(amplitudeEvents.FULL_ACCESS);
     expect(permissions.locations_permission).toEqual(amplitudeEvents.FULL_ACCESS);
     expect(permissions.orientation_permission).toEqual(amplitudeEvents.FULL_ACCESS);
-
   });
 });

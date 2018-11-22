@@ -10,8 +10,7 @@ import {
   ViewChild,
   ViewEncapsulation
 } from '@angular/core';
-import 'node_modules/quill/dist/quill.core.css';
-import 'node_modules/quill/dist/quill.snow.css';
+
 import { of as observableOf, Subject } from 'rxjs';
 import { QuillService } from './../../services/quill.service';
 import { CPI18nService } from '../../services';

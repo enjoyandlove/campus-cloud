@@ -8,6 +8,7 @@ import { AssessUtilsService } from '../../../assess.utils.service';
 import { CPTrackingService } from '../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../base/base.component';
 import { EngagementUtilsService } from '../../engagement.utils.service';
+import { environment } from './../../../../../../../environments/environment';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
@@ -86,10 +87,7 @@ export class EngagementOrientationsBoxComponent extends BaseComponent implements
       sort_type
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.ASSESS_VIEWED_CARDS,
-      this.eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.ASSESS_VIEWED_CARDS, this.eventProperties);
   }
 
   fetch() {
@@ -129,27 +127,27 @@ export class EngagementOrientationsBoxComponent extends BaseComponent implements
           {
             value: res.data.total_events,
             label: this.cpI18n.translate('t_assess_total_orientation_programs'),
-            icon: require('public/png/assess/chart_service.png')
+            icon: `${environment.root}public/png/assess/chart_service.png`
           },
           {
             value: res.data.total_events_with_attendance,
             label: this.cpI18n.translate('t_assess_total_orientation_programs_assessed'),
-            icon: require('public/png/assess/chart_service_assess.png')
+            icon: `${environment.root}public/png/assess/chart_service_assess.png`
           },
           {
             value: res.data.total_attendees,
             label: this.cpI18n.translate('assess_total_attendees'),
-            icon: require('public/png/assess/chart_attendee.png')
+            icon: `${environment.root}public/png/assess/chart_attendee.png`
           },
           {
             value: (res.data.avg_feedbacks / 100 * 5).toFixed(1),
             label: this.cpI18n.translate('assess_average_rating'),
-            icon: require('public/png/assess/chart_rating.png')
+            icon: `${environment.root}public/png/assess/chart_rating.png`
           },
           {
             value: res.data.total_feedbacks,
             label: this.cpI18n.translate('assess_feedback_received'),
-            icon: require('public/png/assess/chart_feedback.png')
+            icon: `${environment.root}public/png/assess/chart_feedback.png`
           }
         ];
       },

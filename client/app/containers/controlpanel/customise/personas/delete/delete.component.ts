@@ -70,9 +70,8 @@ export class PersonasDeleteComponent implements OnInit {
   }
 
   trackDeleteExperienceEvent() {
-    const experience_type = this.persona.platform === PersonasType.web
-      ? amplitudeEvents.WEB
-      : amplitudeEvents.MOBILE;
+    const experience_type =
+      this.persona.platform === PersonasType.web ? amplitudeEvents.WEB : amplitudeEvents.MOBILE;
 
     const eventProperties = {
       experience_type,
@@ -80,10 +79,7 @@ export class PersonasDeleteComponent implements OnInit {
       credential_type: credentialType[this.persona.login_requirement]
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.STUDIO_DELETED_EXPERIENCE,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_DELETED_EXPERIENCE, eventProperties);
   }
 
   ngOnInit() {

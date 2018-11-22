@@ -1,10 +1,10 @@
-@import '~styles/core/colors';
-@import '~styles/core/typography';
-@import '~styles/components/button';
-@import '~styles/components/card';
-@import '~bootstrap/functions';
-@import '~bootstrap/variables';
-@import '~bootstrap/mixins/breakpoints';
+@import '~client/style/core/colors';
+@import '~client/style/core/typography';
+@import '~client/style/components/button';
+@import '~client/style/components/card';
+@import '~node_modules/bootstrap/scss/functions';
+@import '~node_modules/bootstrap/scss/variables';
+@import '~node_modules/bootstrap/scss/mixins/breakpoints';
 
 .card-margin {
   @include card-margin();

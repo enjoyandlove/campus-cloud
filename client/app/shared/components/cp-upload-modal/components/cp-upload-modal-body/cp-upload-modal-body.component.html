@@ -24,7 +24,7 @@
     <label
       for="file"
       class="dropzone__label"
-      *ngIf="!processing">
+      *ngIf="!state.processing">
       <i class="material-icons">cloud_upload</i>
       <span *ngIf="!state.error">
         {{ state.fileName ? state.fileName : cpI18n.translate('csv_modal_button_text') }}

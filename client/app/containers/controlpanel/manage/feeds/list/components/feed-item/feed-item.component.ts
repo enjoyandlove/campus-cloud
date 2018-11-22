@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
+import { GroupType } from '../../../feeds.utils.service';
 import { CPDate } from '../../../../../../../shared/utils';
 import { FORMAT } from '../../../../../../../shared/pipes/date';
 
@@ -13,9 +14,8 @@ declare var $: any;
 })
 export class FeedItemComponent implements OnInit {
   @Input() feed: any;
-  @Input() clubId: number;
-  @Input() athleticId: number;
-  @Input() orientationId: number;
+  @Input() groupId: number;
+  @Input() groupType: GroupType;
   @Input() isCampusWallView: Observable<any>;
   @Input() isFilteredByRemovedPosts: Observable<any>;
 
@@ -30,6 +30,7 @@ export class FeedItemComponent implements OnInit {
   CPDate = CPDate;
   _isCampusWallView;
   FORMAT = FORMAT.SHORT;
+  isCommentsOpen: boolean;
   requiresApproval$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor() {}

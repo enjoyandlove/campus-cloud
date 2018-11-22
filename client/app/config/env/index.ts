@@ -1,32 +1,31 @@
-export const ENV = process.env.ENV;
+import { environment } from './../../../environments/environment';
 
 /**
  * General Prod
  */
-export const isProd =
-  ENV === 'production-usa' || ENV === 'production-sea' || ENV === 'production-canada';
+export const isProd = environment.production && environment.envName !== 'staging';
 
 /**
  * General Staging
  */
-export const isStaging = ENV === 'staging';
+export const isStaging = environment.envName === 'staging';
 
 /**
  * Canada Prod Only
  */
-export const isCanada = ENV === 'production-canada';
+export const isCanada = environment.envName === 'production_canada';
 
 /**
  * USA Prod Only
  */
-export const isUsa = ENV === 'production-usa';
+export const isUsa = environment.envName === 'production_usa';
 
 /**
  * SEA prod only
  */
-export const isSea = ENV === 'production-sea';
+export const isSea = environment.envName === 'production_sea';
 
 /**
  * DEV
  */
-export const isDev = !isProd && !isStaging;
+export const isDev = environment.envName === 'development';

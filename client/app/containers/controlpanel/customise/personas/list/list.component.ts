@@ -240,13 +240,12 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
       ? amplitudeEvents.STUDIO_MOVED_EXPERIENCE
       : amplitudeEvents.STUDIO_VIEWED_CUSTOMIZATION_EXPERIENCE;
 
-    const experience_type = persona.platform === PersonasType.web
-      ? amplitudeEvents.WEB
-      : amplitudeEvents.MOBILE;
+    const experience_type =
+      persona.platform === PersonasType.web ? amplitudeEvents.WEB : amplitudeEvents.MOBILE;
 
     const eventProperties = {
       experience_type,
-      experience_id : persona.id,
+      experience_id: persona.id,
       credential_type: credentialType[persona.login_requirement]
     };
 

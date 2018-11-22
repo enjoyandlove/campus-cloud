@@ -5,6 +5,7 @@ import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { membershipTypes } from './index';
 import { IService } from '../service.interface';
 import { CPMap } from '../../../../../shared/utils';
 import { ServicesService } from '../services.service';
@@ -28,10 +29,12 @@ export class ServicesCreateComponent implements OnInit {
   school: ISchool;
   form: FormGroup;
   formError = false;
+  defaultMembership;
   attendance = false;
   showLocationDetails = false;
   categories$: Observable<any>;
   mapCenter: BehaviorSubject<any>;
+  membershipTypes = membershipTypes;
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
 
@@ -47,12 +50,12 @@ export class ServicesCreateComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private fb: FormBuilder,
+    public fb: FormBuilder,
     public session: CPSession,
-    private store: Store<IHeader>,
-    private cpI18n: CPI18nService,
-    private utils: ServicesUtilsService,
-    private cpTracking: CPTrackingService,
+    public store: Store<IHeader>,
+    public cpI18n: CPI18nService,
+    public utils: ServicesUtilsService,
+    public cpTracking: CPTrackingService,
     public servicesService: ServicesService
   ) {
     this.buildHeader();
@@ -75,6 +78,7 @@ export class ServicesCreateComponent implements OnInit {
         return _categories;
       })
     );
+    this.defaultMembership = this.membershipTypes.find((type) => type.action === false);
   }
 
   onUploadedImage(image) {
@@ -158,6 +162,10 @@ export class ServicesCreateComponent implements OnInit {
         children: []
       }
     });
+  }
+
+  onSelectedMembership(type) {
+    this.form.controls['has_membership'].setValue(type.action);
   }
 
   onSubmit() {
@@ -271,6 +279,7 @@ export class ServicesCreateComponent implements OnInit {
       postal_code: [null],
       contactphone: [null],
       secondary_name: [null],
+      has_membership: [null],
       service_attendance: [null],
       rating_scale_maximum: [null],
       name: [null, Validators.required],

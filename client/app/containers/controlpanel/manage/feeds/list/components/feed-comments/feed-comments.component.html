@@ -1,18 +1,18 @@
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div *ngSwitchCase="false" class="comments">
+  <div
+    *ngSwitchCase="false"
+    class="comments">
     <cp-feed-comment
+      *ngFor="let comment of state.comments; let last = last"
       [last]="last"
       [comment]="comment"
+      [groupType]="groupType"
       [replyView]="isReplyView"
-      [clubId]="clubId"
-      [athleticId]="athleticId"
-      [orientationId]="orientationId"
       [wallCategory]="feed.channelName"
-      (deleted)="onDeletedComment($event)"
       [isCampusWallView]="isCampusWallView"
-      *ngFor="let comment of state.comments; let last = last">
+      (deleted)="onDeletedComment($event)">
     </cp-feed-comment>
   </div>
 </div>
@@ -20,15 +20,14 @@
 <div class="row">
   <div class="col-12">
     <cp-feed-input-box
-      [clubId]="clubId"
+      [groupId]="groupId"
       [threadId]="feed.id"
-      [athleticId]="athleticId"
-      [postType]="feed.post_type"
+      [groupType]="groupType"
       [replyView]="isReplyView"
-      [orientationId]="orientationId"
+      [postType]="feed.post_type"
       [wallCategory]="feed.channelName"
       [isCampusWallView]="isCampusWallView"
-      (created)="onReplied($event)">
+      (created)="onReplied()">
     </cp-feed-input-box>
   </div>
 </div>

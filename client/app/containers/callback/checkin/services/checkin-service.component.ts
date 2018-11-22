@@ -99,10 +99,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       ...service.data
     };
 
-    const properties = this.utils.getCheckedInEventProperties(
-      this.serviceId,
-      this.state.services
-    );
+    const properties = this.utils.getCheckedInEventProperties(this.serviceId, this.state.services);
 
     const access_type = this.checkInSource
       ? amplitudeEvents.EMAIL_WEB_CHECK_IN
@@ -115,10 +112,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
 
     delete eventProperties.check_out_status;
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_ADDED_WEB_CHECK_OUT,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_ADDED_WEB_CHECK_OUT, eventProperties);
   }
 
   fetch() {
@@ -136,17 +130,11 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       assessment_type: amplitudeEvents.SERVICE_PROVIDER
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_EMAIL_WEB_CHECK_IN,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_EMAIL_WEB_CHECK_IN, eventProperties);
   }
 
   trackCheckedInEvent() {
-    const properties = this.utils.getCheckedInEventProperties(
-      this.serviceId,
-      this.state.services
-    );
+    const properties = this.utils.getCheckedInEventProperties(this.serviceId, this.state.services);
 
     const access_type = this.checkInSource
       ? amplitudeEvents.EMAIL_WEB_CHECK_IN
@@ -157,10 +145,7 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
       access_type
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_ADDED_WEB_CHECK_IN,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_ADDED_WEB_CHECK_IN, eventProperties);
   }
 
   ngOnInit() {

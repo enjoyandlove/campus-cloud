@@ -6,8 +6,8 @@ import { map } from 'rxjs/operators';
 
 import { FeedsService } from '../../../feeds.service';
 import { CPSession } from '../../../../../../../session';
-import { FeedsUtilsService } from '../../../feeds.utils.service';
 import { CPTrackingService } from '../../../../../../../shared/services';
+import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
@@ -17,9 +17,8 @@ import { CPI18nService } from './../../../../../../../shared/services/i18n.servi
   styleUrls: ['./feed-settings-modal.component.scss']
 })
 export class FeedSettingsComponent implements OnInit {
-  @Input() clubId: number;
-  @Input() athleticId: number;
-  @Input() orientationId: number;
+  @Input() groupId: number;
+  @Input() groupType: GroupType;
   @Input() isCampusWallView: Observable<any>;
 
   @Output() updateWallSettings: EventEmitter<null> = new EventEmitter();
@@ -50,8 +49,8 @@ export class FeedSettingsComponent implements OnInit {
   private fetch() {
     let search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    if (this.orientationId) {
-      search = search.append('calendar_id', this.orientationId.toString());
+    if (this.groupType === GroupType.orientation) {
+      search = search.append('calendar_id', this.groupId.toString());
     }
 
     this.feedsService
@@ -70,12 +69,8 @@ export class FeedSettingsComponent implements OnInit {
             });
           });
 
-          if (this.clubId) {
-            _groups = _groups.filter((group) => group.related_obj_id === +this.clubId);
-          }
-
-          if (this.orientationId) {
-            _groups = _groups.filter((group) => group.related_obj_id === +this.orientationId);
+          if (this.groupId) {
+            _groups = _groups.filter((group) => group.related_obj_id === +this.groupId);
           }
 
           return _groups;
@@ -149,20 +144,22 @@ export class FeedSettingsComponent implements OnInit {
     this.eventProperties = {
       ...this.eventProperties,
       wall_source,
-      wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
+      wall_page: this.utils.wallPage(this.groupType)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_UPDATED_SETTINGS, this.eventProperties);
   }
 
   ngOnInit() {
-    this.wallName = this.orientationId
-      ? this.cpI18n.translate('orientation_wall_name')
-      : this.cpI18n.translate('feeds_wall_name');
+    this.wallName =
+      this.groupType === GroupType.orientation
+        ? this.cpI18n.translate('orientation_wall_name')
+        : this.cpI18n.translate('feeds_wall_name');
 
-    this.modalTitle = this.orientationId
-      ? this.cpI18n.translate('orientation_feeds_wall_settings_modal_title')
-      : this.cpI18n.translate('feeds_wall_settings_modal_title');
+    this.modalTitle =
+      this.groupType === GroupType.orientation
+        ? this.cpI18n.translate('orientation_feeds_wall_settings_modal_title')
+        : this.cpI18n.translate('feeds_wall_settings_modal_title');
 
     this.fetch();
     this.form = this.fb.group({

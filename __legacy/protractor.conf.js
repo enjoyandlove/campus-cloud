@@ -1,9 +1,7 @@
 exports.config = {
   baseUrl: 'http://localhost:3030/',
 
-  specs: [
-    'src/**/*.e2e-spec.js'
-  ],
+  specs: ['src/**/*.e2e-spec.js'],
   exclude: [],
 
   framework: 'jasmine2',
@@ -20,17 +18,16 @@ exports.config = {
   directConnect: true,
 
   capabilities: {
-    'browserName': 'chrome'
+    browserName: 'chrome'
   },
 
-  onPrepare: function () {
+  onPrepare: function() {
     var SpecReporter = require('jasmine-spec-reporter');
     // add jasmine spec reporter
-    jasmine.getEnv().addReporter(new SpecReporter({displayStacktrace: true}));
+    jasmine.getEnv().addReporter(new SpecReporter({ displayStacktrace: true }));
 
     browser.ignoreSynchronization = true;
   },
-
 
   /**
    * Angular 2 configuration

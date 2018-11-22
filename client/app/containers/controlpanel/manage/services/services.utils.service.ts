@@ -15,8 +15,8 @@ import { Formats } from '../../../../shared/utils/csv';
 import { CPDate } from '../../../../shared/utils/date/date';
 import { CPI18nService } from '../../../../shared/services';
 import { baseActions, IHeader } from '../../../../store/base';
-import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
 import { createSpreadSheet } from '../../../../shared/utils/csv/parser';
+import { CP_PRIVILEGES_MAP, amplitudeEvents } from '../../../../shared/constants';
 import { attendanceType, CheckInMethod, CheckInOutTime } from '../events/event.status';
 
 @Injectable()
@@ -183,33 +183,60 @@ export class ServicesUtilsService {
     createSpreadSheet(assessments, columns);
   }
 
-  buildServiceProviderHeader(service) {
+  hasPrivilege(storeId: number, privilege: number): boolean {
+    const schoolLevel = canSchoolReadResource(this.session.g, privilege);
+    const accountLevel = canStoreReadAndWriteResource(this.session.g, storeId, privilege);
+
+    return schoolLevel || accountLevel;
+  }
+
+  buildServiceHeader(service) {
     let children = [
       {
         label: 'info',
+        isSubMenuItem: true,
+        amplitude: amplitudeEvents.INFO,
         url: `/manage/services/${service.id}/info`
       }
     ];
 
-    const eventsSchoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
-    const eventsAccountLevel = canStoreReadAndWriteResource(
-      this.session.g,
-      service.store_id,
-      CP_PRIVILEGES_MAP.events
-    );
+    if (service.has_membership) {
+      if (this.hasPrivilege(service.store_id, CP_PRIVILEGES_MAP.membership)) {
+        const members = {
+          label: 'members',
+          isSubMenuItem: true,
+          amplitude: amplitudeEvents.MEMBER,
+          url: `/manage/services/${service.id}/members`
+        };
+        children = [...children, members];
+      }
 
-    if (eventsSchoolLevel || eventsAccountLevel) {
+      if (this.hasPrivilege(service.store_id, CP_PRIVILEGES_MAP.moderation)) {
+        const feeds = {
+          label: 'feeds',
+          isSubMenuItem: true,
+          amplitude: amplitudeEvents.WALL,
+          url: `/manage/services/${service.id}/feeds`
+        };
+        children = [...children, feeds];
+      }
+    }
+
+    if (this.hasPrivilege(service.store_id, CP_PRIVILEGES_MAP.events)) {
       const events = {
         label: 'events',
+        isSubMenuItem: true,
+        amplitude: amplitudeEvents.EVENTS,
         url: `/manage/services/${service.id}/events`
       };
-
       children = [...children, events];
     }
 
     if (service.service_attendance) {
       const attendance = {
         label: 'service_provider',
+        isSubMenuItem: true,
+        amplitude: amplitudeEvents.ASSESSMENT,
         url: `/manage/services/${service.id}`
       };
 
@@ -220,11 +247,11 @@ export class ServicesUtilsService {
       type: baseActions.HEADER_UPDATE,
       payload: {
         heading: `[NOTRANSLATE]${service.name}[NOTRANSLATE]`,
-        subheading: '',
         crumbs: {
           url: 'services',
           label: 'services'
         },
+        subheading: '',
         children: [...children]
       }
     });

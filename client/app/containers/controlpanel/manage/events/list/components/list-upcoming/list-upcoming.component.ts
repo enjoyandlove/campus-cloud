@@ -75,10 +75,7 @@ export class ListUpcomingComponent implements OnInit {
     const eventProperties = this.setEventProperties();
     delete eventProperties['page_type'];
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.DELETED_ITEM,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, eventProperties);
   }
 
   setEventProperties() {
@@ -96,10 +93,7 @@ export class ListUpcomingComponent implements OnInit {
       assessment_type: this.utils.getEventCategoryType(event.store_category)
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CC_WEB_CHECK_IN,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_WEB_CHECK_IN, eventProperties);
   }
 
   ngOnInit() {

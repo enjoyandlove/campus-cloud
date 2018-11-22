@@ -1,11 +1,11 @@
-@import '~styles/core/colors';
-@import '~styles/components/card';
-@import '~styles/core/typography';
-@import '~styles/components/form';
-@import '~styles/components/button';
-@import '~bootstrap/functions';
-@import '~bootstrap/variables';
-@import '~bootstrap/mixins/breakpoints';
+@import '~client/style/core/colors';
+@import '~client/style/components/card';
+@import '~client/style/core/typography';
+@import '~client/style/components/form';
+@import '~client/style/components/button';
+@import '~node_modules/bootstrap/scss/functions';
+@import '~node_modules/bootstrap/scss/variables';
+@import '~node_modules/bootstrap/scss/mixins/breakpoints';
 
 :host {
   display: block;
