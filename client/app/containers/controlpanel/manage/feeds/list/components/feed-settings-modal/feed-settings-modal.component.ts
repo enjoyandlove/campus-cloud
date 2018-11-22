@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs/index';
 import { map } from 'rxjs/operators';
 
 import { FeedsService } from '../../../feeds.service';
@@ -19,6 +20,7 @@ export class FeedSettingsComponent implements OnInit {
   @Input() clubId: number;
   @Input() athleticId: number;
   @Input() orientationId: number;
+  @Input() isCampusWallView: Observable<any>;
 
   @Output() updateWallSettings: EventEmitter<null> = new EventEmitter();
 
@@ -27,9 +29,11 @@ export class FeedSettingsComponent implements OnInit {
   modalTitle;
   privileges;
   form: FormGroup;
+  _isCampusWallView;
 
   eventProperties = {
-    wall_page: null
+    wall_page: null,
+    wall_source: null
   };
 
   constructor(
@@ -138,8 +142,13 @@ export class FeedSettingsComponent implements OnInit {
   }
 
   trackAmplitudeEvent() {
+    const wall_source = this._isCampusWallView
+      ? amplitudeEvents.CAMPUS_WALL
+      : amplitudeEvents.OTHER_WALLS;
+
     this.eventProperties = {
       ...this.eventProperties,
+      wall_source,
       wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
     };
 
@@ -174,5 +183,9 @@ export class FeedSettingsComponent implements OnInit {
         action: 0
       }
     ];
+
+    this.isCampusWallView.subscribe((res: any) => {
+      this._isCampusWallView = res.type === 1;
+    });
   }
 }

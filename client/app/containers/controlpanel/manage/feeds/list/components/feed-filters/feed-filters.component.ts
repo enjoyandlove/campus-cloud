@@ -52,6 +52,7 @@ export class FeedFiltersComponent implements OnInit {
   @Input() athleticId: number;
   @Input() orientationId: number;
   @Input() selectedItem: any;
+  @Input() isCampusWallView: Observable<any>;
 
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
 

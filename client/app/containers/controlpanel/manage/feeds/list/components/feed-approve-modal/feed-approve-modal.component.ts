@@ -32,6 +32,7 @@ export class FeedApproveModalComponent implements OnInit {
     likes: null,
     comments: null,
     wall_page: null,
+    wall_source: null,
     upload_image: null,
     campus_wall_category: null
   };
@@ -64,8 +65,13 @@ export class FeedApproveModalComponent implements OnInit {
   trackAmplitudeEvent(feed) {
     const campus_wall_category = feed.channelName ? feed.channelName : null;
 
+    const wall_source = this._isCampusWallView
+      ? amplitudeEvents.CAMPUS_WALL
+      : amplitudeEvents.OTHER_WALLS;
+
     this.eventProperties = {
       ...this.eventProperties,
+      wall_source,
       post_id: feed.id,
       campus_wall_category,
       likes: this.utils.hasLikes(feed.likes),
@@ -84,7 +90,7 @@ export class FeedApproveModalComponent implements OnInit {
     };
 
     this.isCampusWallView.subscribe((res: any) => {
-      this._isCampusWallView = res.type === 1 ? true : false;
+      this._isCampusWallView = res.type === 1;
     });
   }
 }
