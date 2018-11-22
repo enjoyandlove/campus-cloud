@@ -2894,6 +2894,15 @@
   "t_services_label_checkout_time": {
     "message": "Check-out"
   },
+  "t_services_label_membership_wall": {
+    "message": "Membership and Wall"
+  },
+  "t_services_membership_disabled": {
+    "message": "User can view the service but cannot join or message other members"
+  },
+  "t_services_membership_enabled": {
+    "message": "Allow users to register and message other members"
+  },
   "t_services_no_service_provider_found": {
     "message": "No Service Provider Found"
   },
@@ -2966,6 +2975,9 @@
   "t_shared_label_location_toggle": {
     "message": "Set Location"
   },
+  "t_shared_last_synced": {
+    "message": "Last Synced"
+  },
   "t_shared_limited": {
     "message": "Limited"
   },
@@ -2977,6 +2989,12 @@
   },
   "t_shared_show": {
     "message": "Show"
+  },
+  "t_shared_sync_now": {
+    "message": "Sync Now"
+  },
+  "t_shared_url": {
+    "message": "URL"
   },
   "t_shared_web_checkin": {
     "message": "Web Check-In"
