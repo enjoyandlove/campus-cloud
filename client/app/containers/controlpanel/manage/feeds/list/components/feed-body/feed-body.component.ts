@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs/index';
+import { Observable } from 'rxjs';
 
 import { CPHostDirective } from '../../../../../../../shared/directives';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
