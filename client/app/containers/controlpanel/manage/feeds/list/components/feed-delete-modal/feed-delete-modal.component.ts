@@ -28,6 +28,7 @@ export class FeedDeleteModalComponent implements OnInit {
     likes: null,
     comments: null,
     wall_page: null,
+    wall_source: null,
     upload_image: null,
     campus_wall_category: null
   };
@@ -54,10 +55,15 @@ export class FeedDeleteModalComponent implements OnInit {
   }
 
   trackAmplitudeEvent(feed) {
+    const wall_source = this._isCampusWallView
+      ? amplitudeEvents.CAMPUS_WALL
+      : amplitudeEvents.OTHER_WALLS;
+
     const campus_wall_category = feed.channelName ? feed.channelName : null;
 
     this.eventProperties = {
       ...this.eventProperties,
+      wall_source,
       post_id: feed.id,
       campus_wall_category,
       likes: this.utils.hasLikes(feed.likes),

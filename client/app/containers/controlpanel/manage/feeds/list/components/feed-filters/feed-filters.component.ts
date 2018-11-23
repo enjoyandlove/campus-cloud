@@ -52,6 +52,7 @@ export class FeedFiltersComponent implements OnInit {
   @Input() groupId: number;
   @Input() selectedItem: any;
   @Input() groupType: GroupType;
+  @Input() isCampusWallView: Observable<any>;
 
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
 
