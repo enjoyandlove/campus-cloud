@@ -13,7 +13,7 @@ import { CheckInOutTime, CheckInType } from '../../../callback.status';
 export class CheckinAttendeesListComponent {
   @Input() data: ICheckIn;
 
-  @Output() checkout: EventEmitter<{ data: ICheckIn, userId: number}> = new EventEmitter();
+  @Output() checkout: EventEmitter<{ data: ICheckIn; userId: number }> = new EventEmitter();
 
   timezone: string;
   attendee: IAttendee;
@@ -38,8 +38,8 @@ export class CheckinAttendeesListComponent {
   showCheckOutButton(attendee: IAttendee) {
     const webCheckIn = attendee.check_in_type === CheckInType.web;
 
-    const noCheckOutDate =  (!attendee.check_out_time_epoch
-      || attendee.check_out_time_epoch === this.empty);
+    const noCheckOutDate =
+      !attendee.check_out_time_epoch || attendee.check_out_time_epoch === this.empty;
 
     return webCheckIn && noCheckOutDate;
   }
@@ -48,9 +48,10 @@ export class CheckinAttendeesListComponent {
     this.attendee = null;
     this.launchCheckOutModal = true;
 
-    const attendees = this.data.attendees
-      .map((attendee: IAttendee) => attendee.attendance_id === newAttendee.attendance_id
-        ? newAttendee : attendee);
+    const attendees = this.data.attendees.map(
+      (attendee: IAttendee) =>
+        attendee.attendance_id === newAttendee.attendance_id ? newAttendee : attendee
+    );
 
     this.data = {
       ...this.data,

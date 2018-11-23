@@ -25,6 +25,8 @@ require('node_modules/bootstrap/dist/js/bootstrap.bundle.min');
  using that regex we are saying look in client/app and find
  any file that ends with '.spec.ts' and get its path. By passing in true
  we say do this recursively
+ /\.spec\.ts/ <== ALL FILES
+ /dashboard-general-information\.component\.spec\.ts/ <== ONE FILE
  */
 var appContext = require.context('./client', true, /\.spec\.ts/);
 

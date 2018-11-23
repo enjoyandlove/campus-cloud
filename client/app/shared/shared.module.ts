@@ -151,18 +151,9 @@ import {
     CPDropdownMultiSelectComponent
   ],
 
-  entryComponents: [
-    CPLightboxComponent,
-    CPImageCropperComponent
-  ],
+  entryComponents: [CPLightboxComponent, CPImageCropperComponent],
 
-  imports: [
-    CommonModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule,
-    PopoverModule.forRoot()
-  ],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, PopoverModule.forRoot()],
 
   providers: [
     StoreService,
