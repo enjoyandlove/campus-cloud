@@ -55,7 +55,7 @@
                       <p><strong>{{ 't_services_label_membership_wall' | cpI18n }}</strong></p>
                     </div>
                     <div class="col-10" >
-                      <p>{{ service.hasMembership ? ('service_enabled' | cpI18n) : ('services_disabled' | cpI18n) }}</p>
+                      <p>{{ service.has_membership ? ('service_enabled' | cpI18n) : ('services_disabled' | cpI18n) }}</p>
                     </div>
                   </div>
                   <div class="row" *ngIf="service.address">
