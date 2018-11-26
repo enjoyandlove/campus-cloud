@@ -1,9 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 
 import { BaseComponent } from '../../../../../base';
 import { CPSession } from './../../../../../session';
 import { DashboardService } from './../../dashboard.service';
+import { DashboardUtilsService } from './../../dashboard.utils.service';
 
 @Component({
   selector: 'cp-dashboard-general-information',
@@ -11,38 +13,50 @@ import { DashboardService } from './../../dashboard.service';
   styleUrls: ['./dashboard-general-information.component.scss']
 })
 export class DashboardGeneralInformationComponent extends BaseComponent implements OnInit {
-  @Output() ready: EventEmitter<boolean> = new EventEmitter();
-
   data;
-  _dates;
-
-  @Input()
-  set dates(dates) {
-    this._dates = dates;
-    this.fetch();
-  }
-
   loading;
 
-  constructor(private session: CPSession, private service: DashboardService) {
+  constructor(
+    private session: CPSession,
+    public route: ActivatedRoute,
+    private service: DashboardService,
+    public utils: DashboardUtilsService
+  ) {
     super();
     super.isLoading().subscribe((loading) => {
       this.loading = loading;
-      this.ready.emit(!this.loading);
     });
   }
 
-  fetch() {
+  fetch(start, end) {
     const search = new HttpParams()
-      .append('end', this._dates.end)
-      .append('start', this._dates.start)
+      .append('end', end)
+      .append('start', start)
       .append('school_id', this.session.g.get('school').id);
 
     const stream$ = this.service.getGeneralInformation(search);
-    super.fetchData(stream$).then((res) => (this.data = res.data));
+
+    super.fetchData(stream$).then((res) => {
+      this.data = res.data;
+    });
+  }
+
+  listenForQueryParamChanges() {
+    // instead of passing @Input(s) we update the queryParams
+    // and call the fetch event whenever any of those values change
+    this.route.queryParams.subscribe((params) => {
+      const validParams = this.utils.validParams(params);
+      if (!validParams) {
+        return;
+      }
+
+      const { start, end } = params;
+
+      this.fetch(start, end);
+    });
   }
 
   ngOnInit() {
-    this.fetch();
+    this.listenForQueryParamChanges();
   }
 }

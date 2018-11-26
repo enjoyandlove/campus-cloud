@@ -50,6 +50,14 @@
                       <p>{{ service.website }}</p>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-2">
+                      <p><strong>{{ 't_services_label_membership_wall' | cpI18n }}</strong></p>
+                    </div>
+                    <div class="col-10" >
+                      <p>{{ service.has_membership ? ('service_enabled' | cpI18n) : ('services_disabled' | cpI18n) }}</p>
+                    </div>
+                  </div>
                   <div class="row" *ngIf="service.address">
                     <div class="col-2">
                       <p><strong i18n>{{ 'location' | cpI18n }}</strong></p>

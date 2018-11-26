@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 
 import { FeedsService } from '../../../feeds.service';
 import { CPSession } from '../../../../../../../session';
+import { GroupType } from '../../../feeds.utils.service';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
 const campusWall = {
@@ -48,10 +49,10 @@ const state: IState = {
   styleUrls: ['./feed-filters.component.scss']
 })
 export class FeedFiltersComponent implements OnInit {
-  @Input() clubId: number;
-  @Input() athleticId: number;
-  @Input() orientationId: number;
+  @Input() groupId: number;
   @Input() selectedItem: any;
+  @Input() groupType: GroupType;
+  @Input() isCampusWallView: Observable<any>;
 
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
 
@@ -215,16 +216,14 @@ export class FeedFiltersComponent implements OnInit {
       }
     ];
 
-    if (this.clubId || this.orientationId) {
-      let group_id;
-      let search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
-      if (this.clubId) {
-        group_id = this.clubId;
-        search = search.append('store_id', this.clubId.toString());
-      } else if (this.orientationId) {
-        group_id = this.orientationId;
-        search = search.append('calendar_id', this.orientationId.toString());
-      }
+    if (this.groupId) {
+      const group_id = this.groupId;
+      const search = new HttpParams()
+        .append('school_id', this.session.g.get('school').id.toString())
+        .append(
+          this.groupType === GroupType.orientation ? 'calendar_id' : 'store_id',
+          this.groupId.toString()
+        );
 
       const getGroup = this.feedsService.getSocialGroups(search).toPromise();
 
@@ -247,6 +246,6 @@ export class FeedFiltersComponent implements OnInit {
 
     this.fetch();
     this.doFilter.emit(this.state);
-    this.campusWallView = !this.clubId && !this.orientationId;
+    this.campusWallView = this.groupType === GroupType.campus;
   }
 }

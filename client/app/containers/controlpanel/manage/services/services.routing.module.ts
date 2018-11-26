@@ -7,8 +7,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { ServicesListComponent } from './list';
 import { ServicesEditComponent } from './edit';
 import { ServicesInfoComponent } from './info';
+import { ServicesFeedsComponent } from './feeds';
 import { ServicesCreateComponent } from './create';
 import { ServicesEventsComponent } from './events';
+import { ServicesMembersComponent } from './members';
 import { ServicesAttendanceComponent } from './attendance';
 
 import {
@@ -25,6 +27,7 @@ import { ServicesProviderDetailsComponent } from './attendance/components';
  * Excel
  */
 import { ServicesExcelComponent } from './excel';
+import { ServicesResolver } from './services.resolver';
 import { PrivilegesGuard } from '../../../../config/guards';
 
 const appRoutes: Routes = [
@@ -54,6 +57,20 @@ const appRoutes: Routes = [
     canActivate: [PrivilegesGuard],
     component: ServicesEditComponent,
     data: { zendesk: 'services' }
+  },
+  {
+    path: ':serviceId/members',
+    canActivate: [PrivilegesGuard],
+    component: ServicesMembersComponent,
+    data: { zendesk: 'services' },
+    resolve: { service: ServicesResolver }
+  },
+  {
+    path: ':serviceId/feeds',
+    canActivate: [PrivilegesGuard],
+    component: ServicesFeedsComponent,
+    data: { zendesk: 'services' },
+    resolve: { service: ServicesResolver }
   },
   {
     path: ':serviceId/events',

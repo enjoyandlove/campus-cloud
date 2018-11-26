@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { BaseComponent } from '../../../../../../../base/base.component';
-import { CPSession } from '../../../../../../../session';
 import { FeedsService } from '../../../feeds.service';
+import { CPSession } from '../../../../../../../session';
+import { GroupType } from '../../../feeds.utils.service';
+import { BaseComponent } from '../../../../../../../base/base.component';
 
 interface IState {
   comments: Array<any>;
@@ -21,19 +22,18 @@ const state: IState = {
 })
 export class FeedCommentsComponent extends BaseComponent implements OnInit {
   @Input() feed;
-  @Input() clubId: number;
+  @Input() groupId: number;
   @Input() postType: number;
-  @Input() athleticId: number;
-  @Input() orientationId: number;
+  @Input() groupType: GroupType;
   @Input() isCampusWallView: Observable<number>;
   @Output() deleted: EventEmitter<null> = new EventEmitter();
   @Output() replied: EventEmitter<null> = new EventEmitter();
 
   loading;
   comments;
-  groupId: number;
   _isCampusWallView;
   isReplyView = true;
+  campusGroupId: number;
   state: IState = state;
 
   constructor(private session: CPSession, private feedsService: FeedsService) {
@@ -62,7 +62,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
 
     search = this._isCampusWallView
       ? search.append('school_id', this.session.g.get('school').id.toString())
-      : search.append('group_id', this.groupId.toString());
+      : search.append('group_id', this.campusGroupId.toString());
 
     const campusWallComments$ = this.feedsService.getCampusWallCommentsByThreadId(
       search,
@@ -101,7 +101,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
     this.maxPerPage = this.feed.comment_count + 1;
 
     this.isCampusWallView.subscribe((res: any) => {
-      this.groupId = res.type;
+      this.campusGroupId = res.type;
       this._isCampusWallView = res.type === 1;
     });
     this.fetch();

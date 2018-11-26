@@ -111,6 +111,10 @@ export const amplitudeEvents = {
 
   CAMPUS_WIDE: 'Campus Wide',
 
+  CAMPUS_WALL: 'Campus Wall',
+
+  OTHER_WALLS: 'Other Walls',
+
   ORIENTATION: 'Orientation',
 
   ONE_SERVICE: 'One Service',

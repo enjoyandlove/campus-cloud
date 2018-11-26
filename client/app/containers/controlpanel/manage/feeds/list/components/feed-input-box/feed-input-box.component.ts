@@ -8,9 +8,9 @@ import { Store } from '@ngrx/store';
 import { FeedsService } from '../../../feeds.service';
 import { API } from '../../../../../../../config/api';
 import { appStorage } from '../../../../../../../shared/utils';
-import { FeedsUtilsService } from '../../../feeds.utils.service';
 import { CPSession, ISchool } from '../../../../../../../session';
 import { ISnackbar, baseActions } from './../../../../../../../store/base';
+import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
@@ -26,22 +26,21 @@ import {
   styleUrls: ['./feed-input-box.component.scss']
 })
 export class FeedInputBoxComponent implements OnInit {
-  @Input() clubId: number;
+  @Input() groupId: number;
   @Input() threadId: number;
   @Input() postType: number;
-  @Input() athleticId: number;
   @Input() replyView: boolean;
+  @Input() groupType: GroupType;
   @Input() wallCategory: string;
-  @Input() orientationId: number;
   @Input() disablePost: boolean; // TODO REMOVE
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
-  groupId;
   stores$;
   channels$;
   imageError;
   buttonData;
+  campusGroupId;
   form: FormGroup;
   school: ISchool;
   _isCampusWallView;
@@ -55,6 +54,7 @@ export class FeedInputBoxComponent implements OnInit {
     wall_page: null,
     host_type: null,
     comment_id: null,
+    wall_source: null,
     upload_image: null,
     campus_wall_category: null
   };
@@ -112,7 +112,7 @@ export class FeedInputBoxComponent implements OnInit {
       });
     }
 
-    if (this.orientationId) {
+    if (this.groupType === GroupType.orientation) {
       body = this.asCalendarFormat(body);
     }
 
@@ -124,7 +124,7 @@ export class FeedInputBoxComponent implements OnInit {
   }
 
   postToWall(formData): Promise<any> {
-    if (this.orientationId) {
+    if (this.groupType === GroupType.orientation) {
       formData = this.asCalendarFormat(formData);
     }
 
@@ -138,7 +138,7 @@ export class FeedInputBoxComponent implements OnInit {
   asCalendarFormat(data) {
     delete data['store_id'];
 
-    return { ...data, calendar_id: this.orientationId };
+    return { ...data, calendar_id: this.groupId };
   }
 
   handleError({ status = 400 }) {
@@ -186,14 +186,14 @@ export class FeedInputBoxComponent implements OnInit {
     };
 
     if (this._isCampusWallView) {
-      _data['group_id'] = this.groupId;
+      _data['group_id'] = this.campusGroupId;
     }
 
     return _data;
   }
 
   resetFormValues() {
-    if (!this.clubId && !this._isCampusWallView && !this.replyView) {
+    if (!this.groupId && !this._isCampusWallView && !this.replyView) {
       this.form.controls['group_id'].setValue(null);
       this.form.controls['post_type'].setValue(null);
     }
@@ -264,11 +264,16 @@ export class FeedInputBoxComponent implements OnInit {
 
     eventName = amplitudeEvents.WALL_SUBMITTED_POST;
 
+    const wall_source = this._isCampusWallView
+      ? amplitudeEvents.OTHER_WALLS
+      : amplitudeEvents.CAMPUS_WALL;
+
     this.eventProperties = {
       ...this.eventProperties,
+      wall_source,
       post_id: data.id,
       upload_image: this.utils.hasImage(data.has_image),
-      wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
+      wall_page: this.utils.wallPage(this.groupType)
     };
 
     if (this.replyView) {
@@ -320,7 +325,7 @@ export class FeedInputBoxComponent implements OnInit {
     this.isCampusWallView.subscribe((res) => {
       // Not Campus Wall
       if (res.type !== 1) {
-        this.groupId = res.type;
+        this.campusGroupId = res.type;
         this.form.controls['store_id'].setValue(res.group_id);
         this.form.removeControl('post_type');
         this._isCampusWallView = true;

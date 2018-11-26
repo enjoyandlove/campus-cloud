@@ -3,8 +3,15 @@
 
     <div class="tile" *ngSwitchCase="false">
       <div class="row">
-        <div class="col-12">
+        <div class="col-7">
           <p class="tile--title">{{ 'dashboard_campus_tile_title' | cpI18n }}</p>
+        </div>
+        <div class="col-5">
+          <cp-dashboard-experience-menu
+            [experiences]="experiences"
+            paramName="cga_exp_id"
+            [selectedPersona]="selectedPersona">
+          </cp-dashboard-experience-menu>
         </div>
       </div>
 

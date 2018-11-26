@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import { FeedsUtilsService } from '../../../feeds.utils.service';
 import { CPHostDirective } from '../../../../../../../shared/directives';
+import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
@@ -13,13 +14,12 @@ import { CPI18nService, CPTrackingService } from '../../../../../../../shared/se
 })
 export class FeedBodyComponent implements OnInit {
   @Input() feed: any;
-  @Input() clubId: number;
   @Input() replyView: number;
   @Input() isComment: boolean;
-  @Input() athleticId: number;
   @Input() wallCategory: string;
-  @Input() orientationId: number;
+  @Input() groupType: GroupType;
   @Input() isRemovedPosts: boolean;
+  @Input() isCampusWallView: Observable<number>;
 
   @Output() viewComments: EventEmitter<boolean> = new EventEmitter();
   @Output() toggleReplies: EventEmitter<boolean> = new EventEmitter();
@@ -31,10 +31,12 @@ export class FeedBodyComponent implements OnInit {
     likes: null,
     comments: null,
     wall_page: null,
+    wall_source: null,
     upload_image: null,
     campus_wall_category: null
   };
 
+  _isCampusWallView;
   viewImageEventData;
 
   constructor(
@@ -46,15 +48,19 @@ export class FeedBodyComponent implements OnInit {
   trackEvent(isCommentsOpen) {
     if (isCommentsOpen) {
       const campus_wall_category = this.feed.channelName ? this.feed.channelName : null;
+      const wall_source = this._isCampusWallView
+        ? amplitudeEvents.CAMPUS_WALL
+        : amplitudeEvents.OTHER_WALLS;
 
       this.eventProperties = {
         ...this.eventProperties,
+        wall_source,
         campus_wall_category,
         post_id: this.feed.id,
         likes: this.utils.hasLikes(this.feed.likes),
         upload_image: this.utils.hasImage(this.feed.has_image),
         comments: this.utils.hasComments(this.feed.comment_count),
-        wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
+        wall_page: this.utils.wallPage(this.groupType)
       };
 
       this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_VIEWED_COMMENT, this.eventProperties);
@@ -66,17 +72,22 @@ export class FeedBodyComponent implements OnInit {
   }
 
   trackViewLightBoxEvent() {
-    const wallCategory =  this.wallCategory ? this.wallCategory : null;
+    const wallCategory = this.wallCategory ? this.wallCategory : null;
     const channelName = this.feed.channelName ? this.feed.channelName : null;
     const campus_wall_category = channelName ? channelName : wallCategory;
 
     const message_type = this.isComment ? amplitudeEvents.COMMENT : amplitudeEvents.POST;
 
+    const wall_source = this._isCampusWallView
+      ? amplitudeEvents.CAMPUS_WALL
+      : amplitudeEvents.OTHER_WALLS;
+
     const eventProperties = {
       message_type,
+      wall_source,
       campus_wall_category,
       likes: this.utils.hasLikes(this.feed.likes),
-      wall_page: this.utils.wallPage(this.athleticId, this.orientationId, this.clubId)
+      wall_page: this.utils.wallPage(this.groupType)
     };
 
     this.viewImageEventData = {
@@ -88,5 +99,9 @@ export class FeedBodyComponent implements OnInit {
 
   ngOnInit() {
     this.trackViewLightBoxEvent();
+
+    this.isCampusWallView.subscribe((res: any) => {
+      this._isCampusWallView = res.type === 1;
+    });
   }
 }

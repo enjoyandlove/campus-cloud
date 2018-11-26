@@ -11,6 +11,7 @@ import {
   last30Days,
   yesterdayEnd
 } from '../../../shared/components/cp-range-picker/cp-range-picker.utils.service';
+import { Params } from '@angular/router';
 
 const cpI18n = new CPI18nService();
 const todayDate = moment().endOf('day');
@@ -25,6 +26,12 @@ export class DashboardUtilsService {
 
   dayStart(date) {
     return CPDate.toEpoch(moment(date).startOf('day'), this.session.tz);
+  }
+
+  validParams(params: Params) {
+    const { start, end, label, cga_exp_id } = params;
+
+    return start && end && label && cga_exp_id;
   }
 
   dayEnd(date) {
