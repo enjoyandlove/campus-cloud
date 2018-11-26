@@ -4,13 +4,13 @@
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
     <div class="col-3 float-right">
-      <button
+      <a
         cpTracker
-        (click)="launchModal.emit()"
         [eventData]="eventData"
+        [routerLink]="['create']"
         class="cpbtn cpbtn--primary float-right">
         {{ 'locations_btn_create' | cpI18n }}
-      </button>
+      </a>
     </div>
   </div>
 </div>

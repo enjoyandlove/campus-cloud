@@ -11,7 +11,6 @@ import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 })
 export class LocationsListTopBarComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
-  @Output() launchModal: EventEmitter<null> = new EventEmitter();
 
   eventData;
 

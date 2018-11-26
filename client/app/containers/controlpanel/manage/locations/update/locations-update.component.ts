@@ -1,38 +1,28 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  HostListener,
-  ElementRef,
-  ChangeDetectorRef
-} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
-import { CPTrackingService } from '../../../../../shared/services';
-import { hasAcronym, LocationsService } from '../locations.service';
+import { BaseComponent } from '../../../../../base';
+import { LocationsService } from '../locations.service';
+import { baseActions, IHeader } from '../../../../../store/base';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-locations-update',
   templateUrl: './locations-update.component.html',
   styleUrls: ['./locations-update.component.scss']
 })
-export class LocationsUpdateComponent implements OnInit {
-  @Input() location: any;
-  @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() locationUpdated: EventEmitter<any> = new EventEmitter();
-
+export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   school;
+  loading;
   buttonData;
+  locationId;
   form: FormGroup;
-  isFormReady = false;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
 
@@ -42,21 +32,17 @@ export class LocationsUpdateComponent implements OnInit {
   };
 
   constructor(
-    public el: ElementRef,
+    public router: Router,
     private fb: FormBuilder,
     private session: CPSession,
+    public route: ActivatedRoute,
     public cpI18n: CPI18nService,
-    public cdRef: ChangeDetectorRef,
-    public service: LocationsService,
-    public cpTracking: CPTrackingService
-  ) {}
-
-  @HostListener('document:click', ['$event'])
-  onClick(event) {
-    // out of modal reset form
-    if (event.target.contains(this.el.nativeElement)) {
-      this.resetModal();
-    }
+    public store: Store<IHeader>,
+    public service: LocationsService
+  ) {
+    super();
+    super.isLoading().subscribe((res) => (this.loading = res));
+    this.locationId = this.route.snapshot.params['locationId'];
   }
 
   onResetMap() {
@@ -68,13 +54,18 @@ export class LocationsUpdateComponent implements OnInit {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
     this.service
-      .updateLocation(this.form.value, this.location.id, search)
-      .subscribe((editedLocation) => {
-        this.trackEvent(editedLocation);
-        $('#locationsUpdate').modal('hide');
-        this.locationUpdated.emit(editedLocation);
-        this.resetModal();
+      .updateLocation(this.form.value, this.locationId, search)
+      .subscribe(() => {
+        this.router.navigate(['/manage/locations']);
       });
+  }
+  public fetch() {
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
+
+    // todo: add location Interface
+    super.fetchData(this.service.getLocationById(this.locationId, search)).then((location) => {
+      this.buildForm(location.data);
+    });
   }
 
   onMapSelection(data) {
@@ -121,60 +112,45 @@ export class LocationsUpdateComponent implements OnInit {
     return this.mapCenter.next({ lat, lng });
   }
 
-  resetModal() {
-    this.teardown.emit();
+  buildHeader() {
+    this.store.dispatch({
+      type: baseActions.HEADER_UPDATE,
+      payload: {
+        heading: `t_locations_edit_location`,
+        subheading: null,
+        em: null,
+        children: []
+      }
+    });
   }
 
-  trackEvent(res) {
-    this.eventProperties = {
-      ...this.eventProperties,
-      location_id: res.id,
-      acronym: hasAcronym(res.short_name)
-    };
-
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_UPDATED_LOCATION,
-      this.eventProperties
-    );
-  }
-
-  ngOnInit() {
-    this.school = this.session.g.get('school');
-
+  buildForm(location) {
     this.mapCenter = new BehaviorSubject({
-      lat: this.location.latitude,
-      lng: this.location.longitude
+      lat: location.latitude,
+      lng: location.longitude
     });
 
     this.form = this.fb.group({
-      name: [this.location.name, Validators.required],
-      short_name: [this.location.short_name, Validators.maxLength(32)],
-      address: [this.location.address, Validators.required],
-      city: [this.location.city],
-      province: [this.location.province],
-      country: [this.location.country],
-      postal_code: [this.location.postal_code],
-      latitude: [this.location.latitude, Validators.required],
-      longitude: [this.location.longitude, Validators.required]
+      city: [location.city],
+      country: [location.country],
+      province: [location.province],
+      postal_code: [location.postal_code],
+      name: [location.name, Validators.required],
+      address: [location.address, Validators.required],
+      latitude: [location.latitude, Validators.required],
+      longitude: [location.longitude, Validators.required],
+      short_name: [location.short_name, Validators.maxLength(32)]
     });
+  }
+
+  ngOnInit() {
+    this.fetch();
+    this.buildHeader();
+    this.school = this.session.g.get('school');
 
     this.buttonData = {
-      disabled: true,
       class: 'primary',
       text: this.cpI18n.translate('update')
     };
-
-    this.form.valueChanges.subscribe((_) => {
-      this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
-
-      /**
-       * INTENTIONAL
-       * In order to reenable the button
-       * after selecting a location from the dropdown
-       */
-      this.cdRef.detectChanges();
-    });
-
-    this.isFormReady = true;
   }
 }

@@ -39,16 +39,13 @@
           <div class="row">
             <span class="col-5 text-truncate">
               <strong>
-                <button
+                <a
                   cpTracker
                   [eventData]="eventData"
-                  data-toggle="modal"
-                  data-target="#locationsUpdate"
-                  (click)="updateLocation = location"
-                  (click)="isLocationsUpdate = true"
+                  [routerLink]="[location.id + '/edit']"
                   class="cpbtn cpbtn--link-dark text-truncate updateLocationBtn">
                   {{ location.name }}
-                </button>
+                </a>
               </strong>
             </span>
               <span class="col-6 text-truncate">
@@ -77,28 +74,9 @@
   </div>
 </div>
 
-<cp-modal
-  modalId="locationsCreate"
-  *ngIf="isLocationsCreate">
-  <cp-locations-create
-    (teardown)="isLocationsCreate = false"
-    (locationCreated)="onLocationCreated($event)">
-  </cp-locations-create>
-</cp-modal>
-
 <cp-modal modalId="locationsDelete">
   <cp-locations-delete
     [location]="deleteLocation"
     (locationDeleted)="onLocationDeleted($event)">
   </cp-locations-delete>
-</cp-modal>
-
-<cp-modal
-  modalId="locationsUpdate"
-  *ngIf="isLocationsUpdate">
-  <cp-locations-update
-    [location]="updateLocation"
-    (teardown)="isLocationsUpdate = false"
-    (locationUpdated)="onLocationUpdated($event)">
-  </cp-locations-update>
 </cp-modal>

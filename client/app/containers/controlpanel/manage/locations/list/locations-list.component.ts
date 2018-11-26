@@ -1,14 +1,15 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 
+import { ManageHeaderService } from '../../utils';
 import { CPSession } from './../../../../../session';
 import { LocationsService } from '../locations.service';
+import { baseActions, IHeader } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
-
-declare var $: any;
 
 interface IState {
   locations: Array<any>;
@@ -33,16 +34,15 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   loading;
   eventData;
   sortingLabels;
-  isLocationsUpdate;
-  isLocationsCreate;
   deleteLocation = '';
-  updateLocation = '';
   state: IState = state;
 
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public store: Store<IHeader>,
     public cpTracking: CPTrackingService,
+    public headerService: ManageHeaderService,
     private locationsService: LocationsService
   ) {
     super();
@@ -95,32 +95,6 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  onLaunchModal() {
-    this.isLocationsCreate = true;
-    setTimeout(
-      () => {
-        $('#locationsCreate').modal();
-      },
-
-      1
-    );
-  }
-
-  onLocationCreated(location) {
-    this.state = Object.assign({}, this.state, {
-      locations: [location, ...this.state.locations]
-    });
-  }
-
-  onLocationUpdated(editedLocation) {
-    this.state = {
-      ...this.state,
-      locations: this.state.locations.map(
-        (location) => (location.id === editedLocation.id ? editedLocation : location)
-      )
-    };
-  }
-
   onLocationDeleted(locationId) {
     this.state = {
       ...this.state,
@@ -128,7 +102,16 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     };
   }
 
+  buildHeader() {
+    this.store.dispatch({
+      type: baseActions.HEADER_UPDATE,
+      payload: this.headerService.filterByPrivileges()
+    });
+  }
+
   ngOnInit() {
+    this.buildHeader();
+
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM,
