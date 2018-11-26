@@ -1,18 +1,21 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Subject, combineLatest } from 'rxjs';
+import { Subject, combineLatest, Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { sortBy } from 'lodash';
 
 import { API } from '../../../config/api';
-import { HTTPService } from '../../../base/index';
+import { HTTPService } from '../../../base';
+import { CPI18nService } from '../../../shared/services';
+import { IPersona } from '../customise/personas/persona.interface';
 
 @Injectable()
 export class DashboardService extends HTTPService {
   eventAssessment = new Subject();
   serviceAssessment = new Subject();
 
-  constructor(http: HttpClient, router: Router) {
+  constructor(http: HttpClient, router: Router, public cpI18n: CPI18nService) {
     super(http, router);
 
     Object.setPrototypeOf(this, DashboardService.prototype);
@@ -27,6 +30,33 @@ export class DashboardService extends HTTPService {
           series: [data.downloads.series, data.registrations.series],
           labels: data.downloads.labels
         };
+      })
+    );
+  }
+
+  getExperiences(
+    search: HttpParams
+  ): Observable<Array<{ label: string; action: number; heading?: boolean }>> {
+    const defaultValue = { label: '---', action: null, heading: true };
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/1;1000`;
+
+    return super.get(url, search).pipe(
+      startWith([defaultValue]),
+      map((data: IPersona[]) => {
+        const parsePersona = (persona: IPersona) => {
+          return {
+            label: persona.localized_name_map.en,
+            action: persona.id
+          };
+        };
+
+        const parsedExperience = data.filter((experience) => experience.id).map(parsePersona);
+        const sortedExperiences = sortBy(
+          parsedExperience,
+          (experience: { label: string; action: number }) => experience.label.toLowerCase()
+        );
+
+        return [defaultValue, ...sortedExperiences];
       })
     );
   }

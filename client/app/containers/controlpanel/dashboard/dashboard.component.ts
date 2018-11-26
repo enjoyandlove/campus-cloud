@@ -1,81 +1,92 @@
+import { ActivatedRoute, Router, Params } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { DashboardUtilsService } from './dashboard.utils.service';
-import { CPSession, IUser } from '../../../session';
-import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
-import { CPI18nService } from '../../../shared/services';
-import { canSchoolReadResource } from '../../../shared/utils/privileges';
 
-const isTileReady = (val) => !!val;
+import { BaseComponent } from '../../../base';
+import { CPSession, IUser } from '../../../session';
+import { DashboardService } from './dashboard.service';
+import { CPI18nService } from '../../../shared/services';
+import { PersonaType } from './../audience/audience.status';
+import { CP_PRIVILEGES_MAP } from '../../../shared/constants';
+import { DashboardUtilsService } from './dashboard.utils.service';
+import { canSchoolReadResource } from '../../../shared/utils/privileges';
 
 @Component({
   selector: 'cp-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent extends BaseComponent implements OnInit {
   dateRanges;
   headerData;
   user: IUser;
+  loading = true;
   canAssess = false;
   currentDate = null;
   canViewClub = false;
-  areAllTilesReady = false;
   datePickerClass = 'primary dropdown-toggle';
 
-  downloadsTile$ = new BehaviorSubject(false);
-  generalInfoTile$ = new BehaviorSubject(false);
-  topEventsTile$ = new BehaviorSubject(false);
-  topServicesTile$ = new BehaviorSubject(false);
-  assessmentTile$ = new BehaviorSubject(false);
-  socialActivityTile$ = new BehaviorSubject(false);
-  campusTileTile$ = new BehaviorSubject(false);
-  topClubsTile$ = new BehaviorSubject(false);
-  integrationsTile$ = new BehaviorSubject(false);
-  topOrientationTile$ = new BehaviorSubject(false);
+  state = {
+    experiences: []
+  };
 
   constructor(
-    private router: Router,
-    private session: CPSession,
-    private route: ActivatedRoute,
-    private cpI18n: CPI18nService,
-    private helper: DashboardUtilsService
+    public router: Router,
+    public session: CPSession,
+    public route: ActivatedRoute,
+    public cpI18n: CPI18nService,
+    public service: DashboardService,
+    public helper: DashboardUtilsService
   ) {
-    this.user = this.session.g.get('user');
+    super();
   }
 
   readStateFromUrl(): void {
     const routeParams: any = this.route.snapshot.queryParams;
 
-    this.currentDate = Object.assign({}, this.currentDate, {
+    this.currentDate = {
+      ...this.currentDate,
       start: +routeParams.start,
       end: +routeParams.end,
       label: routeParams.label
-    });
+    };
   }
 
   initState() {
     const defaultDate = this.helper.last30Days();
+    const firstExperiences = this.state.experiences[1];
 
-    this.currentDate = Object.assign({}, this.currentDate, { ...defaultDate });
+    this.currentDate = {
+      ...this.currentDate,
+      ...defaultDate
+    };
 
-    this.updateUrl();
+    this.updateUrl({
+      start: this.currentDate.start,
+      end: this.currentDate.end,
+      label: this.currentDate.label,
+      cga_exp_id: firstExperiences.action
+    });
   }
 
-  updateUrl(): void {
+  updateUrl(params: Params): void {
     this.router.navigate(['/dashboard'], {
-      queryParams: {
-        start: this.currentDate.start,
-        end: this.currentDate.end,
-        label: this.currentDate.label
-      }
+      queryParamsHandling: 'merge',
+      queryParams: { ...params }
     });
   }
 
   onDateChange(newDate) {
-    this.currentDate = newDate;
-    this.updateUrl();
+    this.currentDate = {
+      ...this.currentDate,
+      ...newDate
+    };
+
+    this.updateUrl({
+      start: this.currentDate.start,
+      end: this.currentDate.end,
+      label: this.currentDate.label
+    });
   }
 
   updateHeader() {
@@ -95,32 +106,34 @@ export class DashboardComponent implements OnInit {
     };
   }
 
-  subscribeToTilesReadyEvent() {
-    combineLatest([
-      this.downloadsTile$,
-      this.generalInfoTile$,
-      this.topEventsTile$,
-      this.topServicesTile$,
-      this.assessmentTile$,
-      this.socialActivityTile$,
-      this.campusTileTile$,
-      this.topClubsTile$,
-      this.integrationsTile$,
-      this.topOrientationTile$
-    ]).subscribe((tiles: any) => {
-      setTimeout(
-        () => {
-          this.areAllTilesReady = tiles.every(isTileReady);
-        },
+  fetchPersonas() {
+    const search = new HttpParams()
+      .set('school_id', this.session.g.get('school').id)
+      .set('platform', PersonaType.app.toString());
 
-        1
-      );
+    return super.fetchData(this.service.getExperiences(search));
+  }
 
-      return tiles.every(isTileReady);
-    });
+  setUp() {
+    const hasValidParams = this.helper.validParams(this.route.snapshot.queryParams);
+
+    this.fetchPersonas()
+      .then(({ data }) => {
+        this.state = {
+          ...this.state,
+          experiences: data
+        };
+
+        return hasValidParams ? this.readStateFromUrl() : this.initState();
+      })
+      .then(() => {
+        this.loading = false;
+      });
   }
 
   ngOnInit() {
+    this.user = this.session.g.get('user');
+
     this.dateRanges = [this.helper.last30Days(), this.helper.last90Days(), this.helper.lastYear()];
 
     this.canAssess = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.assessment);
@@ -129,16 +142,15 @@ export class DashboardComponent implements OnInit {
 
     this.currentDate = this.helper.last30Days();
 
-    if (
-      this.route.snapshot.queryParams['start'] &&
-      this.route.snapshot.queryParams['end'] &&
-      this.route.snapshot.queryParams['label']
-    ) {
-      this.readStateFromUrl();
-    } else {
-      this.initState();
-    }
+    this.setUp();
 
     this.updateHeader();
+
+    this.route.queryParams.subscribe((params) => {
+      const noParamsInUrl = !Object.keys(params).length;
+      if (noParamsInUrl) {
+        this.setUp();
+      }
+    });
   }
 }

@@ -1,88 +1,81 @@
 <cp-page-header [data]="headerData"></cp-page-header>
-<div class="cp-wrapper cp-wrapper--outer">
-  <div class="row tile">
-    <div class="col-12">
-      <cp-range-picker
-        [class]="datePickerClass"
-        [dateRanges]="dateRanges"
-        [label]="currentDate.label"
-        (rangeChange)="onDateChange($event)">
-      </cp-range-picker>
-    </div>
-  </div>
+<ng-container [ngSwitch]="loading">
 
-  <div class="row tile">
-    <div class="col-12">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <div class="cp-wrapper cp-wrapper--outer" *ngSwitchCase="false">
+    <div class="row tile">
+      <div class="col-12">
+        <cp-range-picker
+          [class]="datePickerClass"
+          [dateRanges]="dateRanges"
+          [label]="currentDate.label"
+          (rangeChange)="onDateChange($event)">
+        </cp-range-picker>
+      </div>
+    </div>
+
+    <div class="row tile">
+      <div class="col-12">
+        <div class="cp-card">
+          <cp-dashboard-downloads-registration
+            [dates]="currentDate">
+          </cp-dashboard-downloads-registration>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-columns">
       <div class="cp-card">
-        <cp-dashboard-downloads-registration
-          [dates]="currentDate"
-          (ready)="downloadsTile$.next($event)">
-        </cp-dashboard-downloads-registration>
+        <cp-dashboard-general-information>
+        </cp-dashboard-general-information>
+      </div>
+
+      <div class="cp-card" *ngIf="canAssess">
+        <cp-dashboard-top-events
+          [dates]="currentDate">
+        </cp-dashboard-top-events>
+      </div>
+
+      <div class="cp-card" *ngIf="canAssess">
+        <cp-dashboard-assessment
+          [dates]="currentDate">
+        </cp-dashboard-assessment>
+      </div>
+
+      <div class="cp-card">
+        <cp-dashboard-campus-tile
+          [experiences]="state.experiences">
+        </cp-dashboard-campus-tile>
+      </div>
+
+      <div class="cp-card">
+        <cp-dashboard-integrations>
+        </cp-dashboard-integrations>
+      </div>
+
+      <div class="cp-card" *ngIf="canAssess">
+        <cp-dashboard-top-services
+          [dates]="currentDate">
+        </cp-dashboard-top-services>
+      </div>
+
+      <div class="cp-card">
+        <cp-dashboard-social-activity
+          [dates]="currentDate">
+        </cp-dashboard-social-activity>
+      </div>
+
+      <div class="cp-card" *ngIf="canViewClub">
+        <cp-dashboard-top-clubs
+          [dates]="currentDate">
+        </cp-dashboard-top-clubs>
+      </div>
+
+      <div class="cp-card" *ngIf="canAssess">
+        <cp-dashboard-top-orientation
+          [dates]="currentDate">
+        </cp-dashboard-top-orientation>
       </div>
     </div>
   </div>
-
-  <div class="card-columns">
-    <!-- <div class="cp-card">
-      <cp-dashboard-general-information
-        [dates]="currentDate"
-        (ready)="generalInfoTile$.next($event)">
-      </cp-dashboard-general-information>
-    </div> -->
-
-    <div class="cp-card" *ngIf="canAssess">
-      <cp-dashboard-top-events
-        [dates]="currentDate"
-        (ready)="topEventsTile$.next($event)">
-      </cp-dashboard-top-events>
-    </div>
-
-    <div class="cp-card" *ngIf="canAssess">
-      <cp-dashboard-assessment
-        [dates]="currentDate"
-        (ready)="assessmentTile$.next($event)">
-      </cp-dashboard-assessment>
-    </div>
-
-    <!-- <div class="cp-card">
-      <cp-dashboard-campus-tile
-        [dates]="currentDate"
-        (ready)="campusTileTile$.next($event)">
-      </cp-dashboard-campus-tile>
-    </div> -->
-
-    <div class="cp-card">
-      <cp-dashboard-integrations
-        (ready)="integrationsTile$.next($event)">
-      </cp-dashboard-integrations>
-    </div>
-
-    <div class="cp-card" *ngIf="canAssess">
-      <cp-dashboard-top-services
-        [dates]="currentDate"
-        (ready)="topServicesTile$.next($event)">
-      </cp-dashboard-top-services>
-    </div>
-
-    <div class="cp-card">
-      <cp-dashboard-social-activity
-        [dates]="currentDate"
-        (ready)="socialActivityTile$.next($event)">
-      </cp-dashboard-social-activity>
-    </div>
-
-    <div class="cp-card" *ngIf="canViewClub">
-      <cp-dashboard-top-clubs
-        [dates]="currentDate"
-        (ready)="topClubsTile$.next($event)">
-      </cp-dashboard-top-clubs>
-    </div>
-
-    <div class="cp-card" *ngIf="canAssess">
-      <cp-dashboard-top-orientation
-        [dates]="currentDate"
-        (ready)="topOrientationTile$.next($event)">
-      </cp-dashboard-top-orientation>
-    </div>
-  </div>
-</div>
+</ng-container>

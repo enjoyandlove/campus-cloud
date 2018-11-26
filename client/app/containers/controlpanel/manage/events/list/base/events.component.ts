@@ -195,19 +195,16 @@ export class EventsComponent extends BaseComponent {
         event_type_id: this.clubId,
         event_type: EventType.athletics
       };
-
     } else if (this.isClub) {
       return {
         event_type_id: this.clubId,
         event_type: EventType.club
       };
-
     } else if (this.isService) {
       return {
         event_type: EventType.services,
         event_type_id: this.serviceId ? this.serviceId : this.storeId
       };
-
     } else if (this.isOrientation) {
       return {
         event_type_id: this.orientationId,

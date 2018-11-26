@@ -69,7 +69,8 @@ describe('EventsListComponent', () => {
           }
           if (component.eventState.exclude_current) {
             search = search.append(
-              'exclude_current', component.eventState.exclude_current.toString()
+              'exclude_current',
+              component.eventState.exclude_current.toString()
             );
           }
         });
