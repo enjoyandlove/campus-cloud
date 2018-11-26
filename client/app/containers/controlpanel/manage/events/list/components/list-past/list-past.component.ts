@@ -56,10 +56,7 @@ export class ListPastComponent implements OnInit {
     const eventProperties = this.setEventProperties();
     delete eventProperties['page_type'];
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.DELETED_ITEM,
-      eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, eventProperties);
   }
 
   setEventProperties() {

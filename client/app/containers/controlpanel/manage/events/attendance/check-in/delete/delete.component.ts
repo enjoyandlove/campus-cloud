@@ -34,8 +34,7 @@ export class CheckInDeleteComponent implements OnInit {
 
   onDelete() {
     this.errors = false;
-    let search = new HttpParams()
-      .append('event_id', this.data.id.toString());
+    let search = new HttpParams().append('event_id', this.data.id.toString());
 
     if (this.orientationId) {
       search = search
@@ -49,8 +48,8 @@ export class CheckInDeleteComponent implements OnInit {
         .append('service_id', this.data['campus_service_id'].toString());
     }
 
-    const eventCheckIn$ =  this.service.deleteCheckInById(this.checkIn.id, search);
-    const orientationCheckIn$ =  this.service.deleteOrientationCheckInById(this.checkIn.id, search);
+    const eventCheckIn$ = this.service.deleteCheckInById(this.checkIn.id, search);
+    const orientationCheckIn$ = this.service.deleteOrientationCheckInById(this.checkIn.id, search);
 
     const request$ = this.orientationId ? orientationCheckIn$ : eventCheckIn$;
 
@@ -64,7 +63,8 @@ export class CheckInDeleteComponent implements OnInit {
         this.errors = true;
         this.enableDeleteButton();
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
-      });
+      }
+    );
   }
 
   enableDeleteButton() {

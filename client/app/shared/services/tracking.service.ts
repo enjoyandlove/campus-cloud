@@ -9,7 +9,7 @@ import { isProd, isStaging } from './../../config/env';
  * i.e url = /manage/events/123/info
  * Route Level first = parent(manage), second = child(events),
  * third = sub-child and so on
- * @type {{first: number; second: number}}
+ * {{first: number; second: number}}
  */
 export enum RouteLevel {
   'first' = 0,
@@ -73,6 +73,10 @@ export class CPTrackingService {
       return;
     }
 
+    if (!this._isAmplitudeAvailable()) {
+      return;
+    }
+
     window.amplitude.getInstance().logEvent(eventName, eventProperties);
   }
 
@@ -101,5 +105,9 @@ export class CPTrackingService {
       eventAction: eventAction,
       eventValue: eventValue
     });
+  }
+
+  _isAmplitudeAvailable() {
+    return !!window.amplitude;
   }
 }
