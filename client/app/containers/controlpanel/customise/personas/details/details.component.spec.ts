@@ -44,10 +44,13 @@ describe('PersonasDetailsComponent', () => {
       fixture = TestBed.createComponent(PersonasDetailsComponent);
       component = fixture.componentInstance;
 
-      component.state = {
-        ...component.state,
-        guides: [mockSection]
-      };
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        component.state = {
+          ...component.state,
+          guides: [mockSection]
+        };
+      });
     })
   );
 
