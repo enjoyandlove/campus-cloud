@@ -125,6 +125,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   onRemoveSection(sectionId: number) {
     this.setGuideDisabledStatus(false);
     const filteredGuides = this.state.guides.filter((guide) => guide.id !== sectionId);
+
+    // if last section was deleted, add a temporary section
     const temporaryGuide = [this.sectionUtils.temporaryGuide(9e4)];
     const guides = filteredGuides.length ? filteredGuides : temporaryGuide;
 
