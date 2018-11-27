@@ -1,8 +1,7 @@
-/* tslint:disable: max-line-length */
 import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
-import { CPSession } from '../../session';
+import { CPSession } from './../../session';
 import { amplitudeEvents } from '../constants/analytics';
 import { CP_PRIVILEGES_MAP } from '../constants/privileges';
 import { isCanada, isProd, isSea, isUsa } from '../../config/env';
@@ -11,59 +10,61 @@ declare var window: any;
 
 @Injectable()
 export class CPAmplitudeService {
-  user;
-  school;
-  isInternal;
-
-  constructor(public session: CPSession) {}
+  constructor(private session: CPSession) {}
 
   loadAmplitude() {
-    this.user = this.session.g.get('user');
-    this.school = this.session.g.get('school');
-    this.isInternal = this.session.isInternal;
+    const user = _get(this.session.g.get('user'), null);
+    const school = _get(this.session.g.get('school'), null);
+    const isInternal = this.session.isInternal;
+
     const api_key = isProd
       ? '24c823bab76344e912538ef6a942f517'
       : '434caff2f839c60ab12edd1119ec7641';
 
     require('node_modules/amplitude-js/src/amplitude-snippet.js');
 
-    try {
-      window.amplitude.getInstance().init(api_key, this.getSchoolUserID(this.user));
-    } catch {
-      return;
+    if (user && school) {
+      try {
+        window.amplitude.getInstance().init(api_key, this.getSchoolUserID(user));
+      } catch {
+        return;
+      }
+      this.setIdentity(school, isInternal);
     }
-
-    this.setIdentity();
   }
 
-  setIdentity() {
-    if (this.school && this.user) {
-      const userPermissions = this.getUserPermissionsEventProperties();
+  setIdentity(school, is_oohlala) {
+    const accountLevelPrivileges = this.getAccountLevelPrivilege();
+    const schoolLevelPrivileges = this.getSchoolLevelPrivileges(school.id);
 
-      const userProperties = {
-        is_oohlala: this.isInternal,
-        school_name: this.school.name,
-        jobs: userPermissions.jobs_permission,
-        links: userPermissions.links_permission,
-        deals: userPermissions.deals_permission,
-        walls: userPermissions.walls_permission,
-        events: userPermissions.event_permission,
-        notify: userPermissions.notify_permission,
-        assess: userPermissions.assess_permission,
-        studio: userPermissions.studio_permission,
-        school_id: this.getSchoolUserID(this.school),
-        calendar: userPermissions.calendar_permission,
-        audiences: userPermissions.audience_permission,
-        team_member: userPermissions.invite_permission,
-        locations: userPermissions.locations_permission,
-        club_executive: userPermissions.club_permission,
-        orientation: userPermissions.orientation_permission,
-        service_executive: userPermissions.service_permission,
-        athletics_executive: userPermissions.athletic_permission
-      };
+    const userPermissions = this.getUserPermissionsEventProperties(
+      schoolLevelPrivileges,
+      accountLevelPrivileges
+    );
 
-      window.amplitude.getInstance().setUserProperties(userProperties);
-    }
+    const userProperties = {
+      is_oohlala,
+      school_name: school.name,
+      jobs: userPermissions.jobs_permission,
+      links: userPermissions.links_permission,
+      deals: userPermissions.deals_permission,
+      school_id: this.getSchoolUserID(school),
+      walls: userPermissions.walls_permission,
+      events: userPermissions.event_permission,
+      notify: userPermissions.notify_permission,
+      assess: userPermissions.assess_permission,
+      studio: userPermissions.studio_permission,
+      calendar: userPermissions.calendar_permission,
+      audiences: userPermissions.audience_permission,
+      team_member: userPermissions.invite_permission,
+      locations: userPermissions.locations_permission,
+      club_executive: userPermissions.club_permission,
+      orientation: userPermissions.orientation_permission,
+      service_executive: userPermissions.service_permission,
+      athletics_executive: userPermissions.athletic_permission
+    };
+
+    window.amplitude.getInstance().setUserProperties(userProperties);
   }
 
   getSchoolUserID(user) {
@@ -83,54 +84,83 @@ export class CPAmplitudeService {
     }
   }
 
-  private get schoolLevelPrivilege() {
-    if (!this.user || !this.school) {
-      return {};
-    }
+  getUserPermissionsEventProperties(schoolPrivileges, accountPrivileges) {
+    const eventPermission = this.getEventPermissions(schoolPrivileges);
 
-    return _get(this.user, ['school_level_privileges', this.school.id], {});
-  }
+    const notifyPermission = this.getNotifyPermissions(schoolPrivileges);
 
-  private get accountLevelPrivilege() {
-    if (!this.user) {
-      return {};
-    }
+    const invitePermission = this.getUserPermissionsStatus(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.manage_admin
+    );
 
-    return _get(this.user, 'account_level_privileges', {});
-  }
+    const assessPermission = this.getUserPermissionsStatus(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.assessment
+    );
 
-  getUserPermissionsEventProperties() {
-    const eventPermission = this.getEventPermissions();
+    const clubPermission = this.getSchoolOrAccountLevelPermissions(
+      schoolPrivileges,
+      accountPrivileges,
+      CP_PRIVILEGES_MAP.clubs
+    );
 
-    const notifyPermission = this.getNotifyPermissions();
+    const servicePermission = this.getSchoolOrAccountLevelPermissions(
+      schoolPrivileges,
+      accountPrivileges,
+      CP_PRIVILEGES_MAP.services
+    );
 
-    const invitePermission = this.getUserPermissionsStatus(CP_PRIVILEGES_MAP.manage_admin);
+    const athleticPermission = this.getSchoolOrAccountLevelPermissions(
+      schoolPrivileges,
+      accountPrivileges,
+      CP_PRIVILEGES_MAP.athletics
+    );
 
-    const assessPermission = this.getUserPermissionsStatus(CP_PRIVILEGES_MAP.assessment);
+    const audiencePermission = this.getUserPermissionsAccessType(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.audience
+    );
 
-    const clubPermission = this.getSchoolOrAccountLevelPermissions(CP_PRIVILEGES_MAP.clubs);
+    const jobsPermission = this.getUserPermissionsAccessType(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.jobs
+    );
 
-    const servicePermission = this.getSchoolOrAccountLevelPermissions(CP_PRIVILEGES_MAP.services);
+    const linksPermission = this.getUserPermissionsAccessType(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.links
+    );
 
-    const athleticPermission = this.getSchoolOrAccountLevelPermissions(CP_PRIVILEGES_MAP.athletics);
+    const dealsPermission = this.getUserPermissionsAccessType(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.deals
+    );
 
-    const audiencePermission = this.getUserPermissionsAccessType(CP_PRIVILEGES_MAP.audience);
+    const wallsPermission = this.getUserPermissionsAccessType(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.moderation
+    );
 
-    const jobsPermission = this.getUserPermissionsAccessType(CP_PRIVILEGES_MAP.jobs);
+    const calendarPermission = this.getUserPermissionsAccessType(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.calendar
+    );
 
-    const linksPermission = this.getUserPermissionsAccessType(CP_PRIVILEGES_MAP.links);
+    const locationsPermission = this.getUserPermissionsAccessType(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.campus_maps
+    );
 
-    const dealsPermission = this.getUserPermissionsAccessType(CP_PRIVILEGES_MAP.deals);
+    const orientationPermission = this.getUserPermissionsAccessType(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.orientation
+    );
 
-    const wallsPermission = this.getUserPermissionsAccessType(CP_PRIVILEGES_MAP.moderation);
-
-    const calendarPermission = this.getUserPermissionsAccessType(CP_PRIVILEGES_MAP.calendar);
-
-    const locationsPermission = this.getUserPermissionsAccessType(CP_PRIVILEGES_MAP.campus_maps);
-
-    const orientationPermission = this.getUserPermissionsAccessType(CP_PRIVILEGES_MAP.orientation);
-
-    const studioPermission = this.getUserPermissionsAccessType(CP_PRIVILEGES_MAP.app_customization);
+    const studioPermission = this.getUserPermissionsAccessType(
+      schoolPrivileges,
+      CP_PRIVILEGES_MAP.app_customization
+    );
 
     return {
       club_permission: clubPermission,
@@ -152,10 +182,7 @@ export class CPAmplitudeService {
     };
   }
 
-  getSchoolOrAccountLevelPermissions(type) {
-    const schoolPrivileges = this.schoolLevelPrivilege;
-    const accountPrivileges = this.accountLevelPrivilege;
-
+  getSchoolOrAccountLevelPermissions(schoolPrivileges, accountPrivileges = {}, type) {
     let permissions;
     const privileges = schoolPrivileges[type];
 
@@ -175,9 +202,7 @@ export class CPAmplitudeService {
     return permissions;
   }
 
-  getEventPermissions() {
-    const schoolPrivileges = this.schoolLevelPrivilege;
-
+  getEventPermissions(schoolPrivileges) {
     const noReadWritePrivilege = {
       r: false,
       w: false
@@ -187,7 +212,8 @@ export class CPAmplitudeService {
 
     const eventPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.events] || noReadWritePrivilege;
 
-    const eventAssessmentPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance] || noReadWritePrivilege;
+    const eventAssessmentPrivilege =
+      schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance] || noReadWritePrivilege;
 
     if (eventPrivilege.w && eventAssessmentPrivilege.w) {
       permissions = amplitudeEvents.FULL_ACCESS;
@@ -198,21 +224,15 @@ export class CPAmplitudeService {
     return permissions;
   }
 
-  getUserPermissionsStatus(type) {
-    const schoolPrivileges = this.schoolLevelPrivilege;
-
+  getUserPermissionsStatus(schoolPrivileges, type) {
     return schoolPrivileges[type] ? amplitudeEvents.ENABLED : amplitudeEvents.DISABLED;
   }
 
-  getUserPermissionsAccessType(type) {
-    const schoolPrivileges = this.schoolLevelPrivilege;
-
+  getUserPermissionsAccessType(schoolPrivileges, type) {
     return schoolPrivileges[type] ? amplitudeEvents.FULL_ACCESS : amplitudeEvents.NO_ACCESS;
   }
 
-  getNotifyPermissions() {
-    const schoolPrivileges = this.schoolLevelPrivilege;
-
+  getNotifyPermissions(schoolPrivileges) {
     let permissions;
     const regular = schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
     const emergency = schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement];
@@ -226,5 +246,17 @@ export class CPAmplitudeService {
     }
 
     return permissions;
+  }
+
+  getAccountLevelPrivilege() {
+    const user = this.session.g.get('user');
+
+    return _get(user, 'account_level_privileges', {});
+  }
+
+  getSchoolLevelPrivileges(schoolId: number) {
+    const school = this.session.g.get('school');
+
+    return _get(school, ['school_level_privileges', schoolId], {});
   }
 }

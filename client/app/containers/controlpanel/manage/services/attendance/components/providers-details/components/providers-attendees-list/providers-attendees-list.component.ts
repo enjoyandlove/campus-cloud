@@ -65,7 +65,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     private utils: ServicesUtilsService,
     private eventUtils: EventUtilService,
     private cpTracking: CPTrackingService,
-    private providersService: ProvidersService
+    public providersService: ProvidersService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -104,13 +104,16 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   }
 
   fetchAllRecords(): Promise<any> {
-    const search = new HttpParams()
+    let search = new HttpParams()
       .append('all', '1')
-      .append('end', this.state.end)
-      .append('start', this.state.start)
-      .append('search_text', this.state.search_text)
       .append('service_id', this.provider.campus_service_id.toString())
       .append('service_provider_id', this.provider.id.toString());
+
+    if (this.state.start && this.state.end) {
+      search = search.append('end', this.state.end).append('start', this.state.start);
+    } else {
+      search = search.append('search_text', this.state.search_text);
+    }
 
     const stream$ = this.providersService.getProviderAssessments(
       this.startRange,
