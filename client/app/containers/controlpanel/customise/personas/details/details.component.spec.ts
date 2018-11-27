@@ -1,21 +1,34 @@
-import { configureTestSuite } from '../../../../../shared/tests';
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
-import { PersonasDetailsComponent } from './details.component';
 import { RouterTestingModule } from '@angular/router/testing';
-import { mockPersonas } from '../__mock__/personas.mock';
-import { mockSection } from '../sections/__mock__';
+import { HttpClientModule } from '@angular/common/http';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { of } from 'rxjs';
 
-const personas = mockPersonas;
-const section = mockSection;
+import { CPSession } from '../../../../../session';
+import { mockSection } from '../sections/__mock__';
+import { PersonasModule } from '../personas.module';
+import { RootStoreModule } from '../../../../../store';
+import { ICampusGuide } from '../sections/section.interface';
+import mockSession from '../../../../../session/mock/session';
+import { CPI18nService } from '../../../../../shared/services';
+import { PersonasDetailsComponent } from './details.component';
+import { configureTestSuite } from '../../../../../shared/tests';
 
 describe('PersonasDetailsComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        declarations: [PersonasDetailsComponent],
-        imports: [RouterTestingModule],
-        providers: []
+        declarations: [],
+        imports: [HttpClientModule, RouterTestingModule, PersonasModule, RootStoreModule],
+        providers: [
+          CPI18nService,
+          {
+            provide: CPSession,
+            useValue: mockSession
+          }
+        ],
+        schemas: [NO_ERRORS_SCHEMA]
       });
       await TestBed.compileComponents();
     })()
@@ -33,12 +46,34 @@ describe('PersonasDetailsComponent', () => {
 
       component.state = {
         ...component.state,
-        guides: [section]
+        guides: [mockSection]
       };
     })
   );
 
-  it('should return section empty', () => {});
+  it('should return section not empty', () => {
+    const sectionEmpty = component.isSectionEmpty(mockSection.id);
+    expect(sectionEmpty).toBe(false);
+  });
 
-  it('should call delete section', () => {});
+  it('should return section empty', () => {
+    component.state = {
+      ...component.state,
+      guides: [
+        ...component.state.guides.map((g: ICampusGuide) => {
+          return { ...g, tiles: [] };
+        })
+      ]
+    };
+    const sectionEmpty = component.isSectionEmpty(mockSection.id);
+    expect(sectionEmpty).toBe(true);
+  });
+
+  it('should delete section', () => {
+    spyOn(component.sectionService, 'deleteSectionTileCategory').and.callFake(function() {
+      return of({});
+    });
+    component.deleteEmptySection(mockSection.id);
+    expect(component.sectionService.deleteSectionTileCategory).toHaveBeenCalled();
+  });
 });
