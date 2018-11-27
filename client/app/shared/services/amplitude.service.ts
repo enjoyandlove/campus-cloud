@@ -1,7 +1,7 @@
 /* tslint:disable: max-line-length */
 import { Injectable } from '@angular/core';
-
 import { get as _get } from 'lodash';
+
 import { CPSession } from '../../session';
 import { amplitudeEvents } from '../constants/analytics';
 import { CP_PRIVILEGES_MAP } from '../constants/privileges';
@@ -27,7 +27,11 @@ export class CPAmplitudeService {
 
     require('node_modules/amplitude-js/src/amplitude-snippet.js');
 
-    window.amplitude.getInstance().init(api_key, this.getSchoolUserID(this.user));
+    try {
+      window.amplitude.getInstance().init(api_key, this.getSchoolUserID(this.user));
+    } catch {
+      return;
+    }
 
     this.setIdentity();
   }

@@ -11,39 +11,39 @@ service.school = {
 service.user = {
   school_level_privileges: {
     157: {
-      '13': {
+      [CP_PRIVILEGES_MAP.jobs]: {
         r: true,
         w: true
       },
-      '15': {
+      [CP_PRIVILEGES_MAP.services]: {
         r: true,
         w: true
       },
-      '17': {
+      [CP_PRIVILEGES_MAP.orientation]: {
         r: true,
         w: true
       },
-      '21': {
+      [CP_PRIVILEGES_MAP.campus_maps]: {
         r: true,
         w: true
       },
-      '24': {
+      [CP_PRIVILEGES_MAP.app_customization]: {
         r: true,
         w: true
       },
-      '25': {
+      [CP_PRIVILEGES_MAP.app_customization]: {
         r: true,
         w: true
-      },
+      }
     }
   },
   account_level_privileges: {
     '587': {
-      '22': {
+      [CP_PRIVILEGES_MAP.clubs]: {
         r: true,
         w: true
       },
-      '24': {
+      [CP_PRIVILEGES_MAP.services]: {
         r: true,
         w: true
       }
