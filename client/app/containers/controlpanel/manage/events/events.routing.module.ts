@@ -24,6 +24,11 @@ const appRoutes: Routes = [
   { path: 'import', redirectTo: '', pathMatch: 'full' },
 
   {
+    path: 'integrations',
+    loadChildren: './integrations/integrations.module#EventIntegrationsModule'
+  },
+
+  {
     path: '',
     data: { zendesk: 'events' },
     canActivate: [PrivilegesGuard],

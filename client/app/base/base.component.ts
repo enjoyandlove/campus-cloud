@@ -15,33 +15,32 @@ export abstract class BaseComponent {
   private _isLoading = new Subject<boolean>();
   private _isLoading$ = this._isLoading.asObservable();
 
-  fetchData(request: Observable<any>) {
+  updatePagination(response) {
+    this.pageNext = false;
+    this.pagePrev = this.pageNumber > 1;
+
+    if (response.length > this.maxPerPage) {
+      this.pageNext = true;
+      response.pop();
+    }
+    return response;
+  }
+
+  async fetchData(request: Observable<any>) {
     this._isLoading.next(true);
 
-    return request
-      .toPromise()
-      .then((response) => {
-        this.pageNext = false;
-        this.pagePrev = false;
-
-        if (this.pageNumber > 1) {
-          this.pagePrev = true;
-        }
-
-        if (response.length > this.maxPerPage) {
-          this.pageNext = true;
-          response.pop();
-        }
-
-        this._isLoading.next(false);
-
-        return Promise.resolve({
-          data: response,
-          pageNext: this.pageNext,
-          pagePrev: this.pagePrev
-        });
-      })
-      .catch((err) => Promise.reject(err));
+    try {
+      const response = await request.toPromise();
+      const data = this.updatePagination(response);
+      this._isLoading.next(false);
+      return Promise.resolve({
+        data,
+        pageNext: this.pageNext,
+        pagePrev: this.pagePrev
+      });
+    } catch (err) {
+      return Promise.reject(err);
+    }
   }
 
   goToNext(): void {

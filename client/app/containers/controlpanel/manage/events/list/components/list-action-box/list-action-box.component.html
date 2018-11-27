@@ -59,6 +59,11 @@
 
     <div class="col-3 text-right float-right" *ngIf="canCreateEvent">
       <a
+        routerLink="integrations"
+        class="cpbtn cpbtn--cancel integrations">
+        <i class="material-icons">link</i>
+      </a>
+      <a
         cpTracker
         [routerLink]="['create']"
         [eventData]="eventData"

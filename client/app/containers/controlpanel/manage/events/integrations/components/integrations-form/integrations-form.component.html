@@ -1,0 +1,51 @@
+<form [formGroup]="integration.form">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-6">
+        <label for="type">{{ 't_shared_type' | cpI18n }}</label>
+        <cp-dropdown
+          [items]="typesDropdown"
+          (selected)="onTypeSelected($event)">
+        </cp-dropdown>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-12">
+        <label for="url">{{ 't_shared_url' | cpI18n }}</label>
+        <input id="url" type="text" formControlName="feed_url">
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-12">
+        <label for="store_id">{{ 'select_host' | cpI18n }}</label>
+        <cp-dropdown
+          [items]="stores$ | async"
+          [selectedItem]="selectedItem"
+          (selected)="onHostSelected($event)">
+        </cp-dropdown>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="row">
+      <div class="col-12">
+        <label
+          for="poster_url">
+          {{ 't_event_integration_form_default_image' | cpI18n }}
+        </label>
+        <cp-image-upload
+          id="poster_url"
+          (uploaded)="onImageUpload($event)"
+          [defaultImage]="integration.form.get('poster_url').value">
+        </cp-image-upload>
+      </div>
+    </div>
+  </div>
+</form>
