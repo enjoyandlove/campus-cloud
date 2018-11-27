@@ -62,7 +62,7 @@ export class AssessUtilsService {
   createExcel(stream, student) {
     const columns = [
       this.cpI18n.translate('assess_check_in_time'),
-      this.cpI18n.translate('type'),
+      this.cpI18n.translate('t_shared_type'),
       this.cpI18n.translate('assess_checkin_date'),
       this.cpI18n.translate('t_assess_checkin_time_in'),
       this.cpI18n.translate('t_assess_checkout_date'),
@@ -89,7 +89,7 @@ export class AssessUtilsService {
         return {
           [this.cpI18n.translate('assess_check_in_time')]: item.name,
 
-          [this.cpI18n.translate('type')]: type[item.type],
+          [this.cpI18n.translate('t_shared_type')]: type[item.type],
 
           [this.cpI18n.translate('assess_checkin_date')]: CPDate.fromEpoch(
             item.time_epoch,
