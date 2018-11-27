@@ -1,23 +1,15 @@
-import {
-  Component,
-  OnInit,
-  EventEmitter,
-  Output,
-  ChangeDetectorRef,
-  HostListener,
-  ElementRef
-} from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
+import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { CPMap } from '../../../../../shared/utils';
+import { LocationsService } from '../locations.service';
+import { baseActions } from '../../../../../store/base';
 import { CPSession, ISchool } from '../../../../../session';
-import { hasAcronym, LocationsService } from '../locations.service';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
-
-declare var $: any;
+import { CPI18nService } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-locations-create',
@@ -25,12 +17,10 @@ declare var $: any;
   styleUrls: ['./locations-create.component.scss']
 })
 export class LocationsCreateComponent implements OnInit {
-  @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() locationCreated: EventEmitter<any> = new EventEmitter();
-
   buttonData;
   form: FormGroup;
   school: ISchool;
+  openingHours = false;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
 
@@ -40,22 +30,13 @@ export class LocationsCreateComponent implements OnInit {
   };
 
   constructor(
-    public el: ElementRef,
+    public router: Router,
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
-    public cdRef: ChangeDetectorRef,
-    public service: LocationsService,
-    public cpTracking: CPTrackingService
+    public storeHeader: Store<any>,
+    public service: LocationsService
   ) {}
-
-  @HostListener('document:click', ['$event'])
-  onClick(event) {
-    // out of modal reset form
-    if (event.target.contains(this.el.nativeElement)) {
-      this.resetModal();
-    }
-  }
 
   onResetMap() {
     CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
@@ -109,33 +90,27 @@ export class LocationsCreateComponent implements OnInit {
   doSubmit() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    this.service.createLocation(this.form.value, search).subscribe((newLocation) => {
-      this.trackEvent(newLocation);
-      $('#locationsUpdate').modal('hide');
-      this.locationCreated.emit(newLocation);
-      $('#locationsCreate').modal('hide');
-      this.resetModal();
+    this.service.createLocation(this.form.value, search).subscribe((_) => {
+      this.router.navigate(['/manage/locations']);
     });
   }
 
-  resetModal() {
-    this.teardown.emit();
-  }
-
-  trackEvent(res) {
-    this.eventProperties = {
-      ...this.eventProperties,
-      location_id: res.id,
-      acronym: hasAcronym(res.short_name)
+  buildHeader() {
+    const payload = {
+      heading: 't_locations_create_location',
+      subheading: null,
+      em: null,
+      children: []
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CREATED_LOCATION,
-      this.eventProperties
-    );
+    this.storeHeader.dispatch({
+      type: baseActions.HEADER_UPDATE,
+      payload
+    });
   }
 
   ngOnInit() {
+    this.buildHeader();
     this.school = this.session.g.get('school');
     this.mapCenter = new BehaviorSubject({
       lat: this.school.latitude,
@@ -143,32 +118,20 @@ export class LocationsCreateComponent implements OnInit {
     });
 
     this.form = this.fb.group({
-      name: [null, Validators.required],
-      short_name: [null, Validators.maxLength(32)],
-      address: [null, Validators.required],
       city: [null],
-      province: [null],
       country: [null],
+      province: [null],
       postal_code: [null],
+      name: [null, Validators.required],
+      address: [null, Validators.required],
       latitude: [this.school.latitude, Validators.required],
+      short_name: [null, Validators.maxLength(32)],
       longitude: [this.school.longitude, Validators.required]
     });
 
     this.buttonData = {
-      disabled: true,
       class: 'primary',
       text: this.cpI18n.translate('save')
     };
-
-    this.form.valueChanges.subscribe((_) => {
-      this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
-
-      /**
-       * INTENTIONAL
-       * In order to reenable the button
-       * after selecting a location from the dropdown
-       */
-      this.cdRef.detectChanges();
-    });
   }
 }

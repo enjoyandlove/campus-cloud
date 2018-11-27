@@ -1,50 +1,35 @@
-<div class="cpmodal">
-  <div class="cpmodal__header">
+<div class="margin-bottom" [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <form [formGroup]="form" *ngSwitchCase="false">
     <div class="row">
-      <div class="col-12 text-center">
-        <span i18n><strong>{{ 'locations_edit_modal_title' | cpI18n }}</strong></span>
+      <div class="col">
+        <div class="cp-card">
+          <div class="row event-details">
+            <div class="col-12">
+              <p class="title">{{ 't_locations_location_details' | cpI18n }}</p>
 
-        <span
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="float-right hover cpmodal__header__close">
-          &times;
-        </span>
-      </div>
-    </div>
-  </div>
-
-  <div [ngSwitch]="isFormReady">
-    <cp-spinner *ngSwitchCase="false"></cp-spinner>
-
-      <div class="cpmodal__body" *ngSwitchCase="true">
-        <div class="row">
-          <div class="col-12">
-            <form [formGroup]="form">
               <div class="form-group">
-                <div class="row">
-                  <div class="col-6">
-                    <label i18n>{{ 'name' | cpI18n }}</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="name"
-                      [class.error]="formError && form.controls['name'].hasError('required')">
-                  </div>
-                  <div class="col-6">
-                    <label i18n>{{ 'locations_label_acronym' | cpI18n }}</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="short_name"
-                      [class.error]="formError && form.controls['name'].hasError('required')">
-                  </div>
+                <label>{{ 'name' | cpI18n }}</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name">
+              </div>
+
+              <div class="row form-group">
+                <div class="col-6">
+                  <label>{{ 'locations_label_acronym' | cpI18n }}</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="short_name">
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-12">
-                  <label i18n>{{ 'address' | cpI18n }}</label>
+                  <label>{{ 'address' | cpI18n }}</label>
                   <div class="row form-group">
                     <div class="col-12">
                       <cp-place-autocomplete
@@ -70,28 +55,48 @@
                   </div>
                 </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
-  </div>
 
-  <div class="cpmodal__footer">
-    <div class="row justify-content-end">
-      <div class="col-6 text-right">
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="cpbtn cpbtn--cancel" i18n>
-          {{ 'cancel' | cpI18n }}
-        </button>
+      <div class="col">
+        <div class="cp-card">
+          <div class="row">
+            <div class="col-12">
+              <p class="title">{{ 't_locations_opening_hours' | cpI18n }}</p>
+              <span class="float-right">
+                <cp-switch [id]="openingHours"></cp-switch>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <cp-button
-          [props]="buttonData"
-          (buttonClick)="doSubmit()">
-        </cp-button>
+      <div class="footer">
+        <div class="cp-wrapper cp-wrapper--outer">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12">
+                <div class="text-right">
+                  <!--<label class="error" *ngIf="formError">
+                    <span>&#x26A0;</span>
+                    {{ // isDateError ? dateErrorMessage : cpI18n.translate('error_fill_out_marked_fields') }}
+                  </label>-->
+                  <a [routerLink]="['../../']"
+                     class="cpbtn cpbtn--cancel">
+                    {{ 'cancel' | cpI18n }}
+                  </a>
+                  <cp-button
+                    [props]="buttonData"
+                    (buttonClick)="doSubmit()">
+                  </cp-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
+  </form>
 </div>
