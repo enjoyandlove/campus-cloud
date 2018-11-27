@@ -122,17 +122,13 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       );
   }
 
-  onRemoveSection(sectionId: number) {
+  onRemoveSection(g: ICampusGuide) {
     this.setGuideDisabledStatus(false);
-    const filteredGuides = this.state.guides.filter((guide) => guide.id !== sectionId);
-
-    // if last section was deleted, add a temporary section
-    const temporaryGuide = [this.sectionUtils.temporaryGuide(9e4)];
-    const guides = filteredGuides.length ? filteredGuides : temporaryGuide;
+    const filteredGuides = this.state.guides.filter((guide) => guide.id !== g.id);
 
     this.state = {
       ...this.state,
-      guides
+      guides: filteredGuides
     };
   }
 
@@ -216,7 +212,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     this.state = { ...this.state, working: true };
     this.displayWarning();
 
-    return this.tileService
+    this.tileService
       .bulkUpdateTiles(search, body)
       .toPromise()
       .then(() => this.fetch(() => this.handleSuccess()))
@@ -263,7 +259,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         }
       };
     } else {
-      const previousSectionId = tile.tile_category_id;
       this.state = {
         ...this.state,
         guides: this.state.guides.map((g: ICampusGuide) => {
@@ -277,9 +272,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
           return g;
         })
       };
-      if (this.isSectionEmpty(previousSectionId)) {
-        this.deleteEmptySection(previousSectionId);
-      }
     }
   }
 
@@ -404,8 +396,6 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     }
 
     const school_id = this.session.g.get('school').id;
-    const previousSectionId = movingTile.tile_category_id;
-    const previousSectionEmpty = this.isSectionEmpty(previousSectionId);
 
     if (this.nonFeaturedTileToFeatureSection(movingTile, newCategory)) {
       const body = {
@@ -422,10 +412,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
         school_id,
         'featured_rank'
       );
-      await this.doBulkUpdate({ tilesToUpdate, movingTile });
-      if (previousSectionEmpty) {
-        this.deleteEmptySection(previousSectionId);
-      }
+      this.doBulkUpdate({ tilesToUpdate, movingTile });
     } else if (this.featuredTileToNonFeatureSection(movingTile, newCategory)) {
       const body = {
         ...movingTile,
@@ -450,25 +437,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
       const tilesToUpdate = this.sectionUtils.updateGuideTileRank(newCategory, school_id, 'rank');
 
-      await this.doBulkUpdate({ tilesToUpdate, movingTile });
-      if (previousSectionEmpty) {
-        this.deleteEmptySection(previousSectionId);
-      }
+      this.doBulkUpdate({ tilesToUpdate, movingTile });
     }
-  }
-
-  isSectionEmpty(sectionId: number) {
-    const section = this.state.guides.find((g: ICampusGuide) => g.id === sectionId);
-    const sectionEmpty = section ? section.tiles.length === 0 : false;
-
-    return sectionEmpty && !this.sectionUtils.isTemporaryGuide(section);
-  }
-
-  deleteEmptySection(sectionId: number) {
-    const search = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.sectionService
-      .deleteSectionTileCategory(sectionId, search)
-      .subscribe(() => this.onRemoveSection(sectionId), (_err) => {}); // ignore errors due to legacy issues
   }
 
   onDeletedSection(section: ICampusGuide) {

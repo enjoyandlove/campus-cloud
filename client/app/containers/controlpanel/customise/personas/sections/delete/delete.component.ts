@@ -15,7 +15,7 @@ export class PersonasSectioDeleteComponent implements OnInit {
   @Input() section: ICampusGuide;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() deleted: EventEmitter<number> = new EventEmitter();
+  @Output() deleted: EventEmitter<ICampusGuide> = new EventEmitter();
   @Output() error: EventEmitter<HttpErrorResponse> = new EventEmitter();
 
   buttonData;
@@ -30,7 +30,7 @@ export class PersonasSectioDeleteComponent implements OnInit {
 
   onDelete() {
     if (this.utils.isTemporaryGuide(this.section)) {
-      this.deleted.emit(this.section.id);
+      this.deleted.emit(this.section);
       this.teardown.emit();
 
       return;
@@ -40,7 +40,7 @@ export class PersonasSectioDeleteComponent implements OnInit {
 
     this.service.deleteSectionTileCategory(this.section.id, search).subscribe(
       () => {
-        this.deleted.emit(this.section.id);
+        this.deleted.emit(this.section);
         this.teardown.emit();
       },
       (err) => {
