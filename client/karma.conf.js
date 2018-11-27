@@ -1,5 +1,5 @@
-process.env.CHROME_BIN = require('puppeteer').executablePath();
-process.env.CHROME_DEVEL_SANDBOX = process.env.CHROME_BIN + '_sandbox';
+//process.env.CHROME_BIN = require('puppeteer').executablePath();
+//process.env.CHROME_DEVEL_SANDBOX = process.env.CHROME_BIN + '_sandbox';
 
 const jasmineSeedReporter = require('./jasmine-seed-reporter.js');
 

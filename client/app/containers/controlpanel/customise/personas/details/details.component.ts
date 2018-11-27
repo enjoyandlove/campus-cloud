@@ -457,9 +457,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
   isSectionEmpty(sectionId: number) {
     const section = this.state.guides.find((g: ICampusGuide) => g.id === sectionId);
-    const sectionEmpty = section.tiles.length === 0 && !this.sectionUtils.isTemporaryGuide(section);
+    const sectionEmpty = section ? section.tiles.length === 0 : false;
 
-    return section ? sectionEmpty : false;
+    return sectionEmpty && !this.sectionUtils.isTemporaryGuide(section);
   }
 
   deleteEmptySection(sectionId: number) {
