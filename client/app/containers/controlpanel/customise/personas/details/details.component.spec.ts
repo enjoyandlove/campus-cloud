@@ -44,39 +44,45 @@ describe('PersonasDetailsComponent', () => {
       fixture = TestBed.createComponent(PersonasDetailsComponent);
       component = fixture.componentInstance;
 
-      fixture.detectChanges();
-      fixture.whenStable().then(() => {
-        component.state = {
-          ...component.state,
-          guides: [mockSection]
-        };
-      });
+      component.state = {
+        ...component.state,
+        guides: [mockSection]
+      };
     })
   );
 
   it('should return section not empty', () => {
-    const sectionEmpty = component.isSectionEmpty(mockSection.id);
-    expect(sectionEmpty).toBe(false);
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      const sectionEmpty = component.isSectionEmpty(mockSection.id);
+      expect(sectionEmpty).toBe(false);
+    });
   });
 
   it('should return section empty', () => {
-    component.state = {
-      ...component.state,
-      guides: [
-        ...component.state.guides.map((g: ICampusGuide) => {
-          return { ...g, tiles: [] };
-        })
-      ]
-    };
-    const sectionEmpty = component.isSectionEmpty(mockSection.id);
-    expect(sectionEmpty).toBe(true);
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      component.state = {
+        ...component.state,
+        guides: [
+          ...component.state.guides.map((g: ICampusGuide) => {
+            return { ...g, tiles: [] };
+          })
+        ]
+      };
+      const sectionEmpty = component.isSectionEmpty(mockSection.id);
+      expect(sectionEmpty).toBe(true);
+    });
   });
 
   it('should delete section', () => {
-    spyOn(component.sectionService, 'deleteSectionTileCategory').and.callFake(function() {
-      return of({});
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      spyOn(component.sectionService, 'deleteSectionTileCategory').and.callFake(function() {
+        return of({});
+      });
+      component.deleteEmptySection(mockSection.id);
+      expect(component.sectionService.deleteSectionTileCategory).toHaveBeenCalled();
     });
-    component.deleteEmptySection(mockSection.id);
-    expect(component.sectionService.deleteSectionTileCategory).toHaveBeenCalled();
   });
 });
