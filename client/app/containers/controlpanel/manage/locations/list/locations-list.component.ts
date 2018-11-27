@@ -1,10 +1,12 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
+import * as fromStore from '../store';
 import { ManageHeaderService } from '../../utils';
+import { ILocation } from '../locations.interface';
 import { CPSession } from './../../../../../session';
-import { LocationsService } from '../locations.service';
 import { baseActions, IHeader } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
@@ -31,24 +33,21 @@ const state: IState = {
   styleUrls: ['./locations-list.component.scss']
 })
 export class LocationsListComponent extends BaseComponent implements OnInit {
-  loading;
   eventData;
   sortingLabels;
   deleteLocation = '';
   state: IState = state;
+  loading$: Observable<boolean>;
+  locations$: Observable<ILocation[]>;
 
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public store: Store<IHeader>,
     public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService,
-    private locationsService: LocationsService
+    public store: Store<fromStore.ILocationsState | IHeader>
   ) {
     super();
-    super.isLoading().subscribe((res) => (this.loading = res));
-
-    this.fetch();
   }
 
   private fetch() {
@@ -58,11 +57,13 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
       .append('sort_direction', this.state.sort_direction)
       .append('school_id', this.session.g.get('school').id);
 
-    const stream$ = this.locationsService.getLocations(this.startRange, this.endRange, search);
+    const payload = {
+      startRange: this.startRange,
+      endRange: this.endRange,
+      params: search
+    };
 
-    super.fetchData(stream$).then((res) => {
-      this.state = Object.assign({}, this.state, { locations: res.data });
-    });
+    this.store.dispatch(new fromStore.GetLocations(payload));
   }
 
   onPaginationNext() {
@@ -121,5 +122,9 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     this.sortingLabels = {
       locations: this.cpI18n.translate('locations')
     };
+
+    this.locations$ = this.store.select(fromStore.getLocations);
+    this.loading$ = this.store.select(fromStore.getLocationsLoading);
+    this.fetch();
   }
 }

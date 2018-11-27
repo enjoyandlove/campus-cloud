@@ -62,7 +62,6 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   public fetch() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    // todo: add location Interface
     super.fetchData(this.service.getLocationById(this.locationId, search)).then((location) => {
       this.buildForm(location.data);
     });
