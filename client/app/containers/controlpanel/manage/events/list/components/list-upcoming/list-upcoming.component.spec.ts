@@ -1,4 +1,4 @@
-import { EventUtilService } from './../../../events.utils.service';
+import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { configureTestSuite } from '@shared/tests';
 import { By } from '@angular/platform-browser';
@@ -9,7 +9,7 @@ import { mockSchool, mockUser } from '@app/session/mock';
 import { SharedModule } from '@app/shared/shared.module';
 import { CPI18nService } from '@shared/services/i18n.service';
 import { ListUpcomingComponent } from './list-upcoming.component';
-import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { EventUtilService } from './../../../events.utils.service';
 import { CPTrackingService } from '@shared/services/tracking.service';
 
 const initialState = {
