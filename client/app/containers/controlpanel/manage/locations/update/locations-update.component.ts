@@ -5,12 +5,14 @@ import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import * as fromStore from '../store';
+import * as fromRoot from '../../../../../store';
 import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base';
 import { LocationsService } from '../locations.service';
-import { baseActions, IHeader } from '../../../../../store/base';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { ILocation } from '@containers/controlpanel/manage/locations/locations.interface';
 
 @Component({
   selector: 'cp-locations-update',
@@ -19,7 +21,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 })
 export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   school;
-  loading;
+  loading$;
   buttonData;
   locationId;
   form: FormGroup;
@@ -37,11 +39,10 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
-    public store: Store<IHeader>,
-    public service: LocationsService
+    public service: LocationsService,
+    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>,
   ) {
     super();
-    super.isLoading().subscribe((res) => (this.loading = res));
     this.locationId = this.route.snapshot.params['locationId'];
   }
 
@@ -51,20 +52,31 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   }
 
   doSubmit() {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
+    const body = this.form.value;
+    const locationId = this.locationId;
+    const school_id = this.session.g.get('school').id;
+    const params = new HttpParams().append('school_id', school_id);
 
-    this.service
-      .updateLocation(this.form.value, this.locationId, search)
-      .subscribe(() => {
-        this.router.navigate(['/manage/locations']);
-      });
+    const payload = {
+      body,
+      params,
+      locationId
+    };
+
+    this.store.dispatch(new fromStore.EditLocation(payload));
   }
-  public fetch() {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
-    super.fetchData(this.service.getLocationById(this.locationId, search)).then((location) => {
-      this.buildForm(location.data);
-    });
+  public fetch() {
+    const locationId = this.locationId;
+    const school_id = this.session.g.get('school').id;
+    const params = new HttpParams().append('school_id', school_id);
+
+    const payload = {
+      params,
+      locationId
+    };
+
+    this.store.dispatch(new fromStore.GetLocationById(payload));
   }
 
   onMapSelection(data) {
@@ -113,7 +125,7 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
 
   buildHeader() {
     this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
+      type: fromRoot.baseActions.HEADER_UPDATE,
       payload: {
         heading: `t_locations_edit_location`,
         subheading: null,
@@ -146,6 +158,8 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
     this.fetch();
     this.buildHeader();
     this.school = this.session.g.get('school');
+    this.loading$ = this.store.select(fromStore.getLocationsLoading);
+    this.store.select(fromStore.getLocations).subscribe((location: ILocation[]) => this.buildForm(location));
 
     this.buttonData = {
       class: 'primary',

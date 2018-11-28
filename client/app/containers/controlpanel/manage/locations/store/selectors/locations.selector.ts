@@ -14,6 +14,11 @@ export const getLocations = createSelector(
   fromLocations.getLocations
 );
 
+export const getLocationsError = createSelector(
+  getLocationState,
+  fromLocations.getLocationsError
+);
+
 export const getLocationsLoading = createSelector(
   getLocationState,
   fromLocations.getLocationsLoading

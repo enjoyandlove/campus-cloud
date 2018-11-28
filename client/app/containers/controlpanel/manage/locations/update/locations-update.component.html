@@ -1,4 +1,4 @@
-<div class="margin-bottom" [ngSwitch]="loading">
+<div class="margin-bottom" [ngSwitch]="loading$ | async">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <form [formGroup]="form" *ngSwitchCase="false">

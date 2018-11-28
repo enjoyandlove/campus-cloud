@@ -1,13 +1,13 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import * as fromStore from '../store';
+import * as fromRoot from '../../../../../store';
 import { CPMap } from '../../../../../shared/utils';
 import { LocationsService } from '../locations.service';
-import { baseActions } from '../../../../../store/base';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
 
@@ -30,12 +30,11 @@ export class LocationsCreateComponent implements OnInit {
   };
 
   constructor(
-    public router: Router,
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
-    public storeHeader: Store<any>,
-    public service: LocationsService
+    public service: LocationsService,
+    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
   ) {}
 
   onResetMap() {
@@ -88,11 +87,16 @@ export class LocationsCreateComponent implements OnInit {
   }
 
   doSubmit() {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
+    const body = this.form.value;
+    const school_id = this.session.g.get('school').id;
+    const params = new HttpParams().append('school_id', school_id);
 
-    this.service.createLocation(this.form.value, search).subscribe((_) => {
-      this.router.navigate(['/manage/locations']);
-    });
+    const payload = {
+      body,
+      params
+    };
+
+    this.store.dispatch(new fromStore.PostLocation(payload));
   }
 
   buildHeader() {
@@ -103,8 +107,8 @@ export class LocationsCreateComponent implements OnInit {
       children: []
     };
 
-    this.storeHeader.dispatch({
-      type: baseActions.HEADER_UPDATE,
+    this.store.dispatch({
+      type: fromRoot.baseActions.HEADER_UPDATE,
       payload
     });
   }
