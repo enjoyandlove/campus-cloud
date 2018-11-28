@@ -41,3 +41,13 @@
     }
   }
 }
+
+.actions {
+  color: $color-secondary-text;
+
+  i {
+    top: 2px;
+    right: 10px;
+    position: relative;
+  }
+}

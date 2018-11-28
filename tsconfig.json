@@ -14,9 +14,8 @@
     "skipLibCheck": true,
     "typeRoots": ["node_modules/@types"],
     "paths": {
+      "@app/*": ["client/app/*"],
       "@shared/*": ["client/app/shared/*"],
-      "@config/*": ["client/app/config/*"],
-      "@session/*": ["client/app/session/*"],
       "@containers/*": ["client/app/containers/*"]
     }
   },
