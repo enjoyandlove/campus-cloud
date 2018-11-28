@@ -46,7 +46,7 @@
               {{ integration.feed_type | cpEventIntegrationType }}
             </span>
             <span class="col-3">
-              {{ integration.last_successful_sync_epoch | cpDatePipe:dateFormat }}
+              {{ integration.last_successful_sync_epoch > -1 ? (integration.last_successful_sync_epoch | cpDatePipe:dateFormat) : null }}
             </span>
             <span
               (click)="showDeleteModal = true"
