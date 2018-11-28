@@ -72,22 +72,4 @@ describe('ServicesProvidersAttendeesListComponent', () => {
       );
     });
   });
-
-  it('should get assessment with search', () => {
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      spyOn(component.providersService, 'getProviderAssessments').and.callThrough();
-      component.state.search_text = 'search';
-      component.fetchAllRecords();
-      const search = mkSearch('1', component.provider).append(
-        'search_text',
-        component.state.search_text
-      );
-      expect(component.providersService.getProviderAssessments).toHaveBeenCalledWith(
-        1,
-        101,
-        search
-      );
-    });
-  });
 });
