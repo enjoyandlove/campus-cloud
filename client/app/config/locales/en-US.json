@@ -1176,9 +1176,6 @@
   "engagement": {
     "message": "Engagement"
   },
-  "error": {
-    "message": "Error"
-  },
   "error_allow_local_storage_to_continue": {
     "message": "Your browser does not allow cookies.  Enable cookies in your browser to continue."
   },
@@ -1708,9 +1705,6 @@
   "locations_btn_create": {
     "message": "Create Location"
   },
-  "locations_create_modal_title": {
-    "message": "Create Location"
-  },
   "locations_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
@@ -2180,9 +2174,6 @@
   "start_date": {
     "message": "Start Date"
   },
-  "status": {
-    "message": "Status"
-  },
   "stores_create_modal_title": {
     "message": "Create Store"
   },
@@ -2285,9 +2276,6 @@
   },
   "total_ratings": {
     "message": "Ratings"
-  },
-  "type": {
-    "message": "Type"
   },
   "t_admin_invite_studio_limited_tooltip": {
     "message": "Full access to Studio requires permission to Athletics, Events, Clubs, Services, Calendar and Orientation. Your access to add resources will be limited without those permissions"
@@ -2554,6 +2542,9 @@
   "t_event_check_in_attendee_already_exist": {
     "message": "This person has already checked in."
   },
+  "t_event_integration_form_default_image": {
+    "message": "Poster Avatar"
+  },
   "t_external_checkin_already_checked_in": {
     "message": "This person has already checked in."
   },
@@ -2599,6 +2590,18 @@
   "t_jobs_ongoing": {
     "message": "Ongoing",
     "description": "Indicates that a job posting has no end date"
+  },
+  "t_locations_create_location": {
+    "message": "Create Location"
+  },
+  "t_locations_edit_location": {
+    "message": "Edit Location"
+  },
+  "t_locations_location_details": {
+    "message": "Location Details"
+  },
+  "t_locations_opening_hours": {
+    "message": "Opening Hours"
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
@@ -2945,6 +2948,9 @@
   "t_shared_average_rating": {
     "message": "Average Rating"
   },
+  "t_shared_btn_add_integration": {
+    "message": "Add Integration"
+  },
   "t_shared_cancel": {
     "message": "Cancel"
   },
@@ -2960,14 +2966,38 @@
   "t_shared_delete": {
     "message": "Delete"
   },
+  "t_shared_delete_confirmation": {
+    "message": "Are you sure you want to delete %s?"
+  },
   "t_shared_edit": {
     "message": "Edit"
+  },
+  "t_shared_entry_deleted_successfully": {
+    "message": "Item deleted"
+  },
+  "t_shared_error": {
+    "message": "Error"
+  },
+  "t_shared_failed": {
+    "message": "Failed"
+  },
+  "t_shared_feature_integrations": {
+    "message": "Integrations"
   },
   "t_shared_hide": {
     "message": "Hide"
   },
   "t_shared_image": {
     "message": "Image"
+  },
+  "t_shared_integration_create_form_modal_title": {
+    "message": "New Integration"
+  },
+  "t_shared_integration_delete_modal_title": {
+    "message": "Delete Integration"
+  },
+  "t_shared_integration_edit_form_modal_title": {
+    "message": "Edit Integration"
   },
   "t_shared_invalid_url": {
     "message": "Invalid URL (eg: https://google.com)"
@@ -2981,17 +3011,32 @@
   "t_shared_limited": {
     "message": "Limited"
   },
+  "t_shared_pending": {
+    "message": "Pending"
+  },
   "t_shared_preview": {
     "message": "Preview"
   },
   "t_shared_save": {
     "message": "Done"
   },
+  "t_shared_saved_update_success_message": {
+    "message": "Success! "
+  },
   "t_shared_show": {
     "message": "Show"
   },
+  "t_shared_status": {
+    "message": "Status"
+  },
+  "t_shared_successful": {
+    "message": "Successful"
+  },
   "t_shared_sync_now": {
     "message": "Sync Now"
+  },
+  "t_shared_type": {
+    "message": "Type"
   },
   "t_shared_url": {
     "message": "URL"

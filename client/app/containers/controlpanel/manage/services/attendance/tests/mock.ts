@@ -1,0 +1,21 @@
+import IServiceProvider from '../../providers.interface';
+
+export const mockProvider: IServiceProvider = {
+  avg_rating_percent: 83,
+  campus_service_id: 12806,
+  checkin_verification_methods: [1, 2, 3],
+  contactphone: '',
+  custom_basic_feedback_label: 'Were you able to check-in and out? Hope those burgers were good!',
+  email: 'test@gotoohlala.com',
+  encrypted_campus_service_id: 'WEgSG6jznW3RxLvv4Mb9IA',
+  encrypted_id: 'T3TSXclbUEmXMKxBpDsrbg',
+  has_checkout: true,
+  has_feedback: true,
+  id: 1929,
+  img_url: '',
+  num_ratings: 31,
+  provider_name: 'Service provider with check-in and check-out',
+  provider_type: 1,
+  total_visits: 32,
+  unique_visits: 8
+};
