@@ -2879,6 +2879,15 @@
   "t_services_label_checkout_time": {
     "message": "Sortie"
   },
+  "t_services_label_membership_wall": {
+    "message": "Membres et mur"
+  },
+  "t_services_membership_disabled": {
+    "message": "Les utilisateurs peuvent voir le service mais ne peuvent pas s'inscrire ou contacter les autres membres"
+  },
+  "t_services_membership_enabled": {
+    "message": "Autoriser les utilisateurs à s'inscrire et contacter les autres membres"
+  },
   "t_services_service_qr_enabled": {
     "message": "Code QR"
   },

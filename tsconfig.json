@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "ES5",
     "module": "commonjs",
     "emitDecoratorMetadata": true,
@@ -11,7 +12,13 @@
     "noUnusedParameters": true,
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types"],
+    "paths": {
+      "@shared/*": ["client/app/shared/*"],
+      "@config/*": ["client/app/config/*"],
+      "@session/*": ["client/app/session/*"],
+      "@containers/*": ["client/app/containers/*"]
+    }
   },
   "compileOnSave": false,
   "buildOnSave": false,
