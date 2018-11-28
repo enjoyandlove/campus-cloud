@@ -24,8 +24,7 @@
             <span class="col-2">{{ 't_shared_status' | cpI18n }}</span>
             <span class="col-1">{{ 't_shared_type' | cpI18n }}</span>
             <span class="col-3">{{ 't_shared_last_synced' | cpI18n }}</span>
-            <span class="col-1"></span>
-            <span class="col-1"></span>
+            <span class="col-2"></span>
           </div>
         </li>
 
@@ -49,16 +48,9 @@
             <span class="col-3">
               {{ integration.last_successful_sync_epoch | cpDatePipe:dateFormat }}
             </span>
-            <span class="col-1 text-right">
-              <button
-                type="button"
-                class="cpbtn cpbtn--link">
-                {{ 't_shared_sync_now' | cpI18n }}
-              </button>
-            </span>
             <span
               (click)="showDeleteModal = true"
-              class="col-1 hover delete-link text-right"
+              class="col-2 hover delete-link text-right"
               (click)="selectedIntegration = integration"
               data-toggle="modal" data-target="#integrationDelete">
               &times;
