@@ -56,24 +56,38 @@ describe('ServicesProvidersAttendeesListComponent', () => {
   );
 
   it('should get assessment with dates', () => {
-    spyOn(component.providersService, 'getProviderAssessments').and.callThrough();
-    component.state.start = '1';
-    component.state.end = '2';
-    component.fetchAllRecords();
-    const search = mkSearch('1', component.provider)
-      .append('end', component.state.end)
-      .append('start', component.state.start);
-    expect(component.providersService.getProviderAssessments).toHaveBeenCalledWith(1, 101, search);
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      spyOn(component.providersService, 'getProviderAssessments').and.callThrough();
+      component.state.start = '1';
+      component.state.end = '2';
+      component.fetchAllRecords();
+      const search = mkSearch('1', component.provider)
+        .append('end', component.state.end)
+        .append('start', component.state.start);
+      expect(component.providersService.getProviderAssessments).toHaveBeenCalledWith(
+        1,
+        101,
+        search
+      );
+    });
   });
 
   it('should get assessment with search', () => {
-    spyOn(component.providersService, 'getProviderAssessments').and.callThrough();
-    component.state.search_text = 'search';
-    component.fetchAllRecords();
-    const search = mkSearch('1', component.provider).append(
-      'search_text',
-      component.state.search_text
-    );
-    expect(component.providersService.getProviderAssessments).toHaveBeenCalledWith(1, 101, search);
+    fixture.detectChanges();
+    fixture.whenStable().then(() => {
+      spyOn(component.providersService, 'getProviderAssessments').and.callThrough();
+      component.state.search_text = 'search';
+      component.fetchAllRecords();
+      const search = mkSearch('1', component.provider).append(
+        'search_text',
+        component.state.search_text
+      );
+      expect(component.providersService.getProviderAssessments).toHaveBeenCalledWith(
+        1,
+        101,
+        search
+      );
+    });
   });
 });
