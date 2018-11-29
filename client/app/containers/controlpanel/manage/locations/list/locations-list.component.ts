@@ -4,10 +4,10 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
+import * as fromRoot from '../../../../../store';
 import { ManageHeaderService } from '../../utils';
 import { ILocation } from '../locations.interface';
 import { CPSession } from './../../../../../session';
-import { baseActions, IHeader } from '../../../../../store/base';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
@@ -45,7 +45,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService,
-    public store: Store<fromStore.ILocationsState | IHeader>
+    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
   ) {
     super();
   }
@@ -105,7 +105,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
 
   buildHeader() {
     this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
+      type: fromRoot.baseActions.HEADER_UPDATE,
       payload: this.headerService.filterByPrivileges()
     });
   }
