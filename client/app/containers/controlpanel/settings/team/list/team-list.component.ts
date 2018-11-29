@@ -116,7 +116,7 @@ export class TeamListComponent extends BaseComponent implements OnInit {
 
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),
-      status: this.cpI18n.translate('status')
+      status: this.cpI18n.translate('t_shared_status')
     };
   }
 }

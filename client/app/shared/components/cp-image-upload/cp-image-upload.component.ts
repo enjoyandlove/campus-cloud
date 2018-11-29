@@ -18,6 +18,7 @@ export class CPImageUploadComponent implements OnInit {
   @Input() heading: string;
   @Input() description: string;
   @Input() validationFn: Function;
+
   @Output() uploaded: EventEmitter<string> = new EventEmitter();
 
   image;
