@@ -7,21 +7,19 @@ import * as fromStore from '../store';
 import * as fromRoot from '../../../../../store';
 import { ManageHeaderService } from '../../utils';
 import { ILocation } from '../locations.interface';
-import { CPSession } from './../../../../../session';
+import { CPSession } from '../../../../../session';
+import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 import { BaseComponent } from '../../../../../base/base.component';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 interface IState {
-  locations: Array<any>;
   search_str: string;
   sort_field: string;
   sort_direction: string;
 }
 
 const state: IState = {
-  locations: [],
   search_str: null,
   sort_field: 'name',
   sort_direction: 'asc'
@@ -94,13 +92,6 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     };
 
     this.fetch();
-  }
-
-  onLocationDeleted(locationId) {
-    this.state = {
-      ...this.state,
-      locations: this.state.locations.filter((location) => location.id !== locationId)
-    };
   }
 
   buildHeader() {

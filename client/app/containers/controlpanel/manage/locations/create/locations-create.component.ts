@@ -5,11 +5,10 @@ import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
+import { CPMap } from '@shared/utils';
 import * as fromRoot from '../../../../../store';
-import { CPMap } from '../../../../../shared/utils';
-import { LocationsService } from '../locations.service';
+import { CPI18nService } from '@shared/services';
 import { CPSession, ISchool } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
 
 @Component({
   selector: 'cp-locations-create',
@@ -33,7 +32,6 @@ export class LocationsCreateComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
-    public service: LocationsService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
   ) {}
 

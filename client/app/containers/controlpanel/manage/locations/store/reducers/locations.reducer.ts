@@ -105,7 +105,7 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
         ...state,
         error: false,
         loaded: true,
-        loading: true
+        loading: false
       };
     }
 

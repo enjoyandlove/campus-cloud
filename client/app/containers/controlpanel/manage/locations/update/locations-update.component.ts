@@ -1,8 +1,9 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { OnInit, Component, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -10,7 +11,6 @@ import * as fromRoot from '../../../../../store';
 import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
 import { BaseComponent } from '../../../../../base';
-import { LocationsService } from '../locations.service';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { ILocation } from '@containers/controlpanel/manage/locations/locations.interface';
 
@@ -19,7 +19,7 @@ import { ILocation } from '@containers/controlpanel/manage/locations/locations.i
   templateUrl: './locations-update.component.html',
   styleUrls: ['./locations-update.component.scss']
 })
-export class LocationsUpdateComponent extends BaseComponent implements OnInit {
+export class LocationsUpdateComponent extends BaseComponent implements OnInit, OnDestroy {
   school;
   loading$;
   buttonData;
@@ -33,13 +33,14 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
     location_id: null
   };
 
+  private destroy$ = new Subject();
+
   constructor(
     public router: Router,
     private fb: FormBuilder,
     private session: CPSession,
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
-    public service: LocationsService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>,
   ) {
     super();
@@ -159,11 +160,18 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
     this.buildHeader();
     this.school = this.session.g.get('school');
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
-    this.store.select(fromStore.getLocations).subscribe((location: ILocation[]) => this.buildForm(location));
+    this.store.select(fromStore.getLocations)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((location: ILocation[]) => this.buildForm(location));
 
     this.buttonData = {
       class: 'primary',
       text: this.cpI18n.translate('update')
     };
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import * as fromRoot from '../../../../../store';
 import { ILocation } from '../locations.interface';
-import { CPSession } from './../../../../../session';
-import { CPTrackingService } from '../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPSession } from '../../../../../session';
+import { CPTrackingService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants/analytics';
 
 declare var $: any;
 
@@ -18,8 +18,6 @@ declare var $: any;
 })
 export class LocationsDeleteComponent implements OnInit {
   @Input() location: ILocation;
-
-  @Output() locationDeleted: EventEmitter<null> = new EventEmitter();
 
   eventProperties;
 
@@ -41,7 +39,6 @@ export class LocationsDeleteComponent implements OnInit {
 
     this.store.dispatch(new fromStore.DeleteLocation(payload));
     this.trackEvent();
-    this.locationDeleted.emit();
     $('#locationsDelete').modal('hide');
   }
 
