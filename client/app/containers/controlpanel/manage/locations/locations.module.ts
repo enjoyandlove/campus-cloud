@@ -11,6 +11,7 @@ import { LocationsDeleteComponent } from './delete';
 import { LocationsUpdateComponent } from './update';
 import { LocationsCreateComponent } from './create';
 import { LocationsListTopBarComponent } from './list/components';
+import { LocationFormComponent } from './components/location-form';
 
 import { LocationsService } from './locations.service';
 import { SharedModule } from '../../../../shared/shared.module';
@@ -19,11 +20,14 @@ import { LocationsRoutingModule } from './locations.routing.module';
 @NgModule({
   declarations: [
     LocationsListComponent,
+    LocationFormComponent,
     LocationsDeleteComponent,
     LocationsUpdateComponent,
-    LocationsListTopBarComponent,
-    LocationsCreateComponent
+    LocationsCreateComponent,
+    LocationsListTopBarComponent
   ],
+
+  exports: [LocationFormComponent],
 
   imports: [
     CommonModule,

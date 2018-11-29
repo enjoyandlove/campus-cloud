@@ -26,6 +26,7 @@ export * from './cp-onboarding';
 export * from './cp-no-content';
 export * from './cp-datepicker';
 export * from './cp-pagination';
+export * from './cp-form-footer';
 export * from './cp-page-header';
 export * from './cp-text-editor';
 export * from './cp-range-picker';

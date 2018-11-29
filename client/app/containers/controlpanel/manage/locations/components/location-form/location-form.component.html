@@ -1,0 +1,125 @@
+<form [formGroup]="location.form">
+  <div class="row form-group">
+    <div class="col-12">
+      <label>{{ 'category' | cpI18n }}</label>
+      <cp-dropdown
+        [items]="categories"
+        (selected)="onSelectedCategory($event)"
+        [isRequiredError]="formErrors && location.form.get('category_id').hasError('required')">
+      </cp-dropdown>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>{{ 'name' | cpI18n }}</label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="name"
+      [class.error]="formErrors && location.form.get('name').hasError('required')">
+  </div>
+
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 'locations_label_acronym' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="short_name">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <label>{{ 't_locations_photo' | cpI18n }}</label>
+      <cp-image-upload
+        class="col-12"
+        (uploaded)="onUploadedImage($event)">
+      </cp-image-upload>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-12">
+      <label>{{ 'address' | cpI18n }}</label>
+      <cp-place-autocomplete
+        disableLocations
+        [newAddress]="newAddress"
+        (backToDefault)="onResetMap()"
+        (placeChange)="onPlaceChange($event)"
+        [defaultValue]="location.form.get('address').value">
+      </cp-place-autocomplete>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 't_latitude' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="latitude"
+        [class.error]="formErrors && location.form.get('latitude').hasError('required')">
+    </div>
+
+    <div class="col-6">
+      <label>{{ 't_longitude' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="longitude"
+        [class.error]="formErrors && location.form.get('longitude').hasError('required')">
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-12">
+      <cp-maps
+        class="map"
+        [center]="mapCenter"
+        (mapSelection)="onMapSelection($event)">
+      </cp-maps>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>{{ 'description' | cpI18n }}</label>
+    <textarea formControlName="description"></textarea>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 'phone' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="phone">
+    </div>
+
+    <div class="col-6">
+      <label>{{ 'email' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="email">
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 't_locations_link_label' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="link_label">
+    </div>
+
+    <div class="col-6">
+      <label>{{ 't_locations_link' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="link">
+    </div>
+  </div>
+</form>

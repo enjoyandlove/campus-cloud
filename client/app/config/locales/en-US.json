@@ -1004,7 +1004,7 @@
     "message": "Assessment"
   },
   "dashboard_campus_tile_title": {
-    "message": "Campus Guide Activity\n"
+    "message": "Campus Tile Activity"
   },
   "dashboard_club_views": {
     "message": "Club Views"
@@ -2591,17 +2591,32 @@
     "message": "Ongoing",
     "description": "Indicates that a job posting has no end date"
   },
+  "t_latitude": {
+    "message": "Latitude"
+  },
   "t_locations_create_location": {
     "message": "Create Location"
   },
   "t_locations_edit_location": {
     "message": "Edit Location"
   },
+  "t_locations_link": {
+    "message": "Link"
+  },
+  "t_locations_link_label": {
+    "message": "Link Label"
+  },
   "t_locations_location_details": {
     "message": "Location Details"
   },
   "t_locations_opening_hours": {
     "message": "Opening Hours"
+  },
+  "t_locations_photo": {
+    "message": "Photo"
+  },
+  "t_longitude": {
+    "message": "Longitude"
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"

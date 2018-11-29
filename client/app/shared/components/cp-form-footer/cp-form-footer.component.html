@@ -1,0 +1,24 @@
+<div class="footer">
+  <div class="cp-wrapper cp-wrapper--outer">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12">
+          <div class="text-right">
+            <label class="error" *ngIf="formErrors">
+              <i class="material-icons">warning</i>
+              {{ errorMessage ? errorMessage : 'error_fill_out_marked_fields' | cpI18n }}
+            </label>
+            <a [routerLink]="cancelLink"
+               class="cpbtn cpbtn--cancel">
+              {{ 'cancel' | cpI18n }}
+            </a>
+            <cp-button
+              [props]="buttonData"
+              (buttonClick)="doSubmit.emit()">
+            </cp-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
