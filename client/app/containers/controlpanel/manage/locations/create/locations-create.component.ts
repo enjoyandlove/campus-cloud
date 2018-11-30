@@ -6,9 +6,9 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPMap } from '@shared/utils';
-import * as fromRoot from '../../../../../store';
+import * as fromRoot from '@app/store';
 import { CPI18nService } from '@shared/services';
-import { CPSession, ISchool } from '../../../../../session';
+import { CPSession, ISchool } from '@app/session';
 
 @Component({
   selector: 'cp-locations-create',

@@ -7,12 +7,12 @@ import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '../../../../../store';
-import { CPSession } from '../../../../../session';
-import { CPMap } from '../../../../../shared/utils';
+import * as fromRoot from '@app/store';
+import { CPSession } from '@app/session';
+import { CPMap } from '@app/shared/utils';
+import { ILocation } from '../locations.interface';
 import { BaseComponent } from '../../../../../base';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { ILocation } from '@containers/controlpanel/manage/locations/locations.interface';
 
 @Component({
   selector: 'cp-locations-update',

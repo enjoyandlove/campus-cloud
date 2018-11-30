@@ -3,9 +3,9 @@ import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '../../../../../store';
+import * as fromRoot from '@app/store';
+import { CPSession } from '@app/session';
 import { ILocation } from '../locations.interface';
-import { CPSession } from '../../../../../session';
 import { CPTrackingService } from '@shared/services';
 import { amplitudeEvents } from '@shared/constants/analytics';
 

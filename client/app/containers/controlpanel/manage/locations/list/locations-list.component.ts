@@ -1,13 +1,14 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { map, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
-import * as fromRoot from '../../../../../store';
+import * as fromRoot from '@app/store';
+import { CPSession } from '@app/session';
 import { ManageHeaderService } from '../../utils';
 import { ILocation } from '../locations.interface';
-import { CPSession } from '../../../../../session';
 import { CP_TRACK_TO } from '@shared/directives/tracking';
 import { amplitudeEvents } from '@shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '@shared/services';
@@ -30,13 +31,17 @@ const state: IState = {
   templateUrl: './locations-list.component.html',
   styleUrls: ['./locations-list.component.scss']
 })
-export class LocationsListComponent extends BaseComponent implements OnInit {
+export class LocationsListComponent extends BaseComponent implements OnInit, OnDestroy {
   eventData;
+  error = false;
   sortingLabels;
   deleteLocation = '';
   state: IState = state;
   loading$: Observable<boolean>;
   locations$: Observable<ILocation[]>;
+  contentText = 't_locations_no_location_found';
+
+  private destroy$ = new Subject();
 
   constructor(
     public session: CPSession,
@@ -101,8 +106,31 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     });
   }
 
+  loadLocations() {
+    this.locations$ = this.store.select(fromStore.getLocations).pipe(
+      map((locations: ILocation[]) => {
+        const responseCopy = [...locations];
+
+        return super.updatePagination(responseCopy);
+      })
+    );
+  }
+
+  setErrors() {
+    this.store.select(fromStore.getLocationsError)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((isError) => {
+        this.error = isError;
+        this.contentText  = isError
+          ? 'something_went_wrong'
+          : 't_locations_no_location_found';
+      });
+  }
+
   ngOnInit() {
+    this.setErrors();
     this.buildHeader();
+    this.loadLocations();
 
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
@@ -114,8 +142,12 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
       locations: this.cpI18n.translate('locations')
     };
 
-    this.locations$ = this.store.select(fromStore.getLocations);
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
     this.fetch();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.unsubscribe();
   }
 }

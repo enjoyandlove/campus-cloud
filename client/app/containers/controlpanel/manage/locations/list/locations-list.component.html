@@ -12,8 +12,8 @@
   <div *ngSwitchCase="false">
     <cp-no-content
       class="no-content"
-      *ngIf="!(locations$ | async).length"
-      [noContentText]="'t_locations_no_location_found' | cpI18n">
+      *ngIf="!(locations$ | async).length || error"
+      [noContentText]="contentText | cpI18n">
     </cp-no-content>
 
     <div *ngIf="(locations$ | async).length">

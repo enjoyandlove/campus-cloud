@@ -53,7 +53,7 @@ export class GetLocationByIdFail implements Action {
 
 export class GetLocationByIdSuccess implements Action {
   readonly type = locationActions.GET_LOCATION_BY_ID_SUCCESS;
-  constructor(public payload: ILocation) {}
+  constructor(public payload: any) {}
 }
 
 export class PostLocation implements Action {
