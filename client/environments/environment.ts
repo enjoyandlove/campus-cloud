@@ -2,9 +2,32 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
+interface IWildCard {
+  ['*']: boolean;
+}
+
+interface IFeatureFlag {
+  [key: string]: {
+    active: boolean;
+    internal?: boolean;
+  };
+}
+
+type Flag = IFeatureFlag | IWildCard;
+
+export interface IEnvironment {
+  flags: Flag;
+  root: string;
+  envName: string;
+  production: boolean;
+}
+
+export const environment: IEnvironment = {
   root: '/',
   production: false,
+  flags: {
+    '*': true
+  },
   envName: 'development'
 };
 

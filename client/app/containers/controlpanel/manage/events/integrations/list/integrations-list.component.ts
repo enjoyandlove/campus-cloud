@@ -173,7 +173,9 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
   }
 
   ngOnDestroy() {
-    this.destroy$.next(true);
+    this.destroy$.next();
+    this.destroy$.complete();
     this.destroy$.unsubscribe();
+    this.store.dispatch(new fromStore.Destroy());
   }
 }
