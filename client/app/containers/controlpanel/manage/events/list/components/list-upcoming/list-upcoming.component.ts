@@ -7,7 +7,6 @@ import {
 
 import IEvent from '../../../event.interface';
 import { EventAttendance } from '../../../event.status';
-import { EventsService } from '../../../events.service';
 import { FORMAT } from '../../../../../../../shared/pipes';
 import { CPSession } from './../../../../../../../session';
 import { EventUtilService } from '../../../events.utils.service';
@@ -53,7 +52,6 @@ export class ListUpcomingComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: EventsService,
     public utils: EventUtilService,
     private cpTracking: CPTrackingService
   ) {}

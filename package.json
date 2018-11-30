@@ -127,7 +127,6 @@
     "prettier": "1.11.1",
     "pretty-quick": "1.4.1",
     "protractor": "5.1.2",
-    "puppeteer": "1.10.0",
     "raw-loader": "0.5.1",
     "remap-istanbul": "0.9.5",
     "rimraf": "^2.5.1",
@@ -143,5 +142,8 @@
     "webpack": "3.5.3",
     "webpack-bundle-analyzer": "2.9.0",
     "webpack-dev-server": "2.7.1"
+  },
+  "optionalDependencies": {
+    "puppeteer": "1.10.0"
   }
 }
