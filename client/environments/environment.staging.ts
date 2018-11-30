@@ -1,4 +1,4 @@
-import { IEnvironment } from './environment';
+import { IEnvironment } from './environment.interface';
 
 export const environment: IEnvironment = {
   root: '/dist/',

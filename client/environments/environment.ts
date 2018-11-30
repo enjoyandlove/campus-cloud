@@ -1,26 +1,7 @@
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
-
-interface IWildCard {
-  ['*']: boolean;
-}
-
-interface IFeatureFlag {
-  [key: string]: {
-    active: boolean;
-    internal?: boolean;
-  };
-}
-
-type Flag = IFeatureFlag | IWildCard;
-
-export interface IEnvironment {
-  flags: Flag;
-  root: string;
-  envName: string;
-  production: boolean;
-}
+import { IEnvironment } from './environment.interface';
 
 export const environment: IEnvironment = {
   root: '/',
