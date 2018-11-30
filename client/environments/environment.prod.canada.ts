@@ -1,11 +1,10 @@
-import { IEnvironment } from './environment';
-import { EVENTS_INTEGRATION } from '@shared/constants';
+import { IEnvironment } from './environment.interface';
 
 export const environment: IEnvironment = {
   root: '/dist/',
   production: true,
   flags: {
-    [EVENTS_INTEGRATION]: {
+    EVENTS_INTEGRATION: {
       active: false,
       internal: true
     }
