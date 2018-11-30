@@ -1,17 +1,18 @@
 /*tslint:disable:max-line-length */
 import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 
+import { IService } from '../service.interface';
+import { AdminService } from '@shared/services';
+import { CPSession, ISchool } from '@app/session';
 import { ServicesService } from '../services.service';
-import { CPSession, ISchool } from '../../../../../session';
-import { AdminService } from '../../../../../shared/services';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { BaseComponent } from '@app/base/base.component';
 import { ServicesUtilsService } from '../services.utils.service';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
+import { IResourceBanner } from '@shared/components/cp-resource-banner';
 
 @Component({
   selector: 'cp-services-info',
@@ -35,7 +36,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     private route: ActivatedRoute,
-    private adminService: AdminService,
+    public adminService: AdminService,
     private utils: ServicesUtilsService,
     private serviceService: ServicesService
   ) {
@@ -43,34 +44,36 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     this.school = this.session.g.get('school');
     super.isLoading().subscribe((res) => (this.loading = res));
     this.serviceId = this.route.snapshot.params['serviceId'];
-
-    this.fetch();
   }
 
   private fetch() {
-    const search: HttpParams = new HttpParams()
-      .append('school_id', this.school.id.toString())
-      .append('store_id', this.serviceId.toString())
-      .append('privilege_type', CP_PRIVILEGES_MAP.services.toString());
-
     const service$ = this.serviceService.getServiceById(this.serviceId);
 
-    const admins$ = this.adminService
-      .getAdminByStoreId(search)
-      .pipe(map((admins: Array<any>) => admins.filter((admin) => !admin.is_school_level)));
+    const stream$ = service$.pipe(
+      switchMap((serviceResponse: IService) => {
+        this.service = serviceResponse;
+        this.storeId = this.service.store_id;
 
-    const stream$ = combineLatest(service$, admins$);
-    super.fetchData(stream$).then((res) => {
-      this.admins = res.data[1];
-      this.service = res.data[0];
-      this.storeId = this.service.store_id;
-      this.showLocationDetails = res.data[0].latitude !== 0 && res.data[0].longitude !== 0;
+        const search: HttpParams = new HttpParams()
+          .append('school_id', this.school.id.toString())
+          .append('store_id', this.storeId.toString())
+          .append('privilege_type', CP_PRIVILEGES_MAP.services.toString());
+
+        return this.adminService
+          .getAdminByStoreId(search)
+          .pipe(map((admins: Array<any>) => admins.filter((admin) => !admin.is_school_level)));
+      })
+    );
+
+    super.fetchData(stream$).then((admins) => {
+      this.admins = admins.data;
 
       this.utils.buildServiceHeader(this.service);
 
+      this.showLocationDetails = this.service.latitude !== 0 && this.service.longitude !== 0;
       this.mapCenter = new BehaviorSubject({
-        lat: res.data[0].latitude,
-        lng: res.data[0].longitude
+        lat: this.service.latitude,
+        lng: this.service.longitude
       });
 
       this.resourceBanner = {
@@ -86,5 +89,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fetch();
+  }
 }

@@ -43,6 +43,7 @@
     "@angular/router": "^7.0.0",
     "@ngrx/core": "^1.2.0",
     "@ngrx/effects": "6.0.1",
+    "@ngrx/router-store": "6.1.2",
     "@ngrx/store": "6.0.1",
     "@types/moment-duration-format": "^2.2.2",
     "@types/moment-timezone": "0.5.4",
@@ -141,5 +142,8 @@
     "webpack": "3.5.3",
     "webpack-bundle-analyzer": "2.9.0",
     "webpack-dev-server": "2.7.1"
+  },
+  "optionalDependencies": {
+    "puppeteer": "1.10.0"
   }
 }

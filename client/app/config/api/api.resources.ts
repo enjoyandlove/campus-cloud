@@ -87,6 +87,8 @@ export const API_ENDPOINTS = {
 
   SERVICE_ASSESSMENT: 'service_assessment',
 
+  EVENT_INTEGRATIONS: 'external_feed/event',
+
   DASHBOARD_TOP_CLUBS: 'analytics/club_data',
 
   GUIDE_TILE_CATEGORY: 'guide_tile_category',

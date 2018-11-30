@@ -66,12 +66,19 @@
         </a>
       </span>
 
-      <span
-        *ngIf="canDelete"
-        (click)="onDelete(event)"
-        data-toggle="modal" data-target="#deleteEventsModal"
-        class="col-1 hover text-truncate delete-event text-center">
-        &times;
+      <span class="col-1 text-right actions">
+        <i
+          *ngIf="event.is_external"
+          class="material-icons js_event_external">
+          link
+        </i>
+        <span
+          *ngIf="canDelete"
+          (click)="onDelete(event)"
+          class="hover text-truncate delete-event"
+          data-toggle="modal" data-target="#deleteEventsModal">
+          &times;
+        </span>
       </span>
     </div>
   </li>

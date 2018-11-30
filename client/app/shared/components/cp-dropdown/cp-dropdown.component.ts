@@ -9,9 +9,9 @@ import {
 
 import { Observable, of as observableOf } from 'rxjs';
 
-interface IItems {
+export interface IItem {
   label: string;
-  action: string;
+  action: string | number;
   heading?: boolean;
 }
 
@@ -22,7 +22,7 @@ interface IItems {
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CPDropdownComponent implements OnInit {
-  @Input() items: IItems[];
+  @Input() items: IItem[];
   @Input() disabled = false;
   @Input() selectedItem: any;
   @Input() isRequiredError: boolean;

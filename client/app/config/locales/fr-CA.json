@@ -1004,7 +1004,7 @@
     "message": "Évaluation"
   },
   "dashboard_campus_tile_title": {
-    "message": "Activité du guide du campus"
+    "message": "Activité de Tuile de Campus"
   },
   "dashboard_club_views": {
     "message": "Vues du club"
@@ -1175,9 +1175,6 @@
   },
   "engagement": {
     "message": "Implication"
-  },
-  "error": {
-    "message": "Erreur"
   },
   "error_allow_local_storage_to_continue": {
     "message": "Votre navigateur n'autorise pas les cookies. Activez les cookies dans votre navigateur pour continuer."
@@ -1708,9 +1705,6 @@
   "locations_btn_create": {
     "message": "Créer lieu"
   },
-  "locations_create_modal_title": {
-    "message": "Créer lieu"
-  },
   "locations_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
@@ -2180,9 +2174,6 @@
   "start_date": {
     "message": "Date de début"
   },
-  "status": {
-    "message": "Statut"
-  },
   "stores_create_modal_title": {
     "message": "Créer magasin"
   },
@@ -2285,9 +2276,6 @@
   },
   "total_ratings": {
     "message": "Notes"
-  },
-  "type": {
-    "message": "Type"
   },
   "t_assess_all_orientations": {
     "message": "Tous les programmes d'orientation"
@@ -2597,6 +2585,9 @@
     "message": "Ongoing",
     "description": "Indicates that a job posting has no end date"
   },
+  "t_locations_create_location": {
+    "message": "Créer lieu"
+  },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "Mes expériences"
   },
@@ -2888,6 +2879,15 @@
   "t_services_label_checkout_time": {
     "message": "Sortie"
   },
+  "t_services_label_membership_wall": {
+    "message": "Membres et mur"
+  },
+  "t_services_membership_disabled": {
+    "message": "Les utilisateurs peuvent voir le service mais ne peuvent pas s'inscrire ou contacter les autres membres"
+  },
+  "t_services_membership_enabled": {
+    "message": "Autoriser les utilisateurs à s'inscrire et contacter les autres membres"
+  },
   "t_services_service_qr_enabled": {
     "message": "Code QR"
   },
@@ -2942,8 +2942,14 @@
   "t_shared_delete": {
     "message": "Supprimer"
   },
+  "t_shared_delete_confirmation": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
   "t_shared_edit": {
     "message": "Éditer"
+  },
+  "t_shared_error": {
+    "message": "Erreur"
   },
   "t_shared_hide": {
     "message": "Cacher"
@@ -2960,6 +2966,9 @@
   "t_shared_limited": {
     "message": "Limité"
   },
+  "t_shared_pending": {
+    "message": "En attente"
+  },
   "t_shared_preview": {
     "message": "Aperçu"
   },
@@ -2968,6 +2977,15 @@
   },
   "t_shared_show": {
     "message": "Montrer"
+  },
+  "t_shared_status": {
+    "message": "Statut"
+  },
+  "t_shared_successful": {
+    "message": "Réussi"
+  },
+  "t_shared_type": {
+    "message": "Type"
   },
   "t_shared_url": {
     "message": "Lien"

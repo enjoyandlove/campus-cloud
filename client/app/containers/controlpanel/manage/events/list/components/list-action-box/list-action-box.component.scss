@@ -5,6 +5,14 @@
 @import '~client/style/components/button';
 @import '~client/style/components/dropdown';
 
+.integrations {
+  margin-right: 10px;
+  i {
+    font-size: 20px;
+    vertical-align: -5px;
+  }
+}
+
 .dropdown-menu,
 .action-dropdown-list {
   @include cpDropdownMenu();
