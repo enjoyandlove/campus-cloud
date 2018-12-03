@@ -2966,6 +2966,9 @@
   "t_shared_limited": {
     "message": "Limité"
   },
+  "t_shared_no_integrations_found": {
+    "message": "Aucune intégration trouvée"
+  },
   "t_shared_pending": {
     "message": "En attente"
   },

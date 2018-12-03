@@ -3029,6 +3029,9 @@
   "t_shared_limited": {
     "message": "Limited"
   },
+  "t_shared_no_integrations_found": {
+    "message": "No integration found"
+  },
   "t_shared_pending": {
     "message": "Pending"
   },

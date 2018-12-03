@@ -1,5 +1,5 @@
-import { EventIntegration } from './../../model/integration.model';
 import * as fromIntegrations from '../actions';
+import { EventIntegration } from './../../model/integration.model';
 
 export interface IntegrationsState {
   error: boolean;
@@ -150,6 +150,13 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         hosts: [...data]
+      };
+    }
+
+    case fromIntegrations.IntegrationActions.DESTROY: {
+      return {
+        ...state,
+        completedAction: null
       };
     }
 
