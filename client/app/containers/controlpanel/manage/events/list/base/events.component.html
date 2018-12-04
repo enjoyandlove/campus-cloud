@@ -2,8 +2,9 @@
   <div class="col-12">
     <cp-list-action-box
       [isOrientation]="isOrientation"
+      (listAction)="doFilter($event)"
       [isSimple]="isClub || isService || isOrientation"
-      (listAction)="doFilter($event)">
+      [showIntegration]="!isClub && !isService && !isOrientation">
     </cp-list-action-box>
   </div>
 </div>

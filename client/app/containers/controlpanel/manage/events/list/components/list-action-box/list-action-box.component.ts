@@ -42,6 +42,7 @@ interface IState {
 export class ListActionBoxComponent implements OnInit {
   @Input() isSimple: boolean;
   @Input() isOrientation: boolean;
+  @Input() showIntegration: boolean;
   @Output() listAction: EventEmitter<IState> = new EventEmitter();
 
   hosts;
