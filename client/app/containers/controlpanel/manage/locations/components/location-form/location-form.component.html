@@ -5,7 +5,7 @@
       <cp-dropdown
         [items]="categories"
         (selected)="onSelectedCategory($event)"
-        [isRequiredError]="formErrors && location.form.get('category_id').hasError('required')">
+        [isRequiredError]="formErrors && location.form.get('location_type').hasError('required')">
       </cp-dropdown>
     </div>
   </div>
@@ -105,21 +105,21 @@
     </div>
   </div>
 
-  <div class="row form-group">
-    <div class="col-6">
+  <div class="row form-group" formArrayName="links">
+    <div class="col-6" [formGroupName]="0">
       <label>{{ 't_locations_link_label' | cpI18n }}</label>
       <input
         type="text"
         class="form-control"
-        formControlName="link_label">
+        formControlName="label">
     </div>
 
-    <div class="col-6">
+    <div class="col-6" [formGroupName]="0">
       <label>{{ 't_locations_link' | cpI18n }}</label>
       <input
         type="text"
         class="form-control"
-        formControlName="link">
+        formControlName="url">
     </div>
   </div>
 </form>

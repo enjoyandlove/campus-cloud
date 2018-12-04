@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
 
 import * as fromActions from '../actions';
-import { ILocation } from '../../locations.interface';
+import { LocationModel } from '../../model';
 import { LocationsService } from '../../locations.service';
 
 @Injectable()
@@ -25,7 +25,7 @@ export class LocationsEffect {
 
       return this.service.getLocations(startRange, endRange, params )
         .pipe(
-          map((data: ILocation[]) => new fromActions.GetLocationsSuccess(data)),
+          map((data: LocationModel[]) => new fromActions.GetLocationsSuccess(data)),
           catchError((error) => of(new fromActions.GetLocationsFail(error)))
         );
     })
@@ -40,7 +40,7 @@ export class LocationsEffect {
 
       return this.service.getLocationById(locationId, params )
         .pipe(
-          map((data: ILocation) => new fromActions.GetLocationByIdSuccess(data)),
+          map((data: LocationModel) => new fromActions.GetLocationByIdSuccess(data)),
           catchError((error) => of(new fromActions.GetLocationByIdFail(error)))
         );
     })
@@ -56,7 +56,7 @@ export class LocationsEffect {
       return this.service
         .createLocation(body, params)
         .pipe(
-          map((data: ILocation[]) => new fromActions.PostLocationSuccess(data)),
+          map((data: LocationModel[]) => new fromActions.PostLocationSuccess(data)),
           tap((_) => {
             this.router.navigate(['/manage/locations']);
           }),
@@ -75,7 +75,7 @@ export class LocationsEffect {
       return this.service
         .updateLocation(body, locationId, params)
         .pipe(
-          map((data: ILocation[]) => new fromActions.EditLocationSuccess(data)),
+          map((data: LocationModel[]) => new fromActions.EditLocationSuccess(data)),
           tap((_) => {
             this.router.navigate(['/manage/locations']);
           }),

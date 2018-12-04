@@ -1,12 +1,12 @@
 import * as fromLocations from '../actions';
 
-import { ILocation } from '../../locations.interface';
+import { LocationModel } from '../../model';
 
 export interface ILocationState {
   error: boolean;
   loaded: boolean;
   loading: boolean;
-  data: ILocation[];
+  data: LocationModel[];
 }
 
 export const InitialState: ILocationState = {

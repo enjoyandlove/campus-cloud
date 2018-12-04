@@ -4,9 +4,9 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
+import { LocationModel } from '../model';
 import * as fromRoot from '../../../../../store';
 import { ManageHeaderService } from '../../utils';
-import { ILocation } from '../locations.interface';
 import { CPSession } from './../../../../../session';
 import { BaseComponent } from '../../../../../base/base.component';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
@@ -38,7 +38,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   deleteLocation = '';
   state: IState = state;
   loading$: Observable<boolean>;
-  locations$: Observable<ILocation[]>;
+  locations$: Observable<LocationModel[]>;
 
   constructor(
     public session: CPSession,

@@ -7,7 +7,6 @@ import * as fromStore from '../store';
 import { LocationModel } from '../model';
 import * as fromRoot from '../../../../../store';
 import { CPSession } from '../../../../../session';
-import { ILocation } from '../locations.interface';
 import { BaseComponent } from '../../../../../base';
 import { LocationsService } from '../locations.service';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
@@ -116,7 +115,7 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
     this.school = this.session.g.get('school');
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
     this.store.select(fromStore.getLocations)
-      .subscribe((location: ILocation[]) => this.location = new LocationModel({...location}));
+      .subscribe((location: LocationModel[]) => this.location = new LocationModel({...location}));
 
     this.buttonData = {
       class: 'primary',
