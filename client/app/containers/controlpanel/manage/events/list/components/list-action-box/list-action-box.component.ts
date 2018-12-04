@@ -1,4 +1,5 @@
 import { HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import {
   Component,
   ElementRef,
@@ -8,20 +9,21 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-import { Observable } from 'rxjs';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+
+import { CPSession } from '@app/session';
+import { CPDate } from '@shared/utils/date';
+import { DATE_FILTER } from './events-filters';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { EventAttendance } from '../../../event.status';
+import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { CPI18nService } from '@shared/services/i18n.service';
+import { amplitudeEvents, EVENTS_INTEGRATION } from '@shared/constants';
+import { CPTrackingService, RouteLevel, StoreService } from '@shared/services';
+
 import {
   canAccountLevelWriteResource,
   canSchoolWriteResource
-} from './../../../../../../../shared/utils/privileges/privileges';
-import { DATE_FILTER } from './events-filters';
-import { CPSession } from '../../../../../../../session';
-import { EventAttendance } from '../../../event.status';
-import { CPDate } from '../../../../../../../shared/utils/date';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
-import { CPTrackingService, RouteLevel, StoreService } from '../../../../../../../shared/services';
+} from '@shared/utils/privileges/privileges';
 
 interface IState {
   end: number;
@@ -48,6 +50,7 @@ export class ListActionBoxComponent implements OnInit {
   eventFilter;
   dateFilterOpts;
   canCreateEvent;
+  featureName = EVENTS_INTEGRATION;
   threeYearsFromNow = CPDate.now(this.session.tz)
     .add(3, 'years')
     .unix();

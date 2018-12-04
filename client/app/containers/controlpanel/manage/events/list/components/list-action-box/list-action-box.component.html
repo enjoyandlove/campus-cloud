@@ -60,6 +60,7 @@
     <div class="col-3 text-right float-right" *ngIf="canCreateEvent">
       <a
         routerLink="integrations"
+        *cpFeatureToggle="featureName"
         class="cpbtn cpbtn--cancel integrations">
         <i class="material-icons">link</i>
       </a>

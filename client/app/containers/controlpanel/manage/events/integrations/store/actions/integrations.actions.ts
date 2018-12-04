@@ -4,6 +4,8 @@ import { Action } from '@ngrx/store';
 import { EventIntegration } from './../../model/integration.model';
 
 export enum IntegrationActions {
+  DESTROY = '[manage.events.integrations] destroy',
+
   GET_INTEGRATIONS = '[manage.events.integrations] get integrations',
   GET_INTEGRATIONS_SUCCESS = '[manage.events.integrations] get integrations success',
   GET_INTEGRATIONS_FAIL = '[manage.events.integrations] get integrations fail',
@@ -115,7 +117,12 @@ export class GetHostsFail implements Action {
   constructor(public payload: HttpErrorResponse) {}
 }
 
+export class Destroy implements Action {
+  readonly type = IntegrationActions.DESTROY;
+}
+
 export type Actions =
+  | Destroy
   | GetIntegrations
   | GetIntegrationsSuccess
   | GetIntegrationsFail
