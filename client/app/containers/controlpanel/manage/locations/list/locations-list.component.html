@@ -12,7 +12,7 @@
   <div *ngSwitchCase="false">
     <cp-no-content
       class="no-content"
-      *ngIf="!(locations$ | async).length || error"
+      *ngIf="!(locations$ | async).length"
       [noContentText]="contentText | cpI18n">
     </cp-no-content>
 

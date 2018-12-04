@@ -30,7 +30,7 @@ export class LocationsDeleteComponent implements OnInit {
   onDelete() {
     const locationId = this.location.id;
     const school_id =  this.session.g.get('school').id;
-    const params = new HttpParams().append('school_id', school_id);
+    const params = new HttpParams().set('school_id', school_id);
 
     const payload = {
       params,

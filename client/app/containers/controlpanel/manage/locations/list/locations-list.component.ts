@@ -33,7 +33,6 @@ const state: IState = {
 })
 export class LocationsListComponent extends BaseComponent implements OnInit, OnDestroy {
   eventData;
-  error = false;
   sortingLabels;
   deleteLocation = '';
   state: IState = state;
@@ -119,8 +118,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
   setErrors() {
     this.store.select(fromStore.getLocationsError)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((isError) => {
-        this.error = isError;
+      .subscribe((isError: boolean) => {
         this.contentText  = isError
           ? 'something_went_wrong'
           : 't_locations_no_location_found';
@@ -148,6 +146,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
   ngOnDestroy() {
     this.destroy$.next(true);
+    this.destroy$.complete();
     this.destroy$.unsubscribe();
   }
 }

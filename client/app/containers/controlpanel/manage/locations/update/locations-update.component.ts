@@ -38,7 +38,7 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit, O
   constructor(
     public router: Router,
     private fb: FormBuilder,
-    private session: CPSession,
+    public session: CPSession,
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>,

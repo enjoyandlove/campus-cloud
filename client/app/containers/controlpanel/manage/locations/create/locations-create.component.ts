@@ -30,7 +30,7 @@ export class LocationsCreateComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private session: CPSession,
+    public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
   ) {}
