@@ -1,13 +1,14 @@
-import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
-import { EventsComponent } from './events.component';
-import { CPSession } from '../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { CPI18nService } from '../../../../../../shared/services';
+import { Router } from '@angular/router';
+
+import { CPSession } from '@app/session';
+import { CPI18nService } from '@shared/services';
 import { EventsModule } from '../../events.module';
 import { EventsService } from '../../events.service';
+import { EventsComponent } from './events.component';
+import { mockSchool } from '@app/session/mock/school';
 
 class MockService {
   dummy;
