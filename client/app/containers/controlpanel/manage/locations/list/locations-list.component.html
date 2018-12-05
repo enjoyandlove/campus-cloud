@@ -13,7 +13,7 @@
     <cp-no-content
       class="no-content"
       *ngIf="!(locations$ | async).length"
-      [noContentText]="contentText | cpI18n">
+      [noContentText]=" 't_locations_no_location_found' | cpI18n">
     </cp-no-content>
 
     <div *ngIf="(locations$ | async).length">

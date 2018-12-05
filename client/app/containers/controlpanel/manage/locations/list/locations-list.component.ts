@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -38,7 +38,6 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
   state: IState = state;
   loading$: Observable<boolean>;
   locations$: Observable<ILocation[]>;
-  contentText = 't_locations_no_location_found';
 
   private destroy$ = new Subject();
 
@@ -115,20 +114,33 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     );
   }
 
-  setErrors() {
-    this.store.select(fromStore.getLocationsError)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((isError: boolean) => {
-        this.contentText  = isError
-          ? 'something_went_wrong'
-          : 't_locations_no_location_found';
-      });
+  listenForErrors() {
+    this.store
+      .select(fromStore.getLocationsError)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((error) => error),
+        tap(() => {
+          const payload = {
+            body: this.cpI18n.translate('something_went_wrong'),
+            sticky: true,
+            autoClose: true,
+            class: 'danger'
+          };
+
+          this.store.dispatch({
+            type: fromRoot.baseActions.SNACKBAR_SHOW,
+            payload
+          });
+        })
+      )
+      .subscribe();
   }
 
   ngOnInit() {
-    this.setErrors();
     this.buildHeader();
     this.loadLocations();
+    this.listenForErrors();
 
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
