@@ -9,10 +9,10 @@ import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { ManageHeaderService } from '../../utils';
 import { ILocation } from '../locations.interface';
+import { BaseComponent } from '@app/base/base.component';
 import { CP_TRACK_TO } from '@shared/directives/tracking';
 import { amplitudeEvents } from '@shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '@shared/services';
-import { BaseComponent } from '../../../../../base/base.component';
 
 interface IState {
   search_str: string;

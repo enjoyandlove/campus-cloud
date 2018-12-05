@@ -4,15 +4,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
+import { of } from 'rxjs';
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
-import { fillForm, mockLocations } from '../tests';
 import { CPI18nService } from '@shared/services';
+import { fillForm, mockLocations } from '../tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
 import { LocationsUpdateComponent } from './locations-update.component';
-import { of } from 'rxjs/index';
 
 describe('LocationsUpdateComponent', () => {
   configureTestSuite();

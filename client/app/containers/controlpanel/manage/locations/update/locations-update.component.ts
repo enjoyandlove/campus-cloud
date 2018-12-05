@@ -10,9 +10,9 @@ import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { CPMap } from '@app/shared/utils';
+import { BaseComponent } from '@app/base';
 import { ILocation } from '../locations.interface';
-import { BaseComponent } from '../../../../../base';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { CPI18nService } from '@app/shared/services';
 
 @Component({
   selector: 'cp-locations-update',

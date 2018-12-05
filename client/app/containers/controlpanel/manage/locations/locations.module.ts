@@ -13,7 +13,7 @@ import { LocationsCreateComponent } from './create';
 import { LocationsListTopBarComponent } from './list/components';
 
 import { LocationsService } from './locations.service';
-import { SharedModule } from '../../../../shared/shared.module';
+import { SharedModule } from '@app/shared/shared.module';
 import { LocationsRoutingModule } from './locations.routing.module';
 
 @NgModule({

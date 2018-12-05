@@ -1,17 +1,5 @@
 import { FormGroup } from '@angular/forms';
 
-export const emptyForm = {
-  city: null,
-  name: null,
-  latitude: 0,
-  longitude: 0,
-  country: null,
-  address: null,
-  province: null,
-  postal_code: null,
-  short_name: null
-};
-
 const filledForm = {
   city: 'Karachi',
   province: 'Sindh',
