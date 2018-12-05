@@ -71,7 +71,8 @@ export class LocationModel {
           url: [this.url],
           label: [this.label]
         })
-      ])
+      ]),
+      schedule: fb.array([])
     });
 
     return this._form;

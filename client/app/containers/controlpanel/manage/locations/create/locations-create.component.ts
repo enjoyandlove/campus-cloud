@@ -19,7 +19,7 @@ export class LocationsCreateComponent implements OnInit {
   buttonData;
   errorMessage;
   school: ISchool;
-  openingHours = false;
+  openingHours = true;
   location: LocationModel;
 
   eventProperties = {

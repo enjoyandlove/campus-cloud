@@ -23,6 +23,7 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   buttonData;
   locationId;
   errorMessage;
+  openingHours = false;
   location: LocationModel;
 
   eventProperties = {

@@ -52,6 +52,25 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
     }
 
     case fromLocations.locationActions.GET_LOCATION_BY_ID_SUCCESS: {
+      action.payload.schedule = [
+        {
+          day: 1,
+          label: 'Monday',
+          open: '17:00',
+          close: '17:30',
+          notes: '',
+          link: '',
+        },
+        {
+          day: 4,
+          label: 'Thursday',
+          open: '18:00',
+          close: '19:30',
+          notes: '',
+          link: '',
+        }
+      ];
+
       return  {
         ...state,
         error: false,

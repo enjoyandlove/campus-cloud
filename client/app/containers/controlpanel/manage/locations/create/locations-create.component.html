@@ -21,9 +21,19 @@
             <div class="col-12">
               <p class="title">{{ 't_locations_opening_hours' | cpI18n }}</p>
               <span class="float-right">
-                <cp-switch [id]="openingHours"></cp-switch>
+                <cp-switch
+                  [id]="openingHours"
+                  [isChecked]="true"
+                  (toggle)="openingHours = !openingHours">
+                </cp-switch>
               </span>
             </div>
+
+            <cp-location-opening-hours-form
+              *ngIf="openingHours"
+              [location]="location"
+              [formErrors]="formErrors">
+            </cp-location-opening-hours-form>
           </div>
         </div>
       </div>

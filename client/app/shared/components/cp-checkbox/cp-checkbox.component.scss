@@ -10,11 +10,16 @@
   cursor: pointer;
   font-weight: 400;
   position: relative;
+  margin-right: 30px;
 
   &.labelRight {
     .control__indicator {
       float: left;
       margin-right: 8px;
+    }
+
+    .control__indicator:after {
+      left: 6.5px;
     }
   }
 
@@ -82,7 +87,7 @@
 .control--checkbox .control__indicator:after {
   top: 1px;
   width: 6px;
-  left: 6.5px;
+  right: 7px;
   height: 13px;
   transform: rotate(45deg);
   border: solid #fff;

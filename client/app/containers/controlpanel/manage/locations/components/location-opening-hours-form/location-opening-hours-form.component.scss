@@ -1,0 +1,11 @@
+@import '~client/style/components/form';
+
+form {
+  label {
+    margin-top: 10px;
+    float: left;
+    text-align: right;
+    clear: both;
+    margin-right:15px;
+  }
+}

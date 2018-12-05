@@ -1,0 +1,37 @@
+<form [formGroup]="location.form" class="form-horizontal">
+  <div class="col-12">
+    <div *ngFor="let openingHour of openingHours; let i = index">
+      <div class="row">
+        <div class="col-3">
+          <label>{{ openingHour.label }}</label>
+        </div>
+
+        <div class="col-3">
+          <cp-checkbox
+            [labelRight]="false"
+            [label]=" 't_open' | cpI18n"
+            (toggle)="onDayCheck($event, openingHour, i)">
+          </cp-checkbox>
+        </div>
+
+        <div class="col-3">
+          <label>{{ 't_to' | cpI18n }}</label>
+          <cp-dropdown
+            [items]="locationTiming"
+            [selectedItem]="selectedFrom[i]"
+            (selected)="onTimeSelected($event, i, 'open')">
+          </cp-dropdown>
+        </div>
+
+        <div class="col-3">
+          <label> {{ 't_from' | cpI18n }}</label>
+          <cp-dropdown
+            [items]="locationTiming"
+            [selectedItem]="selectedTo[i]"
+            (selected)="onTimeSelected($event, i, 'close')">
+          </cp-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

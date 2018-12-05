@@ -11,9 +11,10 @@ import { LocationsDeleteComponent } from './delete';
 import { LocationsUpdateComponent } from './update';
 import { LocationsCreateComponent } from './create';
 import { LocationsListTopBarComponent } from './list/components';
-import { LocationFormComponent } from './components/location-form';
+import { LocationFormComponent, LocationOpeningHoursFormComponent } from './components';
 
 import { LocationsService } from './locations.service';
+import { LocationsUtilsService } from './locations.utils';
 import { SharedModule } from '../../../../shared/shared.module';
 import { LocationsRoutingModule } from './locations.routing.module';
 
@@ -24,10 +25,9 @@ import { LocationsRoutingModule } from './locations.routing.module';
     LocationsDeleteComponent,
     LocationsUpdateComponent,
     LocationsCreateComponent,
-    LocationsListTopBarComponent
+    LocationsListTopBarComponent,
+    LocationOpeningHoursFormComponent
   ],
-
-  exports: [LocationFormComponent],
 
   imports: [
     CommonModule,
@@ -38,6 +38,6 @@ import { LocationsRoutingModule } from './locations.routing.module';
     StoreModule.forFeature('locations', reducers)
   ],
 
-  providers: [LocationsService]
+  providers: [LocationsService, LocationsUtilsService]
 })
 export class LocationsModule {}
