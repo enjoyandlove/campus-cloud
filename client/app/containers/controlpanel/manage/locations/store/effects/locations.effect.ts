@@ -75,7 +75,7 @@ export class LocationsEffect {
       return this.service
         .updateLocation(body, locationId, params)
         .pipe(
-          map((data: ILocation[]) => new fromActions.EditLocationSuccess(data)),
+          map((data: ILocation) => new fromActions.EditLocationSuccess(data)),
           tap((_) => {
             this.router.navigate(['/manage/locations']);
           }),

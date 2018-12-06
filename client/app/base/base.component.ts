@@ -9,7 +9,7 @@ export abstract class BaseComponent {
   public pagePrev;
   public pageNumber = 1;
   public startRange = 1;
-  public maxPerPage = 100;
+  public maxPerPage = 5;
   public endRange = this.maxPerPage + 1;
 
   private _isLoading = new Subject<boolean>();

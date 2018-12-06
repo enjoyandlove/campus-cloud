@@ -6,14 +6,16 @@ export interface ILocationState {
   error: boolean;
   loaded: boolean;
   loading: boolean;
-  data: ILocation[];
+  data: Array<any>;
+  editedRecord: Array<any>;
 }
 
 export const InitialState: ILocationState = {
   data: [],
   error: false,
   loaded: false,
-  loading: false
+  loading: false,
+  editedRecord: []
 };
 
 export function reducer (state = InitialState, action: fromLocations.LocationsAction) {
@@ -57,7 +59,8 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
         error: false,
         loaded: true,
         loading: false,
-        data: action.payload
+        data: [...state.data],
+        editedRecord: action.payload
       };
     }
 
@@ -117,7 +120,7 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
         error: false,
         loaded: true,
         loading: false,
-        data: [edited, ...state.data]
+        data: state.data.map((l: ILocation) => (l.id === edited.id ? edited : l))
       };
     }
 
@@ -147,7 +150,7 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
         error: false,
         loaded: true,
         loading: false,
-        data: state.data.filter((l) => l.id !== deletedId),
+        data: state.data.filter((l: ILocation) => l.id !== deletedId),
       };
     }
 
@@ -170,3 +173,4 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
 export const getLocations = (state: ILocationState) => state.data;
 export const getLocationsError = (state: ILocationState) => state.error;
 export const getLocationsLoading = (state: ILocationState) => state.loading;
+export const getLocationsById = (state: ILocationState) => state.editedRecord;

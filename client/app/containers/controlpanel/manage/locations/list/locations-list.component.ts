@@ -1,6 +1,6 @@
+import { filter, takeUntil, map, tap, take } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -105,6 +105,18 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
   }
 
   loadLocations() {
+    this.store
+      .select(fromStore.getLocations)
+      .pipe(
+        tap((locations: ILocation[]) => {
+          if (!locations.length) {
+            this.fetch();
+          }
+        }),
+        take(1)
+      )
+      .subscribe();
+
     this.locations$ = this.store.select(fromStore.getLocations).pipe(
       map((locations: ILocation[]) => {
         const responseCopy = [...locations];
@@ -153,7 +165,6 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     };
 
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
-    this.fetch();
   }
 
   ngOnDestroy() {

@@ -83,7 +83,7 @@ export class EditLocationFail implements Action {
 
 export class EditLocationSuccess implements Action {
   readonly type = locationActions.EDIT_LOCATION_SUCCESS;
-  constructor(public payload: ILocation[]) {}
+  constructor(public payload: ILocation) {}
 }
 
 export class DeleteLocation implements Action {

@@ -37,7 +37,7 @@ describe('LocationsDeleteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LocationsDeleteComponent);
     component = fixture.componentInstance;
-    component.location = mockLocations;
+    component.location = mockLocations[0];
     component.session.g.set('school', mockSchool);
   });
 
@@ -57,7 +57,7 @@ describe('LocationsDeleteComponent', () => {
     const expectedParams = new HttpParams().set('school_id', <any>mockSchool.id);
 
     expect(params).toEqual(expectedParams);
-    expect(locationId).toBe(mockLocations.id);
+    expect(locationId).toBe(mockLocations[0].id);
     expect(type).toBe(fromStore.locationActions.DELETE_LOCATION);
   });
 });

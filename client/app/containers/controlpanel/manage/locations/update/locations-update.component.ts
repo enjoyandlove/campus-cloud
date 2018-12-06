@@ -160,7 +160,7 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit, O
     this.buildHeader();
     this.school = this.session.g.get('school');
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
-    this.store.select(fromStore.getLocations)
+    this.store.select(fromStore.getLocationsById)
       .pipe(takeUntil(this.destroy$))
       .subscribe((location: ILocation[]) => this.buildForm(location));
 
@@ -172,6 +172,7 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit, O
 
   ngOnDestroy() {
     this.destroy$.next(true);
+    this.destroy$.complete();
     this.destroy$.unsubscribe();
   }
 }
