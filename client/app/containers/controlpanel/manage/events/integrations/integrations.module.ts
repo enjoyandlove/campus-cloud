@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 
 import { reducers } from './store';
 import { effects } from './store/effects';
+import { SharedModule } from '@shared/shared.module';
 import { EventsIntegrationEditComponent } from './edit';
 import { EventsIntegrationsListComponent } from './list';
 import { EventsIntegrationsCreateComponent } from './create';
@@ -14,21 +15,18 @@ import { IntegrationsService } from './integrations.service';
 import { EventIntegrationFormComponent } from './components';
 import { EventIntegrationTypePipe } from './pipes/type.pipe';
 import { EventIntegrationStatusPipe } from './pipes/status.pipe';
-import { SharedModule } from './../../../../../shared/shared.module';
 import { IntegrationsUtilsService } from './integrations.utils.service';
 import { EventIntegrationRoutingModule } from './integrations.routing.module';
-import { EventIntegrationsActionBoxComponent } from './list/components/action-box';
-import { EventsIntegrationsDeleteComponent } from './delete/integrations-delete.component';
+
+import { EventsIntegrationsModule } from '@libs/integrations/events/events-integrations.module';
 
 @NgModule({
   declarations: [
     EventsIntegrationsListComponent,
     EventsIntegrationsCreateComponent,
-    EventIntegrationsActionBoxComponent,
     EventIntegrationStatusPipe,
     EventIntegrationTypePipe,
     EventIntegrationFormComponent,
-    EventsIntegrationsDeleteComponent,
     EventsIntegrationEditComponent
   ],
   imports: [
@@ -36,6 +34,7 @@ import { EventsIntegrationsDeleteComponent } from './delete/integrations-delete.
     SharedModule,
     ReactiveFormsModule,
     RouterModule,
+    EventsIntegrationsModule,
     EventIntegrationRoutingModule,
     EffectsModule.forFeature(effects),
     StoreModule.forFeature('eventIntegrations', reducers)

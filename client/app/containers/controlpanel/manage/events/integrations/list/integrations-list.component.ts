@@ -103,10 +103,29 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
     setTimeout(() => $('#integrationCreate').modal());
   }
 
-  onLaunchEditModal() {
+  onLaunchEditModal(integration: EventIntegration) {
     this.showEditModal = true;
+    this.selectedIntegration = integration;
 
     setTimeout(() => $('#integrationEdit').modal());
+  }
+
+  onLaunchDeleteModal(integration: EventIntegration) {
+    this.showDeleteModal = true;
+    this.selectedIntegration = integration;
+
+    setTimeout(() => $('#integrationDelete').modal());
+  }
+
+  onDeleteClick(integration: EventIntegration) {
+    const params = this.defaultParams;
+
+    const payload = {
+      params,
+      integrationId: integration.id
+    };
+
+    this.store.dispatch(new fromStore.DeleteIntegration(payload));
   }
 
   listenForErrors() {
