@@ -5,9 +5,9 @@ export interface ILocation {
 
   address: string;
 
-  latitude: string;
+  latitude: number;
 
-  longitude: string;
+  longitude: number;
 
   short_name: string;
 }

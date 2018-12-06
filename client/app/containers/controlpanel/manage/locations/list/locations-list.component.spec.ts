@@ -4,6 +4,7 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
+import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
@@ -33,11 +34,13 @@ describe('LocationsListComponent', () => {
 
   let fixture: ComponentFixture<LocationsListComponent>;
   let component: LocationsListComponent;
+  let dispatchSpy: jasmine.Spy;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LocationsListComponent);
     component = fixture.componentInstance;
     component.session.g.set('school', mockSchool);
+    dispatchSpy = spyOn(component.store, 'dispatch');
   });
 
   it('should init', () => {
@@ -57,8 +60,10 @@ describe('LocationsListComponent', () => {
   it('should set error message', () => {
     spyOn(component.store, 'select').and.returnValue(of(true));
 
-    component.setErrors();
+    component.listenForErrors();
+    const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
 
-    expect(component.contentText).toBe('something_went_wrong');
+    expect(payload.class).toBe('danger');
+    expect(type).toBe(fromRoot.baseActions.SNACKBAR_SHOW);
   });
 });

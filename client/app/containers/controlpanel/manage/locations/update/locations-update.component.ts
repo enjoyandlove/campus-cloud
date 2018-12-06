@@ -1,9 +1,7 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { OnInit, Component, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -19,7 +17,7 @@ import { CPI18nService } from '@app/shared/services';
   templateUrl: './locations-update.component.html',
   styleUrls: ['./locations-update.component.scss']
 })
-export class LocationsUpdateComponent extends BaseComponent implements OnInit, OnDestroy {
+export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   school;
   loading$;
   buttonData;
@@ -33,18 +31,13 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit, O
     location_id: null
   };
 
-  private destroy$ = new Subject();
-
   constructor(
-    public router: Router,
     private fb: FormBuilder,
     public session: CPSession,
-    public route: ActivatedRoute,
     public cpI18n: CPI18nService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>,
   ) {
     super();
-    this.locationId = this.route.snapshot.params['locationId'];
   }
 
   onResetMap() {
@@ -65,19 +58,6 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit, O
     };
 
     this.store.dispatch(new fromStore.EditLocation(payload));
-  }
-
-  public fetch() {
-    const locationId = this.locationId;
-    const school_id = this.session.g.get('school').id;
-    const params = new HttpParams().append('school_id', school_id);
-
-    const payload = {
-      params,
-      locationId
-    };
-
-    this.store.dispatch(new fromStore.GetLocationById(payload));
   }
 
   onMapSelection(data) {
@@ -137,6 +117,8 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit, O
   }
 
   buildForm(location) {
+    this.locationId = location.id;
+
     this.mapCenter = new BehaviorSubject({
       lat: location.latitude,
       lng: location.longitude
@@ -156,23 +138,19 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit, O
   }
 
   ngOnInit() {
-    this.fetch();
     this.buildHeader();
     this.school = this.session.g.get('school');
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
-    this.store.select(fromStore.getLocationsById)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((location: ILocation[]) => this.buildForm(location));
+    this.store.select(fromStore.getSelectedLocation)
+      .subscribe((location: ILocation) => {
+        if (location) {
+          this.buildForm(location);
+        }
+      });
 
     this.buttonData = {
       class: 'primary',
       text: this.cpI18n.translate('update')
     };
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.complete();
-    this.destroy$.unsubscribe();
   }
 }

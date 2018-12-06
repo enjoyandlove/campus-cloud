@@ -16,11 +16,11 @@ export const mockLocations = [
     city: 'Karachi',
     province: 'Sindh',
     short_name: 'LMC',
+    latitude: 78584585,
     country: 'Pakistan',
-    latitude: '78584585',
     name: 'Hello World!',
     postal_code: '74000',
-    longitude: '-45857858',
+    longitude: -45857858,
     address: 'Clifton Block #04'
   },
   {
@@ -28,11 +28,11 @@ export const mockLocations = [
     city: 'Lahore',
     province: 'Punjab',
     short_name: 'KLC',
+    latitude: 78584585,
     country: 'Pakistan',
-    latitude: '78584585',
     name: 'Hello World!',
     postal_code: '74000',
-    longitude: '-45857858',
+    longitude: -45857858,
     address: 'Clifton Block #04'
   }
 ];

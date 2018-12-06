@@ -9,6 +9,7 @@ import { CPSession } from '@app/session';
 import { emptyForm, fillForm } from '../tests';
 import { CPI18nService } from '@shared/services';
 import { SharedModule } from '@shared/shared.module';
+import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
 import { LocationsCreateComponent } from './locations-create.component';
 
@@ -36,6 +37,7 @@ describe('LocationsCreateComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LocationsCreateComponent);
     component = fixture.componentInstance;
+    component.session.g.set('school', mockSchool);
   });
 
   it('should init', () => {

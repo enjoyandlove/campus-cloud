@@ -53,7 +53,7 @@ describe('LocationsUpdateComponent', () => {
 
     const result = component.form.value;
     result['id'] = 123;
-    expect(result).toEqual(mockLocations);
+    expect(result).toEqual(mockLocations[0]);
   });
 
   it('should dispatch EditLocation action', () => {
