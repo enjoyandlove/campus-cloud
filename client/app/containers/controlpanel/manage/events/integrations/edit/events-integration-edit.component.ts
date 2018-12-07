@@ -68,7 +68,11 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
         }
 
         if (stores.length) {
-          this.selectedHost = stores.find((s) => s.value === this.eventIntegration.store_id);
+          setTimeout(() => {
+            const selectedHostLookup = (s) => s.value === this.eventIntegration.store_id;
+
+            this.selectedHost = stores.find(selectedHostLookup);
+          }, 1);
         }
       }),
       map((res) => (res.length ? res : [{ label: '---' }]))
