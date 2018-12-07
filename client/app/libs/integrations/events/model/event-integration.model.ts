@@ -3,6 +3,9 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { FeedIntegration } from '../../common/model';
 
 export class EventIntegration extends FeedIntegration {
+  public poster_url: number;
+  public poster_thumb_url: number;
+
   constructor() {
     super();
   }

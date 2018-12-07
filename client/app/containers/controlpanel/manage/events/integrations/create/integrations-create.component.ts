@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
-import { EventIntegration } from '@client/app/libs/integrations/events/model';
+import { EventIntegration } from '@libs/integrations/events/model';
 
 @Component({
   selector: 'cp-events-integrations-create',

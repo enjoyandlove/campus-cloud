@@ -16,7 +16,7 @@ export class FeedIntegration {
 
   public readonly id;
   public store_id: number;
-  public feed_url: number;
+  public feed_url: string;
   public school_id: number;
   public last_successful_sync_epoch: number;
   public feed_type: IntegrationTypes = IntegrationTypes.rss;

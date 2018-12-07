@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
-import { EventIntegration } from '@client/app/libs/integrations/events/model';
+import { EventIntegration } from '@libs/integrations/events/model';
 
 @Component({
   selector: 'cp-events-integration-edit',
