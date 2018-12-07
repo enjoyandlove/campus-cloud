@@ -6,7 +6,7 @@ export interface ILocationState {
   error: boolean;
   loaded: boolean;
   loading: boolean;
-  data: Array<any>;
+  data: ILocation[];
 }
 
 export const InitialState: ILocationState = {
