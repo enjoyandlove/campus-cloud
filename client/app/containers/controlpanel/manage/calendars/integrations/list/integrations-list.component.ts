@@ -11,7 +11,7 @@ import { CPSession } from '@app/session';
 import { BaseComponent } from '@app/base';
 import { FORMAT } from '@shared/pipes/date/date.pipe';
 import { CPI18nService } from '@shared/services/i18n.service';
-import { EventIntegration } from '@libs/integrations/events/model/event-integration.model';
+import { IEventIntegration } from '@libs/integrations/events/model';
 
 @Component({
   selector: 'cp-items-integrations',
@@ -26,8 +26,8 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
   showCreateModal = false;
   dateFormat = FORMAT.DATETIME;
   loading$: Observable<boolean>;
-  selectedIntegration: EventIntegration = null;
-  integrations$: Observable<EventIntegration[]>;
+  selectedIntegration: IEventIntegration = null;
+  integrations$: Observable<IEventIntegration[]>;
   stores$: Observable<Array<{ label: string; value: number }>>;
 
   constructor(
@@ -104,21 +104,21 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
     setTimeout(() => $('#integrationCreate').modal());
   }
 
-  onLaunchEditModal(integration: EventIntegration) {
+  onLaunchEditModal(integration: IEventIntegration) {
     this.showEditModal = true;
     this.selectedIntegration = integration;
 
     setTimeout(() => $('#integrationEdit').modal());
   }
 
-  onLaunchDeleteModal(integration: EventIntegration) {
+  onLaunchDeleteModal(integration: IEventIntegration) {
     this.showDeleteModal = true;
     this.selectedIntegration = integration;
 
     setTimeout(() => $('#integrationDelete').modal());
   }
 
-  onDeleteClick(integration: EventIntegration) {
+  onDeleteClick(integration: IEventIntegration) {
     const params = this.defaultParams;
 
     const payload = {

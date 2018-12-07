@@ -11,3 +11,13 @@ export const fillForm = (form: FormGroup) => {
 
   return form;
 };
+
+export const resetForm = (form: FormGroup) => {
+  for (const key in filledForm) {
+    if (filledForm[key]) {
+      form.get(key).setValue(null);
+    }
+  }
+
+  return form;
+};

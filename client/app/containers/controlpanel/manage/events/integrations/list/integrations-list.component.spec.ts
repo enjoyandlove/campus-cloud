@@ -1,19 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpParams } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import * as fromRoot from '@app/store';
 
 import { CPSession } from '@app/session';
+import { mockEventIntegration } from '../tests';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
+import { CPNoContentComponent } from '@shared/components';
 import { CPI18nService } from '@shared/services/i18n.service';
 import { EventsIntegrationsListComponent } from './integrations-list.component';
-import { IntegrationStatusPipe } from '@libs/integrations/common/pipes/status.pipe';
 import { IntegrationTypePipe } from '@client/app/libs/integrations/common/pipes';
+import { IntegrationStatusPipe } from '@libs/integrations/common/pipes/status.pipe';
 
 describe('EventsIntegrationsListComponent', () => {
   configureTestSuite();
@@ -80,5 +83,26 @@ describe('EventsIntegrationsListComponent', () => {
 
     expect(payload.class).toBe('danger');
     expect(type).toBe(fromRoot.baseActions.SNACKBAR_SHOW);
+  });
+
+  it('should show no results found message', () => {
+    const de = fixture.debugElement;
+    let noResultsFoundComp;
+
+    component.loading$ = of(false);
+    component.integrations$ = of([]);
+    fixture.detectChanges();
+
+    noResultsFoundComp = de.query(By.directive(CPNoContentComponent));
+
+    expect(noResultsFoundComp).not.toBeNull();
+
+    component.loading$ = of(false);
+    component.integrations$ = of([mockEventIntegration]);
+    fixture.detectChanges();
+
+    noResultsFoundComp = de.query(By.directive(CPNoContentComponent));
+
+    expect(noResultsFoundComp).toBeNull();
   });
 });

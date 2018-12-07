@@ -44,9 +44,8 @@ describe('Event Integrations Reducer', () => {
       const mock = mockEventIntegration;
 
       const action = new fromActions.GetIntegrationsSuccess([mock]);
-      const { data, error, loaded } = fromReducer.reducer(initialState, action);
+      const { data, error } = fromReducer.reducer(initialState, action);
 
-      expect(loaded).toBe(true);
       expect(error).toBe(false);
       expect(data.length).toBe(1);
       expect(data[0].id).toBe(mock.id);
@@ -58,10 +57,9 @@ describe('Event Integrations Reducer', () => {
       const { initialState } = fromReducer;
 
       const action = new fromActions.GetIntegrationsFail(httpErrorResponse);
-      const { loaded, error } = fromReducer.reducer(initialState, action);
+      const { error } = fromReducer.reducer(initialState, action);
 
       expect(error).toBe(true);
-      expect(loaded).toBe(false);
     });
   });
 

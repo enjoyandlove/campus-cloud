@@ -10,7 +10,7 @@ import { CPSession } from '@app/session';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '../../../../../../session/mock';
-import { mockEventIntegration, MockActivatedRoute } from '../tests';
+import { mockEventIntegration, MockActivatedRoute, resetForm } from '../tests';
 
 import { ItemsIntegrationEditComponent } from './integrations-edit.component';
 
@@ -110,5 +110,30 @@ describe('ItemsIntegrationEditComponent', () => {
     expect(body).toEqual(expected.payload);
     expect(integrationId).toEqual(component.eventIntegration.id);
     expect(type).toEqual(fromStore.IntegrationActions.EDIT_INTEGRATION);
+  });
+
+  it('submit button should be disabled unless form is valid', () => {
+    const de = fixture.debugElement;
+    const submitBtn = de.query(By.css('.js_submit_button')).nativeElement;
+
+    resetForm(component.form);
+
+    expect(submitBtn.disabled).toBe(true);
+
+    component.form.get('school_id').setValue(1);
+    fixture.detectChanges();
+    expect(submitBtn.disabled).toBe(true);
+
+    component.form.get('store_id').setValue(1);
+    fixture.detectChanges();
+    expect(submitBtn.disabled).toBe(true);
+
+    component.form.get('feed_url').setValue('mock');
+    fixture.detectChanges();
+    expect(submitBtn.disabled).toBe(true);
+
+    component.form.get('feed_type').setValue(1);
+    fixture.detectChanges();
+    expect(submitBtn.disabled).toBe(false);
   });
 });
