@@ -11,6 +11,7 @@ import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { emptyForm, fillForm, resetForm } from '../tests';
 import { EventsIntegrationsCreateComponent } from './integrations-create.component';
+import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers/integrations.utils.service';
 
 describe('EventsIntegrationsCreateComponent', () => {
   configureTestSuite();
@@ -19,7 +20,7 @@ describe('EventsIntegrationsCreateComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession],
+        providers: [CPSession, CommonIntegrationUtilsService],
         declarations: [EventsIntegrationsCreateComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

@@ -7,6 +7,8 @@ import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
+import { IItem } from '@client/app/shared/components';
+import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { IEventIntegration, EventIntegration } from '@libs/integrations/events/model';
 
 @Component({
@@ -20,11 +22,13 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   form: FormGroup;
+  typesDropdown: IItem[];
   destroy$ = new Subject();
 
   constructor(
     public session: CPSession,
     private route: ActivatedRoute,
+    private utils: CommonIntegrationUtilsService,
     public store: Store<fromStore.IEventIntegrationState>
   ) {}
 
@@ -64,6 +68,10 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
     this.form = EventIntegration.form(this.eventIntegration);
 
     this.form.get('store_id').setValue(calendarId);
+
+    this.typesDropdown = this.utils
+      .typesDropdown()
+      .filter((type: IItem) => type.action === EventIntegration.types.ical);
   }
 
   ngOnDestroy() {

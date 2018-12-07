@@ -7,7 +7,9 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
+import { IItem } from '@client/app/shared/components';
 import { IStore } from '@shared/services/store.service';
+import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { IEventIntegration, EventIntegration } from '@libs/integrations/events/model';
 
 @Component({
@@ -22,10 +24,15 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
 
   selectedHost;
   form: FormGroup;
+  typesDropdown: IItem[];
   destroy$ = new Subject();
   stores$: Observable<IStore[] | [{ label: '---'; value: number }]>;
 
-  constructor(public session: CPSession, public store: Store<fromStore.IEventIntegrationState>) {}
+  constructor(
+    public session: CPSession,
+    public utils: CommonIntegrationUtilsService,
+    public store: Store<fromStore.IEventIntegrationState>
+  ) {}
 
   get defaultParams(): HttpParams {
     const school_id = this.session.g.get('school').id;
@@ -78,6 +85,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
     );
 
     this.form = EventIntegration.form(this.eventIntegration);
+    this.typesDropdown = this.utils.typesDropdown();
   }
 
   ngOnDestroy() {

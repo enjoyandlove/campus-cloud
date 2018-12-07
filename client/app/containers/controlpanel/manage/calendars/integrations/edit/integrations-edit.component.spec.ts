@@ -11,8 +11,8 @@ import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '../../../../../../session/mock';
 import { mockEventIntegration, MockActivatedRoute, resetForm } from '../tests';
-
 import { ItemsIntegrationEditComponent } from './integrations-edit.component';
+import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers/integrations.utils.service';
 
 describe('ItemsIntegrationEditComponent', () => {
   configureTestSuite();
@@ -21,7 +21,11 @@ describe('ItemsIntegrationEditComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession, { provide: ActivatedRoute, useClass: MockActivatedRoute }],
+        providers: [
+          CPSession,
+          CommonIntegrationUtilsService,
+          { provide: ActivatedRoute, useClass: MockActivatedRoute }
+        ],
         declarations: [ItemsIntegrationEditComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

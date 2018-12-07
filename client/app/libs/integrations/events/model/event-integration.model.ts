@@ -1,10 +1,12 @@
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { FeedIntegration } from '../../common/model';
+import { EventFeedObjectType } from './event-integration.interface';
 
 export class EventIntegration extends FeedIntegration {
   public poster_url: number;
   public poster_thumb_url: number;
+  public readonly objectType = EventFeedObjectType;
 
   static form(eventIntegration?) {
     const fb = new FormBuilder();
