@@ -3,9 +3,10 @@ import { FormGroup } from '@angular/forms';
 import { filledForm } from './mocks';
 
 export const fillForm = (form: FormGroup) => {
-  for (const key in filledForm) {
-    if (filledForm[key]) {
-      form.get(key).setValue(filledForm[key]);
+  const f = { ...filledForm };
+  for (const key in f) {
+    if (f[key]) {
+      form.get(key).setValue(f[key]);
     }
   }
 
@@ -13,8 +14,9 @@ export const fillForm = (form: FormGroup) => {
 };
 
 export const resetForm = (form: FormGroup) => {
-  for (const key in filledForm) {
-    if (filledForm[key]) {
+  const f = { ...filledForm };
+  for (const key in f) {
+    if (f[key]) {
       form.get(key).setValue(null);
     }
   }
