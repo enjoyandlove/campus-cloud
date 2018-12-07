@@ -65,13 +65,14 @@ export class AudienceCreateComponent implements OnInit, OnDestroy {
       },
       (err) => {
         this.isError = true;
-        const error = JSON.parse(err._body).error;
+        const error = err.error.error;
         if (error === 'Database Error') {
           this.errorMessage = this.cpI18n.translate('audience_create_error_duplicate_audience');
 
           return;
         }
         this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
+        this.buttonData = { ...this.buttonData, disabled: false };
       }
     );
   }
