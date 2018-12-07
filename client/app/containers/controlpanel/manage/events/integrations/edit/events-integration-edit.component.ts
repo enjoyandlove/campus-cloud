@@ -1,12 +1,13 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { tap, map, takeUntil } from 'rxjs/internal/operators';
 import { HttpParams } from '@angular/common/http';
+import { Subject, Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
+import { IStore } from '@shared/services/store.service';
 import { IEventIntegration, EventIntegration } from '@libs/integrations/events/model';
 
 @Component({
@@ -19,10 +20,10 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
-  stores$;
   selectedHost;
   form: FormGroup;
   destroy$ = new Subject();
+  stores$: Observable<IStore[] | [{ label: '---'; value: number }]>;
 
   constructor(public session: CPSession, public store: Store<fromStore.IEventIntegrationState>) {}
 
@@ -60,7 +61,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.stores$ = this.store.select(fromStore.getIntegrationsHosts).pipe(
       takeUntil(this.destroy$),
-      tap((stores: any[]) => {
+      tap((stores: IStore[]) => {
         if (!stores.length) {
           const params = this.defaultParams;
 
@@ -73,7 +74,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
           }, 1);
         }
       }),
-      map((res) => (res.length ? res : [{ label: '---' }]))
+      map((res) => (res.length ? res : [{ label: '---', value: null }]))
     );
 
     this.form = EventIntegration.form(this.eventIntegration);

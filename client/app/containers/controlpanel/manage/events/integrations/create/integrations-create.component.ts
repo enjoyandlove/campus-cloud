@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
+import { IStore } from '@shared/services/store.service';
 import { EventIntegration } from '@libs/integrations/events/model';
 
 @Component({
@@ -15,7 +16,7 @@ import { EventIntegration } from '@libs/integrations/events/model';
   styleUrls: ['./integrations-create.component.scss']
 })
 export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
-  @Input() stores$: Observable<any>;
+  @Input() stores$: Observable<IStore[] | [{ label: '---'; value: number }]>;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
@@ -62,14 +63,14 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
 
     this.stores$ = this.store.select(fromStore.getIntegrationsHosts).pipe(
       takeUntil(this.destroy$),
-      tap((stores: any[]) => {
+      tap((stores: IStore[]) => {
         if (!stores.length) {
           const params = this.defaultParams;
 
           this.store.dispatch(new fromStore.GetHosts({ params }));
         }
       }),
-      map((res) => (res.length ? res : [{ label: '---' }]))
+      map((res) => (res.length ? res : [{ label: '---', value: null }]))
     );
   }
 

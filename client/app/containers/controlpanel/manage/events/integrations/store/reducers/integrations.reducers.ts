@@ -1,12 +1,13 @@
 import * as fromIntegrations from '../actions';
-import { IEventIntegration } from '@libs/integrations/events/model';
+import { IStore } from '@shared/services/store.service';
+import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
 
 export interface IntegrationsState {
   error: boolean;
   loading: boolean;
-  data: Array<any>;
-  hosts: Array<any>;
+  hosts: IStore[];
   completedAction: string;
+  data: IEventIntegration[];
 }
 
 export const initialState: IntegrationsState = {
@@ -90,8 +91,8 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
         ...state,
         error: false,
         loading: false,
-        data: state.data.filter((e) => e.id !== deletedId),
-        completedAction: 't_shared_entry_deleted_successfully'
+        completedAction: 't_shared_entry_deleted_successfully',
+        data: state.data.filter((e: IEventIntegration) => e.id !== deletedId)
       };
     }
 

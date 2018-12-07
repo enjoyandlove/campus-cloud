@@ -82,7 +82,7 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
         em: null,
         crumbs: {
           url: `/manage/calendars/${calendarId}`,
-          label: 't_items'
+          label: 't_shared_items'
         },
         children: []
       }

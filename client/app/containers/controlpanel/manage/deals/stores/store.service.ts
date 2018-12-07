@@ -2,8 +2,8 @@ import { HttpParams, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { API } from '../../../../../config/api';
-import { HTTPService } from '../../../../../base';
+import { API } from '@app/config/api';
+import { HTTPService } from '@app/base';
 
 @Injectable()
 export class DealsStoreService extends HTTPService {

@@ -1,6 +1,7 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
+import { IStore } from '@shared/services/store.service';
 import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
 
 export enum IntegrationActions {
@@ -48,7 +49,7 @@ export class GetIntegrationsFail implements Action {
 export class PostIntegration implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION;
 
-  constructor(public payload: { body: any; params: HttpParams }) {}
+  constructor(public payload: { body: IEventIntegration; params: HttpParams }) {}
 }
 
 export class PostIntegrationSuccess implements Action {
@@ -84,7 +85,9 @@ export class DeleteIntegrationFail implements Action {
 export class EditIntegration implements Action {
   readonly type = IntegrationActions.EDIT_INTEGRATION;
 
-  constructor(public payload: { integrationId: number; body: any; params: HttpParams }) {}
+  constructor(
+    public payload: { integrationId: number; body: IEventIntegration; params: HttpParams }
+  ) {}
 }
 
 export class EditIntegrationSuccess implements Action {
@@ -108,7 +111,7 @@ export class GetHosts implements Action {
 export class GetHostsSuccess implements Action {
   readonly type = IntegrationActions.GET_HOSTS_SUCCESS;
 
-  constructor(public payload: any[]) {}
+  constructor(public payload: IStore[]) {}
 }
 
 export class GetHostsFail implements Action {
