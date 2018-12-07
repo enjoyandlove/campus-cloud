@@ -116,6 +116,7 @@ describe('EventsIntegrationEditComponent', () => {
     const submitBtn = de.query(By.css('.js_submit_button')).nativeElement;
 
     resetForm(component.form);
+    fixture.detectChanges();
 
     expect(submitBtn.disabled).toBe(true);
 

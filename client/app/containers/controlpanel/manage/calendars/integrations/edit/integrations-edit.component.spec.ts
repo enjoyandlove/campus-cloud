@@ -117,7 +117,7 @@ describe('ItemsIntegrationEditComponent', () => {
     const submitBtn = de.query(By.css('.js_submit_button')).nativeElement;
 
     resetForm(component.form);
-
+    fixture.detectChanges();
     expect(submitBtn.disabled).toBe(true);
 
     component.form.get('school_id').setValue(1);
