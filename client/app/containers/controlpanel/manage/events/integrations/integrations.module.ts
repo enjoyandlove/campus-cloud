@@ -12,10 +12,6 @@ import { EventsIntegrationEditComponent } from './edit';
 import { EventsIntegrationsListComponent } from './list';
 import { EventsIntegrationsCreateComponent } from './create';
 import { IntegrationsService } from './integrations.service';
-import { EventIntegrationFormComponent } from './components';
-import { EventIntegrationTypePipe } from './pipes/type.pipe';
-import { EventIntegrationStatusPipe } from './pipes/status.pipe';
-import { IntegrationsUtilsService } from './integrations.utils.service';
 import { EventIntegrationRoutingModule } from './integrations.routing.module';
 
 import { EventsIntegrationsModule } from '@libs/integrations/events/events-integrations.module';
@@ -24,9 +20,6 @@ import { EventsIntegrationsModule } from '@libs/integrations/events/events-integ
   declarations: [
     EventsIntegrationsListComponent,
     EventsIntegrationsCreateComponent,
-    EventIntegrationStatusPipe,
-    EventIntegrationTypePipe,
-    EventIntegrationFormComponent,
     EventsIntegrationEditComponent
   ],
   imports: [
@@ -40,6 +33,6 @@ import { EventsIntegrationsModule } from '@libs/integrations/events/events-integ
     StoreModule.forFeature('eventIntegrations', reducers)
   ],
   exports: [],
-  providers: [IntegrationsService, IntegrationsUtilsService]
+  providers: [IntegrationsService]
 })
 export class EventIntegrationsModule {}

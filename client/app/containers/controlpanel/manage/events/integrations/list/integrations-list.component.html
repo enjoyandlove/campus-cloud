@@ -35,15 +35,6 @@
 </div>
 
 <cp-modal
-  *ngIf="showCreateModal"
-  modalId="integrationCreate"
-  (modalClose)="onCreateTeardown()">
-  <cp-events-integrations-create
-    (teardown)="onCreateTeardown()">
-  </cp-events-integrations-create>
-</cp-modal>
-
-<cp-modal
   *ngIf="showDeleteModal"
   modalId="integrationDelete">
   <cp-integrations-delete
@@ -51,6 +42,15 @@
     (deleteClick)="onDeleteClick($event)"
     [eventIntegration]="selectedIntegration">
   </cp-integrations-delete>
+</cp-modal>
+
+<cp-modal
+  *ngIf="showCreateModal"
+  modalId="integrationCreate"
+  (modalClose)="onCreateTeardown()">
+  <cp-events-integrations-create
+    (teardown)="onCreateTeardown()">
+  </cp-events-integrations-create>
 </cp-modal>
 
 <cp-modal
