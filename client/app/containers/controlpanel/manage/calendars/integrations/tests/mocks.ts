@@ -1,6 +1,6 @@
 import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
 
-export const emptyForm = {
+export const emptyIntegrationForm = {
   school_id: 157,
   feed_obj_id: null,
   feed_url: null,
@@ -11,7 +11,7 @@ export const emptyForm = {
   last_successful_sync_epoch: null
 };
 
-export const filledForm = {
+export const filledIntegrationForm = {
   school_id: 157,
   feed_obj_id: 1,
   feed_url: 'http://some.data',
