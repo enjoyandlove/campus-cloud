@@ -2,6 +2,7 @@ import { Component, OnInit, Input, EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { SyncStatus } from './../../model';
 import { FeedIntegration } from './../../model/integration.model';
 
 @Component({
@@ -14,6 +15,8 @@ export class IntegrationsListComponent implements OnInit {
 
   @Output() editClick: EventEmitter<FeedIntegration> = new EventEmitter();
   @Output() deleteClick: EventEmitter<FeedIntegration> = new EventEmitter();
+
+  notSynced = SyncStatus.notSynced;
 
   constructor() {}
 

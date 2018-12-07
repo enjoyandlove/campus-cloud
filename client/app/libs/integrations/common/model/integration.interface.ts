@@ -10,6 +10,10 @@ export enum IntegrationTypes {
   ical = 3
 }
 
+export enum SyncStatus {
+  notSynced = -1
+}
+
 export interface IFeedIntegration {
   readonly id;
   store_id: number;
