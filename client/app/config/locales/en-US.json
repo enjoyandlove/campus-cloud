@@ -2609,6 +2609,12 @@
   "t_locations_location_details": {
     "message": "Location Details"
   },
+  "t_locations_manage_categories": {
+    "message": "Manage Categories"
+  },
+  "t_locations_no_location_found": {
+    "message": "No Locations Found"
+  },
   "t_locations_opening_hours": {
     "message": "Opening Hours"
   },
@@ -3025,6 +3031,9 @@
   },
   "t_shared_limited": {
     "message": "Limited"
+  },
+  "t_shared_no_integrations_found": {
+    "message": "No integration found"
   },
   "t_shared_pending": {
     "message": "Pending"

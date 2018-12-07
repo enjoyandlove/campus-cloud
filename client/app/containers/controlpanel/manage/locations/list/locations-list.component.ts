@@ -12,6 +12,7 @@ import { BaseComponent } from '../../../../../base/base.component';
 import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { environment } from '../../../../../../environments/environment';
 
 interface IState {
   locations: Array<any>;
@@ -39,6 +40,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   state: IState = state;
   loading$: Observable<boolean>;
   locations$: Observable<LocationModel[]>;
+  defaultImage = `${environment.root}public/default/user.png`;
 
   constructor(
     public session: CPSession,
@@ -120,7 +122,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     };
 
     this.sortingLabels = {
-      locations: this.cpI18n.translate('locations')
+      locations: this.cpI18n.translate('name')
     };
 
     this.locations$ = this.store.select(fromStore.getLocations);
