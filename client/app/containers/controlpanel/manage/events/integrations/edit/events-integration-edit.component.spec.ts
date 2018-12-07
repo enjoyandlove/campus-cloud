@@ -10,7 +10,7 @@ import { mockSchool } from '@app/session/mock';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockEventIntegration, resetForm } from '../tests';
-
+import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { EventsIntegrationEditComponent } from './events-integration-edit.component';
 
 describe('EventsIntegrationEditComponent', () => {
@@ -20,7 +20,7 @@ describe('EventsIntegrationEditComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession],
+        providers: [CPSession, CommonIntegrationUtilsService],
         declarations: [EventsIntegrationEditComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

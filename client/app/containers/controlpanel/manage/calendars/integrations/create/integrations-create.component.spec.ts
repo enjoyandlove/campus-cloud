@@ -10,6 +10,7 @@ import { CPSession } from '@app/session';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
+import { EventIntegration } from '@libs/integrations/events/model';
 import { emptyForm, fillForm, MockActivatedRoute, resetForm } from '../tests';
 import { ItemsIntegrationsCreateComponent } from './integrations-create.component';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers/integrations.utils.service';
@@ -99,7 +100,8 @@ describe('ItemsIntegrationsCreateComponent', () => {
     const result = {
       ...emptyForm,
       // mock calendarId;
-      store_id: 1
+      store_id: 1,
+      feed_type: EventIntegration.types.ical
     };
     expect(expected).toEqual(result);
   });
