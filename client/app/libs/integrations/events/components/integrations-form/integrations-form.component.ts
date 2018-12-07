@@ -21,7 +21,7 @@ export class EventIntegrationFormComponent implements OnInit {
   constructor() {}
 
   onHostSelected({ value }) {
-    this.form.get('store_id').setValue(value);
+    this.form.get('feed_obj_id').setValue(value);
   }
 
   onTypeSelected({ action }) {

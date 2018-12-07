@@ -5,7 +5,6 @@ export class FeedIntegration {
   static readonly status = IntegrationStatus;
 
   public readonly id;
-  public store_id: number;
   public feed_url: string;
   public school_id: number;
   public last_successful_sync_epoch: number;

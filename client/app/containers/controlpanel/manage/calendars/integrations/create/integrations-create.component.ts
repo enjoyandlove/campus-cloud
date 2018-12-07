@@ -66,7 +66,7 @@ export class ItemsIntegrationsCreateComponent implements OnInit, OnDestroy {
 
     this.form = EventIntegration.form();
     this.form.get('school_id').setValue(schoolId);
-    this.form.get('store_id').setValue(calendarId);
+    this.form.get('feed_obj_id').setValue(calendarId);
     this.form.get('feed_type').setValue(EventIntegration.types.ical);
 
     this.typesDropdown = this.utils

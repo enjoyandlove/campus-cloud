@@ -7,6 +7,7 @@ export class EventIntegration extends FeedIntegration {
   static readonly objectType = EventFeedObjectType;
 
   public poster_url: number;
+  public feed_obj_id: number;
   public poster_thumb_url: number;
 
   static form(eventIntegration?) {
@@ -14,7 +15,7 @@ export class EventIntegration extends FeedIntegration {
 
     const _integration = {
       school_id: eventIntegration ? eventIntegration.school_id : null,
-      store_id: eventIntegration ? eventIntegration.store_id : null,
+      feed_obj_id: eventIntegration ? eventIntegration.feed_obj_id : null,
       feed_url: eventIntegration ? eventIntegration.feed_url : null,
       feed_type: eventIntegration ? eventIntegration.feed_type : FeedIntegration.types.rss,
       poster_url: eventIntegration ? eventIntegration.poster_url : null,
@@ -27,7 +28,7 @@ export class EventIntegration extends FeedIntegration {
 
     return fb.group({
       school_id: [_integration.school_id, Validators.required],
-      store_id: [_integration.store_id, Validators.required],
+      feed_obj_id: [_integration.feed_obj_id, Validators.required],
       feed_url: [_integration.feed_url, Validators.required],
       feed_type: [_integration.feed_type, Validators.required],
       poster_url: [_integration.poster_url],

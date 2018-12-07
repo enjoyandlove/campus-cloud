@@ -16,7 +16,6 @@ export enum SyncStatus {
 
 export interface IFeedIntegration {
   readonly id;
-  store_id: number;
   feed_url: string;
   school_id: number;
   last_successful_sync_epoch: number;

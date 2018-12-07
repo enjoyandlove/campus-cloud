@@ -124,7 +124,7 @@ describe('EventsIntegrationEditComponent', () => {
     fixture.detectChanges();
     expect(submitBtn.disabled).toBe(true);
 
-    component.form.get('store_id').setValue(1);
+    component.form.get('feed_obj_id').setValue(1);
     fixture.detectChanges();
     expect(submitBtn.disabled).toBe(true);
 

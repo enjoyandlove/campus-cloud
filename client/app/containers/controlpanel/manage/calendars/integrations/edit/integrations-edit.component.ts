@@ -67,7 +67,7 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
     const calendarId = this.route.snapshot.params['calendarId'];
     this.form = EventIntegration.form(this.eventIntegration);
 
-    this.form.get('store_id').setValue(calendarId);
+    this.form.get('feed_obj_id').setValue(calendarId);
 
     this.typesDropdown = this.utils
       .typesDropdown()

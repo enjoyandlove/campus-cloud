@@ -100,7 +100,7 @@ describe('ItemsIntegrationsCreateComponent', () => {
     const result = {
       ...emptyForm,
       // mock calendarId;
-      store_id: 1,
+      feed_obj_id: 1,
       feed_type: EventIntegration.types.ical
     };
     expect(expected).toEqual(result);
@@ -139,7 +139,7 @@ describe('ItemsIntegrationsCreateComponent', () => {
     fixture.detectChanges();
     expect(submitBtn.disabled).toBe(true);
 
-    component.form.get('store_id').setValue(1);
+    component.form.get('feed_obj_id').setValue(1);
     fixture.detectChanges();
     expect(submitBtn.disabled).toBe(true);
 
