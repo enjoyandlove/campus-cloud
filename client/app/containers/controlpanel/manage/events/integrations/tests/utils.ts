@@ -5,8 +5,8 @@ import { filledForm } from './mocks';
 export const fillForm = (form: FormGroup) => {
   const f = { ...filledForm };
   for (const key in f) {
-    if (filledForm[key]) {
-      form.get(key).setValue(filledForm[key]);
+    if (f[key]) {
+      form.get(key).setValue(f[key]);
     }
   }
 
@@ -16,7 +16,7 @@ export const fillForm = (form: FormGroup) => {
 export const resetForm = (form: FormGroup) => {
   const f = { ...filledForm };
   for (const key in f) {
-    if (filledForm[key]) {
+    if (f[key]) {
       form.get(key).setValue(null);
     }
   }
