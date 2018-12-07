@@ -18,7 +18,7 @@ import { CommonIntegrationUtilsService } from '@libs/integrations/common/provide
   styleUrls: ['./integrations-create.component.scss']
 })
 export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
-  @Input() stores$: Observable<IStore[] | [{ label: '---'; value: number }]>;
+  @Input() stores$: Observable<IStore[] | IItem[]>;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
@@ -77,7 +77,7 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
           this.store.dispatch(new fromStore.GetHosts({ params }));
         }
       }),
-      map((res) => (res.length ? res : [{ label: '---', value: null }]))
+      map((res) => (res.length ? res : [{ label: '---', action: null }]))
     );
 
     this.typesDropdown = this.utils.typesDropdown();

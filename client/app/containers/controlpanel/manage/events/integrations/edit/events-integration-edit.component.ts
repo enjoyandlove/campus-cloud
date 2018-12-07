@@ -26,7 +26,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
   form: FormGroup;
   typesDropdown: IItem[];
   destroy$ = new Subject();
-  stores$: Observable<IStore[] | [{ label: '---'; value: number }]>;
+  stores$: Observable<IStore[] | IItem[]>;
 
   constructor(
     public session: CPSession,
@@ -81,7 +81,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
           }, 1);
         }
       }),
-      map((res) => (res.length ? res : [{ label: '---', value: null }]))
+      map((res) => (res.length ? res : [{ label: '---', action: null }]))
     );
 
     this.form = EventIntegration.form(this.eventIntegration);
