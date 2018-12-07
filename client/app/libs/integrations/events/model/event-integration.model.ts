@@ -6,10 +6,6 @@ export class EventIntegration extends FeedIntegration {
   public poster_url: number;
   public poster_thumb_url: number;
 
-  constructor() {
-    super();
-  }
-
   static form(eventIntegration?) {
     const fb = new FormBuilder();
 

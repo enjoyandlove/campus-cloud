@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { IntegrationsActionBoxComponent } from './integrations-action-box.component';
+import { SharedModule } from '@shared/shared.module';
 
 describe('IntegrationsActionBoxComponent', () => {
   let component: IntegrationsActionBoxComponent;
@@ -9,6 +10,7 @@ describe('IntegrationsActionBoxComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
+        imports: [SharedModule],
         declarations: [IntegrationsActionBoxComponent]
       }).compileComponents();
     })

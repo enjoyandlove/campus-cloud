@@ -1,4 +1,6 @@
-export const mockEventIntegration = {
+import { IEventIntegration } from '@libs/integrations/events/model';
+
+export const mockEventIntegration: IEventIntegration = {
   id: 4,
   school_id: 157,
   store_id: 28677,

@@ -1,30 +1,30 @@
-import { EventIntegrationTypePipe } from './type.pipe';
-import { EventIntegration } from './../model/integration.model';
+import { IntegrationTypePipe } from './type.pipe';
+import { IntegrationTypes } from './../model/integration.interface';
 
-describe('EventIntegrationTypePipe', () => {
-  let pipe: EventIntegrationTypePipe;
+describe('IntegrationTypePipe', () => {
+  let pipe: IntegrationTypePipe;
 
   beforeEach(() => {
-    pipe = new EventIntegrationTypePipe();
+    pipe = new IntegrationTypePipe();
   });
 
   it('should convert atom', () => {
     const expected = 'ATOM';
-    const result = pipe.transform(EventIntegration.types.atom);
+    const result = pipe.transform(IntegrationTypes.atom);
 
     expect(result).toEqual(expected);
   });
 
   it('should convert ical', () => {
     const expected = 'ICAL';
-    const result = pipe.transform(EventIntegration.types.ical);
+    const result = pipe.transform(IntegrationTypes.ical);
 
     expect(result).toEqual(expected);
   });
 
   it('should convert rss', () => {
     const expected = 'RSS';
-    const result = pipe.transform(EventIntegration.types.rss);
+    const result = pipe.transform(IntegrationTypes.rss);
 
     expect(result).toEqual(expected);
   });

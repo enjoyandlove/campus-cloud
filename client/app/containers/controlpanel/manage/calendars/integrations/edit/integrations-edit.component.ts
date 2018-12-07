@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
-import { EventIntegration } from '@libs/integrations/events/model';
+import { IEventIntegration, EventIntegration } from '@libs/integrations/events/model';
 
 @Component({
   selector: 'cp-items-integrations-edit',
@@ -15,7 +15,7 @@ import { EventIntegration } from '@libs/integrations/events/model';
   styleUrls: ['./integrations-edit.component.scss']
 })
 export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
-  @Input() eventIntegration: EventIntegration;
+  @Input() eventIntegration: IEventIntegration;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 

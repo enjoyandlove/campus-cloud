@@ -1,15 +1,17 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 
-import { emptyForm, fillForm } from '../tests';
 import { CPSession } from '@app/session';
 import { configureTestSuite } from '@shared/tests';
-import { mockSchool } from '@app/session/mock/school';
 import { SharedModule } from '@shared/shared.module';
+import { mockSchool } from '@app/session/mock/school';
+import { emptyForm, fillForm, MockActivatedRoute } from '../tests';
+
 import { ItemsIntegrationsCreateComponent } from './integrations-create.component';
 
 describe('ItemsIntegrationsCreateComponent', () => {
@@ -19,7 +21,7 @@ describe('ItemsIntegrationsCreateComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession],
+        providers: [CPSession, { provide: ActivatedRoute, useClass: MockActivatedRoute }],
         declarations: [ItemsIntegrationsCreateComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
@@ -89,8 +91,13 @@ describe('ItemsIntegrationsCreateComponent', () => {
   it('should create an empty form', () => {
     component.ngOnInit();
 
-    const result = component.form.value;
-    expect(result).toEqual(emptyForm);
+    const expected = component.form.value;
+    const result = {
+      ...emptyForm,
+      // mock calendarId;
+      store_id: 1
+    };
+    expect(expected).toEqual(result);
   });
 
   it('should dispatch PostIntegration action', () => {

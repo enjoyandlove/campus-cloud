@@ -14,7 +14,6 @@ export class ItemsIntegrationsService extends HTTPService {
   }
 
   getIntegrations(startRage: number, endRage: number, search: HttpParams) {
-    console.log('sopa');
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.EVENT_INTEGRATIONS
     }/${startRage};${endRage}`;

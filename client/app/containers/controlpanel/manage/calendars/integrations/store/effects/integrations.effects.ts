@@ -6,7 +6,7 @@ import { of, Observable } from 'rxjs';
 import * as fromActions from '../actions';
 import { StoreService } from '@shared/services';
 import { ItemsIntegrationsService } from './../../integrations.service';
-import { EventIntegration } from '@libs/integrations/events/model/event-integration.model';
+import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
 
 @Injectable()
 export class IntegrationsEffects {
@@ -36,7 +36,7 @@ export class IntegrationsEffects {
       return this.service
         .getIntegrations(startRange, endRange, params)
         .pipe(
-          map((data: EventIntegration[]) => new fromActions.GetIntegrationsSuccess(data)),
+          map((data: IEventIntegration[]) => new fromActions.GetIntegrationsSuccess(data)),
           catchError((error) => of(new fromActions.GetIntegrationsFail(error)))
         );
     })
@@ -52,7 +52,7 @@ export class IntegrationsEffects {
       return this.service
         .createIntegration(body, params)
         .pipe(
-          map((data: EventIntegration) => new fromActions.PostIntegrationSuccess(data)),
+          map((data: IEventIntegration) => new fromActions.PostIntegrationSuccess(data)),
           catchError((error) => of(new fromActions.PostIntegrationFail(error)))
         );
     })
@@ -84,7 +84,7 @@ export class IntegrationsEffects {
       return this.service
         .editIntegration(integrationId, body, params)
         .pipe(
-          map((edited: EventIntegration) => new fromActions.EditIntegrationSuccess(edited)),
+          map((edited: IEventIntegration) => new fromActions.EditIntegrationSuccess(edited)),
           catchError((error) => of(new fromActions.EditIntegrationFail(error)))
         );
     })

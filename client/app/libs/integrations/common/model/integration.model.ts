@@ -1,14 +1,4 @@
-export enum IntegrationStatus {
-  successful = 1,
-  error = -1,
-  pending = 0
-}
-
-export enum IntegrationTypes {
-  rss = 1,
-  atom = 2,
-  ical = 3
-}
+import { IntegrationTypes, IntegrationStatus } from './integration.interface';
 
 export class FeedIntegration {
   static readonly types = IntegrationTypes;

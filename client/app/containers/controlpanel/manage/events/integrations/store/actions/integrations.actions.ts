@@ -1,7 +1,7 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
-import { EventIntegration } from '@libs/integrations/events/model/event-integration.model';
+import { IEventIntegration } from '@libs/integrations/events/model';
 
 export enum IntegrationActions {
   DESTROY = '[manage.events.integrations] destroy',
@@ -36,7 +36,7 @@ export class GetIntegrations implements Action {
 export class GetIntegrationsSuccess implements Action {
   readonly type = IntegrationActions.GET_INTEGRATIONS_SUCCESS;
 
-  constructor(public payload: EventIntegration[]) {}
+  constructor(public payload: IEventIntegration[]) {}
 }
 
 export class GetIntegrationsFail implements Action {
@@ -54,7 +54,7 @@ export class PostIntegration implements Action {
 export class PostIntegrationSuccess implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION_SUCCESS;
 
-  constructor(public payload: EventIntegration) {}
+  constructor(public payload: IEventIntegration) {}
 }
 
 export class PostIntegrationFail implements Action {
@@ -90,7 +90,7 @@ export class EditIntegration implements Action {
 export class EditIntegrationSuccess implements Action {
   readonly type = IntegrationActions.EDIT_INTEGRATION_SUCCESS;
 
-  constructor(public payload: EventIntegration) {}
+  constructor(public payload: IEventIntegration) {}
 }
 
 export class EditIntegrationFail implements Action {

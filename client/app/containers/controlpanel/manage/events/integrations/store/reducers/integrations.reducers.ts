@@ -1,5 +1,5 @@
 import * as fromIntegrations from '../actions';
-import { EventIntegration } from '@libs/integrations/events/model/event-integration.model';
+import { IEventIntegration } from '@libs/integrations/events/model';
 
 export interface IntegrationsState {
   error: boolean;
@@ -131,7 +131,7 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
         error: false,
         loaded: true,
         loading: false,
-        data: state.data.map((e: EventIntegration) => (e.id === edited.id ? edited : e)),
+        data: state.data.map((e: IEventIntegration) => (e.id === edited.id ? edited : e)),
         completedAction: 't_shared_saved_update_success_message'
       };
     }

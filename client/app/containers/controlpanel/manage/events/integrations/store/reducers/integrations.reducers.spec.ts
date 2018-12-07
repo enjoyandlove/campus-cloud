@@ -4,7 +4,6 @@ import * as fromActions from '../actions';
 import { mockSchool } from '@app/session/mock';
 import * as fromReducer from './integrations.reducers';
 import { mockEventIntegration } from './../../tests/mocks';
-import { EventIntegration } from '@libs/integrations/events/model/event-integration.model';
 
 const pagination = {
   startRange: 1,
@@ -42,7 +41,7 @@ describe('Event Integrations Reducer', () => {
     it('should update data key with response', () => {
       const { initialState } = fromReducer;
 
-      const mock = new EventIntegration({ ...mockEventIntegration });
+      const mock = mockEventIntegration;
 
       const action = new fromActions.GetIntegrationsSuccess([mock]);
       const { data, error, loaded } = fromReducer.reducer(initialState, action);
@@ -86,7 +85,7 @@ describe('Event Integrations Reducer', () => {
   describe('POST_INTEGRATION_SUCCESS', () => {
     it('should set completedAction flag to null', () => {
       const { initialState } = fromReducer;
-      const payload = new EventIntegration({ ...mockEventIntegration });
+      const payload = mockEventIntegration;
 
       const action = new fromActions.PostIntegrationSuccess(payload);
       const { data, completedAction } = fromReducer.reducer(initialState, action);
@@ -167,7 +166,6 @@ describe('Event Integrations Reducer', () => {
       };
 
       const action = new fromActions.EditIntegration(payload);
-      console.log(fromReducer.reducer(initialState, action));
       const { loading, completedAction } = fromReducer.reducer(initialState, action);
 
       expect(loading).toBe(true);
@@ -187,7 +185,7 @@ describe('Event Integrations Reducer', () => {
         feed_url: updatedValue
       };
 
-      const payload = new EventIntegration({ ...edited });
+      const payload = edited;
 
       const action = new fromActions.EditIntegrationSuccess(payload);
       const { error, data, completedAction } = fromReducer.reducer(initialState, action);

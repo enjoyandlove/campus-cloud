@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
@@ -7,23 +8,28 @@ import { of } from 'rxjs';
 import * as fromRoot from '@app/store';
 
 import { CPSession } from '@app/session';
+import { MockActivatedRoute } from '../tests';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { CPI18nService } from '@shared/services/i18n.service';
-import { EventsIntegrationsListComponent } from './integrations-list.component';
+import { ItemsIntegrationsListComponent } from './integrations-list.component';
 import { IntegrationStatusPipe } from '@libs/integrations/common/pipes/status.pipe';
 import { IntegrationTypePipe } from '@client/app/libs/integrations/common/pipes';
 
-describe('EventsIntegrationsListComponent', () => {
+describe('ItemsIntegrationsListComponent', () => {
   configureTestSuite();
 
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService],
-        declarations: [EventsIntegrationsListComponent, IntegrationStatusPipe, IntegrationTypePipe],
+        providers: [
+          CPSession,
+          CPI18nService,
+          { provide: ActivatedRoute, useClass: MockActivatedRoute }
+        ],
+        declarations: [ItemsIntegrationsListComponent, IntegrationStatusPipe, IntegrationTypePipe],
         schemas: [NO_ERRORS_SCHEMA]
       });
 
@@ -34,11 +40,11 @@ describe('EventsIntegrationsListComponent', () => {
   );
   let session: CPSession;
   let dispatchSpy: jasmine.Spy;
-  let fixture: ComponentFixture<EventsIntegrationsListComponent>;
-  let component: EventsIntegrationsListComponent;
+  let fixture: ComponentFixture<ItemsIntegrationsListComponent>;
+  let component: ItemsIntegrationsListComponent;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EventsIntegrationsListComponent);
+    fixture = TestBed.createComponent(ItemsIntegrationsListComponent);
     component = fixture.componentInstance;
 
     session = TestBed.get(CPSession);

@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 
 import { CPSession } from '@app/session';
-import { mockEventIntegration } from '../tests';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '../../../../../../session/mock';
-import { EventIntegration } from '@client/app/libs/integrations/events/model';
+import { mockEventIntegration, MockActivatedRoute } from '../tests';
 
 import { ItemsIntegrationEditComponent } from './integrations-edit.component';
 
@@ -21,7 +21,7 @@ describe('ItemsIntegrationEditComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession],
+        providers: [CPSession, { provide: ActivatedRoute, useClass: MockActivatedRoute }],
         declarations: [ItemsIntegrationEditComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
@@ -59,7 +59,7 @@ describe('ItemsIntegrationEditComponent', () => {
     fixture.detectChanges();
 
     tearDownSpy = spyOn(component.teardown, 'emit');
-    formResetSpy = spyOn(component.integration.form, 'reset');
+    formResetSpy = spyOn(component.form, 'reset');
   });
 
   it('should create', () => {
@@ -89,8 +89,7 @@ describe('ItemsIntegrationEditComponent', () => {
   });
 
   it('should create an EventIntegration with the data pass as input', () => {
-    expect(component.integration.id).toBe(mockEventIntegration.id);
-    expect(component.integration instanceof EventIntegration).toBe(true);
+    expect(component.eventIntegration.id).toBe(mockEventIntegration.id);
   });
 
   it('should dispatch EditIntegration action', () => {
@@ -100,14 +99,13 @@ describe('ItemsIntegrationEditComponent', () => {
 
     component.doSubmit();
 
-    const expected = new fromStore.EditIntegration(component.integration.form.value);
+    const expected = new fromStore.EditIntegration(component.form.value);
 
     expect(component.resetModal).toHaveBeenCalled();
     expect(component.store.dispatch).toHaveBeenCalled();
 
     const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
     const { body, integrationId } = payload;
-    console.log(dispatchSpy.calls.mostRecent().args[0]);
 
     expect(body).toEqual(expected.payload);
     expect(integrationId).toEqual(component.eventIntegration.id);

@@ -57,7 +57,7 @@ describe('EventsIntegrationsCreateComponent', () => {
     fixture.detectChanges();
 
     tearDownSpy = spyOn(component.teardown, 'emit');
-    formResetSpy = spyOn(component.integration.form, 'reset');
+    formResetSpy = spyOn(component.form, 'reset');
   });
 
   it('should init', () => {
@@ -89,7 +89,7 @@ describe('EventsIntegrationsCreateComponent', () => {
   it('should create an empty form', () => {
     component.ngOnInit();
 
-    const result = component.integration.form.value;
+    const result = component.form.value;
     expect(result).toEqual(emptyForm);
   });
 
@@ -98,11 +98,11 @@ describe('EventsIntegrationsCreateComponent', () => {
     spyOn(component, 'resetModal');
     const dispatchSpy = spyOn(component.store, 'dispatch');
 
-    fillForm(component.integration.form);
+    fillForm(component.form);
 
     component.doSubmit();
 
-    const expected = new fromStore.PostIntegration(component.integration.form.value);
+    const expected = new fromStore.PostIntegration(component.form.value);
 
     expect(component.resetModal).toHaveBeenCalled();
     expect(component.store.dispatch).toHaveBeenCalled();

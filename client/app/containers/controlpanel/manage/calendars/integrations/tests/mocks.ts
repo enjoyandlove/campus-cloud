@@ -1,4 +1,6 @@
-export const mockEventIntegration = {
+import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
+
+export const mockEventIntegration: IEventIntegration = {
   id: 4,
   school_id: 157,
   store_id: 28677,
@@ -9,3 +11,11 @@ export const mockEventIntegration = {
   sync_status: 1,
   last_successful_sync_epoch: 1541794599
 };
+
+export class MockActivatedRoute {
+  snapshot = {
+    params: {
+      calendarId: 1
+    }
+  };
+}
