@@ -14,10 +14,10 @@ export class EventIntegration extends FeedIntegration {
       school_id: eventIntegration ? eventIntegration.school_id : null,
       store_id: eventIntegration ? eventIntegration.store_id : null,
       feed_url: eventIntegration ? eventIntegration.feed_url : null,
-      feed_type: eventIntegration ? eventIntegration.feed_type : null,
+      feed_type: eventIntegration ? eventIntegration.feed_type : FeedIntegration.types.rss,
       poster_url: eventIntegration ? eventIntegration.poster_url : null,
       poster_thumb_url: eventIntegration ? eventIntegration.poster_thumb_url : null,
-      sync_status: eventIntegration ? eventIntegration.sync_status : null,
+      sync_status: eventIntegration ? eventIntegration.sync_status : FeedIntegration.status.pending,
       last_successful_sync_epoch: eventIntegration
         ? eventIntegration.last_successful_sync_epoch
         : null

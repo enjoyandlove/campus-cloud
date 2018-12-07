@@ -13,6 +13,8 @@ import { CommonIntegrationUtilsService } from './../../../common/providers';
 export class EventIntegrationFormComponent implements OnInit {
   @Input() form: FormGroup;
 
+  @Input() showHosts = true;
+
   @Input() selectedHost;
 
   @Input() stores$: Observable<Array<{ label: string; value: number }>>;
