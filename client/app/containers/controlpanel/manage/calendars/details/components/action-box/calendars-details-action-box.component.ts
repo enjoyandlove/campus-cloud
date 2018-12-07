@@ -1,6 +1,6 @@
 import { OnInit, Output, Component, EventEmitter } from '@angular/core';
 
-import { EVENTS_INTEGRATION } from '@client/app/shared/constants';
+import { ITEMS_INTEGRATION } from '@client/app/shared/constants';
 
 @Component({
   selector: 'cp-calendars-details-action-box',
@@ -10,7 +10,7 @@ import { EVENTS_INTEGRATION } from '@client/app/shared/constants';
 export class CalendarsDetailsActionBoxComponent implements OnInit {
   @Output() search: EventEmitter<string> = new EventEmitter();
 
-  featureName = EVENTS_INTEGRATION;
+  featureName = ITEMS_INTEGRATION;
 
   constructor() {}
 

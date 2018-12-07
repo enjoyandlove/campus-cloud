@@ -209,7 +209,7 @@ describe('Event Integrations Reducer', () => {
   describe('GET_HOSTS_SUCCESS', () => {
     it('should set hosts', () => {
       const { initialState } = fromReducer;
-      const payload = [{ id: 1, name: 'fake' }];
+      const payload = [{ value: 1, label: 'fake' }];
       const action = new fromActions.GetHostsSuccess(payload);
       const { error, loading, hosts } = fromReducer.reducer(initialState, action);
 
