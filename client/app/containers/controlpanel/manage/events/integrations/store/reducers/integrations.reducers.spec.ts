@@ -1,10 +1,10 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 
 import * as fromActions from '../actions';
+import { mockSchool } from '@app/session/mock';
 import * as fromReducer from './integrations.reducers';
 import { mockEventIntegration } from './../../tests/mocks';
-import { mockSchool } from '../../../../../../../session/mock';
-import { EventIntegration } from './../../model/integration.model';
+import { EventIntegration } from '@libs/integrations/events/model/event-integration.model';
 
 const pagination = {
   startRange: 1,

@@ -6,10 +6,10 @@ import { StoreModule } from '@ngrx/store';
 import * as fromStore from '../store';
 
 import { emptyForm, fillForm } from '../tests';
-import { CPSession } from './../../../../../../session';
-import { configureTestSuite } from '../../../../../../shared/tests';
-import { mockSchool } from './../../../../../../session/mock/school';
-import { SharedModule } from './../../../../../../shared/shared.module';
+import { CPSession } from '@app/session';
+import { configureTestSuite } from '@shared/tests';
+import { mockSchool } from '@app/session/mock/school';
+import { SharedModule } from '@shared/shared.module';
 import { EventsIntegrationsCreateComponent } from './integrations-create.component';
 
 describe('EventsIntegrationsCreateComponent', () => {

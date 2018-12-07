@@ -4,9 +4,9 @@ import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
 import * as fromActions from '../actions';
+import { StoreService } from '@shared/services';
 import { IntegrationsService } from './../../integrations.service';
-import { EventIntegration } from './../../model/integration.model';
-import { StoreService } from '../../../../../../../shared/services';
+import { EventIntegration } from '@libs/integrations/events/model/event-integration.model';
 
 @Injectable()
 export class IntegrationsEffects {

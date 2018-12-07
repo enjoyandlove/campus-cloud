@@ -5,12 +5,13 @@ import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 
+import { CPSession } from '@app/session';
 import { mockEventIntegration } from '../tests';
-import { CPSession } from './../../../../../../session';
+import { configureTestSuite } from '@shared/tests';
+import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '../../../../../../session/mock';
-import { EventIntegration } from './../model/integration.model';
-import { configureTestSuite } from '../../../../../../shared/tests';
-import { SharedModule } from './../../../../../../shared/shared.module';
+import { EventIntegration } from '@client/app/libs/integrations/events/model';
+
 import { EventsIntegrationEditComponent } from './events-integration-edit.component';
 
 describe('EventsIntegrationEditComponent', () => {

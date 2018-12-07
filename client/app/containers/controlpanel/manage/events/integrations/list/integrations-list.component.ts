@@ -11,7 +11,7 @@ import { CPSession } from '@app/session';
 import { FORMAT } from '@shared/pipes/date/date.pipe';
 import { EventsIntegrationEditComponent } from '../edit';
 import { CPI18nService } from '@shared/services/i18n.service';
-import { EventIntegration } from './../model/integration.model';
+import { EventIntegration } from '@libs/integrations/events/model/event-integration.model';
 
 @Component({
   selector: 'cp-events-integrations',

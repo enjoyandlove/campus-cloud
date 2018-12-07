@@ -4,16 +4,16 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import * as fromRoot from '../../../../../../store';
+import * as fromRoot from '@app/store';
 
-import { CPSession } from './../../../../../../session';
-import { EventIntegrationTypePipe } from './../pipes/type.pipe';
-import { EventIntegrationStatusPipe } from './../pipes/status.pipe';
-import { mockSchool } from './../../../../../../session/mock/school';
-import { configureTestSuite } from './../../../../../../shared/tests';
-import { SharedModule } from './../../../../../../shared/shared.module';
+import { CPSession } from '@app/session';
+import { configureTestSuite } from '@shared/tests';
+import { SharedModule } from '@shared/shared.module';
+import { mockSchool } from '@app/session/mock/school';
+import { CPI18nService } from '@shared/services/i18n.service';
 import { EventsIntegrationsListComponent } from './integrations-list.component';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { IntegrationStatusPipe } from '@libs/integrations/common/pipes/status.pipe';
+import { IntegrationTypePipe } from '@client/app/libs/integrations/common/pipes';
 
 describe('EventsIntegrationsListComponent', () => {
   configureTestSuite();
@@ -23,11 +23,7 @@ describe('EventsIntegrationsListComponent', () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, StoreModule.forRoot({})],
         providers: [CPSession, CPI18nService],
-        declarations: [
-          EventsIntegrationsListComponent,
-          EventIntegrationStatusPipe,
-          EventIntegrationTypePipe
-        ],
+        declarations: [EventsIntegrationsListComponent, IntegrationStatusPipe, IntegrationTypePipe],
         schemas: [NO_ERRORS_SCHEMA]
       });
 

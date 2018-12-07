@@ -1,7 +1,7 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
-import { EventIntegration } from './../../model/integration.model';
+import { EventIntegration } from '@libs/integrations/events/model/event-integration.model';
 
 export enum IntegrationActions {
   DESTROY = '[manage.events.integrations] destroy',

@@ -1,5 +1,5 @@
 import * as fromIntegrations from '../actions';
-import { EventIntegration } from './../../model/integration.model';
+import { EventIntegration } from '@libs/integrations/events/model/event-integration.model';
 
 export interface IntegrationsState {
   error: boolean;
