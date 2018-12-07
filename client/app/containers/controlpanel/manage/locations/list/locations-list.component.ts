@@ -1,27 +1,26 @@
+import { filter, takeUntil, map, tap, take } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
+import * as fromRoot from '@app/store';
+import { CPSession } from '@app/session';
 import { ManageHeaderService } from '../../utils';
 import { ILocation } from '../locations.interface';
-import { CPSession } from './../../../../../session';
-import { baseActions, IHeader } from '../../../../../store/base';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { BaseComponent } from '@app/base/base.component';
+import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 
 interface IState {
-  locations: Array<any>;
   search_str: string;
   sort_field: string;
   sort_direction: string;
 }
 
 const state: IState = {
-  locations: [],
   search_str: null,
   sort_field: 'name',
   sort_direction: 'asc'
@@ -32,7 +31,7 @@ const state: IState = {
   templateUrl: './locations-list.component.html',
   styleUrls: ['./locations-list.component.scss']
 })
-export class LocationsListComponent extends BaseComponent implements OnInit {
+export class LocationsListComponent extends BaseComponent implements OnInit, OnDestroy {
   eventData;
   sortingLabels;
   deleteLocation = '';
@@ -40,12 +39,14 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   loading$: Observable<boolean>;
   locations$: Observable<ILocation[]>;
 
+  private destroy$ = new Subject();
+
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
     public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService,
-    public store: Store<fromStore.ILocationsState | IHeader>
+    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
   ) {
     super();
   }
@@ -96,22 +97,62 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  onLocationDeleted(locationId) {
-    this.state = {
-      ...this.state,
-      locations: this.state.locations.filter((location) => location.id !== locationId)
-    };
-  }
-
   buildHeader() {
     this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
+      type: fromRoot.baseActions.HEADER_UPDATE,
       payload: this.headerService.filterByPrivileges()
     });
   }
 
+  loadLocations() {
+    this.store
+      .select(fromStore.getLocations)
+      .pipe(
+        tap((locations: ILocation[]) => {
+          if (!locations.length) {
+            this.fetch();
+          }
+        }),
+        take(1)
+      )
+      .subscribe();
+
+    this.locations$ = this.store.select(fromStore.getLocations).pipe(
+      map((locations: ILocation[]) => {
+        const responseCopy = [...locations];
+
+        return super.updatePagination(responseCopy);
+      })
+    );
+  }
+
+  listenForErrors() {
+    this.store
+      .select(fromStore.getLocationsError)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((error) => error),
+        tap(() => {
+          const payload = {
+            body: this.cpI18n.translate('something_went_wrong'),
+            sticky: true,
+            autoClose: true,
+            class: 'danger'
+          };
+
+          this.store.dispatch({
+            type: fromRoot.baseActions.SNACKBAR_SHOW,
+            payload
+          });
+        })
+      )
+      .subscribe();
+  }
+
   ngOnInit() {
     this.buildHeader();
+    this.loadLocations();
+    this.listenForErrors();
 
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
@@ -123,8 +164,12 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
       locations: this.cpI18n.translate('locations')
     };
 
-    this.locations$ = this.store.select(fromStore.getLocations);
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
-    this.fetch();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 }
