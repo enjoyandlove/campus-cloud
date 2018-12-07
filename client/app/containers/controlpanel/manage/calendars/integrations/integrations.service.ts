@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 
 import { API } from '@app/config/api';
 import { HTTPService } from '@app/base/http.service';
+import { EventIntegration } from '@libs/integrations/events/model';
 
 @Injectable()
 export class ItemsIntegrationsService extends HTTPService {
@@ -14,6 +15,7 @@ export class ItemsIntegrationsService extends HTTPService {
   }
 
   getIntegrations(startRage: number, endRage: number, search: HttpParams) {
+    search = search.set('obj_type', EventIntegration.objectType.academicEvent.toString());
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.EVENT_INTEGRATIONS
     }/${startRage};${endRage}`;
@@ -22,12 +24,14 @@ export class ItemsIntegrationsService extends HTTPService {
   }
 
   createIntegration(body, search: HttpParams) {
+    search = search.set('obj_type', EventIntegration.objectType.academicEvent.toString());
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_INTEGRATIONS}/`;
 
     return super.post(url, body, search);
   }
 
   editIntegration(integrationId: number, body, search: HttpParams) {
+    search = search.set('obj_type', EventIntegration.objectType.academicEvent.toString());
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.EVENT_INTEGRATIONS
     }/${integrationId}`;
@@ -36,6 +40,7 @@ export class ItemsIntegrationsService extends HTTPService {
   }
 
   deleteIntegration(integrationId: number, search: HttpParams) {
+    search = search.set('obj_type', EventIntegration.objectType.academicEvent.toString());
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.EVENT_INTEGRATIONS
     }/${integrationId}`;

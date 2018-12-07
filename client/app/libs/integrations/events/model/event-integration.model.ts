@@ -4,9 +4,10 @@ import { FeedIntegration } from '../../common/model';
 import { EventFeedObjectType } from './event-integration.interface';
 
 export class EventIntegration extends FeedIntegration {
+  static readonly objectType = EventFeedObjectType;
+
   public poster_url: number;
   public poster_thumb_url: number;
-  public readonly objectType = EventFeedObjectType;
 
   static form(eventIntegration?) {
     const fb = new FormBuilder();
