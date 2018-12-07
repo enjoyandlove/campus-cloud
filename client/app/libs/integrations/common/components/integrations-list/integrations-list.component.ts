@@ -1,5 +1,5 @@
-import { Output } from '@angular/core';
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { FeedIntegration } from './../../model/integration.model';

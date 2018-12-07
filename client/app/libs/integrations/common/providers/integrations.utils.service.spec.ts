@@ -1,5 +1,5 @@
-import { CommonIntegrationUtilsService } from './integrations.utils.service';
 import { FeedIntegration } from './../model/integration.model';
+import { CommonIntegrationUtilsService } from './integrations.utils.service';
 
 describe('CommonIntegrationUtilsService', () => {
   let service: CommonIntegrationUtilsService;

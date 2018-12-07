@@ -14,8 +14,7 @@ import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { CPI18nService } from '@shared/services/i18n.service';
 import { ItemsIntegrationsListComponent } from './integrations-list.component';
-import { IntegrationStatusPipe } from '@libs/integrations/common/pipes/status.pipe';
-import { IntegrationTypePipe } from '@client/app/libs/integrations/common/pipes';
+import { IntegrationStatusPipe, IntegrationTypePipe } from '@libs/integrations/common/pipes';
 
 describe('ItemsIntegrationsListComponent', () => {
   configureTestSuite();

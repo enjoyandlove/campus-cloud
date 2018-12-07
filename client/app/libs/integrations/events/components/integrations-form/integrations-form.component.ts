@@ -11,12 +11,9 @@ import { CommonIntegrationUtilsService } from './../../../common/providers';
   styleUrls: ['./integrations-form.component.scss']
 })
 export class EventIntegrationFormComponent implements OnInit {
-  @Input() form: FormGroup;
-
-  @Input() showHosts = true;
-
   @Input() selectedHost;
-
+  @Input() form: FormGroup;
+  @Input() showHosts = true;
   @Input() stores$: Observable<Array<{ label: string; value: number }>>;
 
   selectedItem;

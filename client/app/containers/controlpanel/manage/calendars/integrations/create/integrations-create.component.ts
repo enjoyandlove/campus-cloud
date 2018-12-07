@@ -22,8 +22,8 @@ export class ItemsIntegrationsCreateComponent implements OnInit, OnDestroy {
 
   constructor(
     public session: CPSession,
-    public store: Store<fromStore.IEventIntegrationState>,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    public store: Store<fromStore.IEventIntegrationState>
   ) {}
 
   get defaultParams(): HttpParams {

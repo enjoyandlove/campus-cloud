@@ -65,9 +65,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
           const params = this.defaultParams;
 
           this.store.dispatch(new fromStore.GetHosts({ params }));
-        }
-
-        if (stores.length) {
+        } else {
           setTimeout(() => {
             const selectedHostLookup = (s) => s.value === this.eventIntegration.store_id;
 

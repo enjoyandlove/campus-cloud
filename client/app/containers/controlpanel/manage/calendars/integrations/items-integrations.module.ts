@@ -13,20 +13,19 @@ import { ItemsIntegrationsListComponent } from './list';
 import { ItemsIntegrationsCreateComponent } from './create';
 import { ItemsIntegrationsService } from './integrations.service';
 import { ItemsIntegrationRoutingModule } from './items-integrations.routing.module';
-
 import { EventsIntegrationsModule } from '@libs/integrations/events/events-integrations.module';
 
 @NgModule({
   declarations: [
+    ItemsIntegrationEditComponent,
     ItemsIntegrationsListComponent,
-    ItemsIntegrationsCreateComponent,
-    ItemsIntegrationEditComponent
+    ItemsIntegrationsCreateComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
-    ReactiveFormsModule,
     RouterModule,
+    ReactiveFormsModule,
     EventsIntegrationsModule,
     ItemsIntegrationRoutingModule,
     EffectsModule.forFeature(effects),

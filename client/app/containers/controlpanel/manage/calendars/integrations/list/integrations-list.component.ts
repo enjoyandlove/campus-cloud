@@ -1,14 +1,14 @@
-import { ActivatedRoute } from '@angular/router';
 import { tap, takeUntil, filter, map } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
-import { BaseComponent } from '@app/base';
 import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
 import { FORMAT } from '@shared/pipes/date/date.pipe';
 import { CPI18nService } from '@shared/services/i18n.service';
 import { EventIntegration } from '@libs/integrations/events/model/event-integration.model';

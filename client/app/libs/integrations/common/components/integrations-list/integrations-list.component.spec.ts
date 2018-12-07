@@ -2,9 +2,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { CPSession } from '@app/session';
-import { CommonIntegrationsModule } from './../../common-integrations.module';
-import { IntegrationsListComponent } from './integrations-list.component';
 import { SharedModule } from '@shared/shared.module';
+import { IntegrationsListComponent } from './integrations-list.component';
+import { CommonIntegrationsModule } from './../../common-integrations.module';
 
 describe('IntegrationsListComponent', () => {
   let component: IntegrationsListComponent;
