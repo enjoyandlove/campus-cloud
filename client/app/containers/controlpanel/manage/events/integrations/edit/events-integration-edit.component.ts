@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
-import { CPSession } from './../../../../../../session';
+import { CPSession } from '@app/session';
 import { EventIntegration } from '@client/app/libs/integrations/events/model';
 
 @Component({
