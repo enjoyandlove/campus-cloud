@@ -5,13 +5,13 @@ import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '../../../../../../store';
-import { BaseComponent } from '../../../../../../base';
-import { CPSession } from './../../../../../../session';
+import * as fromRoot from '@app/store';
+import { BaseComponent } from '@app/base';
+import { CPSession } from '@app/session';
+import { FORMAT } from '@shared/pipes/date/date.pipe';
 import { EventsIntegrationEditComponent } from '../edit';
-import { EventIntegration } from './../model/integration.model';
-import { FORMAT } from './../../../../../../shared/pipes/date/date.pipe';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { CPI18nService } from '@shared/services/i18n.service';
+import { IEventIntegration } from '@libs/integrations/events/model';
 
 @Component({
   selector: 'cp-events-integrations',
@@ -28,8 +28,9 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
   showCreateModal = false;
   dateFormat = FORMAT.DATETIME;
   loading$: Observable<boolean>;
-  selectedIntegration: EventIntegration = null;
-  integrations$: Observable<EventIntegration[]>;
+  selectedIntegration: IEventIntegration = null;
+  integrations$: Observable<IEventIntegration[]>;
+  stores$: Observable<Array<{ label: string; value: number }>>;
 
   constructor(
     public session: CPSession,
@@ -103,10 +104,29 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
     setTimeout(() => $('#integrationCreate').modal());
   }
 
-  onLaunchEditModal() {
+  onLaunchEditModal(integration: IEventIntegration) {
     this.showEditModal = true;
+    this.selectedIntegration = integration;
 
     setTimeout(() => $('#integrationEdit').modal());
+  }
+
+  onLaunchDeleteModal(integration: IEventIntegration) {
+    this.showDeleteModal = true;
+    this.selectedIntegration = integration;
+
+    setTimeout(() => $('#integrationDelete').modal());
+  }
+
+  onDeleteClick(integration: IEventIntegration) {
+    const params = this.defaultParams;
+
+    const payload = {
+      params,
+      integrationId: integration.id
+    };
+
+    this.store.dispatch(new fromStore.DeleteIntegration(payload));
   }
 
   listenForErrors() {
@@ -158,6 +178,7 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
     this.updateHeader();
     this.listenForErrors();
     this.listenForCompletedActions();
+
     this.integrations$ = this.store.select(fromStore.getIntegrations).pipe(
       map((res) => {
         const responseCopy = [...res];
@@ -165,6 +186,7 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
         return super.updatePagination(responseCopy);
       })
     );
+
     this.loading$ = this.store
       .select(fromStore.getIntegrationsLoading)
       .pipe(takeUntil(this.destroy$));
