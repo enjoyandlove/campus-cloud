@@ -1,12 +1,11 @@
 import { FormGroup } from '@angular/forms';
 
-import { filledIntegrationForm } from './mocks';
+import { filledForm } from './mocks';
 
 export const fillForm = (form: FormGroup) => {
-  const f = { ...filledIntegrationForm };
-  for (const key in f) {
-    if (f[key]) {
-      form.get(key).setValue(f[key]);
+  for (const key in filledForm) {
+    if (filledForm[key]) {
+      form.get(key).setValue(filledForm[key]);
     }
   }
 
@@ -14,9 +13,8 @@ export const fillForm = (form: FormGroup) => {
 };
 
 export const resetForm = (form: FormGroup) => {
-  const f = { ...filledIntegrationForm };
-  for (const key in f) {
-    if (f[key]) {
+  for (const key in filledForm) {
+    if (filledForm[key]) {
       form.get(key).setValue(null);
     }
   }

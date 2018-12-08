@@ -14,7 +14,7 @@ import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { CPNoContentComponent } from '@shared/components';
 import { CPI18nService } from '@shared/services/i18n.service';
-import { MockActivatedRoute, mockEventIntegration } from '../tests';
+import { MockActivatedRoute, mockIntegration } from '../tests';
 import { ItemsIntegrationsListComponent } from './integrations-list.component';
 import { IntegrationStatusPipe, IntegrationTypePipe } from '@libs/integrations/common/pipes';
 
@@ -102,7 +102,7 @@ describe('ItemsIntegrationsListComponent', () => {
     expect(noResultsFoundComp).not.toBeNull();
 
     component.loading$ = of(false);
-    component.integrations$ = of([mockEventIntegration]);
+    component.integrations$ = of([mockIntegration]);
     fixture.detectChanges();
 
     noResultsFoundComp = de.query(By.directive(CPNoContentComponent));

@@ -8,7 +8,7 @@ import { of } from 'rxjs';
 import * as fromRoot from '@app/store';
 
 import { CPSession } from '@app/session';
-import { mockEventIntegration } from '../tests';
+import { mockIntegration } from '../tests';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
@@ -98,7 +98,7 @@ describe('EventsIntegrationsListComponent', () => {
     expect(noResultsFoundComp).not.toBeNull();
 
     component.loading$ = of(false);
-    component.integrations$ = of([mockEventIntegration]);
+    component.integrations$ = of([mockIntegration]);
     fixture.detectChanges();
 
     noResultsFoundComp = de.query(By.directive(CPNoContentComponent));
