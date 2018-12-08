@@ -11,8 +11,8 @@ import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { EventIntegration } from '@libs/integrations/events/model';
+import { emptyForm, fillForm, MockActivatedRoute, resetForm } from '../tests';
 import { ItemsIntegrationsCreateComponent } from './integrations-create.component';
-import { emptyIntegrationForm, fillForm, MockActivatedRoute, resetForm } from '../tests';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers/integrations.utils.service';
 
 describe('ItemsIntegrationsCreateComponent', () => {
@@ -98,7 +98,7 @@ describe('ItemsIntegrationsCreateComponent', () => {
 
     const expected = component.form.value;
     const result = {
-      ...emptyIntegrationForm,
+      ...emptyForm,
       // mock calendarId;
       feed_obj_id: 1,
       feed_type: EventIntegration.types.ical

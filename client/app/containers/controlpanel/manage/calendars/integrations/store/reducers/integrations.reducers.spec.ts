@@ -2,8 +2,8 @@ import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 
 import * as fromActions from '../actions';
 import { mockSchool } from '@app/session/mock';
+import { mockIntegration } from './../../tests/mocks';
 import * as fromReducer from './integrations.reducers';
-import { mockEventIntegration } from './../../tests/mocks';
 
 const pagination = {
   startRange: 1,
@@ -41,7 +41,7 @@ describe('Event Integrations Reducer', () => {
     it('should update data key with response', () => {
       const { initialState } = fromReducer;
 
-      const mock = mockEventIntegration;
+      const mock = mockIntegration;
 
       const action = new fromActions.GetIntegrationsSuccess([mock]);
       const { data, error } = fromReducer.reducer(initialState, action);
@@ -66,7 +66,7 @@ describe('Event Integrations Reducer', () => {
   describe('POST_INTEGRATION', () => {
     it('should set completedAction flag to null', () => {
       const { initialState } = fromReducer;
-      const body = mockEventIntegration;
+      const body = mockIntegration;
       const payload = {
         body,
         params
@@ -83,7 +83,7 @@ describe('Event Integrations Reducer', () => {
   describe('POST_INTEGRATION_SUCCESS', () => {
     it('should set completedAction flag to null', () => {
       const { initialState } = fromReducer;
-      const payload = mockEventIntegration;
+      const payload = mockIntegration;
 
       const action = new fromActions.PostIntegrationSuccess(payload);
       const { data, completedAction } = fromReducer.reducer(initialState, action);
@@ -110,7 +110,7 @@ describe('Event Integrations Reducer', () => {
       const { initialState } = fromReducer;
       const payload = {
         params,
-        integrationId: mockEventIntegration.id
+        integrationId: mockIntegration.id
       };
 
       const action = new fromActions.DeleteIntegration(payload);
@@ -125,10 +125,10 @@ describe('Event Integrations Reducer', () => {
     it('should set completedAction flag', () => {
       let { initialState } = fromReducer;
 
-      initialState = addEventToState(initialState, mockEventIntegration);
+      initialState = addEventToState(initialState, mockIntegration);
 
       const payload = {
-        deletedId: mockEventIntegration.id
+        deletedId: mockIntegration.id
       };
 
       const action = new fromActions.DeleteIntegrationSuccess({ ...payload });
@@ -155,12 +155,12 @@ describe('Event Integrations Reducer', () => {
     it('should set loading flag to true', () => {
       let { initialState } = fromReducer;
 
-      initialState = addEventToState(initialState, mockEventIntegration);
+      initialState = addEventToState(initialState, mockIntegration);
 
       const payload = {
         params,
-        body: mockEventIntegration,
-        integrationId: mockEventIntegration.id
+        body: mockIntegration,
+        integrationId: mockIntegration.id
       };
 
       const action = new fromActions.EditIntegration(payload);
@@ -176,10 +176,10 @@ describe('Event Integrations Reducer', () => {
       let { initialState } = fromReducer;
       const updatedValue = 'EDITED';
 
-      initialState = addEventToState(initialState, mockEventIntegration);
+      initialState = addEventToState(initialState, mockIntegration);
 
       const edited = {
-        ...mockEventIntegration,
+        ...mockIntegration,
         feed_url: updatedValue
       };
 

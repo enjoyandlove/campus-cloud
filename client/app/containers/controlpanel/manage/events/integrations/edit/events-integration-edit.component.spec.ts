@@ -9,7 +9,7 @@ import { CPSession } from '@app/session';
 import { mockSchool } from '@app/session/mock';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
-import { mockEventIntegration, resetForm } from '../tests';
+import { mockIntegration, resetForm } from '../tests';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { EventsIntegrationEditComponent } from './events-integration-edit.component';
 
@@ -46,7 +46,7 @@ describe('EventsIntegrationEditComponent', () => {
     session = TestBed.get(CPSession);
     session.g.set('school', mockSchool);
 
-    component.eventIntegration = mockEventIntegration;
+    component.eventIntegration = mockIntegration;
 
     const closeButtonDebugEl = fixture.debugElement.query(By.css('.cpmodal__header__close'));
 
@@ -88,7 +88,7 @@ describe('EventsIntegrationEditComponent', () => {
   });
 
   it('should create an EventIntegration with the data pass as input', () => {
-    expect(component.eventIntegration.id).toBe(mockEventIntegration.id);
+    expect(component.eventIntegration.id).toBe(mockIntegration.id);
   });
 
   it('should dispatch EditIntegration action', () => {

@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { CPI18nService } from '@app/shared/services';
 import { SharedModule } from '@shared/shared.module';
 import { IntegrationsDeleteComponent } from './integrations-delete.component';
-import { mockEventIntegration } from '@client/app/containers/controlpanel/manage/calendars/integrations/tests';
+import { mockIntegration } from '@client/app/containers/controlpanel/manage/calendars/integrations/tests';
 
 describe('IntegrationsDeleteComponent', () => {
   let component: IntegrationsDeleteComponent;
@@ -24,7 +24,7 @@ describe('IntegrationsDeleteComponent', () => {
     fixture = TestBed.createComponent(IntegrationsDeleteComponent);
     component = fixture.componentInstance;
 
-    component.eventIntegration = mockEventIntegration;
+    component.eventIntegration = mockIntegration;
 
     fixture.detectChanges();
   });
