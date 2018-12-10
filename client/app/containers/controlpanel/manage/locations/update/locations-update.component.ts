@@ -1,16 +1,16 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '../../../../../session';
-import { CPMap } from '../../../../../shared/utils';
-import { BaseComponent } from '../../../../../base';
-import { LocationsService } from '../locations.service';
-import { baseActions, IHeader } from '../../../../../store/base';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import * as fromStore from '../store';
+import * as fromRoot from '@app/store';
+import { CPSession } from '@app/session';
+import { CPMap } from '@app/shared/utils';
+import { BaseComponent } from '@app/base';
+import { ILocation } from '../locations.interface';
+import { CPI18nService } from '@app/shared/services';
 
 @Component({
   selector: 'cp-locations-update',
@@ -19,7 +19,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 })
 export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   school;
-  loading;
+  loading$;
   buttonData;
   locationId;
   form: FormGroup;
@@ -32,17 +32,12 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   };
 
   constructor(
-    public router: Router,
     private fb: FormBuilder,
-    private session: CPSession,
-    public route: ActivatedRoute,
+    public session: CPSession,
     public cpI18n: CPI18nService,
-    public store: Store<IHeader>,
-    public service: LocationsService
+    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>,
   ) {
     super();
-    super.isLoading().subscribe((res) => (this.loading = res));
-    this.locationId = this.route.snapshot.params['locationId'];
   }
 
   onResetMap() {
@@ -51,20 +46,18 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   }
 
   doSubmit() {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
+    const body = this.form.value;
+    const locationId = this.locationId;
+    const school_id = this.session.g.get('school').id;
+    const params = new HttpParams().append('school_id', school_id);
 
-    this.service
-      .updateLocation(this.form.value, this.locationId, search)
-      .subscribe(() => {
-        this.router.navigate(['/manage/locations']);
-      });
-  }
-  public fetch() {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
+    const payload = {
+      body,
+      params,
+      locationId
+    };
 
-    super.fetchData(this.service.getLocationById(this.locationId, search)).then((location) => {
-      this.buildForm(location.data);
-    });
+    this.store.dispatch(new fromStore.EditLocation(payload));
   }
 
   onMapSelection(data) {
@@ -113,7 +106,7 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
 
   buildHeader() {
     this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
+      type: fromRoot.baseActions.HEADER_UPDATE,
       payload: {
         heading: `t_locations_edit_location`,
         subheading: null,
@@ -124,6 +117,8 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   }
 
   buildForm(location) {
+    this.locationId = location.id;
+
     this.mapCenter = new BehaviorSubject({
       lat: location.latitude,
       lng: location.longitude
@@ -143,9 +138,15 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetch();
     this.buildHeader();
     this.school = this.session.g.get('school');
+    this.loading$ = this.store.select(fromStore.getLocationsLoading);
+    this.store.select(fromStore.getSelectedLocation)
+      .subscribe((location: ILocation) => {
+        if (location) {
+          this.buildForm(location);
+        }
+      });
 
     this.buttonData = {
       class: 'primary',
