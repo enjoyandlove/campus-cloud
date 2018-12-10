@@ -1,5 +1,15 @@
 import { Injectable } from '@angular/core';
 
+export enum ScheduleDays {
+  'Monday' = 1,
+  'Tuesday' = 2,
+  'Wednesday' = 3,
+  'Thursday' = 4,
+  'Friday' = 5,
+  'Saturday' = 6,
+  'Sunday' = 7
+}
+
 @Injectable()
 export class LocationsUtilsService {
   constructor() {}
@@ -7,79 +17,93 @@ export class LocationsUtilsService {
   locationOpeningHours() {
     return [
       {
-        day: 1, // todo: enum for day
         is_checked: false,
         label: 't_monday',
+        day: ScheduleDays.Monday,
         items: [
           {
             open: '09:00',
-            close: '17:00' // todo: add dining fields  (link, notes) as well
+            close: '17:00',
+            link: null,
+            notes: null
           },
         ]
       },
       {
-        day: 2,
         is_checked: false,
         label: 't_tuesday',
+        day: ScheduleDays.Tuesday,
         items: [
           {
             open: '09:00',
-            close: '17:00'
+            close: '17:00',
+            link: null,
+            notes: null
           }
         ]
       },
       {
-        day: 3,
         is_checked: false,
         label: 't_wednesday',
+        day: ScheduleDays.Wednesday,
         items: [
           {
             open: '09:00',
-            close: '17:00'
+            close: '17:00',
+            link: null,
+            notes: null
           }
         ]
       },
       {
-        day: 4,
         is_checked: false,
         label: 't_thursday',
+        day: ScheduleDays.Thursday,
         items: [
           {
             open: '09:00',
-            close: '17:00'
+            close: '17:00',
+            link: null,
+            notes: null
           }
         ]
       },
       {
-        day: 5,
         is_checked: false,
         label: 't_friday',
+        day: ScheduleDays.Friday,
         items: [
           {
             open: '09:00',
-            close: '17:00'
+            close: '17:00',
+            link: null,
+            notes: null
           }
         ]
       },
       {
-        day: 6,
         is_checked: false,
         label: 't_saturday',
+        day: ScheduleDays.Saturday,
         items: [
           {
             open: '09:00',
-            close: '17:00'
+            close: '17:00',
+            link: null,
+            notes: null
           }
         ]
       },
       {
-        day: 7,
         is_checked: false,
         label: 't_sunday',
+        day: ScheduleDays.Sunday,
         items: [
           {
             open: '09:00',
-            close: '17:00'
+            close: '17:00',
+            link: null,
+            notes: null
           }
         ]
       }
