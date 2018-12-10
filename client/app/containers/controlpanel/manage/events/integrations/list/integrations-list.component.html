@@ -1,8 +1,8 @@
 <div class="row">
   <div class="col-12">
-    <cp-event-integrations-action-box
+    <cp-integrations-action-box
       (launchCreateModal)="onLaunchCreateModal()">
-    </cp-event-integrations-action-box>
+    </cp-integrations-action-box>
   </div>
 </div>
 
@@ -17,47 +17,11 @@
     </cp-no-content>
 
     <div *ngIf="(integrations$ | async)?.length">
-      <ul class="links cp-form">
-        <li class="cp-form__header col-12">
-          <div class="row">
-            <span class="col-4">{{ 't_shared_url' | cpI18n }}</span>
-            <span class="col-2">{{ 't_shared_status' | cpI18n }}</span>
-            <span class="col-1">{{ 't_shared_type' | cpI18n }}</span>
-            <span class="col-3">{{ 't_shared_last_synced' | cpI18n }}</span>
-            <span class="col-2"></span>
-          </div>
-        </li>
-
-        <li
-          class="cp-form__item col-12"
-          *ngFor="let integration of integrations$ | async">
-          <div class="row">
-            <span
-              (click)="onLaunchEditModal()"
-              class="col-4 hover text-truncate"
-              [attr.title]="integration.feed_url"
-              (click)="selectedIntegration = integration">
-              {{ integration.feed_url }}
-            </span>
-            <span class="col-2">
-              {{ integration.sync_status | cpEventIntegrationStatus | cpI18n }}
-            </span>
-            <span class="col-1">
-              {{ integration.feed_type | cpEventIntegrationType }}
-            </span>
-            <span class="col-3">
-              {{ integration.last_successful_sync_epoch > -1 ? (integration.last_successful_sync_epoch | cpDatePipe:dateFormat) : null }}
-            </span>
-            <span
-              (click)="showDeleteModal = true"
-              class="col-2 hover delete-link text-right"
-              (click)="selectedIntegration = integration"
-              data-toggle="modal" data-target="#integrationDelete">
-              &times;
-            </span>
-          </div>
-        </li>
-      </ul>
+      <cp-integrations-list
+        [integrations$]="integrations$"
+        (editClick)="onLaunchEditModal($event)"
+        (deleteClick)="onLaunchDeleteModal($event)">
+      </cp-integrations-list>
 
       <cp-pagination
         [pageNext]="pageNext"
@@ -71,21 +35,22 @@
 </div>
 
 <cp-modal
+  *ngIf="showDeleteModal"
+  modalId="integrationDelete">
+  <cp-integrations-delete
+    (teardown)="onDeleteTeardown()"
+    (deleteClick)="onDeleteClick($event)"
+    [eventIntegration]="selectedIntegration">
+  </cp-integrations-delete>
+</cp-modal>
+
+<cp-modal
   *ngIf="showCreateModal"
   modalId="integrationCreate"
   (modalClose)="onCreateTeardown()">
   <cp-events-integrations-create
     (teardown)="onCreateTeardown()">
   </cp-events-integrations-create>
-</cp-modal>
-
-<cp-modal
-  *ngIf="showDeleteModal"
-  modalId="integrationDelete">
-  <cp-events-integrations-delete
-    (teardown)="onDeleteTeardown()"
-    [eventIntegration]="selectedIntegration">
-  </cp-events-integrations-delete>
 </cp-modal>
 
 <cp-modal

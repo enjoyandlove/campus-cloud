@@ -2609,6 +2609,9 @@
   "t_locations_location_details": {
     "message": "Location Details"
   },
+  "t_locations_manage_categories": {
+    "message": "Manage Categories"
+  },
   "t_locations_no_location_found": {
     "message": "No Locations Found"
   },
@@ -3019,6 +3022,9 @@
   },
   "t_shared_invalid_url": {
     "message": "Invalid URL (eg: https://google.com)"
+  },
+  "t_shared_items": {
+    "message": "Items"
   },
   "t_shared_label_location_toggle": {
     "message": "Set Location"

@@ -18,9 +18,12 @@
   </div>
 
   <div class="cpmodal__body">
-    <cp-integrations-form
-      [integration]="integration">
-    </cp-integrations-form>
+    <cp-events-integrations-form
+      [form]="form"
+      [stores$]="stores$"
+      [selectedHost]="selectedHost"
+      [typesDropdown]="typesDropdown">
+    </cp-events-integrations-form>
   </div>
 
   <div class="cpmodal__footer">
@@ -37,8 +40,8 @@
         <button
           type="button"
           (click)="doSubmit()"
-          class="cpbtn cpbtn--primary"
-          [disabled]="!integration.form.valid">
+          [disabled]="!form.valid"
+          class="cpbtn cpbtn--primary js_submit_button">
           {{ 'save' | cpI18n }}
         </button>
       </div>

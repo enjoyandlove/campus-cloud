@@ -1,19 +1,26 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { combineLatest, of as observableOf } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { API } from '../../config/api';
-import { CPSession } from './../../session';
+import { API } from '@app/config/api';
+import { CPSession } from '@app/session';
 import { CPI18nService } from './i18n.service';
-import { HTTPService } from '../../base/http.service';
-import { amplitudeEvents } from '../constants/analytics';
-import { isClubAthletic } from '../../containers/controlpanel/manage/clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from '../constants';
+import { HTTPService } from '@app/base/http.service';
+import { amplitudeEvents } from '../constants/analytics';
 import { canAccountLevelReadResource, canSchoolReadResource } from '../utils/privileges';
+import { isClubAthletic } from '@app/containers/controlpanel/manage/clubs/clubs.athletics.labels';
 
 const cpI18n = new CPI18nService();
+
+export interface IStore {
+  label: string;
+  value: number | null;
+  heading?: string;
+  hostType?: string;
+}
 
 @Injectable()
 export class StoreService extends HTTPService {
