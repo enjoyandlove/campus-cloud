@@ -23,8 +23,8 @@
               <span class="float-right">
                 <cp-switch
                   [id]="openingHours"
-                  [isChecked]="true"
-                  (toggle)="openingHours = !openingHours">
+                  [isChecked]="openingHours"
+                  (toggle)="onToggleOpeningHours($event)">
                 </cp-switch>
               </span>
             </div>

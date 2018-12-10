@@ -10,6 +10,7 @@ import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { LocationsService } from '../locations.service';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { FormArray } from '@angular/forms';
 
 @Component({
   selector: 'cp-locations-update',
@@ -18,6 +19,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 })
 export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   school;
+  schedule;
   loading$;
   formErrors;
   buttonData;
@@ -109,6 +111,19 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
       });
   }
 
+  onToggleOpeningHours(isOpen) {
+    this.openingHours = isOpen;
+
+    if (isOpen) {
+      this.location.buildSchedule(this.schedule);
+    } else {
+      const schedule = <FormArray>this.location.form.controls['schedule'];
+      while (schedule.length !== 0) {
+        schedule.removeAt(0);
+      }
+    }
+  }
+
   ngOnInit() {
     this.fetch();
     this.setErrors();
@@ -116,7 +131,11 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
     this.school = this.session.g.get('school');
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
     this.store.select(fromStore.getLocations)
-      .subscribe((location: LocationModel[]) => this.location = new LocationModel({...location}));
+      .subscribe((location: LocationModel[]) => {
+        this.schedule = location['schedule'];
+        this.openingHours = !!this.schedule;
+        this.location = new LocationModel({...location});
+      });
 
     this.buttonData = {
       class: 'primary',

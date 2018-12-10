@@ -8,6 +8,7 @@ import * as fromRoot from '../../../../../store';
 import { LocationsService } from '../locations.service';
 import { CPSession, ISchool } from '../../../../../session';
 import { CPI18nService } from '../../../../../shared/services';
+import { FormArray } from '@angular/forms';
 
 @Component({
   selector: 'cp-locations-create',
@@ -86,6 +87,17 @@ export class LocationsCreateComponent implements OnInit {
           this.errorMessage = this.cpI18n.translate('something_went_wrong');
         }
       });
+  }
+
+  onToggleOpeningHours(isOpen) {
+    this.openingHours = isOpen;
+
+    if (!isOpen) {
+      const schedule = <FormArray>this.location.form.controls['schedule'];
+      while (schedule.length !== 0) {
+        schedule.removeAt(0);
+      }
+    }
   }
 
   ngOnInit() {

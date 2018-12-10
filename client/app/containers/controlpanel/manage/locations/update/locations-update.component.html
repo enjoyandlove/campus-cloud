@@ -24,15 +24,15 @@
               <p class="title">{{ 't_locations_opening_hours' | cpI18n }}</p>
               <span class="float-right">
                 <cp-switch
-                  [id]="openingHours"
-                  (toggle)="openingHours = !openingHours"
-                  [isChecked]="location.form.controls['schedule'].controls.length > 1">
+                  [isChecked]="openingHours"
+                  (toggle)="onToggleOpeningHours($event)">
                 </cp-switch>
               </span>
             </div>
 
             <cp-location-opening-hours-form
               *ngIf="openingHours"
+              [schedule]="schedule"
               [location]="location"
               [formErrors]="formErrors">
             </cp-location-opening-hours-form>

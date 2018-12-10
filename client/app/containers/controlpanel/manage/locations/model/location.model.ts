@@ -1,4 +1,4 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 export class LocationModel {
   public readonly id;
@@ -46,6 +46,8 @@ export class LocationModel {
     this.postal_code = location['postal_code'] || null;
     this.location_type = location['location_type'] || null;
     this.thumbnail_url = location['thumbnail_url'] || null;
+
+    this.buildSchedule(location['schedule']);
   }
 
   private buildForm(): FormGroup {
@@ -76,5 +78,39 @@ export class LocationModel {
     });
 
     return this._form;
+  }
+
+  buildSchedule(schedule) {
+    if (schedule) {
+      const scheduleControls = <FormArray>this.form.controls['schedule'];
+
+      schedule.map((items) => {
+        scheduleControls.push(this.buildScheduleForm(items));
+      });
+    }
+  }
+
+  buildScheduleForm(schedule) {
+    const fb = new FormBuilder();
+
+    return fb.group({
+      day: schedule.day,
+      items: this.buildScheduleFormItems(schedule.items)
+    });
+  }
+
+  buildScheduleFormItems(items) {
+    const fb = new FormBuilder();
+
+    const itemsList =  items.map((item) => {
+      return fb.group({
+        open: item.open,
+        close: item.close,
+        link: item.link,
+        notes: item.notes
+      });
+    });
+
+    return fb.array(itemsList);
   }
 }

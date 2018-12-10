@@ -10,69 +10,83 @@ import { LocationsUtilsService } from '../../locations.utils';
   styleUrls: ['./location-opening-hours-form.component.scss']
 })
 export class LocationOpeningHoursFormComponent implements OnInit {
+  @Input() schedule;
   @Input() formErrors: boolean;
   @Input() location: LocationModel;
 
-  selectedTo;
   openingHours;
-  selectedFrom;
-  locationTiming = require('../../locationTiming.json');
+  locationTiming;
 
   constructor(
     public fb: FormBuilder,
     public utils: LocationsUtilsService
   ) {}
 
-  onTimeSelected(time, index, key) {
+  onTimeSelected(schedule, item, key, index) {
     const controls = <FormArray>this.location.form.controls['schedule'];
-    const control = <FormGroup>controls.controls[index];
+    const itemIndex = controls.value.findIndex((items) => items.day === item.day);
 
-    if (control) {
-      control.controls[key].setValue(time.value);
+    this.openingHours[index].items[0][key] = schedule.value;
+
+    if (itemIndex >= 0) {
+      const control = <FormGroup>controls.controls[itemIndex];
+      const controlItems = <FormArray>control.controls['items'];
+      const controlFirstItem = <FormGroup>controlItems.controls[0];
+      controlFirstItem.controls[key].setValue(schedule.value);
     }
   }
 
-  onDayCheck(checked, item, index) {
-    checked ? this.addControl(item) : this.removeControl(index);
+  onDayCheck(checked, item) {
+    checked ? this.addControl(item) : this.removeControl(item);
   }
 
   addControl(item) {
     const controls = <FormArray>this.location.form.controls['schedule'];
-    controls.push(this.buildScheduleControl(item));
 
-    this.loadSchedule();
+    controls.push((this.buildScheduleControl(item)));
   }
 
-  removeControl(index) {
+  removeControl(item) {
     const control = <FormArray>this.location.form.controls['schedule'];
+    const index = control.value.findIndex((items) => items.day === item.day);
     control.removeAt(index);
   }
 
-  buildScheduleControl(item) {
+  buildScheduleControl(schedule) {
     return this.fb.group({
-      day: [item.day],
-      label: [item.label],
-      open: [item.open],
-      close: [item.close],
-      notes: [null],
-      link: [null],
+      day: schedule.day,
+      items: this.fb.array([
+        this.fb.group({
+          open: schedule.items[0].open,
+          close: schedule.items[0].close
+        })
+      ])
     });
   }
 
-  loadSchedule() {
-    const schedules = <FormArray>this.location.form.controls['schedule'];
+  getSelectedTime(selectedTime) {
+   return this.locationTiming.find((time) => time.value === selectedTime);
+  }
 
-    if (schedules.length) {
-      schedules.controls.map((item, index) => {
-        console.log(item, index);
-      });
+  updateScheduleArray() {
+    if (!this.schedule) {
+      return;
     }
+
+    this.openingHours.forEach((openingHours, index) => {
+      this.schedule.forEach((schedule) => {
+        if (openingHours.day === schedule.day) {
+          this.openingHours[index].is_checked = true;
+          this.openingHours[index].items = [];
+          this.openingHours[index].items = (schedule.items);
+        }
+      });
+    });
   }
 
   ngOnInit(): void {
-    this.loadSchedule();
+    this.locationTiming = this.utils.getLocationTiming();
     this.openingHours = this.utils.locationOpeningHours();
-    this.selectedTo = this.locationTiming.filter((time) => time.value === '17:00')[0];
-    this.selectedFrom = this.locationTiming.filter((time) => time.value === '09:00')[0];
+    this.updateScheduleArray();
   }
 }

@@ -7,46 +7,278 @@ export class LocationsUtilsService {
   locationOpeningHours() {
     return [
       {
-        day: 1,
-        open: '17:00',
-        close: '17:30',
-        label: 't_monday'
+        day: 1, // todo: enum for day
+        is_checked: false,
+        label: 't_monday',
+        items: [
+          {
+            open: '09:00',
+            close: '17:00' // todo: add dining fields  (link, notes) as well
+          },
+        ]
       },
       {
         day: 2,
-        open: '17:00',
-        close: '17:30',
-        label: 't_tuesday'
+        is_checked: false,
+        label: 't_tuesday',
+        items: [
+          {
+            open: '09:00',
+            close: '17:00'
+          }
+        ]
       },
       {
         day: 3,
-        open: '17:00',
-        close: '17:30',
-        label: 't_wednesday'
+        is_checked: false,
+        label: 't_wednesday',
+        items: [
+          {
+            open: '09:00',
+            close: '17:00'
+          }
+        ]
       },
       {
         day: 4,
-        open: '17:00',
-        close: '17:30',
-        label: 't_thursday'
+        is_checked: false,
+        label: 't_thursday',
+        items: [
+          {
+            open: '09:00',
+            close: '17:00'
+          }
+        ]
       },
       {
         day: 5,
-        open: '17:00',
-        close: '17:30',
-        label: 't_friday'
+        is_checked: false,
+        label: 't_friday',
+        items: [
+          {
+            open: '09:00',
+            close: '17:00'
+          }
+        ]
       },
       {
         day: 6,
-        open: '17:00',
-        close: '17:30',
-        label: 't_saturday'
+        is_checked: false,
+        label: 't_saturday',
+        items: [
+          {
+            open: '09:00',
+            close: '17:00'
+          }
+        ]
       },
       {
         day: 7,
-        open: '17:00',
-        close: '17:30',
-        label: 't_sunday'
+        is_checked: false,
+        label: 't_sunday',
+        items: [
+          {
+            open: '09:00',
+            close: '17:00'
+          }
+        ]
+      }
+    ];
+  }
+
+  getLocationTiming() {
+    return [
+      {
+        value: '00:30',
+        label: '12:30 AM'
+      },
+      {
+        value: '01:00',
+        label: '1:00 AM'
+      },
+      {
+        value: '01:30',
+        label: '1:30 AM'
+      },
+      {
+        value: '02:00',
+        label: '2:00 AM'
+      },
+      {
+        value: '02:30',
+        label: '2:30 AM'
+      },
+      {
+        value: '03:00',
+        label: '3:00 AM'
+      },
+      {
+        value: '03:30',
+        label: '3:30 AM'
+      },
+      {
+        value: '04:00',
+        label: '4:00 AM'
+      },
+      {
+        value: '04:30',
+        label: '4:30 AM'
+      },
+      {
+        value: '05:00',
+        label: '5:00 AM'
+      },
+      {
+        value: '05:30',
+        label: '5:30 AM'
+      },
+      {
+        value: '06:00',
+        label: '6:00 AM'
+      },
+      {
+        value: '06:30',
+        label: '6:30 AM'
+      },
+      {
+        value: '07:00',
+        label: '7:70 AM'
+      },
+      {
+        value: '07:30',
+        label: '7:30 AM'
+      },
+      {
+        value: '08:00',
+        label: '8:00 AM'
+      },
+      {
+        value: '08:30',
+        label: '8:30 AM'
+      },
+      {
+        value: '09:00',
+        label: '9:00 AM'
+      },
+      {
+        value: '09:30',
+        label: '9:30 AM'
+      },
+      {
+        value: '10:00',
+        label: '10:00 AM'
+      },
+      {
+        value: '10:30',
+        label: '10:30 AM'
+      },
+      {
+        value: '11:00',
+        label: '11:00 AM'
+      },
+      {
+        value: '11:30',
+        label: '11:30 AM'
+      },
+      {
+        value: '12:00',
+        label: '12:00 PM'
+      },
+      {
+        value: '12:30',
+        label: '12:30 PM'
+      },
+      {
+        value: '13:00',
+        label: '1:00 PM'
+      },
+      {
+        value: '13:30',
+        label: '1:30 PM'
+      },
+      {
+        value: '14:00',
+        label: '2:00 PM'
+      },
+      {
+        value: '14:30',
+        label: '2:30 PM'
+      },
+      {
+        value: '15:00',
+        label: '3:00 PM'
+      },
+      {
+        value: '15:30',
+        label: '3:30 PM'
+      },
+      {
+        value: '16:00',
+        label: '4:00 PM'
+      },
+      {
+        value: '16:30',
+        label: '4:30 PM'
+      },
+      {
+        value: '17:00',
+        label: '5:00 PM'
+      },
+      {
+        value: '17:30',
+        label: '5:30 PM'
+      },
+      {
+        value: '18:00',
+        label: '6:00 PM'
+      },
+      {
+        value: '18:30',
+        label: '6:30 PM'
+      },
+      {
+        value: '19:00',
+        label: '7:00 PM'
+      },
+      {
+        value: '19:30',
+        label: '7:30 PM'
+      },
+      {
+        value: '20:00',
+        label: '8:00 PM'
+      },
+      {
+        value: '20:30',
+        label: '8:30 PM'
+      },
+      {
+        value: '21:00',
+        label: '9:00 PM'
+      },
+      {
+        value: '21:30',
+        label: '9:30 PM'
+      },
+      {
+        value: '22:00',
+        label: '10:00 PM'
+      },
+      {
+        value: '22:30',
+        label: '10:30 PM'
+      },
+      {
+        value: '23:00',
+        label: '11:00 PM'
+      },
+      {
+        value: '23:30',
+        label: '11:30 PM'
+      },
+      {
+        value: '24:00',
+        label: '12:00 AM'
       }
     ];
   }
