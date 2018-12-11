@@ -1,6 +1,6 @@
 import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { FormArray } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -19,6 +19,7 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   school;
   schedule;
   loading$;
+  formState;
   formErrors;
   buttonData;
   locationId;
@@ -41,6 +42,10 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
       this.enableSubmitButton();
 
       return;
+    }
+
+    if (!this.openingHours) {
+      this.location.form.setControl('schedule', new FormControl([]));
     }
 
     const body = this.location.form.value;
@@ -87,17 +92,8 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
       });
   }
 
-  onToggleOpeningHours(isOpen) {
-    this.openingHours = isOpen;
-
-    if (isOpen) {
-      this.location.buildSchedule(this.schedule);
-    } else {
-      const schedule = <FormArray>this.location.form.controls['schedule'];
-      while (schedule.length !== 0) {
-        schedule.removeAt(0);
-      }
-    }
+  onChangeFormState(formState) {
+    this.formState = formState;
   }
 
   ngOnInit() {

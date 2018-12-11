@@ -24,7 +24,7 @@
                 <cp-switch
                   [id]="openingHours"
                   [isChecked]="openingHours"
-                  (toggle)="onToggleOpeningHours($event)">
+                  (toggle)="openingHours = !openingHours">
                 </cp-switch>
               </span>
             </div>
@@ -32,7 +32,9 @@
             <cp-location-opening-hours-form
               *ngIf="openingHours"
               [location]="location"
-              [formErrors]="formErrors">
+              [formErrors]="formErrors"
+              [formChangedState]="formState"
+              (formState)="onChangeFormState($event)">
             </cp-location-opening-hours-form>
           </div>
         </div>

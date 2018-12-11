@@ -1,11 +1,12 @@
 @import '~client/style/components/form';
 
-form {
-  label {
-    margin-top: 10px;
-    float: left;
-    text-align: right;
-    clear: both;
-    margin-right:15px;
-  }
+.margin-right {
+  margin-right: 10px;
+}
+
+.horizontal {
+  display: flex;
+  margin-top: 6px;
+  flex-direction: row;
+  align-items: center
 }

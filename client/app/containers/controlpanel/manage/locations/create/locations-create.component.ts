@@ -1,6 +1,6 @@
 import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { FormArray } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -16,17 +16,13 @@ import { LocationsService } from '../locations.service';
   styleUrls: ['./locations-create.component.scss']
 })
 export class LocationsCreateComponent implements OnInit {
+  formState;
   formErrors;
   buttonData;
   errorMessage;
   school: ISchool;
   openingHours = true;
   location: LocationModel;
-
-  eventProperties = {
-    acronym: null,
-    location_id: null
-  };
 
   constructor(
     public session: CPSession,
@@ -43,6 +39,10 @@ export class LocationsCreateComponent implements OnInit {
       this.enableSubmitButton();
 
       return;
+    }
+
+    if (!this.openingHours) {
+      this.location.form.setControl('schedule', new FormControl([]));
     }
 
     const body = this.location.form.value;
@@ -89,15 +89,8 @@ export class LocationsCreateComponent implements OnInit {
       });
   }
 
-  onToggleOpeningHours(isOpen) {
-    this.openingHours = isOpen;
-
-    if (!isOpen) {
-      const schedule = <FormArray>this.location.form.controls['schedule'];
-      while (schedule.length !== 0) {
-        schedule.removeAt(0);
-      }
-    }
+  onChangeFormState(formState) {
+    this.formState = formState;
   }
 
   ngOnInit() {

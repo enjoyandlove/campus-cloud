@@ -1,23 +1,23 @@
-<form [formGroup]="location.form" class="form-horizontal">
+<form [formGroup]="location.form" class="opening-form">
   <div class="col-12">
     <div *ngFor="let openingHour of openingHours; let i = index">
       <div *ngFor="let item of openingHour.items">
         <div class="row">
-          <div class="col-3">
+          <div class="col-3 horizontal">
             <label> {{ openingHour.label }}</label>
           </div>
 
-        <div class="col-3">
-          <cp-checkbox
-            [labelRight]="false"
-            [label]=" 't_open' | cpI18n"
-            [isChecked]="openingHour.is_checked"
-            (toggle)="onDayCheck($event, openingHour)">
-          </cp-checkbox>
-        </div>
+          <div class="col-3 horizontal">
+            <cp-checkbox
+              [labelRight]="false"
+              [label]="'t_open' | cpI18n"
+              [isChecked]="openingHour.is_checked"
+              (toggle)="onDayCheck($event, openingHour, i)">
+            </cp-checkbox>
+          </div>
 
-          <div class="col-3">
-            <label>{{ 't_to' | cpI18n }}</label>
+          <div class="col-3 horizontal">
+            <label class="margin-right">{{ 't_to' | cpI18n }}</label>
             <cp-dropdown
               [items]="locationTiming"
               [selectedItem]="getSelectedTime(item.open)"
@@ -25,8 +25,8 @@
             </cp-dropdown>
           </div>
 
-          <div class="col-3">
-            <label> {{ 't_from' | cpI18n }}</label>
+          <div class="col-3 horizontal">
+            <label class="margin-right">{{ 't_from' | cpI18n }}</label>
             <cp-dropdown
               [items]="locationTiming"
               [selectedItem]="getSelectedTime(item.close)"

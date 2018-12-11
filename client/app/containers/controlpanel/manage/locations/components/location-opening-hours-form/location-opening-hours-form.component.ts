@@ -1,5 +1,5 @@
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
 
 import { LocationModel } from '../../model';
 import { LocationsUtilsService } from '../../locations.utils';
@@ -11,8 +11,11 @@ import { LocationsUtilsService } from '../../locations.utils';
 })
 export class LocationOpeningHoursFormComponent implements OnInit {
   @Input() schedule;
+  @Input() formChangedState;
   @Input() formErrors: boolean;
   @Input() location: LocationModel;
+
+  @Output() formState: EventEmitter<LocationModel> = new EventEmitter();
 
   openingHours;
   locationTiming;
@@ -34,22 +37,28 @@ export class LocationOpeningHoursFormComponent implements OnInit {
       const controlFirstItem = <FormGroup>controlItems.controls[0];
       controlFirstItem.controls[key].setValue(schedule.value);
     }
+
+    this.keepFormState();
   }
 
-  onDayCheck(checked, item) {
-    checked ? this.addControl(item) : this.removeControl(item);
+  onDayCheck(checked, item, index) {
+    checked ? this.addControl(item, index) : this.removeControl(item, index);
+
+    this.keepFormState();
   }
 
-  addControl(item) {
+  addControl(item, index) {
+    this.openingHours[index]['is_checked'] = true;
     const controls = <FormArray>this.location.form.controls['schedule'];
 
     controls.push((this.buildScheduleControl(item)));
   }
 
-  removeControl(item) {
+  removeControl(item, index) {
+    this.openingHours[index]['is_checked'] = false;
     const control = <FormArray>this.location.form.controls['schedule'];
-    const index = control.value.findIndex((items) => items.day === item.day);
-    control.removeAt(index);
+    const itemIndex = control.value.findIndex((items) => items.day === item.day);
+    control.removeAt(itemIndex);
   }
 
   buildScheduleControl(schedule) {
@@ -84,9 +93,14 @@ export class LocationOpeningHoursFormComponent implements OnInit {
     });
   }
 
+  keepFormState() {
+    this.formState.emit(this.openingHours);
+  }
+
   ngOnInit(): void {
     this.locationTiming = this.utils.getLocationTiming();
-    this.openingHours = this.utils.locationOpeningHours();
+    this.openingHours = this.formChangedState ? this.formChangedState : this.utils.locationOpeningHours();
+
     this.updateScheduleArray();
   }
 }
