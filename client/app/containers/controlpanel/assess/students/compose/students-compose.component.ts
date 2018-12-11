@@ -7,15 +7,15 @@ import {
   EventEmitter,
   HostListener
 } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/internal/operators';
-import { HttpParams } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
+import { tap } from 'rxjs/internal/operators';
+import { BehaviorSubject } from 'rxjs';
 
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@app/session';
+import { StoreService } from '@shared/services';
 import { StudentsService } from './../students.service';
-import { StoreService } from '../../../../../shared/services';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { CPI18nService } from '@shared/services/i18n.service';
 
 const THROTTLED_STATUS = 1;
 
@@ -27,7 +27,7 @@ declare var $;
   styleUrls: ['./students-compose.component.scss']
 })
 export class StudentsComposeComponent implements OnInit {
-  @Input() props: { name: string; userIds: Array<number>, storeId: number };
+  @Input() props: { name: string; userIds: Array<number>; storeId: number };
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() success: EventEmitter<{ hostType: string }> = new EventEmitter();
@@ -105,21 +105,30 @@ export class StudentsComposeComponent implements OnInit {
     const school = this.session.g.get('school');
     const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
-    this.selectedStore = this.session.defaultHost;
-    this.stores$ = this.storeService.getStores(search).pipe(
-      map((stores) => this.props.storeId ? this.getSelectedStore(stores) : stores
-    ));
+    /**
+     * avoid updatating the dropdown when
+     * we get both defaultHost and storeId
+     */
+    this.selectedStore = this.props.storeId ? null : this.session.defaultHost;
+
+    this.stores$ = this.storeService.getStores(search, '---').pipe(
+      tap((stores) => {
+        if (this.props.storeId) {
+          this.getSelectedStore(stores);
+        }
+      })
+    );
   }
 
   getSelectedStore(stores) {
-    return stores.filter((store) => {
-      if (store.value === this.props.storeId) {
-        this.selectedStore = store;
-        this.sendAsName = store.label;
+    const selectedStore = stores.find((s) => s.value === this.props.storeId);
 
-        return store;
-      }
-    });
+    if (selectedStore) {
+      this.selectedStore = selectedStore;
+      this.sendAsName = selectedStore.label;
+    }
+
+    return selectedStore;
   }
 
   ngOnInit() {

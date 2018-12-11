@@ -5,12 +5,12 @@ import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 
-import { mockEventIntegration } from '../tests';
-import { CPSession } from './../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock';
-import { EventIntegration } from './../model/integration.model';
-import { configureTestSuite } from '../../../../../../shared/tests';
-import { SharedModule } from './../../../../../../shared/shared.module';
+import { CPSession } from '@app/session';
+import { mockSchool } from '@app/session/mock';
+import { configureTestSuite } from '@shared/tests';
+import { SharedModule } from '@shared/shared.module';
+import { mockIntegration, resetForm } from '../tests';
+import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { EventsIntegrationEditComponent } from './events-integration-edit.component';
 
 describe('EventsIntegrationEditComponent', () => {
@@ -20,7 +20,7 @@ describe('EventsIntegrationEditComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession],
+        providers: [CPSession, CommonIntegrationUtilsService],
         declarations: [EventsIntegrationEditComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
@@ -46,7 +46,7 @@ describe('EventsIntegrationEditComponent', () => {
     session = TestBed.get(CPSession);
     session.g.set('school', mockSchool);
 
-    component.eventIntegration = mockEventIntegration;
+    component.eventIntegration = mockIntegration;
 
     const closeButtonDebugEl = fixture.debugElement.query(By.css('.cpmodal__header__close'));
 
@@ -58,7 +58,7 @@ describe('EventsIntegrationEditComponent', () => {
     fixture.detectChanges();
 
     tearDownSpy = spyOn(component.teardown, 'emit');
-    formResetSpy = spyOn(component.integration.form, 'reset');
+    formResetSpy = spyOn(component.form, 'reset');
   });
 
   it('should create', () => {
@@ -88,8 +88,7 @@ describe('EventsIntegrationEditComponent', () => {
   });
 
   it('should create an EventIntegration with the data pass as input', () => {
-    expect(component.integration.id).toBe(mockEventIntegration.id);
-    expect(component.integration instanceof EventIntegration).toBe(true);
+    expect(component.eventIntegration.id).toBe(mockIntegration.id);
   });
 
   it('should dispatch EditIntegration action', () => {
@@ -99,17 +98,42 @@ describe('EventsIntegrationEditComponent', () => {
 
     component.doSubmit();
 
-    const expected = new fromStore.EditIntegration(component.integration.form.value);
+    const expected = new fromStore.EditIntegration(component.form.value);
 
     expect(component.resetModal).toHaveBeenCalled();
     expect(component.store.dispatch).toHaveBeenCalled();
 
     const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
     const { body, integrationId } = payload;
-    console.log(dispatchSpy.calls.mostRecent().args[0]);
 
     expect(body).toEqual(expected.payload);
     expect(integrationId).toEqual(component.eventIntegration.id);
     expect(type).toEqual(fromStore.IntegrationActions.EDIT_INTEGRATION);
+  });
+
+  it('submit button should be disabled unless form is valid', () => {
+    const de = fixture.debugElement;
+    const submitBtn = de.query(By.css('.js_submit_button')).nativeElement;
+
+    resetForm(component.form);
+    fixture.detectChanges();
+
+    expect(submitBtn.disabled).toBe(true);
+
+    component.form.get('school_id').setValue(1);
+    fixture.detectChanges();
+    expect(submitBtn.disabled).toBe(true);
+
+    component.form.get('feed_obj_id').setValue(1);
+    fixture.detectChanges();
+    expect(submitBtn.disabled).toBe(true);
+
+    component.form.get('feed_url').setValue('mock');
+    fixture.detectChanges();
+    expect(submitBtn.disabled).toBe(true);
+
+    component.form.get('feed_type').setValue(1);
+    fixture.detectChanges();
+    expect(submitBtn.disabled).toBe(false);
   });
 });

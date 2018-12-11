@@ -3,18 +3,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
+import { CPMap } from '@shared/utils';
 import { membershipTypes } from '../create';
-import { CPMap } from '../../../../../shared/utils';
+import { CPSession, ISchool } from '@app/session';
 import { ServicesService } from '../services.service';
-import { CPSession, ISchool } from '../../../../../session';
+import { baseActions, IHeader } from '@app/store/base';
+import { BaseComponent } from '@app/base/base.component';
+import { amplitudeEvents } from '@shared/constants/analytics';
 import { ServicesUtilsService } from '../services.utils.service';
-import { baseActions, IHeader } from '../../../../../store/base';
-import { BaseComponent } from '../../../../../base/base.component';
 import { RatingScale, ServiceAttendance } from '../services.status';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 
 @Component({
   selector: 'cp-services-edit',
@@ -100,9 +101,11 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
       this.selectedCategory = this.getFromArray(this.categories, 'action', this.service.category);
 
+      const category_name = _get(this.selectedCategory, 'label', '');
+
       this.eventProperties = {
-        ...this.eventProperties,
-        category_name: this.selectedCategory.label
+        category_name,
+        ...this.eventProperties
       };
 
       this.defaultMembership = this.membershipTypes.find(

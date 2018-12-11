@@ -35,6 +35,10 @@ const appRoutes: Routes = [
     data: { zendesk: 'calendars' }
   },
   {
+    path: ':calendarId/integrations',
+    loadChildren: './integrations/items-integrations.module#ItemsIntegrationsModule'
+  },
+  {
     path: ':calendarId/items/import',
     data: { zendesk: 'calendars' },
     canActivate: [PrivilegesGuard],

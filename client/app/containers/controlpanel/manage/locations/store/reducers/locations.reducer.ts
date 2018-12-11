@@ -21,7 +21,8 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
     case fromLocations.locationActions.GET_LOCATIONS: {
       return {
         ...state,
-        loading: true
+        loading: true,
+        loaded: false
       };
     }
 
@@ -36,32 +37,6 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
     }
 
     case fromLocations.locationActions.GET_LOCATIONS_FAIL: {
-      return {
-        ...state,
-        error: true,
-        loaded: false,
-        loading: false
-      };
-    }
-
-    case fromLocations.locationActions.GET_LOCATION_BY_ID: {
-      return {
-        ...state,
-        loading: true
-      };
-    }
-
-    case fromLocations.locationActions.GET_LOCATION_BY_ID_SUCCESS: {
-      return  {
-        ...state,
-        error: false,
-        loaded: true,
-        loading: false,
-        data: action.payload
-      };
-    }
-
-    case fromLocations.locationActions.GET_LOCATION_BY_ID_FAIL: {
       return {
         ...state,
         error: true,
@@ -105,7 +80,7 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
         ...state,
         error: false,
         loaded: true,
-        loading: true
+        loading: false
       };
     }
 
@@ -117,7 +92,7 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
         error: false,
         loaded: true,
         loading: false,
-        data: [edited, ...state.data]
+        data: state.data.map((l: LocationModel) => (l.id === edited.id ? edited : l))
       };
     }
 
@@ -147,7 +122,7 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
         error: false,
         loaded: true,
         loading: false,
-        data: state.data.filter((l) => l.id !== deletedId),
+        data: state.data.filter((l: LocationModel) => l.id !== deletedId),
       };
     }
 
@@ -169,4 +144,5 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
 
 export const getLocations = (state: ILocationState) => state.data;
 export const getLocationsError = (state: ILocationState) => state.error;
+export const getLocationsLoaded = (state: ILocationState) => state.loaded;
 export const getLocationsLoading = (state: ILocationState) => state.loading;

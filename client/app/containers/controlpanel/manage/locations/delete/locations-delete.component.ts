@@ -1,13 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '../../../../../store';
-import { ILocation } from '../locations.interface';
-import { CPSession } from './../../../../../session';
-import { CPTrackingService } from '../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import * as fromRoot from '@app/store';
+import { CPSession } from '@app/session';
+import { CPTrackingService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { LocationModel } from '@containers/controlpanel/manage/locations/model';
 
 declare var $: any;
 
@@ -17,9 +17,7 @@ declare var $: any;
   styleUrls: ['./locations-delete.component.scss']
 })
 export class LocationsDeleteComponent implements OnInit {
-  @Input() location: ILocation;
-
-  @Output() locationDeleted: EventEmitter<null> = new EventEmitter();
+  @Input() location: LocationModel;
 
   eventProperties;
 
@@ -32,7 +30,7 @@ export class LocationsDeleteComponent implements OnInit {
   onDelete() {
     const locationId = this.location.id;
     const school_id =  this.session.g.get('school').id;
-    const params = new HttpParams().append('school_id', school_id);
+    const params = new HttpParams().set('school_id', school_id);
 
     const payload = {
       params,
@@ -41,7 +39,6 @@ export class LocationsDeleteComponent implements OnInit {
 
     this.store.dispatch(new fromStore.DeleteLocation(payload));
     this.trackEvent();
-    this.locationDeleted.emit();
     $('#locationsDelete').modal('hide');
   }
 

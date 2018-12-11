@@ -1,16 +1,14 @@
-import { ActivatedRoute, Router } from '@angular/router';
 import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { FormArray } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
+import * as fromRoot from '@app/store';
 import { LocationModel } from '../model';
-import * as fromRoot from '../../../../../store';
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
-import { LocationsService } from '../locations.service';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { FormArray } from '@angular/forms';
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
+import { CPI18nService } from '@app/shared/services';
 
 @Component({
   selector: 'cp-locations-update',
@@ -28,21 +26,12 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   openingHours = false;
   location: LocationModel;
 
-  eventProperties = {
-    acronym: null,
-    location_id: null
-  };
-
   constructor(
-    public router: Router,
-    private session: CPSession,
-    public route: ActivatedRoute,
+    public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: LocationsService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>,
   ) {
     super();
-    this.locationId = this.route.snapshot.params['locationId'];
   }
 
   doSubmit() {
@@ -66,19 +55,6 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
     };
 
     this.store.dispatch(new fromStore.EditLocation(payload));
-  }
-
-  public fetch() {
-    const locationId = this.locationId;
-    const school_id = this.session.g.get('school').id;
-    const params = new HttpParams().append('school_id', school_id);
-
-    const payload = {
-      params,
-      locationId
-    };
-
-    this.store.dispatch(new fromStore.GetLocationById(payload));
   }
 
   buildHeader() {
@@ -125,16 +101,18 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.fetch();
     this.setErrors();
     this.buildHeader();
     this.school = this.session.g.get('school');
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
-    this.store.select(fromStore.getLocations)
-      .subscribe((location: LocationModel[]) => {
-        this.schedule = location['schedule'];
-        this.openingHours = !!this.schedule;
-        this.location = new LocationModel({...location});
+    this.store.select(fromStore.getSelectedLocation)
+      .subscribe((location: LocationModel) => {
+        if (location) {
+          this.locationId = location.id;
+          this.schedule = location['schedule'];
+          this.openingHours = !!this.schedule;
+          this.location = new LocationModel({...location});
+        }
       });
 
     this.buttonData = {

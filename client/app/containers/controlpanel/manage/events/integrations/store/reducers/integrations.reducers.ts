@@ -1,20 +1,19 @@
-import { EventIntegration } from './../../model/integration.model';
 import * as fromIntegrations from '../actions';
+import { IStore } from '@shared/services/store.service';
+import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
 
 export interface IntegrationsState {
   error: boolean;
-  loaded: boolean;
   loading: boolean;
-  data: Array<any>;
-  hosts: Array<any>;
+  hosts: IStore[];
   completedAction: string;
+  data: IEventIntegration[];
 }
 
 export const initialState: IntegrationsState = {
   data: [],
   hosts: [],
   error: false,
-  loaded: false,
   loading: false,
   completedAction: null
 };
@@ -33,7 +32,6 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
 
       return {
         ...state,
-        loaded: true,
         error: false,
         loading: false,
         data: [...data]
@@ -44,7 +42,6 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         error: true,
-        loaded: false,
         loading: false
       };
     }
@@ -53,7 +50,6 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         error: false,
-        loaded: true,
         loading: true,
         completedAction: null
       };
@@ -65,7 +61,6 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         error: false,
-        loaded: false,
         loading: false,
         data: [newEventIntegration, ...state.data],
         completedAction: 't_shared_saved_update_success_message'
@@ -76,7 +71,6 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         error: true,
-        loaded: true,
         loading: false
       };
     }
@@ -85,7 +79,6 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         error: false,
-        loaded: true,
         loading: true,
         completedAction: null
       };
@@ -97,10 +90,9 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         error: false,
-        loaded: true,
         loading: false,
-        data: state.data.filter((e) => e.id !== deletedId),
-        completedAction: 't_shared_entry_deleted_successfully'
+        completedAction: 't_shared_entry_deleted_successfully',
+        data: state.data.filter((e: IEventIntegration) => e.id !== deletedId)
       };
     }
 
@@ -108,7 +100,6 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         error: true,
-        loaded: true,
         loading: false
       };
     }
@@ -117,7 +108,6 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         error: false,
-        loaded: true,
         loading: true,
         completedAction: null
       };
@@ -129,9 +119,8 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         error: false,
-        loaded: true,
         loading: false,
-        data: state.data.map((e: EventIntegration) => (e.id === edited.id ? edited : e)),
+        data: state.data.map((e: IEventIntegration) => (e.id === edited.id ? edited : e)),
         completedAction: 't_shared_saved_update_success_message'
       };
     }
@@ -140,7 +129,6 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         error: true,
-        loaded: true,
         loading: false
       };
     }
@@ -153,6 +141,13 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       };
     }
 
+    case fromIntegrations.IntegrationActions.DESTROY: {
+      return {
+        ...state,
+        completedAction: null
+      };
+    }
+
     default: {
       return state;
     }
@@ -162,6 +157,5 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
 export const getHosts = (state: IntegrationsState) => state.hosts;
 export const getIntegrations = (state: IntegrationsState) => state.data;
 export const getIntegrationsError = (state: IntegrationsState) => state.error;
-export const getIntegrationsLoaded = (state: IntegrationsState) => state.loaded;
 export const getIntegrationsLoading = (state: IntegrationsState) => state.loading;
 export const getCompletedAction = (state: IntegrationsState) => state.completedAction;

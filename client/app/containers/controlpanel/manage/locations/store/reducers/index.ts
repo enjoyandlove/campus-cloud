@@ -9,3 +9,5 @@ export interface ILocationsState {
 export const reducers: ActionReducerMap<ILocationsState> = {
   locations: fromLocations.reducer
 };
+
+export * from './router.reducer';

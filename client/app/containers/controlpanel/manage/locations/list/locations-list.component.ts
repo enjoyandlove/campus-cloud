@@ -1,28 +1,27 @@
+import { filter, takeUntil, map, tap, take } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
+import * as fromRoot from '@app/store';
+import { CPSession } from '@app/session';
 import { LocationModel } from '../model';
-import * as fromRoot from '../../../../../store';
 import { ManageHeaderService } from '../../utils';
-import { CPSession } from './../../../../../session';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
-import { environment } from '../../../../../../environments/environment';
+import { BaseComponent } from '@app/base/base.component';
+import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { environment } from '@client/environments/environment';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 
 interface IState {
-  locations: Array<any>;
   search_str: string;
   sort_field: string;
   sort_direction: string;
 }
 
 const state: IState = {
-  locations: [],
   search_str: null,
   sort_field: 'name',
   sort_direction: 'asc'
@@ -33,7 +32,7 @@ const state: IState = {
   templateUrl: './locations-list.component.html',
   styleUrls: ['./locations-list.component.scss']
 })
-export class LocationsListComponent extends BaseComponent implements OnInit {
+export class LocationsListComponent extends BaseComponent implements OnInit, OnDestroy {
   eventData;
   sortingLabels;
   deleteLocation = '';
@@ -41,6 +40,8 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   loading$: Observable<boolean>;
   locations$: Observable<LocationModel[]>;
   defaultImage = `${environment.root}public/default/user.png`;
+
+  private destroy$ = new Subject();
 
   constructor(
     public session: CPSession,
@@ -98,13 +99,6 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  onLocationDeleted(locationId) {
-    this.state = {
-      ...this.state,
-      locations: this.state.locations.filter((location) => location.id !== locationId)
-    };
-  }
-
   buildHeader() {
     this.store.dispatch({
       type: fromRoot.baseActions.HEADER_UPDATE,
@@ -112,8 +106,55 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     });
   }
 
+  loadLocations() {
+    this.store
+      .select(fromStore.getLocations)
+      .pipe(
+        tap((locations: LocationModel[]) => {
+          if (!locations.length) {
+            this.fetch();
+          }
+        }),
+        take(1)
+      )
+      .subscribe();
+
+    this.locations$ = this.store.select(fromStore.getLocations).pipe(
+      map((locations: LocationModel[]) => {
+        const responseCopy = [...locations];
+
+        return super.updatePagination(responseCopy);
+      })
+    );
+  }
+
+  listenForErrors() {
+    this.store
+      .select(fromStore.getLocationsError)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((error) => error),
+        tap(() => {
+          const payload = {
+            body: this.cpI18n.translate('something_went_wrong'),
+            sticky: true,
+            autoClose: true,
+            class: 'danger'
+          };
+
+          this.store.dispatch({
+            type: fromRoot.baseActions.SNACKBAR_SHOW,
+            payload
+          });
+        })
+      )
+      .subscribe();
+  }
+
   ngOnInit() {
     this.buildHeader();
+    this.loadLocations();
+    this.listenForErrors();
 
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
@@ -125,8 +166,12 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
       locations: this.cpI18n.translate('name')
     };
 
-    this.locations$ = this.store.select(fromStore.getLocations);
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
-    this.fetch();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 }

@@ -5,6 +5,12 @@
     </div>
     <div class="col-5 text-right">
       <a
+        routerLink="integrations"
+        *cpFeatureToggle="featureName"
+        class="cpbtn cpbtn--cancel integrations">
+        <i class="material-icons">link</i>
+      </a>
+      <a
         [routerLink]="['items/create']"
         class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">
         {{ 'calendars_items_button_new' | cpI18n }}

@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { CPMap } from '@shared/utils';
 import { LocationModel } from '../../model';
-import { CPSession, ISchool } from '@session/index';
+import { CPSession, ISchool } from '@app/session';
 
 @Component({
   selector: 'cp-location-form',

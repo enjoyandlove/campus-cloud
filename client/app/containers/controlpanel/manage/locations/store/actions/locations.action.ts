@@ -8,10 +8,6 @@ export enum locationActions {
   GET_LOCATIONS_FAIL = '[manage.locations] get locations fail',
   GET_LOCATIONS_SUCCESS = '[manage.locations] get locations success',
 
-  GET_LOCATION_BY_ID = '[manage.locations] get location by id',
-  GET_LOCATION_BY_ID_FAIL = '[manage.locations] get location by id fail',
-  GET_LOCATION_BY_ID_SUCCESS = '[manage.locations] get location by id success',
-
   POST_LOCATION = '[manage.locations] post location',
   POST_LOCATION_FAIL = '[manage.locations] post location fail',
   POST_LOCATION_SUCCESS = '[manage.locations] post location success',
@@ -41,21 +37,6 @@ export class GetLocationsSuccess implements Action {
   constructor(public payload: LocationModel[]) {}
 }
 
-export class GetLocationById implements Action {
-  readonly type = locationActions.GET_LOCATION_BY_ID;
-  constructor(public payload: { locationId: number; params: HttpParams }) {}
-}
-
-export class GetLocationByIdFail implements Action {
-  readonly type = locationActions.GET_LOCATION_BY_ID_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
-}
-
-export class GetLocationByIdSuccess implements Action {
-  readonly type = locationActions.GET_LOCATION_BY_ID_SUCCESS;
-  constructor(public payload: any) {}
-}
-
 export class PostLocation implements Action {
   readonly type = locationActions.POST_LOCATION;
   constructor(public payload: { body: any; params: HttpParams }) {}
@@ -83,7 +64,7 @@ export class EditLocationFail implements Action {
 
 export class EditLocationSuccess implements Action {
   readonly type = locationActions.EDIT_LOCATION_SUCCESS;
-  constructor(public payload: LocationModel[]) {}
+  constructor(public payload: any) {}
 }
 
 export class DeleteLocation implements Action {
@@ -105,9 +86,6 @@ export type LocationsAction =
   | GetLocations
   | GetLocationsFail
   | GetLocationsSuccess
-  | GetLocationById
-  | GetLocationByIdFail
-  | GetLocationByIdSuccess
   | PostLocation
   | PostLocationFail
   | PostLocationSuccess

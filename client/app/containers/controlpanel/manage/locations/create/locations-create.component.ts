@@ -1,14 +1,14 @@
 import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { FormArray } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { LocationModel } from '../model';
-import * as fromRoot from '../../../../../store';
+import * as fromRoot from '@app/store';
+import { CPSession, ISchool } from '@app/session';
+import { CPI18nService } from '@app/shared/services';
 import { LocationsService } from '../locations.service';
-import { CPSession, ISchool } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
-import { FormArray } from '@angular/forms';
 
 @Component({
   selector: 'cp-locations-create',
@@ -29,7 +29,7 @@ export class LocationsCreateComponent implements OnInit {
   };
 
   constructor(
-    private session: CPSession,
+    public session: CPSession,
     public cpI18n: CPI18nService,
     public service: LocationsService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
