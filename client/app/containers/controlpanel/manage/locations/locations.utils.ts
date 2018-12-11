@@ -22,8 +22,8 @@ export class LocationsUtilsService {
         day: ScheduleDays.Monday,
         items: [
           {
-            open: '09:00',
-            close: '17:00',
+            open: 32400,
+            close: 61200,
             link: null,
             notes: null
           },
@@ -35,8 +35,8 @@ export class LocationsUtilsService {
         day: ScheduleDays.Tuesday,
         items: [
           {
-            open: '09:00',
-            close: '17:00',
+            open: 32400,
+            close: 61200,
             link: null,
             notes: null
           }
@@ -48,8 +48,8 @@ export class LocationsUtilsService {
         day: ScheduleDays.Wednesday,
         items: [
           {
-            open: '09:00',
-            close: '17:00',
+            open: 32400,
+            close: 61200,
             link: null,
             notes: null
           }
@@ -61,8 +61,8 @@ export class LocationsUtilsService {
         day: ScheduleDays.Thursday,
         items: [
           {
-            open: '09:00',
-            close: '17:00',
+            open: 32400,
+            close: 61200,
             link: null,
             notes: null
           }
@@ -74,8 +74,8 @@ export class LocationsUtilsService {
         day: ScheduleDays.Friday,
         items: [
           {
-            open: '09:00',
-            close: '17:00',
+            open: 32400,
+            close: 61200,
             link: null,
             notes: null
           }
@@ -87,8 +87,8 @@ export class LocationsUtilsService {
         day: ScheduleDays.Saturday,
         items: [
           {
-            open: '09:00',
-            close: '17:00',
+            open: 32400,
+            close: 61200,
             link: null,
             notes: null
           }
@@ -100,8 +100,8 @@ export class LocationsUtilsService {
         day: ScheduleDays.Sunday,
         items: [
           {
-            open: '09:00',
-            close: '17:00',
+            open: 32400,
+            close: 61200,
             link: null,
             notes: null
           }
@@ -113,195 +113,195 @@ export class LocationsUtilsService {
   getLocationTiming() {
     return [
       {
-        value: '00:30',
+        value: 1800,
         label: '12:30 AM'
       },
       {
-        value: '01:00',
+        value: 3600,
         label: '1:00 AM'
       },
       {
-        value: '01:30',
+        value: 5400,
         label: '1:30 AM'
       },
       {
-        value: '02:00',
+        value: 7200,
         label: '2:00 AM'
       },
       {
-        value: '02:30',
+        value: 9000,
         label: '2:30 AM'
       },
       {
-        value: '03:00',
+        value: 10800,
         label: '3:00 AM'
       },
       {
-        value: '03:30',
+        value: 12600,
         label: '3:30 AM'
       },
       {
-        value: '04:00',
+        value: 14400,
         label: '4:00 AM'
       },
       {
-        value: '04:30',
+        value: 16200,
         label: '4:30 AM'
       },
       {
-        value: '05:00',
+        value: 18000,
         label: '5:00 AM'
       },
       {
-        value: '05:30',
+        value: 19800,
         label: '5:30 AM'
       },
       {
-        value: '06:00',
+        value: 21600,
         label: '6:00 AM'
       },
       {
-        value: '06:30',
+        value: 23400,
         label: '6:30 AM'
       },
       {
-        value: '07:00',
+        value: 25200,
         label: '7:70 AM'
       },
       {
-        value: '07:30',
+        value: 27000,
         label: '7:30 AM'
       },
       {
-        value: '08:00',
+        value: 28800,
         label: '8:00 AM'
       },
       {
-        value: '08:30',
+        value: 30600,
         label: '8:30 AM'
       },
       {
-        value: '09:00',
+        value: 32400,
         label: '9:00 AM'
       },
       {
-        value: '09:30',
+        value: 34200,
         label: '9:30 AM'
       },
       {
-        value: '10:00',
+        value: 36000,
         label: '10:00 AM'
       },
       {
-        value: '10:30',
+        value: 37800,
         label: '10:30 AM'
       },
       {
-        value: '11:00',
+        value: 39600,
         label: '11:00 AM'
       },
       {
-        value: '11:30',
+        value: 41400,
         label: '11:30 AM'
       },
       {
-        value: '12:00',
+        value: 43200,
         label: '12:00 PM'
       },
       {
-        value: '12:30',
+        value: 45000,
         label: '12:30 PM'
       },
       {
-        value: '13:00',
+        value: 46800,
         label: '1:00 PM'
       },
       {
-        value: '13:30',
+        value: 48600,
         label: '1:30 PM'
       },
       {
-        value: '14:00',
+        value: 50400,
         label: '2:00 PM'
       },
       {
-        value: '14:30',
+        value: 52200,
         label: '2:30 PM'
       },
       {
-        value: '15:00',
+        value: 54000,
         label: '3:00 PM'
       },
       {
-        value: '15:30',
+        value: 55800,
         label: '3:30 PM'
       },
       {
-        value: '16:00',
+        value: 57600,
         label: '4:00 PM'
       },
       {
-        value: '16:30',
+        value: 59400,
         label: '4:30 PM'
       },
       {
-        value: '17:00',
+        value: 61200,
         label: '5:00 PM'
       },
       {
-        value: '17:30',
+        value: 63000,
         label: '5:30 PM'
       },
       {
-        value: '18:00',
+        value: 64800,
         label: '6:00 PM'
       },
       {
-        value: '18:30',
+        value: 66600,
         label: '6:30 PM'
       },
       {
-        value: '19:00',
+        value: 68400,
         label: '7:00 PM'
       },
       {
-        value: '19:30',
+        value: 70200,
         label: '7:30 PM'
       },
       {
-        value: '20:00',
+        value: 72000,
         label: '8:00 PM'
       },
       {
-        value: '20:30',
+        value: 73800,
         label: '8:30 PM'
       },
       {
-        value: '21:00',
+        value: 75600,
         label: '9:00 PM'
       },
       {
-        value: '21:30',
+        value: 77400,
         label: '9:30 PM'
       },
       {
-        value: '22:00',
+        value: 79200,
         label: '10:00 PM'
       },
       {
-        value: '22:30',
+        value: 81000,
         label: '10:30 PM'
       },
       {
-        value: '23:00',
+        value: 82800,
         label: '11:00 PM'
       },
       {
-        value: '23:30',
+        value: 84600,
         label: '11:30 PM'
       },
       {
-        value: '24:00',
+        value: 0,
         label: '12:00 AM'
       }
     ];
