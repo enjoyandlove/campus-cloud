@@ -13,10 +13,9 @@ export class EventIntegrationFormComponent implements OnInit {
   @Input() selectedHost;
   @Input() form: FormGroup;
   @Input() showHosts = true;
+  @Input() selectedType: IItem;
   @Input() typesDropdown: Array<IItem>;
   @Input() stores$: Observable<Array<{ label: string; value: number }>>;
-
-  selectedItem;
 
   constructor() {}
 

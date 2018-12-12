@@ -10,6 +10,7 @@ import { CPSession } from '@app/session';
 import { IItem } from '@client/app/shared/components';
 import { IStore } from '@shared/services/store.service';
 import { EventIntegration } from '@libs/integrations/events/model';
+import { IntegrationsUitlsService } from './../integrations.utils.service';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 
 @Component({
@@ -25,6 +26,7 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
   form: FormGroup;
   destroy$ = new Subject();
   typesDropdown: IItem[];
+  selectedType: IItem | null;
 
   constructor(
     public session: CPSession,
@@ -35,7 +37,7 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
   get defaultParams(): HttpParams {
     const school_id = this.session.g.get('school').id;
 
-    return new HttpParams().set('school_id', school_id);
+    return IntegrationsUitlsService.commonParams(school_id);
   }
 
   resetModal() {
@@ -49,8 +51,7 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
     }
 
     const body = this.form.value;
-    const school_id = this.session.g.get('school').id;
-    const params = new HttpParams().set('school_id', school_id);
+    const params = this.defaultParams;
 
     const payload = {
       body,
@@ -81,6 +82,9 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
     );
 
     this.typesDropdown = this.utils.typesDropdown();
+    this.selectedType = this.typesDropdown.find(
+      (t) => t.action === this.form.get('feed_type').value
+    );
   }
 
   ngOnDestroy() {

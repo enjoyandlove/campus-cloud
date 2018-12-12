@@ -5,6 +5,7 @@
         <label for="type">{{ 't_shared_type' | cpI18n }}</label>
         <cp-dropdown
           [items]="typesDropdown"
+          [selectedItem]="selectedType"
           (selected)="onTypeSelected($event)">
         </cp-dropdown>
       </div>
