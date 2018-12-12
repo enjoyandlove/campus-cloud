@@ -12,6 +12,7 @@ import { FORMAT } from '@shared/pipes/date/date.pipe';
 import { EventsIntegrationEditComponent } from '../edit';
 import { CPI18nService } from '@shared/services/i18n.service';
 import { IEventIntegration } from '@libs/integrations/events/model';
+import { IntegrationsUitlsService } from './../integrations.utils.service';
 
 @Component({
   selector: 'cp-events-integrations',
@@ -43,7 +44,7 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
   get defaultParams(): HttpParams {
     const school_id = this.session.g.get('school').id;
 
-    return new HttpParams().set('school_id', school_id);
+    return IntegrationsUitlsService.commonParams(school_id);
   }
 
   onPaginationNext() {

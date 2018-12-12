@@ -9,6 +9,7 @@ import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { IItem } from '@client/app/shared/components';
 import { IStore } from '@shared/services/store.service';
+import { IntegrationsUitlsService } from './../integrations.utils.service';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { IEventIntegration, EventIntegration } from '@libs/integrations/events/model';
 
@@ -26,6 +27,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
   form: FormGroup;
   typesDropdown: IItem[];
   destroy$ = new Subject();
+  selectedType: IItem | null;
   stores$: Observable<IStore[] | IItem[]>;
 
   constructor(
@@ -37,7 +39,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
   get defaultParams(): HttpParams {
     const school_id = this.session.g.get('school').id;
 
-    return new HttpParams().set('school_id', school_id);
+    return IntegrationsUitlsService.commonParams(school_id);
   }
 
   resetModal() {
@@ -51,8 +53,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
     }
 
     const body = this.form.value;
-    const school_id = this.session.g.get('school').id;
-    const params = new HttpParams().set('school_id', school_id);
+    const params = this.defaultParams;
 
     const payload = {
       body,
@@ -86,6 +87,9 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
 
     this.form = EventIntegration.form(this.eventIntegration);
     this.typesDropdown = this.utils.typesDropdown();
+    this.selectedType = this.typesDropdown.find(
+      (t) => t.action === this.form.get('feed_type').value
+    );
   }
 
   ngOnDestroy() {
