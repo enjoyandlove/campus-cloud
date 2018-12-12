@@ -8,6 +8,7 @@ import { Subject } from 'rxjs';
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { IItem } from '@client/app/shared/components';
+import { ItemsIntegrationsUitlsService } from '../items-integrations.utils.service';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { IEventIntegration, EventIntegration } from '@libs/integrations/events/model';
 
@@ -22,6 +23,7 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   form: FormGroup;
+  calendarId: number;
   typesDropdown: IItem[];
   destroy$ = new Subject();
 
@@ -35,7 +37,7 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
   get defaultParams(): HttpParams {
     const school_id = this.session.g.get('school').id;
 
-    return new HttpParams().set('school_id', school_id);
+    return ItemsIntegrationsUitlsService.commonParams(school_id, this.calendarId.toString());
   }
 
   resetModal() {
@@ -49,8 +51,7 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
     }
 
     const body = this.form.value;
-    const school_id = this.session.g.get('school').id;
-    const params = new HttpParams().set('school_id', school_id);
+    const params = this.defaultParams;
 
     const payload = {
       body,
@@ -64,10 +65,10 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    const calendarId = this.route.snapshot.params['calendarId'];
+    this.calendarId = this.route.snapshot.params['calendarId'];
     this.form = EventIntegration.form(this.eventIntegration);
 
-    this.form.get('feed_obj_id').setValue(calendarId);
+    this.form.get('feed_obj_id').setValue(this.calendarId);
 
     this.typesDropdown = this.utils
       .typesDropdown()

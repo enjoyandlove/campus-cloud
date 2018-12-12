@@ -12,6 +12,7 @@ import { BaseComponent } from '@app/base';
 import { FORMAT } from '@shared/pipes/date/date.pipe';
 import { CPI18nService } from '@shared/services/i18n.service';
 import { IEventIntegration } from '@libs/integrations/events/model';
+import { ItemsIntegrationsUitlsService } from '../items-integrations.utils.service';
 
 @Component({
   selector: 'cp-items-integrations',
@@ -21,6 +22,7 @@ import { IEventIntegration } from '@libs/integrations/events/model';
 export class ItemsIntegrationsListComponent extends BaseComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
+  calendarId: number;
   showEditModal = false;
   showDeleteModal = false;
   showCreateModal = false;
@@ -42,7 +44,7 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
   get defaultParams(): HttpParams {
     const school_id = this.session.g.get('school').id;
 
-    return new HttpParams().set('school_id', school_id);
+    return ItemsIntegrationsUitlsService.commonParams(school_id, this.calendarId.toString());
   }
 
   onPaginationNext() {
@@ -73,7 +75,7 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
   }
 
   updateHeader() {
-    const calendarId = this.route.snapshot.params['calendarId'];
+    this.calendarId = this.route.snapshot.params['calendarId'];
     this.store.dispatch({
       type: fromRoot.baseActions.HEADER_UPDATE,
       payload: {
@@ -81,7 +83,7 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
         subheading: null,
         em: null,
         crumbs: {
-          url: `/manage/calendars/${calendarId}`,
+          url: `/manage/calendars/${this.calendarId}`,
           label: 't_shared_items'
         },
         children: []
