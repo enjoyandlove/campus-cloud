@@ -5,7 +5,7 @@
       <cp-dropdown
         [items]="categories"
         (selected)="onSelectedCategory($event)"
-        [isRequiredError]="formErrors && location.form.get('location_type').hasError('required')">
+        [isRequiredError]="formErrors && location.form.get('category_id').hasError('required')">
       </cp-dropdown>
     </div>
   </div>
@@ -34,7 +34,8 @@
       <label>{{ 't_locations_photo' | cpI18n }}</label>
       <cp-image-upload
         class="col-12"
-        (uploaded)="onUploadedImage($event)">
+        (uploaded)="onUploadedImage($event)"
+        [defaultImage]="location.form.controls['image_url'].value">
       </cp-image-upload>
     </div>
   </div>

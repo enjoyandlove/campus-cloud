@@ -66,8 +66,8 @@ export class LocationOpeningHoursFormComponent implements OnInit {
       day: schedule.day,
       items: this.fb.array([
         this.fb.group({
-          open: schedule.items[0].open,
-          close: schedule.items[0].close
+          end_time: schedule.items[0].end_time,
+          start_time: schedule.items[0].start_time
         })
       ])
     });

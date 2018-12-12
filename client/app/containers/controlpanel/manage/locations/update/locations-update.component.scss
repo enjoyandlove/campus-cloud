@@ -6,6 +6,10 @@
   padding-bottom: 90px;
 }
 
+.margin-top {
+  margin-top: 20px;
+}
+
 p.title {
   @include font-24px();
   @include font-bold();

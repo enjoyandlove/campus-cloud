@@ -2587,6 +2587,12 @@
   "t_external_check_in_not_found_error": {
     "message": "The event cannot be found"
   },
+  "t_friday": {
+    "message": "Friday"
+  },
+  "t_from": {
+    "message": "From"
+  },
   "t_jobs_ongoing": {
     "message": "Ongoing",
     "description": "Indicates that a job posting has no end date"
@@ -2624,8 +2630,14 @@
   "t_longitude": {
     "message": "Longitude"
   },
+  "t_monday": {
+    "message": "Monday"
+  },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
+  },
+  "t_open": {
+    "message": "Open"
   },
   "t_personas": {
     "message": "App Experiences"
@@ -2894,6 +2906,9 @@
   "t_persona_list_button_notify": {
     "message": "Notify"
   },
+  "t_saturday": {
+    "message": "Saturday"
+  },
   "t_saving": {
     "message": "Saving"
   },
@@ -3083,11 +3098,26 @@
   "t_studio_section_delete_no_name": {
     "message": "Untitled"
   },
+  "t_sunday": {
+    "message": "Sunday"
+  },
+  "t_thursday": {
+    "message": "Thursday"
+  },
   "t_tile_button_default": {
     "message": "Default"
   },
   "t_tile_button_locked": {
     "message": "Locked"
+  },
+  "t_to": {
+    "message": "To"
+  },
+  "t_tuesday": {
+    "message": "Tuesday"
+  },
+  "t_wednesday": {
+    "message": "Wednesday"
   },
   "update": {
     "message": "Update",

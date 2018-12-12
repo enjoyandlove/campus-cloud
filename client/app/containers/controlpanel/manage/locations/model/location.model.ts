@@ -13,11 +13,11 @@ export class LocationModel {
   public province: string;
   public latitude: number;
   public longitude: string;
+  public image_url: string;
   public short_name: string;
   public description: string;
   public postal_code: string;
-  public thumbnail_url: string;
-  public location_type: number;
+  public category_id: number;
 
   _form: FormGroup;
 
@@ -26,11 +26,8 @@ export class LocationModel {
   }
 
   constructor({ ...location } = {}) {
-    const url = location['links'] ? location['links'][0]['url'] : null;
-    const label = location['links'] ? location['links'][0]['label'] : null;
+    this.setLinks(location['links']);
 
-    this.url = url;
-    this.label = label;
     this.id = location['id'] || null;
     this.city = location['city'] || null;
     this.name = location['name'] || null;
@@ -41,11 +38,11 @@ export class LocationModel {
     this.province = location['province'] || null;
     this.latitude = location['latitude'] || null;
     this.longitude = location['longitude'] || null;
+    this.image_url = location['image_url'] || null;
     this.short_name = location['short_name'] || null;
     this.description = location['description'] || null;
     this.postal_code = location['postal_code'] || null;
-    this.location_type = location['location_type'] || null;
-    this.thumbnail_url = location['thumbnail_url'] || null;
+    this.category_id = location['category_id'] || null;
 
     this.buildSchedule(location['schedule']);
   }
@@ -60,14 +57,14 @@ export class LocationModel {
       country: [this.country],
       address: [this.address],
       province: [this.province],
+      image_url: [this.image_url],
       short_name: [this.short_name],
       postal_code: [this.postal_code],
       description: [this.description],
-      thumbnail_url: [this.thumbnail_url],
       name: [this.name, Validators.required],
       latitude: [this.latitude, Validators.required],
       longitude: [this.longitude, Validators.required],
-      location_type: [this.location_type, Validators.required],
+      category_id: [this.category_id, Validators.required],
       links: fb.array([
         fb.group({
           url: [this.url],
@@ -104,13 +101,22 @@ export class LocationModel {
 
     const itemsList =  items.map((item) => {
       return fb.group({
-        open: item.open,
-        close: item.close,
         link: item.link,
-        notes: item.notes
+        notes: item.notes,
+        end_time: item.end_time,
+        start_time: item.start_time
       });
     });
 
     return fb.array(itemsList);
+  }
+
+  setLinks(links) {
+    if (links) {
+      links.map((link) => {
+        this.url = link.url ? link.url : null;
+        this.label = link.label ? link.label : null;
+      });
+    }
   }
 }

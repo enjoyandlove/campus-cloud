@@ -74,11 +74,11 @@ export class LocationFormComponent implements OnInit {
   }
 
   onSelectedCategory(category) {
-    this.location.form.get('location_type').setValue(category.value);
+    this.location.form.get('category_id').setValue(category.value);
   }
 
   onUploadedImage(image) {
-    this.location.form.get('thumbnail_url').setValue(image);
+    this.location.form.get('image_url').setValue(image);
   }
 
   ngOnInit(): void {

@@ -29,13 +29,15 @@
               </span>
             </div>
 
-            <cp-location-opening-hours-form
-              *ngIf="openingHours"
-              [location]="location"
-              [formErrors]="formErrors"
-              [formChangedState]="formState"
-              (formState)="onChangeFormState($event)">
-            </cp-location-opening-hours-form>
+            <div class="col-12 margin-top">
+              <cp-location-opening-hours-form
+                *ngIf="openingHours"
+                [location]="location"
+                [formErrors]="formErrors"
+                [formChangedState]="formState"
+                (formState)="onChangeFormState($event)">
+              </cp-location-opening-hours-form>
+            </div>
           </div>
         </div>
       </div>

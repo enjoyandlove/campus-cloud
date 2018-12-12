@@ -22,10 +22,10 @@ export class LocationsUtilsService {
         day: ScheduleDays.Monday,
         items: [
           {
-            open: 32400,
-            close: 61200,
             link: null,
-            notes: null
+            notes: null,
+            end_time: 61200,
+            start_time: 32400
           },
         ]
       },
@@ -35,10 +35,10 @@ export class LocationsUtilsService {
         day: ScheduleDays.Tuesday,
         items: [
           {
-            open: 32400,
-            close: 61200,
             link: null,
-            notes: null
+            notes: null,
+            end_time: 61200,
+            start_time: 32400
           }
         ]
       },
@@ -48,10 +48,10 @@ export class LocationsUtilsService {
         day: ScheduleDays.Wednesday,
         items: [
           {
-            open: 32400,
-            close: 61200,
             link: null,
-            notes: null
+            notes: null,
+            end_time: 61200,
+            start_time: 32400
           }
         ]
       },
@@ -61,10 +61,10 @@ export class LocationsUtilsService {
         day: ScheduleDays.Thursday,
         items: [
           {
-            open: 32400,
-            close: 61200,
             link: null,
-            notes: null
+            notes: null,
+            end_time: 61200,
+            start_time: 32400
           }
         ]
       },
@@ -74,10 +74,10 @@ export class LocationsUtilsService {
         day: ScheduleDays.Friday,
         items: [
           {
-            open: 32400,
-            close: 61200,
             link: null,
-            notes: null
+            notes: null,
+            end_time: 61200,
+            start_time: 32400
           }
         ]
       },
@@ -87,10 +87,10 @@ export class LocationsUtilsService {
         day: ScheduleDays.Saturday,
         items: [
           {
-            open: 32400,
-            close: 61200,
             link: null,
-            notes: null
+            notes: null,
+            end_time: 61200,
+            start_time: 32400
           }
         ]
       },
@@ -100,10 +100,10 @@ export class LocationsUtilsService {
         day: ScheduleDays.Sunday,
         items: [
           {
-            open: 32400,
-            close: 61200,
             link: null,
-            notes: null
+            notes: null,
+            end_time: 61200,
+            start_time: 32400
           }
         ]
       }

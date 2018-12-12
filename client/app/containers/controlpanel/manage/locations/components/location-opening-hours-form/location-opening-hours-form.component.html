@@ -1,37 +1,43 @@
-<form [formGroup]="location.form" class="opening-form">
-  <div class="col-12">
-    <div *ngFor="let openingHour of openingHours; let i = index">
-      <div *ngFor="let item of openingHour.items">
-        <div class="row">
-          <div class="col-3 horizontal">
-            <label> {{ openingHour.label }}</label>
+<form [formGroup]="location.form">
+  <div *ngFor="let openingHour of openingHours; let i = index">
+    <div *ngFor="let item of openingHour.items">
+      <div class="row">
+        <div class="col-5">
+          <div class="row">
+            <div class="col-6 horizontal">
+              <label> {{ openingHour.label | cpI18n }}</label>
+            </div>
+            <div class="col-6 horizontal">
+              <cp-checkbox
+                class="checkbox"
+                [labelRight]="false"
+                [label]="'t_open' | cpI18n"
+                [isChecked]="openingHour.is_checked"
+                (toggle)="onDayCheck($event, openingHour, i)">
+              </cp-checkbox>
+            </div>
           </div>
+        </div>
 
-          <div class="col-3 horizontal">
-            <cp-checkbox
-              [labelRight]="false"
-              [label]="'t_open' | cpI18n"
-              [isChecked]="openingHour.is_checked"
-              (toggle)="onDayCheck($event, openingHour, i)">
-            </cp-checkbox>
-          </div>
+        <div class="col-7">
+          <div class="row">
+            <div class="col-6 horizontal">
+              <label class="margin-right">{{ 't_from' | cpI18n }}</label>
+              <cp-dropdown
+                [items]="locationTiming"
+                [selectedItem]="getSelectedTime(item.start_time)"
+                (selected)="onTimeSelected($event, openingHour, 'start_time', i)">
+              </cp-dropdown>
+            </div>
 
-          <div class="col-3 horizontal">
-            <label class="margin-right">{{ 't_to' | cpI18n }}</label>
-            <cp-dropdown
-              [items]="locationTiming"
-              [selectedItem]="getSelectedTime(item.open)"
-              (selected)="onTimeSelected($event, openingHour, 'open', i)">
-            </cp-dropdown>
-          </div>
-
-          <div class="col-3 horizontal">
-            <label class="margin-right">{{ 't_from' | cpI18n }}</label>
-            <cp-dropdown
-              [items]="locationTiming"
-              [selectedItem]="getSelectedTime(item.close)"
-              (selected)="onTimeSelected($event, openingHour, 'close', i)">
-            </cp-dropdown>
+            <div class="col-6 horizontal">
+              <label class="margin-right">{{ 't_to' | cpI18n }}</label>
+              <cp-dropdown
+                [items]="locationTiming"
+                [selectedItem]="getSelectedTime(item.end_time)"
+                (selected)="onTimeSelected($event, openingHour, 'end_time', i)">
+              </cp-dropdown>
+            </div>
           </div>
         </div>
       </div>

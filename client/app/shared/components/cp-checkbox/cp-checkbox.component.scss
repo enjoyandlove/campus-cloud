@@ -10,11 +10,11 @@
   cursor: pointer;
   font-weight: 400;
   position: relative;
-  margin-right: 30px;
 
   &.labelRight {
     .control__indicator {
       float: left;
+      margin-left: 0;
       margin-right: 8px;
     }
 
@@ -34,6 +34,7 @@
     width: 20px;
     height: 20px;
     float: right;
+    margin-left: 8px;
     border-radius: 4px;
     background: $color-white;
     border: 1px solid $color-med-grey;
