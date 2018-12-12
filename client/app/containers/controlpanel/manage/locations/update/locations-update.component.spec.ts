@@ -56,6 +56,19 @@ describe('LocationsUpdateComponent', () => {
     expect(result).toEqual(mockLocations[0]);
   });
 
+  it('should show form errors true', () => {
+    component.ngOnInit();
+
+    fillForm(component.location.form);
+
+    component.location.form.get('category_id').setValue(null);
+    component.location.form.get('name').setValue(null);
+
+    component.doSubmit();
+
+    expect(component.formErrors).toBe(true);
+  });
+
   it('should dispatch EditLocation action', () => {
     component.ngOnInit();
     const dispatchSpy = spyOn(component.store, 'dispatch');

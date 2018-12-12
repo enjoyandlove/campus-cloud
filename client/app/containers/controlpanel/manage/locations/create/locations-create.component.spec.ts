@@ -51,11 +51,27 @@ describe('LocationsCreateComponent', () => {
     expect(result).toEqual(emptyForm);
   });
 
+  it('should show form errors true', () => {
+    component.ngOnInit();
+
+    fillForm(component.location.form);
+
+    component.location.form.get('category_id').setValue(null);
+    component.location.form.get('name').setValue(null);
+
+    component.doSubmit();
+
+    expect(component.formErrors).toBe(true);
+  });
+
   it('should dispatch PostLocation action', () => {
     component.ngOnInit();
     const dispatchSpy = spyOn(component.store, 'dispatch');
 
     fillForm(component.location.form);
+
+    component.location.form.get('category_id').setValue(1);
+    component.location.form.get('name').setValue('Hello World!');
 
     component.doSubmit();
 

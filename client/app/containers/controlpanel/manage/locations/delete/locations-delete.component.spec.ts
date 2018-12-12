@@ -6,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
+import { LocationModel } from '../model';
 import { mockLocations } from '../tests';
 import { CPI18nService } from '@shared/services';
 import { SharedModule } from '@shared/shared.module';
@@ -37,7 +38,7 @@ describe('LocationsDeleteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LocationsDeleteComponent);
     component = fixture.componentInstance;
-    component.location = mockLocations[0];
+    component.location = new LocationModel({...mockLocations[0]});
     component.session.g.set('school', mockSchool);
   });
 
