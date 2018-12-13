@@ -5,20 +5,21 @@ import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@app/session';
+import { baseActions, IHeader } from '@app/store';
+import { NotifyUtilsService } from '../../notify.utils.service';
 import { AnnouncementsService } from '../announcements.service';
 import { AudienceType } from '../../../audience/audience.status';
-import { baseActions, IHeader } from './../../../../../store/base';
-import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { canSchoolReadResource } from './../../../../../shared/utils/privileges/privileges';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { CP_PRIVILEGES_MAP, STATUS } from '@app/shared/constants';
+import { amplitudeEvents } from '@app/shared/constants/analytics';
+import { canSchoolReadResource } from '@app/shared/utils/privileges/privileges';
+import { IToolTipContent } from '@app/shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   CPI18nService,
   StoreService,
   CPTrackingService,
   ZendeskService
-} from '../../../../../shared/services';
+} from '@app/shared/services';
 
 interface IState {
   isUrgent: boolean;
@@ -92,6 +93,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
+    public utils: NotifyUtilsService,
     public storeService: StoreService,
     public service: AnnouncementsService,
     public cpTracking: CPTrackingService
@@ -628,7 +630,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       subject: [null, [Validators.required, Validators.maxLength(128)]],
       message: [null, [Validators.required, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
-    });
+    },
+      { validator: this.utils.trimWhiteSpaces });
 
     this.form.valueChanges.subscribe((_) => {
       this.validButton();

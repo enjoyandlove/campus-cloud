@@ -1,4 +1,3 @@
-import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
 import { HttpParams } from '@angular/common/http';
 import {
   Component,
@@ -14,17 +13,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { CPSession } from './../../../../../session/index';
-import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPSession } from '@app/session';
+import { amplitudeEvents } from '@app/shared/constants';
+import { NotifyUtilsService } from '../../notify.utils.service';
+import { CP_PRIVILEGES_MAP, STATUS } from '@app/shared/constants';
+import { canSchoolWriteResource } from '@app/shared/utils/privileges';
 import { AnnouncementsService } from './../../announcements/announcements.service';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { IToolTipContent } from '@app/shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   CPI18nService,
   StoreService,
   CPTrackingService,
   ZendeskService
-} from './../../../../../shared/services';
+} from '@app/shared/services';
 
 interface IState {
   isUrgent: boolean;
@@ -100,6 +101,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public utils: NotifyUtilsService,
     public storeService: StoreService,
     public cpTracking: CPTrackingService,
     public service: AnnouncementsService
@@ -566,7 +568,9 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
       subject: [null, [Validators.required, Validators.maxLength(128)]],
       message: [null, [Validators.required, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
-    });
+    },
+      { validator: this.utils.trimWhiteSpaces}
+      );
 
     this.form.valueChanges.subscribe((_) => {
       let isValid = true;

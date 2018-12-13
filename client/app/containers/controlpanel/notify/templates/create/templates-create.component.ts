@@ -3,16 +3,16 @@ import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
-import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
-import { CPSession } from './../../../../../session/index';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
-import { CPI18nService, StoreService, ZendeskService } from './../../../../../shared/services';
-import { AnnouncementsService } from './../../announcements/announcements.service';
+import { CPSession } from '@app/session';
 import { TemplatesService } from './../templates.service';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { NotifyUtilsService } from '../../notify.utils.service';
+import { amplitudeEvents } from '@app/shared/constants/analytics';
+import { CP_PRIVILEGES_MAP } from '@app/shared/constants/privileges';
+import { canSchoolWriteResource } from '@app/shared/utils/privileges/privileges';
+import { AnnouncementsService } from './../../announcements/announcements.service';
 import { TemplatesComposeComponent } from '../compose/templates-compose.component';
-import { CPTrackingService } from '../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { IToolTipContent } from '@app/shared/components/cp-tooltip/cp-tooltip.interface';
+import { CPI18nService, StoreService, ZendeskService, CPTrackingService } from '@app/shared/services';
 
 declare var $;
 
@@ -31,12 +31,13 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
     public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public utils: NotifyUtilsService,
     public storeService: StoreService,
     public service: AnnouncementsService,
     public cpTracking: CPTrackingService,
     private childService: TemplatesService
   ) {
-    super(el, fb, session, cpI18n, storeService, cpTracking, service);
+    super(el, fb, session, cpI18n, utils, storeService, cpTracking, service);
   }
 
   @HostListener('document:click', ['$event'])
@@ -220,7 +221,9 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
       subject: [null, [Validators.required, Validators.maxLength(128)]],
       message: [null, [Validators.required, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
-    });
+    },
+      {validator: this.utils.trimWhiteSpaces}
+      );
 
     this.form.valueChanges.subscribe((_) => {
       let isValid = true;

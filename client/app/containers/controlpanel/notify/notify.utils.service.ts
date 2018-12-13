@@ -1,7 +1,9 @@
+import { FormGroup, ValidationErrors } from '@angular/forms';
 import { Injectable } from '@angular/core';
+import { trim as _trim } from 'lodash';
 
 import { types } from './templates/compose/announcement-types';
-import { amplitudeEvents } from '../../../shared/constants/analytics';
+import { amplitudeEvents } from '@app/shared/constants/analytics';
 
 @Injectable()
 export class NotifyUtilsService {
@@ -26,5 +28,12 @@ export class NotifyUtilsService {
 
   getAnnouncementType(data) {
     return types.filter((item) => item.action === data.priority)[0].label;
+  }
+
+  trimWhiteSpaces(controls: FormGroup): ValidationErrors | null {
+    const title = controls.get('subject').value;
+    const message = controls.get('message').value;
+
+    return _trim(title) && _trim(message) ? null : { required: true };
   }
 }
