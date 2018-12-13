@@ -2960,11 +2960,17 @@
   "t_shared_invalid_url": {
     "message": "URL invalide (https://google.com)"
   },
+  "t_shared_items": {
+    "message": "Articles"
+  },
   "t_shared_label_location_toggle": {
     "message": "Ajouter un lieu"
   },
   "t_shared_limited": {
     "message": "Limité"
+  },
+  "t_shared_no_integrations_found": {
+    "message": "Aucune intégration trouvée"
   },
   "t_shared_pending": {
     "message": "En attente"

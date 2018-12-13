@@ -5,12 +5,13 @@ import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 
-import { emptyForm, fillForm } from '../tests';
-import { CPSession } from './../../../../../../session';
-import { configureTestSuite } from '../../../../../../shared/tests';
-import { mockSchool } from './../../../../../../session/mock/school';
-import { SharedModule } from './../../../../../../shared/shared.module';
+import { CPSession } from '@app/session';
+import { configureTestSuite } from '@shared/tests';
+import { SharedModule } from '@shared/shared.module';
+import { mockSchool } from '@app/session/mock/school';
+import { emptyForm, fillForm, resetForm } from '../tests';
 import { EventsIntegrationsCreateComponent } from './integrations-create.component';
+import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers/integrations.utils.service';
 
 describe('EventsIntegrationsCreateComponent', () => {
   configureTestSuite();
@@ -19,7 +20,7 @@ describe('EventsIntegrationsCreateComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession],
+        providers: [CPSession, CommonIntegrationUtilsService],
         declarations: [EventsIntegrationsCreateComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
@@ -57,7 +58,7 @@ describe('EventsIntegrationsCreateComponent', () => {
     fixture.detectChanges();
 
     tearDownSpy = spyOn(component.teardown, 'emit');
-    formResetSpy = spyOn(component.integration.form, 'reset');
+    formResetSpy = spyOn(component.form, 'reset');
   });
 
   it('should init', () => {
@@ -89,7 +90,7 @@ describe('EventsIntegrationsCreateComponent', () => {
   it('should create an empty form', () => {
     component.ngOnInit();
 
-    const result = component.integration.form.value;
+    const result = component.form.value;
     expect(result).toEqual(emptyForm);
   });
 
@@ -98,11 +99,11 @@ describe('EventsIntegrationsCreateComponent', () => {
     spyOn(component, 'resetModal');
     const dispatchSpy = spyOn(component.store, 'dispatch');
 
-    fillForm(component.integration.form);
+    fillForm(component.form);
 
     component.doSubmit();
 
-    const expected = new fromStore.PostIntegration(component.integration.form.value);
+    const expected = new fromStore.PostIntegration(component.form.value);
 
     expect(component.resetModal).toHaveBeenCalled();
     expect(component.store.dispatch).toHaveBeenCalled();
@@ -112,5 +113,30 @@ describe('EventsIntegrationsCreateComponent', () => {
 
     expect(body).toEqual(expected.payload);
     expect(type).toEqual(fromStore.IntegrationActions.POST_INTEGRATION);
+  });
+
+  it('submit button should be disabled unless form is valid', () => {
+    const de = fixture.debugElement;
+    const submitBtn = de.query(By.css('.js_submit_button')).nativeElement;
+
+    resetForm(component.form);
+
+    expect(submitBtn.disabled).toBe(true);
+
+    component.form.get('school_id').setValue(1);
+    fixture.detectChanges();
+    expect(submitBtn.disabled).toBe(true);
+
+    component.form.get('feed_obj_id').setValue(1);
+    fixture.detectChanges();
+    expect(submitBtn.disabled).toBe(true);
+
+    component.form.get('feed_url').setValue('mock');
+    fixture.detectChanges();
+    expect(submitBtn.disabled).toBe(true);
+
+    component.form.get('feed_type').setValue(1);
+    fixture.detectChanges();
+    expect(submitBtn.disabled).toBe(false);
   });
 });

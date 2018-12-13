@@ -1,32 +1,17 @@
-import { EventIntegration } from './model/integration.model';
-import { IntegrationsUtilsService } from './integrations.utils.service';
-describe('IntegrationsUtilsService', () => {
-  let service: IntegrationsUtilsService;
+import { HttpParams } from '@angular/common/http';
 
-  beforeEach(() => {
-    service = new IntegrationsUtilsService();
-  });
+import { EventIntegration } from '@libs/integrations/events/model';
+import { IntegrationsUitlsService } from './integrations.utils.service';
 
-  it('should return type menu', () => {
-    const result = service.typesDropdown();
+describe('IntegrationsUitlsService', () => {
+  it('should return default Event Integration params', () => {
+    const schoolId = 157;
 
-    expect(result.length).toBe(3);
-  });
+    const result = IntegrationsUitlsService.commonParams(schoolId);
+    const expected = new HttpParams()
+      .set('school_id', schoolId.toString())
+      .set('feed_obj_type', EventIntegration.objectType.campusEvent.toString());
 
-  it('should have right items in dropdown', () => {
-    const result = service.typesDropdown();
-    const labels = result.map((r) => r.label);
-    const actions = result.map((r) => r.action);
-
-    const expectedLabels = ['RSS', 'ATOM', 'ICAL'];
-
-    const expectedActions = [
-      EventIntegration.types.rss,
-      EventIntegration.types.atom,
-      EventIntegration.types.ical
-    ];
-
-    expect(labels).toEqual(expectedLabels);
-    expect(actions).toEqual(expectedActions);
+    expect(result.toString()).toEqual(expected.toString());
   });
 });

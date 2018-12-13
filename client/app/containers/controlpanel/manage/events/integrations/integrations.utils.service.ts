@@ -1,26 +1,13 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { IItem } from '@shared/components/cp-dropdown';
-import { EventIntegration } from './model/integration.model';
+import { EventIntegration } from '@libs/integrations/events/model';
 
 @Injectable()
-export class IntegrationsUtilsService {
-  constructor() {}
-
-  typesDropdown(): IItem[] {
-    return [
-      {
-        action: EventIntegration.types.rss,
-        label: 'RSS'
-      },
-      {
-        action: EventIntegration.types.atom,
-        label: 'ATOM'
-      },
-      {
-        action: EventIntegration.types.ical,
-        label: 'ICAL'
-      }
-    ];
+export class IntegrationsUitlsService {
+  static commonParams(schoolId): HttpParams {
+    return new HttpParams()
+      .set('school_id', schoolId)
+      .set('feed_obj_type', EventIntegration.objectType.campusEvent.toString());
   }
 }

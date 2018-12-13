@@ -1,9 +1,12 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
-import { EventIntegration } from './../../model/integration.model';
+import { IStore } from '@shared/services/store.service';
+import { IEventIntegration } from '@libs/integrations/events/model';
 
 export enum IntegrationActions {
+  DESTROY = '[manage.events.integrations] destroy',
+
   GET_INTEGRATIONS = '[manage.events.integrations] get integrations',
   GET_INTEGRATIONS_SUCCESS = '[manage.events.integrations] get integrations success',
   GET_INTEGRATIONS_FAIL = '[manage.events.integrations] get integrations fail',
@@ -34,7 +37,7 @@ export class GetIntegrations implements Action {
 export class GetIntegrationsSuccess implements Action {
   readonly type = IntegrationActions.GET_INTEGRATIONS_SUCCESS;
 
-  constructor(public payload: EventIntegration[]) {}
+  constructor(public payload: IEventIntegration[]) {}
 }
 
 export class GetIntegrationsFail implements Action {
@@ -46,13 +49,13 @@ export class GetIntegrationsFail implements Action {
 export class PostIntegration implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION;
 
-  constructor(public payload: { body: any; params: HttpParams }) {}
+  constructor(public payload: { body: IEventIntegration; params: HttpParams }) {}
 }
 
 export class PostIntegrationSuccess implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION_SUCCESS;
 
-  constructor(public payload: EventIntegration) {}
+  constructor(public payload: IEventIntegration) {}
 }
 
 export class PostIntegrationFail implements Action {
@@ -82,13 +85,15 @@ export class DeleteIntegrationFail implements Action {
 export class EditIntegration implements Action {
   readonly type = IntegrationActions.EDIT_INTEGRATION;
 
-  constructor(public payload: { integrationId: number; body: any; params: HttpParams }) {}
+  constructor(
+    public payload: { integrationId: number; body: IEventIntegration; params: HttpParams }
+  ) {}
 }
 
 export class EditIntegrationSuccess implements Action {
   readonly type = IntegrationActions.EDIT_INTEGRATION_SUCCESS;
 
-  constructor(public payload: EventIntegration) {}
+  constructor(public payload: IEventIntegration) {}
 }
 
 export class EditIntegrationFail implements Action {
@@ -106,7 +111,7 @@ export class GetHosts implements Action {
 export class GetHostsSuccess implements Action {
   readonly type = IntegrationActions.GET_HOSTS_SUCCESS;
 
-  constructor(public payload: any[]) {}
+  constructor(public payload: IStore[]) {}
 }
 
 export class GetHostsFail implements Action {
@@ -115,7 +120,12 @@ export class GetHostsFail implements Action {
   constructor(public payload: HttpErrorResponse) {}
 }
 
+export class Destroy implements Action {
+  readonly type = IntegrationActions.DESTROY;
+}
+
 export type Actions =
+  | Destroy
   | GetIntegrations
   | GetIntegrationsSuccess
   | GetIntegrationsFail
