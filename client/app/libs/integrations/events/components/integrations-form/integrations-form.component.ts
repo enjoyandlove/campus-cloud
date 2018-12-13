@@ -27,9 +27,11 @@ export class EventIntegrationFormComponent implements OnInit {
     this.form.get('feed_type').setValue(action);
   }
 
-  onImageUpload(image) {
-    this.form.get('poster_url').setValue(image);
-    this.form.get('poster_thumb_url').setValue(image);
+  onImageUpload(image: string) {
+    const imageStringOrEmpty = image ? image : '';
+
+    this.form.get('poster_url').setValue(imageStringOrEmpty);
+    this.form.get('poster_thumb_url').setValue(imageStringOrEmpty);
   }
 
   ngOnInit(): void {}
