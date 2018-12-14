@@ -18,13 +18,13 @@ export class ItemsIntegrationsService extends HTTPService {
       API.ENDPOINTS.EVENT_INTEGRATIONS
     }/${startRage};${endRage}`;
 
-    return super.get(url, search);
+    return super.get(url, search, true);
   }
 
   createIntegration(body, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_INTEGRATIONS}/`;
 
-    return super.post(url, body, search);
+    return super.post(url, body, search, true);
   }
 
   editIntegration(integrationId: number, body, search: HttpParams) {
@@ -32,7 +32,7 @@ export class ItemsIntegrationsService extends HTTPService {
       API.ENDPOINTS.EVENT_INTEGRATIONS
     }/${integrationId}`;
 
-    return super.update(url, body, search);
+    return super.update(url, body, search, true);
   }
 
   deleteIntegration(integrationId: number, search: HttpParams) {
@@ -40,6 +40,6 @@ export class ItemsIntegrationsService extends HTTPService {
       API.ENDPOINTS.EVENT_INTEGRATIONS
     }/${integrationId}`;
 
-    return super.delete(url, search);
+    return super.delete(url, search, true);
   }
 }
