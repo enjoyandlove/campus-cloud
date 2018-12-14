@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpParams } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
@@ -54,13 +53,6 @@ describe('EventsIntegrationsListComponent', () => {
 
   it('should init', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should return a common http params object', () => {
-    const result = component.defaultParams.toString();
-    const expected = new HttpParams().set('school_id', <any>mockSchool.id);
-
-    expect(result.toString()).toEqual(expected.toString());
   });
 
   it('should trigger success snackbar on action completed', () => {
