@@ -2,6 +2,7 @@ import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { tap, map, filter, take, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { get as _get } from 'lodash';
 import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
@@ -10,47 +11,50 @@ import { HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class LocationExistsGuard implements CanActivate {
+  locationId: number;
+
   constructor(
     private session: CPSession,
     private store: Store<fromStore.ILocationsState>
   ) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+    this.locationId = parseInt(route.params.locationId, 10);
     return this.checkStore().pipe(
-      switchMap((_) => {
-        const id = parseInt(route.params.locationId, 10);
-
-        return this.hasLocation(id);
+      switchMap(() => {
+        return this.hasLocation(this.locationId);
       })
     );
   }
 
   hasLocation(id: number): Observable<boolean> {
-    return this.store.select(fromStore.getLocations)
+    return this.store.select(fromStore.getLocationsById)
       .pipe(
-        map((locations: any) => !!locations.find((location) => location.id === id)),
+        map((location: any) => !!location[id]),
         take(1)
       );
   }
 
   checkStore(): Observable<boolean> {
-    return this.store.select(fromStore.getLocationsLoaded)
+    return this.store.select(fromStore.getLocationsById)
       .pipe(
-        tap((loaded: boolean) => {
-          if (!loaded) {
+        tap((locations: any) => {
+          const locationId = this.locationId;
+          const has_schedule = _get(locations[locationId], 'has_schedule', false);
+
+          if (!has_schedule) {
             const search = new HttpParams()
               .append('school_id', this.session.g.get('school').id);
 
             const payload = {
-              startRange: 1,
-              endRange: 100,
+              locationId,
               params: search
             };
 
-            this.store.dispatch(new fromStore.GetLocations(payload));
+            this.store.dispatch(new fromStore.GetLocationById(payload));
           }
         }),
-        filter((loaded) => loaded),
+        filter((location) => !!location[this.locationId]),
         take(1)
       );
   }

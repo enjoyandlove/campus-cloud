@@ -32,6 +32,21 @@ export class LocationsEffect {
   );
 
   @Effect()
+  getLocationById$: Observable<fromActions.GetLocationByIdSuccess | fromActions.GetLocationByIdFail>
+    = this.actions$.pipe(
+    ofType(fromActions.locationActions.GET_LOCATION_BY_ID),
+    mergeMap((action: fromActions.GetLocationById) => {
+      const { locationId, params } = action.payload;
+
+      return this.service.getLocationById(locationId, params )
+        .pipe(
+          map((data: LocationModel) => new fromActions.GetLocationByIdSuccess(data)),
+          catchError((error) => of(new fromActions.GetLocationByIdFail(error)))
+        );
+    })
+  );
+
+  @Effect()
   createLocation$: Observable<fromActions.PostLocationSuccess | fromActions.PostLocationFail>
     = this.actions$.pipe(
     ofType(fromActions.locationActions.POST_LOCATION),
@@ -41,7 +56,7 @@ export class LocationsEffect {
       return this.service
         .createLocation(body, params)
         .pipe(
-          map((data: LocationModel[]) => new fromActions.PostLocationSuccess(data)),
+          map((data: LocationModel) => new fromActions.PostLocationSuccess(data)),
           tap((_) => {
             this.router.navigate(['/manage/locations']);
           }),

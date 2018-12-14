@@ -6,14 +6,21 @@ export interface ILocationState {
   error: boolean;
   loaded: boolean;
   loading: boolean;
-  data: LocationModel[];
+  loadedAll: boolean;
+  data: {
+    [id: number]: {
+      has_schedule: boolean,
+      data: LocationModel
+    }
+  };
 }
 
 export const InitialState: ILocationState = {
-  data: [],
+  data: {},
   error: false,
   loaded: false,
-  loading: false
+  loading: false,
+  loadedAll: false
 };
 
 export function reducer (state = InitialState, action: fromLocations.LocationsAction) {
@@ -22,21 +29,76 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       return {
         ...state,
         loading: true,
-        loaded: false
+        loaded: false,
+        loadedAll: false
       };
     }
 
     case fromLocations.locationActions.GET_LOCATIONS_SUCCESS: {
+      const payload = action.payload;
+
+      const data = payload.reduce(
+        ( entities: { [id: number]: LocationModel }, location: LocationModel) => {
+          return {
+            ...entities,
+            [location.id]: {
+              has_schedule: false,
+              data: location
+            }
+          };
+        },
+        {
+          ...{}
+        });
+
       return  {
         ...state,
+        data,
         error: false,
         loaded: true,
         loading: false,
-        data: [...action.payload]
+        loadedAll: true
       };
     }
 
     case fromLocations.locationActions.GET_LOCATIONS_FAIL: {
+      return {
+        ...state,
+        error: true,
+        loaded: false,
+        loading: false,
+        loadedAll: false
+      };
+    }
+
+    case fromLocations.locationActions.GET_LOCATION_BY_ID: {
+      return {
+        ...state,
+        loading: true
+      };
+    }
+
+    case fromLocations.locationActions.GET_LOCATION_BY_ID_SUCCESS: {
+      const payload = action.payload;
+
+      const data = {
+        ...state.data,
+        [payload.id]: {
+          data: payload,
+          has_schedule: true
+        }
+      };
+
+      return  {
+        ...state,
+        data,
+        error: false,
+        loaded: true,
+        loading: false
+      };
+    }
+
+    case fromLocations.locationActions.GET_LOCATION_BY_ID_FAIL: {
       return {
         ...state,
         error: true,
@@ -57,12 +119,20 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
     case fromLocations.locationActions.POST_LOCATION_SUCCESS: {
       const newCreatedLocation = action.payload;
 
+      const data = {
+        [newCreatedLocation.id]: {
+          data: newCreatedLocation,
+          has_schedule: true
+        },
+        ...state.data,
+      };
+
       return {
         ...state,
+        data,
         error: false,
         loaded: true,
-        loading: false,
-        data: [newCreatedLocation, ...state.data]
+        loading: false
       };
     }
 
@@ -87,12 +157,20 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
     case fromLocations.locationActions.EDIT_LOCATION_SUCCESS: {
       const edited = action.payload;
 
+      const data = {
+        ...state.data,
+        [edited.id]: {
+          data: edited,
+          has_schedule: true
+        }
+      };
+
       return {
         ...state,
+        data,
         error: false,
         loaded: true,
-        loading: false,
-        data: state.data.map((l: LocationModel) => (l.id === edited.id ? edited : l))
+        loading: false
       };
     }
 
@@ -101,7 +179,7 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
         ...state,
         error: true,
         loaded: true,
-        loading: false
+        loading: false,
       };
     }
 
@@ -117,12 +195,18 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
     case fromLocations.locationActions.DELETE_LOCATION_SUCCESS: {
       const { deletedId } = action.payload;
 
+      const data = {
+        ...state.data,
+      };
+
+      delete data[deletedId];
+
       return {
         ...state,
+        data,
         error: false,
         loaded: true,
-        loading: false,
-        data: state.data.filter((l: LocationModel) => l.id !== deletedId),
+        loading: false
       };
     }
 
@@ -146,3 +230,4 @@ export const getLocations = (state: ILocationState) => state.data;
 export const getLocationsError = (state: ILocationState) => state.error;
 export const getLocationsLoaded = (state: ILocationState) => state.loaded;
 export const getLocationsLoading = (state: ILocationState) => state.loading;
+export const getLocationLoadedAll = (state: ILocationState) => state.loadedAll;

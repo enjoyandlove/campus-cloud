@@ -104,10 +104,10 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
     this.store.select(fromStore.getSelectedLocation)
       .subscribe((location: LocationModel) => {
         if (location) {
-          this.locationId = location.id;
-          this.schedule = location['schedule'];
+          this.locationId = location['data'].id;
+          this.schedule = location['data']['schedule'];
           this.openingHours = !!this.schedule;
-          this.location = new LocationModel({...location});
+          this.location = new LocationModel({...location['data']});
         }
       });
 

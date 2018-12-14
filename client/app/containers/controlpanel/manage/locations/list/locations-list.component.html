@@ -40,30 +40,30 @@
             <span class="col-7 text-truncate">
               <img
                 class="rounded img-fit-cover float-left avatar"
-                [src]="location.image_url ? location.image_url : defaultImage">
-              <strong> {{ location.name }}</strong>
+                [src]="location.data.image_url ? location.data.image_url : defaultImage">
+              <strong> {{ location.data.name }}</strong>
 
               <br>
-              {{ location.address }}
+              {{ location.data.address }}
             </span>
 
             <span class="col-2 text-truncate">
-              {{ location.short_name }}
+              {{ location.data.short_name }}
             </span>
 
             <span class="col-2 text-truncate">
-              {{ location.category_id }}
+              {{ location.data.category_id }}
             </span>
 
             <span>
               <a
                 cpTracker
                 [eventData]="eventData"
-                [routerLink]="[location.id + '/edit']">
+                [routerLink]="[location.data.id + '/edit']">
                 <i class="material-icons hover action-button margin-right">edit</i>
               </a>
               <i
-                (click)="deleteLocation = location;"
+                (click)="deleteLocation = location.data;"
                 data-toggle="modal" data-target="#locationsDelete"
                 class="material-icons hover margin-right action-button">close</i>
             </span>

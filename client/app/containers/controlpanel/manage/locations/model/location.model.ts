@@ -114,8 +114,8 @@ export class LocationModel {
   setLinks(links) {
     if (links) {
       links.map((link) => {
-        this.url = link.url ? link.url : null;
-        this.label = link.label ? link.label : null;
+        this.url = link.url ? link.url : '';
+        this.label = link.label ? link.label : '';
       });
     }
   }
