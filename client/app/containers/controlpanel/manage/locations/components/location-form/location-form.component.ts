@@ -40,7 +40,10 @@ export class LocationFormComponent implements OnInit {
   }
 
   updateWithUserLocation(location) {
-    location = Object.assign({}, location, { location: location.name });
+    location = {
+      ...location,
+      location: location.name
+    };
 
     CPMap.setFormLocationData(this.location.form, location);
 
@@ -79,6 +82,15 @@ export class LocationFormComponent implements OnInit {
 
   onUploadedImage(image) {
     this.location.form.get('image_url').setValue(image);
+  }
+
+  get requiredControls() {
+    return {
+      name: this.location.form.get('name'),
+      latitude: this.location.form.get('latitude'),
+      longitude: this.location.form.get('longitude'),
+      category: this.location.form.get('category_id'),
+    };
   }
 
   ngOnInit(): void {

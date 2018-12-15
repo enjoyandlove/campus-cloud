@@ -5,7 +5,7 @@
       <cp-dropdown
         [items]="categories"
         (selected)="onSelectedCategory($event)"
-        [isRequiredError]="formErrors && location.form.get('category_id').hasError('required')">
+        [isRequiredError]="formErrors && requiredControls.category.invalid">
       </cp-dropdown>
     </div>
   </div>
@@ -16,7 +16,7 @@
       type="text"
       class="form-control"
       formControlName="name"
-      [class.error]="formErrors && location.form.get('name').hasError('required')">
+      [class.error]="formErrors && requiredControls.name.invalid">
   </div>
 
   <div class="row form-group">
@@ -60,7 +60,7 @@
         type="text"
         class="form-control"
         formControlName="latitude"
-        [class.error]="formErrors && location.form.get('latitude').hasError('required')">
+        [class.error]="formErrors && requiredControls.latitude.invalid">
     </div>
 
     <div class="col-6">
@@ -69,7 +69,7 @@
         type="text"
         class="form-control"
         formControlName="longitude"
-        [class.error]="formErrors && location.form.get('longitude').hasError('required')">
+        [class.error]="formErrors && requiredControls.longitude.invalid">
     </div>
   </div>
 
