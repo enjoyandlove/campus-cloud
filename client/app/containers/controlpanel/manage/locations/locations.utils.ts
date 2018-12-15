@@ -18,7 +18,7 @@ export class LocationsUtilsService {
     return [
       {
         is_checked: false,
-        label: 't_monday',
+        label: 't_shared_monday',
         day: ScheduleDays.Monday,
         items: [
           {
@@ -31,7 +31,7 @@ export class LocationsUtilsService {
       },
       {
         is_checked: false,
-        label: 't_tuesday',
+        label: 't_shared_tuesday',
         day: ScheduleDays.Tuesday,
         items: [
           {
@@ -44,7 +44,7 @@ export class LocationsUtilsService {
       },
       {
         is_checked: false,
-        label: 't_wednesday',
+        label: 't_shared_wednesday',
         day: ScheduleDays.Wednesday,
         items: [
           {
@@ -57,7 +57,7 @@ export class LocationsUtilsService {
       },
       {
         is_checked: false,
-        label: 't_thursday',
+        label: 't_shared_thursday',
         day: ScheduleDays.Thursday,
         items: [
           {
@@ -70,7 +70,7 @@ export class LocationsUtilsService {
       },
       {
         is_checked: false,
-        label: 't_friday',
+        label: 't_shared_friday',
         day: ScheduleDays.Friday,
         items: [
           {
@@ -83,7 +83,7 @@ export class LocationsUtilsService {
       },
       {
         is_checked: false,
-        label: 't_saturday',
+        label: 't_shared_saturday',
         day: ScheduleDays.Saturday,
         items: [
           {
@@ -96,7 +96,7 @@ export class LocationsUtilsService {
       },
       {
         is_checked: false,
-        label: 't_sunday',
+        label: 't_shared_sunday',
         day: ScheduleDays.Sunday,
         items: [
           {

@@ -11,7 +11,7 @@
               <cp-checkbox
                 class="checkbox"
                 [labelRight]="false"
-                [label]="'t_open' | cpI18n"
+                [label]="'t_shared_open' | cpI18n"
                 [isChecked]="openingHour.is_checked"
                 (toggle)="onDayCheck($event, openingHour, i)">
               </cp-checkbox>
@@ -22,7 +22,7 @@
         <div class="col-7">
           <div class="row">
             <div class="col-6 horizontal">
-              <label class="margin-right">{{ 't_from' | cpI18n }}</label>
+              <label class="margin-right">{{ 't_shared_from' | cpI18n }}</label>
               <cp-dropdown
                 [items]="locationTiming"
                 [selectedItem]="getSelectedTime(item.start_time)"
@@ -31,7 +31,7 @@
             </div>
 
             <div class="col-6 horizontal">
-              <label class="margin-right">{{ 't_to' | cpI18n }}</label>
+              <label class="margin-right">{{ 't_shared_to' | cpI18n }}</label>
               <cp-dropdown
                 [items]="locationTiming"
                 [selectedItem]="getSelectedTime(item.end_time)"
