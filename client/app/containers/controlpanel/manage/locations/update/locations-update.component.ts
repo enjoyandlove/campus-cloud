@@ -1,6 +1,7 @@
 import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -8,6 +9,7 @@ import * as fromRoot from '@app/store';
 import { LocationModel } from '../model';
 import { CPSession } from '@app/session';
 import { BaseComponent } from '@app/base';
+import { baseActions } from '@app/store/base';
 import { CPI18nService } from '@app/shared/services';
 
 @Component({
@@ -25,9 +27,11 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   locationId;
   errorMessage;
   openingHours = false;
+  buttonDisabled = false;
   location: LocationModel;
 
   constructor(
+    public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>,
@@ -37,9 +41,13 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
 
   doSubmit() {
     this.formErrors = false;
+    this.buttonDisabled = true;
+
     if (!this.location.form.valid) {
       this.formErrors = true;
-      this.enableSubmitButton();
+      this.buttonDisabled = false;
+
+      this.handleError();
 
       return;
     }
@@ -74,26 +82,37 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
     });
   }
 
-  enableSubmitButton() {
-    this.buttonData = {
-      ...this.buttonData,
-      disabled: false
-    };
-  }
-
   setErrors() {
     this.store.select(fromStore.getLocationsError)
       .subscribe((isError: boolean) => {
         if (isError) {
           this.formErrors = true;
-          this.enableSubmitButton();
-          this.errorMessage = this.cpI18n.translate('something_went_wrong');
+          this.buttonDisabled = false;
+          const errorMessage = this.cpI18n.translate('something_went_wrong');
+
+          this.handleError(errorMessage);
         }
       });
   }
 
   onChangeFormState(formState) {
     this.formState = formState;
+  }
+
+  onCancel() {
+    this.router.navigate(['/manage/locations']);
+  }
+
+  handleError(err?: string) {
+    this.store.dispatch({
+      type: baseActions.SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        class: 'danger',
+        autoClose: true,
+        body: err ? err : this.cpI18n.translate('error_fill_out_marked_fields')
+      }
+    });
   }
 
   ngOnInit() {
@@ -110,10 +129,5 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
           this.location = new LocationModel({...location['data']});
         }
       });
-
-    this.buttonData = {
-      class: 'primary',
-      text: this.cpI18n.translate('update')
-    };
   }
 }

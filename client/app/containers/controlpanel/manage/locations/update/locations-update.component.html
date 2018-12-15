@@ -45,13 +45,12 @@
       </div>
 
       <div class="footer">
-        <cp-form-footer
-          [cancelLink]="'../../'"
-          [formErrors]="formErrors"
-          [buttonData]="buttonData"
-          [errorMessage]="errorMessage"
-          (doSubmit)="doSubmit()">
-        </cp-form-footer>
+        <cp-form-fixed-footer
+          (submitClick)="doSubmit()"
+          (cancelClick)="onCancel()"
+          [submitButtonText]="'update'"
+          [submitButtonDisabled]="buttonDisabled">
+        </cp-form-fixed-footer>
       </div>
     </div>
   </form>

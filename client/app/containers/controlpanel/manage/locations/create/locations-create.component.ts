@@ -1,11 +1,13 @@
 import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { LocationModel } from '../model';
 import * as fromRoot from '@app/store';
+import { LocationModel } from '../model';
+import { baseActions } from '@app/store/base';
 import { CPSession, ISchool } from '@app/session';
 import { CPI18nService } from '@app/shared/services';
 import { LocationsService } from '../locations.service';
@@ -22,9 +24,11 @@ export class LocationsCreateComponent implements OnInit {
   errorMessage;
   school: ISchool;
   openingHours = true;
+  buttonDisabled = false;
   location: LocationModel;
 
   constructor(
+    public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: LocationsService,
@@ -33,10 +37,13 @@ export class LocationsCreateComponent implements OnInit {
 
   doSubmit() {
     this.formErrors = false;
+    this.buttonDisabled = true;
 
     if (!this.location.form.valid) {
       this.formErrors = true;
-      this.enableSubmitButton();
+      this.buttonDisabled = false;
+
+      this.handleError();
 
       return;
     }
@@ -71,26 +78,37 @@ export class LocationsCreateComponent implements OnInit {
     });
   }
 
-  enableSubmitButton() {
-    this.buttonData = {
-      ...this.buttonData,
-      disabled: false
-    };
-  }
-
   setErrors() {
     this.store.select(fromStore.getLocationsError)
       .subscribe((isError: boolean) => {
         if (isError) {
           this.formErrors = true;
-          this.enableSubmitButton();
-          this.errorMessage = this.cpI18n.translate('something_went_wrong');
+          this.buttonDisabled = false;
+          const errorMessage = this.cpI18n.translate('something_went_wrong');
+
+          this.handleError(errorMessage);
         }
       });
   }
 
   onChangeFormState(formState) {
     this.formState = formState;
+  }
+
+  onCancel() {
+    this.router.navigate(['/manage/locations']);
+  }
+
+  handleError(err?: string) {
+    this.store.dispatch({
+      type: baseActions.SNACKBAR_SHOW,
+      payload: {
+        sticky: true,
+        class: 'danger',
+        autoClose: true,
+        body: err ? err : this.cpI18n.translate('error_fill_out_marked_fields')
+      }
+    });
   }
 
   ngOnInit() {
@@ -101,10 +119,5 @@ export class LocationsCreateComponent implements OnInit {
     this.location = new LocationModel();
     this.location.form.get('latitude').setValue(this.school.latitude);
     this.location.form.get('longitude').setValue(this.school.longitude);
-
-    this.buttonData = {
-      class: 'primary',
-      text: this.cpI18n.translate('save')
-    };
   }
 }
