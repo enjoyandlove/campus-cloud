@@ -3,6 +3,7 @@ import { createSelector } from '@ngrx/store';
 import * as fromFeature from '../reducers';
 import { LocationModel } from '../../model';
 import { getFeatureState } from './feature.selector';
+import { getRouterState } from '@app/store/base/router-state';
 import * as fromLocations from '../reducers/locations.reducer';
 
 export const getLocationState = createSelector(
@@ -49,7 +50,7 @@ export const getLocationLoadedAll = createSelector(
 
 export const getSelectedLocation = createSelector(
   getLocationsData,
-  fromFeature.getRouterState,
+  getRouterState,
   (locations, router): LocationModel => {
     const locationId = parseInt(router.state.params.locationId, 10);
 

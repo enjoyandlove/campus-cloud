@@ -17,8 +17,9 @@ import { SharedModule } from '@app/shared/shared.module';
 import { LocationsUtilsService } from './locations.utils';
 import { LocationsRoutingModule } from './locations.routing.module';
 
+import { reducers, effects } from './store';
 import { LocationExistsGuard } from './guards';
-import { reducers, effects, CustomSerializer } from './store';
+import { CustomSerializer } from '@app/store/base/router-state';
 
 @NgModule({
   declarations: [
