@@ -57,9 +57,7 @@ export class LocationsEffect {
         .createLocation(body, params)
         .pipe(
           map((data: LocationModel) => new fromActions.PostLocationSuccess(data)),
-          tap((_) => {
-            this.router.navigate(['/manage/locations']);
-          }),
+          tap((_) => this.router.navigate(['/manage/locations'])),
           catchError((error) => of(new fromActions.PostLocationFail(error)))
         );
     })
@@ -76,9 +74,7 @@ export class LocationsEffect {
         .updateLocation(body, locationId, params)
         .pipe(
           map((data: LocationModel[]) => new fromActions.EditLocationSuccess(data)),
-          tap((_) => {
-            this.router.navigate(['/manage/locations']);
-          }),
+          tap((_) => this.router.navigate(['/manage/locations'])),
           catchError((error) => of(new fromActions.EditLocationFail(error)))
         );
     })
