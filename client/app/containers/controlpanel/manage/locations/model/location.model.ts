@@ -45,11 +45,11 @@ export class LocationModel {
 
   static setLinks(locations) {
     const fb = new FormBuilder();
-    const links = _get(locations, 'links', null);
+    const links = _get(locations, 'links', []);
 
     return fb.group({
-      url: [links ? links[0]['url'] : ''],
-      label: [links ? links[0]['label'] : ''],
+      url: [links.length ? links[0]['url'] : ''],
+      label: [links.length ? links[0]['label'] : ''],
     });
   }
 }

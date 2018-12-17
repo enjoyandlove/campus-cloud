@@ -38,7 +38,7 @@ export class ScheduleModel {
       name: [items ? items.name : null],
       url: [items ? items.url : null],
       end_time: [items ? items.end_time : 61200],
-      description: [items ? items.desciption : null],
+      description: [items ? items.description : null],
       start_time: [items ? items.start_time : 32400]
     });
   }
