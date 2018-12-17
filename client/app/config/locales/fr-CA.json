@@ -2591,6 +2591,9 @@
   "t_notify_announcement_audiences_my_experiences": {
     "message": "Mes expériences"
   },
+  "t_orientation_everyone": {
+    "message": "Membres de l'événement"
+  },
   "t_personas": {
     "message": "Expériences d'application"
   },
@@ -2891,6 +2894,12 @@
   "t_services_service_qr_enabled": {
     "message": "Code QR"
   },
+  "t_services_wall_settings_modal_title": {
+    "message": "Réglages du mur du service"
+  },
+  "t_service_everyone": {
+    "message": "Membres du service"
+  },
   "t_service_provider_csv_column_check_in_date": {
     "message": "Heure de vérification de présence"
   },
@@ -2995,6 +3004,9 @@
   },
   "t_shared_url": {
     "message": "Lien"
+  },
+  "t_shared_visits": {
+    "message": "Visites"
   },
   "t_shared_web_checkin": {
     "message": "Vérification de présence"
