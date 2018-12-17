@@ -1,9 +1,9 @@
 import { OnInit, Output, Component, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { CPSession } from '../../../../../../session';
+import { CPSession } from '@app/session';
+import { CPI18nService } from '@shared/services';
 import { EngagementUtilsService } from '../../engagement.utils.service';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 interface IState {
   engagement: {
@@ -43,6 +43,7 @@ export class EngagementTopBarComponent implements OnInit {
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
   @Output() download: EventEmitter<null> = new EventEmitter();
 
+  dateRanges;
   hasRouteData;
   state: IState;
   studentFilter;
@@ -165,5 +166,6 @@ export class EngagementTopBarComponent implements OnInit {
     }
 
     this.getStateFromUrl();
+    this.dateRanges = this.utils.dateFilter();
   }
 }
