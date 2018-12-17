@@ -1,7 +1,7 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
-import { LocationModel } from '../../model';
+import { ILocation } from '../../model';
 
 export enum locationActions {
   GET_LOCATIONS = '[manage.locations] get locations',
@@ -38,7 +38,7 @@ export class GetLocationsFail implements Action {
 
 export class GetLocationsSuccess implements Action {
   readonly type = locationActions.GET_LOCATIONS_SUCCESS;
-  constructor(public payload: LocationModel[]) {}
+  constructor(public payload: ILocation[]) {}
 }
 
 export class GetLocationById implements Action {
@@ -53,7 +53,7 @@ export class GetLocationByIdFail implements Action {
 
 export class GetLocationByIdSuccess implements Action {
   readonly type = locationActions.GET_LOCATION_BY_ID_SUCCESS;
-  constructor(public payload: any) {}
+  constructor(public payload: ILocation) {}
 }
 
 export class PostLocation implements Action {
@@ -68,7 +68,7 @@ export class PostLocationFail implements Action {
 
 export class PostLocationSuccess implements Action {
   readonly type = locationActions.POST_LOCATION_SUCCESS;
-  constructor(public payload: LocationModel) {}
+  constructor(public payload: ILocation) {}
 }
 
 export class EditLocation implements Action {
@@ -83,7 +83,7 @@ export class EditLocationFail implements Action {
 
 export class EditLocationSuccess implements Action {
   readonly type = locationActions.EDIT_LOCATION_SUCCESS;
-  constructor(public payload: any) {}
+  constructor(public payload: ILocation) {}
 }
 
 export class DeleteLocation implements Action {

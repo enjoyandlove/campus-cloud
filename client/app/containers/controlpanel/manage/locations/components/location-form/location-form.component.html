@@ -1,4 +1,4 @@
-<form [formGroup]="location.form">
+<form [formGroup]="locationForm">
   <div class="row form-group">
     <div class="col-12">
       <label>{{ 'category' | cpI18n }}</label>
@@ -35,7 +35,7 @@
       <cp-image-upload
         class="col-12"
         (uploaded)="onUploadedImage($event)"
-        [defaultImage]="location.form.controls['image_url'].value">
+        [defaultImage]="locationForm.controls['image_url'].value">
       </cp-image-upload>
     </div>
   </div>
@@ -48,7 +48,7 @@
         [newAddress]="newAddress"
         (backToDefault)="onResetMap()"
         (placeChange)="onPlaceChange($event)"
-        [defaultValue]="location.form.get('address').value">
+        [defaultValue]="locationForm.get('address').value">
       </cp-place-autocomplete>
     </div>
   </div>

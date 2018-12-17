@@ -1,6 +1,6 @@
 import * as fromLocations from '../actions';
 
-import { LocationModel } from '../../model';
+import { ILocation } from '../../model';
 
 export interface ILocationState {
   error: boolean;
@@ -10,7 +10,7 @@ export interface ILocationState {
   data: {
     [id: number]: {
       has_schedule: boolean,
-      data: LocationModel
+      data: ILocation
     }
   };
 }
@@ -35,10 +35,8 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
     }
 
     case fromLocations.locationActions.GET_LOCATIONS_SUCCESS: {
-      const payload = action.payload;
-
-      const data = payload.reduce(
-        ( entities: { [id: number]: LocationModel }, location: LocationModel) => {
+      const data = action.payload.reduce(
+        ( entities: { [id: number]: ILocation }, location: ILocation) => {
           return {
             ...entities,
             [location.id]: {

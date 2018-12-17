@@ -1,6 +1,6 @@
+import { FormControl, FormGroup } from '@angular/forms';
 import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -11,6 +11,7 @@ import { baseActions } from '@app/store/base';
 import { CPSession, ISchool } from '@app/session';
 import { CPI18nService } from '@app/shared/services';
 import { LocationsService } from '../locations.service';
+import { LocationsUtilsService } from '../locations.utils';
 
 @Component({
   selector: 'cp-locations-create',
@@ -18,20 +19,20 @@ import { LocationsService } from '../locations.service';
   styleUrls: ['./locations-create.component.scss']
 })
 export class LocationsCreateComponent implements OnInit {
-  formState;
   formErrors;
   buttonData;
   errorMessage;
   school: ISchool;
   openingHours = true;
   buttonDisabled = false;
-  location: LocationModel;
+  locationForm: FormGroup;
 
   constructor(
     public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: LocationsService,
+    public utils: LocationsUtilsService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
   ) {}
 
@@ -39,7 +40,7 @@ export class LocationsCreateComponent implements OnInit {
     this.formErrors = false;
     this.buttonDisabled = true;
 
-    if (!this.location.form.valid) {
+    if (!this.locationForm.valid) {
       this.formErrors = true;
       this.buttonDisabled = false;
 
@@ -49,10 +50,12 @@ export class LocationsCreateComponent implements OnInit {
     }
 
     if (!this.openingHours) {
-      this.location.form.setControl('schedule', new FormControl([]));
+      this.locationForm.setControl('schedule', new FormControl([]));
     }
 
-    const body = this.location.form.value;
+    const body = this.locationForm.value;
+    body['schedule'] = this.utils.filteredScheduleControls(this.locationForm);
+
     const school_id = this.session.g.get('school').id;
     const params = new HttpParams().append('school_id', school_id);
 
@@ -91,10 +94,6 @@ export class LocationsCreateComponent implements OnInit {
       });
   }
 
-  onChangeFormState(formState) {
-    this.formState = formState;
-  }
-
   onCancel() {
     this.router.navigate(['/manage/locations']);
   }
@@ -116,8 +115,9 @@ export class LocationsCreateComponent implements OnInit {
     this.buildHeader();
     this.school = this.session.g.get('school');
 
-    this.location = new LocationModel();
-    this.location.form.get('latitude').setValue(this.school.latitude);
-    this.location.form.get('longitude').setValue(this.school.longitude);
+    this.locationForm = LocationModel.form();
+    this.utils.setScheduleFormControls(this.locationForm);
+    this.locationForm.get('latitude').setValue(this.school.latitude);
+    this.locationForm.get('longitude').setValue(this.school.longitude);
   }
 }

@@ -1,5 +1,5 @@
 <div class="margin-bottom">
-  <form [formGroup]="location.form">
+  <form [formGroup]="locationForm">
     <div class="row">
       <div class="col">
         <div class="cp-card">
@@ -7,8 +7,8 @@
             <div class="col-12">
               <p class="title">{{ 't_locations_location_details' | cpI18n }}</p>
               <cp-location-form
-                [location]="location"
-                [formErrors]="formErrors">
+                [formErrors]="formErrors"
+                [locationForm]="locationForm">
               </cp-location-form>
             </div>
           </div>
@@ -32,10 +32,8 @@
             <div class="col-12 margin-top">
               <cp-location-opening-hours-form
                 *ngIf="openingHours"
-                [location]="location"
                 [formErrors]="formErrors"
-                [formChangedState]="formState"
-                (formState)="onChangeFormState($event)">
+                [locationForm]="locationForm">
               </cp-location-opening-hours-form>
             </div>
           </div>

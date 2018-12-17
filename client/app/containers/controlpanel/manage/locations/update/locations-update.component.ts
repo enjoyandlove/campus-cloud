@@ -1,16 +1,17 @@
+import { FormControl, FormGroup } from '@angular/forms';
 import { OnInit, Component } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
-import { LocationModel } from '../model';
 import { CPSession } from '@app/session';
 import { BaseComponent } from '@app/base';
 import { baseActions } from '@app/store/base';
+import { LocationModel, ILocation } from '../model';
 import { CPI18nService } from '@app/shared/services';
+import { LocationsUtilsService } from '../locations.utils';
 
 @Component({
   selector: 'cp-locations-update',
@@ -19,21 +20,20 @@ import { CPI18nService } from '@app/shared/services';
 })
 export class LocationsUpdateComponent extends BaseComponent implements OnInit {
   school;
-  schedule;
   loading$;
-  formState;
   formErrors;
   buttonData;
   locationId;
   errorMessage;
   openingHours = false;
   buttonDisabled = false;
-  location: LocationModel;
+  locationForm: FormGroup;
 
   constructor(
     public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public utils: LocationsUtilsService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>,
   ) {
     super();
@@ -43,7 +43,7 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
     this.formErrors = false;
     this.buttonDisabled = true;
 
-    if (!this.location.form.valid) {
+    if (!this.locationForm.valid) {
       this.formErrors = true;
       this.buttonDisabled = false;
 
@@ -53,10 +53,12 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
     }
 
     if (!this.openingHours) {
-      this.location.form.setControl('schedule', new FormControl([]));
+      this.locationForm.setControl('schedule', new FormControl([]));
     }
 
-    const body = this.location.form.value;
+    const body = this.locationForm.value;
+    body['schedule'] = this.utils.filteredScheduleControls(this.locationForm);
+
     const locationId = this.locationId;
     const school_id = this.session.g.get('school').id;
     const params = new HttpParams().append('school_id', school_id);
@@ -95,10 +97,6 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
       });
   }
 
-  onChangeFormState(formState) {
-    this.formState = formState;
-  }
-
   onCancel() {
     this.router.navigate(['/manage/locations']);
   }
@@ -121,12 +119,13 @@ export class LocationsUpdateComponent extends BaseComponent implements OnInit {
     this.school = this.session.g.get('school');
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
     this.store.select(fromStore.getSelectedLocation)
-      .subscribe((location: LocationModel) => {
+      .subscribe((location: ILocation) => {
         if (location) {
-          this.locationId = location['data'].id;
-          this.schedule = location['data']['schedule'];
-          this.openingHours = !!this.schedule;
-          this.location = new LocationModel({...location['data']});
+          const schedule = location['schedule'];
+          this.openingHours = !!schedule.length;
+          this.locationId = location.id;
+          this.locationForm = LocationModel.form(location);
+          this.utils.setScheduleFormControls(this.locationForm, schedule);
         }
       });
   }

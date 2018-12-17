@@ -1,7 +1,7 @@
 <div class="margin-bottom" [ngSwitch]="loading$ | async">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <form [formGroup]="location.form" *ngSwitchCase="false">
+  <form [formGroup]="locationForm" *ngSwitchCase="false">
     <div class="row">
       <div class="col">
         <div class="cp-card">
@@ -9,8 +9,8 @@
             <div class="col-12">
               <p class="title">{{ 't_locations_location_details' | cpI18n }}</p>
               <cp-location-form
-                [location]="location"
-                [formErrors]="formErrors">
+                [formErrors]="formErrors"
+                [locationForm]="locationForm">
               </cp-location-form>
             </div>
           </div>
@@ -33,11 +33,8 @@
             <div class="col-12 margin-top">
               <cp-location-opening-hours-form
                 *ngIf="openingHours"
-                [schedule]="schedule"
-                [location]="location"
                 [formErrors]="formErrors"
-                [formChangedState]="formState"
-                (formState)="onChangeFormState($event)">
+                [locationForm]="locationForm">
               </cp-location-opening-hours-form>
             </div>
           </div>

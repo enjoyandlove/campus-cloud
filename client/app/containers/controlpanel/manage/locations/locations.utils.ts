@@ -1,113 +1,61 @@
+import { FormArray, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
-export enum ScheduleDays {
-  'Monday' = 1,
-  'Tuesday' = 2,
-  'Wednesday' = 3,
-  'Thursday' = 4,
-  'Friday' = 5,
-  'Saturday' = 6,
-  'Sunday' = 7
-}
+import { ScheduleModel, scheduleLabels } from './model';
 
 @Injectable()
 export class LocationsUtilsService {
   constructor() {}
 
-  locationOpeningHours() {
-    return [
-      {
-        is_checked: false,
-        label: 't_shared_monday',
-        day: ScheduleDays.Monday,
-        items: [
-          {
-            link: null,
-            notes: null,
-            end_time: 61200,
-            start_time: 32400
-          },
-        ]
-      },
-      {
-        is_checked: false,
-        label: 't_shared_tuesday',
-        day: ScheduleDays.Tuesday,
-        items: [
-          {
-            link: null,
-            notes: null,
-            end_time: 61200,
-            start_time: 32400
-          }
-        ]
-      },
-      {
-        is_checked: false,
-        label: 't_shared_wednesday',
-        day: ScheduleDays.Wednesday,
-        items: [
-          {
-            link: null,
-            notes: null,
-            end_time: 61200,
-            start_time: 32400
-          }
-        ]
-      },
-      {
-        is_checked: false,
-        label: 't_shared_thursday',
-        day: ScheduleDays.Thursday,
-        items: [
-          {
-            link: null,
-            notes: null,
-            end_time: 61200,
-            start_time: 32400
-          }
-        ]
-      },
-      {
-        is_checked: false,
-        label: 't_shared_friday',
-        day: ScheduleDays.Friday,
-        items: [
-          {
-            link: null,
-            notes: null,
-            end_time: 61200,
-            start_time: 32400
-          }
-        ]
-      },
-      {
-        is_checked: false,
-        label: 't_shared_saturday',
-        day: ScheduleDays.Saturday,
-        items: [
-          {
-            link: null,
-            notes: null,
-            end_time: 61200,
-            start_time: 32400
-          }
-        ]
-      },
-      {
-        is_checked: false,
-        label: 't_shared_sunday',
-        day: ScheduleDays.Sunday,
-        items: [
-          {
-            link: null,
-            notes: null,
-            end_time: 61200,
-            start_time: 32400
-          }
-        ]
+  getScheduleLabel(day) {
+    return scheduleLabels[day];
+  }
+
+  filteredScheduleControls(form: FormGroup) {
+    const _schedule = [];
+    const controls = <FormArray>form.controls['schedule'];
+
+    controls.controls.forEach((control: FormGroup) => {
+      if (control.controls['is_checked'].value) {
+        _schedule.push(control.value);
       }
-    ];
+    });
+
+    return _schedule;
+  }
+
+  setScheduleFormControls(form: FormGroup, schedule = []) {
+    const days = Array.from(Array(7).keys());
+    const controls = <FormArray>form.controls['schedule'];
+
+    days.forEach((d) => {
+      const day = d + 1;
+      const scheduleForm = ScheduleModel.form();
+
+      scheduleForm.get('day').setValue(day);
+
+      if (schedule.length) {
+        this.setItemControls(scheduleForm, schedule, day);
+      }
+
+      controls.push(scheduleForm);
+    });
+  }
+
+  setItemControls(scheduleForm, schedule, day) {
+    const controlItems = <FormArray>scheduleForm.controls['items'];
+
+    schedule.forEach((openingHours) => {
+      if (openingHours.day === day) {
+        scheduleForm.get('is_checked').setValue(true);
+
+        openingHours.items.forEach((time) => {
+          controlItems.push(ScheduleModel.setItemControls(time));
+        });
+
+        controlItems.removeAt(0);
+      }
+    });
   }
 
   getLocationTiming() {

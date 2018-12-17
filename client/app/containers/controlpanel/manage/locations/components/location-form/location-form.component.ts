@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
 import { CPMap } from '@shared/utils';
-import { LocationModel } from '../../model';
 import { CPSession, ISchool } from '@app/session';
 
 @Component({
@@ -12,7 +12,7 @@ import { CPSession, ISchool } from '@app/session';
 })
 export class LocationFormComponent implements OnInit {
   @Input() formErrors: boolean;
-  @Input() location: LocationModel;
+  @Input() locationForm: FormGroup;
 
   categories;
   school: ISchool;
@@ -23,10 +23,10 @@ export class LocationFormComponent implements OnInit {
 
 
   onResetMap() {
-    CPMap.setFormLocationData(this.location.form, CPMap.resetLocationFields());
+    CPMap.setFormLocationData(this.locationForm, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
-    this.location.form.get('latitude').setValue(this.school.latitude);
-    this.location.form.get('longitude').setValue(this.school.longitude);
+    this.locationForm.get('latitude').setValue(this.school.latitude);
+    this.locationForm.get('longitude').setValue(this.school.longitude);
   }
 
   onMapSelection(data) {
@@ -34,9 +34,9 @@ export class LocationFormComponent implements OnInit {
 
     const location = { ...cpMap, address: data.formatted_address };
 
-    CPMap.setFormLocationData(this.location.form, location);
+    CPMap.setFormLocationData(this.locationForm, location);
 
-    this.newAddress.next(this.location.form.get('address').value);
+    this.newAddress.next(this.locationForm.get('address').value);
   }
 
   updateWithUserLocation(location) {
@@ -45,7 +45,7 @@ export class LocationFormComponent implements OnInit {
       location: location.name
     };
 
-    CPMap.setFormLocationData(this.location.form, location);
+    CPMap.setFormLocationData(this.locationForm, location);
 
     this.centerMap(location.latitude, location.longitude);
   }
@@ -67,7 +67,7 @@ export class LocationFormComponent implements OnInit {
 
     const coords: google.maps.LatLngLiteral = data.geometry.location.toJSON();
 
-    CPMap.setFormLocationData(this.location.form, location);
+    CPMap.setFormLocationData(this.locationForm, location);
 
     this.centerMap(coords.lat, coords.lng);
   }
@@ -77,26 +77,26 @@ export class LocationFormComponent implements OnInit {
   }
 
   onSelectedCategory(category) {
-    this.location.form.get('category_id').setValue(category.value);
+    this.locationForm.get('category_id').setValue(category.value);
   }
 
   onUploadedImage(image) {
-    this.location.form.get('image_url').setValue(image);
+    this.locationForm.get('image_url').setValue(image);
   }
 
   get requiredControls() {
     return {
-      name: this.location.form.get('name'),
-      latitude: this.location.form.get('latitude'),
-      longitude: this.location.form.get('longitude'),
-      category: this.location.form.get('category_id'),
+      name: this.locationForm.get('name'),
+      latitude: this.locationForm.get('latitude'),
+      longitude: this.locationForm.get('longitude'),
+      category: this.locationForm.get('category_id'),
     };
   }
 
   ngOnInit(): void {
     this.school = this.session.g.get('school');
-    const lat = this.location.form.get('latitude').value;
-    const lng = this.location.form.get('longitude').value;
+    const lat = this.locationForm.get('latitude').value;
+    const lng = this.locationForm.get('longitude').value;
 
     this.mapCenter = new BehaviorSubject({
       lat: lat ? lat : this.school.latitude,

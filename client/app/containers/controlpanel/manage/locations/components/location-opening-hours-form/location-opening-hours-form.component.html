@@ -1,42 +1,44 @@
-<form [formGroup]="location.form">
-  <div *ngFor="let openingHour of openingHours; let i = index">
-    <div *ngFor="let item of openingHour.items">
-      <div class="row">
+<form [formGroup]="locationForm">
+  <div formArrayName="schedule">
+    <div *ngFor="let schedule of locationForm.get('schedule').controls; let i= index">
+      <div class="row" [formGroupName]="i">
         <div class="col-5">
           <div class="row">
             <div class="col-6 horizontal">
-              <label> {{ openingHour.label | cpI18n }}</label>
+              <label> {{ getDayLabel(schedule.controls.day.value) | cpI18n }}</label>
             </div>
             <div class="col-6 horizontal">
               <cp-checkbox
                 class="checkbox"
                 [labelRight]="false"
                 [label]="'t_shared_open' | cpI18n"
-                [isChecked]="openingHour.is_checked"
-                (toggle)="onDayCheck($event, openingHour, i)">
+                [isChecked]="schedule.controls.is_checked.value"
+                (toggle)="onDayCheck($event, i)">
               </cp-checkbox>
             </div>
           </div>
         </div>
 
-        <div class="col-7">
-          <div class="row">
-            <div class="col-6 horizontal">
-              <label class="margin-right">{{ 't_shared_from' | cpI18n }}</label>
-              <cp-dropdown
-                [items]="locationTiming"
-                [selectedItem]="getSelectedTime(item.start_time)"
-                (selected)="onTimeSelected($event, openingHour, 'start_time', i)">
-              </cp-dropdown>
-            </div>
+        <div class="col-7" *ngFor="let item of schedule.get('items').controls; let itemIndex = index">
+          <div formArrayName="items">
+            <div class="row" [formGroupName]="itemIndex">
+              <div class="col-6 horizontal">
+                <label class="margin-right">{{ 't_shared_from' | cpI18n }}</label>
+                <cp-dropdown
+                  [items]="locationTiming"
+                  [selectedItem]="getSelectedTime(item.controls.start_time.value)"
+                  (selected)="onTimeSelected($event, 'start_time', i)">
+                </cp-dropdown>
+              </div>
 
-            <div class="col-6 horizontal">
-              <label class="margin-right">{{ 't_shared_to' | cpI18n }}</label>
-              <cp-dropdown
-                [items]="locationTiming"
-                [selectedItem]="getSelectedTime(item.end_time)"
-                (selected)="onTimeSelected($event, openingHour, 'end_time', i)">
-              </cp-dropdown>
+              <div class="col-6 horizontal">
+                <label class="margin-right">{{ 't_shared_to' | cpI18n }}</label>
+                <cp-dropdown
+                  [items]="locationTiming"
+                  [selectedItem]="getSelectedTime(item.controls.end_time.value)"
+                  (selected)="onTimeSelected($event, 'end_time', i)">
+                </cp-dropdown>
+              </div>
             </div>
           </div>
         </div>
