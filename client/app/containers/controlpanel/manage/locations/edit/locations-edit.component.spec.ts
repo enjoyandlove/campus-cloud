@@ -12,17 +12,18 @@ import { fillForm, mockLocations } from '../tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
-import { LocationsUpdateComponent } from './locations-update.component';
+import { LocationsUtilsService } from '../locations.utils';
+import { LocationsEditComponent } from './locations-edit.component';
 
-describe('LocationsUpdateComponent', () => {
+describe('LocationsEditComponent', () => {
   configureTestSuite();
 
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService],
-        declarations: [LocationsUpdateComponent],
+        providers: [CPSession, CPI18nService, LocationsUtilsService],
+        declarations: [LocationsEditComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
 
@@ -32,14 +33,15 @@ describe('LocationsUpdateComponent', () => {
       .catch(done.fail)
   );
 
-  let fixture: ComponentFixture<LocationsUpdateComponent>;
-  let component: LocationsUpdateComponent;
+  let fixture: ComponentFixture<LocationsEditComponent>;
+  let component: LocationsEditComponent;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LocationsUpdateComponent);
+    fixture = TestBed.createComponent(LocationsEditComponent);
     component = fixture.componentInstance;
+    component.openingHours = true;
     component.session.g.set('school', mockSchool);
-    spyOn(component.store, 'select').and.returnValue(of(mockLocations));
+    spyOn(component.store, 'select').and.returnValue(of(mockLocations[0]));
   });
 
   it('should init', () => {
@@ -49,20 +51,25 @@ describe('LocationsUpdateComponent', () => {
   it('should populate form with values', () => {
     component.ngOnInit();
 
-    fillForm(component.location.form);
+    fillForm(component.locationForm);
 
-    const result = component.location.form.value;
+    const result = component.locationForm.value;
     result['id'] = 123;
+
+    expect(result['schedule'].length).toEqual(7);
+
+    result['links'] = [];
+    result['schedule'] = [];
     expect(result).toEqual(mockLocations[0]);
   });
 
   it('should show form errors true', () => {
     component.ngOnInit();
 
-    fillForm(component.location.form);
+    fillForm(component.locationForm);
 
-    component.location.form.get('category_id').setValue(null);
-    component.location.form.get('name').setValue(null);
+    component.locationForm.get('category_id').setValue(null);
+    component.locationForm.get('name').setValue(null);
 
     component.doSubmit();
 
@@ -73,11 +80,11 @@ describe('LocationsUpdateComponent', () => {
     component.ngOnInit();
     const dispatchSpy = spyOn(component.store, 'dispatch');
 
-    fillForm(component.location.form);
+    fillForm(component.locationForm);
 
     component.doSubmit();
 
-    const expected = new fromStore.EditLocation(component.location.form.value);
+    const expected = new fromStore.EditLocation(component.locationForm.value);
 
     expect(component.store.dispatch).toHaveBeenCalled();
 

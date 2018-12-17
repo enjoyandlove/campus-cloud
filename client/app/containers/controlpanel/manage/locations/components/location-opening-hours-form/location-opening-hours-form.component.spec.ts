@@ -1,29 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-import { mockLocations } from '../../tests';
-import { LocationModel } from '../../model';
+import { mockTime } from '../../tests';
 import { SharedModule } from '@shared/shared.module';
 import { configureTestSuite } from '@app/shared/tests';
-import { LocationsUtilsService, ScheduleDays } from '../../locations.utils';
+import { LocationsUtilsService } from '../../locations.utils';
+import { LocationModel, ScheduleDays, scheduleLabels } from '../../model';
 import { LocationOpeningHoursFormComponent } from './location-opening-hours-form.component';
-
-const mockTime = {
-  value: 1800,
-  label: '12:30 AM'
-};
-
-const mockSchedule = [
-  {
-    day: ScheduleDays.Tuesday,
-    items: [
-      {
-        start_time: 61200,
-        end_time: 32400
-      }
-    ]
-  }
-];
 
 describe('LocationOpeningHoursFormComponent', () => {
   configureTestSuite();
@@ -49,15 +32,10 @@ describe('LocationOpeningHoursFormComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(LocationOpeningHoursFormComponent);
     component = fixture.componentInstance;
-    component.location = new LocationModel({...mockLocations[0]});
-
-    component.schedule = mockSchedule;
-
-    spyOn(component.formState, 'emit');
+    component.locationForm = LocationModel.form();
+    component.utils.setScheduleFormControls(component.locationForm);
 
     component.ngOnInit();
-
-    component.location.buildSchedule(component.schedule);
   });
 
   it('should init', () => {
@@ -70,62 +48,60 @@ describe('LocationOpeningHoursFormComponent', () => {
     expect(selectedTime).toEqual(mockTime);
   });
 
-  it('should set start end time', () => {
-    const index = 1;
-    const openingHour = component.openingHours[1];
+  it('should set start time', () => {
+    const index = 0;
+    const key = 'start_time';
 
-    let key = 'start_time';
+    component.onTimeSelected(mockTime, key, index);
 
-    component.onTimeSelected(mockTime, openingHour, key, index);
+    const formSchedule = component.locationForm.value['schedule'];
 
-    let formSchedule = component.location.form.value['schedule'];
+    const itemsStartTime = formSchedule[0]['items'][0][key];
 
-    expect(component.formState.emit).toHaveBeenCalled();
-    expect(formSchedule[0]['items'][0][key]).toEqual(mockTime.value);
-    expect(component.openingHours[1].items[0][key]).toEqual(mockTime.value);
-    expect(component.formState.emit).toHaveBeenCalledWith(component.openingHours);
-
-    key = 'end_time';
-
-    component.onTimeSelected(mockTime, openingHour, key, index);
-
-    formSchedule = component.location.form.value['schedule'];
-
-    expect(component.formState.emit).toHaveBeenCalled();
-    expect(formSchedule[0]['items'][0][key]).toEqual(mockTime.value);
-    expect(component.openingHours[1].items[0][key]).toEqual(mockTime.value);
-    expect(component.formState.emit).toHaveBeenCalledWith(component.openingHours);
+    expect(itemsStartTime).toEqual(mockTime.value);
   });
 
-  it('should add form control', () => {
-    const index = 1;
+  it('should set end time', () => {
+    const index = 0;
+    const key = 'end_time';
 
-    component.onDayCheck(true, mockSchedule[0], index);
+    component.onTimeSelected(mockTime, key, index);
 
-    const formSchedule = component.location.form.value['schedule'];
+    const formSchedule = component.locationForm.value['schedule'];
 
-    const day = formSchedule[0]['day'];
-    const endTime = formSchedule[0]['items'][0]['end_time'];
-    const startTime = formSchedule[0]['items'][0]['start_time'];
+    const itemsEndTime = formSchedule[0]['items'][0][key];
 
-    expect(day).toEqual(mockSchedule[0]['day']);
-    expect(component.formState.emit).toHaveBeenCalled();
-    expect(endTime).toEqual(mockSchedule[0]['items'][0].end_time);
-    expect(startTime).toEqual(mockSchedule[0]['items'][0].start_time);
-    expect(component.openingHours[index]['is_checked']).toBe(true);
-    expect(component.formState.emit).toHaveBeenCalledWith(component.openingHours);
+    expect(itemsEndTime).toEqual(mockTime.value);
   });
 
-  it('should remove from control', () => {
-    const index = 1;
+  it('should check opening hour day', () => {
+    const index = 0;
 
-    component.onDayCheck(false, mockSchedule[0], index);
+    component.onDayCheck(true, index);
 
-    const formSchedule = component.location.form.value['schedule'];
+    const formSchedule = component.locationForm.value['schedule'];
 
-    expect(formSchedule).toEqual([]);
-    expect(component.formState.emit).toHaveBeenCalled();
-    expect(component.openingHours[index]['is_checked']).toBe(false);
-    expect(component.formState.emit).toHaveBeenCalledWith(component.openingHours);
+    const isDayChecked = formSchedule[0].is_checked;
+
+    expect(isDayChecked).toBe(true);
+  });
+
+  it('should uncheck opening hour day', () => {
+    const index = 0;
+
+    component.onDayCheck(false, index);
+
+    const formSchedule = component.locationForm.value['schedule'];
+
+    const isDayChecked = formSchedule[0].is_checked;
+
+    expect(isDayChecked).toBe(false);
+  });
+
+  it('should get day label', () => {
+
+    const day = component.getDayLabel(ScheduleDays.Wednesday);
+
+    expect(day).toEqual(scheduleLabels[ScheduleDays.Wednesday]);
   });
 });

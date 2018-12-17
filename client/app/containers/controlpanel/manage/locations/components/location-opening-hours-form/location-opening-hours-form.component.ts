@@ -12,7 +12,6 @@ export class LocationOpeningHoursFormComponent implements OnInit {
   @Input() formErrors: boolean;
   @Input() locationForm: FormGroup;
 
-  openingHours;
   locationTiming;
 
   constructor(

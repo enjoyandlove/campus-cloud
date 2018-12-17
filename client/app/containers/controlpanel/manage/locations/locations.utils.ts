@@ -11,12 +11,12 @@ export class LocationsUtilsService {
     return scheduleLabels[day];
   }
 
-  filteredScheduleControls(form: FormGroup) {
+  filteredScheduleControls(form: FormGroup, hasOpeningHours) {
     const _schedule = [];
     const controls = <FormArray>form.controls['schedule'];
 
     controls.controls.forEach((control: FormGroup) => {
-      if (control.controls['is_checked'].value) {
+      if (control.controls['is_checked'].value && hasOpeningHours) {
         _schedule.push(control.value);
       }
     });

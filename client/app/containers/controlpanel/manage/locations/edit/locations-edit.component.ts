@@ -1,8 +1,10 @@
-import { FormControl, FormGroup } from '@angular/forms';
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, OnDestroy } from '@angular/core';
+import { filter, takeUntil, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
@@ -18,16 +20,17 @@ import { LocationsUtilsService } from '../locations.utils';
   templateUrl: './locations-edit.component.html',
   styleUrls: ['./locations-edit.component.scss']
 })
-export class LocationsEditComponent extends BaseComponent implements OnInit {
+export class LocationsEditComponent extends BaseComponent implements OnInit, OnDestroy {
   school;
   loading$;
   formErrors;
-  buttonData;
   locationId;
   errorMessage;
   openingHours = false;
   buttonDisabled = false;
   locationForm: FormGroup;
+
+  private destroy$ = new Subject();
 
   constructor(
     public router: Router,
@@ -52,12 +55,8 @@ export class LocationsEditComponent extends BaseComponent implements OnInit {
       return;
     }
 
-    if (!this.openingHours) {
-      this.locationForm.setControl('schedule', new FormControl([]));
-    }
-
     const body = this.locationForm.value;
-    body['schedule'] = this.utils.filteredScheduleControls(this.locationForm);
+    body['schedule'] = this.utils.filteredScheduleControls(this.locationForm, this.openingHours);
 
     const locationId = this.locationId;
     const school_id = this.session.g.get('school').id;
@@ -86,15 +85,18 @@ export class LocationsEditComponent extends BaseComponent implements OnInit {
 
   setErrors() {
     this.store.select(fromStore.getLocationsError)
-      .subscribe((isError: boolean) => {
-        if (isError) {
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((error) => error),
+        tap(() => {
           this.formErrors = true;
           this.buttonDisabled = false;
           const errorMessage = this.cpI18n.translate('something_went_wrong');
 
           this.handleError(errorMessage);
-        }
-      });
+        })
+      )
+      .subscribe();
   }
 
   onCancel() {
@@ -128,5 +130,11 @@ export class LocationsEditComponent extends BaseComponent implements OnInit {
           this.utils.setScheduleFormControls(this.locationForm, schedule);
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 }

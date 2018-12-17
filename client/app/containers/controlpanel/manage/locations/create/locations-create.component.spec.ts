@@ -11,6 +11,7 @@ import { CPI18nService } from '@shared/services';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
+import { LocationsUtilsService } from '../locations.utils';
 import { LocationsCreateComponent } from './locations-create.component';
 
 describe('LocationsCreateComponent', () => {
@@ -20,7 +21,7 @@ describe('LocationsCreateComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService],
+        providers: [CPSession, CPI18nService, LocationsUtilsService],
         declarations: [LocationsCreateComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
@@ -47,17 +48,22 @@ describe('LocationsCreateComponent', () => {
   it('should create an empty form', () => {
     component.ngOnInit();
 
-    const result = component.location.form.value;
+    const result = component.locationForm.value;
+
+    expect(result['schedule'].length).toEqual(7);
+
+    result['links'] = [];
+    result['schedule'] = [];
     expect(result).toEqual(emptyForm);
   });
 
   it('should show form errors true', () => {
     component.ngOnInit();
 
-    fillForm(component.location.form);
+    fillForm(component.locationForm);
 
-    component.location.form.get('category_id').setValue(null);
-    component.location.form.get('name').setValue(null);
+    component.locationForm.get('category_id').setValue(null);
+    component.locationForm.get('name').setValue(null);
 
     component.doSubmit();
 
@@ -68,14 +74,14 @@ describe('LocationsCreateComponent', () => {
     component.ngOnInit();
     const dispatchSpy = spyOn(component.store, 'dispatch');
 
-    fillForm(component.location.form);
+    fillForm(component.locationForm);
 
-    component.location.form.get('category_id').setValue(1);
-    component.location.form.get('name').setValue('Hello World!');
+    component.locationForm.get('category_id').setValue(1);
+    component.locationForm.get('name').setValue('Hello World!');
 
     component.doSubmit();
 
-    const expected = new fromStore.PostLocation(component.location.form.value);
+    const expected = new fromStore.PostLocation(component.locationForm.value);
 
     expect(component.store.dispatch).toHaveBeenCalled();
 

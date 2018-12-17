@@ -1,4 +1,4 @@
-import { ISchedule } from './schedule.interface';
+import { ILinks, ISchedule } from './schedule.interface';
 
 export interface ILocation {
   id?: number;
@@ -7,9 +7,7 @@ export interface ILocation {
 
   name: string;
 
-  phone: string;
-
-  label: string;
+  phone: number;
 
   email: string;
 
@@ -33,7 +31,7 @@ export interface ILocation {
 
   category_id: number;
 
-  schedule: ISchedule[];
+  links: ILinks[];
 
-  links: [{ url: string; label: string}];
+  schedule: ISchedule[];
 }

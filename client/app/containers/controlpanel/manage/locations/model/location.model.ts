@@ -1,12 +1,12 @@
 import { FormBuilder, Validators } from '@angular/forms';
 
+import { get as _get } from 'lodash';
+
 export class LocationModel {
   static form(location?) {
     const fb = new FormBuilder();
 
     const _location = {
-      url: this.setLinks(location.links),
-      label: this.setLinks(location.links),
       city: location ? location.city : null,
       name: location ? location.name : null,
       phone: location ? location.phone : null,
@@ -38,24 +38,18 @@ export class LocationModel {
       latitude: [_location.latitude, Validators.required],
       longitude: [_location.longitude, Validators.required],
       category_id: [_location.category_id, Validators.required],
-      links: fb.array([
-        fb.group({
-          url: [_location.url],
-          label: [_location.label]
-        })
-      ]),
+      links: fb.array([this.setLinks(location)]),
       schedule: fb.array([]),
     });
   }
 
-  static setLinks(links = []) {
-    if (links.length) {
-      return links.map((link) => {
-        return {
-          url: link.url ? link.url : '',
-          label: link.label ? link.label : ''
-        };
-      });
-    }
+  static setLinks(locations) {
+    const fb = new FormBuilder();
+    const links = _get(locations, 'links', null);
+
+    return fb.group({
+      url: [links ? links[0]['url'] : ''],
+      label: [links ? links[0]['label'] : ''],
+    });
   }
 }

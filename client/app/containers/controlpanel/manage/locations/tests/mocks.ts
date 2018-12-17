@@ -1,3 +1,8 @@
+export const mockTime = {
+  value: 1800,
+  label: '12:30 AM'
+};
+
 export const emptyForm = {
   city: null,
   name: null,
@@ -13,12 +18,7 @@ export const emptyForm = {
   description: null,
   postal_code: null,
   category_id: null,
-  links: [
-    {
-      url: null,
-      label: null
-    }
-  ],
+  links: [],
   schedule: []
 };
 
@@ -39,7 +39,7 @@ export const mockLocations = [
     address: 'Clifton Block #04',
     email: 'test@oohlalamobile.com',
     description: 'test description',
-    links: [{ url: null, label: null }],
+    links: [],
     schedule: []
   },
   {
@@ -58,7 +58,7 @@ export const mockLocations = [
     address: 'Clifton Block #04',
     email: 'test@oohlalamobile.com',
     description: 'test description',
-    links: [{ url: null, label: null }],
+    links: [],
     schedule: []
   }
 ];
