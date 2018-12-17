@@ -14,11 +14,11 @@ import { CPI18nService } from '@app/shared/services';
 import { LocationsUtilsService } from '../locations.utils';
 
 @Component({
-  selector: 'cp-locations-update',
-  templateUrl: './locations-update.component.html',
-  styleUrls: ['./locations-update.component.scss']
+  selector: 'cp-locations-edit',
+  templateUrl: './locations-edit.component.html',
+  styleUrls: ['./locations-edit.component.scss']
 })
-export class LocationsUpdateComponent extends BaseComponent implements OnInit {
+export class LocationsEditComponent extends BaseComponent implements OnInit {
   school;
   loading$;
   formErrors;

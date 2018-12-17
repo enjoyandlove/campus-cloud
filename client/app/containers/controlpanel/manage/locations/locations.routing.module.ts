@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { LocationExistsGuard } from './guards';
 import { LocationsListComponent } from './list';
+import { LocationsEditComponent } from './edit';
 import { LocationsCreateComponent } from './create';
-import { LocationsUpdateComponent } from './update';
 import { PrivilegesGuard } from '@app/config/guards';
 
 const appRoutes: Routes = [
@@ -23,7 +23,7 @@ const appRoutes: Routes = [
   {
     path: ':locationId/edit',
     canActivate: [PrivilegesGuard, LocationExistsGuard],
-    component: LocationsUpdateComponent,
+    component: LocationsEditComponent,
     data: { zendesk: 'locations' }
   }
 ];

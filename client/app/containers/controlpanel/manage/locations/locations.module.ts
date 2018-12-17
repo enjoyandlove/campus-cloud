@@ -6,8 +6,8 @@ import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
 import { LocationsListComponent } from './list';
+import { LocationsEditComponent } from './edit';
 import { LocationsDeleteComponent } from './delete';
-import { LocationsUpdateComponent } from './update';
 import { LocationsCreateComponent } from './create';
 import { LocationsListTopBarComponent } from './list/components';
 import { LocationFormComponent, LocationOpeningHoursFormComponent } from './components';
@@ -23,10 +23,10 @@ import { CustomSerializer } from '@app/store/base/router-state';
 
 @NgModule({
   declarations: [
-    LocationsListComponent,
     LocationFormComponent,
+    LocationsListComponent,
+    LocationsEditComponent,
     LocationsDeleteComponent,
-    LocationsUpdateComponent,
     LocationsCreateComponent,
     LocationsListTopBarComponent,
     LocationOpeningHoursFormComponent
@@ -43,8 +43,8 @@ import { CustomSerializer } from '@app/store/base/router-state';
   ],
 
   providers: [
-    LocationExistsGuard,
     LocationsService,
+    LocationExistsGuard,
     LocationsUtilsService,
     {
       provide: RouterStateSerializer, useClass: CustomSerializer
