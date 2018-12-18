@@ -5,6 +5,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
+import { LocationsInfoComponent } from './info';
 import { LocationsListComponent } from './list';
 import { LocationsEditComponent } from './edit';
 import { LocationsDeleteComponent } from './delete';
@@ -25,6 +26,7 @@ import { CustomSerializer } from '@app/store/base/router-state';
   declarations: [
     LocationFormComponent,
     LocationsListComponent,
+    LocationsInfoComponent,
     LocationsEditComponent,
     LocationsDeleteComponent,
     LocationsCreateComponent,

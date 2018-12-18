@@ -14,7 +14,7 @@ import { CPTrackingService, CPI18nService } from '@shared/services';
 import { LocationsListComponent } from './locations-list.component';
 import { ManageHeaderService } from '@containers/controlpanel/manage/utils';
 
-fdescribe('LocationsListComponent', () => {
+describe('LocationsListComponent', () => {
   configureTestSuite();
 
   beforeAll((done) =>

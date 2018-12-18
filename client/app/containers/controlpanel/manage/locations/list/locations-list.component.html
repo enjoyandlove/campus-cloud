@@ -41,7 +41,11 @@
               <img
                 class="rounded img-fit-cover float-left avatar"
                 [src]="location.image_url ? location.image_url : defaultImage">
-              <strong> {{ location.name }}</strong>
+              <strong>
+                <a [routerLink]="[location.id + '/info']">
+                  {{ location.name }}
+                </a>
+              </strong>
 
               <br>
               {{ location.address }}

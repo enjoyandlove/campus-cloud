@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { LocationExistsGuard } from './guards';
+import { LocationsInfoComponent } from './info';
 import { LocationsListComponent } from './list';
 import { LocationsEditComponent } from './edit';
 import { LocationsCreateComponent } from './create';
@@ -24,6 +25,12 @@ const appRoutes: Routes = [
     path: ':locationId/edit',
     canActivate: [PrivilegesGuard, LocationExistsGuard],
     component: LocationsEditComponent,
+    data: { zendesk: 'locations' }
+  },
+  {
+    path: ':locationId/info',
+    canActivate: [PrivilegesGuard, LocationExistsGuard],
+    component: LocationsInfoComponent,
     data: { zendesk: 'locations' }
   }
 ];
