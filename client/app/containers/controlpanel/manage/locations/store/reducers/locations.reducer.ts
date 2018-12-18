@@ -3,10 +3,12 @@ import * as fromLocations from '../actions';
 import { ILocation } from '../../model';
 
 export interface ILocationState {
-  error: boolean;
   loaded: boolean;
   loading: boolean;
+  editError: boolean;
   loadedAll: boolean;
+  getError: boolean;
+  postError: boolean;
   data: {
     [id: number]: {
       has_schedule: boolean,
@@ -17,10 +19,12 @@ export interface ILocationState {
 
 export const InitialState: ILocationState = {
   data: {},
-  error: false,
   loaded: false,
   loading: false,
-  loadedAll: false
+  getError: false,
+  editError: false,
+  loadedAll: false,
+  postError: false
 };
 
 export function reducer (state = InitialState, action: fromLocations.LocationsAction) {
@@ -52,18 +56,20 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       return  {
         ...state,
         data,
-        error: false,
         loaded: true,
         loading: false,
-        loadedAll: true
+        getError: false,
+        loadedAll: true,
+        postError: false,
+        editError: false
       };
     }
 
     case fromLocations.locationActions.GET_LOCATIONS_FAIL: {
       return {
         ...state,
-        error: true,
         loaded: false,
+        getError: true,
         loading: false,
         loadedAll: false
       };
@@ -90,27 +96,31 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       return  {
         ...state,
         data,
-        error: false,
         loaded: true,
-        loading: false
+        loading: false,
+        getError: false,
+        postError: false,
+        editError: false
       };
     }
 
     case fromLocations.locationActions.GET_LOCATION_BY_ID_FAIL: {
       return {
         ...state,
-        error: true,
         loaded: false,
-        loading: false
+        loading: false,
+        getError: true
       };
     }
 
     case fromLocations.locationActions.POST_LOCATION: {
       return {
         ...state,
-        error: false,
         loaded: true,
-        loading: true
+        loading: true,
+        getError: false,
+        postError: false,
+        editError: false
       };
     }
 
@@ -128,27 +138,29 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       return {
         ...state,
         data,
-        error: false,
         loaded: true,
-        loading: false
+        loading: false,
+        postError: false
       };
     }
 
     case fromLocations.locationActions.POST_LOCATION_FAIL: {
       return {
         ...state,
-        error: true,
         loaded: true,
-        loading: false
+        loading: false,
+        postError: true
       };
     }
 
     case fromLocations.locationActions.EDIT_LOCATION: {
       return {
         ...state,
-        error: false,
         loaded: true,
-        loading: false
+        loading: false,
+        getError: false,
+        postError: false,
+        editError: false
       };
     }
 
@@ -166,18 +178,18 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       return {
         ...state,
         data,
-        error: false,
         loaded: true,
-        loading: false
+        loading: false,
+        editError: false
       };
     }
 
     case fromLocations.locationActions.EDIT_LOCATION_FAIL: {
       return {
         ...state,
-        error: true,
         loaded: true,
         loading: false,
+        editError: true,
       };
     }
 
@@ -225,7 +237,9 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
 
 
 export const getLocations = (state: ILocationState) => state.data;
-export const getLocationsError = (state: ILocationState) => state.error;
 export const getLocationsLoaded = (state: ILocationState) => state.loaded;
+export const getLocationsError = (state: ILocationState) => state.getError;
 export const getLocationsLoading = (state: ILocationState) => state.loading;
 export const getLocationLoadedAll = (state: ILocationState) => state.loadedAll;
+export const getLocationsPostError = (state: ILocationState) => state.postError;
+export const getLocationsEditError = (state: ILocationState) => state.editError;

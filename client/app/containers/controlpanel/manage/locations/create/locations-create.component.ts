@@ -81,7 +81,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
   }
 
   setErrors() {
-    this.store.select(fromStore.getLocationsError)
+    this.store.select(fromStore.getLocationsPostError)
       .pipe(
         takeUntil(this.destroy$),
         filter((error) => error),

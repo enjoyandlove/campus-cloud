@@ -84,7 +84,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
   }
 
   setErrors() {
-    this.store.select(fromStore.getLocationsError)
+    this.store.select(fromStore.getLocationsEditError)
       .pipe(
         takeUntil(this.destroy$),
         filter((error) => error),

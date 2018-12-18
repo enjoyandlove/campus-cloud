@@ -27,6 +27,16 @@ export const getLocationsError = createSelector(
   fromLocations.getLocationsError
 );
 
+export const getLocationsPostError = createSelector(
+  getLocationState,
+  fromLocations.getLocationsPostError
+);
+
+export const getLocationsEditError = createSelector(
+  getLocationState,
+  fromLocations.getLocationsEditError
+);
+
 export const getLocationsLoading = createSelector(
   getLocationState,
   fromLocations.getLocationsLoading
