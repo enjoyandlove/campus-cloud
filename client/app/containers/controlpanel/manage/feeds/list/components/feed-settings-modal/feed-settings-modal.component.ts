@@ -11,6 +11,24 @@ import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
 import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
 
+const TYPE_STRINGS = {
+  [GroupType.orientation]: {
+    wallName: 'orientation_wall_name',
+    modalTitle: 'orientation_feeds_wall_settings_modal_title',
+    membersLabel: 't_orientation_everyone'
+  },
+  [GroupType.service]: {
+    wallName: 'services_label_name',
+    modalTitle: 't_services_wall_settings_modal_title',
+    membersLabel: 't_service_everyone'
+  },
+  default: {
+    wallName: 'feeds_wall_name',
+    modalTitle: 'feeds_wall_settings_modal_title',
+    membersLabel: 'feeds_everyone'
+  }
+};
+
 @Component({
   selector: 'cp-feed-settings-modal',
   templateUrl: './feed-settings-modal.component.html',
@@ -151,15 +169,13 @@ export class FeedSettingsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.wallName =
-      this.groupType === GroupType.orientation
-        ? this.cpI18n.translate('orientation_wall_name')
-        : this.cpI18n.translate('feeds_wall_name');
+    this.wallName = this.cpI18n.translate(
+      (TYPE_STRINGS[this.groupType] || TYPE_STRINGS.default).wallName
+    );
 
-    this.modalTitle =
-      this.groupType === GroupType.orientation
-        ? this.cpI18n.translate('orientation_feeds_wall_settings_modal_title')
-        : this.cpI18n.translate('feeds_wall_settings_modal_title');
+    this.modalTitle = this.cpI18n.translate(
+      (TYPE_STRINGS[this.groupType] || TYPE_STRINGS.default).modalTitle
+    );
 
     this.fetch();
     this.form = this.fb.group({
@@ -176,7 +192,9 @@ export class FeedSettingsComponent implements OnInit {
         action: 3
       },
       {
-        label: this.cpI18n.translate('feeds_everyone'),
+        label: this.cpI18n.translate(
+          (TYPE_STRINGS[this.groupType] || TYPE_STRINGS.default).membersLabel
+        ),
         action: 0
       }
     ];

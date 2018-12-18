@@ -2657,6 +2657,9 @@
   "t_personas_delete_error_last_persona": {
     "message": "A school must have at least one experience enabled."
   },
+  "t_personas_delete_error_persona_non_empty": {
+    "message": "Can not delete experienced as it's in used by other users."
+  },
   "t_personas_delete_error_users_associated": {
     "message": "This experience has users associated, so you cannot delete it."
   },
@@ -3103,6 +3106,9 @@
   },
   "t_shared_url": {
     "message": "URL"
+  },
+  "t_shared_visits": {
+    "message": "Visits"
   },
   "t_shared_web_checkin": {
     "message": "Web Check-In"
