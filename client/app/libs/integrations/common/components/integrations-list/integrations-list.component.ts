@@ -3,6 +3,7 @@ import { Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { SyncStatus } from './../../model';
+import { FORMAT } from '@client/app/shared/pipes';
 import { FeedIntegration } from './../../model/integration.model';
 
 @Component({
@@ -17,6 +18,8 @@ export class IntegrationsListComponent implements OnInit {
   @Output() deleteClick: EventEmitter<FeedIntegration> = new EventEmitter();
 
   notSynced = SyncStatus.notSynced;
+
+  dateFormat = FORMAT.DATETIME;
 
   constructor() {}
 
