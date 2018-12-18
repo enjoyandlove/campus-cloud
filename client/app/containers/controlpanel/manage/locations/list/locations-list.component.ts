@@ -53,7 +53,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     super();
   }
 
-  private fetch() {
+  public fetch() {
     const search = new HttpParams()
       .append('search_str', this.state.search_str)
       .append('sort_field', this.state.sort_field)

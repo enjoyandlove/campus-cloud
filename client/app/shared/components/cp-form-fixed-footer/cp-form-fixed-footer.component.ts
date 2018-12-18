@@ -11,10 +11,4 @@ export class CPFormFixedFooterComponent {
 
   @Output() submitClick: EventEmitter<null> = new EventEmitter();
   @Output() cancelClick: EventEmitter<null> = new EventEmitter();
-
-  buttonData;
-
-  onCancel() {
-    this.cancelClick.emit();
-  }
 }

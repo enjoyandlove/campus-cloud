@@ -3,6 +3,21 @@ export const mockTime = {
   label: '12:30 AM'
 };
 
+export const mockSchedule = [
+  {
+    day: 2,
+    items: [
+      {
+        url: '',
+        name: '',
+        description: '',
+        end_time: 18000,
+        start_time: 3600
+      }
+    ]
+  }
+];
+
 export const emptyForm = {
   city: null,
   name: null,

@@ -108,8 +108,8 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
       type: baseActions.SNACKBAR_SHOW,
       payload: {
         sticky: true,
-        class: 'danger',
         autoClose: true,
+        class: err ? 'danger' : 'info',
         body: err ? err : this.cpI18n.translate('error_fill_out_marked_fields')
       }
     });

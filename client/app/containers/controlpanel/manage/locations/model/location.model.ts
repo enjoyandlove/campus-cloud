@@ -1,9 +1,10 @@
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { get as _get } from 'lodash';
+import { ILocation } from './locations.interface';
 
 export class LocationModel {
-  static form(location?) {
+  static form(location?: ILocation) {
     const fb = new FormBuilder();
 
     const _location = {
