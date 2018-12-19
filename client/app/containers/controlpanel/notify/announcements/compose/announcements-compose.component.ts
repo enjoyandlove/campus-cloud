@@ -7,13 +7,13 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '@app/session';
 import { baseActions, IHeader } from '@app/store';
-import { NotifyUtilsService } from '../../notify.utils.service';
+import { CustomValidators } from '@shared/validators';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { CP_PRIVILEGES_MAP, STATUS } from '@shared/constants';
 import { AnnouncementsService } from '../announcements.service';
 import { AudienceType } from '../../../audience/audience.status';
-import { CP_PRIVILEGES_MAP, STATUS } from '@app/shared/constants';
-import { amplitudeEvents } from '@app/shared/constants/analytics';
-import { canSchoolReadResource } from '@app/shared/utils/privileges/privileges';
-import { IToolTipContent } from '@app/shared/components/cp-tooltip/cp-tooltip.interface';
+import { canSchoolReadResource } from '@shared/utils/privileges/privileges';
+import { IToolTipContent } from '@shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   CPI18nService,
   StoreService,
@@ -93,7 +93,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
-    public utils: NotifyUtilsService,
     public storeService: StoreService,
     public service: AnnouncementsService,
     public cpTracking: CPTrackingService
@@ -627,11 +626,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       filters: [[]],
       persona_id: [null],
       is_school_wide: true,
-      subject: [null, [Validators.required, Validators.maxLength(128)]],
-      message: [null, [Validators.required, Validators.maxLength(400)]],
+      subject: [null, [CustomValidators.textInputValidator, Validators.maxLength(128)]],
+      message: [null, [CustomValidators.textInputValidator, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
-    },
-      { validator: this.utils.trimWhiteSpaces });
+    });
 
     this.form.valueChanges.subscribe((_) => {
       this.validButton();

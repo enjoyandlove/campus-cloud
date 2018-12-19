@@ -14,8 +14,8 @@ import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { CPSession } from '@app/session';
+import { CustomValidators } from '@shared/validators';
 import { amplitudeEvents } from '@app/shared/constants';
-import { NotifyUtilsService } from '../../notify.utils.service';
 import { CP_PRIVILEGES_MAP, STATUS } from '@app/shared/constants';
 import { canSchoolWriteResource } from '@app/shared/utils/privileges';
 import { AnnouncementsService } from './../../announcements/announcements.service';
@@ -101,7 +101,6 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public utils: NotifyUtilsService,
     public storeService: StoreService,
     public cpTracking: CPTrackingService,
     public service: AnnouncementsService
@@ -565,12 +564,10 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
       user_ids: [[]],
       list_ids: [[]],
       is_school_wide: false,
-      subject: [null, [Validators.required, Validators.maxLength(128)]],
-      message: [null, [Validators.required, Validators.maxLength(400)]],
+      subject: [null, [CustomValidators.textInputValidator, Validators.maxLength(128)]],
+      message: [null, [CustomValidators.textInputValidator, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
-    },
-      { validator: this.utils.trimWhiteSpaces}
-      );
+    });
 
     this.form.valueChanges.subscribe((_) => {
       let isValid = true;
