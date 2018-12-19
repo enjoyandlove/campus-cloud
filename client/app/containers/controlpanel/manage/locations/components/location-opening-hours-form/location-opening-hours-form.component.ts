@@ -1,4 +1,4 @@
-import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormGroup } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 
 import { LocationsUtilsService } from '../../locations.utils';
@@ -14,10 +14,7 @@ export class LocationOpeningHoursFormComponent implements OnInit {
 
   locationTiming;
 
-  constructor(
-    public fb: FormBuilder,
-    public utils: LocationsUtilsService
-  ) {}
+  constructor() {}
 
   onTimeSelected(schedule, key, index) {
     const controls = <FormArray>this.locationForm.controls['schedule'];
@@ -36,7 +33,7 @@ export class LocationOpeningHoursFormComponent implements OnInit {
   }
 
   getDayLabel(day) {
-    return this.utils.getScheduleLabel(day);
+    return LocationsUtilsService.getScheduleLabel(day);
   }
 
   getSelectedTime(selectedTime) {
@@ -44,6 +41,6 @@ export class LocationOpeningHoursFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.locationTiming = this.utils.getLocationTiming();
+    this.locationTiming = LocationsUtilsService.getLocationTiming();
   }
 }

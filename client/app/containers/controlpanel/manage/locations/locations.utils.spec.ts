@@ -6,7 +6,6 @@ import { LocationsUtilsService } from './locations.utils';
 
 describe('LocationsUtils', () => {
   const fb = new FormBuilder();
-  const utils = new LocationsUtilsService();
 
   const schedule = fb.group({
     day: ScheduleDays.Monday,
@@ -22,14 +21,14 @@ describe('LocationsUtils', () => {
 
   it('should filter schedule controls if opening hours open', () => {
     const hasOpeningHours = true;
-    const filteredControls = utils.filteredScheduleControls(locationForm, hasOpeningHours);
+    const filteredControls = LocationsUtilsService.filteredScheduleControls(locationForm, hasOpeningHours);
 
     expect(filteredControls.length).toBe(1);
   });
 
   it('should filter schedule controls if opening hours close', () => {
     const hasOpeningHours = false;
-    const filteredControls = utils.filteredScheduleControls(locationForm, hasOpeningHours);
+    const filteredControls = LocationsUtilsService.filteredScheduleControls(locationForm, hasOpeningHours);
 
     expect(filteredControls).toEqual([]);
   });
@@ -39,7 +38,7 @@ describe('LocationsUtils', () => {
     // remove above first added control
     scheduleForm.removeAt(0);
 
-    utils.setScheduleFormControls(locationForm);
+    LocationsUtilsService.setScheduleFormControls(locationForm);
 
     const controls = <FormArray>locationForm.controls['schedule'];
 
@@ -53,7 +52,7 @@ describe('LocationsUtils', () => {
 
     scheduleForm.get('day').setValue(day);
 
-    utils.setItemControls(scheduleForm, mockSchedule, day);
+    LocationsUtilsService.setItemControls(scheduleForm, mockSchedule, day);
 
     const mockItems = mockSchedule[0]['items'][0];
 

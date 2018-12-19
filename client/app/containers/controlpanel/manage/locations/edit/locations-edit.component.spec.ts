@@ -12,7 +12,6 @@ import { fillForm, mockLocations } from '../tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
-import { LocationsUtilsService } from '../locations.utils';
 import { LocationsEditComponent } from './locations-edit.component';
 
 describe('LocationsEditComponent', () => {
@@ -22,7 +21,7 @@ describe('LocationsEditComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, LocationsUtilsService],
+        providers: [CPSession, CPI18nService],
         declarations: [LocationsEditComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

@@ -19,17 +19,14 @@ export class LocationsInfoComponent implements OnInit {
   location: ILocation;
   mapCenter: BehaviorSubject<any>;
 
-  constructor(
-    public utils: LocationsUtilsService,
-    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
-  ) {}
+  constructor(public store: Store<fromStore.ILocationsState | fromRoot.IHeader>) {}
 
   getDayLabel(day) {
-    return this.utils.getScheduleLabel(day);
+    return LocationsUtilsService.getScheduleLabel(day);
   }
 
   getTimeLabel(time) {
-    return this.utils.getLocationTiming().find((t) => t.value === time);
+    return LocationsUtilsService.getLocationTiming().find((t) => t.value === time);
   }
 
   buildHeader(location: ILocation) {

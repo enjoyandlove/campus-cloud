@@ -33,7 +33,7 @@ describe('LocationOpeningHoursFormComponent', () => {
     fixture = TestBed.createComponent(LocationOpeningHoursFormComponent);
     component = fixture.componentInstance;
     component.locationForm = LocationModel.form();
-    component.utils.setScheduleFormControls(component.locationForm);
+    LocationsUtilsService.setScheduleFormControls(component.locationForm);
 
     component.ngOnInit();
   });

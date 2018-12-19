@@ -7,11 +7,11 @@ import { ScheduleModel, scheduleLabels } from './model';
 export class LocationsUtilsService {
   constructor() {}
 
-  getScheduleLabel(day) {
+  static getScheduleLabel(day) {
     return scheduleLabels[day];
   }
 
-  filteredScheduleControls(form: FormGroup, hasOpeningHours) {
+  static filteredScheduleControls(form: FormGroup, hasOpeningHours) {
     const _schedule = [];
     const controls = <FormArray>form.controls['schedule'];
 
@@ -24,7 +24,7 @@ export class LocationsUtilsService {
     return _schedule;
   }
 
-  setScheduleFormControls(form: FormGroup, schedule = []) {
+  static setScheduleFormControls(form: FormGroup, schedule = []) {
     const days = Array.from(Array(7).keys());
     const controls = <FormArray>form.controls['schedule'];
 
@@ -42,23 +42,27 @@ export class LocationsUtilsService {
     });
   }
 
-  setItemControls(scheduleForm, schedule, day) {
+  static setItemControls(scheduleForm, schedule, day) {
     const controlItems = <FormArray>scheduleForm.controls['items'];
 
     schedule.forEach((openingHours) => {
-      if (openingHours.day === day) {
-        scheduleForm.get('is_checked').setValue(true);
-
-        openingHours.items.forEach((time) => {
-          controlItems.push(ScheduleModel.setItemControls(time));
-        });
-
-        controlItems.removeAt(0);
-      }
+      this.setOpeningHours(openingHours, controlItems, scheduleForm, day);
     });
   }
 
-  getLocationTiming() {
+  static setOpeningHours(openingHours, controlItems, scheduleForm, day) {
+    if (openingHours.day === day) {
+      scheduleForm.get('is_checked').setValue(true);
+
+      openingHours.items.forEach((time) => {
+        controlItems.push(ScheduleModel.setItemControls(time));
+      });
+
+      controlItems.removeAt(0);
+    }
+  }
+
+  static getLocationTiming() {
     return [
       {
         value: 1800,

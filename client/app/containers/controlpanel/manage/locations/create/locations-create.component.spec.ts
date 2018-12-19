@@ -11,7 +11,6 @@ import { CPI18nService } from '@shared/services';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
-import { LocationsUtilsService } from '../locations.utils';
 import { LocationsCreateComponent } from './locations-create.component';
 
 describe('LocationsCreateComponent', () => {
@@ -21,7 +20,7 @@ describe('LocationsCreateComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, LocationsUtilsService],
+        providers: [CPSession, CPI18nService],
         declarations: [LocationsCreateComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

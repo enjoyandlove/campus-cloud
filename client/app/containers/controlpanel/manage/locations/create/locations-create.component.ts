@@ -35,7 +35,6 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: LocationsService,
-    public utils: LocationsUtilsService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
   ) {}
 
@@ -47,13 +46,13 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
       this.formErrors = true;
       this.buttonDisabled = false;
 
-      this.handleError();
+      this.handleWarning();
 
       return;
     }
 
     const body = this.locationForm.value;
-    body['schedule'] = this.utils.filteredScheduleControls(this.locationForm, this.openingHours);
+    body['schedule'] = LocationsUtilsService.filteredScheduleControls(this.locationForm, this.openingHours);
 
     const school_id = this.session.g.get('school').id;
     const params = new HttpParams().append('school_id', school_id);
@@ -100,14 +99,30 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     this.router.navigate(['/manage/locations']);
   }
 
-  handleError(err?: string) {
+  handleError(body) {
+    const options = {
+      body,
+      class: 'danger'
+    };
+    this.dispatchSnackBar(options);
+  }
+
+  handleWarning() {
+    const options = {
+      class: 'warning',
+      body: this.cpI18n.translate('error_fill_out_marked_fields')
+    };
+
+    this.dispatchSnackBar(options);
+  }
+
+  dispatchSnackBar(options) {
     this.store.dispatch({
       type: baseActions.SNACKBAR_SHOW,
       payload: {
+        ...options,
         sticky: true,
-        autoClose: true,
-        class: err ? 'danger' : 'info',
-        body: err ? err : this.cpI18n.translate('error_fill_out_marked_fields')
+        autoClose: true
       }
     });
   }
@@ -118,7 +133,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     this.school = this.session.g.get('school');
 
     this.locationForm = LocationModel.form();
-    this.utils.setScheduleFormControls(this.locationForm);
+    LocationsUtilsService.setScheduleFormControls(this.locationForm);
     this.locationForm.get('latitude').setValue(this.school.latitude);
     this.locationForm.get('longitude').setValue(this.school.longitude);
   }
