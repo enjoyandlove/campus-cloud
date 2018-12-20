@@ -37,11 +37,11 @@ export class ScheduleModel {
     const fb = new FormBuilder();
 
     return fb.group({
-      url: [items ? items.url : null],
-      name: [items ? items.name : null],
+      url: [items ? items.url : ''],
+      name: [items ? items.name : ''],
       end_time: [items ? items.end_time : fivePM],
       start_time: [items ? items.start_time : nineAM],
-      description: [items ? items.description : null]
+      description: [items ? items.description : '']
     });
   }
 }

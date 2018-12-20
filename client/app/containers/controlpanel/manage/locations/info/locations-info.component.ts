@@ -26,7 +26,12 @@ export class LocationsInfoComponent implements OnInit {
   }
 
   getTimeLabel(time) {
-    return LocationsUtilsService.getLocationTiming().find((t) => t.value === time);
+    const openingHours =  LocationsUtilsService.getLocationTiming()
+      .find((t) => t.value === time);
+
+    if (openingHours) {
+      return openingHours.label;
+    }
   }
 
   buildHeader(location: ILocation) {
@@ -56,7 +61,7 @@ export class LocationsInfoComponent implements OnInit {
           this.resourceBanner = {
             heading: location.name,
             image: location.image_url,
-            subheading: 'Cafe'
+            subheading: location.category_name
           };
 
           this.mapCenter = new BehaviorSubject({
