@@ -45,13 +45,12 @@ export class LocationsUtilsService {
   static setItemControls(scheduleForm, schedule, day) {
     const controlItems = <FormArray>scheduleForm.controls['items'];
 
-    schedule.forEach((openingHours) => {
-      this.setOpeningHours(openingHours, controlItems, scheduleForm, day);
-    });
+    schedule
+      .filter((d) => d.day === day)
+      .map((openingHours) => this.setOpeningHours(openingHours, controlItems, scheduleForm));
   }
 
-  static setOpeningHours(openingHours, controlItems, scheduleForm, day) {
-    if (openingHours.day === day) {
+  static setOpeningHours(openingHours, controlItems, scheduleForm) {
       scheduleForm.get('is_checked').setValue(true);
 
       openingHours.items.forEach((time) => {
@@ -59,7 +58,6 @@ export class LocationsUtilsService {
       });
 
       controlItems.removeAt(0);
-    }
   }
 
   static getLocationTiming() {

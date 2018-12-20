@@ -1,10 +1,5 @@
 import { FormBuilder } from '@angular/forms';
 
-export enum ScheduleTime {
-  'nineAM' = 32400,
-  'fivePM' = 61200
-}
-
 export enum ScheduleDays {
   'Monday' = 1,
   'Tuesday' = 2,
@@ -37,14 +32,16 @@ export class ScheduleModel {
   }
 
   static setItemControls(items?) {
+    const nineAM = 32400;
+    const fivePM = 61200;
     const fb = new FormBuilder();
 
     return fb.group({
       url: [items ? items.url : null],
       name: [items ? items.name : null],
-      description: [items ? items.description : null],
-      end_time: [items ? items.end_time : ScheduleTime.fivePM],
-      start_time: [items ? items.start_time : ScheduleTime.nineAM]
+      end_time: [items ? items.end_time : fivePM],
+      start_time: [items ? items.start_time : nineAM],
+      description: [items ? items.description : null]
     });
   }
 }
