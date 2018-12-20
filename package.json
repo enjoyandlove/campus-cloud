@@ -7,14 +7,14 @@
   },
   "scripts": {
     "i18n": "phraseapp pull",
-    "production-usa": "node_modules/.bin/ng build --c=production_usa --deployUrl=/dist/ && rimraf dist && mv _dist dist",
-    "production-canada": "node_modules/.bin/ng build --c=production_canada --deployUrl=/dist/ && rimraf dist && mv _dist dist",
-    "production-sea": "node_modules/.bin/ng build --c=production_sea --deployUrl=/dist/ && rimraf dist && mv _dist dist",
+    "production-usa":
+      "node_modules/.bin/ng build --c=production_usa --deployUrl=/dist/ && rimraf dist && mv _dist dist",
+    "production-canada":
+      "node_modules/.bin/ng build --c=production_canada --deployUrl=/dist/ && rimraf dist && mv _dist dist",
     "staging": "ng build --c=staging --deployUrl=/dist/ && rimraf dist && mv _dist dist",
     "_posttest": "remap-istanbul -i coverage/json/coverage-final.json -o coverage/html -t html",
     "build:prod-usa": "yarn run production-usa",
     "build:prod-can": "yarn run production-canada",
-    "build:prod-sea": "yarn run production-sea",
     "build:staging": "yarn run staging",
     "e2e": "protractor",
     "e2e-live": "protractor --elementExplorer",
