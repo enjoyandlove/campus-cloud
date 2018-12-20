@@ -32,6 +32,12 @@ const appRoutes: Routes = [
     canActivate: [PrivilegesGuard, LocationExistsGuard],
     component: LocationsInfoComponent,
     data: { zendesk: 'locations' }
+  },
+  {
+    path: 'categories',
+    canActivate: [PrivilegesGuard],
+    data: { zendesk: 'categories' },
+    loadChildren: './categories/categories.module#CategoriesModule'
   }
 ];
 @NgModule({

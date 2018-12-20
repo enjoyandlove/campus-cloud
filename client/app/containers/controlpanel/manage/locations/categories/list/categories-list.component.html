@@ -1,0 +1,70 @@
+<div class="row">
+  <div class="col-12">
+    <cp-categories-action-box
+      (launchCreateModal)="onLaunchCreateModal()">
+    </cp-categories-action-box>
+  </div>
+</div>
+
+<div [ngSwitch]="loading$ | async">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      class="no-content"
+      *ngIf="!(categories$ | async)?.length"
+      [noContentText]="cpI18n.translate('t_shared_no_categories_found')">
+    </cp-no-content>
+
+    <div *ngIf="(categories$ | async)?.length">
+      <ul class="categories cp-form">
+        <li class="cp-form__header col-12">
+          <div class="row">
+            <span class="col-4">{{ 'name' | cpI18n }}</span>
+            <span class="col-2">{{ 't_shared_type' | cpI18n }}</span>
+            <span class="col-2">{{ 't_shared_icon' | cpI18n }}</span>
+            <span class="col-2">{{ 't_shared_default' | cpI18n }}</span>
+            <span class="col-2"></span>
+          </div>
+        </li>
+
+        <li
+          class="cp-form__item col-12"
+          *ngFor="let category of categories$ | async">
+          <div class="row">
+            <span
+              class="col-4 hover text-truncate"
+              [attr.title]="category.name"
+              (click)="editClick.emit(category)">
+              {{ category.name }}
+            </span>
+            <span class="col-2">
+              {{ category.category_type }}
+            </span>
+            <span class="col-2">
+              {{ category.image_url }}
+            </span>
+            <span class="col-2">
+              {{ category.is_default }}
+            </span>
+            <span class="col-2 text-right">
+              <span
+                class="hover delete-category"
+                (click)="deleteClick.emit(category)">
+                 &times;
+              </span>
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      <cp-pagination
+        [pageNext]="pageNext"
+        [pagePrev]="pagePrev"
+        [pageNumber]="pageNumber"
+        (next)="onPaginationNext()"
+        (previous)="onPaginationPrevious()">
+      </cp-pagination>
+    </div>
+  </div>
+</div>
