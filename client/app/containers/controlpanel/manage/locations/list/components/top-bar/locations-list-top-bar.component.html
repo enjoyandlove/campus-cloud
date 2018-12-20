@@ -3,13 +3,19 @@
     <div class="col-3 float-left">
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
-    <div class="col-3 float-right">
+    <div class="col-6 float-right">
       <a
         cpTracker
         [eventData]="eventData"
         [routerLink]="['create']"
         class="cpbtn cpbtn--primary float-right">
         {{ 'locations_btn_create' | cpI18n }}
+      </a>
+
+      <a
+        [routerLink]="['']"
+        class="cpbtn cpbtn--cancel float-right margin-right">
+        {{ 't_locations_manage_categories' | cpI18n }}
       </a>
     </div>
   </div>

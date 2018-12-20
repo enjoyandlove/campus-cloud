@@ -5,7 +5,7 @@ import { StoreModule } from '@ngrx/store';
 
 import { BaseStoreModule } from './base';
 import { ManageStoreModule } from './manage';
-import { routerReducers } from '@containers/controlpanel/manage/locations/store';
+import { routerReducers } from '@app/store/base/router-state';
 
 @NgModule({
   imports: [

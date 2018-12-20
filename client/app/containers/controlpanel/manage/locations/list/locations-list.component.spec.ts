@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
@@ -9,7 +10,6 @@ import { CPSession } from '@app/session';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
-import { HttpClientModule } from '@angular/common/http';
 import { CPTrackingService, CPI18nService } from '@shared/services';
 import { LocationsListComponent } from './locations-list.component';
 import { ManageHeaderService } from '@containers/controlpanel/manage/utils';
@@ -34,12 +34,14 @@ describe('LocationsListComponent', () => {
 
   let fixture: ComponentFixture<LocationsListComponent>;
   let component: LocationsListComponent;
+  let fetchSpy: jasmine.Spy;
   let dispatchSpy: jasmine.Spy;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LocationsListComponent);
     component = fixture.componentInstance;
     component.session.g.set('school', mockSchool);
+    fetchSpy = spyOn(component, 'fetch');
     dispatchSpy = spyOn(component.store, 'dispatch');
   });
 
@@ -49,11 +51,17 @@ describe('LocationsListComponent', () => {
 
   it('should search string', () => {
     component.onSearch('hello world');
+
+    expect(fetchSpy).toHaveBeenCalled();
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
     expect(component.state.search_str).toEqual('hello world');
   });
 
   it('should sort by name', () => {
     component.doSort('name');
+
+    expect(fetchSpy).toHaveBeenCalled();
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
     expect(component.state.sort_field).toEqual('name');
   });
 

@@ -2,7 +2,7 @@ import { createSelector } from '@ngrx/store';
 
 import * as fromFeature from '../reducers';
 import { getFeatureState } from './feature.selector';
-import { ILocation } from '../../locations.interface';
+import { getRouterState } from '@app/store/base/router-state';
 import * as fromLocations from '../reducers/locations.reducer';
 
 export const getLocationState = createSelector(
@@ -10,14 +10,31 @@ export const getLocationState = createSelector(
   (state: fromFeature.ILocationsState) => state.locations
 );
 
-export const getLocations = createSelector(
+export const getLocationsData = createSelector(
   getLocationState,
   fromLocations.getLocations
+);
+
+export const getLocations = createSelector(
+  getLocationsData,
+  (data) => {
+    return Object.keys(data).map((id) => data[id]['data']);
+  }
 );
 
 export const getLocationsError = createSelector(
   getLocationState,
   fromLocations.getLocationsError
+);
+
+export const getLocationsPostError = createSelector(
+  getLocationState,
+  fromLocations.getLocationsPostError
+);
+
+export const getLocationsEditError = createSelector(
+  getLocationState,
+  fromLocations.getLocationsEditError
 );
 
 export const getLocationsLoading = createSelector(
@@ -30,12 +47,24 @@ export const getLocationsLoaded = createSelector(
   fromLocations.getLocationsLoaded
 );
 
+export const getLocationsById = createSelector(
+  getLocationState,
+  fromLocations.getLocations
+);
+
+export const getLocationLoadedAll = createSelector(
+  getLocationState,
+  fromLocations.getLocationLoadedAll
+);
+
 export const getSelectedLocation = createSelector(
-  getLocations,
-  fromFeature.getRouterState,
-  (locations, router): ILocation => {
+  getLocationsData,
+  getRouterState,
+  (locations, router) => {
     const locationId = parseInt(router.state.params.locationId, 10);
 
-    return locations.filter((location: ILocation) => location.id === locationId)[0];
+    if (locations[locationId]) {
+      return locations[locationId]['data'];
+    }
   }
 );
