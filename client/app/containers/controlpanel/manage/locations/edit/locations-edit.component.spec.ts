@@ -7,8 +7,9 @@ import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
+import { fillForm } from '@shared/utils/tests';
 import { CPI18nService } from '@shared/services';
-import { fillForm, mockLocations } from '../tests';
+import { mockLocations, filledForm } from '../tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
@@ -50,7 +51,7 @@ describe('LocationsEditComponent', () => {
   it('should populate form with values', () => {
     component.ngOnInit();
 
-    fillForm(component.locationForm);
+    fillForm(component.locationForm, filledForm);
 
     const result = component.locationForm.value;
     result['id'] = 123;
@@ -65,7 +66,7 @@ describe('LocationsEditComponent', () => {
   it('should show form errors true', () => {
     component.ngOnInit();
 
-    fillForm(component.locationForm);
+    fillForm(component.locationForm, filledForm);
 
     component.locationForm.get('category_id').setValue(null);
     component.locationForm.get('name').setValue(null);
@@ -79,7 +80,7 @@ describe('LocationsEditComponent', () => {
     component.ngOnInit();
     const dispatchSpy = spyOn(component.store, 'dispatch');
 
-    fillForm(component.locationForm);
+    fillForm(component.locationForm, filledForm);
 
     component.doSubmit();
 

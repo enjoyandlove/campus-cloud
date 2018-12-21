@@ -4,6 +4,11 @@
 
 .delete-event {
   font-size: 2em;
+
+  &.disabled {
+    cursor: not-allowed;
+    color: $color-light-grey;
+  }
 }
 
 .cp-form__header {

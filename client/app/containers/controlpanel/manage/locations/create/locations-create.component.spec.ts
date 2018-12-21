@@ -6,7 +6,8 @@ import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
-import { emptyForm, fillForm } from '../tests';
+import { fillForm } from '@shared/utils/tests';
+import { emptyForm, filledForm } from '../tests';
 import { CPI18nService } from '@shared/services';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
@@ -59,7 +60,7 @@ describe('LocationsCreateComponent', () => {
   it('should show form errors true', () => {
     component.ngOnInit();
 
-    fillForm(component.locationForm);
+    fillForm(component.locationForm, filledForm);
 
     component.locationForm.get('category_id').setValue(null);
     component.locationForm.get('name').setValue(null);
@@ -73,7 +74,7 @@ describe('LocationsCreateComponent', () => {
     component.ngOnInit();
     const dispatchSpy = spyOn(component.store, 'dispatch');
 
-    fillForm(component.locationForm);
+    fillForm(component.locationForm, filledForm);
 
     component.locationForm.get('category_id').setValue(1);
     component.locationForm.get('name').setValue('Hello World!');

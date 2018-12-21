@@ -1,6 +1,4 @@
-import { FormGroup } from '@angular/forms';
-
-const filledForm = {
+export const filledForm = {
   phone: 125488,
   category_id: 1,
   city: 'Karachi',
@@ -15,14 +13,4 @@ const filledForm = {
   address: 'Clifton Block #04',
   description: 'test description',
   email: 'test@oohlalamobile.com'
-};
-
-export const fillForm = (form: FormGroup) => {
-  for (const key in filledForm) {
-    if (filledForm[key]) {
-      form.get(key).setValue(filledForm[key]);
-    }
-  }
-
-  return form;
 };

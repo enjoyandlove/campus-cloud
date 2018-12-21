@@ -21,11 +21,6 @@ export const isCanada = environment.envName === 'production_canada';
 export const isUsa = environment.envName === 'production_usa';
 
 /**
- * SEA prod only
- */
-export const isSea = environment.envName === 'production_sea';
-
-/**
  * DEV
  */
 export const isDev = environment.envName === 'development';
