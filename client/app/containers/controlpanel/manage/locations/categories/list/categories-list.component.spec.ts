@@ -13,7 +13,7 @@ import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
 import { CategoriesListComponent } from './categories-list.component';
 
-fdescribe('CategoriesListComponent', () => {
+describe('CategoriesListComponent', () => {
   configureTestSuite();
 
   beforeAll((done) =>

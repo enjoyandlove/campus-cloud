@@ -29,10 +29,10 @@ export function reducer (state = InitialState, action: fromLocations.Actions) {
     case fromLocations.CategoriesActions.GET_CATEGORIES_SUCCESS: {
       return  {
         ...state,
-        data: [...action.payload],
         loaded: true,
         loading: false,
-        getError: false
+        getError: false,
+        data: [...action.payload]
       };
     }
 
