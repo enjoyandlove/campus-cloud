@@ -1,4 +1,4 @@
-import { takeUntil, map, filter, tap, take } from 'rxjs/operators';
+import { takeUntil, filter, tap, take } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
@@ -7,9 +7,9 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
-import { BaseComponent } from '@app/base';
 import { CPI18nService } from '@shared/services';
 import { ICategory } from '../categories.interface';
+import { isDefault, Locale } from '../categories.status';
 
 interface IState {
   search_str: string;
@@ -28,7 +28,9 @@ const state: IState = {
   templateUrl: './categories-list.component.html',
   styleUrls: ['./categories-list.component.scss']
 })
-export class CategoriesListComponent extends BaseComponent implements OnInit, OnDestroy {
+export class CategoriesListComponent implements OnInit, OnDestroy {
+  editCategory = '';
+  deleteCategory = '';
   state: IState = state;
   showCreateModal = false;
   loading$: Observable<boolean>;
@@ -40,18 +42,23 @@ export class CategoriesListComponent extends BaseComponent implements OnInit, On
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<fromStore.ICategoriesState | fromRoot.IHeader | fromRoot.ISnackbar>
-  ) {
-    super();
-  }
+  ) {}
 
-  onPaginationNext() {
-    super.goToNext();
+  onSearch(search_str) {
+    this.state = {
+      ...this.state,
+      search_str
+    };
 
     this.fetch();
   }
 
-  onPaginationPrevious() {
-    super.goToPrevious();
+  doSort(sort_field) {
+    this.state = {
+      ...this.state,
+      sort_field: sort_field,
+      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
+    };
 
     this.fetch();
   }
@@ -62,19 +69,22 @@ export class CategoriesListComponent extends BaseComponent implements OnInit, On
     setTimeout(() => $('#categoriesCreate').modal());
   }
 
+  isDefault(val) {
+    return this.cpI18n.translate(isDefault[val]);
+  }
+
   fetch() {
+    const locale = CPI18nService.getLocale().startsWith('fr')
+      ? Locale.fr : Locale.eng;
+
     const params = new HttpParams()
+      .append('locale', locale)
       .append('search_str', this.state.search_str)
       .append('sort_field', this.state.sort_field)
       .append('sort_direction', this.state.sort_direction)
       .append('school_id', this.session.g.get('school').id);
 
-    const payload = {
-      params,
-      endRange: this.endRange,
-      startRange: this.startRange
-    };
-    this.store.dispatch(new fromStore.GetCategories(payload));
+    this.store.dispatch(new fromStore.GetCategories({ params }));
   }
 
   updateHeader() {
@@ -106,13 +116,7 @@ export class CategoriesListComponent extends BaseComponent implements OnInit, On
       )
       .subscribe();
 
-    this.categories$ = this.store.select(fromStore.getCategories).pipe(
-      map((categories: ICategory[]) => {
-        const responseCopy = [...categories];
-
-        return super.updatePagination(responseCopy);
-      })
-    );
+    this.categories$ = this.store.select(fromStore.getCategories);
   }
 
   listenForErrors() {

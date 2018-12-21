@@ -5,13 +5,32 @@
   @include card-margin();
 }
 
-.delete-category {
-  top: -5px;
-  font-size: 2em;
-  position: relative;
-}
-
-.categories {
+.cp-form {
   padding: 0;
   list-style: none;
+
+  &__item {
+    .height {
+      height: 18px;
+    }
+
+    .margin-right {
+      margin-right: 5px;
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .delete-category {
+      top: -5px;
+      font-size: 2em;
+      position: relative;
+    }
+
+    span i.action-button {
+      color: $color-secondary-text;
+    }
+  }
 }

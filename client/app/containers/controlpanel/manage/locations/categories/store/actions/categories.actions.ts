@@ -12,7 +12,7 @@ export enum CategoriesActions {
 export class GetCategories implements Action {
   readonly type = CategoriesActions.GET_CATEGORIES;
 
-  constructor(public payload: { startRange: number; endRange: number; params: HttpParams }) {}
+  constructor(public payload: { params: HttpParams }) {}
 }
 
 export class GetCategoriesSuccess implements Action {

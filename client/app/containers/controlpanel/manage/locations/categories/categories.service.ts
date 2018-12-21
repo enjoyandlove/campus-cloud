@@ -13,10 +13,9 @@ export class CategoriesService extends HTTPService {
     Object.setPrototypeOf(this, CategoriesService.prototype);
   }
 
-  getCategories(startRange: number, endRange: number, search: HttpParams) {
+  getCategories(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.LOCATIONS_CATEGORIES
-      }/${startRange};${endRange}`;
+      API.ENDPOINTS.LOCATIONS_CATEGORIES}/`;
 
     return super.get(url, search);
   }

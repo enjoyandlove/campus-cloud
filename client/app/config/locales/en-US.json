@@ -2594,6 +2594,9 @@
   "t_latitude": {
     "message": "Latitude"
   },
+  "t_locations_category_create_category": {
+    "message": "Create Category"
+  },
   "t_locations_create_location": {
     "message": "Create Location"
   },
@@ -3065,6 +3068,9 @@
   "t_shared_monday": {
     "message": "Monday"
   },
+  "t_shared_no": {
+    "message": "No"
+  },
   "t_shared_no_categories_found": {
     "message": "No Category Found"
   },
@@ -3130,6 +3136,9 @@
   },
   "t_shared_wrong_dimensions": {
     "message": "Must be JPG or PNG, 720*400px, smaller than 300KB "
+  },
+  "t_shared_yes": {
+    "message": "Yes"
   },
   "t_students_profile_students": {
     "message": "Students"

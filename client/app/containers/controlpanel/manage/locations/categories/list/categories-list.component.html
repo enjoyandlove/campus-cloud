@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-12">
     <cp-categories-action-box
+      (search)="onSearch($event)"
       (launchCreateModal)="onLaunchCreateModal()">
     </cp-categories-action-box>
   </div>
@@ -20,51 +21,56 @@
       <ul class="categories cp-form">
         <li class="cp-form__header col-12">
           <div class="row">
-            <span class="col-4">{{ 'name' | cpI18n }}</span>
-            <span class="col-2">{{ 't_shared_type' | cpI18n }}</span>
+            <cp-sorting-header
+              class="col-4"
+              sortLabel="name"
+              (click)="doSort('name')"
+              [label]="'name' | cpI18n"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction">
+            </cp-sorting-header>
+            <span class="col-3">{{ 't_shared_type' | cpI18n }}</span>
             <span class="col-2">{{ 't_shared_icon' | cpI18n }}</span>
             <span class="col-2">{{ 't_shared_default' | cpI18n }}</span>
-            <span class="col-2"></span>
+            <span class="col-1"></span>
           </div>
         </li>
 
         <li
           class="cp-form__item col-12"
           *ngFor="let category of categories$ | async">
-          <div class="row">
+          <div class="row height">
             <span
-              class="col-4 hover text-truncate"
-              [attr.title]="category.name"
-              (click)="editClick.emit(category)">
+              class="col-4 text-truncate"
+              [attr.title]="category.name">
               {{ category.name }}
             </span>
-            <span class="col-2">
-              {{ category.category_type }}
+            <span class="col-3">
+              {{ category.category_type_name }}
             </span>
             <span class="col-2">
-              {{ category.image_url }}
+              <img
+                class="icon"
+                *ngIf="category.image_url"
+                [src]="category.image_url">
             </span>
             <span class="col-2">
-              {{ category.is_default }}
+              {{ isDefault(category.is_default) }}
             </span>
-            <span class="col-2 text-right">
-              <span
-                class="hover delete-category"
-                (click)="deleteClick.emit(category)">
-                 &times;
-              </span>
+            <span class="col-1 text-right">
+              <span *ngIf="!category.is_default">
+              <i
+                (click)="editCategory = category;"
+                class="material-icons hover action-button margin-right">edit</i>
+              <i
+                (click)="deleteCategory = category;"
+                data-toggle="modal" data-target="#categoryDelete"
+                class="material-icons hover action-button">close</i>
+            </span>
             </span>
           </div>
         </li>
       </ul>
-
-      <cp-pagination
-        [pageNext]="pageNext"
-        [pagePrev]="pagePrev"
-        [pageNumber]="pageNumber"
-        (next)="onPaginationNext()"
-        (previous)="onPaginationPrevious()">
-      </cp-pagination>
     </div>
   </div>
 </div>

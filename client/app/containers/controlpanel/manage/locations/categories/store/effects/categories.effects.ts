@@ -19,9 +19,9 @@ export class CategoriesEffects {
     = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.GET_CATEGORIES),
     mergeMap((action: fromActions.GetCategories) => {
-      const { startRange, endRange, params } = action.payload;
+      const { params } = action.payload;
 
-      return this.service.getCategories(startRange, endRange, params )
+      return this.service.getCategories(params)
         .pipe(
           map((data: ICategory[]) => new fromActions.GetCategoriesSuccess(data)),
           catchError((error) => of(new fromActions.GetCategoriesFail(error)))
