@@ -87,12 +87,6 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     type: null
   };
 
-  resetFormValues = {
-    name: '',
-    subject: '',
-    message: ''
-  };
-
   amplitudeEventProperties = {
     host_type: null,
     sub_menu_name: null,
@@ -242,11 +236,11 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   }
 
   resetModal() {
+    this.form.reset();
     this.isError = false;
     this.shouldConfirm = false;
     this.state.isCampusWide = false;
     this.resetCustomFields$.next(true);
-    this.form.reset(this.resetFormValues);
 
     this.subject_prefix = {
       label: null,
@@ -568,8 +562,8 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
       user_ids: [[]],
       list_ids: [[]],
       is_school_wide: false,
-      subject: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
-      message: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
+      subject: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
+      message: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
     });
 
