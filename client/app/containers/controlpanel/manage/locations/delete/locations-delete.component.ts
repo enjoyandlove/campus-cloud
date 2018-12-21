@@ -2,10 +2,10 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
+import { ILocation } from '../model';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
-import { ILocation } from '../locations.interface';
 import { CPTrackingService } from '@shared/services';
 import { amplitudeEvents } from '@shared/constants/analytics';
 

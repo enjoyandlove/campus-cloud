@@ -6,7 +6,8 @@ import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
-import { emptyForm, fillForm } from '../tests';
+import { fillForm } from '@shared/utils/tests';
+import { emptyForm, filledForm } from '../tests';
 import { CPI18nService } from '@shared/services';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
@@ -47,19 +48,40 @@ describe('LocationsCreateComponent', () => {
   it('should create an empty form', () => {
     component.ngOnInit();
 
-    const result = component.form.value;
+    const result = component.locationForm.value;
+
+    expect(result['schedule'].length).toEqual(7);
+
+    result['links'] = [];
+    result['schedule'] = [];
     expect(result).toEqual(emptyForm);
+  });
+
+  it('should show form errors true', () => {
+    component.ngOnInit();
+
+    fillForm(component.locationForm, filledForm);
+
+    component.locationForm.get('category_id').setValue(null);
+    component.locationForm.get('name').setValue(null);
+
+    component.doSubmit();
+
+    expect(component.formErrors).toBe(true);
   });
 
   it('should dispatch PostLocation action', () => {
     component.ngOnInit();
     const dispatchSpy = spyOn(component.store, 'dispatch');
 
-    fillForm(component.form);
+    fillForm(component.locationForm, filledForm);
+
+    component.locationForm.get('category_id').setValue(1);
+    component.locationForm.get('name').setValue('Hello World!');
 
     component.doSubmit();
 
-    const expected = new fromStore.PostLocation(component.form.value);
+    const expected = new fromStore.PostLocation(component.locationForm.value);
 
     expect(component.store.dispatch).toHaveBeenCalled();
 

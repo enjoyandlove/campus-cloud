@@ -1,91 +1,59 @@
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { OnInit, Component } from '@angular/core';
+import { OnInit, Component, OnDestroy } from '@angular/core';
+import { filter, takeUntil, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
-import { CPMap } from '@shared/utils';
 import * as fromRoot from '@app/store';
-import { CPI18nService } from '@shared/services';
+import { LocationModel } from '../model';
+import { baseActions } from '@app/store/base';
 import { CPSession, ISchool } from '@app/session';
+import { CPI18nService } from '@app/shared/services';
+import { LocationsService } from '../locations.service';
+import { LocationsUtilsService } from '../locations.utils';
 
 @Component({
   selector: 'cp-locations-create',
   templateUrl: './locations-create.component.html',
   styleUrls: ['./locations-create.component.scss']
 })
-export class LocationsCreateComponent implements OnInit {
-  buttonData;
-  form: FormGroup;
+export class LocationsCreateComponent implements OnInit, OnDestroy {
+  formErrors;
+  errorMessage;
   school: ISchool;
-  openingHours = false;
-  mapCenter: BehaviorSubject<any>;
-  newAddress = new BehaviorSubject(null);
+  openingHours = true;
+  buttonDisabled = false;
+  locationForm: FormGroup;
 
-  eventProperties = {
-    acronym: null,
-    location_id: null
-  };
+  private destroy$ = new Subject();
 
   constructor(
-    private fb: FormBuilder,
+    public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public service: LocationsService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
   ) {}
 
-  onResetMap() {
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
-    this.centerMap(this.school.latitude, this.school.longitude);
-  }
-
-  onMapSelection(data) {
-    const cpMap = CPMap.getBaseMapObject(data);
-
-    const location = { ...cpMap, address: data.formatted_address };
-
-    CPMap.setFormLocationData(this.form, location);
-
-    this.newAddress.next(this.form.controls['address'].value);
-  }
-
-  updateWithUserLocation(location) {
-    location = Object.assign({}, location, { location: location.name });
-
-    CPMap.setFormLocationData(this.form, location);
-
-    this.centerMap(location.latitude, location.longitude);
-  }
-
-  onPlaceChange(data) {
-    if (!data) {
-      return;
-    }
-
-    if ('fromUsersLocations' in data) {
-      this.updateWithUserLocation(data);
-
-      return;
-    }
-
-    const cpMap = CPMap.getBaseMapObject(data);
-
-    const location = { ...cpMap, address: data.name };
-
-    const coords: google.maps.LatLngLiteral = data.geometry.location.toJSON();
-
-    CPMap.setFormLocationData(this.form, location);
-
-    this.centerMap(coords.lat, coords.lng);
-  }
-
-  centerMap(lat: number, lng: number) {
-    return this.mapCenter.next({ lat, lng });
-  }
-
   doSubmit() {
-    const body = this.form.value;
+    this.formErrors = false;
+    this.buttonDisabled = true;
+
+    if (!this.locationForm.valid) {
+      this.formErrors = true;
+      this.buttonDisabled = false;
+
+      this.handleWarning();
+
+      return;
+    }
+
+    const body = this.locationForm.value;
+    body['schedule'] = LocationsUtilsService.filteredScheduleControls(this.locationForm, this.openingHours);
+
     const school_id = this.session.g.get('school').id;
     const params = new HttpParams().append('school_id', school_id);
 
@@ -111,29 +79,68 @@ export class LocationsCreateComponent implements OnInit {
     });
   }
 
+  setErrors() {
+    this.store.select(fromStore.getLocationsPostError)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((error) => error),
+        tap(() => {
+          this.formErrors = true;
+          this.buttonDisabled = false;
+          const errorMessage = this.cpI18n.translate('something_went_wrong');
+
+          this.handleError(errorMessage);
+        })
+      )
+      .subscribe();
+  }
+
+  onCancel() {
+    this.router.navigate(['/manage/locations']);
+  }
+
+  handleError(body) {
+    const options = {
+      body,
+      class: 'danger'
+    };
+    this.dispatchSnackBar(options);
+  }
+
+  handleWarning() {
+    const options = {
+      class: 'warning',
+      body: this.cpI18n.translate('error_fill_out_marked_fields')
+    };
+
+    this.dispatchSnackBar(options);
+  }
+
+  dispatchSnackBar(options) {
+    this.store.dispatch({
+      type: baseActions.SNACKBAR_SHOW,
+      payload: {
+        ...options,
+        sticky: true,
+        autoClose: true
+      }
+    });
+  }
+
   ngOnInit() {
+    this.setErrors();
     this.buildHeader();
     this.school = this.session.g.get('school');
-    this.mapCenter = new BehaviorSubject({
-      lat: this.school.latitude,
-      lng: this.school.longitude
-    });
 
-    this.form = this.fb.group({
-      city: [null],
-      country: [null],
-      province: [null],
-      postal_code: [null],
-      name: [null, Validators.required],
-      address: [null, Validators.required],
-      latitude: [this.school.latitude, Validators.required],
-      short_name: [null, Validators.maxLength(32)],
-      longitude: [this.school.longitude, Validators.required]
-    });
+    this.locationForm = LocationModel.form();
+    LocationsUtilsService.setScheduleFormControls(this.locationForm);
+    this.locationForm.get('latitude').setValue(this.school.latitude);
+    this.locationForm.get('longitude').setValue(this.school.longitude);
+  }
 
-    this.buttonData = {
-      class: 'primary',
-      text: this.cpI18n.translate('save')
-    };
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 }

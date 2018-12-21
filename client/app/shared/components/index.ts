@@ -41,5 +41,6 @@ export * from './cp-sorting-header';
 export * from './cp-check-dropdown';
 export * from './cp-resource-banner';
 export * from './cp-small-datepicker';
+export * from './cp-form-fixed-footer';
 export * from './cp-place-autocomplete';
 export * from './cp-dropdown-multiselect';

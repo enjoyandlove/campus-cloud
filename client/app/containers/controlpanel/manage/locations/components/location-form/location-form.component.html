@@ -1,0 +1,126 @@
+<form [formGroup]="locationForm">
+  <div class="row form-group">
+    <div class="col-12">
+      <label>{{ 'category' | cpI18n }}</label>
+      <cp-dropdown
+        [items]="categories"
+        (selected)="onSelectedCategory($event)"
+        [isRequiredError]="formErrors && requiredControls.category.invalid">
+      </cp-dropdown>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>{{ 'name' | cpI18n }}</label>
+    <input
+      type="text"
+      class="form-control"
+      formControlName="name"
+      [class.error]="formErrors && requiredControls.name.invalid">
+  </div>
+
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 'locations_label_acronym' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="short_name">
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <label>{{ 't_locations_photo' | cpI18n }}</label>
+      <cp-image-upload
+        class="col-12"
+        (uploaded)="onUploadedImage($event)"
+        [defaultImage]="locationForm.controls['image_url'].value">
+      </cp-image-upload>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-12">
+      <label>{{ 'address' | cpI18n }}</label>
+      <cp-place-autocomplete
+        disableLocations
+        [newAddress]="newAddress"
+        (backToDefault)="onResetMap()"
+        (placeChange)="onPlaceChange($event)"
+        [defaultValue]="locationForm.get('address').value">
+      </cp-place-autocomplete>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 't_latitude' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="latitude"
+        [class.error]="formErrors && requiredControls.latitude.invalid">
+    </div>
+
+    <div class="col-6">
+      <label>{{ 't_longitude' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="longitude"
+        [class.error]="formErrors && requiredControls.longitude.invalid">
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-12">
+      <cp-maps
+        class="map"
+        [center]="mapCenter"
+        (mapSelection)="onMapSelection($event)">
+      </cp-maps>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>{{ 'description' | cpI18n }}</label>
+    <textarea formControlName="description"></textarea>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 'phone' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="phone">
+    </div>
+
+    <div class="col-6">
+      <label>{{ 'email' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="email">
+    </div>
+  </div>
+
+  <div class="row form-group" formArrayName="links">
+    <div class="col-6" [formGroupName]="0">
+      <label>{{ 't_locations_link_label' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="label">
+    </div>
+
+    <div class="col-6" [formGroupName]="0">
+      <label>{{ 't_locations_link' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="url">
+    </div>
+  </div>
+</form>

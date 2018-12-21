@@ -5,26 +5,33 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
+import { LocationsInfoComponent } from './info';
 import { LocationsListComponent } from './list';
+import { LocationsEditComponent } from './edit';
 import { LocationsDeleteComponent } from './delete';
-import { LocationsUpdateComponent } from './update';
 import { LocationsCreateComponent } from './create';
 import { LocationsListTopBarComponent } from './list/components';
+import { LocationFormComponent, LocationOpeningHoursFormComponent } from './components';
 
 import { LocationsService } from './locations.service';
 import { SharedModule } from '@app/shared/shared.module';
+import { LocationsUtilsService } from './locations.utils';
 import { LocationsRoutingModule } from './locations.routing.module';
 
+import { reducers, effects } from './store';
 import { LocationExistsGuard } from './guards';
-import { reducers, effects, CustomSerializer } from './store';
+import { CustomSerializer } from '@app/store/base/router-state';
 
 @NgModule({
   declarations: [
+    LocationFormComponent,
     LocationsListComponent,
+    LocationsInfoComponent,
+    LocationsEditComponent,
     LocationsDeleteComponent,
-    LocationsUpdateComponent,
+    LocationsCreateComponent,
     LocationsListTopBarComponent,
-    LocationsCreateComponent
+    LocationOpeningHoursFormComponent
   ],
 
   imports: [
@@ -38,8 +45,9 @@ import { reducers, effects, CustomSerializer } from './store';
   ],
 
   providers: [
-    LocationExistsGuard,
     LocationsService,
+    LocationExistsGuard,
+    LocationsUtilsService,
     {
       provide: RouterStateSerializer, useClass: CustomSerializer
     }

@@ -1,0 +1,18 @@
+@import '~client/style/components/form';
+
+form {
+  .checkbox {
+    display: flex;
+  }
+
+  .margin-right {
+   margin-right: 5px;
+  }
+
+  .horizontal {
+    display: flex;
+    margin-top: 6px;
+    flex-direction: row;
+    align-items: center
+  }
+}

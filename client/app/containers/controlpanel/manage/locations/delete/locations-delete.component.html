@@ -2,7 +2,7 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span i18n><strong>{{ 'locations_delete_modal_title' | cpI18n }}</strong></span>
+        <span><strong>{{ 'locations_delete_modal_title' | cpI18n }}</strong></span>
 
         <span
           data-dismiss="modal"
@@ -16,7 +16,7 @@
   <div class="cpmodal__body">
     <div class="row">
       <div class="col-12">
-        <p class="text-center" i18n>
+        <p class="text-center">
           {{ 'locations_delete_modal_body' | cpI18n:location.name }}
         </p>
       </div>
@@ -29,14 +29,14 @@
         <button
           type="button"
           class="cpbtn cpbtn--cancel"
-          data-dismiss="modal" i18n>
+          data-dismiss="modal">
           {{ 'cancel' | cpI18n }}
         </button>
 
         <button
           type="button"
           (click)="onDelete()"
-          class="cpbtn cpbtn--danger"i18n>
+          class="cpbtn cpbtn--danger">
           {{ 'delete' | cpI18n }}
         </button>
       </div>

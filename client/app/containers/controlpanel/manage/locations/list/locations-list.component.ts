@@ -7,11 +7,12 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
+import { LocationModel } from '../model';
 import { ManageHeaderService } from '../../utils';
-import { ILocation } from '../locations.interface';
 import { BaseComponent } from '@app/base/base.component';
 import { CP_TRACK_TO } from '@shared/directives/tracking';
 import { amplitudeEvents } from '@shared/constants/analytics';
+import { environment } from '@client/environments/environment';
 import { CPI18nService, CPTrackingService } from '@shared/services';
 
 interface IState {
@@ -37,7 +38,8 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
   deleteLocation = '';
   state: IState = state;
   loading$: Observable<boolean>;
-  locations$: Observable<ILocation[]>;
+  locations$: Observable<LocationModel[]>;
+  defaultImage = `${environment.root}public/default/user.png`;
 
   private destroy$ = new Subject();
 
@@ -51,7 +53,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     super();
   }
 
-  private fetch() {
+  public fetch() {
     const search = new HttpParams()
       .append('search_str', this.state.search_str)
       .append('sort_field', this.state.sort_field)
@@ -106,10 +108,10 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
   loadLocations() {
     this.store
-      .select(fromStore.getLocations)
+      .select(fromStore.getLocationLoadedAll)
       .pipe(
-        tap((locations: ILocation[]) => {
-          if (!locations.length) {
+        tap((loaded: boolean) => {
+          if (!loaded) {
             this.fetch();
           }
         }),
@@ -118,7 +120,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       .subscribe();
 
     this.locations$ = this.store.select(fromStore.getLocations).pipe(
-      map((locations: ILocation[]) => {
+      map((locations: LocationModel[]) => {
         const responseCopy = [...locations];
 
         return super.updatePagination(responseCopy);
@@ -161,7 +163,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     };
 
     this.sortingLabels = {
-      locations: this.cpI18n.translate('locations')
+      locations: this.cpI18n.translate('name')
     };
 
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
