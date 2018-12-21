@@ -3,16 +3,15 @@ import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
-import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
-import { CPSession } from './../../../../../session/index';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
-import { CPI18nService, StoreService, ZendeskService } from './../../../../../shared/services';
-import { AnnouncementsService } from './../../announcements/announcements.service';
+import { CPSession } from '@app/session';
+import { IToolTipContent } from '@shared/components';
+import { canSchoolWriteResource } from '@shared/utils';
 import { TemplatesService } from './../templates.service';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { CustomTextValidators } from '@shared/validators';
+import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@shared/constants';
+import { AnnouncementsService } from './../../announcements/announcements.service';
 import { TemplatesComposeComponent } from '../compose/templates-compose.component';
-import { CPTrackingService } from '../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPI18nService, StoreService, ZendeskService, CPTrackingService } from '@shared/services';
 
 declare var $;
 
@@ -217,8 +216,8 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
       user_ids: [[]],
       list_ids: [[]],
       is_school_wide: false,
-      subject: [null, [Validators.required, Validators.maxLength(128)]],
-      message: [null, [Validators.required, Validators.maxLength(400)]],
+      subject: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
+      message: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
     });
 
@@ -241,7 +240,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
       this.isFormValid = isValid;
     });
-    const control = new FormControl(null, Validators.required);
+    const control = new FormControl(null, CustomTextValidators.requiredNonEmpty);
 
     this.form.addControl('name', control);
   }

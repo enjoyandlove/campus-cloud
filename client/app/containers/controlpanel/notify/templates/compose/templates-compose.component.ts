@@ -1,4 +1,3 @@
-import { canSchoolWriteResource } from './../../../../../shared/utils/privileges/privileges';
 import { HttpParams } from '@angular/common/http';
 import {
   Component,
@@ -14,17 +13,18 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { CPSession } from './../../../../../session/index';
-import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPSession } from '@app/session';
+import { IToolTipContent } from '@shared/components';
+import { canSchoolWriteResource } from '@shared/utils';
+import { CustomTextValidators } from '@shared/validators';
+import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@shared/constants';
 import { AnnouncementsService } from './../../announcements/announcements.service';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   CPI18nService,
   StoreService,
   CPTrackingService,
   ZendeskService
-} from './../../../../../shared/services';
+} from '@shared/services';
 
 interface IState {
   isUrgent: boolean;
@@ -55,6 +55,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
+  types;
   stores$;
   isError;
   chips = [];
@@ -85,8 +86,6 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     label: null,
     type: null
   };
-
-  types;
 
   amplitudeEventProperties = {
     host_type: null,
@@ -563,8 +562,8 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
       user_ids: [[]],
       list_ids: [[]],
       is_school_wide: false,
-      subject: [null, [Validators.required, Validators.maxLength(128)]],
-      message: [null, [Validators.required, Validators.maxLength(400)]],
+      subject: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
+      message: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
     });
 

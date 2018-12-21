@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { amplitudeEvents } from '@shared/constants/analytics';
 import { types } from './templates/compose/announcement-types';
-import { amplitudeEvents } from '../../../shared/constants/analytics';
 
 @Injectable()
 export class NotifyUtilsService {
