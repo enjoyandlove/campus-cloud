@@ -75,8 +75,8 @@
         <span
           *ngIf="canDelete"
           (click)="onDelete(event)"
-          class="hover text-truncate delete-event"
-          data-toggle="modal" data-target="#deleteEventsModal">
+          [class.disabled]="event.is_external"
+          class="hover text-truncate delete-event">
           &times;
         </span>
       </span>
