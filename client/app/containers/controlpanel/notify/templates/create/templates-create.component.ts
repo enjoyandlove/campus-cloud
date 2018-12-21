@@ -75,11 +75,11 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   }
 
   resetModal() {
+    this.form.reset();
     this.isError = false;
     this.shouldConfirm = false;
     this.state.isCampusWide = false;
     this.resetCustomFields$.next(true);
-    this.form.reset(this.resetFormValues);
 
     this.subject_prefix = {
       label: null,
@@ -216,8 +216,8 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
       user_ids: [[]],
       list_ids: [[]],
       is_school_wide: false,
-      subject: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
-      message: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
+      subject: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
+      message: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
     });
 
@@ -240,7 +240,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
       this.isFormValid = isValid;
     });
-    const control = new FormControl('', CustomTextValidators.requiredNonEmpty);
+    const control = new FormControl(null, CustomTextValidators.requiredNonEmpty);
 
     this.form.addControl('name', control);
   }

@@ -625,8 +625,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       filters: [[]],
       persona_id: [null],
       is_school_wide: true,
-      subject: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
-      message: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
+      subject: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
+      message: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
     });
 
