@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '@app/session';
 import { baseActions, IHeader } from '@app/store';
-import { CustomValidators } from '@shared/validators';
+import { CustomTextValidators } from '@shared/validators';
 import { amplitudeEvents } from '@shared/constants/analytics';
 import { CP_PRIVILEGES_MAP, STATUS } from '@shared/constants';
 import { AnnouncementsService } from '../announcements.service';
@@ -626,8 +626,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       filters: [[]],
       persona_id: [null],
       is_school_wide: true,
-      subject: [null, [CustomValidators.textInputValidator, Validators.maxLength(128)]],
-      message: [null, [CustomValidators.textInputValidator, Validators.maxLength(400)]],
+      subject: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
+      message: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
     });
 

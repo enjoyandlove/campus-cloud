@@ -5,6 +5,7 @@ import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '@app/session';
 import { TemplatesService } from './../templates.service';
+import { CustomTextValidators } from '@shared/validators';
 import { amplitudeEvents } from '@shared/constants/analytics';
 import { CP_PRIVILEGES_MAP } from '@shared/constants/privileges';
 import { canSchoolWriteResource } from '@shared/utils/privileges/privileges';
@@ -12,7 +13,6 @@ import { AnnouncementsService } from './../../announcements/announcements.servic
 import { TemplatesComposeComponent } from '../compose/templates-compose.component';
 import { IToolTipContent } from '@shared/components/cp-tooltip/cp-tooltip.interface';
 import { CPI18nService, StoreService, ZendeskService, CPTrackingService } from '@shared/services';
-import { CustomValidators } from '@shared/validators';
 
 declare var $;
 
@@ -76,11 +76,11 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   }
 
   resetModal() {
-    this.form.reset();
     this.isError = false;
     this.shouldConfirm = false;
     this.state.isCampusWide = false;
     this.resetCustomFields$.next(true);
+    this.form.reset(this.resetFormValues);
 
     this.subject_prefix = {
       label: null,
@@ -217,8 +217,8 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
       user_ids: [[]],
       list_ids: [[]],
       is_school_wide: false,
-      subject: [null, [CustomValidators.textInputValidator, Validators.maxLength(128)]],
-      message: [null, [CustomValidators.textInputValidator, Validators.maxLength(400)]],
+      subject: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
+      message: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
     });
 
@@ -241,7 +241,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
       this.isFormValid = isValid;
     });
-    const control = new FormControl(null, CustomValidators.textInputValidator);
+    const control = new FormControl('', CustomTextValidators.requiredNonEmpty);
 
     this.form.addControl('name', control);
   }

@@ -14,8 +14,8 @@ import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { CPSession } from '@app/session';
-import { CustomValidators } from '@shared/validators';
 import { amplitudeEvents } from '@app/shared/constants';
+import { CustomTextValidators } from '@shared/validators';
 import { CP_PRIVILEGES_MAP, STATUS } from '@app/shared/constants';
 import { canSchoolWriteResource } from '@app/shared/utils/privileges';
 import { AnnouncementsService } from './../../announcements/announcements.service';
@@ -56,6 +56,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   @Output() created: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
+  types;
   stores$;
   isError;
   chips = [];
@@ -87,7 +88,11 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     type: null
   };
 
-  types;
+  resetFormValues = {
+    name: '',
+    subject: '',
+    message: ''
+  };
 
   amplitudeEventProperties = {
     host_type: null,
@@ -238,11 +243,11 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   }
 
   resetModal() {
-    this.form.reset();
     this.isError = false;
     this.shouldConfirm = false;
     this.state.isCampusWide = false;
     this.resetCustomFields$.next(true);
+    this.form.reset(this.resetFormValues);
 
     this.subject_prefix = {
       label: null,
@@ -564,8 +569,8 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
       user_ids: [[]],
       list_ids: [[]],
       is_school_wide: false,
-      subject: [null, [CustomValidators.textInputValidator, Validators.maxLength(128)]],
-      message: [null, [CustomValidators.textInputValidator, Validators.maxLength(400)]],
+      subject: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
+      message: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
     });
 
