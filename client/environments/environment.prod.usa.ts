@@ -7,6 +7,10 @@ export const environment: IEnvironment = {
     EVENTS_INTEGRATION: {
       active: false,
       internal: true
+    },
+    ITEMS_INTEGRATION: {
+      active: false,
+      internal: true
     }
   },
   envName: 'production_usa'

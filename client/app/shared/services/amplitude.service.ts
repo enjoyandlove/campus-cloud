@@ -5,7 +5,7 @@ import { get as _get } from 'lodash';
 import { CPSession } from '../../session';
 import { amplitudeEvents } from '../constants/analytics';
 import { CP_PRIVILEGES_MAP } from '../constants/privileges';
-import { isCanada, isProd, isSea, isUsa } from '../../config/env';
+import { isCanada, isProd, isUsa } from '../../config/env';
 
 declare var window: any;
 
@@ -73,8 +73,6 @@ export class CPAmplitudeService {
 
     if (isCanada) {
       return `CAN${user.id}`;
-    } else if (isSea) {
-      return `SEA${user.id}`;
     } else if (isUsa) {
       return `US${user.id}`;
     } else {
@@ -187,7 +185,8 @@ export class CPAmplitudeService {
 
     const eventPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.events] || noReadWritePrivilege;
 
-    const eventAssessmentPrivilege = schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance] || noReadWritePrivilege;
+    const eventAssessmentPrivilege =
+      schoolPrivileges[CP_PRIVILEGES_MAP.event_attendance] || noReadWritePrivilege;
 
     if (eventPrivilege.w && eventAssessmentPrivilege.w) {
       permissions = amplitudeEvents.FULL_ACCESS;

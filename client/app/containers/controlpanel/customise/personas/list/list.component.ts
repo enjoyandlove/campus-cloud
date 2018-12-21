@@ -108,15 +108,17 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
 
   onRankUp(persona: IPersona, currentIndex: number) {
     this.state = { ...this.state, updating: true };
+    const movedRank = persona.rank;
+    const movingRank = this.state.personas[currentIndex - 1].rank;
 
     const movingPersona = {
       ...persona,
-      rank: this.state.personas[currentIndex - 1].rank
+      rank: movingRank - (movedRank === movingRank ? 1 : 0)
     };
 
     const movedPersona = {
       ...this.state.personas[currentIndex - 1],
-      rank: persona.rank
+      rank: movedRank
     };
 
     const updatePersonas = Promise.all([
@@ -141,15 +143,17 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
 
   onRankDown(persona: IPersona, currentIndex: number) {
     this.state = { ...this.state, updating: true };
+    const movedRank = persona.rank;
+    const movingRank = this.state.personas[currentIndex + 1].rank;
 
     const movingPersona = {
       ...persona,
-      rank: this.state.personas[currentIndex + 1].rank
+      rank: movingRank + (movedRank === movingRank ? 1 : 0)
     };
 
     const movedPersona = {
       ...this.state.personas[currentIndex + 1],
-      rank: persona.rank
+      rank: movedRank
     };
 
     const updatePersonas = Promise.all([

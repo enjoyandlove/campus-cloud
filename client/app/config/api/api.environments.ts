@@ -1,11 +1,9 @@
-import { isCanada, isProd, isSea } from '../../config/env';
+import { isCanada, isProd } from '../../config/env';
 
 const CP_API_URL = {
   USA: 'https://api.studentlifemobile.com/cc',
 
   CAN: 'https://canapi.studentlifemobile.com/cc',
-
-  SEA: 'https://seaapi.studentlifemobile.com/cc',
 
   DEV: 'https://usstagingapi.studentlifemobile.com/cc'
 
@@ -14,13 +12,7 @@ const CP_API_URL = {
 
 export const getUrlByEnv = () => {
   if (isProd) {
-    if (isCanada) {
-      return CP_API_URL.CAN;
-    } else if (isSea) {
-      return CP_API_URL.SEA;
-    }
-
-    return CP_API_URL.USA;
+    return isCanada ? CP_API_URL.CAN : CP_API_URL.USA;
   }
 
   return CP_API_URL.DEV;

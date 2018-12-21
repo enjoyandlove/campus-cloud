@@ -206,14 +206,15 @@ export class PersonasSectionComponent implements OnInit {
   }
 
   onMoveCheckDraggable(event) {
-    const toLength = event.to.childElementCount - 2;
+    const toLength = event.to.childElementCount - 1;
     const toIndex = Sortable.utils.index(event.related, '.tile');
 
-    const toEmpty = toLength === 0;
-    const toFirst = toIndex === 0;
-    const toSelf = event.to === event.from && toLength === 1 && toIndex === 1;
+    const toEnd = toIndex === toLength;
+    const toRight = event.willInsertAfter;
+    const inRange = toIndex < toLength;
+    // if dragging to the end of section, do not left the tile go to the right of the add button
 
-    return toEmpty ? toFirst : toSelf || toIndex < toLength;
+    return toEnd ? !toRight : inRange;
   }
 
   ngOnInit(): void {
@@ -238,7 +239,8 @@ export class PersonasSectionComponent implements OnInit {
       },
       onAdd: this.onMoveToSection.bind(this),
       onUpdate: this.onMoveWithinSection.bind(this),
-      onMove: this.onMoveCheckDraggable
+      onMove: this.onMoveCheckDraggable,
+      swapThreshold: 0.8
     };
   }
 }

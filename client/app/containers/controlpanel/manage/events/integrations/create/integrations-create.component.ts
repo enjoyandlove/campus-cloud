@@ -1,36 +1,57 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
+import { takeUntil, map, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from './../../../../../../session';
-import { EventIntegration } from './../model/integration.model';
+import { CPSession } from '@app/session';
+import { IItem } from '@client/app/shared/components';
+import { IStore } from '@shared/services/store.service';
+import { EventIntegration } from '@libs/integrations/events/model';
+import { IntegrationsUitlsService } from './../integrations.utils.service';
+import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 
 @Component({
   selector: 'cp-events-integrations-create',
   templateUrl: './integrations-create.component.html',
   styleUrls: ['./integrations-create.component.scss']
 })
-export class EventsIntegrationsCreateComponent implements OnInit {
+export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
+  @Input() stores$: Observable<IStore[] | IItem[]>;
+
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
-  integration: EventIntegration;
+  form: FormGroup;
+  destroy$ = new Subject();
+  typesDropdown: IItem[];
+  selectedType: IItem | null;
 
-  constructor(public session: CPSession, public store: Store<fromStore.IEventIntegrationState>) {}
+  constructor(
+    public session: CPSession,
+    public utils: CommonIntegrationUtilsService,
+    public store: Store<fromStore.IEventIntegrationState>
+  ) {}
+
+  get defaultParams(): HttpParams {
+    const school_id = this.session.g.get('school').id;
+
+    return IntegrationsUitlsService.commonParams(school_id);
+  }
 
   resetModal() {
-    this.integration.form.reset();
+    this.form.reset();
     this.teardown.emit();
   }
 
   doSubmit() {
-    if (!this.integration.form.valid) {
+    if (!this.form.valid) {
       return;
     }
 
-    const body = this.integration.form.value;
-    const school_id = this.session.g.get('school').id;
-    const params = new HttpParams().set('school_id', school_id);
+    const body = this.form.value;
+    const params = this.defaultParams;
 
     const payload = {
       body,
@@ -45,7 +66,29 @@ export class EventsIntegrationsCreateComponent implements OnInit {
   ngOnInit(): void {
     const schoolId = this.session.g.get('school').id;
 
-    this.integration = new EventIntegration();
-    this.integration.form.get('school_id').setValue(schoolId);
+    this.form = EventIntegration.form();
+    this.form.get('school_id').setValue(schoolId);
+
+    this.stores$ = this.store.select(fromStore.getIntegrationsHosts).pipe(
+      takeUntil(this.destroy$),
+      tap((stores: IStore[]) => {
+        if (!stores.length) {
+          const params = this.defaultParams;
+
+          this.store.dispatch(new fromStore.GetHosts({ params }));
+        }
+      }),
+      map((res) => (res.length ? res : [{ label: '---', action: null }]))
+    );
+
+    this.typesDropdown = this.utils.typesDropdown();
+    this.selectedType = this.typesDropdown.find(
+      (t) => t.action === this.form.get('feed_type').value
+    );
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

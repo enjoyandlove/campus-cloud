@@ -70,34 +70,6 @@
                 }
               ]
             },
-            "production_sea": {
-              "fileReplacements": [
-                {
-                  "replace": "client/environments/environment.ts",
-                  "with": "client/environments/environment.prod.sea.ts"
-                },
-                {
-                  "replace": "client/index.html",
-                  "with": "client/index.prod.html"
-                }
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
-            },
             "production_canada": {
               "fileReplacements": [
                 {
@@ -165,9 +137,6 @@
           "configurations": {
             "staging": {
               "browserTarget": "cp:build:staging"
-            },
-            "production_sea": {
-              "browserTarget": "cp:build:production_sea"
             },
             "production_usa": {
               "browserTarget": "cp:build:production_usa"
