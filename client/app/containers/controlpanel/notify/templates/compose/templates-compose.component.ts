@@ -14,18 +14,17 @@ import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { CPSession } from '@app/session';
-import { amplitudeEvents } from '@app/shared/constants';
+import { IToolTipContent } from '@shared/components';
+import { canSchoolWriteResource } from '@shared/utils';
 import { CustomTextValidators } from '@shared/validators';
-import { CP_PRIVILEGES_MAP, STATUS } from '@app/shared/constants';
-import { canSchoolWriteResource } from '@app/shared/utils/privileges';
+import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@shared/constants';
 import { AnnouncementsService } from './../../announcements/announcements.service';
-import { IToolTipContent } from '@app/shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   CPI18nService,
   StoreService,
   CPTrackingService,
   ZendeskService
-} from '@app/shared/services';
+} from '@shared/services';
 
 interface IState {
   isUrgent: boolean;

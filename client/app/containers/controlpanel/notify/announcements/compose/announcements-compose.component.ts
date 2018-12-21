@@ -7,19 +7,18 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '@app/session';
 import { baseActions, IHeader } from '@app/store';
+import { IToolTipContent } from '@shared/components';
+import { canSchoolReadResource } from '@shared/utils';
 import { CustomTextValidators } from '@shared/validators';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { CP_PRIVILEGES_MAP, STATUS } from '@shared/constants';
 import { AnnouncementsService } from '../announcements.service';
 import { AudienceType } from '../../../audience/audience.status';
-import { canSchoolReadResource } from '@shared/utils/privileges/privileges';
-import { IToolTipContent } from '@shared/components/cp-tooltip/cp-tooltip.interface';
+import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@shared/constants';
 import {
   CPI18nService,
   StoreService,
   CPTrackingService,
   ZendeskService
-} from '@app/shared/services';
+} from '@shared/services';
 
 interface IState {
   isUrgent: boolean;

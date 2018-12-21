@@ -15,6 +15,12 @@ describe('CustomTextValidators', () => {
     expect(formGroup.valid).toBe(false);
   });
 
+  it('should check validation - fail (NULL)', () => {
+    formGroup.get('name').setValue(null);
+
+    expect(formGroup.valid).toBe(false);
+  });
+
   it('should check validation - pass', () => {
     formGroup.get('name').setValue('Hello World');
 

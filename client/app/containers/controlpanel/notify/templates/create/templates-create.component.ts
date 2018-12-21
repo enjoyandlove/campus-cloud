@@ -4,14 +4,13 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '@app/session';
+import { IToolTipContent } from '@shared/components';
+import { canSchoolWriteResource } from '@shared/utils';
 import { TemplatesService } from './../templates.service';
 import { CustomTextValidators } from '@shared/validators';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { CP_PRIVILEGES_MAP } from '@shared/constants/privileges';
-import { canSchoolWriteResource } from '@shared/utils/privileges/privileges';
+import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@shared/constants';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 import { TemplatesComposeComponent } from '../compose/templates-compose.component';
-import { IToolTipContent } from '@shared/components/cp-tooltip/cp-tooltip.interface';
 import { CPI18nService, StoreService, ZendeskService, CPTrackingService } from '@shared/services';
 
 declare var $;
