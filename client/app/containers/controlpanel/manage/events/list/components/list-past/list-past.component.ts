@@ -48,6 +48,10 @@ export class ListPastComponent implements OnInit {
   ) {}
 
   onDelete(event) {
+    if (event.is_external) {
+      return;
+    }
+
     this.deleteEvent.emit(event);
     this.trackDeleteEvent();
   }
