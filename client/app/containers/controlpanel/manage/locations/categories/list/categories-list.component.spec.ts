@@ -2,15 +2,18 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
+import { CategoryTypePipe } from '../pipes';
+import { mockCategories} from '../../tests';
 import { CPI18nService } from '@shared/services';
+import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
-import { configureTestSuite } from '@app/shared/tests';
 import { CategoriesListComponent } from './categories-list.component';
 
 describe('CategoriesListComponent', () => {
@@ -21,7 +24,7 @@ describe('CategoriesListComponent', () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
         providers: [CPSession, CPI18nService],
-        declarations: [CategoriesListComponent],
+        declarations: [CategoriesListComponent, CategoryTypePipe],
         schemas: [NO_ERRORS_SCHEMA]
       });
 
@@ -31,10 +34,10 @@ describe('CategoriesListComponent', () => {
       .catch(done.fail)
   );
 
-  let fixture: ComponentFixture<CategoriesListComponent>;
-  let component: CategoriesListComponent;
   let fetchSpy: jasmine.Spy;
   let dispatchSpy: jasmine.Spy;
+  let component: CategoriesListComponent;
+  let fixture: ComponentFixture<CategoriesListComponent>;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CategoriesListComponent);
@@ -42,22 +45,12 @@ describe('CategoriesListComponent', () => {
     component.session.g.set('school', mockSchool);
     fetchSpy = spyOn(component, 'fetch');
     dispatchSpy = spyOn(component.store, 'dispatch');
+
+    fixture.detectChanges();
   });
 
   it('should init', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should be default category', () => {
-    const isDefault = component.isDefault(true);
-
-    expect(isDefault).toEqual('Yes');
-  });
-
-  it('should not be default category', () => {
-    const isDefault = component.isDefault(false);
-
-    expect(isDefault).toEqual('No');
   });
 
   it('should search string', () => {
@@ -68,8 +61,17 @@ describe('CategoriesListComponent', () => {
     expect(component.state.search_str).toEqual('hello world');
   });
 
-  it('should sort by name', () => {
-    component.doSort('name');
+  it('should click sort by name', () => {
+    spyOn(component.store, 'select');
+    component.loading$ = of(false);
+    component.categories$ = of(mockCategories);
+
+    fixture.detectChanges();
+
+    const sortingLabel = fixture.debugElement
+      .query(By.css('.categories li .js_test_sorting_name')).nativeElement;
+
+    sortingLabel.click();
 
     expect(fetchSpy).toHaveBeenCalled();
     expect(fetchSpy).toHaveBeenCalledTimes(1);

@@ -1,9 +1,9 @@
 export interface ICategory {
   id?: number;
 
-  name: number;
+  name: string;
 
-  image_url: number;
+  image_url: string;
 
   is_default: boolean;
 

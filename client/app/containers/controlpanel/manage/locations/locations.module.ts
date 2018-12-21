@@ -40,10 +40,10 @@ import { CategoriesModule } from './categories/categories.module';
     SharedModule,
     ReactiveFormsModule,
     LocationsRoutingModule,
+    CategoriesModule,
     StoreRouterConnectingModule,
     EffectsModule.forFeature(effects),
-    StoreModule.forFeature('locations', reducers),
-    CategoriesModule
+    StoreModule.forFeature('locations', reducers)
   ],
 
   providers: [

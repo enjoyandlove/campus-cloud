@@ -5,9 +5,10 @@ import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
 import { CategoriesListComponent } from './list';
-import { CategoriesActionBoxComponent } from './list/components/action-box';
+import { CategoriesActionBoxComponent } from './list/components';
 
 
+import { CategoryTypePipe } from './pipes';
 import { effects, reducers } from './store';
 import { SharedModule } from '@shared/shared.module';
 import { CategoriesService } from './categories.service';
@@ -15,6 +16,7 @@ import { CategoriesRoutingModule } from './categories.routing.module';
 
 @NgModule({
   declarations: [
+    CategoryTypePipe,
     CategoriesListComponent,
     CategoriesActionBoxComponent
   ],
@@ -25,7 +27,7 @@ import { CategoriesRoutingModule } from './categories.routing.module';
     ReactiveFormsModule,
     CategoriesRoutingModule,
     EffectsModule.forFeature(effects),
-    StoreModule.forFeature('categories', reducers),
+    StoreModule.forFeature('locationCategories', reducers),
   ],
 
   providers: [CategoriesService]

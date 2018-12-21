@@ -22,11 +22,11 @@
         <li class="cp-form__header col-12">
           <div class="row">
             <cp-sorting-header
-              class="col-4"
               sortLabel="name"
               (click)="doSort('name')"
               [label]="'name' | cpI18n"
               [sortField]="state.sort_field"
+              class="col-4 js_test_sorting_name"
               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
             <span class="col-3">{{ 't_shared_type' | cpI18n }}</span>
@@ -55,18 +55,15 @@
                 [src]="category.image_url">
             </span>
             <span class="col-2">
-              {{ isDefault(category.is_default) }}
+              {{ category.is_default | cpIsDefaultCategory | cpI18n }}
             </span>
             <span class="col-1 text-right">
               <span *ngIf="!category.is_default">
-              <i
-                (click)="editCategory = category;"
-                class="material-icons hover action-button margin-right">edit</i>
-              <i
-                (click)="deleteCategory = category;"
-                data-toggle="modal" data-target="#categoryDelete"
-                class="material-icons hover action-button">close</i>
-            </span>
+                <i class="material-icons hover action-button margin-right">edit</i>
+                <i
+                  data-toggle="modal" data-target="#categoryDelete"
+                  class="material-icons hover action-button">close</i>
+              </span>
             </span>
           </div>
         </li>

@@ -7,9 +7,9 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
+import { Locale } from '../categories.status';
 import { CPI18nService } from '@shared/services';
 import { ICategory } from '../categories.interface';
-import { isDefault, Locale } from '../categories.status';
 
 interface IState {
   search_str: string;
@@ -29,8 +29,6 @@ const state: IState = {
   styleUrls: ['./categories-list.component.scss']
 })
 export class CategoriesListComponent implements OnInit, OnDestroy {
-  editCategory = '';
-  deleteCategory = '';
   state: IState = state;
   showCreateModal = false;
   loading$: Observable<boolean>;
@@ -67,10 +65,6 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.showCreateModal = true;
 
     setTimeout(() => $('#categoriesCreate').modal());
-  }
-
-  isDefault(val) {
-    return this.cpI18n.translate(isDefault[val]);
   }
 
   fetch() {
