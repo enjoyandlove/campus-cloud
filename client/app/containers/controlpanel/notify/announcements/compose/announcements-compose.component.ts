@@ -5,20 +5,20 @@ import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@app/session';
+import { baseActions, IHeader } from '@app/store';
+import { IToolTipContent } from '@shared/components';
+import { canSchoolReadResource } from '@shared/utils';
+import { CustomTextValidators } from '@shared/validators';
 import { AnnouncementsService } from '../announcements.service';
 import { AudienceType } from '../../../audience/audience.status';
-import { baseActions, IHeader } from './../../../../../store/base';
-import { CP_PRIVILEGES_MAP, STATUS } from '../../../../../shared/constants';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { canSchoolReadResource } from './../../../../../shared/utils/privileges/privileges';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@shared/constants';
 import {
   CPI18nService,
   StoreService,
   CPTrackingService,
   ZendeskService
-} from '../../../../../shared/services';
+} from '@shared/services';
 
 interface IState {
   isUrgent: boolean;
@@ -625,8 +625,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       filters: [[]],
       persona_id: [null],
       is_school_wide: true,
-      subject: [null, [Validators.required, Validators.maxLength(128)]],
-      message: [null, [Validators.required, Validators.maxLength(400)]],
+      subject: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
+      message: ['', [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
     });
 
