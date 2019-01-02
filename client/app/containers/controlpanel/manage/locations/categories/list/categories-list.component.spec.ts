@@ -14,6 +14,7 @@ import { CPI18nService } from '@shared/services';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
+import { CategoriesActionBoxComponent } from './components';
 import { CategoriesListComponent } from './categories-list.component';
 
 describe('CategoriesListComponent', () => {
@@ -24,7 +25,7 @@ describe('CategoriesListComponent', () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
         providers: [CPSession, CPI18nService],
-        declarations: [CategoriesListComponent, CategoryTypePipe],
+        declarations: [CategoriesListComponent, CategoryTypePipe, CategoriesActionBoxComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
 
@@ -37,6 +38,7 @@ describe('CategoriesListComponent', () => {
   let fetchSpy: jasmine.Spy;
   let dispatchSpy: jasmine.Spy;
   let component: CategoriesListComponent;
+  let actionBox: CategoriesActionBoxComponent;
   let fixture: ComponentFixture<CategoriesListComponent>;
 
   beforeEach(() => {
@@ -46,6 +48,9 @@ describe('CategoriesListComponent', () => {
     fetchSpy = spyOn(component, 'fetch');
     dispatchSpy = spyOn(component.store, 'dispatch');
 
+    actionBox = fixture.debugElement.query(By.directive(CategoriesActionBoxComponent))
+      .componentInstance;
+
     fixture.detectChanges();
   });
 
@@ -54,11 +59,13 @@ describe('CategoriesListComponent', () => {
   });
 
   it('should search string', () => {
-    component.onSearch('hello world');
+    const query = 'hello world';
+
+    actionBox.search.emit(query);
 
     expect(fetchSpy).toHaveBeenCalled();
     expect(fetchSpy).toHaveBeenCalledTimes(1);
-    expect(component.state.search_str).toEqual('hello world');
+    expect(component.state.search_str).toEqual(query);
   });
 
   it('should click sort by name', () => {

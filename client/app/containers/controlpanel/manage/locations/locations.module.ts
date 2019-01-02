@@ -21,7 +21,6 @@ import { LocationsRoutingModule } from './locations.routing.module';
 import { reducers, effects } from './store';
 import { LocationExistsGuard } from './guards';
 import { CustomSerializer } from '@app/store/base/router-state';
-import { CategoriesModule } from './categories/categories.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +39,6 @@ import { CategoriesModule } from './categories/categories.module';
     SharedModule,
     ReactiveFormsModule,
     LocationsRoutingModule,
-    CategoriesModule,
     StoreRouterConnectingModule,
     EffectsModule.forFeature(effects),
     StoreModule.forFeature('locations', reducers)
