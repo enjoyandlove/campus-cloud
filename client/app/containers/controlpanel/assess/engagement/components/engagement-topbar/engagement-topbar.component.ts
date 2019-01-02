@@ -126,6 +126,8 @@ export class EngagementTopBarComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.dateRanges = this.utils.dateFilter();
+
     this.route.data.subscribe((res: { zendesk: string; data: Array<any> }) => {
       // @data [services, lists, persona]
       let _persona = [];
@@ -166,6 +168,5 @@ export class EngagementTopBarComponent implements OnInit {
     }
 
     this.getStateFromUrl();
-    this.dateRanges = this.utils.dateFilter();
   }
 }
