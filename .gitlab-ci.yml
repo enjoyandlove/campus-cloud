@@ -12,6 +12,10 @@ Testing Web Staging:
   - echo "Web Staging tested successfully"
   only:
   - staging
+  coverage: '/TOTAL.+ ([0-9]{1,3}%)/'
+  artifacts:
+    paths:
+      - coverage/
   environment: Staging
 
 Building Web Staging:
