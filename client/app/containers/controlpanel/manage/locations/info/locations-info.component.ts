@@ -5,7 +5,6 @@ import { Store } from '@ngrx/store';
 import { ILocation } from '../model';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
-import { LocationsUtilsService } from '../locations.utils';
 
 @Component({
   selector: 'cp-locations-info',
@@ -20,19 +19,6 @@ export class LocationsInfoComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
 
   constructor(public store: Store<fromStore.ILocationsState | fromRoot.IHeader>) {}
-
-  getDayLabel(day) {
-    return LocationsUtilsService.getScheduleLabel(day);
-  }
-
-  getTimeLabel(time) {
-    const openingHours =  LocationsUtilsService.getLocationTiming()
-      .find((t) => t.value === time);
-
-    if (openingHours) {
-      return openingHours.label;
-    }
-  }
 
   buildHeader(location: ILocation) {
     this.store.dispatch({
@@ -51,7 +37,6 @@ export class LocationsInfoComponent implements OnInit {
   }
 
   loadLocationDetail() {
-    this.loading$ = this.store.select(fromStore.getLocationsLoading);
     this.store.select(fromStore.getSelectedLocation)
       .subscribe((location: ILocation) => {
         if (location) {
@@ -73,6 +58,8 @@ export class LocationsInfoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loading$ = this.store.select(fromStore.getLocationsLoading);
+
     this.loadLocationDetail();
   }
 
