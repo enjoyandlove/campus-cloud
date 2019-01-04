@@ -41,10 +41,16 @@
 
   > The shared directory is getting pretty long, especially the components section, i think we can split things up and group them into smaller components that we could then import wherever we need to
 
-- Look into typescript mixins to reuse common logic (pagination, snackbar)
+- Look into typescript mixins to reuse common logic (pagination, snackbar) (Patrick)
 
 - Refactor `cp-button`
 
   > cp-button should work like the [material](https://github.com/angular/material2/blob/master/src/lib/button/button.ts) one, its selector should be a button an we just pass down the button type (primary, secondary...) and the text should not be passed as Input, all buttons in the app or anchor tags should use this component
 
 - Create a theme provider component
+
+- Remove `api.enviornment` and use angular's environment file instead
+
+- Ngrx Entities
+
+  > Came acrosss this in a few tutorials:  https://ngrx.io/guide/entity  seems like the preferred way to handle lists of items in the redux pattern, so I think we should look into it

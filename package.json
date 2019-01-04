@@ -18,7 +18,7 @@
     "build:staging": "yarn run staging",
     "e2e": "protractor",
     "e2e-live": "protractor --elementExplorer",
-    "test": "node_modules/@angular/cli/bin/ng test --watch=false --codeCoverage=true",
+    "test": "node_modules/@angular/cli/bin/ng test --watch=false --codeCoverage",
     "test-watch": "node_modules/@angular/cli/bin/ng test",
     "ci": "yarn run e2e && yarn run test",
     "start": "ng serve",
