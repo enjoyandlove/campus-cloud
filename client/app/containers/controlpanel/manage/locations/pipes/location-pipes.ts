@@ -2,8 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 import { LocationsUtilsService } from '../locations.utils';
 
-@Pipe({ name: 'cpTimeLabel' })
-export class CPTimeLabel implements PipeTransform {
+@Pipe({ name: 'locationsTimeLabel' })
+export class LocationsTimeLabelPipe implements PipeTransform {
   transform(time): string {
     const openingHours = LocationsUtilsService.getLocationTiming()
       .find((t) => t.value === time);
@@ -14,8 +14,8 @@ export class CPTimeLabel implements PipeTransform {
   }
 }
 
-@Pipe({ name: 'cpDayLabel' })
-export class CPDayLabel implements PipeTransform {
+@Pipe({ name: 'locationsDayLabel' })
+export class LocationsDayLabelPipe implements PipeTransform {
   transform(day): number {
     return LocationsUtilsService.getScheduleLabel(day);
   }

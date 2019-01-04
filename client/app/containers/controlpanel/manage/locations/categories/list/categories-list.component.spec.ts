@@ -60,12 +60,13 @@ describe('CategoriesListComponent', () => {
 
   it('should search string', () => {
     const query = 'hello world';
+    spyOn(component, 'onSearch');
 
     actionBox.search.emit(query);
 
-    expect(fetchSpy).toHaveBeenCalled();
-    expect(fetchSpy).toHaveBeenCalledTimes(1);
-    expect(component.state.search_str).toEqual(query);
+    expect(component.onSearch).toHaveBeenCalled();
+    expect(component.onSearch).toHaveBeenCalledWith(query);
+    expect(component.onSearch).toHaveBeenCalledTimes(1);
   });
 
   it('should click sort by name', () => {

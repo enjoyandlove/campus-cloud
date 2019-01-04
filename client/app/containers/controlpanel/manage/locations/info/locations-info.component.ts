@@ -1,4 +1,5 @@
 import { OnInit, Component } from '@angular/core';
+import { map, take, filter } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -37,24 +38,25 @@ export class LocationsInfoComponent implements OnInit {
   }
 
   loadLocationDetail() {
-    this.store.select(fromStore.getSelectedLocation)
-      .subscribe((location: ILocation) => {
-        if (location) {
-          this.location = location;
-          this.buildHeader(location);
+    this.store.select(fromStore.getSelectedLocation).pipe(
+      filter((location: ILocation) => !!location),
+      map((location: ILocation) => {
+        this.location = location;
+        this.buildHeader(location);
 
-          this.resourceBanner = {
-            heading: location.name,
-            image: location.image_url,
-            subheading: location.category_name
-          };
+        this.resourceBanner = {
+          heading: location.name,
+          image: location.image_url,
+          subheading: location.category_name
+        };
 
-          this.mapCenter = new BehaviorSubject({
-            lat: location.latitude,
-            lng: location.longitude
-          });
-        }
-      });
+        this.mapCenter = new BehaviorSubject({
+          lat: location.latitude,
+          lng: location.longitude
+        });
+      }),
+      take(1)
+    ).subscribe();
   }
 
   ngOnInit() {

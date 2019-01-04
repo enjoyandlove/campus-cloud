@@ -8,10 +8,10 @@ import { NgModule } from '@angular/core';
 import { LocationsInfoComponent } from './info';
 import { LocationsListComponent } from './list';
 import { LocationsEditComponent } from './edit';
-import { CPDayLabel, CPTimeLabel } from './pipes';
 import { LocationsDeleteComponent } from './delete';
 import { LocationsCreateComponent } from './create';
 import { LocationsListTopBarComponent } from './list/components';
+import { LocationsDayLabelPipe, LocationsTimeLabelPipe } from './pipes';
 import { LocationFormComponent, LocationOpeningHoursFormComponent } from './components';
 
 import { LocationsService } from './locations.service';
@@ -25,9 +25,9 @@ import { CustomSerializer } from '@app/store/base/router-state';
 
 @NgModule({
   declarations: [
-    CPDayLabel,
-    CPTimeLabel,
+    LocationsDayLabelPipe,
     LocationFormComponent,
+    LocationsTimeLabelPipe,
     LocationsListComponent,
     LocationsInfoComponent,
     LocationsEditComponent,

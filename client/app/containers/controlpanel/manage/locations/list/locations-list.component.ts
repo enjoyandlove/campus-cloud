@@ -4,10 +4,10 @@ import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import { ILocation } from '../model';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
-import { LocationModel } from '../model';
 import { ManageHeaderService } from '../../utils';
 import { BaseComponent } from '@app/base/base.component';
 import { CP_TRACK_TO } from '@shared/directives/tracking';
@@ -38,7 +38,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
   deleteLocation = '';
   state: IState = state;
   loading$: Observable<boolean>;
-  locations$: Observable<LocationModel[]>;
+  locations$: Observable<ILocation[]>;
   defaultImage = `${environment.root}public/default/user.png`;
 
   private destroy$ = new Subject();
@@ -120,7 +120,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       .subscribe();
 
     this.locations$ = this.store.select(fromStore.getLocations).pipe(
-      map((locations: LocationModel[]) => {
+      map((locations: ILocation[]) => {
         const responseCopy = [...locations];
 
         return super.updatePagination(responseCopy);
