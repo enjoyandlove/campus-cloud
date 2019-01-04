@@ -108,7 +108,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
   loadLocations() {
     this.store
-      .select(fromStore.getLocationLoadedAll)
+      .select(fromStore.getLocationsLoaded)
       .pipe(
         tap((loaded: boolean) => {
           if (!loaded) {

@@ -42,11 +42,6 @@ export const getLocationsById = createSelector(
   fromLocations.getLocations
 );
 
-export const getLocationLoadedAll = createSelector(
-  getLocationState,
-  fromLocations.getLocationLoadedAll
-);
-
 export const getSelectedLocation = createSelector(
   getLocationsData,
   getRouterState,

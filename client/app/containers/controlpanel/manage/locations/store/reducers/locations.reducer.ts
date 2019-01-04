@@ -6,7 +6,6 @@ export interface ILocationState {
   error: boolean;
   loaded: boolean;
   loading: boolean;
-  loadedAll: boolean;
   data: {
     [id: number]: {
       has_schedule: boolean,
@@ -19,8 +18,7 @@ export const InitialState: ILocationState = {
   data: {},
   error: false,
   loaded: false,
-  loading: false,
-  loadedAll: false
+  loading: false
 };
 
 export function reducer (state = InitialState, action: fromLocations.LocationsAction) {
@@ -29,8 +27,7 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       return {
         ...state,
         loading: true,
-        loaded: false,
-        loadedAll: false
+        loaded: false
       };
     }
 
@@ -54,8 +51,7 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
         data,
         error: false,
         loaded: true,
-        loading: false,
-        loadedAll: true
+        loading: false
       };
     }
 
@@ -64,8 +60,7 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
         ...state,
         error: true,
         loaded: false,
-        loading: false,
-        loadedAll: false
+        loading: false
       };
     }
 
@@ -91,7 +86,6 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
         ...state,
         data,
         error: false,
-        loaded: true,
         loading: false
       };
     }
@@ -100,7 +94,6 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       return {
         ...state,
         error: true,
-        loaded: false,
         loading: false
       };
     }
@@ -235,4 +228,3 @@ export const getLocations = (state: ILocationState) => state.data;
 export const getLocationsError = (state: ILocationState) => state.error;
 export const getLocationsLoaded = (state: ILocationState) => state.loaded;
 export const getLocationsLoading = (state: ILocationState) => state.loading;
-export const getLocationLoadedAll = (state: ILocationState) => state.loadedAll;
