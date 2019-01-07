@@ -9,9 +9,10 @@ import { CallbackRoutingModule } from './callback.routing.module';
 import { CallbackPasswordResetComponent } from './password-reset';
 
 import { AuthService } from '../auth/auth.service';
+import { SharedModule } from '@shared/shared.module';
 import { CallbackService } from './callback.service';
-import { SharedModule } from '../../shared/shared.module';
 import { CheckinService } from './checkin/checkin.service';
+import { LayoutsModule } from '@app/layouts/layouts.module';
 import { FeedbackService } from './feedback/feedback.service';
 import { CheckinUtilsService } from './checkin/checkin.utils.service';
 
@@ -68,17 +69,11 @@ import {
     CommonModule,
     SharedModule,
     RouterModule,
+    LayoutsModule,
     ReactiveFormsModule,
     CallbackRoutingModule
   ],
 
-  providers: [
-    AuthService,
-    CheckinService,
-    FeedbackService,
-    CallbackService,
-    CheckinUtilsService
-  ]
+  providers: [AuthService, CheckinService, FeedbackService, CallbackService, CheckinUtilsService]
 })
-
 export class CallbackModule {}
