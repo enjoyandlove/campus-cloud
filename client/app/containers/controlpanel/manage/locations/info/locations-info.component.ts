@@ -1,11 +1,11 @@
 import { OnInit, Component } from '@angular/core';
+import { map, take, filter } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { ILocation } from '../model';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
-import { LocationsUtilsService } from '../locations.utils';
 
 @Component({
   selector: 'cp-locations-info',
@@ -20,19 +20,6 @@ export class LocationsInfoComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
 
   constructor(public store: Store<fromStore.ILocationsState | fromRoot.IHeader>) {}
-
-  getDayLabel(day) {
-    return LocationsUtilsService.getScheduleLabel(day);
-  }
-
-  getTimeLabel(time) {
-    const openingHours =  LocationsUtilsService.getLocationTiming()
-      .find((t) => t.value === time);
-
-    if (openingHours) {
-      return openingHours.label;
-    }
-  }
 
   buildHeader(location: ILocation) {
     this.store.dispatch({
@@ -51,28 +38,30 @@ export class LocationsInfoComponent implements OnInit {
   }
 
   loadLocationDetail() {
-    this.loading$ = this.store.select(fromStore.getLocationsLoading);
-    this.store.select(fromStore.getSelectedLocation)
-      .subscribe((location: ILocation) => {
-        if (location) {
-          this.location = location;
-          this.buildHeader(location);
+    this.store.select(fromStore.getSelectedLocation).pipe(
+      filter((location: ILocation) => !!location),
+      map((location: ILocation) => {
+        this.location = location;
+        this.buildHeader(location);
 
-          this.resourceBanner = {
-            heading: location.name,
-            image: location.image_url,
-            subheading: location.category_name
-          };
+        this.resourceBanner = {
+          heading: location.name,
+          image: location.image_url,
+          subheading: location.category_name
+        };
 
-          this.mapCenter = new BehaviorSubject({
-            lat: location.latitude,
-            lng: location.longitude
-          });
-        }
-      });
+        this.mapCenter = new BehaviorSubject({
+          lat: location.latitude,
+          lng: location.longitude
+        });
+      }),
+      take(1)
+    ).subscribe();
   }
 
   ngOnInit() {
+    this.loading$ = this.store.select(fromStore.getLocationsLoading);
+
     this.loadLocationDetail();
   }
 

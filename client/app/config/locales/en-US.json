@@ -2594,6 +2594,9 @@
   "t_latitude": {
     "message": "Latitude"
   },
+  "t_locations_category_create_category": {
+    "message": "Create Category"
+  },
   "t_locations_create_location": {
     "message": "Create Location"
   },
@@ -2987,6 +2990,9 @@
   "t_shared_cancel": {
     "message": "Cancel"
   },
+  "t_shared_channel": {
+    "message": "Channel"
+  },
   "t_shared_checkin": {
     "message": "Check-in"
   },
@@ -2995,6 +3001,9 @@
   },
   "t_shared_color": {
     "message": "Color"
+  },
+  "t_shared_default": {
+    "message": "Default"
   },
   "t_shared_delete": {
     "message": "Delete"
@@ -3026,6 +3035,9 @@
   "t_shared_hide": {
     "message": "Hide"
   },
+  "t_shared_icon": {
+    "message": "Icon"
+  },
   "t_shared_image": {
     "message": "Image"
   },
@@ -3055,6 +3067,12 @@
   },
   "t_shared_monday": {
     "message": "Monday"
+  },
+  "t_shared_no": {
+    "message": "No"
+  },
+  "t_shared_no_categories_found": {
+    "message": "No Category Found"
   },
   "t_shared_no_integrations_found": {
     "message": "No integration found"
@@ -3119,6 +3137,9 @@
   "t_shared_wrong_dimensions": {
     "message": "Must be JPG or PNG, 720*400px, smaller than 300KB "
   },
+  "t_shared_yes": {
+    "message": "Yes"
+  },
   "t_students_profile_students": {
     "message": "Students"
   },
@@ -3133,6 +3154,12 @@
   },
   "t_tile_button_locked": {
     "message": "Locked"
+  },
+  "t_walls_integrations_form_label_poster_name": {
+    "message": "Poster Name"
+  },
+  "t_walls_integrations_new_channel": {
+    "message": "New Channel"
   },
   "update": {
     "message": "Update",

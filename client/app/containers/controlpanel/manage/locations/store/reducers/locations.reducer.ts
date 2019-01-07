@@ -3,12 +3,9 @@ import * as fromLocations from '../actions';
 import { ILocation } from '../../model';
 
 export interface ILocationState {
+  error: boolean;
   loaded: boolean;
   loading: boolean;
-  editError: boolean;
-  loadedAll: boolean;
-  getError: boolean;
-  postError: boolean;
   data: {
     [id: number]: {
       has_schedule: boolean,
@@ -19,12 +16,9 @@ export interface ILocationState {
 
 export const InitialState: ILocationState = {
   data: {},
+  error: false,
   loaded: false,
-  loading: false,
-  getError: false,
-  editError: false,
-  loadedAll: false,
-  postError: false
+  loading: false
 };
 
 export function reducer (state = InitialState, action: fromLocations.LocationsAction) {
@@ -33,8 +27,7 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       return {
         ...state,
         loading: true,
-        loaded: false,
-        loadedAll: false
+        loaded: false
       };
     }
 
@@ -56,22 +49,18 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       return  {
         ...state,
         data,
+        error: false,
         loaded: true,
-        loading: false,
-        getError: false,
-        loadedAll: true,
-        postError: false,
-        editError: false
+        loading: false
       };
     }
 
     case fromLocations.locationActions.GET_LOCATIONS_FAIL: {
       return {
         ...state,
+        error: true,
         loaded: false,
-        getError: true,
-        loading: false,
-        loadedAll: false
+        loading: false
       };
     }
 
@@ -96,31 +85,25 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       return  {
         ...state,
         data,
-        loaded: true,
-        loading: false,
-        getError: false,
-        postError: false,
-        editError: false
+        error: false,
+        loading: false
       };
     }
 
     case fromLocations.locationActions.GET_LOCATION_BY_ID_FAIL: {
       return {
         ...state,
-        loaded: false,
-        loading: false,
-        getError: true
+        error: true,
+        loading: false
       };
     }
 
     case fromLocations.locationActions.POST_LOCATION: {
       return {
         ...state,
+        error: false,
         loaded: true,
-        loading: true,
-        getError: false,
-        postError: false,
-        editError: false
+        loading: true
       };
     }
 
@@ -138,29 +121,27 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       return {
         ...state,
         data,
+        error: false,
         loaded: true,
-        loading: false,
-        postError: false
+        loading: false
       };
     }
 
     case fromLocations.locationActions.POST_LOCATION_FAIL: {
       return {
         ...state,
+        error: true,
         loaded: true,
-        loading: false,
-        postError: true
+        loading: false
       };
     }
 
     case fromLocations.locationActions.EDIT_LOCATION: {
       return {
         ...state,
+        error: false,
         loaded: true,
-        loading: false,
-        getError: false,
-        postError: false,
-        editError: false
+        loading: false
       };
     }
 
@@ -178,18 +159,18 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       return {
         ...state,
         data,
+        error: false,
         loaded: true,
-        loading: false,
-        editError: false
+        loading: false
       };
     }
 
     case fromLocations.locationActions.EDIT_LOCATION_FAIL: {
       return {
         ...state,
+        error: true,
         loaded: true,
         loading: false,
-        editError: true,
       };
     }
 
@@ -229,6 +210,13 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       };
     }
 
+    case fromLocations.locationActions.RESET_ERROR: {
+      return {
+        ...state,
+        error: false
+      };
+    }
+
     default: {
       return state;
     }
@@ -237,9 +225,6 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
 
 
 export const getLocations = (state: ILocationState) => state.data;
+export const getLocationsError = (state: ILocationState) => state.error;
 export const getLocationsLoaded = (state: ILocationState) => state.loaded;
-export const getLocationsError = (state: ILocationState) => state.getError;
 export const getLocationsLoading = (state: ILocationState) => state.loading;
-export const getLocationLoadedAll = (state: ILocationState) => state.loadedAll;
-export const getLocationsPostError = (state: ILocationState) => state.postError;
-export const getLocationsEditError = (state: ILocationState) => state.editError;

@@ -45,9 +45,11 @@ export class LocationsUtilsService {
   static setItemControls(scheduleForm, schedule, day) {
     const controlItems = <FormArray>scheduleForm.controls['items'];
 
-    schedule
-      .filter((d) => d.day === day)
-      .map((openingHours) => this.setOpeningHours(openingHours, controlItems, scheduleForm));
+    const openingHour = schedule.find((d) => d.day === day);
+
+    if (openingHour) {
+      this.setOpeningHours(openingHour, controlItems, scheduleForm);
+    }
   }
 
   static setOpeningHours(openingHours, controlItems, scheduleForm) {

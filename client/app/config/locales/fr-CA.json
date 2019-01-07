@@ -2939,6 +2939,9 @@
   "t_shared_cancel": {
     "message": "Annuler"
   },
+  "t_shared_channel": {
+    "message": "Canal"
+  },
   "t_shared_checkin": {
     "message": "Présence"
   },

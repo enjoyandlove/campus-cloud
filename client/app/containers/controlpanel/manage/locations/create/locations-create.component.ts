@@ -80,7 +80,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
   }
 
   setErrors() {
-    this.store.select(fromStore.getLocationsPostError)
+    this.store.select(fromStore.getLocationsError)
       .pipe(
         takeUntil(this.destroy$),
         filter((error) => error),
@@ -96,6 +96,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
+    this.store.dispatch(new fromStore.ResetError());
     this.router.navigate(['/manage/locations']);
   }
 
