@@ -11,10 +11,11 @@ import { CPSession, ISchool } from '@app/session';
   styleUrls: ['./location-form.component.scss']
 })
 export class LocationFormComponent implements OnInit {
+  @Input() categories$;
+  @Input() selectedCategory;
   @Input() formErrors: boolean;
   @Input() locationForm: FormGroup;
 
-  categories;
   school: ISchool;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
@@ -102,21 +103,5 @@ export class LocationFormComponent implements OnInit {
       lat: lat ? lat : this.school.latitude,
       lng: lng ? lng : this.school.longitude
     });
-
-    // temporary will be replaced with actual
-    this.categories = [
-      {
-        value: null,
-        label: 'Select Category'
-      },
-      {
-        value: 1,
-        label: 'Dining'
-      },
-      {
-        value: 2,
-        label: 'New Dining'
-      }
-    ];
   }
 }

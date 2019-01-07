@@ -1,5 +1,5 @@
 import { OnInit, Component, OnDestroy } from '@angular/core';
-import { filter, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,7 +13,9 @@ import { baseActions } from '@app/store/base';
 import { CPSession, ISchool } from '@app/session';
 import { CPI18nService } from '@app/shared/services';
 import { LocationsService } from '../locations.service';
+import * as fromCategoryStore from '../categories/store';
 import { LocationsUtilsService } from '../locations.utils';
+import { ICategory } from '../categories/categories.interface';
 
 @Component({
   selector: 'cp-locations-create',
@@ -22,6 +24,7 @@ import { LocationsUtilsService } from '../locations.utils';
 })
 export class LocationsCreateComponent implements OnInit, OnDestroy {
   formErrors;
+  categories$;
   errorMessage;
   school: ISchool;
   openingHours = true;
@@ -35,7 +38,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: LocationsService,
-    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
+    public store: Store<fromStore.ILocationsState | fromCategoryStore.ICategoriesState | fromRoot.IHeader>
   ) {}
 
   doSubmit() {
@@ -137,6 +140,19 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     LocationsUtilsService.setScheduleFormControls(this.locationForm);
     this.locationForm.get('latitude').setValue(this.school.latitude);
     this.locationForm.get('longitude').setValue(this.school.longitude);
+
+    this.categories$ = this.store.select(fromCategoryStore.getCategories).pipe(
+      takeUntil(this.destroy$),
+      tap((categories: ICategory[]) => {
+        if (!categories.length) {
+          const params = new HttpParams()
+            .set('school_id', this.session.g.get('school').id);
+
+          this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
+        }
+      }),
+      map((res) => LocationsUtilsService.setCategories(res))
+    );
   }
 
   ngOnDestroy() {

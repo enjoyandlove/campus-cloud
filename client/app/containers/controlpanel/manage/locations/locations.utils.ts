@@ -2,6 +2,7 @@ import { FormArray, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
 import { ScheduleModel, scheduleLabels } from './model';
+import { ICategory } from './categories/categories.interface';
 
 @Injectable()
 export class LocationsUtilsService {
@@ -60,6 +61,24 @@ export class LocationsUtilsService {
       });
 
       controlItems.removeAt(0);
+  }
+
+  static setCategories(categories: ICategory[]) {
+    const _categories = [{
+      value: null,
+      label: '---'
+    }];
+
+    if (categories.length) {
+      categories.map((category: ICategory) => {
+        _categories.push({
+          value: category.id,
+          label: category.name
+        });
+      });
+    }
+
+    return _categories;
   }
 
   static getLocationTiming() {

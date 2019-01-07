@@ -3,7 +3,8 @@
     <div class="col-12">
       <label>{{ 'category' | cpI18n }}</label>
       <cp-dropdown
-        [items]="categories"
+        [items]="categories$ | async"
+        [selectedItem]="selectedCategory"
         (selected)="onSelectedCategory($event)"
         [isRequiredError]="formErrors && requiredControls.category.invalid">
       </cp-dropdown>
