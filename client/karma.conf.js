@@ -26,10 +26,19 @@ module.exports = function(config) {
       dir: require('path').join(__dirname, '../coverage'),
       reports: ['html', 'lcovonly', 'text-summary'],
       fixWebpackSourcePaths: true,
-      combineBrowserReports: true
+      combineBrowserReports: true,
+      thresholds: {
+        emitWarning: false,
+        global: {
+          statements: 65.66,
+          branches: 36.24,
+          functions: 42.25,
+          lines: 64.85
+        }
+      }
     },
     browserDisconnectTimeout: 10000,
-    reporters: ['mocha', 'coverage-istanbul', 'jasmine-seed'],
+    reporters: ['mocha', 'jasmine-seed'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
