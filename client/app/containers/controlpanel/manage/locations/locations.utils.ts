@@ -64,21 +64,19 @@ export class LocationsUtilsService {
   }
 
   static setCategories(categories: ICategory[]) {
-    const _categories = [{
+    const _heading = [{
       value: null,
       label: '---'
     }];
 
-    if (categories.length) {
-      categories.map((category: ICategory) => {
-        _categories.push({
-          value: category.id,
-          label: category.name
-        });
-      });
-    }
+    const _categories = categories.map((category: ICategory) => {
+      return {
+        value: category.id,
+        label: category.name
+      };
+    });
 
-    return _categories;
+    return [..._heading, ..._categories];
   }
 
   static getLocationTiming() {

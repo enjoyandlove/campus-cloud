@@ -1,9 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 
 import { CPMap } from '@shared/utils';
 import { CPSession, ISchool } from '@app/session';
+import { ICategoryDropDown } from '../../categories/categories.interface';
 
 @Component({
   selector: 'cp-location-form',
@@ -11,10 +12,10 @@ import { CPSession, ISchool } from '@app/session';
   styleUrls: ['./location-form.component.scss']
 })
 export class LocationFormComponent implements OnInit {
-  @Input() categories$;
-  @Input() selectedCategory;
   @Input() formErrors: boolean;
   @Input() locationForm: FormGroup;
+  @Input() selectedCategory: ICategoryDropDown;
+  @Input() categories$: Observable<ICategoryDropDown[]>;
 
   school: ISchool;
   mapCenter: BehaviorSubject<any>;

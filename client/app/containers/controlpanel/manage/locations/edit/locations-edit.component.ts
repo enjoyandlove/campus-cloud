@@ -2,20 +2,20 @@ import { OnInit, Component, OnDestroy } from '@angular/core';
 import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
+import { Subject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
-import { CPSession } from '@app/session';
 import { BaseComponent } from '@app/base';
 import { baseActions } from '@app/store/base';
+import { CPSession, ISchool } from '@app/session';
 import { LocationModel, ILocation } from '../model';
 import { CPI18nService } from '@app/shared/services';
 import * as fromCategoryStore from '../categories/store';
 import { LocationsUtilsService } from '../locations.utils';
-import { ICategory } from '../categories/categories.interface';
+import { ICategory, ICategoryDropDown } from '../categories/categories.interface';
 
 @Component({
   selector: 'cp-locations-edit',
@@ -23,18 +23,18 @@ import { ICategory } from '../categories/categories.interface';
   styleUrls: ['./locations-edit.component.scss']
 })
 export class LocationsEditComponent extends BaseComponent implements OnInit, OnDestroy {
-  school;
-  loading$;
-  formErrors;
-  locationId;
-  categories;
-  categoryId;
-  categories$;
-  errorMessage;
-  selectedCategory;
+  school: ISchool;
+  formErrors: boolean;
+  locationId: number;
+  categoryId: number;
+  errorMessage: string;
   openingHours = false;
   buttonDisabled = false;
   locationForm: FormGroup;
+  loading$: Observable<boolean>;
+  categories: ICategoryDropDown[];
+  selectedCategory: ICategoryDropDown;
+  categories$: Observable<ICategoryDropDown[]>;
 
   private destroy$ = new Subject();
 
@@ -138,17 +138,17 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
   }
 
   loadLocation() {
-    this.store.select(fromStore.getSelectedLocation)
-      .subscribe((location: ILocation) => {
-        if (location) {
-          const schedule = location['schedule'];
-          this.openingHours = !!schedule.length;
-          this.locationId = location.id;
-          this.categoryId = location.category_id;
-          this.locationForm = LocationModel.form(location);
-          LocationsUtilsService.setScheduleFormControls(this.locationForm, schedule);
-        }
-      });
+    this.store.select(fromStore.getSelectedLocation).pipe(
+      filter((location: ILocation) => !! location),
+      map((location: ILocation) => {
+        const schedule = location['schedule'];
+        this.openingHours = !!schedule.length;
+        this.locationId = location.id;
+        this.categoryId = location.category_id;
+        this.locationForm = LocationModel.form(location);
+        LocationsUtilsService.setScheduleFormControls(this.locationForm, schedule);
+      })
+    ).subscribe();
   }
 
   loadCategories() {

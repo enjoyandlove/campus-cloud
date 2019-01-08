@@ -2,9 +2,9 @@ import { OnInit, Component, OnDestroy } from '@angular/core';
 import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
+import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
@@ -15,7 +15,7 @@ import { CPI18nService } from '@app/shared/services';
 import { LocationsService } from '../locations.service';
 import * as fromCategoryStore from '../categories/store';
 import { LocationsUtilsService } from '../locations.utils';
-import { ICategory } from '../categories/categories.interface';
+import { ICategory, ICategoryDropDown } from '../categories/categories.interface';
 
 @Component({
   selector: 'cp-locations-create',
@@ -23,13 +23,13 @@ import { ICategory } from '../categories/categories.interface';
   styleUrls: ['./locations-create.component.scss']
 })
 export class LocationsCreateComponent implements OnInit, OnDestroy {
-  formErrors;
-  categories$;
-  errorMessage;
   school: ISchool;
+  formErrors: boolean;
   openingHours = true;
+  errorMessage: string;
   buttonDisabled = false;
   locationForm: FormGroup;
+  categories$: Observable<ICategoryDropDown[]>;
 
   private destroy$ = new Subject();
 
