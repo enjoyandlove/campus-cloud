@@ -30,10 +30,10 @@ module.exports = function(config) {
       thresholds: {
         emitWarning: false,
         global: {
-          statements: 65.66,
-          branches: 36.24,
-          functions: 42.25,
-          lines: 64.85
+          statements: 65,
+          branches: 36,
+          functions: 42,
+          lines: 64
         }
       }
     },

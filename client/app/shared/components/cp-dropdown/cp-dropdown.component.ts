@@ -15,6 +15,10 @@ export interface IItem {
   heading?: boolean;
 }
 
+export function getItem(object: any, label: string, action: string): IItem {
+  return { label: object[label], action: object[action] };
+}
+
 @Component({
   selector: 'cp-dropdown',
   templateUrl: './cp-dropdown.component.html',
