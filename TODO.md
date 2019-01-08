@@ -1,6 +1,7 @@
 * [x] Improve Test performance
 * [x] Build AOT
 * [x] Upgrade webpack (done by the CLI now)
+* [x] Create Layout components
 
 - Refactor Events: (Andres)
 
@@ -15,10 +16,6 @@
 - Refactor Members:
 
   > Similar to Events avoid passing `isXXX` inputs
-
-- Create Layout components
-
-  > By now we have a good set of layouts used accross the app, full width (events list), two-columns (events create), one-third (login) three-quarters (events info), the idea is to have layout components that wrap the content inside with a <ng-content> so we reuse the css
 
 - Set up `nrwl nx` (Andres)
 
@@ -53,4 +50,4 @@
 
 - Ngrx Entities
 
-  > Came acrosss this in a few tutorials:  https://ngrx.io/guide/entity  seems like the preferred way to handle lists of items in the redux pattern, so I think we should look into it
+  > Came acrosss this in a few tutorials: https://ngrx.io/guide/entity seems like the preferred way to handle lists of items in the redux pattern, so I think we should look into it

@@ -3,15 +3,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { AuthService } from '../auth.service';
-import { baseActions } from '../../../store/base';
-import { amplitudeEvents } from '../../../shared/constants/analytics';
+import { baseActions } from '@app/store/base';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { LayoutWidth, LayoutAlign } from '@app/layouts/interfaces';
 
 import {
   ErrorService,
   CPI18nService,
   CPTrackingService,
   CPAmplitudeService
-} from '../../../shared/services';
+} from '@shared/services';
 
 @Component({
   selector: 'cp-lost-password',
@@ -22,6 +23,8 @@ export class LostPasswordComponent implements OnInit, OnDestroy {
   email;
   form: FormGroup;
   isSubmitted;
+  layoutWidth = LayoutWidth.fourth;
+  layoutAlign = LayoutAlign.center;
 
   constructor(
     private fb: FormBuilder,
