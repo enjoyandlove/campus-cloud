@@ -3,9 +3,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import ICheckIn from '../checkin.interface';
+import { CPTrackingService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants/analytics';
 import { CheckinUtilsService } from '../checkin.utils.service';
-import { CPTrackingService } from '../../../../shared/services';
-import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import { LayoutWidth, LayoutAlign } from '@app/layouts/interfaces';
 
 const jsPDF = require('jspdf');
 
@@ -45,6 +46,8 @@ export class BaseCheckinComponent implements OnInit {
   isInternal;
   isDownload;
   checkInSource;
+  layoutWidth = LayoutWidth.third;
+  layoutAlign = LayoutAlign.center;
 
   constructor(
     private route: ActivatedRoute,
