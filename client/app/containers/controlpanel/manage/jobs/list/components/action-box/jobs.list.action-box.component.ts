@@ -2,14 +2,14 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { map, startWith } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '@app/session';
+import * as fromJobs from '@app/store/manage';
 import { IJob } from '../../../jobs.interface';
 import { JobsService } from '../../../jobs.service';
-import { CPSession } from '../../../../../../../session';
-import * as fromJobs from '../../../../../../../store/manage';
-import { CPTrackingService } from '../../../../../../../shared/services';
-import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService } from '../../../../../../../shared/services/i18n.service';
+import { CPTrackingService } from '@shared/services';
+import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPI18nService } from '@shared/services/i18n.service';
 
 export interface IState {
   jobs: Array<IJob>;
@@ -75,12 +75,12 @@ export class JobsListActionBoxComponent implements OnInit {
         startWith([{ label: dropdownLabel }]),
         map((employers) => [{ label: dropdownLabel, action: null }, ...employers])
       );
-    this.store.select(fromJobs.getJobsLoaded).subscribe((loaded: boolean) => {
+    this.store.select(fromJobs.getJobsEmployersLoaded).subscribe((loaded: boolean) => {
       if (!loaded) {
         this.store.dispatch(new fromJobs.LoadEmployers());
       }
     });
-
+    
     this.eventPageItemData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_PAGE_ITEM,

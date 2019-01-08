@@ -1,18 +1,22 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
+import { Actions } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
-import { EmployerService } from '../employer.service';
-import { CPSession } from '../../../../../../session';
-import { CPTrackingService } from '../../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+import { CPSession } from '@app/session';
+import { IJobsState } from '@client/app/store';
+import * as fromJobs from '@app/store/manage/jobs';
+import { CPTrackingService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPI18nService } from '@shared/services/i18n.service';
 
 @Component({
   selector: 'cp-employer-delete',
   templateUrl: './employer-delete.component.html',
   styleUrls: ['./employer-delete.component.scss']
 })
-export class EmployerDeleteComponent implements OnInit {
+export class EmployerDeleteComponent implements OnInit, OnDestroy {
   @Input() employer;
 
   @Output() deleted: EventEmitter<number> = new EventEmitter();
@@ -20,23 +24,18 @@ export class EmployerDeleteComponent implements OnInit {
 
   buttonData;
   eventProperties;
+  destroy$ = new Subject();
 
   constructor(
+    public updates$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: EmployerService,
+    public store: Store<IJobsState>,
     public cpTracking: CPTrackingService
   ) {}
 
   onDelete() {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
-
-    this.service.deleteEmployer(this.employer.id, search).subscribe(() => {
-      this.trackEvent();
-      this.deleted.emit(this.employer.id);
-      this.resetDeleteModal.emit();
-      $('#deleteModal').modal('hide');
-    });
+    this.store.dispatch(new fromJobs.DeleteEmployer(this.employer.id));
   }
 
   trackEvent() {
@@ -54,5 +53,20 @@ export class EmployerDeleteComponent implements OnInit {
       text: this.cpI18n.translate('delete'),
       class: 'danger'
     };
+
+    this.updates$
+      .ofType(fromJobs.DELETE_EMPLOYER_SUCCESS)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((action: fromJobs.DeleteEmployerSuccess) => {
+        this.trackEvent();
+        this.deleted.emit(action.payload);
+        this.resetDeleteModal.emit();
+        $('#deleteModal').modal('hide');
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

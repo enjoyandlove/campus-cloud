@@ -17,5 +17,11 @@ export const getJobsEmployers = createSelector(
   getJobsState,
   (state: IJobsState) => state.employers
 );
-export const getJobsLoaded = createSelector(getJobsState, (state: IJobsState) => state.loaded);
-export const getJobsLoading = createSelector(getJobsState, (state: IJobsState) => state.loading);
+export const getJobsEmployersLoaded = createSelector(
+  getJobsState,
+  (state: IJobsState) => state.loaded
+);
+export const getJobsEmployersLoading = createSelector(
+  getJobsState,
+  (state: IJobsState) => state.loading
+);

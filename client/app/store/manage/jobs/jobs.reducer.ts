@@ -1,5 +1,6 @@
 import * as actions from './jobs.actions';
 import { IJobsState } from './jobs.state';
+import { IItem, getItem } from '@client/app/shared/components';
 
 export const initialState: IJobsState = {
   employers: [],
@@ -24,12 +25,46 @@ export function reducer(state = initialState, action: actions.JobssAction): IJob
     }
     case actions.LOAD_EMPLOYERS_SUCCESS: {
       const employers = action.payload;
-
       return {
         ...state,
         employers,
         loaded: true,
         loading: false
+      };
+    }
+
+    case actions.CREATE_EMPLOYER:
+    case actions.CREATE_EMPLOYER_FAIL:
+    case actions.EDIT_EMPLOYER:
+    case actions.EDIT_EMPLOYER_FAIL:
+    case actions.DELETE_EMPLOYER:
+    case actions.DELETE_EMPLOYER_FAIL:
+      return state;
+
+    case actions.CREATE_EMPLOYER_SUCCESS: {
+      const employers = [getItem(action.payload, 'name', 'id'), ...state.employers];
+      return {
+        ...state,
+        employers
+      };
+    }
+
+    case actions.EDIT_EMPLOYER_SUCCESS: {
+      return {
+        ...state,
+        employers: state.employers.map((employer: IItem) => {
+          if (employer.action === action.payload.id) {
+            return getItem(action.payload, 'name', 'id');
+          }
+          return employer;
+        })
+      };
+    }
+
+    case actions.DELETE_EMPLOYER_SUCCESS: {
+      return {
+        ...state,
+        employers: state.employers.filter((employer: IItem) => employer.action !== action.payload)
       };
     }
   }

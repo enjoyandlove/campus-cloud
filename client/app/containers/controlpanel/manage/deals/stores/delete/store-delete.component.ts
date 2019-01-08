@@ -1,18 +1,21 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
+import { Actions } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
-import { DealsStoreService } from '../store.service';
-import { CPSession } from '../../../../../../session';
-import { CPTrackingService } from '../../../../../../shared/services';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
+import { CPSession } from '@app/session';
+import { CPTrackingService } from '@shared/services';
+import * as fromDeals from '@app/store/manage/deals';
+import { CPI18nService } from '@shared/services/i18n.service';
+import { amplitudeEvents } from '@shared/constants/analytics';
 
 @Component({
   selector: 'cp-store-delete',
   templateUrl: './store-delete.component.html',
   styleUrls: ['./store-delete.component.scss']
 })
-export class StoreDeleteComponent implements OnInit {
+export class StoreDeleteComponent implements OnInit, OnDestroy {
   @Input() store;
 
   @Output() deleted: EventEmitter<number> = new EventEmitter();
@@ -20,23 +23,18 @@ export class StoreDeleteComponent implements OnInit {
 
   buttonData;
   eventProperties;
+  destroy$ = new Subject();
 
   constructor(
+    public updates$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: DealsStoreService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    public stateStore: Store<fromDeals.IDealsState>
   ) {}
 
   onDelete() {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
-
-    this.service.deleteStore(this.store.id, search).subscribe(() => {
-      this.trackEvent();
-      this.deleted.emit(this.store.id);
-      this.resetDeleteModal.emit();
-      $('#deleteModal').modal('hide');
-    });
+    this.stateStore.dispatch(new fromDeals.DeleteStore(this.store.id));
   }
 
   trackEvent() {
@@ -54,5 +52,20 @@ export class StoreDeleteComponent implements OnInit {
       text: this.cpI18n.translate('delete'),
       class: 'danger'
     };
+
+    this.updates$
+      .ofType(fromDeals.DELETE_STORE_SUCCESS)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((action: fromDeals.DeleteStoreSuccess) => {
+        this.trackEvent();
+        this.deleted.emit(action.payload);
+        this.resetDeleteModal.emit();
+        $('#deleteModal').modal('hide');
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
