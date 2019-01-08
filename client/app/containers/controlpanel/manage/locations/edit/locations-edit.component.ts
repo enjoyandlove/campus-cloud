@@ -137,11 +137,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
     });
   }
 
-  ngOnInit() {
-    this.setErrors();
-    this.buildHeader();
-    this.school = this.session.g.get('school');
-    this.loading$ = this.store.select(fromStore.getLocationsLoading);
+  loadLocation() {
     this.store.select(fromStore.getSelectedLocation)
       .subscribe((location: ILocation) => {
         if (location) {
@@ -153,7 +149,9 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
           LocationsUtilsService.setScheduleFormControls(this.locationForm, schedule);
         }
       });
+  }
 
+  loadCategories() {
     this.categories$ = this.store.select(fromCategoryStore.getCategories).pipe(
       takeUntil(this.destroy$),
       tap((categories: ICategory[]) => {
@@ -174,6 +172,15 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
         return this.categories;
       })
     );
+  }
+
+  ngOnInit() {
+    this.setErrors();
+    this.buildHeader();
+    this.loadLocation();
+    this.loadCategories();
+    this.school = this.session.g.get('school');
+    this.loading$ = this.store.select(fromStore.getLocationsLoading);
   }
 
   ngOnDestroy() {

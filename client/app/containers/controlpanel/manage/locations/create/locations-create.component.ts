@@ -131,16 +131,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
-    this.setErrors();
-    this.buildHeader();
-    this.school = this.session.g.get('school');
-
-    this.locationForm = LocationModel.form();
-    LocationsUtilsService.setScheduleFormControls(this.locationForm);
-    this.locationForm.get('latitude').setValue(this.school.latitude);
-    this.locationForm.get('longitude').setValue(this.school.longitude);
-
+  loadCategories() {
     this.categories$ = this.store.select(fromCategoryStore.getCategories).pipe(
       takeUntil(this.destroy$),
       tap((categories: ICategory[]) => {
@@ -153,6 +144,18 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
       }),
       map((res) => LocationsUtilsService.setCategories(res))
     );
+  }
+
+  ngOnInit() {
+    this.setErrors();
+    this.buildHeader();
+    this.loadCategories();
+    this.school = this.session.g.get('school');
+
+    this.locationForm = LocationModel.form();
+    LocationsUtilsService.setScheduleFormControls(this.locationForm);
+    this.locationForm.get('latitude').setValue(this.school.latitude);
+    this.locationForm.get('longitude').setValue(this.school.longitude);
   }
 
   ngOnDestroy() {
