@@ -1,4 +1,8 @@
-import { HttpParams } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Actions } from '@ngrx/effects';
+import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 import {
   Component,
   ElementRef,
@@ -7,20 +11,22 @@ import {
   Input,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
+  OnDestroy
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CPSession } from '../../../../../../session';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+
+import { CPSession } from '@app/session';
+import { IJobsState } from '@client/app/store';
 import { IEmployer } from '../employer.interface';
-import { EmployerService } from '../employer.service';
+import * as fromJobs from '@app/store/manage/jobs';
+import { CPI18nService } from '@shared/services/i18n.service';
 
 @Component({
   selector: 'cp-employer-edit',
   templateUrl: './employer-edit.component.html',
   styleUrls: ['./employer-edit.component.scss']
 })
-export class EmployerEditComponent implements OnInit {
+export class EmployerEditComponent implements OnInit, OnDestroy {
   @ViewChild('editForm') editForm;
 
   @Input() employer: IEmployer;
@@ -30,13 +36,15 @@ export class EmployerEditComponent implements OnInit {
 
   buttonData;
   employerForm: FormGroup;
+  destroy$ = new Subject();
 
   constructor(
     public el: ElementRef,
     public fb: FormBuilder,
+    public updates$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: EmployerService
+    public store: Store<IJobsState>
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -54,14 +62,7 @@ export class EmployerEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
-
-    this.service
-      .editEmployer(this.employer.id, this.employerForm.value, search)
-      .subscribe((employer: any) => {
-        this.edited.emit(employer);
-        this.resetModal();
-      });
+    this.store.dispatch(new fromJobs.EditEmployer(this.employerForm.value));
   }
 
   ngOnInit() {
@@ -82,5 +83,18 @@ export class EmployerEditComponent implements OnInit {
     this.employerForm.valueChanges.subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.employerForm.valid };
     });
+
+    this.updates$
+      .ofType(fromJobs.EDIT_EMPLOYER_SUCCESS)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((action: fromJobs.EditEmployerSuccess) => {
+        this.edited.emit(action.payload);
+        this.resetModal();
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

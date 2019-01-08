@@ -1,11 +1,15 @@
 import { switchMap, map, catchError } from 'rxjs/operators';
+import { HttpParams } from '@angular/common/http';
 import { Actions, Effect } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 
+import { CPSession } from '@app/session';
 import * as fromActions from './jobs.actions';
-import { JobsService } from '../../../containers/controlpanel/manage/jobs/jobs.service';
+import { JobsService } from '@app/containers/controlpanel/manage/jobs/jobs.service';
+import { IEmployer } from '@app/containers/controlpanel/manage/jobs/employers/employer.interface';
+import { EmployerService } from '@app/containers/controlpanel/manage/jobs/employers/employer.service';
 
 @Injectable()
 export class JobsEffects {
@@ -21,5 +25,54 @@ export class JobsEffects {
     })
   );
 
-  constructor(private service: JobsService, private actions$: Actions) {}
+  @Effect()
+  createEmployer$: Observable<Action> = this.actions$.ofType(fromActions.CREATE_EMPLOYER).pipe(
+    map((action: fromActions.CreateEmployer) => action.payload),
+    switchMap((employer) => {
+      const search = new HttpParams().append('school_id', this.session.g.get('school').id);
+      return this.employerService
+        .createEmployer(employer, search)
+        .pipe(
+          map(
+            (createdEmployer: IEmployer) => new fromActions.CreateEmployerSuccess(createdEmployer)
+          ),
+          catchError((error) => of(new fromActions.CreateEmployerFail(error)))
+        );
+    })
+  );
+
+  @Effect()
+  editEmployer$: Observable<Action> = this.actions$.ofType(fromActions.EDIT_EMPLOYER).pipe(
+    map((action: fromActions.EditEmployer) => action.payload),
+    switchMap((employer) => {
+      const search = new HttpParams().append('school_id', this.session.g.get('school').id);
+      return this.employerService
+        .editEmployer(employer.id, employer, search)
+        .pipe(
+          map((createdEmployer: IEmployer) => new fromActions.EditEmployerSuccess(createdEmployer)),
+          catchError((error) => of(new fromActions.EditEmployerFail(error)))
+        );
+    })
+  );
+
+  @Effect()
+  deleteEmployer$: Observable<Action> = this.actions$.ofType(fromActions.DELETE_EMPLOYER).pipe(
+    map((action: fromActions.DeleteEmployer) => action.payload),
+    switchMap((id) => {
+      const search = new HttpParams().append('school_id', this.session.g.get('school').id);
+      return this.employerService
+        .deleteEmployer(id, search)
+        .pipe(
+          map(() => new fromActions.DeleteEmployerSuccess(id)),
+          catchError((error) => of(new fromActions.DeleteEmployerFail(error)))
+        );
+    })
+  );
+
+  constructor(
+    private actions$: Actions,
+    private session: CPSession,
+    private service: JobsService,
+    private employerService: EmployerService
+  ) {}
 }
