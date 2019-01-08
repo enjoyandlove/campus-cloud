@@ -9,13 +9,14 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { BaseComponent } from '@app/base';
+import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
 import { CPSession, ISchool } from '@app/session';
 import { LocationModel, ILocation } from '../model';
 import { CPI18nService } from '@app/shared/services';
 import * as fromCategoryStore from '../categories/store';
 import { LocationsUtilsService } from '../locations.utils';
-import { ICategory, ICategoryDropDown } from '../categories/categories.interface';
+import { ICategory } from '../categories/categories.interface';
 
 @Component({
   selector: 'cp-locations-edit',
@@ -27,14 +28,14 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
   formErrors: boolean;
   locationId: number;
   categoryId: number;
+  categories: IItem[];
   errorMessage: string;
   openingHours = false;
   buttonDisabled = false;
   locationForm: FormGroup;
+  selectedCategory: IItem;
   loading$: Observable<boolean>;
-  categories: ICategoryDropDown[];
-  selectedCategory: ICategoryDropDown;
-  categories$: Observable<ICategoryDropDown[]>;
+  categories$: Observable<IItem[]>;
 
   private destroy$ = new Subject();
 
@@ -162,7 +163,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
           this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
         } else {
           setTimeout(() => {
-            this.selectedCategory = this.categories.find((c) => c.value === this.categoryId);
+            this.selectedCategory = this.categories.find((c) => c.action === this.categoryId);
           });
         }
       }),

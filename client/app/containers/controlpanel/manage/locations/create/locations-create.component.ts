@@ -9,13 +9,14 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { LocationModel } from '../model';
+import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
 import { CPSession, ISchool } from '@app/session';
 import { CPI18nService } from '@app/shared/services';
 import { LocationsService } from '../locations.service';
 import * as fromCategoryStore from '../categories/store';
 import { LocationsUtilsService } from '../locations.utils';
-import { ICategory, ICategoryDropDown } from '../categories/categories.interface';
+import { ICategory } from '../categories/categories.interface';
 
 @Component({
   selector: 'cp-locations-create',
@@ -29,7 +30,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
   errorMessage: string;
   buttonDisabled = false;
   locationForm: FormGroup;
-  categories$: Observable<ICategoryDropDown[]>;
+  categories$: Observable<IItem[]>;
 
   private destroy$ = new Subject();
 

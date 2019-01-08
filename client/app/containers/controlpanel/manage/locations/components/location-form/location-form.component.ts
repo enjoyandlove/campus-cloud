@@ -3,8 +3,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 
 import { CPMap } from '@shared/utils';
+import { IItem } from '@shared/components';
 import { CPSession, ISchool } from '@app/session';
-import { ICategoryDropDown } from '../../categories/categories.interface';
 
 @Component({
   selector: 'cp-location-form',
@@ -14,8 +14,8 @@ import { ICategoryDropDown } from '../../categories/categories.interface';
 export class LocationFormComponent implements OnInit {
   @Input() formErrors: boolean;
   @Input() locationForm: FormGroup;
-  @Input() selectedCategory: ICategoryDropDown;
-  @Input() categories$: Observable<ICategoryDropDown[]>;
+  @Input() selectedCategory: IItem;
+  @Input() categories$: Observable<IItem[]>;
 
   school: ISchool;
   mapCenter: BehaviorSubject<any>;
@@ -79,7 +79,7 @@ export class LocationFormComponent implements OnInit {
   }
 
   onSelectedCategory(category) {
-    this.locationForm.get('category_id').setValue(category.value);
+    this.locationForm.get('category_id').setValue(category.action);
   }
 
   onUploadedImage(image) {

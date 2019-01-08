@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { ScheduleModel, scheduleLabels } from './model';
 import { ICategory } from './categories/categories.interface';
+import { getItem } from '@shared/components';
 
 @Injectable()
 export class LocationsUtilsService {
@@ -65,15 +66,12 @@ export class LocationsUtilsService {
 
   static setCategories(categories: ICategory[]) {
     const _heading = [{
-      value: null,
+      action: null,
       label: '---'
     }];
 
     const _categories = categories.map((category: ICategory) => {
-      return {
-        value: category.id,
-        label: category.name
-      };
+      return getItem(category, 'name', 'id');
     });
 
     return [..._heading, ..._categories];

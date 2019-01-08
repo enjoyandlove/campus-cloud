@@ -1,9 +1,3 @@
-export interface ICategoryDropDown {
-  value: number;
-
-  label: string;
-}
-
 export interface ICategory {
   id?: number;
 
