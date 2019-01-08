@@ -79,12 +79,12 @@
 
               <div class="row" *ngFor="let openingHour of location.schedule">
                 <div class="col-2">
-                  <p>{{ getDayLabel(openingHour.day) | cpI18n }}</p>
+                  <p>{{ openingHour.day | locationsDayLabel | cpI18n }}</p>
                 </div>
                 <div class="col-10">
                   <p>
-                    {{ getTimeLabel(openingHour['items'][0].start_time) }} -
-                    {{ getTimeLabel(openingHour['items'][0].end_time) }}
+                    {{ openingHour['items'][0].start_time | locationsTimeLabel }} -
+                    {{ openingHour['items'][0].end_time | locationsTimeLabel }}
                   </p>
                 </div>
               </div>

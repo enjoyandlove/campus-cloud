@@ -83,7 +83,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
   }
 
   setErrors() {
-    this.store.select(fromStore.getLocationsEditError)
+    this.store.select(fromStore.getLocationsError)
       .pipe(
         takeUntil(this.destroy$),
         filter((error) => error),
@@ -99,6 +99,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
   }
 
   onCancel() {
+    this.store.dispatch(new fromStore.ResetError());
     this.router.navigate(['/manage/locations']);
   }
 

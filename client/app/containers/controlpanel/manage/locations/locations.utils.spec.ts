@@ -48,16 +48,16 @@ describe('LocationsUtils', () => {
   it('should set schedule form items controls', () => {
     const scheduleForm = ScheduleModel.form();
 
-    const day = 2;
+    const day = ScheduleDays.Tuesday;
 
     scheduleForm.get('day').setValue(day);
 
     LocationsUtilsService.setItemControls(scheduleForm, mockSchedule, day);
 
-    const mockItems = mockSchedule[0]['items'][0];
+    const expected = mockSchedule[0]['items'][0];
 
-    const items = scheduleForm.value['items'][0];
+    const result = scheduleForm.value['items'][0];
 
-    expect(items).toEqual(mockItems);
+    expect(result).toEqual(expected);
   });
 });

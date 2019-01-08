@@ -11,6 +11,7 @@ import { LocationsEditComponent } from './edit';
 import { LocationsDeleteComponent } from './delete';
 import { LocationsCreateComponent } from './create';
 import { LocationsListTopBarComponent } from './list/components';
+import { LocationsDayLabelPipe, LocationsTimeLabelPipe } from './pipes';
 import { LocationFormComponent, LocationOpeningHoursFormComponent } from './components';
 
 import { LocationsService } from './locations.service';
@@ -24,7 +25,9 @@ import { CustomSerializer } from '@app/store/base/router-state';
 
 @NgModule({
   declarations: [
+    LocationsDayLabelPipe,
     LocationFormComponent,
+    LocationsTimeLabelPipe,
     LocationsListComponent,
     LocationsInfoComponent,
     LocationsEditComponent,
