@@ -1,6 +1,7 @@
 * [x] Improve Test performance
 * [x] Build AOT
 * [x] Upgrade webpack (done by the CLI now)
+* [x] Create `cp-card` component
 * [x] Create Layout components
 
 - Refactor Events: (Andres)
@@ -20,10 +21,6 @@
 - Set up `nrwl nx` (Andres)
 
   > This will change the app strcuture a bit creating an new directories `apps`, `libs`, etc, it helps us create more resuable libraries, since it does all the heavy lifting for us, and will allow us to shared all our UI components in new apps if we ever need to in the future
-
-- Create `cp-card` component
-
-  > Again to avoid importing the card styles and/or having to use the cpcard class everywhere, we could just create a component
 
 - Remove bootstrap and jQuery
 

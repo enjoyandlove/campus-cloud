@@ -112,7 +112,7 @@ export class FeedFiltersComponent implements OnInit {
 
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 1000, search).pipe(
       startWith([{ label: this.cpI18n.translate('all') }]),
-      map((channels) => {
+      map((channels: any) => {
         const _channels = [
           {
             label: this.cpI18n.translate('all'),

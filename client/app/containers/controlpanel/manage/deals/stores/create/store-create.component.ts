@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Actions, ofType } from '@ngrx/effects';
 import { takeUntil } from 'rxjs/operators';
-import { Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import {
@@ -86,9 +86,11 @@ export class StoreCreateComponent implements OnInit, OnDestroy {
     });
 
     this.updates$
-      .ofType(fromDeals.CREATE_STORE_SUCCESS || fromDeals.CREATE_STORE_FAIL)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((action) => {
+      .pipe(
+        ofType(fromDeals.CREATE_STORE_SUCCESS || fromDeals.CREATE_STORE_FAIL),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((action: any) => {
         if (action instanceof fromDeals.CreateStoreSuccess) {
           this.created.emit(action.payload);
           this.resetModal();
