@@ -1,6 +1,6 @@
 import { switchMap, map, catchError } from 'rxjs/operators';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HttpParams } from '@angular/common/http';
-import { Actions, Effect } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
@@ -14,7 +14,8 @@ import { EmployerService } from '@app/containers/controlpanel/manage/jobs/employ
 @Injectable()
 export class JobsEffects {
   @Effect()
-  loadEmployers$: Observable<Action> = this.actions$.ofType(fromActions.LOAD_EMPLOYERS).pipe(
+  loadEmployers$: Observable<Action> = this.actions$.pipe(
+    ofType(fromActions.LOAD_EMPLOYERS),
     switchMap(() => {
       return this.service
         .getEmployers()
@@ -26,7 +27,8 @@ export class JobsEffects {
   );
 
   @Effect()
-  createEmployer$: Observable<Action> = this.actions$.ofType(fromActions.CREATE_EMPLOYER).pipe(
+  createEmployer$: Observable<Action> = this.actions$.pipe(
+    ofType(fromActions.CREATE_EMPLOYER),
     map((action: fromActions.CreateEmployer) => action.payload),
     switchMap((employer) => {
       const search = new HttpParams().append('school_id', this.session.g.get('school').id);
@@ -42,7 +44,8 @@ export class JobsEffects {
   );
 
   @Effect()
-  editEmployer$: Observable<Action> = this.actions$.ofType(fromActions.EDIT_EMPLOYER).pipe(
+  editEmployer$: Observable<Action> = this.actions$.pipe(
+    ofType(fromActions.EDIT_EMPLOYER),
     map((action: fromActions.EditEmployer) => action.payload),
     switchMap((employer) => {
       const search = new HttpParams().append('school_id', this.session.g.get('school').id);
@@ -56,7 +59,8 @@ export class JobsEffects {
   );
 
   @Effect()
-  deleteEmployer$: Observable<Action> = this.actions$.ofType(fromActions.DELETE_EMPLOYER).pipe(
+  deleteEmployer$: Observable<Action> = this.actions$.pipe(
+    ofType(fromActions.DELETE_EMPLOYER),
     map((action: fromActions.DeleteEmployer) => action.payload),
     switchMap((id) => {
       const search = new HttpParams().append('school_id', this.session.g.get('school').id);

@@ -1,6 +1,6 @@
 import { switchMap, map, catchError } from 'rxjs/operators';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HttpParams } from '@angular/common/http';
-import { Actions, Effect } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
@@ -13,7 +13,8 @@ import { DealsStoreService } from '@app/containers/controlpanel/manage/deals/sto
 @Injectable()
 export class DealsEffects {
   @Effect()
-  loadStores$: Observable<Action> = this.actions$.ofType(fromActions.LOAD_STORES).pipe(
+  loadStores$: Observable<Action> = this.actions$.pipe(
+    ofType(fromActions.LOAD_STORES),
     switchMap(() => {
       return this.service
         .getDealStores()
@@ -25,7 +26,8 @@ export class DealsEffects {
   );
 
   @Effect()
-  createStore$: Observable<Action> = this.actions$.ofType(fromActions.CREATE_STORE).pipe(
+  createStore$: Observable<Action> = this.actions$.pipe(
+    ofType(fromActions.CREATE_STORE),
     map((action: fromActions.CreateStore) => action.payload),
     switchMap((store) => {
       const search = new HttpParams().append('school_id', this.session.g.get('school').id);
@@ -39,7 +41,8 @@ export class DealsEffects {
   );
 
   @Effect()
-  editStore$: Observable<Action> = this.actions$.ofType(fromActions.EDIT_STORE).pipe(
+  editStore$: Observable<Action> = this.actions$.pipe(
+    ofType(fromActions.EDIT_STORE),
     map((action: fromActions.EditStore) => action.payload),
     switchMap((store) => {
       const search = new HttpParams().append('school_id', this.session.g.get('school').id);
@@ -53,7 +56,8 @@ export class DealsEffects {
   );
 
   @Effect()
-  deleteStore$: Observable<Action> = this.actions$.ofType(fromActions.DELETE_STORE).pipe(
+  deleteStore$: Observable<Action> = this.actions$.pipe(
+    ofType(fromActions.DELETE_STORE),
     map((action: fromActions.DeleteStore) => action.payload),
     switchMap((id) => {
       const search = new HttpParams().append('school_id', this.session.g.get('school').id);
