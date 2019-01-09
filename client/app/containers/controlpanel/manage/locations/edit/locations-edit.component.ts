@@ -28,7 +28,6 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
   formErrors: boolean;
   locationId: number;
   categoryId: number;
-  categories: IItem[];
   errorMessage: string;
   openingHours = false;
   buttonDisabled = false;
@@ -162,16 +161,15 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
             .set('school_id', this.session.g.get('school').id);
 
           this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
-        } else {
-          setTimeout(() => {
-            this.selectedCategory = this.categories.find((c) => c.action === this.categoryId);
-          });
         }
       }),
-      map((res) => {
-        this.categories = LocationsUtilsService.setCategoriesDropDown(res);
+      map((categories) => LocationsUtilsService.setCategoriesDropDown(categories)),
+      map(parsedCategories => {
+        setTimeout(() => {
+          this.selectedCategory = parsedCategories.find((c) => c.action === this.categoryId);
+        });
 
-        return this.categories;
+        return parsedCategories;
       })
     );
   }
