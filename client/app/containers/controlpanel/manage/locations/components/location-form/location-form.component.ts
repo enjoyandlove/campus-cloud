@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
-import { BehaviorSubject } from 'rxjs';
 
 import { CPMap } from '@shared/utils';
+import { IItem } from '@shared/components';
 import { CPSession, ISchool } from '@app/session';
 
 @Component({
@@ -13,8 +14,9 @@ import { CPSession, ISchool } from '@app/session';
 export class LocationFormComponent implements OnInit {
   @Input() formErrors: boolean;
   @Input() locationForm: FormGroup;
+  @Input() selectedCategory: IItem;
+  @Input() categories$: Observable<IItem[]>;
 
-  categories;
   school: ISchool;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
@@ -77,7 +79,7 @@ export class LocationFormComponent implements OnInit {
   }
 
   onSelectedCategory(category) {
-    this.locationForm.get('category_id').setValue(category.value);
+    this.locationForm.get('category_id').setValue(category.action);
   }
 
   onUploadedImage(image) {
@@ -102,21 +104,5 @@ export class LocationFormComponent implements OnInit {
       lat: lat ? lat : this.school.latitude,
       lng: lng ? lng : this.school.longitude
     });
-
-    // temporary will be replaced with actual
-    this.categories = [
-      {
-        value: null,
-        label: 'Select Category'
-      },
-      {
-        value: 1,
-        label: 'Dining'
-      },
-      {
-        value: 2,
-        label: 'New Dining'
-      }
-    ];
   }
 }

@@ -5,7 +5,7 @@ import { CategoriesListComponent } from './list';
 
 const appRoutes: Routes = [
   {
-    path: '',
+    path: 'categories',
     component: CategoriesListComponent,
     data: { zendesk: 'categories' }
   }

@@ -1,19 +1,22 @@
 import { OnInit, Component, OnDestroy } from '@angular/core';
-import { filter, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
+import { Subject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
-import { CPSession } from '@app/session';
 import { BaseComponent } from '@app/base';
+import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
+import { CPSession, ISchool } from '@app/session';
 import { LocationModel, ILocation } from '../model';
 import { CPI18nService } from '@app/shared/services';
+import * as fromCategoryStore from '../categories/store';
 import { LocationsUtilsService } from '../locations.utils';
+import { ICategory } from '../categories/categories.interface';
 
 @Component({
   selector: 'cp-locations-edit',
@@ -21,14 +24,17 @@ import { LocationsUtilsService } from '../locations.utils';
   styleUrls: ['./locations-edit.component.scss']
 })
 export class LocationsEditComponent extends BaseComponent implements OnInit, OnDestroy {
-  school;
-  loading$;
-  formErrors;
-  locationId;
-  errorMessage;
+  school: ISchool;
+  formErrors: boolean;
+  locationId: number;
+  categoryId: number;
+  errorMessage: string;
   openingHours = false;
   buttonDisabled = false;
   locationForm: FormGroup;
+  selectedCategory: IItem;
+  loading$: Observable<boolean>;
+  categories$: Observable<IItem[]>;
 
   private destroy$ = new Subject();
 
@@ -36,7 +42,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
     public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>,
+    public store: Store<fromStore.ILocationsState | fromCategoryStore.ICategoriesState | fromRoot.IHeader>,
   ) {
     super();
   }
@@ -131,21 +137,50 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
     });
   }
 
+  loadLocation() {
+    this.store.select(fromStore.getSelectedLocation).pipe(
+      takeUntil(this.destroy$),
+      filter((location: ILocation) => !! location),
+      map((location: ILocation) => {
+        const schedule = location['schedule'];
+        this.openingHours = !!schedule.length;
+        this.locationId = location.id;
+        this.categoryId = location.category_id;
+        this.locationForm = LocationModel.form(location);
+        LocationsUtilsService.setScheduleFormControls(this.locationForm, schedule);
+      })
+    ).subscribe();
+  }
+
+  loadCategories() {
+    this.categories$ = this.store.select(fromCategoryStore.getCategories).pipe(
+      takeUntil(this.destroy$),
+      tap((categories: ICategory[]) => {
+        if (!categories.length) {
+          const params = new HttpParams()
+            .set('school_id', this.session.g.get('school').id);
+
+          this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
+        }
+      }),
+      map((categories) => LocationsUtilsService.setCategoriesDropDown(categories)),
+      map(parsedCategories => {
+        Promise.resolve().then(() => {
+          this.selectedCategory = parsedCategories.find((c) => c.action === this.categoryId);
+        });
+
+        return parsedCategories;
+      })
+    );
+  }
+
   ngOnInit() {
     this.setErrors();
     this.buildHeader();
+    this.loadLocation();
+    this.loadCategories();
     this.school = this.session.g.get('school');
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
-    this.store.select(fromStore.getSelectedLocation)
-      .subscribe((location: ILocation) => {
-        if (location) {
-          const schedule = location['schedule'];
-          this.openingHours = !!schedule.length;
-          this.locationId = location.id;
-          this.locationForm = LocationModel.form(location);
-          LocationsUtilsService.setScheduleFormControls(this.locationForm, schedule);
-        }
-      });
   }
 
   ngOnDestroy() {

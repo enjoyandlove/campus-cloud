@@ -10,7 +10,9 @@
               <p class="title">{{ 't_locations_location_details' | cpI18n }}</p>
               <cp-location-form
                 [formErrors]="formErrors"
-                [locationForm]="locationForm">
+                [categories$]="categories$"
+                [locationForm]="locationForm"
+                [selectedCategory]="selectedCategory">
               </cp-location-form>
             </div>
           </div>

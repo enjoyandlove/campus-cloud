@@ -1,7 +1,9 @@
 import { FormArray, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
+import { getItem } from '@shared/components';
 import { ScheduleModel, scheduleLabels } from './model';
+import { ICategory } from './categories/categories.interface';
 
 @Injectable()
 export class LocationsUtilsService {
@@ -60,6 +62,19 @@ export class LocationsUtilsService {
       });
 
       controlItems.removeAt(0);
+  }
+
+  static setCategoriesDropDown(categories: ICategory[]) {
+    const _heading = [{
+      action: null,
+      label: '---'
+    }];
+
+    const _categories = categories.map((category: ICategory) => {
+      return getItem(category, 'name', 'id');
+    });
+
+    return [..._heading, ..._categories];
   }
 
   static getLocationTiming() {
