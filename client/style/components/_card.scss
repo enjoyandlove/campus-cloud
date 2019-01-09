@@ -1,11 +1,14 @@
 @import '../core/colors';
 
+$default_margin: 15px;
+$default_padding: 24px;
+
 @mixin card-margin() {
-  margin: 15px 0;
+  margin: $default_margin 0;
 }
 
 @mixin card-padding() {
-  padding: 24px;
+  padding: $default_padding;
 }
 
 @mixin card-shadow() {
@@ -15,7 +18,7 @@
 .cp-card {
   @include card-shadow();
 
-  padding: 24px;
+  padding: $default_padding;
   border-radius: 4px;
   background: $color-white;
   border: 1px solid $border-color;
@@ -25,7 +28,7 @@
   }
 
   &--half-padding {
-    padding: 12px;
+    padding: #{$default_padding} / 2;
   }
 
   &--no-shadow {
