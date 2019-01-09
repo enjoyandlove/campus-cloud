@@ -140,6 +140,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
 
   loadLocation() {
     this.store.select(fromStore.getSelectedLocation).pipe(
+      takeUntil(this.destroy$),
       filter((location: ILocation) => !! location),
       map((location: ILocation) => {
         const schedule = location['schedule'];
@@ -168,7 +169,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
         }
       }),
       map((res) => {
-        this.categories = LocationsUtilsService.setCategories(res);
+        this.categories = LocationsUtilsService.setCategoriesDropDown(res);
 
         return this.categories;
       })

@@ -143,7 +143,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy {
           this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
         }
       }),
-      map((res) => LocationsUtilsService.setCategories(res))
+      map((res) => LocationsUtilsService.setCategoriesDropDown(res))
     );
   }
 
