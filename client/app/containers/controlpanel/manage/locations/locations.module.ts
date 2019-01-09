@@ -41,9 +41,9 @@ import { CategoriesModule } from './categories/categories.module';
   imports: [
     CommonModule,
     SharedModule,
+    CategoriesModule,
     ReactiveFormsModule,
     LocationsRoutingModule,
-    CategoriesModule,
     StoreRouterConnectingModule,
     EffectsModule.forFeature(effects),
     StoreModule.forFeature('locations', reducers)
