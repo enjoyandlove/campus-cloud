@@ -1,0 +1,5 @@
+@import '~client/style/components/card';
+
+.no-content {
+  @include card-margin();
+}

@@ -2059,7 +2059,7 @@
     "message": "How did you like the service?"
   },
   "services_delete_modal_body": {
-    "message": "Are you sure you want to delete %s?"
+    "message": "Are you sure you want to delete %s?  All events in %s will also be deleted."
   },
   "services_delete_modal_title": {
     "message": "Delete Service"
@@ -2594,6 +2594,9 @@
   "t_latitude": {
     "message": "Latitude"
   },
+  "t_locations_category_create_category": {
+    "message": "Create Category"
+  },
   "t_locations_create_location": {
     "message": "Create Location"
   },
@@ -2620,6 +2623,12 @@
   },
   "t_locations_photo": {
     "message": "Photo"
+  },
+  "t_location_categories_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_location_categories_delete_modal_title": {
+    "message": "Delete Category"
   },
   "t_longitude": {
     "message": "Longitude"
@@ -2987,6 +2996,15 @@
   "t_shared_cancel": {
     "message": "Cancel"
   },
+  "t_shared_category_create_form_modal_title": {
+    "message": "New Category"
+  },
+  "t_shared_category_name": {
+    "message": "Category Name"
+  },
+  "t_shared_channel": {
+    "message": "Channel"
+  },
   "t_shared_checkin": {
     "message": "Check-in"
   },
@@ -2995,6 +3013,15 @@
   },
   "t_shared_color": {
     "message": "Color"
+  },
+  "t_shared_cpimage_icon_heading": {
+    "message": "Upload your icon"
+  },
+  "t_shared_cpimage_icon_help": {
+    "message": "Must be 128 x 128 in PNG format"
+  },
+  "t_shared_default": {
+    "message": "Default"
   },
   "t_shared_delete": {
     "message": "Delete"
@@ -3026,6 +3053,9 @@
   "t_shared_hide": {
     "message": "Hide"
   },
+  "t_shared_icon": {
+    "message": "Icon"
+  },
   "t_shared_image": {
     "message": "Image"
   },
@@ -3055,6 +3085,12 @@
   },
   "t_shared_monday": {
     "message": "Monday"
+  },
+  "t_shared_no": {
+    "message": "No"
+  },
+  "t_shared_no_categories_found": {
+    "message": "No Category Found"
   },
   "t_shared_no_integrations_found": {
     "message": "No integration found"
@@ -3104,6 +3140,9 @@
   "t_shared_type": {
     "message": "Type"
   },
+  "t_shared_upload_icon": {
+    "message": "Upload Icon"
+  },
   "t_shared_url": {
     "message": "URL"
   },
@@ -3119,6 +3158,9 @@
   "t_shared_wrong_dimensions": {
     "message": "Must be JPG or PNG, 720*400px, smaller than 300KB "
   },
+  "t_shared_yes": {
+    "message": "Yes"
+  },
   "t_students_profile_students": {
     "message": "Students"
   },
@@ -3133,6 +3175,18 @@
   },
   "t_tile_button_locked": {
     "message": "Locked"
+  },
+  "t_walls_integrations_error_could_not_create_channel": {
+    "message": "Error while creating channel"
+  },
+  "t_walls_integrations_form_label_channel_name": {
+    "message": "Channel Name"
+  },
+  "t_walls_integrations_form_label_poster_name": {
+    "message": "Poster Name"
+  },
+  "t_walls_integrations_new_channel": {
+    "message": "New Channel"
   },
   "update": {
     "message": "Update",

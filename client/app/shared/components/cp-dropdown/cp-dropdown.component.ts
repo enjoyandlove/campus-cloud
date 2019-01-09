@@ -41,6 +41,13 @@ export class CPDropdownComponent implements OnInit {
 
   constructor() {}
 
+  static defaultPlaceHolder(label = '---'): IItem {
+    return {
+      action: null,
+      label
+    };
+  }
+
   onClick(item) {
     if (item.heading) {
       return;

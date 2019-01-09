@@ -21,7 +21,7 @@ function addEventToState(state, event) {
   };
 }
 
-describe('Event Integrations Reducer', () => {
+describe('Calendar Items Integrations Reducer', () => {
   describe('GET_INTEGRATIONS', () => {
     it('should set loading flag to true', () => {
       const { initialState } = fromReducer;
