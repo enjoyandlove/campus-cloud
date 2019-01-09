@@ -2058,9 +2058,6 @@
   "services_default_feedback_question": {
     "message": "Qu'avez-vous pensé de la qualité du service ?"
   },
-  "services_delete_modal_body": {
-    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
-  },
   "services_delete_modal_title": {
     "message": "Supprimer service"
   },
@@ -2588,6 +2585,9 @@
   "t_locations_create_location": {
     "message": "Créer lieu"
   },
+  "t_location_categories_delete_modal_body": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "Mes expériences"
   },
@@ -2938,6 +2938,9 @@
   },
   "t_shared_cancel": {
     "message": "Annuler"
+  },
+  "t_shared_channel": {
+    "message": "Canal"
   },
   "t_shared_checkin": {
     "message": "Présence"
