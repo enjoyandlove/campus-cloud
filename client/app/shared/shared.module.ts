@@ -37,6 +37,7 @@ import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs
 
 import {
   CPTabComponent,
+  CPCardComponent,
   CPChipComponent,
   CPMapsComponent,
   CPAlertComponent,
@@ -94,6 +95,7 @@ import {
     CPDatePipe,
     CPFilterPipe,
     CPTabComponent,
+    CPCardComponent,
     CPHostDirective,
     CPMapsComponent,
     CPTabsComponent,
@@ -178,6 +180,7 @@ import {
     CPI18nPipe,
     CPFilterPipe,
     CPTabComponent,
+    CPCardComponent,
     CPMapsComponent,
     CPHostDirective,
     CPTabsComponent,

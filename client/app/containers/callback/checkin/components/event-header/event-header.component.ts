@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { FORMAT } from '../../../../../shared/pipes/date';
+import { CPSession } from '@client/app/session';
+import { FORMAT, CPDatePipe } from '@shared/pipes/date';
+import { IResourceBanner } from '@client/app/shared/components';
 
 @Component({
   selector: 'cp-event-header',
@@ -10,9 +12,30 @@ import { FORMAT } from '../../../../../shared/pipes/date';
 export class CheckinEventHeaderComponent implements OnInit {
   @Input() event: any;
 
-  dateFormat = FORMAT.DATETIME;
+  datePipe: CPDatePipe;
+  banner: IResourceBanner;
 
-  constructor() {}
+  constructor(private session: CPSession) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.datePipe = new CPDatePipe(this.session);
+
+    const startDate = this.datePipe.transform(
+      this.event.start,
+      FORMAT.DATETIME,
+      this.event.tz_zoneinfo_str
+    );
+
+    const endDate = this.datePipe.transform(
+      this.event.end,
+      FORMAT.DATETIME,
+      this.event.tz_zoneinfo_str
+    );
+
+    this.banner = {
+      heading: this.event.title,
+      image: this.event.poster_thumb_url,
+      subheading: `${startDate} - ${endDate}`
+    };
+  }
 }
