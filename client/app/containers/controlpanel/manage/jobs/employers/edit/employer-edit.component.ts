@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Actions, ofType } from '@ngrx/effects';
 import { takeUntil } from 'rxjs/operators';
-import { Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 import {
@@ -85,8 +85,7 @@ export class EmployerEditComponent implements OnInit, OnDestroy {
     });
 
     this.updates$
-      .ofType(fromJobs.EDIT_EMPLOYER_SUCCESS)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(ofType(fromJobs.EDIT_EMPLOYER_SUCCESS), takeUntil(this.destroy$))
       .subscribe((action: fromJobs.EditEmployerSuccess) => {
         this.edited.emit(action.payload);
         this.resetModal();

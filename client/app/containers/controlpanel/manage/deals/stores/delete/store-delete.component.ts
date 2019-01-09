@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { Actions, ofType } from '@ngrx/effects';
 import { takeUntil } from 'rxjs/operators';
-import { Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
@@ -54,8 +54,7 @@ export class StoreDeleteComponent implements OnInit, OnDestroy {
     };
 
     this.updates$
-      .ofType(fromDeals.DELETE_STORE_SUCCESS)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(ofType(fromDeals.DELETE_STORE_SUCCESS), takeUntil(this.destroy$))
       .subscribe((action: fromDeals.DeleteStoreSuccess) => {
         this.trackEvent();
         this.deleted.emit(action.payload);

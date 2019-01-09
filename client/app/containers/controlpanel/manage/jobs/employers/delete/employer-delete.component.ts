@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { Actions, ofType } from '@ngrx/effects';
 import { takeUntil } from 'rxjs/operators';
-import { Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
@@ -55,8 +55,7 @@ export class EmployerDeleteComponent implements OnInit, OnDestroy {
     };
 
     this.updates$
-      .ofType(fromJobs.DELETE_EMPLOYER_SUCCESS)
-      .pipe(takeUntil(this.destroy$))
+      .pipe(ofType(fromJobs.DELETE_EMPLOYER_SUCCESS), takeUntil(this.destroy$))
       .subscribe((action: fromJobs.DeleteEmployerSuccess) => {
         this.trackEvent();
         this.deleted.emit(action.payload);
