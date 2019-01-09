@@ -48,13 +48,12 @@ export abstract class HTTPService {
     return formData;
   }
 
-  getHeaders(cache: boolean) {
+  getHeaders() {
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     return new HttpHeaders({
-      Authorization: auth,
       'Content-Type': 'application/json',
-      'Cache-Control': cache ? 'public' : 'no-cache'
+      Authorization: auth
     });
   }
 
@@ -69,12 +68,12 @@ export abstract class HTTPService {
     return cleanParams;
   }
 
-  get(url: string, params?: HttpParams, silent = false, cache = true) {
+  get(url: string, params?: HttpParams, silent = false) {
     if (params) {
       params = this.clearNullValues(params);
     }
 
-    const headers = this.getHeaders(cache);
+    const headers = this.getHeaders();
 
     return this.http.get(url, { headers, params }).pipe(
       retryWhen((err) => this.waitAndRetry(err)),
@@ -99,7 +98,7 @@ export abstract class HTTPService {
 
     data = CPObj.cleanNullValues(data);
 
-    const headers = this.getHeaders(false);
+    const headers = this.getHeaders();
 
     return this.http
       .post(url, this.sanitizeEntries(data), { headers, params })
@@ -115,7 +114,7 @@ export abstract class HTTPService {
     }
 
     data = CPObj.cleanNullValues(data);
-    const headers = this.getHeaders(false);
+    const headers = this.getHeaders();
 
     return this.http
       .put(url, this.sanitizeEntries(data), { headers, params })
@@ -130,7 +129,7 @@ export abstract class HTTPService {
       params = this.clearNullValues(params);
     }
 
-    const headers = this.getHeaders(false);
+    const headers = this.getHeaders();
 
     return this.http
       .delete(url, { headers, params, ...extraOptions })

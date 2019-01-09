@@ -10,4 +10,3 @@ export * from './tracking.service';
 export * from './locations.service';
 export * from './amplitude.service';
 export * from './file-upload.service';
-export * from './request-cache.service';
