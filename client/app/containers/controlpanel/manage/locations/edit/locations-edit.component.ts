@@ -165,7 +165,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
       }),
       map((categories) => LocationsUtilsService.setCategoriesDropDown(categories)),
       map(parsedCategories => {
-        setTimeout(() => {
+        Promise.resolve().then(() => {
           this.selectedCategory = parsedCategories.find((c) => c.action === this.categoryId);
         });
 
