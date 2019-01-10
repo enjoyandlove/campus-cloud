@@ -103,7 +103,7 @@ describe('WallsIntegrationsEditComponent', () => {
   it('should create form with values form integration input', () => {
     component.ngOnInit();
 
-    const result = omit(component.form.value, ['channel_name']);
+    const result = component.form.value;
 
     // remove readonly fields
     const expected = omit(component.integration, [

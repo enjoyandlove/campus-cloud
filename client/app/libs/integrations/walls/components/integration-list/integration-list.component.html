@@ -12,6 +12,7 @@
 
   <li
     class="cp-form__item col-12"
+    [cpTarget]="'item_' + integration.id"
     *ngFor="let integration of integrations$ | async">
     <div class="row">
       <span
