@@ -86,6 +86,13 @@ export class LocationFormComponent implements OnInit {
     this.locationForm.get('image_url').setValue(image);
   }
 
+  onUpdateMap() {
+    const lat = this.locationForm.get('latitude').value;
+    const lng = this.locationForm.get('longitude').value;
+
+    this.centerMap(Number(lat), Number(lng));
+  }
+
   get requiredControls() {
     return {
       name: this.locationForm.get('name'),

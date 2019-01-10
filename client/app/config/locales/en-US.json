@@ -2278,7 +2278,7 @@
     "message": "Ratings"
   },
   "t_admin_invite_studio_limited_tooltip": {
-    "message": "Full access to Studio requires permission to Athletics, Events, Clubs, Services, Calendar and Orientation. Your access to add resources will be limited without those permissions"
+    "message": "Full access to Studio requires permission to Athletics, Events, Clubs, Services, Calendar and Orientation. Your access to add resources will be limited without those permissions."
   },
   "t_assess_all_orientations": {
     "message": "All Orientation Programs"
@@ -2543,7 +2543,7 @@
     "message": "This person has already checked in."
   },
   "t_event_integration_form_default_image": {
-    "message": "Poster Avatar"
+    "message": "Event Image"
   },
   "t_external_checkin_already_checked_in": {
     "message": "This person has already checked in."
@@ -2667,7 +2667,7 @@
     "message": "A school must have at least one experience enabled."
   },
   "t_personas_delete_error_persona_non_empty": {
-    "message": "Can not delete experienced as it's in used by other users."
+    "message": "Can not delete experience as it is in use by other users."
   },
   "t_personas_delete_error_users_associated": {
     "message": "This experience has users associated, so you cannot delete it."
@@ -3068,6 +3068,9 @@
   "t_shared_integration_edit_form_modal_title": {
     "message": "Edit Integration"
   },
+  "t_shared_invalid_cords": {
+    "message": "Invalid pair of coordinates"
+  },
   "t_shared_invalid_url": {
     "message": "Invalid URL (eg: https://google.com)"
   },
@@ -3139,6 +3142,9 @@
   },
   "t_shared_type": {
     "message": "Type"
+  },
+  "t_shared_update_map": {
+    "message": "Update Map"
   },
   "t_shared_upload_icon": {
     "message": "Upload Icon"

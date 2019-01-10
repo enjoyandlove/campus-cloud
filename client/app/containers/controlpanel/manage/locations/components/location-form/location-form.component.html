@@ -55,22 +55,46 @@
   </div>
 
   <div class="row form-group">
-    <div class="col-6">
-      <label>{{ 't_latitude' | cpI18n }}</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="latitude"
-        [class.error]="formErrors && requiredControls.latitude.invalid">
+    <div class="col-9">
+      <div class="row">
+        <div class="col-6">
+          <label>{{ 't_latitude' | cpI18n }}</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="latitude"
+            [class.error]="requiredControls.latitude.dirty && requiredControls.latitude.invalid">
+        </div>
+        <div class="col-6">
+          <label>{{ 't_longitude' | cpI18n }}</label>
+          <input
+            type="text"
+            class="form-control"
+            formControlName="longitude"
+            [class.error]="requiredControls.longitude.dirty && requiredControls.longitude.invalid">
+        </div>
+      </div>
+      <div
+        class="row"
+        *ngIf="requiredControls.latitude.dirty && requiredControls.latitude.invalid
+           ||requiredControls.longitude.dirty && requiredControls.longitude.invalid">
+        <div class="col-12">
+          <label class="error">{{ 't_shared_invalid_cords' | cpI18n }}</label>
+        </div>
+      </div>
     </div>
 
-    <div class="col-6">
-      <label>{{ 't_longitude' | cpI18n }}</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="longitude"
-        [class.error]="formErrors && requiredControls.longitude.invalid">
+    <div class="col-3">
+      <div class="row">
+        <div class="col-12">
+          <button
+            type="button"
+            (click)="onUpdateMap()"
+            class="cpbtn cpbtn--primary margin-top">
+            {{ 't_shared_update_map' | cpI18n }}
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
