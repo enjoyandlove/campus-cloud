@@ -18,6 +18,8 @@ export class WallsIntegrationFormComponent implements OnInit {
   @Input() selectedChannel: IItem;
   @Input() channels$: Observable<IItem[]>;
 
+  showChannelName = false;
+
   constructor() {}
 
   onTypeSelected({ action }: IItem) {
@@ -25,14 +27,14 @@ export class WallsIntegrationFormComponent implements OnInit {
   }
 
   onSelectedChannel({ action }: IItem) {
-    const showChannelName = action === 'new_channel';
+    this.showChannelName = action === 'new_channel';
 
-    this.checkChannelNameControl(showChannelName);
+    this.checkChannelNameControl(this.showChannelName);
 
     this.form
       .get('social_post_category_id')
       .setValue(
-        showChannelName ? WallsIntegrationFormComponent.shouldCreateSocialPostCategory : action
+        this.showChannelName ? WallsIntegrationFormComponent.shouldCreateSocialPostCategory : action
       );
   }
 
