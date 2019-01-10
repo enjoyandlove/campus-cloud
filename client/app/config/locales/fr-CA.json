@@ -2274,6 +2274,9 @@
   "total_ratings": {
     "message": "Notes"
   },
+  "t_admin_invite_studio_limited_tooltip": {
+    "message": "Un accès complet à Studio nécessite les permissions vers les clubs sportifs, les événements, les clubs, les services, les calendriers et l'orientation. Votre accès pour ajouter des ressources sera limité sans ces permissions."
+  },
   "t_assess_all_orientations": {
     "message": "Tous les programmes d'orientation"
   },
@@ -2536,6 +2539,9 @@
   "t_event_check_in_attendee_already_exist": {
     "message": "Cette personne s'est déjà enregistrée."
   },
+  "t_event_integration_form_default_image": {
+    "message": "Image de l'événement"
+  },
   "t_external_checkin_already_checked_in": {
     "message": "Cette personne s'est déjà enregistrée."
   },
@@ -2582,11 +2588,47 @@
     "message": "Ongoing",
     "description": "Indicates that a job posting has no end date"
   },
+  "t_latitude": {
+    "message": "Latitude"
+  },
+  "t_locations_category_create_category": {
+    "message": "Créer catégorie"
+  },
   "t_locations_create_location": {
     "message": "Créer lieu"
   },
+  "t_locations_edit_location": {
+    "message": "Éditer lieu"
+  },
+  "t_locations_link": {
+    "message": "Lien"
+  },
+  "t_locations_link_label": {
+    "message": "Libellé du lien"
+  },
+  "t_locations_location_details": {
+    "message": "Détails du lieu"
+  },
+  "t_locations_manage_categories": {
+    "message": "Gérer catégories"
+  },
+  "t_locations_no_location_found": {
+    "message": "Aucun lieu trouvé"
+  },
+  "t_locations_opening_hours": {
+    "message": "Heures d'ouverture"
+  },
+  "t_locations_photo": {
+    "message": "Photo"
+  },
   "t_location_categories_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "t_location_categories_delete_modal_title": {
+    "message": "Supprimer catégorie"
+  },
+  "t_longitude": {
+    "message": "Longitude"
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "Mes expériences"
@@ -2867,6 +2909,9 @@
   "t_services_assessment_disable_qr_check_in": {
     "message": "Désactiver la vérification de présence"
   },
+  "t_services_assessment_enable_qr_check_in": {
+    "message": "Activer code QR"
+  },
   "t_services_assessment_qr_code_disabled_success_message": {
     "message": "Code QR désactivé avec succès"
   },
@@ -2890,6 +2935,9 @@
   },
   "t_services_membership_enabled": {
     "message": "Autoriser les utilisateurs à s'inscrire et contacter les autres membres"
+  },
+  "t_services_no_service_provider_found": {
+    "message": "Aucun fournisseur de service trouvé"
   },
   "t_services_service_qr_enabled": {
     "message": "Code QR"
@@ -2936,8 +2984,17 @@
   "t_shared_average_rating": {
     "message": "Note"
   },
+  "t_shared_btn_add_integration": {
+    "message": "Ajouter intégration"
+  },
   "t_shared_cancel": {
     "message": "Annuler"
+  },
+  "t_shared_category_create_form_modal_title": {
+    "message": "Nouvelle catégorie"
+  },
+  "t_shared_category_name": {
+    "message": "Nom de la catégorie"
   },
   "t_shared_channel": {
     "message": "Canal"
@@ -2951,6 +3008,15 @@
   "t_shared_color": {
     "message": "Couleur"
   },
+  "t_shared_cpimage_icon_heading": {
+    "message": "Téléverser votre icône"
+  },
+  "t_shared_cpimage_icon_help": {
+    "message": "Doit être 128 x 128 au format PNG"
+  },
+  "t_shared_default": {
+    "message": "Défaut"
+  },
   "t_shared_delete": {
     "message": "Supprimer"
   },
@@ -2960,14 +3026,41 @@
   "t_shared_edit": {
     "message": "Éditer"
   },
+  "t_shared_entry_deleted_successfully": {
+    "message": "Élément supprimé"
+  },
   "t_shared_error": {
     "message": "Erreur"
+  },
+  "t_shared_failed": {
+    "message": "Échoué"
+  },
+  "t_shared_feature_integrations": {
+    "message": "Intégrations"
+  },
+  "t_shared_friday": {
+    "message": "Vendredi"
+  },
+  "t_shared_from": {
+    "message": "Depuis"
   },
   "t_shared_hide": {
     "message": "Cacher"
   },
+  "t_shared_icon": {
+    "message": "Icône"
+  },
   "t_shared_image": {
     "message": "Image"
+  },
+  "t_shared_integration_create_form_modal_title": {
+    "message": "Nouvelle intégration"
+  },
+  "t_shared_integration_delete_modal_title": {
+    "message": "Supprimer intégration"
+  },
+  "t_shared_integration_edit_form_modal_title": {
+    "message": "Éditer intégration"
   },
   "t_shared_invalid_url": {
     "message": "URL invalide (https://google.com)"
@@ -2978,8 +3071,20 @@
   "t_shared_label_location_toggle": {
     "message": "Ajouter un lieu"
   },
+  "t_shared_last_synced": {
+    "message": "Dernière synchronisation"
+  },
   "t_shared_limited": {
     "message": "Limité"
+  },
+  "t_shared_monday": {
+    "message": "Lundi"
+  },
+  "t_shared_no": {
+    "message": "Non"
+  },
+  "t_shared_no_categories_found": {
+    "message": "Aucune catégorie trouvée"
   },
   "t_shared_no_integrations_found": {
     "message": "Aucune intégration trouvée"
@@ -2990,8 +3095,14 @@
   "t_shared_preview": {
     "message": "Aperçu"
   },
+  "t_shared_saturday": {
+    "message": "Samedi"
+  },
   "t_shared_save": {
     "message": "Terminé"
+  },
+  "t_shared_saved_update_success_message": {
+    "message": "Succès !"
   },
   "t_shared_show": {
     "message": "Montrer"
@@ -3002,8 +3113,26 @@
   "t_shared_successful": {
     "message": "Réussi"
   },
+  "t_shared_sunday": {
+    "message": "Dimanche"
+  },
+  "t_shared_sync_now": {
+    "message": "Synchroniser maintenant"
+  },
+  "t_shared_thursday": {
+    "message": "Jeudi"
+  },
+  "t_shared_to": {
+    "message": "vers"
+  },
+  "t_shared_tuesday": {
+    "message": "Mardi"
+  },
   "t_shared_type": {
     "message": "Type"
+  },
+  "t_shared_upload_icon": {
+    "message": "Téléverser icône"
   },
   "t_shared_url": {
     "message": "Lien"
@@ -3014,8 +3143,14 @@
   "t_shared_web_checkin": {
     "message": "Vérification de présence"
   },
+  "t_shared_wednesday": {
+    "message": "Mercredi"
+  },
   "t_shared_wrong_dimensions": {
     "message": "Doit être en JPG ou PNG, 720*400px, moins de 300Ko"
+  },
+  "t_shared_yes": {
+    "message": "Oui"
   },
   "t_students_profile_students": {
     "message": "Élèves"
@@ -3031,6 +3166,18 @@
   },
   "t_tile_button_locked": {
     "message": "Verrouillé"
+  },
+  "t_walls_integrations_error_could_not_create_channel": {
+    "message": "Erreur lors de la création de la section"
+  },
+  "t_walls_integrations_form_label_channel_name": {
+    "message": "Nom de la section"
+  },
+  "t_walls_integrations_form_label_poster_name": {
+    "message": "Nom de l'auteur"
+  },
+  "t_walls_integrations_new_channel": {
+    "message": "Nouvelle section"
   },
   "update": {
     "message": "Mettre à jour",

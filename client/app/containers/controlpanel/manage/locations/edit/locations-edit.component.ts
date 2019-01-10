@@ -1,4 +1,4 @@
-import { OnInit, Component, OnDestroy } from '@angular/core';
+import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
 import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
@@ -14,6 +14,7 @@ import { baseActions } from '@app/store/base';
 import { CPSession, ISchool } from '@app/session';
 import { LocationModel, ILocation } from '../model';
 import { CPI18nService } from '@app/shared/services';
+import { LatLngValidators } from '@shared/validators';
 import * as fromCategoryStore from '../categories/store';
 import { LocationsUtilsService } from '../locations.utils';
 import { ICategory } from '../categories/categories.interface';
@@ -23,7 +24,7 @@ import { ICategory } from '../categories/categories.interface';
   templateUrl: './locations-edit.component.html',
   styleUrls: ['./locations-edit.component.scss']
 })
-export class LocationsEditComponent extends BaseComponent implements OnInit, OnDestroy {
+export class LocationsEditComponent extends BaseComponent implements OnInit, OnDestroy, AfterViewInit {
   school: ISchool;
   formErrors: boolean;
   locationId: number;
@@ -42,6 +43,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
     public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public latLng: LatLngValidators,
     public store: Store<fromStore.ILocationsState | fromCategoryStore.ICategoriesState | fromRoot.IHeader>,
   ) {
     super();
@@ -187,5 +189,12 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
     this.destroy$.next(true);
     this.destroy$.complete();
     this.destroy$.unsubscribe();
+  }
+
+  ngAfterViewInit() {
+    const lat = this.locationForm.get('latitude');
+    const lng = this.locationForm.get('longitude');
+    lat.setAsyncValidators([this.latLng.validateLatitude(lng)]);
+    lng.setAsyncValidators([this.latLng.validateLongitude(lat)]);
   }
 }
