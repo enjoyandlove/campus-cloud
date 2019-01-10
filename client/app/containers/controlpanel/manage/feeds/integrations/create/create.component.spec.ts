@@ -4,7 +4,6 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
-import { omit } from 'lodash';
 
 import * as fromStore from '../store';
 
@@ -101,7 +100,7 @@ describe('WallsIntegrationsCreateComponent', () => {
   it('should create an empty form', () => {
     component.ngOnInit();
 
-    const result = omit(component.form.value, ['channel_name']);
+    const result = component.form.value;
 
     expect(result).toEqual(emptyForm);
   });

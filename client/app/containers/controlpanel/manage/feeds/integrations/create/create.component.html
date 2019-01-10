@@ -10,6 +10,7 @@
         <span
           data-dismiss="modal"
           (click)="resetModal()"
+          cpTarget="reset_modal"
           class="float-right hover cpmodal__header__close">
           &times;
         </span>
@@ -31,6 +32,7 @@
         <button
           type="button"
           data-dismiss="modal"
+          cpTarget="reset_btn"
           (click)="resetModal()"
           class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
@@ -40,6 +42,7 @@
           type="button"
           (click)="doSubmit()"
           [disabled]="!form.valid"
+          cpTarget="submit_button"
           class="cpbtn cpbtn--primary js_submit_button">
           {{ 'save' | cpI18n }}
         </button>

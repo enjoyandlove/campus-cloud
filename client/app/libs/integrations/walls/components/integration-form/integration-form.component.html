@@ -4,8 +4,8 @@
       <div class="col-6">
         <label for="type">{{ 't_shared_type' | cpI18n }}</label>
         <cp-dropdown
-          id="type"
           [items]="types"
+          cpTarget="type"
           [selectedItem]="selectedType"
           (selected)="onTypeSelected($event)">
         </cp-dropdown>
@@ -17,7 +17,10 @@
     <div class="row">
       <div class="col-12">
         <label for="url">{{ 't_shared_url' | cpI18n }}</label>
-        <input id="url" type="text" formControlName="feed_url">
+        <input
+          type="text"
+          cpTarget="url"
+          formControlName="feed_url">
       </div>
     </div>
   </div>
@@ -27,6 +30,7 @@
       <div class="col-12">
         <label for="channel">{{ 't_shared_channel' | cpI18n }}</label>
         <cp-dropdown
+          cpTarget="channel"
           [items]="channels$ | async"
           [selectedItem]="selectedChannel"
           (selected)="onSelectedChannel($event)">
@@ -46,8 +50,8 @@
         </label>
         <input
           type="text"
-          id="channel_name"
           name="channel_name"
+          cpTarget="channel_name"
           formControlName="channel_name">
       </div>
     </div>
@@ -62,8 +66,8 @@
         </label>
         <input
           type="text"
-          id="poster_name"
           name="poster_name"
+          cpTarget="poster_name"
           formControlName="poster_display_name">
       </div>
     </div>
@@ -77,7 +81,7 @@
           {{ 't_event_integration_form_default_image' | cpI18n }}
         </label>
         <cp-image-upload
-          id="poster_avatar"
+          cpTarget="poster_avatar"
           (uploaded)="onImageUpload($event)"
           [defaultImage]="form.get('poster_avatar_url').value">
         </cp-image-upload>
