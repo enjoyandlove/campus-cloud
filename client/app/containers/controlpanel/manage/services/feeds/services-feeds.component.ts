@@ -8,7 +8,8 @@ import { ServicesUtilsService } from '../services.utils.service';
   selector: 'cp-services-feeds',
   template: ` <cp-feeds
                 [groupId]="storeId"
-                [groupType]="groupType">
+                [groupType]="groupType"
+                hideIntegrations="true">
               </cp-feeds>`
 })
 export class ServicesFeedsComponent implements OnInit {

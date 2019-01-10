@@ -1,10 +1,10 @@
-import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
+import { IEventIntegration } from '@client/app/libs/integrations/events/model';
 
 export const emptyForm = {
   school_id: 157,
-  feed_obj_id: null,
   feed_url: null,
   feed_type: 1,
+  feed_obj_id: null,
   poster_url: null,
   poster_thumb_url: null,
   sync_status: 0,
@@ -24,7 +24,7 @@ export const filledForm = {
 export const mockIntegration: IEventIntegration = {
   id: 4,
   school_id: 157,
-  feed_obj_id: 28677,
+  feed_obj_id: 1,
   feed_url: 'https://www.cbc.ca/cmlink/rss-topstorie',
   feed_type: 1,
   poster_url: '',

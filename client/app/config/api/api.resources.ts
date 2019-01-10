@@ -101,6 +101,8 @@ export const API_ENDPOINTS = {
 
   EXTERNAL_EVENT_CHECKIN: 'external_event_checkin',
 
+  WALLS_INTEGRATIONS: 'external_feed/campus_thread',
+
   EXTERNAL_EVENT_FEEDBACK: 'external_event_feedback',
 
   ASSESS_ORIENTATION_EVENT: 'assess_orientation_event',

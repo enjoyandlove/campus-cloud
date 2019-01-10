@@ -80,7 +80,7 @@ export class JobsListActionBoxComponent implements OnInit {
         this.store.dispatch(new fromJobs.LoadEmployers());
       }
     });
-    
+
     this.eventPageItemData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_PAGE_ITEM,
