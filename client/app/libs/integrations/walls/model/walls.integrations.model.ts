@@ -21,7 +21,6 @@ export class WallsIntegrationModel extends FeedIntegration {
     };
 
     return fb.group({
-      channel_name: [null],
       school_id: [_integration.school_id, Validators.required],
       social_post_category_id: [_integration.social_post_category_id, Validators.required],
       feed_url: [_integration.feed_url, Validators.required],

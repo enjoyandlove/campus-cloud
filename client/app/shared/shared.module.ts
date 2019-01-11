@@ -8,6 +8,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 // directives
 import {
   CPHostDirective,
+  CPTargetDirective,
   CPTrackerDirective,
   CPLightboxDirective,
   CPImageRatioDirective,
@@ -113,6 +114,7 @@ import {
     CPButtonComponent,
     CPSpinnerComponent,
     CPTrackerDirective,
+    CPTargetDirective,
     CPTooltipComponent,
     CPStepperComponent,
     CPStepperComponent,
@@ -196,6 +198,7 @@ import {
     CPSwitchComponent,
     CPTopBarComponent,
     CPAvatarComponent,
+    CPTargetDirective,
     CPButtonComponent,
     CPTrackerDirective,
     CPSpinnerComponent,
