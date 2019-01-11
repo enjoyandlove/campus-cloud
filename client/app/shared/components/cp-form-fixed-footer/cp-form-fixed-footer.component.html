@@ -5,12 +5,14 @@
         <div class="col-12">
           <div class="text-right">
             <button
+              cpTarget="cancel"
               (click)="cancelClick.emit()"
               class="cpbtn cpbtn--cancel">
               {{'cancel' | cpI18n }}
             </button>
 
             <button
+              cpTarget="submit"
               class="cpbtn cpbtn--primary"
               (click)="submitClick.emit()"
               [disabled]="submitButtonDisabled">

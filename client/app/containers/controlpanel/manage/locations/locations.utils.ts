@@ -64,10 +64,10 @@ export class LocationsUtilsService {
       controlItems.removeAt(0);
   }
 
-  static setCategoriesDropDown(categories: ICategory[]) {
+  static setCategoriesDropDown(categories: ICategory[], label: string) {
     const _heading = [{
-      action: null,
-      label: '---'
+      label,
+      action: null
     }];
 
     const _categories = categories.map((category: ICategory) => {

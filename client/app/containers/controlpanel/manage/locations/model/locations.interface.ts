@@ -33,6 +33,8 @@ export interface ILocation {
 
   category_name: string;
 
+  category_img_url: string;
+
   links: ILinks[];
 
   schedule: ISchedule[];

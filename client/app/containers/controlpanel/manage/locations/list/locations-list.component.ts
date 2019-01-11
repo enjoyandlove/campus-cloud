@@ -8,21 +8,28 @@ import { ILocation } from '../model';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
+import { IItem } from '@shared/components';
 import { ManageHeaderService } from '../../utils';
 import { BaseComponent } from '@app/base/base.component';
+import * as fromCategoryStore from '../categories/store';
+import { Locale } from '../categories/categories.status';
 import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { LocationsUtilsService } from '../locations.utils';
 import { amplitudeEvents } from '@shared/constants/analytics';
+import { ICategory } from '../categories/categories.interface';
 import { environment } from '@client/environments/environment';
 import { CPI18nService, CPTrackingService } from '@shared/services';
 
 interface IState {
   search_str: string;
   sort_field: string;
+  category_id: string;
   sort_direction: string;
 }
 
 const state: IState = {
   search_str: null,
+  category_id: null,
   sort_field: 'name',
   sort_direction: 'asc'
 };
@@ -38,6 +45,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
   deleteLocation = '';
   state: IState = state;
   loading$: Observable<boolean>;
+  categories$: Observable<IItem[]>;
   locations$: Observable<ILocation[]>;
   defaultImage = `${environment.root}public/default/user.png`;
 
@@ -57,6 +65,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     const search = new HttpParams()
       .append('search_str', this.state.search_str)
       .append('sort_field', this.state.sort_field)
+      .append('category_id', this.state.category_id)
       .append('sort_direction', this.state.sort_direction)
       .append('school_id', this.session.g.get('school').id);
 
@@ -82,7 +91,21 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
   }
 
   onSearch(search_str) {
-    this.state = Object.assign({}, this.state, { search_str });
+    this.state = {
+      ...this.state,
+      search_str
+    };
+
+    this.resetPagination();
+
+    this.fetch();
+  }
+
+  onCategorySelect(category_id) {
+    this.state = {
+      ...this.state,
+      category_id
+    };
 
     this.resetPagination();
 
@@ -104,6 +127,26 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       type: fromRoot.baseActions.HEADER_UPDATE,
       payload: this.headerService.filterByPrivileges()
     });
+  }
+
+  loadCategories() {
+    const categoryLabel = this.cpI18n.translate('all');
+    this.categories$ = this.store.select(fromCategoryStore.getCategories).pipe(
+      takeUntil(this.destroy$),
+      tap((categories: ICategory[]) => {
+        if (!categories.length) {
+          const locale = CPI18nService.getLocale().startsWith('fr')
+            ? Locale.fr : Locale.eng;
+
+          const params = new HttpParams()
+            .set('locale', locale)
+            .set('school_id', this.session.g.get('school').id);
+
+          this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
+        }
+      }),
+      map((res) => LocationsUtilsService.setCategoriesDropDown(res, categoryLabel))
+    );
   }
 
   loadLocations() {
@@ -154,6 +197,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
   ngOnInit() {
     this.buildHeader();
     this.loadLocations();
+    this.loadCategories();
     this.listenForErrors();
 
     this.eventData = {

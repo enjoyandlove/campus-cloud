@@ -64,12 +64,18 @@ export class LocationFormComponent implements OnInit {
     }
 
     const cpMap = CPMap.getBaseMapObject(data);
+    const lat = this.locationForm.get('latitude');
+    const lng = this.locationForm.get('longitude');
+    const options = {onlySelf: true, emitEvent: false};
 
     const location = { ...cpMap, address: data.name };
 
     const coords: google.maps.LatLngLiteral = data.geometry.location.toJSON();
 
     CPMap.setFormLocationData(this.locationForm, location);
+
+    lat.updateValueAndValidity(options);
+    lng.updateValueAndValidity(options);
 
     this.centerMap(coords.lat, coords.lng);
   }

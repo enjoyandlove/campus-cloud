@@ -23,6 +23,7 @@
               <p class="title">{{ 't_locations_opening_hours' | cpI18n }}</p>
               <span class="float-right">
                 <cp-switch
+                  cpTarget="switch"
                   [id]="openingHours"
                   [isChecked]="openingHours"
                   (toggle)="openingHours = !openingHours">

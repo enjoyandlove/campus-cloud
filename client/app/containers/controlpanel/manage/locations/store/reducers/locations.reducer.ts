@@ -102,7 +102,6 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
       return {
         ...state,
         error: false,
-        loaded: true,
         loading: true
       };
     }
@@ -122,7 +121,6 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
         ...state,
         data,
         error: false,
-        loaded: true,
         loading: false
       };
     }
