@@ -16,6 +16,7 @@ import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
 import { LocationsService } from '../locations.service';
 import * as fromCategoryStore from '../categories/store';
+import { Locale } from '../categories/categories.status';
 import { LocationsUtilsService } from '../locations.utils';
 import { ICategory } from '../categories/categories.interface';
 
@@ -135,17 +136,22 @@ export class LocationsCreateComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   loadCategories() {
+    const categoryLabel = this.cpI18n.translate('select_category');
     this.categories$ = this.store.select(fromCategoryStore.getCategories).pipe(
       takeUntil(this.destroy$),
       tap((categories: ICategory[]) => {
         if (!categories.length) {
+          const locale = CPI18nService.getLocale().startsWith('fr')
+            ? Locale.fr : Locale.eng;
+
           const params = new HttpParams()
+            .set('locale', locale)
             .set('school_id', this.session.g.get('school').id);
 
           this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
         }
       }),
-      map((res) => LocationsUtilsService.setCategoriesDropDown(res))
+      map((res) => LocationsUtilsService.setCategoriesDropDown(res, categoryLabel))
     );
   }
 

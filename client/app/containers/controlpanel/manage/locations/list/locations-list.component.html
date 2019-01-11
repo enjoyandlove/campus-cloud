@@ -1,7 +1,9 @@
 <div class="row">
   <div class="col-12">
     <cp-locations-list-top-bar
-      (search)="onSearch($event)">
+      [categories$]="categories$"
+      (search)="onSearch($event)"
+      (selectedCategory)="onCategorySelect($event)">
     </cp-locations-list-top-bar>
   </div>
 </div>

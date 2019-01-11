@@ -3,6 +3,7 @@
     <div class="col-12">
       <label>{{ 'category' | cpI18n }}</label>
       <cp-dropdown
+        cpTarget="categories"
         [items]="categories$ | async"
         [selectedItem]="selectedCategory"
         (selected)="onSelectedCategory($event)"
@@ -15,6 +16,7 @@
     <label>{{ 'name' | cpI18n }}</label>
     <input
       type="text"
+      cpTarget="name"
       class="form-control"
       formControlName="name"
       [class.error]="formErrors && requiredControls.name.invalid">
@@ -25,6 +27,7 @@
       <label>{{ 'locations_label_acronym' | cpI18n }}</label>
       <input
         type="text"
+        cpTarget="short_name"
         class="form-control"
         formControlName="short_name">
     </div>
@@ -35,6 +38,7 @@
       <label>{{ 't_locations_photo' | cpI18n }}</label>
       <cp-image-upload
         class="col-12"
+        cpTarget="image_url"
         (uploaded)="onUploadedImage($event)"
         [defaultImage]="locationForm.controls['image_url'].value">
       </cp-image-upload>
@@ -45,6 +49,7 @@
     <div class="col-12">
       <label>{{ 'address' | cpI18n }}</label>
       <cp-place-autocomplete
+        cpTarget="address"
         disableLocations
         [newAddress]="newAddress"
         (backToDefault)="onResetMap()"
@@ -61,6 +66,7 @@
           <label>{{ 't_latitude' | cpI18n }}</label>
           <input
             type="text"
+            cpTarget="latitude"
             class="form-control"
             formControlName="latitude"
             [class.error]="requiredControls.latitude.dirty && requiredControls.latitude.invalid">
@@ -69,6 +75,7 @@
           <label>{{ 't_longitude' | cpI18n }}</label>
           <input
             type="text"
+            cpTarget="longitude"
             class="form-control"
             formControlName="longitude"
             [class.error]="requiredControls.longitude.dirty && requiredControls.longitude.invalid">
@@ -89,6 +96,7 @@
         <div class="col-12">
           <button
             type="button"
+            cpTarget="map_update"
             (click)="onUpdateMap()"
             class="cpbtn cpbtn--primary margin-top">
             {{ 't_shared_update_map' | cpI18n }}
@@ -110,7 +118,10 @@
 
   <div class="form-group">
     <label>{{ 'description' | cpI18n }}</label>
-    <textarea formControlName="description"></textarea>
+    <textarea
+      cpTarget="description"
+      formControlName="description">
+    </textarea>
   </div>
 
   <div class="row form-group">
@@ -118,6 +129,7 @@
       <label>{{ 'phone' | cpI18n }}</label>
       <input
         type="text"
+        cpTarget="phone"
         class="form-control"
         formControlName="phone">
     </div>
@@ -126,6 +138,7 @@
       <label>{{ 'email' | cpI18n }}</label>
       <input
         type="text"
+        cpTarget="email"
         class="form-control"
         formControlName="email">
     </div>
@@ -136,6 +149,7 @@
       <label>{{ 't_locations_link_label' | cpI18n }}</label>
       <input
         type="text"
+        cpTarget="label"
         class="form-control"
         formControlName="label">
     </div>
@@ -144,6 +158,7 @@
       <label>{{ 't_locations_link' | cpI18n }}</label>
       <input
         type="text"
+        cpTarget="url"
         class="form-control"
         formControlName="url">
     </div>
