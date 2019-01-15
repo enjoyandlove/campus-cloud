@@ -13,9 +13,9 @@
 
   <div *ngSwitchCase="false">
     <cp-no-content
-      class="no-content"
+      class="margin-top"
       *ngIf="!(locations$ | async).length"
-      noContentText="No locations found...">
+      [noContentText]="'t_locations_no_record_found' | cpI18n">
     </cp-no-content>
 
     <cp-list-view

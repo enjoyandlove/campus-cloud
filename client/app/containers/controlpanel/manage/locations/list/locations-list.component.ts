@@ -37,8 +37,6 @@ const state: IState = {
   styleUrls: ['./locations-list.component.scss']
 })
 export class LocationsListComponent extends BaseComponent implements OnInit, OnDestroy {
-  eventData;
-  sortingLabels;
   state: IState = state;
   showDeleteModal = false;
   deleteLocation: ILocation;

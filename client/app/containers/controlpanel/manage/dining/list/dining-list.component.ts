@@ -33,12 +33,10 @@ const state: IState = {
   styleUrls: ['./dining-list.component.scss']
 })
 export class DiningListComponent extends BaseComponent implements OnInit, OnDestroy {
-  eventData;
-  sortingLabels;
   state: IState = state;
   loading$: Observable<boolean>;
   categories$: Observable<IItem[]>;
-  locations$: Observable<ILocation[]>;
+  dining$: Observable<ILocation[]>;
 
   private destroy$ = new Subject();
 
@@ -133,7 +131,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
       )
       .subscribe();
 
-    this.locations$ = this.store.select(fromStore.getDining).pipe(
+    this.dining$ = this.store.select(fromStore.getDining).pipe(
       map((dining: ILocation[]) => {
         const responseCopy = [...dining];
 
