@@ -5,13 +5,14 @@ import { StoreModule } from '@ngrx/store';
 
 import { BaseStoreModule } from './base';
 import { ManageStoreModule } from './manage';
+import { routerReducers } from '@app/store/base/router-state';
 
 @NgModule({
   imports: [
     CommonModule,
     BaseStoreModule,
     ManageStoreModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(routerReducers),
     EffectsModule.forRoot([])
   ],
   declarations: []

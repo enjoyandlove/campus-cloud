@@ -36,6 +36,8 @@ import { CPDatePipe, CPFilterPipe, CPI18nPipe, CPFIlterByLength } from './pipes'
 // components
 import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
 
+import { LatLngValidators } from '@shared/validators';
+
 import {
   CPTabComponent,
   CPCardComponent,
@@ -82,6 +84,7 @@ import {
   CPSortingHeaderComponent,
   CPResourceBannerComponent,
   CPSmallDatePickerComponent,
+  CPFormFixedFooterComponent,
   CPUploadModalBodyComponent,
   CPPlaceAutoCompleteComponent,
   CPUploadModalFooterComponent,
@@ -151,6 +154,7 @@ import {
     CPCheckDropdownComponent,
     CPFeatureToggleDirective,
     CPResourceBannerComponent,
+    CPFormFixedFooterComponent,
     CPSmallDatePickerComponent,
     CPUploadModalBodyComponent,
     CPUploadModalFooterComponent,
@@ -167,6 +171,7 @@ import {
     StoreService,
     CPMapsService,
     LocationsService,
+    LatLngValidators,
     CPTrackingService,
     FileUploadService,
     CPLocationsService,
@@ -236,6 +241,7 @@ import {
     CPSortingHeaderComponent,
     CPFeatureToggleDirective,
     CPResourceBannerComponent,
+    CPFormFixedFooterComponent,
     CPSmallDatePickerComponent,
     CPUploadModalBodyComponent,
     CPPlaceAutoCompleteComponent,

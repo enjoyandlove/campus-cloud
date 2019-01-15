@@ -1,0 +1,56 @@
+<div class="margin-bottom" [ngSwitch]="loading$ | async">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <form [formGroup]="locationForm" *ngSwitchCase="false">
+    <div class="row">
+      <div class="col">
+        <div class="cp-card">
+          <div class="row">
+            <div class="col-12">
+              <p class="title">{{ 't_locations_location_details' | cpI18n }}</p>
+              <cp-location-form
+                [formErrors]="formErrors"
+                [categories$]="categories$"
+                [locationForm]="locationForm"
+                [selectedCategory]="selectedCategory">
+              </cp-location-form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="cp-card">
+          <div class="row">
+            <div class="col-12">
+              <p class="title">{{ 't_locations_opening_hours' | cpI18n }}</p>
+              <span class="float-right">
+                <cp-switch
+                  [isChecked]="openingHours"
+                  (toggle)="openingHours = !openingHours">
+                </cp-switch>
+              </span>
+            </div>
+
+            <div class="col-12 margin-top">
+              <cp-location-opening-hours-form
+                *ngIf="openingHours"
+                [formErrors]="formErrors"
+                [locationForm]="locationForm">
+              </cp-location-opening-hours-form>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <cp-form-fixed-footer
+          (submitClick)="doSubmit()"
+          (cancelClick)="onCancel()"
+          [submitButtonText]="'update'"
+          [submitButtonDisabled]="buttonDisabled">
+        </cp-form-fixed-footer>
+      </div>
+    </div>
+  </form>
+</div>
