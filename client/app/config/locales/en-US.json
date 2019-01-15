@@ -129,7 +129,7 @@
     "message": "Create your Campus Cloud Account"
   },
   "admin_invite_invalid_invite_key_error": {
-    "message": "Invalid invite key"
+    "message": "The activation link is invalid, please make sure you clicked on the right link"
   },
   "admin_manage_and_assess_events": {
     "message": "View events and event assessment"
@@ -2059,7 +2059,7 @@
     "message": "How did you like the service?"
   },
   "services_delete_modal_body": {
-    "message": "Are you sure you want to delete %s?  All events in %s will also be deleted."
+    "message": "Are you sure you want to delete %s?"
   },
   "services_delete_modal_title": {
     "message": "Delete Service"
@@ -2276,6 +2276,12 @@
   },
   "total_ratings": {
     "message": "Ratings"
+  },
+  "t_admin_invite_account_error": {
+    "message": "Activation failed, the account does not exist, please get a new invitation link"
+  },
+  "t_admin_invite_already_activated_error": {
+    "message": "Your account has already been activated, click below to login"
   },
   "t_admin_invite_studio_limited_tooltip": {
     "message": "Full access to Studio requires permission to Athletics, Events, Clubs, Services, Calendar and Orientation. Your access to add resources will be limited without those permissions."
@@ -2596,6 +2602,9 @@
   },
   "t_locations_category_create_category": {
     "message": "Create Category"
+  },
+  "t_locations_category_type_select": {
+    "message": "Select Type"
   },
   "t_locations_create_location": {
     "message": "Create Location"
@@ -2998,6 +3007,9 @@
   },
   "t_shared_category_create_form_modal_title": {
     "message": "New Category"
+  },
+  "t_shared_category_edit_form_modal_title": {
+    "message": "Edit Category"
   },
   "t_shared_category_name": {
     "message": "Category Name"

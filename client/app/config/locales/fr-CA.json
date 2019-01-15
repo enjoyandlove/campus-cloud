@@ -129,7 +129,7 @@
     "message": "Créer votre compte Campus Cloud"
   },
   "admin_invite_invalid_invite_key_error": {
-    "message": "Clé d'invitation non valide"
+    "message": "Le lien d'activation n'est pas valide, veuillez vous assurer d'avoir cliqué sur le bon lien."
   },
   "admin_manage_and_assess_events": {
     "message": "Voir les événements et l'évaluation des événements"
@@ -2058,6 +2058,9 @@
   "services_default_feedback_question": {
     "message": "Qu'avez-vous pensé de la qualité du service ?"
   },
+  "services_delete_modal_body": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
   "services_delete_modal_title": {
     "message": "Supprimer service"
   },
@@ -2273,6 +2276,12 @@
   },
   "total_ratings": {
     "message": "Notes"
+  },
+  "t_admin_invite_account_error": {
+    "message": "Activation échouée, le compte n'existe pas, veuillez obtenir un nouveau lien d'invitation"
+  },
+  "t_admin_invite_already_activated_error": {
+    "message": "Votre compte a déjà été activé, cliquez ci-dessous pour vous connecter"
   },
   "t_admin_invite_studio_limited_tooltip": {
     "message": "Un accès complet à Studio nécessite les permissions vers les clubs sportifs, les événements, les clubs, les services, les calendriers et l'orientation. Votre accès pour ajouter des ressources sera limité sans ces permissions."
