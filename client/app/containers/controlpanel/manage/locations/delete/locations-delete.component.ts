@@ -1,10 +1,13 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
-import { CPSession } from './../../../../../session';
-import { LocationsService } from '../locations.service';
-import { CPTrackingService } from '../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { ILocation } from '../model';
+import * as fromStore from '../store';
+import * as fromRoot from '@app/store';
+import { CPSession } from '@app/session';
+import { CPTrackingService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants/analytics';
 
 declare var $: any;
 
@@ -14,24 +17,29 @@ declare var $: any;
   styleUrls: ['./locations-delete.component.scss']
 })
 export class LocationsDeleteComponent implements OnInit {
-  @Input() location: any;
-  @Output() locationDeleted: EventEmitter<number> = new EventEmitter();
+  @Input() location: ILocation;
 
   eventProperties;
 
   constructor(
     public session: CPSession,
-    public service: LocationsService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
   ) {}
 
   onDelete() {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
-    this.service.deleteLocationById(this.location.id, search).subscribe((_) => {
-      this.trackEvent();
-      this.locationDeleted.emit(this.location.id);
-      $('#locationsDelete').modal('hide');
-    });
+    const locationId = this.location.id;
+    const school_id =  this.session.g.get('school').id;
+    const params = new HttpParams().set('school_id', school_id);
+
+    const payload = {
+      params,
+      locationId
+    };
+
+    this.store.dispatch(new fromStore.DeleteLocation(payload));
+    this.trackEvent();
+    $('#locationsDelete').modal('hide');
   }
 
   trackEvent() {

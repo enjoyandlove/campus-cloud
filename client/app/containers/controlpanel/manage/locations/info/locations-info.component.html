@@ -1,0 +1,97 @@
+<div [ngSwitch]="loading$ | async">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <div class="row justify-content-center">
+      <div class="col-8 location">
+        <div class="cp-card location__header">
+          <div class="row">
+            <div class="col-12">
+              <cp-resource-banner [resourceBanner]="resourceBanner"></cp-resource-banner>
+              <div class="row location__buttons">
+                <div class="col-6">
+                  <a
+                    [routerLink]="['../edit']"
+                    class="cpbtn cpbtn--primary">
+                    {{ 'edit' | cpI18n }}
+                  </a>
+                </div>
+                <div class="col-6 text-right">
+                  <img
+                    class="img-fit-cover avatar"
+                    *ngIf="location.category_img_url"
+                    [src]="location.category_img_url">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="cp-card location__details">
+              <div class="row">
+                <div class="col-12">
+
+                  <div class="row">
+                    <div class="col-2">
+                      <p><strong>{{ 'address' | cpI18n }}</strong></p>
+                    </div>
+                    <div class="col-10">
+                      <p class="js_test_address">{{ location.address }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12 location__map">
+                  <cp-maps
+                    [center]="mapCenter"
+                    [draggable]="draggable">
+                  </cp-maps>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="location.short_name || location.description">
+          <div class="col-12">
+            <div class="cp-card">
+              <div *ngIf="location.short_name">
+                <p><strong>{{ 'locations_label_acronym' | cpI18n }}</strong></p>
+                <p>{{ location.short_name }}</p>
+              </div>
+
+              <div *ngIf="location.description">
+                <p><strong>{{ 'description' | cpI18n }}</strong></p>
+                <p class="render_line_breaks">{{ location.description }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="location.schedule.length">
+          <div class="col-12">
+            <div class="cp-card">
+              <p><strong>{{ 't_locations_opening_hours' | cpI18n }}</strong></p>
+
+              <div class="row" *ngFor="let openingHour of location.schedule">
+                <div class="col-2">
+                  <p>{{ openingHour.day | locationsDayLabel | cpI18n }}</p>
+                </div>
+                <div class="col-10">
+                  <p>
+                    {{ openingHour['items'][0].start_time | locationsTimeLabel }} -
+                    {{ openingHour['items'][0].end_time | locationsTimeLabel }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

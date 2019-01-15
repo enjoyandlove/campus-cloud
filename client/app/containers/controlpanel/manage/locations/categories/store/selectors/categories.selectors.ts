@@ -1,0 +1,33 @@
+import { createSelector } from '@ngrx/store';
+
+import * as fromFeature from '../reducers';
+import { getFeatureState } from './feature.selectors';
+import * as fromCategories from '../reducers/categories.reducers';
+
+export const getCategoriesState = createSelector(
+  getFeatureState,
+  (state: fromFeature.ICategoriesState) => state.categories
+);
+
+export const getCategories = createSelector(
+  getCategoriesState,
+  fromCategories.getCategories
+);
+
+export const getCategoriesError = createSelector(
+  getCategoriesState,
+  fromCategories.getCategoriesError
+);
+
+export const getCategoriesLoading = createSelector(
+  getCategoriesState,
+  fromCategories.getCategoriesLoading
+);
+
+export const getCategoriesLoaded = createSelector(
+  getCategoriesState,
+  fromCategories.getCategoriesLoaded
+);
+
+
+
