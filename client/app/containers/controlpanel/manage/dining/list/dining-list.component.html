@@ -22,8 +22,7 @@
       [state]="state"
       [data$]="locations$"
       (doSort)="onDoSort($event)"
-      *ngIf="(locations$ | async).length"
-      (deleteClick)="onLaunchDeleteModal($event)">
+      *ngIf="(locations$ | async).length">
     </cp-list-view>
 
     <cp-pagination
@@ -35,11 +34,3 @@
     </cp-pagination>
   </div>
 </div>
-
-<cp-modal
-  *ngIf="showDeleteModal"
-  modalId="locationsDelete">
-  <cp-locations-delete
-    [location]="deleteLocation">
-  </cp-locations-delete>
-</cp-modal>

@@ -1,0 +1,52 @@
+@import '~client/style/core/colors';
+@import '~client/style/components/form';
+@import '~client/style/components/card';
+@import '~client/style/components/button';
+
+.delete-location {
+  font-size: 2em;
+}
+
+.updateLocationBtn {
+  max-width: 100%;
+}
+
+.no-content {
+  @include card-margin();
+}
+
+.cp-form {
+  &__item {
+    span i.action-button {
+      color: $color-secondary-text;
+    }
+  }
+
+  &__header {
+    span.hover {
+      position: relative;
+
+      > span i {
+        top: 1px;
+        font-size: 17px;
+        position: absolute;
+        padding-left: 6px;
+      }
+    }
+  }
+
+  .margin-right {
+    margin-right: 10px;
+  }
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  margin-right: 10px;
+}
+
+.locations {
+  padding: 0;
+  list-style: none;
+}

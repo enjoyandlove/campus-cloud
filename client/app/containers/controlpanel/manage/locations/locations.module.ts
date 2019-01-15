@@ -10,8 +10,8 @@ import { LocationsListComponent } from './list';
 import { LocationsEditComponent } from './edit';
 import { LocationsDeleteComponent } from './delete';
 import { LocationsCreateComponent } from './create';
-import { LocationsListTopBarComponent } from './list/components';
 import { LocationsDayLabelPipe, LocationsTimeLabelPipe } from './pipes';
+import { LocationsListTopBarComponent, ListViewComponent } from './list/components';
 import { LocationFormComponent, LocationOpeningHoursFormComponent } from './components';
 
 import { LocationsService } from './locations.service';
@@ -26,6 +26,7 @@ import { CategoriesModule } from './categories/categories.module';
 
 @NgModule({
   declarations: [
+    ListViewComponent,
     LocationsDayLabelPipe,
     LocationFormComponent,
     LocationsTimeLabelPipe,
@@ -49,6 +50,10 @@ import { CategoriesModule } from './categories/categories.module';
     StoreModule.forFeature('locations', reducers)
   ],
 
+  exports: [
+    ListViewComponent,
+    LocationsListTopBarComponent,
+  ],
   providers: [
     LocationsService,
     LocationExistsGuard,

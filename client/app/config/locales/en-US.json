@@ -1096,6 +1096,9 @@
   "description": {
     "message": "Description"
   },
+  "dining": {
+    "message": "Dining"
+  },
   "done": {
     "message": "Done"
   },
@@ -2413,6 +2416,9 @@
     "message": "Ongoing",
     "description": "Indicates that a deal is posted without an end date"
   },
+  "t_error_category_associated_to_location": {
+    "message": "This category is associated to a location."
+  },
   "t_events_assessment_add_checkin_modal_title": {
     "message": "Check-in"
   },
@@ -2641,6 +2647,9 @@
   },
   "t_longitude": {
     "message": "Longitude"
+  },
+  "t_members_no_results_found": {
+    "message": "No Members Found"
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"

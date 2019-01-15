@@ -1,21 +1,17 @@
 import { filter, takeUntil, map, tap, take } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { ILocation } from '../model';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
 import { ManageHeaderService } from '../../utils';
+import { ILocation } from '../../locations/model';
 import { BaseComponent } from '@app/base/base.component';
-import * as fromCategoryStore from '../categories/store';
-import { Locale } from '../categories/categories.status';
-import { LocationsUtilsService } from '../locations.utils';
-import { ICategory } from '../categories/categories.interface';
 
 interface IState {
   search_str: string;
@@ -32,16 +28,14 @@ const state: IState = {
 };
 
 @Component({
-  selector: 'cp-locations-list',
-  templateUrl: './locations-list.component.html',
-  styleUrls: ['./locations-list.component.scss']
+  selector: 'cp-dining-list',
+  templateUrl: './dining-list.component.html',
+  styleUrls: ['./dining-list.component.scss']
 })
-export class LocationsListComponent extends BaseComponent implements OnInit, OnDestroy {
+export class DiningListComponent extends BaseComponent implements OnInit, OnDestroy {
   eventData;
   sortingLabels;
   state: IState = state;
-  showDeleteModal = false;
-  deleteLocation: ILocation;
   loading$: Observable<boolean>;
   categories$: Observable<IItem[]>;
   locations$: Observable<ILocation[]>;
@@ -52,13 +46,14 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     public session: CPSession,
     public cpI18n: CPI18nService,
     public headerService: ManageHeaderService,
-    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
+    public store: Store<fromStore.IDiningState | fromRoot.IHeader>
   ) {
     super();
   }
 
   fetch() {
     const search = new HttpParams()
+      .append('location_type', 'dining')
       .append('search_str', this.state.search_str)
       .append('sort_field', this.state.sort_field)
       .append('category_id', this.state.category_id)
@@ -71,7 +66,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       params: search
     };
 
-    this.store.dispatch(new fromStore.GetLocations(payload));
+    this.store.dispatch(new fromStore.GetDining(payload));
   }
 
   onPaginationNext() {
@@ -125,36 +120,9 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     });
   }
 
-  onLaunchDeleteModal(location: ILocation) {
-    this.showDeleteModal = true;
-    this.deleteLocation = location;
-
-    setTimeout(() => $('#locationsDelete').modal());
-  }
-
-  loadCategories() {
-    const categoryLabel = this.cpI18n.translate('all');
-    this.categories$ = this.store.select(fromCategoryStore.getCategories).pipe(
-      takeUntil(this.destroy$),
-      tap((categories: ICategory[]) => {
-        if (!categories.length) {
-          const locale = CPI18nService.getLocale().startsWith('fr')
-            ? Locale.fr : Locale.eng;
-
-          const params = new HttpParams()
-            .set('locale', locale)
-            .set('school_id', this.session.g.get('school').id);
-
-          this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
-        }
-      }),
-      map((res) => LocationsUtilsService.setCategoriesDropDown(res, categoryLabel))
-    );
-  }
-
-  loadLocations() {
+  loadDining() {
     this.store
-      .select(fromStore.getLocationsLoaded)
+      .select(fromStore.getDiningLoaded)
       .pipe(
         tap((loaded: boolean) => {
           if (!loaded) {
@@ -165,9 +133,9 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       )
       .subscribe();
 
-    this.locations$ = this.store.select(fromStore.getLocations).pipe(
-      map((locations: ILocation[]) => {
-        const responseCopy = [...locations];
+    this.locations$ = this.store.select(fromStore.getDining).pipe(
+      map((dining: ILocation[]) => {
+        const responseCopy = [...dining];
 
         return super.updatePagination(responseCopy);
       })
@@ -176,7 +144,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
   listenForErrors() {
     this.store
-      .select(fromStore.getLocationsError)
+      .select(fromStore.getDiningError)
       .pipe(
         takeUntil(this.destroy$),
         filter((error) => error),
@@ -198,12 +166,12 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
   }
 
   ngOnInit() {
+    this.loadDining();
     this.buildHeader();
-    this.loadLocations();
-    this.loadCategories();
     this.listenForErrors();
 
-    this.loading$ = this.store.select(fromStore.getLocationsLoading);
+    this.loading$ = this.store.select(fromStore.getDiningLoading);
+    this.categories$ = of([{label: '---', action: null}]);
   }
 
   ngOnDestroy() {

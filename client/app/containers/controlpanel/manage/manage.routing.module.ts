@@ -68,6 +68,12 @@ const appRoutes: Routes = [
       },
 
       {
+        path: 'dining',
+        data: { zendesk: 'dining' },
+        loadChildren: './dining/dining.module#DiningModule'
+      },
+
+      {
         path: 'orientation',
         data: { zendesk: 'orientation' },
         loadChildren: './orientation/orientation.module#OrientationModule'
