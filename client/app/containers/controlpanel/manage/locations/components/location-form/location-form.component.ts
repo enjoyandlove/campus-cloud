@@ -89,7 +89,7 @@ export class LocationFormComponent implements OnInit {
   }
 
   onUploadedImage(image) {
-    this.locationForm.get('image_url').setValue(image);
+    this.locationForm.get('image_url').setValue(image ? image : '');
   }
 
   onUpdateMap() {
