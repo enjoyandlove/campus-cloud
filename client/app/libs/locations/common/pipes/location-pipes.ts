@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { LocationsUtilsService } from '../locations.utils';
+import { LocationsUtilsService } from '../utils';
 
 @Pipe({ name: 'locationsTimeLabel' })
 export class LocationsTimeLabelPipe implements PipeTransform {

@@ -3,9 +3,9 @@ import { map, take, filter } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { ILocation } from '../model';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
+import { ILocation } from '@libs/locations/common/model';
 
 @Component({
   selector: 'cp-locations-info',

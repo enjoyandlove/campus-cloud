@@ -18,13 +18,14 @@
       [noContentText]="'t_locations_no_record_found' | cpI18n">
     </cp-no-content>
 
-    <cp-list-view
-      [state]="state"
+    <cp-locations-list-view
       [data$]="locations$"
+      [sortBy]="state.sort_field"
       (doSort)="onDoSort($event)"
       *ngIf="(locations$ | async).length"
+      [sortDirection]="state.sort_direction"
       (deleteClick)="onLaunchDeleteModal($event)">
-    </cp-list-view>
+    </cp-locations-list-view>
 
     <cp-pagination
       [pageNext]="pageNext"

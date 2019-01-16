@@ -8,7 +8,6 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
-import { LocationModel } from '../model';
 import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
 import { CPSession, ISchool } from '@app/session';
@@ -17,8 +16,9 @@ import { LatLngValidators } from '@shared/validators';
 import { LocationsService } from '../locations.service';
 import * as fromCategoryStore from '../categories/store';
 import { Locale } from '../categories/categories.status';
-import { LocationsUtilsService } from '../locations.utils';
+import { LocationModel } from '@libs/locations/common/model';
 import { ICategory } from '../categories/categories.interface';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
 
 @Component({
   selector: 'cp-locations-create',

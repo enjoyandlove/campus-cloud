@@ -1,7 +1,7 @@
 import { FormArray, FormGroup } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 
-import { LocationsUtilsService } from '../../locations.utils';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
 
 @Component({
   selector: 'cp-location-opening-hours-form',

@@ -12,13 +12,13 @@ import { BaseComponent } from '@app/base';
 import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
 import { CPSession, ISchool } from '@app/session';
-import { LocationModel, ILocation } from '../model';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
 import * as fromCategoryStore from '../categories/store';
 import { Locale } from '../categories/categories.status';
-import { LocationsUtilsService } from '../locations.utils';
 import { ICategory } from '../categories/categories.interface';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { LocationModel, ILocation } from '@libs/locations/common/model';
 
 @Component({
   selector: 'cp-locations-edit',

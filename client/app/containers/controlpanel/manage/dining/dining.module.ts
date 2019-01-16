@@ -10,6 +10,7 @@ import { DiningService } from './dining.service';
 import { SharedModule } from '@shared/shared.module';
 import { DiningRoutingModule } from './dining.routing.module';
 import { LocationsModule } from '../locations/locations.module';
+import { CommonLocationsModule } from '@libs/locations/common/common-locations.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { LocationsModule } from '../locations/locations.module';
     SharedModule,
     DiningRoutingModule,
     LocationsModule,
+    CommonLocationsModule,
     EffectsModule.forFeature(effects),
     StoreModule.forFeature('dining', reducers)
   ],

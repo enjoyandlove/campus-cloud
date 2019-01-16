@@ -1,7 +1,7 @@
 import { FormArray, FormBuilder } from '@angular/forms';
 
-import { mockSchedule } from './tests';
-import { ScheduleDays, ScheduleModel } from './model';
+import { mockSchedule } from '../tests';
+import { ScheduleDays, ScheduleModel } from '../model';
 import { LocationsUtilsService } from './locations.utils';
 
 describe('LocationsUtils', () => {

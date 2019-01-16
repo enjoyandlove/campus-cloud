@@ -5,10 +5,10 @@
         <cp-sorting-header
           class="col-7"
           sortLabel="name"
+          [sortField]="sortBy"
           (click)="doSort.emit('name')"
-          [sortField]="state.sort_field"
-          [label]="sortingLabels.locations"
-          [sortDirection]="state.sort_direction">
+          [sortDirection]="sortDirection"
+          [label]="sortingLabels.locations">
         </cp-sorting-header>
 
         <span class="col-2">{{ 'locations_label_acronym' | cpI18n }}</span>
@@ -24,7 +24,9 @@
           class="rounded img-fit-cover float-left avatar"
           [src]="location.image_url ? location.image_url : defaultImage">
         <strong>
-          <a [routerLink]="[location.id + '/info']">
+          <a
+            cpTarget="view_info"
+            [routerLink]="[location.id + '/info']">
             {{ location.name }}
           </a>
         </strong>
@@ -33,22 +35,28 @@
         {{ location.address }}
       </span>
 
-        <span class="col-2 text-truncate">
+        <span
+          cpTarget="acronym"
+          class="col-2 text-truncate">
         {{ location.short_name }}
       </span>
 
-        <span class="col-2 text-truncate">
+        <span
+          cpTarget="category_name"
+          class="col-2 text-truncate">
         {{ location.category_name }}
       </span>
 
         <span>
         <a
           cpTracker
+          cpTarget="edit"
           [eventData]="eventData"
           [routerLink]="[location.id + '/edit']">
            <i class="material-icons hover action-button margin-right">edit</i>
         </a>
         <i
+          cpTarget="delete"
           (click)="deleteClick.emit(location)"
           class="material-icons hover margin-right action-button">close</i>
       </span>

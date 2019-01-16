@@ -3,8 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
-
 import { of } from 'rxjs';
+
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { CPI18nService } from '@shared/services';

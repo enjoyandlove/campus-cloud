@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
 
-import { ILocation } from '../../model';
 import * as fromActions from '../actions';
+import { ILocation } from '@libs/locations/common/model';
 import { LocationsService } from '../../locations.service';
 
 @Injectable()

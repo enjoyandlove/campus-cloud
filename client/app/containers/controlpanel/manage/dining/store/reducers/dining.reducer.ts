@@ -1,6 +1,6 @@
 import * as fromDining from '../actions';
 
-import { ILocation } from '../../../locations/model';
+import { ILocation } from '@libs/locations/common/model';
 
 export interface IDiningState {
   error: boolean;

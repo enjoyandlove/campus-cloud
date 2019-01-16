@@ -5,7 +5,7 @@ import { mockTime } from '../../tests';
 import { SharedModule } from '@shared/shared.module';
 import { configureTestSuite } from '@app/shared/tests';
 import { LocationsUtilsService } from '../../locations.utils';
-import { LocationModel, ScheduleDays, scheduleLabels } from '../../model';
+import { LocationModel, ScheduleDays, scheduleLabels } from '@libs/locations/common/model';
 import { LocationOpeningHoursFormComponent } from './location-opening-hours-form.component';
 
 describe('LocationOpeningHoursFormComponent', () => {
