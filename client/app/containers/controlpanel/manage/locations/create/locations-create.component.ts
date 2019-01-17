@@ -42,7 +42,9 @@ export class LocationsCreateComponent implements OnInit, OnDestroy, AfterViewIni
     public cpI18n: CPI18nService,
     public latLng: LatLngValidators,
     public service: LocationsService,
-    public store: Store<fromStore.ILocationsState | fromCategoryStore.ICategoriesState | fromRoot.IHeader>
+    public store: Store<
+      fromStore.ILocationsState | fromCategoryStore.ICategoriesState | fromRoot.IHeader
+    >
   ) {}
 
   doSubmit() {
@@ -59,7 +61,10 @@ export class LocationsCreateComponent implements OnInit, OnDestroy, AfterViewIni
     }
 
     const body = this.locationForm.value;
-    body['schedule'] = LocationsUtilsService.filteredScheduleControls(this.locationForm, this.openingHours);
+    body['schedule'] = LocationsUtilsService.filteredScheduleControls(
+      this.locationForm,
+      this.openingHours
+    );
 
     const school_id = this.session.g.get('school').id;
     const params = new HttpParams().append('school_id', school_id);
@@ -87,7 +92,8 @@ export class LocationsCreateComponent implements OnInit, OnDestroy, AfterViewIni
   }
 
   setErrors() {
-    this.store.select(fromStore.getLocationsError)
+    this.store
+      .select(fromStore.getLocationsError)
       .pipe(
         takeUntil(this.destroy$),
         filter((error) => error),
@@ -141,8 +147,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy, AfterViewIni
       takeUntil(this.destroy$),
       tap((categories: ICategory[]) => {
         if (!categories.length) {
-          const locale = CPI18nService.getLocale().startsWith('fr')
-            ? Locale.fr : Locale.eng;
+          const locale = CPI18nService.getLocale().startsWith('fr') ? Locale.fr : Locale.eng;
 
           const params = new HttpParams()
             .set('locale', locale)

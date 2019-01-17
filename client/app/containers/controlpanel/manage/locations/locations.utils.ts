@@ -14,16 +14,11 @@ export class LocationsUtilsService {
   }
 
   static filteredScheduleControls(form: FormGroup, hasOpeningHours) {
-    const _schedule = [];
     const controls = <FormArray>form.controls['schedule'];
 
-    controls.controls.forEach((control: FormGroup) => {
-      if (control.controls['is_checked'].value && hasOpeningHours) {
-        _schedule.push(control.value);
-      }
-    });
-
-    return _schedule;
+    return controls.controls
+      .filter((control: FormGroup) => control.controls['is_checked'].value && hasOpeningHours)
+      .map((ctr: FormGroup) => ctr.value);
   }
 
   static setScheduleFormControls(form: FormGroup, schedule = []) {
@@ -55,20 +50,22 @@ export class LocationsUtilsService {
   }
 
   static setOpeningHours(openingHours, controlItems, scheduleForm) {
-      scheduleForm.get('is_checked').setValue(true);
+    scheduleForm.get('is_checked').setValue(true);
 
-      openingHours.items.forEach((time) => {
-        controlItems.push(ScheduleModel.setItemControls(time));
-      });
+    openingHours.items.forEach((time) => {
+      controlItems.push(ScheduleModel.setItemControls(time));
+    });
 
-      controlItems.removeAt(0);
+    controlItems.removeAt(0);
   }
 
   static setCategoriesDropDown(categories: ICategory[], label: string) {
-    const _heading = [{
-      label,
-      action: null
-    }];
+    const _heading = [
+      {
+        label,
+        action: null
+      }
+    ];
 
     const _categories = categories.map((category: ICategory) => {
       return getItem(category, 'name', 'id');
