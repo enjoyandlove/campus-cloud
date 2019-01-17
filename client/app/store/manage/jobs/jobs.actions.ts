@@ -76,7 +76,7 @@ export class DeleteEmployerSuccess implements Action {
   constructor(public payload: number) {}
 }
 
-export type JobssAction =
+export type JobsAction =
   | LoadEmployers
   | LoadEmployersFail
   | LoadEmployersSuccess

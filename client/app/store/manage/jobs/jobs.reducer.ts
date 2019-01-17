@@ -8,7 +8,7 @@ export const initialState: IJobsState = {
   loading: false
 };
 
-export function reducer(state = initialState, action: actions.JobssAction): IJobsState {
+export function reducer(state = initialState, action: actions.JobsAction): IJobsState {
   switch (action.type) {
     case actions.LOAD_EMPLOYERS: {
       return {

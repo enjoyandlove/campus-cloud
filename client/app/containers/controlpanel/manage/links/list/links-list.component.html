@@ -26,8 +26,8 @@
               sortLabel="name"
               (click)="doSort('name')"
               [label]="sortingLabels.name"
-              [sortField]="state.sort_field"
-              [sortDirection]="state.sort_direction">
+              [sortField]="state.sort.sort_field"
+              [sortDirection]="state.sort.sort_direction">
             </cp-sorting-header>
 
             <span class="col-6">{{ 'description' | cpI18n }}</span>
@@ -83,7 +83,7 @@
 
 <cp-modal modalId="linksCreate" *ngIf="isLinksCreate">
   <cp-links-create
-    (createLink)="onCreatedLink($event)"
+    (createLink)="onCreatedLink()"
     (resetCreateModal)="isLinksCreate = false">
   </cp-links-create>
 </cp-modal>
@@ -91,7 +91,7 @@
 <cp-modal modalId="linksDelete" *ngIf="isLinksDelete">
   <cp-links-delete
     [link]="deleteLink"
-    (deleteLink)="onDeletedLink($event)"
+    (deleteLink)="onDeletedLink()"
     (resetDeleteModal)="isLinksDelete = false">
   </cp-links-delete>
 </cp-modal>
@@ -99,7 +99,7 @@
 <cp-modal modalId="linksEdit" *ngIf="isLinksEdit">
   <cp-links-edit
     [link]="editLink"
-    (editLink)="onEditedLink($event)"
+    (editLink)="onEditedLink()"
     (resetEditModal)="isLinksEdit = false">
   </cp-links-edit>
 </cp-modal>
