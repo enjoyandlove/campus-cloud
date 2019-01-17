@@ -39,6 +39,13 @@ describe('LocationsCreateComponent', () => {
     fixture = TestBed.createComponent(LocationsCreateComponent);
     component = fixture.componentInstance;
     component.session.g.set('school', mockSchool);
+
+    // initial change detection, (this calls all lifecycle hooks)
+    fixture.detectChanges();
+
+    // ignore async validators
+    component.locationForm.get('latitude').clearAsyncValidators();
+    component.locationForm.get('longitude').clearAsyncValidators();
   });
 
   it('should init', () => {
@@ -46,20 +53,22 @@ describe('LocationsCreateComponent', () => {
   });
 
   it('should create an empty form', () => {
-    component.ngOnInit();
-
     const result = component.locationForm.value;
 
+    // update lat/lng values being set after form is created
+    const expected = {
+      ...emptyForm,
+      latitude: mockSchool.latitude,
+      longitude: mockSchool.longitude
+    };
     expect(result['schedule'].length).toEqual(7);
 
     result['links'] = [];
     result['schedule'] = [];
-    expect(result).toEqual(emptyForm);
+    expect(result).toEqual(expected);
   });
 
   it('should show form errors true', () => {
-    component.ngOnInit();
-
     fillForm(component.locationForm, filledForm);
 
     component.locationForm.get('category_id').setValue(null);
@@ -71,7 +80,6 @@ describe('LocationsCreateComponent', () => {
   });
 
   it('should dispatch PostLocation action', () => {
-    component.ngOnInit();
     const dispatchSpy = spyOn(component.store, 'dispatch');
 
     fillForm(component.locationForm, filledForm);
@@ -82,8 +90,6 @@ describe('LocationsCreateComponent', () => {
     component.doSubmit();
 
     const expected = new fromStore.PostLocation(component.locationForm.value);
-
-    expect(component.store.dispatch).toHaveBeenCalled();
 
     const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
     const { body } = payload;
