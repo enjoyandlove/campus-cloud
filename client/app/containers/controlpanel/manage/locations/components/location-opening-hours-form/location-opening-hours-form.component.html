@@ -1,6 +1,6 @@
 <form [formGroup]="locationForm">
   <div formArrayName="schedule">
-    <div *ngFor="let schedule of locationForm.get('schedule').controls; let i= index">
+    <div *ngFor="let schedule of locationForm.get('schedule')['controls']; let i= index">
       <div class="row" [formGroupName]="i">
         <div class="col-5">
           <div class="row">
@@ -20,7 +20,7 @@
           </div>
         </div>
 
-        <div class="col-7" *ngFor="let item of schedule.get('items').controls; let itemIndex = index">
+        <div class="col-7" *ngFor="let item of schedule.get('items')['controls']; let itemIndex = index">
           <div formArrayName="items">
             <div class="row" [formGroupName]="itemIndex">
               <div class="col-6 horizontal">
