@@ -11,6 +11,7 @@ import * as fromRoot from '@app/store';
 import { LocationModel } from '../model';
 import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
+import { ICategory } from '../categories/model';
 import { CPSession, ISchool } from '@app/session';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
@@ -18,7 +19,6 @@ import { LocationsService } from '../locations.service';
 import * as fromCategoryStore from '../categories/store';
 import { Locale } from '../categories/categories.status';
 import { LocationsUtilsService } from '../locations.utils';
-import { ICategory } from '../categories/categories.interface';
 
 @Component({
   selector: 'cp-locations-create',

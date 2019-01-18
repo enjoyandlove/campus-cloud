@@ -2,8 +2,8 @@ import { FormArray, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
 import { getItem } from '@shared/components';
+import { ICategory } from './categories/model';
 import { ScheduleModel, scheduleLabels } from './model';
-import { ICategory } from './categories/categories.interface';
 
 @Injectable()
 export class LocationsUtilsService {

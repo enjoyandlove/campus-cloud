@@ -29,5 +29,15 @@ export const getCategoriesLoaded = createSelector(
   fromCategories.getCategoriesLoaded
 );
 
+export const getCategoriesType = createSelector(
+  getCategoriesState,
+  fromCategories.getCategoriesType
+);
+
+export const getCategoriesErrorMessage = createSelector(
+  getCategoriesState,
+  fromCategories.getCategoriesErrorMessage
+);
+
 
 

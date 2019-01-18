@@ -9,6 +9,7 @@ import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
+import { ICategory } from '../categories/model';
 import { ManageHeaderService } from '../../utils';
 import { BaseComponent } from '@app/base/base.component';
 import * as fromCategoryStore from '../categories/store';
@@ -16,7 +17,6 @@ import { Locale } from '../categories/categories.status';
 import { CP_TRACK_TO } from '@shared/directives/tracking';
 import { LocationsUtilsService } from '../locations.utils';
 import { amplitudeEvents } from '@shared/constants/analytics';
-import { ICategory } from '../categories/categories.interface';
 import { environment } from '@client/environments/environment';
 import { CPI18nService, CPTrackingService } from '@shared/services';
 
