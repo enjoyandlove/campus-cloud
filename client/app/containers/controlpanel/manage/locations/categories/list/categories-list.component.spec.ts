@@ -9,11 +9,11 @@ import { of } from 'rxjs';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { CategoryTypePipe } from '../pipes';
-import { mockCategories} from '../../tests';
 import { CPI18nService } from '@shared/services';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
+import { mockCategories} from '../../categories/tests';
 import { CategoriesActionBoxComponent } from './components';
 import { CategoriesListComponent } from './categories-list.component';
 

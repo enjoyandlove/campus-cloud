@@ -5,6 +5,10 @@ import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
 import { CategoriesListComponent } from './list';
+import { CategoriesEditComponent } from './edit';
+import { CategoriesDeleteComponent } from './delete';
+import { CategoriesCreateComponent } from './create';
+import { CategoryFormComponent } from './components';
 import { CategoriesActionBoxComponent } from './list/components';
 
 
@@ -17,7 +21,11 @@ import { CategoriesRoutingModule } from './categories.routing.module';
 @NgModule({
   declarations: [
     CategoryTypePipe,
+    CategoryFormComponent,
+    CategoriesEditComponent,
     CategoriesListComponent,
+    CategoriesCreateComponent,
+    CategoriesDeleteComponent,
     CategoriesActionBoxComponent
   ],
 

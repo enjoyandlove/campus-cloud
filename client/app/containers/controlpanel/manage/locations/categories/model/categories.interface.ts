@@ -3,11 +3,17 @@ export interface ICategory {
 
   name: string;
 
-  image_url: string;
+  img_url: string;
 
   is_default: boolean;
 
-  category_type: number;
+  category_type_id: number;
 
   category_type_name: string;
+}
+
+export interface ICategoryType {
+  id?: number;
+
+  name: string;
 }
