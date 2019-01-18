@@ -13,6 +13,7 @@ import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { WallsIntegrationsEditComponent } from './edit.component';
 import { WallsIntegrationsService } from '../walls-integrations.service';
+import { FeedIntegration } from '@libs/integrations/common/model/integration.model';
 import { fillForm, resetForm, MockWallsIntegrationsService, mockIntegration } from '../tests';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers/integrations.utils.service';
 
@@ -132,6 +133,14 @@ describe('WallsIntegrationsEditComponent', () => {
 
     expect(body).toEqual(expected.payload);
     expect(type).toEqual(fromStore.IntegrationActions.EDIT_INTEGRATION);
+  });
+
+  it('should return the valid integration types', () => {
+    const resultTypes = component.typesDropdown.map((t) => t.action);
+    const validTypeActions = [FeedIntegration.types.atom, FeedIntegration.types.rss];
+    const resultContainsRightTypes = resultTypes.every((t: any) => validTypeActions.includes(t));
+
+    expect(resultContainsRightTypes).toBe(true);
   });
 
   it('submit button should be disabled unless form is valid', () => {
