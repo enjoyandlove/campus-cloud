@@ -4,6 +4,7 @@
   <div *ngIf="isExist">
     <cp-base-checkin
       *ngSwitchCase="false"
+      [timeZone]="timeZone"
       [data]="state.services"
       [isService]="isService"
       [serviceId]="serviceId"

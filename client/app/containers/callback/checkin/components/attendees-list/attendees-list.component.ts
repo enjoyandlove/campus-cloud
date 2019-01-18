@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
+import { FORMAT } from '@shared/pipes';
 import ICheckIn from '../../checkin.interface';
 import IAttendee from '../attendee.interface';
-import { FORMAT } from '../../../../../shared/pipes';
 import { CheckInOutTime, CheckInType } from '../../../callback.status';
 
 @Component({
@@ -12,6 +12,7 @@ import { CheckInOutTime, CheckInType } from '../../../callback.status';
 })
 export class CheckinAttendeesListComponent {
   @Input() data: ICheckIn;
+  @Input() timeZone: string;
 
   @Output() checkout: EventEmitter<{ data: ICheckIn; userId: number }> = new EventEmitter();
 
