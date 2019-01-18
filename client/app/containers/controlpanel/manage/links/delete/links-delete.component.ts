@@ -1,6 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { Actions, ofType } from '@ngrx/effects';
+import { takeUntil } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
-import { LinksService } from '../links.service';
+import { Destroyable, Mixin } from '@shared/mixins';
+import * as fromLinks from '@app/store/manage/links';
 import { amplitudeEvents } from '@shared/constants/analytics';
 import { CPTrackingService, ErrorService } from '@shared/services';
 
@@ -11,32 +16,28 @@ declare var $: any;
   templateUrl: './links-delete.component.html',
   styleUrls: ['./links-delete.component.scss']
 })
-export class LinksDeleteComponent implements OnInit {
+@Mixin([Destroyable])
+export class LinksDeleteComponent implements OnInit, OnDestroy, Destroyable {
   @Input() link: any;
-  @Output() deleteLink: EventEmitter<number> = new EventEmitter();
+  @Output() deleteLink: EventEmitter<null> = new EventEmitter();
   @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
 
+  buttonData;
   eventProperties;
 
+  // Destroyable
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
-    private service: LinksService,
+    private updates$: Actions,
     private errorService: ErrorService,
-    private cpTracking: CPTrackingService
+    private cpTracking: CPTrackingService,
+    private store: Store<fromLinks.ILinksState>
   ) {}
 
   onDelete() {
-    this.service.deleteLink(this.link.id).subscribe(
-      () => {
-        this.trackEvent();
-
-        this.deleteLink.emit(this.link.id);
-
-        this.resetModal();
-      },
-      (err) => {
-        this.errorService.handleError(err);
-      }
-    );
+    this.store.dispatch(new fromLinks.DeleteLink(this.link.id));
   }
 
   resetModal() {
@@ -53,5 +54,27 @@ export class LinksDeleteComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.updates$
+      .pipe(ofType(fromLinks.LinksActionTypes.DELETE_LINK_FAILURE), takeUntil(this.destroy$))
+      .subscribe((action: fromLinks.DeleteLinkFailure) => {
+        this.errorService.handleError(action.payload);
+
+        this.buttonData = { ...this.buttonData, disabled: false };
+      });
+
+    this.updates$
+      .pipe(ofType(fromLinks.LinksActionTypes.DELETE_LINK_SUCCESS), takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.trackEvent();
+
+        this.deleteLink.emit(this.link.id);
+
+        this.resetModal();
+      });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
+  }
 }

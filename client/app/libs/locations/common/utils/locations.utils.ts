@@ -14,16 +14,11 @@ export class LocationsUtilsService {
   }
 
   static filteredScheduleControls(form: FormGroup, hasOpeningHours) {
-    const _schedule = [];
     const controls = <FormArray>form.controls['schedule'];
 
-    controls.controls.forEach((control: FormGroup) => {
-      if (control.controls['is_checked'].value && hasOpeningHours) {
-        _schedule.push(control.value);
-      }
-    });
-
-    return _schedule;
+    return controls.controls
+      .filter((control: FormGroup) => control.controls['is_checked'].value && hasOpeningHours)
+      .map((ctr: FormGroup) => ctr.value);
   }
 
   static setScheduleFormControls(form: FormGroup, schedule = []) {

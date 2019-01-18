@@ -6,29 +6,53 @@ import { LocationsUtilsService } from './locations.utils';
 
 describe('LocationsUtils', () => {
   const fb = new FormBuilder();
+  let schedule;
+  let locationForm;
 
-  const schedule = fb.group({
-    day: ScheduleDays.Monday,
-    is_checked: true,
-    items: fb.array([])
+  beforeEach(() => {
+    schedule = fb.group({
+      day: ScheduleDays.Monday,
+      is_checked: true,
+      items: fb.array([])
+    });
+
+    locationForm = fb.group({
+      name: [null],
+      email: [null],
+      schedule: fb.array([schedule])
+    });
   });
 
-  const locationForm = fb.group({
-    name: [null],
-    email: [null],
-    schedule: fb.array([schedule])
+  afterEach(() => {
+    schedule.reset({
+      day: ScheduleDays.Monday,
+      is_checked: true,
+      items: fb.array([])
+    });
+
+    locationForm.reset({
+      name: [null],
+      email: [null],
+      schedule: fb.array([schedule])
+    });
   });
 
   it('should filter schedule controls if opening hours open', () => {
     const hasOpeningHours = true;
-    const filteredControls = LocationsUtilsService.filteredScheduleControls(locationForm, hasOpeningHours);
+    const filteredControls = LocationsUtilsService.filteredScheduleControls(
+      locationForm,
+      hasOpeningHours
+    );
 
     expect(filteredControls.length).toBe(1);
   });
 
   it('should filter schedule controls if opening hours close', () => {
     const hasOpeningHours = false;
-    const filteredControls = LocationsUtilsService.filteredScheduleControls(locationForm, hasOpeningHours);
+    const filteredControls = LocationsUtilsService.filteredScheduleControls(
+      locationForm,
+      hasOpeningHours
+    );
 
     expect(filteredControls).toEqual([]);
   });
