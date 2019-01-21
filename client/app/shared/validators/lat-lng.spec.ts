@@ -1,46 +1,82 @@
-import { FormBuilder } from '@angular/forms';
-import { of } from 'rxjs';
+import { TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { CPSession } from '@app/session';
+import { CPLocationsService } from '@shared/services';
 import { LatLngValidators } from '@shared/validators/lat-lng';
+import { LocationsService } from '@containers/controlpanel/manage/locations/locations.service';
+
+const fb = new FormBuilder();
+class MockLocationsService {}
+
+const cords = {
+  latitude: 45.5149733,
+  longitude: -73.5746646
+};
 
 describe('LatLngValidators', () => {
-  const fb = new FormBuilder();
-  const latLngValidator = new LatLngValidators(null);
+  let form: FormGroup;
+  let service: LatLngValidators;
 
-  const formGroup = fb.group({
-    latitude: [45.5149733],
-    longitude: [-73.5746646],
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [
+        CPSession,
+        LatLngValidators,
+        CPLocationsService,
+        { provide: LocationsService, useClass: MockLocationsService }
+      ]
+    });
+
+    form = fb.group({
+      latitude: null,
+      longitude: null
+    });
+
+    service = TestBed.get(LatLngValidators);
   });
 
-  let spy;
-  const required = { invalidCords: true };
+  it(
+    'form should be invalid if geocode fails',
+    fakeAsync(() => {
+      spyOn(service.locationService, 'geoCode').and.returnValue(Promise.reject('invalid'));
+      const lat = form.get('latitude');
+      const lng = form.get('longitude');
 
-  it('should check validation - fail (invalid cords)', () => {
-    spy = spyOn(latLngValidator, 'getCords').and.returnValue(of(required));
+      lat.setAsyncValidators(service.validateLatitude(lng));
+      lng.setAsyncValidators(service.validateLongitude(lat));
 
-    const invalidCords = 88888888;
-    const lat = formGroup.get('latitude');
-    const lng = formGroup.get('longitude');
+      lat.setValue(cords.latitude);
+      lng.setValue(cords.longitude);
 
-    lat.setValue(invalidCords);
-    lat.setAsyncValidators([latLngValidator.validateLatitude(lng)]);
-    lat.updateValueAndValidity({ onlySelf: true, emitEvent: true });
+      lat.updateValueAndValidity({ onlySelf: true, emitEvent: true });
+      lng.updateValueAndValidity({ onlySelf: true, emitEvent: true });
 
-    expect(spy).toHaveBeenCalled();
-    expect(formGroup.valid).toBe(false);
-  });
+      tick();
 
-  it('should check validation - pass (valid cords)', () => {
-    spy = spyOn(latLngValidator, 'getCords').and.returnValue(of(null));
-    const validCords = 45.5149733;
-    const lat = formGroup.get('latitude');
-    const lng = formGroup.get('longitude');
+      expect(form.valid).toBe(false);
+    })
+  );
 
-    lng.setValue(validCords);
-    lng.setAsyncValidators([latLngValidator.validateLongitude(lat)]);
-    lng.updateValueAndValidity({ onlySelf: true, emitEvent: true });
+  it(
+    'form should be valid if geocode succeeds',
+    fakeAsync(() => {
+      spyOn(service.locationService, 'geoCode').and.returnValue(Promise.resolve(null));
+      const lat = form.get('latitude');
+      const lng = form.get('longitude');
 
-    expect(spy).toHaveBeenCalled();
-    expect(formGroup.valid).toBe(true);
-  });
+      lat.setAsyncValidators(service.validateLatitude(lng));
+      lng.setAsyncValidators(service.validateLongitude(lat));
+
+      lat.setValue(cords.latitude);
+      lng.setValue(cords.longitude);
+
+      lat.updateValueAndValidity({ onlySelf: true, emitEvent: true });
+      lng.updateValueAndValidity({ onlySelf: true, emitEvent: true });
+
+      tick();
+
+      expect(form.valid).toBe(true);
+    })
+  );
 });

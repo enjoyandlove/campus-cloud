@@ -2416,6 +2416,9 @@
     "message": "Ongoing",
     "description": "Indicates that a deal is posted without an end date"
   },
+  "t_dining_no_record_found": {
+    "message": "No dining found..."
+  },
   "t_error_category_associated_to_location": {
     "message": "This category is associated to a location."
   },
@@ -2632,6 +2635,9 @@
   },
   "t_locations_no_location_found": {
     "message": "No Locations Found"
+  },
+  "t_locations_no_record_found": {
+    "message": "No locations found..."
   },
   "t_locations_opening_hours": {
     "message": "Opening Hours"

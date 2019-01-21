@@ -10,8 +10,9 @@ import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
 import { ManageHeaderService } from '../../utils';
-import { ILocation } from '../../locations/model';
+import { ILocation } from '@libs/locations/common/model';
 import { BaseComponent } from '@app/base/base.component';
+import { LocationType } from '@libs/locations/common/utils';
 
 interface IState {
   search_str: string;
@@ -33,12 +34,10 @@ const state: IState = {
   styleUrls: ['./dining-list.component.scss']
 })
 export class DiningListComponent extends BaseComponent implements OnInit, OnDestroy {
-  eventData;
-  sortingLabels;
   state: IState = state;
   loading$: Observable<boolean>;
   categories$: Observable<IItem[]>;
-  locations$: Observable<ILocation[]>;
+  dining$: Observable<ILocation[]>;
 
   private destroy$ = new Subject();
 
@@ -53,9 +52,9 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
 
   fetch() {
     const search = new HttpParams()
-      .append('location_type', 'dining')
       .append('search_str', this.state.search_str)
       .append('sort_field', this.state.sort_field)
+      .append('location_type', LocationType.dining)
       .append('category_id', this.state.category_id)
       .append('sort_direction', this.state.sort_direction)
       .append('school_id', this.session.g.get('school').id);
@@ -133,7 +132,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
       )
       .subscribe();
 
-    this.locations$ = this.store.select(fromStore.getDining).pipe(
+    this.dining$ = this.store.select(fromStore.getDining).pipe(
       map((dining: ILocation[]) => {
         const responseCopy = [...dining];
 

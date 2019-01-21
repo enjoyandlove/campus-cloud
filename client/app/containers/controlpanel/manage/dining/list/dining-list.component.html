@@ -13,17 +13,18 @@
 
   <div *ngSwitchCase="false">
     <cp-no-content
-      class="no-content"
-      *ngIf="!(locations$ | async).length"
-      noContentText="No locations found...">
+      class="margin-top"
+      *ngIf="!(dining$ | async).length"
+      [noContentText]="'t_dining_no_record_found' | cpI18n">
     </cp-no-content>
 
-    <cp-list-view
-      [state]="state"
-      [data$]="locations$"
+    <cp-locations-list-view
+      [data$]="dining$"
+      [sortBy]="state.sort_field"
       (doSort)="onDoSort($event)"
-      *ngIf="(locations$ | async).length">
-    </cp-list-view>
+      *ngIf="(dining$ | async).length"
+      [sortDirection]="state.sort_direction">
+    </cp-locations-list-view>
 
     <cp-pagination
       [pageNext]="pageNext"

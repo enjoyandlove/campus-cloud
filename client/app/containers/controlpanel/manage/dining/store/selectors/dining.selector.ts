@@ -10,16 +10,9 @@ export const getDiningState = createSelector(
   (state: fromFeature.IDiningState) => state.dining
 );
 
-export const getDiningData = createSelector(
+export const getDining = createSelector(
   getDiningState,
   fromDining.getDining
-);
-
-export const getDining = createSelector(
-  getDiningData,
-  (data) => {
-    return Object.keys(data).map((id) => data[id]['data']);
-  }
 );
 
 export const getDiningError = createSelector(

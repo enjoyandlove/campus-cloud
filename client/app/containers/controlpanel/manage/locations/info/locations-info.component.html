@@ -4,7 +4,7 @@
   <div *ngSwitchCase="false">
     <div class="row justify-content-center">
       <div class="col-8 location">
-        <div class="cp-card location__header">
+        <cp-card class="location__header">
           <div class="row">
             <div class="col-12">
               <cp-resource-banner [resourceBanner]="resourceBanner"></cp-resource-banner>
@@ -25,11 +25,11 @@
               </div>
             </div>
           </div>
-        </div>
+        </cp-card>
 
         <div class="row">
           <div class="col-12">
-            <div class="cp-card location__details">
+            <cp-card class="location__details">
               <div class="row">
                 <div class="col-12">
 
@@ -52,13 +52,13 @@
                   </cp-maps>
                 </div>
               </div>
-            </div>
+            </cp-card>
           </div>
         </div>
 
         <div class="row" *ngIf="location.short_name || location.description">
           <div class="col-12">
-            <div class="cp-card">
+            <cp-card class="location__details">
               <div *ngIf="location.short_name">
                 <p><strong>{{ 'locations_label_acronym' | cpI18n }}</strong></p>
                 <p>{{ location.short_name }}</p>
@@ -68,13 +68,13 @@
                 <p><strong>{{ 'description' | cpI18n }}</strong></p>
                 <p class="render_line_breaks">{{ location.description }}</p>
               </div>
-            </div>
+            </cp-card>
           </div>
         </div>
 
         <div class="row" *ngIf="location.schedule.length">
           <div class="col-12">
-            <div class="cp-card">
+            <cp-card class="location__details">
               <p><strong>{{ 't_locations_opening_hours' | cpI18n }}</strong></p>
 
               <div class="row" *ngFor="let openingHour of location.schedule">
@@ -88,7 +88,7 @@
                   </p>
                 </div>
               </div>
-            </div>
+            </cp-card>
           </div>
         </div>
       </div>

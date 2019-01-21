@@ -42,8 +42,9 @@
         </cp-checkin-register>
 
         <cp-attendees-list
-          class="card-margin"
           [data]="data"
+          class="card-margin"
+          [timeZone]="timeZone"
           (checkout)="checkout.emit($event)"
           *ngIf="data.attendees.length">
         </cp-attendees-list>

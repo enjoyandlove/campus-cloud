@@ -36,8 +36,9 @@ declare var $;
 export class BaseCheckinComponent implements OnInit {
   @Input() data: any;
   @Input() eventId: number;
-  @Input() serviceId: number;
   @Input() isEvent: boolean;
+  @Input() timeZone: string;
+  @Input() serviceId: number;
   @Input() isService: boolean;
   @Input() isOrientation: boolean;
   @Output() send: EventEmitter<any> = new EventEmitter();

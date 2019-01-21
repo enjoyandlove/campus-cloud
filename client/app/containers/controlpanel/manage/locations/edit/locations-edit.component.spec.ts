@@ -3,17 +3,18 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
-
+import { omit } from 'lodash';
 import { of } from 'rxjs';
+
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { CPI18nService } from '@shared/services';
 import { fillForm } from '@shared/utils/tests/form';
-import { mockLocations, filledForm } from '../tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
 import { LocationsEditComponent } from './locations-edit.component';
+import { mockLocations, filledForm } from '@libs/locations/common/tests';
 
 describe('LocationsEditComponent', () => {
   configureTestSuite();
@@ -42,6 +43,11 @@ describe('LocationsEditComponent', () => {
     component.openingHours = true;
     component.session.g.set('school', mockSchool);
     spyOn(component.store, 'select').and.returnValue(of(mockLocations[0]));
+
+    fixture.detectChanges();
+
+    component.locationForm.get('latitude').clearAsyncValidators();
+    component.locationForm.get('longitude').clearAsyncValidators();
   });
 
   it('should init', () => {
@@ -49,7 +55,7 @@ describe('LocationsEditComponent', () => {
   });
 
   it('should populate form with values', () => {
-    component.ngOnInit();
+    const expected = omit(mockLocations[0], ['category_img_url', 'category_name']);
 
     fillForm(component.locationForm, filledForm);
 
@@ -60,12 +66,10 @@ describe('LocationsEditComponent', () => {
 
     result['links'] = [];
     result['schedule'] = [];
-    expect(result).toEqual(mockLocations[0]);
+    expect(result).toEqual(expected);
   });
 
   it('should show form errors true', () => {
-    component.ngOnInit();
-
     fillForm(component.locationForm, filledForm);
 
     component.locationForm.get('category_id').setValue(null);
@@ -77,7 +81,6 @@ describe('LocationsEditComponent', () => {
   });
 
   it('should dispatch EditLocation action', () => {
-    component.ngOnInit();
     const dispatchSpy = spyOn(component.store, 'dispatch');
 
     fillForm(component.locationForm, filledForm);

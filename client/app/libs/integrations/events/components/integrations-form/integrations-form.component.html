@@ -21,7 +21,9 @@
     </div>
   </div>
 
-  <div class="form-group" *ngIf="showHosts">
+  <div
+    *ngIf="showHosts"
+    class="form-group">
     <div class="row">
       <div class="col-12">
         <label for="store_id">{{ 'select_host' | cpI18n }}</label>
@@ -34,7 +36,9 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div
+    *ngIf="showImage"
+    class="form-group">
     <div class="row">
       <div class="col-12">
         <label

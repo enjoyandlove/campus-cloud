@@ -4,18 +4,18 @@ import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { ILocation } from '../model';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
+import { ICategory } from '../categories/model';
 import { CPI18nService } from '@shared/services';
 import { ManageHeaderService } from '../../utils';
+import { ILocation } from '@libs/locations/common/model';
 import { BaseComponent } from '@app/base/base.component';
 import * as fromCategoryStore from '../categories/store';
 import { Locale } from '../categories/categories.status';
-import { LocationsUtilsService } from '../locations.utils';
-import { ICategory } from '../categories/categories.interface';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
 
 interface IState {
   search_str: string;
@@ -37,8 +37,6 @@ const state: IState = {
   styleUrls: ['./locations-list.component.scss']
 })
 export class LocationsListComponent extends BaseComponent implements OnInit, OnDestroy {
-  eventData;
-  sortingLabels;
   state: IState = state;
   showDeleteModal = false;
   deleteLocation: ILocation;

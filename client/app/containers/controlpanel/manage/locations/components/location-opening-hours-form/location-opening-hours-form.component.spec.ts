@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-import { mockTime } from '../../tests';
 import { SharedModule } from '@shared/shared.module';
 import { configureTestSuite } from '@app/shared/tests';
-import { LocationsUtilsService } from '../../locations.utils';
-import { LocationModel, ScheduleDays, scheduleLabels } from '../../model';
+import { mockTime } from '@libs/locations/common/tests';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { LocationModel, ScheduleDays, scheduleLabels } from '@libs/locations/common/model';
 import { LocationOpeningHoursFormComponent } from './location-opening-hours-form.component';
 
 describe('LocationOpeningHoursFormComponent', () => {

@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
 
 import * as fromActions from '../actions';
-import { ILocation } from '../../../locations/model';
 import { DiningService } from '../../dining.service';
+import { ILocation } from '@libs/locations/common/model';
 
 @Injectable()
 export class DiningEffect {

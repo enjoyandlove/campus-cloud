@@ -10,50 +10,46 @@ import { LocationsListComponent } from './list';
 import { LocationsEditComponent } from './edit';
 import { LocationsDeleteComponent } from './delete';
 import { LocationsCreateComponent } from './create';
-import { LocationsDayLabelPipe, LocationsTimeLabelPipe } from './pipes';
-import { LocationsListTopBarComponent, ListViewComponent } from './list/components';
-import { LocationFormComponent, LocationOpeningHoursFormComponent } from './components';
+import { LocationOpeningHoursFormComponent } from './components';
+import { LocationsDayLabelPipe, LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
 
 import { LocationsService } from './locations.service';
 import { SharedModule } from '@app/shared/shared.module';
-import { LocationsUtilsService } from './locations.utils';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
 import { LocationsRoutingModule } from './locations.routing.module';
 
 import { reducers, effects } from './store';
 import { LocationExistsGuard } from './guards';
+import { LayoutsModule } from '@app/layouts/layouts.module';
 import { CustomSerializer } from '@app/store/base/router-state';
 import { CategoriesModule } from './categories/categories.module';
+import { CommonLocationsModule } from '@libs/locations/common/common-locations.module';
 
 @NgModule({
   declarations: [
-    ListViewComponent,
     LocationsDayLabelPipe,
-    LocationFormComponent,
     LocationsTimeLabelPipe,
     LocationsListComponent,
     LocationsInfoComponent,
     LocationsEditComponent,
     LocationsDeleteComponent,
     LocationsCreateComponent,
-    LocationsListTopBarComponent,
     LocationOpeningHoursFormComponent
   ],
 
   imports: [
     CommonModule,
     SharedModule,
+    LayoutsModule,
     CategoriesModule,
     ReactiveFormsModule,
+    CommonLocationsModule,
     LocationsRoutingModule,
     StoreRouterConnectingModule,
     EffectsModule.forFeature(effects),
     StoreModule.forFeature('locations', reducers)
   ],
 
-  exports: [
-    ListViewComponent,
-    LocationsListTopBarComponent,
-  ],
   providers: [
     LocationsService,
     LocationExistsGuard,

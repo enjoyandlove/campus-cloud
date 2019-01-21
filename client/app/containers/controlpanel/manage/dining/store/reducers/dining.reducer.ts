@@ -1,27 +1,30 @@
+import { EntityState, EntityAdapter, createEntityAdapter, Dictionary } from '@ngrx/entity';
+
 import * as fromDining from '../actions';
 
-import { ILocation } from '../../../locations/model';
+import { ILocation } from '@libs/locations/common/model';
 
-export interface IDiningState {
+export interface IDiningState extends EntityState<ILocation> {
   error: boolean;
   loaded: boolean;
   loading: boolean;
-  data: {
-    [id: number]: {
-      has_schedule: boolean,
-      data: ILocation
-    }
-  };
+  ids: Array<number>;
+  entities: Dictionary<ILocation>;
 }
 
-export const InitialState: IDiningState = {
-  data: {},
+const defaultDining: IDiningState = {
+  ids: [],
+  entities: {},
   error: false,
   loaded: false,
   loading: false
 };
 
-export function reducer (state = InitialState, action: fromDining.DiningAction) {
+export const diningAdaptor: EntityAdapter<ILocation> = createEntityAdapter<ILocation>();
+
+export const initialState: IDiningState = diningAdaptor.getInitialState(defaultDining);
+
+export function reducer (state = initialState, action: fromDining.DiningAction) {
   switch (action.type) {
     case fromDining.diningActions.GET_DINING: {
       return {
@@ -32,35 +35,19 @@ export function reducer (state = InitialState, action: fromDining.DiningAction) 
     }
 
     case fromDining.diningActions.GET_DINING_SUCCESS: {
-      const data = action.payload.reduce(
-        ( entities: { [id: number]: ILocation }, dining: ILocation) => {
-          return {
-            ...entities,
-            [dining.id]: {
-              has_schedule: false,
-              data: dining
-            }
-          };
-        },
-        {
-          ...{}
-        });
-
-      return  {
+      return diningAdaptor.addAll(action.payload, {
         ...state,
-        data,
         error: false,
         loaded: true,
         loading: false
-      };
+      });
     }
 
     case fromDining.diningActions.GET_DINING_FAIL: {
       return {
         ...state,
         error: true,
-        loaded: false,
-        loading: false
+        loaded: true
       };
     }
 
@@ -70,8 +57,9 @@ export function reducer (state = InitialState, action: fromDining.DiningAction) 
   }
 }
 
+export const { selectAll } = diningAdaptor.getSelectors();
 
-export const getDining = (state: IDiningState) => state.data;
+export const getDining = selectAll;
 export const getDiningError = (state: IDiningState) => state.error;
 export const getDiningLoaded = (state: IDiningState) => state.loaded;
 export const getDiningLoading = (state: IDiningState) => state.loading;
