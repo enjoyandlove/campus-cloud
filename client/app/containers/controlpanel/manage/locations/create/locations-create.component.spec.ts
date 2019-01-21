@@ -6,12 +6,12 @@ import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
-import { emptyForm, filledForm } from '../tests';
 import { CPI18nService } from '@shared/services';
 import { fillForm } from '@shared/utils/tests/form';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
+import { emptyForm, filledForm } from '@libs/locations/common/tests';
 import { LocationsCreateComponent } from './locations-create.component';
 
 describe('LocationsCreateComponent', () => {

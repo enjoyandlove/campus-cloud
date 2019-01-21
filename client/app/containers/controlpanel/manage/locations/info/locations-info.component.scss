@@ -1,12 +1,5 @@
-@import '~client/style/components/card';
 @import '~client/style/components/button';
 @import '~client/style/core/typography';
-
-.cp-card {
-  @include card-margin();
-
-  margin-bottom: 0;
-}
 
 strong {
   @include font-semi-bold();
@@ -27,5 +20,10 @@ strong {
   .avatar {
     width: 35px;
     height: 35px;
+  }
+
+  &__details {
+    display: block;
+    margin-top: 15px;
   }
 }

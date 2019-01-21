@@ -1,5 +1,11 @@
 import { ILinks, ISchedule } from './schedule.interface';
 
+export interface ILocationTiming {
+  value: number;
+
+  label: string;
+}
+
 export interface ILocation {
   id?: number;
 

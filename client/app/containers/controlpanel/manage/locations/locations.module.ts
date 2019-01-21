@@ -20,6 +20,7 @@ import { LocationsRoutingModule } from './locations.routing.module';
 
 import { reducers, effects } from './store';
 import { LocationExistsGuard } from './guards';
+import { LayoutsModule } from '@app/layouts/layouts.module';
 import { CustomSerializer } from '@app/store/base/router-state';
 import { CategoriesModule } from './categories/categories.module';
 import { CommonLocationsModule } from '@libs/locations/common/common-locations.module';
@@ -39,6 +40,7 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
   imports: [
     CommonModule,
     SharedModule,
+    LayoutsModule,
     CategoriesModule,
     ReactiveFormsModule,
     CommonLocationsModule,

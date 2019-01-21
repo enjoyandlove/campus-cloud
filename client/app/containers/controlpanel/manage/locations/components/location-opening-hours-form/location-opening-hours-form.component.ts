@@ -1,6 +1,7 @@
 import { FormArray, FormGroup } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 
+import { ILocationTiming } from '@libs/locations/common/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 
 @Component({
@@ -12,7 +13,7 @@ export class LocationOpeningHoursFormComponent implements OnInit {
   @Input() formErrors: boolean;
   @Input() locationForm: FormGroup;
 
-  locationTiming;
+  locationTiming: ILocationTiming[];
 
   constructor() {}
 

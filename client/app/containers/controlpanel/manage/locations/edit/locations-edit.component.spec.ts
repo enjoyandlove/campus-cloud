@@ -10,11 +10,11 @@ import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { CPI18nService } from '@shared/services';
 import { fillForm } from '@shared/utils/tests/form';
-import { mockLocations, filledForm } from '../tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
 import { LocationsEditComponent } from './locations-edit.component';
+import { mockLocations, filledForm } from '@libs/locations/common/tests';
 
 describe('LocationsEditComponent', () => {
   configureTestSuite();
