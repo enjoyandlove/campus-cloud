@@ -6,16 +6,18 @@ import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { CPDate } from '@shared/utils';
+import { STATUS } from '@shared/constants';
+import { baseActions } from '@app/store/base';
+import { getEventsModalState } from '@app/store';
 import { EventsService } from '../events.service';
-import { CPDate } from '../../../../../shared/utils';
-import { baseActions } from '../../../../../store/base';
-import { STATUS } from '../../../../../shared/constants';
-import { getEventsModalState } from '../../../../../store';
+import { CPSession, ISchool } from '@app/session';
+import { CPI18nPipe } from '@shared/pipes/i18n/i18n.pipe';
 import { EventUtilService } from '../events.utils.service';
-import { CPSession, ISchool } from '../../../../../session';
+import { CPImageUploadComponent } from '@shared/components';
 import { EventsComponent } from '../list/base/events.component';
-import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
-import { CPImageUploadComponent } from '../../../../../shared/components';
+import { SnackbarError } from '@app/store/base/reducers/snackbar.reducer';
+import { AdminService, StoreService, CPI18nService, FileUploadService } from '@shared/services';
 
 import {
   isAllDay,
@@ -24,13 +26,6 @@ import {
   attendanceType,
   EventAttendance
 } from '../event.status';
-
-import {
-  AdminService,
-  StoreService,
-  CPI18nService,
-  FileUploadService
-} from '../../../../../shared/services';
 
 const i18n = new CPI18nPipe();
 
@@ -123,7 +118,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     this.buildGroup();
 
     if (this.isService) {
-      this.updateManagersByStoreOrClubId(this.serviceId);
+      this.updateManagersByStoreOrClubId(this.storeId);
     }
     if (this.isClub) {
       this.updateManagersByStoreOrClubId(this.clubId);
@@ -263,11 +258,33 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     const managers$ = this.getManagersByHostId(storeOrClubId);
     const groups = events.controls;
 
-    managers$.subscribe((managers) => {
-      groups.forEach((group: FormGroup) => {
-        group.controls['managers'].setValue(managers);
-      });
-    });
+    managers$.pipe(startWith([{ label: '---' }])).subscribe(
+      (managers) => {
+        groups.forEach((group: FormGroup) => {
+          group.controls['managers'].setValue(managers);
+        });
+      },
+      () => {
+        this.store.dispatch(
+          new SnackbarError({ body: this.cpI18n.translate('something_went_wrong') })
+        );
+        const path: string = this.isService
+          ? 'services'
+          : this.isClub
+            ? 'clubs'
+            : this.isAthletic ? 'athletics' : this.isOrientation ? 'orientation' : 'events';
+        const id: number = this.isService
+          ? this.serviceId
+          : this.isClub
+            ? this.clubId
+            : this.isAthletic ? this.athleticId : this.isOrientation ? this.orientationId : null;
+        if (id) {
+          this.router.navigate([`/manage/${path}/${id}/events`]);
+        } else {
+          this.router.navigate([`manage/${path}`]);
+        }
+      }
+    );
   }
 
   getManagersByHostId(storeOrClubId): Observable<any> {
@@ -280,7 +297,6 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
       .append('privilege_type', this.utils.getPrivilegeType(this.isOrientation));
 
     return this.adminService.getAdminByStoreId(search).pipe(
-      startWith([{ label: '---' }]),
       map((admins) => {
         const _admins = [
           {
