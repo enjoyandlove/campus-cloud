@@ -1,0 +1,67 @@
+<form [formGroup]="diningForm">
+  <div formArrayName="schedule">
+    <div *ngFor="let schedule of diningForm.get('schedule')['controls']; let i= index">
+      <div class="row" [formGroupName]="i">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-9 day">
+              <label> {{ schedule.controls.day.value | locationsDayLabel | cpI18n }}</label>
+            </div>
+            <div class="col-3 day">
+              <cp-checkbox
+                class="checkbox"
+                [labelRight]="false"
+                [cpTarget]="'open_' + i"
+                [label]="'t_shared_open' | cpI18n"
+                [isChecked]="schedule.controls.is_checked.value"
+                (toggle)="onDayCheck($event, i)">
+              </cp-checkbox>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12" *ngFor="let item of schedule.get('items')['controls']; let itemIndex = index">
+          <div formArrayName="items">
+            <div class="row" [formGroupName]="itemIndex">
+              <div class="col-3">
+                <label>Service</label>
+                <input
+                  type="text"
+                  cpTarget="name"
+                  formControlName="name">
+              </div>
+
+              <div class="col-4 horizontal">
+                <label class="margin-right">{{ 't_shared_from' | cpI18n }}</label>
+                <cp-dropdown
+                  [items]="locationTiming"
+                  [cpTarget]="'start_time_' + i"
+                  [selectedItem]="getSelectedTime(item.controls.start_time.value)"
+                  (selected)="onTimeSelected($event, 'start_time', i)">
+                </cp-dropdown>
+              </div>
+
+              <div class="col-4 horizontal">
+                <label class="margin-right">{{ 't_shared_to' | cpI18n }}</label>
+                <cp-dropdown
+                  [items]="locationTiming"
+                  [cpTarget]="'end_time_' + i"
+                  [selectedItem]="getSelectedTime(item.controls.end_time.value)"
+                  (selected)="onTimeSelected($event, 'end_time', i)">
+                </cp-dropdown>
+              </div>
+
+              <div class="col-1">
+                <i
+                  cpTarget="delete"
+                  class="material-icons hover margin-right remove-item">
+                  close
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

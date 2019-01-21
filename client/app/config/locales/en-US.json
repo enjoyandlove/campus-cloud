@@ -2416,6 +2416,15 @@
     "message": "Ongoing",
     "description": "Indicates that a deal is posted without an end date"
   },
+  "t_dining_create_dining": {
+    "message": "Create Dining"
+  },
+  "t_dining_dining_details": {
+    "message": "Dining Details"
+  },
+  "t_dining_hours": {
+    "message": "Dining Hours"
+  },
   "t_dining_no_record_found": {
     "message": "No dining found..."
   },

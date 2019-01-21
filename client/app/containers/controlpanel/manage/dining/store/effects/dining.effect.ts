@@ -1,4 +1,4 @@
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, mergeMap, catchError, tap } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -27,6 +27,23 @@ export class DiningEffect {
         .pipe(
           map((data: ILocation[]) => new fromActions.GetDiningSuccess(data)),
           catchError((error) => of(new fromActions.GetDiningFail(error)))
+        );
+    })
+  );
+
+  @Effect()
+  createDining$: Observable<fromActions.PostDiningSuccess | fromActions.PostDiningFail>
+    = this.actions$.pipe(
+    ofType(fromActions.diningActions.POST_DINING),
+    mergeMap((action: fromActions.PostDining) => {
+      const { body, params } = action.payload;
+
+      return this.service
+        .createDining(body, params)
+        .pipe(
+          map((data: ILocation) => new fromActions.PostDiningSuccess(data)),
+          tap((_) => this.router.navigate(['/manage/dining'])),
+          catchError((error) => of(new fromActions.PostDiningFail(error)))
         );
     })
   );

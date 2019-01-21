@@ -11,7 +11,6 @@ import { LocationsEditComponent } from './edit';
 import { LocationsDeleteComponent } from './delete';
 import { LocationsCreateComponent } from './create';
 import { LocationOpeningHoursFormComponent } from './components';
-import { LocationsDayLabelPipe, LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
 
 import { LocationsService } from './locations.service';
 import { SharedModule } from '@app/shared/shared.module';
@@ -27,8 +26,6 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
 
 @NgModule({
   declarations: [
-    LocationsDayLabelPipe,
-    LocationsTimeLabelPipe,
     LocationsListComponent,
     LocationsInfoComponent,
     LocationsEditComponent,
