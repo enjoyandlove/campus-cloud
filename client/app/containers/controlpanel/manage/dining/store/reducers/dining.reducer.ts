@@ -1,23 +1,30 @@
-import { EntityState, EntityAdapter, createEntityAdapter } from '@ngrx/entity';
+import { EntityState, EntityAdapter, createEntityAdapter, Dictionary } from '@ngrx/entity';
 
 import * as fromDining from '../actions';
 
-// import { ILocation } from '@libs/locations/common/model';
+import { ILocation } from '@libs/locations/common/model';
 
-/*export interface IDiningState {
+export interface IDiningState extends EntityState<ILocation> {
   error: boolean;
   loaded: boolean;
   loading: boolean;
-  data: ILocation;
-}*/
+  ids: Array<number>;
+  entities: Dictionary<ILocation>;
+}
 
-export interface State extends EntityState<any> {}
+const defaultDining: IDiningState = {
+  ids: [],
+  entities: {},
+  error: false,
+  loaded: false,
+  loading: false
+};
 
-export const diningAdaptor: EntityAdapter<any> = createEntityAdapter<any>();
+export const diningAdaptor: EntityAdapter<ILocation> = createEntityAdapter<ILocation>();
 
-export const InitialState = diningAdaptor.getInitialState();
+export const initialState: IDiningState = diningAdaptor.getInitialState(defaultDining);
 
-export function reducer (state = InitialState, action: fromDining.DiningAction) {
+export function reducer (state = initialState, action: fromDining.DiningAction) {
   switch (action.type) {
     case fromDining.diningActions.GET_DINING: {
       return {
@@ -30,7 +37,7 @@ export function reducer (state = InitialState, action: fromDining.DiningAction) 
     case fromDining.diningActions.GET_DINING_SUCCESS: {
       return diningAdaptor.addAll(action.payload, {
         ...state,
-        error: true,
+        error: false,
         loaded: true,
         loading: false
       });
@@ -40,8 +47,7 @@ export function reducer (state = InitialState, action: fromDining.DiningAction) 
       return {
         ...state,
         error: true,
-        loaded: false,
-        loading: false
+        loaded: true
       };
     }
 
@@ -54,6 +60,6 @@ export function reducer (state = InitialState, action: fromDining.DiningAction) 
 export const { selectAll } = diningAdaptor.getSelectors();
 
 export const getDining = selectAll;
-export const getDiningError = (state: any) => state.error;
-export const getDiningLoaded = (state: any) => state.loaded;
-export const getDiningLoading = (state: any) => state.loading;
+export const getDiningError = (state: IDiningState) => state.error;
+export const getDiningLoaded = (state: IDiningState) => state.loaded;
+export const getDiningLoading = (state: IDiningState) => state.loading;
