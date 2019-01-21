@@ -13,6 +13,7 @@ import { WallsIntegrationsService } from './../walls-integrations.service';
 import { SocialPostCategoryModel } from './../../model/social-post-category.model';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { WallsIntegrationFormComponent } from '@libs/integrations/walls/components';
+import { FeedIntegration } from '@libs/integrations/common/model/integration.model';
 
 @Component({
   selector: 'cp-walls-integrations-create',
@@ -93,7 +94,9 @@ export class WallsIntegrationsCreateComponent implements OnInit {
   ngOnInit() {
     const schoolId = this.session.g.get('school').id;
 
-    this.typesDropdown = this.utils.typesDropdown();
+    this.typesDropdown = this.utils
+      .typesDropdown()
+      .filter((t) => t.action !== FeedIntegration.types.ical);
     this.channels$ = this.store.select(fromStore.getSocialPostCategories);
 
     this.form = WallsIntegrationModel.form();

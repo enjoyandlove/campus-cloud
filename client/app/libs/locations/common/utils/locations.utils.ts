@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { getItem } from '@shared/components';
 import { ScheduleModel, scheduleLabels } from '../model';
-import { ICategory } from '@containers/controlpanel/manage/locations/categories/categories.interface';
+import { ICategory } from '@containers/controlpanel/manage/locations/categories/model';
 
 @Injectable()
 export class LocationsUtilsService {
@@ -50,20 +50,22 @@ export class LocationsUtilsService {
   }
 
   static setOpeningHours(openingHours, controlItems, scheduleForm) {
-      scheduleForm.get('is_checked').setValue(true);
+    scheduleForm.get('is_checked').setValue(true);
 
-      openingHours.items.forEach((time) => {
-        controlItems.push(ScheduleModel.setItemControls(time));
-      });
+    openingHours.items.forEach((time) => {
+      controlItems.push(ScheduleModel.setItemControls(time));
+    });
 
-      controlItems.removeAt(0);
+    controlItems.removeAt(0);
   }
 
   static setCategoriesDropDown(categories: ICategory[], label: string) {
-    const _heading = [{
-      label,
-      action: null
-    }];
+    const _heading = [
+      {
+        label,
+        action: null
+      }
+    ];
 
     const _categories = categories.map((category: ICategory) => {
       return getItem(category, 'name', 'id');

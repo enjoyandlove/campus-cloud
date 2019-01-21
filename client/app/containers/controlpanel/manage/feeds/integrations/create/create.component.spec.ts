@@ -12,6 +12,7 @@ import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { WallsIntegrationsCreateComponent } from './create.component';
+import { FeedIntegration } from '@libs/integrations/common/model/integration.model';
 import { emptyForm, fillForm, resetForm, MockWallsIntegrationsService } from '../tests';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers/integrations.utils.service';
 
@@ -87,6 +88,14 @@ describe('WallsIntegrationsCreateComponent', () => {
     closeButton.click();
 
     expect(component.resetModal).toHaveBeenCalled();
+  });
+
+  it('should return the valid integration types', () => {
+    const resultTypes = component.typesDropdown.map((t) => t.action);
+    const validTypeActions = [FeedIntegration.types.atom, FeedIntegration.types.rss];
+    const resultContainsRightTypes = resultTypes.every((t: any) => validTypeActions.includes(t));
+
+    expect(resultContainsRightTypes).toBe(true);
   });
 
   it('should call resetModal on cancel button click', () => {

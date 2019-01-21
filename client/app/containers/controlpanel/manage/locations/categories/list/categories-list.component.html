@@ -41,28 +41,42 @@
           *ngFor="let category of categories$ | async">
           <div class="row height">
             <span
+              cpTarget="name"
               class="col-4 text-truncate"
               [attr.title]="category.name">
               {{ category.name }}
             </span>
-            <span class="col-3">
+            <span
+              class="col-3"
+              cpTarget="category_type">
               {{ category.category_type_name }}
             </span>
             <span class="col-2">
               <img
                 class="icon"
-                *ngIf="category.image_url"
-                [src]="category.image_url">
+                cpTarget="image"
+                *ngIf="category.img_url"
+                [src]="category.img_url">
             </span>
-            <span class="col-2">
+            <span
+              class="col-2"
+              cpTarget="is_default">
               {{ category.is_default | cpIsDefaultCategory | cpI18n }}
             </span>
             <span class="col-1 text-right">
               <span *ngIf="!category.is_default">
-                <i class="material-icons hover action-button margin-right">edit</i>
                 <i
-                  data-toggle="modal" data-target="#categoryDelete"
-                  class="material-icons hover action-button">close</i>
+                  cpTarget="edit"
+                  (click)="onLaunchEditModal(category)"
+                  class="material-icons hover action-button margin-right">
+                   edit
+                </i>
+                <i
+                  cpTarget="delete"
+                  (click)="onLaunchDeleteModal(category)"
+                  class="material-icons hover action-button">
+                   close
+                </i>
               </span>
             </span>
           </div>
@@ -71,3 +85,31 @@
     </div>
   </div>
 </div>
+
+<cp-modal
+  *ngIf="showCreateModal"
+  modalId="categoriesCreate"
+  (modalClose)="onCreateTeardown()">
+  <cp-categories-create
+    (teardown)="onCreateTeardown()">
+  </cp-categories-create>
+</cp-modal>
+
+<cp-modal
+  *ngIf="showEditModal"
+  modalId="categoriesEdit"
+  (modalClose)="onEditTeardown()">
+  <cp-categories-edit
+    [category]="selectedCategory"
+    (teardown)="onEditTeardown()">
+  </cp-categories-edit>
+</cp-modal>
+
+<cp-modal
+  *ngIf="showDeleteModal"
+  modalId="categoryDelete">
+  <cp-categories-delete
+    [category]="deletedCategory"
+    (teardown)="onDeleteTeardown()">
+  </cp-categories-delete>
+</cp-modal>

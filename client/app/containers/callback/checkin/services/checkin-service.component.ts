@@ -3,14 +3,14 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '../../../../session';
+import { CPSession } from '@app/session';
 import { CheckinService } from '../checkin.service';
+import { BaseComponent } from '@app/base/base.component';
+import { ISnackbar, baseActions } from '@app/store/base';
+import { amplitudeEvents } from '@shared/constants/analytics';
 import { CheckinUtilsService } from '../checkin.utils.service';
-import { BaseComponent } from '../../../../base/base.component';
-import { ISnackbar, baseActions } from '../../../../store/base';
 import { CheckInOutTime, CheckInType } from '../../callback.status';
-import { amplitudeEvents } from '../../../../shared/constants/analytics';
-import { CPAmplitudeService, CPI18nService, CPTrackingService } from '../../../../shared/services';
+import { CPAmplitudeService, CPI18nService, CPTrackingService } from '@shared/services';
 
 interface IState {
   services: Array<any>;
@@ -29,11 +29,12 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
   loading;
   checkInSource;
   isExist = true;
+  timeZone: string;
   isService = true;
   serviceId: string;
+  search: HttpParams;
   state: IState = state;
   serviceProviderId: string;
-  search: HttpParams;
 
   constructor(
     public router: Router,
@@ -119,7 +120,12 @@ export class CheckinServiceComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.checkinService.getServiceData(this.search, true))
       .then((res) => {
-        this.state = Object.assign({}, this.state, { services: res.data });
+        this.timeZone = res.data.tz_zoneinfo_str;
+
+        this.state = {
+          ...this.state,
+          services: res.data
+        };
       })
       .catch((_) => this.router.navigate(['/login']));
   }

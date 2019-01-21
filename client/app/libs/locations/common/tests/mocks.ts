@@ -37,25 +37,6 @@ export const emptyForm = {
   schedule: []
 };
 
-export const mockCategories = [
-  {
-    id: 123,
-    category_type: 1,
-    is_default: true,
-    name: 'Hello world',
-    image_url: 'ab.jpeg',
-    category_type_name: 'dining'
-  },
-  {
-    id: 1234,
-    category_type: 4,
-    is_default: true,
-    name: 'Hello world',
-    image_url: 'ab.jpeg',
-    category_type_name: 'dining'
-  }
-];
-
 export const mockLocations = [
   {
     id: 123,

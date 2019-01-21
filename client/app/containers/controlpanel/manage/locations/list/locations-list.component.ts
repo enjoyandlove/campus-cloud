@@ -8,13 +8,13 @@ import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
+import { ICategory } from '../categories/model';
 import { CPI18nService } from '@shared/services';
 import { ManageHeaderService } from '../../utils';
 import { ILocation } from '@libs/locations/common/model';
 import { BaseComponent } from '@app/base/base.component';
 import * as fromCategoryStore from '../categories/store';
 import { Locale } from '../categories/categories.status';
-import { ICategory } from '../categories/categories.interface';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 
 interface IState {
