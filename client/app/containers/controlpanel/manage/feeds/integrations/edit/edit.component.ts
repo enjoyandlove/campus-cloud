@@ -54,7 +54,7 @@ export class WallsIntegrationsEditComponent implements OnInit {
       return;
     }
 
-    let body = this.form.value;
+    let body = this.form.getRawValue();
     const params = this.defaultParams;
     const socialPostCategoryId = this.form.get('social_post_category_id').value;
     const shouldCreateSocialPost =
@@ -114,6 +114,10 @@ export class WallsIntegrationsEditComponent implements OnInit {
 
     this.form = WallsIntegrationModel.form(this.integration);
     this.form.get('school_id').setValue(schoolId);
+
+    this.form.get('feed_url').disable();
+    this.form.get('feed_type').disable();
+    this.form.get('social_post_category_id').disable();
 
     this.selectedType = this.typesDropdown.find(
       (t) => t.action === this.form.get('feed_type').value
