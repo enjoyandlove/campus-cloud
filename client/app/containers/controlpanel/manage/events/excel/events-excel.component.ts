@@ -268,21 +268,6 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
         this.store.dispatch(
           new SnackbarError({ body: this.cpI18n.translate('something_went_wrong') })
         );
-        const path: string = this.isService
-          ? 'services'
-          : this.isClub
-            ? 'clubs'
-            : this.isAthletic ? 'athletics' : this.isOrientation ? 'orientation' : 'events';
-        const id: number = this.isService
-          ? this.serviceId
-          : this.isClub
-            ? this.clubId
-            : this.isAthletic ? this.athleticId : this.isOrientation ? this.orientationId : null;
-        if (id) {
-          this.router.navigate([`/manage/${path}/${id}/events`]);
-        } else {
-          this.router.navigate([`manage/${path}`]);
-        }
       }
     );
   }
