@@ -1,27 +1,29 @@
+import { EntityState, createEntityAdapter, EntityAdapter, Dictionary } from '@ngrx/entity';
+
 import * as fromLocations from '../actions';
 
 import { ILocation } from '@libs/locations/common/model';
 
-export interface ILocationState {
+export interface ILocationState extends EntityState<ILocation> {
   error: boolean;
   loaded: boolean;
   loading: boolean;
-  data: {
-    [id: number]: {
-      has_schedule: boolean,
-      data: ILocation
-    }
-  };
+  ids: Array<number>;
+  entities: Dictionary<ILocation>;
 }
 
-export const InitialState: ILocationState = {
-  data: {},
+const defaultLocation: ILocationState = {
+  ids: [],
+  entities: {},
   error: false,
   loaded: false,
   loading: false
 };
 
-export function reducer (state = InitialState, action: fromLocations.LocationsAction) {
+export const locationAdapter: EntityAdapter<ILocation> = createEntityAdapter<ILocation>();
+export const initialState: ILocationState = locationAdapter.getInitialState(defaultLocation);
+
+export function reducer (state = initialState, action: fromLocations.LocationsAction) {
   switch (action.type) {
     case fromLocations.locationActions.GET_LOCATIONS: {
       return {
@@ -32,27 +34,12 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
     }
 
     case fromLocations.locationActions.GET_LOCATIONS_SUCCESS: {
-      const data = action.payload.reduce(
-        ( entities: { [id: number]: ILocation }, location: ILocation) => {
-          return {
-            ...entities,
-            [location.id]: {
-              has_schedule: false,
-              data: location
-            }
-          };
-        },
-        {
-          ...{}
-        });
-
-      return  {
+      return locationAdapter.addAll(action.payload, {
         ...state,
-        data,
         error: false,
         loaded: true,
         loading: false
-      };
+      });
     }
 
     case fromLocations.locationActions.GET_LOCATIONS_FAIL: {
@@ -72,22 +59,11 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
     }
 
     case fromLocations.locationActions.GET_LOCATION_BY_ID_SUCCESS: {
-      const payload = action.payload;
-
-      const data = {
-        ...state.data,
-        [payload.id]: {
-          data: payload,
-          has_schedule: true
-        }
-      };
-
-      return  {
+      return locationAdapter.upsertOne(action.payload, {
         ...state,
-        data,
         error: false,
         loading: false
-      };
+      });
     }
 
     case fromLocations.locationActions.GET_LOCATION_BY_ID_FAIL: {
@@ -107,22 +83,11 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
     }
 
     case fromLocations.locationActions.POST_LOCATION_SUCCESS: {
-      const newCreatedLocation = action.payload;
-
-      const data = {
-        [newCreatedLocation.id]: {
-          data: newCreatedLocation,
-          has_schedule: true
-        },
-        ...state.data,
-      };
-
-      return {
+      return locationAdapter.addOne(action.payload, {
         ...state,
-        data,
         error: false,
         loading: false
-      };
+      });
     }
 
     case fromLocations.locationActions.POST_LOCATION_FAIL: {
@@ -143,22 +108,11 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
     }
 
     case fromLocations.locationActions.EDIT_LOCATION_SUCCESS: {
-      const edited = action.payload;
-
-      const data = {
-        ...state.data,
-        [edited.id]: {
-          data: edited,
-          has_schedule: true
-        }
-      };
-
-      return {
+      return locationAdapter.updateOne({id: action.payload.id, changes: action.payload }, {
         ...state,
-        data,
         error: false,
         loading: false
-      };
+      });
     }
 
     case fromLocations.locationActions.EDIT_LOCATION_FAIL: {
@@ -180,21 +134,12 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
     }
 
     case fromLocations.locationActions.DELETE_LOCATION_SUCCESS: {
-      const { deletedId } = action.payload;
-
-      const data = {
-        ...state.data,
-      };
-
-      delete data[deletedId];
-
-      return {
+      return locationAdapter.removeOne(action.payload.deletedId, {
         ...state,
-        data,
         error: false,
         loaded: true,
         loading: false
-      };
+      });
     }
 
     case fromLocations.locationActions.DELETE_LOCATION_FAIL: {
@@ -219,8 +164,10 @@ export function reducer (state = InitialState, action: fromLocations.LocationsAc
   }
 }
 
+export const { selectAll, selectEntities } = locationAdapter.getSelectors();
 
-export const getLocations = (state: ILocationState) => state.data;
+export const getLocations = selectAll;
+export const getLocationEntities = selectEntities;
 export const getLocationsError = (state: ILocationState) => state.error;
 export const getLocationsLoaded = (state: ILocationState) => state.loaded;
 export const getLocationsLoading = (state: ILocationState) => state.loading;

@@ -104,7 +104,7 @@ describe('WallsIntegrationsEditComponent', () => {
   it('should create form with values form integration input', () => {
     component.ngOnInit();
 
-    const result = component.form.value;
+    const result = component.form.getRawValue();
 
     // remove readonly fields
     const expected = omit(component.integration, [
@@ -123,7 +123,7 @@ describe('WallsIntegrationsEditComponent', () => {
 
     component.doSubmit();
 
-    const expected = new fromStore.EditIntegration(component.form.value);
+    const expected = new fromStore.EditIntegration(component.form.getRawValue());
 
     expect(component.resetModal).toHaveBeenCalled();
     expect(component.store.dispatch).toHaveBeenCalled();
@@ -143,6 +143,14 @@ describe('WallsIntegrationsEditComponent', () => {
     expect(resultContainsRightTypes).toBe(true);
   });
 
+  it('should disable a few controls on form init', () => {
+    const disabledControls = ['feed_url', 'feed_type', 'social_post_category_id'];
+
+    disabledControls.forEach((ctrName) => {
+      expect(component.form.get(ctrName).disabled).toBe(true);
+    });
+  });
+
   it('submit button should be disabled unless form is valid', () => {
     const de = fixture.debugElement;
     const submitBtn = de.query(By.css('.js_submit_button')).nativeElement;
@@ -154,10 +162,6 @@ describe('WallsIntegrationsEditComponent', () => {
 
     component.form.get('school_id').setValue(1);
     fixture.detectChanges();
-    expect(submitBtn.disabled).toBe(true);
-
-    component.form.get('feed_url').setValue('mock');
-    fixture.detectChanges();
-    expect(submitBtn.disabled).toBe(true);
+    expect(submitBtn.disabled).toBe(false);
   });
 });

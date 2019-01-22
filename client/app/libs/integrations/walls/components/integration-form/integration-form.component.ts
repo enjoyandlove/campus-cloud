@@ -11,7 +11,6 @@ import { IItem } from '@client/app/shared/components';
 })
 export class WallsIntegrationFormComponent implements OnInit {
   static readonly shouldCreateSocialPostCategory = -1;
-
   @Input() types: IItem[];
   @Input() form: FormGroup;
   @Input() selectedType: IItem;

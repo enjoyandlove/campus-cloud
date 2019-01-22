@@ -2,7 +2,6 @@ import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 import { tap, map, filter, take, switchMap } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { get as _get } from 'lodash';
 import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
@@ -40,9 +39,11 @@ export class LocationExistsGuard implements CanActivate {
       .pipe(
         tap((locations: any) => {
           const locationId = this.locationId;
-          const has_schedule = _get(locations[locationId], 'has_schedule', false);
 
-          if (!has_schedule) {
+          const hasSchedule = Object.keys(locations).length
+            ? Boolean(locations[this.locationId].schedule.length) : false;
+
+          if (!hasSchedule) {
             const search = new HttpParams()
               .append('school_id', this.session.g.get('school').id);
 
