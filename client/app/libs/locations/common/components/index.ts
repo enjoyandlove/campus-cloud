@@ -1,3 +1,3 @@
 export * from './top-bar';
 export * from './location-form';
-export * from './locations-list';
+export * from './cp-locations-common-list';

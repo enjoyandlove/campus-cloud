@@ -4,18 +4,18 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '@client/app/shared/shared.module';
-import { LocationsListComponent, LocationFormComponent, LocationsListTopBarComponent } from './components';
+import { LocationsCommonListComponent, LocationFormComponent, LocationsListTopBarComponent } from './components';
 
 @NgModule({
   declarations: [
     LocationFormComponent,
-    LocationsListComponent,
+    LocationsCommonListComponent,
     LocationsListTopBarComponent
   ],
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
   exports: [
     LocationFormComponent,
-    LocationsListComponent,
+    LocationsCommonListComponent,
     LocationsListTopBarComponent
   ]
 })

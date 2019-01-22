@@ -18,13 +18,13 @@
       [noContentText]="'t_dining_no_record_found' | cpI18n">
     </cp-no-content>
 
-    <cp-locations-list-view
+    <cp-locations-common-list
       [data$]="dining$"
       [sortBy]="state.sort_field"
       (doSort)="onDoSort($event)"
       *ngIf="(dining$ | async).length"
       [sortDirection]="state.sort_direction">
-    </cp-locations-list-view>
+    </cp-locations-common-list>
 
     <cp-pagination
       [pageNext]="pageNext"
