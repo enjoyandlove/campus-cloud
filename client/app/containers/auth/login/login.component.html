@@ -1,51 +1,57 @@
 <div class="cp-wrapper">
-  <cp-one-column [width]="layoutWidth" [aligned]="layoutAlign">
-    <form [formGroup]="form">
-      <div class="row">
-        <div class="col-12 heading text-center">
-          <div class="heading__image">
-            <img class="float-left" [src]="logo" alt="Campus Cloud" />
+  <div class="row justify-content-center">
+    <div class="col-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4">
+      <form [formGroup]="form">
+        <div class="row">
+          <div class="col-12 heading text-center">
+            <div class="heading__image">
+              <img class="float-left" [src]="logo" alt="Campus Cloud" />
+            </div>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label>{{ 'email' | cpI18n }}</label>
-        <input
-          autofocus
-          type="email"
-          name="username"
-          class="form-control"
-          formControlName="username">
-      </div>
-      <div class="form-group">
-        <label>{{ 'password' | cpI18n }}</label>
-        <input
-          type="password"
-          name="password"
-          class="form-control"
-          formControlName="password">
-      </div>
-
-      <div class="row text-center">
-        <div class="col-12">
-          <cp-button
-            [props]="buttonData"
-            [listenForEnterKeyEvent]="[true]"
-            (buttonClick)="onSubmit(form.value)">
-          </cp-button>
+        <div class="form-group">
+          <label i18n>{{ 'email' | cpI18n }}</label>
+          <input
+            autofocus
+            type="email"
+            name="username"
+            class="form-control"
+            formControlName="username">
         </div>
-      </div>
+        <div class="form-group">
+          <label i18n>{{ 'password' | cpI18n }}</label>
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            formControlName="password">
+        </div>
+
+        <div class="row text-center">
+          <div class="col-12">
+            <cp-button
+              [props]="buttonData"
+              [listenForEnterKeyEvent]="[true]"
+              (buttonClick)="onSubmit(form.value)">
+            </cp-button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <cp-alert></cp-alert>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row justify-content-center text-center footer">
+    <div class="col-4">
       <div class="row">
         <div class="col-12">
-          <cp-alert></cp-alert>
+          <a [routerLink]="['/lost-password']" i18n>{{ 'lost_password_question' | cpI18n }}</a>
         </div>
       </div>
-    </form>
-
-    <div class="row text-center footer">
-      <div class="col-12">
-        <a [routerLink]="['/lost-password']">{{ 'lost_password_question' | cpI18n }}</a>
-      </div>
     </div>
-  </cp-one-column>
+  </div>
 </div>

@@ -1,10 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { IItem } from '@shared/components';
-import { CP_TRACK_TO } from '@shared/directives';
-import { amplitudeEvents } from '@shared/constants';
-import { CPTrackingService } from '@shared/services';
+import { CPTrackingService } from '../../../../../../../shared/services';
+import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
 
 @Component({
   selector: 'cp-locations-list-top-bar',
@@ -12,10 +10,8 @@ import { CPTrackingService } from '@shared/services';
   styleUrls: ['./locations-list-top-bar.component.scss']
 })
 export class LocationsListTopBarComponent implements OnInit {
-  @Input() categories$: Observable<IItem[]>;
-
   @Output() search: EventEmitter<string> = new EventEmitter();
-  @Output() selectedCategory: EventEmitter<number> = new EventEmitter();
+  @Output() launchModal: EventEmitter<null> = new EventEmitter();
 
   eventData;
 
@@ -23,10 +19,6 @@ export class LocationsListTopBarComponent implements OnInit {
 
   onSearch(query) {
     this.search.emit(query);
-  }
-
-  onSelectedCategory(category) {
-    this.selectedCategory.emit(category.action);
   }
 
   ngOnInit() {

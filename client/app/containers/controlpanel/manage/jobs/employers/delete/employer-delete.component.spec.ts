@@ -1,45 +1,59 @@
+import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { StoreModule, Store } from '@ngrx/store';
-import { Actions } from '@ngrx/effects';
+import { of as observableOf } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import * as fromJobs from '@app/store/manage/jobs';
-import { configureTestSuite } from '@shared/tests';
 import { EmployerModule } from '../employer.module';
-import { CPTrackingService } from '@shared/services';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { CPSession } from '../../../../../../session';
+import { EmployerService } from '../employer.service';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { CPTrackingService } from '../../../../../../shared/services';
 import { EmployerDeleteComponent } from './employer-delete.component';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+
+class MockEmployerService {
+  dummy;
+  deleteEmployer(id: number, search: any) {
+    this.dummy = [id, search];
+
+    return observableOf({});
+  }
+}
 
 describe('EmployerDeleteComponent', () => {
-  configureTestSuite();
-  beforeAll((done) => {
-    (async () => {
-      TestBed.configureTestingModule({
-        imports: [EmployerModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [Store, Actions, CPSession, CPI18nService, CPTrackingService]
-      });
-      await TestBed.compileComponents();
-    })()
-      .then(done)
-      .catch(done.fail);
-  });
-
   let spy;
+  let search;
   let component: EmployerDeleteComponent;
   let fixture: ComponentFixture<EmployerDeleteComponent>;
 
   beforeEach(
     async(() => {
-      fixture = TestBed.createComponent(EmployerDeleteComponent);
-      component = fixture.componentInstance;
+      TestBed.configureTestingModule({
+        imports: [EmployerModule, RouterTestingModule],
+        providers: [
+          CPSession,
+          CPI18nService,
+          CPTrackingService,
+          { provide: EmployerService, useClass: MockEmployerService }
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(EmployerDeleteComponent);
+          component = fixture.componentInstance;
 
-      component.employer = {
-        id: 84,
-        name: 'Hello World',
-        description: 'This is description'
-      };
-      fixture.detectChanges();
+          component.employer = {
+            id: 84,
+            name: 'Hello World',
+            description: 'This is description'
+          };
+
+          component.session.g.set('school', mockSchool);
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
+        });
     })
   );
 
@@ -49,26 +63,19 @@ describe('EmployerDeleteComponent', () => {
     expect(component.buttonData.class).toEqual('danger');
   });
 
-  it('should dispatch delete action', () => {
-    spy = spyOn(component.store, 'dispatch');
+  it('should delete employer', () => {
+    spyOn(component.deleted, 'emit');
+    spyOn(component.resetDeleteModal, 'emit');
+    spy = spyOn(component.service, 'deleteEmployer').and.returnValue(observableOf({}));
+
     component.onDelete();
-
     expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenCalledWith(new fromJobs.DeleteEmployer(component.employer.id));
+    expect(spy).toHaveBeenCalledWith(component.employer.id, search);
+
+    expect(component.deleted.emit).toHaveBeenCalledTimes(1);
+    expect(component.deleted.emit).toHaveBeenCalledWith(component.employer.id);
+
+    expect(component.resetDeleteModal.emit).toHaveBeenCalled();
+    expect(component.resetDeleteModal.emit).toHaveBeenCalledTimes(1);
   });
-
-  it(
-    'should emit after delete',
-    async(() => {
-      spyOn(component.deleted, 'emit');
-      spyOn(component.resetDeleteModal, 'emit');
-
-      component.store.dispatch(new fromJobs.DeleteEmployerSuccess(component.employer.id));
-      fixture.detectChanges();
-
-      expect(component.deleted.emit).toHaveBeenCalledTimes(1);
-      expect(component.deleted.emit).toHaveBeenCalledWith(component.employer.id);
-      expect(component.resetDeleteModal.emit).toHaveBeenCalledTimes(1);
-    })
-  );
 });

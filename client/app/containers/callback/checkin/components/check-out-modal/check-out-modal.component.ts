@@ -12,11 +12,11 @@ import {
   HostListener
 } from '@angular/core';
 
-import { CPDate } from '@shared/utils';
 import IAttendee from '../attendee.interface';
+import { CPDate } from '../../../../../shared/utils';
 import { CheckinService } from '../../checkin.service';
-import { CPI18nService } from '@shared/services/i18n.service';
 import { CheckinUtilsService } from '../../checkin.utils.service';
+import { CPI18nService } from '../../../../../shared/services/i18n.service';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   enableTime: true

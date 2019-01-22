@@ -1,15 +1,14 @@
 import { ActivatedRoute, Router, NavigationExtras } from '@angular/router';
+import { environment } from './../../../../environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { appStorage } from '@shared/utils';
-
 import { AuthService } from '../auth.service';
-import { baseActions } from '@app/store/base';
-import { environment } from '@client/environments/environment';
-import { LayoutWidth, LayoutAlign } from '@app/layouts/interfaces';
-import { CPI18nService, ErrorService, ZendeskService } from '@shared/services';
+import { baseActions } from '../../../store/base';
+import { appStorage } from '../../../shared/utils';
+
+import { CPI18nService, ErrorService, ZendeskService } from '../../../shared/services';
 
 @Component({
   selector: 'cp-login',
@@ -21,8 +20,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   goTo: string;
   form: FormGroup;
   logo = `${environment.root}public/svg/full-logo.svg`;
-  layoutWidth = LayoutWidth.fourth;
-  layoutAlign = LayoutAlign.center;
 
   constructor(
     private router: Router,

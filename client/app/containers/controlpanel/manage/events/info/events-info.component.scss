@@ -1,15 +1,14 @@
 @import '~client/style/components/card';
-@import '~client/style/core/typography';
 @import '~client/style/components/button';
+@import '~client/style/core/typography';
 
 p.no-margin-bottom {
   margin-bottom: 0;
 }
 
-cp-card {
+.cp-card {
   @include card-margin();
 
-  display: block;
   margin-bottom: 0;
 }
 
@@ -20,13 +19,44 @@ strong {
 }
 
 .event {
-  &__map {
+  &__map,
+  &__banner {
     height: 225px;
+  }
+
+  &__map {
     margin-top: 15px;
   }
 
+  &__banner {
+    position: relative;
+    margin-bottom: 15px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  &__meta {
+    left: 20px;
+    bottom: 20px;
+    position: absolute;
+
+    p {
+      @include font-16px();
+
+      margin-bottom: 0;
+      color: $color-white;
+
+      &.event__title {
+        @include font-semi-bold();
+        @include font-24px();
+
+        margin-bottom: 0;
+      }
+    }
+  }
+
   &__buttons {
-    margin-top: 15px;
     a {
       margin-right: 10px;
 

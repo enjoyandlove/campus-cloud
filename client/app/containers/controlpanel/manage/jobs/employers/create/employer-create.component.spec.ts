@@ -1,32 +1,26 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { Store, StoreModule } from '@ngrx/store';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
-import { Actions } from '@ngrx/effects';
-
-import { CPSession } from '@app/session';
-import * as fromJobs from '@app/store/manage/jobs';
-import { configureTestSuite } from '@shared/tests';
-import { EmployerModule } from '../employer.module';
-import { mockSchool } from '@app/session/mock/school';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { RouterTestingModule } from '@angular/router/testing';
+import { of as observableOf } from 'rxjs';
+import { CPSession } from './../../../../../../session';
 import { EmployerCreateComponent } from './employer-create.component';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+import { EmployerModule } from '../employer.module';
+import { EmployerService } from '../employer.service';
+
+class MockEmployerService {
+  dummy;
+
+  createEmployer(body: any, search: any) {
+    this.dummy = [search];
+
+    return observableOf(body);
+  }
+}
 
 describe('EmployerCreateComponent', () => {
-  configureTestSuite();
-  beforeAll((done) => {
-    (async () => {
-      TestBed.configureTestingModule({
-        imports: [HttpClientModule, EmployerModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [Store, Actions, CPSession, FormBuilder, CPI18nService]
-      });
-      await TestBed.compileComponents();
-    })()
-      .then(done)
-      .catch(done.fail);
-  });
-
   let spy;
   let component: EmployerCreateComponent;
   let fixture: ComponentFixture<EmployerCreateComponent>;
@@ -41,11 +35,24 @@ describe('EmployerCreateComponent', () => {
 
   beforeEach(
     async(() => {
-      fixture = TestBed.createComponent(EmployerCreateComponent);
-      component = fixture.componentInstance;
+      TestBed.configureTestingModule({
+        imports: [HttpClientModule, EmployerModule, RouterTestingModule],
+        providers: [
+          CPSession,
+          FormBuilder,
+          CPI18nService,
+          { provide: EmployerService, useClass: MockEmployerService }
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(EmployerCreateComponent);
+          component = fixture.componentInstance;
 
-      component.session.g.set('school', mockSchool);
-      fixture.detectChanges();
+          component.session.g.set('school', mockSchool);
+
+          component.ngOnInit();
+        });
     })
   );
 
@@ -79,26 +86,27 @@ describe('EmployerCreateComponent', () => {
     expect(component.buttonData.disabled).toBeFalsy();
   });
 
-  it('should dispatch create action', () => {
-    spy = spyOn(component.store, 'dispatch');
+  it('should create employer', () => {
+    spyOn(component.created, 'emit');
+    spyOn(component, 'resetModal');
+    spy = spyOn(component.service, 'createEmployer').and.returnValue(observableOf(newEmployer));
+
+    component.employerForm = component.fb.group({
+      name: ['Hello World!'],
+      description: ['This is description'],
+      email: ['test@test.com'],
+      logo_url: ['dummy.jpeg']
+    });
+
     component.onSubmit();
 
+    expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenCalledWith(new fromJobs.CreateEmployer(component.employerForm.value));
+
+    expect(component.created.emit).toHaveBeenCalledTimes(1);
+    expect(component.created.emit).toHaveBeenCalledWith(newEmployer);
+
+    expect(component.resetModal).toHaveBeenCalled();
+    expect(component.resetModal).toHaveBeenCalledTimes(1);
   });
-
-  it(
-    'should emit after create',
-    async(() => {
-      spyOn(component.created, 'emit');
-      spyOn(component, 'resetModal');
-
-      component.store.dispatch(new fromJobs.CreateEmployerSuccess(newEmployer));
-      fixture.detectChanges();
-
-      expect(component.created.emit).toHaveBeenCalledTimes(1);
-      expect(component.created.emit).toHaveBeenCalledWith(newEmployer);
-      expect(component.resetModal).toHaveBeenCalledTimes(1);
-    })
-  );
 });

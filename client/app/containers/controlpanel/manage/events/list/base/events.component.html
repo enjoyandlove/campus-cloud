@@ -19,7 +19,8 @@
         [events]="eventState.events"
         *ngIf="!isUpcoming"
         [isOrientation]="isOrientation"
-        (sortList)="onSortList($event)">
+        (sortList)="onSortList($event)"
+        (deleteEvent)="onDeleteEvent($event)">
       </cp-list-past>
 
       <cp-list-upcoming

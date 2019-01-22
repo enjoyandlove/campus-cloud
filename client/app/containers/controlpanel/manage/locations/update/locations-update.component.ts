@@ -1,36 +1,38 @@
 import {
   Component,
-  OnInit,
   EventEmitter,
+  Input,
+  OnInit,
   Output,
-  ChangeDetectorRef,
   HostListener,
-  ElementRef
+  ElementRef,
+  ChangeDetectorRef
 } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
+import { CPSession } from '../../../../../session';
 import { CPMap } from '../../../../../shared/utils';
-import { CPSession, ISchool } from '../../../../../session';
+import { CPTrackingService } from '../../../../../shared/services';
 import { hasAcronym, LocationsService } from '../locations.service';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
-
-declare var $: any;
 
 @Component({
-  selector: 'cp-locations-create',
-  templateUrl: './locations-create.component.html',
-  styleUrls: ['./locations-create.component.scss']
+  selector: 'cp-locations-update',
+  templateUrl: './locations-update.component.html',
+  styleUrls: ['./locations-update.component.scss']
 })
-export class LocationsCreateComponent implements OnInit {
+export class LocationsUpdateComponent implements OnInit {
+  @Input() location: any;
   @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() locationCreated: EventEmitter<any> = new EventEmitter();
+  @Output() locationUpdated: EventEmitter<any> = new EventEmitter();
 
+  school;
   buttonData;
   form: FormGroup;
-  school: ISchool;
+  isFormReady = false;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
 
@@ -60,6 +62,19 @@ export class LocationsCreateComponent implements OnInit {
   onResetMap() {
     CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
+  }
+
+  doSubmit() {
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
+
+    this.service
+      .updateLocation(this.form.value, this.location.id, search)
+      .subscribe((editedLocation) => {
+        this.trackEvent(editedLocation);
+        $('#locationsUpdate').modal('hide');
+        this.locationUpdated.emit(editedLocation);
+        this.resetModal();
+      });
   }
 
   onMapSelection(data) {
@@ -106,18 +121,6 @@ export class LocationsCreateComponent implements OnInit {
     return this.mapCenter.next({ lat, lng });
   }
 
-  doSubmit() {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
-
-    this.service.createLocation(this.form.value, search).subscribe((newLocation) => {
-      this.trackEvent(newLocation);
-      $('#locationsUpdate').modal('hide');
-      this.locationCreated.emit(newLocation);
-      $('#locationsCreate').modal('hide');
-      this.resetModal();
-    });
-  }
-
   resetModal() {
     this.teardown.emit();
   }
@@ -130,34 +133,35 @@ export class LocationsCreateComponent implements OnInit {
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_CREATED_LOCATION,
+      amplitudeEvents.MANAGE_UPDATED_LOCATION,
       this.eventProperties
     );
   }
 
   ngOnInit() {
     this.school = this.session.g.get('school');
+
     this.mapCenter = new BehaviorSubject({
-      lat: this.school.latitude,
-      lng: this.school.longitude
+      lat: this.location.latitude,
+      lng: this.location.longitude
     });
 
     this.form = this.fb.group({
-      name: [null, Validators.required],
-      short_name: [null, Validators.maxLength(32)],
-      address: [null, Validators.required],
-      city: [null],
-      province: [null],
-      country: [null],
-      postal_code: [null],
-      latitude: [this.school.latitude, Validators.required],
-      longitude: [this.school.longitude, Validators.required]
+      name: [this.location.name, Validators.required],
+      short_name: [this.location.short_name, Validators.maxLength(32)],
+      address: [this.location.address, Validators.required],
+      city: [this.location.city],
+      province: [this.location.province],
+      country: [this.location.country],
+      postal_code: [this.location.postal_code],
+      latitude: [this.location.latitude, Validators.required],
+      longitude: [this.location.longitude, Validators.required]
     });
 
     this.buttonData = {
       disabled: true,
       class: 'primary',
-      text: this.cpI18n.translate('save')
+      text: this.cpI18n.translate('update')
     };
 
     this.form.valueChanges.subscribe((_) => {
@@ -170,5 +174,7 @@ export class LocationsCreateComponent implements OnInit {
        */
       this.cdRef.detectChanges();
     });
+
+    this.isFormReady = true;
   }
 }

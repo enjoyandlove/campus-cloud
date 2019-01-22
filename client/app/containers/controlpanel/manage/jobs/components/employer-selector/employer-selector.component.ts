@@ -3,10 +3,10 @@ import { startWith, map } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { BaseComponent } from '@app/base';
-import * as fromJobs from '@app/store/manage';
 import { JobsService } from '../../jobs.service';
-import { CPI18nService } from '@shared/services';
+import { BaseComponent } from '../../../../../../base';
+import * as fromJobs from '../../../../../../store/manage';
+import { CPI18nService } from '../../../../../../shared/services';
 
 @Component({
   selector: 'cp-employer-selector',
@@ -50,7 +50,7 @@ export class EmployerSelectorComponent extends BaseComponent implements OnInit {
         startWith([{ label: dropdownLabel }]),
         map((employers) => [{ label: dropdownLabel, action: null }, ...employers])
       );
-    this.store.select(fromJobs.getJobsEmployersLoaded).subscribe((loaded: boolean) => {
+    this.store.select(fromJobs.getJobsLoaded).subscribe((loaded: boolean) => {
       if (!loaded) {
         this.store.dispatch(new fromJobs.LoadEmployers());
       }

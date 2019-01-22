@@ -15,10 +15,6 @@ export interface IItem {
   heading?: boolean;
 }
 
-export function getItem(object: any, label: string, action: string): IItem {
-  return { label: object[label], action: object[action] };
-}
-
 @Component({
   selector: 'cp-dropdown',
   templateUrl: './cp-dropdown.component.html',
@@ -40,13 +36,6 @@ export class CPDropdownComponent implements OnInit {
   MIN_RESULTS_FOR_SEARCH = 15;
 
   constructor() {}
-
-  static defaultPlaceHolder(label = '---'): IItem {
-    return {
-      action: null,
-      label
-    };
-  }
 
   onClick(item) {
     if (item.heading) {

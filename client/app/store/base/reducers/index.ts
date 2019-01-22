@@ -35,8 +35,3 @@ export const baseActions = {
   SNACKBAR_SHOW: fromSnackbar.SNACKBAR_SHOW,
   SNACKBAR_HIDE: fromSnackbar.SNACKBAR_HIDE
 };
-
-export const baseActionClass = {
-  SnackbarSuccess: fromSnackbar.SnackbarSuccess,
-  SnackbarError: fromSnackbar.SnackbarError
-};

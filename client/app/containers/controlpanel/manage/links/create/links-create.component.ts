@@ -1,20 +1,18 @@
-import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
-import { Actions, ofType } from '@ngrx/effects';
-import { takeUntil } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
-
-import { API } from '@app/config/api';
-import { CPSession } from '@app/session';
-import { appStorage } from '@shared/utils';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { API } from '../../../../../config/api';
+import { CPSession } from '../../../../../session';
+import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { appStorage } from '../../../../../shared/utils';
+import { ILink } from '../link.interface';
 import { LinksService } from '../links.service';
-import * as fromLinks from '@app/store/manage/links';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { CPI18nService } from '@shared/services/i18n.service';
-import { Destroyable, Mixin } from '@client/app/shared/mixins';
-import { CPTrackingService, FileUploadService, ZendeskService } from '@shared/services';
+import {
+  CPTrackingService,
+  FileUploadService,
+  ZendeskService
+} from '../../../../../shared/services';
 
 declare var $: any;
 
@@ -23,9 +21,8 @@ declare var $: any;
   templateUrl: './links-create.component.html',
   styleUrls: ['./links-create.component.scss']
 })
-@Mixin([Destroyable])
-export class LinksCreateComponent implements OnInit, OnDestroy, Destroyable {
-  @Output() createLink: EventEmitter<null> = new EventEmitter();
+export class LinksCreateComponent implements OnInit {
+  @Output() createLink: EventEmitter<ILink> = new EventEmitter();
   @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
 
   storeId;
@@ -37,18 +34,12 @@ export class LinksCreateComponent implements OnInit, OnDestroy, Destroyable {
     link_id: null
   };
 
-  // Destroyable
-  destroy$ = new Subject<null>();
-  emitDestroy() {}
-
   constructor(
     private fb: FormBuilder,
-    private updates$: Actions,
     private session: CPSession,
     public cpI18n: CPI18nService,
     private service: LinksService,
     private cpTracking: CPTrackingService,
-    private store: Store<fromLinks.ILinksState>,
     private fileUploadService: FileUploadService
   ) {}
 
@@ -97,7 +88,12 @@ export class LinksCreateComponent implements OnInit, OnDestroy, Destroyable {
   }
 
   doSubmit() {
-    this.store.dispatch(new fromLinks.CreateLink(this.form.value));
+    this.service.createLink(this.form.value).subscribe((res: any) => {
+      this.trackEvent(res);
+      $('#linksCreate').modal('hide');
+      this.createLink.emit(res);
+      this.resetModal();
+    });
   }
 
   resetModal() {
@@ -128,20 +124,5 @@ export class LinksCreateComponent implements OnInit, OnDestroy, Destroyable {
         text: this.cpI18n.translate('learn_more')
       }
     };
-
-    this.updates$
-      .pipe(ofType(fromLinks.LinksActionTypes.CREATE_LINK_SUCCESS), takeUntil(this.destroy$))
-      .subscribe((action: fromLinks.CreateLinkSuccess) => {
-        const res = action.payload;
-
-        this.trackEvent(res);
-        $('#linksCreate').modal('hide');
-        this.createLink.emit();
-        this.resetModal();
-      });
-  }
-
-  ngOnDestroy() {
-    this.emitDestroy();
   }
 }

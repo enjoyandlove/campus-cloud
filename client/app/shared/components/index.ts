@@ -1,7 +1,6 @@
 export * from './cp-chip';
 export * from './cp-maps';
 export * from './cp-tabs';
-export * from './cp-card';
 export * from './cp-stars';
 export * from './cp-alert';
 export * from './cp-modal';
@@ -42,6 +41,5 @@ export * from './cp-sorting-header';
 export * from './cp-check-dropdown';
 export * from './cp-resource-banner';
 export * from './cp-small-datepicker';
-export * from './cp-form-fixed-footer';
 export * from './cp-place-autocomplete';
 export * from './cp-dropdown-multiselect';

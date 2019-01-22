@@ -6,9 +6,8 @@ import { GroupType } from '../../feeds/feeds.utils.service';
 @Component({
   selector: 'cp-orientation-wall',
   template: `<cp-feeds
-              [groupType]="groupType"
-              hideIntegrations="true"
-              [groupId]="orientationId">
+              [groupId]="orientationId"
+              [groupType]="groupType">
              </cp-feeds>`
 })
 export class OrientationWallComponent implements OnInit {

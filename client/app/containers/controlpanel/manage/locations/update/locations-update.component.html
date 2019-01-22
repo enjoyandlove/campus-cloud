@@ -1,0 +1,97 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span i18n><strong>{{ 'locations_edit_modal_title' | cpI18n }}</strong></span>
+
+        <span
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="float-right hover cpmodal__header__close">
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div [ngSwitch]="isFormReady">
+    <cp-spinner *ngSwitchCase="false"></cp-spinner>
+
+      <div class="cpmodal__body" *ngSwitchCase="true">
+        <div class="row">
+          <div class="col-12">
+            <form [formGroup]="form">
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-6">
+                    <label i18n>{{ 'name' | cpI18n }}</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="name"
+                      [class.error]="formError && form.controls['name'].hasError('required')">
+                  </div>
+                  <div class="col-6">
+                    <label i18n>{{ 'locations_label_acronym' | cpI18n }}</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      formControlName="short_name"
+                      [class.error]="formError && form.controls['name'].hasError('required')">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-12">
+                  <label i18n>{{ 'address' | cpI18n }}</label>
+                  <div class="row form-group">
+                    <div class="col-12">
+                      <cp-place-autocomplete
+                        disableLocations
+                        [newAddress]="newAddress"
+                        (backToDefault)="onResetMap()"
+                        (placeChange)="onPlaceChange($event)"
+                        [defaultValue]="form.controls['address'].value">
+                      </cp-place-autocomplete>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-12">
+                    <cp-maps
+                      class="map"
+                      [center]="mapCenter"
+                      (mapSelection)="onMapSelection($event)">
+                    </cp-maps>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row justify-content-end">
+      <div class="col-6 text-right">
+        <button
+          type="button"
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="cpbtn cpbtn--cancel" i18n>
+          {{ 'cancel' | cpI18n }}
+        </button>
+
+        <cp-button
+          [props]="buttonData"
+          (buttonClick)="doSubmit()">
+        </cp-button>
+      </div>
+    </div>
+  </div>
+</div>
