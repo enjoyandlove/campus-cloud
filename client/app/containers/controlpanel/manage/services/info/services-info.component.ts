@@ -8,6 +8,7 @@ import { BehaviorSubject } from 'rxjs';
 import { IService } from '../service.interface';
 import { AdminService } from '@shared/services';
 import { CPSession, ISchool } from '@app/session';
+import { LayoutWidth } from '@app/layouts/interfaces';
 import { ServicesService } from '../services.service';
 import { CP_PRIVILEGES_MAP } from '@shared/constants';
 import { BaseComponent } from '@app/base/base.component';
@@ -32,6 +33,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   hasMetaData = false;
   showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
+  layoutWidth = LayoutWidth.third;
 
   constructor(
     private session: CPSession,
