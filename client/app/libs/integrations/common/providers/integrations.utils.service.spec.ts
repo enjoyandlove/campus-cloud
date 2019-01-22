@@ -19,7 +19,7 @@ describe('CommonIntegrationUtilsService', () => {
     const labels = result.map((r) => r.label);
     const actions = result.map((r) => r.action);
 
-    const expectedLabels = ['RSS', 'Atom', 'iCal'];
+    const expectedLabels = ['RSS', 'ATOM', 'ICAL'];
 
     const expectedActions = [
       FeedIntegration.types.rss,

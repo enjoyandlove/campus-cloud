@@ -3,12 +3,17 @@ import { CommonModule } from '@angular/common';
 
 import { SharedModule } from '@client/app/shared/shared.module';
 import { IntegrationTypePipe, IntegrationStatusPipe } from './pipes';
-import { IntegrationsDeleteComponent, IntegrationsActionBoxComponent } from './components';
+import {
+  IntegrationsListComponent,
+  IntegrationsDeleteComponent,
+  IntegrationsActionBoxComponent
+} from './components';
 
 @NgModule({
   declarations: [
     IntegrationTypePipe,
     IntegrationStatusPipe,
+    IntegrationsListComponent,
     IntegrationsDeleteComponent,
     IntegrationsActionBoxComponent
   ],
@@ -16,6 +21,7 @@ import { IntegrationsDeleteComponent, IntegrationsActionBoxComponent } from './c
   exports: [
     IntegrationTypePipe,
     IntegrationStatusPipe,
+    IntegrationsListComponent,
     IntegrationsDeleteComponent,
     IntegrationsActionBoxComponent
   ]

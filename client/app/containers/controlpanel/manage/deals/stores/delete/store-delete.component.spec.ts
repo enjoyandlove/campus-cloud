@@ -1,49 +1,59 @@
+import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Store, StoreModule as NgrxStore } from '@ngrx/store';
-import { Actions } from '@ngrx/effects';
+import { of as observableOf } from 'rxjs';
 
-import { CPSession } from '@app/session';
 import { StoreModule } from '../store.module';
-import { configureTestSuite } from '@shared/tests';
-import * as fromDeals from '@app/store/manage/deals';
-import { CPTrackingService } from '@shared/services';
-import { mockSchool } from '@app/session/mock/school';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { DealsStoreService } from '../store.service';
+import { CPSession } from '../../../../../../session';
 import { StoreDeleteComponent } from './store-delete.component';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { CPTrackingService } from '../../../../../../shared/services';
+import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+
+class MockService {
+  dummy;
+  deleteStore(id: number, search: any) {
+    this.dummy = [id, search];
+
+    return observableOf({});
+  }
+}
 
 describe('DealsStoreDeleteComponent', () => {
-  configureTestSuite();
-  beforeAll((done) => {
-    (async () => {
-      TestBed.configureTestingModule({
-        imports: [StoreModule, RouterTestingModule, NgrxStore.forRoot({})],
-        providers: [Store, Actions, CPSession, CPI18nService, CPTrackingService]
-      });
-      await TestBed.compileComponents();
-    })()
-      .then(done)
-      .catch(done.fail);
-  });
-
   let spy;
+  let search;
   let component: StoreDeleteComponent;
   let fixture: ComponentFixture<StoreDeleteComponent>;
 
   beforeEach(
     async(() => {
-      fixture = TestBed.createComponent(StoreDeleteComponent);
-      component = fixture.componentInstance;
+      TestBed.configureTestingModule({
+        imports: [StoreModule, RouterTestingModule],
+        providers: [
+          CPSession,
+          CPI18nService,
+          CPTrackingService,
+          { provide: DealsStoreService, useClass: MockService }
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(StoreDeleteComponent);
+          component = fixture.componentInstance;
 
-      component.store = {
-        id: 1,
-        name: 'Hello World',
-        logo_url: 'image.jpeg',
-        description: 'This is description'
-      };
-      component.session.g.set('school', mockSchool);
-
-      fixture.detectChanges();
+          component.store = {
+            id: 1,
+            name: 'Hello World',
+            logo_url: 'image.jpeg',
+            description: 'This is description'
+          };
+          component.session.g.set('school', mockSchool);
+          search = new HttpParams().append(
+            'school_id',
+            component.session.g.get('school').id.toString()
+          );
+        });
     })
   );
 
@@ -53,26 +63,19 @@ describe('DealsStoreDeleteComponent', () => {
     expect(component.buttonData.class).toEqual('danger');
   });
 
-  it('should dispatch delete action', () => {
-    spy = spyOn(component.stateStore, 'dispatch');
+  it('should delete store', () => {
+    spyOn(component.deleted, 'emit');
+    spyOn(component.resetDeleteModal, 'emit');
+    spy = spyOn(component.service, 'deleteStore').and.returnValue(observableOf({}));
+
     component.onDelete();
-
     expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenCalledWith(new fromDeals.DeleteStore(component.store.id));
+    expect(spy).toHaveBeenCalledWith(component.store.id, search);
+
+    expect(component.deleted.emit).toHaveBeenCalledTimes(1);
+    expect(component.deleted.emit).toHaveBeenCalledWith(component.store.id);
+
+    expect(component.resetDeleteModal.emit).toHaveBeenCalled();
+    expect(component.resetDeleteModal.emit).toHaveBeenCalledTimes(1);
   });
-
-  it(
-    'should emit after delete',
-    async(() => {
-      spyOn(component.deleted, 'emit');
-      spyOn(component.resetDeleteModal, 'emit');
-
-      component.stateStore.dispatch(new fromDeals.DeleteStoreSuccess(component.store.id));
-      fixture.detectChanges();
-
-      expect(component.deleted.emit).toHaveBeenCalledTimes(1);
-      expect(component.deleted.emit).toHaveBeenCalledWith(component.store.id);
-      expect(component.resetDeleteModal.emit).toHaveBeenCalledTimes(1);
-    })
-  );
 });

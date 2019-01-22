@@ -1,7 +1,5 @@
-import { IItem } from '@client/app/shared/components';
-
 export interface IDealsState {
-  stores: IItem[];
+  stores: any[];
   loaded: boolean;
   loading: boolean;
 }

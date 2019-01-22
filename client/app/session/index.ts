@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
-
-import { UserType } from '@shared/utils';
-import { CP_PRIVILEGES_MAP } from '@shared/constants/privileges';
-import { canSchoolWriteResource } from '@shared/utils/privileges/privileges';
+import { CP_PRIVILEGES_MAP } from './../shared/constants/privileges';
+import { canSchoolWriteResource } from './../shared/utils/privileges/privileges';
 /**
  * All session data should be set
  * as part of the g (global) Map
@@ -61,7 +59,11 @@ export class CPSession {
   get isInternal() {
     const email = _get(this.g.get('user'), 'email', '').toLocaleLowerCase();
 
-    return UserType.isInternal(email);
+    return (
+      email.endsWith('@oohlalamobile.com') ||
+      email.endsWith('@dublabs.com') ||
+      email.endsWith('@readyeducation.com')
+    );
   }
 
   get school() {

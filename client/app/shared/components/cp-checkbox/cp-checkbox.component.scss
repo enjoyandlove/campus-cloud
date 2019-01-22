@@ -14,12 +14,7 @@
   &.labelRight {
     .control__indicator {
       float: left;
-      margin-left: 0;
       margin-right: 8px;
-    }
-
-    .control__indicator:after {
-      left: 6.5px;
     }
   }
 
@@ -34,7 +29,6 @@
     width: 20px;
     height: 20px;
     float: right;
-    margin-left: 8px;
     border-radius: 4px;
     background: $color-white;
     border: 1px solid $color-med-grey;
@@ -88,7 +82,7 @@
 .control--checkbox .control__indicator:after {
   top: 1px;
   width: 6px;
-  right: 7px;
+  left: 6.5px;
   height: 13px;
   transform: rotate(45deg);
   border: solid #fff;

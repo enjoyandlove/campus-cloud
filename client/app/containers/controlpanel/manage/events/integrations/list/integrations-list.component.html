@@ -17,11 +17,11 @@
     </cp-no-content>
 
     <div *ngIf="(integrations$ | async)?.length">
-      <cp-event-integrations-list
+      <cp-integrations-list
         [integrations$]="integrations$"
         (editClick)="onLaunchEditModal($event)"
         (deleteClick)="onLaunchDeleteModal($event)">
-      </cp-event-integrations-list>
+      </cp-integrations-list>
 
       <cp-pagination
         [pageNext]="pageNext"

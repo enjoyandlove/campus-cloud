@@ -1,31 +1,25 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Actions, ofType } from '@ngrx/effects';
-import { takeUntil } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 import {
-  OnInit,
-  Output,
   Component,
-  ViewChild,
-  OnDestroy,
   ElementRef,
   EventEmitter,
-  HostListener
+  HostListener,
+  OnInit,
+  Output,
+  ViewChild
 } from '@angular/core';
-
-import { CPSession } from '@app/session';
-import { IJobsState } from '@client/app/store';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CPSession } from '../../../../../../session';
+import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { IEmployer } from '../employer.interface';
-import * as fromJobs from '@app/store/manage/jobs';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { EmployerService } from '../employer.service';
 
 @Component({
   selector: 'cp-employer-create',
   templateUrl: './employer-create.component.html',
   styleUrls: ['./employer-create.component.scss']
 })
-export class EmployerCreateComponent implements OnInit, OnDestroy {
+export class EmployerCreateComponent implements OnInit {
   @ViewChild('createForm') createForm;
 
   @Output() created: EventEmitter<IEmployer> = new EventEmitter();
@@ -33,15 +27,13 @@ export class EmployerCreateComponent implements OnInit, OnDestroy {
 
   buttonData;
   employerForm: FormGroup;
-  destroy$ = new Subject();
 
   constructor(
     public el: ElementRef,
     public fb: FormBuilder,
-    public updates$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public store: Store<IJobsState>
+    public service: EmployerService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -59,7 +51,12 @@ export class EmployerCreateComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.store.dispatch(new fromJobs.CreateEmployer(this.employerForm.value));
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
+
+    this.service.createEmployer(this.employerForm.value, search).subscribe((employer: any) => {
+      this.created.emit(employer);
+      this.resetModal();
+    });
   }
 
   ngOnInit() {
@@ -79,17 +76,5 @@ export class EmployerCreateComponent implements OnInit, OnDestroy {
     this.employerForm.valueChanges.subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.employerForm.valid };
     });
-
-    this.updates$
-      .pipe(ofType(fromJobs.CREATE_EMPLOYER_SUCCESS), takeUntil(this.destroy$))
-      .subscribe((action: fromJobs.CreateEmployerSuccess) => {
-        this.created.emit(action.payload);
-        this.resetModal();
-      });
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

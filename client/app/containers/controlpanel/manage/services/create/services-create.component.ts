@@ -61,7 +61,7 @@ export class ServicesCreateComponent implements OnInit {
     this.buildHeader();
     this.categories$ = this.servicesService.getCategories().pipe(
       startWith([{ label: '---', action: null }]),
-      map((categories: any[]) => {
+      map((categories) => {
         const _categories = [
           {
             label: '---',

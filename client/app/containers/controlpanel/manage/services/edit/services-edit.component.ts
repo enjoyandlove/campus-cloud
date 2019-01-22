@@ -161,8 +161,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
     }
 
     this.servicesService.updateService(this.form.value, this.serviceId).subscribe(
-      () => {
-        const route = '/info';
+      (service: any) => {
+        const route = !service.service_attendance ? '/info' : '';
 
         this.trackEvent(this.form.value);
         this.router.navigate(['/manage/services/' + this.serviceId + route]);

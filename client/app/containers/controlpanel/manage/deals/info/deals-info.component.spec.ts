@@ -91,11 +91,13 @@ describe('DealsInfoComponent', () => {
       tick(10);
 
       const dealElement = bannerEl.querySelector('div.row div.deals');
+      const dealTitle = dealElement.querySelector('div.row .resource-banner__title');
       const start = dealElement.querySelector('div.deals__details .start');
       const expiration = dealElement.querySelector('div.deals__details .expiration');
       const location = dealElement.querySelector('div.deals__details .location');
       const description = dealElement.querySelector('div.row .description');
 
+      expect(dealTitle.textContent).toEqual(deal.title);
       expect(start.textContent).toEqual('May 15th 2019, 6:49 am');
       expect(expiration.textContent).toEqual('May 15th 2020, 6:49 am');
       expect(location.textContent).toEqual(deal.store_address);

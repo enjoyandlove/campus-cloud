@@ -1,29 +1,28 @@
 <div class="row">
   <div class="col-12">
     <cp-locations-list-top-bar
-      [categories$]="categories$"
       (search)="onSearch($event)"
-      (selectedCategory)="onCategorySelect($event)">
+      (launchModal)="onLaunchModal()">
     </cp-locations-list-top-bar>
   </div>
 </div>
 
-<div [ngSwitch]="loading$ | async">
+<div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
     <cp-no-content
       class="no-content"
-      *ngIf="!(locations$ | async).length"
+      *ngIf="!state.locations.length"
       noContentText="No locations found...">
     </cp-no-content>
 
-    <div *ngIf="(locations$ | async).length">
+    <div *ngIf="state.locations.length">
       <ul class="locations cp-form">
         <li class="cp-form__header col-12">
           <div class="row">
             <cp-sorting-header
-              class="col-7"
+              class="col-5"
               sortLabel="name"
               (click)="doSort('name')"
               [sortField]="state.sort_field"
@@ -31,47 +30,37 @@
               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
-            <span class="col-2">{{ 'locations_label_acronym' | cpI18n }}</span>
-            <span class="col-2">{{ 'category' | cpI18n }}</span>
+            <span class="col-6">{{ 'locations_label_acronym' | cpI18n }}</span>
             <span class="col-1"></span>
           </div>
         </li>
 
-        <li class="cp-form__item col-12" *ngFor="let location of locations$ | async">
+        <li class="cp-form__item col-12" *ngFor="let location of state.locations">
           <div class="row">
-            <span class="col-7 text-truncate">
-              <img
-                class="rounded img-fit-cover float-left avatar"
-                [src]="location.image_url ? location.image_url : defaultImage">
+            <span class="col-5 text-truncate">
               <strong>
-                <a [routerLink]="[location.id + '/info']">
+                <button
+                  cpTracker
+                  [eventData]="eventData"
+                  data-toggle="modal"
+                  data-target="#locationsUpdate"
+                  (click)="updateLocation = location"
+                  (click)="isLocationsUpdate = true"
+                  class="cpbtn cpbtn--link-dark text-truncate updateLocationBtn">
                   {{ location.name }}
-                </a>
+                </button>
               </strong>
-
-              <br>
-              {{ location.address }}
             </span>
-
-            <span class="col-2 text-truncate">
+              <span class="col-6 text-truncate">
               {{ location.short_name }}
             </span>
 
-            <span class="col-2 text-truncate">
-              {{ location.category_name }}
-            </span>
-
-            <span>
-              <a
-                cpTracker
-                [eventData]="eventData"
-                [routerLink]="[location.id + '/edit']">
-                <i class="material-icons hover action-button margin-right">edit</i>
-              </a>
-              <i
-                (click)="deleteLocation = location;"
-                data-toggle="modal" data-target="#locationsDelete"
-                class="material-icons hover margin-right action-button">close</i>
+            <span
+              (click)="deleteLocation = location;"
+              (click)="isLocationsDelete = true"
+              data-toggle="modal" data-target="#locationsDelete"
+              class="col-1 hover delete-location text-center">
+              &times;
             </span>
           </div>
         </li>
@@ -88,8 +77,28 @@
   </div>
 </div>
 
+<cp-modal
+  modalId="locationsCreate"
+  *ngIf="isLocationsCreate">
+  <cp-locations-create
+    (teardown)="isLocationsCreate = false"
+    (locationCreated)="onLocationCreated($event)">
+  </cp-locations-create>
+</cp-modal>
+
 <cp-modal modalId="locationsDelete">
   <cp-locations-delete
-    [location]="deleteLocation">
+    [location]="deleteLocation"
+    (locationDeleted)="onLocationDeleted($event)">
   </cp-locations-delete>
+</cp-modal>
+
+<cp-modal
+  modalId="locationsUpdate"
+  *ngIf="isLocationsUpdate">
+  <cp-locations-update
+    [location]="updateLocation"
+    (teardown)="isLocationsUpdate = false"
+    (locationUpdated)="onLocationUpdated($event)">
+  </cp-locations-update>
 </cp-modal>

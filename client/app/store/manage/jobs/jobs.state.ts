@@ -1,7 +1,5 @@
-import { IItem } from '@client/app/shared/components';
-
 export interface IJobsState {
-  employers: IItem[];
+  employers: any[];
   loaded: boolean;
   loading: boolean;
 }

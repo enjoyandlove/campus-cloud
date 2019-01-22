@@ -1,29 +1,17 @@
+import { HttpParams } from '@angular/common/http';
+import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Actions, ofType } from '@ngrx/effects';
-import { takeUntil } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
-  OnInit,
-  Output,
-  OnDestroy
-} from '@angular/core';
-
-import { CPSession } from '@app/session';
+import { CPSession } from '../../../../../../session';
+import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { IStore } from '../store.interface';
-import * as fromDeals from '@app/store/manage/deals';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { DealsStoreService } from '../store.service';
 
 @Component({
   selector: 'cp-store-create',
   templateUrl: './store-create.component.html',
   styleUrls: ['./store-create.component.scss']
 })
-export class StoreCreateComponent implements OnInit, OnDestroy {
+export class StoreCreateComponent implements OnInit {
   @Output() created: EventEmitter<IStore> = new EventEmitter();
   @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
 
@@ -31,15 +19,13 @@ export class StoreCreateComponent implements OnInit, OnDestroy {
   errorMessage;
   error = false;
   storeForm: FormGroup;
-  destroy$ = new Subject();
 
   constructor(
     public el: ElementRef,
     public fb: FormBuilder,
-    public updates$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public store: Store<fromDeals.IDealsState>
+    public service: DealsStoreService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -57,7 +43,18 @@ export class StoreCreateComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.error = false;
-    this.store.dispatch(new fromDeals.CreateStore(this.storeForm.value));
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
+
+    this.service.createStore(this.storeForm.value, search).subscribe(
+      (store: any) => {
+        this.created.emit(store);
+        this.resetModal();
+      },
+      () => {
+        this.error = true;
+        this.errorMessage = this.cpI18n.translate('something_went_wrong');
+      }
+    );
   }
 
   ngOnInit() {
@@ -84,25 +81,5 @@ export class StoreCreateComponent implements OnInit, OnDestroy {
     this.storeForm.valueChanges.subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.storeForm.valid };
     });
-
-    this.updates$
-      .pipe(
-        ofType(fromDeals.CREATE_STORE_SUCCESS || fromDeals.CREATE_STORE_FAIL),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((action: any) => {
-        if (action instanceof fromDeals.CreateStoreSuccess) {
-          this.created.emit(action.payload);
-          this.resetModal();
-        } else if (action instanceof fromDeals.CreateStoreFail) {
-          this.error = true;
-          this.errorMessage = this.cpI18n.translate('something_went_wrong');
-        }
-      });
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

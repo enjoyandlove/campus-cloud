@@ -12,10 +12,6 @@ Testing Web Staging:
   - echo "Web Staging tested successfully"
   only:
   - staging
-  coverage: '/Statements.*?(\d+(?:\.\d+)?)%/'
-  artifacts:
-    paths:
-      - coverage/
   environment: Staging
 
 Building Web Staging:

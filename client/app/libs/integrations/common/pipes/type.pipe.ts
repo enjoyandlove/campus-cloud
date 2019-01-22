@@ -6,9 +6,9 @@ import { FeedIntegration } from '../model';
 export class IntegrationTypePipe implements PipeTransform {
   transform(value: number): any {
     if (value === FeedIntegration.types.atom) {
-      return 'Atom';
+      return 'ATOM';
     } else if (value === FeedIntegration.types.ical) {
-      return 'iCal';
+      return 'ICAL';
     } else if (value === FeedIntegration.types.rss) {
       return 'RSS';
     }

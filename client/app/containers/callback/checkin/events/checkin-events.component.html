@@ -2,13 +2,12 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <cp-base-checkin
-    [eventId]="eventId"
     [isEvent]="isEvent"
     *ngSwitchCase="false"
     [data]="state.events"
-    [timeZone]="timeZone"
-    (send)="onSubmit($event)"
+    [eventId]="eventId"
     [isOrientation]="isOrientation"
+    (send)="onSubmit($event)"
     (checkout)="onCheckout($event)">
   </cp-base-checkin>
 </div>

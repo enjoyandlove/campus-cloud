@@ -3,20 +3,20 @@ import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '../../../../session';
 import { CheckinService } from '../checkin.service';
-import { BaseComponent } from '@app/base/base.component';
-import { ISnackbar, baseActions } from '@app/store/base';
-import { amplitudeEvents } from '@shared/constants/analytics';
 import { CheckinUtilsService } from '../checkin.utils.service';
+import { BaseComponent } from '../../../../base/base.component';
+import { ISnackbar, baseActions } from '../../../../store/base';
 import { CheckInOutTime, CheckInType } from '../../callback.status';
+import { amplitudeEvents } from '../../../../shared/constants/analytics';
 
 import {
   ErrorService,
   CPI18nService,
   CPTrackingService,
   CPAmplitudeService
-} from '@shared/services';
+} from './../../../../shared/services';
 
 interface IState {
   events: Array<any>;
@@ -35,7 +35,6 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
   loading;
   isEvent = true;
   eventId: string;
-  timeZone: string;
   search: HttpParams;
   checkInSource: string;
   state: IState = state;
@@ -134,12 +133,7 @@ export class CheckinEventsComponent extends BaseComponent implements OnInit {
     super
       .fetchData(this.checkinService.getEventData(this.search, true))
       .then((res) => {
-        this.timeZone = res.data.tz_zoneinfo_str;
-
-        this.state = {
-          ...this.state,
-          events: res.data
-        };
+        this.state = Object.assign({}, this.state, { events: res.data });
 
         if (this.checkInSource) {
           this.trackLoadCheckInEvent();

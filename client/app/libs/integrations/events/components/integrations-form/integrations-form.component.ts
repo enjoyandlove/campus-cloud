@@ -12,7 +12,6 @@ import { IItem } from '@shared/components/cp-dropdown';
 export class EventIntegrationFormComponent implements OnInit {
   @Input() selectedHost;
   @Input() form: FormGroup;
-  @Input() showImage = true;
   @Input() showHosts = true;
   @Input() selectedType: IItem;
   @Input() typesDropdown: Array<IItem>;

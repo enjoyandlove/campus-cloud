@@ -41,7 +41,7 @@ export class StoreService extends HTTPService {
           heading: true
         }
       ]),
-      map((res: any[]) => {
+      map((res) => {
         const services = [
           {
             label: cpI18n.translate('services'),
@@ -81,7 +81,7 @@ export class StoreService extends HTTPService {
           heading: true
         }
       ]),
-      map((res: any[]) => {
+      map((res) => {
         const athletics = [
           {
             label: cpI18n.translate('athletics'),
@@ -124,7 +124,7 @@ export class StoreService extends HTTPService {
           heading: true
         }
       ]),
-      map((res: any[]) => {
+      map((res) => {
         const clubs = [
           {
             label: cpI18n.translate('clubs'),

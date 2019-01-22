@@ -10,10 +10,6 @@ const appRoutes: Routes = [
     canActivate: [PrivilegesGuard],
     component: FeedsListComponent,
     data: { zendesk: 'walls' }
-  },
-  {
-    path: 'integrations',
-    loadChildren: './integrations/walls-integrations.module#WallsIntegrationsModule'
   }
 ];
 @NgModule({
