@@ -12,6 +12,7 @@ $banner_height: 225px;
   &__background {
     position: static;
     height: $banner_height;
+    border-radius: 0.25rem;
     background-size: cover !important;
     background-repeat: no-repeat !important;
     background-position: center center !important;

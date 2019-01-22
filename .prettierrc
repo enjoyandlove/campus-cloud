@@ -4,10 +4,8 @@
   "singleQuote": true,
   "trailingComma": "none",
   "arrowParens": "always",
-  "endOfLine": "auto",
   "bracketSpacing": true,
   "printWidth": 100,
   "semi": true,
-  "proseWrap": "preserve",
-  "htmlWhitespaceSensitivity": "css"
+  "proseWrap": "preserve"
 }
