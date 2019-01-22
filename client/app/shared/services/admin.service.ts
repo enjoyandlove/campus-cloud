@@ -25,11 +25,13 @@ export class AdminService extends HTTPService {
   getAdminByStoreId(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/1;9000`;
 
-    return super
-      .get(url, search)
-      .pipe(
-        map((admins: Array<any>) => sortBy(admins, (admin: any) => admin.firstname.toLowerCase()))
-      );
+    return super.get(url, search).pipe(
+      map((admins: Array<any>) => {
+        if (admins) {
+          return sortBy(admins, (admin: any) => admin.firstname.toLowerCase());
+        }
+      })
+    );
   }
 
   getAdminById(adminId: number) {
