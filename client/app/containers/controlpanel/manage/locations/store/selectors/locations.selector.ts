@@ -10,16 +10,9 @@ export const getLocationState = createSelector(
   (state: fromFeature.ILocationsState) => state.locations
 );
 
-export const getLocationsData = createSelector(
+export const getLocations = createSelector(
   getLocationState,
   fromLocations.getLocations
-);
-
-export const getLocations = createSelector(
-  getLocationsData,
-  (data) => {
-    return Object.keys(data).map((id) => data[id]['data']);
-  }
 );
 
 export const getLocationsError = createSelector(
@@ -39,17 +32,17 @@ export const getLocationsLoaded = createSelector(
 
 export const getLocationsById = createSelector(
   getLocationState,
-  fromLocations.getLocations
+  fromLocations.getLocationEntities
 );
 
 export const getSelectedLocation = createSelector(
-  getLocationsData,
+  getLocationsById,
   getRouterState,
   (locations, router) => {
     const locationId = parseInt(router.state.params.locationId, 10);
 
     if (locations[locationId]) {
-      return locations[locationId]['data'];
+      return locations[locationId];
     }
   }
 );
