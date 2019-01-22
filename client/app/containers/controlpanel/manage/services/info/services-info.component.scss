@@ -6,16 +6,16 @@ p.no-margin-bottom {
   margin-bottom: 0;
 }
 
-.cp-card {
-  @include card-margin();
-
-  margin-bottom: 0;
-}
-
 strong {
   @include font-semi-bold();
 
   color: $color-black;
+}
+
+cp-card,
+cp-resource-banner {
+  display: block;
+  margin-bottom: $default_margin;
 }
 
 .services {

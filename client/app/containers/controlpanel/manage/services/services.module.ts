@@ -11,6 +11,7 @@ import { ServicesExcelComponent } from './excel';
 import { ServicesDeleteComponent } from './delete';
 import { ServicesCreateComponent } from './create';
 import { ServicesAttendanceComponent } from './attendance';
+import { LayoutsModule } from '@app/layouts/layouts.module';
 import { ServicesListActionBoxComponent } from './list/components';
 import { ServicesExcelModalComponent, ServicesImportTopBarComponent } from './excel/components';
 
@@ -83,6 +84,7 @@ import {
     SharedModule,
     RouterModule,
     CheckInModule,
+    LayoutsModule,
     ReactiveFormsModule,
     ServicesFeedsModule,
     ServicesEventsModule,
