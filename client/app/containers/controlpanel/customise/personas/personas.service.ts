@@ -35,7 +35,7 @@ export class PersonasService extends HTTPService {
 
     return super.get(url, search).pipe(
       startWith([{ label: '---' }]),
-      map((services) => {
+      map((services: any[]) => {
         return [
           { label: '---', value: null },
           ...services.map((service: any) => {

@@ -1,0 +1,31 @@
+@import '~client/style/components/card';
+@import '~client/style/components/button';
+@import '~client/style/core/typography';
+
+.cp-card {
+  @include card-margin();
+
+  margin-bottom: 0;
+}
+
+strong {
+  @include font-semi-bold();
+
+  color: $color-black;
+}
+
+.location {
+  &__map,
+  &__banner {
+    height: 225px;
+  }
+
+  &__buttons {
+    margin-top: 15px;
+  }
+
+  .avatar {
+    width: 35px;
+    height: 35px;
+  }
+}

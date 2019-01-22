@@ -11,16 +11,33 @@ module.exports = function(config) {
       require('karma-jasmine'),
       require('karma-mocha-reporter'),
       require('karma-chrome-launcher'),
+      require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
       jasmineSeedReporter
     ],
     client: {
       jasmine: {
         random: true
-        // seed: 70043
+        // seed: 01932
       },
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
+    coverageIstanbulReporter: {
+      dir: require('path').join(__dirname, '../coverage'),
+      reports: ['html', 'lcovonly', 'text-summary'],
+      fixWebpackSourcePaths: true,
+      combineBrowserReports: true,
+      thresholds: {
+        emitWarning: false,
+        global: {
+          statements: 66,
+          branches: 37,
+          functions: 43,
+          lines: 65
+        }
+      }
+    },
+    browserDisconnectTimeout: 10000,
     reporters: ['mocha', 'jasmine-seed'],
     port: 9876,
     colors: true,

@@ -13,11 +13,11 @@ export class CommonIntegrationUtilsService {
       },
       {
         action: FeedIntegration.types.atom,
-        label: 'ATOM'
+        label: 'Atom'
       },
       {
         action: FeedIntegration.types.ical,
-        label: 'ICAL'
+        label: 'iCal'
       }
     ];
   }

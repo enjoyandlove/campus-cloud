@@ -4,10 +4,11 @@ import { map, startWith } from 'rxjs/operators';
 import { sortBy } from 'lodash';
 import { Observable } from 'rxjs';
 
+import { CPSession } from '@app/session';
 import { FeedsService } from '../../../feeds.service';
-import { CPSession } from '../../../../../../../session';
 import { GroupType } from '../../../feeds.utils.service';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { WALLS_INTEGRATION } from '@shared/constants/flags';
+import { CPI18nService } from '@shared/services/i18n.service';
 
 const campusWall = {
   label: 'Campus Wall',
@@ -52,6 +53,7 @@ export class FeedFiltersComponent implements OnInit {
   @Input() groupId: number;
   @Input() selectedItem: any;
   @Input() groupType: GroupType;
+  @Input() hideIntegrations: boolean;
   @Input() isCampusWallView: Observable<any>;
 
   @Output() doFilter: EventEmitter<IState> = new EventEmitter();
@@ -63,6 +65,7 @@ export class FeedFiltersComponent implements OnInit {
   campusWallView;
   socialGroups = [];
   walls$: Observable<any>;
+  featureName = WALLS_INTEGRATION;
 
   constructor(
     private session: CPSession,
@@ -112,7 +115,7 @@ export class FeedFiltersComponent implements OnInit {
 
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 1000, search).pipe(
       startWith([{ label: this.cpI18n.translate('all') }]),
-      map((channels) => {
+      map((channels: any) => {
         const _channels = [
           {
             label: this.cpI18n.translate('all'),

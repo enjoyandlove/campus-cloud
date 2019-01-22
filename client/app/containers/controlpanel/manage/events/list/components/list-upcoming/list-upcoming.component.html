@@ -21,8 +21,8 @@
         [sortDirection]="state.sort_direction">
       </cp-sorting-header>
 
-      <span class="col-3">{{ 'assessment' | cpI18n }}</span>
-      <span class="col-1"></span>
+      <span class="col-2">{{ 'assessment' | cpI18n }}</span>
+      <span class="col-2"></span>
     </div>
   </li>
 
@@ -55,7 +55,7 @@
         {{ event.start | cpDatePipe:dateFormat }}
       </span>
 
-      <span class="col-3 text-truncate">
+      <span class="col-2 text-truncate">
         <a
           target="_blank"
           (click)="trackCheckinEvent(event)"
@@ -66,7 +66,7 @@
         </a>
       </span>
 
-      <span class="col-1 text-right actions">
+      <span class="col-2 text-right actions">
         <i
           *ngIf="event.is_external"
           class="material-icons js_event_external">

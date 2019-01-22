@@ -8,6 +8,7 @@ import { PopoverModule } from 'ngx-bootstrap/popover';
 // directives
 import {
   CPHostDirective,
+  CPTargetDirective,
   CPTrackerDirective,
   CPLightboxDirective,
   CPImageRatioDirective,
@@ -35,8 +36,11 @@ import { CPDatePipe, CPFilterPipe, CPI18nPipe, CPFIlterByLength } from './pipes'
 // components
 import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
 
+import { LatLngValidators } from '@shared/validators';
+
 import {
   CPTabComponent,
+  CPCardComponent,
   CPChipComponent,
   CPMapsComponent,
   CPAlertComponent,
@@ -80,6 +84,7 @@ import {
   CPSortingHeaderComponent,
   CPResourceBannerComponent,
   CPSmallDatePickerComponent,
+  CPFormFixedFooterComponent,
   CPUploadModalBodyComponent,
   CPPlaceAutoCompleteComponent,
   CPUploadModalFooterComponent,
@@ -93,6 +98,7 @@ import {
     CPDatePipe,
     CPFilterPipe,
     CPTabComponent,
+    CPCardComponent,
     CPHostDirective,
     CPMapsComponent,
     CPTabsComponent,
@@ -108,6 +114,7 @@ import {
     CPButtonComponent,
     CPSpinnerComponent,
     CPTrackerDirective,
+    CPTargetDirective,
     CPTooltipComponent,
     CPStepperComponent,
     CPStepperComponent,
@@ -147,6 +154,7 @@ import {
     CPCheckDropdownComponent,
     CPFeatureToggleDirective,
     CPResourceBannerComponent,
+    CPFormFixedFooterComponent,
     CPSmallDatePickerComponent,
     CPUploadModalBodyComponent,
     CPUploadModalFooterComponent,
@@ -163,6 +171,7 @@ import {
     StoreService,
     CPMapsService,
     LocationsService,
+    LatLngValidators,
     CPTrackingService,
     FileUploadService,
     CPLocationsService,
@@ -176,6 +185,7 @@ import {
     CPI18nPipe,
     CPFilterPipe,
     CPTabComponent,
+    CPCardComponent,
     CPMapsComponent,
     CPHostDirective,
     CPTabsComponent,
@@ -188,6 +198,7 @@ import {
     CPSwitchComponent,
     CPTopBarComponent,
     CPAvatarComponent,
+    CPTargetDirective,
     CPButtonComponent,
     CPTrackerDirective,
     CPSpinnerComponent,
@@ -230,6 +241,7 @@ import {
     CPSortingHeaderComponent,
     CPFeatureToggleDirective,
     CPResourceBannerComponent,
+    CPFormFixedFooterComponent,
     CPSmallDatePickerComponent,
     CPUploadModalBodyComponent,
     CPPlaceAutoCompleteComponent,

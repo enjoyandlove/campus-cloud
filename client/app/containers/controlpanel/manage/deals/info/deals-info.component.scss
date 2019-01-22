@@ -12,6 +12,11 @@ p.no-margin-bottom {
   margin-bottom: 0;
 }
 
+cp-resource-banner {
+  display: block;
+  margin-bottom: 15px;
+}
+
 strong {
   @include font-semi-bold();
 

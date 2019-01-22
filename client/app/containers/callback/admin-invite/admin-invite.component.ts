@@ -1,6 +1,7 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { baseActions } from '../../../store/base/';
@@ -13,6 +14,12 @@ import {
   CPTrackingService,
   CPAmplitudeService
 } from '../../../shared/services';
+
+const ERROR_STRINGS = {
+  default: 'admin_invite_invalid_invite_key_error',
+  409: 't_admin_invite_already_activated_error',
+  410: 't_admin_invite_account_error'
+};
 
 @Component({
   selector: 'cp-admin-invite',
@@ -41,9 +48,9 @@ export class AdminInviteComponent implements OnInit, OnDestroy {
   onSubmit(data) {
     this.authService.createInvitePassword(data).subscribe(
       (_) => this.handleSuccess(),
-      (_) => {
+      (error: HttpErrorResponse) => {
         this.error.handleError({
-          reason: this.cpI18n.translate('admin_invite_invalid_invite_key_error')
+          reason: this.cpI18n.translate(ERROR_STRINGS[error.status] || ERROR_STRINGS.default)
         });
       }
     );

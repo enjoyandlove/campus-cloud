@@ -1,19 +1,18 @@
-import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-
-import { SharedModule } from '../../shared/shared.module';
+import { NgModule } from '@angular/core';
 
 import { LoginComponent } from './login';
 import { LogoutComponent } from './logout';
-import { LostPasswordComponent } from './lost-password';
-
 import { AuthService } from './auth.service';
+import { SharedModule } from '@shared/shared.module';
+import { LostPasswordComponent } from './lost-password';
+import { LayoutsModule } from '@app/layouts/layouts.module';
 
 @NgModule({
   declarations: [LoginComponent, LogoutComponent, LostPasswordComponent],
-  imports: [BrowserModule, ReactiveFormsModule, SharedModule, RouterModule],
+  imports: [BrowserModule, ReactiveFormsModule, LayoutsModule, SharedModule, RouterModule],
   providers: [AuthService]
 })
 export class AuthModule {}

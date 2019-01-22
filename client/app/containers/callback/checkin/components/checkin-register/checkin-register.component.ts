@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { CPDate } from '@shared/utils';
 import IAttendee from '../attendee.interface';
 import ICheckIn from '../../checkin.interface';
-import { CPSession } from '../../../../../session';
-import { CPDate } from '../../../../../shared/utils';
-import { CPI18nService } from '../../../../../shared/services';
-import { CheckInMethod } from '../../../../controlpanel/manage/events/event.status';
+import { CPI18nService } from '@shared/services';
+import { CheckInMethod } from '@containers/controlpanel/manage/events/event.status';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   enableTime: true
@@ -21,6 +20,7 @@ export class CheckinRegisterComponent implements OnInit {
   @ViewChild('selectedDate') selectedDate;
 
   @Input() data: ICheckIn;
+  @Input() timeZone: string;
   @Input() isService: boolean;
 
   @Output() send: EventEmitter<IAttendee> = new EventEmitter();
@@ -33,11 +33,11 @@ export class CheckinRegisterComponent implements OnInit {
   disableCheckInTooltip = '';
   registrationForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private session: CPSession, private cpI18n: CPI18nService) {}
+  constructor(private fb: FormBuilder, private cpI18n: CPI18nService) {}
 
   onSubmit(data) {
     if (!data.check_in_time_epoch) {
-      data.check_in_time_epoch = Math.round(CPDate.now(this.session.tz).unix());
+      data.check_in_time_epoch = Math.round(CPDate.now(this.timeZone).unix());
     }
 
     this.selectedDate.clearDate();
@@ -63,7 +63,7 @@ export class CheckinRegisterComponent implements OnInit {
 
   setCheckin(date) {
     this.registrationForm.controls['check_in_time_epoch'].setValue(
-      CPDate.toEpoch(date, this.session.tz)
+      CPDate.toEpoch(date, this.timeZone)
     );
   }
 

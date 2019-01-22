@@ -1,25 +1,35 @@
+import { filter, takeUntil, map, tap, take } from 'rxjs/operators';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
 
-import { CPSession } from './../../../../../session';
-import { LocationsService } from '../locations.service';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
-
-declare var $: any;
+import { ILocation } from '../model';
+import * as fromStore from '../store';
+import * as fromRoot from '@app/store';
+import { CPSession } from '@app/session';
+import { IItem } from '@shared/components';
+import { ICategory } from '../categories/model';
+import { ManageHeaderService } from '../../utils';
+import { BaseComponent } from '@app/base/base.component';
+import * as fromCategoryStore from '../categories/store';
+import { Locale } from '../categories/categories.status';
+import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { LocationsUtilsService } from '../locations.utils';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { environment } from '@client/environments/environment';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 
 interface IState {
-  locations: Array<any>;
   search_str: string;
   sort_field: string;
+  category_id: string;
   sort_direction: string;
 }
 
 const state: IState = {
-  locations: [],
   search_str: null,
+  category_id: null,
   sort_field: 'name',
   sort_direction: 'asc'
 };
@@ -29,40 +39,43 @@ const state: IState = {
   templateUrl: './locations-list.component.html',
   styleUrls: ['./locations-list.component.scss']
 })
-export class LocationsListComponent extends BaseComponent implements OnInit {
-  loading;
+export class LocationsListComponent extends BaseComponent implements OnInit, OnDestroy {
   eventData;
   sortingLabels;
-  isLocationsUpdate;
-  isLocationsCreate;
   deleteLocation = '';
-  updateLocation = '';
   state: IState = state;
+  loading$: Observable<boolean>;
+  categories$: Observable<IItem[]>;
+  locations$: Observable<ILocation[]>;
+  defaultImage = `${environment.root}public/default/user.png`;
+
+  private destroy$ = new Subject();
 
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
     public cpTracking: CPTrackingService,
-    private locationsService: LocationsService
+    public headerService: ManageHeaderService,
+    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
   ) {
     super();
-    super.isLoading().subscribe((res) => (this.loading = res));
-
-    this.fetch();
   }
 
-  private fetch() {
+  fetch() {
     const search = new HttpParams()
       .append('search_str', this.state.search_str)
       .append('sort_field', this.state.sort_field)
+      .append('category_id', this.state.category_id)
       .append('sort_direction', this.state.sort_direction)
       .append('school_id', this.session.g.get('school').id);
 
-    const stream$ = this.locationsService.getLocations(this.startRange, this.endRange, search);
+    const payload = {
+      startRange: this.startRange,
+      endRange: this.endRange,
+      params: search
+    };
 
-    super.fetchData(stream$).then((res) => {
-      this.state = Object.assign({}, this.state, { locations: res.data });
-    });
+    this.store.dispatch(new fromStore.GetLocations(payload));
   }
 
   onPaginationNext() {
@@ -78,7 +91,21 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
   }
 
   onSearch(search_str) {
-    this.state = Object.assign({}, this.state, { search_str });
+    this.state = {
+      ...this.state,
+      search_str
+    };
+
+    this.resetPagination();
+
+    this.fetch();
+  }
+
+  onCategorySelect(category_id) {
+    this.state = {
+      ...this.state,
+      category_id
+    };
 
     this.resetPagination();
 
@@ -95,40 +122,84 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  onLaunchModal() {
-    this.isLocationsCreate = true;
-    setTimeout(
-      () => {
-        $('#locationsCreate').modal();
-      },
-
-      1
-    );
-  }
-
-  onLocationCreated(location) {
-    this.state = Object.assign({}, this.state, {
-      locations: [location, ...this.state.locations]
+  buildHeader() {
+    this.store.dispatch({
+      type: fromRoot.baseActions.HEADER_UPDATE,
+      payload: this.headerService.filterByPrivileges()
     });
   }
 
-  onLocationUpdated(editedLocation) {
-    this.state = {
-      ...this.state,
-      locations: this.state.locations.map(
-        (location) => (location.id === editedLocation.id ? editedLocation : location)
-      )
-    };
+  loadCategories() {
+    const categoryLabel = this.cpI18n.translate('all');
+    this.categories$ = this.store.select(fromCategoryStore.getCategories).pipe(
+      takeUntil(this.destroy$),
+      tap((categories: ICategory[]) => {
+        if (!categories.length) {
+          const locale = CPI18nService.getLocale().startsWith('fr')
+            ? Locale.fr : Locale.eng;
+
+          const params = new HttpParams()
+            .set('locale', locale)
+            .set('school_id', this.session.g.get('school').id);
+
+          this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
+        }
+      }),
+      map((res) => LocationsUtilsService.setCategoriesDropDown(res, categoryLabel))
+    );
   }
 
-  onLocationDeleted(locationId) {
-    this.state = {
-      ...this.state,
-      locations: this.state.locations.filter((location) => location.id !== locationId)
-    };
+  loadLocations() {
+    this.store
+      .select(fromStore.getLocationsLoaded)
+      .pipe(
+        tap((loaded: boolean) => {
+          if (!loaded) {
+            this.fetch();
+          }
+        }),
+        take(1)
+      )
+      .subscribe();
+
+    this.locations$ = this.store.select(fromStore.getLocations).pipe(
+      map((locations: ILocation[]) => {
+        const responseCopy = [...locations];
+
+        return super.updatePagination(responseCopy);
+      })
+    );
+  }
+
+  listenForErrors() {
+    this.store
+      .select(fromStore.getLocationsError)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((error) => error),
+        tap(() => {
+          const payload = {
+            body: this.cpI18n.translate('something_went_wrong'),
+            sticky: true,
+            autoClose: true,
+            class: 'danger'
+          };
+
+          this.store.dispatch({
+            type: fromRoot.baseActions.SNACKBAR_SHOW,
+            payload
+          });
+        })
+      )
+      .subscribe();
   }
 
   ngOnInit() {
+    this.buildHeader();
+    this.loadLocations();
+    this.loadCategories();
+    this.listenForErrors();
+
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM,
@@ -136,7 +207,15 @@ export class LocationsListComponent extends BaseComponent implements OnInit {
     };
 
     this.sortingLabels = {
-      locations: this.cpI18n.translate('locations')
+      locations: this.cpI18n.translate('name')
     };
+
+    this.loading$ = this.store.select(fromStore.getLocationsLoading);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
   }
 }

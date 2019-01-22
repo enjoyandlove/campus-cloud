@@ -84,7 +84,7 @@ export class FeedMoveComponent implements OnInit {
 
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 1000, search).pipe(
       startWith([{ label: '---' }]),
-      map((channels) => {
+      map((channels: any[]) => {
         const _channels = [
           {
             label: '---',

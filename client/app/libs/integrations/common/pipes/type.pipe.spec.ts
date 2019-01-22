@@ -9,14 +9,14 @@ describe('IntegrationTypePipe', () => {
   });
 
   it('should convert atom', () => {
-    const expected = 'ATOM';
+    const expected = 'Atom';
     const result = pipe.transform(IntegrationTypes.atom);
 
     expect(result).toEqual(expected);
   });
 
   it('should convert ical', () => {
-    const expected = 'ICAL';
+    const expected = 'iCal';
     const result = pipe.transform(IntegrationTypes.ical);
 
     expect(result).toEqual(expected);

@@ -1,0 +1,52 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span>
+          <strong>
+            {{ 't_shared_category_edit_form_modal_title' | cpI18n }}
+          </strong>
+        </span>
+        <span
+          cpTarget="close"
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="float-right hover cpmodal__header__close">
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <cp-category-form
+      [form]="form"
+      [formError]="formError"
+      [categoryTypes$]="categoryTypes$"
+      [selectedCategory]="selectedCategory">
+    </cp-category-form>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row justify-content-end">
+      <div class="col-6 text-right">
+        <button
+          type="button"
+          cpTarget="cancel"
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="cpbtn cpbtn--cancel">
+          {{ 'cancel' | cpI18n }}
+        </button>
+
+        <button
+          type="button"
+          cpTarget="save"
+          (click)="doSubmit()"
+          class="cpbtn cpbtn--primary">
+          {{ 'save' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

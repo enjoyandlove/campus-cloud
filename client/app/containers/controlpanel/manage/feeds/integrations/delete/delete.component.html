@@ -1,0 +1,6 @@
+<cp-delete-modal
+  (deleteClick)="onDelete()"
+  (cancelClick)="onResetModal()"
+  [modalTitle]="['t_shared_integration_delete_modal_title' | cpI18n]"
+  [modalBody]="['t_shared_delete_confirmation' | cpI18n: integration.feed_url]">
+</cp-delete-modal>

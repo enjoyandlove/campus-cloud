@@ -11,6 +11,10 @@ export const environment: IEnvironment = {
     ITEMS_INTEGRATION: {
       active: false,
       internal: true
+    },
+    WALLS_INTEGRATION: {
+      active: false,
+      internal: true
     }
   },
   envName: 'production_canada'
