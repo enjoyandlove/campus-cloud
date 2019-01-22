@@ -59,6 +59,10 @@ export const amplitudeEvents = {
 
   ENABLED: 'Enabled',
 
+  INTERNAL: 'Internal',
+
+  EXTERNAL: 'External',
+
   FEATURED: 'Featured',
 
   RESOURCE: 'Resource',
