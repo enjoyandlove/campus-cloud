@@ -45,10 +45,6 @@
 
 * Remove `api.enviornment` and use angular's environment file instead
 
-* Ngrx Entities
-
-  > Came acrosss this in a few tutorials: https://ngrx.io/guide/entity seems like the preferred way to handle lists of items in the redux pattern, so I think we should look into it
-
 * Fix test Warnigns (either missing inputs, or failing to call fixture.detectChanges, when updating values, a few routing minor routing warnings):
   * [ ] ProvidersListComponent
   * [ ] EventCreateComponent
