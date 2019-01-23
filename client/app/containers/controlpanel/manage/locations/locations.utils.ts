@@ -3,7 +3,12 @@ import { Injectable } from '@angular/core';
 
 import { getItem } from '@shared/components';
 import { ICategory } from './categories/model';
+import { CPI18nService } from '@shared/services';
 import { ScheduleModel, scheduleLabels } from './model';
+import { LocationsTimeLabelPipe } from '@containers/controlpanel/manage/locations/pipes';
+
+const cpI18n = new CPI18nService();
+const timeLabel = new LocationsTimeLabelPipe();
 
 @Injectable()
 export class LocationsUtilsService {
@@ -72,6 +77,31 @@ export class LocationsUtilsService {
     });
 
     return [..._heading, ..._categories];
+  }
+
+  static parsedSchedule(schedule) {
+    const openingHours = [];
+    const days = Array.from(Array(7).keys());
+
+    days.forEach((day) => {
+      const selectedDay = schedule.find((d) => d.day === day + 1);
+
+      if (selectedDay) {
+        const items = selectedDay.items[0];
+
+        openingHours.push({
+          day: selectedDay.day,
+          time: timeLabel.transform(items.start_time) + ' - ' + timeLabel.transform(items.end_time)
+        });
+      } else {
+        openingHours.push({
+          day: day + 1,
+          time: cpI18n.translate('t_shared_closed')
+        });
+      }
+    });
+
+    return openingHours;
   }
 
   static getLocationTiming() {

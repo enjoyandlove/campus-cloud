@@ -7,6 +7,7 @@ import { ILocation } from '../model';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { Destroyable, Mixin } from '@shared/mixins';
+import { LocationsUtilsService } from '../locations.utils';
 
 @Mixin([Destroyable])
 
@@ -18,6 +19,7 @@ import { Destroyable, Mixin } from '@shared/mixins';
 export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
   loading$;
   hasMetaData;
+  openingHours;
   resourceBanner;
   draggable = false;
   location: ILocation;
@@ -65,6 +67,10 @@ export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
 
         this.hasMetaData = location.short_name || location.description
           || location.links[0].label || location.links[0].url;
+
+        if (location.schedule.length) {
+          this.openingHours = LocationsUtilsService.parsedSchedule(location.schedule);
+        }
       })
     ).subscribe();
   }

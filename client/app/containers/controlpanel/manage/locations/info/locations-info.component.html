@@ -35,7 +35,7 @@
               <div class="row">
                 <div class="col-12">
 
-                  <div class="row">
+                  <div class="row" *ngIf="location.phone">
                     <div class="col-2">
                       <p>
                         <strong>
@@ -48,7 +48,7 @@
                     </div>
                   </div>
 
-                  <div class="row">
+                  <div class="row" *ngIf="location.email">
                     <div class="col-2">
                       <p>
                         <strong>
@@ -61,7 +61,7 @@
                     </div>
                   </div>
 
-                  <div class="row">
+                  <div class="row" *ngIf="location.address">
                     <div class="col-2">
                       <p>
                         <strong>
@@ -139,15 +139,12 @@
             <div class="cp-card">
               <p><strong>{{ 't_locations_opening_hours' | cpI18n }}</strong></p>
 
-              <div class="row" *ngFor="let openingHour of location.schedule">
+              <div class="row" *ngFor="let openingHour of openingHours">
                 <div class="col-2">
                   <p>{{ openingHour.day | locationsDayLabel | cpI18n }}</p>
                 </div>
                 <div class="col-10">
-                  <p>
-                    {{ openingHour['items'][0].start_time | locationsTimeLabel }} -
-                    {{ openingHour['items'][0].end_time | locationsTimeLabel }}
-                  </p>
+                  <p>{{ openingHour.time }}</p>
                 </div>
               </div>
             </div>
