@@ -48,6 +48,7 @@ export class ListUpcomingComponent implements OnInit {
   sort: ISort = sort;
   dateFormat = FORMAT.SHORT;
   attendanceEnabled = EventAttendance.enabled;
+  isExternalToolTip = this.cpI18n.translate('t_events_list_external_source_tooltip');
 
   constructor(
     public session: CPSession,
@@ -100,6 +101,11 @@ export class ListUpcomingComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(function() {
+      $('[data-toggle="tooltip"]').tooltip({
+        placement: 'bottom'
+      });
+    });
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM,

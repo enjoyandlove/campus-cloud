@@ -9,6 +9,13 @@
   [popover]="tooltipTemplate"
   class="cpbtn cpbtn--link"
   [ngClass]="{'danger': toolTipContent.textClass === 'danger'}">
-  <ng-container *ngIf="toolTipContent.text">{{toolTipContent.text}}</ng-container>
-  <i class="material-icons" *ngIf="!toolTipContent.text">info_outline</i>
+  <ng-container
+    *ngIf="toolTipContent.text">
+    {{toolTipContent.text}}
+  </ng-container>
+  <i
+    class="material-icons"
+    *ngIf="!toolTipContent.text">
+    {{ toolTipContent.icon ? toolTipContent.icon : 'info_outline' }}
+  </i>
 </button>

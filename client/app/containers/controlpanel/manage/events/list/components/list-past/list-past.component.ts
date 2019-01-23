@@ -31,6 +31,7 @@ export class ListPastComponent implements OnInit {
   sortingLabels;
   sort: ISort = sort;
   dateFormat = FORMAT.SHORT;
+  isExternalToolTip = this.cpI18n.translate('t_events_list_external_source_tooltip');
 
   constructor(private cpI18n: CPI18nService, private cpTracking: CPTrackingService) {}
 
@@ -51,6 +52,11 @@ export class ListPastComponent implements OnInit {
   }
 
   ngOnInit() {
+    $(function() {
+      $('[data-toggle="tooltip"]').tooltip({
+        placement: 'bottom'
+      });
+    });
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM,
