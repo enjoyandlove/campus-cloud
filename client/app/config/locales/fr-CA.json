@@ -2134,6 +2134,9 @@
   "services_provider_label_default_question": {
     "message": "Question de retour"
   },
+  "services_provider_label_edit_service_provider": {
+    "message": "Modifier un fournisseur de service"
+  },
   "services_provider_search_tootlip": {
     "message": "Rechercher..."
   },

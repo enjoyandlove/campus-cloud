@@ -1096,6 +1096,9 @@
   "description": {
     "message": "Description"
   },
+  "dining": {
+    "message": "Dining"
+  },
   "done": {
     "message": "Done"
   },
@@ -2134,6 +2137,9 @@
   "services_provider_label_default_question": {
     "message": "Feedback Question"
   },
+  "services_provider_label_edit_service_provider": {
+    "message": "Edit Service Provider"
+  },
   "services_provider_search_tootlip": {
     "message": "Search..."
   },
@@ -2413,6 +2419,18 @@
     "message": "Ongoing",
     "description": "Indicates that a deal is posted without an end date"
   },
+  "t_dining_create_dining": {
+    "message": "Create Dining"
+  },
+  "t_dining_dining_details": {
+    "message": "Dining Details"
+  },
+  "t_dining_hours": {
+    "message": "Dining Hours"
+  },
+  "t_dining_no_record_found": {
+    "message": "No dining found..."
+  },
   "t_error_category_associated_to_location": {
     "message": "This category is associated to a location."
   },
@@ -2629,6 +2647,9 @@
   },
   "t_locations_no_location_found": {
     "message": "No Locations Found"
+  },
+  "t_locations_no_record_found": {
+    "message": "No locations found..."
   },
   "t_locations_opening_hours": {
     "message": "Opening Hours"
