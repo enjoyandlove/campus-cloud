@@ -17,6 +17,7 @@ import { Destroyable, Mixin } from '@shared/mixins';
 })
 export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
   loading$;
+  hasMetaData;
   resourceBanner;
   draggable = false;
   location: ILocation;
@@ -61,6 +62,9 @@ export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
           lat: location.latitude,
           lng: location.longitude
         });
+
+        this.hasMetaData = location.short_name || location.description
+          || location.links[0].label || location.links[0].url;
       })
     ).subscribe();
   }
