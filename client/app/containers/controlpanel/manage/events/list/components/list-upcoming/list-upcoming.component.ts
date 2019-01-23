@@ -101,11 +101,6 @@ export class ListUpcomingComponent implements OnInit {
   }
 
   ngOnInit() {
-    $(function() {
-      $('[data-toggle="tooltip"]').tooltip({
-        placement: 'bottom'
-      });
-    });
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM,
