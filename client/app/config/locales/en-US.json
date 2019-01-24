@@ -2551,6 +2551,9 @@
   "t_events_import_upload_picture": {
     "message": "Upload Image"
   },
+  "t_events_list_external_source_tooltip": {
+    "message": "This event was integrated, it will be automatically updated from the integration"
+  },
   "t_event_assessment_check_in_date": {
     "message": "Check-in"
   },
@@ -3170,7 +3173,7 @@
   "t_shared_sunday": {
     "message": "Sunday"
   },
-  "t_shared_sync_now": {
+  "t_shared_sync": {
     "message": "Sync Now"
   },
   "t_shared_thursday": {
