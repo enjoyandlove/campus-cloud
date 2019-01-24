@@ -2343,6 +2343,9 @@
   "t_check_in_date_placeholder_text": {
     "message": "Maintenant"
   },
+  "t_clubs_admin": {
+    "message": "Administrateur"
+  },
   "t_customise_personas": {
     "message": "Expériences d'application"
   },

@@ -2346,6 +2346,9 @@
   "t_check_in_date_placeholder_text": {
     "message": "Now"
   },
+  "t_clubs_admin": {
+    "message": "Admin"
+  },
   "t_customise_personas": {
     "message": "App Experiences"
   },
