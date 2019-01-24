@@ -3,6 +3,13 @@ export const mockTime = {
   label: '12:30 AM'
 };
 
+export const mockLinks = [
+  {
+    label: 'this is label',
+    url: 'http://google.com'
+  }
+];
+
 export const mockSchedule = [
   {
     day: 2,

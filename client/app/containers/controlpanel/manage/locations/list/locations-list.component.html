@@ -44,7 +44,9 @@
                 class="rounded img-fit-cover float-left avatar"
                 [src]="location.image_url ? location.image_url : defaultImage">
               <strong>
-                <a [routerLink]="[location.id + '/info']">
+                <a
+                  class="cp-form__title"
+                  [routerLink]="[location.id + '/info']">
                   {{ location.name }}
                 </a>
               </strong>
@@ -61,17 +63,22 @@
               {{ location.category_name }}
             </span>
 
-            <span>
+            <span class="col-1 text-right">
               <a
                 cpTracker
                 [eventData]="eventData"
                 [routerLink]="[location.id + '/edit']">
-                <i class="material-icons hover action-button margin-right">edit</i>
+                <i class="material-icons hover action-button margin-right">
+                  edit
+                </i>
               </a>
               <i
+                data-toggle="modal"
+                data-target="#locationsDelete"
                 (click)="deleteLocation = location;"
-                data-toggle="modal" data-target="#locationsDelete"
-                class="material-icons hover margin-right action-button">close</i>
+                class="material-icons hover action-button">
+                 close
+              </i>
             </span>
           </div>
         </li>

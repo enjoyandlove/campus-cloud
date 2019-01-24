@@ -3,11 +3,18 @@ import { Injectable } from '@angular/core';
 
 import { getItem } from '@shared/components';
 import { ICategory } from './categories/model';
+import { CPI18nService } from '@shared/services';
+import { LocationsTimeLabelPipe } from './pipes';
 import { ScheduleModel, scheduleLabels } from './model';
+
+const days = Array.from(Array(7).keys());
 
 @Injectable()
 export class LocationsUtilsService {
-  constructor() {}
+  constructor(
+    public cpI18n: CPI18nService,
+    public timeLabelPipe: LocationsTimeLabelPipe
+  ) {}
 
   static getScheduleLabel(day) {
     return scheduleLabels[day];
@@ -22,7 +29,6 @@ export class LocationsUtilsService {
   }
 
   static setScheduleFormControls(form: FormGroup, schedule = []) {
-    const days = Array.from(Array(7).keys());
     const controls = <FormArray>form.controls['schedule'];
 
     days.forEach((d) => {
@@ -269,5 +275,29 @@ export class LocationsUtilsService {
         label: '12:00 AM'
       }
     ];
+  }
+
+  parsedSchedule(schedule) {
+    const openingHours = [];
+
+    days.forEach((day) => {
+      const selectedDay = schedule.find((d) => d.day === day + 1);
+
+      if (selectedDay) {
+        const item = selectedDay.items[0];
+
+        openingHours.push({
+          day: selectedDay.day,
+          time: this.timeLabelPipe.transform(item.start_time) + ' - ' + this.timeLabelPipe.transform(item.end_time)
+        });
+      } else {
+        openingHours.push({
+          day: day + 1,
+          time: this.cpI18n.translate('t_shared_closed')
+        });
+      }
+    });
+
+    return openingHours;
   }
 }

@@ -28,7 +28,6 @@ import { CategoriesModule } from './categories/categories.module';
   declarations: [
     LocationsDayLabelPipe,
     LocationFormComponent,
-    LocationsTimeLabelPipe,
     LocationsListComponent,
     LocationsInfoComponent,
     LocationsEditComponent,
@@ -53,6 +52,7 @@ import { CategoriesModule } from './categories/categories.module';
     LocationsService,
     LocationExistsGuard,
     LocationsUtilsService,
+    LocationsTimeLabelPipe,
     {
       provide: RouterStateSerializer, useClass: CustomSerializer
     }

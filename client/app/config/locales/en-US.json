@@ -3050,6 +3050,9 @@
   "t_shared_checkins": {
     "message": "Check-ins"
   },
+  "t_shared_closed": {
+    "message": "Closed"
+  },
   "t_shared_color": {
     "message": "Color"
   },
