@@ -28,7 +28,10 @@ export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
-  constructor(public store: Store<fromStore.ILocationsState | fromRoot.IHeader>) {}
+  constructor(
+    public locationUtils: LocationsUtilsService,
+    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
+  ) {}
 
   buildHeader(location: ILocation) {
     this.store.dispatch({
@@ -69,7 +72,7 @@ export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
           || location.links[0].label || location.links[0].url;
 
         if (location.schedule.length) {
-          this.openingHours = LocationsUtilsService.parsedSchedule(location.schedule);
+          this.openingHours = this.locationUtils.parsedSchedule(location.schedule);
         }
       })
     ).subscribe();

@@ -108,7 +108,9 @@
                 </p>
                 <p
                   cpTarget="description"
-                  class="render_line_breaks">{{ location.description }}</p>
+                  class="render_line_breaks">
+                    {{ location.description }}
+                </p>
               </div>
 
               <div *ngIf="location.links[0].label">
@@ -139,12 +141,12 @@
             <div class="cp-card">
               <p><strong>{{ 't_locations_opening_hours' | cpI18n }}</strong></p>
 
-              <div class="row" *ngFor="let openingHour of openingHours">
+              <div class="row" *ngFor="let openingHour of openingHours; let i = index">
                 <div class="col-2">
                   <p>{{ openingHour.day | locationsDayLabel | cpI18n }}</p>
                 </div>
                 <div class="col-10">
-                  <p>{{ openingHour.time }}</p>
+                  <p [cpTarget]="'time_' + i">{{ openingHour.time }}</p>
                 </div>
               </div>
             </div>
