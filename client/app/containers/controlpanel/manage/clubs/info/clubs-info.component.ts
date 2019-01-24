@@ -38,7 +38,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   limitedAdmin = true;
   showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
-  admins$: Observable<Array<IAdmin>>;
+  admins$: Observable<IAdmin[]>;
 
   constructor(
     public session: CPSession,
