@@ -1,6 +1,7 @@
-import { takeUntil, filter, tap, take } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { takeUntil, tap, take } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
+import { Actions, ofType } from '@ngrx/effects';
 import { Subject, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -43,6 +44,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   constructor(
+    public actions$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<fromStore.ICategoriesState | fromRoot.IHeader | fromRoot.ISnackbar>
@@ -170,18 +172,13 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   listenForErrors() {
-    this.store
-      .select(fromStore.getCategoriesErrorMessage)
-      .pipe(
-        takeUntil(this.destroy$),
-        filter((error) => !!error),
-        tap((err) => {
-          const body = DeleteError[err];
+    this.actions$
+      .pipe(ofType(fromStore.CategoriesActions.DELETE_CATEGORIES_FAIL), takeUntil(this.destroy$))
+      .subscribe((action: fromStore.DeleteCategoriesFail) => {
+        const body = DeleteError[action.payload];
 
-          this.handleError(body);
-        })
-      )
-      .subscribe();
+        this.handleError(body);
+      });
   }
 
   resetErrors() {
