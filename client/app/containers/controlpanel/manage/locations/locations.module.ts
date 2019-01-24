@@ -29,6 +29,7 @@ import { CategoriesModule } from './categories/categories.module';
     LocationsDayLabelPipe,
     LocationFormComponent,
     LocationsListComponent,
+    LocationsTimeLabelPipe,
     LocationsInfoComponent,
     LocationsEditComponent,
     LocationsDeleteComponent,
@@ -54,7 +55,8 @@ import { CategoriesModule } from './categories/categories.module';
     LocationsUtilsService,
     LocationsTimeLabelPipe,
     {
-      provide: RouterStateSerializer, useClass: CustomSerializer
+      provide: RouterStateSerializer,
+      useClass: CustomSerializer
     }
   ]
 })
