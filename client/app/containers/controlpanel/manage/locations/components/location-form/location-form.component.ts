@@ -18,6 +18,7 @@ export class LocationFormComponent implements OnInit {
   @Input() categories$: Observable<IItem[]>;
 
   school: ISchool;
+  maxFileSize = '5e6'; // 5MB
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
 

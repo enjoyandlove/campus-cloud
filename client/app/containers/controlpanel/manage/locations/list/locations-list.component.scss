@@ -16,6 +16,10 @@
 }
 
 .cp-form {
+  &__title {
+    display: inherit;
+  }
+
   &__item {
     span i.action-button {
       color: $color-secondary-text;
