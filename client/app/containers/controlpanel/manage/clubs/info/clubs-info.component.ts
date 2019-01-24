@@ -52,7 +52,6 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   ) {
     super();
     this.clubId = this.route.parent.snapshot.params['clubId'];
-    this.schoolId = this.session.g.get('school').id;
 
     super.isLoading().subscribe((res) => (this.loading = res));
   }
@@ -185,6 +184,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.schoolId = this.session.g.get('school').id;
     this.buttonText = this.cpI18n.translate('reupload');
     this.limitedAdmin =
       this.isAthletic === isClubAthletic.club
