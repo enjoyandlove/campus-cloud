@@ -1,20 +1,21 @@
 import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
+import { switchMap, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import { API } from '@app/config/api';
+import { CPSession } from '@app/session';
 import { ClubStatus } from '../club.status';
-import { API } from '../../../../../config/api';
 import { ClubsService } from '../clubs.service';
-import { CPSession } from '../../../../../session';
+import { BaseComponent } from '@app/base/base.component';
+import { baseActions, ISnackbar } from '@app/store/base';
+import { CP_PRIVILEGES_MAP } from '@app/shared/constants';
+import { appStorage } from '@shared/utils/storage/storage';
 import { ClubsUtilsService } from '../clubs.utils.service';
-import { BaseComponent } from '../../../../../base/base.component';
-import { baseActions, ISnackbar } from '../../../../../store/base';
-import { appStorage } from './../../../../../shared/utils/storage/storage';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
-import { CPI18nService, FileUploadService } from '../../../../../shared/services';
+import { CPI18nService, FileUploadService, AdminService, IAdmin } from '@shared/services';
 
 @Component({
   selector: 'cp-clubs-info',
@@ -30,12 +31,14 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   clubStatus;
   buttonText;
   clubId: number;
+  schoolId: number;
   draggable = false;
   uploading = false;
   hasMetaData = false;
   limitedAdmin = true;
   showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
+  admins$: Observable<Array<IAdmin>>;
 
   constructor(
     public session: CPSession,
@@ -43,21 +46,23 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
     public clubsService: ClubsService,
+    public adminService: AdminService,
     public helper: ClubsUtilsService,
     public fileService: FileUploadService
   ) {
     super();
     this.clubId = this.route.parent.snapshot.params['clubId'];
+    this.schoolId = this.session.g.get('school').id;
 
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
   fetch() {
-    const search = new HttpParams()
-      .append('school_id', this.session.g.get('school').id.toString())
+    const clubSearch = new HttpParams()
+      .append('school_id', this.schoolId.toString())
       .append('category_id', this.isAthletic.toString());
 
-    super.fetchData(this.clubsService.getClubById(this.clubId, search)).then((res) => {
+    super.fetchData(this.clubsService.getClubById(this.clubId, clubSearch)).then((res) => {
       this.club = res.data;
       this.showLocationDetails = res.data.latitude !== 0 && res.data.longitude !== 0;
       this.mapCenter = new BehaviorSubject({
@@ -81,6 +86,14 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
         payload: this.buildHeader(res.data.name)
       });
     });
+
+    const adminSearch = new HttpParams()
+      .append('school_id', this.schoolId.toString())
+      .append('store_id', this.clubId.toString())
+      .append('privilege_type', CP_PRIVILEGES_MAP.clubs.toString());
+    this.admins$ = this.adminService
+      .getAdminByStoreId(adminSearch)
+      .pipe(map((admins: IAdmin[]) => admins.filter((admin) => !admin.is_school_level)));
   }
 
   flashMessageSuccess() {
@@ -106,7 +119,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
 
   onFileAdded(file) {
     const validate = this.fileService.validFile(file);
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().append('school_id', this.schoolId.toString());
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FILE_UPLOAD}/`;
 
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
