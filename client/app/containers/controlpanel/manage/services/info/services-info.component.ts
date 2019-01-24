@@ -6,11 +6,11 @@ import { map, switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
 import { IService } from '../service.interface';
-import { AdminService } from '@shared/services';
 import { CPSession, ISchool } from '@app/session';
 import { LayoutWidth } from '@app/layouts/interfaces';
 import { ServicesService } from '../services.service';
 import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { AdminService, IAdmin } from '@shared/services';
 import { BaseComponent } from '@app/base/base.component';
 import { ServicesUtilsService } from '../services.utils.service';
 import { IResourceBanner } from '@shared/components/cp-resource-banner';
@@ -23,11 +23,11 @@ import { IResourceBanner } from '@shared/components/cp-resource-banner';
 export class ServicesInfoComponent extends BaseComponent implements OnInit {
   @Input() resourceBanner: IResourceBanner;
 
-  admins;
   service;
   storeId;
   loading = true;
   school: ISchool;
+  admins: IAdmin[];
   serviceId: number;
   draggable = false;
   hasMetaData = false;
@@ -63,7 +63,7 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
 
         return this.adminService
           .getAdminByStoreId(search)
-          .pipe(map((admins: Array<any>) => admins.filter((admin) => !admin.is_school_level)));
+          .pipe(map((admins: IAdmin[]) => admins.filter((admin) => !admin.is_school_level)));
       })
     );
 

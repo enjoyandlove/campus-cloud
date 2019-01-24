@@ -8,6 +8,14 @@ import { sortBy } from 'lodash';
 import { API } from '../../config/api';
 import { HTTPService } from '../../base/http.service';
 
+export interface IAdmin {
+  id: number;
+  email: string;
+  lastname: string;
+  firstname: string;
+  is_school_level: boolean;
+}
+
 @Injectable()
 export class AdminService extends HTTPService {
   constructor(http: HttpClient, router: Router) {
@@ -26,9 +34,9 @@ export class AdminService extends HTTPService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/1;9000`;
 
     return super.get(url, search).pipe(
-      map((admins: Array<any>) => {
+      map((admins: IAdmin[]) => {
         if (admins) {
-          return sortBy(admins, (admin: any) => admin.firstname.toLowerCase());
+          return sortBy(admins, (admin: IAdmin) => admin.firstname.toLowerCase());
         }
       })
     );
