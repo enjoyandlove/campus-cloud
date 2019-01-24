@@ -28,7 +28,9 @@ export class IntegrationsEffects {
 
   @Effect()
   deleteIntegration$: Observable<
-    fromActions.DeleteIntegrationSuccess | fromActions.DeleteIntegrationFail
+    | fromActions.DeleteIntegrationFail
+    | fromActions.DeleteIntegrationSuccess
+    | fromActions.ResetSocialPostCategories
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.DELETE_INTEGRATION),
     mergeMap((action: fromActions.DeleteIntegration) => {
@@ -36,7 +38,10 @@ export class IntegrationsEffects {
       return this.service
         .deleteIntegration(integrationId, params)
         .pipe(
-          map(() => new fromActions.DeleteIntegrationSuccess({ deletedId: integrationId })),
+          mergeMap(() => [
+            new fromActions.ResetSocialPostCategories(),
+            new fromActions.DeleteIntegrationSuccess({ deletedId: integrationId })
+          ]),
           catchError((error) => of(new fromActions.DeleteIntegrationFail(error)))
         );
     })

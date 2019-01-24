@@ -7,9 +7,8 @@ import { IItem } from '@shared/components';
 })
 export class WallsSocialPostCategoryIdToNamePipe implements PipeTransform {
   transform(categoryId: number, channels: IItem[]): any {
-    if (!channels.length) {
-      return;
-    }
-    return channels.find((c) => c.action === categoryId).label;
+    const channel = channels.find((c) => c.action === categoryId);
+
+    return channel ? channel.label : null;
   }
 }

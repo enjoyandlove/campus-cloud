@@ -195,6 +195,13 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       };
     }
 
+    case fromIntegrations.IntegrationActions.RESET_SOCIAL_POST_CATEGORIES: {
+      return {
+        ...state,
+        socialPostCategories: []
+      };
+    }
+
     default:
       return state;
   }
