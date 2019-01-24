@@ -45,9 +45,9 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
+    public helper: ClubsUtilsService,
     public clubsService: ClubsService,
     public adminService: AdminService,
-    public helper: ClubsUtilsService,
     public fileService: FileUploadService
   ) {
     super();
