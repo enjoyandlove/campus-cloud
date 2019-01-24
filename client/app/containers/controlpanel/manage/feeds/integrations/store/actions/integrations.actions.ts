@@ -28,7 +28,9 @@ export enum IntegrationActions {
 
   EDIT_INTEGRATION = '[manage.walls.integrations] edit integration',
   EDIT_INTEGRATION_SUCCESS = '[manage.walls.integrations] edit integration success',
-  EDIT_INTEGRATION_FAIL = '[manage.walls.integrations] edit integration fail'
+  EDIT_INTEGRATION_FAIL = '[manage.walls.integrations] edit integration fail',
+
+  RESET_SOCIAL_POST_CATEGORIES = '[manage.walls.integrations] reset social post categories'
 }
 
 export class GetIntegrations implements Action {
@@ -152,6 +154,10 @@ export class PostSocialPostCategoriesFail implements Action {
   constructor(public payload: HttpErrorResponse) {}
 }
 
+export class ResetSocialPostCategories implements Action {
+  readonly type = IntegrationActions.RESET_SOCIAL_POST_CATEGORIES;
+}
+
 export type Actions =
   | GetIntegrations
   | GetIntegrationsSuccess
@@ -170,4 +176,5 @@ export type Actions =
   | GetSocialPostCategoriesFail
   | PostSocialPostCategories
   | PostSocialPostCategoriesSuccess
-  | PostSocialPostCategoriesFail;
+  | PostSocialPostCategoriesFail
+  | ResetSocialPostCategories;
