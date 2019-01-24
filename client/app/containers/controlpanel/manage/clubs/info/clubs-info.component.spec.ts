@@ -1,4 +1,4 @@
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, async } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
@@ -9,11 +9,12 @@ import { CPSession } from './../../../../../session';
 import { ClubsInfoComponent } from './clubs-info.component';
 import { ClubsUtilsService } from './../clubs.utils.service';
 import { ClubsDetailsModule } from './../details/details.module';
-import { CPTrackingService } from '../../../../../shared/services';
+import { CPTrackingService, AdminService } from '../../../../../shared/services';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
 import { FileUploadService } from './../../../../../shared/services/file-upload.service';
+import { configureTestSuite } from '@client/app/shared/tests';
 
 const mockClub = {
   name: 'mock name',
@@ -64,64 +65,73 @@ class MockClubsService {
   }
 }
 
-describe('ClubsInfoComponent', () => {
-  let comp: ClubsInfoComponent;
-  let fixture: ComponentFixture<ClubsInfoComponent>;
+class MockAdminService {
+  getAdminByStoreId(search) {
+    return observableOf(search);
+  }
+}
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [ClubsDetailsModule, RouterTestingModule.withRoutes([]), StoreModule.forRoot({})],
-      providers: [
-        CPI18nService,
-        ClubsUtilsService,
-        CPTrackingService,
-        {
-          provide: ActivatedRoute,
-          useValue: {
-            parent: {
-              snapshot: {
-                params: {
-                  clubId: 1
+describe('ClubsInfoComponent', () => {
+  configureTestSuite();
+  beforeAll((done) =>
+    (async () => {
+      TestBed.configureTestingModule({
+        imports: [ClubsDetailsModule, RouterTestingModule.withRoutes([]), StoreModule.forRoot({})],
+        providers: [
+          CPSession,
+          CPI18nService,
+          ClubsUtilsService,
+          CPTrackingService,
+          {
+            provide: ActivatedRoute,
+            useValue: {
+              parent: {
+                snapshot: {
+                  params: {
+                    clubId: 1
+                  }
                 }
               }
             }
-          }
-        },
-        { provide: FileUploadService, useValue: new MockFileUploadService() },
-        { provide: ClubsService, useValue: new MockClubsService() },
-        { provide: CPSession, useValue: new CPSession() }
-      ]
-    });
+          },
+          { provide: FileUploadService, useClass: MockFileUploadService },
+          { provide: ClubsService, useClass: MockClubsService },
+          { provide: AdminService, useClass: MockAdminService }
+        ]
+      });
+      await TestBed.compileComponents;
+    })()
+      .then(done)
+      .catch(done.fail)
+  );
 
-    fixture = TestBed.createComponent(ClubsInfoComponent);
-    comp = fixture.componentInstance;
+  let comp: ClubsInfoComponent;
+  let fixture: ComponentFixture<ClubsInfoComponent>;
+  let clubSpy;
+  let adminSpy;
 
-    comp.clubId = 1;
-    comp.isAthletic = isClubAthletic.club;
-    comp.labels = clubAthleticLabels(comp.isAthletic);
-    comp.session.g.set('user', mockUser);
-    comp.session.g.set('school', mockSchool);
-  });
+  beforeEach(
+    async(() => {
+      fixture = TestBed.createComponent(ClubsInfoComponent);
+      comp = fixture.componentInstance;
 
-  it(
-    'async',
-    fakeAsync(() => {
-      comp.limitedAdmin = false;
+      comp.clubId = 1;
+      comp.isAthletic = isClubAthletic.club;
+      comp.labels = clubAthleticLabels(comp.isAthletic);
+      comp.session.g.set('user', mockUser);
+      comp.session.g.set('school', mockSchool);
+      clubSpy = spyOn(comp.clubsService, 'getClubById').and.callThrough();
+      adminSpy = spyOn(comp.adminService, 'getAdminByStoreId').and.callThrough();
 
-      expect(comp.club).toBeUndefined();
-      expect(comp.loading).toBeUndefined();
-
-      comp.fetch();
-
-      tick();
-
-      // fixture.detectChanges();
-      expect(comp.loading).not.toBeUndefined();
-
-      tick();
-
-      expect(comp.club).toBe(mockClub);
-      expect(comp.hasMetaData).toBeTruthy();
+      fixture.detectChanges();
     })
   );
+
+  it('should fetch club', () => {
+    expect(clubSpy).toHaveBeenCalledTimes(1);
+  });
+
+  it('should fetch admins', () => {
+    expect(adminSpy).toHaveBeenCalledTimes(1);
+  });
 });
