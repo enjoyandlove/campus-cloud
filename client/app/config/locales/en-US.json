@@ -2346,6 +2346,9 @@
   "t_check_in_date_placeholder_text": {
     "message": "Now"
   },
+  "t_clubs_admin": {
+    "message": "Admin"
+  },
   "t_customise_personas": {
     "message": "App Experiences"
   },
@@ -2550,6 +2553,9 @@
   },
   "t_events_import_upload_picture": {
     "message": "Upload Image"
+  },
+  "t_events_list_external_source_tooltip": {
+    "message": "This event was integrated, it will be automatically updated from the integration"
   },
   "t_event_assessment_check_in_date": {
     "message": "Check-in"
@@ -3050,6 +3056,9 @@
   "t_shared_checkins": {
     "message": "Check-ins"
   },
+  "t_shared_closed": {
+    "message": "Closed"
+  },
   "t_shared_color": {
     "message": "Color"
   },
@@ -3167,7 +3176,7 @@
   "t_shared_sunday": {
     "message": "Sunday"
   },
-  "t_shared_sync_now": {
+  "t_shared_sync": {
     "message": "Sync Now"
   },
   "t_shared_thursday": {
