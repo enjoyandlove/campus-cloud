@@ -1,7 +1,7 @@
 import { FormArray, FormGroup } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 
-import { ILocationTiming } from '@libs/locations/common/model';
+import { ILocationTiming, ScheduleModel } from '@libs/locations/common/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 
 @Component({
@@ -39,6 +39,23 @@ export class DiningOpeningHoursFormComponent implements OnInit {
 
   getSelectedTime(selectedTime) {
     return this.locationTiming.find((time) => time.value === selectedTime);
+  }
+
+  addItem(schedule) {
+    const controlItems = <FormArray>schedule.controls['items'];
+
+    controlItems.controls.push(ScheduleModel.setItemControls());
+  }
+
+  removeItem(schedule, index) {
+    const controlItems = <FormArray>schedule.controls['items'];
+
+    console.log(controlItems.controls.length);
+    if (controlItems.controls.length <= 1) {
+      return;
+    }
+
+    controlItems.removeAt(index);
   }
 
   ngOnInit(): void {
