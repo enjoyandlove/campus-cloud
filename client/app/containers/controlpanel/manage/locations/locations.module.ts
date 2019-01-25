@@ -21,6 +21,7 @@ import { LocationsRoutingModule } from './locations.routing.module';
 
 import { reducers, effects } from './store';
 import { LocationExistsGuard } from './guards';
+import { LayoutsModule } from '@app/layouts/layouts.module';
 import { CustomSerializer } from '@app/store/base/router-state';
 import { CategoriesModule } from './categories/categories.module';
 
@@ -41,6 +42,7 @@ import { CategoriesModule } from './categories/categories.module';
   imports: [
     CommonModule,
     SharedModule,
+    LayoutsModule,
     CategoriesModule,
     ReactiveFormsModule,
     LocationsRoutingModule,
