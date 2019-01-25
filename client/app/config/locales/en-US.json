@@ -2137,6 +2137,9 @@
   "services_provider_label_default_question": {
     "message": "Feedback Question"
   },
+  "services_provider_label_edit_service_provider": {
+    "message": "Edit Service Provider"
+  },
   "services_provider_search_tootlip": {
     "message": "Search..."
   },
@@ -2343,6 +2346,9 @@
   "t_check_in_date_placeholder_text": {
     "message": "Now"
   },
+  "t_clubs_admin": {
+    "message": "Admin"
+  },
   "t_customise_personas": {
     "message": "App Experiences"
   },
@@ -2415,6 +2421,15 @@
   "t_deals_ongoing": {
     "message": "Ongoing",
     "description": "Indicates that a deal is posted without an end date"
+  },
+  "t_dining_create_dining": {
+    "message": "Create Dining"
+  },
+  "t_dining_dining_details": {
+    "message": "Dining Details"
+  },
+  "t_dining_hours": {
+    "message": "Dining Hours"
   },
   "t_dining_no_record_found": {
     "message": "No dining found..."
@@ -2538,6 +2553,9 @@
   },
   "t_events_import_upload_picture": {
     "message": "Upload Image"
+  },
+  "t_events_list_external_source_tooltip": {
+    "message": "This event was integrated, it will be automatically updated from the integration"
   },
   "t_event_assessment_check_in_date": {
     "message": "Check-in"
@@ -3038,6 +3056,9 @@
   "t_shared_checkins": {
     "message": "Check-ins"
   },
+  "t_shared_closed": {
+    "message": "Closed"
+  },
   "t_shared_color": {
     "message": "Color"
   },
@@ -3155,7 +3176,7 @@
   "t_shared_sunday": {
     "message": "Sunday"
   },
-  "t_shared_sync_now": {
+  "t_shared_sync": {
     "message": "Sync Now"
   },
   "t_shared_thursday": {

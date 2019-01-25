@@ -28,8 +28,8 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
 @NgModule({
   declarations: [
     LocationsDayLabelPipe,
-    LocationsTimeLabelPipe,
     LocationsListComponent,
+    LocationsTimeLabelPipe,
     LocationsInfoComponent,
     LocationsEditComponent,
     LocationsDeleteComponent,
@@ -54,8 +54,10 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
     LocationsService,
     LocationExistsGuard,
     LocationsUtilsService,
+    LocationsTimeLabelPipe,
     {
-      provide: RouterStateSerializer, useClass: CustomSerializer
+      provide: RouterStateSerializer,
+      useClass: CustomSerializer
     }
   ]
 })

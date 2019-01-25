@@ -39,6 +39,7 @@
       <cp-image-upload
         class="col-12"
         cpTarget="image_url"
+        [maxFileSize]="maxFileSize"
         (uploaded)="onUploadedImage($event)"
         [defaultImage]="locationForm.controls['image_url'].value">
       </cp-image-upload>
@@ -160,7 +161,8 @@
         type="text"
         cpTarget="url"
         class="form-control"
-        formControlName="url">
+        formControlName="url"
+        placeholder="http://www.example.com">
     </div>
   </div>
 </form>
