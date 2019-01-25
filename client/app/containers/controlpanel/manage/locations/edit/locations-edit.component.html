@@ -2,9 +2,9 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <form [formGroup]="locationForm" *ngSwitchCase="false">
-    <div class="row">
-      <div class="col-6">
-        <div class="cp-card">
+    <cp-two-columns>
+      <div layout-left-column>
+        <cp-card>
           <div class="row">
             <div class="col-12">
               <p class="title">{{ 't_locations_location_details' | cpI18n }}</p>
@@ -16,16 +16,17 @@
               </cp-location-form>
             </div>
           </div>
-        </div>
+        </cp-card>
       </div>
 
-      <div class="col-6">
-        <div class="cp-card">
+      <div layout-right-column>
+        <cp-card>
           <div class="row">
             <div class="col-12">
               <p class="title">{{ 't_locations_opening_hours' | cpI18n }}</p>
               <span class="float-right">
                 <cp-switch
+                  cpTarget="switch"
                   [isChecked]="openingHours"
                   (toggle)="openingHours = !openingHours">
                 </cp-switch>
@@ -40,17 +41,17 @@
               </cp-location-opening-hours-form>
             </div>
           </div>
-        </div>
+        </cp-card>
       </div>
+    </cp-two-columns>
 
-      <div class="footer">
-        <cp-form-fixed-footer
-          (submitClick)="doSubmit()"
-          (cancelClick)="onCancel()"
-          [submitButtonText]="'update'"
-          [submitButtonDisabled]="buttonDisabled">
-        </cp-form-fixed-footer>
-      </div>
+    <div class="footer">
+      <cp-form-fixed-footer
+        (submitClick)="doSubmit()"
+        (cancelClick)="onCancel()"
+        [submitButtonText]="'update'"
+        [submitButtonDisabled]="buttonDisabled">
+      </cp-form-fixed-footer>
     </div>
   </form>
 </div>
