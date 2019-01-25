@@ -11,6 +11,7 @@
               <div class="row location__buttons">
                 <div class="col-6">
                   <a
+                    cpTarget="edit"
                     [routerLink]="['../edit']"
                     class="cpbtn cpbtn--primary">
                     {{ 'edit' | cpI18n }}
@@ -18,6 +19,7 @@
                 </div>
                 <div class="col-6 text-right">
                   <img
+                    cpTarget="icon"
                     class="img-fit-cover avatar"
                     *ngIf="location.category_img_url"
                     [src]="location.category_img_url">
@@ -33,12 +35,42 @@
               <div class="row">
                 <div class="col-12">
 
-                  <div class="row">
+                  <div class="row" *ngIf="location.phone">
                     <div class="col-2">
-                      <p><strong>{{ 'address' | cpI18n }}</strong></p>
+                      <p>
+                        <strong>
+                          {{ 'phone' | cpI18n }}
+                        </strong>
+                      </p>
                     </div>
                     <div class="col-10">
-                      <p class="js_test_address">{{ location.address }}</p>
+                      <p cpTarget="phone">{{ location.phone }}</p>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="location.email">
+                    <div class="col-2">
+                      <p>
+                        <strong>
+                          {{ 'email' | cpI18n }}
+                        </strong>
+                      </p>
+                    </div>
+                    <div class="col-10">
+                      <p cpTarget="email">{{ location.email }}</p>
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="location.address">
+                    <div class="col-2">
+                      <p>
+                        <strong>
+                          {{ 'address' | cpI18n }}
+                        </strong>
+                      </p>
+                    </div>
+                    <div class="col-10">
+                      <p cpTarget="address">{{ location.address }}</p>
                     </div>
                   </div>
                 </div>
@@ -56,17 +88,49 @@
           </div>
         </div>
 
-        <div class="row" *ngIf="location.short_name || location.description">
+        <div class="row" *ngIf="hasMetaData">
           <div class="col-12">
             <cp-card class="location__details">
               <div *ngIf="location.short_name">
-                <p><strong>{{ 'locations_label_acronym' | cpI18n }}</strong></p>
-                <p>{{ location.short_name }}</p>
+                <p>
+                  <strong>
+                    {{ 'locations_label_acronym' | cpI18n }}
+                  </strong>
+                </p>
+                <p cpTarget="acronym">{{ location.short_name }}</p>
               </div>
 
               <div *ngIf="location.description">
-                <p><strong>{{ 'description' | cpI18n }}</strong></p>
-                <p class="render_line_breaks">{{ location.description }}</p>
+                <p>
+                  <strong>
+                    {{ 'description' | cpI18n }}
+                  </strong>
+                </p>
+                <p
+                  cpTarget="description"
+                  class="render_line_breaks">
+                    {{ location.description }}
+                </p>
+              </div>
+
+              <div *ngIf="location.links[0].label">
+                <p>
+                  <strong cpTarget="label">
+                    {{ location.links[0].label }}
+                  </strong>
+                </p>
+              </div>
+
+              <div *ngIf="location.links[0].url">
+                <p>
+                  <a
+                    cpTarget="url"
+                    target="_blank"
+                    [href]="location.links[0].url"
+                    class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
+                    {{ location.links[0].url }}
+                  </a>
+                </p>
               </div>
             </cp-card>
           </div>
@@ -77,15 +141,12 @@
             <cp-card class="location__details">
               <p><strong>{{ 't_locations_opening_hours' | cpI18n }}</strong></p>
 
-              <div class="row" *ngFor="let openingHour of location.schedule">
+              <div class="row" *ngFor="let openingHour of openingHours; let i = index">
                 <div class="col-2">
                   <p>{{ openingHour.day | locationsDayLabel | cpI18n }}</p>
                 </div>
                 <div class="col-10">
-                  <p>
-                    {{ openingHour['items'][0].start_time | locationsTimeLabel }} -
-                    {{ openingHour['items'][0].end_time | locationsTimeLabel }}
-                  </p>
+                  <p [cpTarget]="'time_' + i">{{ openingHour.time }}</p>
                 </div>
               </div>
             </cp-card>

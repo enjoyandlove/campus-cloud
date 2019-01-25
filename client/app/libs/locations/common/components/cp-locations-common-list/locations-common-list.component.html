@@ -26,6 +26,7 @@
         <strong>
           <a
             cpTarget="view_info"
+            class="cp-form__title"
             [routerLink]="[location.id + '/info']">
             {{ location.name }}
           </a>
@@ -35,30 +36,34 @@
         {{ location.address }}
       </span>
 
-        <span
+      <span
           cpTarget="acronym"
           class="col-2 text-truncate">
         {{ location.short_name }}
       </span>
 
-        <span
+      <span
           cpTarget="category_name"
           class="col-2 text-truncate">
         {{ location.category_name }}
       </span>
 
-        <span>
+      <span class="col-1 text-right">
         <a
           cpTracker
           cpTarget="edit"
           [eventData]="eventData"
           [routerLink]="[location.id + '/edit']">
-           <i class="material-icons hover action-button margin-right">edit</i>
-        </a>
-        <i
-          cpTarget="delete"
-          (click)="deleteClick.emit(location)"
-          class="material-icons hover margin-right action-button">close</i>
+            <i class="material-icons hover action-button margin-right">
+              edit
+            </i>
+          </a>
+          <i
+            cpTarget="delete"
+            (click)="deleteClick.emit(location)"
+            class="material-icons hover action-button">
+              close
+          </i>
       </span>
       </div>
     </li>

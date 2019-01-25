@@ -15,6 +15,7 @@ export class CPImageUploadComponent implements OnInit {
   @Input() id = 'upload_component';
   @Input() small: boolean;
   @Input() required: boolean;
+  @Input() maxFileSize: number;
   @Input() defaultImage: string;
   @Input() validationFn: Function;
   @Input() buttonText = this.cpI18n.translate('upload_picture');
@@ -40,7 +41,7 @@ export class CPImageUploadComponent implements OnInit {
       return;
     }
 
-    let validate = this.fileUploadService.validImage(file);
+    let validate = this.fileUploadService.validImage(file, this.maxFileSize);
 
     if (this.validationFn) {
       try {

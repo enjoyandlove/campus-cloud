@@ -44,7 +44,9 @@ export class FileUploadService {
 
   constructor(private http: HttpClient, private cpI18n: CPI18nService) {}
 
-  validImage(file: File): { valid: boolean; errors: Array<string> } {
+  validImage(file: File, imageSize?: number): { valid: boolean; errors: Array<string> } {
+    const maxSize = imageSize ? imageSize : this.maxImageSize;
+
     const validType = {
       message: this.cpI18n.translate('error_invalid_extension'),
       valid: this.validateImage(file)
@@ -52,7 +54,7 @@ export class FileUploadService {
 
     const validSize = {
       message: this.cpI18n.translate('error_file_is_too_big'),
-      valid: this.validateFileSize(file, this.maxImageSize)
+      valid: this.validateFileSize(file, maxSize)
     };
 
     const errors = [];

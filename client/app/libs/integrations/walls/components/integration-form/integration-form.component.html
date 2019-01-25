@@ -7,7 +7,8 @@
           [items]="types"
           cpTarget="type"
           [selectedItem]="selectedType"
-          (selected)="onTypeSelected($event)">
+          (selected)="onTypeSelected($event)"
+          [disabled]="form.get('feed_type').disabled">
         </cp-dropdown>
       </div>
     </div>
@@ -33,7 +34,8 @@
           cpTarget="channel"
           [items]="channels$ | async"
           [selectedItem]="selectedChannel"
-          (selected)="onSelectedChannel($event)">
+          (selected)="onSelectedChannel($event)"
+          [disabled]="form.get('social_post_category_id').disabled">
         </cp-dropdown>
       </div>
     </div>

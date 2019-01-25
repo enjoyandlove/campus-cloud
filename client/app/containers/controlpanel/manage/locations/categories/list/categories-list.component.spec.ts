@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
+import { Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
 
 import * as fromRoot from '@app/store';
@@ -24,7 +25,7 @@ describe('CategoriesListComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService],
+        providers: [CPSession, CPI18nService, Actions],
         declarations: [CategoriesListComponent, CategoryTypePipe, CategoriesActionBoxComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
@@ -87,11 +88,15 @@ describe('CategoriesListComponent', () => {
   });
 
   it('should set error message', () => {
+    const errorKey = 'something_went_wrong';
+    const errorMessage = 'Something went wrong';
+
     spyOn(component.store, 'select').and.returnValue(of(true));
 
-    component.listenForErrors();
+    component.handleError(errorKey);
     const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
 
+    expect(payload.body).toEqual(errorMessage);
     expect(payload.class).toBe('danger');
     expect(type).toBe(fromRoot.baseActions.SNACKBAR_SHOW);
   });

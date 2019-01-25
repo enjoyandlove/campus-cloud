@@ -52,7 +52,8 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
     LocationExistsGuard,
     LocationsUtilsService,
     {
-      provide: RouterStateSerializer, useClass: CustomSerializer
+      provide: RouterStateSerializer,
+      useClass: CustomSerializer
     }
   ]
 })

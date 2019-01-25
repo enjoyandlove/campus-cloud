@@ -5,17 +5,18 @@ import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
-import { CPSession } from '../../../../../session';
-import { baseActions, IHeader } from '../../../../../store/base';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { ErrorService, AdminService, CPI18nService } from '../../../../../shared/services';
+import { CPSession } from '@app/session';
+import { UserType } from '@shared/utils';
+import { MODAL_TYPE } from '@shared/components';
+import { baseActions, IHeader } from '@app/store/base';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@shared/constants';
+import { ErrorService, AdminService, CPI18nService, CPTrackingService } from '@shared/services';
 
 import {
   accountsToStoreMap,
   canSchoolReadResource,
   canAccountLevelReadResource
-} from './../../../../../shared/utils/privileges/privileges';
+} from '@shared/utils/privileges';
 
 import {
   clubMenu,
@@ -83,7 +84,8 @@ export class TeamCreateComponent implements OnInit {
     public cpI18n: CPI18nService,
     public utils: TeamUtilsService,
     public teamService: AdminService,
-    public errorService: ErrorService
+    public errorService: ErrorService,
+    public cpTracking: CPTrackingService
   ) {}
 
   private buildHeader() {
@@ -165,6 +167,11 @@ export class TeamCreateComponent implements OnInit {
 
     this.teamService.createAdmin(_data).subscribe(
       () => {
+        const source = UserType.isInternal(_data.email)
+          ? amplitudeEvents.INTERNAL
+          : amplitudeEvents.EXTERNAL;
+
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.INVITED_TEAM_MEMBER, { source });
         this.router.navigate(['/settings/team']);
       },
       (err) => {

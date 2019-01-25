@@ -3,10 +3,9 @@
 @import '~client/style/core/typography';
 @import '~client/style/components/button';
 
-.cp-card {
-  @include card-margin();
-
-  margin-bottom: 0;
+cp-card {
+  display: block;
+  margin-bottom: $default_margin;
 }
 
 .map__container {
@@ -43,6 +42,40 @@
   &__status,
   &__description {
     color: $color-secondary-text;
+  }
+
+  &__admins {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid $border-color;
+
+    &__title {
+      @include font-16px();
+      @include font-semi-bold();
+    }
+
+    &__list {
+      padding-left: 0;
+      margin-bottom: 0;
+      list-style: none;
+    }
+
+    &__admin {
+      padding: 12px 0;
+
+      span {
+        font-size: 0.9em;
+      }
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
   }
 }
 

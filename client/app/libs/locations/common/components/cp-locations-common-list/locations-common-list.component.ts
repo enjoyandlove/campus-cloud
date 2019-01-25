@@ -8,11 +8,11 @@ import { environment } from '@client/environments/environment';
 import { CPI18nService, CPTrackingService } from '@shared/services';
 
 @Component({
-  selector: 'cp-locations-list-view',
-  templateUrl: './locations-list.component.html',
-  styleUrls: ['./locations-list.component.scss']
+  selector: 'cp-locations-common-list',
+  templateUrl: './locations-common-list.component.html',
+  styleUrls: ['./locations-common-list.component.scss']
 })
-export class LocationsListComponent implements OnInit {
+export class LocationsCommonListComponent implements OnInit {
   @Input() sortBy: string;
   @Input() sortDirection: string;
   @Input() data$: Observable<ILocation[]>;
