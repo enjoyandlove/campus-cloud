@@ -325,9 +325,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       text: this.cpI18n.translate('save')
     };
 
-    this.categoryTooltip = {
-      ...this.categoryTooltip,
-      content: this.cpI18n.translate('manage_create_service_category_tooltip')
-    };
+    this.categoryTooltip = this.cpI18n.translate('manage_create_service_category_tooltip');
   }
 }

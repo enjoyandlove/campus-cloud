@@ -2,6 +2,7 @@
 @import '~client/style/components/card';
 @import '~client/style/components/form';
 @import '~client/style/core/typography';
+@import '~client/style/components/tooltip';
 
 .maps {
   height: 200px;
@@ -41,6 +42,12 @@ form {
   label {
     margin-top: 10px;
     display: inline-block;
+
+    &.with-tooltip {
+      i {
+        @include toolTipIcon();
+      }
+    }
   }
 
   .text-muted {

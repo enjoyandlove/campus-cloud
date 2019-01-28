@@ -165,12 +165,6 @@ export class EventUtilService {
     ];
   }
 
-  getToolTipContent(label) {
-    return {
-      content: this.cpI18n.translate(label)
-    };
-  }
-
   hasLocation(location) {
     return location ? Location.yes : Location.no;
   }

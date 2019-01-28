@@ -256,10 +256,13 @@
                 (toggle)="checkControl($event, CP_PRIVILEGES_MAP.app_customization, formData.content.appCustomizaton)"
                 [isDisabled]="!formData.content.appCustomizaton.active">
               </cp-checkbox>
-              <cp-tooltip
-                [toolTipContent]="studioLimitedTooltip"
+              <button
+                cpTooltip
+                class="cpbtn cpbtn--link danger"
+                [attr.title]="['t_admin_invite_studio_limited_tooltip' | cpI18n]"
                 *ngIf="utils.hasStudio(schoolPrivileges) && !utils.hasFullStudioPrivilege(schoolPrivileges)">
-              </cp-tooltip>
+                {{ 't_shared_limited' | cpI18n }}
+              </button>
             </div>
 
              <div
