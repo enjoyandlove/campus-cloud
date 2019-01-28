@@ -102,10 +102,10 @@ describe('JobsInfoComponent', () => {
       expect(jobTitle.textContent).toEqual(job.title);
       expect(jobDescription.textContent).toContain(job.description);
       expect(jobHowToApply.textContent).toContain(job.how_to_apply);
-      expect(jobPostingStart.textContent).toContain('May 12th, 2019');
-      expect(jobPostingEnd.textContent).toContain('May 12th, 2019');
-      expect(jobStartDate.textContent).toContain('May 12th, 2019');
-      expect(jobEndDate.textContent).toContain('May 12th, 2019');
+      expect(jobPostingStart.textContent).toContain('May 12, 2019');
+      expect(jobPostingEnd.textContent).toContain('May 12, 2019');
+      expect(jobStartDate.textContent).toContain('May 12, 2019');
+      expect(jobEndDate.textContent).toContain('May 12, 2019');
       expect(jobLocation.textContent).toContain(job.location);
       expect(jobDesiredYear.textContent).toContain(desiredStudy.join(', '));
       expect(jobType.textContent).toContain(jobTypes.join(', '));

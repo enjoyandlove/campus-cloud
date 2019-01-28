@@ -2,7 +2,7 @@ import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 
 import * as fromActions from '../actions';
 import { mockSchool } from '@app/session/mock';
-import { mockIntegration } from './../../tests/mocks';
+import { mockIntegration } from '../../tests/mocks';
 import * as fromReducer from './integrations.reducers';
 
 const pagination = {
@@ -34,6 +34,85 @@ describe('Calendar Items Integrations Reducer', () => {
       const { loading } = result;
 
       expect(loading).toBe(true);
+    });
+  });
+
+  describe('SYNC_NOW_SUCCESS', () => {
+    it('should toggle competedAction message if one is passed', () => {
+      const { initialState } = fromReducer;
+      const expectedMessage = 'hello';
+
+      let action;
+      let result;
+      let expected;
+
+      action = new fromActions.SyncNowSuccess({
+        integration: mockIntegration
+      });
+
+      result = fromReducer.reducer(initialState, action);
+      expected = 't_shared_saved_update_success_message';
+
+      expect(result.completedAction).toBe(expected);
+
+      action = new fromActions.SyncNowSuccess({
+        integration: mockIntegration,
+        message: expectedMessage
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.completedAction).toBe(expectedMessage);
+    });
+  });
+
+  describe('SYNC_NOW_FAIL', () => {
+    it('should toggle error if passed', () => {
+      const { initialState } = fromReducer;
+
+      let action;
+      let result;
+
+      action = new fromActions.SyncNowFail({
+        integration: mockIntegration
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.error).toBe(true);
+
+      action = new fromActions.SyncNowFail({
+        integration: mockIntegration,
+        hideError: true
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.error).toBe(false);
+    });
+
+    it('should update completedAction', () => {
+      const { initialState } = fromReducer;
+
+      let action;
+      let result;
+
+      action = new fromActions.SyncNowFail({
+        integration: mockIntegration
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.completedAction).toBeNull();
+
+      action = new fromActions.SyncNowFail({
+        integration: mockIntegration,
+        hideError: true
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.completedAction).not.toBeNull();
     });
   });
 
@@ -69,7 +148,8 @@ describe('Calendar Items Integrations Reducer', () => {
       const body = mockIntegration;
       const payload = {
         body,
-        params
+        params,
+        calendarId: mockIntegration.feed_obj_id
       };
 
       const action = new fromActions.PostIntegration(payload);
@@ -81,16 +161,18 @@ describe('Calendar Items Integrations Reducer', () => {
   });
 
   describe('POST_INTEGRATION_SUCCESS', () => {
-    it('should set completedAction flag to null', () => {
+    it('should add created integration to state', () => {
       const { initialState } = fromReducer;
-      const payload = mockIntegration;
+      const payload = {
+        integration: mockIntegration,
+        calendarId: mockIntegration.feed_obj_id
+      };
 
       const action = new fromActions.PostIntegrationSuccess(payload);
-      const { data, completedAction } = fromReducer.reducer(initialState, action);
+      const { data } = fromReducer.reducer(initialState, action);
 
       expect(data.length).toEqual(1);
-      expect(data[0].id).toBe(payload.id);
-      expect(completedAction).not.toBeNull();
+      expect(data[0].id).toBe(mockIntegration.id);
     });
   });
 

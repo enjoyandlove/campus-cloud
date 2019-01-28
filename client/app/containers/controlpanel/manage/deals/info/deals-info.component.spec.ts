@@ -96,8 +96,8 @@ describe('DealsInfoComponent', () => {
       const location = dealElement.querySelector('div.deals__details .location');
       const description = dealElement.querySelector('div.row .description');
 
-      expect(start.textContent).toEqual('May 15th 2019, 6:49 am');
-      expect(expiration.textContent).toEqual('May 15th 2020, 6:49 am');
+      expect(start.textContent).toEqual('May 15, 2019 6:49 am');
+      expect(expiration.textContent).toEqual('May 15, 2020 6:49 am');
       expect(location.textContent).toEqual(deal.store_address);
       expect(description.textContent).toEqual(deal.description);
     })

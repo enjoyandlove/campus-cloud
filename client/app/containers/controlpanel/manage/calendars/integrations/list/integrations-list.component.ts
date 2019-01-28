@@ -1,4 +1,4 @@
-import { tap, takeUntil, filter, map } from 'rxjs/operators';
+import { tap, takeUntil, filter, map, take } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -67,6 +67,20 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
   onCreateTeardown() {
     this.showCreateModal = false;
     $('#integrationCreate').modal('hide');
+  }
+
+  onSyncNow(feedId: number) {
+    this.store
+      .select(fromStore.getIntegrationById(feedId))
+      .pipe(takeUntil(this.destroy$), take(1))
+      .subscribe((integration) => {
+        this.store.dispatch(
+          new fromStore.SyncNow({
+            integration,
+            calendarId: this.calendarId
+          })
+        );
+      });
   }
 
   onDeleteTeardown() {
