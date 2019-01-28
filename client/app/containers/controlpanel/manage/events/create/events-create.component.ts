@@ -6,14 +6,13 @@ import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import { baseActions } from '@app/store/base';
+import { CPDate, CPMap } from '@shared/utils';
 import { EventsService } from '../events.service';
-import { baseActions } from '../../../../../store/base';
+import { CPSession, ISchool } from '@app/session';
 import { EventUtilService } from '../events.utils.service';
-import { CPSession, ISchool } from '../../../../../session';
-import { CPDate, CPMap } from '../../../../../shared/utils';
+import { amplitudeEvents } from '@shared/constants/analytics';
 import { EventsComponent } from '../list/base/events.component';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
 import {
   isAllDay,
   CheckInMethod,
@@ -28,7 +27,7 @@ import {
   CPTrackingService,
   ErrorService,
   StoreService
-} from '../../../../../shared/services';
+} from '@shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -51,7 +50,6 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
   @Input() isService: boolean;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
-  @Input() toolTipContent: IToolTipContent;
 
   stores$;
   urlPrefix;

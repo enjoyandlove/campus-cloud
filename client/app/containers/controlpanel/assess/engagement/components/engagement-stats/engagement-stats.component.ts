@@ -63,10 +63,6 @@ export class EngagementStatsComponent implements OnInit {
   }
 
   ngOnInit() {
-    $(function() {
-      $('[data-toggle="tooltip"]').tooltip();
-    });
-
     this.noEngagementPercentage = this.getPercentage('zero_engagements');
     this.oneEngagementPercentage = this.getPercentage('one_engagements');
     this.repeatEngagementPercentage = this.getPercentage('repeat_engagements');
