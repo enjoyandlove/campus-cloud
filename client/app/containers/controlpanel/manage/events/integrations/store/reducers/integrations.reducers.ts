@@ -20,10 +20,28 @@ export const initialState: IntegrationsState = {
 
 export function reducer(state = initialState, action: fromIntegrations.Actions): IntegrationsState {
   switch (action.type) {
-    case fromIntegrations.IntegrationActions.GET_INTEGRATIONS: {
+    case fromIntegrations.IntegrationActions.SYNC_NOW:
+    case fromIntegrations.IntegrationActions.CREATE_AND_SYNC:
+    case fromIntegrations.IntegrationActions.EDIT_INTEGRATION:
+    case fromIntegrations.IntegrationActions.POST_INTEGRATION:
+    case fromIntegrations.IntegrationActions.GET_INTEGRATIONS:
+    case fromIntegrations.IntegrationActions.DELETE_INTEGRATION: {
       return {
         ...state,
-        loading: true
+        loading: true,
+        error: false,
+        completedAction: null
+      };
+    }
+
+    case fromIntegrations.IntegrationActions.EDIT_INTEGRATION_FAIL:
+    case fromIntegrations.IntegrationActions.POST_INTEGRATION_FAIL:
+    case fromIntegrations.IntegrationActions.GET_INTEGRATIONS_FAIL:
+    case fromIntegrations.IntegrationActions.DELETE_INTEGRATION_FAIL: {
+      return {
+        ...state,
+        error: true,
+        loading: false
       };
     }
 
@@ -38,49 +56,13 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       };
     }
 
-    case fromIntegrations.IntegrationActions.GET_INTEGRATIONS_FAIL: {
-      return {
-        ...state,
-        error: true,
-        loading: false
-      };
-    }
-
-    case fromIntegrations.IntegrationActions.POST_INTEGRATION: {
-      return {
-        ...state,
-        error: false,
-        loading: true,
-        completedAction: null
-      };
-    }
-
     case fromIntegrations.IntegrationActions.POST_INTEGRATION_SUCCESS: {
       const newEventIntegration = action.payload;
 
       return {
         ...state,
         error: false,
-        loading: false,
-        data: [newEventIntegration, ...state.data],
-        completedAction: 't_shared_saved_update_success_message'
-      };
-    }
-
-    case fromIntegrations.IntegrationActions.POST_INTEGRATION_FAIL: {
-      return {
-        ...state,
-        error: true,
-        loading: false
-      };
-    }
-
-    case fromIntegrations.IntegrationActions.DELETE_INTEGRATION: {
-      return {
-        ...state,
-        error: false,
-        loading: true,
-        completedAction: null
+        data: [newEventIntegration, ...state.data]
       };
     }
 
@@ -96,23 +78,6 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       };
     }
 
-    case fromIntegrations.IntegrationActions.DELETE_INTEGRATION_FAIL: {
-      return {
-        ...state,
-        error: true,
-        loading: false
-      };
-    }
-
-    case fromIntegrations.IntegrationActions.EDIT_INTEGRATION: {
-      return {
-        ...state,
-        error: false,
-        loading: true,
-        completedAction: null
-      };
-    }
-
     case fromIntegrations.IntegrationActions.EDIT_INTEGRATION_SUCCESS: {
       const edited = action.payload;
 
@@ -122,14 +87,6 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
         loading: false,
         data: state.data.map((e: IEventIntegration) => (e.id === edited.id ? edited : e)),
         completedAction: 't_shared_saved_update_success_message'
-      };
-    }
-
-    case fromIntegrations.IntegrationActions.EDIT_INTEGRATION_FAIL: {
-      return {
-        ...state,
-        error: true,
-        loading: false
       };
     }
 
@@ -145,6 +102,31 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         completedAction: null
+      };
+    }
+
+    case fromIntegrations.IntegrationActions.SYNC_NOW_FAIL: {
+      const { integration, hideError } = action.payload;
+
+      return {
+        ...state,
+        loading: false,
+        error: hideError ? false : true,
+        data: state.data.map((i) => (i.id === integration.id ? integration : i)),
+        completedAction: hideError ? 't_shared_saved_update_success_message' : null
+      };
+    }
+
+    case fromIntegrations.IntegrationActions.SYNC_NOW_SUCCESS: {
+      const defaultAction = 't_shared_saved_update_success_message';
+
+      const { integration, message } = action.payload;
+
+      return {
+        ...state,
+        loading: false,
+        completedAction: message ? message : defaultAction,
+        data: state.data.map((i) => (i.id === integration.id ? integration : i))
       };
     }
 

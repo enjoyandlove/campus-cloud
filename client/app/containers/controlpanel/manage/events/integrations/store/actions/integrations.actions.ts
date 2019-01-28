@@ -2,7 +2,7 @@ import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
 import { IStore } from '@shared/services/store.service';
-import { IEventIntegration } from '@libs/integrations/events/model';
+import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
 
 export enum IntegrationActions {
   DESTROY = '[manage.events.integrations] destroy',
@@ -25,7 +25,13 @@ export enum IntegrationActions {
 
   GET_HOSTS = '[manage.events.integrations] get hosts',
   GET_HOSTS_SUCCESS = '[manage.events.integrations] get hosts success',
-  GET_HOSTS_FAIL = '[manage.events.integrations] get hosts fail'
+  GET_HOSTS_FAIL = '[manage.events.integrations] get hosts fail',
+
+  SYNC_NOW = '[manage.events.integrations] sync now',
+  SYNC_NOW_FAIL = '[manage.events.integrations] sync now fail',
+  SYNC_NOW_SUCCESS = '[manage.events.integrations] sync now success',
+
+  CREATE_AND_SYNC = '[manage.events.integrations] create and sync'
 }
 
 export class GetIntegrations implements Action {
@@ -120,8 +126,34 @@ export class GetHostsFail implements Action {
   constructor(public payload: HttpErrorResponse) {}
 }
 
+export class SyncNow implements Action {
+  readonly type = IntegrationActions.SYNC_NOW;
+
+  constructor(
+    public payload: { integration: IEventIntegration; succesMessage?: string; hideError?: boolean }
+  ) {}
+}
+
+export class SyncNowSuccess implements Action {
+  readonly type = IntegrationActions.SYNC_NOW_SUCCESS;
+
+  constructor(public payload: { integration: IEventIntegration; message?: string }) {}
+}
+
+export class SyncNowFail implements Action {
+  readonly type = IntegrationActions.SYNC_NOW_FAIL;
+
+  constructor(public payload: { integration: IEventIntegration; hideError?: boolean }) {}
+}
+
 export class Destroy implements Action {
   readonly type = IntegrationActions.DESTROY;
+}
+
+export class CreateAndSync implements Action {
+  readonly type = IntegrationActions.CREATE_AND_SYNC;
+
+  constructor(public payload: { body: IEventIntegration; params: HttpParams }) {}
 }
 
 export type Actions =
@@ -140,4 +172,8 @@ export type Actions =
   | EditIntegrationFail
   | GetHosts
   | GetHostsSuccess
-  | GetHostsFail;
+  | GetHostsFail
+  | CreateAndSync
+  | SyncNow
+  | SyncNowFail
+  | SyncNowSuccess;

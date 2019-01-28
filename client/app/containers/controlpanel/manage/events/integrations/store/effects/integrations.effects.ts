@@ -1,12 +1,16 @@
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
+import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
+import { CPDate } from '@shared/utils/date';
 import { StoreService } from '@shared/services';
 import { IntegrationsService } from './../../integrations.service';
 import { IEventIntegration } from '@libs/integrations/events/model';
+import { EventIntegration } from '@client/app/libs/integrations/events/model';
 
 @Injectable()
 export class IntegrationsEffects {
@@ -47,15 +51,71 @@ export class IntegrationsEffects {
     fromActions.PostIntegrationSuccess | fromActions.PostIntegrationFail
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.POST_INTEGRATION),
-    mergeMap((action: fromActions.PostIntegration) => {
-      const { body, params } = action.payload;
-      return this.service
-        .createIntegration(body, params)
-        .pipe(
-          map((data: IEventIntegration) => new fromActions.PostIntegrationSuccess(data)),
-          catchError((error) => of(new fromActions.PostIntegrationFail(error)))
-        );
+    map((action: fromActions.PostIntegration) => action.payload),
+    mergeMap(({ body, params }) => {
+      return this.service.createIntegration(body, params).pipe(
+        map((integration: IEventIntegration) => {
+          return new fromActions.PostIntegrationSuccess(integration);
+        }),
+        catchError((err) => of(new fromActions.PostIntegrationFail(err)))
+      );
     })
+  );
+
+  @Effect()
+  postIntegrationSuccess$: Observable<fromActions.SyncNow> = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.POST_INTEGRATION_SUCCESS),
+    map((action: fromActions.PostIntegrationSuccess) => action.payload),
+    mergeMap((integration) =>
+      of(
+        new fromActions.SyncNow({
+          integration,
+          hideError: true,
+          succesMessage: 't_shared_saved_update_success_message'
+        })
+      )
+    )
+  );
+
+  @Effect()
+  syncNow$: Observable<fromActions.SyncNowSuccess | fromActions.SyncNowFail> = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.SYNC_NOW),
+    map((action: fromActions.SyncNow) => action.payload),
+    mergeMap(({ integration, succesMessage, hideError }) => {
+      const search = new HttpParams()
+        .set('sync_now', '1')
+        .set('school_id', this.session.g.get('school').id)
+        .set('feed_obj_type', EventIntegration.objectType.campusEvent.toString());
+      return this.service.syncNow(integration.id, search).pipe(
+        map(() => {
+          const editedIntegration = {
+            ...integration,
+            sync_status: EventIntegration.status.successful,
+            last_successful_sync_epoch: CPDate.now(this.session.tz).unix()
+          };
+
+          return new fromActions.SyncNowSuccess({
+            integration: editedIntegration,
+            message: succesMessage
+          });
+        }),
+        catchError(() => {
+          const failedIntegration = {
+            ...integration,
+            sync_status: EventIntegration.status.error
+          };
+
+          return of(new fromActions.SyncNowFail({ integration: failedIntegration, hideError }));
+        })
+      );
+    })
+  );
+
+  @Effect()
+  createAndSync$: Observable<fromActions.PostIntegration> = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.CREATE_AND_SYNC),
+    map((action: fromActions.CreateAndSync) => action.payload),
+    mergeMap((payload) => of(new fromActions.PostIntegration(payload)))
   );
 
   @Effect()
@@ -92,7 +152,8 @@ export class IntegrationsEffects {
 
   constructor(
     private actions$: Actions,
-    private service: IntegrationsService,
-    private storeService: StoreService
+    private session: CPSession,
+    private storeService: StoreService,
+    private service: IntegrationsService
   ) {}
 }

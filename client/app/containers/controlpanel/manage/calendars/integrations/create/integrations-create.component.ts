@@ -51,10 +51,11 @@ export class ItemsIntegrationsCreateComponent implements OnInit {
 
     const payload = {
       body,
-      params
+      params,
+      calendarId: this.route.snapshot.params['calendarId']
     };
 
-    this.store.dispatch(new fromStore.PostIntegration(payload));
+    this.store.dispatch(new fromStore.CreateAndSync(payload));
 
     this.resetModal();
   }
