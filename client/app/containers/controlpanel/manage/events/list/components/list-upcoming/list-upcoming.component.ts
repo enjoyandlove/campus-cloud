@@ -3,17 +3,17 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {
   canSchoolWriteResource,
   canAccountLevelReadResource
-} from './../../../../../../../shared/utils/privileges/privileges';
+} from '@shared/utils/privileges/privileges';
 
+import { FORMAT } from '@shared/pipes';
+import { CPSession } from '@app/session';
 import IEvent from '../../../event.interface';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
 import { EventAttendance } from '../../../event.status';
-import { FORMAT } from '../../../../../../../shared/pipes';
-import { CPSession } from './../../../../../../../session';
+import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { amplitudeEvents } from '@shared/constants/analytics';
 import { EventUtilService } from '../../../events.utils.service';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
-import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../../../shared/services';
+import { CPI18nService, CPTrackingService, RouteLevel } from '@shared/services';
 
 interface ISort {
   sort_field: string;
