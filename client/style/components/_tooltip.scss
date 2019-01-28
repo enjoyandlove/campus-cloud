@@ -1,0 +1,19 @@
+@import '../core/colors';
+@import '../core/typography';
+
+$content_bg: rgba(0, 0, 0, 0.8);
+
+@mixin toolTipIcon {
+  @include font-16px();
+
+  top: 4px;
+  position: relative;
+  color: $color-secondary-text;
+}
+
+.tooltip {
+  z-index: 999999;
+  a {
+    color: $color-brand;
+  }
+}

@@ -3,7 +3,7 @@
   <ng-container *ngSwitchCase="false">
     <div class="row justify-content-center">
       <div class="col-8">
-        <div class="cp-card club">
+        <cp-card class="club">
           <div class="row">
             <div class="col-3">
               <div
@@ -33,13 +33,13 @@
               </div>
             </div>
           </div>
-        </div>
+        </cp-card>
       </div>
     </div>
 
     <div class="row justify-content-center" *ngIf="hasMetaData">
       <div class="col-8">
-        <div class="cp-card meta">
+        <cp-card class="meta">
           <ng-container [ngSwitch]="uploading">
             <cp-spinner *ngSwitchCase="true"></cp-spinner>
             <ng-container *ngSwitchCase="false">
@@ -131,25 +131,25 @@
               </div>
             </ng-container>
           </ng-container>
-        </div>
+        </cp-card>
       </div>
     </div>
 
     <div class="row justify-content-center" *ngIf="showLocationDetails">
       <div class="col-8">
-        <div class="cp-card map">
+        <cp-card class="map">
           <cp-maps
             [center]="mapCenter"
             class="map__container"
             [draggable]="draggable">
           </cp-maps>
-        </div>
+        </cp-card>
       </div>
     </div>
 
     <div class="row club-notes" *ngIf="club.notes?.length && !limitedAdmin">
       <div class="col-8 offset-2">
-        <div class="cp-card">
+        <cp-card>
           <p class="club-notes__title">{{ 'club_info_notes' | cpI18n }}</p>
           <div
             class="club-notes__item"
@@ -159,7 +159,33 @@
               <p class="club-notes__answer">{{answer}}</p>
             </ng-container>
           </div>
-        </div>
+        </cp-card>
+      </div>
+    </div>
+
+    <div class="row justify-content-center">
+      <div class="col-8">
+        <cp-card *ngIf="admins$ | async; let admins;">
+          <p
+            *ngIf="!admins.length">
+            {{ 'no_admins_found' | cpI18n }}...
+          </p>
+          <p><strong>{{ 't_clubs_admin' | cpI18n }}</strong></p>
+          <ul
+            *ngIf="admins.length"
+            class="club__admins__list">
+            <li
+              *ngFor="let admin of admins"
+              class="club__admins__admin">
+              {{ admin.firstname }} {{ admin.lastname }}
+              <br>
+              <span
+                class="text-muted">
+                {{ admin.email }}
+              </span>
+            </li>
+          </ul>
+        </cp-card>
       </div>
     </div>
   </ng-container>

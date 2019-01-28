@@ -12,7 +12,6 @@ export * from './cp-button';
 export * from './cp-working';
 export * from './cp-spinner';
 export * from './cp-stepper';
-export * from './cp-tooltip';
 export * from './cp-snackbar';
 export * from './cp-trackers';
 export * from './cp-dropdown';

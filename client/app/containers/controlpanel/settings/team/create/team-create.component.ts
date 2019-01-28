@@ -63,12 +63,6 @@ export class TeamCreateComponent implements OnInit {
   servicesCount = null;
   athleticsCount = null;
   schoolPrivileges = {};
-  studioLimitedTooltip = {
-    textClass: 'danger',
-    content: this.cpI18n.translate('t_admin_invite_studio_limited_tooltip'),
-    text: this.cpI18n.translate('t_shared_limited'),
-    trigger: 'hover'
-  };
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
 

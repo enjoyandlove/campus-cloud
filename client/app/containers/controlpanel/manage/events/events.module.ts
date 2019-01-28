@@ -15,6 +15,8 @@ import {
   EventsImportTopBarComponent
 } from './excel/components';
 
+import { EventSourceToIconPipe } from './pipes';
+
 import { EventsEditComponent } from './edit';
 import { EventsListComponent } from './list';
 import { EventsInfoComponent } from './info';
@@ -44,6 +46,7 @@ import { EngagementStudentsModule } from '../../assess/students/students.module'
     EventsExcelComponent,
     EventsCreateComponent,
     EventsDeleteComponent,
+    EventSourceToIconPipe,
     ListUpcomingComponent,
     ListActionBoxComponent,
     EventsAttendanceComponent,
@@ -63,11 +66,7 @@ import { EngagementStudentsModule } from '../../assess/students/students.module'
     EngagementStudentsModule
   ],
 
-  providers: [
-    EventsService,
-    EventUtilService,
-    OrientationEventsService
-  ],
+  providers: [EventsService, EventUtilService, OrientationEventsService],
 
   exports: [
     EventsComponent,
@@ -78,6 +77,7 @@ import { EngagementStudentsModule } from '../../assess/students/students.module'
     EventsExcelComponent,
     EventsCreateComponent,
     ListUpcomingComponent,
+    EventSourceToIconPipe,
     EventsDeleteComponent,
     ListActionBoxComponent,
     EventsAttendanceComponent,

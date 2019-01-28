@@ -2,57 +2,58 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <ng-container *ngSwitchCase="false">
-    <div class="row">
-      <div class="col-8 offset-2">
-        <div class="cp-card card">
-          <div class="row">
-            <div class="col-12">
-              <p class="card__title">{{ 'customization_title' | cpI18n }}</p>
-              <p class="text-muted">
-                {{ 'customization_description' | cpI18n }}
-                <cp-tooltip
-                  [toolTipContent]="customizeBannerTooltip">
-                </cp-tooltip>
-              </p>
+    <cp-one-column [width]="layoutWidth">
+      <cp-card>
+        <div class="row">
+          <header class="col-12">
+            <p class="card__title">{{ 'customization_title' | cpI18n }}</p>
+            <p class="text-muted">
+              {{ 'customization_description' | cpI18n }}
+              <i
+                class="material-icons hover"
+                [attr.title]="tooltipContent"
+                [cpTooltip]="imageSizeToolTip">
+                info_outline
+              </i>
+            </p>
+          </header>
+        </div>
+
+        <div class="row canvas">
+          <div class="col-12">
+            <div
+              id="canvas_wrapper"
+              *ngIf="!isEdit"
+              class="canvas__wrapper canvas__wrapper--image"
+              [ngStyle]="{'background-image': 'url(' + originalImage + ')'}">
             </div>
-          </div>
-
-          <div class="row canvas">
-            <div class="col-12">
-              <div
-                id="canvas_wrapper"
-                *ngIf="!isEdit"
-                class="canvas__wrapper canvas__wrapper--image"
-                [ngStyle]="{'background-image': 'url(' + originalImage + ')'}">
-              </div>
-              <div
-                id="canvas_wrapper"
-                *ngIf="isEdit"
-                class="canvas__wrapper">
-                <div class="canvas__bounds"></div>
-              </div>
-
-              <cp-banner-upload-button
-                *ngIf="!isEdit"
-                class="upload-button"
-                (reset)="onReset()"
-                (error)="onError($event)"
-                (upload)="onUpload($event)">
-              </cp-banner-upload-button>
-
-              <cp-banner-control-buttons
-                *ngIf="isEdit"
-                (save)="onSave()"
-                (cancel)="onCancel()"
-                [loading]="uploading"
-                class="control-buttons">
-              </cp-banner-control-buttons>
-
-              <p class="tooltip" *ngIf="isEdit">{{ 'customization_instructions' | cpI18n }}</p>
+            <div
+              id="canvas_wrapper"
+              *ngIf="isEdit"
+              class="canvas__wrapper">
+              <div class="canvas__bounds"></div>
             </div>
+
+            <cp-banner-upload-button
+              *ngIf="!isEdit"
+              class="upload-button"
+              (reset)="onReset()"
+              (error)="onError($event)"
+              (upload)="onUpload($event)">
+            </cp-banner-upload-button>
+
+            <cp-banner-control-buttons
+              *ngIf="isEdit"
+              (save)="onSave()"
+              (cancel)="onCancel()"
+              [loading]="uploading"
+              class="control-buttons">
+            </cp-banner-control-buttons>
+
+            <p class="tooltip" *ngIf="isEdit">{{ 'customization_instructions' | cpI18n }}</p>
           </div>
         </div>
-      </div>
-    </div>
+      </cp-card>
+    </cp-one-column>
   </ng-container>
 </ng-container>

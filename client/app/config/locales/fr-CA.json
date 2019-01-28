@@ -2343,6 +2343,9 @@
   "t_check_in_date_placeholder_text": {
     "message": "Maintenant"
   },
+  "t_clubs_admin": {
+    "message": "Administrateur"
+  },
   "t_customise_personas": {
     "message": "Expériences d'application"
   },
@@ -2605,6 +2608,9 @@
   },
   "t_locations_category_create_category": {
     "message": "Créer catégorie"
+  },
+  "t_locations_category_type_select": {
+    "message": "Selectionner le type"
   },
   "t_locations_create_location": {
     "message": "Créer lieu"
@@ -3104,6 +3110,9 @@
   "t_shared_no_integrations_found": {
     "message": "Aucune intégration trouvée"
   },
+  "t_shared_open": {
+    "message": "Ouvert"
+  },
   "t_shared_pending": {
     "message": "En attente"
   },
@@ -3131,7 +3140,7 @@
   "t_shared_sunday": {
     "message": "Dimanche"
   },
-  "t_shared_sync_now": {
+  "t_shared_sync": {
     "message": "Synchroniser maintenant"
   },
   "t_shared_thursday": {
@@ -3145,6 +3154,9 @@
   },
   "t_shared_type": {
     "message": "Type"
+  },
+  "t_shared_update_map": {
+    "message": "Appliquer"
   },
   "t_shared_upload_icon": {
     "message": "Téléverser icône"
