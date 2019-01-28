@@ -195,7 +195,7 @@
                 <label class="error" *ngIf="formError">
                     <span>&#x26A0;</span> {{ errorMessage ? errorMessage : 'error_fill_out_marked_fields' | cpI18n }}
                 </label>
-                <a [routerLink]="['/manage/services']"
+                <a [routerLink]="['/manage/services/' + serviceId + '/info']"
                   class="cpbtn cpbtn--cancel">
                   {{ 'cancel' | cpI18n }}
                 </a>
