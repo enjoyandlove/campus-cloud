@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
 import { Actions, ofType } from '@ngrx/effects';
 import { takeUntil } from 'rxjs/operators';
+import { TooltipOption } from 'bootstrap';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
@@ -30,8 +31,9 @@ export class LinksCreateComponent implements OnInit, OnDestroy, Destroyable {
 
   storeId;
   imageError;
-  tooltipContent;
   form: FormGroup;
+  tooltipContent: string;
+  imageSizeToolTip: TooltipOption;
 
   eventProperties = {
     link_id: null
@@ -121,13 +123,17 @@ export class LinksCreateComponent implements OnInit, OnDestroy, Destroyable {
     const zendesk = ZendeskService.zdRoot();
     this.storeId = this.session.g.get('school').id;
     this.buildForm();
-    this.tooltipContent = {
-      content: '',
-      link: {
-        url: `${zendesk}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud`,
-        text: this.cpI18n.translate('learn_more')
-      }
+
+    this.imageSizeToolTip = {
+      html: true,
+      trigger: 'click'
     };
+
+    this.tooltipContent = `<a
+      class='cpbtn cpbtn--link'
+      href='${zendesk}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud'>
+      ${this.cpI18n.translate('learn_more')}
+    </a>`;
 
     this.updates$
       .pipe(ofType(fromLinks.LinksActionTypes.CREATE_LINK_SUCCESS), takeUntil(this.destroy$))

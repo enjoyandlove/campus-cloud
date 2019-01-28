@@ -115,7 +115,6 @@ describe('CategoriesEditComponent', () => {
     const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
     const { body, categoryId } = payload;
 
-    console.log(body);
     expect(body).toEqual(expected.payload);
     expect(categoryId).toEqual(component.category.id);
     expect(type).toEqual(fromStore.CategoriesActions.EDIT_CATEGORY);

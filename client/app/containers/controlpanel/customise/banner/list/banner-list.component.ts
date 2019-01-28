@@ -1,18 +1,19 @@
+import { LayoutWidth } from '@app/layouts/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
 import { BannerService } from '../banner.service';
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
-import { baseActions, ISnackbar } from './../../../../../store/base';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { baseActions, ISnackbar } from '@app/store/base';
+import { amplitudeEvents } from '@shared/constants/analytics';
 import {
   CPI18nService,
   CPCroppieService,
   CPTrackingService,
   ZendeskService
-} from '../../../../../shared/services';
+} from '@shared/services';
 
 @Component({
   selector: 'cp-banner-list',
@@ -23,9 +24,11 @@ export class BannerListComponent extends BaseComponent implements OnInit {
   isEdit;
   loading;
   originalImage;
+  tooltipContent;
+  imageSizeToolTip;
   uploading = false;
-  customizeBannerTooltip;
   canvas: CPCroppieService;
+  layoutWidth = LayoutWidth.third;
 
   constructor(
     public session: CPSession,
@@ -158,12 +161,16 @@ export class BannerListComponent extends BaseComponent implements OnInit {
 
     const zendesk = ZendeskService.zdRoot();
     this.loadImage();
-    this.customizeBannerTooltip = {
-      content: '',
-      link: {
-        url: `${zendesk}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud`,
-        text: this.cpI18n.translate('learn_more')
-      }
+
+    this.imageSizeToolTip = {
+      html: true,
+      trigger: 'click'
     };
+
+    this.tooltipContent = `<a
+      class='cpbtn cpbtn--link'
+      href='${zendesk}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud'>
+      ${this.cpI18n.translate('learn_more')}
+    </a>`;
   }
 }

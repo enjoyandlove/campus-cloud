@@ -5,6 +5,7 @@ import { DebugElement } from '@angular/core';
 
 import { CPSession } from '@app/session';
 import { configureTestSuite } from '@shared/tests';
+import { EventSourceToIconPipe } from './../../../pipes';
 import { mockSchool, mockUser } from '@app/session/mock';
 import { SharedModule } from '@app/shared/shared.module';
 import { ListPastComponent } from './list-past.component';
@@ -30,7 +31,7 @@ describe('ListPastComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, RouterTestingModule],
-        declarations: [ListPastComponent],
+        declarations: [ListPastComponent, EventSourceToIconPipe],
         providers: [CPI18nService, CPTrackingService, CPSession]
       });
 

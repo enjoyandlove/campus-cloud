@@ -1,9 +1,14 @@
 @import '~client/style/components/form';
 @import '~client/style/components/modal';
 @import '~client/style/components/button';
+@import '~client/style/components/tooltip';
 
 .cpmodal__body {
   margin-top: 15px;
+
+  label i {
+    @include toolTipIcon;
+  }
 }
 
 .banner__wrapper {

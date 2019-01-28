@@ -15,7 +15,7 @@
                 </div>
               </div>
             </div>
-    
+
             <div class="row margin-top">
               <div class="col-12">
                 <p class="title">{{ 'services_label_details' | cpI18n }}</p>
@@ -27,13 +27,17 @@
                     formControlName="name"
                     [class.error]="formError && form.controls['name'].hasError('required')">
                 </div>
-    
+
                 <div class="row form-group">
                   <div class="col-6">
-                    <label>{{ 'select_category' | cpI18n }}
-                      <cp-tooltip
-                        [toolTipContent]="categoryTooltip">
-                      </cp-tooltip>
+                    <label class="with-tooltip">
+                      {{ 'select_category' | cpI18n }}
+                      <i
+                        cpTooltip
+                        class="material-icons"
+                        [attr.title]="categoryTooltip">
+                        info_outline
+                      </i>
                     </label>
                     <cp-dropdown
                       [items]="categories$ | async"
@@ -42,7 +46,7 @@
                     </cp-dropdown>
                   </div>
                 </div>
-    
+
                 <div class="row form-group">
                   <div class="col-6">
                     <label>{{ 'phone_number' | cpI18n }}</label>
@@ -52,7 +56,7 @@
                       formControlName="contactphone">
                   </div>
                 </div>
-    
+
                 <div class="row form-group">
                   <div class="col-6">
                     <label>{{ 'email' | cpI18n }}</label>
@@ -62,7 +66,7 @@
                       formControlName="email">
                   </div>
                 </div>
-    
+
                 <div class="row form-group">
                   <div class="col-6">
                     <label>{{ 'website' | cpI18n }}</label>
@@ -72,7 +76,7 @@
                       formControlName="website">
                   </div>
                 </div>
-    
+
                 <div class="form-group form-group">
                   <label>{{ 'services_label_description' | cpI18n }}</label>
                   <textarea formControlName="description"></textarea>
@@ -152,7 +156,7 @@
             </div>
           </div>
         </div>
-    
+
         <div class="col-6">
           <div class="cp-card">
             <div class="row">
