@@ -106,7 +106,7 @@ describe('ItemsIntegrationsCreateComponent', () => {
     expect(expected).toEqual(result);
   });
 
-  it('should dispatch PostIntegration action', () => {
+  it('should dispatch CreateAndSync action', () => {
     component.ngOnInit();
     spyOn(component, 'resetModal');
     const dispatchSpy = spyOn(component.store, 'dispatch');
@@ -115,7 +115,7 @@ describe('ItemsIntegrationsCreateComponent', () => {
 
     component.doSubmit();
 
-    const expected = new fromStore.PostIntegration(component.form.value);
+    const expected = new fromStore.CreateAndSync(component.form.value);
 
     expect(component.resetModal).toHaveBeenCalled();
     expect(component.store.dispatch).toHaveBeenCalled();
@@ -124,7 +124,7 @@ describe('ItemsIntegrationsCreateComponent', () => {
     const { body } = payload;
 
     expect(body).toEqual(expected.payload);
-    expect(type).toEqual(fromStore.IntegrationActions.POST_INTEGRATION);
+    expect(type).toEqual(fromStore.IntegrationActions.CREATE_AND_SYNC);
   });
 
   it('submit button should be disabled unless form is valid', () => {

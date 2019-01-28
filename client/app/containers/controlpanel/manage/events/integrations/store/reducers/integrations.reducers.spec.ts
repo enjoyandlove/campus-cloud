@@ -64,7 +64,7 @@ describe('Event Integrations Reducer', () => {
   });
 
   describe('POST_INTEGRATION', () => {
-    it('should set completedAction flag to null', () => {
+    it('should add created integration to state', () => {
       const { initialState } = fromReducer;
       const body = mockIntegration;
       const payload = {
@@ -73,24 +73,22 @@ describe('Event Integrations Reducer', () => {
       };
 
       const action = new fromActions.PostIntegration(payload);
-      const { loading, completedAction } = fromReducer.reducer(initialState, action);
+      const { loading } = fromReducer.reducer(initialState, action);
 
       expect(loading).toBe(true);
-      expect(completedAction).toBeNull();
     });
   });
 
   describe('POST_INTEGRATION_SUCCESS', () => {
-    it('should set completedAction flag to null', () => {
+    it('should add new integration to state', () => {
       const { initialState } = fromReducer;
       const payload = mockIntegration;
 
       const action = new fromActions.PostIntegrationSuccess(payload);
-      const { data, completedAction } = fromReducer.reducer(initialState, action);
+      const { data } = fromReducer.reducer(initialState, action);
 
       expect(data.length).toEqual(1);
       expect(data[0].id).toBe(payload.id);
-      expect(completedAction).not.toBeNull();
     });
   });
 
@@ -168,6 +166,85 @@ describe('Event Integrations Reducer', () => {
 
       expect(loading).toBe(true);
       expect(completedAction).toBeNull();
+    });
+  });
+
+  describe('SYNC_NOW_SUCCESS', () => {
+    it('should toggle competedAction message if one is passed', () => {
+      const { initialState } = fromReducer;
+      const expectedMessage = 'hello';
+
+      let action;
+      let result;
+      let expected;
+
+      action = new fromActions.SyncNowSuccess({
+        integration: mockIntegration
+      });
+
+      result = fromReducer.reducer(initialState, action);
+      expected = 't_shared_saved_update_success_message';
+
+      expect(result.completedAction).toBe(expected);
+
+      action = new fromActions.SyncNowSuccess({
+        integration: mockIntegration,
+        message: expectedMessage
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.completedAction).toBe(expectedMessage);
+    });
+  });
+
+  describe('SYNC_NOW_FAIL', () => {
+    it('should toggle error if passed', () => {
+      const { initialState } = fromReducer;
+
+      let action;
+      let result;
+
+      action = new fromActions.SyncNowFail({
+        integration: mockIntegration
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.error).toBe(true);
+
+      action = new fromActions.SyncNowFail({
+        integration: mockIntegration,
+        hideError: true
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.error).toBe(false);
+    });
+
+    it('should update completedAction', () => {
+      const { initialState } = fromReducer;
+
+      let action;
+      let result;
+
+      action = new fromActions.SyncNowFail({
+        integration: mockIntegration
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.completedAction).toBeNull();
+
+      action = new fromActions.SyncNowFail({
+        integration: mockIntegration,
+        hideError: true
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.completedAction).not.toBeNull();
     });
   });
 

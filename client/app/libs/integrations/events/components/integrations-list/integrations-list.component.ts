@@ -13,6 +13,7 @@ import { FeedIntegration, SyncStatus } from '../../../common/model';
 export class EventIntegrationsListComponent implements OnInit {
   @Input() integrations$: Observable<FeedIntegration[]>;
 
+  @Output() syncClick: EventEmitter<number> = new EventEmitter();
   @Output() editClick: EventEmitter<FeedIntegration> = new EventEmitter();
   @Output() deleteClick: EventEmitter<FeedIntegration> = new EventEmitter();
 
