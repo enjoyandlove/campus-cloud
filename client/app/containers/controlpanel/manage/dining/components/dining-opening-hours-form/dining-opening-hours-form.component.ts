@@ -17,12 +17,12 @@ export class DiningOpeningHoursFormComponent implements OnInit {
 
   constructor() {}
 
-  onTimeSelected(schedule, key, index) {
+  onTimeSelected(schedule, key, index, itemIndex) {
     const controls = <FormArray>this.diningForm.controls['schedule'];
 
     const control = <FormGroup>controls.controls[index];
     const controlItems = <FormArray>control.controls['items'];
-    const controlFirstItem = <FormGroup>controlItems.controls[0];
+    const controlFirstItem = <FormGroup>controlItems.controls[itemIndex];
     controlFirstItem.controls[key].setValue(schedule.value);
   }
 

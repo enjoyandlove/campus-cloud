@@ -38,7 +38,7 @@
                     [items]="locationTiming"
                     [cpTarget]="'start_time_' + i"
                     [selectedItem]="getSelectedTime(item.controls.start_time.value)"
-                    (selected)="onTimeSelected($event, 'start_time', i)">
+                    (selected)="onTimeSelected($event, 'start_time', i, itemIndex)">
                   </cp-dropdown>
                 </div>
 
