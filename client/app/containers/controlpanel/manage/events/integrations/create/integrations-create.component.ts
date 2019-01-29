@@ -58,7 +58,7 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
       params
     };
 
-    this.store.dispatch(new fromStore.PostIntegration(payload));
+    this.store.dispatch(new fromStore.CreateAndSync(payload));
 
     this.resetModal();
   }

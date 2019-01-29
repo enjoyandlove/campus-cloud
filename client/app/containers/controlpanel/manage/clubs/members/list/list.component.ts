@@ -103,7 +103,8 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
       .append('school_id', schoolId)
       .append('sort_field', this.state.sort_field)
       .append('sort_direction', this.state.sort_direction)
-      .append('category_id', this.isAthletic.toString());
+      .append('category_id', this.isAthletic.toString())
+      .append('search_str', this.state.search_str);
 
     let groupSearch = new HttpParams().append('school_id', schoolId);
 

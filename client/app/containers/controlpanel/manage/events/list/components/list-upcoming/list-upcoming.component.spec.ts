@@ -7,6 +7,7 @@ import { CPSession } from '@app/session';
 import { configureTestSuite } from '@shared/tests';
 import { mockSchool, mockUser } from '@app/session/mock';
 import { SharedModule } from '@app/shared/shared.module';
+import { EventSourceToIconPipe } from './../../../pipes';
 import { CPI18nService } from '@shared/services/i18n.service';
 import { ListUpcomingComponent } from './list-upcoming.component';
 import { EventUtilService } from './../../../events.utils.service';
@@ -31,7 +32,7 @@ describe('ListUpcomingComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, RouterTestingModule],
-        declarations: [ListUpcomingComponent],
+        declarations: [ListUpcomingComponent, EventSourceToIconPipe],
         providers: [CPI18nService, CPTrackingService, CPSession, EventUtilService]
       });
 

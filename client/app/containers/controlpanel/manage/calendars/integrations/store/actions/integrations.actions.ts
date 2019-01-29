@@ -25,7 +25,13 @@ export enum IntegrationActions {
 
   GET_HOSTS = '[manage.calendars.items.integrations] get hosts',
   GET_HOSTS_SUCCESS = '[manage.calendars.items.integrations] get hosts success',
-  GET_HOSTS_FAIL = '[manage.calendars.items.integrations] get hosts fail'
+  GET_HOSTS_FAIL = '[manage.calendars.items.integrations] get hosts fail',
+
+  SYNC_NOW = '[manage.calendars.items.integrations] sync now',
+  SYNC_NOW_FAIL = '[manage.calendars.items.integrations] sync now fail',
+  SYNC_NOW_SUCCESS = '[manage.calendars.items.integrations] sync now success',
+
+  CREATE_AND_SYNC = '[manage.calendars.items.integrations] create and sync'
 }
 
 export class GetIntegrations implements Action {
@@ -49,13 +55,15 @@ export class GetIntegrationsFail implements Action {
 export class PostIntegration implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION;
 
-  constructor(public payload: { body: IEventIntegration; params: HttpParams }) {}
+  constructor(
+    public payload: { body: IEventIntegration; calendarId: number; params: HttpParams }
+  ) {}
 }
 
 export class PostIntegrationSuccess implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION_SUCCESS;
 
-  constructor(public payload: IEventIntegration) {}
+  constructor(public payload: { integration: IEventIntegration; calendarId: number }) {}
 }
 
 export class PostIntegrationFail implements Action {
@@ -120,8 +128,41 @@ export class GetHostsFail implements Action {
   constructor(public payload: HttpErrorResponse) {}
 }
 
+export class SyncNow implements Action {
+  readonly type = IntegrationActions.SYNC_NOW;
+
+  constructor(
+    public payload: {
+      calendarId: number;
+      hideError?: boolean;
+      succesMessage?: string;
+      integration: IEventIntegration;
+    }
+  ) {}
+}
+
+export class SyncNowSuccess implements Action {
+  readonly type = IntegrationActions.SYNC_NOW_SUCCESS;
+
+  constructor(public payload: { integration: IEventIntegration; message?: string }) {}
+}
+
+export class SyncNowFail implements Action {
+  readonly type = IntegrationActions.SYNC_NOW_FAIL;
+
+  constructor(public payload: { integration: IEventIntegration; hideError?: boolean }) {}
+}
+
 export class Destroy implements Action {
   readonly type = IntegrationActions.DESTROY;
+}
+
+export class CreateAndSync implements Action {
+  readonly type = IntegrationActions.CREATE_AND_SYNC;
+
+  constructor(
+    public payload: { body: IEventIntegration; calendarId: number; params: HttpParams }
+  ) {}
 }
 
 export type Actions =
@@ -140,4 +181,8 @@ export type Actions =
   | EditIntegrationFail
   | GetHosts
   | GetHostsSuccess
-  | GetHostsFail;
+  | GetHostsFail
+  | CreateAndSync
+  | SyncNow
+  | SyncNowFail
+  | SyncNowSuccess;

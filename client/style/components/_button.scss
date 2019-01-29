@@ -124,6 +124,10 @@ a.cpbtn {
       color: $color-med-grey;
       background: transparent;
     }
+
+    &.danger {
+      color: $color-danger;
+    }
   }
 
   &--link-dark {

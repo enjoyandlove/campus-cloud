@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.6 (67491) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_int_atom</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="table-upcoming" transform="translate(-1310.000000, -238.000000)">
+            <g id="ic_int_atom" transform="translate(1310.000000, 238.000000)">
+                <rect id="Rectangle" fill="#757575" x="0" y="0" width="24" height="24" rx="4"></rect>
+                <text id="Atom" font-family="Helvetica-Bold, Helvetica" font-size="8" font-weight="bold" fill="#FFFFFF">
+                    <tspan x="2" y="15">Atom</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>

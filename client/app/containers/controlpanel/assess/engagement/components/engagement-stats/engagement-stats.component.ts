@@ -1,9 +1,7 @@
 import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
 
 import * as moment from 'moment';
-import { CPI18nService } from '../../../../../../shared/services';
-
-declare var $;
+import { CPI18nService } from '@shared/services';
 
 interface IProps {
   ends: number;
@@ -63,10 +61,6 @@ export class EngagementStatsComponent implements OnInit {
   }
 
   ngOnInit() {
-    $(function() {
-      $('[data-toggle="tooltip"]').tooltip();
-    });
-
     this.noEngagementPercentage = this.getPercentage('zero_engagements');
     this.oneEngagementPercentage = this.getPercentage('one_engagements');
     this.repeatEngagementPercentage = this.getPercentage('repeat_engagements');

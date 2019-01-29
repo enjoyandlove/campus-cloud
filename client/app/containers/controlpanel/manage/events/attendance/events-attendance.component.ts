@@ -166,15 +166,6 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
       .then((res) => {
         this.attendees = res.data;
         this.totalAttendees.next(res.data);
-        setTimeout(
-          () => {
-            $(function() {
-              $('[data-toggle="tooltip"]').tooltip();
-            });
-          },
-
-          10
-        );
       })
       .catch((_) => {});
   }
