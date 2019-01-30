@@ -31,7 +31,8 @@ export enum IntegrationActions {
   SYNC_NOW_FAIL = '[manage.calendars.items.integrations] sync now fail',
   SYNC_NOW_SUCCESS = '[manage.calendars.items.integrations] sync now success',
 
-  CREATE_AND_SYNC = '[manage.calendars.items.integrations] create and sync'
+  CREATE_AND_SYNC = '[manage.calendars.items.integrations] create and sync',
+  UPDATE_AND_SYNC = '[manage.calendars.items.integrations] update and sync'
 }
 
 export class GetIntegrations implements Action {
@@ -165,6 +166,14 @@ export class CreateAndSync implements Action {
   ) {}
 }
 
+export class UpdateAndSync implements Action {
+  readonly type = IntegrationActions.UPDATE_AND_SYNC;
+
+  constructor(
+    public payload: { integrationId: number; body: IEventIntegration; params: HttpParams }
+  ) {}
+}
+
 export type Actions =
   | Destroy
   | GetIntegrations
@@ -185,4 +194,5 @@ export type Actions =
   | CreateAndSync
   | SyncNow
   | SyncNowFail
-  | SyncNowSuccess;
+  | SyncNowSuccess
+  | UpdateAndSync;

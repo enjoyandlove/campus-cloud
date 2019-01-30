@@ -1,6 +1,8 @@
 import { IFeedIntegration } from './../../common/model/integration.interface';
 
 export interface IEventIntegration extends IFeedIntegration {
+  feed_obj_type?: EventFeedObjectType;
+
   poster_url: string;
   feed_obj_id: number;
   poster_thumb_url: string;

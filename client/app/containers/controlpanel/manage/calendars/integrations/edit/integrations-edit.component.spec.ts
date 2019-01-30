@@ -113,7 +113,7 @@ describe('ItemsIntegrationEditComponent', () => {
 
     expect(body).toEqual(expected.payload);
     expect(integrationId).toEqual(component.eventIntegration.id);
-    expect(type).toEqual(fromStore.IntegrationActions.EDIT_INTEGRATION);
+    expect(type).toEqual(fromStore.IntegrationActions.UPDATE_AND_SYNC);
   });
 
   it('submit button should be disabled unless form is valid', () => {

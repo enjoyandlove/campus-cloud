@@ -723,7 +723,7 @@
     "message": "Annuler"
   },
   "category": {
-    "message": "Categorie"
+    "message": "Catégorie"
   },
   "change_password": {
     "message": "Changer mot de passe"
@@ -2599,6 +2599,9 @@
   "t_external_check_in_not_found_error": {
     "message": "Cet événement ne peut pas être trouvé"
   },
+  "t_integration_sync_button_disable_tooltip": {
+    "message": "Integration in progress"
+  },
   "t_jobs_ongoing": {
     "message": "Ongoing",
     "description": "Indicates that a job posting has no end date"
@@ -3014,6 +3017,9 @@
   "t_shared_category_create_form_modal_title": {
     "message": "Nouvelle catégorie"
   },
+  "t_shared_category_edit_form_modal_title": {
+    "message": "Éditer catégorie"
+  },
   "t_shared_category_name": {
     "message": "Nom de la catégorie"
   },
@@ -3025,6 +3031,9 @@
   },
   "t_shared_checkins": {
     "message": "Vérifications de présence"
+  },
+  "t_shared_closed": {
+    "message": "Fermé"
   },
   "t_shared_color": {
     "message": "Couleur"
@@ -3118,6 +3127,9 @@
   },
   "t_shared_preview": {
     "message": "Aperçu"
+  },
+  "t_shared_running": {
+    "message": "En course"
   },
   "t_shared_saturday": {
     "message": "Samedi"

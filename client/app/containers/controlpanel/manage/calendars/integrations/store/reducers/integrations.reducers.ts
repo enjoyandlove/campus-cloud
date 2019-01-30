@@ -84,9 +84,7 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         error: false,
-        loading: false,
-        data: state.data.map((e: IEventIntegration) => (e.id === edited.id ? edited : e)),
-        completedAction: 't_shared_saved_update_success_message'
+        data: state.data.map((e: IEventIntegration) => (e.id === edited.id ? edited : e))
       };
     }
 

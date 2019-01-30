@@ -1,6 +1,6 @@
+import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
@@ -53,12 +53,14 @@ export class IntegrationsEffects {
     ofType(fromActions.IntegrationActions.POST_INTEGRATION),
     map((action: fromActions.PostIntegration) => action.payload),
     mergeMap(({ body, params }) => {
-      return this.service.createIntegration(body, params).pipe(
-        map((integration: IEventIntegration) => {
-          return new fromActions.PostIntegrationSuccess(integration);
-        }),
-        catchError((err) => of(new fromActions.PostIntegrationFail(err)))
-      );
+      return this.service
+        .createIntegration(body, params)
+        .pipe(
+          map(
+            (integration: IEventIntegration) => new fromActions.PostIntegrationSuccess(integration)
+          ),
+          catchError((err) => of(new fromActions.PostIntegrationFail(err)))
+        );
     })
   );
 
@@ -66,6 +68,21 @@ export class IntegrationsEffects {
   postIntegrationSuccess$: Observable<fromActions.SyncNow> = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.POST_INTEGRATION_SUCCESS),
     map((action: fromActions.PostIntegrationSuccess) => action.payload),
+    mergeMap((integration) =>
+      of(
+        new fromActions.SyncNow({
+          integration,
+          hideError: true,
+          succesMessage: 't_shared_saved_update_success_message'
+        })
+      )
+    )
+  );
+
+  @Effect()
+  editIntegrationSuccess$: Observable<fromActions.SyncNow> = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.EDIT_INTEGRATION_SUCCESS),
+    map((action: fromActions.EditIntegrationSuccess) => action.payload),
     mergeMap((integration) =>
       of(
         new fromActions.SyncNow({
@@ -99,10 +116,16 @@ export class IntegrationsEffects {
             message: succesMessage
           });
         }),
-        catchError(() => {
+        catchError((err: HttpErrorResponse) => {
+          const errorIn400Range = /^4[0-9].*$/;
+
+          const sync_status = errorIn400Range.test(err.status.toString())
+            ? EventIntegration.status.error
+            : EventIntegration.status.running;
+
           const failedIntegration = {
             ...integration,
-            sync_status: EventIntegration.status.error
+            sync_status
           };
 
           return of(new fromActions.SyncNowFail({ integration: failedIntegration, hideError }));
@@ -116,6 +139,13 @@ export class IntegrationsEffects {
     ofType(fromActions.IntegrationActions.CREATE_AND_SYNC),
     map((action: fromActions.CreateAndSync) => action.payload),
     mergeMap((payload) => of(new fromActions.PostIntegration(payload)))
+  );
+
+  @Effect()
+  updateAndSync$: Observable<fromActions.EditIntegration> = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.UPDATE_AND_SYNC),
+    map((action: fromActions.UpdateAndSync) => action.payload),
+    mergeMap((payload) => of(new fromActions.EditIntegration(payload)))
   );
 
   @Effect()
