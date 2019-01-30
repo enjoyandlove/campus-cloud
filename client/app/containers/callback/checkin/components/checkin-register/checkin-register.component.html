@@ -55,8 +55,8 @@
             <div class="row">
               <div class="col-12">
                 <cp-button
+                  cpTooltip
                   [props]="buttonData"
-                  [attr.data-toggle]="'tooltip'"
                   [attr.title]="disableCheckInTooltip"
                   (buttonClick)="onSubmit(registrationForm.value)">
                 </cp-button>

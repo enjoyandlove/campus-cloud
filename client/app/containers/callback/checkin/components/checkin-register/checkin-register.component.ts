@@ -49,10 +49,6 @@ export class CheckinRegisterComponent implements OnInit {
     const disabled = !this.verificationMethods.includes(CheckInMethod.web);
 
     if (disabled) {
-      $(function() {
-        $('[data-toggle="tooltip"]').tooltip();
-      });
-
       this.disableCheckInTooltip = this.cpI18n.translate(
         't_external_check_in_disable_manual_check_in'
       );

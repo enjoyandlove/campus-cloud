@@ -67,11 +67,12 @@
       </span>
 
       <span class="col-2 text-right actions">
-        <i
+        <img
+          cpTooltip
+          class="js_event_external"
           *ngIf="event.is_external"
-          class="material-icons js_event_external">
-          link
-        </i>
+          [attr.title]="isExternalToolTip"
+          [src]="event.source | eventSourceToIcon">
         <span
           *ngIf="canDelete"
           (click)="onDelete(event)"

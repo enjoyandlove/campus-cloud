@@ -1,15 +1,19 @@
 @import '~client/style/core/colors';
-@import '~client/style/components/card';
 @import '~client/style/core/typography';
 @import '~client/style/components/button';
+@import '~client/style/components/tooltip';
 
 label.error {
   @include error-label();
 }
 
-.card {
+cp-card {
   p {
     margin-bottom: 3px;
+  }
+
+  header i {
+    @include toolTipIcon;
   }
 
   &__title {

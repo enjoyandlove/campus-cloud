@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
-import { tap, takeUntil, filter, map } from 'rxjs/operators';
+import { tap, takeUntil, filter, map, take } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -57,6 +57,19 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
     super.goToPrevious();
 
     this.fetch();
+  }
+
+  onSyncNow(feedId: number) {
+    this.store
+      .select(fromStore.getIntegrationById(feedId))
+      .pipe(takeUntil(this.destroy$), take(1))
+      .subscribe((integration) => {
+        this.store.dispatch(
+          new fromStore.SyncNow({
+            integration
+          })
+        );
+      });
   }
 
   onEditTeardown() {

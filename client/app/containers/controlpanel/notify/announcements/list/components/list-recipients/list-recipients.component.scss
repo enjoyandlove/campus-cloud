@@ -9,19 +9,19 @@
 
   &__more {
     position: relative;
-    button {
-      padding: 0;
-      border: none;
-      font-size: 0.9em;
-      box-shadow: none;
-      margin-left: 8px;
-      background: transparent;
+    // button {
+    //   padding: 0;
+    //   border: none;
+    //   font-size: 0.9em;
+    //   box-shadow: none;
+    //   margin-left: 8px;
+    //   background: transparent;
 
-      &:focus,
-      &:active {
-        outline: none;
-      }
-    }
+    //   &:focus,
+    //   &:active {
+    //     outline: none;
+    //   }
+    // }
   }
 
   &__list {

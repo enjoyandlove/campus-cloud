@@ -185,7 +185,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
 
   ngOnInit() {
     if (this.isService) {
-      this.updateManagersByStoreOrClubId(this.serviceId);
+      this.updateManagersByStoreOrClubId(this.storeId);
     }
 
     if (this.isClub) {

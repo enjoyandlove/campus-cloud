@@ -2,18 +2,16 @@
 import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { TooltipOption } from 'bootstrap';
 
 import { CPSession } from '@app/session';
-import { IToolTipContent } from '@shared/components';
 import { canSchoolWriteResource } from '@shared/utils';
 import { TemplatesService } from './../templates.service';
 import { CustomTextValidators } from '@shared/validators';
 import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@shared/constants';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 import { TemplatesComposeComponent } from '../compose/templates-compose.component';
-import { CPI18nService, StoreService, ZendeskService, CPTrackingService } from '@shared/services';
-
-declare var $;
+import { CPI18nService, StoreService, CPTrackingService, ZendeskService } from '@shared/services';
 
 @Component({
   selector: 'cp-templates-create',
@@ -23,7 +21,8 @@ declare var $;
 export class TemplatesCreateComponent extends TemplatesComposeComponent
   implements OnInit, OnDestroy {
   form: FormGroup;
-  toolTipContent: IToolTipContent;
+  toolTipContent: string;
+  toolTipOptions: TooltipOption;
 
   constructor(
     public el: ElementRef,
@@ -179,13 +178,19 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
     this.sendAsName = this.session.defaultHost ? this.session.defaultHost.label : undefined;
 
-    this.toolTipContent = Object.assign({}, this.toolTipContent, {
-      content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
-      link: {
-        text: this.cpI18n.translate('lists_button_create'),
-        url: `${ZendeskService.zdRoot()}/articles/115004330554-Create-a-List-of-Students`
-      }
-    });
+    this.toolTipOptions = {
+      html: true,
+      trigger: 'click'
+    };
+
+    this.toolTipContent = `
+      <span class="d-block text-left">
+        ${this.cpI18n.translate('notify_announcement_template_to_tooltip')}
+      </span>
+      <a class="text-left d-block" href='${ZendeskService.zdRoot()}/articles/115004330554-Create-a-List-of-Students}'>
+        ${this.cpI18n.translate('lists_button_create')}
+      </a>
+    `;
 
     let canDoEmergency;
 

@@ -70,12 +70,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   athleticsCount = null;
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
-  studioLimitedTooltip = {
-    textClass: 'danger',
-    content: this.cpI18n.translate('t_admin_invite_studio_limited_tooltip'),
-    text: this.cpI18n.translate('t_shared_limited'),
-    trigger: 'hover'
-  };
 
   resetClubsModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetServiceModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
