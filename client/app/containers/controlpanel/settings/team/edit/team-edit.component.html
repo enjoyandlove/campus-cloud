@@ -307,6 +307,18 @@
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.deals, formData.content.deals)">
                 </cp-checkbox>
               </div>
+
+              <div
+                class="col-4"
+                [class.isDisabled]="!formData.content.dining.active">
+                <cp-checkbox
+                  class="cpcheckbox"
+                  [label]="cpI18n.translate('dining')"
+                  [isDisabled]="!formData.content.dining.active"
+                  [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.dining]"
+                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.dining, formData.content.dining)">
+                </cp-checkbox>
+              </div>
             </div>
           </div>
           <!-- END App Content -->
