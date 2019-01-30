@@ -263,10 +263,9 @@ describe('Event Integrations Reducer', () => {
       const payload = edited;
 
       const action = new fromActions.EditIntegrationSuccess(payload);
-      const { error, data, completedAction } = fromReducer.reducer(initialState, action);
+      const { error, data } = fromReducer.reducer(initialState, action);
 
       expect(error).toBe(false);
-      expect(completedAction).not.toBeNull();
       expect(data[0].feed_url).toBe(updatedValue);
     });
   });

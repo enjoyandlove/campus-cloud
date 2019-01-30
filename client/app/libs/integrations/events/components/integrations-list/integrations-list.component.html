@@ -15,9 +15,10 @@
     *ngFor="let integration of integrations$ | async; let i = index">
     <div class="row">
       <span
-        class="col-4 hover text-truncate"
+        class="col-4 text-truncate"
         [attr.title]="integration.feed_url"
-        (click)="editClick.emit(integration)">
+        (click)="onListItemClick(integration)"
+        [class.hover]="integration.feed_type === campusEvent">
         {{ integration.feed_url }}
       </span>
       <span class="col-2">
@@ -33,7 +34,10 @@
         <button
           cpTarget="sync_btn"
           class="cpbtn cpbtn--link"
-          (click)="syncClick.emit(integration.id)">
+          (click)="syncClick.emit(integration.id)"
+          [disabled]="integration.sync_status === runningStatus"
+          [cpTooltip]="integration.sync_status === runningStatus"
+          [attr.title]="[integration.sync_status === runningStatus ? ('t_integration_sync_button_disable_tooltip' | cpI18n) : '']">
           {{ 't_shared_sync' | cpI18n }}
         </button>
         <span
