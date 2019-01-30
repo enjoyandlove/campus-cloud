@@ -1,7 +1,8 @@
 export enum IntegrationStatus {
   successful = 1,
   error = -1,
-  pending = 0
+  pending = 0,
+  running = 2
 }
 
 export enum IntegrationTypes {
