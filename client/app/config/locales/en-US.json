@@ -2620,7 +2620,10 @@
   "t_external_check_in_not_found_error": {
     "message": "The event cannot be found"
   },
-  "t_integration_sync_button_disable_tooltip": {
+  "t_integration_sync_button_int_not_ready_to_sync_tooltip": {
+    "message": "You can only sync every minute\n"
+  },
+  "t_integration_sync_button_int_running_tooltip": {
     "message": "Integration in progress"
   },
   "t_jobs_ongoing": {
