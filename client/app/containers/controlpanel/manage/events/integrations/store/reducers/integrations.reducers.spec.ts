@@ -282,6 +282,18 @@ describe('Event Integrations Reducer', () => {
     });
   });
 
+  describe('DESTROY', () => {
+    it('should reset completedAction and error keys', () => {
+      const { initialState } = fromReducer;
+      const action = new fromActions.Destroy();
+
+      const { error, completedAction } = fromReducer.reducer(initialState, action);
+
+      expect(error).toBe(false);
+      expect(completedAction).toBeNull();
+    });
+  });
+
   describe('GET_HOSTS_SUCCESS', () => {
     it('should set hosts', () => {
       const { initialState } = fromReducer;
