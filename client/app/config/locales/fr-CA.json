@@ -2599,7 +2599,7 @@
   "t_external_check_in_not_found_error": {
     "message": "Cet événement ne peut pas être trouvé"
   },
-  "t_integration_sync_button_disable_tooltip": {
+  "t_integration_sync_button_int_running_tooltip": {
     "message": "Integration in progress"
   },
   "t_jobs_ongoing": {
