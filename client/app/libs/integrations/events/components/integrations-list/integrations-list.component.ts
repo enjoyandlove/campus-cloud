@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, EventEmitter } from '@angular/core';
-
 import { Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { CPSession } from '@app/session';
 import { FORMAT } from '@client/app/shared/pipes';
 import { SyncStatus, IntegrationStatus } from '../../../common/model';
-import { EventFeedObjectType, IEventIntegration } from './../../model';
+import { EventFeedObjectType, IEventIntegration, EventIntegration } from './../../model';
 
 @Component({
   selector: 'cp-event-integrations-list',
@@ -25,7 +25,7 @@ export class EventIntegrationsListComponent implements OnInit {
 
   dateFormat = FORMAT.DATETIME;
 
-  constructor() {}
+  constructor(private session: CPSession) {}
 
   onListItemClick(integration: IEventIntegration) {
     if (integration.feed_obj_type !== EventFeedObjectType.campusEvent) {
@@ -33,6 +33,26 @@ export class EventIntegrationsListComponent implements OnInit {
     }
 
     this.editClick.emit(integration);
+  }
+
+  canSync(feed: IEventIntegration) {
+    return (
+      EventIntegration.isNotRunning(feed) &&
+      EventIntegration.isLastSyncAfterThreshold(feed, this.session.tz)
+    );
+  }
+
+  syncNowTooltip(feed: IEventIntegration) {
+    const isLastSyncAfterThreshold = EventIntegration.isLastSyncAfterThreshold(
+      feed,
+      this.session.tz
+    );
+
+    if (feed.sync_status === EventIntegration.status.running) {
+      return 't_integration_sync_button_int_running_tooltip';
+    } else if (!isLastSyncAfterThreshold) {
+      return 't_integration_sync_button_int_not_ready_to_sync_tooltip';
+    }
   }
 
   ngOnInit() {}
