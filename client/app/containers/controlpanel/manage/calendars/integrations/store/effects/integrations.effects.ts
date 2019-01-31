@@ -150,11 +150,14 @@ export class IntegrationsEffects {
           });
         }),
         catchError((err: HttpErrorResponse) => {
+          hideError = true;
           const errorIn400Range = /^4[0-9].*$/;
+          let sync_status = EventIntegration.status.running;
 
-          const sync_status = errorIn400Range.test(err.status.toString())
-            ? EventIntegration.status.error
-            : EventIntegration.status.running;
+          if (errorIn400Range.test(err.status.toString())) {
+            sync_status = EventIntegration.status.error;
+            hideError = false;
+          }
 
           const failedIntegration = {
             ...integration,
