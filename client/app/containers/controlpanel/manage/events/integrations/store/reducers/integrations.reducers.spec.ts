@@ -46,7 +46,7 @@ describe('Event Integrations Reducer', () => {
       const action = new fromActions.GetIntegrationsSuccess([mock]);
       const { data, error } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(false);
+      expect(error).toBeNull();
       expect(data.length).toBe(1);
       expect(data[0].id).toBe(mock.id);
     });
@@ -59,7 +59,7 @@ describe('Event Integrations Reducer', () => {
       const action = new fromActions.GetIntegrationsFail(httpErrorResponse);
       const { error } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(true);
+      expect(error).not.toBeNull();
     });
   });
 
@@ -99,7 +99,7 @@ describe('Event Integrations Reducer', () => {
       const action = new fromActions.PostIntegrationFail(httpErrorResponse);
       const { error } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(true);
+      expect(error).not.toBeNull();
     });
   });
 
@@ -144,7 +144,7 @@ describe('Event Integrations Reducer', () => {
       const action = new fromActions.DeleteIntegrationFail(httpErrorResponse);
       const { error, loading } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(true);
+      expect(error).not.toBeNull();
       expect(loading).toBe(false);
     });
   });
@@ -206,21 +206,22 @@ describe('Event Integrations Reducer', () => {
       let result;
 
       action = new fromActions.SyncNowFail({
-        integration: mockIntegration
+        integration: mockIntegration,
+        error: null
       });
 
       result = fromReducer.reducer(initialState, action);
 
-      expect(result.error).toBe(true);
+      expect(result.error).toBeNull();
 
       action = new fromActions.SyncNowFail({
         integration: mockIntegration,
-        hideError: true
+        error: 'some_error'
       });
 
       result = fromReducer.reducer(initialState, action);
 
-      expect(result.error).toBe(false);
+      expect(result.error).not.toBeNull();
     });
 
     it('should update completedAction', () => {
@@ -230,21 +231,21 @@ describe('Event Integrations Reducer', () => {
       let result;
 
       action = new fromActions.SyncNowFail({
-        integration: mockIntegration
+        integration: mockIntegration,
+        error: null
+      });
+
+      result = fromReducer.reducer(initialState, action);
+      expect(result.completedAction).not.toBeNull();
+
+      action = new fromActions.SyncNowFail({
+        integration: mockIntegration,
+        error: 'some_error'
       });
 
       result = fromReducer.reducer(initialState, action);
 
       expect(result.completedAction).toBeNull();
-
-      action = new fromActions.SyncNowFail({
-        integration: mockIntegration,
-        hideError: true
-      });
-
-      result = fromReducer.reducer(initialState, action);
-
-      expect(result.completedAction).not.toBeNull();
     });
   });
 
@@ -265,7 +266,7 @@ describe('Event Integrations Reducer', () => {
       const action = new fromActions.EditIntegrationSuccess(payload);
       const { error, data } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(false);
+      expect(error).toBeNull();
       expect(data[0].feed_url).toBe(updatedValue);
     });
   });
@@ -277,8 +278,8 @@ describe('Event Integrations Reducer', () => {
       const action = new fromActions.EditIntegrationFail(httpErrorResponse);
       const { error, loading } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(true);
       expect(loading).toBe(false);
+      expect(error).not.toBeNull();
     });
   });
 
@@ -289,7 +290,7 @@ describe('Event Integrations Reducer', () => {
 
       const { error, completedAction } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(false);
+      expect(error).toBeNull();
       expect(completedAction).toBeNull();
     });
   });
@@ -301,7 +302,7 @@ describe('Event Integrations Reducer', () => {
       const action = new fromActions.GetHostsSuccess(payload);
       const { error, loading, hosts } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(false);
+      expect(error).toBeNull();
       expect(loading).toBe(false);
       expect(hosts).toEqual(payload);
     });
