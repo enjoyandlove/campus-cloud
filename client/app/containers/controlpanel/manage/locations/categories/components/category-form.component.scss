@@ -5,4 +5,25 @@
   span {
     @include font-normal();
   }
+
+  img {
+    float: left;
+    margin-right: 5px;
+    background: #bdbdbd;
+  }
+
+  .border {
+    float: left;
+    width: 40px;
+    height: 40px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #2096f3;
+  }
+  .pin-color {
+    width: 40px;
+    height: 40px;
+    display: block;
+    float: left;
+  }
 }

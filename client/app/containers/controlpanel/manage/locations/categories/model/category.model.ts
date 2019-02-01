@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { getItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
 import { CustomTextValidators } from '@shared/validators';
+import { environment } from '@client/environments/environment';
 import { ICategory, ICategoryType } from './categories.interface';
 
 export enum DeleteError {
@@ -38,5 +39,33 @@ export class CategoryModel {
     });
 
     return [..._heading, ..._categoryTypes];
+  }
+
+  static categoryIcons() {
+    const path = `${environment.root}public/png/locations-category/`;
+
+    return [
+      { icon: path + 'dining.png' },
+      { icon: path + 'housing.png' },
+      { icon: path + 'library.png' },
+      { icon: path + 'parking.png' },
+      { icon: path + 'security.png' },
+      { icon: path + 'location_pin.png' },
+      { icon: path + 'accessability.png' }
+    ];
+  }
+
+  static categoryIconsColors() {
+    return [
+      { code: '#CF0000' },
+      { code: '#FF5A1B' },
+      { code: '#FFA416' },
+      { code: '#00C2CD' },
+      { code: '#00CE80' },
+      { code: '#4C5A7D' },
+      { code: '#FF575F' },
+      { code: '#4B5DFB' },
+      { code: '#0076FF' }
+    ];
   }
 }
