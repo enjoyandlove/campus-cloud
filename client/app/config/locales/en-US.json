@@ -3113,6 +3113,9 @@
   "t_shared_image": {
     "message": "Image"
   },
+  "t_shared_integration_create_error_duplicate_feed_url": {
+    "message": "Duplicate Feed URL"
+  },
   "t_shared_integration_create_form_modal_title": {
     "message": "New Integration"
   },

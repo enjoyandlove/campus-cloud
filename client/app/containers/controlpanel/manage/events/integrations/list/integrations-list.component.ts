@@ -12,6 +12,7 @@ import { FORMAT } from '@shared/pipes/date/date.pipe';
 import { EventsIntegrationEditComponent } from '../edit';
 import { CPI18nService } from '@shared/services/i18n.service';
 import { IEventIntegration } from '@libs/integrations/events/model';
+import { coerceBooleanProperty } from '@client/app/shared/utils/coercion';
 import { IntegrationsUitlsService } from './../integrations.utils.service';
 
 @Component({
@@ -66,7 +67,8 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
       .subscribe((integration) => {
         this.store.dispatch(
           new fromStore.SyncNow({
-            integration
+            integration,
+            error: this.cpI18n.translate('something_went_wrong')
           })
         );
       });
@@ -148,10 +150,10 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
       .select(fromStore.getIntegrationsError)
       .pipe(
         takeUntil(this.destroy$),
-        filter((error) => error),
-        tap(() => {
+        filter((error) => coerceBooleanProperty(error)),
+        tap((body) => {
           const payload = {
-            body: this.cpI18n.translate('something_went_wrong'),
+            body,
             sticky: true,
             autoClose: true,
             class: 'danger'
