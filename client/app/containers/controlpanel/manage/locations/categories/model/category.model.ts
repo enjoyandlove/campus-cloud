@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { getItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
 import { CustomTextValidators } from '@shared/validators';
-import { environment } from '@client/environments/environment';
 import { ICategory, ICategoryType } from './categories.interface';
 
 export enum DeleteError {
@@ -42,16 +41,14 @@ export class CategoryModel {
   }
 
   static categoryIcons() {
-    const path = `${environment.root}public/png/locations-category/`;
-
     return [
-      { icon: path + 'dining.png' },
-      { icon: path + 'housing.png' },
-      { icon: path + 'library.png' },
-      { icon: path + 'parking.png' },
-      { icon: path + 'security.png' },
-      { icon: path + 'location_pin.png' },
-      { icon: path + 'accessability.png' }
+      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_pin.png' },
+      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_category_housing.png' },
+      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_category_library.png' },
+      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_category_security.png' },
+      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_category_parking.png' },
+      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_category_dining.png' },
+      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_category_accessability.png' },
     ];
   }
 
