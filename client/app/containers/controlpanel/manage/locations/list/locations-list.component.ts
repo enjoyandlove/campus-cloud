@@ -78,9 +78,11 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     };
 
     this.store.dispatch(new fromStore.GetLocations(payload));
+
+    this.locations$ = this.getLocations();
   }
 
-  fetchSearch() {
+  fetchFilteredLocations() {
     const payload = {
       startRange: this.startRange,
       endRange: this.endRange,
@@ -89,14 +91,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
     this.store.dispatch(new fromStore.GetFilteredLocations(payload));
 
-    this.locations$ = this.store.select(fromStore.getFilteredLocations).pipe(
-      map((locations: ILocation[]) => {
-        console.log(locations);
-        const responseCopy = [...locations];
-
-        return super.updatePagination(responseCopy);
-      })
-    );
+    this.locations$ = this.getLocations(true);
   }
 
   onPaginationNext() {
@@ -119,7 +114,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
     this.resetPagination();
 
-    this.fetchSearch();
+    this.fetchFilteredLocations();
   }
 
   onCategorySelect(category_id) {
@@ -130,7 +125,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
     this.resetPagination();
 
-    this.fetchSearch();
+    this.fetchFilteredLocations();
   }
 
   doSort(sort_field) {
@@ -183,13 +178,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       )
       .subscribe();
 
-    this.locations$ = this.store.select(fromStore.getLocations).pipe(
-      map((locations: ILocation[]) => {
-        const responseCopy = [...locations];
-
-        return super.updatePagination(responseCopy);
-      })
-    );
+    this.locations$ = this.getLocations();
   }
 
   listenForErrors() {
@@ -213,6 +202,18 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
         })
       )
       .subscribe();
+  }
+
+  getLocations(isFiltered?: boolean) {
+    const selectLocations = isFiltered ? fromStore.getFilteredLocations : fromStore.getLocations;
+
+    return this.store.select(selectLocations).pipe(
+      map((locations: ILocation[]) => {
+        const responseCopy = [...locations];
+
+        return super.updatePagination(responseCopy);
+      })
+    );
   }
 
   ngOnInit() {

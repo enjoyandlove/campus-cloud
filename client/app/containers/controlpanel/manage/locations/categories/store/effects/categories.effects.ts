@@ -31,6 +31,21 @@ export class CategoriesEffects {
   );
 
   @Effect()
+  getFilteredCategories$: Observable<fromActions.GetFilteredCategoriesSuccess | fromActions.GetFilteredCategoriesFail>
+    = this.actions$.pipe(
+    ofType(fromActions.CategoriesActions.GET_FILTERED_CATEGORIES),
+    mergeMap((action: fromActions.GetFilteredCategories) => {
+      const { params } = action.payload;
+
+      return this.service.getCategories(params)
+        .pipe(
+          map((data: ICategory[]) => new fromActions.GetFilteredCategoriesSuccess(data)),
+          catchError((error) => of(new fromActions.GetFilteredCategoriesFail(error)))
+        );
+    })
+  );
+
+  @Effect()
   getCategoriesTypes$: Observable<fromActions.GetCategoriesTypeSuccess | fromActions.GetCategoriesTypeFail>
     = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.GET_CATEGORIES_TYPE),

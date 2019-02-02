@@ -9,6 +9,7 @@ export interface ICategoriesState {
   data: ICategory[];
   errorMessage: string;
   categoryTypes: IItem[];
+  filteredCategories: ICategory[];
 }
 
 export const InitialState: ICategoriesState = {
@@ -17,7 +18,8 @@ export const InitialState: ICategoriesState = {
   loaded: false,
   loading: false,
   errorMessage: null,
-  categoryTypes: []
+  categoryTypes: [],
+  filteredCategories: []
 };
 
 export function reducer (state = InitialState, action: fromLocations.Actions) {
@@ -42,6 +44,34 @@ export function reducer (state = InitialState, action: fromLocations.Actions) {
     }
 
     case fromLocations.CategoriesActions.GET_CATEGORIES_FAIL: {
+      return {
+        ...state,
+        error: true,
+        loaded: false,
+        loading: false
+      };
+    }
+
+    case fromLocations.CategoriesActions.GET_FILTERED_CATEGORIES: {
+      return {
+        ...state,
+        error: false,
+        loading: true,
+        loaded: false
+      };
+    }
+
+    case fromLocations.CategoriesActions.GET_FILTERED_CATEGORIES_SUCCESS: {
+      return  {
+        ...state,
+        error: false,
+        loaded: true,
+        loading: false,
+        filteredCategories: [...action.payload]
+      };
+    }
+
+    case fromLocations.CategoriesActions.GET_FILTERED_CATEGORIES_FAIL: {
       return {
         ...state,
         error: true,
@@ -162,3 +192,4 @@ export const getCategoriesLoaded = (state: ICategoriesState) => state.loaded;
 export const getCategoriesLoading = (state: ICategoriesState) => state.loading;
 export const getCategoriesType = (state: ICategoriesState) => state.categoryTypes;
 export const getCategoriesErrorMessage = (state: ICategoriesState) => state.errorMessage;
+export const getFilteredCategories = (state: ICategoriesState) => state.filteredCategories;
