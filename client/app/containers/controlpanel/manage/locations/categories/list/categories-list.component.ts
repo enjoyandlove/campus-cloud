@@ -66,7 +66,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
 
-    this.fetch();
+    this.fetchFilteredCategories();
   }
 
   onLaunchCreateModal() {

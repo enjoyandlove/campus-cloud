@@ -6,10 +6,12 @@ import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
+import { ILocation } from '../../model';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { Locale } from '../categories.status';
 import { CPI18nService } from '@shared/services';
+import * as fromLocationStore from '../../store';
 import { ICategory, CategoryModel } from '../model';
 
 @Component({
@@ -68,6 +70,7 @@ export class CategoriesEditComponent implements OnInit, OnDestroy {
     };
 
     this.store.dispatch(new fromStore.EditCategory(payload));
+    this.updateCategoryInfo(body);
 
     this.resetModal();
   }
@@ -85,6 +88,20 @@ export class CategoriesEditComponent implements OnInit, OnDestroy {
           return categoryTypes;
         })
       );
+  }
+
+  updateCategoryInfo(body) {
+    this.store
+      .select(fromLocationStore.getLocations)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((locations: ILocation[]) => {
+        locations.filter((location: ILocation) => location.category_id === this.category.id)
+          .map((filteredLocation: ILocation) => {
+            filteredLocation['category_name'] = body['name'];
+
+            return filteredLocation;
+          });
+      });
   }
 
   ngOnInit(): void {

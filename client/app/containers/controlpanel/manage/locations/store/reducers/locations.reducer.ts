@@ -67,7 +67,7 @@ export function reducer (state = initialState, action: fromLocations.LocationsAc
         error: false,
         loaded: true,
         loading: false,
-        filteredLocations: action.payload
+        filteredLocations: [...action.payload]
       };
     }
 

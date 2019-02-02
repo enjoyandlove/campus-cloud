@@ -10,7 +10,7 @@ export enum locationActions {
 
   GET_FILTERED_LOCATIONS = '[manage.locations] get filtered locations',
   GET_FILTERED_LOCATIONS_FAIL = '[manage.locations] get filtered locations fail',
-  GET_FILTERED_LOCATIONS_SUCCESS = '[manage.locations] get filtered locations fail',
+  GET_FILTERED_LOCATIONS_SUCCESS = '[manage.locations] get filtered locations success',
 
   GET_LOCATION_BY_ID = '[manage.locations] get location by id',
   GET_LOCATION_BY_ID_FAIL = '[manage.locations] get location by id fail',

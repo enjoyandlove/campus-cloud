@@ -135,7 +135,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
 
-    this.fetch();
+    this.fetchFilteredLocations();
   }
 
   buildHeader() {
