@@ -61,21 +61,42 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     super();
   }
 
-  fetch() {
-    const search = new HttpParams()
+  get defaultParams(): HttpParams {
+    return new HttpParams()
       .append('search_str', this.state.search_str)
       .append('sort_field', this.state.sort_field)
       .append('category_id', this.state.category_id)
       .append('sort_direction', this.state.sort_direction)
       .append('school_id', this.session.g.get('school').id);
+  }
 
+  fetch() {
     const payload = {
       startRange: this.startRange,
       endRange: this.endRange,
-      params: search
+      params: this.defaultParams
     };
 
     this.store.dispatch(new fromStore.GetLocations(payload));
+  }
+
+  fetchSearch() {
+    const payload = {
+      startRange: this.startRange,
+      endRange: this.endRange,
+      params: this.defaultParams
+    };
+
+    this.store.dispatch(new fromStore.GetFilteredLocations(payload));
+
+    this.locations$ = this.store.select(fromStore.getFilteredLocations).pipe(
+      map((locations: ILocation[]) => {
+        console.log(locations);
+        const responseCopy = [...locations];
+
+        return super.updatePagination(responseCopy);
+      })
+    );
   }
 
   onPaginationNext() {
@@ -98,7 +119,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
     this.resetPagination();
 
-    this.fetch();
+    this.fetchSearch();
   }
 
   onCategorySelect(category_id) {
@@ -109,7 +130,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
     this.resetPagination();
 
-    this.fetch();
+    this.fetchSearch();
   }
 
   doSort(sort_field) {
