@@ -61,7 +61,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
       integrationId: this.eventIntegration.id
     };
 
-    this.store.dispatch(new fromStore.EditIntegration(payload));
+    this.store.dispatch(new fromStore.UpdateAndSync(payload));
 
     this.resetModal();
   }

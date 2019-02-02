@@ -2555,7 +2555,7 @@
     "message": "Upload Image"
   },
   "t_events_list_external_source_tooltip": {
-    "message": "This event was integrated, it will be automatically updated from the integration"
+    "message": "This event was integrated. It will be automatically updated from the integration"
   },
   "t_event_assessment_check_in_date": {
     "message": "Check-in"
@@ -2619,6 +2619,12 @@
   },
   "t_external_check_in_not_found_error": {
     "message": "The event cannot be found"
+  },
+  "t_integration_sync_button_int_not_ready_to_sync_tooltip": {
+    "message": "You can only sync every minute\n"
+  },
+  "t_integration_sync_button_int_running_tooltip": {
+    "message": "Integration in progress"
   },
   "t_jobs_ongoing": {
     "message": "Ongoing",
@@ -3107,6 +3113,9 @@
   "t_shared_image": {
     "message": "Image"
   },
+  "t_shared_integration_create_error_duplicate_feed_url": {
+    "message": "Duplicate Feed URL"
+  },
   "t_shared_integration_create_form_modal_title": {
     "message": "New Integration"
   },
@@ -3154,6 +3163,9 @@
   },
   "t_shared_preview": {
     "message": "Preview"
+  },
+  "t_shared_running": {
+    "message": "Running"
   },
   "t_shared_saturday": {
     "message": "Saturday"

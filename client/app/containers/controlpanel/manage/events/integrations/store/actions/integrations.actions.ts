@@ -1,4 +1,4 @@
-import { HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
 import { IStore } from '@shared/services/store.service';
@@ -31,7 +31,8 @@ export enum IntegrationActions {
   SYNC_NOW_FAIL = '[manage.events.integrations] sync now fail',
   SYNC_NOW_SUCCESS = '[manage.events.integrations] sync now success',
 
-  CREATE_AND_SYNC = '[manage.events.integrations] create and sync'
+  CREATE_AND_SYNC = '[manage.events.integrations] create and sync',
+  UPDATE_AND_SYNC = '[manage.events.integrations] update and sync'
 }
 
 export class GetIntegrations implements Action {
@@ -49,7 +50,7 @@ export class GetIntegrationsSuccess implements Action {
 export class GetIntegrationsFail implements Action {
   readonly type = IntegrationActions.GET_INTEGRATIONS_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class PostIntegration implements Action {
@@ -67,7 +68,7 @@ export class PostIntegrationSuccess implements Action {
 export class PostIntegrationFail implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class DeleteIntegration implements Action {
@@ -85,7 +86,7 @@ export class DeleteIntegrationSuccess implements Action {
 export class DeleteIntegrationFail implements Action {
   readonly type = IntegrationActions.DELETE_INTEGRATION_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class EditIntegration implements Action {
@@ -105,7 +106,7 @@ export class EditIntegrationSuccess implements Action {
 export class EditIntegrationFail implements Action {
   readonly type = IntegrationActions.EDIT_INTEGRATION_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class GetHosts implements Action {
@@ -123,14 +124,14 @@ export class GetHostsSuccess implements Action {
 export class GetHostsFail implements Action {
   readonly type = IntegrationActions.GET_HOSTS_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class SyncNow implements Action {
   readonly type = IntegrationActions.SYNC_NOW;
 
   constructor(
-    public payload: { integration: IEventIntegration; succesMessage?: string; hideError?: boolean }
+    public payload: { integration: IEventIntegration; succesMessage?: string; error?: string }
   ) {}
 }
 
@@ -143,7 +144,7 @@ export class SyncNowSuccess implements Action {
 export class SyncNowFail implements Action {
   readonly type = IntegrationActions.SYNC_NOW_FAIL;
 
-  constructor(public payload: { integration: IEventIntegration; hideError?: boolean }) {}
+  constructor(public payload: { integration: IEventIntegration; error?: string }) {}
 }
 
 export class Destroy implements Action {
@@ -154,6 +155,14 @@ export class CreateAndSync implements Action {
   readonly type = IntegrationActions.CREATE_AND_SYNC;
 
   constructor(public payload: { body: IEventIntegration; params: HttpParams }) {}
+}
+
+export class UpdateAndSync implements Action {
+  readonly type = IntegrationActions.UPDATE_AND_SYNC;
+
+  constructor(
+    public payload: { integrationId: number; body: IEventIntegration; params: HttpParams }
+  ) {}
 }
 
 export type Actions =
@@ -176,4 +185,5 @@ export type Actions =
   | CreateAndSync
   | SyncNow
   | SyncNowFail
-  | SyncNowSuccess;
+  | SyncNowSuccess
+  | UpdateAndSync;
