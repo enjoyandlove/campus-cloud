@@ -55,7 +55,9 @@ export const CP_PRIVILEGES_MAP = {
 
   assessment: 34,
 
-  audience: 35
+  audience: 35,
+
+  dining: 36
 };
 
 export const CP_PRIVILEGES = {
@@ -115,5 +117,7 @@ export const CP_PRIVILEGES = {
 
   34: 'Assessment',
 
-  35: 'Audience'
+  35: 'Audience',
+
+  36: 'Dining'
 };
