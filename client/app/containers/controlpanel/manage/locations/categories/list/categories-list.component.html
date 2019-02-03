@@ -26,12 +26,13 @@
               (click)="doSort('name')"
               [label]="'name' | cpI18n"
               [sortField]="state.sort_field"
-              class="col-4 js_test_sorting_name"
+              class="col-3 js_test_sorting_name"
               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
-            <span class="col-3">{{ 't_shared_type' | cpI18n }}</span>
+            <span class="col-2">{{ 't_shared_type' | cpI18n }}</span>
             <span class="col-2">{{ 't_shared_icon' | cpI18n }}</span>
             <span class="col-2">{{ 't_shared_default' | cpI18n }}</span>
+            <span class="col-2">{{ 'locations' | cpI18n }}</span>
             <span class="col-1"></span>
           </div>
         </li>
@@ -42,26 +43,34 @@
           <div class="row height">
             <span
               cpTarget="name"
-              class="col-4 text-truncate"
+              class="col-3 text-truncate"
               [attr.title]="category.name">
               {{ category.name }}
             </span>
             <span
-              class="col-3"
+              class="col-2"
               cpTarget="category_type">
               {{ category.category_type_name }}
             </span>
             <span class="col-2">
-              <img
+              <span
                 class="icon"
-                cpTarget="image"
-                *ngIf="category.img_url"
-                [src]="category.img_url">
+                [ngStyle]="{'background' : '#' + category.color }">
+                <img
+                  cpTarget="image"
+                  *ngIf="category.img_url"
+                  [src]="category.img_url">
+              </span>
             </span>
             <span
               class="col-2"
               cpTarget="is_default">
               {{ category.is_default | cpIsDefaultCategory | cpI18n }}
+            </span>
+            <span
+              class="col-2"
+              cpTarget="locations_count">
+              {{ category.locations_count }}
             </span>
             <span class="col-1 text-right">
               <span *ngIf="!category.is_default">
@@ -71,8 +80,15 @@
                   class="material-icons hover action-button margin-right">edit</i>
                 <i
                   cpTarget="delete"
+                  *ngIf="!category.locations_count"
                   (click)="onLaunchDeleteModal(category)"
                   class="material-icons hover action-button">close</i>
+                <i
+                  cpTarget="delete"
+                  [cpTooltip]="tooltipOptions"
+                  *ngIf="category.locations_count"
+                  [attr.title]="'t_categories_can_not_be_delete' | cpI18n"
+                  class="material-icons hover action-button disabled">close</i>
               </span>
             </span>
           </div>

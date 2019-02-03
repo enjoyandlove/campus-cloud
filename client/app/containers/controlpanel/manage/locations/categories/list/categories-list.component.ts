@@ -3,6 +3,7 @@ import { takeUntil, tap, take } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Actions, ofType } from '@ngrx/effects';
 import { Subject, Observable } from 'rxjs';
+import { TooltipOption } from 'bootstrap';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -36,6 +37,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   showEditModal = false;
   showCreateModal = false;
   showDeleteModal = false;
+  tooltipOptions: TooltipOption;
   loading$: Observable<boolean>;
   deletedCategory: ICategory = null;
   selectedCategory: ICategory = null;
@@ -208,6 +210,10 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.tooltipOptions = {
+      placement: 'left'
+    };
+
     this.resetErrors();
     this.updateHeader();
     this.loadCategories();

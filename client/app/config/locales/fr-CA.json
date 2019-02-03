@@ -1096,6 +1096,9 @@
   "description": {
     "message": "Description"
   },
+  "dining": {
+    "message": "Menu"
+  },
   "done": {
     "message": "Terminé"
   },
@@ -2419,6 +2422,21 @@
     "message": "Ongoing",
     "description": "Indicates that a deal is posted without an end date"
   },
+  "t_dining_create_dining": {
+    "message": "Créer menu"
+  },
+  "t_dining_dining_details": {
+    "message": "Détails du menu"
+  },
+  "t_dining_hours": {
+    "message": "Heures de repas"
+  },
+  "t_dining_no_record_found": {
+    "message": "Aucun menu trouvé..."
+  },
+  "t_error_category_associated_to_location": {
+    "message": "Cette catégorie est associée à un lieu."
+  },
   "t_events_assessment_add_checkin_modal_title": {
     "message": "Vérification de présence"
   },
@@ -2536,6 +2554,9 @@
   "t_events_import_upload_picture": {
     "message": "Téléverser image"
   },
+  "t_events_list_external_source_tooltip": {
+    "message": "Cet événement était intégré. Il sera automatiquement mis à jour depuis l'intégration."
+  },
   "t_event_assessment_check_in_date": {
     "message": "Vérification de présence"
   },
@@ -2599,8 +2620,11 @@
   "t_external_check_in_not_found_error": {
     "message": "Cet événement ne peut pas être trouvé"
   },
+  "t_integration_sync_button_int_not_ready_to_sync_tooltip": {
+    "message": "Vous pouvez synchroniser seulement une fois par minute"
+  },
   "t_integration_sync_button_int_running_tooltip": {
-    "message": "Integration in progress"
+    "message": "Intégration en cours"
   },
   "t_jobs_ongoing": {
     "message": "Ongoing",
@@ -2635,6 +2659,9 @@
   },
   "t_locations_no_location_found": {
     "message": "Aucun lieu trouvé"
+  },
+  "t_locations_no_record_found": {
+    "message": "Aucune location trouvée"
   },
   "t_locations_opening_hours": {
     "message": "Heures d'ouverture"
@@ -2686,6 +2713,9 @@
   },
   "t_personas_delete_error_last_persona": {
     "message": "Une école doit avoir au moins une expérience d'activée."
+  },
+  "t_personas_delete_error_persona_non_empty": {
+    "message": "Impossible de supprimer l'expérience car elle est utilisée par d'autres utilisateurs."
   },
   "t_personas_delete_error_users_associated": {
     "message": "Cette expérience a des utilisateurs associés, donc vous ne pouvez pas la supprimer."
@@ -3083,6 +3113,9 @@
   "t_shared_image": {
     "message": "Image"
   },
+  "t_shared_integration_create_error_duplicate_feed_url": {
+    "message": "Dupliquer le lien du flux"
+  },
   "t_shared_integration_create_form_modal_title": {
     "message": "Nouvelle intégration"
   },
@@ -3091,6 +3124,9 @@
   },
   "t_shared_integration_edit_form_modal_title": {
     "message": "Éditer intégration"
+  },
+  "t_shared_invalid_cords": {
+    "message": "Paire de coordonnées invalide"
   },
   "t_shared_invalid_url": {
     "message": "URL invalide (https://google.com)"
