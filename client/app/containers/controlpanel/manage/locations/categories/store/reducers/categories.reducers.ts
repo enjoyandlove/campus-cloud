@@ -95,7 +95,8 @@ export function reducer (state = InitialState, action: fromLocations.Actions) {
         ...state,
         error: false,
         loading: false,
-        data: [newCategory, ...state.data]
+        data: [newCategory, ...state.data],
+        filteredCategories: [newCategory, ...state.filteredCategories]
       };
     }
 
@@ -138,6 +139,7 @@ export function reducer (state = InitialState, action: fromLocations.Actions) {
         error: false,
         loading: false,
         data: state.data.map((c: ICategory) => (c.id === edited.id ? edited : c)),
+        filteredCategories: state.filteredCategories.map((c: ICategory) => (c.id === edited.id ? edited : c))
       };
     }
 
@@ -156,7 +158,8 @@ export function reducer (state = InitialState, action: fromLocations.Actions) {
         ...state,
         error: false,
         loading: false,
-        data: state.data.filter((c: ICategory) => c.id !== deletedId)
+        data: state.data.filter((c: ICategory) => c.id !== deletedId),
+        filteredCategories: state.filteredCategories.filter((c: ICategory) => c.id !== deletedId)
       };
     }
 

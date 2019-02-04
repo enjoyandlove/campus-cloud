@@ -163,12 +163,18 @@ export function reducer (state = initialState, action: fromLocations.LocationsAc
     }
 
     case fromLocations.locationActions.DELETE_LOCATION_SUCCESS: {
-      return locationAdapter.removeOne(action.payload.deletedId, {
+      const deletedId = action.payload.deletedId;
+      const data =  locationAdapter.removeOne(deletedId, {
         ...state,
         error: false,
         loaded: true,
         loading: false
       });
+
+      return {
+        ...data,
+        filteredLocations: state.filteredLocations.filter((l: ILocation) => l.id !== deletedId)
+      };
     }
 
     case fromLocations.locationActions.DELETE_LOCATION_FAIL: {

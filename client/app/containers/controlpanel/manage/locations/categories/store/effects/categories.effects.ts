@@ -2,9 +2,12 @@ import { map, mergeMap, catchError } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { ICategory } from '../../model';
 import * as fromActions from '../actions';
+import { ILocation } from '../../../model';
+import * as fromLocationStore from '../../../store';
 import { parseErrorResponse } from '@shared/utils/http';
 import { CategoriesService } from '../../categories.service';
 
@@ -12,7 +15,8 @@ import { CategoriesService } from '../../categories.service';
 export class CategoriesEffects {
   constructor(
     public actions$: Actions,
-    public service: CategoriesService
+    public service: CategoriesService,
+    public store: Store<fromLocationStore.ILocationsState>
   ) {}
 
   @Effect()
@@ -77,7 +81,7 @@ export class CategoriesEffects {
   );
 
   @Effect()
-  editLocation$: Observable<fromActions.EditCategorySuccess | fromActions.EditCategoryFail>
+  editCategories$: Observable<fromActions.EditCategorySuccess | fromActions.EditCategoryFail>
     = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.EDIT_CATEGORY),
     mergeMap((action: fromActions.EditCategory) => {
@@ -86,7 +90,11 @@ export class CategoriesEffects {
       return this.service
         .updateCategory(body, categoryId, params)
         .pipe(
-          map((data: ICategory) => new fromActions.EditCategorySuccess(data)),
+          map((data: ICategory) => {
+            this.updateCategoryInfo(data);
+
+            return new fromActions.EditCategorySuccess(data);
+          }),
           catchError((error) => of(new fromActions.EditCategoryFail(error)))
         );
     })
@@ -107,4 +115,17 @@ export class CategoriesEffects {
         );
     })
   );
+
+  updateCategoryInfo(data) {
+    this.store
+      .select(fromLocationStore.getLocations)
+      .subscribe((locations: ILocation[]) => {
+        locations.filter((location: ILocation) => location.category_id === data.id)
+          .map((filteredLocation: ILocation) => {
+            filteredLocation['category_name'] = data.name;
+
+            return filteredLocation;
+          });
+      });
+  }
 }
