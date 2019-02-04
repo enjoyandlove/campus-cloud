@@ -123,6 +123,7 @@ export class CategoriesEffects {
         locations.filter((location: ILocation) => location.category_id === data.id)
           .map((filteredLocation: ILocation) => {
             filteredLocation['category_name'] = data.name;
+            filteredLocation['category_img_url'] = data.img_urlg;
 
             return filteredLocation;
           });
