@@ -2343,6 +2343,15 @@
   "t_categories_can_not_be_delete": {
     "message": "Categories with locations cannot be deleted."
   },
+  "t_categories_icon_color_required": {
+    "message": "Map pin icon and color are required field."
+  },
+  "t_categories_map_pin_color": {
+    "message": "Map Pin Color"
+  },
+  "t_categories_map_pin_icon": {
+    "message": "Map Pin Icon"
+  },
   "t_changes_saved_ok": {
     "message": "Changes saved successfully"
   },

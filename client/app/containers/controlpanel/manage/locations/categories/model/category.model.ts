@@ -15,12 +15,14 @@ export class CategoryModel {
 
     const _category = {
       name: category ? category.name : null,
+      color: category ? category.color : null,
       img_url: category ? category.img_url : null,
       category_type_id: category ? category.category_type_id : null
     };
 
     return fb.group({
-      img_url: [_category.img_url],
+      color: [_category.color, Validators.required],
+      img_url: [_category.img_url, Validators.required],
       name: [_category.name, CustomTextValidators.requiredNonEmpty],
       category_type_id: [_category.category_type_id, Validators.required]
     });
@@ -41,28 +43,30 @@ export class CategoryModel {
   }
 
   static categoryIcons() {
+    const path = 'https://d38h7mnlv8qddx.cloudfront.net/';
+
     return [
-      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_pin.png' },
-      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_category_housing.png' },
-      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_category_library.png' },
-      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_category_security.png' },
-      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_category_parking.png' },
-      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_category_dining.png' },
-      { icon: 'https://d38h7mnlv8qddx.cloudfront.net/location_category_accessability.png' },
+      { icon: `${path + 'location_pin.png'}` },
+      { icon: `${path + 'location_category_dining.png'}` },
+      { icon: `${path + 'location_category_housing.png'}` },
+      { icon: `${path + 'location_category_library.png'}` },
+      { icon: `${path + 'location_category_parking.png'}` },
+      { icon: `${path + 'location_category_security.png'}` },
+      { icon: `${path + 'location_category_accessability.png'}` },
     ];
   }
 
-  static categoryIconsColors() {
+  static categoryIconColors() {
     return [
-      { code: '#CF0000' },
-      { code: '#FF5A1B' },
-      { code: '#FFA416' },
-      { code: '#00C2CD' },
-      { code: '#00CE80' },
-      { code: '#4C5A7D' },
-      { code: '#FF575F' },
-      { code: '#4B5DFB' },
-      { code: '#0076FF' }
+      { code: 'CF0000' },
+      { code: 'FF5A1B' },
+      { code: 'FFA416' },
+      { code: '00C2CD' },
+      { code: '00CE80' },
+      { code: '4C5A7D' },
+      { code: 'FF575F' },
+      { code: '4B5DFB' },
+      { code: '0076FF' }
     ];
   }
 }

@@ -8,10 +8,20 @@
 
   img {
     float: left;
+    width: 38px;
+    height: 38px;
     margin-right: 5px;
     background: #bdbdbd;
   }
 
+  .active {
+    border: 1px solid #2096f3;
+  }
+
+  .label {
+    clear: both;
+    margin-top: 20px;
+  }
   .border {
     float: left;
     width: 40px;

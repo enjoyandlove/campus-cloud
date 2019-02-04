@@ -1,17 +1,28 @@
 <form [formGroup]="form">
   <div class="form-group category">
     <div class="form-group">
-      <label>Map Pin Icon</label>
+      <label>{{ 't_categories_map_pin_icon' | cpI18n }}</label>
       <div *ngFor="let category of categoryIcons">
-        <img [src]="category.icon">
+        <img
+          class="hover"
+          [src]="category.icon"
+          (click)="onIconClick(category.icon)"
+          [class.active]="category.icon === form.get('img_url').value">
       </div>
 
-      <label>Map Pin Color</label>
-      <div class="border" *ngFor="let color of categoryIconsColors">
+      <label class="label">{{ 't_categories_map_pin_color' | cpI18n }}</label>
+      <div class="border" *ngFor="let color of categoryIconColors">
         <span
-          class="color pin-color"
-          [ngStyle]="{ 'background' :  color.code}"></span>
+          class="color pin-color hover"
+          (click)="onColorClick(color.code)"
+          [ngStyle]="{ 'background' :  '#' + color.code}"
+          [class.active]="color.code === form.get('color').value"></span>
       </div>
+      <label
+        class="error"
+        *ngIf="formError && (requiredControls.icon.invalid || requiredControls.color.invalid)">
+        {{ 't_categories_icon_color_required' | cpI18n }}
+      </label>
     </div>
 
     <div class="form-group">
