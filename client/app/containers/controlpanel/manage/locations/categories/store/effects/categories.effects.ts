@@ -90,13 +90,19 @@ export class CategoriesEffects {
       return this.service
         .updateCategory(body, categoryId, params)
         .pipe(
-          map((data: ICategory) => {
-            this.updateCategoryInfo(data);
-
-            return new fromActions.EditCategorySuccess(data);
-          }),
+          map((data: ICategory) => new fromActions.EditCategorySuccess(data)),
           catchError((error) => of(new fromActions.EditCategoryFail(error)))
         );
+    })
+  );
+
+  @Effect({dispatch: false})
+  editCategoriesSuccess$ = this.actions$.pipe(
+    ofType(fromActions.CategoriesActions.EDIT_CATEGORY_SUCCESS),
+    mergeMap((action: fromActions.EditCategorySuccess) => {
+      this.updateCategoryInfo(action.payload);
+
+      return of({});
     })
   );
 
@@ -123,7 +129,7 @@ export class CategoriesEffects {
         locations.filter((location: ILocation) => location.category_id === data.id)
           .map((filteredLocation: ILocation) => {
             filteredLocation['category_name'] = data.name;
-            filteredLocation['category_img_url'] = data.img_urlg;
+            filteredLocation['category_img_url'] = data.img_url;
 
             return filteredLocation;
           });
