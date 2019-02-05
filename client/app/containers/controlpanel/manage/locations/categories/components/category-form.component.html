@@ -1,30 +1,34 @@
 <form [formGroup]="form">
   <div class="form-group category">
-    <div class="form-group">
+    <div class="form-group btn-icons">
       <label>{{ 't_categories_map_pin_icon' | cpI18n }}</label>
-      <div *ngFor="let category of categoryIcons">
-        <img
-          class="hover"
-          [src]="category.icon"
-          (click)="onIconClick(category.icon)"
-          [class.active]="category.icon === form.get('img_url').value">
-      </div>
-
+      <button
+        class='btn btn-sm'
+        (click)="onIconClick(category.value)"
+        *ngFor="let category of categoryIcons"
+        [class.active]="category.value === form.get('img_url').value">
+          <img
+            class="hover"
+            [src]="category.icon">
+      </button>
+    </div>
+    <div class="clearfix"></div>
+    <div class="form-group btn-color">
       <label class="label">{{ 't_categories_map_pin_color' | cpI18n }}</label>
-      <div class="border" *ngFor="let color of categoryIconColors">
-        <span
-          class="color pin-color hover"
-          (click)="onColorClick(color.code)"
-          [ngStyle]="{ 'background' :  '#' + color.code}"
-          [class.active]="color.code === form.get('color').value"></span>
-      </div>
+      <button
+        class="btn btn-sm"
+        (click)="onColorClick(color.code)"
+        *ngFor="let color of categoryIconColors"
+        [class.active]="color.code === form.get('color').value">
+          <span [ngStyle]="{ 'background' :  '#' + color.code}"></span>
+      </button>
       <label
         class="error"
         *ngIf="formError && (requiredControls.icon.invalid || requiredControls.color.invalid)">
         {{ 't_categories_icon_color_required' | cpI18n }}
       </label>
     </div>
-
+    <div class="clearfix"></div>
     <div class="form-group">
       <label>
         {{ 't_shared_category_name' | cpI18n }}

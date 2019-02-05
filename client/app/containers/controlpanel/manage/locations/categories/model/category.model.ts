@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { getItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
 import { CustomTextValidators } from '@shared/validators';
+import { environment } from '@client/environments/environment';
 import { ICategory, ICategoryType } from './categories.interface';
 
 export enum DeleteError {
@@ -43,16 +44,38 @@ export class CategoryModel {
   }
 
   static categoryIcons() {
-    const path = 'https://d38h7mnlv8qddx.cloudfront.net/';
+    const dbPath = 'https://d38h7mnlv8qddx.cloudfront.net/';
+    const assetPath = `${environment.root}public/svg/categories/`;
 
     return [
-      { icon: `${path + 'location_pin.png'}` },
-      { icon: `${path + 'location_category_dining.png'}` },
-      { icon: `${path + 'location_category_housing.png'}` },
-      { icon: `${path + 'location_category_library.png'}` },
-      { icon: `${path + 'location_category_parking.png'}` },
-      { icon: `${path + 'location_category_security.png'}` },
-      { icon: `${path + 'location_category_accessability.png'}` },
+      {
+        value: `${dbPath + 'location_pin.png'}`,
+        icon: `${assetPath + 'location_pin.svg'}`
+      },
+      {
+        icon: `${assetPath + 'dining.svg'}`,
+        value: `${dbPath + 'location_category_dining.png'}`
+      },
+      {
+        icon: `${assetPath + 'housing.svg'}`,
+        value: `${dbPath + 'location_category_housing.png'}`
+      },
+      {
+        icon: `${assetPath + 'library.svg'}`,
+        value: `${dbPath + 'location_category_library.png'}`,
+      },
+      {
+        icon: `${assetPath + 'parking.svg'}`,
+        value: `${dbPath + 'location_category_parking.png'}`
+      },
+      {
+        icon: `${assetPath + 'security.svg'}`,
+        value: `${dbPath + 'location_category_security.png'}`
+      },
+      {
+        icon: `${assetPath + 'accessability.svg'}`,
+        value: `${dbPath + 'location_category_accessability.png'}`
+      }
     ];
   }
 
