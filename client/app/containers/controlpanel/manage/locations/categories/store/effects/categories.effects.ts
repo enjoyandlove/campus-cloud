@@ -100,7 +100,17 @@ export class CategoriesEffects {
   editCategoriesSuccess$ = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.EDIT_CATEGORY_SUCCESS),
     mergeMap((action: fromActions.EditCategorySuccess) => {
-      this.updateCategoryInfo(action.payload);
+      this.store
+        .select(fromLocationStore.getLocations)
+        .subscribe((locations: ILocation[]) => {
+          locations.filter((location: ILocation) => location.category_id === action.payload.id)
+            .map((filteredLocation: ILocation) => {
+              filteredLocation['category_name'] = action.payload.name;
+              filteredLocation['category_img_url'] = action.payload.img_url;
+
+              return filteredLocation;
+            });
+        });
 
       return of({});
     })
@@ -121,18 +131,4 @@ export class CategoriesEffects {
         );
     })
   );
-
-  updateCategoryInfo(data) {
-    this.store
-      .select(fromLocationStore.getLocations)
-      .subscribe((locations: ILocation[]) => {
-        locations.filter((location: ILocation) => location.category_id === data.id)
-          .map((filteredLocation: ILocation) => {
-            filteredLocation['category_name'] = data.name;
-            filteredLocation['category_img_url'] = data.img_url;
-
-            return filteredLocation;
-          });
-      });
-  }
 }
