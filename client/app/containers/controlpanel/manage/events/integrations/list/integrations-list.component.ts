@@ -98,9 +98,9 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
 
   fetch() {
     const payload = {
-      startRange: this.startRange,
       endRange: this.endRange,
-      params: this.defaultParams
+      params: this.defaultParams,
+      startRange: this.startRange
     };
     this.store.dispatch(new fromStore.GetIntegrations(payload));
   }
