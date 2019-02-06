@@ -32,6 +32,21 @@ export class LocationsEffect {
   );
 
   @Effect()
+  getFilteredLocations$: Observable<fromActions.GetFilteredLocationsSuccess | fromActions.GetFilteredLocationsFail>
+    = this.actions$.pipe(
+    ofType(fromActions.locationActions.GET_FILTERED_LOCATIONS),
+    mergeMap((action: fromActions.GetFilteredLocations) => {
+      const { startRange, endRange, params } = action.payload;
+
+      return this.service.getLocations(startRange, endRange, params )
+        .pipe(
+          map((data: ILocation[]) => new fromActions.GetFilteredLocationsSuccess(data)),
+          catchError((error) => of(new fromActions.GetFilteredLocationsFail(error)))
+        );
+    })
+  );
+
+  @Effect()
   getLocationById$: Observable<fromActions.GetLocationByIdSuccess | fromActions.GetLocationByIdFail>
     = this.actions$.pipe(
     ofType(fromActions.locationActions.GET_LOCATION_BY_ID),
