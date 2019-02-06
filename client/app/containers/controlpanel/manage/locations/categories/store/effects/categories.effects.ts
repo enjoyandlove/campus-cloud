@@ -1,4 +1,4 @@
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, take, mergeMap, catchError } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
@@ -10,7 +10,6 @@ import { ILocation } from '../../../model';
 import * as fromLocationStore from '../../../store';
 import { parseErrorResponse } from '@shared/utils/http';
 import { CategoriesService } from '../../categories.service';
-import { take } from 'rxjs/internal/operators';
 
 @Injectable()
 export class CategoriesEffects {
