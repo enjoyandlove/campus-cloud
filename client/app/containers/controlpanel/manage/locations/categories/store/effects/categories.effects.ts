@@ -10,6 +10,7 @@ import { ILocation } from '../../../model';
 import * as fromLocationStore from '../../../store';
 import { parseErrorResponse } from '@shared/utils/http';
 import { CategoriesService } from '../../categories.service';
+import { take } from 'rxjs/internal/operators';
 
 @Injectable()
 export class CategoriesEffects {
@@ -102,6 +103,7 @@ export class CategoriesEffects {
     map((action: fromActions.EditCategorySuccess) => {
       this.store
         .select(fromLocationStore.getLocations)
+        .pipe(take(1))
         .subscribe((locations: ILocation[]) => {
           locations.filter((location: ILocation) => location.category_id === action.payload.id)
             .map((filteredLocation: ILocation) => {
