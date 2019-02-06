@@ -101,6 +101,7 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
     case fromIntegrations.IntegrationActions.DESTROY: {
       return {
         ...state,
+        hosts: [],
         error: null,
         completedAction: null
       };
