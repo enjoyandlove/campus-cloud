@@ -20,7 +20,6 @@
       <cp-event-integrations-list
         [integrations$]="integrations$"
         (syncClick)="onSyncNow($event)"
-        (editClick)="onLaunchEditModal($event)"
         (deleteClick)="onLaunchDeleteModal($event)">
       </cp-event-integrations-list>
 
@@ -52,14 +51,4 @@
   <cp-items-integrations-create
     (teardown)="onCreateTeardown()">
   </cp-items-integrations-create>
-</cp-modal>
-
-<cp-modal
-  *ngIf="showEditModal"
-  modalId="integrationEdit"
-  (modalClose)="onEditTeardown()">
-  <cp-items-integrations-edit
-    (teardown)="onEditTeardown()"
-    [eventIntegration]="selectedIntegration">
-  </cp-items-integrations-edit>
 </cp-modal>
