@@ -7,13 +7,16 @@ import { of, Observable } from 'rxjs';
 import { CPDate } from '@shared/utils';
 import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
-import { StoreService } from '@shared/services';
+import { StoreService, CPI18nService } from '@shared/services';
 import { ItemsIntegrationsService } from './../../integrations.service';
 import { EventIntegration } from '@client/app/libs/integrations/events/model';
+import { LibsIntegrationEventCommonUtilsService } from '@libs/integrations/events/providers';
 import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
 
 @Injectable()
 export class IntegrationsEffects {
+  somethingWentWrong = { error: this.cpI18n.translate('something_went_wrong') };
+
   @Effect()
   getHosts$: Observable<
     fromActions.GetHostsSuccess | fromActions.GetHostsFail
@@ -25,7 +28,7 @@ export class IntegrationsEffects {
         .getStores(params)
         .pipe(
           map((data: any[]) => new fromActions.GetHostsSuccess(data)),
-          catchError((error) => of(new fromActions.GetHostsFail(error)))
+          catchError(() => of(new fromActions.GetHostsFail(this.somethingWentWrong)))
         );
     })
   );
@@ -41,7 +44,7 @@ export class IntegrationsEffects {
         .getIntegrations(startRange, endRange, params)
         .pipe(
           map((data: IEventIntegration[]) => new fromActions.GetIntegrationsSuccess(data)),
-          catchError((error) => of(new fromActions.GetIntegrationsFail(error)))
+          catchError(() => of(new fromActions.GetIntegrationsFail(this.somethingWentWrong)))
         );
     })
   );
@@ -57,7 +60,7 @@ export class IntegrationsEffects {
         .deleteIntegration(integrationId, params)
         .pipe(
           map(() => new fromActions.DeleteIntegrationSuccess({ deletedId: integrationId })),
-          catchError((error) => of(new fromActions.DeleteIntegrationFail(error)))
+          catchError(() => of(new fromActions.DeleteIntegrationFail(this.somethingWentWrong)))
         );
     })
   );
@@ -73,7 +76,9 @@ export class IntegrationsEffects {
         .editIntegration(integrationId, body, params)
         .pipe(
           map((edited: IEventIntegration) => new fromActions.EditIntegrationSuccess(edited)),
-          catchError((error) => of(new fromActions.EditIntegrationFail(error)))
+          catchError((error) =>
+            of(new fromActions.EditIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
+          )
         );
     })
   );
@@ -86,7 +91,7 @@ export class IntegrationsEffects {
       of(
         new fromActions.SyncNow({
           integration,
-          hideError: true,
+          error: null,
           calendarId: integration.feed_obj_id,
           succesMessage: 't_shared_saved_update_success_message'
         })
@@ -105,7 +110,9 @@ export class IntegrationsEffects {
         map((integration: IEventIntegration) => {
           return new fromActions.PostIntegrationSuccess({ integration, calendarId });
         }),
-        catchError((err) => of(new fromActions.PostIntegrationFail(err)))
+        catchError(({ error }: HttpErrorResponse) =>
+          of(new fromActions.PostIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
+        )
       );
     })
   );
@@ -119,7 +126,7 @@ export class IntegrationsEffects {
         new fromActions.SyncNow({
           calendarId,
           integration,
-          hideError: true,
+          error: null,
           succesMessage: 't_shared_saved_update_success_message'
         })
       )
@@ -130,7 +137,7 @@ export class IntegrationsEffects {
   syncNow$: Observable<fromActions.SyncNowSuccess | fromActions.SyncNowFail> = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.SYNC_NOW),
     map((action: fromActions.SyncNow) => action.payload),
-    mergeMap(({ integration, succesMessage, hideError, calendarId }) => {
+    mergeMap(({ integration, succesMessage, error, calendarId }) => {
       const search = new HttpParams()
         .set('sync_now', '1')
         .set('academic_calendar_id', calendarId.toString())
@@ -150,21 +157,19 @@ export class IntegrationsEffects {
           });
         }),
         catchError((err: HttpErrorResponse) => {
-          hideError = true;
-          const errorIn400Range = /^4[0-9].*$/;
-          let sync_status = EventIntegration.status.running;
-
-          if (errorIn400Range.test(err.status.toString())) {
-            sync_status = EventIntegration.status.error;
-            hideError = false;
-          }
+          const timedOut = 0;
+          const requestTimedOut = err.status === timedOut;
+          error = requestTimedOut ? null : error;
+          const sync_status = requestTimedOut
+            ? EventIntegration.status.running
+            : EventIntegration.status.error;
 
           const failedIntegration = {
             ...integration,
             sync_status
           };
 
-          return of(new fromActions.SyncNowFail({ integration: failedIntegration, hideError }));
+          return of(new fromActions.SyncNowFail({ integration: failedIntegration, error }));
         })
       );
     })
@@ -187,7 +192,9 @@ export class IntegrationsEffects {
   constructor(
     private actions$: Actions,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private storeService: StoreService,
-    private service: ItemsIntegrationsService
+    private service: ItemsIntegrationsService,
+    private commonUtils: LibsIntegrationEventCommonUtilsService
   ) {}
 }
