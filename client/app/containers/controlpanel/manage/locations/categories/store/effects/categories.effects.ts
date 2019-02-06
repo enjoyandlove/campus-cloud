@@ -1,4 +1,4 @@
-import { map, take, mergeMap, catchError } from 'rxjs/operators';
+import { map, filter, mergeMap, catchError, withLatestFrom } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
@@ -96,23 +96,25 @@ export class CategoriesEffects {
     })
   );
 
-  @Effect({dispatch: false})
-  editCategoriesSuccess$ = this.actions$.pipe(
+  @Effect()
+  editCategoriesSuccess$: Observable<fromLocationStore.GetLocationsSuccess> = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.EDIT_CATEGORY_SUCCESS),
-    map((action: fromActions.EditCategorySuccess) => {
-      this.store
-        .select(fromLocationStore.getLocations)
-        .pipe(take(1))
-        .subscribe((locations: ILocation[]) => {
-          locations.filter((location: ILocation) => location.category_id === action.payload.id)
-            .map((filteredLocation: ILocation) => {
-              filteredLocation['category_name'] = action.payload.name;
-              filteredLocation['category_img_url'] = action.payload.img_url;
-
-              return filteredLocation;
-            });
-        });
-    })
+    map((action: fromActions.EditCategorySuccess) => action.payload),
+    withLatestFrom(this.store.select(fromLocationStore.getLocations)),
+    map(([{ id, name, img_url }, locations]) => {
+      return locations.map((l: ILocation) => {
+        if (l.category_id === id) {
+          return {
+            ...l,
+            category_name: name,
+            category_img_url: img_url
+          };
+        }
+        return l;
+      });
+    }),
+    filter((l: ILocation[]) => !!l.length),
+    mergeMap((l) => of(new fromLocationStore.GetLocationsSuccess(l)))
   );
 
   @Effect()
