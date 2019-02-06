@@ -99,7 +99,7 @@ export class CategoriesEffects {
   @Effect({dispatch: false})
   editCategoriesSuccess$ = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.EDIT_CATEGORY_SUCCESS),
-    mergeMap((action: fromActions.EditCategorySuccess) => {
+    map((action: fromActions.EditCategorySuccess) => {
       this.store
         .select(fromLocationStore.getLocations)
         .subscribe((locations: ILocation[]) => {
@@ -111,8 +111,6 @@ export class CategoriesEffects {
               return filteredLocation;
             });
         });
-
-      return of({});
     })
   );
 
