@@ -17,9 +17,7 @@
       <span
         class="col-4 text-truncate"
         [cpTarget]="['feed_title_' + i]"
-        [attr.title]="integration.feed_url"
-        (click)="onListItemClick(integration)"
-        [class.hover]="integration.feed_type === campusEvent">
+        [attr.title]="integration.feed_url">
         {{ integration.feed_url }}
       </span>
       <span class="col-2">

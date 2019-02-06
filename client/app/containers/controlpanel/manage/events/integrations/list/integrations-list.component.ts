@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { tap, takeUntil, filter, map, take } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -9,7 +9,6 @@ import * as fromRoot from '@app/store';
 import { BaseComponent } from '@app/base';
 import { CPSession } from '@app/session';
 import { FORMAT } from '@shared/pipes/date/date.pipe';
-import { EventsIntegrationEditComponent } from '../edit';
 import { CPI18nService } from '@shared/services/i18n.service';
 import { IEventIntegration } from '@libs/integrations/events/model';
 import { coerceBooleanProperty } from '@client/app/shared/utils/coercion';
@@ -21,11 +20,8 @@ import { IntegrationsUitlsService } from './../integrations.utils.service';
   styleUrls: ['./integrations-list.component.scss']
 })
 export class EventsIntegrationsListComponent extends BaseComponent implements OnInit, OnDestroy {
-  @ViewChild(EventsIntegrationEditComponent) editModal: EventsIntegrationEditComponent;
-
   private destroy$ = new Subject();
 
-  showEditModal = false;
   showDeleteModal = false;
   showCreateModal = false;
   dateFormat = FORMAT.DATETIME;
@@ -74,11 +70,6 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
       });
   }
 
-  onEditTeardown() {
-    this.showEditModal = false;
-    $('#integrationEdit').modal('hide');
-  }
-
   onCreateTeardown() {
     this.showCreateModal = false;
     $('#integrationCreate').modal('hide');
@@ -118,13 +109,6 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
     this.showCreateModal = true;
 
     setTimeout(() => $('#integrationCreate').modal());
-  }
-
-  onLaunchEditModal(integration: IEventIntegration) {
-    this.showEditModal = true;
-    this.selectedIntegration = integration;
-
-    setTimeout(() => $('#integrationEdit').modal());
   }
 
   onLaunchDeleteModal(integration: IEventIntegration) {
