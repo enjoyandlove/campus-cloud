@@ -3,14 +3,6 @@
 @import '~client/style/components/card';
 @import '~client/style/components/button';
 
-.delete-location {
-  font-size: 2em;
-}
-
-.updateLocationBtn {
-  max-width: 100%;
-}
-
 .no-content {
   @include card-margin();
 }
@@ -41,6 +33,10 @@
 
   .margin-right {
     margin-right: 10px;
+  }
+
+  .margin-top {
+    margin-top: 8px;
   }
 }
 

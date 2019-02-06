@@ -3,17 +3,23 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { ILocation } from '../../model';
 import * as fromActions from '../actions';
 import { LocationsService } from '../../locations.service';
+import * as fromCategoryStore from '../../categories/store';
+import { ICategory } from '@containers/controlpanel/manage/locations/categories/model';
 
 @Injectable()
 export class LocationsEffect {
+  categoryId: number;
+
   constructor(
     public router: Router,
     public actions$: Actions,
-    public service: LocationsService
+    public service: LocationsService,
+    public store: Store<fromCategoryStore.ICategoriesState>
   ) {}
 
   @Effect()
@@ -68,6 +74,7 @@ export class LocationsEffect {
     = this.actions$.pipe(
     ofType(fromActions.locationActions.EDIT_LOCATION),
     mergeMap((action: fromActions.EditLocation) => {
+       console.log('working');
       const { locationId, body, params } = action.payload;
 
       return this.service
@@ -77,6 +84,45 @@ export class LocationsEffect {
           tap((_) => this.router.navigate(['/manage/locations'])),
           catchError((error) => of(new fromActions.EditLocationFail(error)))
         );
+    })
+  );
+
+  @Effect({ dispatch: false })
+  getLocationByIdSuccess = this.actions$.pipe(
+    ofType(fromActions.locationActions.GET_LOCATION_BY_ID_SUCCESS),
+    mergeMap((action: fromActions.GetLocationByIdSuccess) => {
+      console.log('working');
+      this.categoryId = action.payload.category_id;
+
+      return of({});
+    })
+  );
+
+  @Effect({ dispatch: false })
+  editLocationSuccess$ = this.actions$.pipe(
+    ofType(fromActions.locationActions.EDIT_LOCATION_SUCCESS),
+    mergeMap((action: fromActions.EditLocationSuccess) => {
+      this.store.select(fromCategoryStore.getCategories)
+        .subscribe((categories: ICategory[]) => {
+          categories.map((category: ICategory) => {
+            if (category.id === this.categoryId) {
+              console.log(category);
+              category['locations_count'] = category['locations_count'] - 1;
+
+              // console.log(category['locations_count']);
+            }
+
+            if (category.id === action.payload.category_id) {
+              console.log('++', category);
+              category['locations_count'] = category['locations_count'] + 1;
+              // console.log(category['locations_count']);
+            }
+
+            return category;
+          });
+        });
+
+      return of({});
     })
   );
 

@@ -8,23 +8,19 @@
 
   .btn-icons{
     button{
-      margin:0 2px;
       width: 38px;
+      margin:0 2px;
       height: 38px;
       text-align: center;
       background-color: $color-white;
       border:1px solid $color-med-grey;
 
       &.active{
-        border:1px solid $color-brand;
+        border:2px solid $color-brand;
       }
 
       &:first-child{
         margin-left: 0;
-      }
-
-      &:last-child{
-        margin-right: 0;
       }
 
       img {
@@ -35,24 +31,20 @@
 
   .btn-color{
     button{
-      margin:0 2px;
       width: 38px;
+      margin:0 2px;
       height: 38px;
-      text-align: center;
       padding: 2px;
-      background-color: #fff;
-      border:1px solid #ccc;
+      text-align: center;
+      background-color: $color-white;;
+      border:1px solid $color-med-grey;;
 
       &.active{
-        border:1px solid blue;
+        border: 2px solid $color-brand;
       }
 
       &:first-child{
         margin-left: 0;
-      }
-
-      &:last-child{
-        margin-right: 0;
       }
 
       span {
