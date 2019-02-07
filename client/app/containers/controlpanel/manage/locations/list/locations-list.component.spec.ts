@@ -41,8 +41,8 @@ describe('LocationsListComponent', () => {
     fixture = TestBed.createComponent(LocationsListComponent);
     component = fixture.componentInstance;
     component.session.g.set('school', mockSchool);
-    fetchSpy = spyOn(component, 'fetch');
     dispatchSpy = spyOn(component.store, 'dispatch');
+    fetchSpy = spyOn(component, 'fetchFilteredLocations');
   });
 
   it('should init', () => {

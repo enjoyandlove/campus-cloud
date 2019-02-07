@@ -1,10 +1,13 @@
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, filter, mergeMap, catchError, withLatestFrom } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { ICategory } from '../../model';
 import * as fromActions from '../actions';
+import { ILocation } from '../../../model';
+import * as fromLocationStore from '../../../store';
 import { parseErrorResponse } from '@shared/utils/http';
 import { CategoriesService } from '../../categories.service';
 
@@ -12,7 +15,8 @@ import { CategoriesService } from '../../categories.service';
 export class CategoriesEffects {
   constructor(
     public actions$: Actions,
-    public service: CategoriesService
+    public service: CategoriesService,
+    public store: Store<fromLocationStore.ILocationsState>
   ) {}
 
   @Effect()
@@ -26,6 +30,21 @@ export class CategoriesEffects {
         .pipe(
           map((data: ICategory[]) => new fromActions.GetCategoriesSuccess(data)),
           catchError((error) => of(new fromActions.GetCategoriesFail(error)))
+        );
+    })
+  );
+
+  @Effect()
+  getFilteredCategories$: Observable<fromActions.GetFilteredCategoriesSuccess | fromActions.GetFilteredCategoriesFail>
+    = this.actions$.pipe(
+    ofType(fromActions.CategoriesActions.GET_FILTERED_CATEGORIES),
+    mergeMap((action: fromActions.GetFilteredCategories) => {
+      const { params } = action.payload;
+
+      return this.service.getCategories(params)
+        .pipe(
+          map((data: ICategory[]) => new fromActions.GetFilteredCategoriesSuccess(data)),
+          catchError((error) => of(new fromActions.GetFilteredCategoriesFail(error)))
         );
     })
   );
@@ -62,7 +81,7 @@ export class CategoriesEffects {
   );
 
   @Effect()
-  editLocation$: Observable<fromActions.EditCategorySuccess | fromActions.EditCategoryFail>
+  editCategories$: Observable<fromActions.EditCategorySuccess | fromActions.EditCategoryFail>
     = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.EDIT_CATEGORY),
     mergeMap((action: fromActions.EditCategory) => {
@@ -75,6 +94,27 @@ export class CategoriesEffects {
           catchError((error) => of(new fromActions.EditCategoryFail(error)))
         );
     })
+  );
+
+  @Effect()
+  editCategoriesSuccess$: Observable<fromLocationStore.GetLocationsSuccess> = this.actions$.pipe(
+    ofType(fromActions.CategoriesActions.EDIT_CATEGORY_SUCCESS),
+    map((action: fromActions.EditCategorySuccess) => action.payload),
+    withLatestFrom(this.store.select(fromLocationStore.getLocations)),
+    map(([{ id, name, img_url }, locations]) => {
+      return locations.map((l: ILocation) => {
+        if (l.category_id === id) {
+          return {
+            ...l,
+            category_name: name,
+            category_img_url: img_url
+          };
+        }
+        return l;
+      });
+    }),
+    filter((l: ILocation[]) => !!l.length),
+    mergeMap((l) => of(new fromLocationStore.GetLocationsSuccess(l)))
   );
 
   @Effect()

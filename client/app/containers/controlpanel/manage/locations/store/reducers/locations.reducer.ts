@@ -9,6 +9,7 @@ export interface ILocationState extends EntityState<ILocation> {
   loaded: boolean;
   loading: boolean;
   ids: Array<number>;
+  filteredLocations: ILocation[];
   entities: Dictionary<ILocation>;
 }
 
@@ -17,7 +18,8 @@ const defaultLocation: ILocationState = {
   entities: {},
   error: false,
   loaded: false,
-  loading: false
+  loading: false,
+  filteredLocations: []
 };
 
 export const locationAdapter: EntityAdapter<ILocation> = createEntityAdapter<ILocation>();
@@ -43,6 +45,33 @@ export function reducer (state = initialState, action: fromLocations.LocationsAc
     }
 
     case fromLocations.locationActions.GET_LOCATIONS_FAIL: {
+      return {
+        ...state,
+        error: true,
+        loaded: false,
+        loading: false
+      };
+    }
+
+    case fromLocations.locationActions.GET_FILTERED_LOCATIONS: {
+      return {
+        ...state,
+        loading: true,
+        loaded: false
+      };
+    }
+
+    case fromLocations.locationActions.GET_FILTERED_LOCATIONS_SUCCESS: {
+      return {
+        ...state,
+        error: false,
+        loaded: true,
+        loading: false,
+        filteredLocations: [...action.payload]
+      };
+    }
+
+    case fromLocations.locationActions.GET_FILTERED_LOCATIONS_FAIL: {
       return {
         ...state,
         error: true,
@@ -134,12 +163,18 @@ export function reducer (state = initialState, action: fromLocations.LocationsAc
     }
 
     case fromLocations.locationActions.DELETE_LOCATION_SUCCESS: {
-      return locationAdapter.removeOne(action.payload.deletedId, {
+      const deletedId = action.payload.deletedId;
+      const data =  locationAdapter.removeOne(deletedId, {
         ...state,
         error: false,
         loaded: true,
         loading: false
       });
+
+      return {
+        ...data,
+        filteredLocations: state.filteredLocations.filter((l: ILocation) => l.id !== deletedId)
+      };
     }
 
     case fromLocations.locationActions.DELETE_LOCATION_FAIL: {
@@ -171,3 +206,4 @@ export const getLocationEntities = selectEntities;
 export const getLocationsError = (state: ILocationState) => state.error;
 export const getLocationsLoaded = (state: ILocationState) => state.loaded;
 export const getLocationsLoading = (state: ILocationState) => state.loading;
+export const getFilteredLocations = (state: ILocationState) => state.filteredLocations;

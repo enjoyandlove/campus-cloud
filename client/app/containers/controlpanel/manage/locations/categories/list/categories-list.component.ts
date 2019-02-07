@@ -58,7 +58,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       search_str
     };
 
-    this.fetch();
+    this.fetchFilteredCategories();
   }
 
   doSort(sort_field) {
@@ -68,7 +68,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
 
-    this.fetch();
+    this.fetchFilteredCategories();
   }
 
   onLaunchCreateModal() {
@@ -114,16 +114,22 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
 
     return new HttpParams()
       .set('locale', locale)
-      .set('school_id', this.session.g.get('school').id);
-  }
-
-  fetch() {
-    const params = this.defaultParams
+      .set('school_id', this.session.g.get('school').id)
       .append('search_str', this.state.search_str)
       .append('sort_field', this.state.sort_field)
       .append('sort_direction', this.state.sort_direction);
+  }
 
-    this.store.dispatch(new fromStore.GetCategories({ params }));
+  fetch() {
+    this.store.dispatch(new fromStore.GetCategories({ params: this.defaultParams }));
+
+    this.categories$ = this.store.select(fromStore.getCategories);
+  }
+
+  fetchFilteredCategories() {
+    this.store.dispatch(new fromStore.GetFilteredCategories({ params: this.defaultParams }));
+
+    this.categories$ = this.store.select(fromStore.getFilteredCategories);
   }
 
   updateHeader() {

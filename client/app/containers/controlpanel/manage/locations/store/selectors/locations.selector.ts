@@ -35,6 +35,11 @@ export const getLocationsById = createSelector(
   fromLocations.getLocationEntities
 );
 
+export const getFilteredLocations = createSelector(
+  getLocationState,
+  fromLocations.getFilteredLocations
+);
+
 export const getSelectedLocation = createSelector(
   getLocationsById,
   getRouterState,

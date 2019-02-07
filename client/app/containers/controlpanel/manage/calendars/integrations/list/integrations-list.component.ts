@@ -24,7 +24,6 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
   private destroy$ = new Subject();
 
   calendarId: number;
-  showEditModal = false;
   showDeleteModal = false;
   showCreateModal = false;
   dateFormat = FORMAT.DATETIME;
@@ -58,11 +57,6 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
     super.goToPrevious();
 
     this.fetch();
-  }
-
-  onEditTeardown() {
-    this.showEditModal = false;
-    $('#integrationEdit').modal('hide');
   }
 
   onCreateTeardown() {
@@ -120,13 +114,6 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
     this.showCreateModal = true;
 
     setTimeout(() => $('#integrationCreate').modal());
-  }
-
-  onLaunchEditModal(integration: IEventIntegration) {
-    this.showEditModal = true;
-    this.selectedIntegration = integration;
-
-    setTimeout(() => $('#integrationEdit').modal());
   }
 
   onLaunchDeleteModal(integration: IEventIntegration) {
