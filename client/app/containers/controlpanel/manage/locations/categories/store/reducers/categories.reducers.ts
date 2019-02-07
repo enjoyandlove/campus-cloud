@@ -12,7 +12,7 @@ export interface ICategoriesState {
   filteredCategories: ICategory[];
 }
 
-export const InitialState: ICategoriesState = {
+export const initialState: ICategoriesState = {
   data: [],
   error: false,
   loaded: false,
@@ -22,7 +22,7 @@ export const InitialState: ICategoriesState = {
   filteredCategories: []
 };
 
-export function reducer (state = InitialState, action: fromLocations.Actions) {
+export function reducer (state = initialState, action: fromLocations.Actions) {
   switch (action.type) {
     case fromLocations.CategoriesActions.GET_CATEGORIES: {
       return {
