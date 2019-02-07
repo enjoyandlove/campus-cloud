@@ -77,7 +77,6 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
     };
 
     this.store.dispatch(new fromStore.EditLocation(payload));
-    this.updateCategoryInfo(this.locationForm.get('category_id').value);
   }
 
   buildHeader() {
@@ -181,24 +180,6 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
         return parsedCategories;
       })
     );
-  }
-
-  updateCategoryInfo(categoryId) {
-    this.store.select(fromCategoryStore.getCategories).pipe(
-      takeUntil(this.destroy$)
-    ).subscribe((categories: ICategory[]) => {
-      categories.map((category: ICategory) => {
-        if (category.id === this.categoryId) {
-          category['locations_count'] = category['locations_count'] - 1;
-        }
-
-        if (category.id === categoryId) {
-          category['locations_count'] = category['locations_count'] + 1;
-        }
-
-        return category;
-      });
-    });
   }
 
   ngOnInit() {
