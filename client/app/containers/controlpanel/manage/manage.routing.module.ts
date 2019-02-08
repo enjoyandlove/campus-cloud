@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '../../../config/guards';
 
 import { ManageComponent } from './manage.component';
+import { CanDeactivateLocations } from './locations/locations.guard';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'events', pathMatch: 'full' },
@@ -64,6 +65,7 @@ const appRoutes: Routes = [
       {
         path: 'locations',
         data: { zendesk: 'locations' },
+        canDeactivate: [CanDeactivateLocations],
         loadChildren: './locations/locations.module#LocationsModule'
       },
 
@@ -89,6 +91,7 @@ const appRoutes: Routes = [
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [CanDeactivateLocations]
 })
 export class ManageRoutingModule {}

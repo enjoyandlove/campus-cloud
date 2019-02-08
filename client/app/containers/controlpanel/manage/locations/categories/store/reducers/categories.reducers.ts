@@ -139,7 +139,9 @@ export function reducer(state = initialState, action: fromLocations.Actions) {
         error: false,
         loading: false,
         data: state.data.map((c: ICategory) => (c.id === edited.id ? edited : c)),
-        filteredCategories: state.filteredCategories.map((c: ICategory) => (c.id === edited.id ? edited : c))
+        filteredCategories: state.filteredCategories.map(
+          (c: ICategory) => (c.id === edited.id ? edited : c)
+        )
       };
     }
 
@@ -164,7 +166,6 @@ export function reducer(state = initialState, action: fromLocations.Actions) {
     }
 
     case fromLocations.CategoriesActions.DELETE_CATEGORIES_FAIL: {
-
       return {
         ...state,
         error: true,
@@ -174,11 +175,17 @@ export function reducer(state = initialState, action: fromLocations.Actions) {
     }
 
     case fromLocations.CategoriesActions.RESET_ERROR_MESSAGE: {
-
       return {
         ...state,
         error: true,
         errorMessage: null
+      };
+    }
+
+    case fromLocations.CategoriesActions.DESTROY: {
+      return {
+        ...state,
+        ...initialState
       };
     }
 
@@ -187,7 +194,6 @@ export function reducer(state = initialState, action: fromLocations.Actions) {
     }
   }
 }
-
 
 export const getCategories = (state: ICategoriesState) => state.data;
 export const getCategoriesError = (state: ICategoriesState) => state.error;
