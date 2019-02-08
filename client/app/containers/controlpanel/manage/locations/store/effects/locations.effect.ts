@@ -10,6 +10,7 @@ import * as fromActions from '../actions';
 import { ICategory } from '../../categories/model';
 import { LocationsService } from '../../locations.service';
 import * as fromCategoryStore from '../../categories/store';
+import { coerceBooleanProperty } from '@shared/utils/coercion';
 
 @Injectable()
 export class LocationsEffect {
@@ -133,7 +134,7 @@ export class LocationsEffect {
         return category;
       });
     }),
-    filter((c: ICategory[]) => !!c.length),
+    filter((c: ICategory[]) => coerceBooleanProperty(c.length)),
     mergeMap((c) => of(new fromCategoryStore.GetCategoriesSuccess(c)))
   );
 
