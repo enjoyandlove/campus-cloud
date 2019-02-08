@@ -14,9 +14,7 @@ import { ManageHeaderService } from '../../utils';
 import { BaseComponent } from '@app/base/base.component';
 import * as fromCategoryStore from '../categories/store';
 import { Locale } from '../categories/categories.status';
-import { CP_TRACK_TO } from '@shared/directives/tracking';
 import { LocationsUtilsService } from '../locations.utils';
-import { amplitudeEvents } from '@shared/constants/analytics';
 import { environment } from '@client/environments/environment';
 import { CPI18nService, CPTrackingService } from '@shared/services';
 
@@ -40,7 +38,6 @@ const state: IState = {
   styleUrls: ['./locations-list.component.scss']
 })
 export class LocationsListComponent extends BaseComponent implements OnInit, OnDestroy {
-  eventData;
   sortingLabels;
   deleteLocation = '';
   state: IState = state;
@@ -221,12 +218,6 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     this.loadLocations();
     this.loadCategories();
     this.listenForErrors();
-
-    this.eventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties: this.cpTracking.getEventProperties()
-    };
 
     this.sortingLabels = {
       locations: this.cpI18n.translate('name')
