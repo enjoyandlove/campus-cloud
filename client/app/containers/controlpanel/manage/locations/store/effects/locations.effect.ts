@@ -86,7 +86,7 @@ export class LocationsEffect {
         .createLocation(body, params)
         .pipe(
           map((data: ILocation) => new fromActions.PostLocationSuccess(data)),
-          tap((_) => this.router.navigate(['/manage/locations'])),
+          tap((data) => this.router.navigate([`/manage/locations/${data.payload.id}/info`])),
           catchError((error) => of(new fromActions.PostLocationFail(error)))
         );
     })
@@ -103,7 +103,7 @@ export class LocationsEffect {
         .updateLocation(body, locationId, params)
         .pipe(
           map((data: ILocation) => new fromActions.EditLocationSuccess(data)),
-          tap((_) => this.router.navigate(['/manage/locations'])),
+          tap((_) => this.router.navigate([`/manage/locations/${locationId}/info`])),
           catchError((error) => of(new fromActions.EditLocationFail(error)))
         );
     })
