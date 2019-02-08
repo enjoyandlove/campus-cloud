@@ -1,19 +1,23 @@
 @import '~client/style/components/form';
 @import '~client/style/core/typography';
 
+@mixin button-layout() {
+  width: 38px;
+  margin:0 2px;
+  height: 38px;
+  text-align: center;
+  background-color: $color-white;
+  border:1px solid $color-med-grey;
+}
+
 .category {
   span {
     @include font-normal();
   }
 
-  .btn-icons{
+  &__icons{
     button{
-      width: 38px;
-      margin:0 2px;
-      height: 38px;
-      text-align: center;
-      background-color: $color-white;
-      border:1px solid $color-med-grey;
+      @include button-layout();
 
       &.active{
         border:2px solid $color-brand;
@@ -29,15 +33,11 @@
     }
   }
 
-  .btn-color{
+  &__color{
     button{
-      width: 38px;
-      margin:0 2px;
-      height: 38px;
+      @include button-layout();
+
       padding: 2px;
-      text-align: center;
-      background-color: $color-white;;
-      border:1px solid $color-med-grey;;
 
       &.active{
         border: 2px solid $color-brand;

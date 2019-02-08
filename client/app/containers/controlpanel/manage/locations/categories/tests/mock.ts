@@ -1,10 +1,12 @@
 export const emptyForm = {
   name: null,
+  color: null,
   img_url: null,
   category_type_id: null
 };
 
 export const filledForm = {
+  color: 'FFA416',
   img_url: 'img.jpeg',
   name: 'Hello world',
   category_type_id: 1

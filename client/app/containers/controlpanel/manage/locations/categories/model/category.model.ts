@@ -45,7 +45,7 @@ export class CategoryModel {
 
   static categoryIcons() {
     const dbPath = 'https://d38h7mnlv8qddx.cloudfront.net/';
-    const assetPath = `${environment.root}public/svg/categories/`;
+    const assetPath = `${environment.root}public/svg/locations/categories/`;
 
     return [
       {
