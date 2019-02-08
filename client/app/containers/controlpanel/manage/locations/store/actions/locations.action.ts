@@ -28,9 +28,10 @@ export enum locationActions {
   DELETE_LOCATION_FAIL = '[manage.locations] delete location fail',
   DELETE_LOCATION_SUCCESS = '[manage.locations] delete location success',
 
-  RESET_ERROR = '[manage.locations] reset error to false'
-}
+  RESET_ERROR = '[manage.locations] reset error to false',
 
+  DESTROY = '[manage.locations] destroy'
+}
 
 export class GetLocations implements Action {
   readonly type = locationActions.GET_LOCATIONS;
@@ -109,7 +110,7 @@ export class EditLocationSuccess implements Action {
 
 export class DeleteLocation implements Action {
   readonly type = locationActions.DELETE_LOCATION;
-  constructor(public payload: { locationId: number, params: HttpParams }) {}
+  constructor(public payload: { locationId: number; params: HttpParams }) {}
 }
 
 export class DeleteLocationFail implements Action {
@@ -124,6 +125,10 @@ export class DeleteLocationSuccess implements Action {
 
 export class ResetError implements Action {
   readonly type = locationActions.RESET_ERROR;
+}
+
+export class Destroy implements Action {
+  readonly type = locationActions.DESTROY;
 }
 
 export type LocationsAction =
@@ -145,4 +150,5 @@ export type LocationsAction =
   | ResetError
   | GetFilteredLocations
   | GetFilteredLocationsFail
-  | GetFilteredLocationsSuccess;
+  | GetFilteredLocationsSuccess
+  | Destroy;

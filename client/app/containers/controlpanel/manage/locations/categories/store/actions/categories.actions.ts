@@ -28,7 +28,9 @@ export enum CategoriesActions {
   DELETE_CATEGORIES_SUCCESS = '[manage.events.locations.categories] delete categories success',
   DELETE_CATEGORIES_FAIL = '[manage.events.locations.categories] delete categories fail',
 
-  RESET_ERROR_MESSAGE = '[manage.locations.categories] reset error message'
+  RESET_ERROR_MESSAGE = '[manage.locations.categories] reset error message',
+
+  DESTROY = '[manage.locations.categories] destroy'
 }
 
 export class GetCategories implements Action {
@@ -118,7 +120,7 @@ export class EditCategorySuccess implements Action {
 export class DeleteCategories implements Action {
   readonly type = CategoriesActions.DELETE_CATEGORIES;
 
-  constructor(public payload: { categoryId: number, params: HttpParams }) {}
+  constructor(public payload: { categoryId: number; params: HttpParams }) {}
 }
 
 export class DeleteCategoriesSuccess implements Action {
@@ -135,6 +137,10 @@ export class DeleteCategoriesFail implements Action {
 
 export class ResetErrorMessage implements Action {
   readonly type = CategoriesActions.RESET_ERROR_MESSAGE;
+}
+
+export class Destroy implements Action {
+  readonly type = CategoriesActions.DESTROY;
 }
 
 export type Actions =
@@ -156,4 +162,5 @@ export type Actions =
   | DeleteCategories
   | DeleteCategoriesSuccess
   | DeleteCategoriesFail
-  | ResetErrorMessage;
+  | ResetErrorMessage
+  | Destroy;

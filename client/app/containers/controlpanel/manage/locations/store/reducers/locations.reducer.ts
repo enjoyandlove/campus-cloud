@@ -25,7 +25,7 @@ const defaultLocation: ILocationState = {
 export const locationAdapter: EntityAdapter<ILocation> = createEntityAdapter<ILocation>();
 export const initialState: ILocationState = locationAdapter.getInitialState(defaultLocation);
 
-export function reducer (state = initialState, action: fromLocations.LocationsAction) {
+export function reducer(state = initialState, action: fromLocations.LocationsAction) {
   switch (action.type) {
     case fromLocations.locationActions.GET_LOCATIONS: {
       return {
@@ -137,11 +137,14 @@ export function reducer (state = initialState, action: fromLocations.LocationsAc
     }
 
     case fromLocations.locationActions.EDIT_LOCATION_SUCCESS: {
-      return locationAdapter.updateOne({id: action.payload.id, changes: action.payload }, {
-        ...state,
-        error: false,
-        loading: false
-      });
+      return locationAdapter.updateOne(
+        { id: action.payload.id, changes: action.payload },
+        {
+          ...state,
+          error: false,
+          loading: false
+        }
+      );
     }
 
     case fromLocations.locationActions.EDIT_LOCATION_FAIL: {
@@ -149,7 +152,7 @@ export function reducer (state = initialState, action: fromLocations.LocationsAc
         ...state,
         error: true,
         loaded: true,
-        loading: false,
+        loading: false
       };
     }
 
@@ -164,7 +167,7 @@ export function reducer (state = initialState, action: fromLocations.LocationsAc
 
     case fromLocations.locationActions.DELETE_LOCATION_SUCCESS: {
       const deletedId = action.payload.deletedId;
-      const data =  locationAdapter.removeOne(deletedId, {
+      const data = locationAdapter.removeOne(deletedId, {
         ...state,
         error: false,
         loaded: true,
@@ -190,6 +193,13 @@ export function reducer (state = initialState, action: fromLocations.LocationsAc
       return {
         ...state,
         error: false
+      };
+    }
+
+    case fromLocations.locationActions.DESTROY: {
+      return {
+        ...state,
+        ...initialState
       };
     }
 
