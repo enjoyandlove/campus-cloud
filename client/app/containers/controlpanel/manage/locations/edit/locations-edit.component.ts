@@ -76,7 +76,13 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
       locationId
     };
 
+    const catPayload = {
+      oldCategoryId: this.categoryId,
+      newCategoryId: body.category_id
+    };
+
     this.store.dispatch(new fromStore.EditLocation(payload));
+    this.store.dispatch(new fromCategoryStore.UpdateCategoryLocationCount(catPayload));
   }
 
   buildHeader() {

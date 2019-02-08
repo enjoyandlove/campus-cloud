@@ -22,7 +22,7 @@ export const initialState: ICategoriesState = {
   filteredCategories: []
 };
 
-export function reducer (state = initialState, action: fromLocations.Actions) {
+export function reducer(state = initialState, action: fromLocations.Actions) {
   switch (action.type) {
     case fromLocations.CategoriesActions.GET_CATEGORIES: {
       return {
@@ -34,7 +34,7 @@ export function reducer (state = initialState, action: fromLocations.Actions) {
     }
 
     case fromLocations.CategoriesActions.GET_CATEGORIES_SUCCESS: {
-      return  {
+      return {
         ...state,
         error: false,
         loaded: true,
@@ -62,7 +62,7 @@ export function reducer (state = initialState, action: fromLocations.Actions) {
     }
 
     case fromLocations.CategoriesActions.GET_FILTERED_CATEGORIES_SUCCESS: {
-      return  {
+      return {
         ...state,
         error: false,
         loaded: true,
@@ -109,7 +109,7 @@ export function reducer (state = initialState, action: fromLocations.Actions) {
     }
 
     case fromLocations.CategoriesActions.GET_CATEGORIES_TYPE_SUCCESS: {
-      return  {
+      return {
         ...state,
         categoryTypes: [...action.payload]
       };
@@ -134,7 +134,7 @@ export function reducer (state = initialState, action: fromLocations.Actions) {
     case fromLocations.CategoriesActions.EDIT_CATEGORY_SUCCESS: {
       const edited = action.payload;
 
-      return  {
+      return {
         ...state,
         error: false,
         loading: false,
@@ -179,6 +179,33 @@ export function reducer (state = initialState, action: fromLocations.Actions) {
         ...state,
         error: true,
         errorMessage: null
+      };
+    }
+
+    case fromLocations.CategoriesActions.UPDATE_CATEGORY_LOCATIONS_COUNT: {
+      const { oldCategoryId, newCategoryId } = action.payload;
+
+      const data = state.data.map((category: ICategory) => {
+        if (category.id === oldCategoryId) {
+          category = {
+            ...category,
+            locations_count: category.locations_count - 1
+          };
+        }
+
+        if (category.id === newCategoryId) {
+          category = {
+            ...category,
+            locations_count: category.locations_count + 1
+          };
+        }
+
+        return category;
+      });
+
+      return {
+        ...state,
+        data
       };
     }
 
