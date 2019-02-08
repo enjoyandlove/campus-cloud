@@ -94,7 +94,7 @@ export class PostLocationSuccess implements Action {
 
 export class EditLocation implements Action {
   readonly type = locationActions.EDIT_LOCATION;
-  constructor(public payload: { locationId: number; body: any; params: HttpParams }) {}
+  constructor(public payload: { locationId: number; category_id: number; body: any; params: HttpParams }) {}
 }
 
 export class EditLocationFail implements Action {
@@ -104,7 +104,7 @@ export class EditLocationFail implements Action {
 
 export class EditLocationSuccess implements Action {
   readonly type = locationActions.EDIT_LOCATION_SUCCESS;
-  constructor(public payload: ILocation) {}
+  constructor(public payload: { data: ILocation; category_id: number }) {}
 }
 
 export class DeleteLocation implements Action {

@@ -182,33 +182,6 @@ export function reducer(state = initialState, action: fromLocations.Actions) {
       };
     }
 
-    case fromLocations.CategoriesActions.UPDATE_CATEGORY_LOCATIONS_COUNT: {
-      const { oldCategoryId, newCategoryId } = action.payload;
-
-      const data = state.data.map((category: ICategory) => {
-        if (category.id === oldCategoryId) {
-          category = {
-            ...category,
-            locations_count: category.locations_count - 1
-          };
-        }
-
-        if (category.id === newCategoryId) {
-          category = {
-            ...category,
-            locations_count: category.locations_count + 1
-          };
-        }
-
-        return category;
-      });
-
-      return {
-        ...state,
-        data
-      };
-    }
-
     default: {
       return state;
     }
