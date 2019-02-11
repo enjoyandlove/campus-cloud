@@ -109,7 +109,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
 
   onCancel() {
     this.store.dispatch(new fromStore.ResetError());
-    this.router.navigate(['/manage/locations']);
+    this.router.navigate([`/manage/locations/${this.locationId}/info`]);
   }
 
   handleError(body) {
