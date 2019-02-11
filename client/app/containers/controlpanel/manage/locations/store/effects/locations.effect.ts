@@ -110,12 +110,12 @@ export class LocationsEffect {
     = this.actions$.pipe(
     ofType(fromActions.locationActions.EDIT_LOCATION),
     mergeMap((action: fromActions.EditLocation) => {
-      const { locationId, category_id, body, params } = action.payload;
+      const { locationId, categoryId, body, params } = action.payload;
 
       return this.service
         .updateLocation(body, locationId, params)
         .pipe(
-          map((data: ILocation) => new fromActions.EditLocationSuccess({data: data, category_id})),
+          map((data: ILocation) => new fromActions.EditLocationSuccess({data: data, categoryId})),
           tap((_) => this.router.navigate([`/manage/locations/${locationId}/info`])),
           catchError((error) => of(new fromActions.EditLocationFail(error)))
         );
@@ -130,7 +130,7 @@ export class LocationsEffect {
     withLatestFrom(this.store.select(fromCategoryStore.getCategories)),
     map(([locations, categories]) => {
       return categories.map((category: ICategory) => {
-        if (category.id === locations.category_id) {
+        if (category.id === locations['categoryId']) {
           category = {
             ...category,
             locations_count: category.locations_count - 1
