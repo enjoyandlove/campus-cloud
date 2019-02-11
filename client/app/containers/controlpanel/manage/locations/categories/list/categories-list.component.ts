@@ -1,5 +1,5 @@
+import { takeUntil, tap, take, filter } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { takeUntil, tap, take } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Actions, ofType } from '@ngrx/effects';
 import { Subject, Observable } from 'rxjs';
@@ -179,7 +179,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       ).subscribe();
   }
 
-  listenForErrors() {
+  listenDeleteErrors() {
     this.actions$
       .pipe(ofType(fromStore.CategoriesActions.DELETE_CATEGORIES_FAIL), takeUntil(this.destroy$))
       .subscribe((action: fromStore.DeleteCategoriesFail) => {
@@ -189,11 +189,20 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       });
   }
 
+  listenErrors() {
+    this.store.select(fromStore.getCategoriesError)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((error) => error),
+        tap(() => this.handleError())
+      ).subscribe();
+  }
+
   resetErrors() {
     this.store.dispatch(new fromStore.ResetErrorMessage());
   }
 
-  handleError(message) {
+  handleError(message?) {
     const errorMessage = message ? message : 'something_went_wrong';
 
     const options = {
@@ -218,8 +227,9 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.resetErrors();
     this.updateHeader();
+    this.listenErrors();
     this.loadCategories();
-    this.listenForErrors();
+    this.listenDeleteErrors();
     this.loadCategoryTypes();
 
     this.loading$ = this.store
