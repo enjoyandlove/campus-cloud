@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 
 import { CPSession } from '@app/session';
 import { FORMAT } from '@client/app/shared/pipes';
+import { IEventIntegration, EventIntegration } from './../../model';
 import { SyncStatus, IntegrationStatus } from '../../../common/model';
-import { EventFeedObjectType, IEventIntegration, EventIntegration } from './../../model';
 
 @Component({
   selector: 'cp-event-integrations-list',
@@ -16,24 +16,14 @@ export class EventIntegrationsListComponent implements OnInit {
   @Input() integrations$: Observable<IEventIntegration[]>;
 
   @Output() syncClick: EventEmitter<number> = new EventEmitter();
-  @Output() editClick: EventEmitter<IEventIntegration> = new EventEmitter();
   @Output() deleteClick: EventEmitter<IEventIntegration> = new EventEmitter();
 
   notSynced = SyncStatus.notSynced;
   runningStatus = IntegrationStatus.running;
-  campusEvent = EventFeedObjectType.campusEvent;
 
   dateFormat = FORMAT.DATETIME;
 
   constructor(private session: CPSession) {}
-
-  onListItemClick(integration: IEventIntegration) {
-    if (integration.feed_obj_type !== EventFeedObjectType.campusEvent) {
-      return;
-    }
-
-    this.editClick.emit(integration);
-  }
 
   canSync(feed: IEventIntegration) {
     return (

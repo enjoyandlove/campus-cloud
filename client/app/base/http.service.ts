@@ -11,16 +11,14 @@ import { appStorage, CPObj } from '../shared/utils';
  * extends this class and override
  * getHeaders() if you need a new header
  */
-
+const defaultRetries = 1;
 const emptyResponse = observableOf(new HttpResponse({ body: JSON.stringify([]) }));
 
 @Injectable()
 export abstract class HTTPService {
   constructor(public http: HttpClient, public router: Router) {}
 
-  waitAndRetry(err: Observable<any>): Observable<any> {
-    let retries = 1;
-
+  waitAndRetry(err: Observable<any>, retries: number): Observable<any> {
     return err.pipe(
       delay(1200),
       flatMap((e) => {
@@ -68,7 +66,7 @@ export abstract class HTTPService {
     return cleanParams;
   }
 
-  get(url: string, params?: HttpParams, silent = false) {
+  get(url: string, params?: HttpParams, silent = false, retries = defaultRetries) {
     if (params) {
       params = this.clearNullValues(params);
     }
@@ -76,7 +74,7 @@ export abstract class HTTPService {
     const headers = this.getHeaders();
 
     return this.http.get(url, { headers, params }).pipe(
-      retryWhen((err) => this.waitAndRetry(err)),
+      retryWhen((err) => this.waitAndRetry(err, retries)),
       catchError((err) => {
         if (silent) {
           return observableThrowError(err);
@@ -91,7 +89,7 @@ export abstract class HTTPService {
     );
   }
 
-  post(url: string, data: any, params?: HttpParams, silent = false) {
+  post(url: string, data: any, params?: HttpParams, silent = false, retries = defaultRetries) {
     if (params) {
       params = this.clearNullValues(params);
     }
@@ -103,12 +101,12 @@ export abstract class HTTPService {
     return this.http
       .post(url, this.sanitizeEntries(data), { headers, params })
       .pipe(
-        retryWhen((err) => this.waitAndRetry(err)),
+        retryWhen((err) => this.waitAndRetry(err, retries)),
         catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
       );
   }
 
-  update(url: string, data: any, params?: HttpParams, silent = false) {
+  update(url: string, data: any, params?: HttpParams, silent = false, retries = defaultRetries) {
     if (params) {
       params = this.clearNullValues(params);
     }
@@ -119,12 +117,18 @@ export abstract class HTTPService {
     return this.http
       .put(url, this.sanitizeEntries(data), { headers, params })
       .pipe(
-        retryWhen((err) => this.waitAndRetry(err)),
+        retryWhen((err) => this.waitAndRetry(err, retries)),
         catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
       );
   }
 
-  delete(url: string, params?: HttpParams, silent = false, extraOptions = {}) {
+  delete(
+    url: string,
+    params?: HttpParams,
+    silent = false,
+    extraOptions = {},
+    retries = defaultRetries
+  ) {
     if (params) {
       params = this.clearNullValues(params);
     }
@@ -134,7 +138,7 @@ export abstract class HTTPService {
     return this.http
       .delete(url, { headers, params, ...extraOptions })
       .pipe(
-        retryWhen((err) => this.waitAndRetry(err)),
+        retryWhen((err) => this.waitAndRetry(err, retries)),
         catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
       );
   }

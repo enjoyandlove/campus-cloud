@@ -54,42 +54,6 @@ describe('EventIntegrationsListComponent', () => {
     expect(list.length).toBe(1);
   });
 
-  describe('onListItemClick', () => {
-    it('should not emit syncClick if integration is of type', () => {
-      const emtiSpy: jasmine.Spy = spyOn(component.editClick, 'emit');
-      let title: HTMLSpanElement;
-      let integration: IEventIntegration;
-
-      integration = {
-        ...mockIntegration,
-        feed_obj_type: EventIntegration.objectType.campusEvent
-      };
-
-      component.integrations$ = of([integration]);
-      fixture.detectChanges();
-
-      title = getElementByCPTargetValue(de, 'feed_title_0').nativeElement;
-      title.click();
-
-      expect(component.editClick.emit).toHaveBeenCalled();
-
-      emtiSpy.calls.reset();
-
-      integration = {
-        ...mockIntegration,
-        feed_obj_type: EventIntegration.objectType.academicEvent
-      };
-
-      component.integrations$ = of([integration]);
-      fixture.detectChanges();
-
-      title = getElementByCPTargetValue(de, 'feed_title_0').nativeElement;
-      title.click();
-
-      expect(component.editClick.emit).not.toHaveBeenCalled();
-    });
-  });
-
   describe('sync now button', () => {
     it('should be disable if sync now is false', () => {
       let syncNowBtn: HTMLButtonElement;

@@ -288,9 +288,10 @@ describe('Event Integrations Reducer', () => {
       const { initialState } = fromReducer;
       const action = new fromActions.Destroy();
 
-      const { error, completedAction } = fromReducer.reducer(initialState, action);
+      const { error, completedAction, hosts } = fromReducer.reducer(initialState, action);
 
       expect(error).toBeNull();
+      expect(hosts.length).toBe(0);
       expect(completedAction).toBeNull();
     });
   });
