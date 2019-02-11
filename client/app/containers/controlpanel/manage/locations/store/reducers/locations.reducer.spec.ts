@@ -97,7 +97,7 @@ describe('Locations Reducer', () => {
       body,
       params,
       locationId: mockLocations[0].id,
-      category_id: mockLocations[0].category_id
+      categoryId: mockLocations[0].category_id
     };
 
     const action = new fromActions.EditLocation(payload);
@@ -111,7 +111,7 @@ describe('Locations Reducer', () => {
     const { initialState } = fromReducer;
     const payload = {
       data: mockLocations[0],
-      category_id: mockLocations[0].category_id
+      categoryId: mockLocations[0].category_id
     };
 
     const action = new fromActions.EditLocationSuccess(payload);
