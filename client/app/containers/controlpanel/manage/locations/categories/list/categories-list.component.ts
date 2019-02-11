@@ -13,6 +13,7 @@ import { Locale } from '../categories.status';
 import { baseActions } from '@app/store/base';
 import { CPI18nService } from '@shared/services';
 import { ICategory, DeleteError } from '../model';
+import { LocationType } from '@containers/controlpanel/manage/locations/locations.service';
 
 interface IState {
   search_str: string;
@@ -112,10 +113,11 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
 
     return new HttpParams()
       .set('locale', locale)
+      .set('location_type', LocationType.location)
       .set('school_id', this.session.g.get('school').id)
-      .append('search_str', this.state.search_str)
-      .append('sort_field', this.state.sort_field)
-      .append('sort_direction', this.state.sort_direction);
+      .set('search_str', this.state.search_str)
+      .set('sort_field', this.state.sort_field)
+      .set('sort_direction', this.state.sort_direction);
   }
 
   fetch() {

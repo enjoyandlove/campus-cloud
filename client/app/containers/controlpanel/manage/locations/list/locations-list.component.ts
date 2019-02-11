@@ -11,6 +11,7 @@ import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { ICategory } from '../categories/model';
 import { ManageHeaderService } from '../../utils';
+import { LocationType } from '../locations.service';
 import { BaseComponent } from '@app/base/base.component';
 import * as fromCategoryStore from '../categories/store';
 import { Locale } from '../categories/categories.status';
@@ -63,6 +64,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       .append('search_str', this.state.search_str)
       .append('sort_field', this.state.sort_field)
       .append('category_id', this.state.category_id)
+      .append('location_type', LocationType.location)
       .append('sort_direction', this.state.sort_direction)
       .append('school_id', this.session.g.get('school').id);
   }
@@ -153,6 +155,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
           const params = new HttpParams()
             .set('locale', locale)
+            .set('location_type', LocationType.location)
             .set('school_id', this.session.g.get('school').id);
 
           this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
