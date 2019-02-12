@@ -25,7 +25,7 @@
             <div formArrayName="items">
               <div class="row" [formGroupName]="itemIndex">
                 <div class="col-3">
-                  <label>Service</label>
+                  <label>{{ 't_shared_meal' | cpI18n }}</label>
                   <input
                     type="text"
                     cpTarget="name"
@@ -35,7 +35,7 @@
                 <div class="col-4 horizontal">
                   <label class="margin-right">{{ 't_shared_from' | cpI18n }}</label>
                   <cp-dropdown
-                    [items]="locationTiming"
+                    [items]="diningTiming"
                     [cpTarget]="'start_time_' + i"
                     [selectedItem]="getSelectedTime(item.controls.start_time.value)"
                     (selected)="onTimeSelected($event, 'start_time', i, itemIndex)">
@@ -45,10 +45,10 @@
                 <div class="col-4 horizontal">
                   <label class="margin-right">{{ 't_shared_to' | cpI18n }}</label>
                   <cp-dropdown
-                    [items]="locationTiming"
+                    [items]="diningTiming"
                     [cpTarget]="'end_time_' + i"
                     [selectedItem]="getSelectedTime(item.controls.end_time.value)"
-                    (selected)="onTimeSelected($event, 'end_time', i)">
+                    (selected)="onTimeSelected($event, 'end_time', i, itemIndex)">
                   </cp-dropdown>
                 </div>
 
@@ -68,7 +68,7 @@
           <button
             (click)="addItem(schedule, i)"
             class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
-            + Add Service
+            {{ 't_dining_form_add_meal' | cpI18n }}
           </button>
         </div>
       </div>

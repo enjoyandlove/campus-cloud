@@ -1,4 +1,4 @@
-import { OnInit, Component, OnDestroy } from '@angular/core';
+import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
 import { filter, takeUntil, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
@@ -21,7 +21,7 @@ import { LocationsUtilsService } from '@libs/locations/common/utils';
   templateUrl: './dining-create.component.html',
   styleUrls: ['./dining-create.component.scss']
 })
-export class DiningCreateComponent implements OnInit, OnDestroy {
+export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
   school: ISchool;
   formErrors: boolean;
   openingHours = true;
@@ -61,6 +61,11 @@ export class DiningCreateComponent implements OnInit, OnDestroy {
       this.openingHours
     );
 
+    if (body['schedule']) {
+      console.log(body['schedule']);
+
+      return;
+    }
     const school_id = this.session.g.get('school').id;
     const params = new HttpParams().append('school_id', school_id);
 
@@ -144,17 +149,6 @@ export class DiningCreateComponent implements OnInit, OnDestroy {
     this.diningForm = LocationModel.form();
     LocationsUtilsService.setScheduleFormControls(this.diningForm);
 
-    setTimeout(() => {
-      const lat = this.diningForm.get('latitude');
-      const lng = this.diningForm.get('longitude');
-
-      lat.setValue(this.school.latitude);
-      lng.setValue(this.school.longitude);
-
-      lat.setAsyncValidators([this.latLng.validateLatitude(lng)]);
-      lng.setAsyncValidators([this.latLng.validateLongitude(lat)]);
-    });
-
     // todo replace with actual
     this.categories$ = of([
       {
@@ -172,5 +166,16 @@ export class DiningCreateComponent implements OnInit, OnDestroy {
     this.destroy$.next(true);
     this.destroy$.complete();
     this.destroy$.unsubscribe();
+  }
+
+  ngAfterViewInit() {
+    const lat = this.diningForm.get('latitude');
+    const lng = this.diningForm.get('longitude');
+
+    lat.setValue(this.school.latitude);
+    lng.setValue(this.school.longitude);
+
+    lat.setAsyncValidators([this.latLng.validateLatitude(lng)]);
+    lng.setAsyncValidators([this.latLng.validateLongitude(lat)]);
   }
 }

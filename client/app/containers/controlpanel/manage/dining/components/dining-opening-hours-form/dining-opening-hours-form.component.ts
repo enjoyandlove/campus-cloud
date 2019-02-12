@@ -1,8 +1,8 @@
 import { FormArray, FormGroup } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 
-import { ILocationTiming, ScheduleModel } from '@libs/locations/common/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { ILocationTiming, ScheduleModel } from '@libs/locations/common/model';
 
 @Component({
   selector: 'cp-dining-opening-hours-form',
@@ -13,7 +13,7 @@ export class DiningOpeningHoursFormComponent implements OnInit {
   @Input() formErrors: boolean;
   @Input() diningForm: FormGroup;
 
-  locationTiming: ILocationTiming[];
+  diningTiming: ILocationTiming[];
 
   constructor() {}
 
@@ -33,12 +33,8 @@ export class DiningOpeningHoursFormComponent implements OnInit {
     control.controls['is_checked'].setValue(checked);
   }
 
-  getDayLabel(day) {
-    return LocationsUtilsService.getScheduleLabel(day);
-  }
-
   getSelectedTime(selectedTime) {
-    return this.locationTiming.find((time) => time.value === selectedTime);
+    return this.diningTiming.find((time) => time.value === selectedTime);
   }
 
   addItem(schedule) {
@@ -50,15 +46,10 @@ export class DiningOpeningHoursFormComponent implements OnInit {
   removeItem(schedule, index) {
     const controlItems = <FormArray>schedule.controls['items'];
 
-    console.log(controlItems.controls.length);
-    if (controlItems.controls.length <= 1) {
-      return;
-    }
-
     controlItems.removeAt(index);
   }
 
   ngOnInit(): void {
-    this.locationTiming = LocationsUtilsService.getLocationTiming();
+    this.diningTiming = LocationsUtilsService.getLocationTiming();
   }
 }
