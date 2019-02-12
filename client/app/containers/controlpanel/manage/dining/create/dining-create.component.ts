@@ -163,7 +163,7 @@ export class DiningCreateComponent implements OnInit, OnDestroy {
       },
       {
         label: 'Dining',
-        action: 2
+        action: 8
       }
     ]);
   }
