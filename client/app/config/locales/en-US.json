@@ -2340,6 +2340,18 @@
   "t_audience_save_modal_button_submit": {
     "message": "Save"
   },
+  "t_categories_can_not_be_delete": {
+    "message": "Categories with locations cannot be deleted."
+  },
+  "t_categories_icon_color_required": {
+    "message": "Map pin icon and color are required fields."
+  },
+  "t_categories_map_pin_color": {
+    "message": "Map Pin Color"
+  },
+  "t_categories_map_pin_icon": {
+    "message": "Map Pin Icon"
+  },
   "t_changes_saved_ok": {
     "message": "Changes saved successfully"
   },
@@ -2424,6 +2436,9 @@
   },
   "t_dining_create_dining": {
     "message": "Create Dining"
+  },
+  "t_dining_dietary_notes": {
+    "message": "Dietary Notes"
   },
   "t_dining_dining_details": {
     "message": "Dining Details"
@@ -2555,7 +2570,7 @@
     "message": "Upload Image"
   },
   "t_events_list_external_source_tooltip": {
-    "message": "This event was integrated. It will be automatically updated from the integration"
+    "message": "This event was integrated. It will be automatically updated from the integration."
   },
   "t_event_assessment_check_in_date": {
     "message": "Check-in"
@@ -2621,7 +2636,7 @@
     "message": "The event cannot be found"
   },
   "t_integration_sync_button_int_not_ready_to_sync_tooltip": {
-    "message": "You can only sync every minute\n"
+    "message": "You can only manually sync your feed once per minute"
   },
   "t_integration_sync_button_int_running_tooltip": {
     "message": "Integration in progress"
@@ -2760,7 +2775,7 @@
     "message": "Save Changes"
   },
   "t_personas_edit_tile_locked": {
-    "message": "To make changes to the content of this tile reach out to your customer success representative or contact us through the helpdesk."
+    "message": "To make changes to the content of this tile, reach out to your customer success representative or contact us through the helpdesk."
   },
   "t_personas_form_delete_button": {
     "message": "Delete Experience"
@@ -3034,6 +3049,9 @@
   },
   "t_service_provider_feedback_yes": {
     "message": "Yes"
+  },
+  "t_shared_add": {
+    "message": "Add"
   },
   "t_shared_average_rating": {
     "message": "Average Rating"

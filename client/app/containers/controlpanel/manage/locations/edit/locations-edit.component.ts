@@ -13,6 +13,7 @@ import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
 import { ICategory } from '../categories/model';
 import { CPSession, ISchool } from '@app/session';
+import { LocationType} from '../locations.service';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
 import * as fromCategoryStore from '../categories/store';
@@ -166,6 +167,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
 
           const params = new HttpParams()
             .set('locale', locale)
+            .set('location_type', LocationType.location)
             .set('school_id', this.session.g.get('school').id);
 
           this.store.dispatch(new fromCategoryStore.GetCategories({ params }));

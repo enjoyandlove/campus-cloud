@@ -177,7 +177,7 @@ export function reducer(state = initialState, action: fromLocations.Actions) {
     case fromLocations.CategoriesActions.RESET_ERROR_MESSAGE: {
       return {
         ...state,
-        error: true,
+        error: false,
         errorMessage: null
       };
     }
