@@ -1,12 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { throwError as observableThrowError } from 'rxjs';
+import { throwError as observableThrowError, of } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { sortBy } from 'lodash';
 
-import { API } from '../../config/api';
-import { HTTPService } from '../../base/http.service';
+import { API } from '@app/config/api';
+import { HTTPService } from '@app/base/http.service';
 
 export interface IAdmin {
   id: number;
@@ -33,12 +33,13 @@ export class AdminService extends HTTPService {
   getAdminByStoreId(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/1;9000`;
 
-    return super.get(url, search).pipe(
+    return super.get(url, search, true).pipe(
       map((admins: IAdmin[]) => {
         if (admins) {
           return sortBy(admins, (admin: IAdmin) => admin.firstname.toLowerCase());
         }
-      })
+      }),
+      catchError(() => of([]))
     );
   }
 
