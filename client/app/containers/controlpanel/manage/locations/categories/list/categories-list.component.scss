@@ -1,0 +1,36 @@
+@import '~client/style/components/card';
+@import '~client/style/components/form';
+
+.no-content {
+  @include card-margin();
+}
+
+.cp-form {
+  padding: 0;
+  list-style: none;
+
+  &__item {
+    .height {
+      height: 18px;
+    }
+
+    .margin-right {
+      margin-right: 5px;
+    }
+
+    .icon {
+      width: 30px;
+      height: 30px;
+    }
+
+    .delete-category {
+      top: -5px;
+      font-size: 2em;
+      position: relative;
+    }
+
+    span i.action-button {
+      color: $color-secondary-text;
+    }
+  }
+}

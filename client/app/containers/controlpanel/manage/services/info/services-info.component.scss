@@ -6,50 +6,22 @@ p.no-margin-bottom {
   margin-bottom: 0;
 }
 
-.cp-card {
-  @include card-margin();
-
-  margin-bottom: 0;
-}
-
 strong {
   @include font-semi-bold();
 
   color: $color-black;
 }
 
+cp-card,
+cp-resource-banner {
+  display: block;
+  margin-bottom: $default_margin;
+}
+
 .services {
-  &__map,
-  &__banner {
-    height: 225px;
-  }
-
   &__map {
+    height: 225px;
     margin-top: 15px;
-  }
-
-  &__banner {
-    position: relative;
-    margin-bottom: 15px;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-  }
-
-  &__meta {
-    margin-bottom: 15px;
-
-    i {
-      margin-right: 5px;
-      vertical-align: -7px;
-    }
-    p {
-      margin-bottom: 15px;
-
-      &:last-child {
-        margin-bottom: 0;
-      }
-    }
   }
 
   &__admins {
@@ -87,6 +59,8 @@ strong {
   }
 
   &__buttons {
+    margin-bottom: 15px;
+
     a {
       margin-right: 10px;
 

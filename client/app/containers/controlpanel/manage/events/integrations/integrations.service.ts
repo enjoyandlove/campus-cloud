@@ -42,4 +42,12 @@ export class IntegrationsService extends HTTPService {
 
     return super.delete(url, search, true);
   }
+
+  syncNow(integrationId: number, search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.EVENT_INTEGRATIONS
+    }/${integrationId}`;
+
+    return super.update(url, {}, search, true, 0);
+  }
 }

@@ -1,4 +1,4 @@
-import { tap, takeUntil, filter, map } from 'rxjs/operators';
+import { tap, takeUntil, filter, map, take } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -12,6 +12,7 @@ import { BaseComponent } from '@app/base';
 import { FORMAT } from '@shared/pipes/date/date.pipe';
 import { CPI18nService } from '@shared/services/i18n.service';
 import { IEventIntegration } from '@libs/integrations/events/model';
+import { coerceBooleanProperty } from '@client/app/shared/utils/coercion';
 import { ItemsIntegrationsUitlsService } from '../items-integrations.utils.service';
 
 @Component({
@@ -23,7 +24,6 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
   private destroy$ = new Subject();
 
   calendarId: number;
-  showEditModal = false;
   showDeleteModal = false;
   showCreateModal = false;
   dateFormat = FORMAT.DATETIME;
@@ -59,14 +59,24 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
     this.fetch();
   }
 
-  onEditTeardown() {
-    this.showEditModal = false;
-    $('#integrationEdit').modal('hide');
-  }
-
   onCreateTeardown() {
     this.showCreateModal = false;
     $('#integrationCreate').modal('hide');
+  }
+
+  onSyncNow(feedId: number) {
+    this.store
+      .select(fromStore.getIntegrationById(feedId))
+      .pipe(takeUntil(this.destroy$), take(1))
+      .subscribe((integration) => {
+        this.store.dispatch(
+          new fromStore.SyncNow({
+            integration,
+            calendarId: this.calendarId,
+            error: this.cpI18n.translate('something_went_wrong')
+          })
+        );
+      });
   }
 
   onDeleteTeardown() {
@@ -106,13 +116,6 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
     setTimeout(() => $('#integrationCreate').modal());
   }
 
-  onLaunchEditModal(integration: IEventIntegration) {
-    this.showEditModal = true;
-    this.selectedIntegration = integration;
-
-    setTimeout(() => $('#integrationEdit').modal());
-  }
-
   onLaunchDeleteModal(integration: IEventIntegration) {
     this.showDeleteModal = true;
     this.selectedIntegration = integration;
@@ -136,10 +139,10 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
       .select(fromStore.getIntegrationsError)
       .pipe(
         takeUntil(this.destroy$),
-        filter((error) => error),
-        tap(() => {
+        filter((error) => coerceBooleanProperty(error)),
+        tap((body) => {
           const payload = {
-            body: this.cpI18n.translate('something_went_wrong'),
+            body,
             sticky: true,
             autoClose: true,
             class: 'danger'

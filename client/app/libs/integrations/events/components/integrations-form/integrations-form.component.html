@@ -4,6 +4,7 @@
       <div class="col-6">
         <label for="type">{{ 't_shared_type' | cpI18n }}</label>
         <cp-dropdown
+          cpTarget="type"
           [items]="typesDropdown"
           [selectedItem]="selectedType"
           (selected)="onTypeSelected($event)">
@@ -16,16 +17,22 @@
     <div class="row">
       <div class="col-12">
         <label for="url">{{ 't_shared_url' | cpI18n }}</label>
-        <input id="url" type="text" formControlName="feed_url">
+        <input
+          type="text"
+          cpTarget="url"
+          formControlName="feed_url">
       </div>
     </div>
   </div>
 
-  <div class="form-group" *ngIf="showHosts">
+  <div
+    *ngIf="showHosts"
+    class="form-group">
     <div class="row">
       <div class="col-12">
         <label for="store_id">{{ 'select_host' | cpI18n }}</label>
         <cp-dropdown
+          cpTarget="store_id"
           [items]="stores$ | async"
           [selectedItem]="selectedHost"
           (selected)="onHostSelected($event)">
@@ -34,7 +41,9 @@
     </div>
   </div>
 
-  <div class="form-group">
+  <div
+    *ngIf="showImage"
+    class="form-group">
     <div class="row">
       <div class="col-12">
         <label
@@ -42,7 +51,7 @@
           {{ 't_event_integration_form_default_image' | cpI18n }}
         </label>
         <cp-image-upload
-          id="poster_url"
+          cpTarget="poster_url"
           (uploaded)="onImageUpload($event)"
           [defaultImage]="form.get('poster_url').value">
         </cp-image-upload>

@@ -98,7 +98,7 @@ describe('EventsIntegrationEditComponent', () => {
 
     component.doSubmit();
 
-    const expected = new fromStore.EditIntegration(component.form.value);
+    const expected = new fromStore.EditIntegration(component.form.getRawValue());
 
     expect(component.resetModal).toHaveBeenCalled();
     expect(component.store.dispatch).toHaveBeenCalled();
@@ -108,7 +108,7 @@ describe('EventsIntegrationEditComponent', () => {
 
     expect(body).toEqual(expected.payload);
     expect(integrationId).toEqual(component.eventIntegration.id);
-    expect(type).toEqual(fromStore.IntegrationActions.EDIT_INTEGRATION);
+    expect(type).toEqual(fromStore.IntegrationActions.UPDATE_AND_SYNC);
   });
 
   it('submit button should be disabled unless form is valid', () => {
@@ -135,5 +135,15 @@ describe('EventsIntegrationEditComponent', () => {
     component.form.get('feed_type').setValue(1);
     fixture.detectChanges();
     expect(submitBtn.disabled).toBe(false);
+  });
+
+  it('should mark non editable fields as disable', () => {
+    const nonEditableFields = ['feed_url'];
+
+    nonEditableFields.forEach((ctrlName) => {
+      const disableSatus = component.form.get(ctrlName).disabled;
+
+      expect(disableSatus).toBe(true);
+    });
   });
 });

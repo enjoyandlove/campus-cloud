@@ -47,6 +47,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   @Input() groupId: number;
   @Input() selectedItem: any;
   @Input() groupType: GroupType;
+  @Input() hideIntegrations = false;
 
   channels;
   loading = true;

@@ -129,7 +129,7 @@
     "message": "Créer votre compte Campus Cloud"
   },
   "admin_invite_invalid_invite_key_error": {
-    "message": "Clé d'invitation non valide"
+    "message": "Le lien d'activation n'est pas valide, veuillez vous assurer d'avoir cliqué sur le bon lien."
   },
   "admin_manage_and_assess_events": {
     "message": "Voir les événements et l'évaluation des événements"
@@ -723,7 +723,7 @@
     "message": "Annuler"
   },
   "category": {
-    "message": "Categorie"
+    "message": "Catégorie"
   },
   "change_password": {
     "message": "Changer mot de passe"
@@ -1095,6 +1095,9 @@
   },
   "description": {
     "message": "Description"
+  },
+  "dining": {
+    "message": "Menu"
   },
   "done": {
     "message": "Terminé"
@@ -2134,6 +2137,9 @@
   "services_provider_label_default_question": {
     "message": "Question de retour"
   },
+  "services_provider_label_edit_service_provider": {
+    "message": "Modifier un fournisseur de service"
+  },
   "services_provider_search_tootlip": {
     "message": "Rechercher..."
   },
@@ -2277,6 +2283,15 @@
   "total_ratings": {
     "message": "Notes"
   },
+  "t_admin_invite_account_error": {
+    "message": "Activation échouée, le compte n'existe pas, veuillez obtenir un nouveau lien d'invitation"
+  },
+  "t_admin_invite_already_activated_error": {
+    "message": "Votre compte a déjà été activé, cliquez ci-dessous pour vous connecter"
+  },
+  "t_admin_invite_studio_limited_tooltip": {
+    "message": "Un accès complet à Studio nécessite les permissions vers les clubs sportifs, les événements, les clubs, les services, les calendriers et l'orientation. Votre accès pour ajouter des ressources sera limité sans ces permissions."
+  },
   "t_assess_all_orientations": {
     "message": "Tous les programmes d'orientation"
   },
@@ -2325,11 +2340,26 @@
   "t_audience_save_modal_button_submit": {
     "message": "Enregistrer"
   },
+  "t_categories_can_not_be_delete": {
+    "message": "Les catégories avec des lieux ne peuvent pas être supprimées."
+  },
+  "t_categories_icon_color_required": {
+    "message": "L'icône et la couleur d'épingle de carte sont des champs obligatoires."
+  },
+  "t_categories_map_pin_color": {
+    "message": "Couleur d'épingle de carte"
+  },
+  "t_categories_map_pin_icon": {
+    "message": "Icône d'épingle de carte"
+  },
   "t_changes_saved_ok": {
     "message": "Changements enregistrés avec succès"
   },
   "t_check_in_date_placeholder_text": {
     "message": "Maintenant"
+  },
+  "t_clubs_admin": {
+    "message": "Administrateur"
   },
   "t_customise_personas": {
     "message": "Expériences d'application"
@@ -2344,7 +2374,7 @@
     "message": "Palmarès des orientations"
   },
   "t_datepicker_clear": {
-    "message": "Clear"
+    "message": "Réinitialiser"
   },
   "t_deals_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s?"
@@ -2401,8 +2431,23 @@
     "message": "Magasin"
   },
   "t_deals_ongoing": {
-    "message": "Ongoing",
+    "message": "En cours",
     "description": "Indicates that a deal is posted without an end date"
+  },
+  "t_dining_create_dining": {
+    "message": "Créer menu"
+  },
+  "t_dining_dining_details": {
+    "message": "Détails du menu"
+  },
+  "t_dining_hours": {
+    "message": "Heures de repas"
+  },
+  "t_dining_no_record_found": {
+    "message": "Aucun menu trouvé..."
+  },
+  "t_error_category_associated_to_location": {
+    "message": "Cette catégorie est associée à un lieu."
   },
   "t_events_assessment_add_checkin_modal_title": {
     "message": "Vérification de présence"
@@ -2521,6 +2566,9 @@
   "t_events_import_upload_picture": {
     "message": "Téléverser image"
   },
+  "t_events_list_external_source_tooltip": {
+    "message": "Cet événement était intégré. Il sera automatiquement mis à jour depuis l'intégration."
+  },
   "t_event_assessment_check_in_date": {
     "message": "Vérification de présence"
   },
@@ -2538,6 +2586,9 @@
   },
   "t_event_check_in_attendee_already_exist": {
     "message": "Cette personne s'est déjà enregistrée."
+  },
+  "t_event_integration_form_default_image": {
+    "message": "Image de l'événement"
   },
   "t_external_checkin_already_checked_in": {
     "message": "Cette personne s'est déjà enregistrée."
@@ -2581,12 +2632,66 @@
   "t_external_check_in_not_found_error": {
     "message": "Cet événement ne peut pas être trouvé"
   },
+  "t_integration_sync_button_int_not_ready_to_sync_tooltip": {
+    "message": "Vous pouvez synchroniser seulement une fois par minute"
+  },
+  "t_integration_sync_button_int_running_tooltip": {
+    "message": "Intégration en cours"
+  },
   "t_jobs_ongoing": {
-    "message": "Ongoing",
+    "message": "En cours",
     "description": "Indicates that a job posting has no end date"
+  },
+  "t_latitude": {
+    "message": "Latitude"
+  },
+  "t_locations_category_create_category": {
+    "message": "Créer catégorie"
+  },
+  "t_locations_category_type_select": {
+    "message": "Selectionner le type"
   },
   "t_locations_create_location": {
     "message": "Créer lieu"
+  },
+  "t_locations_edit_location": {
+    "message": "Éditer lieu"
+  },
+  "t_locations_link": {
+    "message": "Lien"
+  },
+  "t_locations_link_label": {
+    "message": "Libellé du lien"
+  },
+  "t_locations_location_details": {
+    "message": "Détails du lieu"
+  },
+  "t_locations_manage_categories": {
+    "message": "Gérer catégories"
+  },
+  "t_locations_no_location_found": {
+    "message": "Aucun lieu trouvé"
+  },
+  "t_locations_no_record_found": {
+    "message": "Aucune location trouvée"
+  },
+  "t_locations_opening_hours": {
+    "message": "Heures d'ouverture"
+  },
+  "t_locations_photo": {
+    "message": "Photo"
+  },
+  "t_location_categories_delete_modal_body": {
+    "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "t_location_categories_delete_modal_title": {
+    "message": "Supprimer catégorie"
+  },
+  "t_longitude": {
+    "message": "Longitude"
+  },
+  "t_members_no_results_found": {
+    "message": "Aucun Membre Trouvé"
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "Mes expériences"
@@ -2620,6 +2725,9 @@
   },
   "t_personas_delete_error_last_persona": {
     "message": "Une école doit avoir au moins une expérience d'activée."
+  },
+  "t_personas_delete_error_persona_non_empty": {
+    "message": "Impossible de supprimer l'expérience car elle est utilisée par d'autres utilisateurs."
   },
   "t_personas_delete_error_users_associated": {
     "message": "Cette expérience a des utilisateurs associés, donc vous ne pouvez pas la supprimer."
@@ -2664,7 +2772,7 @@
     "message": "Enregistrer les changements"
   },
   "t_personas_edit_tile_locked": {
-    "message": "To make changes to the content of this tile reach out to your customer success representative or contact us through the helpdesk."
+    "message": "Pour apporter des changements au contenu de cette tuile, contactez votre représentant du succès de la clientèle ou contactez-nous via le soutien."
   },
   "t_personas_form_delete_button": {
     "message": "Supprimer expérience"
@@ -2718,13 +2826,13 @@
     "message": "Web"
   },
   "t_personas_resource_add_resource": {
-    "message": "Add Resource"
+    "message": "Ajouter ressource"
   },
   "t_personas_resource_create_modal_title": {
     "message": "Nouvelle ressource"
   },
   "t_personas_resource_edit_modal_title": {
-    "message": "Edit Resource"
+    "message": "Éditer ressource"
   },
   "t_personas_section_button_add_section": {
     "message": "Ajouter section"
@@ -2867,6 +2975,9 @@
   "t_services_assessment_disable_qr_check_in": {
     "message": "Désactiver la vérification de présence"
   },
+  "t_services_assessment_enable_qr_check_in": {
+    "message": "Activer code QR"
+  },
   "t_services_assessment_qr_code_disabled_success_message": {
     "message": "Code QR désactivé avec succès"
   },
@@ -2890,6 +3001,9 @@
   },
   "t_services_membership_enabled": {
     "message": "Autoriser les utilisateurs à s'inscrire et contacter les autres membres"
+  },
+  "t_services_no_service_provider_found": {
+    "message": "Aucun fournisseur de service trouvé"
   },
   "t_services_service_qr_enabled": {
     "message": "Code QR"
@@ -2933,11 +3047,29 @@
   "t_service_provider_feedback_yes": {
     "message": "Oui"
   },
+  "t_shared_add": {
+    "message": "Ajouter"
+  },
   "t_shared_average_rating": {
     "message": "Note"
   },
+  "t_shared_btn_add_integration": {
+    "message": "Ajouter intégration"
+  },
   "t_shared_cancel": {
     "message": "Annuler"
+  },
+  "t_shared_category_create_form_modal_title": {
+    "message": "Nouvelle catégorie"
+  },
+  "t_shared_category_edit_form_modal_title": {
+    "message": "Éditer catégorie"
+  },
+  "t_shared_category_name": {
+    "message": "Nom de la catégorie"
+  },
+  "t_shared_channel": {
+    "message": "Canal"
   },
   "t_shared_checkin": {
     "message": "Présence"
@@ -2945,8 +3077,20 @@
   "t_shared_checkins": {
     "message": "Vérifications de présence"
   },
+  "t_shared_closed": {
+    "message": "Fermé"
+  },
   "t_shared_color": {
     "message": "Couleur"
+  },
+  "t_shared_cpimage_icon_heading": {
+    "message": "Téléverser votre icône"
+  },
+  "t_shared_cpimage_icon_help": {
+    "message": "Doit être 128 x 128 au format PNG"
+  },
+  "t_shared_default": {
+    "message": "Défaut"
   },
   "t_shared_delete": {
     "message": "Supprimer"
@@ -2957,14 +3101,47 @@
   "t_shared_edit": {
     "message": "Éditer"
   },
+  "t_shared_entry_deleted_successfully": {
+    "message": "Élément supprimé"
+  },
   "t_shared_error": {
     "message": "Erreur"
+  },
+  "t_shared_failed": {
+    "message": "Échoué"
+  },
+  "t_shared_feature_integrations": {
+    "message": "Intégrations"
+  },
+  "t_shared_friday": {
+    "message": "Vendredi"
+  },
+  "t_shared_from": {
+    "message": "Depuis"
   },
   "t_shared_hide": {
     "message": "Cacher"
   },
+  "t_shared_icon": {
+    "message": "Icône"
+  },
   "t_shared_image": {
     "message": "Image"
+  },
+  "t_shared_integration_create_error_duplicate_feed_url": {
+    "message": "Dupliquer le lien du flux"
+  },
+  "t_shared_integration_create_form_modal_title": {
+    "message": "Nouvelle intégration"
+  },
+  "t_shared_integration_delete_modal_title": {
+    "message": "Supprimer intégration"
+  },
+  "t_shared_integration_edit_form_modal_title": {
+    "message": "Éditer intégration"
+  },
+  "t_shared_invalid_cords": {
+    "message": "Paire de coordonnées invalide"
   },
   "t_shared_invalid_url": {
     "message": "URL invalide (https://google.com)"
@@ -2975,11 +3152,26 @@
   "t_shared_label_location_toggle": {
     "message": "Ajouter un lieu"
   },
+  "t_shared_last_synced": {
+    "message": "Dernière synchronisation"
+  },
   "t_shared_limited": {
     "message": "Limité"
   },
+  "t_shared_monday": {
+    "message": "Lundi"
+  },
+  "t_shared_no": {
+    "message": "Non"
+  },
+  "t_shared_no_categories_found": {
+    "message": "Aucune catégorie trouvée"
+  },
   "t_shared_no_integrations_found": {
     "message": "Aucune intégration trouvée"
+  },
+  "t_shared_open": {
+    "message": "Ouvert"
   },
   "t_shared_pending": {
     "message": "En attente"
@@ -2987,8 +3179,17 @@
   "t_shared_preview": {
     "message": "Aperçu"
   },
+  "t_shared_running": {
+    "message": "En course"
+  },
+  "t_shared_saturday": {
+    "message": "Samedi"
+  },
   "t_shared_save": {
     "message": "Terminé"
+  },
+  "t_shared_saved_update_success_message": {
+    "message": "Succès !"
   },
   "t_shared_show": {
     "message": "Montrer"
@@ -2999,8 +3200,29 @@
   "t_shared_successful": {
     "message": "Réussi"
   },
+  "t_shared_sunday": {
+    "message": "Dimanche"
+  },
+  "t_shared_sync": {
+    "message": "Synchroniser"
+  },
+  "t_shared_thursday": {
+    "message": "Jeudi"
+  },
+  "t_shared_to": {
+    "message": "vers"
+  },
+  "t_shared_tuesday": {
+    "message": "Mardi"
+  },
   "t_shared_type": {
     "message": "Type"
+  },
+  "t_shared_update_map": {
+    "message": "Appliquer"
+  },
+  "t_shared_upload_icon": {
+    "message": "Téléverser icône"
   },
   "t_shared_url": {
     "message": "Lien"
@@ -3011,8 +3233,14 @@
   "t_shared_web_checkin": {
     "message": "Vérification de présence"
   },
+  "t_shared_wednesday": {
+    "message": "Mercredi"
+  },
   "t_shared_wrong_dimensions": {
     "message": "Doit être en JPG ou PNG, 720*400px, moins de 300Ko"
+  },
+  "t_shared_yes": {
+    "message": "Oui"
   },
   "t_students_profile_students": {
     "message": "Élèves"
@@ -3028,6 +3256,18 @@
   },
   "t_tile_button_locked": {
     "message": "Verrouillé"
+  },
+  "t_walls_integrations_error_could_not_create_channel": {
+    "message": "Erreur lors de la création de la section"
+  },
+  "t_walls_integrations_form_label_channel_name": {
+    "message": "Nom de la section"
+  },
+  "t_walls_integrations_form_label_poster_name": {
+    "message": "Nom de l'auteur"
+  },
+  "t_walls_integrations_new_channel": {
+    "message": "Nouvelle section"
   },
   "update": {
     "message": "Mettre à jour",

@@ -3,11 +3,11 @@ import { BehaviorSubject, of as observableOf } from 'rxjs';
 import { flatMap, map, startWith } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 
+import { CPSession, ISchool } from '@app/session';
 import { EventAttendance } from '../../../event.status';
+import { BaseComponent } from '@app/base/base.component';
 import { EventUtilService } from '../../../events.utils.service';
-import { CPSession, ISchool } from '../../../../../../../session';
-import { BaseComponent } from '../../../../../../../base/base.component';
-import { AdminService, CPI18nService, StoreService } from '../../../../../../../shared/services';
+import { AdminService, CPI18nService, StoreService, IAdmin } from '@shared/services';
 
 interface IState {
   store_id: any;
@@ -84,14 +84,14 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
 
     return this.adminService.getAdminByStoreId(search).pipe(
       startWith([{ label: '---' }]),
-      map((admins) => {
+      map((admins: IAdmin[]) => {
         const _admins = [
           {
             label: '---',
             value: null
           }
         ];
-        admins.forEach((admin: any) => {
+        admins.forEach((admin: IAdmin) => {
           _admins.push({
             label: `${admin.firstname} ${admin.lastname}`,
             value: admin.id
@@ -104,9 +104,8 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   }
 
   updateCheckInOption(item) {
-    const event_attendance = item.action !== null
-        ? EventAttendance.enabled
-        : EventAttendance.disabled;
+    const event_attendance =
+      item.action !== null ? EventAttendance.enabled : EventAttendance.disabled;
 
     this.state = {
       ...this.state,
@@ -151,7 +150,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
       attendance_manager_email: null,
       has_checkout: this.checkInOptions[0],
       event_attendance: EventAttendance.disabled,
-      event_feedback: this.eventAttendanceFeedback[1],
+      event_feedback: this.eventAttendanceFeedback[1]
     };
   }
 
@@ -186,7 +185,7 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
 
   ngOnInit() {
     if (this.isService) {
-      this.updateManagersByStoreOrClubId(this.serviceId);
+      this.updateManagersByStoreOrClubId(this.storeId);
     }
 
     if (this.isClub) {
@@ -204,10 +203,12 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
       this.loading = false;
     }
 
-    const attendanceTypeOptions = [{
-      action: null,
-      label: this.cpI18n.translate('t_events_assessment_no_check_in')
-    }];
+    const attendanceTypeOptions = [
+      {
+        action: null,
+        label: this.cpI18n.translate('t_events_assessment_no_check_in')
+      }
+    ];
 
     this.eventAttendanceFeedback = this.utils.getAttendanceFeedback();
 

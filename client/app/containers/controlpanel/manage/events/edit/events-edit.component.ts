@@ -6,24 +6,24 @@ import { HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import { FORMAT } from '@shared/pipes/date';
+import { CPDate, CPMap } from '@shared/utils';
 import { EventsService } from '../events.service';
-import { FORMAT } from '../../../../../shared/pipes/date';
+import { CPSession, ISchool } from '@app/session';
+import { baseActions, IHeader } from '@app/store/base';
 import { EventUtilService } from '../events.utils.service';
-import { CPDate, CPMap } from '../../../../../shared/utils';
-import { CPSession, ISchool } from '../../../../../session';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPI18nService } from '@shared/services/i18n.service';
 import { EventsComponent } from '../list/base/events.component';
-import { baseActions, IHeader } from '../../../../../store/base';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { CheckInMethod, EventAttendance, EventFeedback } from '../event.status';
-import { IToolTipContent } from '../../../../../shared/components/cp-tooltip/cp-tooltip.interface';
+import { EventAttendance, EventFeedback } from './../event.status';
+import { CheckInMethod } from '@containers/controlpanel/manage/events/event.status';
 import {
   RouteLevel,
   AdminService,
   CPTrackingService,
   ErrorService,
   StoreService
-} from '../../../../../shared/services';
+} from '@shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -45,7 +45,6 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
   @Input() athleticId: number;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
-  @Input() toolTipContent: IToolTipContent;
 
   event;
   stores;

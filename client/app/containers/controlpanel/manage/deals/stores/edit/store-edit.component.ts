@@ -1,4 +1,8 @@
-import { HttpParams } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Actions, ofType } from '@ngrx/effects';
+import { takeUntil } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 import {
   Component,
   ElementRef,
@@ -6,20 +10,21 @@ import {
   HostListener,
   Input,
   OnInit,
-  Output
+  Output,
+  OnDestroy
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CPSession } from '../../../../../../session';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+
+import { CPSession } from '@app/session';
 import { IStore } from '../store.interface';
-import { DealsStoreService } from '../store.service';
+import * as fromDeals from '@app/store/manage/deals';
+import { CPI18nService } from '@app/shared/services/i18n.service';
 
 @Component({
   selector: 'cp-store-edit',
   templateUrl: './store-edit.component.html',
   styleUrls: ['./store-edit.component.scss']
 })
-export class StoreEditComponent implements OnInit {
+export class StoreEditComponent implements OnInit, OnDestroy {
   @Input() store: IStore;
 
   @Output() edited: EventEmitter<IStore> = new EventEmitter();
@@ -29,13 +34,15 @@ export class StoreEditComponent implements OnInit {
   buttonData;
   errorMessage;
   storeForm: FormGroup;
+  destroy$ = new Subject();
 
   constructor(
     public el: ElementRef,
     public fb: FormBuilder,
+    public updates$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: DealsStoreService
+    public stateStore: Store<fromDeals.IDealsState>
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -53,22 +60,12 @@ export class StoreEditComponent implements OnInit {
 
   onSubmit() {
     this.error = false;
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id);
-
-    this.service.editStore(this.store.id, this.storeForm.value, search).subscribe(
-      (store: IStore) => {
-        this.edited.emit(store);
-        this.resetModal();
-      },
-      () => {
-        this.error = true;
-        this.errorMessage = this.cpI18n.translate('something_went_wrong');
-      }
-    );
+    this.stateStore.dispatch(new fromDeals.EditStore(this.storeForm.value));
   }
 
   ngOnInit() {
     this.storeForm = this.fb.group({
+      id: [this.store.id],
       name: [this.store.name, [Validators.required, Validators.maxLength(120)]],
       description: [this.store.description],
       logo_url: [this.store.logo_url, Validators.required],
@@ -91,5 +88,25 @@ export class StoreEditComponent implements OnInit {
     this.storeForm.valueChanges.subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.storeForm.valid };
     });
+
+    this.updates$
+      .pipe(
+        ofType(fromDeals.EDIT_STORE_SUCCESS || fromDeals.EDIT_STORE_FAIL),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((action: any) => {
+        if (action instanceof fromDeals.EditStoreSuccess) {
+          this.edited.emit(action.payload);
+          this.resetModal();
+        } else if (action instanceof fromDeals.EditStoreFail) {
+          this.error = true;
+          this.errorMessage = this.cpI18n.translate('something_went_wrong');
+        }
+      });
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

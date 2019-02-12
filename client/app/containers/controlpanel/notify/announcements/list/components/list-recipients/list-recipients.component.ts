@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { maxAllowed } from './list-recipients.constant';
 import { IList, IUser } from '../../../announcements.interface';
 import { CPI18nPipe } from '../../../../../../../shared/pipes/i18n/i18n.pipe';
+import { TooltipOption } from 'bootstrap';
 
 const i18n = new CPI18nPipe();
 
@@ -18,8 +19,10 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
   @Output() viewMoreModal: EventEmitter<null> = new EventEmitter();
 
   moreText;
-  tooltipData;
-  tooltipContent;
+  tooltipContent: string;
+  tooltipOptions: TooltipOption = {
+    html: true
+  };
   maxAllowed = maxAllowed.inList;
   maxToolTipAllowed = maxAllowed.inTooltip;
   recipients: Array<string> = [];
@@ -81,11 +84,5 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
       this.tooltipRecipients.push(this.moreText);
       this.tooltipContent = this.tooltipRecipients.join('</br>');
     }
-
-    this.tooltipData = {
-      trigger: 'hover',
-      content: this.tooltipContent,
-      text: i18n.transform('tooltip_more_text', this.recipients_more.length)
-    };
   }
 }

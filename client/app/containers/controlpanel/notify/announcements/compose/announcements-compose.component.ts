@@ -1,24 +1,18 @@
 /*tslint:disable:max-line-length*/
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { CPSession } from '@app/session';
 import { baseActions, IHeader } from '@app/store';
-import { IToolTipContent } from '@shared/components';
 import { canSchoolReadResource } from '@shared/utils';
 import { CustomTextValidators } from '@shared/validators';
 import { AnnouncementsService } from '../announcements.service';
 import { AudienceType } from '../../../audience/audience.status';
 import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@shared/constants';
-import {
-  CPI18nService,
-  StoreService,
-  CPTrackingService,
-  ZendeskService
-} from '@shared/services';
+import { CPI18nService, StoreService, CPTrackingService } from '@shared/services';
 
 interface IState {
   isUrgent: boolean;
@@ -50,8 +44,6 @@ const THROTTLED_STATUS = 1;
   styleUrls: ['./announcements-compose.component.scss']
 })
 export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
-  @Input() toolTipContent: IToolTipContent;
-
   stores$;
   isError;
   sendAsName;
@@ -591,14 +583,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 
     this.sendAsName = this.session.defaultHost ? this.session.defaultHost.label : undefined;
-
-    this.toolTipContent = Object.assign({}, this.toolTipContent, {
-      content: this.cpI18n.translate('notify_announcement_template_to_tooltip'),
-      link: {
-        text: this.cpI18n.translate('lists_button_create'),
-        url: `${ZendeskService.zdRoot()}/articles/115004330554-Create-a-List-of-Students`
-      }
-    });
 
     let canDoEmergency;
 

@@ -1,16 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import {
-  canSchoolWriteResource,
-  canAccountLevelReadResource
-} from './../../../../../../../shared/utils/privileges/privileges';
-
-import { FORMAT } from '../../../../../../../shared/pipes';
-import { CPSession } from './../../../../../../../session/index';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
-import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../../../shared/services';
+import { FORMAT } from '@shared/pipes';
+import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPI18nService, CPTrackingService, RouteLevel } from '@shared/services';
 
 interface ISort {
   sort_field: string;
@@ -32,36 +25,15 @@ export class ListPastComponent implements OnInit {
   @Input() events: any;
   @Input() isOrientation: boolean;
 
-  @Output() deleteEvent: EventEmitter<any> = new EventEmitter();
   @Output() sortList: EventEmitter<ISort> = new EventEmitter();
 
   eventData;
   sortingLabels;
   sort: ISort = sort;
-  canDelete = false;
   dateFormat = FORMAT.SHORT;
+  isExternalToolTip = this.cpI18n.translate('t_events_list_external_source_tooltip');
 
-  constructor(
-    private session: CPSession,
-    private cpI18n: CPI18nService,
-    private cpTracking: CPTrackingService
-  ) {}
-
-  onDelete(event) {
-    if (event.is_external) {
-      return;
-    }
-
-    this.deleteEvent.emit(event);
-    this.trackDeleteEvent();
-  }
-
-  trackDeleteEvent() {
-    const eventProperties = this.setEventProperties();
-    delete eventProperties['page_type'];
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, eventProperties);
-  }
+  constructor(private cpI18n: CPI18nService, private cpTracking: CPTrackingService) {}
 
   setEventProperties() {
     return {
@@ -85,10 +57,6 @@ export class ListPastComponent implements OnInit {
       eventName: amplitudeEvents.VIEWED_ITEM,
       eventProperties: this.setEventProperties()
     };
-
-    const scholAccess = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.events);
-    const accountAccess = canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.events);
-    this.canDelete = scholAccess || accountAccess || this.isOrientation;
 
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),

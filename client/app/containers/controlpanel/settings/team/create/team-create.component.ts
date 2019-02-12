@@ -5,17 +5,18 @@ import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
-import { CPSession } from '../../../../../session';
-import { baseActions, IHeader } from '../../../../../store/base';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { ErrorService, AdminService, CPI18nService } from '../../../../../shared/services';
+import { CPSession } from '@app/session';
+import { UserType } from '@shared/utils';
+import { MODAL_TYPE } from '@shared/components';
+import { baseActions, IHeader } from '@app/store/base';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@shared/constants';
+import { ErrorService, AdminService, CPI18nService, CPTrackingService } from '@shared/services';
 
 import {
   accountsToStoreMap,
   canSchoolReadResource,
   canAccountLevelReadResource
-} from './../../../../../shared/utils/privileges/privileges';
+} from '@shared/utils/privileges';
 
 import {
   clubMenu,
@@ -62,12 +63,6 @@ export class TeamCreateComponent implements OnInit {
   servicesCount = null;
   athleticsCount = null;
   schoolPrivileges = {};
-  studioLimitedTooltip = {
-    textClass: 'danger',
-    content: this.cpI18n.translate('t_admin_invite_studio_limited_tooltip'),
-    text: this.cpI18n.translate('t_shared_limited'),
-    trigger: 'hover'
-  };
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
 
@@ -83,7 +78,8 @@ export class TeamCreateComponent implements OnInit {
     public cpI18n: CPI18nService,
     public utils: TeamUtilsService,
     public teamService: AdminService,
-    public errorService: ErrorService
+    public errorService: ErrorService,
+    public cpTracking: CPTrackingService
   ) {}
 
   private buildHeader() {
@@ -165,6 +161,11 @@ export class TeamCreateComponent implements OnInit {
 
     this.teamService.createAdmin(_data).subscribe(
       () => {
+        const source = UserType.isInternal(_data.email)
+          ? amplitudeEvents.INTERNAL
+          : amplitudeEvents.EXTERNAL;
+
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.INVITED_TEAM_MEMBER, { source });
         this.router.navigate(['/settings/team']);
       },
       (err) => {
@@ -229,6 +230,7 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onServicesSelected(service) {
+    this.doServicesCleanUp();
     if (service.action === serviceMenu.selectServices) {
       this.isServiceModal = true;
 
@@ -244,7 +246,6 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (service.action === serviceMenu.noAccess) {
-      this.doServicesCleanUp();
       this.resetServiceModal$.next(true);
 
       if (this.schoolPrivileges) {
@@ -257,7 +258,6 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (service.action === serviceMenu.allServices) {
-      this.doServicesCleanUp();
       this.resetServiceModal$.next(true);
 
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
@@ -279,7 +279,6 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onAthleticsModalSelected(athletics) {
-    this.doAthleticsCleanUp();
     const athleticsLength = Object.keys(athletics).length;
     this.athleticsCount = athleticsLength
       ? { label: `${athleticsLength} ${this.cpI18n.translate('admin_form_label_athletics')}` }
@@ -325,6 +324,7 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onClubsSelected(club) {
+    this.doClubsCleanUp();
     if (club.action === clubMenu.selectClubs) {
       this.isClubsModal = true;
       setTimeout(
@@ -339,14 +339,12 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (club.action === clubMenu.noAccess) {
-      this.doClubsCleanUp();
       this.resetClubsModal$.next(true);
 
       return;
     }
 
     if (club.action === clubMenu.allClubs) {
-      this.doClubsCleanUp();
       this.resetClubsModal$.next(true);
 
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
@@ -359,6 +357,7 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onAthleticsSelected(athletic) {
+    this.doAthleticsCleanUp();
     if (athletic.action === athleticMenu.selectAthletic) {
       this.isAthleticsModal = true;
       setTimeout(
@@ -373,14 +372,12 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (athletic.action === athleticMenu.noAccess) {
-      this.doAthleticsCleanUp();
       this.resetAthleticsModal$.next(true);
 
       return;
     }
 
     if (athletic.action === athleticMenu.allAthletics) {
-      this.doAthleticsCleanUp();
       this.resetAthleticsModal$.next(true);
 
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {

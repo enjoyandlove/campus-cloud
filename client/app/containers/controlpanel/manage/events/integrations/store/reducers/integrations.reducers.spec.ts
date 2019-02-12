@@ -46,7 +46,7 @@ describe('Event Integrations Reducer', () => {
       const action = new fromActions.GetIntegrationsSuccess([mock]);
       const { data, error } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(false);
+      expect(error).toBeNull();
       expect(data.length).toBe(1);
       expect(data[0].id).toBe(mock.id);
     });
@@ -59,12 +59,12 @@ describe('Event Integrations Reducer', () => {
       const action = new fromActions.GetIntegrationsFail(httpErrorResponse);
       const { error } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(true);
+      expect(error).not.toBeNull();
     });
   });
 
   describe('POST_INTEGRATION', () => {
-    it('should set completedAction flag to null', () => {
+    it('should add created integration to state', () => {
       const { initialState } = fromReducer;
       const body = mockIntegration;
       const payload = {
@@ -73,24 +73,22 @@ describe('Event Integrations Reducer', () => {
       };
 
       const action = new fromActions.PostIntegration(payload);
-      const { loading, completedAction } = fromReducer.reducer(initialState, action);
+      const { loading } = fromReducer.reducer(initialState, action);
 
       expect(loading).toBe(true);
-      expect(completedAction).toBeNull();
     });
   });
 
   describe('POST_INTEGRATION_SUCCESS', () => {
-    it('should set completedAction flag to null', () => {
+    it('should add new integration to state', () => {
       const { initialState } = fromReducer;
       const payload = mockIntegration;
 
       const action = new fromActions.PostIntegrationSuccess(payload);
-      const { data, completedAction } = fromReducer.reducer(initialState, action);
+      const { data } = fromReducer.reducer(initialState, action);
 
       expect(data.length).toEqual(1);
       expect(data[0].id).toBe(payload.id);
-      expect(completedAction).not.toBeNull();
     });
   });
 
@@ -101,7 +99,7 @@ describe('Event Integrations Reducer', () => {
       const action = new fromActions.PostIntegrationFail(httpErrorResponse);
       const { error } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(true);
+      expect(error).not.toBeNull();
     });
   });
 
@@ -146,7 +144,7 @@ describe('Event Integrations Reducer', () => {
       const action = new fromActions.DeleteIntegrationFail(httpErrorResponse);
       const { error, loading } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(true);
+      expect(error).not.toBeNull();
       expect(loading).toBe(false);
     });
   });
@@ -171,6 +169,86 @@ describe('Event Integrations Reducer', () => {
     });
   });
 
+  describe('SYNC_NOW_SUCCESS', () => {
+    it('should toggle competedAction message if one is passed', () => {
+      const { initialState } = fromReducer;
+      const expectedMessage = 'hello';
+
+      let action;
+      let result;
+      let expected;
+
+      action = new fromActions.SyncNowSuccess({
+        integration: mockIntegration
+      });
+
+      result = fromReducer.reducer(initialState, action);
+      expected = 't_shared_saved_update_success_message';
+
+      expect(result.completedAction).toBe(expected);
+
+      action = new fromActions.SyncNowSuccess({
+        integration: mockIntegration,
+        message: expectedMessage
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.completedAction).toBe(expectedMessage);
+    });
+  });
+
+  describe('SYNC_NOW_FAIL', () => {
+    it('should toggle error if passed', () => {
+      const { initialState } = fromReducer;
+
+      let action;
+      let result;
+
+      action = new fromActions.SyncNowFail({
+        integration: mockIntegration,
+        error: null
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.error).toBeNull();
+
+      action = new fromActions.SyncNowFail({
+        integration: mockIntegration,
+        error: 'some_error'
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.error).not.toBeNull();
+    });
+
+    it('should update completedAction', () => {
+      const { initialState } = fromReducer;
+
+      let action;
+      let result;
+
+      action = new fromActions.SyncNowFail({
+        integration: mockIntegration,
+        error: null
+      });
+
+      result = fromReducer.reducer(initialState, action);
+      expect(result.completedAction).not.toBeNull();
+
+      action = new fromActions.SyncNowFail({
+        integration: mockIntegration,
+        error: 'some_error'
+      });
+
+      result = fromReducer.reducer(initialState, action);
+
+      expect(result.completedAction).toBeNull();
+    });
+  });
+
   describe('EDIT_INTEGRATION_SUCCESS', () => {
     it('should update event integration', () => {
       let { initialState } = fromReducer;
@@ -186,10 +264,9 @@ describe('Event Integrations Reducer', () => {
       const payload = edited;
 
       const action = new fromActions.EditIntegrationSuccess(payload);
-      const { error, data, completedAction } = fromReducer.reducer(initialState, action);
+      const { error, data } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(false);
-      expect(completedAction).not.toBeNull();
+      expect(error).toBeNull();
       expect(data[0].feed_url).toBe(updatedValue);
     });
   });
@@ -201,8 +278,21 @@ describe('Event Integrations Reducer', () => {
       const action = new fromActions.EditIntegrationFail(httpErrorResponse);
       const { error, loading } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(true);
       expect(loading).toBe(false);
+      expect(error).not.toBeNull();
+    });
+  });
+
+  describe('DESTROY', () => {
+    it('should reset completedAction and error keys', () => {
+      const { initialState } = fromReducer;
+      const action = new fromActions.Destroy();
+
+      const { error, completedAction, hosts } = fromReducer.reducer(initialState, action);
+
+      expect(error).toBeNull();
+      expect(hosts.length).toBe(0);
+      expect(completedAction).toBeNull();
     });
   });
 
@@ -213,7 +303,7 @@ describe('Event Integrations Reducer', () => {
       const action = new fromActions.GetHostsSuccess(payload);
       const { error, loading, hosts } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(false);
+      expect(error).toBeNull();
       expect(loading).toBe(false);
       expect(hosts).toEqual(payload);
     });

@@ -1,26 +1,32 @@
-import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
+import { Store, StoreModule as NgrxStore } from '@ngrx/store';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of as observableOf } from 'rxjs';
-import { CPSession } from './../../../../../../session';
-import { StoreCreateComponent } from './store-create.component';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+import { HttpClientModule } from '@angular/common/http';
+import { FormBuilder } from '@angular/forms';
+import { Actions } from '@ngrx/effects';
+
+import { CPSession } from '@app/session';
 import { StoreModule } from '../store.module';
-import { DealsStoreService } from '../store.service';
-
-class MockStoreService {
-  dummy;
-
-  createStore(body: any, search: any) {
-    this.dummy = [search];
-
-    return observableOf(body);
-  }
-}
+import { configureTestSuite } from '@shared/tests';
+import * as fromDeals from '@app/store/manage/deals';
+import { mockSchool } from '@app/session/mock/school';
+import { CPI18nService } from '@shared/services/i18n.service';
+import { StoreCreateComponent } from './store-create.component';
 
 describe('DealsStoreCreateComponent', () => {
+  configureTestSuite();
+  beforeAll((done) => {
+    (async () => {
+      TestBed.configureTestingModule({
+        imports: [HttpClientModule, StoreModule, RouterTestingModule, NgrxStore.forRoot({})],
+        providers: [Store, Actions, CPSession, FormBuilder, CPI18nService]
+      });
+      await TestBed.compileComponents();
+    })()
+      .then(done)
+      .catch(done.fail);
+  });
+
   let spy;
   let component: StoreCreateComponent;
   let fixture: ComponentFixture<StoreCreateComponent>;
@@ -34,24 +40,12 @@ describe('DealsStoreCreateComponent', () => {
 
   beforeEach(
     async(() => {
-      TestBed.configureTestingModule({
-        imports: [HttpClientModule, StoreModule, RouterTestingModule],
-        providers: [
-          CPSession,
-          FormBuilder,
-          CPI18nService,
-          { provide: DealsStoreService, useClass: MockStoreService }
-        ]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(StoreCreateComponent);
-          component = fixture.componentInstance;
+      fixture = TestBed.createComponent(StoreCreateComponent);
+      component = fixture.componentInstance;
 
-          component.session.g.set('school', mockSchool);
+      component.session.g.set('school', mockSchool);
 
-          component.ngOnInit();
-        });
+      fixture.detectChanges();
     })
   );
 
@@ -95,26 +89,26 @@ describe('DealsStoreCreateComponent', () => {
     expect(component.buttonData.disabled).toBeFalsy();
   });
 
-  it('should create store', () => {
-    spyOn(component.created, 'emit');
-    spyOn(component, 'resetModal');
-    spy = spyOn(component.service, 'createStore').and.returnValue(observableOf(newStore));
-
-    component.storeForm = component.fb.group({
-      name: ['Hello World!'],
-      logo_url: ['dummy.jpeg'],
-      description: ['This is description']
-    });
-
+  it('should dispatch create action', () => {
+    spy = spyOn(component.store, 'dispatch');
     component.onSubmit();
 
-    expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledTimes(1);
-
-    expect(component.created.emit).toHaveBeenCalledTimes(1);
-    expect(component.created.emit).toHaveBeenCalledWith(newStore);
-
-    expect(component.resetModal).toHaveBeenCalled();
-    expect(component.resetModal).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(new fromDeals.CreateStore(component.storeForm.value));
   });
+
+  it(
+    'should emit after create',
+    async(() => {
+      spyOn(component.created, 'emit');
+      spyOn(component, 'resetModal');
+
+      component.store.dispatch(new fromDeals.CreateStoreSuccess(newStore));
+      fixture.detectChanges();
+
+      expect(component.created.emit).toHaveBeenCalledTimes(1);
+      expect(component.created.emit).toHaveBeenCalledWith(newStore);
+      expect(component.resetModal).toHaveBeenCalledTimes(1);
+    })
+  );
 });

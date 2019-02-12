@@ -5,16 +5,16 @@ import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { CPMap } from '@shared/utils';
 import { membershipTypes } from './index';
 import { IService } from '../service.interface';
-import { CPMap } from '../../../../../shared/utils';
+import { CPSession, ISchool } from '@app/session';
 import { ServicesService } from '../services.service';
 import { ServiceAttendance } from '../services.status';
-import { CPSession, ISchool } from '../../../../../session';
+import { baseActions, IHeader } from '@app/store/base';
+import { amplitudeEvents } from '@shared/constants/analytics';
 import { ServicesUtilsService } from '../services.utils.service';
-import { baseActions, IHeader } from '../../../../../store/base';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 
 @Component({
   selector: 'cp-services-create',
@@ -61,7 +61,7 @@ export class ServicesCreateComponent implements OnInit {
     this.buildHeader();
     this.categories$ = this.servicesService.getCategories().pipe(
       startWith([{ label: '---', action: null }]),
-      map((categories) => {
+      map((categories: any[]) => {
         const _categories = [
           {
             label: '---',
@@ -247,10 +247,7 @@ export class ServicesCreateComponent implements OnInit {
   ngOnInit() {
     this.school = this.session.g.get('school');
 
-    this.categoryTooltip = {
-      ...this.categoryTooltip,
-      content: this.cpI18n.translate('manage_create_service_category_tooltip')
-    };
+    this.categoryTooltip = this.cpI18n.translate('manage_create_service_category_tooltip');
 
     this.buttonData = {
       disabled: true,

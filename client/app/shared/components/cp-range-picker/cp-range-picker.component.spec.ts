@@ -38,7 +38,7 @@ describe('CPRangePickerComponent', () => {
   const expected = {
     start: 1512363600,
     end: 1512622799,
-    label: 'Dec 4th, 2017 - Dec 6th, 2017'
+    label: 'Dec 4, 2017 - Dec 6, 2017'
   };
 
   beforeEach(

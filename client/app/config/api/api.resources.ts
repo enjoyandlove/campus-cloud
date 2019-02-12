@@ -87,6 +87,8 @@ export const API_ENDPOINTS = {
 
   SERVICE_ASSESSMENT: 'service_assessment',
 
+  LOCATIONS_CATEGORIES: 'location_category',
+
   EVENT_INTEGRATIONS: 'external_feed/event',
 
   DASHBOARD_TOP_CLUBS: 'analytics/club_data',
@@ -97,7 +99,11 @@ export const API_ENDPOINTS = {
 
   DASHBOARD_CAMPUS_TILE: 'analytics/campus_guide',
 
+  LOCATION_CATEGORY_TYPE: 'location_category_type',
+
   EXTERNAL_EVENT_CHECKIN: 'external_event_checkin',
+
+  WALLS_INTEGRATIONS: 'external_feed/campus_thread',
 
   EXTERNAL_EVENT_FEEDBACK: 'external_event_feedback',
 

@@ -3,7 +3,7 @@ import { IStore } from '@shared/services/store.service';
 import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
 
 export interface IntegrationsState {
-  error: boolean;
+  error: string;
   loading: boolean;
   hosts: IStore[];
   completedAction: string;
@@ -13,17 +13,37 @@ export interface IntegrationsState {
 export const initialState: IntegrationsState = {
   data: [],
   hosts: [],
-  error: false,
+  error: null,
   loading: false,
   completedAction: null
 };
 
 export function reducer(state = initialState, action: fromIntegrations.Actions): IntegrationsState {
   switch (action.type) {
-    case fromIntegrations.IntegrationActions.GET_INTEGRATIONS: {
+    case fromIntegrations.IntegrationActions.SYNC_NOW:
+    case fromIntegrations.IntegrationActions.CREATE_AND_SYNC:
+    case fromIntegrations.IntegrationActions.EDIT_INTEGRATION:
+    case fromIntegrations.IntegrationActions.POST_INTEGRATION:
+    case fromIntegrations.IntegrationActions.GET_INTEGRATIONS:
+    case fromIntegrations.IntegrationActions.DELETE_INTEGRATION: {
       return {
         ...state,
-        loading: true
+        error: null,
+        loading: true,
+        completedAction: null
+      };
+    }
+
+    case fromIntegrations.IntegrationActions.EDIT_INTEGRATION_FAIL:
+    case fromIntegrations.IntegrationActions.POST_INTEGRATION_FAIL:
+    case fromIntegrations.IntegrationActions.GET_INTEGRATIONS_FAIL:
+    case fromIntegrations.IntegrationActions.DELETE_INTEGRATION_FAIL: {
+      const { error } = action.payload;
+
+      return {
+        ...state,
+        error,
+        loading: false
       };
     }
 
@@ -32,55 +52,19 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
 
       return {
         ...state,
-        error: false,
+        error: null,
         loading: false,
         data: [...data]
       };
     }
 
-    case fromIntegrations.IntegrationActions.GET_INTEGRATIONS_FAIL: {
-      return {
-        ...state,
-        error: true,
-        loading: false
-      };
-    }
-
-    case fromIntegrations.IntegrationActions.POST_INTEGRATION: {
-      return {
-        ...state,
-        error: false,
-        loading: true,
-        completedAction: null
-      };
-    }
-
     case fromIntegrations.IntegrationActions.POST_INTEGRATION_SUCCESS: {
-      const newIEventIntegration = action.payload;
+      const { integration } = action.payload;
 
       return {
         ...state,
-        error: false,
-        loading: false,
-        data: [newIEventIntegration, ...state.data],
-        completedAction: 't_shared_saved_update_success_message'
-      };
-    }
-
-    case fromIntegrations.IntegrationActions.POST_INTEGRATION_FAIL: {
-      return {
-        ...state,
-        error: true,
-        loading: false
-      };
-    }
-
-    case fromIntegrations.IntegrationActions.DELETE_INTEGRATION: {
-      return {
-        ...state,
-        error: false,
-        loading: true,
-        completedAction: null
+        error: null,
+        data: [integration, ...state.data]
       };
     }
 
@@ -89,27 +73,10 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
 
       return {
         ...state,
-        error: false,
+        error: null,
         loading: false,
         completedAction: 't_shared_entry_deleted_successfully',
         data: state.data.filter((e: IEventIntegration) => e.id !== deletedId)
-      };
-    }
-
-    case fromIntegrations.IntegrationActions.DELETE_INTEGRATION_FAIL: {
-      return {
-        ...state,
-        error: true,
-        loading: false
-      };
-    }
-
-    case fromIntegrations.IntegrationActions.EDIT_INTEGRATION: {
-      return {
-        ...state,
-        error: false,
-        loading: true,
-        completedAction: null
       };
     }
 
@@ -118,18 +85,8 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
 
       return {
         ...state,
-        error: false,
-        loading: false,
-        data: state.data.map((e: IEventIntegration) => (e.id === edited.id ? edited : e)),
-        completedAction: 't_shared_saved_update_success_message'
-      };
-    }
-
-    case fromIntegrations.IntegrationActions.EDIT_INTEGRATION_FAIL: {
-      return {
-        ...state,
-        error: true,
-        loading: false
+        error: null,
+        data: state.data.map((e: IEventIntegration) => (e.id === edited.id ? edited : e))
       };
     }
 
@@ -144,7 +101,33 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
     case fromIntegrations.IntegrationActions.DESTROY: {
       return {
         ...state,
+        error: null,
         completedAction: null
+      };
+    }
+
+    case fromIntegrations.IntegrationActions.SYNC_NOW_FAIL: {
+      const { integration, error } = action.payload;
+
+      return {
+        ...state,
+        error,
+        loading: false,
+        data: state.data.map((i) => (i.id === integration.id ? integration : i)),
+        completedAction: error ? null : 't_shared_saved_update_success_message'
+      };
+    }
+
+    case fromIntegrations.IntegrationActions.SYNC_NOW_SUCCESS: {
+      const defaultAction = 't_shared_saved_update_success_message';
+
+      const { integration, message } = action.payload;
+
+      return {
+        ...state,
+        loading: false,
+        completedAction: message ? message : defaultAction,
+        data: state.data.map((i) => (i.id === integration.id ? integration : i))
       };
     }
 

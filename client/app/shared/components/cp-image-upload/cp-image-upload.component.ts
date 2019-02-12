@@ -1,8 +1,9 @@
-import { HttpHeaders } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { API } from '../../../config/api';
-import { FileUploadService } from '../../../shared/services/file-upload.service';
-import { appStorage } from '../../../shared/utils';
+import { HttpHeaders } from '@angular/common/http';
+
+import { API } from '@app/config/api';
+import { appStorage } from '@shared/utils';
+import { FileUploadService } from '@shared/services';
 import { CPI18nService, ZendeskService } from '../../services';
 
 @Component({
@@ -14,10 +15,12 @@ export class CPImageUploadComponent implements OnInit {
   @Input() id = 'upload_component';
   @Input() small: boolean;
   @Input() required: boolean;
+  @Input() maxFileSize: number;
   @Input() defaultImage: string;
-  @Input() heading: string;
-  @Input() description: string;
   @Input() validationFn: Function;
+  @Input() buttonText = this.cpI18n.translate('upload_picture');
+  @Input() description = this.cpI18n.translate('component_cpimage_help');
+  @Input() heading = this.cpI18n.translate('component_cpimage_description');
 
   @Output() uploaded: EventEmitter<string> = new EventEmitter();
 
@@ -26,7 +29,6 @@ export class CPImageUploadComponent implements OnInit {
   fileName;
   isLoading;
   zdArticle;
-  buttonText;
 
   constructor(public cpI18n: CPI18nService, private fileUploadService: FileUploadService) {}
 
@@ -39,7 +41,7 @@ export class CPImageUploadComponent implements OnInit {
       return;
     }
 
-    let validate = this.fileUploadService.validImage(file);
+    let validate = this.fileUploadService.validImage(file, this.maxFileSize);
 
     if (this.validationFn) {
       try {
@@ -93,15 +95,6 @@ export class CPImageUploadComponent implements OnInit {
   ngOnInit() {
     const root = ZendeskService.zdRoot();
     this.zdArticle = `${root}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud`;
-    this.buttonText = this.cpI18n.translate('upload_picture');
-
-    if (!this.heading) {
-      this.heading = this.cpI18n.translate('component_cpimage_description');
-    }
-
-    if (!this.description) {
-      this.description = this.cpI18n.translate('component_cpimage_help');
-    }
 
     if (this.defaultImage) {
       this.image = this.defaultImage;

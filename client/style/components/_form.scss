@@ -97,6 +97,12 @@ textarea {
   border: 1px solid $color-med-grey;
   transition: border 300ms ease-in-out;
 
+  &:disabled {
+    color: $color-med-grey;
+    background: $color-light-grey;
+    border: 1px solid $color-med-grey;
+  }
+
   &.transparent {
     border: none;
     max-width: 100%;

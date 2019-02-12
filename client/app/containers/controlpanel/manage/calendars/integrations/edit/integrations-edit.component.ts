@@ -50,7 +50,7 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const body = this.form.value;
+    const body = this.form.getRawValue();
     const params = this.defaultParams;
 
     const payload = {
@@ -59,7 +59,7 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
       integrationId: this.eventIntegration.id
     };
 
-    this.store.dispatch(new fromStore.EditIntegration(payload));
+    this.store.dispatch(new fromStore.UpdateAndSync(payload));
 
     this.resetModal();
   }
@@ -67,6 +67,7 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.calendarId = this.route.snapshot.params['calendarId'];
     this.form = EventIntegration.form(this.eventIntegration);
+    this.form.get('feed_url').disable();
 
     this.form.get('feed_obj_id').setValue(this.calendarId);
 

@@ -1,30 +1,27 @@
 <div class="page">
   <div class="page__nav">
     <div class="cp-wrapper cp-wrapper--outer">
-      <div class="row justify-content-center">
-        <div class="col-8">
-          <p class="page__title" i18n>{{ 't_shared_web_checkin' | cpI18n }}</p>
-          <div class="float-right">
-            <button
-              (click)="handlePdf()"
-              class="cpbtn cpbtn--primary"i18n>
-              {{ 'checkin_download_qr_code' | cpI18n }}
-            </button>
-            <button
-              data-toggle="modal"
-              class="cpbtn cpbtn--primary"
-              data-target="#checkinInstruction" i18n>
-              {{ 'instructions' | cpI18n }}
-            </button>
-          </div>
+      <cp-one-column [width]="layoutWidth" [aligned]="layoutAlign">
+        <p class="page__title">{{ 't_shared_web_checkin' | cpI18n }}</p>
+        <div class="float-right">
+          <button
+            (click)="handlePdf()"
+            class="cpbtn cpbtn--primary"i18n>
+            {{ 'checkin_download_qr_code' | cpI18n }}
+          </button>
+          <button
+            data-toggle="modal"
+            class="cpbtn cpbtn--primary"
+            data-target="#checkinInstruction">
+            {{ 'instructions' | cpI18n }}
+          </button>
         </div>
-      </div>
+      </cp-one-column>
     </div>
   </div>
 
   <div class="cp-wrapper cp-wrapper--outer">
-    <div class="row justify-content-center">
-      <div class="col-xs-12 col-sm-8">
+    <cp-one-column [width]="layoutWidth" [aligned]="layoutAlign">
         <cp-service-header
           [service]="data"
           *ngIf="isService"
@@ -45,13 +42,13 @@
         </cp-checkin-register>
 
         <cp-attendees-list
-          class="card-margin"
           [data]="data"
+          class="card-margin"
+          [timeZone]="timeZone"
           (checkout)="checkout.emit($event)"
           *ngIf="data.attendees.length">
         </cp-attendees-list>
-      </div>
-    </div>
+      </cp-one-column>
   </div>
 </div>
 

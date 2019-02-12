@@ -17,11 +17,11 @@
     </cp-no-content>
 
     <div *ngIf="(integrations$ | async)?.length">
-      <cp-integrations-list
+      <cp-event-integrations-list
         [integrations$]="integrations$"
-        (editClick)="onLaunchEditModal($event)"
+        (syncClick)="onSyncNow($event)"
         (deleteClick)="onLaunchDeleteModal($event)">
-      </cp-integrations-list>
+      </cp-event-integrations-list>
 
       <cp-pagination
         [pageNext]="pageNext"
@@ -51,14 +51,4 @@
   <cp-items-integrations-create
     (teardown)="onCreateTeardown()">
   </cp-items-integrations-create>
-</cp-modal>
-
-<cp-modal
-  *ngIf="showEditModal"
-  modalId="integrationEdit"
-  (modalClose)="onEditTeardown()">
-  <cp-items-integrations-edit
-    (teardown)="onEditTeardown()"
-    [eventIntegration]="selectedIntegration">
-  </cp-items-integrations-edit>
 </cp-modal>

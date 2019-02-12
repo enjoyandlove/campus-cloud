@@ -3,6 +3,7 @@
 @import '~client/style/components/form';
 @import '~client/style/components/modal';
 @import '~client/style/components/button';
+@import '~client/style/components/tooltip';
 
 .cpmodal__body {
   margin-top: 15px;
@@ -43,6 +44,12 @@ label {
     @include font-normal();
 
     color: $color-secondary-text;
+  }
+
+  &.with-tooltip {
+    i {
+      @include toolTipIcon();
+    }
   }
 }
 

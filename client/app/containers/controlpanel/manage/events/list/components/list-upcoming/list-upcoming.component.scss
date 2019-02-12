@@ -4,11 +4,6 @@
 
 .delete-event {
   font-size: 2em;
-
-  &.disabled {
-    cursor: not-allowed;
-    color: $color-light-grey;
-  }
 }
 
 .cp-form__header {
@@ -50,8 +45,9 @@
 .actions {
   color: $color-secondary-text;
 
-  i {
-    top: 2px;
+  i,
+  img {
+    top: -5px;
     right: 10px;
     position: relative;
   }

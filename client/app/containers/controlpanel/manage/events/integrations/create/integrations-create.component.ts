@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { takeUntil, map, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
@@ -19,14 +19,13 @@ import { CommonIntegrationUtilsService } from '@libs/integrations/common/provide
   styleUrls: ['./integrations-create.component.scss']
 })
 export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
-  @Input() stores$: Observable<IStore[] | IItem[]>;
-
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   form: FormGroup;
   destroy$ = new Subject();
   typesDropdown: IItem[];
   selectedType: IItem | null;
+  stores$: Observable<IStore[] | IItem[]>;
 
   constructor(
     public session: CPSession,
@@ -58,7 +57,7 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
       params
     };
 
-    this.store.dispatch(new fromStore.PostIntegration(payload));
+    this.store.dispatch(new fromStore.CreateAndSync(payload));
 
     this.resetModal();
   }

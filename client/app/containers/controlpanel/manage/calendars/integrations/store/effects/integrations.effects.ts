@@ -1,15 +1,22 @@
+import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
+import { CPDate } from '@shared/utils';
+import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
-import { StoreService } from '@shared/services';
+import { StoreService, CPI18nService } from '@shared/services';
 import { ItemsIntegrationsService } from './../../integrations.service';
+import { EventIntegration } from '@client/app/libs/integrations/events/model';
+import { LibsIntegrationEventCommonUtilsService } from '@libs/integrations/events/providers';
 import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
 
 @Injectable()
 export class IntegrationsEffects {
+  somethingWentWrong = { error: this.cpI18n.translate('something_went_wrong') };
+
   @Effect()
   getHosts$: Observable<
     fromActions.GetHostsSuccess | fromActions.GetHostsFail
@@ -21,7 +28,7 @@ export class IntegrationsEffects {
         .getStores(params)
         .pipe(
           map((data: any[]) => new fromActions.GetHostsSuccess(data)),
-          catchError((error) => of(new fromActions.GetHostsFail(error)))
+          catchError(() => of(new fromActions.GetHostsFail(this.somethingWentWrong)))
         );
     })
   );
@@ -37,23 +44,7 @@ export class IntegrationsEffects {
         .getIntegrations(startRange, endRange, params)
         .pipe(
           map((data: IEventIntegration[]) => new fromActions.GetIntegrationsSuccess(data)),
-          catchError((error) => of(new fromActions.GetIntegrationsFail(error)))
-        );
-    })
-  );
-
-  @Effect()
-  createIntegration$: Observable<
-    fromActions.PostIntegrationSuccess | fromActions.PostIntegrationFail
-  > = this.actions$.pipe(
-    ofType(fromActions.IntegrationActions.POST_INTEGRATION),
-    mergeMap((action: fromActions.PostIntegration) => {
-      const { body, params } = action.payload;
-      return this.service
-        .createIntegration(body, params)
-        .pipe(
-          map((data: IEventIntegration) => new fromActions.PostIntegrationSuccess(data)),
-          catchError((error) => of(new fromActions.PostIntegrationFail(error)))
+          catchError(() => of(new fromActions.GetIntegrationsFail(this.somethingWentWrong)))
         );
     })
   );
@@ -69,7 +60,7 @@ export class IntegrationsEffects {
         .deleteIntegration(integrationId, params)
         .pipe(
           map(() => new fromActions.DeleteIntegrationSuccess({ deletedId: integrationId })),
-          catchError((error) => of(new fromActions.DeleteIntegrationFail(error)))
+          catchError(() => of(new fromActions.DeleteIntegrationFail(this.somethingWentWrong)))
         );
     })
   );
@@ -85,14 +76,125 @@ export class IntegrationsEffects {
         .editIntegration(integrationId, body, params)
         .pipe(
           map((edited: IEventIntegration) => new fromActions.EditIntegrationSuccess(edited)),
-          catchError((error) => of(new fromActions.EditIntegrationFail(error)))
+          catchError((error) =>
+            of(new fromActions.EditIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
+          )
         );
     })
   );
 
+  @Effect()
+  editIntegrationSuccess$: Observable<fromActions.SyncNow> = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.EDIT_INTEGRATION_SUCCESS),
+    map((action: fromActions.EditIntegrationSuccess) => action.payload),
+    mergeMap((integration) =>
+      of(
+        new fromActions.SyncNow({
+          integration,
+          error: null,
+          calendarId: integration.feed_obj_id,
+          succesMessage: 't_shared_saved_update_success_message'
+        })
+      )
+    )
+  );
+
+  @Effect()
+  createIntegration$: Observable<
+    fromActions.PostIntegrationSuccess | fromActions.PostIntegrationFail
+  > = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.POST_INTEGRATION),
+    map((action: fromActions.PostIntegration) => action.payload),
+    mergeMap(({ body, calendarId, params }) => {
+      return this.service.createIntegration(body, params).pipe(
+        map((integration: IEventIntegration) => {
+          return new fromActions.PostIntegrationSuccess({ integration, calendarId });
+        }),
+        catchError(({ error }: HttpErrorResponse) =>
+          of(new fromActions.PostIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
+        )
+      );
+    })
+  );
+
+  @Effect()
+  postIntegrationSuccess$: Observable<fromActions.SyncNow> = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.POST_INTEGRATION_SUCCESS),
+    map((action: fromActions.PostIntegrationSuccess) => action.payload),
+    mergeMap(({ integration, calendarId }) =>
+      of(
+        new fromActions.SyncNow({
+          calendarId,
+          integration,
+          error: null,
+          succesMessage: 't_shared_saved_update_success_message'
+        })
+      )
+    )
+  );
+
+  @Effect()
+  syncNow$: Observable<fromActions.SyncNowSuccess | fromActions.SyncNowFail> = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.SYNC_NOW),
+    map((action: fromActions.SyncNow) => action.payload),
+    mergeMap(({ integration, succesMessage, error, calendarId }) => {
+      const search = new HttpParams()
+        .set('sync_now', '1')
+        .set('academic_calendar_id', calendarId.toString())
+        .set('school_id', this.session.g.get('school').id)
+        .set('feed_obj_type', EventIntegration.objectType.academicEvent.toString());
+      return this.service.syncNow(integration.id, search).pipe(
+        map(() => {
+          const editedIntegration = {
+            ...integration,
+            sync_status: EventIntegration.status.successful,
+            last_successful_sync_epoch: CPDate.now(this.session.tz).unix()
+          };
+
+          return new fromActions.SyncNowSuccess({
+            integration: editedIntegration,
+            message: succesMessage
+          });
+        }),
+        catchError((err: HttpErrorResponse) => {
+          const timedOut = 0;
+          const requestTimedOut = err.status === timedOut;
+          error = requestTimedOut ? null : error;
+          const sync_status = requestTimedOut
+            ? EventIntegration.status.running
+            : EventIntegration.status.error;
+
+          const failedIntegration = {
+            ...integration,
+            sync_status
+          };
+
+          return of(new fromActions.SyncNowFail({ integration: failedIntegration, error }));
+        })
+      );
+    })
+  );
+
+  @Effect()
+  createAndSync$: Observable<fromActions.PostIntegration> = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.CREATE_AND_SYNC),
+    map((action: fromActions.CreateAndSync) => action.payload),
+    mergeMap((payload) => of(new fromActions.PostIntegration(payload)))
+  );
+
+  @Effect()
+  updateAndSync$: Observable<fromActions.EditIntegration> = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.UPDATE_AND_SYNC),
+    map((action: fromActions.UpdateAndSync) => action.payload),
+    mergeMap((payload) => of(new fromActions.EditIntegration(payload)))
+  );
+
   constructor(
     private actions$: Actions,
+    private session: CPSession,
+    private cpI18n: CPI18nService,
     private storeService: StoreService,
-    private service: ItemsIntegrationsService
+    private service: ItemsIntegrationsService,
+    private commonUtils: LibsIntegrationEventCommonUtilsService
   ) {}
 }

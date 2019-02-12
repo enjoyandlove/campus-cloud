@@ -13,10 +13,12 @@
     <div
       class="recipients__more col-6"
       *ngIf="recipients_more.length">
-        <cp-tooltip
-          [toolTipContent]="tooltipData"
-          (click)="viewMoreModal.emit(totalRecipients)">
-        </cp-tooltip>
+      <button
+        class="cpbtn cpbtn--link"
+        [cpTooltip]="tooltipOptions"
+        [attr.title]="tooltipContent">
+        {{ 'tooltip_more_text' | cpI18n: recipients_more.length }}
+      </button>
     </div>
   </div>
 </div>

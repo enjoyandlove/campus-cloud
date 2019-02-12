@@ -5,16 +5,16 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import { CPMap } from '@shared/utils';
+import { CPSession } from '@app/session';
 import { ClubStatus } from '../club.status';
 import { ClubsService } from '../clubs.service';
-import { CPSession } from '../../../../../session';
-import { CPMap } from '../../../../../shared/utils';
-import { baseActions } from '../../../../../store/base';
+import { CPTrackingService } from '@shared/services';
 import { ClubsUtilsService } from '../clubs.utils.service';
 import { membershipTypes, statusTypes } from './permissions';
-import { CPTrackingService } from '../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { CPI18nService } from '@shared/services/i18n.service';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { baseActions, baseActionClass } from '@app/store/base';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 
 @Component({
@@ -78,11 +78,13 @@ export class ClubsCreateComponent implements OnInit {
         this.trackEvent(res);
         this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
       },
-      (err) => {
+      () => {
         this.buttonData = Object.assign({}, this.buttonData, {
           disabled: false
         });
-        throw new Error(err);
+        this.store.dispatch(
+          new baseActionClass.SnackbarError({ body: this.cpI18n.translate('something_went_wrong') })
+        );
       }
     );
   }

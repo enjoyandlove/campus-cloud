@@ -1,17 +1,28 @@
-import { HttpHeaders } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { API } from '../../../../../config/api';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { appStorage } from '../../../../../shared/utils';
-import { ILink } from '../link.interface';
-import { didUrlChange, LinksService } from '../links.service';
+import { HttpHeaders } from '@angular/common/http';
+import { Actions, ofType } from '@ngrx/effects';
+import { takeUntil } from 'rxjs/operators';
+import { TooltipOption } from 'bootstrap';
+import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 import {
-  CPTrackingService,
-  FileUploadService,
-  ZendeskService
-} from '../../../../../shared/services';
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  OnDestroy
+} from '@angular/core';
+
+import { API } from '@app/config/api';
+import { appStorage } from '@shared/utils';
+import { Destroyable, Mixin } from '@shared/mixins';
+import * as fromLinks from '@app/store/manage/links';
+import { CPI18nService } from '@shared/services/i18n.service';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { didUrlChange, LinksService } from '../links.service';
+import { CPTrackingService, FileUploadService, ZendeskService } from '@shared/services';
 
 declare var $: any;
 
@@ -20,25 +31,33 @@ declare var $: any;
   templateUrl: './links-edit.component.html',
   styleUrls: ['./links-edit.component.scss']
 })
-export class LinksEditComponent implements OnInit, OnChanges {
+@Mixin([Destroyable])
+export class LinksEditComponent implements OnInit, OnChanges, OnDestroy, Destroyable {
   @Input() link: any;
-  @Output() editLink: EventEmitter<ILink> = new EventEmitter();
+  @Output() editLink: EventEmitter<null> = new EventEmitter();
   @Output() resetEditModal: EventEmitter<null> = new EventEmitter();
 
   imageError;
-  tooltipContent;
   form: FormGroup;
+  tooltipContent: string;
+  imageSizeToolTip: TooltipOption;
 
   eventProperties = {
     link_id: null,
     changed_url: null
   };
 
+  // Destroyable
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     private fb: FormBuilder,
+    private updates$: Actions,
     public cpI18n: CPI18nService,
     private service: LinksService,
     private cpTracking: CPTrackingService,
+    private store: Store<fromLinks.ILinksState>,
     private fileUploadService: FileUploadService
   ) {}
 
@@ -92,17 +111,7 @@ export class LinksEditComponent implements OnInit, OnChanges {
   }
 
   doSubmit() {
-    this.service.updateLink(this.form.value, this.link.id).subscribe(
-      (res: any) => {
-        this.trackEvent(res);
-        this.editLink.emit(res);
-        $('#linksEdit').modal('hide');
-        this.resetModal();
-      },
-      (err) => {
-        throw new Error(err);
-      }
-    );
+    this.store.dispatch(new fromLinks.UpdateLink({ link: this.form.value, id: this.link.id }));
   }
 
   trackEvent(res) {
@@ -127,12 +136,36 @@ export class LinksEditComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     const zendesk = ZendeskService.zdRoot();
-    this.tooltipContent = {
-      content: '',
-      link: {
-        url: `${zendesk}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud`,
-        text: this.cpI18n.translate('learn_more')
-      }
+
+    this.imageSizeToolTip = {
+      html: true,
+      trigger: 'click'
     };
+
+    this.tooltipContent = `<a
+      class='cpbtn cpbtn--link'
+      href='${zendesk}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud'>
+      ${this.cpI18n.translate('learn_more')}
+    </a>`;
+
+    this.updates$
+      .pipe(ofType(fromLinks.LinksActionTypes.UPDATE_LINK_SUCCESS), takeUntil(this.destroy$))
+      .subscribe((action: fromLinks.UpdateLinkSuccess) => {
+        const res = action.payload;
+
+        this.trackEvent(res);
+        this.editLink.emit();
+        $('#linksEdit').modal('hide');
+        this.resetModal();
+      });
+    this.updates$
+      .pipe(ofType(fromLinks.LinksActionTypes.UPDATE_LINK_FAILURE), takeUntil(this.destroy$))
+      .subscribe((action: fromLinks.UpdateLinkFailure) => {
+        throw new Error(action.payload);
+      });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

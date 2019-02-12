@@ -1,4 +1,4 @@
-import { HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
 import { IStore } from '@shared/services/store.service';
@@ -25,7 +25,14 @@ export enum IntegrationActions {
 
   GET_HOSTS = '[manage.calendars.items.integrations] get hosts',
   GET_HOSTS_SUCCESS = '[manage.calendars.items.integrations] get hosts success',
-  GET_HOSTS_FAIL = '[manage.calendars.items.integrations] get hosts fail'
+  GET_HOSTS_FAIL = '[manage.calendars.items.integrations] get hosts fail',
+
+  SYNC_NOW = '[manage.calendars.items.integrations] sync now',
+  SYNC_NOW_FAIL = '[manage.calendars.items.integrations] sync now fail',
+  SYNC_NOW_SUCCESS = '[manage.calendars.items.integrations] sync now success',
+
+  CREATE_AND_SYNC = '[manage.calendars.items.integrations] create and sync',
+  UPDATE_AND_SYNC = '[manage.calendars.items.integrations] update and sync'
 }
 
 export class GetIntegrations implements Action {
@@ -43,25 +50,27 @@ export class GetIntegrationsSuccess implements Action {
 export class GetIntegrationsFail implements Action {
   readonly type = IntegrationActions.GET_INTEGRATIONS_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class PostIntegration implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION;
 
-  constructor(public payload: { body: IEventIntegration; params: HttpParams }) {}
+  constructor(
+    public payload: { body: IEventIntegration; calendarId: number; params: HttpParams }
+  ) {}
 }
 
 export class PostIntegrationSuccess implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION_SUCCESS;
 
-  constructor(public payload: IEventIntegration) {}
+  constructor(public payload: { integration: IEventIntegration; calendarId: number }) {}
 }
 
 export class PostIntegrationFail implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class DeleteIntegration implements Action {
@@ -79,7 +88,7 @@ export class DeleteIntegrationSuccess implements Action {
 export class DeleteIntegrationFail implements Action {
   readonly type = IntegrationActions.DELETE_INTEGRATION_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class EditIntegration implements Action {
@@ -99,7 +108,7 @@ export class EditIntegrationSuccess implements Action {
 export class EditIntegrationFail implements Action {
   readonly type = IntegrationActions.EDIT_INTEGRATION_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class GetHosts implements Action {
@@ -117,11 +126,52 @@ export class GetHostsSuccess implements Action {
 export class GetHostsFail implements Action {
   readonly type = IntegrationActions.GET_HOSTS_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
+}
+
+export class SyncNow implements Action {
+  readonly type = IntegrationActions.SYNC_NOW;
+
+  constructor(
+    public payload: {
+      error?: string;
+      calendarId: number;
+      succesMessage?: string;
+      integration: IEventIntegration;
+    }
+  ) {}
+}
+
+export class SyncNowSuccess implements Action {
+  readonly type = IntegrationActions.SYNC_NOW_SUCCESS;
+
+  constructor(public payload: { integration: IEventIntegration; message?: string }) {}
+}
+
+export class SyncNowFail implements Action {
+  readonly type = IntegrationActions.SYNC_NOW_FAIL;
+
+  constructor(public payload: { integration: IEventIntegration; error?: string }) {}
 }
 
 export class Destroy implements Action {
   readonly type = IntegrationActions.DESTROY;
+}
+
+export class CreateAndSync implements Action {
+  readonly type = IntegrationActions.CREATE_AND_SYNC;
+
+  constructor(
+    public payload: { body: IEventIntegration; calendarId: number; params: HttpParams }
+  ) {}
+}
+
+export class UpdateAndSync implements Action {
+  readonly type = IntegrationActions.UPDATE_AND_SYNC;
+
+  constructor(
+    public payload: { integrationId: number; body: IEventIntegration; params: HttpParams }
+  ) {}
 }
 
 export type Actions =
@@ -140,4 +190,9 @@ export type Actions =
   | EditIntegrationFail
   | GetHosts
   | GetHostsSuccess
-  | GetHostsFail;
+  | GetHostsFail
+  | CreateAndSync
+  | SyncNow
+  | SyncNowFail
+  | SyncNowSuccess
+  | UpdateAndSync;

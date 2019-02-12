@@ -47,10 +47,14 @@
               </div>
 
               <div class="form-group" *ngIf="!state.isCampusWide">
-                <label>{{ 'recipient' | cpI18n }}
-                  <cp-tooltip
-                    [toolTipContent]="toolTipContent">
-                  </cp-tooltip>
+                <label class="with-tooltip">
+                  {{ 'recipient' | cpI18n }}
+                  <i
+                    class="material-icons hover"
+                    [cpTooltip]="toolTipOptions"
+                    [attr.title]="toolTipContent">
+                    info_outline
+                  </i>
                 </label>
                 <div class="row">
                   <div class="col-12">

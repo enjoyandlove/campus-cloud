@@ -1,9 +1,8 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
@@ -17,12 +16,11 @@ import { ItemsIntegrationsUitlsService } from '../items-integrations.utils.servi
   templateUrl: './integrations-create.component.html',
   styleUrls: ['./integrations-create.component.scss']
 })
-export class ItemsIntegrationsCreateComponent implements OnInit, OnDestroy {
+export class ItemsIntegrationsCreateComponent implements OnInit {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   form: FormGroup;
   calendarId: number;
-  destroy$ = new Subject();
   typesDropdown: IItem[];
 
   constructor(
@@ -53,10 +51,11 @@ export class ItemsIntegrationsCreateComponent implements OnInit, OnDestroy {
 
     const payload = {
       body,
-      params
+      params,
+      calendarId: this.route.snapshot.params['calendarId']
     };
 
-    this.store.dispatch(new fromStore.PostIntegration(payload));
+    this.store.dispatch(new fromStore.CreateAndSync(payload));
 
     this.resetModal();
   }
@@ -73,10 +72,5 @@ export class ItemsIntegrationsCreateComponent implements OnInit, OnDestroy {
     this.typesDropdown = this.utils
       .typesDropdown()
       .filter((type: IItem) => type.action === EventIntegration.types.ical);
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 }

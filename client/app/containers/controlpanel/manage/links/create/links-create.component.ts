@@ -1,18 +1,21 @@
-import { HttpHeaders } from '@angular/common/http';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { API } from '../../../../../config/api';
-import { CPSession } from '../../../../../session';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { appStorage } from '../../../../../shared/utils';
-import { ILink } from '../link.interface';
+import { HttpHeaders } from '@angular/common/http';
+import { Actions, ofType } from '@ngrx/effects';
+import { takeUntil } from 'rxjs/operators';
+import { TooltipOption } from 'bootstrap';
+import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
+
+import { API } from '@app/config/api';
+import { CPSession } from '@app/session';
+import { appStorage } from '@shared/utils';
 import { LinksService } from '../links.service';
-import {
-  CPTrackingService,
-  FileUploadService,
-  ZendeskService
-} from '../../../../../shared/services';
+import * as fromLinks from '@app/store/manage/links';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPI18nService } from '@shared/services/i18n.service';
+import { Destroyable, Mixin } from '@client/app/shared/mixins';
+import { CPTrackingService, FileUploadService, ZendeskService } from '@shared/services';
 
 declare var $: any;
 
@@ -21,25 +24,33 @@ declare var $: any;
   templateUrl: './links-create.component.html',
   styleUrls: ['./links-create.component.scss']
 })
-export class LinksCreateComponent implements OnInit {
-  @Output() createLink: EventEmitter<ILink> = new EventEmitter();
+@Mixin([Destroyable])
+export class LinksCreateComponent implements OnInit, OnDestroy, Destroyable {
+  @Output() createLink: EventEmitter<null> = new EventEmitter();
   @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
 
   storeId;
   imageError;
-  tooltipContent;
   form: FormGroup;
+  tooltipContent: string;
+  imageSizeToolTip: TooltipOption;
 
   eventProperties = {
     link_id: null
   };
 
+  // Destroyable
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     private fb: FormBuilder,
+    private updates$: Actions,
     private session: CPSession,
     public cpI18n: CPI18nService,
     private service: LinksService,
     private cpTracking: CPTrackingService,
+    private store: Store<fromLinks.ILinksState>,
     private fileUploadService: FileUploadService
   ) {}
 
@@ -88,12 +99,7 @@ export class LinksCreateComponent implements OnInit {
   }
 
   doSubmit() {
-    this.service.createLink(this.form.value).subscribe((res: any) => {
-      this.trackEvent(res);
-      $('#linksCreate').modal('hide');
-      this.createLink.emit(res);
-      this.resetModal();
-    });
+    this.store.dispatch(new fromLinks.CreateLink(this.form.value));
   }
 
   resetModal() {
@@ -117,12 +123,31 @@ export class LinksCreateComponent implements OnInit {
     const zendesk = ZendeskService.zdRoot();
     this.storeId = this.session.g.get('school').id;
     this.buildForm();
-    this.tooltipContent = {
-      content: '',
-      link: {
-        url: `${zendesk}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud`,
-        text: this.cpI18n.translate('learn_more')
-      }
+
+    this.imageSizeToolTip = {
+      html: true,
+      trigger: 'click'
     };
+
+    this.tooltipContent = `<a
+      class='cpbtn cpbtn--link'
+      href='${zendesk}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud'>
+      ${this.cpI18n.translate('learn_more')}
+    </a>`;
+
+    this.updates$
+      .pipe(ofType(fromLinks.LinksActionTypes.CREATE_LINK_SUCCESS), takeUntil(this.destroy$))
+      .subscribe((action: fromLinks.CreateLinkSuccess) => {
+        const res = action.payload;
+
+        this.trackEvent(res);
+        $('#linksCreate').modal('hide');
+        this.createLink.emit();
+        this.resetModal();
+      });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

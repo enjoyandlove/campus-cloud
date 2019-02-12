@@ -5,20 +5,20 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import { API } from '@app/config/api';
+import { appStorage } from '@shared/utils';
+import { validThread } from '../../../validators';
+import { CPSession, ISchool } from '@app/session';
 import { FeedsService } from '../../../feeds.service';
-import { API } from '../../../../../../../config/api';
-import { appStorage } from '../../../../../../../shared/utils';
-import { CPSession, ISchool } from '../../../../../../../session';
-import { ISnackbar, baseActions } from './../../../../../../../store/base';
+import { ISnackbar, baseActions } from '@app/store/base';
+import { amplitudeEvents } from '@shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-
 import {
   CPTrackingService,
   FileUploadService,
-  StoreService
-} from '../../../../../../../shared/services';
+  StoreService,
+  CPI18nService
+} from '@shared/services';
 
 @Component({
   selector: 'cp-feed-input-box',
@@ -76,7 +76,7 @@ export class FeedInputBoxComponent implements OnInit {
 
     this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search).pipe(
       startWith([{ label: '---' }]),
-      map((channels) => {
+      map((channels: any[]) => {
         const _channels = [
           {
             label: '---',
@@ -200,7 +200,7 @@ export class FeedInputBoxComponent implements OnInit {
     this.reset$.next(true);
     this.resetTextEditor$.next(true);
     this.form.controls['message'].setValue(null);
-    this.form.controls['message_image_url_list'].setValue(null);
+    this.form.controls['message_image_url_list'].setValue([]);
   }
 
   onContentChange({ body, withImage }) {
@@ -309,14 +309,17 @@ export class FeedInputBoxComponent implements OnInit {
 
     this.school = this.session.g.get('school');
 
-    this.form = this.fb.group({
-      group_id: [null],
-      school_id: [this.session.g.get('school').id],
-      store_id: [defaultHost, Validators.required],
-      post_type: [this.replyView ? this.postType : null, Validators.required],
-      message: [null, [Validators.required, Validators.maxLength(500)]],
-      message_image_url_list: [null]
-    });
+    this.form = this.fb.group(
+      {
+        group_id: [null],
+        school_id: [this.session.g.get('school').id],
+        store_id: [defaultHost, Validators.required],
+        post_type: [this.replyView ? this.postType : null, Validators.required],
+        message: [null, [Validators.maxLength(500)]],
+        message_image_url_list: [[]]
+      },
+      { validators: validThread }
+    );
 
     this.form.valueChanges.subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };

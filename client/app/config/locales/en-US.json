@@ -129,7 +129,7 @@
     "message": "Create your Campus Cloud Account"
   },
   "admin_invite_invalid_invite_key_error": {
-    "message": "Invalid invite key"
+    "message": "The activation link is invalid, please make sure you clicked on the right link"
   },
   "admin_manage_and_assess_events": {
     "message": "View events and event assessment"
@@ -1095,6 +1095,9 @@
   },
   "description": {
     "message": "Description"
+  },
+  "dining": {
+    "message": "Dining"
   },
   "done": {
     "message": "Done"
@@ -2134,6 +2137,9 @@
   "services_provider_label_default_question": {
     "message": "Feedback Question"
   },
+  "services_provider_label_edit_service_provider": {
+    "message": "Edit Service Provider"
+  },
   "services_provider_search_tootlip": {
     "message": "Search..."
   },
@@ -2277,8 +2283,14 @@
   "total_ratings": {
     "message": "Ratings"
   },
+  "t_admin_invite_account_error": {
+    "message": "Activation failed, the account does not exist, please get a new invitation link"
+  },
+  "t_admin_invite_already_activated_error": {
+    "message": "Your account has already been activated, click below to login"
+  },
   "t_admin_invite_studio_limited_tooltip": {
-    "message": "Full access to Studio requires permission to Athletics, Events, Clubs, Services, Calendar and Orientation. Your access to add resources will be limited without those permissions"
+    "message": "Full access to Studio requires permission to Athletics, Events, Clubs, Services, Calendar and Orientation. Your access to add resources will be limited without those permissions."
   },
   "t_assess_all_orientations": {
     "message": "All Orientation Programs"
@@ -2328,11 +2340,26 @@
   "t_audience_save_modal_button_submit": {
     "message": "Save"
   },
+  "t_categories_can_not_be_delete": {
+    "message": "Categories with locations cannot be deleted."
+  },
+  "t_categories_icon_color_required": {
+    "message": "Map pin icon and color are required fields."
+  },
+  "t_categories_map_pin_color": {
+    "message": "Map Pin Color"
+  },
+  "t_categories_map_pin_icon": {
+    "message": "Map Pin Icon"
+  },
   "t_changes_saved_ok": {
     "message": "Changes saved successfully"
   },
   "t_check_in_date_placeholder_text": {
     "message": "Now"
+  },
+  "t_clubs_admin": {
+    "message": "Admin"
   },
   "t_customise_personas": {
     "message": "App Experiences"
@@ -2406,6 +2433,24 @@
   "t_deals_ongoing": {
     "message": "Ongoing",
     "description": "Indicates that a deal is posted without an end date"
+  },
+  "t_dining_create_dining": {
+    "message": "Create Dining"
+  },
+  "t_dining_dietary_notes": {
+    "message": "Dietary Notes"
+  },
+  "t_dining_dining_details": {
+    "message": "Dining Details"
+  },
+  "t_dining_hours": {
+    "message": "Dining Hours"
+  },
+  "t_dining_no_record_found": {
+    "message": "No dining found..."
+  },
+  "t_error_category_associated_to_location": {
+    "message": "This category is associated to a location."
   },
   "t_events_assessment_add_checkin_modal_title": {
     "message": "Check-in"
@@ -2524,6 +2569,9 @@
   "t_events_import_upload_picture": {
     "message": "Upload Image"
   },
+  "t_events_list_external_source_tooltip": {
+    "message": "This event was integrated. It will be automatically updated from the integration."
+  },
   "t_event_assessment_check_in_date": {
     "message": "Check-in"
   },
@@ -2543,7 +2591,7 @@
     "message": "This person has already checked in."
   },
   "t_event_integration_form_default_image": {
-    "message": "Poster Avatar"
+    "message": "Event Image"
   },
   "t_external_checkin_already_checked_in": {
     "message": "This person has already checked in."
@@ -2587,12 +2635,24 @@
   "t_external_check_in_not_found_error": {
     "message": "The event cannot be found"
   },
+  "t_integration_sync_button_int_not_ready_to_sync_tooltip": {
+    "message": "You can only manually sync your feed once per minute"
+  },
+  "t_integration_sync_button_int_running_tooltip": {
+    "message": "Integration in progress"
+  },
   "t_jobs_ongoing": {
     "message": "Ongoing",
     "description": "Indicates that a job posting has no end date"
   },
   "t_latitude": {
     "message": "Latitude"
+  },
+  "t_locations_category_create_category": {
+    "message": "Create Category"
+  },
+  "t_locations_category_type_select": {
+    "message": "Select Type"
   },
   "t_locations_create_location": {
     "message": "Create Location"
@@ -2615,14 +2675,26 @@
   "t_locations_no_location_found": {
     "message": "No Locations Found"
   },
+  "t_locations_no_record_found": {
+    "message": "No locations found..."
+  },
   "t_locations_opening_hours": {
     "message": "Opening Hours"
   },
   "t_locations_photo": {
     "message": "Photo"
   },
+  "t_location_categories_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_location_categories_delete_modal_title": {
+    "message": "Delete Category"
+  },
   "t_longitude": {
     "message": "Longitude"
+  },
+  "t_members_no_results_found": {
+    "message": "No Members Found"
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
@@ -2658,7 +2730,7 @@
     "message": "A school must have at least one experience enabled."
   },
   "t_personas_delete_error_persona_non_empty": {
-    "message": "Can not delete experienced as it's in used by other users."
+    "message": "Can not delete experience as it is in use by other users."
   },
   "t_personas_delete_error_users_associated": {
     "message": "This experience has users associated, so you cannot delete it."
@@ -2703,7 +2775,7 @@
     "message": "Save Changes"
   },
   "t_personas_edit_tile_locked": {
-    "message": "To make changes to the content of this tile reach out to your customer success representative or contact us through the helpdesk."
+    "message": "To make changes to the content of this tile, reach out to your customer success representative or contact us through the helpdesk."
   },
   "t_personas_form_delete_button": {
     "message": "Delete Experience"
@@ -2978,6 +3050,9 @@
   "t_service_provider_feedback_yes": {
     "message": "Yes"
   },
+  "t_shared_add": {
+    "message": "Add"
+  },
   "t_shared_average_rating": {
     "message": "Average Rating"
   },
@@ -2987,14 +3062,38 @@
   "t_shared_cancel": {
     "message": "Cancel"
   },
+  "t_shared_category_create_form_modal_title": {
+    "message": "New Category"
+  },
+  "t_shared_category_edit_form_modal_title": {
+    "message": "Edit Category"
+  },
+  "t_shared_category_name": {
+    "message": "Category Name"
+  },
+  "t_shared_channel": {
+    "message": "Channel"
+  },
   "t_shared_checkin": {
     "message": "Check-in"
   },
   "t_shared_checkins": {
     "message": "Check-ins"
   },
+  "t_shared_closed": {
+    "message": "Closed"
+  },
   "t_shared_color": {
     "message": "Color"
+  },
+  "t_shared_cpimage_icon_heading": {
+    "message": "Upload your icon"
+  },
+  "t_shared_cpimage_icon_help": {
+    "message": "Must be 128 x 128 in PNG format"
+  },
+  "t_shared_default": {
+    "message": "Default"
   },
   "t_shared_delete": {
     "message": "Delete"
@@ -3026,8 +3125,14 @@
   "t_shared_hide": {
     "message": "Hide"
   },
+  "t_shared_icon": {
+    "message": "Icon"
+  },
   "t_shared_image": {
     "message": "Image"
+  },
+  "t_shared_integration_create_error_duplicate_feed_url": {
+    "message": "Duplicate Feed URL"
   },
   "t_shared_integration_create_form_modal_title": {
     "message": "New Integration"
@@ -3037,6 +3142,9 @@
   },
   "t_shared_integration_edit_form_modal_title": {
     "message": "Edit Integration"
+  },
+  "t_shared_invalid_cords": {
+    "message": "Invalid pair of coordinates"
   },
   "t_shared_invalid_url": {
     "message": "Invalid URL (eg: https://google.com)"
@@ -3056,6 +3164,12 @@
   "t_shared_monday": {
     "message": "Monday"
   },
+  "t_shared_no": {
+    "message": "No"
+  },
+  "t_shared_no_categories_found": {
+    "message": "No Category Found"
+  },
   "t_shared_no_integrations_found": {
     "message": "No integration found"
   },
@@ -3067,6 +3181,9 @@
   },
   "t_shared_preview": {
     "message": "Preview"
+  },
+  "t_shared_running": {
+    "message": "Running"
   },
   "t_shared_saturday": {
     "message": "Saturday"
@@ -3089,8 +3206,8 @@
   "t_shared_sunday": {
     "message": "Sunday"
   },
-  "t_shared_sync_now": {
-    "message": "Sync Now"
+  "t_shared_sync": {
+    "message": "Sync"
   },
   "t_shared_thursday": {
     "message": "Thursday"
@@ -3103,6 +3220,12 @@
   },
   "t_shared_type": {
     "message": "Type"
+  },
+  "t_shared_update_map": {
+    "message": "Update Map"
+  },
+  "t_shared_upload_icon": {
+    "message": "Upload Icon"
   },
   "t_shared_url": {
     "message": "URL"
@@ -3119,6 +3242,9 @@
   "t_shared_wrong_dimensions": {
     "message": "Must be JPG or PNG, 720*400px, smaller than 300KB "
   },
+  "t_shared_yes": {
+    "message": "Yes"
+  },
   "t_students_profile_students": {
     "message": "Students"
   },
@@ -3133,6 +3259,18 @@
   },
   "t_tile_button_locked": {
     "message": "Locked"
+  },
+  "t_walls_integrations_error_could_not_create_channel": {
+    "message": "Error while creating channel"
+  },
+  "t_walls_integrations_form_label_channel_name": {
+    "message": "Channel Name"
+  },
+  "t_walls_integrations_form_label_poster_name": {
+    "message": "Poster Name"
+  },
+  "t_walls_integrations_new_channel": {
+    "message": "New Channel"
   },
   "update": {
     "message": "Update",

@@ -7,9 +7,9 @@ import { CPI18nService } from '../../services/index';
 
 const FORMAT_EN = {
   TIME: 'h:mm A',
-  SHORT: 'MMM Do, YYYY',
+  SHORT: 'MMM D, YYYY',
   LONG: 'dddd, MMMM Do, YYYY',
-  DATETIME: 'MMMM Do YYYY, h:mm a',
+  DATETIME: 'MMM D, YYYY h:mm a',
   DATETIME_SHORT: 'MM/DD/YYYY, h:mm a'
 };
 
