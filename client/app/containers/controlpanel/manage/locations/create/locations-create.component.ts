@@ -15,10 +15,10 @@ import { ICategory } from '../categories/model';
 import { CPSession, ISchool } from '@app/session';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
-import { LocationsService } from '../locations.service';
 import * as fromCategoryStore from '../categories/store';
 import { Locale } from '../categories/categories.status';
 import { LocationsUtilsService } from '../locations.utils';
+import { LocationsService, LocationType } from '../locations.service';
 
 @Component({
   selector: 'cp-locations-create',
@@ -151,6 +151,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy, AfterViewIni
 
           const params = new HttpParams()
             .set('locale', locale)
+            .set('location_type', LocationType.location)
             .set('school_id', this.session.g.get('school').id);
 
           this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
