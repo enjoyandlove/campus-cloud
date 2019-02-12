@@ -54,7 +54,7 @@
       "url": "/manage/locations"
     },
     {
-      "privilege": 21,
+      "privilege": 36,
       "clearParams": true,
       "label": "dining",
       "amplitude": "Dining",

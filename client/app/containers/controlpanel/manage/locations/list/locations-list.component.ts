@@ -11,6 +11,7 @@ import { IItem } from '@shared/components';
 import { ICategory } from '../categories/model';
 import { CPI18nService } from '@shared/services';
 import { ManageHeaderService } from '../../utils';
+import { LocationType } from '../locations.service';
 import { ILocation } from '@libs/locations/common/model';
 import { BaseComponent } from '@app/base/base.component';
 import * as fromCategoryStore from '../categories/store';
@@ -55,21 +56,38 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     super();
   }
 
-  fetch() {
-    const search = new HttpParams()
+  get defaultParams(): HttpParams {
+    return new HttpParams()
       .append('search_str', this.state.search_str)
       .append('sort_field', this.state.sort_field)
       .append('category_id', this.state.category_id)
+      .append('location_type', LocationType.location)
       .append('sort_direction', this.state.sort_direction)
       .append('school_id', this.session.g.get('school').id);
+  }
 
+  fetch() {
     const payload = {
       startRange: this.startRange,
       endRange: this.endRange,
-      params: search
+      params: this.defaultParams
     };
 
     this.store.dispatch(new fromStore.GetLocations(payload));
+
+    this.locations$ = this.getLocations();
+  }
+
+  fetchFilteredLocations() {
+    const payload = {
+      startRange: this.startRange,
+      endRange: this.endRange,
+      params: this.defaultParams
+    };
+
+    this.store.dispatch(new fromStore.GetFilteredLocations(payload));
+
+    this.locations$ = this.getLocations(true);
   }
 
   onPaginationNext() {
@@ -92,7 +110,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
     this.resetPagination();
 
-    this.fetch();
+    this.fetchFilteredLocations();
   }
 
   onCategorySelect(category_id) {
@@ -103,7 +121,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
     this.resetPagination();
 
-    this.fetch();
+    this.fetchFilteredLocations();
   }
 
   onDoSort(sort_field) {
@@ -113,7 +131,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
 
-    this.fetch();
+    this.fetchFilteredLocations();
   }
 
   buildHeader() {
@@ -141,6 +159,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
           const params = new HttpParams()
             .set('locale', locale)
+            .set('location_type', LocationType.location)
             .set('school_id', this.session.g.get('school').id);
 
           this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
@@ -163,13 +182,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       )
       .subscribe();
 
-    this.locations$ = this.store.select(fromStore.getLocations).pipe(
-      map((locations: ILocation[]) => {
-        const responseCopy = [...locations];
-
-        return super.updatePagination(responseCopy);
-      })
-    );
+    this.locations$ = this.getLocations();
   }
 
   listenForErrors() {
@@ -193,6 +206,18 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
         })
       )
       .subscribe();
+  }
+
+  getLocations(isFiltered?: boolean) {
+    const selectLocations = isFiltered ? fromStore.getFilteredLocations : fromStore.getLocations;
+
+    return this.store.select(selectLocations).pipe(
+      map((locations: ILocation[]) => {
+        const responseCopy = [...locations];
+
+        return super.updatePagination(responseCopy);
+      })
+    );
   }
 
   ngOnInit() {

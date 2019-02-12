@@ -8,6 +8,10 @@ export enum CategoriesActions {
   GET_CATEGORIES_SUCCESS = '[manage.events.locations.categories] get categories success',
   GET_CATEGORIES_FAIL = '[manage.events.locations.categories] get categories fail',
 
+  GET_FILTERED_CATEGORIES = '[manage.events.locations.categories] get filtered categories',
+  GET_FILTERED_CATEGORIES_SUCCESS = '[manage.events.locations.categories] get filtered categories success',
+  GET_FILTERED_CATEGORIES_FAIL = '[manage.events.locations.categories] get filtered categories fail',
+
   GET_CATEGORIES_TYPE = '[manage.events.locations.categories] get type categories',
   GET_CATEGORIES_TYPE_SUCCESS = '[manage.events.locations.categories] get categories type success',
   GET_CATEGORIES_TYPE_FAIL = '[manage.events.locations.categories] get categories type fail',
@@ -24,7 +28,9 @@ export enum CategoriesActions {
   DELETE_CATEGORIES_SUCCESS = '[manage.events.locations.categories] delete categories success',
   DELETE_CATEGORIES_FAIL = '[manage.events.locations.categories] delete categories fail',
 
-  RESET_ERROR_MESSAGE = '[manage.locations.categories] reset error message'
+  RESET_ERROR_MESSAGE = '[manage.locations.categories] reset error message',
+
+  DESTROY = '[manage.locations.categories] destroy'
 }
 
 export class GetCategories implements Action {
@@ -41,6 +47,24 @@ export class GetCategoriesSuccess implements Action {
 
 export class GetCategoriesFail implements Action {
   readonly type = CategoriesActions.GET_CATEGORIES_FAIL;
+
+  constructor(public payload: HttpErrorResponse) {}
+}
+
+export class GetFilteredCategories implements Action {
+  readonly type = CategoriesActions.GET_FILTERED_CATEGORIES;
+
+  constructor(public payload: { params: HttpParams }) {}
+}
+
+export class GetFilteredCategoriesSuccess implements Action {
+  readonly type = CategoriesActions.GET_FILTERED_CATEGORIES_SUCCESS;
+
+  constructor(public payload: ICategory[]) {}
+}
+
+export class GetFilteredCategoriesFail implements Action {
+  readonly type = CategoriesActions.GET_FILTERED_CATEGORIES_FAIL;
 
   constructor(public payload: HttpErrorResponse) {}
 }
@@ -96,7 +120,7 @@ export class EditCategorySuccess implements Action {
 export class DeleteCategories implements Action {
   readonly type = CategoriesActions.DELETE_CATEGORIES;
 
-  constructor(public payload: { categoryId: number, params: HttpParams }) {}
+  constructor(public payload: { categoryId: number; params: HttpParams }) {}
 }
 
 export class DeleteCategoriesSuccess implements Action {
@@ -115,10 +139,17 @@ export class ResetErrorMessage implements Action {
   readonly type = CategoriesActions.RESET_ERROR_MESSAGE;
 }
 
+export class Destroy implements Action {
+  readonly type = CategoriesActions.DESTROY;
+}
+
 export type Actions =
   | GetCategories
   | GetCategoriesSuccess
   | GetCategoriesFail
+  | GetFilteredCategories
+  | GetFilteredCategoriesFail
+  | GetFilteredCategoriesSuccess
   | GetCategoriesType
   | GetCategoriesTypeSuccess
   | GetCategoriesTypeFail
@@ -131,4 +162,5 @@ export type Actions =
   | DeleteCategories
   | DeleteCategoriesSuccess
   | DeleteCategoriesFail
-  | ResetErrorMessage;
+  | ResetErrorMessage
+  | Destroy;

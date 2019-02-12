@@ -723,7 +723,7 @@
     "message": "Annuler"
   },
   "category": {
-    "message": "Categorie"
+    "message": "Catégorie"
   },
   "change_password": {
     "message": "Changer mot de passe"
@@ -1095,6 +1095,9 @@
   },
   "description": {
     "message": "Description"
+  },
+  "dining": {
+    "message": "Menu"
   },
   "done": {
     "message": "Terminé"
@@ -2337,6 +2340,18 @@
   "t_audience_save_modal_button_submit": {
     "message": "Enregistrer"
   },
+  "t_categories_can_not_be_delete": {
+    "message": "Les catégories avec des lieux ne peuvent pas être supprimées."
+  },
+  "t_categories_icon_color_required": {
+    "message": "L'icône et la couleur d'épingle de carte sont des champs obligatoires."
+  },
+  "t_categories_map_pin_color": {
+    "message": "Couleur d'épingle de carte"
+  },
+  "t_categories_map_pin_icon": {
+    "message": "Icône d'épingle de carte"
+  },
   "t_changes_saved_ok": {
     "message": "Changements enregistrés avec succès"
   },
@@ -2359,7 +2374,7 @@
     "message": "Palmarès des orientations"
   },
   "t_datepicker_clear": {
-    "message": "Clear"
+    "message": "Réinitialiser"
   },
   "t_deals_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s?"
@@ -2416,8 +2431,23 @@
     "message": "Magasin"
   },
   "t_deals_ongoing": {
-    "message": "Ongoing",
+    "message": "En cours",
     "description": "Indicates that a deal is posted without an end date"
+  },
+  "t_dining_create_dining": {
+    "message": "Créer menu"
+  },
+  "t_dining_dining_details": {
+    "message": "Détails du menu"
+  },
+  "t_dining_hours": {
+    "message": "Heures de repas"
+  },
+  "t_dining_no_record_found": {
+    "message": "Aucun menu trouvé..."
+  },
+  "t_error_category_associated_to_location": {
+    "message": "Cette catégorie est associée à un lieu."
   },
   "t_events_assessment_add_checkin_modal_title": {
     "message": "Vérification de présence"
@@ -2536,6 +2566,9 @@
   "t_events_import_upload_picture": {
     "message": "Téléverser image"
   },
+  "t_events_list_external_source_tooltip": {
+    "message": "Cet événement était intégré. Il sera automatiquement mis à jour depuis l'intégration."
+  },
   "t_event_assessment_check_in_date": {
     "message": "Vérification de présence"
   },
@@ -2599,8 +2632,14 @@
   "t_external_check_in_not_found_error": {
     "message": "Cet événement ne peut pas être trouvé"
   },
+  "t_integration_sync_button_int_not_ready_to_sync_tooltip": {
+    "message": "Vous pouvez synchroniser seulement une fois par minute"
+  },
+  "t_integration_sync_button_int_running_tooltip": {
+    "message": "Intégration en cours"
+  },
   "t_jobs_ongoing": {
-    "message": "Ongoing",
+    "message": "En cours",
     "description": "Indicates that a job posting has no end date"
   },
   "t_latitude": {
@@ -2632,6 +2671,9 @@
   },
   "t_locations_no_location_found": {
     "message": "Aucun lieu trouvé"
+  },
+  "t_locations_no_record_found": {
+    "message": "Aucune location trouvée"
   },
   "t_locations_opening_hours": {
     "message": "Heures d'ouverture"
@@ -2684,6 +2726,9 @@
   "t_personas_delete_error_last_persona": {
     "message": "Une école doit avoir au moins une expérience d'activée."
   },
+  "t_personas_delete_error_persona_non_empty": {
+    "message": "Impossible de supprimer l'expérience car elle est utilisée par d'autres utilisateurs."
+  },
   "t_personas_delete_error_users_associated": {
     "message": "Cette expérience a des utilisateurs associés, donc vous ne pouvez pas la supprimer."
   },
@@ -2727,7 +2772,7 @@
     "message": "Enregistrer les changements"
   },
   "t_personas_edit_tile_locked": {
-    "message": "To make changes to the content of this tile reach out to your customer success representative or contact us through the helpdesk."
+    "message": "Pour apporter des changements au contenu de cette tuile, contactez votre représentant du succès de la clientèle ou contactez-nous via le soutien."
   },
   "t_personas_form_delete_button": {
     "message": "Supprimer expérience"
@@ -2781,13 +2826,13 @@
     "message": "Web"
   },
   "t_personas_resource_add_resource": {
-    "message": "Add Resource"
+    "message": "Ajouter ressource"
   },
   "t_personas_resource_create_modal_title": {
     "message": "Nouvelle ressource"
   },
   "t_personas_resource_edit_modal_title": {
-    "message": "Edit Resource"
+    "message": "Éditer ressource"
   },
   "t_personas_section_button_add_section": {
     "message": "Ajouter section"
@@ -3002,6 +3047,9 @@
   "t_service_provider_feedback_yes": {
     "message": "Oui"
   },
+  "t_shared_add": {
+    "message": "Ajouter"
+  },
   "t_shared_average_rating": {
     "message": "Note"
   },
@@ -3014,6 +3062,9 @@
   "t_shared_category_create_form_modal_title": {
     "message": "Nouvelle catégorie"
   },
+  "t_shared_category_edit_form_modal_title": {
+    "message": "Éditer catégorie"
+  },
   "t_shared_category_name": {
     "message": "Nom de la catégorie"
   },
@@ -3025,6 +3076,9 @@
   },
   "t_shared_checkins": {
     "message": "Vérifications de présence"
+  },
+  "t_shared_closed": {
+    "message": "Fermé"
   },
   "t_shared_color": {
     "message": "Couleur"
@@ -3074,6 +3128,9 @@
   "t_shared_image": {
     "message": "Image"
   },
+  "t_shared_integration_create_error_duplicate_feed_url": {
+    "message": "Dupliquer le lien du flux"
+  },
   "t_shared_integration_create_form_modal_title": {
     "message": "Nouvelle intégration"
   },
@@ -3082,6 +3139,9 @@
   },
   "t_shared_integration_edit_form_modal_title": {
     "message": "Éditer intégration"
+  },
+  "t_shared_invalid_cords": {
+    "message": "Paire de coordonnées invalide"
   },
   "t_shared_invalid_url": {
     "message": "URL invalide (https://google.com)"
@@ -3118,6 +3178,9 @@
   },
   "t_shared_preview": {
     "message": "Aperçu"
+  },
+  "t_shared_running": {
+    "message": "En course"
   },
   "t_shared_saturday": {
     "message": "Samedi"

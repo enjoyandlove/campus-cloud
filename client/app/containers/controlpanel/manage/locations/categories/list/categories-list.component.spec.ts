@@ -46,8 +46,8 @@ describe('CategoriesListComponent', () => {
     fixture = TestBed.createComponent(CategoriesListComponent);
     component = fixture.componentInstance;
     component.session.g.set('school', mockSchool);
-    fetchSpy = spyOn(component, 'fetch');
     dispatchSpy = spyOn(component.store, 'dispatch');
+    fetchSpy = spyOn(component, 'fetchFilteredCategories');
 
     actionBox = fixture.debugElement.query(By.directive(CategoriesActionBoxComponent))
       .componentInstance;

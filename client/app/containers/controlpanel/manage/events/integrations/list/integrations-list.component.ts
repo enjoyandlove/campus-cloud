@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { tap, takeUntil, filter, map, take } from 'rxjs/operators';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -9,9 +9,9 @@ import * as fromRoot from '@app/store';
 import { BaseComponent } from '@app/base';
 import { CPSession } from '@app/session';
 import { FORMAT } from '@shared/pipes/date/date.pipe';
-import { EventsIntegrationEditComponent } from '../edit';
 import { CPI18nService } from '@shared/services/i18n.service';
 import { IEventIntegration } from '@libs/integrations/events/model';
+import { coerceBooleanProperty } from '@client/app/shared/utils/coercion';
 import { IntegrationsUitlsService } from './../integrations.utils.service';
 
 @Component({
@@ -20,11 +20,8 @@ import { IntegrationsUitlsService } from './../integrations.utils.service';
   styleUrls: ['./integrations-list.component.scss']
 })
 export class EventsIntegrationsListComponent extends BaseComponent implements OnInit, OnDestroy {
-  @ViewChild(EventsIntegrationEditComponent) editModal: EventsIntegrationEditComponent;
-
   private destroy$ = new Subject();
 
-  showEditModal = false;
   showDeleteModal = false;
   showCreateModal = false;
   dateFormat = FORMAT.DATETIME;
@@ -66,15 +63,11 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
       .subscribe((integration) => {
         this.store.dispatch(
           new fromStore.SyncNow({
-            integration
+            integration,
+            error: this.cpI18n.translate('something_went_wrong')
           })
         );
       });
-  }
-
-  onEditTeardown() {
-    this.showEditModal = false;
-    $('#integrationEdit').modal('hide');
   }
 
   onCreateTeardown() {
@@ -105,9 +98,9 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
 
   fetch() {
     const payload = {
-      startRange: this.startRange,
       endRange: this.endRange,
-      params: this.defaultParams
+      params: this.defaultParams,
+      startRange: this.startRange
     };
     this.store.dispatch(new fromStore.GetIntegrations(payload));
   }
@@ -116,13 +109,6 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
     this.showCreateModal = true;
 
     setTimeout(() => $('#integrationCreate').modal());
-  }
-
-  onLaunchEditModal(integration: IEventIntegration) {
-    this.showEditModal = true;
-    this.selectedIntegration = integration;
-
-    setTimeout(() => $('#integrationEdit').modal());
   }
 
   onLaunchDeleteModal(integration: IEventIntegration) {
@@ -148,10 +134,10 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
       .select(fromStore.getIntegrationsError)
       .pipe(
         takeUntil(this.destroy$),
-        filter((error) => error),
-        tap(() => {
+        filter((error) => coerceBooleanProperty(error)),
+        tap((body) => {
           const payload = {
-            body: this.cpI18n.translate('something_went_wrong'),
+            body,
             sticky: true,
             autoClose: true,
             class: 'danger'

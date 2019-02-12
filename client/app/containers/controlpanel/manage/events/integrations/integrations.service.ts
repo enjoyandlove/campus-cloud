@@ -48,6 +48,6 @@ export class IntegrationsService extends HTTPService {
       API.ENDPOINTS.EVENT_INTEGRATIONS
     }/${integrationId}`;
 
-    return super.update(url, {}, search, true);
+    return super.update(url, {}, search, true, 0);
   }
 }

@@ -12,9 +12,9 @@ import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
 import { ICategory } from '../categories/model';
 import { CPSession, ISchool } from '@app/session';
+import { LocationType } from '../locations.service';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
-import { LocationsService } from '../locations.service';
 import * as fromCategoryStore from '../categories/store';
 import { Locale } from '../categories/categories.status';
 import { LocationModel } from '@libs/locations/common/model';
@@ -41,7 +41,6 @@ export class LocationsCreateComponent implements OnInit, OnDestroy, AfterViewIni
     public session: CPSession,
     public cpI18n: CPI18nService,
     public latLng: LatLngValidators,
-    public service: LocationsService,
     public store: Store<
       fromStore.ILocationsState | fromCategoryStore.ICategoriesState | fromRoot.IHeader
     >
@@ -151,6 +150,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy, AfterViewIni
 
           const params = new HttpParams()
             .set('locale', locale)
+            .set('location_type', LocationType.location)
             .set('school_id', this.session.g.get('school').id);
 
           this.store.dispatch(new fromCategoryStore.GetCategories({ params }));

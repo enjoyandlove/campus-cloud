@@ -1,19 +1,22 @@
+import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
 import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
 import { CPDate } from '@shared/utils/date';
-import { StoreService } from '@shared/services';
+import { StoreService, CPI18nService } from '@shared/services';
 import { IntegrationsService } from './../../integrations.service';
 import { IEventIntegration } from '@libs/integrations/events/model';
 import { EventIntegration } from '@client/app/libs/integrations/events/model';
+import { LibsIntegrationEventCommonUtilsService } from '@libs/integrations/events/providers';
 
 @Injectable()
 export class IntegrationsEffects {
+  somethingWentWrong = { error: this.cpI18n.translate('something_went_wrong') };
+
   @Effect()
   getHosts$: Observable<
     fromActions.GetHostsSuccess | fromActions.GetHostsFail
@@ -25,7 +28,7 @@ export class IntegrationsEffects {
         .getStores(params)
         .pipe(
           map((data: any[]) => new fromActions.GetHostsSuccess(data)),
-          catchError((error) => of(new fromActions.GetHostsFail(error)))
+          catchError(() => of(new fromActions.GetHostsFail(this.somethingWentWrong)))
         );
     })
   );
@@ -41,7 +44,7 @@ export class IntegrationsEffects {
         .getIntegrations(startRange, endRange, params)
         .pipe(
           map((data: IEventIntegration[]) => new fromActions.GetIntegrationsSuccess(data)),
-          catchError((error) => of(new fromActions.GetIntegrationsFail(error)))
+          catchError(() => of(new fromActions.GetIntegrationsFail(this.somethingWentWrong)))
         );
     })
   );
@@ -53,12 +56,16 @@ export class IntegrationsEffects {
     ofType(fromActions.IntegrationActions.POST_INTEGRATION),
     map((action: fromActions.PostIntegration) => action.payload),
     mergeMap(({ body, params }) => {
-      return this.service.createIntegration(body, params).pipe(
-        map((integration: IEventIntegration) => {
-          return new fromActions.PostIntegrationSuccess(integration);
-        }),
-        catchError((err) => of(new fromActions.PostIntegrationFail(err)))
-      );
+      return this.service
+        .createIntegration(body, params)
+        .pipe(
+          map(
+            (integration: IEventIntegration) => new fromActions.PostIntegrationSuccess(integration)
+          ),
+          catchError(({ error }: HttpErrorResponse) =>
+            of(new fromActions.PostIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
+          )
+        );
     })
   );
 
@@ -70,7 +77,22 @@ export class IntegrationsEffects {
       of(
         new fromActions.SyncNow({
           integration,
-          hideError: true,
+          error: null,
+          succesMessage: 't_shared_saved_update_success_message'
+        })
+      )
+    )
+  );
+
+  @Effect()
+  editIntegrationSuccess$: Observable<fromActions.SyncNow> = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.EDIT_INTEGRATION_SUCCESS),
+    map((action: fromActions.EditIntegrationSuccess) => action.payload),
+    mergeMap((integration) =>
+      of(
+        new fromActions.SyncNow({
+          integration,
+          error: null,
           succesMessage: 't_shared_saved_update_success_message'
         })
       )
@@ -81,11 +103,12 @@ export class IntegrationsEffects {
   syncNow$: Observable<fromActions.SyncNowSuccess | fromActions.SyncNowFail> = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.SYNC_NOW),
     map((action: fromActions.SyncNow) => action.payload),
-    mergeMap(({ integration, succesMessage, hideError }) => {
+    mergeMap(({ integration, succesMessage, error }) => {
       const search = new HttpParams()
         .set('sync_now', '1')
         .set('school_id', this.session.g.get('school').id)
         .set('feed_obj_type', EventIntegration.objectType.campusEvent.toString());
+
       return this.service.syncNow(integration.id, search).pipe(
         map(() => {
           const editedIntegration = {
@@ -99,13 +122,20 @@ export class IntegrationsEffects {
             message: succesMessage
           });
         }),
-        catchError(() => {
+        catchError((err: HttpErrorResponse) => {
+          const timedOut = 0;
+          const requestTimedOut = err.status === timedOut;
+          error = requestTimedOut ? null : error;
+          const sync_status = requestTimedOut
+            ? EventIntegration.status.running
+            : EventIntegration.status.error;
+
           const failedIntegration = {
             ...integration,
-            sync_status: EventIntegration.status.error
+            sync_status
           };
 
-          return of(new fromActions.SyncNowFail({ integration: failedIntegration, hideError }));
+          return of(new fromActions.SyncNowFail({ integration: failedIntegration, error }));
         })
       );
     })
@@ -119,6 +149,13 @@ export class IntegrationsEffects {
   );
 
   @Effect()
+  updateAndSync$: Observable<fromActions.EditIntegration> = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.UPDATE_AND_SYNC),
+    map((action: fromActions.UpdateAndSync) => action.payload),
+    mergeMap((payload) => of(new fromActions.EditIntegration(payload)))
+  );
+
+  @Effect()
   deleteIntegration$: Observable<
     fromActions.DeleteIntegrationSuccess | fromActions.DeleteIntegrationFail
   > = this.actions$.pipe(
@@ -129,7 +166,7 @@ export class IntegrationsEffects {
         .deleteIntegration(integrationId, params)
         .pipe(
           map(() => new fromActions.DeleteIntegrationSuccess({ deletedId: integrationId })),
-          catchError((error) => of(new fromActions.DeleteIntegrationFail(error)))
+          catchError(() => of(new fromActions.DeleteIntegrationFail(this.somethingWentWrong)))
         );
     })
   );
@@ -145,7 +182,9 @@ export class IntegrationsEffects {
         .editIntegration(integrationId, body, params)
         .pipe(
           map((edited: IEventIntegration) => new fromActions.EditIntegrationSuccess(edited)),
-          catchError((error) => of(new fromActions.EditIntegrationFail(error)))
+          catchError(({ error }: HttpErrorResponse) =>
+            of(new fromActions.EditIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
+          )
         );
     })
   );
@@ -153,7 +192,9 @@ export class IntegrationsEffects {
   constructor(
     private actions$: Actions,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private storeService: StoreService,
-    private service: IntegrationsService
+    private service: IntegrationsService,
+    private commonUtils: LibsIntegrationEventCommonUtilsService
   ) {}
 }

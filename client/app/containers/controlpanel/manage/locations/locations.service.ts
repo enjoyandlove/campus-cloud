@@ -10,6 +10,11 @@ export enum Acronym {
   'no' = 'No'
 }
 
+export enum LocationType {
+  'dining' = 'dining',
+  'location' = 'location'
+}
+
 export const hasAcronym = (val) => (val ? Acronym.yes : Acronym.no);
 
 @Injectable()

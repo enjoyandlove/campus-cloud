@@ -33,9 +33,10 @@
               </span>
             </div>
 
-            <div class="col-12 margin-top">
+            <div
+              *ngIf="openingHours"
+              class="col-12 margin-top">
               <cp-location-opening-hours-form
-                *ngIf="openingHours"
                 [formErrors]="formErrors"
                 [locationForm]="locationForm">
               </cp-location-opening-hours-form>

@@ -1,5 +1,5 @@
+import { takeUntil, tap, take, filter } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { takeUntil, tap, take } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Actions, ofType } from '@ngrx/effects';
 import { Subject, Observable } from 'rxjs';
@@ -13,6 +13,7 @@ import { Locale } from '../categories.status';
 import { baseActions } from '@app/store/base';
 import { CPI18nService } from '@shared/services';
 import { ICategory, DeleteError } from '../model';
+import { LocationType } from '@containers/controlpanel/manage/locations/locations.service';
 
 interface IState {
   search_str: string;
@@ -56,7 +57,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       search_str
     };
 
-    this.fetch();
+    this.fetchFilteredCategories();
   }
 
   doSort(sort_field) {
@@ -66,7 +67,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
 
-    this.fetch();
+    this.fetchFilteredCategories();
   }
 
   onLaunchCreateModal() {
@@ -112,16 +113,23 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
 
     return new HttpParams()
       .set('locale', locale)
-      .set('school_id', this.session.g.get('school').id);
+      .set('location_type', LocationType.location)
+      .set('school_id', this.session.g.get('school').id)
+      .set('search_str', this.state.search_str)
+      .set('sort_field', this.state.sort_field)
+      .set('sort_direction', this.state.sort_direction);
   }
 
   fetch() {
-    const params = this.defaultParams
-      .append('search_str', this.state.search_str)
-      .append('sort_field', this.state.sort_field)
-      .append('sort_direction', this.state.sort_direction);
+    this.store.dispatch(new fromStore.GetCategories({ params: this.defaultParams }));
 
-    this.store.dispatch(new fromStore.GetCategories({ params }));
+    this.categories$ = this.store.select(fromStore.getCategories);
+  }
+
+  fetchFilteredCategories() {
+    this.store.dispatch(new fromStore.GetFilteredCategories({ params: this.defaultParams }));
+
+    this.categories$ = this.store.select(fromStore.getFilteredCategories);
   }
 
   updateHeader() {
@@ -171,7 +179,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       ).subscribe();
   }
 
-  listenForErrors() {
+  listenDeleteErrors() {
     this.actions$
       .pipe(ofType(fromStore.CategoriesActions.DELETE_CATEGORIES_FAIL), takeUntil(this.destroy$))
       .subscribe((action: fromStore.DeleteCategoriesFail) => {
@@ -181,11 +189,20 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       });
   }
 
+  listenErrors() {
+    this.store.select(fromStore.getCategoriesError)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((error) => error),
+        tap(() => this.handleError())
+      ).subscribe();
+  }
+
   resetErrors() {
     this.store.dispatch(new fromStore.ResetErrorMessage());
   }
 
-  handleError(message) {
+  handleError(message?) {
     const errorMessage = message ? message : 'something_went_wrong';
 
     const options = {
@@ -210,8 +227,9 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.resetErrors();
     this.updateHeader();
+    this.listenErrors();
     this.loadCategories();
-    this.listenForErrors();
+    this.listenDeleteErrors();
     this.loadCategoryTypes();
 
     this.loading$ = this.store

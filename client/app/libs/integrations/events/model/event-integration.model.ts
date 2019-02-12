@@ -1,7 +1,8 @@
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { FeedIntegration } from '../../common/model';
-import { EventFeedObjectType } from './event-integration.interface';
+import { CPDate } from '@shared/utils/date';
+import { FeedIntegration, IntegrationStatus } from '../../common/model';
+import { EventFeedObjectType, IEventIntegration } from './event-integration.interface';
 
 export class EventIntegration extends FeedIntegration {
   static readonly objectType = EventFeedObjectType;
@@ -10,7 +11,18 @@ export class EventIntegration extends FeedIntegration {
   public feed_obj_id: number;
   public poster_thumb_url: number;
 
-  static form(eventIntegration?) {
+  static isNotRunning(feed: IEventIntegration) {
+    return feed.sync_status !== IntegrationStatus.running;
+  }
+
+  static isLastSyncAfterThreshold(feed: IEventIntegration, tz: string) {
+    const nowMoment = CPDate.now(tz);
+    const lastSyncedMoment = CPDate.fromEpoch(feed.last_successful_sync_epoch, tz);
+
+    return nowMoment.unix() > lastSyncedMoment.add(1, 'minute').unix();
+  }
+
+  static form(eventIntegration?: IEventIntegration) {
     const fb = new FormBuilder();
 
     const _integration = {
