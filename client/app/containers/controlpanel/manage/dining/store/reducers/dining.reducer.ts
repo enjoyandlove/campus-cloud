@@ -24,7 +24,7 @@ export const diningAdaptor: EntityAdapter<ILocation> = createEntityAdapter<ILoca
 
 export const initialState: IDiningState = diningAdaptor.getInitialState(defaultDining);
 
-export function reducer (state = initialState, action: fromDining.DiningAction) {
+export function reducer(state = initialState, action: fromDining.DiningAction) {
   switch (action.type) {
     case fromDining.diningActions.GET_DINING: {
       return {
@@ -48,6 +48,35 @@ export function reducer (state = initialState, action: fromDining.DiningAction) 
         ...state,
         error: true,
         loaded: true
+      };
+    }
+
+    case fromDining.diningActions.DELETE_DINING: {
+      return {
+        ...state,
+        error: false,
+        loaded: true,
+        loading: true
+      };
+    }
+
+    case fromDining.diningActions.DELETE_DINING_SUCCESS: {
+      const deletedId = action.payload.deletedId;
+
+      return diningAdaptor.removeOne(deletedId, {
+        ...state,
+        error: false,
+        loaded: true,
+        loading: false
+      });
+    }
+
+    case fromDining.diningActions.DELETE_DINING_FAIL: {
+      return {
+        ...state,
+        error: true,
+        loaded: true,
+        loading: false
       };
     }
 

@@ -23,7 +23,8 @@
       [sortBy]="state.sort_field"
       (doSort)="onDoSort($event)"
       *ngIf="(dining$ | async).length"
-      [sortDirection]="state.sort_direction">
+      [sortDirection]="state.sort_direction"
+      (deleteClick)="onLaunchDeleteModal($event)">
     </cp-locations-common-list>
 
     <cp-pagination
@@ -35,3 +36,11 @@
     </cp-pagination>
   </div>
 </div>
+
+<cp-modal
+  *ngIf="showDeleteModal"
+  modalId="diningDelete">
+  <cp-dining-delete
+    [dining]="deleteDining">
+  </cp-dining-delete>
+</cp-modal>
