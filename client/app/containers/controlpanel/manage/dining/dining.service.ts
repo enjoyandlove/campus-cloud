@@ -20,4 +20,10 @@ export class DiningService extends HTTPService {
 
     return super.get(url, search);
   }
+
+  deleteDiningById(diningId: number, search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/${diningId}`;
+
+    return super.delete(url, search);
+  }
 }

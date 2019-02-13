@@ -35,6 +35,8 @@ const state: IState = {
 })
 export class DiningListComponent extends BaseComponent implements OnInit, OnDestroy {
   state: IState = state;
+  showDeleteModal = false;
+  deleteDining: ILocation;
   loading$: Observable<boolean>;
   categories$: Observable<IItem[]>;
   dining$: Observable<ILocation[]>;
@@ -110,6 +112,13 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
     };
 
     this.fetch();
+  }
+
+  onLaunchDeleteModal(dining: ILocation) {
+    this.showDeleteModal = true;
+    this.deleteDining = dining;
+
+    setTimeout(() => $('#diningDelete').modal());
   }
 
   buildHeader() {
