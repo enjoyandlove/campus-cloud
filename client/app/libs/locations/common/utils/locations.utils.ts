@@ -83,6 +83,10 @@ export class LocationsUtilsService {
   static getLocationTiming() {
     return [
       {
+        value: 0,
+        label: '12:00 AM'
+      },
+      {
         value: 1800,
         label: '12:30 AM'
       },
@@ -269,10 +273,6 @@ export class LocationsUtilsService {
       {
         value: 84600,
         label: '11:30 PM'
-      },
-      {
-        value: 0,
-        label: '12:00 AM'
       }
     ];
   }
