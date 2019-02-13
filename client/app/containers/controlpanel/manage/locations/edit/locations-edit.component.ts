@@ -74,7 +74,8 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
     const payload = {
       body,
       params,
-      locationId
+      locationId,
+      categoryId: this.categoryId
     };
 
     this.store.dispatch(new fromStore.EditLocation(payload));

@@ -1,14 +1,32 @@
 <form [formGroup]="form">
   <div class="form-group category">
-    <div class="form-group">
-      <cp-image-upload
-        cpTarget="upload_icon"
-        (uploaded)="onUploadedImage($event)"
-        [defaultImage]="form.controls['img_url'].value"
-        [buttonText]="['t_shared_upload_icon' | cpI18n]"
-        [heading]="['t_shared_cpimage_icon_heading' | cpI18n]"
-        [description]="['t_shared_cpimage_icon_help' | cpI18n]">
-      </cp-image-upload>
+    <div class="form-group category__icons">
+      <label>{{ 't_categories_map_pin_icon' | cpI18n }}</label>
+      <button
+        class='btn btn-sm'
+        (click)="onIconClick(category.value)"
+        *ngFor="let category of categoryIcons"
+        [class.active]="category.value === form.get('img_url').value">
+          <img
+            class="hover"
+            [src]="category.icon">
+      </button>
+    </div>
+
+    <div class="form-group category__color">
+      <label class="label">{{ 't_categories_map_pin_color' | cpI18n }}</label>
+      <button
+        class="btn btn-sm"
+        (click)="onColorClick(color.code)"
+        *ngFor="let color of categoryIconColors"
+        [class.active]="color.code === form.get('color').value">
+          <span [ngStyle]="{ 'background' :  '#' + color.code}"></span>
+      </button>
+      <label
+        class="error"
+        *ngIf="formError && (requiredControls.icon.invalid || requiredControls.color.invalid)">
+        {{ 't_categories_icon_color_required' | cpI18n }}
+      </label>
     </div>
 
     <div class="form-group">

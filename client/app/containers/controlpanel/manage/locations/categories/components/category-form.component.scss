@@ -1,8 +1,58 @@
 @import '~client/style/components/form';
 @import '~client/style/core/typography';
 
+@mixin button-layout() {
+  width: 38px;
+  margin: 0 2px;
+  height: 38px;
+  text-align: center;
+  background-color: $color-white;
+  border: 1px solid $color-med-grey;
+}
+
 .category {
   span {
     @include font-normal();
+  }
+
+  &__icons {
+    button {
+      @include button-layout();
+
+      &.active {
+        border: 2px solid $color-brand;
+      }
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+
+  &__color {
+    button {
+      @include button-layout();
+
+      padding: 2px;
+
+      &.active {
+        border: 2px solid $color-brand;
+      }
+
+      &:first-child {
+        margin-left: 0;
+      }
+
+      span {
+        width: 30px;
+        height: 30px;
+        display: block;
+        margin: 0 auto;
+      }
+    }
   }
 }

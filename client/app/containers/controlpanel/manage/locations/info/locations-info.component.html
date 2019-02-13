@@ -18,11 +18,12 @@
                   </a>
                 </div>
                 <div class="col-6 text-right">
-                  <img
+                  <span
                     cpTarget="icon"
-                    class="img-fit-cover avatar"
-                    *ngIf="location.category_img_url"
-                    [src]="location.category_img_url">
+                    class="location__icon"
+                    [ngStyle]="{'background' : '#' + location.category_color}">
+                      <img [src]="location.category_img_url">
+                  </span>
                 </div>
               </div>
             </div>

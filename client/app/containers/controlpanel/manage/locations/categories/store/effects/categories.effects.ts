@@ -10,6 +10,7 @@ import * as fromLocationStore from '../../../store';
 import { parseErrorResponse } from '@shared/utils/http';
 import { ILocation } from '@libs/locations/common/model';
 import { CategoriesService } from '../../categories.service';
+import { coerceBooleanProperty } from '@shared/utils/coercion';
 
 @Injectable()
 export class CategoriesEffects {
@@ -113,7 +114,7 @@ export class CategoriesEffects {
         return l;
       });
     }),
-    filter((l: ILocation[]) => !!l.length),
+    filter((l: ILocation[]) => coerceBooleanProperty(l.length)),
     mergeMap((l) => of(new fromLocationStore.GetLocationsSuccess(l)))
   );
 

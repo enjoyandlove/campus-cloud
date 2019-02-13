@@ -138,7 +138,7 @@ export function reducer(state = initialState, action: fromLocations.LocationsAct
 
     case fromLocations.locationActions.EDIT_LOCATION_SUCCESS: {
       return locationAdapter.updateOne(
-        { id: action.payload.id, changes: action.payload },
+        { id: action.payload.data.id, changes: action.payload.data },
         {
           ...state,
           error: false,
