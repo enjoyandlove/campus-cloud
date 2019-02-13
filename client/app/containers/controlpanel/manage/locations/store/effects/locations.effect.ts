@@ -1,19 +1,24 @@
-import { map, tap, mergeMap, catchError } from 'rxjs/operators';
+import { map, tap, mergeMap, catchError, filter, withLatestFrom } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
 import { ILocation } from '../../model';
 import * as fromActions from '../actions';
+import { ICategory } from '../../categories/model';
 import { LocationsService } from '../../locations.service';
+import * as fromCategoryStore from '../../categories/store';
+import { coerceBooleanProperty } from '@shared/utils/coercion';
 
 @Injectable()
 export class LocationsEffect {
   constructor(
     public router: Router,
     public actions$: Actions,
-    public service: LocationsService
+    public service: LocationsService,
+    public store: Store<fromCategoryStore.ICategoriesState>
   ) {}
 
   @Effect()
@@ -79,20 +84,71 @@ export class LocationsEffect {
   );
 
   @Effect()
+  createLocationSuccess$: Observable<fromCategoryStore.GetCategoriesSuccess>
+    = this.actions$.pipe(
+    ofType(fromActions.locationActions.POST_LOCATION_SUCCESS),
+    map((action: fromActions.PostLocationSuccess) => action.payload),
+    withLatestFrom(this.store.select(fromCategoryStore.getCategories)),
+    map(([{category_id}, categories]) => {
+      return categories.map((category: ICategory) => {
+        if (category.id === category_id) {
+          category = {
+            ...category,
+            locations_count: category.locations_count + 1
+          };
+        }
+
+        return category;
+      });
+    }),
+    filter((c: ICategory[]) => coerceBooleanProperty(c.length)),
+    mergeMap((c) => of(new fromCategoryStore.GetCategoriesSuccess(c)))
+  );
+
+  @Effect()
   editLocation$: Observable<fromActions.EditLocationSuccess | fromActions.EditLocationFail>
     = this.actions$.pipe(
     ofType(fromActions.locationActions.EDIT_LOCATION),
     mergeMap((action: fromActions.EditLocation) => {
-      const { locationId, body, params } = action.payload;
+      const { locationId, categoryId, body, params } = action.payload;
 
       return this.service
         .updateLocation(body, locationId, params)
         .pipe(
-          map((data: ILocation) => new fromActions.EditLocationSuccess(data)),
+          map((data: ILocation) => new fromActions.EditLocationSuccess({data: data, categoryId})),
           tap((_) => this.router.navigate([`/manage/locations/${locationId}/info`])),
           catchError((error) => of(new fromActions.EditLocationFail(error)))
         );
     })
+  );
+
+  @Effect()
+  editLocationSuccess$: Observable<fromCategoryStore.GetCategoriesSuccess>
+    = this.actions$.pipe(
+    ofType(fromActions.locationActions.EDIT_LOCATION_SUCCESS),
+    map((action: fromActions.GetLocationByIdSuccess) => action.payload),
+    withLatestFrom(this.store.select(fromCategoryStore.getCategories)),
+    map(([locations, categories]) => {
+      return categories.map((category: ICategory) => {
+        if (category.id === locations['categoryId']) {
+          category = {
+            ...category,
+            locations_count: category.locations_count - 1
+          };
+        }
+
+        if (category.id === locations['data'].category_id) {
+          category = {
+            ...category,
+            locations_count: category.locations_count + 1
+          };
+        }
+
+        return category;
+      });
+    }),
+    filter((c: ICategory[]) => coerceBooleanProperty(c.length)),
+    mergeMap((c) => of(new fromCategoryStore.GetCategoriesSuccess(c)))
   );
 
   @Effect()
