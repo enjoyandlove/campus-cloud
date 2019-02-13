@@ -102,12 +102,13 @@ export class CategoriesEffects {
     ofType(fromActions.CategoriesActions.EDIT_CATEGORY_SUCCESS),
     map((action: fromActions.EditCategorySuccess) => action.payload),
     withLatestFrom(this.store.select(fromLocationStore.getLocations)),
-    map(([{ id, name, img_url }, locations]) => {
+    map(([{ id, name, img_url, color }, locations]) => {
       return locations.map((l: ILocation) => {
         if (l.category_id === id) {
           return {
             ...l,
             category_name: name,
+            category_color: color,
             category_img_url: img_url
           };
         }
