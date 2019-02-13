@@ -2437,6 +2437,9 @@
   "t_dining_create_dining": {
     "message": "Create Dining"
   },
+  "t_dining_delete_modal_title": {
+    "message": "Delete Dining"
+  },
   "t_dining_dietary_notes": {
     "message": "Dietary Notes"
   },

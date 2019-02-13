@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { reducers, effects } from './store';
 
 import { DiningListComponent } from './list';
+import { DiningDeleteComponent } from './delete';
 import { DiningService } from './dining.service';
 import { SharedModule } from '@shared/shared.module';
 import { DiningRoutingModule } from './dining.routing.module';
@@ -14,7 +15,8 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
 
 @NgModule({
   declarations: [
-    DiningListComponent
+    DiningListComponent,
+    DiningDeleteComponent
   ],
 
   imports: [
