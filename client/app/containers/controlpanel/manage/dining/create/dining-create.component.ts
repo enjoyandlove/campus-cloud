@@ -2,7 +2,7 @@ import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
 import { filter, takeUntil, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
-import { FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -62,6 +62,7 @@ export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
     );
 
     if (body['schedule']) {
+      this.buttonDisabled = false;
       console.log(body['schedule']);
 
       return;
@@ -149,6 +150,11 @@ export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
     this.diningForm = LocationModel.form();
     LocationsUtilsService.setScheduleFormControls(this.diningForm);
 
+    this.diningForm.addControl('notes', new FormControl('5555'));
+
+    this.diningForm.valueChanges.subscribe((val) => {
+      console.log(val);
+    });
     // todo replace with actual
     this.categories$ = of([
       {
