@@ -1,0 +1,17 @@
+@import '~client/style/components/button';
+@import '~client/style/core/typography';
+@import '~client/style/components/card';
+
+strong {
+  @include font-semi-bold();
+
+  color: $color-black;
+}
+
+.location {
+
+  &__details {
+    display: block;
+    margin-top: $default_margin;
+  }
+}

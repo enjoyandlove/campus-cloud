@@ -5,6 +5,7 @@ import { SharedModule } from '@shared/shared.module';
 import { configureTestSuite } from '@app/shared/tests';
 import { mockTime } from '@libs/locations/common/tests';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { LocationsDayLabelPipe } from '@libs/locations/common/pipes';
 import { LocationModel, ScheduleDays, scheduleLabels } from '@libs/locations/common/model';
 import { LocationOpeningHoursFormComponent } from './location-opening-hours-form.component';
 
@@ -16,7 +17,7 @@ describe('LocationOpeningHoursFormComponent', () => {
       TestBed.configureTestingModule({
         imports: [SharedModule],
         providers: [LocationsUtilsService],
-        declarations: [LocationOpeningHoursFormComponent],
+        declarations: [LocationOpeningHoursFormComponent, LocationsDayLabelPipe],
         schemas: [NO_ERRORS_SCHEMA]
       });
 
