@@ -4,6 +4,7 @@ import * as fromFeature from '../reducers';
 import { getFeatureState } from './feature.selector';
 
 import * as fromDining from '../reducers/dining.reducer';
+import { getRouterState } from '@app/store/base/router-state';
 
 export const getDiningState = createSelector(
   getFeatureState,
@@ -28,4 +29,21 @@ export const getDiningLoaded = createSelector(
 export const getDiningLoading = createSelector(
   getDiningState,
   fromDining.getDiningLoading
+);
+
+export const getDiningEntities = createSelector(
+  getDiningState,
+  fromDining.getDiningEntities
+);
+
+export const getSelectedDining = createSelector(
+  getDiningEntities,
+  getRouterState,
+  (dining, router) => {
+    const diningId = parseInt(router.state.params.diningId, 10);
+
+    if (dining[diningId]) {
+      return dining[diningId];
+    }
+  }
 );
