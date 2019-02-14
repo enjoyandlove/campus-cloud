@@ -23,7 +23,7 @@
         <div class="col-7" *ngFor="let item of schedule.get('items')['controls']; let itemIndex = index">
           <div formArrayName="items">
             <div class="row" [formGroupName]="itemIndex">
-              <div class="col-6 horizontal">
+              <div class="col-6 horizontal no-left-padding">
                 <label class="margin-right">{{ 't_shared_from' | cpI18n }}</label>
                 <cp-dropdown
                   [items]="locationTiming"
