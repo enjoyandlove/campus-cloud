@@ -12,7 +12,11 @@ export enum diningActions {
   POST_DINING_FAIL = '[manage.dining] post dining fail',
   POST_DINING_SUCCESS = '[manage.dining] post dining success',
 
-  RESET_ERROR = '[manage.locations] reset error to false'
+  RESET_ERROR = '[manage.locations] reset error to false',
+
+  DELETE_DINING = '[manage.dining] delete dining',
+  DELETE_DINING_FAIL = '[manage.dining] delete dining fail',
+  DELETE_DINING_SUCCESS = '[manage.dining] delete dining success',
 }
 
 
@@ -49,6 +53,20 @@ export class PostDiningSuccess implements Action {
 export class ResetError implements Action {
   readonly type = diningActions.RESET_ERROR;
 }
+export class DeleteDining implements Action {
+  readonly type = diningActions.DELETE_DINING;
+  constructor(public payload: { diningId: number; params: HttpParams }) {}
+}
+
+export class DeleteDiningFail implements Action {
+  readonly type = diningActions.DELETE_DINING_FAIL;
+  constructor(public payload: HttpErrorResponse) {}
+}
+
+export class DeleteDiningSuccess implements Action {
+  readonly type = diningActions.DELETE_DINING_SUCCESS;
+  constructor(public payload: { deletedId: number }) {}
+}
 
 export type DiningAction =
   | GetDining
@@ -57,4 +75,8 @@ export type DiningAction =
   | PostDining
   | PostDiningFail
   | PostDiningSuccess
-  | ResetError;
+  | ResetError
+  | GetDiningSuccess
+  | DeleteDining
+  | DeleteDiningFail
+  | DeleteDiningSuccess;

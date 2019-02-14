@@ -8,6 +8,7 @@ import { reducers, effects } from './store';
 
 import { DiningListComponent } from './list';
 import { DiningCreateComponent } from './create';
+import { DiningDeleteComponent } from './delete';
 import { DiningOpeningHoursFormComponent } from './components';
 
 import { DiningService } from './dining.service';
@@ -21,6 +22,7 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
   declarations: [
     DiningListComponent,
     DiningCreateComponent,
+    DiningDeleteComponent,
     DiningOpeningHoursFormComponent
   ],
 

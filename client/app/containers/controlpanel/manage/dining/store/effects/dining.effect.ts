@@ -47,4 +47,20 @@ export class DiningEffect {
         );
     })
   );
+
+  @Effect()
+  deleteDining$: Observable<fromActions.DeleteDiningSuccess | fromActions.DeleteDiningFail>
+    = this.actions$.pipe(
+    ofType(fromActions.diningActions.DELETE_DINING),
+    mergeMap((action: fromActions.DeleteDining) => {
+      const { diningId, params } = action.payload;
+
+      return this.service
+        .deleteDiningById(diningId, params)
+        .pipe(
+          map(() => new fromActions.DeleteDiningSuccess({ deletedId: diningId })),
+          catchError((error) => of(new fromActions.DeleteDiningFail(error)))
+        );
+    })
+  );
 }
