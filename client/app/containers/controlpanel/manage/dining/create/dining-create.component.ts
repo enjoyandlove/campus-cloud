@@ -61,12 +61,6 @@ export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
       this.openingHours
     );
 
-    if (body['schedule']) {
-      this.buttonDisabled = false;
-      console.log(body['schedule']);
-
-      return;
-    }
     const school_id = this.session.g.get('school').id;
     const params = new HttpParams().append('school_id', school_id);
 
@@ -150,11 +144,8 @@ export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
     this.diningForm = LocationModel.form();
     LocationsUtilsService.setScheduleFormControls(this.diningForm);
 
-    this.diningForm.addControl('notes', new FormControl('5555'));
+    this.diningForm.addControl('notes', new FormControl(null));
 
-    this.diningForm.valueChanges.subscribe((val) => {
-      console.log(val);
-    });
     // todo replace with actual
     this.categories$ = of([
       {

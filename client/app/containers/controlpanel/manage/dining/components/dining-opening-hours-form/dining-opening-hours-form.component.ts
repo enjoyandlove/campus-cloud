@@ -40,7 +40,7 @@ export class DiningOpeningHoursFormComponent implements OnInit {
   addItem(schedule) {
     const controlItems = <FormArray>schedule.controls['items'];
 
-    controlItems.controls.push(ScheduleModel.setItemControls());
+    controlItems.push(ScheduleModel.setItemControls());
   }
 
   removeItem(schedule, index) {

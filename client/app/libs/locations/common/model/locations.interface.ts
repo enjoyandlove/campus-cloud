@@ -13,6 +13,8 @@ export interface ILocation {
 
   name: string;
 
+  notes: string;
+
   phone: number;
 
   email: string;

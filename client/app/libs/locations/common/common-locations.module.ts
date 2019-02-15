@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { LocationsDayLabelPipe, LocationsTimeLabelPipe } from './pipes';
+import { LocationsDayLabelPipe } from './pipes';
 import { SharedModule } from '@client/app/shared/shared.module';
 import {
   LocationFormComponent,
@@ -20,7 +20,6 @@ import {
   declarations: [
     LocationsDayLabelPipe,
     LocationFormComponent,
-    LocationsTimeLabelPipe,
     LocationsInfoCardComponent,
     LocationsMetaDataComponent,
     DiningOpeningHoursComponent,
@@ -33,7 +32,6 @@ import {
   exports: [
     LocationsDayLabelPipe,
     LocationFormComponent,
-    LocationsTimeLabelPipe,
     LocationsInfoCardComponent,
     LocationsMetaDataComponent,
     DiningOpeningHoursComponent,

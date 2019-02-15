@@ -5,7 +5,7 @@
         <div class="col-12">
           <div class="row">
             <div class="col-9 day">
-              <label> {{ schedule.controls.day.value | locationsDayLabel | cpI18n }}</label>
+              <p class="heading"> {{ schedule.controls.day.value | locationsDayLabel | cpI18n }}</p>
             </div>
             <div class="col-3 day">
               <cp-checkbox
@@ -24,8 +24,10 @@
           <div class="col-12" *ngFor="let item of schedule.get('items')['controls']; let itemIndex = index">
             <div formArrayName="items">
               <div class="row" [formGroupName]="itemIndex">
-                <div class="col-3">
-                  <label>{{ 't_shared_meal' | cpI18n }}</label>
+                <div class="col-4">
+                  <label *ngIf="itemIndex === 0">
+                    {{ 't_shared_meal' | cpI18n }}
+                  </label>
                   <input
                     type="text"
                     cpTarget="name"
@@ -42,7 +44,7 @@
                   </cp-dropdown>
                 </div>
 
-                <div class="col-4 horizontal">
+                <div class="col-3 horizontal no-left-padding">
                   <label class="margin-right">{{ 't_shared_to' | cpI18n }}</label>
                   <cp-dropdown
                     [items]="diningTiming"
@@ -55,7 +57,7 @@
                 <div class="col-1">
                   <i
                     cpTarget="delete"
-                    class="material-icons hover"
+                    class="material-icons hover margin-top"
                     (click)="removeItem(schedule, itemIndex)"
                     *ngIf="schedule.get('items')['controls'].length > 1">
                     close
@@ -65,11 +67,15 @@
             </div>
           </div>
 
-          <button
-            (click)="addItem(schedule, i)"
-            class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
-            {{ 't_dining_form_add_meal' | cpI18n }}
-          </button>
+          <div class="col-12">
+            <div class="rows">
+              <button
+                (click)="addItem(schedule, i)"
+                class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
+                {{ 't_dining_form_add_meal' | cpI18n }}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

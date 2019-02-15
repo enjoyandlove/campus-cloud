@@ -22,6 +22,7 @@ import { LocationExistsGuard } from './guards';
 import { LayoutsModule } from '@app/layouts/layouts.module';
 import { CustomSerializer } from '@app/store/base/router-state';
 import { CategoriesModule } from './categories/categories.module';
+import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
 import { CommonLocationsModule } from '@libs/locations/common/common-locations.module';
 
 @NgModule({
@@ -31,6 +32,7 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
     LocationsEditComponent,
     LocationsDeleteComponent,
     LocationsCreateComponent,
+    LocationsTimeLabelPipe,
     LocationOpeningHoursFormComponent
   ],
 
@@ -51,6 +53,7 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
     LocationsService,
     LocationExistsGuard,
     LocationsUtilsService,
+    LocationsTimeLabelPipe,
     {
       provide: RouterStateSerializer,
       useClass: CustomSerializer

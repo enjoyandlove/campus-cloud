@@ -10,6 +10,11 @@ form {
     margin-right: 5px;
   }
 
+  p.heading {
+    @include font-16px();
+    @include font-semi-bold();
+  }
+
   .horizontal {
     display: flex;
     margin-top: 28px;
@@ -21,7 +26,15 @@ form {
     margin-top: 12px;
   }
 
+  .margin-top {
+    margin-top: 33px;
+  }
+
   .remove-item {
     font-size: 2em;
+  }
+
+  button {
+    margin-top: 10px;
   }
 }
