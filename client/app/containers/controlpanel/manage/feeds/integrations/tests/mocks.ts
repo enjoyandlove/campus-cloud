@@ -14,11 +14,11 @@ export const emptyForm = {
 
 export const filledForm = {
   school_id: 157,
-  feed_url: 'http://some.data',
+  feed_url: 'http://google.com',
   feed_type: 1,
-  poster_display_name: null,
+  poster_display_name: 'poster_display_name',
   social_post_category_id: 1,
-  poster_avatar_url: null,
+  poster_avatar_url: 'poster_avatar_url',
   socialPostCategory: {
     ...filledSocialPostCategory
   }
