@@ -10,7 +10,7 @@ import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
 import { ManageHeaderService } from '../../utils';
-import { ILocation } from '@libs/locations/common/model';
+import { IDining } from '@libs/locations/common/model';
 import { BaseComponent } from '@app/base/base.component';
 import { LocationType } from '@libs/locations/common/utils';
 
@@ -36,10 +36,10 @@ const state: IState = {
 export class DiningListComponent extends BaseComponent implements OnInit, OnDestroy {
   state: IState = state;
   showDeleteModal = false;
-  deleteDining: ILocation;
+  deleteDining: IDining;
   loading$: Observable<boolean>;
+  dining$: Observable<IDining[]>;
   categories$: Observable<IItem[]>;
-  dining$: Observable<ILocation[]>;
 
   private destroy$ = new Subject();
 
@@ -114,7 +114,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
     this.fetch();
   }
 
-  onLaunchDeleteModal(dining: ILocation) {
+  onLaunchDeleteModal(dining: IDining) {
     this.showDeleteModal = true;
     this.deleteDining = dining;
 
@@ -142,7 +142,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
       .subscribe();
 
     this.dining$ = this.store.select(fromStore.getDining).pipe(
-      map((dining: ILocation[]) => {
+      map((dining: IDining[]) => {
         const responseCopy = [...dining];
 
         return super.updatePagination(responseCopy);

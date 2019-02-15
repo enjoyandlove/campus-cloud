@@ -2,14 +2,14 @@ import { EntityState, EntityAdapter, createEntityAdapter, Dictionary } from '@ng
 
 import * as fromDining from '../actions';
 
-import { ILocation } from '@libs/locations/common/model';
+import { IDining } from '@libs/locations/common/model';
 
-export interface IDiningState extends EntityState<ILocation> {
+export interface IDiningState extends EntityState<IDining> {
   error: boolean;
   loaded: boolean;
   loading: boolean;
   ids: Array<number>;
-  entities: Dictionary<ILocation>;
+  entities: Dictionary<IDining>;
 }
 
 const defaultDining: IDiningState = {
@@ -20,7 +20,7 @@ const defaultDining: IDiningState = {
   loading: false
 };
 
-export const diningAdaptor: EntityAdapter<ILocation> = createEntityAdapter<ILocation>();
+export const diningAdaptor: EntityAdapter<IDining> = createEntityAdapter<IDining>();
 
 export const initialState: IDiningState = diningAdaptor.getInitialState(defaultDining);
 
@@ -48,6 +48,29 @@ export function reducer(state = initialState, action: fromDining.DiningAction) {
         ...state,
         error: true,
         loaded: true
+      };
+    }
+
+    case fromDining.diningActions.GET_DINING_BY_ID: {
+      return {
+        ...state,
+        loading: true
+      };
+    }
+
+    case fromDining.diningActions.GET_DINING_BY_ID_SUCCESS: {
+      return diningAdaptor.upsertOne(action.payload, {
+        ...state,
+        error: false,
+        loading: false
+      });
+    }
+
+    case fromDining.diningActions.GET_DINING_BY_ID_FAIL: {
+      return {
+        ...state,
+        error: true,
+        loading: false
       };
     }
 
@@ -80,15 +103,23 @@ export function reducer(state = initialState, action: fromDining.DiningAction) {
       };
     }
 
+    case fromDining.diningActions.RESET_ERROR: {
+      return {
+        ...state,
+        error: false
+      };
+    }
+
     default: {
       return state;
     }
   }
 }
 
-export const { selectAll } = diningAdaptor.getSelectors();
+export const { selectAll, selectEntities } = diningAdaptor.getSelectors();
 
 export const getDining = selectAll;
+export const getDiningEntities = selectEntities;
 export const getDiningError = (state: IDiningState) => state.error;
 export const getDiningLoaded = (state: IDiningState) => state.loaded;
 export const getDiningLoading = (state: IDiningState) => state.loading;

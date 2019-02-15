@@ -284,12 +284,18 @@ export class LocationsUtilsService {
       const selectedDay = schedule.find((d) => d.day === day + 1);
 
       if (selectedDay) {
-        const item = selectedDay.items[0];
+        const items = selectedDay.items.map((item) => {
+          return {
+            name: item.name,
+            time: this.timeLabelPipe.transform(item.start_time) + ' - ' + this.timeLabelPipe.transform(item.end_time)
+          };
+        });
 
         openingHours.push({
-          day: selectedDay.day,
-          time: this.timeLabelPipe.transform(item.start_time) + ' - ' + this.timeLabelPipe.transform(item.end_time)
+          items,
+          day: selectedDay.day
         });
+
       } else {
         openingHours.push({
           day: day + 1,
