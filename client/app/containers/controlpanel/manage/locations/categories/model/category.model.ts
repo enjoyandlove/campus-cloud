@@ -53,10 +53,6 @@ export class CategoryModel {
         icon: `${assetPath + 'location_pin.svg'}`
       },
       {
-        icon: `${assetPath + 'dining.svg'}`,
-        value: `${dbPath + 'location_category_dining.png'}`
-      },
-      {
         icon: `${assetPath + 'housing.svg'}`,
         value: `${dbPath + 'location_category_housing.png'}`
       },
@@ -105,7 +101,8 @@ export class CategoryModel {
       { code: '4F5A7A' },
       { code: 'FB6565' },
       { code: '4F5CF2' },
-      { code: '0076FF' }
+      { code: '0076FF' },
+      { code: '9200AF' }
     ];
   }
 }

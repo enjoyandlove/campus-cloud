@@ -4,7 +4,7 @@
 @mixin button-layout() {
   width: 38px;
   height: 38px;
-  margin-left: 3px;
+  margin: 0 2px;
   text-align: center;
   background-color: $color-white;
   border: 1px solid $color-med-grey;
