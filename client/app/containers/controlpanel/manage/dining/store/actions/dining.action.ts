@@ -1,22 +1,26 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
-import { ILocation } from '@libs/locations/common/model';
+import { IDining } from '@libs/locations/common/model';
 
 export enum diningActions {
   GET_DINING = '[manage.dining] get dining locations',
   GET_DINING_FAIL = '[manage.dining] get dining locations fail',
   GET_DINING_SUCCESS = '[manage.dining] get dining locations success',
 
+  GET_DINING_BY_ID = '[manage.dining] get dining by id',
+  GET_DINING_BY_ID_FAIL = '[manage.dining] get dining by id fail',
+  GET_DINING_BY_ID_SUCCESS = '[manage.dining] get dining by id success',
+
   POST_DINING = '[manage.dining] post dining',
   POST_DINING_FAIL = '[manage.dining] post dining fail',
   POST_DINING_SUCCESS = '[manage.dining] post dining success',
 
-  RESET_ERROR = '[manage.locations] reset error to false',
-
   DELETE_DINING = '[manage.dining] delete dining',
   DELETE_DINING_FAIL = '[manage.dining] delete dining fail',
   DELETE_DINING_SUCCESS = '[manage.dining] delete dining success',
+
+  RESET_ERROR = '[manage.dining] reset error to false'
 }
 
 
@@ -32,7 +36,22 @@ export class GetDiningFail implements Action {
 
 export class GetDiningSuccess implements Action {
   readonly type = diningActions.GET_DINING_SUCCESS;
-  constructor(public payload: ILocation[]) {}
+  constructor(public payload: IDining[]) {}
+}
+
+export class GetDiningById implements Action {
+  readonly type = diningActions.GET_DINING_BY_ID;
+  constructor(public payload: { diningId: number }) {}
+}
+
+export class GetDiningByIdFail implements Action {
+  readonly type = diningActions.GET_DINING_BY_ID_FAIL;
+  constructor(public payload: HttpErrorResponse) {}
+}
+
+export class GetDiningByIdSuccess implements Action {
+  readonly type = diningActions.GET_DINING_BY_ID_SUCCESS;
+  constructor(public payload: IDining) {}
 }
 
 export class PostDining implements Action {
@@ -47,12 +66,9 @@ export class PostDiningFail implements Action {
 
 export class PostDiningSuccess implements Action {
   readonly type = diningActions.POST_DINING_SUCCESS;
-  constructor(public payload: ILocation) {}
+  constructor(public payload: IDining) {}
 }
 
-export class ResetError implements Action {
-  readonly type = diningActions.RESET_ERROR;
-}
 export class DeleteDining implements Action {
   readonly type = diningActions.DELETE_DINING;
   constructor(public payload: { diningId: number; params: HttpParams }) {}
@@ -68,15 +84,21 @@ export class DeleteDiningSuccess implements Action {
   constructor(public payload: { deletedId: number }) {}
 }
 
+export class ResetError implements Action {
+  readonly type = diningActions.RESET_ERROR;
+}
+
 export type DiningAction =
   | GetDining
   | GetDiningFail
   | GetDiningSuccess
+  | GetDiningById
+  | GetDiningByIdFail
+  | GetDiningByIdSuccess
   | PostDining
   | PostDiningFail
   | PostDiningSuccess
-  | ResetError
-  | GetDiningSuccess
   | DeleteDining
   | DeleteDiningFail
-  | DeleteDiningSuccess;
+  | DeleteDiningSuccess
+  | ResetError;

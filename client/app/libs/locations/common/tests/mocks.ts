@@ -16,10 +16,10 @@ export const mockSchedule = [
     items: [
       {
         url: '',
-        name: '',
         description: '',
         end_time: 18000,
-        start_time: 3600
+        start_time: 3600,
+        name: 'hello world'
       }
     ]
   }

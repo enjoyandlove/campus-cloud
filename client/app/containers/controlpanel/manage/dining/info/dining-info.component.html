@@ -5,25 +5,25 @@
     <div class="row justify-content-center">
       <div class="col-8">
         <cp-locations-info-resource-banner
-          [location]="location"
+          [location]="dining"
           (editClick)="onEditClick()"
           [resourceBanner]="resourceBanner">
         </cp-locations-info-resource-banner>
 
         <cp-locations-info-card
-          [location]="location"
+          [location]="dining"
           [mapCenter]="mapCenter">
         </cp-locations-info-card>
 
         <cp-locations-meta-data
           *ngIf="hasMetaData"
-          [location]="location">
+          [location]="dining">
         </cp-locations-meta-data>
 
-        <cp-location-opening-hours
+        <cp-dining-opening-hours
           [openingHours]="openingHours"
-          *ngIf="location.schedule.length">
-        </cp-location-opening-hours>
+          *ngIf="dining.schedule.length">
+        </cp-dining-opening-hours>
       </div>
     </div>
   </div>

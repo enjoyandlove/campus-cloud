@@ -16,6 +16,14 @@ export interface IItems {
   description: string;
 }
 
+export interface IOpeningHours {
+  day: number;
+
+  time?: string;
+
+  items?: Array<{ name: string; time: string }>;
+}
+
 export interface ISchedule {
   day: number;
 

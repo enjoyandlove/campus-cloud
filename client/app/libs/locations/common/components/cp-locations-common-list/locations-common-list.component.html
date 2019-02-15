@@ -49,15 +49,6 @@
       </span>
 
       <span class="col-1 text-right">
-        <a
-          cpTracker
-          cpTarget="edit"
-          [eventData]="eventData"
-          [routerLink]="[location.id + '/edit']">
-            <i class="material-icons hover action-button margin-right">
-              edit
-            </i>
-          </a>
           <i
             cpTarget="delete"
             (click)="deleteClick.emit(location)"
