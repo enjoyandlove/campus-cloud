@@ -75,20 +75,36 @@ export class CategoryModel {
       {
         icon: `${assetPath + 'accessability.svg'}`,
         value: `${dbPath + 'location_category_accessability.png'}`
+      },
+      {
+        icon: `${assetPath + 'bus.svg'}`,
+        value: `${dbPath + 'location_category_bus.png'}`
+      },
+      {
+        icon: `${assetPath + 'bike.svg'}`,
+        value: `${dbPath + 'location_category_bike.png'}`
+      },
+      {
+        icon: `${assetPath + 'health.svg'}`,
+        value: `${dbPath + 'location_category_health.png'}`
+      },
+      {
+        icon: `${assetPath + 'information.svg'}`,
+        value: `${dbPath + 'location_category_information.png'}`
       }
     ];
   }
 
   static categoryIconColors() {
     return [
-      { code: 'CF0000' },
-      { code: 'FF5A1B' },
-      { code: 'FFA416' },
-      { code: '00C2CD' },
-      { code: '00CE80' },
-      { code: '4C5A7D' },
-      { code: 'FF575F' },
-      { code: '4B5DFB' },
+      { code: 'E04141' },
+      { code: 'FFA941' },
+      { code: 'EC6634' },
+      { code: '57BFCB' },
+      { code: '5DCB87' },
+      { code: '4F5A7A' },
+      { code: 'FB6565' },
+      { code: '4F5CF2' },
       { code: '0076FF' }
     ];
   }
