@@ -69,6 +69,23 @@ export class DiningEffect {
   );
 
   @Effect()
+  editDining$: Observable<fromActions.EditDiningSuccess | fromActions.EditDiningFail>
+    = this.actions$.pipe(
+    ofType(fromActions.diningActions.EDIT_DINING),
+    mergeMap((action: fromActions.EditDining) => {
+      const { diningId, body, params } = action.payload;
+
+      return this.service
+        .updateDining(body, diningId, params)
+        .pipe(
+          map((data: IDining) => new fromActions.EditDiningSuccess(data)),
+          tap((_) => this.router.navigate([`/manage/dining/${diningId}/info`])),
+          catchError((error) => of(new fromActions.EditDiningFail(error)))
+        );
+    })
+  );
+
+  @Effect()
   deleteDining$: Observable<fromActions.DeleteDiningSuccess | fromActions.DeleteDiningFail>
     = this.actions$.pipe(
     ofType(fromActions.diningActions.DELETE_DINING),

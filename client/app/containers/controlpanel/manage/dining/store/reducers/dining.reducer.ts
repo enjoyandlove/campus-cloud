@@ -99,6 +99,34 @@ export function reducer(state = initialState, action: fromDining.DiningAction) {
       };
     }
 
+    case fromDining.diningActions.EDIT_DINING: {
+      return {
+        ...state,
+        error: false,
+        loading: false
+      };
+    }
+
+    case fromDining.diningActions.EDIT_DINING_SUCCESS: {
+      return diningAdaptor.updateOne(
+        { id: action.payload.id, changes: action.payload },
+        {
+          ...state,
+          error: false,
+          loading: false
+        }
+      );
+    }
+
+    case fromDining.diningActions.EDIT_DINING_FAIL: {
+      return {
+        ...state,
+        error: true,
+        loaded: true,
+        loading: false
+      };
+    }
+
     case fromDining.diningActions.DELETE_DINING: {
       return {
         ...state,

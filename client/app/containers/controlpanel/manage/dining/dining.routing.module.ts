@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { DiningListComponent } from './list';
 import { DiningInfoComponent } from './info';
+import { DiningEditComponent } from './edit';
 import { DiningCreateComponent } from './create';
 import { PrivilegesGuard } from '@app/config/guards';
 import { DiningExistGuard } from './guards/dining-exist-guard';
@@ -24,6 +25,12 @@ const appRoutes: Routes = [
     path: 'create',
     canActivate: [PrivilegesGuard],
     component: DiningCreateComponent,
+    data: { zendesk: 'dining' }
+  },
+  {
+    path: ':diningId/edit',
+    canActivate: [PrivilegesGuard, DiningExistGuard],
+    component: DiningEditComponent,
     data: { zendesk: 'dining' }
   }
 ];

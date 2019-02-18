@@ -33,6 +33,12 @@ export class DiningService extends HTTPService {
     return super.post(url, body, search);
   }
 
+  updateDining(body, diningId: number, search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/${diningId}`;
+
+    return super.update(url, body, search);
+  }
+
   deleteDiningById(diningId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/${diningId}`;
 
