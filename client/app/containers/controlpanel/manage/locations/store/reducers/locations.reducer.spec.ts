@@ -136,7 +136,8 @@ describe('Locations Reducer', () => {
     const { initialState } = fromReducer;
     const payload = {
       params,
-      locationId: mockLocations[0].id
+      locationId: mockLocations[0].id,
+      categoryId: mockLocations[0].category_id
     };
 
     const action = new fromActions.DeleteLocation(payload);
@@ -152,7 +153,8 @@ describe('Locations Reducer', () => {
 
     const payload = {
       params,
-      deletedId: mockLocations[0].id
+      deletedId: mockLocations[0].id,
+      categoryId: mockLocations[0].category_id
     };
 
     const action = new fromActions.DeleteLocationSuccess(payload);
