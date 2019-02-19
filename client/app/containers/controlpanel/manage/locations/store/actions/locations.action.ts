@@ -95,7 +95,7 @@ export class PostLocationSuccess implements Action {
 
 export class EditLocation implements Action {
   readonly type = locationActions.EDIT_LOCATION;
-  constructor(public payload: { locationId: number; body: any; params: HttpParams }) {}
+  constructor(public payload: { locationId: number; categoryId: number; body: any; params: HttpParams }) {}
 }
 
 export class EditLocationFail implements Action {
@@ -105,12 +105,12 @@ export class EditLocationFail implements Action {
 
 export class EditLocationSuccess implements Action {
   readonly type = locationActions.EDIT_LOCATION_SUCCESS;
-  constructor(public payload: ILocation) {}
+  constructor(public payload: { data: ILocation; categoryId: number }) {}
 }
 
 export class DeleteLocation implements Action {
   readonly type = locationActions.DELETE_LOCATION;
-  constructor(public payload: { locationId: number; params: HttpParams }) {}
+  constructor(public payload: { locationId: number; categoryId: number; params: HttpParams }) {}
 }
 
 export class DeleteLocationFail implements Action {
@@ -120,7 +120,7 @@ export class DeleteLocationFail implements Action {
 
 export class DeleteLocationSuccess implements Action {
   readonly type = locationActions.DELETE_LOCATION_SUCCESS;
-  constructor(public payload: { deletedId: number }) {}
+  constructor(public payload: { deletedId: number, categoryId: number  }) {}
 }
 
 export class ResetError implements Action {

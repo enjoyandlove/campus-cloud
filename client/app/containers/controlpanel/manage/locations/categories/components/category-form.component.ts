@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
+import { CategoryModel } from '../model';
 import { IItem } from '@shared/components';
 
 @Component({
@@ -15,10 +16,17 @@ export class CategoryFormComponent implements OnInit {
   @Input() formError: boolean;
   @Input() categoryTypes$: Observable<IItem[]>;
 
+  categoryIcons = CategoryModel.categoryIcons();
+  categoryIconColors = CategoryModel.categoryIconColors();
+
   constructor() {}
 
-  onUploadedImage(image) {
-    this.form.get('img_url').setValue(image ? image : '');
+  onIconClick(icon) {
+    this.form.get('img_url').setValue(icon);
+  }
+
+  onColorClick(color) {
+    this.form.get('color').setValue(color);
   }
 
   onCategoryTypeSelect(type) {
@@ -28,6 +36,8 @@ export class CategoryFormComponent implements OnInit {
   get requiredControls() {
     return {
       name: this.form.get('name'),
+      color: this.form.get('color'),
+      icon: this.form.get('img_url'),
       type: this.form.get('category_type_id'),
     };
   }

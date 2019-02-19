@@ -161,7 +161,11 @@ describe('WallsIntegrationsEditComponent', () => {
     expect(submitBtn.disabled).toBe(true);
 
     component.form.get('school_id').setValue(1);
+    component.form.get('poster_avatar_url').setValue('some');
+    component.form.get('poster_display_name').setValue('some');
+
     fixture.detectChanges();
+
     expect(submitBtn.disabled).toBe(false);
   });
 });

@@ -1,6 +1,8 @@
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { FeedIntegration } from '../../common/model';
+import { validUrl } from '@shared/utils/forms/patterns';
+import { CustomTextValidators } from '@shared/validators';
 import { IWallsIntegration } from './walls.integrations.interface';
 
 export class WallsIntegrationModel extends FeedIntegration {
@@ -23,10 +25,28 @@ export class WallsIntegrationModel extends FeedIntegration {
     return fb.group({
       school_id: [_integration.school_id, Validators.required],
       social_post_category_id: [_integration.social_post_category_id, Validators.required],
-      feed_url: [_integration.feed_url, Validators.required],
+      feed_url: [
+        _integration.feed_url,
+        Validators.compose([
+          Validators.required,
+          Validators.maxLength(1024),
+          Validators.pattern(validUrl),
+          CustomTextValidators.requiredNonEmpty
+        ])
+      ],
       feed_type: [_integration.feed_type, Validators.required],
-      poster_display_name: [_integration.poster_display_name],
-      poster_avatar_url: [_integration.poster_avatar_url]
+      poster_display_name: [
+        _integration.poster_display_name,
+        Validators.compose([
+          Validators.required,
+          Validators.maxLength(128),
+          CustomTextValidators.requiredNonEmpty
+        ])
+      ],
+      poster_avatar_url: [
+        _integration.poster_avatar_url,
+        Validators.compose([Validators.required, Validators.maxLength(128)])
+      ]
     });
   }
 }

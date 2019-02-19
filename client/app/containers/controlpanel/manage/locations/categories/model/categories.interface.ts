@@ -3,9 +3,13 @@ export interface ICategory {
 
   name: string;
 
+  color: string;
+
   img_url: string;
 
   is_default: boolean;
+
+  locations_count: number;
 
   category_type_id: number;
 

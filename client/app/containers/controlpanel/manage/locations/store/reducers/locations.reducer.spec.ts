@@ -96,7 +96,8 @@ describe('Locations Reducer', () => {
     const payload = {
       body,
       params,
-      locationId: mockLocations[0].id
+      locationId: mockLocations[0].id,
+      categoryId: mockLocations[0].category_id
     };
 
     const action = new fromActions.EditLocation(payload);
@@ -108,7 +109,10 @@ describe('Locations Reducer', () => {
 
   it('should EDIT location success', () => {
     const { initialState } = fromReducer;
-    const payload = mockLocations[0];
+    const payload = {
+      data: mockLocations[0],
+      categoryId: mockLocations[0].category_id
+    };
 
     const action = new fromActions.EditLocationSuccess(payload);
     const { loading, error } = fromReducer.reducer(initialState, action);
@@ -132,7 +136,8 @@ describe('Locations Reducer', () => {
     const { initialState } = fromReducer;
     const payload = {
       params,
-      locationId: mockLocations[0].id
+      locationId: mockLocations[0].id,
+      categoryId: mockLocations[0].category_id
     };
 
     const action = new fromActions.DeleteLocation(payload);
@@ -148,7 +153,8 @@ describe('Locations Reducer', () => {
 
     const payload = {
       params,
-      deletedId: mockLocations[0].id
+      deletedId: mockLocations[0].id,
+      categoryId: mockLocations[0].category_id
     };
 
     const action = new fromActions.DeleteLocationSuccess(payload);

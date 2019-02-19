@@ -10,6 +10,7 @@ import { ILocation } from '../../../model';
 import * as fromLocationStore from '../../../store';
 import { parseErrorResponse } from '@shared/utils/http';
 import { CategoriesService } from '../../categories.service';
+import { coerceBooleanProperty } from '@shared/utils/coercion';
 
 @Injectable()
 export class CategoriesEffects {
@@ -101,19 +102,20 @@ export class CategoriesEffects {
     ofType(fromActions.CategoriesActions.EDIT_CATEGORY_SUCCESS),
     map((action: fromActions.EditCategorySuccess) => action.payload),
     withLatestFrom(this.store.select(fromLocationStore.getLocations)),
-    map(([{ id, name, img_url }, locations]) => {
+    map(([{ id, name, img_url, color }, locations]) => {
       return locations.map((l: ILocation) => {
         if (l.category_id === id) {
           return {
             ...l,
             category_name: name,
+            category_color: color,
             category_img_url: img_url
           };
         }
         return l;
       });
     }),
-    filter((l: ILocation[]) => !!l.length),
+    filter((l: ILocation[]) => coerceBooleanProperty(l.length)),
     mergeMap((l) => of(new fromLocationStore.GetLocationsSuccess(l)))
   );
 

@@ -55,7 +55,7 @@ describe('LocationsEditComponent', () => {
   });
 
   it('should populate form with values', () => {
-    const expected = omit(mockLocations[0], ['category_img_url', 'category_name']);
+    const expected = omit(mockLocations[0], ['category_img_url', 'category_name', 'category_color']);
 
     fillForm(component.locationForm, filledForm);
 
