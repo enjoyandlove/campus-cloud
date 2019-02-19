@@ -10,7 +10,6 @@ import { ICategory } from '../../categories/model';
 import { ILocation } from '@libs/locations/common/model';
 import { LocationsService } from '../../locations.service';
 import * as fromCategoryStore from '../../categories/store';
-import { coerceBooleanProperty } from '@shared/utils/coercion';
 
 @Injectable()
 export class LocationsEffect {
@@ -101,7 +100,7 @@ export class LocationsEffect {
         return category;
       });
     }),
-    filter((c: ICategory[]) => coerceBooleanProperty(c.length)),
+    filter((c: ICategory[]) => !!c.length),
     mergeMap((c) => of(new fromCategoryStore.GetCategoriesSuccess(c)))
   );
 
@@ -147,7 +146,7 @@ export class LocationsEffect {
         return category;
       });
     }),
-    filter((c: ICategory[]) => coerceBooleanProperty(c.length)),
+    filter((c: ICategory[]) => !!c.length),
     mergeMap((c) => of(new fromCategoryStore.GetCategoriesSuccess(c)))
   );
 
@@ -156,14 +155,36 @@ export class LocationsEffect {
     = this.actions$.pipe(
     ofType(fromActions.locationActions.DELETE_LOCATION),
     mergeMap((action: fromActions.DeleteLocation) => {
-      const { locationId, params } = action.payload;
+      const { locationId, categoryId, params } = action.payload;
 
       return this.service
         .deleteLocationById(locationId, params)
         .pipe(
-          map(() => new fromActions.DeleteLocationSuccess({ deletedId: locationId })),
+          map(() => new fromActions.DeleteLocationSuccess({ deletedId: locationId, categoryId })),
           catchError((error) => of(new fromActions.DeleteLocationFail(error)))
         );
     })
+  );
+
+  @Effect()
+  deleteLocationSuccess$: Observable<fromCategoryStore.GetCategoriesSuccess>
+    = this.actions$.pipe(
+    ofType(fromActions.locationActions.DELETE_LOCATION_SUCCESS),
+    map((action: fromActions.DeleteLocationSuccess) => action.payload),
+    withLatestFrom(this.store.select(fromCategoryStore.getCategories)),
+    map(([{ categoryId }, categories]) => {
+      return categories.map((category: ICategory) => {
+        if (category.id === categoryId) {
+          category = {
+            ...category,
+            locations_count: category.locations_count - 1
+          };
+        }
+
+        return category;
+      });
+    }),
+    filter((c: ICategory[]) => !!c.length),
+    mergeMap((c) => of(new fromCategoryStore.GetCategoriesSuccess(c)))
   );
 }

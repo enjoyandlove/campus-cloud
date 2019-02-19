@@ -1,8 +1,7 @@
 import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
-import { filter, takeUntil, tap } from 'rxjs/operators';
+import { FormControl, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
-import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -86,34 +85,9 @@ export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  setErrors() {
-    this.store
-      .select(fromStore.getDiningError)
-      .pipe(
-        takeUntil(this.destroy$),
-        filter((error) => error),
-        tap(() => {
-          this.formErrors = true;
-          this.buttonDisabled = false;
-          const errorMessage = this.cpI18n.translate('something_went_wrong');
-
-          this.handleError(errorMessage);
-        })
-      )
-      .subscribe();
-  }
-
   onCancel() {
     this.store.dispatch(new fromStore.ResetError());
     this.router.navigate(['/manage/dining']);
-  }
-
-  handleError(body) {
-    const options = {
-      body,
-      class: 'danger'
-    };
-    this.dispatchSnackBar(options);
   }
 
   handleWarning() {
@@ -137,7 +111,6 @@ export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    this.setErrors();
     this.buildHeader();
     this.school = this.session.g.get('school');
 

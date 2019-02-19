@@ -3,6 +3,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { IItem } from '@client/app/shared/components';
+import { CustomTextValidators } from '@client/app/shared/validators';
 
 @Component({
   selector: 'cp-walls-integration-form',
@@ -40,7 +41,13 @@ export class WallsIntegrationFormComponent implements OnInit {
   checkChannelNameControl(showChannelName: boolean) {
     const controlName = 'channel_name';
     if (showChannelName) {
-      this.form.addControl(controlName, new FormControl(null, Validators.required));
+      this.form.addControl(
+        controlName,
+        new FormControl(
+          null,
+          Validators.compose([Validators.required, CustomTextValidators.requiredNonEmpty])
+        )
+      );
     } else {
       this.form.removeControl(controlName);
     }

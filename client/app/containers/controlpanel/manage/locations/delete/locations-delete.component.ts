@@ -29,12 +29,14 @@ export class LocationsDeleteComponent implements OnInit {
 
   onDelete() {
     const locationId = this.location.id;
+    const categoryId = this.location.category_id;
     const school_id =  this.session.g.get('school').id;
     const params = new HttpParams().set('school_id', school_id);
 
     const payload = {
       params,
-      locationId
+      locationId,
+      categoryId
     };
 
     this.store.dispatch(new fromStore.DeleteLocation(payload));
