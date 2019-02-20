@@ -2,7 +2,7 @@ import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
 import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -90,15 +90,13 @@ export class DiningEditComponent implements OnInit, OnDestroy, AfterViewInit {
   loadDining() {
     this.store.select(fromStore.getSelectedDining).pipe(
       takeUntil(this.destroy$),
-      filter((dining: IDining) => !! dining),
+      filter((dining: IDining) => !!dining),
       map((dining: IDining) => {
         const schedule = dining['schedule'];
         this.openingHours = !!schedule.length;
         this.diningId = dining.id;
-        this.diningForm = LocationModel.form(dining);
+        this.diningForm = LocationModel.diningForm(dining);
         LocationsUtilsService.setScheduleFormControls(this.diningForm, schedule);
-
-        this.diningForm.addControl('notes', new FormControl(dining.notes));
       })
     ).subscribe();
   }
