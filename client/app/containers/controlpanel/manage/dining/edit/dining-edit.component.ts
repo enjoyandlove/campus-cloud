@@ -1,5 +1,5 @@
 import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
-import { filter, map, takeUntil, tap } from 'rxjs/operators';
+import { filter, map, takeUntil } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
@@ -75,7 +75,7 @@ export class DiningEditComponent implements OnInit, OnDestroy, AfterViewInit {
 
   buildHeader() {
     const payload = {
-      heading: 't_dining_create_dining',
+      heading: 't_dining_edit_dining',
       subheading: null,
       em: null,
       children: []
@@ -101,34 +101,9 @@ export class DiningEditComponent implements OnInit, OnDestroy, AfterViewInit {
     ).subscribe();
   }
 
-  setErrors() {
-    this.store
-      .select(fromStore.getDiningError)
-      .pipe(
-        takeUntil(this.destroy$),
-        filter((error) => error),
-        tap(() => {
-          this.formErrors = true;
-          this.buttonDisabled = false;
-          const errorMessage = this.cpI18n.translate('something_went_wrong');
-
-          this.handleError(errorMessage);
-        })
-      )
-      .subscribe();
-  }
-
   onCancel() {
     this.store.dispatch(new fromStore.ResetError());
     this.router.navigate([`/manage/dining/${this.diningId}/info`]);
-  }
-
-  handleError(body) {
-    const options = {
-      body,
-      class: 'danger'
-    };
-    this.dispatchSnackBar(options);
   }
 
   handleWarning() {
@@ -152,7 +127,6 @@ export class DiningEditComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnInit() {
-    this.setErrors();
     this.loadDining();
     this.buildHeader();
 

@@ -94,7 +94,15 @@ export class DiningEffect {
         .pipe(
           map((data: IDining) => new fromActions.EditDiningSuccess(data)),
           tap((_) => this.router.navigate([`/manage/dining/${diningId}/info`])),
-          catchError((error) => of(new fromActions.EditDiningFail(error)))
+          catchError((error) => {
+            this.store.dispatch(
+              new baseActionClass.SnackbarError({
+                body: this.cpI18n.translate('something_went_wrong')
+              })
+            );
+
+            return of(new fromActions.EditDiningFail(error));
+          })
         );
     })
   );
