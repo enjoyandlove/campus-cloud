@@ -14,7 +14,7 @@ import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
 import { DiningEditComponent } from './dining-edit.component';
-import { mockLocations, filledForm } from '@libs/locations/common/tests';
+import { mockLocations as mockDining, filledForm } from '@libs/locations/common/tests';
 
 describe('DiningEditComponent', () => {
   configureTestSuite();
@@ -42,7 +42,7 @@ describe('DiningEditComponent', () => {
     component = fixture.componentInstance;
     component.openingHours = true;
     component.session.g.set('school', mockSchool);
-    spyOn(component.store, 'select').and.returnValue(of(mockLocations[0]));
+    spyOn(component.store, 'select').and.returnValue(of(mockDining[0]));
 
     fixture.detectChanges();
 
@@ -55,7 +55,7 @@ describe('DiningEditComponent', () => {
   });
 
   it('should populate form with values', () => {
-    const expected = omit(mockLocations[0], ['category_img_url', 'category_name', 'category_color']);
+    const expected = omit(mockDining[0], ['category_img_url', 'category_name', 'category_color']);
 
     fillForm(component.diningForm, filledForm);
 
