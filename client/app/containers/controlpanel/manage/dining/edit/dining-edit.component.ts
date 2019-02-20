@@ -28,6 +28,7 @@ export class DiningEditComponent implements OnInit, OnDestroy, AfterViewInit {
   errorMessage: string;
   diningForm: FormGroup;
   buttonDisabled = false;
+  loading$: Observable<boolean>;
   categories$: Observable<IItem[]>;
 
   private destroy$ = new Subject();
@@ -130,6 +131,7 @@ export class DiningEditComponent implements OnInit, OnDestroy, AfterViewInit {
     this.loadDining();
     this.buildHeader();
 
+    this.loading$ = this.store.select(fromStore.getDiningLoading);
     // todo replace with actual
     this.categories$ = of([
       {

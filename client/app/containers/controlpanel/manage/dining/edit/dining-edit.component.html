@@ -1,5 +1,7 @@
-<div class="margin-bottom">
-  <form [formGroup]="diningForm">
+<div class="margin-bottom" [ngSwitch]="loading$ | async">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <form [formGroup]="diningForm" *ngSwitchCase="false">
     <cp-two-columns>
       <ng-container layout-left-column>
         <cp-card>
