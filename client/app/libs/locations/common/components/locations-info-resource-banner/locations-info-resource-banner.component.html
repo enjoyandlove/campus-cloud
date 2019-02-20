@@ -13,11 +13,12 @@
           </button>
         </div>
         <div class="col-6 text-right">
-          <img
+          <span
+            class="icon"
             cpTarget="icon"
-            class="img-fit-cover avatar"
-            *ngIf="location.category_img_url"
-            [src]="location.category_img_url">
+            [ngStyle]="{'background' : '#' + location.category_color}">
+              <img [src]="location.category_img_url">
+          </span>
         </div>
       </div>
     </div>

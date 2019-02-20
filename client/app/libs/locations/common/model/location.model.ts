@@ -1,6 +1,7 @@
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 import { get as _get } from 'lodash';
+import { IDining } from './dining.interface';
 import { ILocation } from './locations.interface';
 
 export class LocationModel {
@@ -42,6 +43,16 @@ export class LocationModel {
       links: fb.array([this.setLinks(location)]),
       schedule: fb.array([]),
     });
+  }
+
+  static diningForm(dining?: IDining) {
+    const diningForm = this.form(dining);
+    const notes = dining ? dining.notes : null;
+
+    console.log('ada');
+    diningForm.addControl('notes', new FormControl(notes));
+
+    return diningForm;
   }
 
   static setLinks(locations) {

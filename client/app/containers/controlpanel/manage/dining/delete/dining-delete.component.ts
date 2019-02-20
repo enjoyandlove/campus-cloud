@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
-import { ILocation } from '@libs/locations/common/model';
+import { IDining } from '@libs/locations/common/model';
 
 @Component({
   selector: 'cp-dining-delete',
@@ -13,7 +13,7 @@ import { ILocation } from '@libs/locations/common/model';
   styleUrls: ['./dining-delete.component.scss']
 })
 export class DiningDeleteComponent implements OnInit {
-  @Input() dining: ILocation;
+  @Input() dining: IDining;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 

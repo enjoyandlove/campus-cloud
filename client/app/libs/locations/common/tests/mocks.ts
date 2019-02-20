@@ -29,6 +29,7 @@ export const emptyForm = {
   city: null,
   name: null,
   phone: null,
+  notes: null,
   email: null,
   country: null,
   address: null,
@@ -47,6 +48,7 @@ export const emptyForm = {
 export const mockLocations = [
   {
     id: 123,
+    notes: '',
     phone: 125488,
     category_id: 1,
     city: 'Karachi',
@@ -69,6 +71,7 @@ export const mockLocations = [
   },
   {
     id: 1234,
+    notes: '',
     phone: 125488,
     category_id: 1,
     city: 'Karachi',
