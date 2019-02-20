@@ -1,7 +1,7 @@
 import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -114,10 +114,8 @@ export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
     this.buildHeader();
     this.school = this.session.g.get('school');
 
-    this.diningForm = LocationModel.form();
+    this.diningForm = LocationModel.diningForm();
     LocationsUtilsService.setScheduleFormControls(this.diningForm);
-
-    this.diningForm.addControl('notes', new FormControl(null));
 
     // todo replace with actual
     this.categories$ = of([
