@@ -52,34 +52,47 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
     super();
   }
 
-  fetch() {
-    const search = new HttpParams()
-      .append('search_str', this.state.search_str)
-      .append('sort_field', this.state.sort_field)
-      .append('location_type', LocationType.dining)
-      .append('category_id', this.state.category_id)
-      .append('sort_direction', this.state.sort_direction)
-      .append('school_id', this.session.g.get('school').id);
+  get defaultParams(): HttpParams {
+    return new HttpParams()
+      .set('search_str', this.state.search_str)
+      .set('sort_field', this.state.sort_field)
+      .set('location_type', LocationType.dining)
+      .set('category_id', this.state.category_id)
+      .set('sort_direction', this.state.sort_direction)
+      .set('school_id', this.session.g.get('school').id);
+  }
 
+  fetch() {
     const payload = {
       startRange: this.startRange,
       endRange: this.endRange,
-      params: search
+      params: this.defaultParams
     };
 
     this.store.dispatch(new fromStore.GetDining(payload));
   }
 
+  fetchFilteredDining() {
+    const payload = {
+      startRange: this.startRange,
+      endRange: this.endRange,
+      params: this.defaultParams
+    };
+
+    this.store.dispatch(new fromStore.GetFilteredDining(payload));
+    this.dining$ = this.getDining(true);
+  }
+
   onPaginationNext() {
     super.goToNext();
 
-    this.fetch();
+    this.fetchFilteredDining();
   }
 
   onPaginationPrevious() {
     super.goToPrevious();
 
-    this.fetch();
+    this.fetchFilteredDining();
   }
 
   onSearch(search_str) {
@@ -90,7 +103,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
 
     this.resetPagination();
 
-    this.fetch();
+    this.fetchFilteredDining();
   }
 
   onCategorySelect(category_id) {
@@ -101,7 +114,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
 
     this.resetPagination();
 
-    this.fetch();
+    this.fetchFilteredDining();
   }
 
   onDoSort(sort_field) {
@@ -111,7 +124,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
       sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
     };
 
-    this.fetch();
+    this.fetchFilteredDining();
   }
 
   onLaunchDeleteModal(dining: IDining) {
@@ -141,7 +154,13 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
       )
       .subscribe();
 
-    this.dining$ = this.store.select(fromStore.getDining).pipe(
+    this.dining$ = this.getDining();
+  }
+
+  getDining(isFiltered?: boolean) {
+    const selectDining = isFiltered ? fromStore.getFilteredDining : fromStore.getDining;
+
+    return this.store.select(selectDining).pipe(
       map((dining: IDining[]) => {
         const responseCopy = [...dining];
 

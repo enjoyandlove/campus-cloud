@@ -41,6 +41,21 @@ export class DiningEffect {
   );
 
   @Effect()
+  getFilteredDining$: Observable<fromActions.GetFilteredDiningSuccess | fromActions.GetFilteredDiningFail>
+    = this.actions$.pipe(
+    ofType(fromActions.diningActions.GET_FILTERED_DINING),
+    mergeMap((action: fromActions.GetFilteredDining) => {
+      const { startRange, endRange, params } = action.payload;
+
+      return this.service.getDining(startRange, endRange, params )
+        .pipe(
+          map((data: IDining[]) => new fromActions.GetFilteredDiningSuccess(data)),
+          catchError((error) => of(new fromActions.GetFilteredDiningFail(error)))
+        );
+    })
+  );
+
+  @Effect()
   getDiningById$: Observable<fromActions.GetDiningByIdSuccess | fromActions.GetDiningByIdFail>
     = this.actions$.pipe(
     ofType(fromActions.diningActions.GET_DINING_BY_ID),

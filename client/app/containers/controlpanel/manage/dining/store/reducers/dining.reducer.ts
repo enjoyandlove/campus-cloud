@@ -9,6 +9,7 @@ export interface IDiningState extends EntityState<IDining> {
   loaded: boolean;
   loading: boolean;
   ids: Array<number>;
+  filteredDining: IDining[];
   entities: Dictionary<IDining>;
 }
 
@@ -17,7 +18,8 @@ const defaultDining: IDiningState = {
   entities: {},
   error: false,
   loaded: false,
-  loading: false
+  loading: false,
+  filteredDining: []
 };
 
 export const diningAdaptor: EntityAdapter<IDining> = createEntityAdapter<IDining>();
@@ -48,6 +50,32 @@ export function reducer(state = initialState, action: fromDining.DiningAction) {
         ...state,
         error: true,
         loaded: true
+      };
+    }
+
+    case fromDining.diningActions.GET_FILTERED_DINING: {
+      return {
+        ...state,
+        loading: true,
+        loaded: false
+      };
+    }
+
+    case fromDining.diningActions.GET_FILTERED_DINING_SUCCESS: {
+      return {
+        ...state,
+        error: false,
+        loaded: true,
+        loading: false,
+        filteredDining: [...action.payload]
+      };
+    }
+
+    case fromDining.diningActions.GET_FILTERED_DINING_FAIL: {
+      return {
+        ...state,
+        error: true,
+        loaded: false
       };
     }
 
@@ -163,6 +191,13 @@ export function reducer(state = initialState, action: fromDining.DiningAction) {
       };
     }
 
+    case fromDining.diningActions.DESTROY: {
+      return {
+        ...state,
+        ...initialState
+      };
+    }
+
     default: {
       return state;
     }
@@ -176,3 +211,4 @@ export const getDiningEntities = selectEntities;
 export const getDiningError = (state: IDiningState) => state.error;
 export const getDiningLoaded = (state: IDiningState) => state.loaded;
 export const getDiningLoading = (state: IDiningState) => state.loading;
+export const getFilteredDining = (state: IDiningState) => state.filteredDining;

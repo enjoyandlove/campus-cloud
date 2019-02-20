@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from '../../../config/guards';
+import { AuthGuard } from '@app/config/guards';
 
 import { ManageComponent } from './manage.component';
+import { CanDeactivateDining } from './dining/guards/dining-guard';
 import { CanDeactivateLocations } from './locations/locations.guard';
 
 const appRoutes: Routes = [
@@ -72,6 +73,7 @@ const appRoutes: Routes = [
       {
         path: 'dining',
         data: { zendesk: 'dining' },
+        canDeactivate: [CanDeactivateDining],
         loadChildren: './dining/dining.module#DiningModule'
       },
 
@@ -98,6 +100,6 @@ const appRoutes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
   exports: [RouterModule],
-  providers: [CanDeactivateLocations]
+  providers: [CanDeactivateLocations, CanDeactivateDining]
 })
 export class ManageRoutingModule {}

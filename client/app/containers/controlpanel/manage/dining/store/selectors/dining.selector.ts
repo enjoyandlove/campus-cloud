@@ -16,6 +16,11 @@ export const getDining = createSelector(
   fromDining.getDining
 );
 
+export const getFilteredDining = createSelector(
+  getDiningState,
+  fromDining.getFilteredDining
+);
+
 export const getDiningError = createSelector(
   getDiningState,
   fromDining.getDiningError
