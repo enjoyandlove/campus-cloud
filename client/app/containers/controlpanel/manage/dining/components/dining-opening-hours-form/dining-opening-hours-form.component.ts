@@ -22,8 +22,8 @@ export class DiningOpeningHoursFormComponent implements OnInit {
 
     const control = <FormGroup>controls.controls[index];
     const controlItems = <FormArray>control.controls['items'];
-    const controlFirstItem = <FormGroup>controlItems.controls[itemIndex];
-    controlFirstItem.controls[key].setValue(schedule.value);
+    const controlItem = <FormGroup>controlItems.controls[itemIndex];
+    controlItem.controls[key].setValue(schedule.value);
   }
 
   onDayCheck(checked, index) {

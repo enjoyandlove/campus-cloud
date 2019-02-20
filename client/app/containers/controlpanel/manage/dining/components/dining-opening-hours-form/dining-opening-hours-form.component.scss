@@ -1,7 +1,7 @@
 @import '~client/style/components/form';
 @import '~client/style/components/button';
 
-form {
+.dining {
   .checkbox {
     display: flex;
   }
@@ -15,23 +15,19 @@ form {
     @include font-semi-bold();
   }
 
-  .horizontal {
+  &__horizontal {
     display: flex;
     margin-top: 28px;
     flex-direction: row;
     align-items: center
   }
 
-  .day {
+  &__day {
     margin-top: 12px;
   }
 
   .margin-top {
     margin-top: 33px;
-  }
-
-  .remove-item {
-    font-size: 2em;
   }
 
   button {

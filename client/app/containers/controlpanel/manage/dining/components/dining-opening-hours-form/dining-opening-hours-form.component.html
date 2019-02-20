@@ -1,13 +1,13 @@
 <form [formGroup]="diningForm">
-  <div formArrayName="schedule">
+  <div formArrayName="schedule" class="dining">
     <div *ngFor="let schedule of diningForm.get('schedule')['controls']; let i= index">
       <div class="row" [formGroupName]="i">
         <div class="col-12">
           <div class="row">
-            <div class="col-9 day">
+            <div class="col-9 dining___day">
               <p class="heading"> {{ schedule.controls.day.value | locationsDayLabel | cpI18n }}</p>
             </div>
-            <div class="col-3 day">
+            <div class="col-3 dining___day">
               <cp-checkbox
                 class="checkbox"
                 [labelRight]="false"
@@ -34,7 +34,7 @@
                     formControlName="name">
                 </div>
 
-                <div class="col-4 horizontal">
+                <div class="col-4 dining__horizontal">
                   <label class="margin-right">{{ 't_shared_from' | cpI18n }}</label>
                   <cp-dropdown
                     [items]="diningTiming"
@@ -44,7 +44,7 @@
                   </cp-dropdown>
                 </div>
 
-                <div class="col-3 horizontal no-left-padding">
+                <div class="col-3 dining__horizontal no-left-padding">
                   <label class="margin-right">{{ 't_shared_to' | cpI18n }}</label>
                   <cp-dropdown
                     [items]="diningTiming"

@@ -1,7 +1,7 @@
 <div class="margin-bottom">
   <form [formGroup]="diningForm">
     <cp-two-columns>
-      <div layout-left-column>
+      <ng-container layout-left-column>
         <cp-card>
           <div class="row">
             <div class="col-12">
@@ -14,9 +14,9 @@
             </div>
           </div>
         </cp-card>
-      </div>
+      </ng-container>
 
-      <div layout-right-column>
+      <ng-container layout-right-column>
         <cp-card>
           <div class="row">
             <div class="col-12">
@@ -41,7 +41,7 @@
             </div>
           </div>
         </cp-card>
-      </div>
+      </ng-container>
     </cp-two-columns>
 
     <div class="footer">
