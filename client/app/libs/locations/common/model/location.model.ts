@@ -49,7 +49,6 @@ export class LocationModel {
     const diningForm = this.form(dining);
     const notes = dining ? dining.notes : null;
 
-    console.log('ada');
     diningForm.addControl('notes', new FormControl(notes));
 
     return diningForm;
