@@ -5,4 +5,6 @@ export * from './locations-meta-data';
 export * from './dining-opening-hours';
 export * from './locations-opening-hours';
 export * from './cp-locations-common-list';
+export * from './dining-opening-hours-form';
+export * from './location-opening-hours-form';
 export * from './locations-info-resource-banner';

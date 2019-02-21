@@ -12,7 +12,7 @@ import { baseActions } from '@app/store/base';
 import { CPSession, ISchool } from '@app/session';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
-import { LocationModel } from '@libs/locations/common/model';
+import { DiningModel } from '@libs/locations/common/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 
 @Component({
@@ -60,8 +60,7 @@ export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
       this.openingHours
     );
 
-    const school_id = this.session.g.get('school').id;
-    const params = new HttpParams().append('school_id', school_id);
+    const params = new HttpParams().append('school_id', this.school.id.toString());
 
     const payload = {
       body,
@@ -114,7 +113,7 @@ export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
     this.buildHeader();
     this.school = this.session.g.get('school');
 
-    this.diningForm = LocationModel.diningForm();
+    this.diningForm = DiningModel.form();
     LocationsUtilsService.setScheduleFormControls(this.diningForm);
 
     // todo replace with actual

@@ -68,7 +68,7 @@ export class DiningEffect {
         .createDining(body, params)
         .pipe(
           map((data: IDining) => new fromActions.PostDiningSuccess(data)),
-          tap((_) => this.router.navigate(['/manage/dining'])),
+          tap((data) => this.router.navigate([`/manage/dining/${data.payload.id}/info`])),
           catchError((error) => {
             this.store.dispatch(
               new baseActionClass.SnackbarError({

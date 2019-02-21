@@ -13,6 +13,8 @@ import {
   LocationsCommonListComponent,
   LocationsListTopBarComponent,
   LocationsOpeningHoursComponent,
+  DiningOpeningHoursFormComponent,
+  LocationOpeningHoursFormComponent,
   LocationsInfoResourceBannerComponent
 } from './components';
 
@@ -26,6 +28,8 @@ import {
     LocationsCommonListComponent,
     LocationsListTopBarComponent,
     LocationsOpeningHoursComponent,
+    DiningOpeningHoursFormComponent,
+    LocationOpeningHoursFormComponent,
     LocationsInfoResourceBannerComponent
   ],
   imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
@@ -38,6 +42,8 @@ import {
     LocationsCommonListComponent,
     LocationsListTopBarComponent,
     LocationsOpeningHoursComponent,
+    DiningOpeningHoursFormComponent,
+    LocationOpeningHoursFormComponent,
     LocationsInfoResourceBannerComponent
   ]
 })

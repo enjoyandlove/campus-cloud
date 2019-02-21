@@ -13,11 +13,13 @@ export interface ILocation {
 
   name: string;
 
-  notes: string;
-
   phone: number;
 
   email: string;
+
+  notes?: string;
+
+  links: ILinks[];
 
   country: string;
 
@@ -39,13 +41,11 @@ export interface ILocation {
 
   category_id: number;
 
+  schedule: ISchedule[];
+
   category_name: string;
 
   category_color: string;
 
   category_img_url: string;
-
-  links: ILinks[];
-
-  schedule: ISchedule[];
 }

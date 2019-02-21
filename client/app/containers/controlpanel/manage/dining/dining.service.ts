@@ -30,7 +30,7 @@ export class DiningService extends HTTPService {
   createDining(body, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/`;
 
-    return super.post(url, body, search);
+    return super.post(url, body, search, true);
   }
 
   deleteDiningById(diningId: number, search: HttpParams) {
