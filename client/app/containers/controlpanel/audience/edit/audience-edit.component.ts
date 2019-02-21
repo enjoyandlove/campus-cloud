@@ -82,7 +82,9 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
   }
 
   resetModal() {
-    this.form.reset();
+    if (this.form) {
+      this.form.reset();
+    }
     this.reset.emit();
   }
 
