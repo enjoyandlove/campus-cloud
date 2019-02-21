@@ -1,5 +1,5 @@
+import { takeUntil, filter, tap, map, take } from 'rxjs/operators';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { takeUntil, filter, tap, map } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { CPSession } from '@app/session';
@@ -11,6 +11,7 @@ import * as fromRoot from '@app/store';
 import { BaseComponent } from '@app/base';
 import { IItem } from '@shared/components';
 import { CPI18nService } from '@shared/services/i18n.service';
+import { coerceBooleanProperty } from '@shared/utils/coercion';
 import { IWallsIntegration } from '@libs/integrations/walls/model';
 
 @Component({
@@ -66,6 +67,20 @@ export class WallsIntegrationsListComponent extends BaseComponent implements OnI
   onDeleteTeardown() {
     this.showDeleteModal = false;
     $('#integrationDelete').modal('hide');
+  }
+
+  onSyncNow(feedId: number) {
+    this.store
+      .select(fromStore.getIntegrationById(feedId))
+      .pipe(takeUntil(this.destroy$), take(1))
+      .subscribe((integration) => {
+        this.store.dispatch(
+          new fromStore.SyncNow({
+            integration,
+            error: this.cpI18n.translate('something_went_wrong')
+          })
+        );
+      });
   }
 
   updateHeader() {
@@ -151,10 +166,10 @@ export class WallsIntegrationsListComponent extends BaseComponent implements OnI
       .select(fromStore.getIntegrationsError)
       .pipe(
         takeUntil(this.destroy$),
-        filter((error) => error),
-        tap(() => {
+        filter((error) => coerceBooleanProperty(error)),
+        tap((body) => {
           const payload = {
-            body: this.cpI18n.translate('something_went_wrong'),
+            body,
             sticky: true,
             autoClose: true,
             class: 'danger'

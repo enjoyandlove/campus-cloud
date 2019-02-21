@@ -30,18 +30,10 @@
         {{ integration.last_successful_sync_epoch > notSynced ? (integration.last_successful_sync_epoch | cpDatePipe:dateFormat) : null }}
       </span>
       <span class="col-2 justify-content-between d-flex align-items-start">
-        <span
-          cpTarget="sync_btn_wrapper"
-          [cpTooltip]="!canSync(integration)"
-          [attr.title]="[!canSync(integration) ? (syncNowTooltip(integration) | cpI18n) : '']">
-          <button
-            cpTarget="sync_btn"
-            class="cpbtn cpbtn--link"
-            (click)="syncClick.emit(integration.id)"
-            [disabled]="!canSync(integration)">
-            {{ 't_shared_sync' | cpI18n }}
-          </button>
-        </span>
+        <cp-integrations-sync-now-button
+          [integration]="integration"
+          (syncClick)="syncClick.emit(integration.id)">
+        </cp-integrations-sync-now-button>
         <span
           class="hover delete-integration"
           (click)="deleteClick.emit(integration)">
