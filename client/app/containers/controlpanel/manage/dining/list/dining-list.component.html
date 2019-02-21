@@ -3,7 +3,8 @@
     <cp-locations-list-top-bar
       [categories$]="categories$"
       (search)="onSearch($event)"
-      (selectedCategory)="onCategorySelect($event)">
+      (selectedCategory)="onCategorySelect($event)"
+      [createLocationLabel]="'t_dining_create_dining' | cpI18n">
     </cp-locations-list-top-bar>
   </div>
 </div>

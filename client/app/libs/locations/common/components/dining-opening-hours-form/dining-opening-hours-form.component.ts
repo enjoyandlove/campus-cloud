@@ -1,5 +1,5 @@
-import { FormArray, FormGroup } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormGroup } from '@angular/forms';
 
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 import { ILocationTiming, ScheduleModel } from '@libs/locations/common/model';

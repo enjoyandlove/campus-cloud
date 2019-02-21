@@ -13,8 +13,8 @@ import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
+import { DiningModel, IDining } from '@libs/locations/common/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
-import { IDining, LocationModel } from '@libs/locations/common/model';
 
 @Component({
   selector: 'cp-dining-edit',
@@ -96,7 +96,7 @@ export class DiningEditComponent implements OnInit, OnDestroy, AfterViewInit {
         const schedule = dining['schedule'];
         this.openingHours = !!schedule.length;
         this.diningId = dining.id;
-        this.diningForm = LocationModel.diningForm(dining);
+        this.diningForm = DiningModel.form(dining);
         LocationsUtilsService.setScheduleFormControls(this.diningForm, schedule);
       })
     ).subscribe();

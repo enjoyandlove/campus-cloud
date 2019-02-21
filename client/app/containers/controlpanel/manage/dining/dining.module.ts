@@ -13,7 +13,6 @@ import { DiningInfoComponent } from './info';
 import { DiningEditComponent } from './edit';
 import { DiningCreateComponent } from './create';
 import { DiningDeleteComponent } from './delete';
-import { DiningOpeningHoursFormComponent } from './components';
 
 import { DiningService } from './dining.service';
 import { SharedModule } from '@shared/shared.module';
@@ -29,8 +28,7 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
     DiningInfoComponent,
     DiningEditComponent,
     DiningCreateComponent,
-    DiningDeleteComponent,
-    DiningOpeningHoursFormComponent
+    DiningDeleteComponent
   ],
 
   imports: [
