@@ -62,8 +62,8 @@ export class DiningEditComponent implements OnInit, OnDestroy, AfterViewInit {
       this.openingHours
     );
 
-    const school_id = this.session.g.get('school').id;
-    const params = new HttpParams().append('school_id', school_id);
+    const schoolId = this.session.g.get('school').id;
+    const params = new HttpParams().append('school_id', schoolId);
 
     const payload = {
       body,
