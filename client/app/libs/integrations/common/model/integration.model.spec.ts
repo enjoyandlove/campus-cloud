@@ -1,29 +1,29 @@
 import { CPDate } from '@shared/utils';
-import { IEventIntegration } from './event-integration.interface';
-import { EventIntegration } from '@libs/integrations/events/model';
-import { mockIntegration } from '@client/app/containers/controlpanel/manage/events/integrations/tests';
+import { IFeedIntegration } from './integration.interface';
+import { FeedIntegration } from '@libs/integrations/common/model';
+import { mockIntegration } from '@containers/controlpanel/manage/events/integrations/tests';
 
-describe('EventIntegration', () => {
+describe('FeedIntegration', () => {
   describe('isNotRunning', () => {
     it('should return false if sync_status is running', () => {
       let result: boolean;
-      let feed: IEventIntegration;
+      let feed: IFeedIntegration;
 
       feed = {
         ...mockIntegration,
-        sync_status: EventIntegration.status.pending
+        sync_status: FeedIntegration.status.pending
       };
 
-      result = EventIntegration.isNotRunning(feed);
+      result = FeedIntegration.isNotRunning(feed);
 
       expect(result).toEqual(true);
 
       feed = {
         ...mockIntegration,
-        sync_status: EventIntegration.status.running
+        sync_status: FeedIntegration.status.running
       };
 
-      result = EventIntegration.isNotRunning(feed);
+      result = FeedIntegration.isNotRunning(feed);
 
       expect(result).toEqual(false);
     });
@@ -37,14 +37,14 @@ describe('EventIntegration', () => {
       const twoDaysAgo = CPDate.now(tz)
         .subtract(2, 'days')
         .unix();
-      let feed: IEventIntegration;
+      let feed: IFeedIntegration;
 
       feed = {
         ...mockIntegration,
         last_successful_sync_epoch: now
       };
 
-      result = EventIntegration.isLastSyncAfterThreshold(feed, tz);
+      result = FeedIntegration.isLastSyncAfterThreshold(feed, tz);
 
       expect(result).toEqual(false);
 
@@ -53,7 +53,7 @@ describe('EventIntegration', () => {
         sync_status: twoDaysAgo
       };
 
-      result = EventIntegration.isNotRunning(feed);
+      result = FeedIntegration.isNotRunning(feed);
 
       expect(result).toEqual(true);
     });

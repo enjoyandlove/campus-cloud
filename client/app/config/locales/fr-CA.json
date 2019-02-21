@@ -2437,8 +2437,20 @@
   "t_dining_create_dining": {
     "message": "Créer menu"
   },
+  "t_dining_delete_modal_title": {
+    "message": "Supprimer menu"
+  },
+  "t_dining_dietary_notes": {
+    "message": "Notes alimentaires"
+  },
   "t_dining_dining_details": {
     "message": "Détails du menu"
+  },
+  "t_dining_edit_dining": {
+    "message": "Éditer menu"
+  },
+  "t_dining_form_add_meal": {
+    "message": "+ Ajouter repas"
   },
   "t_dining_hours": {
     "message": "Heures de repas"
@@ -3158,6 +3170,9 @@
   "t_shared_limited": {
     "message": "Limité"
   },
+  "t_shared_meal": {
+    "message": "Repas"
+  },
   "t_shared_monday": {
     "message": "Lundi"
   },
@@ -3268,6 +3283,9 @@
   },
   "t_walls_integrations_new_channel": {
     "message": "Nouvelle section"
+  },
+  "t_walls_integration_form_default_image": {
+    "message": "Image du mur"
   },
   "update": {
     "message": "Mettre à jour",

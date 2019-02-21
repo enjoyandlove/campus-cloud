@@ -5,8 +5,8 @@
       <span class="col-2">{{ 't_shared_channel' | cpI18n }}</span>
       <span class="col-2">{{ 't_shared_status' | cpI18n }}</span>
       <span class="col-1">{{ 't_shared_type' | cpI18n }}</span>
-      <span class="col-3">{{ 't_shared_last_synced' | cpI18n }}</span>
-      <span class="col-1"></span>
+      <span class="col-2">{{ 't_shared_last_synced' | cpI18n }}</span>
+      <span class="col-2"></span>
     </div>
   </li>
 
@@ -30,13 +30,19 @@
       <span class="col-1">
         {{ integration.feed_type | cpIntegrationType }}
       </span>
-      <span class="col-3">
+      <span class="col-2">
         {{ integration.last_successful_sync_epoch > notSynced ? (integration.last_successful_sync_epoch | cpDatePipe:dateFormat) : null }}
       </span>
-      <span
-        (click)="deleteClick.emit(integration)"
-        class="col-1 hover delete-integration text-right">
-        &times;
+      <span class="col-2 justify-content-between d-flex align-items-start">
+        <cp-integrations-sync-now-button
+          [integration]="integration"
+          (syncClick)="syncClick.emit(integration.id)">
+        </cp-integrations-sync-now-button>
+        <span
+          class="hover delete-integration"
+          (click)="deleteClick.emit(integration)">
+          &times;
+        </span>
       </span>
     </div>
   </li>

@@ -30,7 +30,13 @@ export enum IntegrationActions {
   EDIT_INTEGRATION_SUCCESS = '[manage.walls.integrations] edit integration success',
   EDIT_INTEGRATION_FAIL = '[manage.walls.integrations] edit integration fail',
 
-  RESET_SOCIAL_POST_CATEGORIES = '[manage.walls.integrations] reset social post categories'
+  RESET_SOCIAL_POST_CATEGORIES = '[manage.walls.integrations] reset social post categories',
+
+  SYNC_NOW = '[manage.walls.integrations] sync now',
+  SYNC_NOW_FAIL = '[manage.walls.integrations] sync now fail',
+  SYNC_NOW_SUCCESS = '[manage.walls.integrations] sync now success',
+
+  CREATE_AND_SYNC = '[manage.walls.integrations] create and sync'
 }
 
 export class GetIntegrations implements Action {
@@ -158,6 +164,32 @@ export class ResetSocialPostCategories implements Action {
   readonly type = IntegrationActions.RESET_SOCIAL_POST_CATEGORIES;
 }
 
+export class SyncNow implements Action {
+  readonly type = IntegrationActions.SYNC_NOW;
+
+  constructor(
+    public payload: { integration: IWallsIntegration; succesMessage?: string; error?: string }
+  ) {}
+}
+
+export class SyncNowSuccess implements Action {
+  readonly type = IntegrationActions.SYNC_NOW_SUCCESS;
+
+  constructor(public payload: { integration: IWallsIntegration; message?: string }) {}
+}
+
+export class SyncNowFail implements Action {
+  readonly type = IntegrationActions.SYNC_NOW_FAIL;
+
+  constructor(public payload: { integration: IWallsIntegration; error?: string }) {}
+}
+
+export class CreateAndSync implements Action {
+  readonly type = IntegrationActions.CREATE_AND_SYNC;
+
+  constructor(public payload: { body: IWallsIntegration; params: HttpParams }) {}
+}
+
 export type Actions =
   | GetIntegrations
   | GetIntegrationsSuccess
@@ -177,4 +209,8 @@ export type Actions =
   | PostSocialPostCategories
   | PostSocialPostCategoriesSuccess
   | PostSocialPostCategoriesFail
-  | ResetSocialPostCategories;
+  | ResetSocialPostCategories
+  | SyncNow
+  | SyncNowSuccess
+  | SyncNowFail
+  | CreateAndSync;
