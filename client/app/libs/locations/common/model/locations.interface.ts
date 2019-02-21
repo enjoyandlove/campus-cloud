@@ -17,7 +17,7 @@ export interface ILocation {
 
   email: string;
 
-  notes?: string;
+  notes: string;
 
   links: ILinks[];
 
