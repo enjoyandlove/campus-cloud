@@ -21,10 +21,10 @@
         </div>
 
         <div class="col-12" *ngIf="schedule.controls.is_checked.value">
-          <div *ngFor="let item of schedule.get('items')['controls']; let itemIndex = index">
+          <div class="dining__item" *ngFor="let item of schedule.get('items')['controls']; let itemIndex = index">
             <div formArrayName="items">
               <div class="row" [formGroupName]="itemIndex">
-                <div class="col-4 dining__horizontal">
+                <div class="col-4 dining__item__horizontal">
                   <label *ngIf="itemIndex === 0">
                     {{ 't_shared_meal' | cpI18n }}
                   </label>
@@ -34,7 +34,7 @@
                     formControlName="name">
                 </div>
 
-                <div class="col-3 dining__horizontal">
+                <div class="col-3 dining__item__horizontal">
                   <cp-dropdown
                     [items]="diningTiming"
                     [cpTarget]="'start_time_' + i"
@@ -43,7 +43,7 @@
                   </cp-dropdown>
                 </div>
 
-                <div class="col-4 dining__horizontal">
+                <div class="col-4 dining__item__horizontal">
                   <label class="margin-right">{{ 't_shared_to' | cpI18n }}</label>
                   <cp-dropdown
                     [items]="diningTiming"
