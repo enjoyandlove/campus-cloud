@@ -33,7 +33,7 @@
       <span class="col-2">
         {{ integration.last_successful_sync_epoch > notSynced ? (integration.last_successful_sync_epoch | cpDatePipe:dateFormat) : null }}
       </span>
-      <span class="col-2 justify-content-between d-flex align-items-start">
+      <span class="col-2 justify-content-end d-flex align-items-start">
         <cp-integrations-sync-now-button
           [integration]="integration"
           (syncClick)="syncClick.emit(integration.id)">
