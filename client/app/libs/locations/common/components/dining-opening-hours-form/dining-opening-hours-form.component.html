@@ -20,8 +20,12 @@
           </div>
         </div>
 
-        <div class="col-12" *ngIf="schedule.controls.is_checked.value">
-          <div class="dining__item" *ngFor="let item of schedule.get('items')['controls']; let itemIndex = index">
+        <div
+          class="col-12"
+          *ngIf="schedule.controls.is_checked.value">
+          <div
+            class="dining__item"
+            *ngFor="let item of schedule.get('items')['controls']; let itemIndex = index">
             <div formArrayName="items">
               <div class="row" [formGroupName]="itemIndex">
                 <div class="col-4 dining__item__horizontal">
