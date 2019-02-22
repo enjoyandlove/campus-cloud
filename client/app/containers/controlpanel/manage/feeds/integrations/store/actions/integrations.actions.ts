@@ -90,7 +90,7 @@ export class PostIntegrationSuccess implements Action {
 export class PostIntegrationFail implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class EditIntegration implements Action {

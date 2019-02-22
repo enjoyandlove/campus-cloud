@@ -13,7 +13,7 @@ import { EventsIntegrationsListComponent } from './list';
 import { EventsIntegrationsCreateComponent } from './create';
 import { IntegrationsService } from './integrations.service';
 import { EventIntegrationRoutingModule } from './integrations.routing.module';
-import { LibsIntegrationEventCommonUtilsService } from '@libs/integrations/events/providers';
+import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { EventsIntegrationsModule } from '@libs/integrations/events/events-integrations.module';
 
 @NgModule({
@@ -33,6 +33,6 @@ import { EventsIntegrationsModule } from '@libs/integrations/events/events-integ
     StoreModule.forFeature('eventIntegrations', reducers)
   ],
   exports: [],
-  providers: [IntegrationsService, LibsIntegrationEventCommonUtilsService]
+  providers: [IntegrationsService, CommonIntegrationUtilsService]
 })
 export class EventIntegrationsModule {}
