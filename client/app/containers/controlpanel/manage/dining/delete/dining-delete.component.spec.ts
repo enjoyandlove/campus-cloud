@@ -10,8 +10,8 @@ import { CPI18nService } from '@shared/services';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
-import { mockDining } from '@libs/locations/common/tests';
 import { DiningDeleteComponent } from './dining-delete.component';
+import { mockLocations as mockDining } from '@libs/locations/common/tests';
 
 describe('DiningDeleteComponent', () => {
   configureTestSuite();
