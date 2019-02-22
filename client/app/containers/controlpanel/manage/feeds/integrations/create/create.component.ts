@@ -29,7 +29,6 @@ export class WallsIntegrationsCreateComponent implements OnInit {
   constructor(
     private session: CPSession,
     private service: WallsIntegrationsService,
-    private utils: CommonIntegrationUtilsService,
     public store: Store<fromStore.IWallsIntegrationState>
   ) {}
 
@@ -94,9 +93,9 @@ export class WallsIntegrationsCreateComponent implements OnInit {
   ngOnInit() {
     const schoolId = this.session.g.get('school').id;
 
-    this.typesDropdown = this.utils
-      .typesDropdown()
-      .filter((t) => t.action !== FeedIntegration.types.ical);
+    this.typesDropdown = CommonIntegrationUtilsService.typesDropdown().filter(
+      (t) => t.action !== FeedIntegration.types.ical
+    );
     this.channels$ = this.store.select(fromStore.getSocialPostCategories);
 
     this.form = WallsIntegrationModel.form();

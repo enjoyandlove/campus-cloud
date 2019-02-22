@@ -9,6 +9,7 @@ import * as fromActions from '../actions';
 import { IItem } from '@shared/components';
 import { CPDate } from '@shared/utils/date/date';
 import { WallsIntegrationsService } from '../../walls-integrations.service';
+import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { IWallsIntegration, WallsIntegrationModel } from '@libs/integrations/walls/model';
 
 @Injectable()
@@ -16,7 +17,8 @@ export class IntegrationsEffects {
   constructor(
     private actions$: Actions,
     private session: CPSession,
-    private service: WallsIntegrationsService
+    private service: WallsIntegrationsService,
+    private commonUtils: CommonIntegrationUtilsService
   ) {}
 
   @Effect()
@@ -67,7 +69,9 @@ export class IntegrationsEffects {
         .createIntegration(body, params)
         .pipe(
           map((data: IWallsIntegration) => new fromActions.PostIntegrationSuccess(data)),
-          catchError((error) => of(new fromActions.PostIntegrationFail(error)))
+          catchError(({ error }: HttpErrorResponse) =>
+            of(new fromActions.PostIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
+          )
         );
     })
   );
