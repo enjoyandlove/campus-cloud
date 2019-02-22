@@ -7,8 +7,8 @@ import { CPSession } from '@app/session';
 import { SharedModule } from '@shared/shared.module';
 import { configureTestSuite } from '@app/shared/tests';
 import { getElementByCPTargetValue } from '@shared/utils/tests';
-import { mockLinks, mockLocations } from '@libs/locations/common/tests';
 import { LocationsMetaDataComponent } from './locations-meta-data.component';
+import { mockLinks, mockLocations as mockDining } from '@libs/locations/common/tests';
 
 describe('LocationsMetaDataComponent', () => {
   configureTestSuite();
@@ -36,12 +36,10 @@ describe('LocationsMetaDataComponent', () => {
     fixture = TestBed.createComponent(LocationsMetaDataComponent);
     component = fixture.componentInstance;
 
-    const locations = {
-      ...mockLocations[0],
+    component.dining = {
+      ...mockDining[0],
       links: mockLinks
     };
-
-    component.location = locations;
 
     de = fixture.debugElement;
 
@@ -51,24 +49,24 @@ describe('LocationsMetaDataComponent', () => {
   it('should have acronym', () => {
     const acronym = getElementByCPTargetValue(de, 'acronym').nativeElement;
 
-    expect(acronym.textContent).toEqual(component.location.short_name);
+    expect(acronym.textContent).toEqual(component.dining.short_name);
   });
 
   it('should have description', () => {
     const description = getElementByCPTargetValue(de, 'description').nativeElement;
 
-    expect(description.textContent.trim()).toEqual(component.location.description);
+    expect(description.textContent.trim()).toEqual(component.dining.description);
   });
 
   it('should have link label', () => {
     const label = getElementByCPTargetValue(de, 'label').nativeElement;
 
-    expect(label.textContent.trim()).toEqual(component.location.links[0].label);
+    expect(label.textContent.trim()).toEqual(component.dining.links[0].label);
   });
 
   it('should have link url', () => {
     const url = getElementByCPTargetValue(de, 'url').nativeElement;
 
-    expect(url.textContent.trim()).toEqual(component.location.links[0].url);
+    expect(url.textContent.trim()).toEqual(component.dining.links[0].url);
   });
 });
