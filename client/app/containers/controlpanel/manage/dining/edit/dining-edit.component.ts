@@ -38,16 +38,14 @@ export class DiningEditComponent implements OnInit, OnDestroy, AfterViewInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public latLng: LatLngValidators,
-    public store: Store<
-      fromStore.IDiningState | fromRoot.IHeader
-      >
+    public store: Store<fromStore.IDiningState | fromRoot.IHeader>
   ) {}
 
   doSubmit() {
     this.formErrors = false;
     this.buttonDisabled = true;
 
-    if (!this.diningForm.valid) {
+    if (this.diningForm.invalid) {
       this.formErrors = true;
       this.buttonDisabled = false;
 

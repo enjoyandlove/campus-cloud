@@ -1,7 +1,11 @@
-<div class="margin-bottom" [ngSwitch]="loading$ | async">
+<div
+  class="margin-bottom"
+  [ngSwitch]="loading$ | async">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <form [formGroup]="diningForm" *ngSwitchCase="false">
+  <form
+    *ngSwitchCase="false"
+    [formGroup]="diningForm">
     <cp-two-columns>
       <ng-container layout-left-column>
         <cp-card>
