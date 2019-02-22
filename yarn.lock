@@ -292,7 +292,6 @@
 "@ngrx/entity@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-7.0.0.tgz#c059e10f63d366e405f24a349d6f860afc80f91f"
-  integrity sha512-SyiUmg9YjKcb6cuHvIqoMIUJ6KPPJV4oIaI8Rxxps0C+K3R16q8pTbnNqZek/oGj7SQhbd2DOzhqvybrI34Kmg==
 
 "@ngrx/router-store@7.0.0":
   version "7.0.0"
@@ -339,6 +338,52 @@
   dependencies:
     component-cookie "^1.1.2"
     component-url "^0.2.1"
+
+"@sentry/browser@4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-4.6.2.tgz#f1f96d0a061ce90aeb72bd55af3d39d145effe93"
+  dependencies:
+    "@sentry/core" "4.6.2"
+    "@sentry/types" "4.5.3"
+    "@sentry/utils" "4.6.2"
+    tslib "^1.9.3"
+
+"@sentry/core@4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-4.6.2.tgz#2a0a9b90e46e68f1a4a161afdc18619ed31f2bdf"
+  dependencies:
+    "@sentry/hub" "4.6.2"
+    "@sentry/minimal" "4.6.2"
+    "@sentry/types" "4.5.3"
+    "@sentry/utils" "4.6.2"
+    tslib "^1.9.3"
+
+"@sentry/hub@4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-4.6.2.tgz#5c6688d052be4179b206fbdb173a88dbc98d93b0"
+  dependencies:
+    "@sentry/types" "4.5.3"
+    "@sentry/utils" "4.6.2"
+    tslib "^1.9.3"
+
+"@sentry/minimal@4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-4.6.2.tgz#f3dd639cd8a1e126a62fab18893d06b0760f6605"
+  dependencies:
+    "@sentry/hub" "4.6.2"
+    "@sentry/types" "4.5.3"
+    tslib "^1.9.3"
+
+"@sentry/types@4.5.3":
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-4.5.3.tgz#3350dce2b7f9b936a8c327891c12e3aef7bd8852"
+
+"@sentry/utils@4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-4.6.2.tgz#5bc1885b88c5b6273d7c3099889afb1e2beca9d0"
+  dependencies:
+    "@sentry/types" "4.5.3"
+    tslib "^1.9.3"
 
 "@types/amplitude-js@4.4.0":
   version "4.4.0"
@@ -5945,10 +5990,6 @@ range-parser@^1.0.3, range-parser@^1.2.0, range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
-raven-js@3.23.3:
-  version "3.23.3"
-  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.23.3.tgz#6174f506c7362eb8bb72b291af5f22edb44ef165"
-
 raw-body@2.3.3:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.3.3.tgz#1b324ece6b5706e153855bc1148c65bb7f6ea0c3"
@@ -7317,7 +7358,7 @@ ts-helpers@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/ts-helpers/-/ts-helpers-1.1.2.tgz#fc69be9f1f3baed01fb1a0ef8d4cfe748814d835"
 
-tslib@1.9.3:
+tslib@1.9.3, tslib@^1.9.3:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
 
