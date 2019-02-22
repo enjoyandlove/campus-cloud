@@ -1,5 +1,5 @@
 import { ILocation } from './locations.interface';
 
 export interface IDining extends ILocation {
-  notes: '';
+  notes: string;
 }
