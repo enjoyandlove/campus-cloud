@@ -1,1 +1,5 @@
-export { ILocation as IDining } from './locations.interface';
+import { ILocation } from './locations.interface';
+
+export interface IDining extends ILocation {
+  notes: '';
+}
