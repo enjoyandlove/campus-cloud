@@ -1,5 +1,5 @@
-import { ReactiveFormsModule } from '@angular/forms';
 import { RouterStateSerializer } from '@ngrx/router-store';
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';

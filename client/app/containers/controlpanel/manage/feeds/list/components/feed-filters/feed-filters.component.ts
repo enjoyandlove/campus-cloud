@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { map, startWith } from 'rxjs/operators';
-import { sortBy } from 'lodash';
+import { get as _get, sortBy } from 'lodash';
 import { Observable } from 'rxjs';
 
 import { CPSession } from '@app/session';
@@ -178,10 +178,13 @@ export class FeedFiltersComponent implements OnInit {
       return group.action === wall.id ? this.updateGroup(group, wall) : group;
     });
 
-    if (this.state.currentView.action === wall.id) {
-      this.state = Object.assign({}, this.state, {
+    const action = _get(this.state.currentView, 'action', null);
+
+    if (action === wall.id) {
+      this.state = {
+        ...this.state,
         currentView: this.getWallSettings(wall.id)
-      });
+      };
 
       this.doFilter.emit(this.state);
     }

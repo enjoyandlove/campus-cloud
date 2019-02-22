@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, EventEmitter } from '@angular/core';
+import { Component, Input, EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -12,17 +12,14 @@ import { SyncStatus } from '../../../common/model';
   templateUrl: './integration-list.component.html',
   styleUrls: ['./integration-list.component.scss']
 })
-export class WallsIntegrationListComponent implements OnInit {
+export class WallsIntegrationListComponent {
   @Input() channels: IItem[];
   @Input() integrations$: Observable<IWallsIntegration[]>;
 
+  @Output() syncClick: EventEmitter<number> = new EventEmitter();
   @Output() editClick: EventEmitter<IWallsIntegration> = new EventEmitter();
   @Output() deleteClick: EventEmitter<IWallsIntegration> = new EventEmitter();
 
   dateFormat = FORMAT.DATETIME;
   notSynced = SyncStatus.notSynced;
-
-  constructor() {}
-
-  ngOnInit() {}
 }
