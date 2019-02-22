@@ -15,8 +15,6 @@ export const mockSchedule = [
     day: 2,
     items: [
       {
-        url: '',
-        description: '',
         end_time: 18000,
         start_time: 3600,
         name: 'hello world'
@@ -48,7 +46,6 @@ export const emptyForm = {
 export const mockLocations = [
   {
     id: 123,
-    notes: '',
     phone: 125488,
     category_id: 1,
     city: 'Karachi',
@@ -71,7 +68,6 @@ export const mockLocations = [
   },
   {
     id: 1234,
-    notes: '',
     phone: 125488,
     category_id: 1,
     city: 'Karachi',
@@ -93,3 +89,8 @@ export const mockLocations = [
     schedule: []
   }
 ];
+
+export const mockDining = {
+  ...mockLocations,
+  notes: ''
+};

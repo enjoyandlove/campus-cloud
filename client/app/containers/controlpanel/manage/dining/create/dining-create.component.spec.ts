@@ -12,7 +12,7 @@ import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
 import { DiningCreateComponent } from './dining-create.component';
-import { emptyForm, filledForm } from '@libs/locations/common/tests';
+import { emptyForm, filledForm, mockLinksData, mockScheduleData } from '@libs/locations/common/tests';
 
 describe('DiningCreateComponent', () => {
   configureTestSuite();
@@ -55,13 +55,13 @@ describe('DiningCreateComponent', () => {
 
     const expected = {
       ...emptyForm,
+      links: mockLinksData(),
+      schedule: mockScheduleData(),
       latitude: mockSchool.latitude,
       longitude: mockSchool.longitude
     };
-    expect(result['schedule'].length).toEqual(7);
 
-    result['links'] = [];
-    result['schedule'] = [];
+    expect(result['schedule'].length).toEqual(7);
     expect(result).toEqual(expected);
   });
 
