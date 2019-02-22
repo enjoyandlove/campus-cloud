@@ -39,17 +39,6 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       };
     }
 
-    case fromIntegrations.IntegrationActions.GET_INTEGRATIONS_SUCCESS: {
-      const data = action.payload;
-
-      return {
-        ...state,
-        error: null,
-        loading: false,
-        data: [...data]
-      };
-    }
-
     case fromIntegrations.IntegrationActions.GET_INTEGRATIONS_FAIL:
     case fromIntegrations.IntegrationActions.POST_INTEGRATION_FAIL:
     case fromIntegrations.IntegrationActions.EDIT_INTEGRATION_FAIL:
@@ -62,6 +51,17 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
         ...state,
         error,
         loading: false
+      };
+    }
+
+    case fromIntegrations.IntegrationActions.GET_INTEGRATIONS_SUCCESS: {
+      const data = action.payload;
+
+      return {
+        ...state,
+        error: null,
+        loading: false,
+        data: [...data]
       };
     }
 
@@ -83,9 +83,7 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
       return {
         ...state,
         error: null,
-        loading: false,
-        data: [newEventIntegration, ...state.data],
-        completedAction: 't_shared_saved_update_success_message'
+        data: [newEventIntegration, ...state.data]
       };
     }
 
@@ -156,6 +154,13 @@ export function reducer(state = initialState, action: fromIntegrations.Actions):
         loading: false,
         completedAction: message ? message : defaultAction,
         data: state.data.map((i) => (i.id === integration.id ? integration : i))
+      };
+    }
+
+    case fromIntegrations.IntegrationActions.DESTROY: {
+      return {
+        ...state,
+        ...initialState
       };
     }
 
