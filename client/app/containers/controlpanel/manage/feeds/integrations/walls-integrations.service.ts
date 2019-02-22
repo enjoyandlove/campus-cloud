@@ -70,6 +70,14 @@ export class WallsIntegrationsService extends HTTPService {
     return super.delete(url, search, true);
   }
 
+  syncNow(integrationId: number, search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
+      API.ENDPOINTS.WALLS_INTEGRATIONS
+    }/${integrationId}`;
+
+    return super.update(url, {}, search, true, 0);
+  }
+
   private filterPostableCategories(categories: ISocialPostCategory[]): ISocialPostCategory[] {
     return categories.filter((c) => !c.is_postable);
   }
