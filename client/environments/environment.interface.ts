@@ -16,4 +16,7 @@ export interface IEnvironment {
   root: string;
   envName: string;
   production: boolean;
+  keys?: {
+    [key: string]: string;
+  };
 }

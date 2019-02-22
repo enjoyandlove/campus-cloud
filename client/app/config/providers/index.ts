@@ -1,12 +1,10 @@
 import { ErrorHandler } from '@angular/core';
 
-import { isProd } from './../env';
-import { CPSession } from '../../session';
-import { AuthGuard, PrivilegesGuard } from '../guards';
-
-import { CPI18nService, ErrorService, ZendeskService } from '../../shared/services';
-
-import { RavenErrorHandler } from './raven.handler';
+import { CPSession } from '@app/session';
+import { CPErrorHandler } from './error.handler';
+import { isProd, isStaging } from '@app/config/env';
+import { AuthGuard, PrivilegesGuard } from '@app/config/guards';
+import { CPI18nService, ErrorService, ZendeskService } from '@shared/services';
 
 const COMMON_APP_PROVIDERS = [
   CPSession,
@@ -16,9 +14,17 @@ const COMMON_APP_PROVIDERS = [
   ZendeskService,
   PrivilegesGuard
 ];
+const PROD_APP_PROVIDERS = [{ provide: ErrorHandler, useClass: CPErrorHandler }];
+const STAGING_APP_PROVIDERS = [{ provide: ErrorHandler, useClass: CPErrorHandler }];
 
-const PROD_APP_PROVIDERS = [{ provide: ErrorHandler, useClass: RavenErrorHandler }];
+let _PROVIDERS = [];
 
-export const APP_PROVIDERS = isProd
-  ? [...COMMON_APP_PROVIDERS, ...PROD_APP_PROVIDERS]
-  : [...COMMON_APP_PROVIDERS];
+_PROVIDERS = [...COMMON_APP_PROVIDERS];
+
+if (isStaging) {
+  _PROVIDERS = [...COMMON_APP_PROVIDERS, ...STAGING_APP_PROVIDERS];
+} else if (isProd) {
+  _PROVIDERS = [...COMMON_APP_PROVIDERS, ...PROD_APP_PROVIDERS];
+}
+
+export const APP_PROVIDERS = [..._PROVIDERS];

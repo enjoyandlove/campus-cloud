@@ -1,11 +1,11 @@
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import * as Raven from 'raven-js';
 import { map } from 'rxjs/operators';
 
 import { CPSession } from '../../session';
 import { appStorage } from '../../shared/utils';
+import { CPLogger } from '@shared/services/logger';
 import { base64 } from './../../shared/utils/encrypt/encrypt';
 import { environment } from './../../../environments/environment';
 import { AdminService, SchoolService, StoreService, ZendeskService } from '../../shared/services';
@@ -111,7 +111,7 @@ export class AuthGuard implements CanActivate {
 
     ga('set', 'userId', email);
 
-    Raven.setUserContext({ id, username, email });
+    CPLogger.setUser({ id, username, email });
   }
 
   redirectAndSaveGoTo(url): boolean {
