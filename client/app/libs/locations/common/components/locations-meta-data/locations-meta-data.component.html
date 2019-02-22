@@ -1,16 +1,16 @@
 <div class="row location">
   <div class="col-12">
     <cp-card class="location__details">
-      <div *ngIf="location.short_name">
+      <div *ngIf="dining.short_name">
         <p>
           <strong>
             {{ 'locations_label_acronym' | cpI18n }}
           </strong>
         </p>
-        <p cpTarget="acronym">{{ location.short_name }}</p>
+        <p cpTarget="acronym">{{ dining.short_name }}</p>
       </div>
 
-      <div *ngIf="location.description">
+      <div *ngIf="dining.description">
         <p>
           <strong>
             {{ 'description' | cpI18n }}
@@ -19,31 +19,31 @@
         <p
           cpTarget="description"
           class="render_line_breaks">
-          {{ location.description }}
+          {{ dining.description }}
         </p>
       </div>
 
-      <div *ngIf="location.links[0]?.label">
+      <div *ngIf="dining.links[0]?.label">
         <p>
           <strong cpTarget="label">
-            {{ location.links[0].label }}
+            {{ dining.links[0].label }}
           </strong>
         </p>
       </div>
 
-      <div *ngIf="location.links[0]?.url">
+      <div *ngIf="dining.links[0]?.url">
         <p>
           <a
             cpTarget="url"
             target="_blank"
-            [href]="location.links[0].url"
+            [href]="dining.links[0].url"
             class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
-            {{ location.links[0].url }}
+            {{ dining.links[0].url }}
           </a>
         </p>
       </div>
 
-      <div *ngIf="location.notes">
+      <div *ngIf="dining.notes">
         <p>
           <strong>
             {{ 't_dining_dietary_notes' | cpI18n }}
@@ -52,7 +52,7 @@
         <p
           cpTarget="notes"
           class="render_line_breaks">
-          {{ location.notes }}
+          {{ dining.notes }}
         </p>
       </div>
     </cp-card>

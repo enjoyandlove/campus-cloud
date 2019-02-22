@@ -16,6 +16,8 @@ export class LocationsListTopBarComponent implements OnInit {
   @Input() categories$: Observable<IItem[]>;
 
   @Output() search: EventEmitter<string> = new EventEmitter();
+  @Output() createClick: EventEmitter<null> = new EventEmitter();
+  @Output() categoriesClick: EventEmitter<null> = new EventEmitter();
   @Output() selectedCategory: EventEmitter<number> = new EventEmitter();
 
   eventData;

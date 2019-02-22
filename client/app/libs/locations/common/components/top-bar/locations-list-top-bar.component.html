@@ -16,19 +16,19 @@
       </div>
     </div>
     <div class="col-6 float-right">
-      <a
+      <button
         cpTracker
         [eventData]="eventData"
-        [routerLink]="['create']"
+        (click)="createClick.emit()"
         class="cpbtn cpbtn--primary float-right">
         {{ createLocationLabel }}
-      </a>
+      </button>
 
-      <a
-        [routerLink]="['categories']"
+      <button
+        (click)="categoriesClick.emit()"
         class="cpbtn cpbtn--cancel float-right margin-right">
         {{ 't_locations_manage_categories' | cpI18n }}
-      </a>
+      </button>
     </div>
   </div>
 </div>

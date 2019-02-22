@@ -11,17 +11,20 @@ import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
+import { Destroyable, Mixin } from '@shared/mixins';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
 import { DiningModel, IDining } from '@libs/locations/common/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
+
+@Mixin([Destroyable])
 
 @Component({
   selector: 'cp-dining-edit',
   templateUrl: './dining-edit.component.html',
   styleUrls: ['./dining-edit.component.scss']
 })
-export class DiningEditComponent implements OnInit, OnDestroy, AfterViewInit {
+export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, AfterViewInit {
   diningId: number;
   formErrors: boolean;
   openingHours = true;
@@ -31,7 +34,8 @@ export class DiningEditComponent implements OnInit, OnDestroy, AfterViewInit {
   loading$: Observable<boolean>;
   categories$: Observable<IItem[]>;
 
-  private destroy$ = new Subject();
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public router: Router,
@@ -144,9 +148,7 @@ export class DiningEditComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngOnDestroy() {
-    this.destroy$.next(true);
-    this.destroy$.complete();
-    this.destroy$.unsubscribe();
+    this.emitDestroy();
   }
 
   ngAfterViewInit() {

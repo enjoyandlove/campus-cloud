@@ -14,7 +14,12 @@ import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
 import { DiningEditComponent } from './dining-edit.component';
-import { mockLocations as mockDining, filledForm } from '@libs/locations/common/tests';
+import {
+  filledForm,
+  mockLinksData,
+  mockScheduleData,
+  mockLocations as mockDining
+} from '@libs/locations/common/tests';
 
 describe('DiningEditComponent', () => {
   configureTestSuite();
@@ -55,17 +60,20 @@ describe('DiningEditComponent', () => {
   });
 
   it('should populate form with values', () => {
-    const expected = omit(mockDining[0], ['category_img_url', 'category_name', 'category_color']);
+    let expected = omit(mockDining[0], ['category_img_url', 'category_name', 'category_color', 'id']);
+
+    expected = {
+      ...expected,
+      links: mockLinksData(),
+      schedule: mockScheduleData(),
+    };
 
     fillForm(component.diningForm, filledForm);
 
     const result = component.diningForm.value;
-    result['id'] = 123;
 
     expect(result['schedule'].length).toEqual(7);
 
-    result['links'] = [];
-    result['schedule'] = [];
     expect(result).toEqual(expected);
   });
 

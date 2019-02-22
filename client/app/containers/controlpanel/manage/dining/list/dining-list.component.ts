@@ -2,6 +2,7 @@ import { filter, takeUntil, map, tap, take } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, of, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -44,6 +45,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
   private destroy$ = new Subject();
 
   constructor(
+    public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public headerService: ManageHeaderService,
@@ -190,6 +192,10 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
         })
       )
       .subscribe();
+  }
+
+  onCreateClick() {
+    this.router.navigate(['/manage/dining/create']);
   }
 
   ngOnInit() {
