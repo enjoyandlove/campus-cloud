@@ -2,8 +2,8 @@ import { createSelector } from '@ngrx/store';
 
 import * as fromFeature from '../reducers';
 import { getFeatureState } from './feature.selector';
+import { IWallsIntegration } from '@libs/integrations/walls/model';
 import * as fromIntegrations from '../reducers/integrations.reducers';
-import { IWallsIntegration } from '@app/libs/integrations/walls/model';
 
 export const getIntegrationsState = createSelector(
   getFeatureState,

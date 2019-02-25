@@ -1,19 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import * as Raven from 'raven-js';
-
-import { environment } from './../environments/environment';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'cp-app',
   templateUrl: './app.component.html'
 })
-export class AppComponent implements OnInit {
-  ravenInit() {
-    Raven.setTagsContext({
-      environment: environment.envName
-    });
-  }
-  ngOnInit() {
-    this.ravenInit();
-  }
-}
+export class AppComponent {}
