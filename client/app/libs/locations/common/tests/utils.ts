@@ -15,14 +15,12 @@ export const filledForm = {
   email: 'test@oohlalamobile.com'
 };
 
-export function mockLinksData() {
-  return [
-    {
-      url: '',
-      label: ''
-    }
-  ];
-}
+export const mockLinksData = [
+  {
+    url: '',
+    label: ''
+  }
+];
 
 export function mockScheduleData() {
   const days = Array.from(Array(7).keys());

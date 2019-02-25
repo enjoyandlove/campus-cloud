@@ -36,7 +36,9 @@ export enum IntegrationActions {
   SYNC_NOW_FAIL = '[manage.walls.integrations] sync now fail',
   SYNC_NOW_SUCCESS = '[manage.walls.integrations] sync now success',
 
-  CREATE_AND_SYNC = '[manage.walls.integrations] create and sync'
+  CREATE_AND_SYNC = '[manage.walls.integrations] create and sync',
+
+  DESTROY = '[manage.walls.integrations] destroy'
 }
 
 export class GetIntegrations implements Action {
@@ -90,7 +92,7 @@ export class PostIntegrationSuccess implements Action {
 export class PostIntegrationFail implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class EditIntegration implements Action {
@@ -190,6 +192,10 @@ export class CreateAndSync implements Action {
   constructor(public payload: { body: IWallsIntegration; params: HttpParams }) {}
 }
 
+export class Destroy implements Action {
+  readonly type = IntegrationActions.DESTROY;
+}
+
 export type Actions =
   | GetIntegrations
   | GetIntegrationsSuccess
@@ -213,4 +219,5 @@ export type Actions =
   | SyncNow
   | SyncNowSuccess
   | SyncNowFail
-  | CreateAndSync;
+  | CreateAndSync
+  | Destroy;

@@ -11,6 +11,7 @@ import * as fromRoot from '@app/store';
 import { BaseComponent } from '@app/base';
 import { IItem } from '@shared/components';
 import { CPI18nService } from '@shared/services/i18n.service';
+import { Mixin, Destroyable } from '@client/app/shared/mixins';
 import { coerceBooleanProperty } from '@shared/utils/coercion';
 import { IWallsIntegration } from '@libs/integrations/walls/model';
 
@@ -19,15 +20,19 @@ import { IWallsIntegration } from '@libs/integrations/walls/model';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
+@Mixin([Destroyable])
 export class WallsIntegrationsListComponent extends BaseComponent implements OnInit, OnDestroy {
   channels: IItem[];
   showEditModal = false;
   showCreateModal = false;
   showDeleteModal = false;
-  destroy$ = new Subject();
   loading$: Observable<boolean>;
   selectedIntegration: IWallsIntegration;
   integrations$: Observable<IWallsIntegration[]>;
+
+  // Destroyable
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     private session: CPSession,
@@ -222,8 +227,7 @@ export class WallsIntegrationsListComponent extends BaseComponent implements OnI
   }
 
   ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-    this.destroy$.unsubscribe();
+    this.emitDestroy();
+    this.store.dispatch(new fromStore.Destroy());
   }
 }

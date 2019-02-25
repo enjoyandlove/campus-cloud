@@ -41,7 +41,7 @@ describe('WallsIntegrationFormComponent', () => {
 
     component.form = WallsIntegrationModel.form();
     component.channels$ = of([CPDropdownComponent.defaultPlaceHolder()]);
-    component.types = new CommonIntegrationUtilsService().typesDropdown();
+    component.types = CommonIntegrationUtilsService.typesDropdown();
 
     fixture.detectChanges();
   });

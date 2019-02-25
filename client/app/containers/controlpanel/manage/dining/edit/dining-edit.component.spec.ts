@@ -64,7 +64,7 @@ describe('DiningEditComponent', () => {
 
     expected = {
       ...expected,
-      links: mockLinksData(),
+      links: mockLinksData,
       schedule: mockScheduleData(),
     };
 

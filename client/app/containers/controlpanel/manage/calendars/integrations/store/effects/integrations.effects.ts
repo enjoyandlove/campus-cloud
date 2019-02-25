@@ -10,7 +10,7 @@ import * as fromActions from '../actions';
 import { StoreService, CPI18nService } from '@shared/services';
 import { ItemsIntegrationsService } from './../../integrations.service';
 import { EventIntegration } from '@client/app/libs/integrations/events/model';
-import { LibsIntegrationEventCommonUtilsService } from '@libs/integrations/events/providers';
+import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
 
 @Injectable()
@@ -195,6 +195,6 @@ export class IntegrationsEffects {
     private cpI18n: CPI18nService,
     private storeService: StoreService,
     private service: ItemsIntegrationsService,
-    private commonUtils: LibsIntegrationEventCommonUtilsService
+    private commonUtils: CommonIntegrationUtilsService
   ) {}
 }

@@ -55,7 +55,7 @@ describe('DiningCreateComponent', () => {
 
     const expected = {
       ...emptyForm,
-      links: mockLinksData(),
+      links: mockLinksData,
       schedule: mockScheduleData(),
       latitude: mockSchool.latitude,
       longitude: mockSchool.longitude

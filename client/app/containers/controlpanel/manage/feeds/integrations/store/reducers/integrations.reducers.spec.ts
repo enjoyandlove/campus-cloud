@@ -131,16 +131,16 @@ describe('Walls Integrations Reducer', () => {
   });
 
   describe('POST_INTEGRATION_SUCCESS', () => {
-    it('should set completedAction flag to null', () => {
+    it('should set error flag to null', () => {
       const { initialState } = fromReducer;
       const payload = mockIntegration;
 
       const action = new fromActions.PostIntegrationSuccess(payload);
-      const { data, completedAction } = fromReducer.reducer(initialState, action);
+      const { data, error } = fromReducer.reducer(initialState, action);
 
+      expect(error).toBeNull();
       expect(data.length).toEqual(1);
       expect(data[0].id).toBe(payload.id);
-      expect(completedAction).not.toBeNull();
     });
   });
 
