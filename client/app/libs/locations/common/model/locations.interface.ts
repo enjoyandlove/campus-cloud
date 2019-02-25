@@ -17,6 +17,8 @@ export interface ILocation {
 
   email: string;
 
+  links: ILinks[];
+
   country: string;
 
   address: string;
@@ -37,13 +39,11 @@ export interface ILocation {
 
   category_id: number;
 
+  schedule: ISchedule[];
+
   category_name: string;
 
   category_color: string;
 
   category_img_url: string;
-
-  links: ILinks[];
-
-  schedule: ISchedule[];
 }

@@ -10,8 +10,6 @@ import { LocationsListComponent } from './list';
 import { LocationsEditComponent } from './edit';
 import { LocationsDeleteComponent } from './delete';
 import { LocationsCreateComponent } from './create';
-import { LocationOpeningHoursFormComponent } from './components';
-import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
 
 import { LocationsService } from './locations.service';
 import { SharedModule } from '@app/shared/shared.module';
@@ -23,17 +21,17 @@ import { LocationExistsGuard } from './guards';
 import { LayoutsModule } from '@app/layouts/layouts.module';
 import { CustomSerializer } from '@app/store/base/router-state';
 import { CategoriesModule } from './categories/categories.module';
+import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
 import { CommonLocationsModule } from '@libs/locations/common/common-locations.module';
 
 @NgModule({
   declarations: [
     LocationsListComponent,
-    LocationsTimeLabelPipe,
     LocationsInfoComponent,
     LocationsEditComponent,
+    LocationsTimeLabelPipe,
     LocationsDeleteComponent,
-    LocationsCreateComponent,
-    LocationOpeningHoursFormComponent
+    LocationsCreateComponent
   ],
 
   imports: [

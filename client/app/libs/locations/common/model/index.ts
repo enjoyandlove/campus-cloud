@@ -1,3 +1,4 @@
+export * from './dining.model';
 export * from './location.model';
 export * from './schedule.model';
 export * from './dining.interface';

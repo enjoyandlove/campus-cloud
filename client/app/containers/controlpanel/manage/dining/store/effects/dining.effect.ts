@@ -1,12 +1,16 @@
-import { map, mergeMap, catchError } from 'rxjs/operators';
+import { map, mergeMap, catchError, tap } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 
-import * as fromActions from '../actions';
+import { ISnackbar } from '@app/store';
 import { CPSession } from '@app/session';
+import * as fromActions from '../actions';
+import { CPI18nService } from '@shared/services';
+import { baseActionClass } from '@app/store/base';
 import { DiningService } from '../../dining.service';
 import { IDining } from '@libs/locations/common/model';
 
@@ -16,7 +20,9 @@ export class DiningEffect {
     public router: Router,
     public actions$: Actions,
     public session: CPSession,
-    public service: DiningService
+    public cpI18n: CPI18nService,
+    public service: DiningService,
+    public store: Store<ISnackbar>
   ) {}
 
   @Effect()
@@ -47,6 +53,31 @@ export class DiningEffect {
         .pipe(
           map((data: IDining) => new fromActions.GetDiningByIdSuccess(data)),
           catchError((error) => of(new fromActions.GetDiningByIdFail(error)))
+        );
+    })
+  );
+
+  @Effect()
+  createDining$: Observable<fromActions.PostDiningSuccess | fromActions.PostDiningFail>
+    = this.actions$.pipe(
+    ofType(fromActions.diningActions.POST_DINING),
+    mergeMap((action: fromActions.PostDining) => {
+      const { body, params } = action.payload;
+
+      return this.service
+        .createDining(body, params)
+        .pipe(
+          map((data: IDining) => new fromActions.PostDiningSuccess(data)),
+          tap((data) => this.router.navigate([`/manage/dining/${data.payload.id}/info`])),
+          catchError((error) => {
+            this.store.dispatch(
+              new baseActionClass.SnackbarError({
+                body: this.cpI18n.translate('something_went_wrong')
+              })
+            );
+
+            return of(new fromActions.PostDiningFail(error));
+          })
         );
     })
   );

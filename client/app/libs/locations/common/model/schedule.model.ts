@@ -37,11 +37,9 @@ export class ScheduleModel {
     const fb = new FormBuilder();
 
     return fb.group({
-      url: [items ? items.url : ''],
       name: [items ? items.name : ''],
       end_time: [items ? items.end_time : fivePM],
-      start_time: [items ? items.start_time : nineAM],
-      description: [items ? items.description : '']
+      start_time: [items ? items.start_time : nineAM]
     });
   }
 }

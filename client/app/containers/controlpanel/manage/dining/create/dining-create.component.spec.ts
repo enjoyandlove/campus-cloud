@@ -3,8 +3,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
-import { omit } from 'lodash';
-import { of } from 'rxjs';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
@@ -13,10 +11,10 @@ import { fillForm } from '@shared/utils/tests/form';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
-import { LocationsEditComponent } from './locations-edit.component';
-import { mockLocations, filledForm } from '@libs/locations/common/tests';
+import { DiningCreateComponent } from './dining-create.component';
+import { emptyForm, filledForm, mockLinksData, mockScheduleData } from '@libs/locations/common/tests';
 
-describe('LocationsEditComponent', () => {
+describe('DiningCreateComponent', () => {
   configureTestSuite();
 
   beforeAll((done) =>
@@ -24,7 +22,7 @@ describe('LocationsEditComponent', () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
         providers: [CPSession, CPI18nService],
-        declarations: [LocationsEditComponent],
+        declarations: [DiningCreateComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
 
@@ -34,67 +32,66 @@ describe('LocationsEditComponent', () => {
       .catch(done.fail)
   );
 
-  let fixture: ComponentFixture<LocationsEditComponent>;
-  let component: LocationsEditComponent;
+  let fixture: ComponentFixture<DiningCreateComponent>;
+  let component: DiningCreateComponent;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LocationsEditComponent);
+    fixture = TestBed.createComponent(DiningCreateComponent);
     component = fixture.componentInstance;
-    component.openingHours = true;
     component.session.g.set('school', mockSchool);
-    spyOn(component.store, 'select').and.returnValue(of(mockLocations[0]));
 
     fixture.detectChanges();
 
-    component.locationForm.get('latitude').clearAsyncValidators();
-    component.locationForm.get('longitude').clearAsyncValidators();
+    component.diningForm.get('latitude').clearAsyncValidators();
+    component.diningForm.get('longitude').clearAsyncValidators();
   });
 
   it('should init', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should populate form with values', () => {
-    const expected = omit(mockLocations[0], ['category_img_url', 'category_name', 'category_color', 'notes']);
+  it('should create an empty form', () => {
+    const result = component.diningForm.value;
 
-    fillForm(component.locationForm, filledForm);
-
-    const result = component.locationForm.value;
-    result['id'] = 123;
+    const expected = {
+      ...emptyForm,
+      links: mockLinksData,
+      schedule: mockScheduleData(),
+      latitude: mockSchool.latitude,
+      longitude: mockSchool.longitude
+    };
 
     expect(result['schedule'].length).toEqual(7);
-
-    result['links'] = [];
-    result['schedule'] = [];
     expect(result).toEqual(expected);
   });
 
   it('should show form errors true', () => {
-    fillForm(component.locationForm, filledForm);
+    fillForm(component.diningForm, filledForm);
 
-    component.locationForm.get('category_id').setValue(null);
-    component.locationForm.get('name').setValue(null);
+    component.diningForm.get('category_id').setValue(null);
+    component.diningForm.get('name').setValue(null);
 
     component.doSubmit();
 
     expect(component.formErrors).toBe(true);
   });
 
-  it('should dispatch EditLocation action', () => {
+  it('should dispatch PostDining action', () => {
     const dispatchSpy = spyOn(component.store, 'dispatch');
 
-    fillForm(component.locationForm, filledForm);
+    fillForm(component.diningForm, filledForm);
+
+    component.diningForm.get('category_id').setValue(1);
+    component.diningForm.get('name').setValue('Hello World!');
 
     component.doSubmit();
 
-    const expected = new fromStore.EditLocation(component.locationForm.value);
-
-    expect(component.store.dispatch).toHaveBeenCalled();
+    const expected = new fromStore.PostDining(component.diningForm.value);
 
     const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
     const { body } = payload;
 
     expect(body).toEqual(expected.payload);
-    expect(type).toEqual(fromStore.locationActions.EDIT_LOCATION);
+    expect(type).toEqual(fromStore.diningActions.POST_DINING);
   });
 });
