@@ -302,7 +302,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       .toPromise()
       .then(({ id }: any) => this.redirectToSaveTab({ id }))
       .catch((err) => {
-        const error = JSON.parse(err._body).error;
+        const error = err.error.error;
         const body =
           error === 'Database Error'
             ? this.cpI18n.translate('audience_create_error_duplicate_audience')
