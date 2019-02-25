@@ -3,7 +3,10 @@
     <cp-locations-list-top-bar
       [categories$]="categories$"
       (search)="onSearch($event)"
-      (selectedCategory)="onCategorySelect($event)">
+      (createClick)="onCreateClick()"
+      (categoriesClick)="onCategoriesClick()"
+      (selectedCategory)="onCategorySelect($event)"
+      [createLocationLabel]="'locations_btn_create' | cpI18n">
     </cp-locations-list-top-bar>
   </div>
 </div>
@@ -13,79 +16,33 @@
 
   <div *ngSwitchCase="false">
     <cp-no-content
-      class="no-content"
+      class="margin-top"
       *ngIf="!(locations$ | async).length"
-      noContentText="No locations found...">
+      [noContentText]="'t_locations_no_record_found' | cpI18n">
     </cp-no-content>
 
-    <div *ngIf="(locations$ | async).length">
-      <ul class="locations cp-form">
-        <li class="cp-form__header col-12">
-          <div class="row">
-            <cp-sorting-header
-              class="col-7"
-              sortLabel="name"
-              (click)="doSort('name')"
-              [sortField]="state.sort_field"
-              [label]="sortingLabels.locations"
-              [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
+    <cp-locations-common-list
+      [data$]="locations$"
+      [sortBy]="state.sort_field"
+      (doSort)="onDoSort($event)"
+      *ngIf="(locations$ | async).length"
+      [sortDirection]="state.sort_direction"
+      (deleteClick)="onLaunchDeleteModal($event)">
+    </cp-locations-common-list>
 
-            <span class="col-2">{{ 'locations_label_acronym' | cpI18n }}</span>
-            <span class="col-2">{{ 'category' | cpI18n }}</span>
-            <span class="col-1"></span>
-          </div>
-        </li>
-
-        <li class="cp-form__item col-12" *ngFor="let location of locations$ | async">
-          <div class="row">
-            <span class="col-7 text-truncate">
-              <img
-                class="rounded img-fit-cover float-left avatar"
-                [src]="location.image_url ? location.image_url : defaultImage">
-              <strong>
-                <a
-                  class="cp-form__title"
-                  [routerLink]="[location.id + '/info']">
-                  {{ location.name }}
-                </a>
-              </strong>
-
-              <br>
-              {{ location.address }}
-            </span>
-
-            <span class="col-2 text-truncate margin-top">
-              {{ location.short_name }}
-            </span>
-
-            <span class="col-2 text-truncate margin-top">
-              {{ location.category_name }}
-            </span>
-
-            <span class="col-1 text-right">
-              <i
-                data-toggle="modal"
-                data-target="#locationsDelete"
-                (click)="deleteLocation = location;"
-                class="material-icons hover action-button">close</i>
-            </span>
-          </div>
-        </li>
-      </ul>
-
-      <cp-pagination
-        [pageNext]="pageNext"
-        [pagePrev]="pagePrev"
-        [pageNumber]="pageNumber"
-        (next)="onPaginationNext()"
-        (previous)="onPaginationPrevious()">
-      </cp-pagination>
-    </div>
+    <cp-pagination
+      [pageNext]="pageNext"
+      [pagePrev]="pagePrev"
+      [pageNumber]="pageNumber"
+      (next)="onPaginationNext()"
+      (previous)="onPaginationPrevious()">
+    </cp-pagination>
   </div>
 </div>
 
-<cp-modal modalId="locationsDelete">
+<cp-modal
+  *ngIf="showDeleteModal"
+  modalId="locationsDelete">
   <cp-locations-delete
     [location]="deleteLocation">
   </cp-locations-delete>

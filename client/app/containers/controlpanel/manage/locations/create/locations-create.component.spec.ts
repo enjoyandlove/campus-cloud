@@ -3,15 +3,16 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
+import { omit } from 'lodash';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
-import { emptyForm, filledForm } from '../tests';
 import { CPI18nService } from '@shared/services';
 import { fillForm } from '@shared/utils/tests/form';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
+import { emptyForm, filledForm } from '@libs/locations/common/tests';
 import { LocationsCreateComponent } from './locations-create.component';
 
 describe('LocationsCreateComponent', () => {
@@ -55,9 +56,11 @@ describe('LocationsCreateComponent', () => {
   it('should create an empty form', () => {
     const result = component.locationForm.value;
 
+    const filteredFormFields = omit(emptyForm, ['notes']);
+
     // update lat/lng values being set after form is created
     const expected = {
-      ...emptyForm,
+      ...filteredFormFields,
       latitude: mockSchool.latitude,
       longitude: mockSchool.longitude
     };

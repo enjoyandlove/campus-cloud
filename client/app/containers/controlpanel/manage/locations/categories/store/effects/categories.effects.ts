@@ -7,11 +7,11 @@ import { Store } from '@ngrx/store';
 import { ISnackbar } from '@app/store';
 import { ICategory } from '../../model';
 import * as fromActions from '../actions';
-import { ILocation } from '../../../model';
 import { CPI18nService } from '@shared/services';
 import { baseActionClass } from '@app/store/base';
 import * as fromLocationStore from '../../../store';
 import { parseErrorResponse } from '@shared/utils/http';
+import { ILocation } from '@libs/locations/common/model';
 import { CategoriesService } from '../../categories.service';
 import { coerceBooleanProperty } from '@shared/utils/coercion';
 

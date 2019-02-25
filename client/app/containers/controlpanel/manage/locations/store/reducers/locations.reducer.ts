@@ -2,7 +2,7 @@ import { EntityState, createEntityAdapter, EntityAdapter, Dictionary } from '@ng
 
 import * as fromLocations from '../actions';
 
-import { ILocation } from '../../model';
+import { ILocation } from '@libs/locations/common/model';
 
 export interface ILocationState extends EntityState<ILocation> {
   error: boolean;

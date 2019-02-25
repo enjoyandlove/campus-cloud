@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-12">
+    <cp-locations-list-top-bar
+      [categories$]="categories$"
+      (search)="onSearch($event)"
+      (createClick)="onCreateClick()"
+      (selectedCategory)="onCategorySelect($event)"
+      [createLocationLabel]="'t_dining_create_dining' | cpI18n">
+    </cp-locations-list-top-bar>
+  </div>
+</div>
+
+<div [ngSwitch]="loading$ | async">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      class="margin-top"
+      *ngIf="!(dining$ | async).length"
+      [noContentText]="'t_dining_no_record_found' | cpI18n">
+    </cp-no-content>
+
+    <cp-locations-common-list
+      [data$]="dining$"
+      [sortBy]="state.sort_field"
+      (doSort)="onDoSort($event)"
+      *ngIf="(dining$ | async).length"
+      [sortDirection]="state.sort_direction"
+      (deleteClick)="onLaunchDeleteModal($event)">
+    </cp-locations-common-list>
+
+    <cp-pagination
+      [pageNext]="pageNext"
+      [pagePrev]="pagePrev"
+      [pageNumber]="pageNumber"
+      (next)="onPaginationNext()"
+      (previous)="onPaginationPrevious()">
+    </cp-pagination>
+  </div>
+</div>
+
+<cp-modal
+  *ngIf="showDeleteModal"
+  modalId="diningDelete">
+  <cp-dining-delete
+    [dining]="deleteDining">
+  </cp-dining-delete>
+</cp-modal>

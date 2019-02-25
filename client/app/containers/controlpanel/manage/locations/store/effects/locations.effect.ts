@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { ILocation } from '../../model';
 import * as fromActions from '../actions';
 import { ICategory } from '../../categories/model';
+import { ILocation } from '@libs/locations/common/model';
 import { LocationsService } from '../../locations.service';
 import * as fromCategoryStore from '../../categories/store';
 

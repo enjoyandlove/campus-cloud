@@ -7,10 +7,10 @@ import { of } from 'rxjs';
 
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
+import { CPI18nService } from '@shared/services';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
-import { CPTrackingService, CPI18nService } from '@shared/services';
 import { LocationsListComponent } from './locations-list.component';
 import { ManageHeaderService } from '@containers/controlpanel/manage/utils';
 
@@ -21,7 +21,7 @@ describe('LocationsListComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, CPTrackingService, ManageHeaderService],
+        providers: [CPSession, CPI18nService, ManageHeaderService],
         declarations: [LocationsListComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
@@ -58,7 +58,7 @@ describe('LocationsListComponent', () => {
   });
 
   it('should sort by name', () => {
-    component.doSort('name');
+    component.onDoSort('name');
 
     expect(fetchSpy).toHaveBeenCalled();
     expect(fetchSpy).toHaveBeenCalledTimes(1);
