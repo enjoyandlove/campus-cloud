@@ -4,8 +4,11 @@ import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import { ISnackbar } from '@app/store';
 import { ICategory } from '../../model';
 import * as fromActions from '../actions';
+import { CPI18nService } from '@shared/services';
+import { baseActionClass } from '@app/store/base';
 import * as fromLocationStore from '../../../store';
 import { parseErrorResponse } from '@shared/utils/http';
 import { ILocation } from '@libs/locations/common/model';
@@ -16,8 +19,9 @@ import { coerceBooleanProperty } from '@shared/utils/coercion';
 export class CategoriesEffects {
   constructor(
     public actions$: Actions,
+    public cpI18n: CPI18nService,
     public service: CategoriesService,
-    public store: Store<fromLocationStore.ILocationsState>
+    public store: Store<fromLocationStore.ILocationsState | ISnackbar>
   ) {}
 
   @Effect()
@@ -75,7 +79,15 @@ export class CategoriesEffects {
       return this.service
         .createCategory(body, params)
         .pipe(
-          map((data: ICategory) => new fromActions.PostCategorySuccess(data)),
+          map((data: ICategory) => {
+            this.store.dispatch(
+              new baseActionClass.SnackbarSuccess({
+                body: this.cpI18n.translate('t_category_successfully_created')
+              })
+            );
+
+            return new fromActions.PostCategorySuccess(data);
+          }),
           catchError((error) => of(new fromActions.PostCategoryFail(error)))
         );
     })
@@ -91,7 +103,15 @@ export class CategoriesEffects {
       return this.service
         .updateCategory(body, categoryId, params)
         .pipe(
-          map((data: ICategory) => new fromActions.EditCategorySuccess(data)),
+          map((data: ICategory) => {
+            this.store.dispatch(
+              new baseActionClass.SnackbarSuccess({
+                body: this.cpI18n.translate('t_category_successfully_edited')
+              })
+            );
+
+            return new fromActions.EditCategorySuccess(data);
+          }),
           catchError((error) => of(new fromActions.EditCategoryFail(error)))
         );
     })
@@ -129,7 +149,15 @@ export class CategoriesEffects {
       return this.service
         .deleteCategoryById(categoryId, params)
         .pipe(
-          map(() => new fromActions.DeleteCategoriesSuccess({ deletedId: categoryId })),
+          map(() => {
+            this.store.dispatch(
+              new baseActionClass.SnackbarSuccess({
+                body: this.cpI18n.translate('t_category_successfully_deleted')
+              })
+            );
+
+            return new fromActions.DeleteCategoriesSuccess({ deletedId: categoryId });
+          }),
           catchError((error) => of(new fromActions.DeleteCategoriesFail(parseErrorResponse(error.error))))
         );
     })
