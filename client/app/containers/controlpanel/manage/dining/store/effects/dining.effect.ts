@@ -41,6 +41,21 @@ export class DiningEffect {
   );
 
   @Effect()
+  getFilteredDining$: Observable<fromActions.GetFilteredDiningSuccess | fromActions.GetFilteredDiningFail>
+    = this.actions$.pipe(
+    ofType(fromActions.diningActions.GET_FILTERED_DINING),
+    mergeMap((action: fromActions.GetFilteredDining) => {
+      const { startRange, endRange, params } = action.payload;
+
+      return this.service.getDining(startRange, endRange, params )
+        .pipe(
+          map((data: IDining[]) => new fromActions.GetFilteredDiningSuccess(data)),
+          catchError((error) => of(new fromActions.GetFilteredDiningFail(error)))
+        );
+    })
+  );
+
+  @Effect()
   getDiningById$: Observable<fromActions.GetDiningByIdSuccess | fromActions.GetDiningByIdFail>
     = this.actions$.pipe(
     ofType(fromActions.diningActions.GET_DINING_BY_ID),
@@ -77,6 +92,31 @@ export class DiningEffect {
             );
 
             return of(new fromActions.PostDiningFail(error));
+          })
+        );
+    })
+  );
+
+  @Effect()
+  editDining$: Observable<fromActions.EditDiningSuccess | fromActions.EditDiningFail>
+    = this.actions$.pipe(
+    ofType(fromActions.diningActions.EDIT_DINING),
+    mergeMap((action: fromActions.EditDining) => {
+      const { diningId, body, params } = action.payload;
+
+      return this.service
+        .updateDining(body, diningId, params)
+        .pipe(
+          map((data: IDining) => new fromActions.EditDiningSuccess(data)),
+          tap((_) => this.router.navigate([`/manage/dining/${diningId}/info`])),
+          catchError((error) => {
+            this.store.dispatch(
+              new baseActionClass.SnackbarError({
+                body: this.cpI18n.translate('something_went_wrong')
+              })
+            );
+
+            return of(new fromActions.EditDiningFail(error));
           })
         );
     })

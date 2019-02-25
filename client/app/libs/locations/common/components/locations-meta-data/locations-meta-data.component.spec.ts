@@ -36,12 +36,10 @@ describe('LocationsMetaDataComponent', () => {
     fixture = TestBed.createComponent(LocationsMetaDataComponent);
     component = fixture.componentInstance;
 
-    const locations = {
+    component.location = {
       ...mockLocations[0],
       links: mockLinks
     };
-
-    component.location = locations;
 
     de = fixture.debugElement;
 

@@ -12,9 +12,12 @@ import { CPTrackingService } from '@shared/services';
   styleUrls: ['./locations-list-top-bar.component.scss']
 })
 export class LocationsListTopBarComponent implements OnInit {
+  @Input() createLocationLabel: string;
   @Input() categories$: Observable<IItem[]>;
 
   @Output() search: EventEmitter<string> = new EventEmitter();
+  @Output() createClick: EventEmitter<null> = new EventEmitter();
+  @Output() categoriesClick: EventEmitter<null> = new EventEmitter();
   @Output() selectedCategory: EventEmitter<number> = new EventEmitter();
 
   eventData;

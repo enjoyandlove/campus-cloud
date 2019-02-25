@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { ILocation } from '@libs/locations/common/model';
+import { IDining, ILocation } from '@libs/locations/common/model';
 
 @Component({
   selector: 'cp-locations-meta-data',
@@ -8,5 +8,9 @@ import { ILocation } from '@libs/locations/common/model';
   styleUrls: ['./locations-meta-data.component.scss']
 })
 export class LocationsMetaDataComponent {
-  @Input() location: ILocation;
+  @Input() location: IDining | ILocation;
+
+  get hasNotes() {
+    return 'notes' in this.location && this.location.notes;
+  }
 }

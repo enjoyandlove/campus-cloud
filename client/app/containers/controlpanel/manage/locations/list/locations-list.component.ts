@@ -2,6 +2,7 @@ import { filter, takeUntil, map, tap, take } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -48,6 +49,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
   private destroy$ = new Subject();
 
   constructor(
+    public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public headerService: ManageHeaderService,
@@ -218,6 +220,14 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
         return super.updatePagination(responseCopy);
       })
     );
+  }
+
+  onCreateClick() {
+    this.router.navigate(['/manage/locations/create']);
+  }
+
+  onCategoriesClick() {
+    this.router.navigate(['/manage/locations/categories']);
   }
 
   ngOnInit() {

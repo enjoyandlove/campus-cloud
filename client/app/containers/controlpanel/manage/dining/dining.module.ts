@@ -9,8 +9,9 @@ import { reducers, effects } from './store';
 
 import { DiningExistGuard } from './guards';
 import { DiningListComponent } from './list';
-import { DiningCreateComponent } from './create';
 import { DiningInfoComponent } from './info';
+import { DiningEditComponent } from './edit';
+import { DiningCreateComponent } from './create';
 import { DiningDeleteComponent } from './delete';
 
 import { DiningService } from './dining.service';
@@ -25,6 +26,7 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
   declarations: [
     DiningListComponent,
     DiningInfoComponent,
+    DiningEditComponent,
     DiningCreateComponent,
     DiningDeleteComponent
   ],

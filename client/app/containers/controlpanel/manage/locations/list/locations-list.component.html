@@ -3,7 +3,10 @@
     <cp-locations-list-top-bar
       [categories$]="categories$"
       (search)="onSearch($event)"
-      (selectedCategory)="onCategorySelect($event)">
+      (createClick)="onCreateClick()"
+      (categoriesClick)="onCategoriesClick()"
+      (selectedCategory)="onCategorySelect($event)"
+      [createLocationLabel]="'locations_btn_create' | cpI18n">
     </cp-locations-list-top-bar>
   </div>
 </div>
