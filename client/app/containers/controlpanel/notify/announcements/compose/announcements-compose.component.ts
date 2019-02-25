@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { CPSession } from '@app/session';
 import { baseActions, IHeader } from '@app/store';
 import { canSchoolReadResource } from '@shared/utils';
+import { parseErrorResponse } from '@shared/utils/http';
 import { CustomTextValidators } from '@shared/validators';
 import { AnnouncementsService } from '../announcements.service';
 import { AudienceType } from '../../../audience/audience.status';
@@ -302,7 +303,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       .toPromise()
       .then(({ id }: any) => this.redirectToSaveTab({ id }))
       .catch((err) => {
-        const error = err.error.error;
+        const error = parseErrorResponse(err.error);
         const body =
           error === 'Database Error'
             ? this.cpI18n.translate('audience_create_error_duplicate_audience')

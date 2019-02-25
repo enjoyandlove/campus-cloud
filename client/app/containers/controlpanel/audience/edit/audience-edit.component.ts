@@ -12,12 +12,13 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '../../../../session';
-import { BaseComponent } from '../../../../base';
-import { ISnackbar } from '../../../../store/base';
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
+import { ISnackbar } from '@app/store/base';
 import { AudienceType } from './../audience.status';
 import { AudienceService } from '../audience.service';
-import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { parseErrorResponse } from '@shared/utils/http';
+import { CPI18nService } from '@app/shared/services/i18n.service';
 
 @Component({
   selector: 'cp-audience-edit',
@@ -70,7 +71,7 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
       },
       (err) => {
         this.isError = true;
-        const error = err.error.error;
+        const error = parseErrorResponse(err.error);
         if (error === 'Database Error') {
           this.errorMessage = this.cpI18n.translate('audience_create_error_duplicate_audience');
 
