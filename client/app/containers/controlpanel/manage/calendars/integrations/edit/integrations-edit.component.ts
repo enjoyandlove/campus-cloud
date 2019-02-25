@@ -30,7 +30,6 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
   constructor(
     public session: CPSession,
     private route: ActivatedRoute,
-    private utils: CommonIntegrationUtilsService,
     public store: Store<fromStore.IEventIntegrationState>
   ) {}
 
@@ -71,9 +70,9 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
 
     this.form.get('feed_obj_id').setValue(this.calendarId);
 
-    this.typesDropdown = this.utils
-      .typesDropdown()
-      .filter((type: IItem) => type.action === EventIntegration.types.ical);
+    this.typesDropdown = CommonIntegrationUtilsService.typesDropdown().filter(
+      (type: IItem) => type.action === EventIntegration.types.ical
+    );
   }
 
   ngOnDestroy() {

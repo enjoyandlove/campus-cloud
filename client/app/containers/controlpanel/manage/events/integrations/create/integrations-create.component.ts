@@ -27,11 +27,7 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
   selectedType: IItem | null;
   stores$: Observable<IStore[] | IItem[]>;
 
-  constructor(
-    public session: CPSession,
-    public utils: CommonIntegrationUtilsService,
-    public store: Store<fromStore.IEventIntegrationState>
-  ) {}
+  constructor(public session: CPSession, public store: Store<fromStore.IEventIntegrationState>) {}
 
   get defaultParams(): HttpParams {
     const school_id = this.session.g.get('school').id;
@@ -80,7 +76,7 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
       map((res) => (res.length ? res : [{ label: '---', action: null }]))
     );
 
-    this.typesDropdown = this.utils.typesDropdown();
+    this.typesDropdown = CommonIntegrationUtilsService.typesDropdown();
     this.selectedType = this.typesDropdown.find(
       (t) => t.action === this.form.get('feed_type').value
     );
