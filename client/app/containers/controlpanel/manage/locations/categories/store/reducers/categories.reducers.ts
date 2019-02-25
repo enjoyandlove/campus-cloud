@@ -95,8 +95,8 @@ export function reducer(state = initialState, action: fromLocations.Actions) {
         ...state,
         error: false,
         loading: false,
-        data: [newCategory, ...state.data],
-        filteredCategories: [newCategory, ...state.filteredCategories]
+        data: [...state.data, newCategory],
+        filteredCategories: [...state.filteredCategories, newCategory]
       };
     }
 
