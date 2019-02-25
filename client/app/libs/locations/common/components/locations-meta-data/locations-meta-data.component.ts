@@ -8,9 +8,9 @@ import { IDining, ILocation } from '@libs/locations/common/model';
   styleUrls: ['./locations-meta-data.component.scss']
 })
 export class LocationsMetaDataComponent {
-  @Input() dining: IDining | ILocation;
+  @Input() location: IDining | ILocation;
 
   get hasNotes() {
-    return 'notes' in this.dining;
+    return 'notes' in this.location && this.location.notes;
   }
 }
