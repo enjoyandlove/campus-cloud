@@ -10,8 +10,8 @@ import { CPI18nService } from '@shared/services';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
-import { mockLocations } from '@libs/locations/common/tests';
 import { DiningDeleteComponent } from './dining-delete.component';
+import { mockLocations as mockDining } from '@libs/locations/common/tests';
 
 describe('DiningDeleteComponent', () => {
   configureTestSuite();
@@ -37,7 +37,7 @@ describe('DiningDeleteComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DiningDeleteComponent);
     component = fixture.componentInstance;
-    component.dining = mockLocations[0];
+    component.dining = mockDining[0];
     component.session.g.set('school', mockSchool);
   });
 
@@ -57,7 +57,7 @@ describe('DiningDeleteComponent', () => {
     const expectedParams = new HttpParams().set('school_id', <any>mockSchool.id);
 
     expect(params).toEqual(expectedParams);
-    expect(diningId).toBe(mockLocations[0].id);
+    expect(diningId).toBe(mockDining[0].id);
     expect(type).toBe(fromStore.diningActions.DELETE_DINING);
   });
 });

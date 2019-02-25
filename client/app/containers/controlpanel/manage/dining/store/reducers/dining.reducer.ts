@@ -74,6 +74,31 @@ export function reducer(state = initialState, action: fromDining.DiningAction) {
       };
     }
 
+    case fromDining.diningActions.POST_DINING: {
+      return {
+        ...state,
+        error: false,
+        loading: true
+      };
+    }
+
+    case fromDining.diningActions.POST_DINING_SUCCESS: {
+      return diningAdaptor.addOne(action.payload, {
+        ...state,
+        error: false,
+        loading: false
+      });
+    }
+
+    case fromDining.diningActions.POST_DINING_FAIL: {
+      return {
+        ...state,
+        error: true,
+        loaded: true,
+        loading: false
+      };
+    }
+
     case fromDining.diningActions.DELETE_DINING: {
       return {
         ...state,

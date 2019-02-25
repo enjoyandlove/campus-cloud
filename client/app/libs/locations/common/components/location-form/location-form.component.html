@@ -169,4 +169,14 @@
         placeholder="http://www.example.com">
     </div>
   </div>
+
+  <div
+    class="form-group"
+    *ngIf="locationForm.get('notes')">
+    <label>{{ 't_dining_dietary_notes' | cpI18n }}</label>
+    <textarea
+      cpTarget="notes"
+      formControlName="notes">
+    </textarea>
+  </div>
 </form>

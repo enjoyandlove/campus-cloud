@@ -1,0 +1,146 @@
+import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
+import { Observable, of, Subject } from 'rxjs';
+import { FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+
+import * as fromStore from '../store';
+import * as fromRoot from '@app/store';
+import { IItem } from '@shared/components';
+import { baseActions } from '@app/store/base';
+import { CPSession, ISchool } from '@app/session';
+import { CPI18nService } from '@app/shared/services';
+import { LatLngValidators } from '@shared/validators';
+import { DiningModel } from '@libs/locations/common/model';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
+
+@Component({
+  selector: 'cp-dining-create',
+  templateUrl: './dining-create.component.html',
+  styleUrls: ['./dining-create.component.scss']
+})
+export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
+  school: ISchool;
+  formErrors: boolean;
+  openingHours = true;
+  errorMessage: string;
+  diningForm: FormGroup;
+  buttonDisabled = false;
+  categories$: Observable<IItem[]>;
+
+  private destroy$ = new Subject();
+
+  constructor(
+    public router: Router,
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    public latLng: LatLngValidators,
+    public store: Store<fromStore.IDiningState | fromRoot.IHeader>
+  ) {}
+
+  doSubmit() {
+    this.formErrors = false;
+    this.buttonDisabled = true;
+
+    if (this.diningForm.invalid) {
+      this.formErrors = true;
+      this.buttonDisabled = false;
+
+      this.handleWarning();
+
+      return;
+    }
+
+    const body = this.diningForm.value;
+    body['schedule'] = LocationsUtilsService.filteredScheduleControls(
+      this.diningForm,
+      this.openingHours
+    );
+
+    const params = new HttpParams().append('school_id', this.school.id.toString());
+
+    const payload = {
+      body,
+      params
+    };
+
+    this.store.dispatch(new fromStore.PostDining(payload));
+  }
+
+  buildHeader() {
+    const payload = {
+      heading: 't_dining_create_dining',
+      subheading: null,
+      em: null,
+      children: []
+    };
+
+    this.store.dispatch({
+      type: fromRoot.baseActions.HEADER_UPDATE,
+      payload
+    });
+  }
+
+  onCancel() {
+    this.store.dispatch(new fromStore.ResetError());
+    this.router.navigate(['/manage/dining']);
+  }
+
+  handleWarning() {
+    const options = {
+      class: 'warning',
+      body: this.cpI18n.translate('error_fill_out_marked_fields')
+    };
+
+    this.dispatchSnackBar(options);
+  }
+
+  dispatchSnackBar(options) {
+    this.store.dispatch({
+      type: baseActions.SNACKBAR_SHOW,
+      payload: {
+        ...options,
+        sticky: true,
+        autoClose: true
+      }
+    });
+  }
+
+  ngOnInit() {
+    this.buildHeader();
+    this.school = this.session.g.get('school');
+
+    this.diningForm = DiningModel.form();
+    LocationsUtilsService.setScheduleFormControls(this.diningForm);
+
+    // todo replace with actual
+    this.categories$ = of([
+      {
+        label: 'Select Category',
+        action: null
+      },
+      {
+        label: 'Dining',
+        action: 8
+      }
+    ]);
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+    this.destroy$.unsubscribe();
+  }
+
+  ngAfterViewInit() {
+    const lat = this.diningForm.get('latitude');
+    const lng = this.diningForm.get('longitude');
+
+    lat.setValue(this.school.latitude);
+    lng.setValue(this.school.longitude);
+
+    lat.setAsyncValidators([this.latLng.validateLatitude(lng)]);
+    lng.setAsyncValidators([this.latLng.validateLongitude(lat)]);
+  }
+}

@@ -42,6 +42,19 @@
           </a>
         </p>
       </div>
+
+      <div *ngIf="location.notes">
+        <p>
+          <strong>
+            {{ 't_dining_dietary_notes' | cpI18n }}
+          </strong>
+        </p>
+        <p
+          cpTarget="notes"
+          class="render_line_breaks">
+          {{ location.notes }}
+        </p>
+      </div>
     </cp-card>
   </div>
 </div>
