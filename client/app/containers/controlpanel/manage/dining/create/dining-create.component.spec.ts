@@ -14,7 +14,7 @@ import { configureTestSuite } from '@app/shared/tests';
 import { DiningCreateComponent } from './dining-create.component';
 import { emptyForm, filledForm, mockLinksData, mockScheduleData } from '@libs/locations/common/tests';
 
-describe('DiningCreateComponent', () => {
+fdescribe('DiningCreateComponent', () => {
   configureTestSuite();
 
   beforeAll((done) =>
@@ -55,7 +55,7 @@ describe('DiningCreateComponent', () => {
 
     const expected = {
       ...emptyForm,
-      links: mockLinksData(),
+      links: mockLinksData,
       schedule: mockScheduleData(),
       latitude: mockSchool.latitude,
       longitude: mockSchool.longitude
