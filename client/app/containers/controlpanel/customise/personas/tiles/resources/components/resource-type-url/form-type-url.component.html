@@ -1,6 +1,12 @@
 <div class="row">
   <div class="col-12">
-    <input type="text" [attr.value]="value" #inputEl>
-    <small class="text-muted" *ngIf="invalidInput">{{errorMessage}}</small>
+    <form [formGroup]="form">
+      <input formControlName="url" type="text">
+    </form>
+    <small
+      class="text-muted"
+      *ngIf="form.dirty && form.invalid">
+        {{'t_shared_invalid_url' | cpI18n}}
+    </small>
   </div>
 </div>

@@ -1,60 +1,41 @@
-import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
-import { fromEvent } from 'rxjs';
-import { map, takeWhile } from 'rxjs/operators';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { CPI18nService } from './../../../../../../../../shared/services/i18n.service';
+import { validUrl } from '@client/app/shared/utils/forms';
 
 @Component({
   selector: 'cp-personas-resource-type-url',
   templateUrl: './form-type-url.component.html',
   styleUrls: ['./form-type-url.component.scss']
 })
-export class PersonasResourceTypeUrlComponent implements OnInit, OnDestroy {
-  @Input() value: string;
+export class PersonasResourceTypeUrlComponent implements OnInit {
+  _value: string;
 
-  @ViewChild('inputEl') inputEl: ElementRef;
+  @Input()
+  set value(val: string) {
+    this._value = val;
+    if (this.form) {
+      this.form.get('url').setValue(this._value);
+    }
+  }
 
   @Output() valueChange: EventEmitter<string> = new EventEmitter();
 
   isAlive = true;
+  form: FormGroup;
   invalidInput = false;
   errorMessage: string;
 
-  constructor(public cpI18n: CPI18nService) {}
+  constructor(private fb: FormBuilder) {}
 
-  listenForInputChanges() {
-    const el = this.inputEl.nativeElement;
-    const stream$ = fromEvent(el, 'keyup');
-
-    stream$
-      .pipe(
-        takeWhile(() => this.isAlive),
-        map((event: any) => event.target.value),
-        map((input: string) => {
-          const validUrl = /^((http|https):\/\/)/;
-          this.invalidInput = !validUrl.test(input);
-
-          return this.invalidInput ? null : input;
-        })
-      )
-      .subscribe((input) => this.valueChange.emit(input));
-  }
-
-  ngOnDestroy() {
-    this.isAlive = false;
+  buildForm() {
+    this.form = this.fb.group({
+      url: [this._value, [Validators.required, Validators.pattern(validUrl)]]
+    });
   }
 
   ngOnInit(): void {
-    this.listenForInputChanges();
-    this.errorMessage = this.cpI18n.translate('t_shared_invalid_url');
+    this.buildForm();
+    this.form.valueChanges.subscribe(() => this.valueChange.emit(this.form.value.url));
   }
 }
