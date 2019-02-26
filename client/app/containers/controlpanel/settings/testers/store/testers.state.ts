@@ -1,10 +1,7 @@
 import { EntityState, Dictionary } from '@ngrx/entity';
-import { ActionReducerMap } from '@ngrx/store';
 
-import { ITestersState } from './testers.state';
-import * as testersReducer from './testers.reducers';
-import { ITestUser } from '../models/test-user.interface';
-import { SortDirection, SETTINGS_TESTERS } from '@shared/constants';
+import { SORT_DIRECTION } from '@shared/constants';
+import { ITestUser } from '@libs/testers/model/test-user.interface';
 
 export interface ITestersRange {
   start: number;
@@ -14,18 +11,14 @@ export interface ITestersRange {
 export interface ITestersState extends EntityState<ITestUser> {
   // search parameters
   range: ITestersRange;
-  sortDirection: SortDirection;
-  searchStr: string;
+  sort_direction: SORT_DIRECTION;
+  search_str: string;
 
   // entity
+  loaded: boolean;
   loading: boolean;
   entities: Dictionary<ITestUser>;
-}
 
-export interface ITestersFeature {
-  [SETTINGS_TESTERS]: ITestersState;
+  // error
+  error: string;
 }
-
-export const reducerMap: ActionReducerMap<ITestersFeature> = {
-  [SETTINGS_TESTERS]: testersReducer.reducer
-};

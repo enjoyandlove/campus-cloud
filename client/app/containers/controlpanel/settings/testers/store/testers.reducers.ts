@@ -1,59 +1,61 @@
 import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 import { ITestersState } from './testers.state';
-import { SortDirection } from '@shared/constants';
-import { ITestUser } from '../models/test-user.interface';
-import { TestersActionType, TestersActions } from './testers.actions';
+import { SORT_DIRECTION } from '@shared/constants';
+import { TestersAction, TestersActions } from './testers.actions';
+import { ITestUser } from '@libs/testers/model/test-user.interface';
 
 export const defaultState: ITestersState = {
   range: { start: 1, end: 101 },
-  sortDirection: SortDirection.ASC,
-  searchStr: null,
+  sort_direction: SORT_DIRECTION.ASC,
+  search_str: null,
+  loaded: false,
   loading: false,
   entities: {},
-  ids: []
+  ids: [],
+  error: null
 };
 
 export const testersAdapter: EntityAdapter<ITestUser> = createEntityAdapter<ITestUser>();
 export const initialState: ITestersState = testersAdapter.getInitialState(defaultState);
 
-export function reducer(state = initialState, action: TestersActionType) {
+export function reducer(state = initialState, action: TestersAction) {
   switch (action.type) {
     case TestersActions.SET_RANGE:
-      const range = action.payload;
       return {
         ...state,
-        range
+        range: action.payload
       };
     case TestersActions.SET_SORT:
-      const sortDirection = action.payload;
       return {
         ...state,
-        sortDirection
+        sort_direction: action.payload
       };
     case TestersActions.SET_SEARCH:
-      const searchStr = action.payload;
       return {
         ...state,
-        searchStr
+        search_str: action.payload
       };
     case TestersActions.LOAD:
       return {
         ...state,
+        loaded: false,
         loading: true
       };
     case TestersActions.LOAD_OK:
       return testersAdapter.addAll(action.payload, {
         ...state,
+        loaded: true,
         loading: false
       });
     case TestersActions.LOAD_FAIL:
-      return testersAdapter.removeAll({
+      const error = action.payload.message;
+      return {
         ...state,
-        loading: false
-      });
-    default:
-      return state;
+        loaded: false,
+        loading: false,
+        error
+      };
   }
 }
 

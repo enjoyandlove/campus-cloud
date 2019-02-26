@@ -1,8 +1,9 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
 import { ITestersRange } from './testers.state';
-import { SortDirection } from '@shared/constants';
-import { ITestUser } from '../models/test-user.interface';
+import { SORT_DIRECTION } from '@shared/constants';
+import { ITestUser } from '@libs/testers/model/test-user.interface';
 
 export enum TestersActions {
   SET_RANGE = '[settings.testers] set range',
@@ -20,7 +21,7 @@ export class SetTestersRange implements Action {
 
 export class SetTestersSort implements Action {
   readonly type = TestersActions.SET_SORT;
-  constructor(public payload: SortDirection) {}
+  constructor(public payload: SORT_DIRECTION) {}
 }
 
 export class SetTestersSearch implements Action {
@@ -39,9 +40,10 @@ export class LoadTestersOK implements Action {
 
 export class LoadTestersFail implements Action {
   readonly type = TestersActions.LOAD_FAIL;
+  constructor(public payload: HttpErrorResponse) {}
 }
 
-export type TestersActionType =
+export type TestersAction =
   | SetTestersRange
   | SetTestersSort
   | SetTestersSearch
