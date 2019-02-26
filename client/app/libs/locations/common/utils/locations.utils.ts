@@ -140,7 +140,7 @@ export class LocationsUtilsService {
       },
       {
         value: 25200,
-        label: '7:70 AM'
+        label: '7:00 AM'
       },
       {
         value: 27000,
