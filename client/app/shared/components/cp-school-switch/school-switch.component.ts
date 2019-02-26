@@ -20,6 +20,7 @@ export class SchoolSwitchComponent implements OnInit {
   isSchoolPanel;
   canManageAdmins;
   amplitudeEvents;
+  canManageTestUsers;
   selectedSchool: ISchool;
   schools: Array<ISchool> = [];
   defaultImage = `${environment.root}public/default/user.png`;
@@ -60,16 +61,23 @@ export class SchoolSwitchComponent implements OnInit {
 
     const user: IUser = this.session.g.get('user');
 
-    let schoolPrivileges = user.school_level_privileges[this.session.g.get('school').id];
+    let schoolPrivileges = user.school_level_privileges[this.selectedSchool.id];
+    const clientPrivileges = user.client_level_privileges[this.selectedSchool.client_id];
 
     this.canManageAdmins = false;
+    this.canManageTestUsers = false;
 
     if (schoolPrivileges) {
       const manage_admin = schoolPrivileges[CP_PRIVILEGES_MAP.manage_admin];
 
-      schoolPrivileges = user.school_level_privileges[this.session.g.get('school').id];
+      schoolPrivileges = user.school_level_privileges[this.selectedSchool.id];
 
       this.canManageAdmins = manage_admin ? manage_admin : false;
+    }
+
+    if (clientPrivileges) {
+      this.canManageTestUsers =
+        clientPrivileges[CP_PRIVILEGES_MAP.test_users] && this.selectedSchool.is_sandbox;
     }
 
     this.amplitudeEvents = {

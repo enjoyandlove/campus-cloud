@@ -16,4 +16,6 @@ export interface ISchool {
   short_name: string;
   wall_unlock_num: number;
   wall_unlocked: boolean;
+  client_id: number;
+  is_sandbox: boolean;
 }
