@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
@@ -85,5 +86,13 @@ export class CPSession {
 
   get hasGuideCustomization() {
     return _get(this.g.get('school'), 'has_guide_customization', false);
+  }
+
+  addSchoolId(search: HttpParams): HttpParams {
+    if (search) {
+      const schoolId = this.g.get('school').id.toString();
+      search = search.append('school_id', schoolId);
+    }
+    return search;
   }
 }

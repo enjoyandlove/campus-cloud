@@ -39,6 +39,12 @@ export class ServicesService extends HTTPService {
     return super.get(url, dates);
   }
 
+  getServiceAttendanceSummary(serviceId: number, search: HttpParams) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
+
+    return super.get(url, search);
+  }
+
   deleteService(serviceId: number) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
 

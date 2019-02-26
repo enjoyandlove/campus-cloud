@@ -2,15 +2,16 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '../../../../session';
+import { CPSession } from '@app/session';
 import { AudienceType } from './../audience.status';
 import { AudienceService } from '../audience.service';
-import { BaseComponent } from '../../../../base/base.component';
-import { ISnackbar, baseActions } from '../../../../store/base';
-import { CP_TRACK_TO } from '../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../shared/constants/analytics';
-import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
-import { CPI18nService, CPTrackingService } from '../../../../shared/services';
+import { BaseComponent } from '@app/base/base.component';
+import { ISnackbar, baseActions } from '@app/store/base';
+import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { createSpreadSheet } from '@shared/utils/csv/parser';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { AudienceUtilsService } from '../audience.utils.service';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 
 interface IState {
   audiences: Array<any>;
@@ -50,7 +51,8 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
     private service: AudienceService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    private audienceUtils: AudienceUtilsService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -98,6 +100,8 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
         body: this.cpI18n.translate('audience_import_success_message')
       }
     });
+
+    this.trackImportAudience();
   }
 
   onFilterByListType(list_type) {
@@ -186,8 +190,22 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     this.isAudienceCreate = false;
   }
 
-  onCreatedAudience() {
+  onCreatedAudience(audience) {
     this.fetch();
+    this.trackCreateAudience(audience);
+  }
+
+  trackCreateAudience(audience) {
+    let eventProperties = this.audienceUtils.getAmplitudeEvent(audience, true);
+    eventProperties = { ...eventProperties, menu_name: amplitudeEvents.MENU_AUDIENCE };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CREATED_AUDIENCE, eventProperties);
+  }
+
+  trackImportAudience() {
+    const eventProperties = { menu_name: amplitudeEvents.MENU_AUDIENCE };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_IMPORTED_AUDIENCE, eventProperties);
   }
 
   onLaunchCreateModal(users?: Array<any>) {

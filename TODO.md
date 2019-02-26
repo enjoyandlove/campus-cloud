@@ -51,3 +51,12 @@
   * [ ] EventAttendanceComponent
   * [ ] ClubsMembersComponent
   * [ ] DashboardTopResourceTitleComponent
+
+* Fix module imports to not interfere with routes based on import order
+  This applies to any module that has routes imported.  Sometimes we need to import a module to reference its components/services and we also import the routes.  If we import this additional module before the routing module, the new module's routes take precedence:
+
+  Inside ModuleA
+    > imports: [\
+    >   ModuleB, // here ModuleB's routes get imported first\
+    >   ModuleARouting\
+    > ]

@@ -1,31 +1,29 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { get as _get } from 'lodash';
 
+import { DEFAULT } from '@shared/constants';
+import { RouteLevel } from '@shared/services';
 import { IService } from '../../../service.interface';
+import { BaseComponent } from '@app/base/base.component';
 import IServiceProvider from '../../../providers.interface';
+import { CPI18nService } from '@shared/services/i18n.service';
+import { amplitudeEvents } from '@shared/constants/analytics';
 import { ProvidersService } from '../../../providers.service';
-import { RouteLevel } from '../../../../../../../shared/services';
+import { CPTrackingService } from '@shared/services/tracking.service';
 import { ServicesUtilsService } from '../../../services.utils.service';
-import { BaseComponent } from '../../../../../../../base/base.component';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { CPTrackingService } from './../../../../../../../shared/services/tracking.service';
-import { CP_TRACK_TO } from './../../../../../../../shared/directives/tracking/tracking.directive';
+import { CP_TRACK_TO } from '@shared/directives/tracking/tracking.directive';
+import { IFilterState, ProvidersUtilsService } from '../../../providers.utils.service';
+import { AMPLITUDE_INTERVAL_MAP } from '@containers/controlpanel/assess/engagement/engagement.utils.service';
 
 interface IState {
-  end: string;
-  start: string;
-  search_text: string;
-  providers: Array<any>;
+  providers: Array<IServiceProvider>;
   sort_field: string;
   sort_direction: string;
 }
 
 const state: IState = {
-  end: null,
-  start: null,
   providers: [],
-  search_text: null,
   sort_direction: 'asc',
   sort_field: 'provider_name'
 };
@@ -37,6 +35,16 @@ const state: IState = {
 })
 export class ServicesProvidersListComponent extends BaseComponent implements OnInit {
   @Input() service: IService;
+
+  _filterState;
+  get filterState(): IFilterState {
+    return this._filterState;
+  }
+  @Input('filterState')
+  set filterState(value: IFilterState) {
+    this._filterState = value;
+    this.fetch();
+  }
 
   @Output() hasProviders: EventEmitter<boolean> = new EventEmitter();
 
@@ -56,7 +64,8 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     private cpI18n: CPI18nService,
     private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
-    public providersService: ProvidersService
+    public providersService: ProvidersService,
+    private providerUtils: ProvidersUtilsService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -81,33 +90,13 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.fetch();
   }
 
-  doSearch(search_text) {
-    this.state = {
-      ...this.state,
-      search_text
-    };
-
-    this.fetch();
-  }
-
-  doDateFilter(dateRange) {
-    this.state = {
-      ...this.state,
-      end: dateRange.end,
-      start: dateRange.start
-    };
-
-    this.fetch();
-  }
-
   fetch(setHasRecords = false) {
-    const search = new HttpParams()
-      .append('end', this.state.end)
-      .append('start', this.state.start)
-      .append('search_text', this.state.search_text)
+    let search = new HttpParams()
       .append('service_id', this.service.id.toString())
       .append('sort_field', this.state.sort_field)
       .append('sort_direction', this.state.sort_direction);
+
+    search = this.providerUtils.addSearchParams(search, this.filterState);
 
     super
       .fetchData(this.providersService.getProviders(this.startRange, this.endRange, search))
@@ -160,11 +149,9 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   }
 
   downloadProvidersCSV() {
-    const search = new HttpParams()
-      .append('end', this.state.end)
-      .append('start', this.state.start)
-      .append('service_id', this.service.id.toString())
-      .append('all', '1');
+    let search = new HttpParams().append('service_id', this.service.id.toString());
+
+    search = this.providerUtils.addSearchParams(search, this.filterState);
 
     const stream$ = this.providersService.getProviderAssessments(
       this.startRange,
@@ -179,7 +166,18 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   }
 
   trackDownloadProviders() {
+    const filter_type = _get(
+      this.filterState,
+      ['studentFilter', 'cohort_type'],
+      amplitudeEvents.ALL_STUDENTS
+    );
+
+    const dateType = _get(this.filterState, ['dateRange', 'route_id'], DEFAULT);
+    const interval = AMPLITUDE_INTERVAL_MAP[dateType];
+
     const eventProperties = {
+      interval,
+      filter_type,
       provider_type: amplitudeEvents.ALL_PROVIDERS,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
     };

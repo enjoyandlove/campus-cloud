@@ -1,4 +1,8 @@
+import { HttpParams } from '@angular/common/http';
+import { of } from 'rxjs';
+
 import IServiceProvider from '../../providers.interface';
+import { IFilterState } from '../../providers.utils.service';
 
 export const mockProvider: IServiceProvider = {
   avg_rating_percent: 83,
@@ -19,3 +23,20 @@ export const mockProvider: IServiceProvider = {
   total_visits: 32,
   unique_visits: 8
 };
+
+export const mockFilter: IFilterState = {
+  dateRange: { start: 1500000000, end: 1600000000, label: null },
+  searchText: 'search',
+  studentFilter: {
+    route_id: 'test_persona',
+    label: 'test persona',
+    listId: 12345,
+    cohort_type: 'Experience'
+  }
+};
+
+export class MockProvidersService {
+  getProviderByProviderId(serviceId, search: HttpParams) {
+    return of({ serviceId, search });
+  }
+}

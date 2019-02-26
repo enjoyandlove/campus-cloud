@@ -73,7 +73,7 @@ export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
     };
 
     if (this.locale === 'fr-CA') {
-      this.flatPicker.localize(French.fr);
+      this.flatPicker.localize(French);
     }
 
     this.el = $(host).flatpickr(this.options);

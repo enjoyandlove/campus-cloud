@@ -75,7 +75,7 @@ export class CPSmallDatePickerComponent implements AfterViewInit, OnInit, OnChan
     });
 
     if (this.locale === 'fr-CA') {
-      this.options = { ...this.options, locale: French.fr };
+      this.options = { ...this.options, locale: French };
     }
 
     this.flatPickerInstance = $(el).flatpickr(this.options);

@@ -7,7 +7,6 @@ import { CPDate } from '../../../../../../shared/utils';
 import { JobsUtilsService } from '../../jobs.utils.service';
 
 const COMMON_DATE_PICKER_OPTIONS = {
-  utc: true,
   enableTime: false
 };
 

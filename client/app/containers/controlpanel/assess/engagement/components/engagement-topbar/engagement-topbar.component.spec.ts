@@ -1,12 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
-import { CPSession } from './../../../../../../session';
-import { mockSchool } from './../../../../../../session/mock/school';
-import { mockUser } from './../../../../../../session/mock/user';
+
+import { CPSession } from '@app/session';
+import { CPI18nService } from '@shared/services';
+import { mockUser } from '@app/session/mock/user';
+import { mockSchool } from '@app/session/mock/school';
+import { EngagementService } from '../../engagement.service';
 import { EngagementUtilsService } from './../../engagement.utils.service';
 import { EngagementTopBarComponent } from './engagement-topbar.component';
-import { CPI18nService } from '../../../../../../shared/services';
 
 class MockActivatedRoute {
   data = {
@@ -36,8 +40,10 @@ describe('EngagementTopBarComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [EngagementTopBarComponent],
+      imports: [HttpClientModule, RouterTestingModule],
       providers: [
         CPI18nService,
+        EngagementService,
         EngagementUtilsService,
         { provide: CPSession, useClass: MockSession },
         { provide: ActivatedRoute, useClass: MockActivatedRoute }

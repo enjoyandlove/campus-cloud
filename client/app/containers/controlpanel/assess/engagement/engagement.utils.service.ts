@@ -1,22 +1,52 @@
+import { HttpParams } from '@angular/common/http';
+import { map, startWith } from 'rxjs/operators';
+import { forkJoin, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 
-import {
-  now,
-  lastYear,
-  last30Days,
-  last90Days
-} from '../../../../shared/components/cp-range-picker/cp-range-picker.utils.service';
-
-import { CPSession } from '../../../../session';
-import { CPI18nService } from '../../../../shared/services';
-import { AssessType, FilterType } from './engagement.status';
+import { CPSession } from '@app/session';
+import { DEFAULT } from '@shared/constants';
+import { CPI18nService } from '@shared/services';
+import { EngagementService } from './engagement.service';
 import { AudienceType } from '../../audience/audience.status';
-import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import * as DATE_RANGE from '@shared/components/cp-range-picker';
+import { AssessType, FilterType, PersonaType } from './engagement.status';
+
+export interface IStudentFilter {
+  label: string;
+  route_id: string;
+  cohort_type: string;
+  listId?: number;
+  personaId?: number;
+}
+
+export interface IDateFilter {
+  route_id: string;
+  label: string;
+  payload: {
+    metric: string;
+    range: {
+      end: number;
+      start: number;
+    };
+  };
+}
+
+export const AMPLITUDE_INTERVAL_MAP = {
+  last_30_days: amplitudeEvents.LAST_30_DAYS,
+  last_90_days: amplitudeEvents.LAST_90_DAYS,
+  last_year: amplitudeEvents.LAST_YEAR,
+  [DEFAULT]: amplitudeEvents.CUSTOM
+};
 
 @Injectable()
 export class EngagementUtilsService {
-  constructor(public session: CPSession, public cpI18n: CPI18nService) {}
+  constructor(
+    public session: CPSession,
+    public cpI18n: CPI18nService,
+    private engageService: EngagementService
+  ) {}
 
   getFromArray(arr: Array<any>, key: string, val: number) {
     return arr.filter((item) => item[key] === val)[0];
@@ -135,7 +165,7 @@ export class EngagementUtilsService {
     return _persona;
   }
 
-  dateFilter() {
+  dateFilter(): IDateFilter[] {
     const todayDate = moment().endOf('day');
 
     return [
@@ -145,8 +175,8 @@ export class EngagementUtilsService {
         payload: {
           metric: 'weekly',
           range: {
-            end: now(this.session.tz),
-            start: last30Days(this.session.tz, todayDate)
+            end: DATE_RANGE.now(this.session.tz),
+            start: DATE_RANGE.last30Days(this.session.tz, todayDate)
           }
         }
       },
@@ -156,8 +186,8 @@ export class EngagementUtilsService {
         payload: {
           metric: 'monthly',
           range: {
-            end: now(this.session.tz),
-            start: last90Days(this.session.tz, todayDate)
+            end: DATE_RANGE.now(this.session.tz),
+            start: DATE_RANGE.last90Days(this.session.tz, todayDate)
           }
         }
       },
@@ -167,8 +197,8 @@ export class EngagementUtilsService {
         payload: {
           metric: 'monthly',
           range: {
-            end: now(this.session.tz),
-            start: lastYear(this.session.tz, todayDate)
+            end: DATE_RANGE.now(this.session.tz),
+            start: DATE_RANGE.lastYear(this.session.tz, todayDate)
           }
         }
       }
@@ -224,6 +254,25 @@ export class EngagementUtilsService {
         listId: null
       }
     ];
+  }
+
+  getStudentFilter(): Observable<any[]> {
+    const schoolSearch = this.session.addSchoolId(new HttpParams());
+    const personaSearch = schoolSearch.set('platform', PersonaType.app.toString());
+    const audienceSearch = schoolSearch;
+    return forkJoin(
+      this.engageService.getPersona(undefined, undefined, personaSearch),
+      this.engageService.getLists(undefined, undefined, audienceSearch)
+    ).pipe(
+      map((res) => {
+        return [
+          ...this.commonStudentFilter(),
+          ...this.parsedPersona(res[0]),
+          ...this.parsedAudiences(res[1])
+        ];
+      }),
+      startWith(this.commonStudentFilter())
+    );
   }
 
   resourceSortingFilter() {

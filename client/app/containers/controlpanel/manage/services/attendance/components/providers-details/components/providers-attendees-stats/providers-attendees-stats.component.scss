@@ -3,15 +3,15 @@
 @import '~client/style/components/button';
 
 .rating-box {
-  height: 129px;
+  height: 153px;
 
   &__star {
     display: block;
-    padding-top: 12px;
+    padding-top: 8px;
   }
 
   p {
-    padding-top: 10px;
+    padding-top: 18px;
     margin-bottom: 0;
   }
 }
