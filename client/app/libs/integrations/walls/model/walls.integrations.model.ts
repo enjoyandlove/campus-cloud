@@ -1,7 +1,6 @@
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { FeedIntegration } from '../../common/model';
-import { validUrl } from '@shared/utils/forms/patterns';
 import { CustomTextValidators } from '@shared/validators';
 import { IWallsIntegration } from './walls.integrations.interface';
 
@@ -30,7 +29,6 @@ export class WallsIntegrationModel extends FeedIntegration {
         Validators.compose([
           Validators.required,
           Validators.maxLength(1024),
-          Validators.pattern(validUrl),
           CustomTextValidators.requiredNonEmpty
         ])
       ],
