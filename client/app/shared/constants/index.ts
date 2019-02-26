@@ -1,4 +1,4 @@
-export * from './store';
+export * from './enums';
 export * from './flags';
 export * from './google';
 export * from './params';
