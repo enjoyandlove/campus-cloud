@@ -200,7 +200,6 @@ export class ListActionBoxComponent implements OnInit {
     this.eventFilter = DATE_FILTER;
 
     this.dateFilterOpts = {
-      utc: true,
       inline: true,
       mode: 'range',
       minDate: CPDate.now(this.session.tz).format(),

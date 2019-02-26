@@ -5,15 +5,17 @@
     <cp-providers-attendees-action-box
       [provider]="provider"
       [updateQrCode]="updateQrCode"
-      [noAttendees]="providerAttendees.hasAttendees"
+      [hasAttendees]="providerAttendees.hasAttendees"
       (download)="onDownload()"
       (search)="onSearch($event)"
       (addCheckIn)="onAddCheckIn()"
       (onToggleQr)="onToggleQr($event)"
-      (filterByDates)="onDateFilter($event)">
+      (filterByDates)="onDateFilter($event)"
+      (updateStudentFilter)="onStudentFilter($event)">
     </cp-providers-attendees-action-box>
     
     <cp-providers-attendees-stats
+      *ngIf="!state.searchText"
       [provider]="provider"
       [eventRating]="eventRating">
     </cp-providers-attendees-stats>
@@ -24,6 +26,7 @@
           #providerAttendees
           [service]="service"
           [provider]="provider"
+          [filterState]="state"
           [serviceId]="serviceId"
           [providerId]="providerId">
         </cp-providers-attendees-list>

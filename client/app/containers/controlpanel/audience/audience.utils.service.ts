@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
-import { CPI18nService } from '../../../shared/services';
+import { CPI18nService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants';
 
 @Injectable()
 export class AudienceUtilsService {
@@ -63,5 +64,20 @@ export class AudienceUtilsService {
 
   getLocalizedLabel(label) {
     return CPI18nService.getLocale().startsWith('fr') ? label.fr : label.en;
+  }
+
+  getAmplitudeEvent(audience, filterCount = false) {
+    let eventProperties: any = {
+      audience_type: audience.filters
+        ? amplitudeEvents.DYNAMIC_AUDIENCE
+        : amplitudeEvents.CUSTOM_AUDIENCE
+    };
+    if (filterCount && audience.filters) {
+      eventProperties = {
+        ...eventProperties,
+        filter_count: audience.filters.length
+      };
+    }
+    return eventProperties;
   }
 }

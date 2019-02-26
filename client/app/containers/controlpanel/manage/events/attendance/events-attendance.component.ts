@@ -2,37 +2,38 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs/index';
+import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
+import { FORMAT } from '@shared/pipes';
 import IEvent from '../event.interface';
+import { CPSession, IUser } from '@app/session';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
-import { FORMAT } from '../../../../../shared/pipes';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { IHeader, baseActions } from '@app/store/base';
 import { ICheckIn } from './check-in/check-in.interface';
 import { EventUtilService } from './../events.utils.service';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { environment } from '@client/environments/environment';
 import { EventsComponent } from '../list/base/events.component';
-import { IHeader, baseActions } from '../../../../../store/base';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { environment } from './../../../../../../environments/environment';
 import { CheckInMethod, CheckInOutTime, CheckInOut } from '../event.status';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
-import {
-  canSchoolReadResource,
-  canSchoolWriteResource
-} from '../../../../../shared/utils/privileges/privileges';
+import { CPI18nService, CPTrackingService, RouteLevel } from '@shared/services';
+import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
+import { canSchoolReadResource, canSchoolWriteResource } from '@shared/utils/privileges/privileges';
 
 interface IState {
   sort_field: string;
   sort_direction: string;
   search_text: string;
+  student_filter: IStudentFilter;
 }
 
 const state = {
   sort_field: 'firstname',
   sort_direction: 'asc',
-  search_text: null
+  search_text: null,
+  student_filter: null
 };
 
 @Component({
@@ -62,6 +63,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   eventId: number;
   allStudents = false;
   state: IState = state;
+  summaryLoading = false;
   checkInEventProperties;
   attendeesLoading = true;
   downloadEventProperties;
@@ -104,8 +106,8 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
 
     if (this.orientationId) {
       search = search
-        .append('school_id', this.session.g.get('school').id)
-        .append('calendar_id', this.orientationId.toString());
+        .set('school_id', this.session.g.get('school').id)
+        .set('calendar_id', this.orientationId.toString());
     }
 
     super.fetchData(this.service.getEventById(this.eventId, search)).then((event) => {
@@ -116,6 +118,13 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
       this.setCheckInEventProperties();
       this.updateQrCode.next(this.event.attend_verification_methods);
     });
+  }
+
+  updateAssessment() {
+    this.fetchAttendees();
+    if (!this.state.search_text) {
+      this.fetchAttendanceSummary();
+    }
   }
 
   public buildHeader(event) {
@@ -141,33 +150,59 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   }
 
   fetchAttendees() {
+    const search = this.getAttendeesSearch();
+
+    this.attendeesLoading = true;
+    this.service
+      .getEventAttendanceByEventId(this.startRange, this.endRange, search)
+      .subscribe((res: IUser[]) => {
+        this.attendeesLoading = false;
+        this.attendees = res;
+        this.totalAttendees.next(res);
+      });
+  }
+
+  fetchAttendanceSummary() {
+    let search = new HttpParams();
+
+    search = this.addStudentFilter(search);
+
+    this.summaryLoading = true;
+    this.service.getEventAttendanceSummary(this.eventId, search).subscribe((res) => {
+      this.summaryLoading = false;
+      this.event = { ...this.event, ...res };
+    });
+  }
+
+  getAttendeesSearch() {
     let search = new HttpParams();
 
     search = search
-      .append('event_id', this.event.id)
-      .append('sort_field', this.state.sort_field)
-      .append('search_text', this.state.search_text)
-      .append('sort_direction', this.state.sort_direction);
+      .set('event_id', this.event.id)
+      .set('sort_field', this.state.sort_field)
+      .set('search_text', this.state.search_text)
+      .set('sort_direction', this.state.sort_direction);
 
     if (this.orientationId) {
       search = search
-        .append('school_id', this.session.g.get('school').id)
-        .append('calendar_id', this.orientationId.toString());
+        .set('school_id', this.session.g.get('school').id)
+        .set('calendar_id', this.orientationId.toString());
     }
 
-    const stream$ = this.service.getEventAttendanceByEventId(
-      this.startRange,
-      this.endRange,
-      search
-    );
+    search = this.addStudentFilter(search);
 
-    super
-      .fetchData(stream$)
-      .then((res) => {
-        this.attendees = res.data;
-        this.totalAttendees.next(res.data);
-      })
-      .catch((_) => {});
+    return search;
+  }
+
+  addStudentFilter(search: HttpParams) {
+    if (search && this.state.student_filter) {
+      if (this.state.student_filter.listId) {
+        search = search.set('user_list_id', this.state.student_filter.listId.toString());
+      } else if (this.state.student_filter.personaId) {
+        search = search.set('persona_id', this.state.student_filter.personaId.toString());
+      }
+    }
+    return search;
   }
 
   onPaginationNext() {
@@ -194,21 +229,20 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
 
   doSearch(search_text): void {
     search_text = search_text === '' ? null : search_text;
-    this.state = Object.assign({}, this.state, { search_text });
-
+    this.state = { ...this.state, search_text };
     this.resetPagination();
+    this.updateAssessment();
+  }
 
-    this.fetchAttendees();
+  onStudentFilter(filter: IStudentFilter) {
+    this.state.student_filter = { ...filter };
+    this.resetPagination();
+    this.updateAssessment();
   }
 
   onCreateExcel() {
-    let search = new HttpParams().append('event_id', this.event.id).append('all', '1');
+    const search = this.getAttendeesSearch();
 
-    if (this.isOrientation) {
-      search = search
-        .append('school_id', this.session.g.get('school').id)
-        .append('calendar_id', this.orientationId.toString());
-    }
     const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,
       this.endRange,
@@ -221,12 +255,24 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   }
 
   trackAmplitudeEvent() {
-    const check_out_status = this.event.has_checkout
+    const assessment_status = this.event.has_checkout
+      ? amplitudeEvents.CHECKIN_AND_CHECKOUT
+      : amplitudeEvents.CHECKIN_ONLY;
+
+    const feedback_status = this.event.event_feedback
       ? amplitudeEvents.ENABLED
       : amplitudeEvents.DISABLED;
 
+    const filter_type = _get(
+      this.state,
+      ['student_filter', 'cohort_type'],
+      amplitudeEvents.ALL_STUDENTS
+    );
+
     this.downloadEventProperties = {
-      check_out_status,
+      filter_type,
+      feedback_status,
+      assessment_status,
       source_id: this.event.encrypted_id,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
       assessment_type: this.utils.getEventCategoryType(this.event.store_category)
@@ -417,8 +463,8 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     let search = new HttpParams();
     if (this.orientationId) {
       search = search
-        .append('school_id', this.session.g.get('school').id)
-        .append('calendar_id', this.orientationId.toString());
+        .set('school_id', this.session.g.get('school').id)
+        .set('calendar_id', this.orientationId.toString());
     }
 
     this.service.updateEvent(data, this.eventId, search).subscribe(

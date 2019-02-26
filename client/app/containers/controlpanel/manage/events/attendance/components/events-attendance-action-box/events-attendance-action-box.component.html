@@ -3,6 +3,13 @@
     <div class="col-3">
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
+    <div class="col-3">
+      <cp-dropdown
+        class="topbar--dropdown"
+        [items]="studentFilter$ | async"
+        (selected)="onStudentFilter($event)">
+      </cp-dropdown>
+    </div>
     <div class="col text-right">
       <button
         *ngIf="canDownload"

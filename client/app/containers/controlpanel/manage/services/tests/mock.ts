@@ -1,4 +1,5 @@
 import { IService } from '../service.interface';
+import { of } from 'rxjs';
 
 export const mockService: IService = {
   address: '',
@@ -35,3 +36,13 @@ export const mockService: IService = {
   unique_visits: 12,
   website: 'www.google.com'
 };
+
+export class MockServicesService {
+  getServiceById(serviceId, start, end) {
+    return of({ serviceId, start, end });
+  }
+
+  getServiceAttendanceSummary(serviceId, search) {
+    return of({ serviceId, search });
+  }
+}

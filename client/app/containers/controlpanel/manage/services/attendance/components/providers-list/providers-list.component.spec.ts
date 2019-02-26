@@ -3,15 +3,18 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of as observableOf } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 
-import { CPSession } from '../../../../../../../session';
+import { CPSession } from '@app/session';
+import { mockFilter } from '../../tests/mock';
+import { CPI18nService } from '@shared/services';
+import { configureTestSuite } from '@shared/tests';
+import mockSession from '@app/session/mock/session';
+import { baseReducers } from '@app/store/base/reducers';
 import { ServicesModule } from '../../../services.module';
 import { ProvidersService } from '../../../providers.service';
-import { CPI18nService } from '../../../../../../../shared/services';
-import { configureTestSuite } from '../../../../../../../shared/tests';
+import { CPTrackingService } from '@shared/services/tracking.service';
 import { ServicesUtilsService } from '../../../services.utils.service';
-import { baseReducers } from '../../../../../../../store/base/reducers';
+import { ProvidersUtilsService } from '../../../providers.utils.service';
 import { ServicesProvidersListComponent } from './providers-list.component';
-import { CPTrackingService } from '../../../../../../../shared/services/tracking.service';
 
 class MockService {
   dummy;
@@ -66,10 +69,11 @@ describe('ProvidersListComponent', () => {
           })
         ],
         providers: [
-          CPSession,
           CPI18nService,
           CPTrackingService,
           ServicesUtilsService,
+          ProvidersUtilsService,
+          { provide: CPSession, useValue: mockSession },
           { provide: ProvidersService, useClass: MockService }
         ]
       });
@@ -116,28 +120,11 @@ describe('ProvidersListComponent', () => {
     expect(component.state.sort_field).toEqual('provider_name');
   });
 
-  it('should search string', () => {
-    component.doSearch('hello world');
+  it('should search on filter change', () => {
+    component.filterState = mockFilter;
 
     expect(spy).toHaveBeenCalled();
     expect(spy).toHaveBeenCalledTimes(1);
-
-    expect(component.state.search_text).toEqual('hello world');
-  });
-
-  it('should filter on date selection', () => {
-    const dateRange = {
-      start: '1540899640',
-      end: '1540899650'
-    };
-
-    component.doDateFilter(dateRange);
-
-    expect(spy).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalledTimes(1);
-
-    expect(component.state.end).toEqual(dateRange.end);
-    expect(component.state.start).toEqual(dateRange.start);
   });
 
   it('should delete record', () => {

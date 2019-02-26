@@ -5,23 +5,23 @@
         <div class="col-3">
           <cp-searchbox (query)=onSearch($event)></cp-searchbox>
         </div>
-        <div class="col-4">
+        <div class="col-3">
+          <cp-dropdown
+            class="topbar--dropdown"
+            [items]="studentFilter$ | async"
+            (selected)="onStudentFilter($event)">
+          </cp-dropdown>
+        </div>
+        <div class="col-3">
           <cp-range-picker
             [class]="'cancel'"
-            [clearable]="true"
             [icon]="'date_range'"
+            [dateRanges]="dateRanges"
             [iconPositionLeft]="true"
             (rangeChange)="onDateChange($event)">
           </cp-range-picker>
         </div>
-        <div class="col-5 text-right">
-          <button
-            (click)="onDownload()"
-            [disabled]="!noAttendees"
-            class="cpbtn cpbtn--secondary margin-right">
-            {{ 'services_button_download_attendance_data' | cpI18n }}
-          </button>
-
+        <div class="col-3 text-right">
           <button
             (click)="onAddCheckIn()"
             class="cpbtn cpbtn--primary no-right-padding cpbtn--square-right">
@@ -41,7 +41,15 @@
               </li>
               <li
                 (click)="onEnableDisableQR()"
-                class="list-as-anchor"> {{ qrLabel }}</li>
+                class="list-as-anchor">
+                {{ qrLabel }}
+              </li>
+              <li
+                *ngIf="hasAttendees"
+                class="list-as-anchor"
+                (click)="onDownload()">
+                {{ 'services_button_download_attendance_data' | cpI18n }}
+              </li>
             </ul>
           </div>
         </div>

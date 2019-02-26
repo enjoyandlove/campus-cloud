@@ -3,20 +3,39 @@
 
   <div *ngSwitchCase="false">
     <div class="row">
+      <div class="col-12">
+        <cp-events-attendance-action-box
+          [event]="event"
+          [updateQrCode]="updateQrCode"
+          [isOrientation]="isOrientation"
+          [totalAttendees]="totalAttendees"
+          (addCheckIn)="onAddCheckIn()"
+          (createExcel)="onCreateExcel()"
+          (querySearch)="doSearch($event)"
+          (onToggleQr)="onToggleQr($event)"
+          (sendMessage)="messageAllAttendees()"
+          (updateStudentFilter)="onStudentFilter($event)"
+          (trackClickCheckIn)="onTrackClickCheckinEvent($event)">
+        </cp-events-attendance-action-box>
+      </div>
+    </div>
+
+    <div *ngIf="!state.search_text && !summaryLoading"
+      class="row">
       <div class="col-4 text-center">
-        <div class="cp-card">
+        <cp-card>
           <p class="header__digit">{{ event.verified_checkins }}</p>
           <p>{{ 't_shared_checkins' | cpI18n }}</p>
-        </div>
+        </cp-card>
       </div>
       <div class="col-4 text-center">
-        <div class="cp-card">
+        <cp-card>
           <p class="header__digit">{{ event.num_ratings }}</p>
           <p>{{ 'ratings' | cpI18n }}</p>
-        </div>
+        </cp-card>
       </div>
       <div class="col-4 text-center">
-        <div class="cp-card">
+        <cp-card>
           <p class="header__digit">
             <cp-stars
               [size]="detailStarSize"
@@ -31,24 +50,7 @@
             </strong>
             <strong *ngIf="event.rating_scale_maximum === -1">---</strong>
           </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-12">
-        <cp-events-attendance-action-box
-          [event]="event"
-          [updateQrCode]="updateQrCode"
-          [totalAttendees]="totalAttendees"
-          [isOrientation]="isOrientation"
-          (addCheckIn)="onAddCheckIn()"
-          (createExcel)="onCreateExcel()"
-          (querySearch)="doSearch($event)"
-          (sendMessage)="messageAllAttendees()"
-          (onToggleQr)="onToggleQr($event)"
-          (trackClickCheckIn)="onTrackClickCheckinEvent($event)">
-        </cp-events-attendance-action-box>
+        </cp-card>
       </div>
     </div>
 
