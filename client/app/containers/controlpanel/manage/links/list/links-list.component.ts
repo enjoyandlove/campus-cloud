@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { OverlayRef } from '@angular/cdk/overlay';
 import { Store } from '@ngrx/store';
 
 import * as fromLinks from '@app/store/manage/links';
@@ -7,30 +8,32 @@ import { CP_TRACK_TO } from '@shared/directives/tracking';
 import { amplitudeEvents } from '@shared/constants/analytics';
 import { environment } from '@client/environments/environment';
 import * as selectors from '@app/store/manage/manage.selectors';
-import { CPI18nService, CPTrackingService } from '@shared/services';
+import { LinksEditComponent } from './../edit/links-edit.component';
+import { LinksDeleteComponent } from './../delete/links-delete.component';
+import { LinksCreateComponent } from './../create/links-create.component';
+import { ILink } from '@app/containers/controlpanel/manage/links/link.interface';
+import { CPI18nService, CPTrackingService, ModalService } from '@shared/services';
 
 @Component({
   selector: 'cp-links-list',
   templateUrl: './links-list.component.html',
-  styleUrls: ['./links-list.component.scss']
+  styleUrls: ['./links-list.component.scss'],
+  providers: [ModalService]
 })
 export class LinksListComponent extends BaseComponent implements OnInit {
   pageNext;
   pagePrev;
   eventData;
   pageNumber;
-  isLinksEdit;
   sortingLabels;
-  editLink = '';
-  isLinksDelete;
-  isLinksCreate;
   loading = true;
-  deleteLink = '';
+  modal: OverlayRef;
   state: fromLinks.ILinksState;
   defaultImage = `${environment.root}public/default/user.png`;
 
   constructor(
     public cpI18n: CPI18nService,
+    private modalService: ModalService,
     public cpTracking: CPTrackingService,
     private store: Store<fromLinks.ILinksState>
   ) {
@@ -86,32 +89,35 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   }
 
   onLaunchCreateModal() {
-    this.isLinksCreate = true;
-
-    setTimeout(
-      () => {
-        $('#linksCreate').modal();
-      },
-
-      1
-    );
+    this.modal = this.modalService.open(LinksCreateComponent, null, {
+      onClose: this.resetModal.bind(this)
+    });
   }
 
-  onCreatedLink() {
-    this.isLinksCreate = false;
-  }
-
-  onEditedLink() {
-    this.isLinksEdit = false;
+  onLaunchDeleteModal(link: ILink) {
+    this.modal = this.modalService.open(LinksDeleteComponent, null, {
+      data: link,
+      onClose: this.onDeletedLink.bind(this)
+    });
   }
 
   onDeletedLink() {
-    this.isLinksDelete = false;
-
     if (this.state.links.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
       this.fetch();
     }
+  }
+
+  resetModal() {
+    this.modalService.close(this.modal);
+    this.modal = null;
+  }
+
+  onEdit(link: ILink) {
+    this.modal = this.modalService.open(LinksEditComponent, null, {
+      data: link,
+      onClose: this.resetModal.bind(this)
+    });
   }
 
   ngOnInit() {

@@ -2,5 +2,5 @@
   (deleteClick)="onDelete()"
   (cancelClick)="resetModal()"
   [modalTitle]="['links_delete_modal_title' | cpI18n]"
-  [modalBody]="['links_delete_modal_body' | cpI18n: link.name]">
+  [modalBody]="['links_delete_modal_body' | cpI18n: modal.data.name]">
 </cp-delete-modal>

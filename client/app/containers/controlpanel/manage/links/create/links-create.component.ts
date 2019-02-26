@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
 import { Actions, ofType } from '@ngrx/effects';
@@ -13,11 +13,15 @@ import { appStorage } from '@shared/utils';
 import { LinksService } from '../links.service';
 import * as fromLinks from '@app/store/manage/links';
 import { amplitudeEvents } from '@shared/constants/analytics';
-import { CPI18nService } from '@shared/services/i18n.service';
 import { Destroyable, Mixin } from '@client/app/shared/mixins';
-import { CPTrackingService, FileUploadService, ZendeskService } from '@shared/services';
-
-declare var $: any;
+import {
+  IModal,
+  MODAL_DATA,
+  CPI18nService,
+  ZendeskService,
+  CPTrackingService,
+  FileUploadService
+} from '@shared/services';
 
 @Component({
   selector: 'cp-links-create',
@@ -26,9 +30,6 @@ declare var $: any;
 })
 @Mixin([Destroyable])
 export class LinksCreateComponent implements OnInit, OnDestroy, Destroyable {
-  @Output() createLink: EventEmitter<null> = new EventEmitter();
-  @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
-
   storeId;
   imageError;
   form: FormGroup;
@@ -44,6 +45,7 @@ export class LinksCreateComponent implements OnInit, OnDestroy, Destroyable {
   emitDestroy() {}
 
   constructor(
+    @Inject(MODAL_DATA) private modal: IModal,
     private fb: FormBuilder,
     private updates$: Actions,
     private session: CPSession,
@@ -100,10 +102,11 @@ export class LinksCreateComponent implements OnInit, OnDestroy, Destroyable {
 
   doSubmit() {
     this.store.dispatch(new fromLinks.CreateLink(this.form.value));
+    this.modal.onClose();
   }
 
   resetModal() {
-    this.resetCreateModal.emit();
+    this.modal.onClose();
   }
 
   handleDeleteImage() {
@@ -141,8 +144,6 @@ export class LinksCreateComponent implements OnInit, OnDestroy, Destroyable {
         const res = action.payload;
 
         this.trackEvent(res);
-        $('#linksCreate').modal('hide');
-        this.createLink.emit();
         this.resetModal();
       });
   }
