@@ -8,8 +8,8 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-
 import { BehaviorSubject, Observable } from 'rxjs';
+import { debounce } from 'lodash';
 
 import { CPMapsService } from './../../services/maps.service';
 import { CPLocationsService } from '../../services/locations.service';
@@ -44,21 +44,30 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
           this.marker = this.cpMapsService.setMarker(this.map, center);
 
           if (this.doubleClick) {
-            this.map.addListener('dblclick', (event) => {
-              this.locationService.geoCode(event.latLng.toJSON()).then((response) => {
-                const location = event.latLng;
-
-                response = { ...response, geometry: { location } };
-
-                this.mapSelection.emit(response);
-              });
-
-              this.cpMapsService.setMarkerPosition(this.marker, event.latLng.toJSON());
-            });
+            this.map.addListener('dblclick', debounce(this.handleDoubleClick.bind(this), 1001));
           }
         }
       });
     });
+  }
+
+  handleDoubleClick(event) {
+    this.locationService
+      .geoCode(event.latLng.toJSON())
+      .then((response) => {
+        const location = event.latLng;
+
+        response = { ...response, geometry: { location } };
+
+        this.mapSelection.emit(response);
+      })
+      .catch((err) => {
+        if (err === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
+          console.log(err, event);
+        }
+      });
+
+    this.cpMapsService.setMarkerPosition(this.marker, event.latLng.toJSON());
   }
 
   ngAfterViewInit() {
