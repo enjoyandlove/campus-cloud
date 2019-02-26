@@ -1,6 +1,9 @@
 @import '../core/colors';
 
 .cpmodal {
+  border-radius: 4px;
+  background: $color-white;
+
   &__header {
     padding: 15px;
     line-height: 1;

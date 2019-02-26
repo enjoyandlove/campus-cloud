@@ -1,4 +1,4 @@
-<div class="cpmodal" *ngIf="link">
+<div class="cpmodal">
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
@@ -9,7 +9,6 @@
         </span>
 
         <span
-          data-dismiss="modal"
           (click)="resetModal()"
           class="float-right hover cpmodal__header__close">
           &times;
@@ -90,7 +89,6 @@
       <div class="col-6 text-right">
         <button
           type="button"
-          data-dismiss="modal"
           (click)="resetModal()"
           class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}

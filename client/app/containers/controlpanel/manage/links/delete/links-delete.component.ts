@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Actions, ofType } from '@ngrx/effects';
 import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -7,9 +7,7 @@ import { Subject } from 'rxjs';
 import { Destroyable, Mixin } from '@shared/mixins';
 import * as fromLinks from '@app/store/manage/links';
 import { amplitudeEvents } from '@shared/constants/analytics';
-import { CPTrackingService, ErrorService } from '@shared/services';
-
-declare var $: any;
+import { CPTrackingService, ErrorService, IModal, MODAL_DATA } from '@shared/services';
 
 @Component({
   selector: 'cp-links-delete',
@@ -18,10 +16,6 @@ declare var $: any;
 })
 @Mixin([Destroyable])
 export class LinksDeleteComponent implements OnInit, OnDestroy, Destroyable {
-  @Input() link: any;
-  @Output() deleteLink: EventEmitter<null> = new EventEmitter();
-  @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
-
   buttonData;
   eventProperties;
 
@@ -30,6 +24,7 @@ export class LinksDeleteComponent implements OnInit, OnDestroy, Destroyable {
   emitDestroy() {}
 
   constructor(
+    @Inject(MODAL_DATA) public modal: IModal,
     private updates$: Actions,
     private errorService: ErrorService,
     private cpTracking: CPTrackingService,
@@ -37,12 +32,12 @@ export class LinksDeleteComponent implements OnInit, OnDestroy, Destroyable {
   ) {}
 
   onDelete() {
-    this.store.dispatch(new fromLinks.DeleteLink(this.link.id));
+    this.store.dispatch(new fromLinks.DeleteLink(this.modal.data.id));
+    this.modal.onClose();
   }
 
   resetModal() {
-    this.resetDeleteModal.emit();
-    $('#linksDelete').modal('hide');
+    this.modal.onClose();
   }
 
   trackEvent() {
@@ -67,9 +62,6 @@ export class LinksDeleteComponent implements OnInit, OnDestroy, Destroyable {
       .pipe(ofType(fromLinks.LinksActionTypes.DELETE_LINK_SUCCESS), takeUntil(this.destroy$))
       .subscribe(() => {
         this.trackEvent();
-
-        this.deleteLink.emit(this.link.id);
-
         this.resetModal();
       });
   }
