@@ -55,6 +55,8 @@
     },
     {
       "privilege": 36,
+      "hidden": true,
+      "allow_internal": true,
       "clearParams": true,
       "label": "dining",
       "amplitude": "Dining",
