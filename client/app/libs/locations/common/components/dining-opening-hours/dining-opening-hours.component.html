@@ -14,10 +14,10 @@
             class="row"
             *ngFor="let item of openingHour.items; let itemIndex = index"
             [cpTarget]="'item_' + itemIndex">
-            <div class="col-2">
+            <div class="col-4">
               <p cpTarget="name">{{ item.name }}</p>
             </div>
-            <div class="col-10">
+            <div class="col-8">
               <p cpTarget="time">{{ item.time }}</p>
             </div>
           </div>
