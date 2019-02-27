@@ -32,7 +32,7 @@ export class CPFeatureToggleDirective implements OnInit {
   isEnabled() {
     const { flags } = environment;
 
-    if (flags['*']) {
+    if (flags['*'] || !this._feature) {
       return true;
     }
 

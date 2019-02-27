@@ -15,6 +15,10 @@ export const environment: IEnvironment = {
     WALLS_INTEGRATION: {
       active: false,
       internal: true
+    },
+    DINING: {
+      active: false,
+      internal: true
     }
   },
   envName: 'production_usa',
