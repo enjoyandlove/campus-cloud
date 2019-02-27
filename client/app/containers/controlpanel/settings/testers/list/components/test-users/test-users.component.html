@@ -1,4 +1,4 @@
-<ng-container [ngSwitch]="users?.length">
+<div [ngSwitch]="users.length">
   <ul
     *ngSwitchCase="true"  
     class="test-users cp-form">
@@ -14,9 +14,8 @@
     </li>
     
     <li
-      *ngFor="let user of users; index as i"
-      class="cp-form__item col-12"
-      [cpTarget]="['test_user_' + i]">
+      *ngFor="let user of users"
+      class="cp-form__item col-12">
       <div class="row">
         <span class="col-9">
           {{user.email}}
@@ -29,7 +28,7 @@
           </a>
         </span>
         <span
-          class="col-1 hover delete"
+          class="col-1  hover delete"
           (click)="onDelete.emit(user.id)">
           &times;
         </span>
@@ -41,4 +40,4 @@
     class="add-margin"
     [noContentText]="'t_sandbox_no_test_users' | cpI18n">
   </cp-no-content>
-</ng-container>
+</div>
