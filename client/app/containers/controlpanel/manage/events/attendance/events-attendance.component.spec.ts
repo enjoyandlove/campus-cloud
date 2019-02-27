@@ -88,10 +88,10 @@ describe('EventAttendanceComponent', () => {
           };
 
           search = new HttpParams()
-            .append('event_id', component.event.id)
-            .append('sort_field', component.state.sort_field)
-            .append('search_text', component.state.search_text)
-            .append('sort_direction', component.state.sort_direction);
+            .set('event_id', component.event.id)
+            .set('sort_field', component.state.sort_field)
+            .set('search_text', component.state.search_text)
+            .set('sort_direction', component.state.sort_direction);
 
           spyOn(component, 'buildHeader');
           spyOn(component, 'trackQrCode');
@@ -114,8 +114,8 @@ describe('EventAttendanceComponent', () => {
     component.orientationId = 5425;
 
     const _search = new HttpParams()
-      .append('school_id', component.session.g.get('school').id)
-      .append('calendar_id', component.orientationId.toString());
+      .set('school_id', component.session.g.get('school').id)
+      .set('calendar_id', component.orientationId.toString());
 
     component.fetch();
 
@@ -135,12 +135,12 @@ describe('EventAttendanceComponent', () => {
     component.orientationId = 1001;
 
     const _search = new HttpParams()
-      .append('event_id', component.event.id)
-      .append('sort_field', component.state.sort_field)
-      .append('search_text', component.state.search_text)
-      .append('sort_direction', component.state.sort_direction)
-      .append('school_id', component.session.g.get('school').id)
-      .append('calendar_id', component.orientationId.toString());
+      .set('event_id', component.event.id)
+      .set('sort_field', component.state.sort_field)
+      .set('search_text', component.state.search_text)
+      .set('sort_direction', component.state.sort_direction)
+      .set('school_id', component.session.g.get('school').id)
+      .set('calendar_id', component.orientationId.toString());
 
     component.fetchAttendees();
 
