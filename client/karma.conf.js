@@ -37,6 +37,7 @@ module.exports = function(config) {
         }
       }
     },
+    browserDisconnectTolerance: 2,
     browserDisconnectTimeout: 10000,
     reporters: ['mocha', 'jasmine-seed'],
     port: 9876,
