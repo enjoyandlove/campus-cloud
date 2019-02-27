@@ -138,7 +138,7 @@ export const canSchoolWriteResource = (session: Map<any, any>, privilegeType: nu
 };
 
 export const canClientReadResource = (session: Map<any, any>, privilegeType: number) => {
-  if (clientLevelEmpty(session.get('user'))) {
+  if (schoolLevelEmpty(session.get('user'))) {
     return false;
   }
 
@@ -158,10 +158,6 @@ export const canClientReadResource = (session: Map<any, any>, privilegeType: num
 };
 
 export const canClientWriteResource = (session: Map<any, any>, privilegeType: number) => {
-  if (clientLevelEmpty(session.get('user'))) {
-    return false;
-  }
-
   if (!Object.keys(session.get('user').client_level_privileges).length) {
     return false;
   }
