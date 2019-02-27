@@ -14,8 +14,9 @@
     </li>
     
     <li
-      *ngFor="let user of users"
-      class="cp-form__item col-12">
+      *ngFor="let user of users; index as i"
+      class="cp-form__item col-12"
+      [cpTarget]="['test_user_' + i]">
       <div class="row">
         <span class="col-9">
           {{user.email}}
