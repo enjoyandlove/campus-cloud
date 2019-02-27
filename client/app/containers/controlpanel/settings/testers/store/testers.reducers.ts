@@ -9,11 +9,9 @@ export const defaultState: ITestersState = {
   range: { start: 1, end: 101 },
   sort_direction: SORT_DIRECTION.ASC,
   search_str: null,
-  loaded: false,
   loading: false,
   entities: {},
-  ids: [],
-  error: null
+  ids: []
 };
 
 export const testersAdapter: EntityAdapter<ITestUser> = createEntityAdapter<ITestUser>();
@@ -22,40 +20,40 @@ export const initialState: ITestersState = testersAdapter.getInitialState(defaul
 export function reducer(state = initialState, action: TestersAction) {
   switch (action.type) {
     case TestersActions.SET_RANGE:
+      const range = action.payload;
       return {
         ...state,
-        range: action.payload
+        range
       };
     case TestersActions.SET_SORT:
+      const sort_direction = action.payload;
       return {
         ...state,
-        sort_direction: action.payload
+        sort_direction
       };
     case TestersActions.SET_SEARCH:
+      const search_str = action.payload;
       return {
         ...state,
-        search_str: action.payload
+        search_str
       };
     case TestersActions.LOAD:
       return {
         ...state,
-        loaded: false,
         loading: true
       };
     case TestersActions.LOAD_OK:
       return testersAdapter.addAll(action.payload, {
         ...state,
-        loaded: true,
         loading: false
       });
     case TestersActions.LOAD_FAIL:
-      const error = action.payload.message;
-      return {
+      return testersAdapter.removeAll({
         ...state,
-        loaded: false,
-        loading: false,
-        error
-      };
+        loading: false
+      });
+    default:
+      return state;
   }
 }
 

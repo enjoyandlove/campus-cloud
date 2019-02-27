@@ -58,6 +58,16 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
     this.store.dispatch(new actions.LoadTesters());
   }
 
+  initSelectors() {
+    this.testers$ = this.store.select(selectors.getTesters).pipe(takeUntil(this.destroy$));
+    this.testersLoading$ = this.store
+      .select(selectors.getTestersLoading)
+      .pipe(takeUntil(this.destroy$));
+    this.sortDirection$ = this.store
+      .select(selectors.getSortDirection)
+      .pipe(takeUntil(this.destroy$));
+  }
+
   ngOnInit() {
     this.store.dispatch({
       type: baseActions.HEADER_UPDATE,
@@ -67,13 +77,7 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
         children: []
       }
     });
-    this.testers$ = this.store.select(selectors.getTesters).pipe(takeUntil(this.destroy$));
-    this.testersLoading$ = this.store
-      .select(selectors.getTestersLoading)
-      .pipe(takeUntil(this.destroy$));
-    this.sortDirection$ = this.store
-      .select(selectors.getSortDirection)
-      .pipe(takeUntil(this.destroy$));
+    this.initSelectors();
     this.fetch();
   }
 

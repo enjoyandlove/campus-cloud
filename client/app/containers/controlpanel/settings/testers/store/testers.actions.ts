@@ -1,4 +1,3 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
 import { ITestersRange } from './testers.state';
@@ -40,7 +39,7 @@ export class LoadTestersOK implements Action {
 
 export class LoadTestersFail implements Action {
   readonly type = TestersActions.LOAD_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor() {}
 }
 
 export type TestersAction =

@@ -18,12 +18,8 @@ export interface ITestersState extends EntityState<ITestUser> {
   search_str: string;
 
   // entity
-  loaded: boolean;
   loading: boolean;
   entities: Dictionary<ITestUser>;
-
-  // error
-  error: string;
 }
 
 export interface ITestersFeature {
