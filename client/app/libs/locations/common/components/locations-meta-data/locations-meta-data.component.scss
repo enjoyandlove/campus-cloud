@@ -13,5 +13,9 @@ strong {
   &__details {
     display: block;
     margin-top: $default_margin;
+
+    a {
+      display: block;
+    }
   }
 }
