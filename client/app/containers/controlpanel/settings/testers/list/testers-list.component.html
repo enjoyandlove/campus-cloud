@@ -1,3 +1,5 @@
-<p>
-  testers-list works!
-</p>
+<div>
+  <div *ngFor="let tester of testers$ | async">
+    <p>{{tester.email}}</p>
+  </div>
+</div>
