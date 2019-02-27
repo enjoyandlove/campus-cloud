@@ -101,6 +101,7 @@
     "karma-chrome-launcher": "2.2.0",
     "karma-coverage": "1.0.0",
     "karma-coverage-istanbul-reporter": "2.0.4",
+    "karma-firefox-launcher": "1.1.0",
     "karma-jasmine": "2.0.1",
     "karma-mocha-reporter": "2.0.3",
     "karma-remap-istanbul": "0.6.0",
