@@ -1,5 +1,6 @@
+const process = require('process');
 process.env.CHROME_BIN = require('puppeteer').executablePath();
-process.env.CHROME_DEVEL_SANDBOX = process.env.CHROME_BIN + '_sandbox';
+// process.env.CHROME_DEVEL_SANDBOX = process.env.CHROME_BIN + '_sandbox';
 
 const jasmineSeedReporter = require('./jasmine-seed-reporter.js');
 
@@ -45,6 +46,17 @@ module.exports = function(config) {
     logLevel: config.LOG_INFO,
     autoWatch: true,
     browsers: ['ChromeHeadless'],
+    customLaunchers: {
+      ChromeHeadless: {
+        base: 'Chrome',
+        flags: [
+          '--headless',
+          '--disable-gpu',
+          '--disable-extensions',
+          '--remote-debugging-port=9222'
+        ]
+      }
+    },
     singleRun: false
   });
 };
