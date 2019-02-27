@@ -49,6 +49,8 @@ export const amplitudeEvents = {
 
   ACTIVE: 'Active',
 
+  CUSTOM: 'Custom',
+
   COMMENT: 'Comment',
 
   REGULAR: 'Regular',
@@ -93,13 +95,15 @@ export const amplitudeEvents = {
 
   EXECUTIVE: 'Executive',
 
-  EXPERIENCE: 'Experience',
-
   ATHLETICS: 'Athletics',
 
   NO_ACCESS: 'No Access',
 
   LOGGED_IN: 'Logged In',
+
+  LAST_YEAR: 'Last Year',
+
+  EXPERIENCE: 'Experience',
 
   ATTENDANCE: 'Attendance',
 
@@ -127,6 +131,10 @@ export const amplitudeEvents = {
 
   VIEWED_ITEM: 'Viewed Item',
 
+  LAST_30_DAYS: 'Last 30 Days',
+
+  LAST_90_DAYS: 'Last 90 Days',
+
   SAME_SECTION: 'Same Section',
 
   ALL_STUDENTS: 'All Students',
@@ -136,6 +144,8 @@ export const amplitudeEvents = {
   DELETED_ITEM: 'Deleted Item',
 
   ANNOUNCEMENT: 'Announcement',
+
+  CHECKIN_ONLY: 'Check-in Only',
 
   RESOURCE_LIST: 'Resource List',
 
@@ -219,6 +229,8 @@ export const amplitudeEvents = {
 
   WALL_VIEWED_COMMENT: 'Wall - Viewed Comment',
 
+  CHECKIN_AND_CHECKOUT: 'Check-In & Check-Out',
+
   ORIENTATION_PROGRAMS: 'Orientation Programs',
 
   WALL_SUBMITTED_POST: 'Wall - Submitted Post',
@@ -293,11 +305,19 @@ export const amplitudeEvents = {
 
   STUDIO_MOVED_EXPERIENCE: 'Studio - Moved Experience',
 
+  MANAGE_CREATED_AUDIENCE: 'Manage - Created Audience',
+
+  MANAGE_UPDATED_AUDIENCE: 'Manage - Updated Audience',
+
+  MANAGE_DELETED_AUDIENCE: 'Manage - Deleted Audience',
+
   MANAGE_ADDED_CLUB_MEMBER: 'Manage - Added Club Member',
 
   CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
 
   NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
+
+  MANAGE_IMPORTED_AUDIENCE: 'Manage - Imported Audience',
 
   MANAGE_DELETED_ATTENDANCE: 'Manage - Deleted Attendance',
 

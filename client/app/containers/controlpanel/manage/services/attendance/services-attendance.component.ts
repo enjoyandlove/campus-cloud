@@ -1,13 +1,16 @@
 /*tslint:disable:max-line-length */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 
+import { CPI18nService } from '@shared/services';
 import { ServicesService } from '../services.service';
+import { STAR_SIZE } from '@shared/components/cp-stars';
+import { BaseComponent } from '@app/base/base.component';
 import { IDateRange } from './components/providers-action-box';
-import { CPI18nService } from '../../../../../shared/services';
 import { ServicesUtilsService } from '../services.utils.service';
-import { BaseComponent } from '../../../../../base/base.component';
-import { STAR_SIZE } from '../../../../../shared/components/cp-stars';
+import { IFilterState, ProvidersUtilsService } from '../providers.utils.service';
+import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
 import { ServicesProvidersListComponent } from './components/providers-list/providers-list.component';
 
 @Component({
@@ -27,12 +30,19 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
   detailStarSize = STAR_SIZE.LARGE;
   listStarSize = STAR_SIZE.DEFAULT;
 
+  state: IFilterState = {
+    dateRange: null,
+    searchText: null,
+    studentFilter: null
+  };
+
   constructor(
     private router: Router,
     public cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private utils: ServicesUtilsService,
-    public serviceService: ServicesService
+    public serviceService: ServicesService,
+    private providerUtils: ProvidersUtilsService
   ) {
     super();
     this.serviceId = this.route.snapshot.params['serviceId'];
@@ -52,6 +62,22 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
       }
 
       this.utils.buildServiceHeader(this.service);
+    });
+  }
+
+  updateAssessment() {
+    if (!this.state.searchText) {
+      this.fetchAttendanceSummary();
+    }
+  }
+
+  fetchAttendanceSummary() {
+    let search = new HttpParams();
+
+    search = this.providerUtils.addSearchParams(search, this.state);
+
+    this.serviceService.getServiceAttendanceSummary(this.serviceId, search).subscribe((res) => {
+      this.service = { ...this.service, ...res };
     });
   }
 
@@ -77,18 +103,19 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     );
   }
 
-  onSearch(query) {
-    this.providersList.doSearch(query);
+  onSearch(searchText) {
+    this.state = { ...this.state, searchText };
+    this.updateAssessment();
+  }
+
+  onStudentFilter(studentFilter: IStudentFilter) {
+    this.state = { ...this.state, studentFilter };
+    this.updateAssessment();
   }
 
   onDateFilter(dateRange: IDateRange) {
-    this.providersList.doDateFilter(dateRange);
-
-    const start = dateRange ? dateRange.start : null;
-    const end = dateRange ? dateRange.end : null;
-    this.serviceService.getServiceById(this.serviceId, start, end).subscribe((res) => {
-      this.service = res;
-    });
+    this.state = { ...this.state, dateRange };
+    this.updateAssessment();
   }
 
   onProvidersResult(data) {

@@ -7,18 +7,21 @@ import {
   OnInit,
   Output
 } from '@angular/core';
-
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
+import { isEqual } from 'lodash';
 
 import { CPSession } from '@app/session';
 import { BaseComponent } from '@app/base';
 import { ISnackbar } from '@app/store/base';
 import { AudienceType } from './../audience.status';
+import { amplitudeEvents } from '@shared/constants';
+import { CPTrackingService } from '@shared/services';
 import { AudienceService } from '../audience.service';
 import { parseErrorResponse } from '@shared/utils/http';
-import { CPI18nService } from '@app/shared/services/i18n.service';
+import { CPI18nService } from '@shared/services/i18n.service';
+import { AudienceUtilsService } from '../audience.utils.service';
 
 @Component({
   selector: 'cp-audience-edit',
@@ -38,6 +41,7 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
   errorMessage;
   userCount = 0;
   form: FormGroup;
+  eventProperties;
   defaultAudienceView;
 
   constructor(
@@ -46,7 +50,9 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
-    private service: AudienceService
+    private service: AudienceService,
+    private cpTracking: CPTrackingService,
+    private audienceUtils: AudienceUtilsService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -67,6 +73,7 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
       (_) => {
         $('#audienceEdit').modal('hide');
         this.edited.emit(this.form.value);
+        this.trackEditAudience();
         this.resetModal();
       },
       (err) => {
@@ -94,10 +101,21 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
     this.form.controls['user_ids'].setValue(userIds);
 
     this.buttonData = { ...this.buttonData, disabled: !this.validate() };
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      updated_list: true
+    };
   }
 
   onFiltersSelected(filters) {
     this.form.controls['filters'].setValue(filters);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      updated_list: true,
+      filter_count: filters.length
+    };
   }
 
   validate() {
@@ -136,6 +154,19 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
     this.buttonData = { ...this.buttonData, disabled: !this.validate() };
   }
 
+  trackEditAudience() {
+    const updated_name = !isEqual(this.audience.name, this.form.controls['name'].value);
+    this.eventProperties = {
+      ...this.eventProperties,
+      updated_name
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_UPDATED_AUDIENCE,
+      this.eventProperties
+    );
+  }
+
   fetch() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id);
 
@@ -163,6 +194,11 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
       if (this.audience.type === AudienceType.dynamic) {
         this.initDynamic();
       }
+
+      this.eventProperties = {
+        ...this.audienceUtils.getAmplitudeEvent(this.audience, true),
+        updated_list: false
+      };
     });
   }
 

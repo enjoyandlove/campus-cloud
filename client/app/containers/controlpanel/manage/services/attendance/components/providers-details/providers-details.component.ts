@@ -5,13 +5,16 @@ import { switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import { CPI18nService } from '@shared/services';
 import { IDateRange } from '../providers-action-box';
+import { baseActions, IHeader } from '@app/store/base';
+import { BaseComponent } from '@app/base/base.component';
+import IServiceProvider from '../../../providers.interface';
 import { ServicesService } from './../../../services.service';
 import { ProvidersService } from '../../../providers.service';
 import { CheckInMethod } from '../../../../events/event.status';
-import { CPI18nService } from '../../../../../../../shared/services';
-import { baseActions, IHeader } from '../../../../../../../store/base';
-import { BaseComponent } from '../../../../../../../base/base.component';
+import { IFilterState, ProvidersUtilsService } from '../../../providers.utils.service';
+import { IStudentFilter } from '@containers/controlpanel/assess/engagement/engagement.utils.service';
 
 @Component({
   selector: 'cp-providers-details',
@@ -31,12 +34,19 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   eventRating;
   updateQrCode = new BehaviorSubject(null);
 
+  state: IFilterState = {
+    dateRange: null,
+    searchText: null,
+    studentFilter: null
+  };
+
   constructor(
     private route: ActivatedRoute,
     private store: Store<IHeader>,
     private cpI18n: CPI18nService,
     public serviceService: ServicesService,
-    public providersService: ProvidersService
+    public providersService: ProvidersService,
+    private providerUtils: ProvidersUtilsService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -75,6 +85,25 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     );
   }
 
+  updateAssessment() {
+    if (!this.state.searchText) {
+      this.fetchProvider();
+    }
+  }
+
+  fetchProvider() {
+    let search = new HttpParams().append('service_id', this.serviceId);
+
+    search = this.providerUtils.addSearchParams(search, this.state);
+
+    this.providersService
+      .getProviderByProviderId(this.providerId, search)
+      .subscribe((res: IServiceProvider) => {
+        this.provider = res;
+        this.eventRating = this.getEventRating(res.avg_rating_percent);
+      });
+  }
+
   buildHeader() {
     this.store.dispatch({
       type: baseActions.HEADER_UPDATE,
@@ -95,21 +124,23 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     this.providerAttendees.downloadProvidersCSV();
   }
 
-  onSearch(query) {
-    this.providerAttendees.doSearch(query);
-  }
-
   onAddCheckIn() {
     this.providerAttendees.onCreateCheckIn();
   }
 
-  onDateFilter(dateRange: IDateRange) {
-    this.providerAttendees.doDateFilter(dateRange);
+  onSearch(searchText) {
+    this.state = { ...this.state, searchText };
+    this.updateAssessment();
+  }
 
-    this.getProvider(dateRange).subscribe((res) => {
-      this.provider = res;
-      this.eventRating = this.getEventRating(this.provider.avg_rating_percent);
-    });
+  onStudentFilter(studentFilter: IStudentFilter) {
+    this.state = { ...this.state, studentFilter };
+    this.updateAssessment();
+  }
+
+  onDateFilter(dateRange: IDateRange) {
+    this.state = { ...this.state, dateRange };
+    this.updateAssessment();
   }
 
   getEventRating(avgRating: number) {

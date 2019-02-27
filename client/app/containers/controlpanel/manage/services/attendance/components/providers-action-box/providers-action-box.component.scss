@@ -1,5 +1,6 @@
 @import '~client/style/components/card';
 @import '~client/style/components/button';
+@import '~client/style/components/dropdown';
 
 .delete-provider {
   font-size: 2em;
@@ -9,10 +10,40 @@
   @include card-margin();
 
   margin-top: 0;
+}
 
-  button {
-    &:first-child {
-      margin-right: 8px;
+.action-dropdown {
+  margin-left: -3px;
+  position: relative;
+
+  i {
+    padding: 4px;
+    font-size: 23px;
+  }
+
+  .dropdown-menu {
+    top: 115%;
+    padding: 0;
+    min-width: 200px;
+  }
+
+  a {
+    padding: 0;
+  }
+
+  li {
+    padding: 12px;
+  }
+
+  a,
+  li {
+    @include font-normal();
+  
+    color: $color-text;
+
+    &:hover {
+      cursor: pointer;
+      background: none;
     }
   }
 }

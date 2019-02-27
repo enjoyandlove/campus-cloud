@@ -62,7 +62,7 @@ describe('ServicesProviderAddComponent', () => {
             id: 1253
           };
 
-          component.ngOnInit();
+          fixture.detectChanges();
         });
     })
   );

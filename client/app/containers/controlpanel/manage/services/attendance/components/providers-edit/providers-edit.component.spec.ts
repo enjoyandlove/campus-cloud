@@ -68,7 +68,7 @@ describe('ServicesProviderUpdateComponent', () => {
             ...mockProvider
           };
 
-          component.ngOnInit();
+          fixture.detectChanges();
         });
     })
   );

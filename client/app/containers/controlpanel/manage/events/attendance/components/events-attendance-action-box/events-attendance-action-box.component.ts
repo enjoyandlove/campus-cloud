@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { TooltipOption } from 'bootstrap';
-import { BehaviorSubject } from 'rxjs';
 
 import { CPSession } from '@app/session';
 import IEvent from '../../../event.interface';
@@ -9,6 +9,8 @@ import { CheckInMethod } from '../../../event.status';
 import { EventUtilService } from '../../../events.utils.service';
 import { CP_PRIVILEGES_MAP } from '@shared/constants/privileges';
 import { canSchoolWriteResource } from '@shared/utils/privileges/privileges';
+import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
+import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
 
 @Component({
   selector: 'cp-events-attendance-action-box',
@@ -21,19 +23,21 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   @Input() updateQrCode = new BehaviorSubject(null);
   @Input() totalAttendees = new BehaviorSubject(null);
 
-  @Output() querySearch: EventEmitter<string> = new EventEmitter();
+  @Output() addCheckIn: EventEmitter<null> = new EventEmitter();
   @Output() createExcel: EventEmitter<null> = new EventEmitter();
   @Output() sendMessage: EventEmitter<null> = new EventEmitter();
-  @Output() addCheckIn: EventEmitter<null> = new EventEmitter();
   @Output() onToggleQr: EventEmitter<boolean> = new EventEmitter();
+  @Output() querySearch: EventEmitter<string> = new EventEmitter();
   @Output() trackClickCheckIn: EventEmitter<IEvent> = new EventEmitter();
+  @Output() updateStudentFilter: EventEmitter<EngageUtils.IStudentFilter> = new EventEmitter();
 
-  hasQr;
-  qrLabel;
-  canMessage;
-  eventCheckinRoute;
+  hasQr: boolean;
+  qrLabel: string;
+  canMessage: boolean;
   canDownload: boolean;
-  disableMessageAttendees;
+  eventCheckinRoute: string;
+  studentFilter$: Observable<any[]>;
+  disableMessageAttendees: boolean;
   messageAttendeesTooltipText: string;
   tooltipOptions: TooltipOption = {
     placement: 'left'
@@ -42,7 +46,9 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public utils: EventUtilService
+    public utils: EventUtilService,
+    public engageService: EngagementService,
+    public engageUtils: EngageUtils.EngagementUtilsService
   ) {}
 
   onSearch(query) {
@@ -74,6 +80,10 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
       return attendees.filter((attendee) => attendee.user_id).map((attendee) => attendee.user_id)
         .length;
     }
+  }
+
+  onStudentFilter(filter) {
+    this.updateStudentFilter.emit(filter);
   }
 
   ngOnInit() {
@@ -108,5 +118,7 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
         this.messageAttendeesTooltipText = '';
       }
     });
+
+    this.studentFilter$ = this.engageUtils.getStudentFilter();
   }
 }

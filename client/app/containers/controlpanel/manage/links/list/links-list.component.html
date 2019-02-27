@@ -45,10 +45,8 @@
                 <button
                   cpTracker
                   [eventData]="eventData"
-                  (click)="editLink = link"
-                  class="cpbtn cpbtn--link-dark"
-                  (click)="isLinksEdit = true"
-                  data-toggle="modal" data-target="#linksEdit">
+                  (click)="onEdit(link)"
+                  class="cpbtn cpbtn--link-dark">
                   {{ link.name }}
                 </button>
               </strong>
@@ -60,10 +58,8 @@
             </span>
 
             <span
-              (click)="deleteLink = link;"
-              (click)="isLinksDelete = true"
-              class="col-1 hover delete-link text-right"
-              data-toggle="modal" data-target="#linksDelete">
+              (click)="onLaunchDeleteModal(link)"
+              class="col-1 hover delete-link text-right">
               &times;
             </span>
           </div>
@@ -80,26 +76,3 @@
     </div>
   </div>
 </div>
-
-<cp-modal modalId="linksCreate" *ngIf="isLinksCreate">
-  <cp-links-create
-    (createLink)="onCreatedLink()"
-    (resetCreateModal)="isLinksCreate = false">
-  </cp-links-create>
-</cp-modal>
-
-<cp-modal modalId="linksDelete" *ngIf="isLinksDelete">
-  <cp-links-delete
-    [link]="deleteLink"
-    (deleteLink)="onDeletedLink()"
-    (resetDeleteModal)="isLinksDelete = false">
-  </cp-links-delete>
-</cp-modal>
-
-<cp-modal modalId="linksEdit" *ngIf="isLinksEdit">
-  <cp-links-edit
-    [link]="editLink"
-    (editLink)="onEditedLink()"
-    (resetEditModal)="isLinksEdit = false">
-  </cp-links-edit>
-</cp-modal>

@@ -11,9 +11,10 @@ import { canSchoolReadResource } from '@shared/utils';
 import { parseErrorResponse } from '@shared/utils/http';
 import { CustomTextValidators } from '@shared/validators';
 import { AnnouncementsService } from '../announcements.service';
-import { AudienceType } from '../../../audience/audience.status';
+import { AudienceType } from '@controlpanel/audience/audience.status';
 import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@shared/constants';
 import { CPI18nService, StoreService, CPTrackingService } from '@shared/services';
+import { AudienceUtilsService } from '@controlpanel/audience/audience.utils.service';
 
 interface IState {
   isUrgent: boolean;
@@ -87,7 +88,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     public store: Store<IHeader>,
     public storeService: StoreService,
     public service: AnnouncementsService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    private audienceUtils: AudienceUtilsService
   ) {
     const school = this.session.g.get('school');
     const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
@@ -115,6 +117,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         saved_audience_active: true
       }
     });
+    this.trackImportAudience();
   }
 
   onNewAudienceTypeChange(audienceState) {
@@ -301,7 +304,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.service
       .createAudience(data, search)
       .toPromise()
-      .then(({ id }: any) => this.redirectToSaveTab({ id }))
+      .then(({ id }: any) => {
+        this.redirectToSaveTab({ id });
+        this.trackCreateAudience(data);
+      })
       .catch((err) => {
         const error = parseErrorResponse(err.error);
         const body =
@@ -323,6 +329,18 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
           disabled: false
         };
       });
+  }
+
+  trackCreateAudience(audience) {
+    let eventProperties = this.audienceUtils.getAmplitudeEvent(audience, true);
+    eventProperties = { ...eventProperties, menu_name: amplitudeEvents.MENU_NOTIFY };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CREATED_AUDIENCE, eventProperties);
+  }
+
+  trackImportAudience() {
+    const eventProperties = { menu_name: amplitudeEvents.MENU_NOTIFY };
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_IMPORTED_AUDIENCE, eventProperties);
   }
 
   onResetNewAudience() {

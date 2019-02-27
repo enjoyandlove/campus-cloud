@@ -113,6 +113,14 @@
     "@angular-devkit/core" "7.2.0"
     rxjs "6.3.3"
 
+"@angular/cdk@7.3.3":
+  version "7.3.3"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-7.3.3.tgz#02a2ad248141cd9968a5950ce0602da3fcf5445b"
+  dependencies:
+    tslib "^1.7.1"
+  optionalDependencies:
+    parse5 "^5.0.0"
+
 "@angular/cli@~7.2.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-7.2.0.tgz#912f83a74b7dded4a14fc3db4857c4873479de32"
@@ -2926,9 +2934,10 @@ find-up@^3.0.0:
   dependencies:
     locate-path "^3.0.0"
 
-flatpickr@2.4.4:
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-2.4.4.tgz#7cfcd7918dd5e5d60e5ba32c0423d45db2fde794"
+flatpickr@4.5.2:
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.5.2.tgz#47c8ad472a096e5fb7e74b809b0703535383f20d"
+  integrity sha512-jDy4QYGpmiy7+Qk8QvKJ4spjDdxcx9cxMydmq1x427HkKWBw0qizLYeYM2F6tMcvvqGjU5VpJS55j4LnsaBblA==
 
 flatted@^2.0.0:
   version "2.0.0"
@@ -5541,6 +5550,10 @@ parse-json@^4.0.0:
 parse5@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-4.0.0.tgz#6d78656e3da8d78b4ec0b906f7c08ef1dfe3f608"
+
+parse5@^5.0.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.0.tgz#c59341c9723f414c452975564c7c00a68d58acd2"
 
 parseqs@0.0.5:
   version "0.0.5"

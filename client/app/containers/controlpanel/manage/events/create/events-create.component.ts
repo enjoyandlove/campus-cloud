@@ -32,7 +32,6 @@ import {
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
 const COMMON_DATE_PICKER_OPTIONS = {
-  utc: true,
   enableTime: true
 };
 

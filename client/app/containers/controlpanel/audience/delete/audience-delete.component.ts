@@ -10,10 +10,11 @@ import {
 
 import { HttpParams } from '@angular/common/http';
 
+import { CPSession } from '@app/session';
 import { AudienceService } from '../audience.service';
-import { CPSession } from '../../../../session';
-import { amplitudeEvents } from '../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../shared/services';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { AudienceUtilsService } from '../audience.utils.service';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 
 const AUDIENCE_USED_IN_TEMPLATE = 409;
 
@@ -27,7 +28,6 @@ export class AudienceDeleteComponent implements OnInit {
   @Output() deleteAudience: EventEmitter<number> = new EventEmitter();
 
   buttonData;
-  eventProperties;
   templateConflict = false;
 
   constructor(
@@ -35,7 +35,8 @@ export class AudienceDeleteComponent implements OnInit {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private service: AudienceService,
-    private cpTracking: CPTrackingService
+    private cpTracking: CPTrackingService,
+    private audienceUtils: AudienceUtilsService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -82,12 +83,8 @@ export class AudienceDeleteComponent implements OnInit {
   }
 
   trackEvent() {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.cpTracking.getEventProperties()
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
+    const eventProperties = this.audienceUtils.getAmplitudeEvent(this.audience);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DELETED_AUDIENCE, eventProperties);
   }
 
   ngOnInit() {
