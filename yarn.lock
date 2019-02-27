@@ -2937,7 +2937,6 @@ find-up@^3.0.0:
 flatpickr@4.5.2:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.5.2.tgz#47c8ad472a096e5fb7e74b809b0703535383f20d"
-  integrity sha512-jDy4QYGpmiy7+Qk8QvKJ4spjDdxcx9cxMydmq1x427HkKWBw0qizLYeYM2F6tMcvvqGjU5VpJS55j4LnsaBblA==
 
 flatted@^2.0.0:
   version "2.0.0"
@@ -4208,6 +4207,10 @@ karma-coverage@1.0.0:
     istanbul "^0.4.0"
     minimatch "^3.0.0"
     source-map "^0.5.1"
+
+karma-firefox-launcher@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/karma-firefox-launcher/-/karma-firefox-launcher-1.1.0.tgz#2c47030452f04531eb7d13d4fc7669630bb93339"
 
 karma-jasmine@2.0.1:
   version "2.0.1"

@@ -1,6 +1,5 @@
-const process = require('process');
 process.env.CHROME_BIN = require('puppeteer').executablePath();
-// process.env.CHROME_DEVEL_SANDBOX = process.env.CHROME_BIN + '_sandbox';
+process.env.CHROME_DEVEL_SANDBOX = process.env.CHROME_BIN + '_sandbox';
 
 const jasmineSeedReporter = require('./jasmine-seed-reporter.js');
 
@@ -12,13 +11,15 @@ module.exports = function(config) {
       require('karma-jasmine'),
       require('karma-mocha-reporter'),
       require('karma-chrome-launcher'),
+      require('karma-firefox-launcher'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
       jasmineSeedReporter
     ],
     client: {
       jasmine: {
-        random: true
+        random: true,
+        timeoutInterval: 10000
         // seed: 01932
       },
       clearContext: false // leave Jasmine Spec Runner output visible in browser
@@ -45,16 +46,11 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'],
+    browsers: ['FirefoxHeadless'],
     customLaunchers: {
-      ChromeHeadless: {
-        base: 'Chrome',
-        flags: [
-          '--headless',
-          '--disable-gpu',
-          '--disable-extensions',
-          '--remote-debugging-port=9222'
-        ]
+      FirefoxHeadless: {
+        base: 'Firefox',
+        flags: ['-headless']
       }
     },
     singleRun: false
