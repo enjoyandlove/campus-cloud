@@ -2,8 +2,8 @@ import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 import { ITestersState } from './testers.state';
 import { SORT_DIRECTION } from '@shared/constants';
+import { ITestUser } from '../models/test-user.interface';
 import { TestersAction, TestersActions } from './testers.actions';
-import { ITestUser } from '@libs/testers/model/test-user.interface';
 
 export const defaultState: ITestersState = {
   range: { start: 1, end: 101 },

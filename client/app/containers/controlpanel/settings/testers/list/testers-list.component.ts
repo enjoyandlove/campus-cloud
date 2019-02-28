@@ -9,7 +9,7 @@ import { Mixin, Destroyable } from '@shared/mixins';
 import * as actions from '../store/testers.actions';
 import { ITestersState } from '../store/testers.state';
 import * as selectors from '../store/testers.selectors';
-import { ITestUser } from '@libs/testers/model/test-user.interface';
+import { ITestUser } from '../models/test-user.interface';
 
 @Component({
   selector: 'cp-testers-list',

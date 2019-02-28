@@ -3,7 +3,7 @@ import { ActionReducerMap } from '@ngrx/store';
 
 import { ITestersState } from './testers.state';
 import * as testersReducer from './testers.reducers';
-import { ITestUser } from '@libs/testers/model/test-user.interface';
+import { ITestUser } from '../models/test-user.interface';
 import { SORT_DIRECTION, SETTINGS_TESTERS } from '@shared/constants';
 
 export interface ITestersRange {

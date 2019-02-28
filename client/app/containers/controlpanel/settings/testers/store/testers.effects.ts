@@ -11,7 +11,7 @@ import { ITestersState } from './testers.state';
 import * as selectors from './testers.selectors';
 import { CPI18nService } from '@shared/services';
 import { TestersService } from '../testers.service';
-import { ITestUser } from '@libs/testers/model/test-user.interface';
+import { ITestUser } from '../models/test-user.interface';
 
 @Injectable()
 export class TestersEffects {

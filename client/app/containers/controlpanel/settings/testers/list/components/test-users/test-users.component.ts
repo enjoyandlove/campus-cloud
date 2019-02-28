@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { SORT_DIRECTION } from '@shared/constants';
-import { ITestUser } from '@libs/testers/model/test-user.interface';
+import { ITestUser } from '../../../models/test-user.interface';
 
 @Component({
   selector: 'cp-test-users',
