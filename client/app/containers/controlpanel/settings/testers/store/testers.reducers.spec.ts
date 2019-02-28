@@ -3,7 +3,7 @@ import { reducer } from './testers.reducers';
 import * as actions from './testers.actions';
 import { ITestersState } from './testers.state';
 import { defaultState } from './testers.reducers';
-import { SortDirection } from '@shared/constants';
+import { SORT_DIRECTION } from '@shared/constants';
 
 describe('TestersReducer', () => {
   let state: ITestersState;
@@ -15,14 +15,14 @@ describe('TestersReducer', () => {
   });
 
   it('should set sort', () => {
-    state = reducer(state, new actions.SetTestersSort(SortDirection.DESC));
-    expect(state.sortDirection).toBe(SortDirection.DESC);
+    state = reducer(state, new actions.SetTestersSort(SORT_DIRECTION.DESC));
+    expect(state.sort_direction).toBe(SORT_DIRECTION.DESC);
   });
 
   it('should set search', () => {
     const search = 'test';
     state = reducer(state, new actions.SetTestersSearch(search));
-    expect(state.searchStr).toBe(search);
+    expect(state.search_str).toBe(search);
   });
 
   it('should set loading', () => {
