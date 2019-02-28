@@ -6,8 +6,8 @@ import { CPI18nService } from '@shared/services';
 import { configureTestSuite } from '@shared/tests';
 import * as actions from '../store/testers.actions';
 import { SharedModule } from '@shared/shared.module';
-import { SETTINGS_TESTERS, SORT_DIRECTION } from '@shared/constants';
 import { TestersListComponent } from './testers-list.component';
+import { SETTINGS_TESTERS, SortDirection } from '@shared/constants';
 import { TestUsersComponent } from './components/test-users/test-users.component';
 import { TestersActionBoxComponent } from './components/testers-action-box/testers-action-box.component';
 
@@ -62,8 +62,8 @@ describe('TestersListComponent', () => {
 
   it('should toggle sort and fetch', () => {
     spyFetch.calls.reset();
-    component.doSort(SORT_DIRECTION.ASC);
-    expect(spyDispatch).toHaveBeenCalledWith(new actions.SetTestersSort(SORT_DIRECTION.DESC));
+    component.doSort(SortDirection.ASC);
+    expect(spyDispatch).toHaveBeenCalledWith(new actions.SetTestersSort(SortDirection.DESC));
     expect(spyFetch).toHaveBeenCalled();
   });
 });
