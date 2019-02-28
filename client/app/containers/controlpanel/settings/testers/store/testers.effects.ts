@@ -29,10 +29,10 @@ export class TestersEffects {
     ofType(actions.TestersActions.LOAD),
     withLatestFrom(this.store.select(selectors.getTestersState)),
     mergeMap(([_, state]) => {
-      const { range, sort_direction, search_str } = state;
+      const { range, sortDirection, searchStr } = state;
       const search = new HttpParams()
-        .set('sort_direction', sort_direction)
-        .set('search_str', search_str);
+        .set('sort_direction', sortDirection)
+        .set('search_str', searchStr);
       return this.service.getUsers(range.start, range.end, search).pipe(
         map((users: ITestUser[]) => new actions.LoadTestersOK(users)),
         catchError(() => {

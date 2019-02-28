@@ -14,8 +14,8 @@ export interface ITestersRange {
 export interface ITestersState extends EntityState<ITestUser> {
   // search parameters
   range: ITestersRange;
-  sort_direction: SortDirection;
-  search_str: string;
+  sortDirection: SortDirection;
+  searchStr: string;
 
   // entity
   loading: boolean;

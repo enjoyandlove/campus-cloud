@@ -17,5 +17,5 @@ export const getTestersLoading = createSelector(
 );
 export const getSortDirection = createSelector(
   getTestersState,
-  (state: ITestersState) => state.sort_direction
+  (state: ITestersState) => state.sortDirection
 );

@@ -7,8 +7,8 @@ import { TestersAction, TestersActions } from './testers.actions';
 
 export const defaultState: ITestersState = {
   range: { start: 1, end: 101 },
-  sort_direction: SortDirection.ASC,
-  search_str: null,
+  sortDirection: SortDirection.ASC,
+  searchStr: null,
   loading: false,
   entities: {},
   ids: []
@@ -26,16 +26,16 @@ export function reducer(state = initialState, action: TestersAction) {
         range
       };
     case TestersActions.SET_SORT:
-      const sort_direction = action.payload;
+      const sortDirection = action.payload;
       return {
         ...state,
-        sort_direction
+        sortDirection
       };
     case TestersActions.SET_SEARCH:
-      const search_str = action.payload;
+      const searchStr = action.payload;
       return {
         ...state,
-        search_str
+        searchStr
       };
     case TestersActions.LOAD:
       return {
