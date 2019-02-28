@@ -22,7 +22,7 @@ export class TestersEffects {
     public service: CampusTestersService
   ) {}
 
-  somethingWentWrong = { error: this.cpI18n.translate('something_went_wrong') };
+  somethingWentWrong = this.cpI18n.translate('something_went_wrong');
 
   @Effect()
   getTesters$: Observable<actions.LoadTestersOK | actions.LoadTestersFail> = this.actions$.pipe(
@@ -36,9 +36,7 @@ export class TestersEffects {
       return this.service.getUsers(range.start, range.end, search).pipe(
         map((users: ITestUser[]) => new actions.LoadTestersOK(users)),
         catchError(() => {
-          this.store.dispatch(
-            new baseActionClass.SnackbarError({ body: this.somethingWentWrong.error })
-          );
+          this.store.dispatch(new baseActionClass.SnackbarError({ body: this.somethingWentWrong }));
           return of(new actions.LoadTestersFail());
         })
       );
