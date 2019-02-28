@@ -23,4 +23,10 @@ export class CampusTestersService extends HTTPService {
 
     return super.get(url, search, true);
   }
+
+  deleteUser(testerId) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_ACCESS_LEVEL}/${testerId}`;
+
+    return super.delete(url, null, true);
+  }
 }
