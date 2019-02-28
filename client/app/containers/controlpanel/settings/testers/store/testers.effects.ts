@@ -10,16 +10,16 @@ import { baseActionClass } from '@app/store';
 import { ITestersState } from './testers.state';
 import * as selectors from './testers.selectors';
 import { CPI18nService } from '@shared/services';
-import { TestersService } from '../testers.service';
 import { ITestUser } from '../models/test-user.interface';
+import { CampusTestersService } from '../campus-testers.service';
 
 @Injectable()
 export class TestersEffects {
   constructor(
     public actions$: Actions,
     public cpI18n: CPI18nService,
-    public service: TestersService,
-    public store: Store<ITestersState>
+    public store: Store<ITestersState>,
+    public service: CampusTestersService
   ) {}
 
   somethingWentWrong = { error: this.cpI18n.translate('something_went_wrong') };
