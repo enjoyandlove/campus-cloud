@@ -2352,6 +2352,15 @@
   "t_categories_map_pin_icon": {
     "message": "Icône d'épingle de carte"
   },
+  "t_category_successfully_created": {
+    "message": " Catégorie créée avec succès"
+  },
+  "t_category_successfully_deleted": {
+    "message": "Catégorie supprimée avec succès"
+  },
+  "t_category_successfully_edited": {
+    "message": "Catégorie éditée avec succès"
+  },
   "t_changes_saved_ok": {
     "message": "Changements enregistrés avec succès"
   },
@@ -2980,6 +2989,12 @@
   },
   "t_persona_list_button_notify": {
     "message": "Notifier"
+  },
+  "t_sandbox_test_environment": {
+    "message": "ENVIRONNEMENT DE TEST"
+  },
+  "t_sandbox_test_environment_users": {
+    "message": "Utilisateurs de l'environnement de test"
   },
   "t_saving": {
     "message": "Enregistrement"

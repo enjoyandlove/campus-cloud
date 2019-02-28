@@ -2990,6 +2990,48 @@
   "t_persona_list_button_notify": {
     "message": "Notify"
   },
+  "t_sandbox_delete_invite": {
+    "message": "Delete Invite"
+  },
+  "t_sandbox_delete_modal_body": {
+    "message": "Are you sure you want to delete invite?"
+  },
+  "t_sandbox_email_addresses": {
+    "message": "Email Addresses (separated by comma)"
+  },
+  "t_sandbox_email_addresses_hint": {
+    "message": "i.e. (john@ready.edu, jane@ready.edu)"
+  },
+  "t_sandbox_invite": {
+    "message": "Invite"
+  },
+  "t_sandbox_invite_testers": {
+    "message": "Invite Testers"
+  },
+  "t_sandbox_invite_testers_success": {
+    "message": "Testers Invited!"
+  },
+  "t_sandbox_invite_users": {
+    "message": "Invite Users"
+  },
+  "t_sandbox_no_test_users": {
+    "message": "No Test Users"
+  },
+  "t_sandbox_resend_invite": {
+    "message": "Resend Invite"
+  },
+  "t_sandbox_resend_invite_success": {
+    "message": "Invitation Resent!"
+  },
+  "t_sandbox_sub_heading": {
+    "message": "Invite App Users to the Test Environment"
+  },
+  "t_sandbox_test_environment": {
+    "message": "TEST ENVIRONMENT"
+  },
+  "t_sandbox_test_environment_users": {
+    "message": "Test Environment Users"
+  },
   "t_saving": {
     "message": "Saving"
   },
