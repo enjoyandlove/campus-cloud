@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { SORT_DIRECTION } from '@shared/constants';
+import { SortDirection } from '@shared/constants';
 import { ITestUser } from '../../../models/test-user.interface';
 
 @Component({
@@ -10,11 +10,11 @@ import { ITestUser } from '../../../models/test-user.interface';
 })
 export class TestUsersComponent implements OnInit {
   @Input() users: ITestUser[];
-  @Input() sortDirection: SORT_DIRECTION;
+  @Input() sortDirection: SortDirection;
 
   @Output() onResend: EventEmitter<number> = new EventEmitter();
   @Output() onDelete: EventEmitter<number> = new EventEmitter();
-  @Output() onSort: EventEmitter<SORT_DIRECTION> = new EventEmitter();
+  @Output() onSort: EventEmitter<SortDirection> = new EventEmitter();
 
   constructor() {}
 

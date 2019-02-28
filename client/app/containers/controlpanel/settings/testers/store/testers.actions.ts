@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
 import { ITestersRange } from './testers.state';
-import { SORT_DIRECTION } from '@shared/constants';
+import { SortDirection } from '@shared/constants';
 import { ITestUser } from '../models/test-user.interface';
 
 export enum TestersActions {
@@ -20,7 +20,7 @@ export class SetTestersRange implements Action {
 
 export class SetTestersSort implements Action {
   readonly type = TestersActions.SET_SORT;
-  constructor(public payload: SORT_DIRECTION) {}
+  constructor(public payload: SortDirection) {}
 }
 
 export class SetTestersSearch implements Action {

@@ -4,7 +4,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { baseActions } from '@app/store';
-import { SORT_DIRECTION } from '@shared/constants';
+import { SortDirection } from '@shared/constants';
 import { Mixin, Destroyable } from '@shared/mixins';
 import * as actions from '../store/testers.actions';
 import { ITestersState } from '../store/testers.state';
@@ -20,7 +20,7 @@ import { ITestUser } from '../models/test-user.interface';
 export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
   testers$: Observable<ITestUser[]>;
   testersLoading$: Observable<boolean>;
-  sortDirection$: Observable<SORT_DIRECTION>;
+  sortDirection$: Observable<SortDirection>;
 
   // Destroyable
   destroy$ = new Subject<null>();
@@ -40,7 +40,7 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
   doSort(sortDirection) {
     this.store.dispatch(
       new actions.SetTestersSort(
-        sortDirection === SORT_DIRECTION.ASC ? SORT_DIRECTION.DESC : SORT_DIRECTION.ASC
+        sortDirection === SortDirection.ASC ? SortDirection.DESC : SortDirection.ASC
       )
     );
     this.fetch();

@@ -1,13 +1,13 @@
 import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 import { ITestersState } from './testers.state';
-import { SORT_DIRECTION } from '@shared/constants';
+import { SortDirection } from '@shared/constants';
 import { ITestUser } from '../models/test-user.interface';
 import { TestersAction, TestersActions } from './testers.actions';
 
 export const defaultState: ITestersState = {
   range: { start: 1, end: 101 },
-  sort_direction: SORT_DIRECTION.ASC,
+  sort_direction: SortDirection.ASC,
   search_str: null,
   loading: false,
   entities: {},
