@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '@shared/shared.module';
 import { SettingsComponent } from './settings.component';
-import { TestersModule } from './testers/testers.module';
+import { CampusTestersModule } from './testers/testers.module';
 import { SettingsRoutingModule } from './settings.routing.module';
 import { CampusTestersModule } from './testers/campus-testers.module';
 
 @NgModule({
   declarations: [SettingsComponent],
 
-  imports: [CommonModule, SharedModule, SettingsRoutingModule, TestersModule],
+  imports: [CommonModule, SharedModule, SettingsRoutingModule, CampusTestersModule],
 
   providers: []
 })

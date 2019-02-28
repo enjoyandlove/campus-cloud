@@ -23,4 +23,4 @@ import { TestersActionBoxComponent } from './list/components/testers-action-box/
   ],
   providers: [TestersService]
 })
-export class TestersModule {}
+export class CampusTestersModule {}
