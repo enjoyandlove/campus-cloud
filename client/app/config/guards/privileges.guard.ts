@@ -5,7 +5,8 @@ import {
   CanLoad,
   CanActivate,
   CanActivateChild,
-  ActivatedRouteSnapshot
+  ActivatedRouteSnapshot,
+  Route
 } from '@angular/router';
 
 import { CPSession } from '@app/session';
@@ -24,32 +25,44 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild, CanLoad {
     public zendeskService: ZendeskService
   ) {}
 
-  canLoad() {
-    return true;
-  }
-
-  canActivateChild(activatedRoute: ActivatedRouteSnapshot) {
-    console.log('canActivateChild');
-    this.setZendesk(activatedRoute.data);
-    return this.checkPrivileges(activatedRoute);
-  }
-
-  canActivate(activatedRoute: ActivatedRouteSnapshot) {
-    return this.checkPrivileges(activatedRoute);
-  }
-
-  private checkPrivileges(route: ActivatedRouteSnapshot) {
-    const privilege = _get(route, ['data', 'privilege'], null);
-
+  canLoad(route: Route) {
+    const privilege = this.getPrivilegeFromRouteData(route.data);
     if (!privilege) {
-      console.log('NO PRIVILEGE INFO FOR ', route.url);
       return true;
     }
 
+    return this.hasPrivileges(privilege);
+  }
+
+  canActivateChild(activatedRoute: ActivatedRouteSnapshot) {
+    const privilege = this.getPrivilegeFromRouteData(activatedRoute.data);
+    if (!privilege) {
+      return true;
+    }
+
+    this.setZendesk(activatedRoute.data);
+    return this.checkPrivilege(privilege);
+  }
+
+  canActivate(activatedRoute: ActivatedRouteSnapshot) {
+    const privilege = this.getPrivilegeFromRouteData(activatedRoute.data);
+    if (!privilege) {
+      return true;
+    }
+
+    return this.checkPrivilege(privilege);
+  }
+
+  private getPrivilegeFromRouteData(data: any) {
+    return _get(data, ['privilege'], null);
+  }
+
+  private checkPrivilege(privilege: number) {
     const hasPrivileges = this.hasPrivileges(privilege);
 
     if (!hasPrivileges) {
       this.router.navigate(['/dashboard']);
+      return;
     }
 
     console.log(`User has access to ${CP_PRIVILEGES[privilege]}`);
