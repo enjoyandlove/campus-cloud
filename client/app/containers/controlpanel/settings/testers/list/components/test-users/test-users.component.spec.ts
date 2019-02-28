@@ -1,11 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { CPI18nService } from '@shared/services';
+import { configureTestSuite } from '@shared/tests';
+import { SharedModule } from '@shared/shared.module';
 import { TestUsersComponent } from './test-users.component';
-import { configureTestSuite } from '@client/app/shared/tests';
-import { SharedModule } from '@client/app/shared/shared.module';
-import { CPI18nService } from '@client/app/shared/services';
 
-fdescribe('TestUsersComponent', () => {
+describe('TestUsersComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
