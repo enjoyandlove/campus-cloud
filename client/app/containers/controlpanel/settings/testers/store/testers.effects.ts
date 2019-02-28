@@ -33,13 +33,31 @@ export class TestersEffects {
       const search = new HttpParams()
         .set('sort_direction', sortDirection)
         .set('search_str', searchStr);
-      return this.service.getUsers(range.start, range.end, search).pipe(
-        map((users: ITestUser[]) => new actions.LoadTestersOK(users)),
-        catchError(() => {
-          this.store.dispatch(new baseActionClass.SnackbarError({ body: this.somethingWentWrong }));
-          return of(new actions.LoadTestersFail());
-        })
-      );
+      return this.service
+        .getUsers(range.start, range.end, search)
+        .pipe(
+          map((users: ITestUser[]) => new actions.LoadTestersOK(users)),
+          catchError(() => this.errorSnackbarAndFail(new actions.LoadTestersFail()))
+        );
     })
   );
+
+  @Effect()
+  deleteTester$: Observable<actions.DeleteTesterOK | actions.DeleteTesterFail> = this.actions$.pipe(
+    ofType(actions.TestersActions.DELETE),
+    map((action: actions.DeleteTester) => action.payload),
+    mergeMap((id: number) => {
+      return this.service
+        .deleteUser(id)
+        .pipe(
+          map(() => new actions.DeleteTesterOK(id)),
+          catchError(() => this.errorSnackbarAndFail(new actions.DeleteTesterFail()))
+        );
+    })
+  );
+
+  errorSnackbarAndFail(failAction) {
+    this.store.dispatch(new baseActionClass.SnackbarError({ body: this.somethingWentWrong }));
+    return of(failAction);
+  }
 }

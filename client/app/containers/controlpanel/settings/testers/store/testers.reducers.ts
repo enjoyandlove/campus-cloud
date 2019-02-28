@@ -52,6 +52,11 @@ export function reducer(state = initialState, action: TestersAction) {
         ...state,
         loading: false
       });
+    case TestersActions.DELETE:
+    case TestersActions.DELETE_FAIL:
+      return state;
+    case TestersActions.DELETE_OK:
+      return testersAdapter.removeOne(action.payload, state);
     default:
       return state;
   }

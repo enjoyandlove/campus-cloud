@@ -10,7 +10,10 @@ export enum TestersActions {
   SET_SEARCH = '[settings.testers] set search',
   LOAD = '[settings.testers] load',
   LOAD_OK = '[settings.testers] load OK',
-  LOAD_FAIL = '[settings.testers] load fail'
+  LOAD_FAIL = '[settings.testers] load fail',
+  DELETE = '[settings.testers] delete',
+  DELETE_OK = '[settings.testers] delete OK',
+  DELETE_FAIL = '[settings.testers] delete fail'
 }
 
 export class SetTestersRange implements Action {
@@ -42,10 +45,28 @@ export class LoadTestersFail implements Action {
   constructor() {}
 }
 
+export class DeleteTester implements Action {
+  readonly type = TestersActions.DELETE;
+  constructor(public payload: number) {}
+}
+
+export class DeleteTesterOK implements Action {
+  readonly type = TestersActions.DELETE_OK;
+  constructor(public payload: number) {}
+}
+
+export class DeleteTesterFail implements Action {
+  readonly type = TestersActions.DELETE_FAIL;
+  constructor() {}
+}
+
 export type TestersAction =
   | SetTestersRange
   | SetTestersSort
   | SetTestersSearch
   | LoadTesters
   | LoadTestersOK
-  | LoadTestersFail;
+  | LoadTestersFail
+  | DeleteTester
+  | DeleteTesterOK
+  | DeleteTesterFail;
