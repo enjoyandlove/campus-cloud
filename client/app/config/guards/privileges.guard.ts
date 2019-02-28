@@ -1,23 +1,20 @@
 import { Injectable } from '@angular/core';
+import { get as _get } from 'lodash';
 import {
-  ActivatedRouteSnapshot,
+  Router,
+  CanLoad,
   CanActivate,
   CanActivateChild,
-  Router,
-  PRIMARY_OUTLET
+  ActivatedRouteSnapshot
 } from '@angular/router';
 
-import { CPSession } from '../../session';
-import { CP_PRIVILEGES_MAP } from './../../shared/constants';
-import { AdminService, SchoolService, StoreService, ZendeskService } from '../../shared/services';
-
-import {
-  canAccountLevelReadResource,
-  canSchoolReadResource
-} from './../../shared/utils/privileges';
+import { CPSession } from '@app/session';
+import { CP_PRIVILEGES } from '@shared/constants/privileges';
+import { AdminService, SchoolService, StoreService, ZendeskService } from '@shared/services';
+import { canSchoolReadResource, canAccountLevelReadResource } from '@client/app/shared/utils';
 
 @Injectable()
-export class PrivilegesGuard implements CanActivate, CanActivateChild {
+export class PrivilegesGuard implements CanActivate, CanActivateChild, CanLoad {
   constructor(
     public router: Router,
     public session: CPSession,
@@ -27,107 +24,43 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
     public zendeskService: ZendeskService
   ) {}
 
-  canActivateChild(childRoute: ActivatedRouteSnapshot) {
-    this.setZendesk(childRoute.data);
-
-    if (childRoute.url.length) {
-      return this.hasPrivileges(childRoute.url[0].path);
-    }
-
+  canLoad() {
     return true;
   }
 
-  canActivate(activatedRoute, state) {
+  canActivateChild(activatedRoute: ActivatedRouteSnapshot) {
+    console.log('canActivateChild');
     this.setZendesk(activatedRoute.data);
+    return this.checkPrivileges(activatedRoute);
+  }
 
-    if (this.getParentModuleNameByRouteConfig(state.url)) {
-      return this.hasPrivileges(this.getParentModuleNameByRouteConfig(state.url));
+  canActivate(activatedRoute: ActivatedRouteSnapshot) {
+    return this.checkPrivileges(activatedRoute);
+  }
+
+  private checkPrivileges(route: ActivatedRouteSnapshot) {
+    const privilege = _get(route, ['data', 'privilege'], null);
+
+    if (!privilege) {
+      console.log('NO PRIVILEGE INFO FOR ', route.url);
+      return true;
     }
 
+    const hasPrivileges = this.hasPrivileges(privilege);
+
+    if (!hasPrivileges) {
+      this.router.navigate(['/dashboard']);
+    }
+
+    console.log(`User has access to ${CP_PRIVILEGES[privilege]}`);
     return true;
   }
 
-  hasPrivileges(route) {
-    const protectedRoutes = [
-      'jobs',
-      'deals',
-      'events',
-      'feeds',
-      'clubs',
-      'athletics',
-      'calendars',
-      'services',
-      'audience',
-      'links',
-      'locations',
-      'announcements',
-      'templates',
-      'branding',
-      'studio',
-      'dashboard',
-      'students',
-      'orientation',
-      'dining'
-    ];
-
-    const routeToPrivilege = {
-      events: CP_PRIVILEGES_MAP.events,
-
-      feeds: CP_PRIVILEGES_MAP.moderation,
-
-      clubs: CP_PRIVILEGES_MAP.clubs,
-
-      athletics: CP_PRIVILEGES_MAP.athletics,
-
-      services: CP_PRIVILEGES_MAP.services,
-
-      audience: CP_PRIVILEGES_MAP.campus_announcements,
-
-      calendars: CP_PRIVILEGES_MAP.calendar,
-
-      links: CP_PRIVILEGES_MAP.links,
-
-      announcements: CP_PRIVILEGES_MAP.campus_announcements,
-
-      locations: CP_PRIVILEGES_MAP.campus_maps,
-
-      templates: CP_PRIVILEGES_MAP.campus_announcements,
-
-      branding: CP_PRIVILEGES_MAP.app_customization,
-
-      studio: CP_PRIVILEGES_MAP.app_customization,
-
-      dashboard: CP_PRIVILEGES_MAP.assessment,
-
-      students: CP_PRIVILEGES_MAP.assessment,
-
-      orientation: CP_PRIVILEGES_MAP.orientation,
-
-      jobs: CP_PRIVILEGES_MAP.jobs,
-
-      deals: CP_PRIVILEGES_MAP.deals,
-
-      dining: CP_PRIVILEGES_MAP.dining
-    };
-
-    if (route) {
-      if (protectedRoutes.includes(route)) {
-        let canAccess;
-
-        const schoolLevel = canSchoolReadResource(this.session.g, routeToPrivilege[route]);
-        const accountLevel = canAccountLevelReadResource(this.session.g, routeToPrivilege[route]);
-
-        canAccess = schoolLevel || accountLevel;
-
-        if (!canAccess) {
-          this.router.navigate(['/dashboard']);
-        }
-
-        return canAccess;
-      }
-    }
-
-    return true;
+  private hasPrivileges(privilege: number) {
+    return (
+      canSchoolReadResource(this.session.g, privilege) ||
+      canAccountLevelReadResource(this.session.g, privilege)
+    );
   }
 
   private setZendesk(routeObj) {
@@ -136,13 +69,5 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
         labels: [routeObj['zendesk']]
       });
     }
-  }
-
-  getParentModuleNameByRouteConfig(url) {
-    const tree = this.router.parseUrl(url);
-    const children = tree.root.children[PRIMARY_OUTLET];
-    const segments = children.segments;
-
-    return segments[1].path;
   }
 }

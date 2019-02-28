@@ -1,25 +1,26 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
+import { PrivilegesGuard } from '@app/config/guards';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
 import { CustomiseComponent } from './customise.component';
-import { AuthGuard, PrivilegesGuard } from '../../../config/guards';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'experiences', pathMatch: 'full' },
   {
     path: '',
     component: CustomiseComponent,
-    canActivate: [AuthGuard],
-    canActivateChild: [PrivilegesGuard],
     children: [
       {
         path: 'experiences',
-        data: { zendesk: 'experiences' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'experiences', privilege: CP_PRIVILEGES_MAP.app_customization },
         loadChildren: './personas/personas.module#PersonasModule'
       },
       {
         path: 'branding',
-        data: { zendesk: 'studio' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'experiences', privilege: CP_PRIVILEGES_MAP.app_customization },
         loadChildren: './banner/banner.module#BannerModule'
       }
     ]
