@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { OverlayRef } from '@angular/cdk/overlay';
 import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -7,9 +8,11 @@ import { baseActions } from '@app/store';
 import { SortDirection } from '@shared/constants';
 import { Mixin, Destroyable } from '@shared/mixins';
 import * as actions from '../store/testers.actions';
+import { ModalService } from '@shared/services/modal';
 import { ITestersState } from '../store/testers.state';
 import * as selectors from '../store/testers.selectors';
 import { ITestUser } from '../models/test-user.interface';
+import { TestersDeleteComponent } from '../delete/testers-delete.component';
 
 @Component({
   selector: 'cp-testers-list',
@@ -18,6 +21,7 @@ import { ITestUser } from '../models/test-user.interface';
 })
 @Mixin([Destroyable])
 export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
+  modal: OverlayRef;
   testers$: Observable<ITestUser[]>;
   testersLoading$: Observable<boolean>;
   sortDirection$: Observable<SortDirection>;
@@ -26,7 +30,7 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
-  constructor(public store: Store<ITestersState>) {}
+  constructor(public store: Store<ITestersState>, private modalService: ModalService) {}
 
   doSearch(search) {
     this.store.dispatch(new actions.SetTestersSearch(search));
@@ -51,7 +55,20 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
   }
 
   doDelete(testerId) {
-    console.log('delete', testerId);
+    this.modal = this.modalService.open(TestersDeleteComponent, null, {
+      data: testerId,
+      onClose: this.resetModal.bind(this),
+      onAction: this.dispatchDelete.bind(this)
+    });
+  }
+
+  resetModal() {
+    this.modalService.close(this.modal);
+    this.modal = null;
+  }
+
+  dispatchDelete(testerId) {
+    this.store.dispatch(new actions.DeleteTester(testerId));
   }
 
   fetch() {

@@ -28,10 +28,12 @@
             {{ 't_sandbox_resend_invite' | cpI18n }}
           </a>
         </span>
-        <span
-          class="col-1  hover delete"
-          (click)="onDelete.emit(user.id)">
-          &times;
+        <span class="col-1 text-right actions">
+          <span
+            class="hover delete"
+            (click)="onDelete.emit(user.id)">
+            &times;
+          </span>
         </span>
       </div>
     </li>
