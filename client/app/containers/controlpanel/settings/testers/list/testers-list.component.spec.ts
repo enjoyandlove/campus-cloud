@@ -2,10 +2,10 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { StoreModule } from '@ngrx/store';
 
 import { reducerMap } from '../store';
-import { CPI18nService } from '@shared/services';
 import { configureTestSuite } from '@shared/tests';
 import * as actions from '../store/testers.actions';
 import { SharedModule } from '@shared/shared.module';
+import { CPI18nService, ModalService } from '@shared/services';
 import { TestersListComponent } from './testers-list.component';
 import { SETTINGS_TESTERS, SortDirection } from '@shared/constants';
 import { TestUsersComponent } from './components/test-users/test-users.component';
@@ -21,7 +21,7 @@ describe('TestersListComponent', () => {
           StoreModule.forRoot({}),
           StoreModule.forFeature(SETTINGS_TESTERS, reducerMap)
         ],
-        providers: [CPI18nService],
+        providers: [CPI18nService, ModalService],
         declarations: [TestersListComponent, TestersActionBoxComponent, TestUsersComponent]
       }).compileComponents();
     })()
