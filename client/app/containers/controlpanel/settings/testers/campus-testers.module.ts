@@ -11,9 +11,15 @@ import { TestersListComponent } from './list/testers-list.component';
 import { CampusTestersRoutingModule } from './campus-testers-routing.module';
 import { TestUsersComponent } from './list/components/test-users/test-users.component';
 import { TestersActionBoxComponent } from './list/components/testers-action-box/testers-action-box.component';
+import { TestersDeleteComponent } from './delete/testers-delete/testers-delete.component';
 
 @NgModule({
-  declarations: [TestersListComponent, TestUsersComponent, TestersActionBoxComponent],
+  declarations: [
+    TestersListComponent,
+    TestUsersComponent,
+    TestersActionBoxComponent,
+    TestersDeleteComponent
+  ],
   imports: [
     SharedModule,
     CommonModule,
