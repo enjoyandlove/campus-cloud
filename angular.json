@@ -113,9 +113,7 @@
                   "with": "client/index.prod.html"
                 }
               ],
-              "verbose": true,
-              "progress": false,
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
