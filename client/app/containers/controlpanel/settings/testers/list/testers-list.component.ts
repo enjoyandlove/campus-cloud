@@ -12,6 +12,7 @@ import { ModalService } from '@shared/services/modal';
 import { ITestersState } from '../store/testers.state';
 import * as selectors from '../store/testers.selectors';
 import { ITestUser } from '../models/test-user.interface';
+import { TestersCreateComponent } from '../create/testers-create.component';
 import { TestersDeleteComponent } from '../delete/testers-delete.component';
 
 @Component({
@@ -38,7 +39,14 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
   }
 
   doCreateModal() {
-    console.log('create modal');
+    this.modal = this.modalService.open(TestersCreateComponent, null, {
+      onClose: this.resetModal.bind(this),
+      onAction: this.dispatchCreate.bind(this)
+    });
+  }
+
+  dispatchCreate(users) {
+    console.log('create', users);
   }
 
   doSort(sortDirection) {
@@ -62,15 +70,14 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
     });
   }
 
-  resetModal() {
-    this.modalService.close(this.modal);
-    this.modal = null;
-  }
-
   dispatchDelete(testerId) {
     this.store.dispatch(new actions.DeleteTester(testerId));
   }
 
+  resetModal() {
+    this.modalService.close(this.modal);
+    this.modal = null;
+  }
   fetch() {
     this.store.dispatch(new actions.LoadTesters());
   }

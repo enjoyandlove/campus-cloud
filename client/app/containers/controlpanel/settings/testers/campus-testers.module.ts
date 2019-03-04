@@ -9,17 +9,19 @@ import { SETTINGS_TESTERS } from '@shared/constants';
 import { reducerMap, TestersEffects } from './store';
 import { CampusTestersService } from './campus-testers.service';
 import { TestersListComponent } from './list/testers-list.component';
+import { TestersCreateComponent } from './create/testers-create.component';
 import { TestersDeleteComponent } from './delete/testers-delete.component';
 import { CampusTestersRoutingModule } from './campus-testers-routing.module';
 import { TestUsersComponent } from './list/components/test-users/test-users.component';
 import { TestersActionBoxComponent } from './list/components/testers-action-box/testers-action-box.component';
 
 @NgModule({
-  entryComponents: [TestersDeleteComponent],
+  entryComponents: [TestersCreateComponent, TestersDeleteComponent],
   declarations: [
     TestersListComponent,
     TestUsersComponent,
     TestersActionBoxComponent,
+    TestersCreateComponent,
     TestersDeleteComponent
   ],
   imports: [

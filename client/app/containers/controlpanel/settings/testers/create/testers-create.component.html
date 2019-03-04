@@ -1,0 +1,44 @@
+<div class="cpmodal">
+    <div class="cpmodal__header">
+      <div class="row">
+        <div class="col-12 text-center">
+          <span>
+            <strong>
+              {{ 't_sandbox_invite_testers' | cpI18n }}
+            </strong>
+          </span>
+          <span
+            class="float-right hover cpmodal__header__close"
+            (click)="doCancel()">
+            &times;
+          </span>
+        </div>
+      </div>
+    </div>
+  
+    <div class="cpmodal__body">
+      form
+    </div>
+  
+    <div class="cpmodal__footer">
+      <div class="row justify-content-end">
+        <div class="col-6 text-right">
+          <button
+            type="button"
+            data-dismiss="modal"
+            (click)="doCancel()"
+            class="cpbtn cpbtn--cancel">
+            {{ 'cancel' | cpI18n }}
+          </button>
+  
+          <button
+            type="button"
+            (click)="doCreate()"
+            class="cpbtn cpbtn--primary js_submit_button">
+            {{ 't_sandbox_invite' | cpI18n }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
