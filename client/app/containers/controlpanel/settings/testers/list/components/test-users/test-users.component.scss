@@ -1,0 +1,19 @@
+@import '~client/style/core/colors';
+@import '~client/style/components/card';
+@import '~client/style/components/form';
+@import '~client/style/components/button';
+
+.test-users {
+  padding: 0;
+  list-style: none;
+
+  .delete {
+    top: -5px;
+    font-size: 2em;
+    position: relative;
+  }
+}
+
+.add-margin {
+  @include card-margin();
+}

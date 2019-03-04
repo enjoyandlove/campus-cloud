@@ -1,0 +1,15 @@
+<cp-testers-action-box
+  (onCreate)="doCreateModal()"
+  (onSearch)="doSearch($event)">
+</cp-testers-action-box>
+<div [ngSwitch]="testersLoading$ | async">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <cp-test-users
+    *ngSwitchCase="false"
+    [users]="testers$ | async"
+    [sortDirection]="sortDirection$ | async"
+    (onSort)="doSort($event)"
+    (onResend)="doResend($event)"
+    (onDelete)="doDelete($event)">
+  </cp-test-users>
+</div>
