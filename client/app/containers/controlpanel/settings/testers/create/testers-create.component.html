@@ -17,7 +17,19 @@
     </div>
   
     <div class="cpmodal__body">
-      form
+      <form [formGroup]="form">
+        <div class="formGroup">
+          <div class="row">
+            <div class="col-12">
+              <label for="emails">{{ 't_sandbox_email_addresses' | cpI18n }}</label>
+              <input
+                type="text"
+                cpTarget="emails"
+                formControlName="emails">
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
   
     <div class="cpmodal__footer">
@@ -26,15 +38,16 @@
           <button
             type="button"
             data-dismiss="modal"
-            (click)="doCancel()"
-            class="cpbtn cpbtn--cancel">
+            class="cpbtn cpbtn--cancel"
+            (click)="doCancel()">
             {{ 'cancel' | cpI18n }}
           </button>
   
           <button
             type="button"
-            (click)="doCreate()"
-            class="cpbtn cpbtn--primary js_submit_button">
+            class="cpbtn cpbtn--primary js_submit_button"
+            [disabled]="!form.valid"
+            (click)="doCreate()">
             {{ 't_sandbox_invite' | cpI18n }}
           </button>
         </div>

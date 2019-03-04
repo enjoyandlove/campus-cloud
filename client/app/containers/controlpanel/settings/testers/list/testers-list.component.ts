@@ -52,8 +52,8 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
     });
   }
 
-  dispatchCreate(users) {
-    console.log('create', users);
+  dispatchCreate(testers) {
+    console.log('create', testers);
   }
 
   doSort(sortDirection) {

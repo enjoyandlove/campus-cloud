@@ -1,5 +1,8 @@
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
-import { MODAL_DATA, IModal } from '@client/app/shared/services';
+
+import { MODAL_DATA, IModal } from '@shared/services';
+import { CustomTextValidators } from '@shared/validators';
 
 @Component({
   selector: 'cp-testers-create',
@@ -7,6 +10,7 @@ import { MODAL_DATA, IModal } from '@client/app/shared/services';
   styleUrls: ['./testers-create.component.scss']
 })
 export class TestersCreateComponent implements OnInit {
+  form: FormGroup;
   constructor(@Inject(MODAL_DATA) public modal: IModal) {}
 
   doCreate() {
@@ -18,5 +22,9 @@ export class TestersCreateComponent implements OnInit {
     this.modal.onClose();
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.form = new FormBuilder().group({
+      emails: [null, CustomTextValidators.commaSeparated(Validators.email)]
+    });
+  }
 }

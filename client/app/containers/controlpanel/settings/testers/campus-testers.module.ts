@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -27,9 +28,10 @@ import { TestersActionBoxComponent } from './list/components/testers-action-box/
   imports: [
     SharedModule,
     CommonModule,
+    ReactiveFormsModule,
     CampusTestersRoutingModule,
-    StoreModule.forFeature(SETTINGS_TESTERS, reducerMap),
-    EffectsModule.forFeature([TestersEffects])
+    EffectsModule.forFeature([TestersEffects]),
+    StoreModule.forFeature(SETTINGS_TESTERS, reducerMap)
   ],
   providers: [CampusTestersService, ModalService]
 })
