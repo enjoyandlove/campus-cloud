@@ -11,8 +11,8 @@ import {
 
 import { CPSession } from '@app/session';
 import { CP_PRIVILEGES } from '@shared/constants/privileges';
+import { canSchoolReadResource, canAccountLevelReadResource } from '@shared/utils';
 import { AdminService, SchoolService, StoreService, ZendeskService } from '@shared/services';
-import { canSchoolReadResource, canAccountLevelReadResource } from '@client/app/shared/utils';
 
 @Injectable()
 export class PrivilegesGuard implements CanActivate, CanActivateChild, CanLoad {
