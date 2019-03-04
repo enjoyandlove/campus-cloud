@@ -14,6 +14,10 @@ const appRoutes: Routes = [
     path: 'compose',
     component: AnnouncementsComposeComponent,
     data: { zendesk: 'notify' }
+  },
+  {
+    path: 'integrations',
+    loadChildren: './integrations/announcements.integrations.module#AnnouncementIntegrationsModule'
   }
 ];
 @NgModule({
