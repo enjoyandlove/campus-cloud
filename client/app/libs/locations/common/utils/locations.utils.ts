@@ -11,10 +11,7 @@ const days = Array.from(Array(7).keys());
 
 @Injectable()
 export class LocationsUtilsService {
-  constructor(
-    public cpI18n: CPI18nService,
-    public timeLabelPipe: LocationsTimeLabelPipe
-  ) {}
+  constructor(public cpI18n: CPI18nService, public timeLabelPipe: LocationsTimeLabelPipe) {}
 
   static getScheduleLabel(day) {
     return scheduleLabels[day];
@@ -287,7 +284,10 @@ export class LocationsUtilsService {
         const items = selectedDay.items.map((item) => {
           return {
             name: item.name,
-            time: this.timeLabelPipe.transform(item.start_time) + ' - ' + this.timeLabelPipe.transform(item.end_time)
+            time:
+              this.timeLabelPipe.transform(item.start_time) +
+              ' - ' +
+              this.timeLabelPipe.transform(item.end_time)
           };
         });
 
@@ -295,7 +295,6 @@ export class LocationsUtilsService {
           items,
           day: selectedDay.day
         });
-
       } else {
         openingHours.push({
           day: day + 1,

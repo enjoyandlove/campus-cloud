@@ -13,14 +13,22 @@
         </div>
       </div>
     </div>
-    <div class="col" *ngIf="canCompose">
+    <div class="col">
       <div class="row">
         <div class="col-12 text-right">
           <a
+            cpTarget="integrations"
+            routerLink="integrations"
+            *cpFeatureToggle="featureName"
+            class="cpbtn cpbtn--cancel integrations">
+            <i class="material-icons">link</i>
+          </a>
+          <a
             cpTracker
+            *ngIf="canCompose"
+            [eventData]="eventData"
             [routerLink]="['compose']"
-            class="cpbtn cpbtn--primary"
-            [eventData]="eventData">
+            class="cpbtn cpbtn--primary">
             {{ 'compose' | cpI18n }}
           </a>
         </div>
