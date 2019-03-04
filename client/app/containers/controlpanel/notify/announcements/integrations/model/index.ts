@@ -1,1 +1,2 @@
-export * from './walls-integration.interface';
+export * from './announcement-integration.model';
+export * from './announcement-integration.interface';

@@ -38,7 +38,7 @@
   a,
   li {
     @include font-normal();
-  
+
     color: $color-text;
 
     &:hover {

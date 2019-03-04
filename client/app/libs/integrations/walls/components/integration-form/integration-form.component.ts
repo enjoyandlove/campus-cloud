@@ -2,8 +2,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { IItem } from '@client/app/shared/components';
-import { CustomTextValidators } from '@client/app/shared/validators';
+import { IItem } from '@shared/components';
+import { CustomValidators } from '@shared/validators';
 
 @Component({
   selector: 'cp-walls-integration-form',
@@ -45,7 +45,7 @@ export class WallsIntegrationFormComponent implements OnInit {
         controlName,
         new FormControl(
           null,
-          Validators.compose([Validators.required, CustomTextValidators.requiredNonEmpty])
+          Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])
         )
       );
     } else {

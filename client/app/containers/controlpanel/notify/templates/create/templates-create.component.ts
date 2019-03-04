@@ -7,7 +7,7 @@ import { TooltipOption } from 'bootstrap';
 import { CPSession } from '@app/session';
 import { canSchoolWriteResource } from '@shared/utils';
 import { TemplatesService } from './../templates.service';
-import { CustomTextValidators } from '@shared/validators';
+import { CustomValidators } from '@shared/validators';
 import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@shared/constants';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 import { TemplatesComposeComponent } from '../compose/templates-compose.component';
@@ -221,8 +221,8 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
       user_ids: [[]],
       list_ids: [[]],
       is_school_wide: false,
-      subject: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
-      message: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
+      subject: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(128)]],
+      message: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
     });
 
@@ -245,7 +245,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
       this.isFormValid = isValid;
     });
-    const control = new FormControl(null, CustomTextValidators.requiredNonEmpty);
+    const control = new FormControl(null, CustomValidators.requiredNonEmpty);
 
     this.form.addControl('name', control);
   }

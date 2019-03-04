@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 
 import { FORMAT } from '@shared/pipes';
 import { SyncStatus } from '@libs/integrations/common/model';
-import { IAnnoucementsIntegration } from './../../model/walls-integration.interface';
+import { IAnnoucementsIntegration } from '../../model/announcement-integration.interface';
 
 @Component({
   selector: 'cp-integrations-list',
