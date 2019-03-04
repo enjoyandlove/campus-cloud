@@ -42,7 +42,6 @@ export class LoadTestersOK implements Action {
 
 export class LoadTestersFail implements Action {
   readonly type = TestersActions.LOAD_FAIL;
-  constructor() {}
 }
 
 export class DeleteTester implements Action {
@@ -57,10 +56,9 @@ export class DeleteTesterOK implements Action {
 
 export class DeleteTesterFail implements Action {
   readonly type = TestersActions.DELETE_FAIL;
-  constructor() {}
 }
 
-export type TestersAction =
+export type TestersActionType =
   | SetTestersRange
   | SetTestersSort
   | SetTestersSearch

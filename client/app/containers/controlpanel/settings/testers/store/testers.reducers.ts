@@ -3,7 +3,7 @@ import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 import { ITestersState } from './testers.state';
 import { SortDirection } from '@shared/constants';
 import { ITestUser } from '../models/test-user.interface';
-import { TestersAction, TestersActions } from './testers.actions';
+import { TestersActionType, TestersActions } from './testers.actions';
 
 export const defaultState: ITestersState = {
   range: { start: 1, end: 101 },
@@ -17,7 +17,7 @@ export const defaultState: ITestersState = {
 export const testersAdapter: EntityAdapter<ITestUser> = createEntityAdapter<ITestUser>();
 export const initialState: ITestersState = testersAdapter.getInitialState(defaultState);
 
-export function reducer(state = initialState, action: TestersAction) {
+export function reducer(state = initialState, action: TestersActionType) {
   switch (action.type) {
     case TestersActions.SET_RANGE:
       const range = action.payload;
