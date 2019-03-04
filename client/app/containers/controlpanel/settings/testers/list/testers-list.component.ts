@@ -4,14 +4,16 @@ import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { baseActions } from '@app/store';
+import { CPI18nService } from '@shared/services';
 import { SortDirection } from '@shared/constants';
-import { Mixin, Destroyable } from '@shared/mixins';
 import * as actions from '../store/testers.actions';
+import { Mixin, Destroyable } from '@shared/mixins';
 import { ModalService } from '@shared/services/modal';
 import { ITestersState } from '../store/testers.state';
 import * as selectors from '../store/testers.selectors';
 import { ITestUser } from '../models/test-user.interface';
+import { CampusTestersService } from '../campus-testers.service';
+import { baseActions, ISnackbar, baseActionClass } from '@app/store';
 import { TestersCreateComponent } from '../create/testers-create.component';
 import { TestersDeleteComponent } from '../delete/testers-delete.component';
 
@@ -31,7 +33,12 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
-  constructor(public store: Store<ITestersState>, private modalService: ModalService) {}
+  constructor(
+    public store: Store<ITestersState | ISnackbar>,
+    private service: CampusTestersService,
+    public cpI18n: CPI18nService,
+    private modalService: ModalService
+  ) {}
 
   doSearch(search) {
     this.store.dispatch(new actions.SetTestersSearch(search));
@@ -59,7 +66,20 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
   }
 
   doResend(testerId) {
-    console.log('resend', testerId);
+    this.service.resendInvite(testerId).subscribe(
+      () =>
+        this.store.dispatch(
+          new baseActionClass.SnackbarSuccess({
+            body: this.cpI18n.translate('t_sandbox_resend_invite_success')
+          })
+        ),
+      () =>
+        this.store.dispatch(
+          new baseActionClass.SnackbarError({
+            body: this.cpI18n.translate('something_went_wrong')
+          })
+        )
+    );
   }
 
   doDelete(testerId) {

@@ -24,6 +24,13 @@ export class CampusTestersService extends HTTPService {
     return super.get(url, search, true);
   }
 
+  resendInvite(testerId) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_ACCESS_LEVEL}/${testerId}`;
+    const body = { resend_email: 1 };
+
+    return super.update(url, body, null, true);
+  }
+
   deleteUser(testerId) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_ACCESS_LEVEL}/${testerId}`;
 
