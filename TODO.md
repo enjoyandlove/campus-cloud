@@ -59,6 +59,7 @@
   Inside ModuleA
 
   > imports: [\
-  > >  ModuleB, // here ModuleB's routes get imported first\
+  >
+  > > ModuleB, // here ModuleB's routes get imported first\
   > >  ModuleARouting\
   > > ]

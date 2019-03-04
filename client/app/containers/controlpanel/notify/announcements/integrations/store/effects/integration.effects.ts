@@ -41,6 +41,23 @@ export class AnnoucementIntegrationsEffects {
     })
   );
 
+  @Effect()
+  deleteById$: Observable<
+    fromActions.DeleteIntegrationsSuccess | fromActions.DeleteIntegrationsFail
+  > = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.DELETE_INTEGRATIONS),
+    map((action: fromActions.DeleteIntegrations) => action.payload),
+    mergeMap(({ integrationId }) => {
+      return this.service.deleteIntegration(integrationId, this.params).pipe(
+        map(() => new fromActions.DeleteIntegrationsSuccess({ integrationId })),
+        catchError(() => {
+          this.handleError();
+          return of(new fromActions.DeleteIntegrationsFail());
+        })
+      );
+    })
+  );
+
   private get params() {
     return new HttpParams().set('school_id', this.session.g.get('school').id);
   }
