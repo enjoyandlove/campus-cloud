@@ -1,4 +1,4 @@
-<div [ngSwitch]="users?.length > 0">
+<ng-container [ngSwitch]="users?.length > 0">
   <ul
     *ngSwitchCase="true"  
     class="test-users cp-form">
@@ -43,4 +43,4 @@
     class="add-margin"
     [noContentText]="'t_sandbox_no_test_users' | cpI18n">
   </cp-no-content>
-</div>
+</ng-container>
