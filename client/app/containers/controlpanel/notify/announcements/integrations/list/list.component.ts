@@ -1,13 +1,16 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { OverlayRef } from '@angular/cdk/overlay';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
+import { ModalService } from '@shared/services';
 import { IAnnoucementsIntegration } from '../model';
 import { BaseComponent } from '@app/base/base.component';
+import { AnnouncementsIntegrationDeleteComponent } from '../delete';
 
 @Component({
   selector: 'cp-announcements-integrations-list',
@@ -15,11 +18,13 @@ import { BaseComponent } from '@app/base/base.component';
   styleUrls: ['./list.component.scss']
 })
 export class AnnouncementsIntegrationListComponent extends BaseComponent implements OnInit {
+  activeModal: OverlayRef;
   loading$: Observable<boolean>;
   integrations$: Observable<IAnnoucementsIntegration[]>;
 
   constructor(
     private session: CPSession,
+    private modalService: ModalService,
     private store: Store<fromRoot.IHeader | fromStore.IAnnoucementsIntegrationState>
   ) {
     super();
@@ -63,8 +68,20 @@ export class AnnouncementsIntegrationListComponent extends BaseComponent impleme
     console.log('onSyncNow');
   }
 
-  onLaunchDeleteModal() {
-    console.log('onLaunchDeleteModal');
+  onActiveModalTearDown() {
+    this.modalService.close(this.activeModal);
+    this.activeModal = null;
+  }
+
+  onLaunchDeleteModal(integration: IAnnoucementsIntegration) {
+    this.activeModal = this.modalService.open(
+      AnnouncementsIntegrationDeleteComponent,
+      {},
+      {
+        data: integration,
+        onClose: this.onActiveModalTearDown.bind(this)
+      }
+    );
   }
 
   fetch() {
