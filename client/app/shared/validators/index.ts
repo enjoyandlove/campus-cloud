@@ -1,2 +1,2 @@
-export * from './text';
 export * from './lat-lng';
+export * from './custom.validators';

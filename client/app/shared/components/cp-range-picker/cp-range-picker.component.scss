@@ -672,10 +672,14 @@ span.flatpickr-day.endRange,
 span.flatpickr-day.startRange {
   border-color: #4f99ff;
 }
-.flatpickr-day.selected.startRange, .flatpickr-day.startRange.startRange, .flatpickr-day.endRange.startRange {
+.flatpickr-day.selected.startRange,
+.flatpickr-day.startRange.startRange,
+.flatpickr-day.endRange.startRange {
   border-radius: 0;
 }
-.flatpickr-day.selected.endRange, .flatpickr-day.startRange.endRange, .flatpickr-day.endRange.endRange {
+.flatpickr-day.selected.endRange,
+.flatpickr-day.startRange.endRange,
+.flatpickr-day.endRange.endRange {
   border-radius: 0;
 }
 span.flatpickr-day.selected,

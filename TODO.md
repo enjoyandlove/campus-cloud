@@ -46,6 +46,7 @@
 * Remove `api.enviornment` and use angular's environment file instead
 
 * Fix test Warnigns (either missing inputs, or failing to call fixture.detectChanges, when updating values, a few routing minor routing warnings):
+
   * [ ] ProvidersListComponent
   * [ ] EventCreateComponent
   * [ ] EventAttendanceComponent
@@ -53,10 +54,11 @@
   * [ ] DashboardTopResourceTitleComponent
 
 * Fix module imports to not interfere with routes based on import order
-  This applies to any module that has routes imported.  Sometimes we need to import a module to reference its components/services and we also import the routes.  If we import this additional module before the routing module, the new module's routes take precedence:
+  This applies to any module that has routes imported. Sometimes we need to import a module to reference its components/services and we also import the routes. If we import this additional module before the routing module, the new module's routes take precedence:
 
   Inside ModuleA
-    > imports: [\
-    >   ModuleB, // here ModuleB's routes get imported first\
-    >   ModuleARouting\
-    > ]
+
+  > imports: [\
+  > >  ModuleB, // here ModuleB's routes get imported first\
+  > >  ModuleARouting\
+  > > ]

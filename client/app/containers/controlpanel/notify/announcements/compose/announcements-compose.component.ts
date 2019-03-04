@@ -9,7 +9,7 @@ import { CPSession } from '@app/session';
 import { baseActions, IHeader } from '@app/store';
 import { canSchoolReadResource } from '@shared/utils';
 import { parseErrorResponse } from '@shared/utils/http';
-import { CustomTextValidators } from '@shared/validators';
+import { CustomValidators } from '@shared/validators';
 import { AnnouncementsService } from '../announcements.service';
 import { AudienceType } from '@controlpanel/audience/audience.status';
 import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@shared/constants';
@@ -628,8 +628,8 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       filters: [[]],
       persona_id: [null],
       is_school_wide: true,
-      subject: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
-      message: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
+      subject: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(128)]],
+      message: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
     });
 

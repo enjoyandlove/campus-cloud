@@ -16,7 +16,7 @@ import { map } from 'rxjs/operators';
 
 import { CPSession } from '@app/session';
 import { canSchoolWriteResource } from '@shared/utils';
-import { CustomTextValidators } from '@shared/validators';
+import { CustomValidators } from '@shared/validators';
 import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@shared/constants';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 import { CPI18nService, StoreService, CPTrackingService, ZendeskService } from '@shared/services';
@@ -564,8 +564,8 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
       user_ids: [[]],
       list_ids: [[]],
       is_school_wide: false,
-      subject: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(128)]],
-      message: [null, [CustomTextValidators.requiredNonEmpty, Validators.maxLength(400)]],
+      subject: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(128)]],
+      message: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(400)]],
       priority: [this.types[0].action, Validators.required]
     });
 

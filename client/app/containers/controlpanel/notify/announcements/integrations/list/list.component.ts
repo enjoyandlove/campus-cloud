@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
+import { IAnnoucementsIntegration } from '../model';
 import { BaseComponent } from '@app/base/base.component';
-import { IAnnoucementsIntegration } from './../model/walls-integration.interface';
 
 @Component({
   selector: 'cp-announcements-integrations-list',

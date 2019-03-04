@@ -22,3 +22,9 @@ export interface IUser {
   firstname: string;
   lastname: string;
 }
+
+export enum AnnouncementPriority {
+  urgent = 1,
+  regular = 2,
+  emergency = 0
+}

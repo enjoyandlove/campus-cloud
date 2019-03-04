@@ -2,7 +2,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 
 import { getItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
-import { CustomTextValidators } from '@shared/validators';
+import { CustomValidators } from '@shared/validators';
 import { environment } from '@client/environments/environment';
 import { ICategory, ICategoryType } from './categories.interface';
 
@@ -24,17 +24,19 @@ export class CategoryModel {
     return fb.group({
       color: [_category.color, Validators.required],
       img_url: [_category.img_url, Validators.required],
-      name: [_category.name, CustomTextValidators.requiredNonEmpty],
+      name: [_category.name, CustomValidators.requiredNonEmpty],
       category_type_id: [_category.category_type_id, Validators.required]
     });
   }
 
   static setCategoryTypes(categoryTypes: ICategoryType[]) {
     const cpI18n = new CPI18nService();
-    const _heading = [{
-      action: null,
-      label: cpI18n.translate('t_locations_category_type_select')
-    }];
+    const _heading = [
+      {
+        action: null,
+        label: cpI18n.translate('t_locations_category_type_select')
+      }
+    ];
 
     const _categoryTypes = categoryTypes.map((types: ICategoryType) => {
       return getItem(types, 'name', 'id');
@@ -58,7 +60,7 @@ export class CategoryModel {
       },
       {
         icon: `${assetPath + 'library.svg'}`,
-        value: `${dbPath + 'location_category_library.png'}`,
+        value: `${dbPath + 'location_category_library.png'}`
       },
       {
         icon: `${assetPath + 'parking.svg'}`,
