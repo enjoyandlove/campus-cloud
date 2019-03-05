@@ -1,11 +1,12 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 
 import { MODAL_DATA, IModal } from '@shared/services';
 
 @Component({
   selector: 'cp-testers-delete',
   templateUrl: './testers-delete.component.html',
-  styleUrls: ['./testers-delete.component.scss']
+  styleUrls: ['./testers-delete.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TestersDeleteComponent implements OnInit {
   constructor(@Inject(MODAL_DATA) public modal: IModal) {}
