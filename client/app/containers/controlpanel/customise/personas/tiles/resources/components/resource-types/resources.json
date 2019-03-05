@@ -80,6 +80,17 @@
     }
   },
   {
+    "id": "dining",
+    "login_required": false,
+    "label": "dining",
+    "meta": {
+      "is_system": 1,
+      "link_params": {},
+      "open_in_browser": 0,
+      "link_url": "oohlala://campus_poi_list/dining"
+    }
+  },
+  {
     "id": "store_list",
     "login_required": false,
     "label": "t_personas_tile_create_resource_type_store_list",
