@@ -63,12 +63,17 @@ export class TestersEffects {
     ofType(actions.TestersActions.CREATE),
     map((action: actions.CreateTesters) => action.payload),
     mergeMap((emails: string[]) => {
-      return this.service
-        .createUsers(emails)
-        .pipe(
-          map((testers: ITestUser[]) => new actions.CreateTestersOK(testers)),
-          catchError(() => this.errorSnackbarAndFail(new actions.CreateTestersFail()))
-        );
+      return this.service.createUsers(emails).pipe(
+        map((testers: ITestUser[]) => {
+          this.store.dispatch(
+            new baseActionClass.SnackbarSuccess({
+              body: this.cpI18n.translate('t_sandbox_invite_testers_success')
+            })
+          );
+          return new actions.CreateTestersOK(testers);
+        }),
+        catchError(() => this.errorSnackbarAndFail(new actions.CreateTestersFail()))
+      );
     })
   );
 
