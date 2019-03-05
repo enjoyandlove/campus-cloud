@@ -1,4 +1,5 @@
 import { takeUntil, filter, tap, map, take } from 'rxjs/operators';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
@@ -12,7 +13,6 @@ import { BaseComponent } from '@app/base';
 import { IItem } from '@shared/components';
 import { CPI18nService } from '@shared/services/i18n.service';
 import { Mixin, Destroyable } from '@client/app/shared/mixins';
-import { coerceBooleanProperty } from '@shared/utils/coercion';
 import { IWallsIntegration } from '@libs/integrations/walls/model';
 
 @Component({

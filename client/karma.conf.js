@@ -11,7 +11,6 @@ module.exports = function(config) {
       require('karma-jasmine'),
       require('karma-mocha-reporter'),
       require('karma-chrome-launcher'),
-      require('karma-firefox-launcher'),
       require('karma-coverage-istanbul-reporter'),
       require('@angular-devkit/build-angular/plugins/karma'),
       jasmineSeedReporter
@@ -46,7 +45,7 @@ module.exports = function(config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadless'], // test
+    browsers: ['ChromeHeadless'],
     singleRun: false
   });
 };

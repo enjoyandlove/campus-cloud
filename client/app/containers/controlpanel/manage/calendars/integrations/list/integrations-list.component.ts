@@ -1,4 +1,5 @@
 import { tap, takeUntil, filter, map, take } from 'rxjs/operators';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -12,7 +13,6 @@ import { BaseComponent } from '@app/base';
 import { FORMAT } from '@shared/pipes/date/date.pipe';
 import { CPI18nService } from '@shared/services/i18n.service';
 import { IEventIntegration } from '@libs/integrations/events/model';
-import { coerceBooleanProperty } from '@client/app/shared/utils/coercion';
 import { ItemsIntegrationsUitlsService } from '../items-integrations.utils.service';
 
 @Component({

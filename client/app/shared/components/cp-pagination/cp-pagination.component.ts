@@ -9,8 +9,9 @@ export class CPPaginationComponent implements OnInit {
   @Input() pageNext: boolean;
   @Input() pagePrev: boolean;
   @Input() pageNumber: number;
-  @Output() next: EventEmitter<null> = new EventEmitter();
-  @Output() previous: EventEmitter<null> = new EventEmitter();
+
+  @Output() next: EventEmitter<number> = new EventEmitter();
+  @Output() previous: EventEmitter<number> = new EventEmitter();
 
   constructor() {}
 
@@ -19,14 +20,15 @@ export class CPPaginationComponent implements OnInit {
       return;
     }
 
-    this.next.emit();
+    this.next.emit(+this.pageNumber + 1);
   }
 
   onPrevious(): void {
     if (!this.pagePrev) {
       return;
     }
-    this.previous.emit();
+
+    this.previous.emit(+this.pageNumber - 1);
   }
 
   ngOnInit() {
