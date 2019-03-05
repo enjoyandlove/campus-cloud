@@ -52,20 +52,13 @@ export class CPMapsComponent implements OnInit, AfterViewInit {
   }
 
   handleDoubleClick(event) {
-    this.locationService
-      .geoCode(event.latLng.toJSON())
-      .then((response) => {
-        const location = event.latLng;
+    this.locationService.geoCode(event.latLng.toJSON()).then((response) => {
+      const location = event.latLng;
 
-        response = { ...response, geometry: { location } };
+      response = { ...response, geometry: { location } };
 
-        this.mapSelection.emit(response);
-      })
-      .catch((err) => {
-        if (err === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) {
-          console.log(err, event);
-        }
-      });
+      this.mapSelection.emit(response);
+    });
 
     this.cpMapsService.setMarkerPosition(this.marker, event.latLng.toJSON());
   }

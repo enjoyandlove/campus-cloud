@@ -1,4 +1,4 @@
-import { parseErrorResponse } from '@shared/utils/http/api-error-parser';
+import { parseErrorResponse } from './api-error-parser';
 
 enum errorKeys {
   'school_id' = 'invalid school id',
