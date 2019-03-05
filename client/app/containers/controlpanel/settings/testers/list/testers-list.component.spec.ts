@@ -1,12 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 
 import { reducerMap } from '../store';
+import { CPSession } from '@app/session';
 import { configureTestSuite } from '@shared/tests';
 import * as actions from '../store/testers.actions';
 import { SharedModule } from '@shared/shared.module';
 import { CPI18nService, ModalService } from '@shared/services';
 import { TestersListComponent } from './testers-list.component';
+import { CampusTestersService } from '../campus-testers.service';
 import { SETTINGS_TESTERS, SortDirection } from '@shared/constants';
 import { TestUsersComponent } from './components/test-users/test-users.component';
 import { TestersActionBoxComponent } from './components/testers-action-box/testers-action-box.component';
@@ -18,10 +22,12 @@ describe('TestersListComponent', () => {
       await TestBed.configureTestingModule({
         imports: [
           SharedModule,
+          HttpClientModule,
+          RouterTestingModule,
           StoreModule.forRoot({}),
           StoreModule.forFeature(SETTINGS_TESTERS, reducerMap)
         ],
-        providers: [CPI18nService, ModalService],
+        providers: [CPSession, CPI18nService, ModalService, CampusTestersService],
         declarations: [TestersListComponent, TestersActionBoxComponent, TestUsersComponent]
       }).compileComponents();
     })()
