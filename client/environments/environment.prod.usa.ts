@@ -16,6 +16,10 @@ export const environment: IEnvironment = {
       active: false,
       internal: true
     },
+    ANNOUNCEMENT_INTEGRATION: {
+      active: false,
+      internal: true
+    },
     DINING: {
       active: false,
       internal: true
