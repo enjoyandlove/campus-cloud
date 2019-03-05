@@ -46,7 +46,7 @@ export class CampusTestersService extends HTTPService {
       emails
     };
 
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_ACCESS_LEVEL}/1`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_ACCESS_LEVEL}/`;
 
     return super.post(url, body, null, true);
   }
