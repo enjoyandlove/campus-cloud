@@ -4,12 +4,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CPI18nService } from './index';
 
-const maxAllowed = 8e6;
+const maxAllowed = 5e6; // 5MB
 
 @Injectable()
 export class FileUploadService {
-  maxImageSize = maxAllowed; // 8MB
-  maxFileSize = maxAllowed; // 8MB
+  maxImageSize = maxAllowed;
+  maxFileSize = maxAllowed;
 
   validFileTypes = [
     'application/pdf', // .pdf
