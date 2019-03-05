@@ -1,11 +1,4 @@
-import {
-  ChangeDetectionStrategy,
-  EventEmitter,
-  Component,
-  OnInit,
-  Output,
-  Input
-} from '@angular/core';
+import { EventEmitter, Component, OnInit, Output, Input } from '@angular/core';
 
 import { SortDirection } from '@shared/constants';
 import { ITestUser } from '../../../models/test-user.interface';
@@ -13,8 +6,7 @@ import { ITestUser } from '../../../models/test-user.interface';
 @Component({
   selector: 'cp-test-users',
   templateUrl: './test-users.component.html',
-  styleUrls: ['./test-users.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./test-users.component.scss']
 })
 export class TestUsersComponent implements OnInit {
   @Input() users: ITestUser[];
