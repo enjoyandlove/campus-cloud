@@ -45,7 +45,8 @@
   
           <button
             type="button"
-            class="cpbtn cpbtn--primary js_submit_button"
+            cpTarget="submit"
+            class="cpbtn cpbtn--primary"
             [disabled]="!form.valid"
             (click)="doCreate()">
             {{ 't_sandbox_invite' | cpI18n }}
