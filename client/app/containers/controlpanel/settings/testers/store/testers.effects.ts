@@ -56,6 +56,22 @@ export class TestersEffects {
     })
   );
 
+  @Effect()
+  createTesters$: Observable<
+    actions.CreateTestersOK | actions.CreateTestersFail
+  > = this.actions$.pipe(
+    ofType(actions.TestersActions.CREATE),
+    map((action: actions.CreateTesters) => action.payload),
+    mergeMap((emails: string[]) => {
+      return this.service
+        .createUsers(emails)
+        .pipe(
+          map((testers: ITestUser[]) => new actions.CreateTestersOK(testers)),
+          catchError(() => this.errorSnackbarAndFail(new actions.CreateTestersFail()))
+        );
+    })
+  );
+
   errorSnackbarAndFail(failAction) {
     this.store.dispatch(new baseActionClass.SnackbarError({ body: this.somethingWentWrong }));
     return of(failAction);

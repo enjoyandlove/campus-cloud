@@ -38,6 +38,7 @@ export function reducer(state = initialState, action: TestersActionType) {
         searchStr
       };
     case TestersActions.LOAD:
+    case TestersActions.CREATE:
       return {
         ...state,
         loading: true
@@ -57,6 +58,16 @@ export function reducer(state = initialState, action: TestersActionType) {
       return state;
     case TestersActions.DELETE_OK:
       return testersAdapter.removeOne(action.payload, state);
+    case TestersActions.CREATE_OK:
+      return testersAdapter.addMany(action.payload, {
+        ...state,
+        loading: false
+      });
+    case TestersActions.CREATE_FAIL:
+      return {
+        ...state,
+        loading: false
+      };
     default:
       return state;
   }

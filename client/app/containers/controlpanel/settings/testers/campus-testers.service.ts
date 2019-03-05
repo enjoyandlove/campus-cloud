@@ -36,4 +36,18 @@ export class CampusTestersService extends HTTPService {
 
     return super.delete(url, null, true);
   }
+
+  createUsers(emails) {
+    const client_id = this.session.g.get('school').client_id;
+    const access_level = 1;
+    const body = {
+      client_id,
+      access_level,
+      emails
+    };
+
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_ACCESS_LEVEL}/1`;
+
+    return super.post(url, body, null, true);
+  }
 }

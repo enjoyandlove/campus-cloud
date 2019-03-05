@@ -11,10 +11,16 @@ import { CustomTextValidators } from '@shared/validators';
 })
 export class TestersCreateComponent implements OnInit {
   form: FormGroup;
+
   constructor(@Inject(MODAL_DATA) public modal: IModal) {}
 
   doCreate() {
-    this.modal.onAction();
+    const value = this.form.get('emails').value;
+    const emails = value
+      .split(',')
+      .map((email) => email.trim())
+      .filter((email) => email.length);
+    this.modal.onAction(emails);
     this.modal.onClose();
   }
 
