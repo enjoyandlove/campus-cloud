@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, Inject } from '@angular/core';
 
 import { MODAL_DATA, IModal } from '@shared/services';
 import { CustomTextValidators } from '@shared/validators';
@@ -7,8 +7,7 @@ import { CustomTextValidators } from '@shared/validators';
 @Component({
   selector: 'cp-testers-create',
   templateUrl: './testers-create.component.html',
-  styleUrls: ['./testers-create.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  styleUrls: ['./testers-create.component.scss']
 })
 export class TestersCreateComponent implements OnInit {
   form: FormGroup;

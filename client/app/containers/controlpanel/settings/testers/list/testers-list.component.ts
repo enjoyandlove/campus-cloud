@@ -34,10 +34,10 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
   emitDestroy() {}
 
   constructor(
-    public store: Store<ITestersState | ISnackbar>,
+    private cpI18n: CPI18nService,
+    private modalService: ModalService,
     private service: CampusTestersService,
-    public cpI18n: CPI18nService,
-    private modalService: ModalService
+    public store: Store<ITestersState | ISnackbar>
   ) {}
 
   doSearch(search) {
