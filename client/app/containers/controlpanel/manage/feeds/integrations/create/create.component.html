@@ -21,8 +21,8 @@
   <div class="cpmodal__body">
     <cp-walls-integration-form
       [form]="form"
-      [channels$]="channels$"
-      [types]="typesDropdown">
+      [types]="typesDropdown"
+      [channels]="channels$ | async">
     </cp-walls-integration-form>
   </div>
 

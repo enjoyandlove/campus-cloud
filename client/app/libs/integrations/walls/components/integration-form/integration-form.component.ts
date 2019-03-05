@@ -1,6 +1,5 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
-import { Observable } from 'rxjs';
 
 import { IItem } from '@shared/components';
 import { CustomValidators } from '@shared/validators';
@@ -14,9 +13,9 @@ export class WallsIntegrationFormComponent implements OnInit {
   static readonly shouldCreateSocialPostCategory = -1;
   @Input() types: IItem[];
   @Input() form: FormGroup;
+  @Input() channels: IItem[];
   @Input() selectedType: IItem;
   @Input() selectedChannel: IItem;
-  @Input() channels$: Observable<IItem[]>;
 
   showChannelName = false;
 
