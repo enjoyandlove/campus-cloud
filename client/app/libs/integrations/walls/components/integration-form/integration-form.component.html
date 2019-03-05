@@ -32,7 +32,7 @@
         <label for="channel">{{ 't_shared_channel' | cpI18n }}</label>
         <cp-dropdown
           cpTarget="channel"
-          [items]="channels$ | async"
+          [items]="channels"
           [selectedItem]="selectedChannel"
           (selected)="onSelectedChannel($event)"
           [disabled]="form.get('social_post_category_id').disabled">

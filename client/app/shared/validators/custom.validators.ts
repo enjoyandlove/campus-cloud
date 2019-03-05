@@ -1,5 +1,4 @@
-import { ValidationErrors } from '@angular/forms/src/directives/validators';
-import { AbstractControl } from '@angular/forms/src/model';
+import { ValidationErrors, AbstractControl } from '@angular/forms';
 
 export class CustomValidators {
   static positiveInteger(control: AbstractControl): ValidationErrors | null {
