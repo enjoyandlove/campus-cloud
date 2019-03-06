@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 
 @Component({
@@ -7,12 +7,8 @@ import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
               [isAthletic]="isAthletic">
              </cp-clubs-delete>`
 })
-export class AthleticsDeleteComponent implements OnInit {
-  @Input() isAthletic;
+export class AthleticsDeleteComponent {
+  isAthletic = isClubAthletic.athletic;
 
   constructor() {}
-
-  ngOnInit() {
-    this.isAthletic = isClubAthletic.athletic;
-  }
 }

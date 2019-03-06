@@ -130,10 +130,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
       ClubsDeleteComponent,
       {},
       {
-        data: {
-          club,
-          isAthletic: this.isAthletic
-        },
+        data: club,
         onClose: this.onDeletedClub.bind(this)
       }
     );

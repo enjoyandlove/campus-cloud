@@ -1,8 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 
 import { ClubsService } from '../clubs.service';
 import { amplitudeEvents } from '@shared/constants';
-import { clubAthleticLabels } from '../clubs.athletics.labels';
+import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
 import { CPTrackingService, CPI18nService, MODAL_DATA, IModal } from '@shared/services';
 
 @Component({
@@ -11,6 +11,8 @@ import { CPTrackingService, CPI18nService, MODAL_DATA, IModal } from '@shared/se
   styleUrls: ['./clubs-delete.component.scss']
 })
 export class ClubsDeleteComponent implements OnInit {
+  @Input() isAthletic = isClubAthletic.club;
+
   labels;
   club: any;
   deleteWarnings = [
@@ -46,9 +48,8 @@ export class ClubsDeleteComponent implements OnInit {
   }
 
   ngOnInit() {
-    const { club, isAthletic } = this.modal.data;
-    this.club = club;
+    this.club = this.modal.data;
 
-    this.labels = clubAthleticLabels(isAthletic);
+    this.labels = clubAthleticLabels(this.isAthletic);
   }
 }
