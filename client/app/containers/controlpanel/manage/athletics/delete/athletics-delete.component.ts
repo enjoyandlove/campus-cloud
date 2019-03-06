@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 
 @Component({
