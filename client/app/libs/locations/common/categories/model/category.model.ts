@@ -1,5 +1,6 @@
 import { FormBuilder, Validators } from '@angular/forms';
 
+import { CPSession } from '@app/session';
 import { getItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
 import { CustomValidators } from '@shared/validators';
@@ -10,7 +11,12 @@ export enum DeleteError {
   'locations_associated_to_category' = 't_error_category_associated_to_location'
 }
 
+const dbPath = 'https://d38h7mnlv8qddx.cloudfront.net/';
+const assetPath = `${environment.root}public/svg/locations/categories/`;
+
 export class CategoryModel {
+  constructor(public session: CPSession) {}
+
   static form(category?: ICategory) {
     const fb = new FormBuilder();
 
@@ -45,14 +51,24 @@ export class CategoryModel {
     return [..._heading, ..._categoryTypes];
   }
 
-  static categoryIcons() {
-    const dbPath = 'https://d38h7mnlv8qddx.cloudfront.net/';
-    const assetPath = `${environment.root}public/svg/locations/categories/`;
-
+  static diningCategoryIcons() {
     return [
       {
-        value: `${dbPath + 'location_pin.png'}`,
-        icon: `${assetPath + 'location_pin.svg'}`
+        icon: `${assetPath + 'dining.svg'}`,
+        value: `${dbPath + 'location_category_dining.png'}`
+      },
+      {
+        icon: `${assetPath + 'location_pin.svg'}`,
+        value: `${dbPath + 'location_pin.png'}`
+      }
+    ];
+  }
+
+  static categoryIcons() {
+    return [
+      {
+        icon: `${assetPath + 'location_pin.svg'}`,
+        value: `${dbPath + 'location_pin.png'}`
       },
       {
         icon: `${assetPath + 'housing.svg'}`,

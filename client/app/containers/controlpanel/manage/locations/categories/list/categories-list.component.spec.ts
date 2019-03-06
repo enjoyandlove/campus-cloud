@@ -9,14 +9,14 @@ import { of } from 'rxjs';
 
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
-import { CategoryTypePipe } from '../pipes';
 import { CPI18nService } from '@shared/services';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
-import { mockCategories} from '../../categories/tests';
-import { CategoriesActionBoxComponent } from './components';
 import { CategoriesListComponent } from './categories-list.component';
+import { mockCategories} from '@libs/locations/common/categories/tests';
+import { CategoryTypePipe } from '@libs/locations/common/categories/pipes';
+import { CategoriesActionBoxComponent } from '@libs/locations/common/categories/components';
 
 describe('CategoriesListComponent', () => {
   configureTestSuite();
@@ -77,10 +77,7 @@ describe('CategoriesListComponent', () => {
 
     fixture.detectChanges();
 
-    const sortingLabel = fixture.debugElement
-      .query(By.css('.categories li .js_test_sorting_name')).nativeElement;
-
-    sortingLabel.click();
+    component.doSort('name');
 
     expect(fetchSpy).toHaveBeenCalled();
     expect(fetchSpy).toHaveBeenCalledTimes(1);

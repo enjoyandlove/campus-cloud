@@ -32,6 +32,12 @@ const appRoutes: Routes = [
     canActivate: [PrivilegesGuard, DiningExistGuard],
     component: DiningEditComponent,
     data: { zendesk: 'dining' }
+  },
+  {
+    path: 'categories',
+    canActivate: [PrivilegesGuard],
+    data: { zendesk: 'categories' },
+    loadChildren: './categories/dining-categories.module#DiningCategoriesModule'
   }
 ];
 @NgModule({

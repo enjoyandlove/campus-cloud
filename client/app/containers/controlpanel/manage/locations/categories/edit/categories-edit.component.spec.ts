@@ -9,8 +9,8 @@ import { CPI18nService } from '@shared/services';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
-import { filledForm, mockCategories } from '../tests';
 import { CategoriesEditComponent } from './categories-edit.component';
+import { filledForm, mockCategories } from '@libs/locations/common/categories/tests';
 
 describe('CategoriesEditComponent', () => {
   configureTestSuite();

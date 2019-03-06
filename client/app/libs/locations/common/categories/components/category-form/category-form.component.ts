@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { CategoryModel } from '../model';
 import { IItem } from '@shared/components';
+import { CategoryModel } from '../../model';
 
 @Component({
   selector: 'cp-category-form',
@@ -15,8 +15,8 @@ export class CategoryFormComponent implements OnInit {
   @Input() selectedCategory;
   @Input() formError: boolean;
   @Input() categoryTypes$: Observable<IItem[]>;
+  @Input() categoryIcons: Array<{ value: string; icon: string }>;
 
-  categoryIcons = CategoryModel.categoryIcons();
   categoryIconColors = CategoryModel.categoryIconColors();
 
   constructor() {}

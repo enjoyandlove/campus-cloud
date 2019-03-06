@@ -10,15 +10,15 @@ import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
-import { ICategory } from '../categories/model';
 import { CPSession, ISchool } from '@app/session';
-import { LocationType } from '../locations.service';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
 import * as fromCategoryStore from '../categories/store';
-import { Locale } from '../categories/categories.status';
+import { LocationType } from '@libs/locations/common/utils';
 import { LocationModel } from '@libs/locations/common/model';
+import { ICategory } from '@libs/locations/common/categories/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
 
 @Component({
   selector: 'cp-locations-create',
@@ -146,7 +146,9 @@ export class LocationsCreateComponent implements OnInit, OnDestroy, AfterViewIni
       takeUntil(this.destroy$),
       tap((categories: ICategory[]) => {
         if (!categories.length) {
-          const locale = CPI18nService.getLocale().startsWith('fr') ? Locale.fr : Locale.eng;
+          const locale = CPI18nService.getLocale().startsWith('fr')
+            ? LocationCategoryLocale.fr
+            : LocationCategoryLocale.eng;
 
           const params = new HttpParams()
             .set('locale', locale)

@@ -34,6 +34,10 @@
   }
 
   &__color {
+    .error {
+      display: block;
+    }
+
     button {
       @include button-layout();
 
