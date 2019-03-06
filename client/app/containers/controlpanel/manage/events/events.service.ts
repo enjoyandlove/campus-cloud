@@ -63,7 +63,7 @@ export class EventsService extends HTTPService {
   createEvent(body: any, {}) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/`;
 
-    return super.post(url, body);
+    return super.post(url, body, null, true);
   }
 
   updateEvent(body: any, eventId: number, {}) {
