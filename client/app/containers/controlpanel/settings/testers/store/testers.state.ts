@@ -27,5 +27,5 @@ export interface ITestersFeature {
 }
 
 export const reducerMap: ActionReducerMap<ITestersFeature> = {
-  [SETTINGS_TESTERS]: testersReducer.reducer
+  settingsTesters: testersReducer.reducer
 };

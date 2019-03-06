@@ -7,6 +7,7 @@ import { CPI18nService } from '@shared/services';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { TestUsersComponent } from './test-users.component';
+import { NoTestersComponent } from '../no-testers/no-testers.component';
 
 describe('TestUsersComponent', () => {
   configureTestSuite();
@@ -15,7 +16,7 @@ describe('TestUsersComponent', () => {
       await TestBed.configureTestingModule({
         imports: [SharedModule],
         providers: [CPI18nService],
-        declarations: [TestUsersComponent]
+        declarations: [TestUsersComponent, NoTestersComponent]
       }).compileComponents();
     })()
       .then(done)
@@ -46,14 +47,14 @@ describe('TestUsersComponent', () => {
     component.users = [];
     fixture.detectChanges();
     const testUsers = debugEl.queryAll(By.css('.cp-form__item'));
-    const noContent = debugEl.query(By.css('cp-no-content'));
+    const noContent = debugEl.query(By.css('cp-no-testers'));
     expect(testUsers.length).toBe(0);
     expect(noContent).toBeTruthy();
   });
 
   it('should have testers', () => {
     const testUsers = debugEl.queryAll(By.css('.cp-form__item'));
-    const noContent = debugEl.query(By.css('cp-no-content'));
+    const noContent = debugEl.query(By.css('cp-no-testers'));
     expect(testUsers.length).toBe(1);
     expect(noContent).toBeNull();
   });

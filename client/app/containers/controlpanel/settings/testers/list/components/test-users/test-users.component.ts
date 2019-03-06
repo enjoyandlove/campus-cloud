@@ -12,6 +12,7 @@ export class TestUsersComponent implements OnInit {
   @Input() users: ITestUser[];
   @Input() sortDirection: SortDirection;
 
+  @Output() onCreate: EventEmitter<null> = new EventEmitter();
   @Output() onResend: EventEmitter<number> = new EventEmitter();
   @Output() onDelete: EventEmitter<number> = new EventEmitter();
   @Output() onSort: EventEmitter<SortDirection> = new EventEmitter();

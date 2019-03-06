@@ -1,0 +1,79 @@
+<ng-container [ngSwitch]="loading">
+    <cp-spinner *ngSwitchCase="true"></cp-spinner>
+    <div class="cp-wrapper cp-wrapper--outer" *ngSwitchCase="false">
+      <div class="row tile">
+        <div class="col-12">
+          <cp-range-picker
+            [class]="datePickerClass"
+            [dateRanges]="dateRanges"
+            [label]="currentDate.label"
+            (rangeChange)="onDateChange($event)">
+          </cp-range-picker>
+        </div>
+      </div>
+  
+      <div class="row tile">
+        <div class="col-12">
+          <cp-card>
+            <cp-dashboard-downloads-registration
+              [dates]="currentDate">
+            </cp-dashboard-downloads-registration>
+          </cp-card>
+        </div>
+      </div>
+  
+      <div class="card-columns">
+        <cp-card>
+          <cp-dashboard-general-information>
+          </cp-dashboard-general-information>
+        </cp-card>
+        <cp-card *ngIf="canAssess">
+          <cp-dashboard-top-events
+            [dates]="currentDate">
+          </cp-dashboard-top-events>
+        </cp-card>
+  
+        <cp-card *ngIf="canAssess">
+          <cp-dashboard-assessment
+            [dates]="currentDate">
+          </cp-dashboard-assessment>
+        </cp-card>
+  
+        <cp-card *ngIf="state.experiences[1]">
+          <cp-dashboard-campus-tile
+            [experiences]="state.experiences">
+          </cp-dashboard-campus-tile>
+        </cp-card>
+  
+        <cp-card>
+          <cp-dashboard-integrations>
+          </cp-dashboard-integrations>
+        </cp-card>
+  
+        <cp-card *ngIf="canAssess">
+          <cp-dashboard-top-services
+            [dates]="currentDate">
+          </cp-dashboard-top-services>
+        </cp-card>
+  
+        <cp-card>
+          <cp-dashboard-social-activity
+            [dates]="currentDate">
+          </cp-dashboard-social-activity>
+        </cp-card>
+  
+        <cp-card *ngIf="canViewClub">
+          <cp-dashboard-top-clubs
+            [dates]="currentDate">
+          </cp-dashboard-top-clubs>
+        </cp-card>
+  
+        <cp-card *ngIf="canAssess">
+          <cp-dashboard-top-orientation
+            [dates]="currentDate">
+          </cp-dashboard-top-orientation>
+        </cp-card>
+      </div>
+    </div>
+  </ng-container>
+  

@@ -38,9 +38,9 @@
       </div>
     </li>
   </ul>
-  <cp-no-content
+  <cp-no-testers
     *ngSwitchCase="false"
     class="add-margin"
-    [noContentText]="'t_sandbox_no_test_users' | cpI18n">
-  </cp-no-content>
+    (onCreate)="onCreate.emit()">
+  </cp-no-testers>
 </ng-container>

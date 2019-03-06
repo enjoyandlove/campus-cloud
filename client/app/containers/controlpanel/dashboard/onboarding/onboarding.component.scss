@@ -1,0 +1,15 @@
+@import '~client/style/core/typography';
+@import '~client/style/components/button';
+
+.content {
+  text-align: center;
+
+  h4 {
+    @include font-bold();
+  }
+
+  img {
+    height: 300px;
+    margin-right: 48px;
+  }
+}

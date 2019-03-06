@@ -13,6 +13,7 @@ import { TestersListComponent } from './testers-list.component';
 import { CampusTestersService } from '../campus-testers.service';
 import { SETTINGS_TESTERS, SortDirection } from '@shared/constants';
 import { TestUsersComponent } from './components/test-users/test-users.component';
+import { NoTestersComponent } from './components/no-testers/no-testers.component';
 import { TestersActionBoxComponent } from './components/testers-action-box/testers-action-box.component';
 
 describe('TestersListComponent', () => {
@@ -28,7 +29,12 @@ describe('TestersListComponent', () => {
           StoreModule.forFeature(SETTINGS_TESTERS, reducerMap)
         ],
         providers: [CPSession, CPI18nService, ModalService, CampusTestersService],
-        declarations: [TestersListComponent, TestersActionBoxComponent, TestUsersComponent]
+        declarations: [
+          TestersListComponent,
+          TestersActionBoxComponent,
+          TestUsersComponent,
+          NoTestersComponent
+        ]
       }).compileComponents();
     })()
       .then(done)

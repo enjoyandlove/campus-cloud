@@ -9,6 +9,7 @@
     [users]="testers$ | async"
     [sortDirection]="sortDirection$ | async"
     (onSort)="doSort($event)"
+    (onCreate)="doCreateModal()"
     (onResend)="doResend($event)"
     (onDelete)="doDelete($event)">
   </cp-test-users>
