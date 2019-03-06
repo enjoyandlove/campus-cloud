@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import * as fromRoot from '@app/store/base';
 import { baseActions } from '@app/store/base';
 import { CPDate, CPMap } from '@shared/utils';
 import { EventsService } from '../events.service';
@@ -25,7 +26,6 @@ import {
   AdminService,
   CPI18nService,
   CPTrackingService,
-  ErrorService,
   StoreService
 } from '@shared/services';
 
@@ -92,7 +92,6 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
     public utils: EventUtilService,
     public adminService: AdminService,
     public storeService: StoreService,
-    public errorService: ErrorService,
     public cpTracking: CPTrackingService
   ) {
     super(session, cpI18n, service);
@@ -311,9 +310,13 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
         this.urlPrefix = this.getUrlPrefix(res.id);
         this.router.navigate([this.urlPrefix]);
       },
-      (err) => {
+      () => {
         this.enableSaveButton();
-        this.errorService.handleError(err);
+        this.storeHeader.dispatch(
+          new fromRoot.baseActionClass.SnackbarError({
+            body: this.cpI18n.translate('something_went_wrong')
+          })
+        );
       }
     );
   }
