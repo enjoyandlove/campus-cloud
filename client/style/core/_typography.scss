@@ -147,3 +147,7 @@ form input,
 input.flatpickr-input[readonly] {
   @include font-14px();
 }
+
+.text-danger {
+  color: $color-danger;
+}

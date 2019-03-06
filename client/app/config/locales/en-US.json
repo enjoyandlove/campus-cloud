@@ -2373,6 +2373,9 @@
   "t_customise_personas": {
     "message": "App Experiences"
   },
+  "t_dashboard_build_experience": {
+    "message": "Build App Experience"
+  },
   "t_dashboard_chart_tooltip_label_downloads": {
     "message": "Downloads"
   },
@@ -2381,6 +2384,12 @@
   },
   "t_dashboard_top_orientation": {
     "message": "Top Orientation Programs"
+  },
+  "t_dashboard_welcome": {
+    "message": "Welcome to Campus Cloud"
+  },
+  "t_dashboard_welcome_subheader": {
+    "message": "You can measure your app and content engagement after launching your app experience"
   },
   "t_datepicker_clear": {
     "message": "Clear"
@@ -3000,7 +3009,7 @@
     "message": "Email Addresses (separated by comma)"
   },
   "t_sandbox_email_addresses_hint": {
-    "message": "i.e. (john@ready.edu, jane@ready.edu)"
+    "message": "e.g. (john@ready.edu, jane@ready.edu)"
   },
   "t_sandbox_invite": {
     "message": "Invite"
@@ -3160,6 +3169,12 @@
   },
   "t_shared_delete_confirmation": {
     "message": "Are you sure you want to delete %s?"
+  },
+  "t_shared_delete_modal_warning": {
+    "message": "Warning: This cannot be undone"
+  },
+  "t_shared_delete_resource_warning_assessment_data": {
+    "message": "All assessment data will be deleted"
   },
   "t_shared_edit": {
     "message": "Edit"
