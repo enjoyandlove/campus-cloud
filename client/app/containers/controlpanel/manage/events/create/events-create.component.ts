@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+
 import * as fromRoot from '@app/store/base';
 import { baseActions } from '@app/store/base';
 import { CPDate, CPMap } from '@shared/utils';
