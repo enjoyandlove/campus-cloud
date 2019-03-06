@@ -6,7 +6,6 @@ import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { ISnackbar } from '@app/store';
-import { ICategory } from '../../model';
 import * as fromActions from '../actions';
 import { CPI18nService } from '@shared/services';
 import { baseActionClass } from '@app/store/base';
@@ -14,6 +13,7 @@ import * as fromLocationStore from '../../../store';
 import { parseErrorResponse } from '@shared/utils/http';
 import { ILocation } from '@libs/locations/common/model';
 import { CategoriesService } from '../../categories.service';
+import { ICategory } from '@libs/locations/common/categories/model';
 
 @Injectable()
 export class CategoriesEffects {

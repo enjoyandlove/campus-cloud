@@ -1,3 +1,5 @@
+export class MockModalData {}
+
 export const emptyForm = {
   name: null,
   color: null,

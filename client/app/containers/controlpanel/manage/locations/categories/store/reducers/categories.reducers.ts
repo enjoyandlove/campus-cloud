@@ -1,6 +1,6 @@
-import { ICategory } from '../../model';
 import { IItem } from '@shared/components';
 import * as fromLocations from '../actions';
+import { ICategory } from '@libs/locations/common/categories/model';
 
 export interface ICategoriesState {
   error: boolean;

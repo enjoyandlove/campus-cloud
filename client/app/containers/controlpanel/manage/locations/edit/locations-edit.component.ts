@@ -11,15 +11,15 @@ import * as fromRoot from '@app/store';
 import { BaseComponent } from '@app/base';
 import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
-import { ICategory } from '../categories/model';
 import { CPSession, ISchool } from '@app/session';
-import { LocationType} from '../locations.service';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
 import * as fromCategoryStore from '../categories/store';
-import { Locale } from '../categories/categories.status';
+import { LocationType } from '@libs/locations/common/utils';
+import { ICategory } from '@libs/locations/common/categories/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 import { LocationModel, ILocation } from '@libs/locations/common/model';
+import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
 
 @Component({
   selector: 'cp-locations-edit',
@@ -164,7 +164,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
       tap((categories: ICategory[]) => {
         if (!categories.length) {
           const locale = CPI18nService.getLocale().startsWith('fr')
-            ? Locale.fr : Locale.eng;
+            ? LocationCategoryLocale.fr : LocationCategoryLocale.eng;
 
           const params = new HttpParams()
             .set('locale', locale)

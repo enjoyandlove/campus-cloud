@@ -1,4 +1,4 @@
-import { map, mergeMap, catchError, tap } from 'rxjs/operators';
+import { map, mergeMap, catchError, tap, filter, withLatestFrom } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -13,6 +13,8 @@ import { CPI18nService } from '@shared/services';
 import { baseActionClass } from '@app/store/base';
 import { DiningService } from '../../dining.service';
 import { IDining } from '@libs/locations/common/model';
+import * as fromDiningCategoryStore from '../../categories/store';
+import { ICategory } from '@libs/locations/common/categories/model';
 
 @Injectable()
 export class DiningEffect {
@@ -98,16 +100,38 @@ export class DiningEffect {
   );
 
   @Effect()
+  createDiningSuccess$: Observable<fromDiningCategoryStore.GetCategoriesSuccess>
+    = this.actions$.pipe(
+    ofType(fromActions.diningActions.POST_DINING_SUCCESS),
+    map((action: fromActions.PostDiningSuccess) => action.payload),
+    withLatestFrom(this.store.select(fromDiningCategoryStore.getCategories)),
+    map(([{ category_id }, categories]) => {
+      return categories.map((category: ICategory) => {
+        if (category.id === category_id) {
+          category = {
+            ...category,
+            locations_count: category.locations_count + 1
+          };
+        }
+
+        return category;
+      });
+    }),
+    filter((c: ICategory[]) => !!c.length),
+    mergeMap((c) => of(new fromDiningCategoryStore.GetCategoriesSuccess(c)))
+  );
+
+  @Effect()
   editDining$: Observable<fromActions.EditDiningSuccess | fromActions.EditDiningFail>
     = this.actions$.pipe(
     ofType(fromActions.diningActions.EDIT_DINING),
     mergeMap((action: fromActions.EditDining) => {
-      const { diningId, body, params } = action.payload;
+      const { diningId, categoryId, body, params } = action.payload;
 
       return this.service
         .updateDining(body, diningId, params)
         .pipe(
-          map((data: IDining) => new fromActions.EditDiningSuccess(data)),
+          map((data: IDining) => new fromActions.EditDiningSuccess({ data, categoryId })),
           tap((_) => this.router.navigate([`/manage/dining/${diningId}/info`])),
           catchError((error) => {
             this.store.dispatch(
@@ -123,18 +147,69 @@ export class DiningEffect {
   );
 
   @Effect()
+  editDiningSuccess$: Observable<fromDiningCategoryStore.GetCategoriesSuccess>
+    = this.actions$.pipe(
+    ofType(fromActions.diningActions.EDIT_DINING_SUCCESS),
+    map((action: fromActions.EditDiningSuccess) => action.payload),
+    withLatestFrom(this.store.select(fromDiningCategoryStore.getCategories)),
+    map(([dining, categories]) => {
+      return categories.map((category: ICategory) => {
+        if (category.id === dining['categoryId']) {
+          category = {
+            ...category,
+            locations_count: category.locations_count - 1
+          };
+        }
+
+        if (category.id === dining['data'].category_id) {
+          category = {
+            ...category,
+            locations_count: category.locations_count + 1
+          };
+        }
+
+        return category;
+      });
+    }),
+    filter((c: ICategory[]) => !!c.length),
+    mergeMap((c) => of(new fromDiningCategoryStore.GetCategoriesSuccess(c)))
+  );
+
+  @Effect()
   deleteDining$: Observable<fromActions.DeleteDiningSuccess | fromActions.DeleteDiningFail>
     = this.actions$.pipe(
     ofType(fromActions.diningActions.DELETE_DINING),
     mergeMap((action: fromActions.DeleteDining) => {
-      const { diningId, params } = action.payload;
+      const { diningId, categoryId, params } = action.payload;
 
       return this.service
         .deleteDiningById(diningId, params)
         .pipe(
-          map(() => new fromActions.DeleteDiningSuccess({ deletedId: diningId })),
+          map(() => new fromActions.DeleteDiningSuccess({ deletedId: diningId, categoryId })),
           catchError((error) => of(new fromActions.DeleteDiningFail(error)))
         );
     })
+  );
+
+  @Effect()
+  deleteDiningSuccess$: Observable<fromDiningCategoryStore.GetCategoriesSuccess>
+    = this.actions$.pipe(
+    ofType(fromActions.diningActions.DELETE_DINING_SUCCESS),
+    map((action: fromActions.DeleteDiningSuccess) => action.payload),
+    withLatestFrom(this.store.select(fromDiningCategoryStore.getCategories)),
+    map(([{ categoryId }, categories]) => {
+      return categories.map((category: ICategory) => {
+        if (category.id === categoryId) {
+          category = {
+            ...category,
+            locations_count: category.locations_count - 1
+          };
+        }
+
+        return category;
+      });
+    }),
+    filter((c: ICategory[]) => !!c.length),
+    mergeMap((c) => of(new fromDiningCategoryStore.GetCategoriesSuccess(c)))
   );
 }

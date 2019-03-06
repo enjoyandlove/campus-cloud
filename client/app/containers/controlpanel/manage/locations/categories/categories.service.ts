@@ -5,9 +5,9 @@ import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
 import { API } from '@app/config/api';
-import { CategoryModel } from './model';
 import { IItem } from '@shared/components';
 import { HTTPService } from '@app/base/http.service';
+import { CategoryModel } from '@libs/locations/common/categories/model';
 
 @Injectable()
 export class CategoriesService extends HTTPService {
