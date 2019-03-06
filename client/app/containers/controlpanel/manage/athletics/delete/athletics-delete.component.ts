@@ -1,15 +1,7 @@
 import { Component } from '@angular/core';
 
-import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
-
 @Component({
   selector: 'cp-athletics-delete',
-  template: `<cp-clubs-delete
-              [isAthletic]="isAthletic">
-             </cp-clubs-delete>`
+  template: `<cp-clubs-delete></cp-clubs-delete>`
 })
-export class AthleticsDeleteComponent {
-  isAthletic = isClubAthletic.athletic;
-
-  constructor() {}
-}
+export class AthleticsDeleteComponent {}

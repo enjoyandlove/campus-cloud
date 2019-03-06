@@ -9,6 +9,7 @@ import { SharedModule } from '@shared/shared.module';
 import { CPDeleteModalComponent } from '@shared/components';
 import { ClubsDeleteComponent } from './clubs-delete.component';
 import { MODAL_DATA, CPI18nService, CPTrackingService } from '@shared/services';
+import { isClubAthletic } from '@controlpanel/manage/clubs/clubs.athletics.labels';
 
 describe('ClubsDeleteComponent', () => {
   configureTestSuite();
@@ -24,7 +25,10 @@ describe('ClubsDeleteComponent', () => {
           {
             provide: MODAL_DATA,
             useValue: {
-              data: {},
+              data: {
+                club: {},
+                isAthletic: isClubAthletic.club
+              },
               onClose: () => {}
             }
           }

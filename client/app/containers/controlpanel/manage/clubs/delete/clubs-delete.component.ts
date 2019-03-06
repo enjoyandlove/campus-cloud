@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, Input } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 import { ClubsService } from '../clubs.service';
 import { amplitudeEvents } from '@shared/constants';
@@ -11,7 +11,7 @@ import { CPTrackingService, CPI18nService, MODAL_DATA, IModal } from '@shared/se
   styleUrls: ['./clubs-delete.component.scss']
 })
 export class ClubsDeleteComponent implements OnInit {
-  @Input() isAthletic = isClubAthletic.club;
+  isAthletic: isClubAthletic;
 
   labels;
   club: any;
@@ -48,8 +48,9 @@ export class ClubsDeleteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.club = this.modal.data;
+    const { club, isAthletic } = this.modal.data;
+    this.club = club;
 
-    this.labels = clubAthleticLabels(this.isAthletic);
+    this.labels = clubAthleticLabels(isAthletic);
   }
 }
