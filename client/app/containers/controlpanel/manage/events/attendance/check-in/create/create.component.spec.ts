@@ -3,17 +3,16 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormBuilder } from '@angular/forms';
 import { of as observableOf } from 'rxjs';
 
+import { CPSession } from '@app/session';
+import { mockCheckIn } from '../../../tests';
+import { mockSchool } from '@app/session/mock';
+import { CPI18nService } from '@shared/services';
 import { EventsModule } from '../../../events.module';
 import { attendanceType } from '../../../event.status';
 import { EventsService } from '../../../events.service';
 import { CheckInCreateComponent } from './create.component';
-import { CPSession } from '../../../../../../../session';
 import { CheckInUtilsService } from '../check-in.utils.service';
-import { mockSchool } from '../../../../../../../session/mock';
 import { EventUtilService } from '../../../events.utils.service';
-import { CPI18nService } from '../../../../../../../shared/services';
-
-let mockCheckIn = require('../../../__mock__/eventCheckIn.json');
 
 class MockService {
   dummy;
@@ -64,6 +63,7 @@ describe('EventCheckInCreateComponent', () => {
             ...component.data,
             ...mockEvent
           };
+
           component.ngOnInit();
           component.form = component.checkInUtils.getCheckInForm(mockCheckIn, component.data);
         });
@@ -74,12 +74,12 @@ describe('EventCheckInCreateComponent', () => {
     spyOn(component.created, 'emit');
     spyOn(component, 'resetModal');
 
-    mockCheckIn = {
+    const checkin = {
       ...mockCheckIn,
       attendance_id: 4525
     };
 
-    spy = spyOn(component.service, 'addCheckIn').and.returnValue(observableOf(mockCheckIn));
+    spy = spyOn(component.service, 'addCheckIn').and.returnValue(observableOf(checkin));
 
     const checkInTime = 1598918399;
     const checkOutTimeInFuture = 1601549048;

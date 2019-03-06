@@ -3,15 +3,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 
+import { CPSession } from '@app/session';
+import { mockCheckIn } from '../../../tests';
+import { mockSchool } from '@app/session/mock';
+import { CPI18nService } from '@shared/services';
 import { EventsModule } from '../../../events.module';
 import { attendanceType } from '../../../event.status';
 import { EventsService } from '../../../events.service';
 import { CheckInDeleteComponent } from './delete.component';
-import { CPSession } from '../../../../../../../session';
-import { mockSchool } from '../../../../../../../session/mock';
-import { CPI18nService } from '../../../../../../../shared/services';
-
-const mockCheckIn = require('../../../__mock__/eventCheckIn.json');
 
 class MockService {
   dummy;
