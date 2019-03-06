@@ -2373,6 +2373,9 @@
   "t_customise_personas": {
     "message": "Expériences d'application"
   },
+  "t_dashboard_build_experience": {
+    "message": "Créer expérience d'application"
+  },
   "t_dashboard_chart_tooltip_label_downloads": {
     "message": "Téléchargements"
   },
@@ -2381,6 +2384,12 @@
   },
   "t_dashboard_top_orientation": {
     "message": "Palmarès des orientations"
+  },
+  "t_dashboard_welcome": {
+    "message": "Bienvenue sur Campus Cloud"
+  },
+  "t_dashboard_welcome_subheader": {
+    "message": "Vous pouvez mesurer l'engagement avec votre application et le contenu après avoir lancé votre expérience d'application"
   },
   "t_datepicker_clear": {
     "message": "Réinitialiser"

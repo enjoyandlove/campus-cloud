@@ -1,63 +1,71 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { of as observableOf } from 'rxjs';
+import { By } from '@angular/platform-browser';
 
+import { configureTestSuite } from '@shared/tests';
 import { ServicesModule } from '../services.module';
 import { ServicesService } from '../services.service';
-import { CPI18nService } from '../../../../../shared/services';
+import { CPDeleteModalComponent } from '@shared/components';
+import { MockServicesService, mockService } from '../tests';
+import { CPI18nService, MODAL_DATA } from '@shared/services';
 import { ServicesDeleteComponent } from './services-delete.component';
 
-class MockService {
-  dummy;
-
-  deleteService(serviceId: any) {
-    this.dummy = [serviceId];
-
-    return observableOf({});
-  }
-}
-
 describe('ServicesDeleteComponent', () => {
-  let spy;
+  configureTestSuite();
+
+  beforeAll((done) => {
+    (async () => {
+      TestBed.configureTestingModule({
+        imports: [ServicesModule, HttpClientModule, RouterTestingModule],
+        providers: [
+          CPI18nService,
+          {
+            provide: MODAL_DATA,
+            useValue: {
+              data: mockService,
+              onClose: () => {}
+            }
+          },
+          { provide: ServicesService, useClass: MockServicesService }
+        ]
+      });
+      await TestBed.compileComponents();
+    })()
+      .then(done)
+      .catch(done.fail);
+  });
+
   let component: ServicesDeleteComponent;
+  let deleteModal: CPDeleteModalComponent;
   let fixture: ComponentFixture<ServicesDeleteComponent>;
 
   beforeEach(
     async(() => {
-      TestBed.configureTestingModule({
-        imports: [ServicesModule, HttpClientModule, RouterTestingModule],
-        providers: [CPI18nService, { provide: ServicesService, useClass: MockService }]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(ServicesDeleteComponent);
+      fixture = TestBed.createComponent(ServicesDeleteComponent);
+      component = fixture.componentInstance;
+      deleteModal = fixture.debugElement.query(By.directive(CPDeleteModalComponent))
+        .componentInstance;
 
-          component = fixture.componentInstance;
-          component.service = {
-            ...component.service,
-            id: 123
-          };
-
-          spyOn(component.deleted, 'emit');
-          spy = spyOn(component.servicesService, 'deleteService').and.returnValue(observableOf({}));
-
-          component.ngOnInit();
-        });
+      fixture.detectChanges();
     })
   );
 
-  it('Should delete service', () => {
-    component.onDelete();
+  it('should init', () => {
+    expect(component).toBeTruthy();
+  });
 
-    expect(component.buttonData.disabled).toBe(false);
+  it('should call onDelete on cp-delete-modal deleteClick', () => {
+    spyOn(component, 'onDelete');
+    deleteModal.deleteClick.emit();
 
-    expect(spy).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalledTimes(1);
-    expect(spy).toHaveBeenCalledWith(component.service.id);
+    expect(component.onDelete).toHaveBeenCalled();
+  });
 
-    expect(component.deleted.emit).toHaveBeenCalled();
-    expect(component.deleted.emit).toHaveBeenCalledTimes(1);
-    expect(component.deleted.emit).toHaveBeenCalledWith(component.service.id);
+  it('should call onClose on cp-delete-modal cancelClick', () => {
+    spyOn(component, 'onClose');
+    deleteModal.cancelClick.emit();
+
+    expect(component.onClose).toHaveBeenCalled();
   });
 });
