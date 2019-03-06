@@ -20,6 +20,7 @@ import { LayoutsModule } from '@app/layouts/layouts.module';
 import { DiningRoutingModule } from './dining.routing.module';
 import { LocationsModule } from '../locations/locations.module';
 import { CustomSerializer } from '@app/store/base/router-state';
+import { DiningCategoriesModule } from './categories/dining-categories.module';
 import { CommonLocationsModule } from '@libs/locations/common/common-locations.module';
 
 @NgModule({
@@ -35,6 +36,7 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
     CommonModule,
     SharedModule,
     LayoutsModule,
+    DiningCategoriesModule, // sorting based on route loading
     DiningRoutingModule,
     LocationsModule,
     ReactiveFormsModule,

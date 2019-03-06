@@ -1,6 +1,6 @@
 import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -13,7 +13,10 @@ import { CPSession, ISchool } from '@app/session';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
 import { DiningModel } from '@libs/locations/common/model';
+import { map, takeUntil, tap } from 'rxjs/operators';
+import { ICategory } from '@libs/locations/common/categories/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
+import * as fromCategoryStore from '@controlpanel/manage/dining/categories/store';
 
 @Component({
   selector: 'cp-dining-create',
@@ -107,24 +110,26 @@ export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  loadCategories() {
+    const categoryLabel = this.cpI18n.translate('select_category');
+    this.categories$ = this.store.select(fromCategoryStore.getCategories).pipe(
+      takeUntil(this.destroy$),
+      tap((categories: ICategory[]) => {
+        if (!categories.length) {
+          this.store.dispatch(new fromCategoryStore.GetCategories());
+        }
+      }),
+      map((categories) => LocationsUtilsService.setCategoriesDropDown(categories, categoryLabel))
+    );
+  }
+
   ngOnInit() {
     this.buildHeader();
+    this.loadCategories();
     this.school = this.session.g.get('school');
 
     this.diningForm = DiningModel.form();
     LocationsUtilsService.setScheduleFormControls(this.diningForm);
-
-    // todo replace with actual
-    this.categories$ = of([
-      {
-        label: 'Select Category',
-        action: null
-      },
-      {
-        label: 'Dining',
-        action: 8
-      }
-    ]);
   }
 
   ngOnDestroy() {

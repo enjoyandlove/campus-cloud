@@ -4,8 +4,8 @@ import { Injectable } from '@angular/core';
 import { getItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
 import { ScheduleModel, scheduleLabels } from '../model';
+import { ICategory } from '@libs/locations/common/categories/model';
 import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
-import { ICategory } from '@containers/controlpanel/manage/locations/categories/model';
 
 const days = Array.from(Array(7).keys());
 

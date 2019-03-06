@@ -17,90 +17,15 @@
       [noContentText]="cpI18n.translate('t_shared_no_categories_found')">
     </cp-no-content>
 
-    <div *ngIf="(categories$ | async)?.length">
-      <ul class="categories cp-form">
-        <li class="cp-form__header col-12">
-          <div class="row">
-            <cp-sorting-header
-              sortLabel="name"
-              (click)="doSort('name')"
-              [label]="'name' | cpI18n"
-              [sortField]="state.sort_field"
-              class="col-3 js_test_sorting_name"
-              [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
-            <span class="col-2">{{ 't_shared_type' | cpI18n }}</span>
-            <span class="col-1">{{ 't_shared_icon' | cpI18n }}</span>
-            <span class="col-2">{{ 't_shared_default' | cpI18n }}</span>
-            <span class="col-2">{{ 'locations' | cpI18n }}</span>
-            <span class="col-2"></span>
-          </div>
-        </li>
-
-        <li
-          class="cp-form__item col-12"
-          *ngFor="let category of categories$ | async">
-          <div class="row height">
-            <span
-              cpTarget="name"
-              class="col-3 text-truncate"
-              [attr.title]="category.name">
-              {{ category.name }}
-            </span>
-            <span
-              class="col-2"
-              cpTarget="category_type">
-              {{ category.category_type_name }}
-            </span>
-            <span class="col-1">
-              <span
-                class="icon"
-                [ngStyle]="{'background' : '#' + category.color }">
-                <img
-                  cpTarget="image"
-                  *ngIf="category.img_url"
-                  [src]="category.img_url">
-              </span>
-            </span>
-            <span
-              class="col-2"
-              cpTarget="is_default">
-              {{ category.is_default | cpIsDefaultCategory | cpI18n }}
-            </span>
-            <span
-              class="col-2"
-              cpTarget="locations_count">
-              {{ category.locations_count }}
-            </span>
-            <span class="col-2 action-icons text-right">
-              <span *ngIf="!category.is_default">
-                <i
-                  cpTarget="edit"
-                  (click)="onLaunchEditModal(category)"
-                  class="material-icons hover action-button margin-right">
-                  edit
-                </i>
-                <i
-                  cpTarget="delete"
-                  *ngIf="!category.locations_count"
-                  (click)="onLaunchDeleteModal(category)"
-                  class="material-icons hover action-button">
-                  close
-                </i>
-                <i
-                  cpTarget="delete"
-                  [cpTooltip]="tooltipOptions"
-                  *ngIf="category.locations_count"
-                  [attr.title]="'t_categories_can_not_be_delete' | cpI18n"
-                  class="material-icons hover action-button disabled">
-                  close
-                </i>
-              </span>
-            </span>
-          </div>
-        </li>
-      </ul>
-    </div>
+    <cp-categories-common-list
+      *ngIf="(categories$ | async)?.length"
+      [categories$]="categories$"
+      [sortBy]="state.sort_field"
+      [sortDirection]="state.sort_direction"
+      (doSort)="doSort($event)"
+      (editClick)="onLaunchEditModal($event)"
+      (deleteClick)="onLaunchDeleteModal($event)">
+    </cp-categories-common-list>
   </div>
 </div>
 

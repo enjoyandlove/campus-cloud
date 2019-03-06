@@ -81,7 +81,7 @@ export class GetDiningByIdSuccess implements Action {
 
 export class PostDining implements Action {
   readonly type = diningActions.POST_DINING;
-  constructor(public payload: { body: any; params: HttpParams }) {}
+  constructor(public payload: { body: IDining; params: HttpParams }) {}
 }
 
 export class PostDiningFail implements Action {
@@ -96,7 +96,7 @@ export class PostDiningSuccess implements Action {
 
 export class EditDining implements Action {
   readonly type = diningActions.EDIT_DINING;
-  constructor(public payload: { diningId: number; body: any; params: HttpParams }) {}
+  constructor(public payload: { diningId: number; body: IDining; categoryId: number; params: HttpParams }) {}
 }
 
 export class EditDiningFail implements Action {
@@ -106,12 +106,12 @@ export class EditDiningFail implements Action {
 
 export class EditDiningSuccess implements Action {
   readonly type = diningActions.EDIT_DINING_SUCCESS;
-  constructor(public payload: IDining) {}
+  constructor(public payload: { data: IDining, categoryId: number }) {}
 }
 
 export class DeleteDining implements Action {
   readonly type = diningActions.DELETE_DINING;
-  constructor(public payload: { diningId: number; params: HttpParams }) {}
+  constructor(public payload: { diningId: number; categoryId: number; params: HttpParams }) {}
 }
 
 export class DeleteDiningFail implements Action {
@@ -121,7 +121,7 @@ export class DeleteDiningFail implements Action {
 
 export class DeleteDiningSuccess implements Action {
   readonly type = diningActions.DELETE_DINING_SUCCESS;
-  constructor(public payload: { deletedId: number }) {}
+  constructor(public payload: { deletedId: number; categoryId: number }) {}
 }
 
 export class ResetError implements Action {

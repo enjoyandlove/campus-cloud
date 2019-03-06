@@ -86,7 +86,8 @@ describe('Dining Reducer', () => {
     const payload = {
       body,
       params,
-      diningId: mockDining[0].id
+      diningId: mockDining[0].id,
+      categoryId: mockDining[0].category_id
     };
 
     const action = new fromActions.EditDining(payload);
@@ -97,7 +98,12 @@ describe('Dining Reducer', () => {
   });
 
   it('should EDIT dining success', () => {
-    const action = new fromActions.EditDiningSuccess(mockDining[0]);
+    const payload = {
+      data: mockDining[0],
+      categoryId: mockDining[0].category_id
+    };
+
+    const action = new fromActions.EditDiningSuccess(payload);
     const { loading, error } = fromReducer.reducer(initialState, action);
 
     expect(error).toBe(false);
@@ -116,7 +122,8 @@ describe('Dining Reducer', () => {
   it('should DELETE dining', () => {
     const payload = {
       params,
-      diningId: mockDining[0].id
+      diningId: mockDining[0].id,
+      categoryId: mockDining[0].category_id
     };
 
     const action = new fromActions.DeleteDining(payload);
@@ -130,7 +137,8 @@ describe('Dining Reducer', () => {
   it('should DELETE dining success', () => {
     const payload = {
       params,
-      deletedId: mockDining[0].id
+      deletedId: mockDining[0].id,
+      categoryId: mockDining[0].category_id
     };
 
     const action = new fromActions.DeleteDiningSuccess(payload);
