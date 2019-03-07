@@ -1,20 +1,20 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 
 import { AudienceListComponent } from './list';
+import { PrivilegesGuard } from '@app/config/guards';
 import { AudienceComponent } from './audience.component';
-import { AuthGuard, PrivilegesGuard } from '../../../config/guards';
+import { CP_PRIVILEGES_MAP } from '@app/shared/constants';
 
 const appRoutes: Routes = [
   {
     path: '',
     component: AudienceComponent,
-    canActivate: [AuthGuard],
-    canActivateChild: [PrivilegesGuard],
     children: [
       {
         path: '',
-        data: { zendesk: 'audience' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'audience', privilege: CP_PRIVILEGES_MAP.audience },
         component: AudienceListComponent
       }
     ]
