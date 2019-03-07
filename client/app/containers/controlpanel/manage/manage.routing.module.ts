@@ -16,7 +16,6 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'events',
-        canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'events', privilege: CP_PRIVILEGES_MAP.events },
         loadChildren: './events/events.module#EventsModule'
@@ -24,7 +23,6 @@ const appRoutes: Routes = [
 
       {
         path: 'services',
-        canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'services', privilege: CP_PRIVILEGES_MAP.services },
         loadChildren: './services/services.module#ServicesModule'
@@ -32,7 +30,6 @@ const appRoutes: Routes = [
 
       {
         path: 'clubs',
-        canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'clubs', privilege: CP_PRIVILEGES_MAP.clubs },
         loadChildren: './clubs/clubs.module#ClubsModule'
@@ -40,7 +37,6 @@ const appRoutes: Routes = [
 
       {
         path: 'athletics',
-        canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'athletics', privilege: CP_PRIVILEGES_MAP.athletics },
         loadChildren: './athletics/athletics.module#AthleticsModule'
@@ -48,7 +44,6 @@ const appRoutes: Routes = [
 
       {
         path: 'links',
-        canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'links', privilege: CP_PRIVILEGES_MAP.links },
         loadChildren: './links/links.module#LinksModule'
@@ -56,7 +51,6 @@ const appRoutes: Routes = [
 
       {
         path: 'feeds',
-        canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'walls', privilege: CP_PRIVILEGES_MAP.moderation },
         loadChildren: './feeds/feeds.module#FeedsModule'
@@ -64,7 +58,6 @@ const appRoutes: Routes = [
 
       {
         path: 'clubs',
-        canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'clubs', privilege: CP_PRIVILEGES_MAP.clubs },
         loadChildren: './clubs/clubs.module#ClubsModule'
@@ -72,7 +65,6 @@ const appRoutes: Routes = [
 
       {
         path: 'calendars',
-        canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'calendars', privilege: CP_PRIVILEGES_MAP.calendar },
         loadChildren: './calendars/calendars.module#CalendarsModule'
@@ -80,7 +72,6 @@ const appRoutes: Routes = [
 
       {
         path: 'locations',
-        canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'locations', privilege: CP_PRIVILEGES_MAP.campus_maps },
         canDeactivate: [CanDeactivateLocations],
@@ -89,7 +80,6 @@ const appRoutes: Routes = [
 
       {
         path: 'dining',
-        canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'dining', privilege: CP_PRIVILEGES_MAP.dining },
         canDeactivate: [CanDeactivateDining],
@@ -98,7 +88,6 @@ const appRoutes: Routes = [
 
       {
         path: 'orientation',
-        canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'orientation', privilege: CP_PRIVILEGES_MAP.orientation },
         loadChildren: './orientation/orientation.module#OrientationModule'
@@ -106,7 +95,6 @@ const appRoutes: Routes = [
 
       {
         path: 'jobs',
-        canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'jobs', privilege: CP_PRIVILEGES_MAP.jobs },
         loadChildren: './jobs/jobs.module#JobsModule'
@@ -114,7 +102,6 @@ const appRoutes: Routes = [
 
       {
         path: 'deals',
-        canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'deals', privilege: CP_PRIVILEGES_MAP.deals },
         loadChildren: './deals/deals.module#DealsModule'
