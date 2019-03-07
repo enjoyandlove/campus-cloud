@@ -1,15 +1,16 @@
+import { map, startWith, concat, reduce } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { map, startWith } from 'rxjs/operators';
-import { forkJoin, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import * as moment from 'moment';
 
 import { CPSession } from '@app/session';
-import { DEFAULT } from '@shared/constants';
 import { CPI18nService } from '@shared/services';
+import { canSchoolReadResource } from '@shared/utils';
 import { EngagementService } from './engagement.service';
 import { AudienceType } from '../../audience/audience.status';
 import { amplitudeEvents } from '@shared/constants/analytics';
+import { DEFAULT, CP_PRIVILEGES_MAP } from '@shared/constants';
 import * as DATE_RANGE from '@shared/components/cp-range-picker';
 import { AssessType, FilterType, PersonaType } from './engagement.status';
 
@@ -259,18 +260,25 @@ export class EngagementUtilsService {
   getStudentFilter(): Observable<any[]> {
     const schoolSearch = this.session.addSchoolId(new HttpParams());
     const personaSearch = schoolSearch.set('platform', PersonaType.app.toString());
-    const audienceSearch = schoolSearch;
-    return forkJoin(
-      this.engageService.getPersona(undefined, undefined, personaSearch),
-      this.engageService.getLists(undefined, undefined, audienceSearch)
-    ).pipe(
-      map((res) => {
-        return [
-          ...this.commonStudentFilter(),
-          ...this.parsedPersona(res[0]),
-          ...this.parsedAudiences(res[1])
-        ];
-      }),
+
+    let filter$ = this.engageService
+      .getPersona(undefined, undefined, personaSearch)
+      .pipe(map((res) => this.parsedPersona(res)));
+
+    const canReadAudience = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.audience);
+    if (canReadAudience) {
+      const audienceSearch = schoolSearch;
+      filter$ = filter$.pipe(
+        concat(
+          this.engageService
+            .getLists(undefined, undefined, audienceSearch)
+            .pipe(map((res) => this.parsedAudiences(res)))
+        )
+      );
+    }
+
+    return filter$.pipe(
+      reduce((list, res) => [...list, ...res], this.commonStudentFilter()),
       startWith(this.commonStudentFilter())
     );
   }
