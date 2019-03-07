@@ -11,8 +11,13 @@ import {
 
 import { CPSession } from '@app/session';
 import { CP_PRIVILEGES } from '@shared/constants/privileges';
-import { canSchoolReadResource, canAccountLevelReadResource } from '@shared/utils';
 import { AdminService, SchoolService, StoreService, ZendeskService } from '@shared/services';
+
+import {
+  canClientReadResource,
+  canSchoolReadResource,
+  canAccountLevelReadResource
+} from '@shared/utils/privileges';
 
 @Injectable()
 export class PrivilegesGuard implements CanActivate, CanActivateChild, CanLoad {
@@ -71,6 +76,7 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild, CanLoad {
 
   private hasPrivileges(privilege: number) {
     return (
+      canClientReadResource(this.session.g, privilege) ||
       canSchoolReadResource(this.session.g, privilege) ||
       canAccountLevelReadResource(this.session.g, privilege)
     );

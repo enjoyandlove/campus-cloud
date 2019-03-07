@@ -3,15 +3,15 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, NavigationExtras } from '@angular/router';
 import { By } from '@angular/platform-browser';
 
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@app/session';
+import { configureTestSuite } from '@shared/tests';
 import { DashboardModule } from '../../dashboard.module';
 import { DashboardService } from '../../dashboard.service';
-import { configureTestSuite } from '../../../../../shared/tests';
+import { MockRouter } from '../../tests/dashboard.activatedroute';
+import { MockDashboardService } from '../../tests/dashboard.service';
 import { DashboardUtilsService } from '../../dashboard.utils.service';
-import { MockRouter } from '../../__tests__/dashboard.activatedroute';
-import { MockDashboardService } from '../../__tests__/dashboard.service';
 import { DashboardExperienceMenuComponent } from './dashboard-experience-menu.component';
-import { CPDropdownComponent } from './../../../../../shared/components/cp-dropdown/cp-dropdown.component';
+import { CPDropdownComponent } from '@shared/components/cp-dropdown/cp-dropdown.component';
 
 describe('DashboardExperienceMenuComponent', () => {
   configureTestSuite();

@@ -11,6 +11,7 @@ import {
 export interface IModal {
   data?: any;
   onClose?: Function;
+  onAction?: Function;
 }
 
 export const MODAL_DATA = new InjectionToken<IModal>('MODAL_DATA');

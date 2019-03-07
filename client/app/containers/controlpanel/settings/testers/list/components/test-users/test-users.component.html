@@ -1,0 +1,46 @@
+<ng-container [ngSwitch]="users?.length > 0">
+  <ul
+    *ngSwitchCase="true"  
+    class="test-users cp-form">
+    <li class="cp-form__header col-12">
+      <div class="row">
+        <cp-sorting-header
+          class="col-12"
+          [label]="'email' | cpI18n"
+          [sortDirection]="sortDirection"
+          (click)="onSort.emit(sortDirection)">
+        </cp-sorting-header>
+      </div>
+    </li>
+    
+    <li
+      *ngFor="let user of users; index as i"
+      class="cp-form__item col-12"
+      [cpTarget]="['test_user_' + i]">
+      <div class="row">
+        <span class="col-9">
+          {{user.email}}
+        </span>
+        <span class="col-2 text-truncate">
+          <a
+            class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary"
+            (click)="onResend.emit(user.id)">
+            {{ 't_sandbox_resend_invite' | cpI18n }}
+          </a>
+        </span>
+        <span class="col-1 text-right actions">
+          <span
+            class="hover delete"
+            (click)="onDelete.emit(user.id)">
+            &times;
+          </span>
+        </span>
+      </div>
+    </li>
+  </ul>
+  <cp-no-testers
+    *ngSwitchCase="false"
+    class="add-margin"
+    (onCreate)="onCreate.emit()">
+  </cp-no-testers>
+</ng-container>

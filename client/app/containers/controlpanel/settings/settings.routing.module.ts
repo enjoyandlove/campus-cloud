@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 
 import { PrivilegesGuard } from '@app/config/guards';
 import { SettingsComponent } from './settings.component';
@@ -15,6 +15,12 @@ const appRoutes: Routes = [
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'team settings', privilege: CP_PRIVILEGES_MAP.manage_admin },
         loadChildren: './team/team.module#TeamModule'
+      },
+      {
+        path: 'testers',
+        canActivate: [PrivilegesGuard],
+        data: { privilege: CP_PRIVILEGES_MAP.test_users },
+        loadChildren: './testers/campus-testers.module#CampusTestersModule'
       }
     ]
   }

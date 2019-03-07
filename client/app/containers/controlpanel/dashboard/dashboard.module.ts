@@ -1,48 +1,50 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../../../shared/shared.module';
+import { NgModule } from '@angular/core';
 
+import { SharedModule } from '@shared/shared.module';
 import { DashboardService } from './dashboard.service';
+import { DashboardComponent } from './dashboard.component';
+import { DashboardBaseComponent } from './base/base.component';
 import { DashboardUtilsService } from './dashboard.utils.service';
-
+import { DashboardRoutingModule } from './dashboard.routing.module';
+import { EngagementModule } from '../assess/engagement/engagement.module';
+import { DashboardOnboardingComponent } from './onboarding/onboarding.component';
 import {
   DashboardTopClubsComponent,
-  DashboardCampusTileComponent,
   DashboardTopEventsComponent,
   DashboardAssessmentComponent,
+  DashboardCampusTileComponent,
   DashboardTopResourceComponent,
   DashboardTopServicesComponent,
   DashboardIntegrationsComponent,
   DashboardSocialActivyComponent,
-  DashboardTopOrientationComponent,
   DashboardExperienceMenuComponent,
+  DashboardTopOrientationComponent,
+  DashboardTopResourceTitleComponent,
   DashboardSocialActivyChartComponent,
   DashboardGeneralInformationComponent,
-  DashboardDownloadsRegistrationComponent,
-  DashboardTopResourceTitleComponent
+  DashboardDownloadsRegistrationComponent
 } from './components';
-
-import { DashboardComponent } from './dashboard.component';
-import { DashboardRoutingModule } from './dashboard.routing.module';
-import { EngagementModule } from './../assess/engagement/engagement.module';
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    DashboardExperienceMenuComponent,
-    DashboardGeneralInformationComponent,
-    DashboardTopEventsComponent,
-    DashboardTopServicesComponent,
-    DashboardTopResourceComponent,
-    DashboardAssessmentComponent,
-    DashboardIntegrationsComponent,
-    DashboardCampusTileComponent,
+    DashboardBaseComponent,
     DashboardTopClubsComponent,
-    DashboardDownloadsRegistrationComponent,
+    DashboardTopEventsComponent,
+    DashboardAssessmentComponent,
+    DashboardCampusTileComponent,
+    DashboardOnboardingComponent,
+    DashboardTopResourceComponent,
+    DashboardTopServicesComponent,
+    DashboardIntegrationsComponent,
     DashboardSocialActivyComponent,
-    DashboardSocialActivyChartComponent,
+    DashboardExperienceMenuComponent,
     DashboardTopOrientationComponent,
-    DashboardTopResourceTitleComponent
+    DashboardTopResourceTitleComponent,
+    DashboardSocialActivyChartComponent,
+    DashboardGeneralInformationComponent,
+    DashboardDownloadsRegistrationComponent
   ],
 
   imports: [CommonModule, SharedModule, DashboardRoutingModule, EngagementModule],

@@ -16,7 +16,7 @@ import { CPDate } from './../../utils/date/date';
 import { FORMAT, CPDatePipe } from './../../pipes/date/date.pipe';
 import { CPRangePickerUtilsService } from './cp-range-picker.utils.service';
 
-interface IDateChange {
+export interface IDateRange {
   end: number;
   start: number;
   label: string;
@@ -60,7 +60,7 @@ export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy 
   @Input() iconPositionLeft = false;
   @Input() pickerOptions: IRangePickerOptions = rangeOptions;
 
-  @Output() rangeChange: EventEmitter<IDateChange> = new EventEmitter();
+  @Output() rangeChange: EventEmitter<IDateRange> = new EventEmitter();
 
   picker;
   datePipe;
