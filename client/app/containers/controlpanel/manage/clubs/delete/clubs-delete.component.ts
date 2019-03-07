@@ -1,10 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 import { ClubsService } from '../clubs.service';
-import { CPTrackingService } from '../../../../../shared/services';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { amplitudeEvents } from '@shared/constants';
 import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPTrackingService, CPI18nService, MODAL_DATA, IModal } from '@shared/services';
 
 @Component({
   selector: 'cp-clubs-delete',
@@ -12,42 +11,32 @@ import { amplitudeEvents } from '../../../../../shared/constants/analytics';
   styleUrls: ['./clubs-delete.component.scss']
 })
 export class ClubsDeleteComponent implements OnInit {
-  @Input() club: any;
-  @Input() isAthletic = isClubAthletic.club;
-  @Output() error: EventEmitter<string> = new EventEmitter();
-  @Output() deletedClub: EventEmitter<number> = new EventEmitter();
+  isAthletic: isClubAthletic;
 
   labels;
-  buttonData;
+  club: any;
+  deleteWarnings = [
+    this.cpI18n.translate('t_shared_delete_resource_warning_wall_posts'),
+    this.cpI18n.translate('t_shared_delete_resource_warning_assessment_data'),
+    this.cpI18n.translate('t_shared_delete_resource_warning_events')
+  ];
 
   constructor(
+    @Inject(MODAL_DATA) private modal: IModal,
     private service: ClubsService,
     private cpI18n: CPI18nService,
     private cpTracking: CPTrackingService
   ) {}
 
+  onClose() {
+    this.modal.onClose();
+  }
+
   onDelete() {
-    this.service.deleteClubById(this.club.id).subscribe(
-      (_) => {
-        this.trackEvent();
-
-        this.deletedClub.emit(this.club.id);
-
-        $('#deleteClubsModal').modal('hide');
-
-        this.buttonData = { ...this.buttonData, disabled: false };
-      },
-
-      (err) => {
-        $('#deleteClubsModal').modal('hide');
-
-        this.buttonData = { ...this.buttonData, disabled: false };
-
-        this.error.emit(
-          err.status === 403 ? 'clubs_delete_error_unauthorized' : 'something_went_wrong'
-        );
-      }
-    );
+    this.service.deleteClubById(this.club.id).subscribe((_) => {
+      this.trackEvent();
+      this.modal.onClose(this.club.id);
+    });
   }
 
   trackEvent() {
@@ -59,10 +48,9 @@ export class ClubsDeleteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.labels = clubAthleticLabels(this.isAthletic);
-    this.buttonData = {
-      text: this.cpI18n.translate('delete'),
-      class: 'danger'
-    };
+    const { club, isAthletic } = this.modal.data;
+    this.club = club;
+
+    this.labels = clubAthleticLabels(isAthletic);
   }
 }
