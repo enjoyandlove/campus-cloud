@@ -27,13 +27,13 @@ import { OrientationListActionBoxComponent } from './list/components/action-box'
   ],
 
   imports: [
-    ClubsModule,
     CommonModule,
     SharedModule,
     RouterModule,
-    CalendarsModule,
     ReactiveFormsModule,
-    OrientationRoutingModule
+    OrientationRoutingModule,
+    CalendarsModule,
+    ClubsModule
   ],
 
   providers: [OrientationService, ModalService, OrientationUtilsService]
