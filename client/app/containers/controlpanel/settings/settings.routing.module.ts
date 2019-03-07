@@ -18,6 +18,7 @@ const appRoutes: Routes = [
       },
       {
         path: 'testers',
+        canActivate: [PrivilegesGuard],
         data: { privilege: CP_PRIVILEGES_MAP.test_users },
         loadChildren: './testers/campus-testers.module#CampusTestersModule'
       }
