@@ -13,9 +13,10 @@
 
   &.labelRight {
     .control__indicator {
+      top: 2px;
+      left: -10px;
       float: left;
-      margin-left: 0;
-      margin-right: 8px;
+      position: relative;
     }
 
     .control__indicator:after {

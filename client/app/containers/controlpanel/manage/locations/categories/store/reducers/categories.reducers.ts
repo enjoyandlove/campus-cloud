@@ -1,6 +1,6 @@
-import { ICategory } from '../../model';
 import { IItem } from '@shared/components';
 import * as fromLocations from '../actions';
+import { ICategory } from '@libs/locations/common/categories/model';
 
 export interface ICategoriesState {
   error: boolean;
@@ -95,8 +95,8 @@ export function reducer(state = initialState, action: fromLocations.Actions) {
         ...state,
         error: false,
         loading: false,
-        data: [newCategory, ...state.data],
-        filteredCategories: [newCategory, ...state.filteredCategories]
+        data: [...state.data, newCategory],
+        filteredCategories: [...state.filteredCategories, newCategory]
       };
     }
 

@@ -5,22 +5,16 @@ import { FormBuilder } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
+import { CPSession } from '@app/session';
+import { CPDate } from '@app/shared/utils';
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
 import { EventAttendance } from '../event.status';
-import { CPSession } from '../../../../../session';
+import { mockSchool } from '@app/session/mock/school';
+import { baseReducers } from '@app/store/base/reducers';
 import { EventUtilService } from '../events.utils.service';
-import { mockSchool } from '../../../../../session/mock/school';
 import { EventsCreateComponent } from './events-create.component';
-import { baseReducers } from '../../../../../store/base/reducers';
-
-import {
-  AdminService,
-  CPI18nService,
-  ErrorService,
-  StoreService
-} from '../../../../../shared/services';
-import { CPDate } from '../../../../../shared/utils';
+import { AdminService, CPI18nService, StoreService } from '@app/shared/services';
 
 class MockService {
   dummy;
@@ -53,7 +47,6 @@ describe('EventCreateComponent', () => {
           CPSession,
           FormBuilder,
           AdminService,
-          ErrorService,
           StoreService,
           CPI18nService,
           EventUtilService,

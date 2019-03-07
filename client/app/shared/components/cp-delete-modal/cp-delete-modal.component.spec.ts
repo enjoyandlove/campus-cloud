@@ -1,5 +1,7 @@
+import { CPCheckboxComponent } from './../cp-checkbox/cp-checkbox.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
 import { SharedModule } from '@shared/shared.module';
 import { configureTestSuite } from '@app/shared/tests';
@@ -100,5 +102,43 @@ describe('CPDeleteModalComponent', () => {
     const bodyPTag: HTMLElement = de.query(By.css('.js_title')).nativeElement;
 
     expect(bodyPTag.innerHTML).toContain(modalTitle);
+  });
+
+  it('should set disableSubmit to false if no warning inputs are passed', () => {
+    expect(component.disableSubmit).toBe(false);
+  });
+
+  describe('with warning input', () => {
+    beforeEach(() => {
+      component.warnings = ['some', 'random', 'input'];
+      component.ngOnInit();
+      fixture.detectChanges();
+    });
+
+    it('should set disableSubmit to true if warning inputs are passed', () => {
+      expect(component.disableSubmit).toBe(true);
+    });
+
+    it('should render warnings on the template', () => {
+      const warningItems = fixture.debugElement.queryAll(By.css('.cpmodal__body__warning__item'));
+      expect(warningItems.length).toBe(component._warnings.length);
+    });
+
+    it('should set disableStatus when all warnings are checked', () => {
+      const warningItems: DebugElement[] = fixture.debugElement.queryAll(
+        By.css('.cpmodal__body__warning__item')
+      );
+
+      expect(component.disableSubmit).toBe(true);
+
+      warningItems.forEach((i) => {
+        const checkbox: CPCheckboxComponent = i.query(By.directive(CPCheckboxComponent))
+          .componentInstance;
+        checkbox.toggle.emit(true);
+        fixture.detectChanges();
+      });
+
+      expect(component.disableSubmit).toBe(false);
+    });
   });
 });

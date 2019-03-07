@@ -24,13 +24,13 @@
       </div>
     </div>
 
-    <div class="row" *ngIf="readyFeatures.length">
+    <div class="row" *ngIf="data.children">
       <div class="col-12">
         <cp-header-link
           [extraMenu]="extraMenu"
           [maxChildren]="maxChildren"
           [extraChildren]="extraChildren"
-          [readyFeatures]="readyFeatures">
+          [readyFeatures]="data.children">
         </cp-header-link>
       </div>
     </div>

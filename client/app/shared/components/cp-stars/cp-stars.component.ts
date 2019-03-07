@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnChanges } from '@angular/core';
 
 export const STAR_SIZE = {
   SMALL: 'small',
@@ -19,7 +19,7 @@ const DISABLED = -1;
   templateUrl: './cp-stars.component.html',
   styleUrls: ['./cp-stars.component.scss']
 })
-export class CPStarsComponent implements OnInit {
+export class CPStarsComponent implements OnInit, OnChanges {
   @Input() maxRate: number;
   @Input() avgRate: number;
   @Input() size: string;
@@ -78,10 +78,13 @@ export class CPStarsComponent implements OnInit {
 
       return;
     }
+  }
 
-    this.totalRating = +(this.avgRate * this.maxRate / 100).toFixed(1);
-
-    this.drawStars();
-    this.fillStars();
+  ngOnChanges() {
+    if (this.maxRate !== DISABLED) {
+      this.totalRating = +(this.avgRate * this.maxRate / 100).toFixed(1);
+      this.drawStars();
+      this.fillStars();
+    }
   }
 }

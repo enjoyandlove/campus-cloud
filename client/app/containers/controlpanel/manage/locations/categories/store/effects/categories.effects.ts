@@ -1,33 +1,39 @@
 import { map, filter, mergeMap, catchError, withLatestFrom } from 'rxjs/operators';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { ICategory } from '../../model';
+import { ISnackbar } from '@app/store';
 import * as fromActions from '../actions';
-import { ILocation } from '../../../model';
+import { CPI18nService } from '@shared/services';
+import { baseActionClass } from '@app/store/base';
 import * as fromLocationStore from '../../../store';
 import { parseErrorResponse } from '@shared/utils/http';
+import { ILocation } from '@libs/locations/common/model';
 import { CategoriesService } from '../../categories.service';
-import { coerceBooleanProperty } from '@shared/utils/coercion';
+import { ICategory } from '@libs/locations/common/categories/model';
 
 @Injectable()
 export class CategoriesEffects {
   constructor(
     public actions$: Actions,
+    public cpI18n: CPI18nService,
     public service: CategoriesService,
-    public store: Store<fromLocationStore.ILocationsState>
+    public store: Store<fromLocationStore.ILocationsState | ISnackbar>
   ) {}
 
   @Effect()
-  getCategories$: Observable<fromActions.GetCategoriesSuccess | fromActions.GetCategoriesFail>
-    = this.actions$.pipe(
+  getCategories$: Observable<
+    fromActions.GetCategoriesSuccess | fromActions.GetCategoriesFail
+  > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.GET_CATEGORIES),
     mergeMap((action: fromActions.GetCategories) => {
       const { params } = action.payload;
 
-      return this.service.getCategories(params)
+      return this.service
+        .getCategories(params)
         .pipe(
           map((data: ICategory[]) => new fromActions.GetCategoriesSuccess(data)),
           catchError((error) => of(new fromActions.GetCategoriesFail(error)))
@@ -36,13 +42,15 @@ export class CategoriesEffects {
   );
 
   @Effect()
-  getFilteredCategories$: Observable<fromActions.GetFilteredCategoriesSuccess | fromActions.GetFilteredCategoriesFail>
-    = this.actions$.pipe(
+  getFilteredCategories$: Observable<
+    fromActions.GetFilteredCategoriesSuccess | fromActions.GetFilteredCategoriesFail
+  > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.GET_FILTERED_CATEGORIES),
     mergeMap((action: fromActions.GetFilteredCategories) => {
       const { params } = action.payload;
 
-      return this.service.getCategories(params)
+      return this.service
+        .getCategories(params)
         .pipe(
           map((data: ICategory[]) => new fromActions.GetFilteredCategoriesSuccess(data)),
           catchError((error) => of(new fromActions.GetFilteredCategoriesFail(error)))
@@ -51,13 +59,15 @@ export class CategoriesEffects {
   );
 
   @Effect()
-  getCategoriesTypes$: Observable<fromActions.GetCategoriesTypeSuccess | fromActions.GetCategoriesTypeFail>
-    = this.actions$.pipe(
+  getCategoriesTypes$: Observable<
+    fromActions.GetCategoriesTypeSuccess | fromActions.GetCategoriesTypeFail
+  > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.GET_CATEGORIES_TYPE),
     mergeMap((action: fromActions.GetCategoriesType) => {
       const { params } = action.payload;
 
-      return this.service.getCategoriesType(params)
+      return this.service
+        .getCategoriesType(params)
         .pipe(
           map((data) => new fromActions.GetCategoriesTypeSuccess(data)),
           catchError((error) => of(new fromActions.GetCategoriesTypeFail(error)))
@@ -66,34 +76,48 @@ export class CategoriesEffects {
   );
 
   @Effect()
-  createCategory$: Observable<fromActions.PostCategorySuccess | fromActions.PostCategoryFail>
-    = this.actions$.pipe(
+  createCategory$: Observable<
+    fromActions.PostCategorySuccess | fromActions.PostCategoryFail
+  > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.POST_CATEGORY),
     mergeMap((action: fromActions.PostCategory) => {
       const { body, params } = action.payload;
 
-      return this.service
-        .createCategory(body, params)
-        .pipe(
-          map((data: ICategory) => new fromActions.PostCategorySuccess(data)),
-          catchError((error) => of(new fromActions.PostCategoryFail(error)))
-        );
+      return this.service.createCategory(body, params).pipe(
+        map((data: ICategory) => {
+          this.store.dispatch(
+            new baseActionClass.SnackbarSuccess({
+              body: this.cpI18n.translate('t_category_successfully_created')
+            })
+          );
+
+          return new fromActions.PostCategorySuccess(data);
+        }),
+        catchError((error) => of(new fromActions.PostCategoryFail(error)))
+      );
     })
   );
 
   @Effect()
-  editCategories$: Observable<fromActions.EditCategorySuccess | fromActions.EditCategoryFail>
-    = this.actions$.pipe(
+  editCategories$: Observable<
+    fromActions.EditCategorySuccess | fromActions.EditCategoryFail
+  > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.EDIT_CATEGORY),
     mergeMap((action: fromActions.EditCategory) => {
       const { categoryId, body, params } = action.payload;
 
-      return this.service
-        .updateCategory(body, categoryId, params)
-        .pipe(
-          map((data: ICategory) => new fromActions.EditCategorySuccess(data)),
-          catchError((error) => of(new fromActions.EditCategoryFail(error)))
-        );
+      return this.service.updateCategory(body, categoryId, params).pipe(
+        map((data: ICategory) => {
+          this.store.dispatch(
+            new baseActionClass.SnackbarSuccess({
+              body: this.cpI18n.translate('t_category_successfully_edited')
+            })
+          );
+
+          return new fromActions.EditCategorySuccess(data);
+        }),
+        catchError((error) => of(new fromActions.EditCategoryFail(error)))
+      );
     })
   );
 
@@ -120,18 +144,27 @@ export class CategoriesEffects {
   );
 
   @Effect()
-  deleteCategories$: Observable<fromActions.DeleteCategoriesSuccess | fromActions.DeleteCategoriesFail>
-    = this.actions$.pipe(
+  deleteCategories$: Observable<
+    fromActions.DeleteCategoriesSuccess | fromActions.DeleteCategoriesFail
+  > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.DELETE_CATEGORIES),
     mergeMap((action: fromActions.DeleteCategories) => {
       const { categoryId, params } = action.payload;
 
-      return this.service
-        .deleteCategoryById(categoryId, params)
-        .pipe(
-          map(() => new fromActions.DeleteCategoriesSuccess({ deletedId: categoryId })),
-          catchError((error) => of(new fromActions.DeleteCategoriesFail(parseErrorResponse(error.error))))
-        );
+      return this.service.deleteCategoryById(categoryId, params).pipe(
+        map(() => {
+          this.store.dispatch(
+            new baseActionClass.SnackbarSuccess({
+              body: this.cpI18n.translate('t_category_successfully_deleted')
+            })
+          );
+
+          return new fromActions.DeleteCategoriesSuccess({ deletedId: categoryId });
+        }),
+        catchError((error) =>
+          of(new fromActions.DeleteCategoriesFail(parseErrorResponse(error.error)))
+        )
+      );
     })
   );
 }

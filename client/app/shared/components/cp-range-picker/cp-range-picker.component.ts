@@ -23,7 +23,6 @@ interface IDateChange {
 }
 
 interface IRangePickerOptions {
-  utc: boolean;
   inline: boolean;
   mode: string;
   altInput: boolean;
@@ -33,7 +32,6 @@ interface IRangePickerOptions {
 }
 
 const rangeOptions: IRangePickerOptions = {
-  utc: true,
   inline: true,
   mode: 'range',
   altInput: true,

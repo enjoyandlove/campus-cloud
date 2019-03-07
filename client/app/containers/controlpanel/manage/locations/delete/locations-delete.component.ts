@@ -2,11 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
-import { ILocation } from '../model';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { CPTrackingService } from '@shared/services';
+import { ILocation } from '@libs/locations/common/model';
 import { amplitudeEvents } from '@shared/constants/analytics';
 
 declare var $: any;

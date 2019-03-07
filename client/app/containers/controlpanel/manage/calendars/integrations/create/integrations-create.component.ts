@@ -26,7 +26,6 @@ export class ItemsIntegrationsCreateComponent implements OnInit {
   constructor(
     public session: CPSession,
     private route: ActivatedRoute,
-    private utils: CommonIntegrationUtilsService,
     public store: Store<fromStore.IEventIntegrationState>
   ) {}
 
@@ -69,8 +68,8 @@ export class ItemsIntegrationsCreateComponent implements OnInit {
     this.form.get('feed_obj_id').setValue(this.calendarId);
     this.form.get('feed_type').setValue(EventIntegration.types.ical);
 
-    this.typesDropdown = this.utils
-      .typesDropdown()
-      .filter((type: IItem) => type.action === EventIntegration.types.ical);
+    this.typesDropdown = CommonIntegrationUtilsService.typesDropdown().filter(
+      (type: IItem) => type.action === EventIntegration.types.ical
+    );
   }
 }

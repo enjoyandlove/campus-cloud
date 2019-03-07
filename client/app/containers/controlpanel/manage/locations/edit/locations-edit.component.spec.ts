@@ -4,17 +4,17 @@ import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { omit } from 'lodash';
-
 import { of } from 'rxjs';
+
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { CPI18nService } from '@shared/services';
 import { fillForm } from '@shared/utils/tests/form';
-import { mockLocations, filledForm } from '../tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
 import { LocationsEditComponent } from './locations-edit.component';
+import { mockLocations, filledForm } from '@libs/locations/common/tests';
 
 describe('LocationsEditComponent', () => {
   configureTestSuite();
@@ -55,7 +55,7 @@ describe('LocationsEditComponent', () => {
   });
 
   it('should populate form with values', () => {
-    const expected = omit(mockLocations[0], ['category_img_url', 'category_name', 'category_color']);
+    const expected = omit(mockLocations[0], ['category_img_url', 'category_name', 'category_color', 'notes']);
 
     fillForm(component.locationForm, filledForm);
 

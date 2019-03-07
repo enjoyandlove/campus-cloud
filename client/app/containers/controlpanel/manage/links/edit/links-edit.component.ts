@@ -1,3 +1,4 @@
+import { OnInit, Inject, Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpHeaders } from '@angular/common/http';
 import { Actions, ofType } from '@ngrx/effects';
@@ -5,39 +6,32 @@ import { takeUntil } from 'rxjs/operators';
 import { TooltipOption } from 'bootstrap';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  OnDestroy
-} from '@angular/core';
 
 import { API } from '@app/config/api';
 import { appStorage } from '@shared/utils';
 import { Destroyable, Mixin } from '@shared/mixins';
 import * as fromLinks from '@app/store/manage/links';
-import { CPI18nService } from '@shared/services/i18n.service';
 import { amplitudeEvents } from '@shared/constants/analytics';
 import { didUrlChange, LinksService } from '../links.service';
-import { CPTrackingService, FileUploadService, ZendeskService } from '@shared/services';
-
-declare var $: any;
-
+import { ILink } from '@containers/controlpanel/manage/links/link.interface';
+import {
+  IModal,
+  MODAL_DATA,
+  CPI18nService,
+  ZendeskService,
+  CPTrackingService,
+  FileUploadService
+} from '@shared/services';
 @Component({
   selector: 'cp-links-edit',
   templateUrl: './links-edit.component.html',
   styleUrls: ['./links-edit.component.scss']
 })
 @Mixin([Destroyable])
-export class LinksEditComponent implements OnInit, OnChanges, OnDestroy, Destroyable {
-  @Input() link: any;
-  @Output() editLink: EventEmitter<null> = new EventEmitter();
-  @Output() resetEditModal: EventEmitter<null> = new EventEmitter();
-
+export class LinksEditComponent implements OnInit, OnDestroy, Destroyable {
   imageError;
+  link: ILink;
+  modalId: number;
   form: FormGroup;
   tooltipContent: string;
   imageSizeToolTip: TooltipOption;
@@ -52,6 +46,7 @@ export class LinksEditComponent implements OnInit, OnChanges, OnDestroy, Destroy
   emitDestroy() {}
 
   constructor(
+    @Inject(MODAL_DATA) private modal: IModal,
     private fb: FormBuilder,
     private updates$: Actions,
     public cpI18n: CPI18nService,
@@ -112,6 +107,7 @@ export class LinksEditComponent implements OnInit, OnChanges, OnDestroy, Destroy
 
   doSubmit() {
     this.store.dispatch(new fromLinks.UpdateLink({ link: this.form.value, id: this.link.id }));
+    this.modal.onClose();
   }
 
   trackEvent(res) {
@@ -124,17 +120,13 @@ export class LinksEditComponent implements OnInit, OnChanges, OnDestroy, Destroy
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_UPDATED_LINK, this.eventProperties);
   }
 
-  ngOnChanges() {
-    if (this.link) {
-      this.buildForm();
-    }
-  }
-
   resetModal() {
-    this.resetEditModal.emit();
+    this.modal.onClose();
   }
 
   ngOnInit() {
+    this.link = this.modal.data;
+    this.buildForm();
     const zendesk = ZendeskService.zdRoot();
 
     this.imageSizeToolTip = {
@@ -154,8 +146,6 @@ export class LinksEditComponent implements OnInit, OnChanges, OnDestroy, Destroy
         const res = action.payload;
 
         this.trackEvent(res);
-        this.editLink.emit();
-        $('#linksEdit').modal('hide');
         this.resetModal();
       });
     this.updates$

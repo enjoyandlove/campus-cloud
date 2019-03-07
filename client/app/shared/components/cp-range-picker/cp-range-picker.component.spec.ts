@@ -17,7 +17,6 @@ class MockCPSession extends CPSession {
 const mockSession = new MockCPSession();
 
 const pickerOptions = {
-  utc: true,
   inline: true,
   mode: 'range',
   altInput: true,

@@ -2,7 +2,6 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
-import { of } from 'rxjs';
 
 import { CPI18nService } from '@app/shared/services';
 import { CPDropdownComponent } from '@shared/components';
@@ -40,8 +39,8 @@ describe('WallsIntegrationFormComponent', () => {
     de = fixture.debugElement;
 
     component.form = WallsIntegrationModel.form();
-    component.channels$ = of([CPDropdownComponent.defaultPlaceHolder()]);
-    component.types = new CommonIntegrationUtilsService().typesDropdown();
+    component.channels = [CPDropdownComponent.defaultPlaceHolder()];
+    component.types = CommonIntegrationUtilsService.typesDropdown();
 
     fixture.detectChanges();
   });

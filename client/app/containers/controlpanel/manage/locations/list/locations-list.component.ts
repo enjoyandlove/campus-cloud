@@ -2,22 +2,22 @@ import { filter, takeUntil, map, tap, take } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { ILocation } from '../model';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
-import { ICategory } from '../categories/model';
+import { CPI18nService } from '@shared/services';
 import { ManageHeaderService } from '../../utils';
-import { LocationType } from '../locations.service';
+import { ILocation } from '@libs/locations/common/model';
 import { BaseComponent } from '@app/base/base.component';
 import * as fromCategoryStore from '../categories/store';
-import { Locale } from '../categories/categories.status';
-import { LocationsUtilsService } from '../locations.utils';
-import { environment } from '@client/environments/environment';
-import { CPI18nService, CPTrackingService } from '@shared/services';
+import { LocationType } from '@libs/locations/common/utils';
+import { ICategory } from '@libs/locations/common/categories/model';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
 
 interface IState {
   search_str: string;
@@ -39,20 +39,19 @@ const state: IState = {
   styleUrls: ['./locations-list.component.scss']
 })
 export class LocationsListComponent extends BaseComponent implements OnInit, OnDestroy {
-  sortingLabels;
-  deleteLocation = '';
   state: IState = state;
+  showDeleteModal = false;
+  deleteLocation: ILocation;
   loading$: Observable<boolean>;
   categories$: Observable<IItem[]>;
   locations$: Observable<ILocation[]>;
-  defaultImage = `${environment.root}public/default/user.png`;
 
   private destroy$ = new Subject();
 
   constructor(
+    public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
   ) {
@@ -127,7 +126,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     this.fetchFilteredLocations();
   }
 
-  doSort(sort_field) {
+  onDoSort(sort_field) {
     this.state = {
       ...this.state,
       sort_field: sort_field,
@@ -144,6 +143,13 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     });
   }
 
+  onLaunchDeleteModal(location: ILocation) {
+    this.showDeleteModal = true;
+    this.deleteLocation = location;
+
+    setTimeout(() => $('#locationsDelete').modal());
+  }
+
   loadCategories() {
     const categoryLabel = this.cpI18n.translate('all');
     this.categories$ = this.store.select(fromCategoryStore.getCategories).pipe(
@@ -151,7 +157,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       tap((categories: ICategory[]) => {
         if (!categories.length) {
           const locale = CPI18nService.getLocale().startsWith('fr')
-            ? Locale.fr : Locale.eng;
+            ? LocationCategoryLocale.fr : LocationCategoryLocale.eng;
 
           const params = new HttpParams()
             .set('locale', locale)
@@ -216,15 +222,19 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     );
   }
 
+  onCreateClick() {
+    this.router.navigate(['/manage/locations/create']);
+  }
+
+  onCategoriesClick() {
+    this.router.navigate(['/manage/locations/categories']);
+  }
+
   ngOnInit() {
     this.buildHeader();
     this.loadLocations();
     this.loadCategories();
     this.listenForErrors();
-
-    this.sortingLabels = {
-      locations: this.cpI18n.translate('name')
-    };
 
     this.loading$ = this.store.select(fromStore.getLocationsLoading);
   }

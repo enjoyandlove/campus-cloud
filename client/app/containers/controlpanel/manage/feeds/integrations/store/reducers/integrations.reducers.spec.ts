@@ -50,7 +50,7 @@ describe('Walls Integrations Reducer', () => {
       const action = new fromActions.GetIntegrationsSuccess([mock]);
       const { data, error } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(false);
+      expect(error).toBeNull();
       expect(data.length).toBe(1);
       expect(data[0].id).toBe(mock.id);
     });
@@ -63,7 +63,7 @@ describe('Walls Integrations Reducer', () => {
       const action = new fromActions.GetIntegrationsFail(httpErrorResponse);
       const { error } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(true);
+      expect(error).not.toBeNull();
     });
   });
 
@@ -108,7 +108,7 @@ describe('Walls Integrations Reducer', () => {
       const action = new fromActions.DeleteIntegrationFail(httpErrorResponse);
       const { error, loading } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(true);
+      expect(error).not.toBeNull();
       expect(loading).toBe(false);
     });
   });
@@ -131,16 +131,16 @@ describe('Walls Integrations Reducer', () => {
   });
 
   describe('POST_INTEGRATION_SUCCESS', () => {
-    it('should set completedAction flag to null', () => {
+    it('should set error flag to null', () => {
       const { initialState } = fromReducer;
       const payload = mockIntegration;
 
       const action = new fromActions.PostIntegrationSuccess(payload);
-      const { data, completedAction } = fromReducer.reducer(initialState, action);
+      const { data, error } = fromReducer.reducer(initialState, action);
 
+      expect(error).toBeNull();
       expect(data.length).toEqual(1);
       expect(data[0].id).toBe(payload.id);
-      expect(completedAction).not.toBeNull();
     });
   });
 
@@ -151,7 +151,7 @@ describe('Walls Integrations Reducer', () => {
       const action = new fromActions.PostIntegrationFail(httpErrorResponse);
       const { error } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(true);
+      expect(error).not.toBeNull();
     });
   });
 
@@ -192,7 +192,7 @@ describe('Walls Integrations Reducer', () => {
       const action = new fromActions.EditIntegrationSuccess(payload);
       const { error, data, completedAction } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(false);
+      expect(error).toBeNull();
       expect(completedAction).not.toBeNull();
       expect(data[0].feed_url).toBe(updatedValue);
     });
@@ -205,7 +205,7 @@ describe('Walls Integrations Reducer', () => {
       const action = new fromActions.EditIntegrationFail(httpErrorResponse);
       const { error, loading } = fromReducer.reducer(initialState, action);
 
-      expect(error).toBe(true);
+      expect(error).not.toBeNull();
       expect(loading).toBe(false);
     });
   });

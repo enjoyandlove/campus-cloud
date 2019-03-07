@@ -27,9 +27,7 @@ export class PersonasResourceTypesComponent implements OnInit {
   resources;
   selectedItem = null;
   inappLinkMessage: string;
-
   textInputComponent = ['web_link', 'external_link'];
-
   typeSearchComponent = ['store', 'campus_service', 'subscribable_calendar'];
 
   constructor(

@@ -18,13 +18,16 @@ import { ServicesExcelModalComponent, ServicesImportTopBarComponent } from './ex
 import { ServicesService } from './services.service';
 import { ProvidersService } from './providers.service';
 import { ServicesResolver } from './services.resolver';
+import { AssessModule } from '../../assess/assess.module';
 import { SharedModule } from '../../../../shared/shared.module';
 import { ServicesUtilsService } from './services.utils.service';
 import { ServicesRoutingModule } from './services.routing.module';
+import { ProvidersUtilsService } from './providers.utils.service';
 import { ServicesFeedsModule } from './feeds/services-feeds.module';
 import { ServicesEventsModule } from './events/services-events.module';
 import { AdminService } from '../../../../shared/services/admin.service';
 import { ServicesMembersModule } from './members/services-members.module';
+import { EngagementModule } from '../../assess/engagement/engagement.module';
 import { CheckInModule } from '../events/attendance/check-in/check-in.module';
 
 import {
@@ -88,7 +91,9 @@ import {
     ReactiveFormsModule,
     ServicesFeedsModule,
     ServicesEventsModule,
-    ServicesMembersModule
+    ServicesMembersModule,
+    AssessModule, // sorting based on route loading
+    EngagementModule
   ],
 
   providers: [
@@ -96,7 +101,8 @@ import {
     ServicesService,
     ProvidersService,
     ServicesResolver,
-    ServicesUtilsService
+    ServicesUtilsService,
+    ProvidersUtilsService
   ]
 })
 export class ServicesModule {}

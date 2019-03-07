@@ -8,31 +8,26 @@ import { CategoriesListComponent } from './list';
 import { CategoriesEditComponent } from './edit';
 import { CategoriesDeleteComponent } from './delete';
 import { CategoriesCreateComponent } from './create';
-import { CategoryFormComponent } from './components';
-import { CategoriesActionBoxComponent } from './list/components';
 
-
-import { CategoryTypePipe } from './pipes';
 import { effects, reducers } from './store';
 import { SharedModule } from '@shared/shared.module';
 import { CategoriesService } from './categories.service';
 import { CategoriesRoutingModule } from './categories.routing.module';
+import { CommonCategoriesModule } from '@libs/locations/common/categories/common-categories.module';
 
 @NgModule({
   declarations: [
-    CategoryTypePipe,
-    CategoryFormComponent,
     CategoriesEditComponent,
     CategoriesListComponent,
     CategoriesCreateComponent,
-    CategoriesDeleteComponent,
-    CategoriesActionBoxComponent
+    CategoriesDeleteComponent
   ],
 
   imports: [
     SharedModule,
     CommonModule,
     ReactiveFormsModule,
+    CommonCategoriesModule,
     CategoriesRoutingModule,
     EffectsModule.forFeature(effects),
     StoreModule.forFeature('locationCategories', reducers),

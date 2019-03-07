@@ -113,6 +113,14 @@
     "@angular-devkit/core" "7.2.0"
     rxjs "6.3.3"
 
+"@angular/cdk@7.3.3":
+  version "7.3.3"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-7.3.3.tgz#02a2ad248141cd9968a5950ce0602da3fcf5445b"
+  dependencies:
+    tslib "^1.7.1"
+  optionalDependencies:
+    parse5 "^5.0.0"
+
 "@angular/cli@~7.2.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-7.2.0.tgz#912f83a74b7dded4a14fc3db4857c4873479de32"
@@ -292,7 +300,6 @@
 "@ngrx/entity@^7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@ngrx/entity/-/entity-7.0.0.tgz#c059e10f63d366e405f24a349d6f860afc80f91f"
-  integrity sha512-SyiUmg9YjKcb6cuHvIqoMIUJ6KPPJV4oIaI8Rxxps0C+K3R16q8pTbnNqZek/oGj7SQhbd2DOzhqvybrI34Kmg==
 
 "@ngrx/router-store@7.0.0":
   version "7.0.0"
@@ -339,6 +346,52 @@
   dependencies:
     component-cookie "^1.1.2"
     component-url "^0.2.1"
+
+"@sentry/browser@4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@sentry/browser/-/browser-4.6.2.tgz#f1f96d0a061ce90aeb72bd55af3d39d145effe93"
+  dependencies:
+    "@sentry/core" "4.6.2"
+    "@sentry/types" "4.5.3"
+    "@sentry/utils" "4.6.2"
+    tslib "^1.9.3"
+
+"@sentry/core@4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@sentry/core/-/core-4.6.2.tgz#2a0a9b90e46e68f1a4a161afdc18619ed31f2bdf"
+  dependencies:
+    "@sentry/hub" "4.6.2"
+    "@sentry/minimal" "4.6.2"
+    "@sentry/types" "4.5.3"
+    "@sentry/utils" "4.6.2"
+    tslib "^1.9.3"
+
+"@sentry/hub@4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@sentry/hub/-/hub-4.6.2.tgz#5c6688d052be4179b206fbdb173a88dbc98d93b0"
+  dependencies:
+    "@sentry/types" "4.5.3"
+    "@sentry/utils" "4.6.2"
+    tslib "^1.9.3"
+
+"@sentry/minimal@4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@sentry/minimal/-/minimal-4.6.2.tgz#f3dd639cd8a1e126a62fab18893d06b0760f6605"
+  dependencies:
+    "@sentry/hub" "4.6.2"
+    "@sentry/types" "4.5.3"
+    tslib "^1.9.3"
+
+"@sentry/types@4.5.3":
+  version "4.5.3"
+  resolved "https://registry.yarnpkg.com/@sentry/types/-/types-4.5.3.tgz#3350dce2b7f9b936a8c327891c12e3aef7bd8852"
+
+"@sentry/utils@4.6.2":
+  version "4.6.2"
+  resolved "https://registry.yarnpkg.com/@sentry/utils/-/utils-4.6.2.tgz#5bc1885b88c5b6273d7c3099889afb1e2beca9d0"
+  dependencies:
+    "@sentry/types" "4.5.3"
+    tslib "^1.9.3"
 
 "@types/amplitude-js@4.4.0":
   version "4.4.0"
@@ -2881,9 +2934,9 @@ find-up@^3.0.0:
   dependencies:
     locate-path "^3.0.0"
 
-flatpickr@2.4.4:
-  version "2.4.4"
-  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-2.4.4.tgz#7cfcd7918dd5e5d60e5ba32c0423d45db2fde794"
+flatpickr@4.5.2:
+  version "4.5.2"
+  resolved "https://registry.yarnpkg.com/flatpickr/-/flatpickr-4.5.2.tgz#47c8ad472a096e5fb7e74b809b0703535383f20d"
 
 flatted@^2.0.0:
   version "2.0.0"
@@ -4154,6 +4207,10 @@ karma-coverage@1.0.0:
     istanbul "^0.4.0"
     minimatch "^3.0.0"
     source-map "^0.5.1"
+
+karma-firefox-launcher@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/karma-firefox-launcher/-/karma-firefox-launcher-1.1.0.tgz#2c47030452f04531eb7d13d4fc7669630bb93339"
 
 karma-jasmine@2.0.1:
   version "2.0.1"
@@ -5497,6 +5554,10 @@ parse5@4.0.0:
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/parse5/-/parse5-4.0.0.tgz#6d78656e3da8d78b4ec0b906f7c08ef1dfe3f608"
 
+parse5@^5.0.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.0.tgz#c59341c9723f414c452975564c7c00a68d58acd2"
+
 parseqs@0.0.5:
   version "0.0.5"
   resolved "https://registry.yarnpkg.com/parseqs/-/parseqs-0.0.5.tgz#d5208a3738e46766e291ba2ea173684921a8b89d"
@@ -5944,10 +6005,6 @@ randombytes@^2.0.0, randombytes@^2.0.1:
 range-parser@^1.0.3, range-parser@^1.2.0, range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
-
-raven-js@3.23.3:
-  version "3.23.3"
-  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.23.3.tgz#6174f506c7362eb8bb72b291af5f22edb44ef165"
 
 raw-body@2.3.3:
   version "2.3.3"
@@ -7317,7 +7374,7 @@ ts-helpers@^1.1.1:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/ts-helpers/-/ts-helpers-1.1.2.tgz#fc69be9f1f3baed01fb1a0ef8d4cfe748814d835"
 
-tslib@1.9.3:
+tslib@1.9.3, tslib@^1.9.3:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
 

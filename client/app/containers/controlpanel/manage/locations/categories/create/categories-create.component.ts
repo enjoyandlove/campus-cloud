@@ -6,10 +6,10 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
-import { CategoryModel } from '../model';
 import { IItem } from '@shared/components';
-import { Locale } from '../categories.status';
 import { CPI18nService } from '@shared/services';
+import { CategoryModel} from '@libs/locations/common/categories/model';
+import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
 
 @Component({
   selector: 'cp-categories-create',
@@ -22,6 +22,7 @@ export class CategoriesCreateComponent implements OnInit, OnDestroy {
   formError;
   form: FormGroup;
   categoryTypes$: Observable<IItem[]>;
+  categoryIcons = CategoryModel.categoryIcons();
 
   private destroy$ = new Subject();
 
@@ -38,7 +39,7 @@ export class CategoriesCreateComponent implements OnInit, OnDestroy {
 
   get defaultParams(): HttpParams {
     const locale = CPI18nService.getLocale().startsWith('fr')
-      ? Locale.fr : Locale.eng;
+      ? LocationCategoryLocale.fr : LocationCategoryLocale.eng;
 
     return new HttpParams()
       .set('locale', locale)

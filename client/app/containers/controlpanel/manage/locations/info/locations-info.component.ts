@@ -1,13 +1,14 @@
 import { OnInit, Component, OnDestroy } from '@angular/core';
 import { map, filter, takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { ILocation } from '../model';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { Destroyable, Mixin } from '@shared/mixins';
-import { LocationsUtilsService } from '../locations.utils';
+import { ILocation } from '@libs/locations/common/model';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
 
 @Mixin([Destroyable])
 
@@ -29,6 +30,7 @@ export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
   emitDestroy() {}
 
   constructor(
+    public router: Router,
     public locationUtils: LocationsUtilsService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
   ) {}
@@ -76,6 +78,10 @@ export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
         }
       })
     ).subscribe();
+  }
+
+  onEditClick() {
+    this.router.navigate([`/manage/locations/${this.location.id}/edit`]);
   }
 
   ngOnInit() {

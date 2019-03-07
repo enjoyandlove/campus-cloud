@@ -2352,6 +2352,15 @@
   "t_categories_map_pin_icon": {
     "message": "Map Pin Icon"
   },
+  "t_category_successfully_created": {
+    "message": "Category successfully created"
+  },
+  "t_category_successfully_deleted": {
+    "message": "Category successfully deleted"
+  },
+  "t_category_successfully_edited": {
+    "message": "Category successfully edited"
+  },
   "t_changes_saved_ok": {
     "message": "Changes saved successfully"
   },
@@ -2364,6 +2373,9 @@
   "t_customise_personas": {
     "message": "App Experiences"
   },
+  "t_dashboard_build_experience": {
+    "message": "Build App Experience"
+  },
   "t_dashboard_chart_tooltip_label_downloads": {
     "message": "Downloads"
   },
@@ -2372,6 +2384,12 @@
   },
   "t_dashboard_top_orientation": {
     "message": "Top Orientation Programs"
+  },
+  "t_dashboard_welcome": {
+    "message": "Welcome to Campus Cloud"
+  },
+  "t_dashboard_welcome_subheader": {
+    "message": "You can measure your app and content engagement after launching your app experience"
   },
   "t_datepicker_clear": {
     "message": "Clear"
@@ -2437,11 +2455,20 @@
   "t_dining_create_dining": {
     "message": "Create Dining"
   },
+  "t_dining_delete_modal_title": {
+    "message": "Delete Dining"
+  },
   "t_dining_dietary_notes": {
     "message": "Dietary Notes"
   },
   "t_dining_dining_details": {
     "message": "Dining Details"
+  },
+  "t_dining_edit_dining": {
+    "message": "Edit Dining"
+  },
+  "t_dining_form_add_meal": {
+    "message": "+ Add Meal"
   },
   "t_dining_hours": {
     "message": "Dining Hours"
@@ -2972,6 +2999,48 @@
   "t_persona_list_button_notify": {
     "message": "Notify"
   },
+  "t_sandbox_delete_invite": {
+    "message": "Delete Invite"
+  },
+  "t_sandbox_delete_modal_body": {
+    "message": "Are you sure you want to delete invite?"
+  },
+  "t_sandbox_email_addresses": {
+    "message": "Email Addresses (separated by comma)"
+  },
+  "t_sandbox_email_addresses_hint": {
+    "message": "e.g. (john@ready.edu, jane@ready.edu)"
+  },
+  "t_sandbox_invite": {
+    "message": "Invite"
+  },
+  "t_sandbox_invite_testers": {
+    "message": "Invite Testers"
+  },
+  "t_sandbox_invite_testers_success": {
+    "message": "Testers Invited!"
+  },
+  "t_sandbox_invite_users": {
+    "message": "Invite Users"
+  },
+  "t_sandbox_no_test_users": {
+    "message": "No Test Users"
+  },
+  "t_sandbox_resend_invite": {
+    "message": "Resend Invite"
+  },
+  "t_sandbox_resend_invite_success": {
+    "message": "Invitation Resent!"
+  },
+  "t_sandbox_sub_heading": {
+    "message": "Invite App Users to the Test Environment"
+  },
+  "t_sandbox_test_environment": {
+    "message": "TEST ENVIRONMENT"
+  },
+  "t_sandbox_test_environment_users": {
+    "message": "Test Environment Users"
+  },
   "t_saving": {
     "message": "Saving"
   },
@@ -3101,6 +3170,12 @@
   "t_shared_delete_confirmation": {
     "message": "Are you sure you want to delete %s?"
   },
+  "t_shared_delete_modal_warning": {
+    "message": "Warning: This cannot be undone"
+  },
+  "t_shared_delete_resource_warning_assessment_data": {
+    "message": "All assessment data will be deleted"
+  },
   "t_shared_edit": {
     "message": "Edit"
   },
@@ -3160,6 +3235,9 @@
   },
   "t_shared_limited": {
     "message": "Limited"
+  },
+  "t_shared_meal": {
+    "message": "Meal"
   },
   "t_shared_monday": {
     "message": "Monday"
@@ -3271,6 +3349,9 @@
   },
   "t_walls_integrations_new_channel": {
     "message": "New Channel"
+  },
+  "t_walls_integration_form_default_image": {
+    "message": "Wall Image"
   },
   "update": {
     "message": "Update",

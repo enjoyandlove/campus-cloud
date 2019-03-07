@@ -47,6 +47,10 @@ function getMenu(privileges = {}) {
       deals: {
         active: false,
         deps: []
+      },
+      dining: {
+        active: false,
+        deps: []
       }
     },
     notify: {
@@ -110,6 +114,9 @@ function getMenu(privileges = {}) {
     }
     if (+p === CP_PRIVILEGES_MAP.deals) {
       form.content.deals.active = true;
+    }
+    if (+p === CP_PRIVILEGES_MAP.dining) {
+      form.content.dining.active = true;
     }
   });
 

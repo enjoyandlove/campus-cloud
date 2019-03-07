@@ -46,6 +46,13 @@ export class EventsService extends HTTPService {
     return super.get(url, search);
   }
 
+  getEventAttendanceSummary(eventId: number, search?: HttpParams) {
+    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}`;
+    const url = `${common}/${eventId}`;
+
+    return super.get(url, search);
+  }
+
   setModalEvents(events: any[]): void {
     this.store.dispatch({
       type: baseActions.EVENTS_MODAL_SET,
@@ -56,7 +63,7 @@ export class EventsService extends HTTPService {
   createEvent(body: any, {}) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT}/`;
 
-    return super.post(url, body);
+    return super.post(url, body, null, true);
   }
 
   updateEvent(body: any, eventId: number, {}) {

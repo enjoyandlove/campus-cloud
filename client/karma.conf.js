@@ -17,7 +17,8 @@ module.exports = function(config) {
     ],
     client: {
       jasmine: {
-        random: true
+        random: true,
+        timeoutInterval: 10000
         // seed: 01932
       },
       clearContext: false // leave Jasmine Spec Runner output visible in browser
@@ -30,13 +31,14 @@ module.exports = function(config) {
       thresholds: {
         emitWarning: false,
         global: {
-          statements: 66,
+          statements: 69,
           branches: 37,
-          functions: 44,
-          lines: 66
+          functions: 45,
+          lines: 70
         }
       }
     },
+    browserDisconnectTolerance: 2,
     browserDisconnectTimeout: 10000,
     reporters: ['mocha', 'jasmine-seed'],
     port: 9876,

@@ -1,9 +1,10 @@
 /*tslint:disable:max-line-length */
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { PopoverModule } from 'ngx-bootstrap/popover';
+import { OverlayModule } from '@angular/cdk/overlay';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 
 // directives
 import {
@@ -165,7 +166,14 @@ import {
 
   entryComponents: [CPLightboxComponent, CPImageCropperComponent],
 
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule, PopoverModule.forRoot()],
+  imports: [
+    FormsModule,
+    CommonModule,
+    RouterModule,
+    OverlayModule,
+    ReactiveFormsModule,
+    PopoverModule.forRoot()
+  ],
 
   providers: [
     StoreService,

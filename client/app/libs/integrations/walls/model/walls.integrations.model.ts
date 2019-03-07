@@ -1,8 +1,7 @@
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { FeedIntegration } from '../../common/model';
-import { validUrl } from '@shared/utils/forms/patterns';
-import { CustomTextValidators } from '@shared/validators';
+import { CustomValidators } from '@shared/validators';
 import { IWallsIntegration } from './walls.integrations.interface';
 
 export class WallsIntegrationModel extends FeedIntegration {
@@ -30,8 +29,7 @@ export class WallsIntegrationModel extends FeedIntegration {
         Validators.compose([
           Validators.required,
           Validators.maxLength(1024),
-          Validators.pattern(validUrl),
-          CustomTextValidators.requiredNonEmpty
+          CustomValidators.requiredNonEmpty
         ])
       ],
       feed_type: [_integration.feed_type, Validators.required],
@@ -40,7 +38,7 @@ export class WallsIntegrationModel extends FeedIntegration {
         Validators.compose([
           Validators.required,
           Validators.maxLength(128),
-          CustomTextValidators.requiredNonEmpty
+          CustomValidators.requiredNonEmpty
         ])
       ],
       poster_avatar_url: [

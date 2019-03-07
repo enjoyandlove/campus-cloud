@@ -1,24 +1,28 @@
 <ul class="header">
-  <li
-    routerLinkActive="active"
-    *ngFor="let page of readyFeatures | cpFilterByLength : maxChildren"
-    [routerLinkActiveOptions]="{exact: page.hasParams ? false : true}">
-    <span class="promote-badge" *ngIf="page.new">new</span>
-    <a
-      *ngIf="page.amplitude"
-      [routerLink]="[page.url]"
-      (click)="trackSubMenu(page.amplitude, page.isSubMenuItem)"
-      [queryParamsHandling]="setQueryParams(page)">
-      {{ page.label | cpI18n }}
-    </a>
-    <a
-      *ngIf="!page.amplitude"
-      [routerLink]="[page.url]"
-      [queryParamsHandling]="setQueryParams(page)">
-      {{ page.label | cpI18n }}
-    </a>
+  <ng-container *ngFor="let page of readyFeatures | cpFilterByLength : maxChildren">
+    <ng-container *cpFeatureToggle="page.flag">
+      <li
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{exact: page.hasParams ? false : true}">
+        <span class="promote-badge" *ngIf="page.new">new</span>
+        <a
+          *ngIf="page.amplitude"
+          [routerLink]="[page.url]"
+          (click)="trackSubMenu(page.amplitude, page.isSubMenuItem)"
+          [queryParamsHandling]="setQueryParams(page)">
+          {{ page.label | cpI18n }}
+        </a>
+        <a
+          *ngIf="!page.amplitude"
+          [routerLink]="[page.url]"
+          [queryParamsHandling]="setQueryParams(page)">
+          {{ page.label | cpI18n }}
+        </a>
+      </li>
+    </ng-container>
+  </ng-container>
 
-  </li>
+
   <li *ngIf="extraMenu" [class.active]="isExtraMenuRoute()">
     <a
       [routerLink]="[extraMenu.url]">{{ extraMenu.label | cpI18n }}
@@ -34,19 +38,21 @@
 
     <ul class="dropdown-menu dropdown-menu-right header__more-children">
       <li *ngFor="let page of extraChildren">
-        <a
-          *ngIf="page.amplitude"
-          (click)="extraMenu = page"
-          [routerLink]="[page.url]"
-          (click)="trackSubMenu(page.amplitude, page.isSubMenuItem)">
-          {{ page.label | cpI18n }}
-        </a>
-        <a
-          *ngIf="!page.amplitude"
-          (click)="extraMenu = page"
-          [routerLink]="[page.url]">
-          {{ page.label | cpI18n }}
-        </a>
+        <ng-container *cpFeatureToggle="page.flag">
+          <a
+            *ngIf="page.amplitude"
+            (click)="extraMenu = page"
+            [routerLink]="[page.url]"
+            (click)="trackSubMenu(page.amplitude, page.isSubMenuItem)">
+            {{ page.label | cpI18n }}
+          </a>
+          <a
+            *ngIf="!page.amplitude"
+            (click)="extraMenu = page"
+            [routerLink]="[page.url]">
+            {{ page.label | cpI18n }}
+          </a>
+        </ng-container>
       </li>
     </ul>
   </li>

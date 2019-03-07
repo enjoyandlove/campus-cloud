@@ -15,7 +15,18 @@ export const environment: IEnvironment = {
     WALLS_INTEGRATION: {
       active: false,
       internal: true
+    },
+    ANNOUNCEMENT_INTEGRATION: {
+      active: false,
+      internal: true
+    },
+    DINING: {
+      active: false,
+      internal: true
     }
   },
-  envName: 'production_canada'
+  envName: 'production_canada',
+  keys: {
+    sentryDsn: 'https://0b6c76a5691d4b7399394aa79753acef@sentry.io/207033'
+  }
 };

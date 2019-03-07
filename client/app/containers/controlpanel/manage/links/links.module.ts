@@ -15,6 +15,7 @@ import { LinksRoutingModule } from './links.routing.module';
 import { LinksListActionBoxComponent } from './list/components';
 
 @NgModule({
+  entryComponents: [LinksEditComponent, LinksCreateComponent, LinksDeleteComponent],
   declarations: [
     LinksListActionBoxComponent,
     LinksListComponent,

@@ -20,6 +20,7 @@
       <cp-walls-integration-list
         [channels]="channels"
         [integrations$]="integrations$"
+        (syncClick)="onSyncNow($event)"
         (editClick)="onLaunchEditModal($event)"
         (deleteClick)="onLaunchDeleteModal($event)">
       </cp-walls-integration-list>

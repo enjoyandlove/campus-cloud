@@ -1,9 +1,10 @@
+import { combineLatest, from as fromPromise, Subject } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { combineLatest, from as fromPromise, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { LocationsService } from '../../containers/controlpanel/manage/locations/locations.service';
+
 import { CPSession } from '../../session';
+import { LocationsService } from '../../containers/controlpanel/manage/locations/locations.service';
 
 const defaultOptions: google.maps.places.AutocompletionRequest = {
   offset: 5,

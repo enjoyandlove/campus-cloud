@@ -3,16 +3,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/index';
 
+import { CPSession } from '@app/session';
+import { mockAttendees } from '../../../tests';
+import { CPI18nService } from '@shared/services';
+import { mockUser } from '@app/session/mock/user';
+import { mockSchool } from '@app/session/mock/school';
 import { EventsModule } from '../../../events.module';
 import { CheckInMethod } from '../../../event.status';
-import { CPSession } from '../../../../../../../session';
 import { EventUtilService } from '../../../events.utils.service';
-import { mockUser } from '../../../../../../../session/mock/user';
-import { mockSchool } from '../../../../../../../session/mock/school';
-import { CPI18nService } from '../../../../../../../shared/services';
 import { EventsAttendanceActionBoxComponent } from './events-attendance-action-box.component';
-
-const mockAttendees = require('../../../__mock__/eventAttendees.json');
 
 describe('EventsAttendanceActionBoxComponent', () => {
   let component: EventsAttendanceActionBoxComponent;

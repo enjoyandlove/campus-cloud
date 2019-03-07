@@ -1,20 +1,30 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { get as _get } from 'lodash';
 
-import { IService } from '../../../../../service.interface';
-import { CPSession } from './../../../../../../../../../session';
-import IServiceProvider from '../../../../../providers.interface';
-import { ProvidersService } from '../../../../../providers.service';
-import { FORMAT } from '../../../../../../../../../shared/pipes/date';
-import { ServicesUtilsService } from '../../../../../services.utils.service';
-import { BaseComponent } from '../../../../../../../../../base/base.component';
-import { EventUtilService } from '../../../../../../events/events.utils.service';
-import { amplitudeEvents } from '../../../../../../../../../shared/constants/analytics';
-import { environment } from './../../../../../../../../../../environments/environment';
-import { CPI18nService } from './../../../../../../../../../shared/services/i18n.service';
-import { CPTrackingService, RouteLevel } from '../../../../../../../../../shared/services';
-import { ICheckIn } from '../../../../../../events/attendance/check-in/check-in.interface';
-import { CheckInMethod, CheckInOutTime, CheckInOut } from '../../../../../../events/event.status';
+import { FORMAT } from '@shared/pipes/date';
+import { DEFAULT } from '@shared/constants';
+import { BaseComponent } from '@app/base/base.component';
+import { CPI18nService } from '@shared/services/i18n.service';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { environment } from '@client/environments/environment';
+import { CPTrackingService, RouteLevel } from '@shared/services';
+import { IService } from '@containers/controlpanel/manage/services/service.interface';
+import IServiceProvider from '@containers/controlpanel/manage/services/providers.interface';
+import { ProvidersService } from '@containers/controlpanel/manage/services/providers.service';
+import { EventUtilService } from '@containers/controlpanel/manage/events/events.utils.service';
+import { ServicesUtilsService } from '@containers/controlpanel/manage/services/services.utils.service';
+import { ICheckIn } from '@containers/controlpanel/manage/events/attendance/check-in/check-in.interface';
+import { AMPLITUDE_INTERVAL_MAP } from '@containers/controlpanel/assess/engagement/engagement.utils.service';
+import {
+  CheckInOut,
+  CheckInMethod,
+  CheckInOutTime
+} from '@containers/controlpanel/manage/events/event.status';
+import {
+  IFilterState,
+  ProvidersUtilsService
+} from '@containers/controlpanel/manage/services/providers.utils.service';
 
 interface IState {
   end: string;
@@ -43,6 +53,16 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   @Input() providerId: number;
   @Input() provider: IServiceProvider;
 
+  _filterState;
+  get filterState(): IFilterState {
+    return this._filterState;
+  }
+  @Input('filterState')
+  set filterState(value: IFilterState) {
+    this._filterState = value;
+    this.fetch();
+  }
+
   loading;
   checkInData;
   assessments;
@@ -60,26 +80,25 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   defaultImage = `${environment.root}public/default/user.png`;
 
   constructor(
-    public session: CPSession,
     private cpI18n: CPI18nService,
     private utils: ServicesUtilsService,
     private eventUtils: EventUtilService,
     private cpTracking: CPTrackingService,
-    public providersService: ProvidersService
+    public providersService: ProvidersService,
+    private providerUtils: ProvidersUtilsService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
   fetch() {
-    const search = new HttpParams()
-      .append('end', this.state.end)
-      .append('start', this.state.start)
-      .append('search_text', this.state.search_text)
+    let search = new HttpParams()
       .append('service_id', this.provider.campus_service_id.toString())
       .append('service_provider_id', this.provider.id.toString())
       .append('sort_field', this.state.sort_field)
       .append('sort_direction', this.state.sort_direction);
+
+    search = this.providerUtils.addSearchParams(search, this.filterState);
 
     const stream$ = this.providersService.getProviderAssessments(
       this.startRange,
@@ -87,10 +106,17 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       search
     );
 
-    super.fetchData(stream$).then((res) => {
-      this.assessments = res.data;
-      this.hasAttendees = res.data.length > 0;
-    });
+    super
+      .fetchData(stream$)
+      .then((res) => {
+        this.assessments = res.data;
+        this.hasAttendees = res.data.length > 0;
+      })
+      .catch(() => {
+        this.loading = false;
+        this.assessments = [];
+        this.hasAttendees = false;
+      });
   }
 
   onPaginationNext() {
@@ -104,12 +130,13 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   }
 
   fetchAllRecords(): Promise<any> {
-    const search = new HttpParams()
-      .append('all', '1')
+    let search = new HttpParams()
       .append('service_id', this.provider.campus_service_id.toString())
       .append('service_provider_id', this.provider.id.toString())
-      .append('end', this.state.end)
-      .append('start', this.state.start);
+      .append('sort_field', this.state.sort_field)
+      .append('sort_direction', this.state.sort_direction);
+
+    search = this.providerUtils.addSearchParams(search, this.filterState);
 
     const stream$ = this.providersService.getProviderAssessments(
       this.startRange,
@@ -125,25 +152,6 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       ...this.state,
       sort_field,
       sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
-    };
-
-    this.fetch();
-  }
-
-  doSearch(search_text) {
-    this.state = {
-      ...this.state,
-      search_text
-    };
-
-    this.fetch();
-  }
-
-  doDateFilter(dateRange) {
-    this.state = {
-      ...this.state,
-      start: dateRange.start,
-      end: dateRange.end
     };
 
     this.fetch();
@@ -250,12 +258,28 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   }
 
   trackAmplitudeEvent() {
-    const check_out_status = this.provider.has_checkout
+    const assessment_status = this.provider.has_checkout
+      ? amplitudeEvents.CHECKIN_AND_CHECKOUT
+      : amplitudeEvents.CHECKIN_ONLY;
+
+    const feedback_status = this.provider.has_feedback
       ? amplitudeEvents.ENABLED
       : amplitudeEvents.DISABLED;
 
+    const filter_type = _get(
+      this.filterState,
+      ['studentFilter', 'cohort_type'],
+      amplitudeEvents.ALL_STUDENTS
+    );
+
+    const dateType = _get(this.filterState, ['dateRange', 'route_id'], DEFAULT);
+    const interval = AMPLITUDE_INTERVAL_MAP[dateType];
+
     this.eventProperties = {
-      check_out_status,
+      interval,
+      filter_type,
+      feedback_status,
+      assessment_status,
       source_id: this.provider.encrypted_id,
       provider_type: amplitudeEvents.ONE_PROVIDER,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
