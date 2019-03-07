@@ -1,16 +1,9 @@
 import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
-import {
-  Router,
-  CanLoad,
-  CanActivate,
-  CanActivateChild,
-  ActivatedRouteSnapshot,
-  Route
-} from '@angular/router';
+import { Router, CanActivate, CanActivateChild, ActivatedRouteSnapshot } from '@angular/router';
 
 import { CPSession } from '@app/session';
-import { CP_PRIVILEGES } from '@shared/constants/privileges';
+import { canSchoolReadResource, canAccountLevelReadResource } from '@shared/utils';
 import { AdminService, SchoolService, StoreService, ZendeskService } from '@shared/services';
 
 import {
@@ -20,7 +13,7 @@ import {
 } from '@shared/utils/privileges';
 
 @Injectable()
-export class PrivilegesGuard implements CanActivate, CanActivateChild, CanLoad {
+export class PrivilegesGuard implements CanActivate, CanActivateChild {
   constructor(
     public router: Router,
     public session: CPSession,
@@ -29,15 +22,6 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild, CanLoad {
     public schoolService: SchoolService,
     public zendeskService: ZendeskService
   ) {}
-
-  canLoad(route: Route) {
-    const privilege = this.getPrivilegeFromRouteData(route.data);
-    if (!privilege) {
-      return true;
-    }
-
-    return this.hasPrivileges(privilege);
-  }
 
   canActivateChild(activatedRoute: ActivatedRouteSnapshot) {
     const privilege = this.getPrivilegeFromRouteData(activatedRoute.data);
@@ -70,7 +54,6 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild, CanLoad {
       return;
     }
 
-    console.log(`User has access to ${CP_PRIVILEGES[privilege]}`);
     return true;
   }
 
