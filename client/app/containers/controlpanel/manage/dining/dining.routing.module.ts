@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 
 import { DiningListComponent } from './list';
 import { DiningInfoComponent } from './info';
@@ -32,7 +32,6 @@ const appRoutes: Routes = [
   },
   {
     path: 'categories',
-    canActivate: [PrivilegesGuard],
     data: { zendesk: 'categories' },
     loadChildren: './categories/dining-categories.module#DiningCategoriesModule'
   }
