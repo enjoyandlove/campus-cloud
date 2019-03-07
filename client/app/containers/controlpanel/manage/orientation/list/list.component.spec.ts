@@ -2,37 +2,24 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
-import { of as observableOf } from 'rxjs';
+import { of } from 'rxjs';
 
+import { CPSession } from '@app/session';
 import { ManageHeaderService } from '../../utils';
-import { CPSession } from '../../../../../session';
+import { configureTestSuite } from '@shared/tests';
+import { mockSchool } from '@app/session/mock/school';
+import { baseReducers } from '@app/store/base/reducers';
 import { OrientationModule } from '../orientation.module';
 import { OrientationListComponent } from './list.component';
 import { OrientationService } from '../orientation.services';
-import { mockSchool } from '../../../../../session/mock/school';
-import { baseReducers } from '../../../../../store/base/reducers';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
-
-class MockOrientationService {
-  dummy;
-
-  getPrograms(startRage: number, endRage: number, search: any) {
-    this.dummy = [startRage, endRage, search];
-
-    return observableOf({});
-  }
-}
+import { MockOrientationService, mockPrograms } from '../tests';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 
 describe('OrientationListComponent', () => {
-  let spy;
-  let search;
-  let component: OrientationListComponent;
-  let fixture: ComponentFixture<OrientationListComponent>;
+  configureTestSuite();
 
-  const mockPrograms = require('../mock.json');
-
-  beforeEach(
-    async(() => {
+  beforeAll((done) => {
+    (async () => {
       TestBed.configureTestingModule({
         imports: [
           OrientationModule,
@@ -49,20 +36,30 @@ describe('OrientationListComponent', () => {
           ManageHeaderService,
           { provide: OrientationService, useClass: MockOrientationService }
         ]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(OrientationListComponent);
+      });
+      await TestBed.compileComponents();
+    })()
+      .then(done)
+      .catch(done.fail);
+  });
 
-          component = fixture.componentInstance;
-          component.session.g.set('school', mockSchool);
+  let spy;
+  let search;
+  let component: OrientationListComponent;
+  let fixture: ComponentFixture<OrientationListComponent>;
 
-          search = new HttpParams()
-            .append('search_str', component.state.search_str)
-            .append('sort_field', component.state.sort_field)
-            .append('sort_direction', component.state.sort_direction)
-            .append('school_id', component.session.g.get('school').id.toString());
-        });
+  beforeEach(
+    async(() => {
+      fixture = TestBed.createComponent(OrientationListComponent);
+
+      component = fixture.componentInstance;
+      component.session.g.set('school', mockSchool);
+
+      search = new HttpParams()
+        .set('search_str', component.state.search_str)
+        .set('sort_field', component.state.sort_field)
+        .set('sort_direction', component.state.sort_direction)
+        .set('school_id', component.session.g.get('school').id.toString());
     })
   );
 
@@ -74,7 +71,7 @@ describe('OrientationListComponent', () => {
   it(
     'should fetch list of orientation programs',
     fakeAsync(() => {
-      spy = spyOn(component.service, 'getPrograms').and.returnValue(observableOf(mockPrograms));
+      spy = spyOn(component.service, 'getPrograms').and.returnValue(of(mockPrograms));
       component.ngOnInit();
 
       tick();

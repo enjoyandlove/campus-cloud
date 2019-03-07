@@ -1,43 +1,7 @@
-<div class="cpmodal">
-  <div class="cpmodal__header">
-    <div class="row">
-      <div class="col-12 text-center">
-        <span i18n><strong>{{ 'orientation_delete_program' | cpI18n }}</strong></span>
-
-        <span
-          data-dismiss="modal"
-          class="float-right hover cpmodal__header__close">
-            &times;
-          </span>
-      </div>
-    </div>
-  </div>
-
-  <div class="cpmodal__body">
-    <div class="row">
-      <div class="col-12">
-        <p class="text-center" i18n>
-          {{ 'orientation_delete_modal_body' | cpI18n:orientationProgram.name }}
-        </p>
-      </div>
-    </div>
-  </div>
-
-  <div class="cpmodal__footer">
-    <div class="row justify-content-end">
-      <div class="col-6 text-right">
-        <button
-          type="button"
-          class="cpbtn cpbtn--cancel"
-          data-dismiss="modal" i18n>
-          {{ 'cancel' | cpI18n }}
-        </button>
-
-        <cp-button
-          [props]="buttonData"
-          (buttonClick)="onDelete()">
-        </cp-button>
-      </div>
-    </div>
-  </div>
-</div>
+<cp-delete-modal
+  (cancelClick)="onClose()"
+  (deleteClick)="onDelete()"
+  [warnings]="deleteWarnings"
+  [modalTitle]="['orientation_delete_program' | cpI18n]"
+  [modalBody]="['orientation_delete_modal_body' | cpI18n:orientationProgram.name]">
+</cp-delete-modal>

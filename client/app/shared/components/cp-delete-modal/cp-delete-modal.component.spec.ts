@@ -1,12 +1,12 @@
-import { CPCheckboxComponent } from './../cp-checkbox/cp-checkbox.component';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
+import { CPI18nService } from '@shared/services';
 import { SharedModule } from '@shared/shared.module';
 import { configureTestSuite } from '@app/shared/tests';
-import { CPI18nService } from '@shared/services/i18n.service';
 import { CPDeleteModalComponent } from './cp-delete-modal.component';
+import { CPCheckboxComponent } from './../cp-checkbox/cp-checkbox.component';
 
 describe('CPDeleteModalComponent', () => {
   configureTestSuite();
