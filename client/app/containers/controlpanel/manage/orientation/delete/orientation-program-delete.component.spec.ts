@@ -1,26 +1,44 @@
-import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of as observableOf } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
+import { of } from 'rxjs';
 
-import { CPSession } from './../../../../../session';
+import { CPSession } from '@app/session';
+import { configureTestSuite } from '@shared/tests';
+import { mockSchool } from '@app/session/mock/school';
 import { OrientationModule } from '../orientation.module';
 import { OrientationService } from '../orientation.services';
-import { mockSchool } from '../../../../../session/mock/school';
-import { CPTrackingService } from '../../../../../shared/services';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { MockOrientationService, mockPrograms } from '../tests';
+import { CPI18nService, CPTrackingService, MODAL_DATA } from '@shared/services';
 import { OrientationProgramDeleteComponent } from './orientation-program-delete.component';
 
-class MockOrientationService {
-  dummy;
-  deleteProgram(programId: number, search: any) {
-    this.dummy = [programId, search];
-
-    return observableOf({});
-  }
-}
-
 describe('OrientationProgramDeleteComponent', () => {
+  configureTestSuite();
+
+  beforeAll((done) => {
+    (async () => {
+      TestBed.configureTestingModule({
+        imports: [OrientationModule, RouterTestingModule],
+        providers: [
+          CPSession,
+          CPI18nService,
+          CPTrackingService,
+          {
+            provide: MODAL_DATA,
+            useValue: {
+              data: mockPrograms[0],
+              onClose: () => {}
+            }
+          },
+          { provide: OrientationService, useClass: MockOrientationService }
+        ]
+      });
+      await TestBed.compileComponents();
+    })()
+      .then(done)
+      .catch(done.fail);
+  });
+
   let spy;
   let search;
   let programId;
@@ -29,44 +47,22 @@ describe('OrientationProgramDeleteComponent', () => {
 
   beforeEach(
     async(() => {
-      TestBed.configureTestingModule({
-        imports: [OrientationModule, RouterTestingModule],
-        providers: [
-          CPSession,
-          CPI18nService,
-          CPTrackingService,
-          { provide: OrientationService, useClass: MockOrientationService }
-        ]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(OrientationProgramDeleteComponent);
-          component = fixture.componentInstance;
+      fixture = TestBed.createComponent(OrientationProgramDeleteComponent);
+      component = fixture.componentInstance;
 
-          component.orientationProgram = {
-            id: 84,
-            name: 'Hello World',
-            description: 'This is description'
-          };
+      component.orientationProgram = mockPrograms[0];
 
-          component.session.g.set('school', mockSchool);
-          programId = component.orientationProgram.id;
-          search = new HttpParams().append(
-            'school_id',
-            component.session.g.get('school').id.toString()
-          );
-        });
+      component.session.g.set('school', mockSchool);
+      programId = component.orientationProgram.id;
+      search = new HttpParams().append(
+        'school_id',
+        component.session.g.get('school').id.toString()
+      );
     })
   );
 
-  it('buttonData should have "Delete" label & "Danger class"', () => {
-    component.ngOnInit();
-    expect(component.buttonData.text).toEqual('Delete');
-    expect(component.buttonData.class).toEqual('danger');
-  });
-
   it('should delete orientation program', () => {
-    spy = spyOn(component.service, 'deleteProgram').and.returnValue(observableOf({}));
+    spy = spyOn(component.service, 'deleteProgram').and.returnValue(of({}));
 
     component.onDelete();
     expect(spy).toHaveBeenCalledWith(programId, search);
