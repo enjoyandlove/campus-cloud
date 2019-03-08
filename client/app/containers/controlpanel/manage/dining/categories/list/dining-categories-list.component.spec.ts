@@ -25,7 +25,11 @@ describe('DiningCategoriesListComponent', () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
         providers: [CPSession, CPI18nService, Actions],
-        declarations: [DiningCategoriesListComponent, CategoryTypePipe, CategoriesActionBoxComponent],
+        declarations: [
+          DiningCategoriesListComponent,
+          CategoryTypePipe,
+          CategoriesActionBoxComponent
+        ],
         schemas: [NO_ERRORS_SCHEMA]
       });
 

@@ -95,7 +95,7 @@ export function reducer(state = initialState, action: fromCategories.Actions) {
     }
 
     case fromCategories.CategoriesActions.POST_CATEGORY_SUCCESS: {
-      const result =  categoryAdaptor.addOne(action.payload, {
+      const result = categoryAdaptor.addOne(action.payload, {
         ...state,
         error: false,
         loaded: true,

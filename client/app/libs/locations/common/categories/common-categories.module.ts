@@ -18,16 +18,7 @@ import {
     CategoriesActionBoxComponent,
     CategoriesCommonListComponent
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule,
-    ReactiveFormsModule
-  ],
-  exports: [
-    CategoryFormComponent,
-    CategoriesActionBoxComponent,
-    CategoriesCommonListComponent
-  ]
+  imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
+  exports: [CategoryFormComponent, CategoriesActionBoxComponent, CategoriesCommonListComponent]
 })
 export class CommonCategoriesModule {}

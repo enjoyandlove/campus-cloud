@@ -54,5 +54,4 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
     }
   ]
 })
-
 export class DiningModule {}

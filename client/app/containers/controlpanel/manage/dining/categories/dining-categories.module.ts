@@ -36,7 +36,7 @@ import { CommonCategoriesModule } from '@libs/locations/common/categories/common
     CommonCategoriesModule,
     DiningCategoriesRoutingModule,
     EffectsModule.forFeature(effects),
-    StoreModule.forFeature('diningCategories', reducers),
+    StoreModule.forFeature('diningCategories', reducers)
   ],
 
   providers: [DiningCategoriesService]

@@ -55,7 +55,10 @@ describe('Dining Categories Reducer', () => {
     const payload = mockCategories[0];
 
     const action = new fromActions.PostCategorySuccess(payload);
-    const { filteredCategories, entities, loading, error } = fromReducer.reducer(initialState, action);
+    const { filteredCategories, entities, loading, error } = fromReducer.reducer(
+      initialState,
+      action
+    );
 
     expect(error).toBe(false);
     expect(loading).toBe(false);

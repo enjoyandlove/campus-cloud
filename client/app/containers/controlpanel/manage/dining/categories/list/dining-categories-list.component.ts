@@ -18,7 +18,6 @@ import { ICategory } from '@libs/locations/common/categories/model';
 import { ICategoriesApiQuery } from '@libs/locations/common/categories/categories.status';
 
 @Mixin([Destroyable])
-
 @Component({
   selector: 'cp-dining-categories-list',
   templateUrl: './dining-categories-list.component.html',
@@ -64,9 +63,7 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
   fetch() {
     this.store.dispatch(new fromStore.GetCategories());
 
-    this.categories$ = this.store
-      .select(fromStore.getCategories)
-      .pipe(takeUntil(this.destroy$));
+    this.categories$ = this.store.select(fromStore.getCategories).pipe(takeUntil(this.destroy$));
   }
 
   fetchFilteredCategories() {
@@ -132,9 +129,7 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
       )
       .subscribe();
 
-    this.categories$ = this.store
-      .select(fromStore.getCategories)
-      .pipe(takeUntil(this.destroy$));
+    this.categories$ = this.store.select(fromStore.getCategories).pipe(takeUntil(this.destroy$));
   }
 
   loadCategoryTypes() {
@@ -147,7 +142,8 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
             this.store.dispatch(new fromStore.GetCategoriesType());
           }
         })
-      ).subscribe();
+      )
+      .subscribe();
   }
 
   ngOnInit() {
@@ -159,13 +155,13 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
       .select(fromStore.getCategoriesLoading)
       .pipe(takeUntil(this.destroy$));
 
-    this.store.select(fromStore.getCategoriesParamState)
-      .pipe((takeUntil(this.destroy$)))
-      .subscribe((state) => this.state = state);
+    this.store
+      .select(fromStore.getCategoriesParamState)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((state) => (this.state = state));
   }
 
   ngOnDestroy() {
     this.emitDestroy();
   }
 }
-

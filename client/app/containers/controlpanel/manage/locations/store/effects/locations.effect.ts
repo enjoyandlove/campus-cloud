@@ -21,13 +21,15 @@ export class LocationsEffect {
   ) {}
 
   @Effect()
-  getLocations$: Observable<fromActions.GetLocationsSuccess | fromActions.GetLocationsFail>
-    = this.actions$.pipe(
+  getLocations$: Observable<
+    fromActions.GetLocationsSuccess | fromActions.GetLocationsFail
+  > = this.actions$.pipe(
     ofType(fromActions.locationActions.GET_LOCATIONS),
     mergeMap((action: fromActions.GetLocations) => {
       const { startRange, endRange, params } = action.payload;
 
-      return this.service.getLocations(startRange, endRange, params )
+      return this.service
+        .getLocations(startRange, endRange, params)
         .pipe(
           map((data: ILocation[]) => new fromActions.GetLocationsSuccess(data)),
           catchError((error) => of(new fromActions.GetLocationsFail(error)))
@@ -36,13 +38,15 @@ export class LocationsEffect {
   );
 
   @Effect()
-  getFilteredLocations$: Observable<fromActions.GetFilteredLocationsSuccess | fromActions.GetFilteredLocationsFail>
-    = this.actions$.pipe(
+  getFilteredLocations$: Observable<
+    fromActions.GetFilteredLocationsSuccess | fromActions.GetFilteredLocationsFail
+  > = this.actions$.pipe(
     ofType(fromActions.locationActions.GET_FILTERED_LOCATIONS),
     mergeMap((action: fromActions.GetFilteredLocations) => {
       const { startRange, endRange, params } = action.payload;
 
-      return this.service.getLocations(startRange, endRange, params )
+      return this.service
+        .getLocations(startRange, endRange, params)
         .pipe(
           map((data: ILocation[]) => new fromActions.GetFilteredLocationsSuccess(data)),
           catchError((error) => of(new fromActions.GetFilteredLocationsFail(error)))
@@ -51,13 +55,15 @@ export class LocationsEffect {
   );
 
   @Effect()
-  getLocationById$: Observable<fromActions.GetLocationByIdSuccess | fromActions.GetLocationByIdFail>
-    = this.actions$.pipe(
+  getLocationById$: Observable<
+    fromActions.GetLocationByIdSuccess | fromActions.GetLocationByIdFail
+  > = this.actions$.pipe(
     ofType(fromActions.locationActions.GET_LOCATION_BY_ID),
     mergeMap((action: fromActions.GetLocationById) => {
       const { locationId, params } = action.payload;
 
-      return this.service.getLocationById(locationId, params )
+      return this.service
+        .getLocationById(locationId, params)
         .pipe(
           map((data: ILocation) => new fromActions.GetLocationByIdSuccess(data)),
           catchError((error) => of(new fromActions.GetLocationByIdFail(error)))
@@ -66,8 +72,9 @@ export class LocationsEffect {
   );
 
   @Effect()
-  createLocation$: Observable<fromActions.PostLocationSuccess | fromActions.PostLocationFail>
-    = this.actions$.pipe(
+  createLocation$: Observable<
+    fromActions.PostLocationSuccess | fromActions.PostLocationFail
+  > = this.actions$.pipe(
     ofType(fromActions.locationActions.POST_LOCATION),
     mergeMap((action: fromActions.PostLocation) => {
       const { body, params } = action.payload;
@@ -83,12 +90,11 @@ export class LocationsEffect {
   );
 
   @Effect()
-  createLocationSuccess$: Observable<fromCategoryStore.GetCategoriesSuccess>
-    = this.actions$.pipe(
+  createLocationSuccess$: Observable<fromCategoryStore.GetCategoriesSuccess> = this.actions$.pipe(
     ofType(fromActions.locationActions.POST_LOCATION_SUCCESS),
     map((action: fromActions.PostLocationSuccess) => action.payload),
     withLatestFrom(this.store.select(fromCategoryStore.getCategories)),
-    map(([{category_id}, categories]) => {
+    map(([{ category_id }, categories]) => {
       return categories.map((category: ICategory) => {
         if (category.id === category_id) {
           category = {
@@ -105,8 +111,9 @@ export class LocationsEffect {
   );
 
   @Effect()
-  editLocation$: Observable<fromActions.EditLocationSuccess | fromActions.EditLocationFail>
-    = this.actions$.pipe(
+  editLocation$: Observable<
+    fromActions.EditLocationSuccess | fromActions.EditLocationFail
+  > = this.actions$.pipe(
     ofType(fromActions.locationActions.EDIT_LOCATION),
     mergeMap((action: fromActions.EditLocation) => {
       const { locationId, categoryId, body, params } = action.payload;
@@ -114,7 +121,7 @@ export class LocationsEffect {
       return this.service
         .updateLocation(body, locationId, params)
         .pipe(
-          map((data: ILocation) => new fromActions.EditLocationSuccess({data: data, categoryId})),
+          map((data: ILocation) => new fromActions.EditLocationSuccess({ data: data, categoryId })),
           tap((_) => this.router.navigate([`/manage/locations/${locationId}/info`])),
           catchError((error) => of(new fromActions.EditLocationFail(error)))
         );
@@ -122,8 +129,7 @@ export class LocationsEffect {
   );
 
   @Effect()
-  editLocationSuccess$: Observable<fromCategoryStore.GetCategoriesSuccess>
-    = this.actions$.pipe(
+  editLocationSuccess$: Observable<fromCategoryStore.GetCategoriesSuccess> = this.actions$.pipe(
     ofType(fromActions.locationActions.EDIT_LOCATION_SUCCESS),
     map((action: fromActions.GetLocationByIdSuccess) => action.payload),
     withLatestFrom(this.store.select(fromCategoryStore.getCategories)),
@@ -151,8 +157,9 @@ export class LocationsEffect {
   );
 
   @Effect()
-  deleteLocation$: Observable<fromActions.DeleteLocationSuccess | fromActions.DeleteLocationFail>
-    = this.actions$.pipe(
+  deleteLocation$: Observable<
+    fromActions.DeleteLocationSuccess | fromActions.DeleteLocationFail
+  > = this.actions$.pipe(
     ofType(fromActions.locationActions.DELETE_LOCATION),
     mergeMap((action: fromActions.DeleteLocation) => {
       const { locationId, categoryId, params } = action.payload;
@@ -167,8 +174,7 @@ export class LocationsEffect {
   );
 
   @Effect()
-  deleteLocationSuccess$: Observable<fromCategoryStore.GetCategoriesSuccess>
-    = this.actions$.pipe(
+  deleteLocationSuccess$: Observable<fromCategoryStore.GetCategoriesSuccess> = this.actions$.pipe(
     ofType(fromActions.locationActions.DELETE_LOCATION_SUCCESS),
     map((action: fromActions.DeleteLocationSuccess) => action.payload),
     withLatestFrom(this.store.select(fromCategoryStore.getCategories)),

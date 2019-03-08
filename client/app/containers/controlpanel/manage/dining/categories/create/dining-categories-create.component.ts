@@ -10,7 +10,7 @@ import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { Destroyable, Mixin } from '@shared/mixins';
 import { CPI18nService, IModal, MODAL_DATA } from '@shared/services';
-import { CategoryModel} from '@libs/locations/common/categories/model';
+import { CategoryModel } from '@libs/locations/common/categories/model';
 import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
 
 @Component({
@@ -18,9 +18,7 @@ import { LocationCategoryLocale } from '@libs/locations/common/categories/catego
   templateUrl: './dining-categories-create.component.html',
   styleUrls: ['./dining-categories-create.component.scss']
 })
-
 @Mixin([Destroyable])
-
 export class DiningCategoriesCreateComponent implements OnInit, OnDestroy {
   formError;
   form: FormGroup;
@@ -43,11 +41,10 @@ export class DiningCategoriesCreateComponent implements OnInit, OnDestroy {
 
   get defaultParams(): HttpParams {
     const locale = CPI18nService.getLocale().startsWith('fr')
-      ? LocationCategoryLocale.fr : LocationCategoryLocale.eng;
+      ? LocationCategoryLocale.fr
+      : LocationCategoryLocale.eng;
 
-    return new HttpParams()
-      .set('locale', locale)
-      .set('school_id', this.session.g.get('school').id);
+    return new HttpParams().set('locale', locale).set('school_id', this.session.g.get('school').id);
   }
 
   doSubmit() {

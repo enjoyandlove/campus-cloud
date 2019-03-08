@@ -12,7 +12,6 @@ import { CPI18nService, IModal, MODAL_DATA } from '@shared/services';
 import { ICategory, CategoryModel } from '@libs/locations/common/categories/model';
 
 @Mixin([Destroyable])
-
 @Component({
   selector: 'cp-dining-categories-edit',
   templateUrl: './dining-categories-edit.component.html',
@@ -62,18 +61,18 @@ export class DiningCategoriesEditComponent implements OnInit, OnDestroy {
   }
 
   loadCategoryTypes() {
-    this.categoryTypes$ = this.store
-      .select(fromStore.getCategoriesType)
-      .pipe(
-        takeUntil(this.destroy$),
-        map((categoryTypes) => {
-          Promise.resolve().then(() => {
-            this.selectedCategory = categoryTypes.find((c) => c.action === this.category.category_type_id);
-          });
+    this.categoryTypes$ = this.store.select(fromStore.getCategoriesType).pipe(
+      takeUntil(this.destroy$),
+      map((categoryTypes) => {
+        Promise.resolve().then(() => {
+          this.selectedCategory = categoryTypes.find(
+            (c) => c.action === this.category.category_type_id
+          );
+        });
 
-          return categoryTypes;
-        })
-      );
+        return categoryTypes;
+      })
+    );
   }
 
   ngOnInit(): void {

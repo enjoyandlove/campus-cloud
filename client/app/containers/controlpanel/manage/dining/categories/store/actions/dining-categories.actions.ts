@@ -133,7 +133,7 @@ export class Destroy implements Action {
 export class SetCategoriesApiQuery implements Action {
   readonly type = CategoriesActions.SET_CATEGORIES_API_QUERY;
 
-  constructor( public payload: ICategoriesApiQuery) {}
+  constructor(public payload: ICategoriesApiQuery) {}
 }
 
 export type Actions =
