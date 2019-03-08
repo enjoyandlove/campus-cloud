@@ -1,37 +1,25 @@
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of as observableOf } from 'rxjs';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { OrientationTodosListComponent } from './orientation-todos-list.component';
-import { CPSession } from '../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { CPTrackingService } from '../../../../../../shared/services';
+import { ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+
+import { CPSession } from '@app/session';
 import { TodosModule } from '../todos.module';
 import { TodosService } from '../todos.service';
-
-class MockTodosService {
-  dummy;
-  mockTodos = require('../mockTodos.json');
-
-  getTodos(startRage: number, endRage: number, search: any) {
-    this.dummy = [startRage, endRage, search];
-
-    return observableOf(this.mockTodos);
-  }
-}
+import { configureTestSuite } from '@shared/tests';
+import { mockSchool } from '@app/session/mock/school';
+import { CPTrackingService, CPI18nService } from '@shared/services';
+import { mockTodo, MockTodosService, MockActivatedRoute } from '../tests';
+import { OrientationTodosListComponent } from './orientation-todos-list.component';
 
 describe('OrientationTodosListComponent', () => {
-  let spy;
-  let component: OrientationTodosListComponent;
-  let fixture: ComponentFixture<OrientationTodosListComponent>;
+  configureTestSuite();
 
-  const mockTodos = require('../../mock.json');
-
-  beforeEach(
-    async(() => {
+  beforeAll((done) => {
+    (async () => {
       TestBed.configureTestingModule({
-        imports: [TodosModule, RouterTestingModule],
+        imports: [TodosModule, RouterTestingModule, HttpClientModule],
         providers: [
           CPSession,
           CPI18nService,
@@ -39,27 +27,28 @@ describe('OrientationTodosListComponent', () => {
           { provide: TodosService, useClass: MockTodosService },
           {
             provide: ActivatedRoute,
-            useValue: {
-              snapshot: {
-                parent: {
-                  parent: {
-                    params: observableOf({ orientationId: 1 })
-                  }
-                }
-              }
-            }
+            useClass: MockActivatedRoute
           }
         ]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(OrientationTodosListComponent);
-          component = fixture.componentInstance;
+      });
+      await TestBed.compileComponents();
+    })()
+      .then(done)
+      .catch(done.fail);
+  });
 
-          component.session.g.set('school', mockSchool);
-          component.orientationId = 5452;
-          spy = spyOn(component.service, 'getTodos').and.returnValue(observableOf(mockTodos));
-        });
+  let spy;
+  let component: OrientationTodosListComponent;
+  let fixture: ComponentFixture<OrientationTodosListComponent>;
+
+  beforeEach(
+    async(() => {
+      fixture = TestBed.createComponent(OrientationTodosListComponent);
+      component = fixture.componentInstance;
+
+      component.session.g.set('school', mockSchool);
+      component.orientationId = 5452;
+      spy = spyOn(component.service, 'getTodos').and.returnValue(of([mockTodo]));
     })
   );
 
@@ -82,7 +71,7 @@ describe('OrientationTodosListComponent', () => {
       tick();
       expect(spy).toHaveBeenCalled();
       expect(spy.calls.count()).toBe(1);
-      expect(component.state.todos.length).toEqual(mockTodos.length);
+      expect(component.state.todos.length).toEqual(1);
     })
   );
 });

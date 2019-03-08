@@ -3,9 +3,9 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { ICategory } from '../model';
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
+import { ICategory } from '@libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-categories-delete',

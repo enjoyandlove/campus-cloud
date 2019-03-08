@@ -9,7 +9,6 @@ import { FORMAT } from '@shared/pipes';
 import IEvent from '../event.interface';
 import { CPSession, IUser } from '@app/session';
 import { EventsService } from '../events.service';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
 import { IHeader, baseActions } from '@app/store/base';
 import { ICheckIn } from './check-in/check-in.interface';
 import { EventUtilService } from './../events.utils.service';
@@ -17,23 +16,24 @@ import { amplitudeEvents } from '@shared/constants/analytics';
 import { environment } from '@client/environments/environment';
 import { EventsComponent } from '../list/base/events.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
+import { CP_PRIVILEGES_MAP, SortDirection } from '@shared/constants';
 import { CheckInMethod, CheckInOutTime, CheckInOut } from '../event.status';
 import { CPI18nService, CPTrackingService, RouteLevel } from '@shared/services';
 import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
 import { canSchoolReadResource, canSchoolWriteResource } from '@shared/utils/privileges/privileges';
 
 interface IState {
-  sort_field: string;
-  sort_direction: string;
-  search_text: string;
-  student_filter: IStudentFilter;
+  sortField: string;
+  searchText: string;
+  sortDirection: SortDirection;
+  studentFilter: IStudentFilter;
 }
 
-const state = {
-  sort_field: 'firstname',
-  sort_direction: 'asc',
-  search_text: null,
-  student_filter: null
+const state: IState = {
+  searchText: null,
+  studentFilter: null,
+  sortField: 'firstname',
+  sortDirection: SortDirection.ASC
 };
 
 @Component({
@@ -122,7 +122,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
 
   updateAssessment() {
     this.fetchAttendees();
-    if (!this.state.search_text) {
+    if (!this.state.searchText) {
       this.fetchAttendanceSummary();
     }
   }
@@ -179,9 +179,9 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
 
     search = search
       .set('event_id', this.event.id)
-      .set('sort_field', this.state.sort_field)
-      .set('search_text', this.state.search_text)
-      .set('sort_direction', this.state.sort_direction);
+      .set('sort_field', this.state.sortField)
+      .set('search_text', this.state.searchText)
+      .set('sort_direction', this.state.sortDirection);
 
     if (this.orientationId) {
       search = search
@@ -195,11 +195,11 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   }
 
   addStudentFilter(search: HttpParams) {
-    if (search && this.state.student_filter) {
-      if (this.state.student_filter.listId) {
-        search = search.set('user_list_id', this.state.student_filter.listId.toString());
-      } else if (this.state.student_filter.personaId) {
-        search = search.set('persona_id', this.state.student_filter.personaId.toString());
+    if (search && this.state.studentFilter) {
+      if (this.state.studentFilter.listId) {
+        search = search.set('user_list_id', this.state.studentFilter.listId.toString());
+      } else if (this.state.studentFilter.personaId) {
+        search = search.set('persona_id', this.state.studentFilter.personaId.toString());
       }
     }
     return search;
@@ -215,11 +215,14 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.fetchAttendees();
   }
 
-  doSort(sort_field) {
-    this.state = Object.assign({}, this.state, {
-      sort_field,
-      sort_direction: this.state.sort_direction === 'asc' ? 'desc' : 'asc'
-    });
+  doSort(sortField) {
+    const sortDirection =
+      this.state.sortDirection === SortDirection.ASC ? SortDirection.DESC : SortDirection.ASC;
+    this.state = {
+      ...this.state,
+      sortField,
+      sortDirection
+    };
     this.fetchAttendees();
   }
 
@@ -227,15 +230,15 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     return method === CheckInMethod.web ? 'computer' : 'smartphone';
   }
 
-  doSearch(search_text): void {
-    search_text = search_text === '' ? null : search_text;
-    this.state = { ...this.state, search_text };
+  doSearch(searchText): void {
+    searchText = searchText === '' ? null : searchText;
+    this.state = { ...this.state, searchText };
     this.resetPagination();
     this.updateAssessment();
   }
 
-  onStudentFilter(filter: IStudentFilter) {
-    this.state.student_filter = { ...filter };
+  onStudentFilter(studentFilter: IStudentFilter) {
+    this.state = { ...this.state, studentFilter };
     this.resetPagination();
     this.updateAssessment();
   }

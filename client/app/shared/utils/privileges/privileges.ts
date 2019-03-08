@@ -12,6 +12,12 @@ const schoolLevelEmpty = (user) => {
   return isEmpty(schoolLevel);
 };
 
+const clientLevelEmpty = (user) => {
+  const clientLevel = _get(user, 'client_level_privileges', []);
+
+  return isEmpty(clientLevel);
+};
+
 export const accountsToStoreMap = (accountsMap: Array<number> = [], accountPrivileges) => {
   const accounts = {};
 
@@ -110,6 +116,10 @@ export const canSchoolReadResource = (session: Map<any, any>, privilegeType: num
 };
 
 export const canSchoolWriteResource = (session: Map<any, any>, privilegeType: number) => {
+  if (schoolLevelEmpty(session.get('user'))) {
+    return false;
+  }
+
   if (!Object.keys(session.get('user').school_level_privileges).length) {
     return false;
   }
@@ -119,6 +129,50 @@ export const canSchoolWriteResource = (session: Map<any, any>, privilegeType: nu
   }
 
   const schoolPrivileges = session.get('user').school_level_privileges[session.get('school').id];
+
+  if (privilegeType in schoolPrivileges) {
+    return schoolPrivileges[privilegeType].w;
+  }
+
+  return false;
+};
+
+export const canClientReadResource = (session: Map<any, any>, privilegeType: number) => {
+  if (clientLevelEmpty(session.get('user'))) {
+    return false;
+  }
+
+  if (!(session.get('school').client_id in session.get('user').client_level_privileges)) {
+    return false;
+  }
+
+  const schoolPrivileges = session.get('user').client_level_privileges[
+    session.get('school').client_id
+  ];
+
+  if (privilegeType in schoolPrivileges) {
+    return schoolPrivileges[privilegeType].r;
+  }
+
+  return false;
+};
+
+export const canClientWriteResource = (session: Map<any, any>, privilegeType: number) => {
+  if (clientLevelEmpty(session.get('user'))) {
+    return false;
+  }
+
+  if (!Object.keys(session.get('user').client_level_privileges).length) {
+    return false;
+  }
+
+  if (!(session.get('school').client_id in session.get('user').client_level_privileges)) {
+    return false;
+  }
+
+  const schoolPrivileges = session.get('user').client_level_privileges[
+    session.get('school').client_id
+  ];
 
   if (privilegeType in schoolPrivileges) {
     return schoolPrivileges[privilegeType].w;

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard, PrivilegesGuard } from '../../../config/guards';
-
+import { PrivilegesGuard } from '@app/config/guards';
 import { AssessComponent } from './assess.component';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -11,18 +11,18 @@ const appRoutes: Routes = [
   {
     path: '',
     component: AssessComponent,
-    canActivate: [AuthGuard],
-    canActivateChild: [PrivilegesGuard],
     children: [
       {
         path: 'dashboard',
-        data: { zendesk: 'assessment' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'assessment', privilege: CP_PRIVILEGES_MAP.assessment },
         loadChildren: './engagement/engagement.module#EngagementModule'
       },
 
       {
         path: 'students',
-        data: { zendesk: 'notify' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'notify', privilege: CP_PRIVILEGES_MAP.assessment },
         loadChildren: './students/students.module#EngagementStudentsModule'
       }
     ]

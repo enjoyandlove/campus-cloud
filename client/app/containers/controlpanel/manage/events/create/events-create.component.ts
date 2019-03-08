@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import * as fromRoot from '@app/store/base';
 import { baseActions } from '@app/store/base';
 import { CPDate, CPMap } from '@shared/utils';
 import { EventsService } from '../events.service';
@@ -21,13 +22,7 @@ import {
   EventAttendance
 } from '../event.status';
 
-import {
-  AdminService,
-  CPI18nService,
-  CPTrackingService,
-  ErrorService,
-  StoreService
-} from '@shared/services';
+import { AdminService, CPI18nService, CPTrackingService, StoreService } from '@shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -92,7 +87,6 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
     public utils: EventUtilService,
     public adminService: AdminService,
     public storeService: StoreService,
-    public errorService: ErrorService,
     public cpTracking: CPTrackingService
   ) {
     super(session, cpI18n, service);
@@ -311,9 +305,13 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
         this.urlPrefix = this.getUrlPrefix(res.id);
         this.router.navigate([this.urlPrefix]);
       },
-      (err) => {
+      () => {
         this.enableSaveButton();
-        this.errorService.handleError(err);
+        this.storeHeader.dispatch(
+          new fromRoot.baseActionClass.SnackbarError({
+            body: this.cpI18n.translate('something_went_wrong')
+          })
+        );
       }
     );
   }

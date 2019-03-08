@@ -18,7 +18,6 @@ import { EventsExcelComponent } from './excel';
  * MISC
  */
 import { EventsAttendanceComponent } from './attendance';
-import { PrivilegesGuard } from '../../../../config/guards';
 
 const appRoutes: Routes = [
   { path: 'import', redirectTo: '', pathMatch: 'full' },
@@ -31,38 +30,32 @@ const appRoutes: Routes = [
   {
     path: '',
     data: { zendesk: 'events' },
-    canActivate: [PrivilegesGuard],
     component: EventsListComponent
   },
   {
     path: 'create',
     data: { zendesk: 'events' },
-    canActivate: [PrivilegesGuard],
     component: EventsCreateComponent
   },
   {
     path: ':eventId',
     data: { zendesk: 'events' },
-    canActivate: [PrivilegesGuard],
     component: EventsAttendanceComponent
   },
   {
     path: ':eventId/edit',
     data: { zendesk: 'events' },
-    canActivate: [PrivilegesGuard],
     component: EventsEditComponent
   },
   {
     path: ':eventId/info',
     data: { zendesk: 'events' },
-    canActivate: [PrivilegesGuard],
     component: EventsInfoComponent
   },
 
   {
     path: 'import/excel',
     data: { zendesk: 'events' },
-    canActivate: [PrivilegesGuard],
     component: EventsExcelComponent
   }
 ];

@@ -1,73 +1,73 @@
 export default interface IEvent {
-  id?: Number;
+  id?: number;
 
-  encrypted_id?: String;
+  encrypted_id?: string;
 
-  store_id: Number;
+  store_id: number;
 
-  title: String;
+  title: string;
 
-  description?: String;
+  description?: string;
 
-  poster_thumb_url: String;
+  poster_thumb_url: string;
 
-  poster_url: String;
+  poster_url: string;
 
-  start: Number;
+  start: number;
 
-  end: Number;
+  end: number;
 
   has_checkout: boolean;
 
-  room_data?: String;
+  room_data?: string;
 
-  location?: String;
+  location?: string;
 
-  latitude?: Number;
+  latitude?: number;
 
-  longitude?: Number;
+  longitude?: number;
 
-  likes?: Number;
+  likes?: number;
 
-  dislikes?: Number;
+  dislikes?: number;
 
-  attends?: Number;
+  attends?: number;
 
-  checkins?: Number;
+  checkins?: number;
 
-  verified_checkins?: Number;
+  verified_checkins?: number;
 
-  avg_rating_percent?: Number;
+  avg_rating_percent?: number;
 
-  rating_scale_maximum?: Number;
+  rating_scale_maximum?: number;
 
-  num_ratings?: Number;
+  num_ratings?: number;
 
-  related_feedback_obj_id?: Number;
+  related_feedback_obj_id?: number;
 
-  attend_verification_methods?: Number[];
+  attend_verification_methods?: number[];
 
-  address?: String;
+  address?: string;
 
-  city?: String;
+  city?: string;
 
-  province?: String;
+  province?: string;
 
-  country?: String;
+  country?: string;
 
-  postal_code?: String;
+  postal_code?: string;
 
-  store_category: Number;
+  store_category: number;
 
-  event_attendance?: Number;
+  event_attendance?: number;
 
-  event_feedback?: Number;
+  event_feedback?: number;
 
-  event_manager_id?: Number;
+  event_manager_id?: number;
 
-  custom_basic_feedback_label?: String;
+  custom_basic_feedback_label?: string;
 
-  attendance_manager_email?: String;
+  attendance_manager_email?: string;
 
-  qr_img_url?: String;
+  qr_img_url?: string;
 };

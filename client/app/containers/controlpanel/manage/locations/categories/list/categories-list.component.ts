@@ -3,18 +3,17 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Actions, ofType } from '@ngrx/effects';
 import { Subject, Observable } from 'rxjs';
-import { TooltipOption } from 'bootstrap';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
-import { Locale } from '../categories.status';
 import { baseActions } from '@app/store/base';
 import { CPI18nService } from '@shared/services';
-import { ICategory, DeleteError } from '../model';
-import { LocationType } from '@containers/controlpanel/manage/locations/locations.service';
+import { LocationType } from '@libs/locations/common/utils';
+import { ICategory, DeleteError } from '@libs/locations/common/categories/model';
+import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
 
 interface IState {
   search_str: string;
@@ -38,7 +37,6 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   showEditModal = false;
   showCreateModal = false;
   showDeleteModal = false;
-  tooltipOptions: TooltipOption;
   loading$: Observable<boolean>;
   deletedCategory: ICategory = null;
   selectedCategory: ICategory = null;
@@ -110,7 +108,8 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   get defaultParams(): HttpParams {
-    const locale = CPI18nService.getLocale().startsWith('fr') ? Locale.fr : Locale.eng;
+    const locale = CPI18nService.getLocale().startsWith('fr')
+      ? LocationCategoryLocale.fr : LocationCategoryLocale.eng;
 
     return new HttpParams()
       .set('locale', locale)
@@ -177,8 +176,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
             this.store.dispatch(new fromStore.GetCategoriesType({ params }));
           }
         })
-      )
-      .subscribe();
+      ).subscribe();
   }
 
   listenDeleteErrors() {
@@ -192,10 +190,12 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   listenErrors() {
-    this.store
-      .select(fromStore.getCategoriesError)
-      .pipe(takeUntil(this.destroy$), filter((error) => error), tap(() => this.handleError()))
-      .subscribe();
+    this.store.select(fromStore.getCategoriesError)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((error) => error),
+        tap(() => this.handleError())
+      ).subscribe();
   }
 
   resetErrors() {
@@ -225,10 +225,6 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.tooltipOptions = {
-      placement: 'left'
-    };
-
     this.resetErrors();
     this.updateHeader();
     this.listenErrors();
@@ -247,3 +243,4 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 }
+

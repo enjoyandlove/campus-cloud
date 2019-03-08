@@ -8,9 +8,9 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
-import { Locale } from '../categories.status';
 import { CPI18nService } from '@shared/services';
-import { ICategory, CategoryModel } from '../model';
+import { ICategory, CategoryModel } from '@libs/locations/common/categories/model';
+import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
 
 @Component({
   selector: 'cp-categories-edit',
@@ -26,6 +26,7 @@ export class CategoriesEditComponent implements OnInit, OnDestroy {
   form: FormGroup;
   selectedCategory;
   categoryTypes$: Observable<IItem[]>;
+  categoryIcons = CategoryModel.categoryIcons();
 
   private destroy$ = new Subject();
 
@@ -41,9 +42,12 @@ export class CategoriesEditComponent implements OnInit, OnDestroy {
   }
 
   get defaultParams(): HttpParams {
-    const locale = CPI18nService.getLocale().startsWith('fr') ? Locale.fr : Locale.eng;
+    const locale = CPI18nService.getLocale().startsWith('fr')
+      ? LocationCategoryLocale.fr : LocationCategoryLocale.eng;
 
-    return new HttpParams().set('locale', locale).set('school_id', this.session.g.get('school').id);
+    return new HttpParams()
+      .set('locale', locale)
+      .set('school_id', this.session.g.get('school').id);
   }
 
   doSubmit() {
@@ -70,18 +74,18 @@ export class CategoriesEditComponent implements OnInit, OnDestroy {
   }
 
   loadCategoryTypes() {
-    this.categoryTypes$ = this.store.select(fromStore.getCategoriesType).pipe(
-      takeUntil(this.destroy$),
-      map((categoryTypes) => {
-        Promise.resolve().then(() => {
-          this.selectedCategory = categoryTypes.find(
-            (c) => c.action === this.category.category_type_id
-          );
-        });
+    this.categoryTypes$ = this.store
+      .select(fromStore.getCategoriesType)
+      .pipe(
+        takeUntil(this.destroy$),
+        map((categoryTypes) => {
+          Promise.resolve().then(() => {
+            this.selectedCategory = categoryTypes.find((c) => c.action === this.category.category_type_id);
+          });
 
-        return categoryTypes;
-      })
-    );
+          return categoryTypes;
+        })
+      );
   }
 
   ngOnInit(): void {

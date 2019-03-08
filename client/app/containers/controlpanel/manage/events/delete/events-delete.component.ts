@@ -1,11 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
+import IEvent from '../event.interface';
+import { CPSession } from '@app/session';
+import { CPI18nService } from '@shared/services';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
-
-declare var $: any;
 
 @Component({
   selector: 'cp-events-delete',
@@ -13,18 +12,22 @@ declare var $: any;
   styleUrls: ['./events-delete.component.scss']
 })
 export class EventsDeleteComponent implements OnInit {
-  @Input() event: any;
+  @Input() event: IEvent;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
   @Output() deletedEvent: EventEmitter<number> = new EventEmitter();
 
-  buttonData;
+  deleteWarnings = [this.cpI18n.translate('t_shared_delete_resource_warning_assessment_data')];
 
   constructor(
     public session: CPSession,
     private cpI18n: CPI18nService,
     public service: EventsService
   ) {}
+
+  onClose() {
+    $('#deleteEventsModal').modal('hide');
+  }
 
   onDelete() {
     let search = new HttpParams();
@@ -36,17 +39,9 @@ export class EventsDeleteComponent implements OnInit {
 
     this.service.deleteEventById(this.event.id, search).subscribe(() => {
       this.deletedEvent.emit(this.event.id);
-
-      $('#deleteEventsModal').modal('hide');
-
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+      this.onClose();
     });
   }
 
-  ngOnInit() {
-    this.buttonData = {
-      text: this.cpI18n.translate('delete'),
-      class: 'danger'
-    };
-  }
+  ngOnInit() {}
 }

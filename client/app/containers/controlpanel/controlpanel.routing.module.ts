@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { AuthGuard } from '@app/config/guards';
 import { ControlPanelComponent } from './controlpanel.component';
 
 const appRoutes: Routes = [
@@ -8,6 +9,7 @@ const appRoutes: Routes = [
 
   {
     path: '',
+    canActivate: [AuthGuard],
     component: ControlPanelComponent,
     children: [
       {

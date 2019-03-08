@@ -1,4 +1,4 @@
-import { ValidationErrors, AbstractControl } from '@angular/forms';
+import { AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
 
 export class CustomValidators {
   static positiveInteger(control: AbstractControl): ValidationErrors | null {
@@ -22,4 +22,24 @@ export class CustomValidators {
 
     return control.value.trim() ? null : { required: true };
   }
+
+  static commaSeparated = (validator: Function) => {
+    return (control: AbstractControl) => {
+      if (control.value === null) {
+        return { required: true };
+      }
+      const separated = control.value.split(',');
+      return separated
+        .map((value: string) => value.trim())
+        .reduce((errors: ValidationErrors | null, value: string) => {
+          if (value) {
+            return {
+              ...errors,
+              ...validator(new FormControl(value))
+            };
+          }
+          return errors;
+        }, null);
+    };
+  };
 }

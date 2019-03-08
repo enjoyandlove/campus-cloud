@@ -94,14 +94,6 @@ export class AuthGuard implements CanActivate {
     });
   }
 
-  private setZendesk(routeObj) {
-    if ('zendesk' in routeObj) {
-      this.zendeskService.setHelpCenterSuggestions({
-        labels: [routeObj['zendesk']]
-      });
-    }
-  }
-
   setUserContext() {
     const email = this.session.g.get('user').email;
     const id = this.session.g.get('user').id.toString();
@@ -150,5 +142,13 @@ export class AuthGuard implements CanActivate {
     }
 
     return this.redirectAndSaveGoTo(state.url);
+  }
+
+  private setZendesk(routeObj) {
+    if ('zendesk' in routeObj) {
+      this.zendeskService.setHelpCenterSuggestions({
+        labels: [routeObj['zendesk']]
+      });
+    }
   }
 }

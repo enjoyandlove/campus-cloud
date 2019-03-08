@@ -21,12 +21,14 @@ export class DiningDeleteComponent implements OnInit {
 
   onDelete() {
     const diningId = this.dining.id;
+    const categoryId = this.dining.category_id;
     const school_id = this.session.g.get('school').id;
     const params = new HttpParams().set('school_id', school_id);
 
     const payload = {
       params,
-      diningId
+      diningId,
+      categoryId
     };
 
     this.store.dispatch(new fromStore.DeleteDining(payload));

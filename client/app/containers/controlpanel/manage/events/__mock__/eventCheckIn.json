@@ -1,9 +1,0 @@
-{
-  "id": 125457,
-  "firstname": "Hello",
-  "lastname": "World",
-  "check_in_method": 3,
-  "email": "helloworld@test.com",
-  "check_in_time": 1460806527,
-  "check_out_time_epoch": 1601549048
-}

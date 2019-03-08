@@ -55,7 +55,7 @@
                   "with": "client/index.prod.html"
                 }
               ],
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "all",
               "sourceMap": true,
               "extractCss": true,
@@ -63,7 +63,7 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",
@@ -85,7 +85,7 @@
               ],
               "verbose": true,
               "progress": false,
-              "optimization": true,
+              "optimization": false,
               "outputHashing": "all",
               "sourceMap": true,
               "extractCss": true,
@@ -93,7 +93,7 @@
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true,
+              "buildOptimizer": false,
               "budgets": [
                 {
                   "type": "initial",

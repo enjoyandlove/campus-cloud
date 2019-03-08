@@ -6,10 +6,10 @@ import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromActions from '../actions';
-import { ICategory } from '../../categories/model';
 import { ILocation } from '@libs/locations/common/model';
 import { LocationsService } from '../../locations.service';
 import * as fromCategoryStore from '../../categories/store';
+import { ICategory } from '@libs/locations/common/categories/model';
 
 @Injectable()
 export class LocationsEffect {

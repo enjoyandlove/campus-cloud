@@ -137,7 +137,7 @@ export function reducer(state = initialState, action: fromDining.DiningAction) {
 
     case fromDining.diningActions.EDIT_DINING_SUCCESS: {
       return diningAdaptor.updateOne(
-        { id: action.payload.id, changes: action.payload },
+        { id: action.payload.data.id, changes: action.payload.data },
         {
           ...state,
           error: false,

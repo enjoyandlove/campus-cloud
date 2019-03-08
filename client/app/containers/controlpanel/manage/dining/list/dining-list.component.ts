@@ -1,7 +1,7 @@
 import { filter, takeUntil, map, tap, take } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -13,7 +13,9 @@ import { CPI18nService } from '@shared/services';
 import { ManageHeaderService } from '../../utils';
 import { IDining } from '@libs/locations/common/model';
 import { BaseComponent } from '@app/base/base.component';
-import { LocationType } from '@libs/locations/common/utils';
+import * as fromCategoryStore from '../categories/store';
+import { ICategory } from '@libs/locations/common/categories/model';
+import { LocationsUtilsService, LocationType } from '@libs/locations/common/utils';
 
 interface IState {
   search_str: string;
@@ -194,17 +196,34 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
       .subscribe();
   }
 
+  loadCategories() {
+    const categoryLabel = this.cpI18n.translate('all');
+    this.categories$ = this.store.select(fromCategoryStore.getCategories).pipe(
+      takeUntil(this.destroy$),
+      tap((categories: ICategory[]) => {
+        if (!categories.length) {
+          this.store.dispatch(new fromCategoryStore.GetCategories());
+        }
+      }),
+      map((res) => LocationsUtilsService.setCategoriesDropDown(res, categoryLabel))
+    );
+  }
+
   onCreateClick() {
     this.router.navigate(['/manage/dining/create']);
+  }
+
+  onCategoriesClick() {
+    this.router.navigate(['/manage/dining/categories']);
   }
 
   ngOnInit() {
     this.loadDining();
     this.buildHeader();
+    this.loadCategories();
     this.listenForErrors();
 
     this.loading$ = this.store.select(fromStore.getDiningLoading);
-    this.categories$ = of([{ label: '---', action: null }]);
   }
 
   ngOnDestroy() {

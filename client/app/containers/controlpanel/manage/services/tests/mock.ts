@@ -1,5 +1,6 @@
-import { IService } from '../service.interface';
 import { of } from 'rxjs';
+
+import { IService } from '../service.interface';
 
 export const mockService: IService = {
   address: '',
@@ -38,11 +39,19 @@ export const mockService: IService = {
 };
 
 export class MockServicesService {
+  dummy: any;
+
   getServiceById(serviceId, start, end) {
     return of({ serviceId, start, end });
   }
 
   getServiceAttendanceSummary(serviceId, search) {
     return of({ serviceId, search });
+  }
+
+  deleteService(serviceId: any) {
+    this.dummy = [serviceId];
+
+    return of({});
   }
 }

@@ -1,17 +1,19 @@
-import { Component, ElementRef, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { OverlayRef } from '@angular/cdk/overlay';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
+import { FORMAT } from '@shared/pipes/date';
+import { CP_TRACK_TO } from '@shared/directives';
 import { ManageHeaderService } from '../../utils';
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
+import { amplitudeEvents } from '@shared/constants';
+import { baseActions, IHeader } from '@app/store/base';
 import { ProgramDuration } from '../orientation.status';
 import { OrientationService } from '../orientation.services';
-import { baseActions, IHeader } from '../../../../../store/base';
-import { FORMAT } from '../../../../../shared/pipes/date/date.pipe';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking/tracking.directive';
+import { OrientationProgramDeleteComponent } from '../delete';
+import { CPI18nService, CPTrackingService, ModalService } from '@shared/services';
 
 @Component({
   selector: 'cp-list-orientation',
@@ -20,12 +22,11 @@ import { CP_TRACK_TO } from '../../../../../shared/directives/tracking/tracking.
 })
 export class OrientationListComponent extends BaseComponent implements OnInit {
   label;
-  isOpen;
   loading;
   eventData;
   noDuration;
+  activeModal: OverlayRef;
   selectedProgram = null;
-  launchDeleteModal = false;
   launchCreateModal = false;
   launchDuplicateModal = false;
   dateFormat = FORMAT.SHORT;
@@ -42,6 +43,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
+    private modalService: ModalService,
     public service: OrientationService,
     public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService
@@ -50,23 +52,41 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((loading) => (this.loading = loading));
   }
 
-  @HostListener('document:click', ['$event'])
-  onClick(event) {
-    if (!this.el.nativeElement.contains(event.target)) {
-      if (this.isOpen) {
-        this.isOpen = false;
-      }
-    }
-  }
-
   onClickDuplicate(program) {
     this.selectedProgram = program;
     this.launchDuplicateModal = true;
   }
 
   onClickDelete(program) {
-    this.selectedProgram = program;
-    this.launchDeleteModal = true;
+    this.activeModal = this.modalService.open(
+      OrientationProgramDeleteComponent,
+      {},
+      {
+        data: program,
+        onClose: this.onDeleteTearDown.bind(this)
+      }
+    );
+  }
+
+  closeActiveModal() {
+    this.modalService.close(this.activeModal);
+    this.activeModal = null;
+  }
+
+  onDeleteTearDown(programId?: number) {
+    if (programId) {
+      this.state = {
+        ...this.state,
+        orientationPrograms: this.state.orientationPrograms.filter((p) => p.id !== programId)
+      };
+
+      if (this.state.orientationPrograms.length === 0 && this.pageNumber > 1) {
+        this.resetPagination();
+        this.fetch();
+      }
+    }
+
+    this.closeActiveModal();
   }
 
   onLaunchCreateModal() {
@@ -110,10 +130,10 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
 
   public fetch() {
     const search = new HttpParams()
-      .append('search_str', this.state.search_str)
-      .append('sort_field', this.state.sort_field)
-      .append('sort_direction', this.state.sort_direction)
-      .append('school_id', this.session.g.get('school').id.toString());
+      .set('search_str', this.state.search_str)
+      .set('sort_field', this.state.sort_field)
+      .set('sort_direction', this.state.sort_direction)
+      .set('school_id', this.session.g.get('school').id.toString());
 
     super
       .fetchData(this.service.getPrograms(this.startRange, this.endRange, search))
@@ -128,22 +148,6 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     };
 
     this.fetch();
-  }
-
-  onDeleted(programId: number) {
-    this.selectedProgram = null;
-    this.launchDeleteModal = false;
-
-    this.state = Object.assign({}, this.state, {
-      orientationPrograms: this.state.orientationPrograms.filter(
-        (program) => program.id !== programId
-      )
-    });
-
-    if (this.state.orientationPrograms.length === 0 && this.pageNumber > 1) {
-      this.resetPagination();
-      this.fetch();
-    }
   }
 
   ngOnInit() {

@@ -1,7 +1,7 @@
 import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
-import { filter, map, takeUntil } from 'rxjs/operators';
+import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -14,10 +14,13 @@ import { baseActions } from '@app/store/base';
 import { Destroyable, Mixin } from '@shared/mixins';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
+import * as fromCategoryStore from '../categories/store';
+import { ICategory } from '@libs/locations/common/categories/model';
 import { DiningModel, IDining } from '@libs/locations/common/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 
 @Mixin([Destroyable])
+
 @Component({
   selector: 'cp-dining-edit',
   templateUrl: './dining-edit.component.html',
@@ -25,11 +28,13 @@ import { LocationsUtilsService } from '@libs/locations/common/utils';
 })
 export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, AfterViewInit {
   diningId: number;
+  categoryId: number;
   formErrors: boolean;
   openingHours = true;
   errorMessage: string;
   diningForm: FormGroup;
   buttonDisabled = false;
+  selectedCategory: IItem;
   loading$: Observable<boolean>;
   categories$: Observable<IItem[]>;
 
@@ -69,7 +74,8 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
     const payload = {
       body,
       params,
-      diningId: this.diningId
+      diningId: this.diningId,
+      categoryId: this.categoryId
     };
 
     this.store.dispatch(new fromStore.EditDining(payload));
@@ -90,20 +96,38 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
   }
 
   loadDining() {
-    this.store
-      .select(fromStore.getSelectedDining)
-      .pipe(
-        takeUntil(this.destroy$),
-        filter((dining: IDining) => !!dining),
-        map((dining: IDining) => {
-          const schedule = dining['schedule'];
-          this.openingHours = !!schedule.length;
-          this.diningId = dining.id;
-          this.diningForm = DiningModel.form(dining);
-          LocationsUtilsService.setScheduleFormControls(this.diningForm, schedule);
-        })
-      )
-      .subscribe();
+    this.store.select(fromStore.getSelectedDining).pipe(
+      takeUntil(this.destroy$),
+      filter((dining: IDining) => !!dining),
+      map((dining: IDining) => {
+        const schedule = dining['schedule'];
+        this.openingHours = !!schedule.length;
+        this.diningId = dining.id;
+        this.categoryId = dining.category_id;
+        this.diningForm = DiningModel.form(dining);
+        LocationsUtilsService.setScheduleFormControls(this.diningForm, schedule);
+      })
+    ).subscribe();
+  }
+
+  loadCategories() {
+    const categoryLabel = this.cpI18n.translate('select_category');
+    this.categories$ = this.store.select(fromCategoryStore.getCategories).pipe(
+      takeUntil(this.destroy$),
+      tap((categories: ICategory[]) => {
+        if (!categories.length) {
+          this.store.dispatch(new fromCategoryStore.GetCategories());
+        }
+      }),
+      map((categories) => LocationsUtilsService.setCategoriesDropDown(categories, categoryLabel)),
+      map(parsedCategories => {
+        Promise.resolve().then(() => {
+          this.selectedCategory = parsedCategories.find((c) => c.action === this.categoryId);
+        });
+
+        return parsedCategories;
+      })
+    );
   }
 
   onCancel() {
@@ -134,19 +158,9 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
   ngOnInit() {
     this.loadDining();
     this.buildHeader();
+    this.loadCategories();
 
     this.loading$ = this.store.select(fromStore.getDiningLoading);
-    // todo replace with actual
-    this.categories$ = of([
-      {
-        label: 'Select Category',
-        action: null
-      },
-      {
-        label: 'Dining',
-        action: 8
-      }
-    ]);
   }
 
   ngOnDestroy() {

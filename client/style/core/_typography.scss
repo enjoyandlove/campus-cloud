@@ -34,6 +34,7 @@ p.no-margin {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .text-wrap {
@@ -146,4 +147,8 @@ form input,
 .dropdown-menu,
 input.flatpickr-input[readonly] {
   @include font-14px();
+}
+
+.text-danger {
+  color: $color-danger;
 }

@@ -41,6 +41,12 @@
     </li>
     <li
       class="switch__item"
+      (click)="close.emit()"
+      *ngIf="canManageTestUsers">
+      <a [routerLink]="['/settings/testers']">{{ 't_sandbox_test_environment_users' | cpI18n }}</a>
+    </li>
+    <li
+      class="switch__item"
       (click)="close.emit()">
       <a [routerLink]="['/account/change-password']">{{ 'change_password' | cpI18n }}</a>
     </li>
@@ -73,8 +79,13 @@
             class="switch__school__thumb"
             [ngStyle]="{'background-image': 'url(' + defaultImage + ')'}">
           </div>
-          <div class="switch__school__name text-truncate">
-            {{ school.name }}
+          <div class="switch__school__name">
+            <div class="text-truncate">{{ school.name }}</div>
+            <div
+              *ngIf="school.is_sandbox"
+              class="switch__school__label">
+              {{ 't_sandbox_test_environment' | cpI18n }}
+            </div>
           </div>
         </div>
         <div class="col-2">

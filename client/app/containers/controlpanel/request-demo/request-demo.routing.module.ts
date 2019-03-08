@@ -1,14 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from '../../../config/guards';
-
 import { RequestDemoAssessmentComponent } from './request-demo-assessment';
 
 const appRoutes: Routes = [
   {
     path: 'assess',
-    canActivate: [AuthGuard],
     data: { zendesk: 'assessment' },
     component: RequestDemoAssessmentComponent
   }

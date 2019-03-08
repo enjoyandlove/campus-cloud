@@ -1,68 +1,83 @@
-import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { of as observableOf } from 'rxjs';
-import { EventsDeleteComponent } from './events-delete.component';
-import { CPSession } from '../../../../../session';
-import { mockSchool } from '../../../../../session/mock/school';
-import { CPI18nService } from '../../../../../shared/services';
+import { HttpParams } from '@angular/common/http';
+import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
+import { of } from 'rxjs';
+
+import { CPSession } from '@app/session';
 import { EventsModule } from '../events.module';
+import { CPI18nService } from '@shared/services';
 import { EventsService } from '../events.service';
-
-class MockService {
-  dummy;
-
-  deleteEventById(id: number, search: any) {
-    this.dummy = [id, search];
-
-    return observableOf({});
-  }
-}
+import { mockSchool } from '@app/session/mock/school';
+import { mockEvent, MockEventService } from './../tests';
+import { CPDeleteModalComponent } from '@shared/components';
+import { configureTestSuite } from '@client/app/shared/tests';
+import { EventsDeleteComponent } from './events-delete.component';
 
 describe('EventDeleteComponent', () => {
+  configureTestSuite();
+
+  beforeAll((done) => {
+    (async () => {
+      TestBed.configureTestingModule({
+        imports: [EventsModule, RouterTestingModule],
+        providers: [
+          CPSession,
+          CPI18nService,
+          { provide: EventsService, useClass: MockEventService }
+        ]
+      });
+      await TestBed.compileComponents();
+    })()
+      .then(done)
+      .catch(done.fail);
+  });
+
   let spy;
   let search;
   let eventId;
+  let de: DebugElement;
   let component: EventsDeleteComponent;
+  let deleteModal: CPDeleteModalComponent;
   let fixture: ComponentFixture<EventsDeleteComponent>;
 
   beforeEach(
     async(() => {
-      TestBed.configureTestingModule({
-        imports: [EventsModule, RouterTestingModule],
-        providers: [CPSession, CPI18nService, { provide: EventsService, useClass: MockService }]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(EventsDeleteComponent);
+      fixture = TestBed.createComponent(EventsDeleteComponent);
+      component = fixture.componentInstance;
+      de = fixture.debugElement;
+      deleteModal = de.query(By.directive(CPDeleteModalComponent)).componentInstance;
 
-          component = fixture.componentInstance;
-          component.event = {
-            id: 1001
-          };
+      component.event = mockEvent;
 
-          eventId = component.event.id;
-          component.session.g.set('school', mockSchool);
-        });
+      eventId = component.event.id;
+      component.session.g.set('school', mockSchool);
     })
   );
 
-  it('buttonData should have "Delete" label & "Danger class"', () => {
-    component.ngOnInit();
+  it('should call onDelete on cp-delete-modal deleteClick', () => {
+    spyOn(component, 'onDelete');
+    deleteModal.deleteClick.emit();
 
-    expect(component.buttonData.text).toEqual('Delete');
-    expect(component.buttonData.class).toEqual('danger');
+    expect(component.onDelete).toHaveBeenCalled();
+  });
+
+  it('should call onClose on cp-delete-modal cancelClick', () => {
+    spyOn(component, 'onClose');
+    deleteModal.cancelClick.emit();
+
+    expect(component.onClose).toHaveBeenCalled();
   });
 
   it('should delete orientation event', () => {
     component.orientationId = 10045;
-    spy = spyOn(component.service, 'deleteEventById').and.returnValue(observableOf({}));
+    spy = spyOn(component.service, 'deleteEventById').and.returnValue(of({}));
     search = new HttpParams()
       .append('school_id', component.session.g.get('school').id)
       .append('calendar_id', component.orientationId.toString());
 
     component.onDelete();
-    expect(component.buttonData.disabled).toBeFalsy();
     expect(spy).toHaveBeenCalledWith(eventId, search);
     expect(spy.calls.count()).toBe(1);
   });
