@@ -303,7 +303,7 @@
     "message": "Rating"
   },
   "assess_button_download_engagement_data": {
-    "message": "Download Engagement"
+    "message": "All Engagement"
   },
   "assess_checkin_date": {
     "message": "Check-in Date"
@@ -426,10 +426,10 @@
     "message": "To see Service data use the Engagement filter"
   },
   "assess_number_of_checkins": {
-    "message": "# of Check-ins"
+    "message": "Total Engagement"
   },
   "assess_number_of_event_checkins": {
-    "message": "# of Event Check-ins"
+    "message": "Number of Events"
   },
   "assess_number_of_responses": {
     "message": "# of Responses"
@@ -456,7 +456,7 @@
     "message": "Services Assessed"
   },
   "assess_service_checkins": {
-    "message": "# of  Service Check-ins"
+    "message": "Number of Services"
   },
   "assess_service_rating_average": {
     "message": "Service Rating"
@@ -2307,11 +2307,32 @@
   "t_assess_checkout_time_out": {
     "message": "Check-out Time"
   },
+  "t_assess_email": {
+    "message": "Email"
+  },
+  "t_assess_first_name": {
+    "message": "First Name"
+  },
+  "t_assess_last_name": {
+    "message": "Last Name"
+  },
+  "t_assess_list_event_names": {
+    "message": "List of Events Attended"
+  },
+  "t_assess_list_service_names": {
+    "message": "List of Services Visited"
+  },
   "t_assess_no_orientation_data": {
     "message": "No Orientation Data"
   },
   "t_assess_no_orientation_data_help": {
     "message": "To see Orientation data, use the Engagement filter."
+  },
+  "t_assess_number_events": {
+    "message": "Number of Events"
+  },
+  "t_assess_number_services": {
+    "message": "Number of Services"
   },
   "t_assess_orientation_programs": {
     "message": "Orientation Programs"
@@ -2327,6 +2348,9 @@
   },
   "t_assess_top_orientation_programs": {
     "message": "Top Programs"
+  },
+  "t_assess_total_engagement": {
+    "message": "Total Engagement (Number of Events + Number of Services)"
   },
   "t_assess_total_orientation_programs": {
     "message": "Total Programs"
