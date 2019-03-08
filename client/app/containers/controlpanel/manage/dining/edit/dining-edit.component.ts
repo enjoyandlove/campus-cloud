@@ -20,7 +20,6 @@ import { DiningModel, IDining } from '@libs/locations/common/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 
 @Mixin([Destroyable])
-
 @Component({
   selector: 'cp-dining-edit',
   templateUrl: './dining-edit.component.html',
@@ -96,18 +95,21 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
   }
 
   loadDining() {
-    this.store.select(fromStore.getSelectedDining).pipe(
-      takeUntil(this.destroy$),
-      filter((dining: IDining) => !!dining),
-      map((dining: IDining) => {
-        const schedule = dining['schedule'];
-        this.openingHours = !!schedule.length;
-        this.diningId = dining.id;
-        this.categoryId = dining.category_id;
-        this.diningForm = DiningModel.form(dining);
-        LocationsUtilsService.setScheduleFormControls(this.diningForm, schedule);
-      })
-    ).subscribe();
+    this.store
+      .select(fromStore.getSelectedDining)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((dining: IDining) => !!dining),
+        map((dining: IDining) => {
+          const schedule = dining['schedule'];
+          this.openingHours = !!schedule.length;
+          this.diningId = dining.id;
+          this.categoryId = dining.category_id;
+          this.diningForm = DiningModel.form(dining);
+          LocationsUtilsService.setScheduleFormControls(this.diningForm, schedule);
+        })
+      )
+      .subscribe();
   }
 
   loadCategories() {
@@ -120,7 +122,7 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
         }
       }),
       map((categories) => LocationsUtilsService.setCategoriesDropDown(categories, categoryLabel)),
-      map(parsedCategories => {
+      map((parsedCategories) => {
         Promise.resolve().then(() => {
           this.selectedCategory = parsedCategories.find((c) => c.action === this.categoryId);
         });
