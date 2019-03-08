@@ -19,14 +19,11 @@ export class CategoriesDeleteComponent implements OnInit {
 
   buttonData;
 
-  constructor(
-    public session: CPSession,
-    public store: Store<fromStore.ICategoriesState>
-    ) {}
+  constructor(public session: CPSession, public store: Store<fromStore.ICategoriesState>) {}
 
   onDelete() {
     const categoryId = this.category.id;
-    const school_id =  this.session.g.get('school').id;
+    const school_id = this.session.g.get('school').id;
     const params = new HttpParams().set('school_id', school_id);
 
     const payload = {

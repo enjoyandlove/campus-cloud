@@ -204,7 +204,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
     this.listenForErrors();
 
     this.loading$ = this.store.select(fromStore.getDiningLoading);
-    this.categories$ = of([{label: '---', action: null}]);
+    this.categories$ = of([{ label: '---', action: null }]);
   }
 
   ngOnDestroy() {

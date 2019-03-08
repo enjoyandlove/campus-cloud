@@ -1,7 +1,6 @@
 import { isDefault } from '../categories.status';
 import { CategoryTypePipe } from './category-type.pipe';
 
-
 describe('CategoryTypePipe', () => {
   let pipe: CategoryTypePipe;
 

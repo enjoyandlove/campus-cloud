@@ -11,7 +11,6 @@ import { CategoriesCreateComponent } from './create';
 import { CategoryFormComponent } from './components';
 import { CategoriesActionBoxComponent } from './list/components';
 
-
 import { CategoryTypePipe } from './pipes';
 import { effects, reducers } from './store';
 import { SharedModule } from '@shared/shared.module';
@@ -35,7 +34,7 @@ import { CategoriesRoutingModule } from './categories.routing.module';
     ReactiveFormsModule,
     CategoriesRoutingModule,
     EffectsModule.forFeature(effects),
-    StoreModule.forFeature('locationCategories', reducers),
+    StoreModule.forFeature('locationCategories', reducers)
   ],
 
   providers: [CategoriesService]

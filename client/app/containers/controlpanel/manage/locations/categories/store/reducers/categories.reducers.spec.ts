@@ -12,7 +12,6 @@ const pagination = {
   endRange: 2
 };
 
-
 const params = new HttpParams().set('school_id', mockSchool.id.toString());
 
 describe('Categories Reducer', () => {

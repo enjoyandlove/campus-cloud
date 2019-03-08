@@ -110,8 +110,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   get defaultParams(): HttpParams {
-    const locale = CPI18nService.getLocale().startsWith('fr')
-      ? Locale.fr : Locale.eng;
+    const locale = CPI18nService.getLocale().startsWith('fr') ? Locale.fr : Locale.eng;
 
     return new HttpParams()
       .set('locale', locale)
@@ -178,7 +177,8 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
             this.store.dispatch(new fromStore.GetCategoriesType({ params }));
           }
         })
-      ).subscribe();
+      )
+      .subscribe();
   }
 
   listenDeleteErrors() {
@@ -192,12 +192,10 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   listenErrors() {
-    this.store.select(fromStore.getCategoriesError)
-      .pipe(
-        takeUntil(this.destroy$),
-        filter((error) => error),
-        tap(() => this.handleError())
-      ).subscribe();
+    this.store
+      .select(fromStore.getCategoriesError)
+      .pipe(takeUntil(this.destroy$), filter((error) => error), tap(() => this.handleError()))
+      .subscribe();
   }
 
   resetErrors() {
@@ -249,4 +247,3 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 }
-

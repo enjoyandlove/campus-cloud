@@ -13,7 +13,7 @@ import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
 import { ICategory } from '../categories/model';
 import { CPSession, ISchool } from '@app/session';
-import { LocationType} from '../locations.service';
+import { LocationType } from '../locations.service';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
 import * as fromCategoryStore from '../categories/store';
@@ -26,7 +26,8 @@ import { LocationModel, ILocation } from '@libs/locations/common/model';
   templateUrl: './locations-edit.component.html',
   styleUrls: ['./locations-edit.component.scss']
 })
-export class LocationsEditComponent extends BaseComponent implements OnInit, OnDestroy, AfterViewInit {
+export class LocationsEditComponent extends BaseComponent
+  implements OnInit, OnDestroy, AfterViewInit {
   school: ISchool;
   formErrors: boolean;
   locationId: number;
@@ -46,7 +47,9 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
     public session: CPSession,
     public cpI18n: CPI18nService,
     public latLng: LatLngValidators,
-    public store: Store<fromStore.ILocationsState | fromCategoryStore.ICategoriesState | fromRoot.IHeader>,
+    public store: Store<
+      fromStore.ILocationsState | fromCategoryStore.ICategoriesState | fromRoot.IHeader
+    >
   ) {
     super();
   }
@@ -65,7 +68,10 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
     }
 
     const body = this.locationForm.value;
-    body['schedule'] = LocationsUtilsService.filteredScheduleControls(this.locationForm, this.openingHours);
+    body['schedule'] = LocationsUtilsService.filteredScheduleControls(
+      this.locationForm,
+      this.openingHours
+    );
 
     const locationId = this.locationId;
     const school_id = this.session.g.get('school').id;
@@ -94,7 +100,8 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
   }
 
   setErrors() {
-    this.store.select(fromStore.getLocationsError)
+    this.store
+      .select(fromStore.getLocationsError)
       .pipe(
         takeUntil(this.destroy$),
         filter((error) => error),
@@ -143,18 +150,21 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
   }
 
   loadLocation() {
-    this.store.select(fromStore.getSelectedLocation).pipe(
-      takeUntil(this.destroy$),
-      filter((location: ILocation) => !! location),
-      map((location: ILocation) => {
-        const schedule = location['schedule'];
-        this.openingHours = !!schedule.length;
-        this.locationId = location.id;
-        this.categoryId = location.category_id;
-        this.locationForm = LocationModel.form(location);
-        LocationsUtilsService.setScheduleFormControls(this.locationForm, schedule);
-      })
-    ).subscribe();
+    this.store
+      .select(fromStore.getSelectedLocation)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((location: ILocation) => !!location),
+        map((location: ILocation) => {
+          const schedule = location['schedule'];
+          this.openingHours = !!schedule.length;
+          this.locationId = location.id;
+          this.categoryId = location.category_id;
+          this.locationForm = LocationModel.form(location);
+          LocationsUtilsService.setScheduleFormControls(this.locationForm, schedule);
+        })
+      )
+      .subscribe();
   }
 
   loadCategories() {
@@ -163,8 +173,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
       takeUntil(this.destroy$),
       tap((categories: ICategory[]) => {
         if (!categories.length) {
-          const locale = CPI18nService.getLocale().startsWith('fr')
-            ? Locale.fr : Locale.eng;
+          const locale = CPI18nService.getLocale().startsWith('fr') ? Locale.fr : Locale.eng;
 
           const params = new HttpParams()
             .set('locale', locale)
@@ -175,7 +184,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
         }
       }),
       map((categories) => LocationsUtilsService.setCategoriesDropDown(categories, categoryLabel)),
-      map(parsedCategories => {
+      map((parsedCategories) => {
         Promise.resolve().then(() => {
           this.selectedCategory = parsedCategories.find((c) => c.action === this.categoryId);
         });

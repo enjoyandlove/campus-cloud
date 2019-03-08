@@ -14,7 +14,7 @@ import { CPI18nService } from '@shared/services';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
-import { mockCategories} from '../../categories/tests';
+import { mockCategories } from '../../categories/tests';
 import { CategoriesActionBoxComponent } from './components';
 import { CategoriesListComponent } from './categories-list.component';
 
@@ -77,8 +77,8 @@ describe('CategoriesListComponent', () => {
 
     fixture.detectChanges();
 
-    const sortingLabel = fixture.debugElement
-      .query(By.css('.categories li .js_test_sorting_name')).nativeElement;
+    const sortingLabel = fixture.debugElement.query(By.css('.categories li .js_test_sorting_name'))
+      .nativeElement;
 
     sortingLabel.click();
 

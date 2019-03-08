@@ -6,9 +6,7 @@ import * as fromDining from '../store';
 
 @Injectable()
 export class CanDeactivateDining implements CanDeactivate<any> {
-  constructor(
-    private store: Store<fromDining.IDiningState>
-  ) {}
+  constructor(private store: Store<fromDining.IDiningState>) {}
 
   canDeactivate() {
     this.store.dispatch(new fromDining.Destroy());

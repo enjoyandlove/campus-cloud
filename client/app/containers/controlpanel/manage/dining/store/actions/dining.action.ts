@@ -33,7 +33,6 @@ export enum diningActions {
   DESTROY = '[manage.dining] destroy'
 }
 
-
 export class GetDining implements Action {
   readonly type = diningActions.GET_DINING;
   constructor(public payload: { startRange: number; endRange: number; params: HttpParams }) {}

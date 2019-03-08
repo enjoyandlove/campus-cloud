@@ -17,9 +17,7 @@ export class DiningDeleteComponent implements OnInit {
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
-  constructor(
-    public session: CPSession,
-    public store: Store<fromStore.IDiningState>) {}
+  constructor(public session: CPSession, public store: Store<fromStore.IDiningState>) {}
 
   onDelete() {
     const diningId = this.dining.id;

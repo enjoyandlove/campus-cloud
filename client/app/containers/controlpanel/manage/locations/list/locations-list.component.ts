@@ -156,8 +156,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       takeUntil(this.destroy$),
       tap((categories: ICategory[]) => {
         if (!categories.length) {
-          const locale = CPI18nService.getLocale().startsWith('fr')
-            ? Locale.fr : Locale.eng;
+          const locale = CPI18nService.getLocale().startsWith('fr') ? Locale.fr : Locale.eng;
 
           const params = new HttpParams()
             .set('locale', locale)
