@@ -44,8 +44,8 @@ export class ModalService {
 
   private get defaultConfig(): OverlayConfig {
     return {
-      minWidth: 500,
-      minHeight: 320,
+      width: 520,
+      height: 320,
       hasBackdrop: true,
       disposeOnNavigation: true,
       scrollStrategy: this.getScrollStrategy(),
