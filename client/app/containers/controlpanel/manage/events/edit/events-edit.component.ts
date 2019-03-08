@@ -464,6 +464,7 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
   toggleEventAttendance(value) {
     value = value ? EventAttendance.enabled : EventAttendance.disabled;
 
+    this.selectedQRCode = this.eventQRCodes[0];
     this.enableStudentFeedbackOnAttendanceToggle(value);
     this.form.controls['event_attendance'].setValue(value);
     this.form.controls['attend_verification_methods'].setValue([
