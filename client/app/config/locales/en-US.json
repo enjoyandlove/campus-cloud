@@ -3203,6 +3203,12 @@
   "t_shared_delete_resource_warning_events": {
     "message": "All events will be deleted"
   },
+  "t_shared_delete_resource_warning_service_providers": {
+    "message": "All service providers will be deleted"
+  },
+  "t_shared_delete_resource_warning_todos": {
+    "message": "All To-Do's will be deleted"
+  },
   "t_shared_delete_resource_warning_wall_posts": {
     "message": "All wall posts and comments will be deleted"
   },

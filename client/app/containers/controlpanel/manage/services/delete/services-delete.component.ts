@@ -16,7 +16,8 @@ export class ServicesDeleteComponent implements OnInit {
   deleteWarnings = [
     this.cpI18n.translate('t_shared_delete_resource_warning_wall_posts'),
     this.cpI18n.translate('t_shared_delete_resource_warning_assessment_data'),
-    this.cpI18n.translate('t_shared_delete_resource_warning_events')
+    this.cpI18n.translate('t_shared_delete_resource_warning_events'),
+    this.cpI18n.translate('t_shared_delete_resource_warning_service_providers')
   ];
 
   constructor(
