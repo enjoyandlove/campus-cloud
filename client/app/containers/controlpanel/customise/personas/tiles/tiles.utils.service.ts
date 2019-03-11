@@ -58,7 +58,6 @@ export class TilesUtilsService {
   }
 
   isTileSupportedByWebApp(tile: ITile) {
-    console.log(tile);
     const supportedLinkUrls = TilesUtilsService.webAppSupportedLinkUrls;
     const linkUrl = _get(tile, ['related_link_data', 'link_url'], null);
     const linkType = _get(tile, ['related_link_data', 'link_type'], null);
