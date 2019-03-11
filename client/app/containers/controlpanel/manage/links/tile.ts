@@ -60,4 +60,6 @@ export class CampusLink {
   public static readonly campaignList = `${prefix}campaign_list`;
 
   public static readonly serviceByCategoryId = `${prefix}service_by_category_id`;
+
+  public static readonly dining = `${prefix}campus_poi_list/dining`;
 }

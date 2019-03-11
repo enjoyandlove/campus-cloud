@@ -26,7 +26,8 @@ export class TilesUtilsService {
     CampusLink.campusServiceList,
     CampusLink.campusPoiList,
     CampusLink.campusSecurityService,
-    CampusLink.campusLinkList
+    CampusLink.campusLinkList,
+    CampusLink.dining
   ];
 
   static deprecatedTiles = [
@@ -57,6 +58,7 @@ export class TilesUtilsService {
   }
 
   isTileSupportedByWebApp(tile: ITile) {
+    console.log(tile);
     const supportedLinkUrls = TilesUtilsService.webAppSupportedLinkUrls;
     const linkUrl = _get(tile, ['related_link_data', 'link_url'], null);
     const linkType = _get(tile, ['related_link_data', 'link_type'], null);
