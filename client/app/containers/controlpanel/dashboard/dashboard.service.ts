@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Subject, combineLatest, Observable } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
+import { Subject, combineLatest, Observable, of } from 'rxjs';
+import { map, startWith, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { sortBy } from 'lodash';
@@ -40,7 +40,7 @@ export class DashboardService extends HTTPService {
     const defaultValue = { label: '---', action: null, heading: true };
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/1;1000`;
 
-    return super.get(url, search).pipe(
+    return super.get(url, search, true).pipe(
       startWith([defaultValue]),
       map((data: IPersona[]) => {
         const parsePersona = (persona: IPersona) => {
@@ -57,7 +57,8 @@ export class DashboardService extends HTTPService {
         );
 
         return [defaultValue, ...sortedExperiences];
-      })
+      }),
+      catchError(() => of([defaultValue]))
     );
   }
 
