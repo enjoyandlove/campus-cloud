@@ -275,7 +275,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
 
     this.services$ = this.service.getServices(search).pipe(
-      map((services) => {
+      map((services: [{ label: string; action: number; meta: any }]) => {
         if (this.originalSecurityService) {
           const campusSecurityServiceId = this.utils.getCampusSecurityServiceId(
             this.originalSecurityService
