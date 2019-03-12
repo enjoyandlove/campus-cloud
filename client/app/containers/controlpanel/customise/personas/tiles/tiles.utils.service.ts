@@ -1,33 +1,33 @@
-import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { get as _get, sortBy } from 'lodash';
-import { FileUploadService } from './../../../../../shared/services/file-upload.service';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { CampusLink } from './../../../manage/links/tile';
-import { ICampusGuide } from './../sections/section.interface';
-import { SectionUtilsService } from './../sections/section.utils.service';
+import { Injectable } from '@angular/core';
+
 import { ITile } from './tile.interface';
+import { CPSession } from '@app/session';
+import { CampusLink } from '@controlpanel/manage/links/tile';
+import { ICampusGuide } from './../sections/section.interface';
+import { FileUploadService, CPI18nService } from '@app/shared/services';
+import { SectionUtilsService } from './../sections/section.utils.service';
 import { CampusLinkType, TileCategoryRank, TileFeatureRank, TileVisibility } from './tiles.status';
-import { CPSession } from '../../../../../session';
 
 const threeHundrendKb = 3e5;
 
 @Injectable()
 export class TilesUtilsService {
   static webAppSupportedLinkUrls = [
-    CampusLink.campusService,
     CampusLink.store,
+    CampusLink.dining,
     CampusLink.jobList,
     CampusLink.storeList,
-    CampusLink.schoolCampaign,
     CampusLink.eventList,
     CampusLink.campaignList,
+    CampusLink.campusService,
     CampusLink.dealStoreList,
-    CampusLink.campusServiceList,
     CampusLink.campusPoiList,
-    CampusLink.campusSecurityService,
+    CampusLink.schoolCampaign,
     CampusLink.campusLinkList,
-    CampusLink.dining
+    CampusLink.campusServiceList,
+    CampusLink.campusSecurityService
   ];
 
   static deprecatedTiles = [
