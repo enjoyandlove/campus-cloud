@@ -6,7 +6,7 @@ import { ITile } from './tile.interface';
 import { CPSession } from '@app/session';
 import { CampusLink } from '@controlpanel/manage/links/tile';
 import { ICampusGuide } from './../sections/section.interface';
-import { FileUploadService, CPI18nService } from '@app/shared/services';
+import { FileUploadService, CPI18nService } from '@shared/services';
 import { SectionUtilsService } from './../sections/section.utils.service';
 import { CampusLinkType, TileCategoryRank, TileFeatureRank, TileVisibility } from './tiles.status';
 
