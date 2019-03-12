@@ -1,11 +1,12 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { map, startWith, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { sortBy } from 'lodash';
-import { map, startWith } from 'rxjs/operators';
+
+import { API } from '@app/config/api';
+import { HTTPService } from '@app/base/http.service';
 import { ICampusGuide } from './sections/section.interface';
-import { HTTPService } from '../../../../base/http.service';
-import { API } from '../../../../config/api';
 
 @Injectable()
 export class PersonasService extends HTTPService {
@@ -29,11 +30,11 @@ export class PersonasService extends HTTPService {
     return super.get(url, search, true);
   }
 
-  getServices(search) {
+  getServices(search: HttpParams) {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
     const url = `${common}/1;3000`;
 
-    return super.get(url, search).pipe(
+    return super.get(url, search, true).pipe(
       startWith([{ label: '---' }]),
       map((services: any[]) => {
         return [
@@ -48,7 +49,8 @@ export class PersonasService extends HTTPService {
             };
           })
         ];
-      })
+      }),
+      catchError(() => [{ label: '---' }])
     );
   }
 
