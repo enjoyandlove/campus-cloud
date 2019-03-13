@@ -5,7 +5,7 @@ import { CPTrackingService } from '@shared/services';
 
 @Injectable()
 export class CategoriesUtilsService {
-  constructor(public cpTracking: CPTrackingService) {}
+  constructor(private cpTracking: CPTrackingService) {}
 
   getCategoriesAmplitudeProperties(isLocation?: boolean) {
     const page_type = isLocation
