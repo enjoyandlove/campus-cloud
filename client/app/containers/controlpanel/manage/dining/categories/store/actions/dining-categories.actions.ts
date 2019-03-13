@@ -113,7 +113,7 @@ export class EditCategorySuccess implements Action {
 export class DeleteCategories implements Action {
   readonly type = CategoriesActions.DELETE_CATEGORIES;
 
-  constructor(public payload: { categoryId: number }) {}
+  constructor(public payload: ICategory) {}
 }
 
 export class DeleteCategoriesSuccess implements Action {
