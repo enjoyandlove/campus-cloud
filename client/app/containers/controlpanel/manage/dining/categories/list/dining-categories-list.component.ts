@@ -9,13 +9,15 @@ import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
+import { amplitudeEvents } from '@shared/constants';
 import { Destroyable, Mixin } from '@shared/mixins';
 import { DiningCategoriesEditComponent } from '../edit';
 import { DiningCategoriesCreateComponent } from '../create';
 import { DiningCategoriesDeleteComponent } from '../delete';
-import { CPI18nService, ModalService } from '@shared/services';
 import { ICategory } from '@libs/locations/common/categories/model';
+import { CPI18nService, CPTrackingService, ModalService } from '@shared/services';
 import { ICategoriesApiQuery } from '@libs/locations/common/categories/categories.status';
+import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 @Mixin([Destroyable])
 @Component({
@@ -38,6 +40,8 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
     public session: CPSession,
     public cpI18n: CPI18nService,
     private modalService: ModalService,
+    public cpTracking: CPTrackingService,
+    public utils: CategoriesUtilsService,
     public store: Store<fromStore.ICategoriesState | fromRoot.IHeader | fromRoot.ISnackbar>
   ) {}
 
@@ -76,12 +80,25 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
   }
 
   onLaunchCreateModal() {
+    const eventName = amplitudeEvents.CLICKED_CREATE_ITEM;
+    const eventProperties = this.utils.getCategoriesAmplitudeProperties();
+
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
     this.modal = this.modalService.open(DiningCategoriesCreateComponent, null, {
       onClose: this.resetModal.bind(this)
     });
   }
 
   onEdit(category: ICategory) {
+    const eventName = amplitudeEvents.VIEWED_ITEM;
+
+    const eventProperties = {
+      ...this.utils.getCategoriesAmplitudeProperties(),
+      page_name: amplitudeEvents.INFO
+    };
+
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+
     this.modal = this.modalService.open(DiningCategoriesEditComponent, null, {
       data: category,
       onClose: this.resetModal.bind(this)

@@ -7,13 +7,15 @@ import { Store } from '@ngrx/store';
 
 import { ISnackbar } from '@app/store';
 import * as fromActions from '../actions';
-import { CPI18nService } from '@shared/services';
 import { baseActionClass } from '@app/store/base';
 import * as fromLocationStore from '../../../store';
+import { amplitudeEvents } from '@shared/constants';
 import { parseErrorResponse } from '@shared/utils/http';
 import { ILocation } from '@libs/locations/common/model';
 import { CategoriesService } from '../../categories.service';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 import { ICategory } from '@libs/locations/common/categories/model';
+import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 @Injectable()
 export class CategoriesEffects {
@@ -21,6 +23,8 @@ export class CategoriesEffects {
     public actions$: Actions,
     public cpI18n: CPI18nService,
     public service: CategoriesService,
+    public cpTracking: CPTrackingService,
+    public utils: CategoriesUtilsService,
     public store: Store<fromLocationStore.ILocationsState | ISnackbar>
   ) {}
 
@@ -158,6 +162,11 @@ export class CategoriesEffects {
               body: this.cpI18n.translate('t_category_successfully_deleted')
             })
           );
+
+          const eventName = amplitudeEvents.DELETED_ITEM;
+          const eventProperties = this.utils.getCategoriesAmplitudeProperties(true);
+
+          this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
           return new fromActions.DeleteCategoriesSuccess({ deletedId: categoryId });
         }),

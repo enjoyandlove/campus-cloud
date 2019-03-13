@@ -9,13 +9,15 @@ import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
-import { CPI18nService } from '@shared/services';
 import { ManageHeaderService } from '../../utils';
+import { amplitudeEvents } from '@shared/constants';
 import { IDining } from '@libs/locations/common/model';
 import { BaseComponent } from '@app/base/base.component';
 import * as fromCategoryStore from '../categories/store';
 import { ICategory } from '@libs/locations/common/categories/model';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 import { LocationsUtilsService, LocationType } from '@libs/locations/common/utils';
+import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 interface IState {
   search_str: string;
@@ -50,7 +52,9 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
     public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService,
+    public categoryUtils: CategoriesUtilsService,
     public store: Store<fromStore.IDiningState | fromRoot.IHeader>
   ) {
     super();
@@ -214,6 +218,11 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
   }
 
   onCategoriesClick() {
+    const eventName = amplitudeEvents.CLICKED_PAGE_ITEM;
+    const eventProperties = this.categoryUtils.getCategoriesAmplitudeProperties();
+
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+
     this.router.navigate(['/manage/dining/categories']);
   }
 

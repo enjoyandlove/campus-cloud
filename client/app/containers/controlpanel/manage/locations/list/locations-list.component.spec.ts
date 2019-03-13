@@ -13,6 +13,7 @@ import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
 import { LocationsListComponent } from './locations-list.component';
 import { ManageHeaderService } from '@containers/controlpanel/manage/utils';
+import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 describe('LocationsListComponent', () => {
   configureTestSuite();
@@ -21,7 +22,7 @@ describe('LocationsListComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, ManageHeaderService],
+        providers: [CPSession, CPI18nService, ManageHeaderService, CategoriesUtilsService],
         declarations: [LocationsListComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

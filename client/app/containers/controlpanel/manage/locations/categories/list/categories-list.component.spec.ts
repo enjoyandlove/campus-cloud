@@ -14,9 +14,10 @@ import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { CategoriesListComponent } from './categories-list.component';
-import { mockCategories} from '@libs/locations/common/categories/tests';
+import { mockCategories } from '@libs/locations/common/categories/tests';
 import { CategoryTypePipe } from '@libs/locations/common/categories/pipes';
 import { CategoriesActionBoxComponent } from '@libs/locations/common/categories/components';
+import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 describe('CategoriesListComponent', () => {
   configureTestSuite();
@@ -25,7 +26,7 @@ describe('CategoriesListComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, Actions],
+        providers: [CPSession, CPI18nService, Actions, CategoriesUtilsService],
         declarations: [CategoriesListComponent, CategoryTypePipe, CategoriesActionBoxComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

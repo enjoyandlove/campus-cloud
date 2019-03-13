@@ -10,10 +10,12 @@ import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
-import { CPI18nService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants';
 import { LocationType } from '@libs/locations/common/utils';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 import { ICategory, DeleteError } from '@libs/locations/common/categories/model';
 import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
+import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 interface IState {
   search_str: string;
@@ -48,6 +50,8 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     public actions$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public cpTracking: CPTrackingService,
+    public utils: CategoriesUtilsService,
     public store: Store<fromStore.ICategoriesState | fromRoot.IHeader | fromRoot.ISnackbar>
   ) {}
 
@@ -71,14 +75,26 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   onLaunchCreateModal() {
+    const eventName = amplitudeEvents.CLICKED_CREATE_ITEM;
+    const eventProperties = this.utils.getCategoriesAmplitudeProperties(true);
+
     this.showCreateModal = true;
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
     setTimeout(() => $('#categoriesCreate').modal());
   }
 
   onLaunchEditModal(category: ICategory) {
+    const eventName = amplitudeEvents.VIEWED_ITEM;
+
+    const eventProperties = {
+      ...this.utils.getCategoriesAmplitudeProperties(true),
+      page_name: amplitudeEvents.INFO
+    };
+
     this.showEditModal = true;
     this.selectedCategory = category;
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
     setTimeout(() => $('#categoriesEdit').modal());
   }
@@ -109,7 +125,8 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
 
   get defaultParams(): HttpParams {
     const locale = CPI18nService.getLocale().startsWith('fr')
-      ? LocationCategoryLocale.fr : LocationCategoryLocale.eng;
+      ? LocationCategoryLocale.fr
+      : LocationCategoryLocale.eng;
 
     return new HttpParams()
       .set('locale', locale)
@@ -176,7 +193,8 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
             this.store.dispatch(new fromStore.GetCategoriesType({ params }));
           }
         })
-      ).subscribe();
+      )
+      .subscribe();
   }
 
   listenDeleteErrors() {
@@ -190,12 +208,10 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   listenErrors() {
-    this.store.select(fromStore.getCategoriesError)
-      .pipe(
-        takeUntil(this.destroy$),
-        filter((error) => error),
-        tap(() => this.handleError())
-      ).subscribe();
+    this.store
+      .select(fromStore.getCategoriesError)
+      .pipe(takeUntil(this.destroy$), filter((error) => error), tap(() => this.handleError()))
+      .subscribe();
   }
 
   resetErrors() {
@@ -243,4 +259,3 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 }
-

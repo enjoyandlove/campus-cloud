@@ -10,12 +10,14 @@ import { ISnackbar } from '@app/store';
 import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
 import * as fromDining from '../../../store';
-import { CPI18nService } from '@shared/services';
 import { baseActionClass } from '@app/store/base';
+import { amplitudeEvents } from '@shared/constants';
 import { IDining } from '@libs/locations/common/model';
 import { LocationType } from '@libs/locations/common/utils';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 import { ICategory } from '@libs/locations/common/categories/model';
 import { DiningCategoriesService } from '../../dining-categories.service';
+import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 import {
   ICategoriesApiQuery,
   LocationCategoryLocale
@@ -27,6 +29,8 @@ export class DiningCategoriesEffects {
     public actions$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public cpTracking: CPTrackingService,
+    public utils: CategoriesUtilsService,
     public service: DiningCategoriesService,
     public store: Store<fromDining.IDiningState | ISnackbar>
   ) {}
@@ -170,6 +174,11 @@ export class DiningCategoriesEffects {
       return this.service.deleteCategoryById(categoryId, params).pipe(
         map(() => {
           this.handleSuccess('t_category_successfully_deleted');
+
+          const eventName = amplitudeEvents.DELETED_ITEM;
+          const eventProperties = this.utils.getCategoriesAmplitudeProperties();
+
+          this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
           return new fromActions.DeleteCategoriesSuccess({ deletedId: categoryId });
         }),

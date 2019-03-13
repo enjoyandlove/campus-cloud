@@ -70,7 +70,7 @@ export class CPTrackingService {
 
   amplitudeEmitEvent(eventName: string, eventProperties?: {}) {
     if (!isProd && !isStaging) {
-      return;
+      // return;
     }
 
     if (!this._isAmplitudeAvailable()) {
