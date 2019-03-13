@@ -275,6 +275,12 @@ export const amplitudeEvents = {
 
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
 
+  MANAGE_CREATED_CATEGORY: 'Manage Created Category',
+
+  MANAGE_UPDATED_CATEGORY: 'Manage Updated Category',
+
+  MANAGE_DELETED_CATEGORY: 'Manage Deleted Category',
+
   STUDIO_DRAG_DROP_TILE: 'Studio - Drag & Drop Tile',
 
   MANAGE_CHANGED_QR_CODE: 'Manage - Changed QR Code',

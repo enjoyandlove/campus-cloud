@@ -22,13 +22,13 @@ export class CategoriesDeleteComponent implements OnInit {
   constructor(public session: CPSession, public store: Store<fromStore.ICategoriesState>) {}
 
   onDelete() {
-    const categoryId = this.category.id;
+    const body = this.category;
     const school_id = this.session.g.get('school').id;
     const params = new HttpParams().set('school_id', school_id);
 
     const payload = {
       params,
-      categoryId
+      body
     };
 
     this.store.dispatch(new fromStore.DeleteCategories(payload));
