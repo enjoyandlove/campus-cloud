@@ -164,10 +164,16 @@ export class CategoriesEffects {
           const deletedItemEventName = amplitudeEvents.DELETED_ITEM;
           const deletedCategoryEventName = amplitudeEvents.MANAGE_DELETED_CATEGORY;
           const deletedItemEventProperties = this.utils.getCategoriesAmplitudeProperties(true);
-          const deletedCategoryEventProperties = this.utils.getParsedCategoriesEventProperties(body, true);
+          const deletedCategoryEventProperties = this.utils.getParsedCategoriesEventProperties(
+            body,
+            true
+          );
 
           this.cpTracking.amplitudeEmitEvent(deletedItemEventName, deletedItemEventProperties);
-          this.cpTracking.amplitudeEmitEvent(deletedCategoryEventName, deletedCategoryEventProperties);
+          this.cpTracking.amplitudeEmitEvent(
+            deletedCategoryEventName,
+            deletedCategoryEventProperties
+          );
 
           return new fromActions.DeleteCategoriesSuccess({ deletedId: body.id });
         }),

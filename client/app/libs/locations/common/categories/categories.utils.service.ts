@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import { amplitudeEvents } from '@shared/constants';
 import { CPTrackingService } from '@shared/services';
 import { ICategory } from '@libs/locations/common/categories/model';
-import { categoryIconType, categoryTypes } from '@libs/locations/common/categories/categories.status';
+import {
+  categoryIconType,
+  categoryTypes
+} from '@libs/locations/common/categories/categories.status';
 
 @Injectable()
 export class CategoriesUtilsService {
@@ -23,7 +26,9 @@ export class CategoriesUtilsService {
   getParsedCategoriesEventProperties(category: ICategory, isLocation?: boolean) {
     const icon_type = categoryIconType[category.img_url];
     const category_type = categoryTypes[category.category_type_id];
-    const page_type = isLocation ? amplitudeEvents.LOCATION_CATEGORY : amplitudeEvents.DINING_CATEGORY;
+    const page_type = isLocation
+      ? amplitudeEvents.LOCATION_CATEGORY
+      : amplitudeEvents.DINING_CATEGORY;
 
     return {
       icon_type,
