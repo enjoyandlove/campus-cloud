@@ -3,12 +3,12 @@ import { IAnnouncementsIntegration } from './../model';
 import { IntegrationTypes } from '@libs/integrations/common/model';
 import { AnnouncementPriority } from './../../announcements.interface';
 
-export const emptyForm = {
+export const defaultForm = {
   school_id: null,
   feed_url: null,
-  feed_type: null,
+  feed_type: IntegrationTypes.rss,
   store_id: null,
-  priority: null
+  priority: AnnouncementPriority.regular
 };
 
 export const filledForm = {
