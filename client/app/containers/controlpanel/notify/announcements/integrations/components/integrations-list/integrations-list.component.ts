@@ -2,8 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { FORMAT } from '@shared/pipes';
+import { IAnnouncementsIntegration } from '../../model';
 import { SyncStatus } from '@libs/integrations/common/model';
-import { IAnnoucementsIntegration } from '../../model/announcement-integration.interface';
 
 @Component({
   selector: 'cp-integrations-list',
@@ -11,10 +11,10 @@ import { IAnnoucementsIntegration } from '../../model/announcement-integration.i
   styleUrls: ['./integrations-list.component.scss']
 })
 export class IntegrationsListComponent implements OnInit {
-  @Input() integrations$: Observable<IAnnoucementsIntegration[]>;
+  @Input() integrations$: Observable<IAnnouncementsIntegration[]>;
 
   @Output() syncClick: EventEmitter<number> = new EventEmitter();
-  @Output() deleteClick: EventEmitter<IAnnoucementsIntegration> = new EventEmitter();
+  @Output() deleteClick: EventEmitter<IAnnouncementsIntegration> = new EventEmitter();
 
   dateFormat = FORMAT.DATETIME;
   notSynced = SyncStatus.notSynced;

@@ -1,5 +1,5 @@
 import { mockSchool } from '@app/session/mock';
-import { IAnnoucementsIntegration } from './../model';
+import { IAnnouncementsIntegration } from './../model';
 import { IntegrationTypes } from '@libs/integrations/common/model';
 import { AnnouncementPriority } from './../../announcements.interface';
 
@@ -19,7 +19,7 @@ export const filledForm = {
   priority: AnnouncementPriority.regular
 };
 
-export const mockIntegration: IAnnoucementsIntegration = {
+export const mockIntegration: IAnnouncementsIntegration = {
   id: 4,
   school_id: mockSchool.id,
   store_id: 28677,
