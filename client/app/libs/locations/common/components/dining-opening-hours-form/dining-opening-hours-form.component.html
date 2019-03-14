@@ -74,6 +74,7 @@
           <div class="rows">
             <button
               *ngIf="schedule.get('items')['controls'].length < 3"
+              [cpTarget]="'add_meal_' + i"
               (click)="addItem(schedule, i)"
               class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
               {{ 't_dining_form_add_meal' | cpI18n }}
