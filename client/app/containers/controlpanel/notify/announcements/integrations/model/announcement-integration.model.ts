@@ -3,16 +3,16 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { CustomValidators } from '@shared/validators';
 import { IntegrationTypes } from '@libs/integrations/common/model';
 import { AnnouncementPriority } from './../../announcements.interface';
-import { IAnnoucementsIntegration } from './announcement-integration.interface';
+import { IAnnouncementsIntegration } from './announcement-integration.interface';
 
 export class AnnouncementIntegrationModel {
-  static form(integration?: IAnnoucementsIntegration): FormGroup {
+  static form(integration?: IAnnouncementsIntegration): FormGroup {
     const _integration = {
       school_id: integration ? integration.school_id : null,
       feed_url: integration ? integration.feed_url : null,
-      feed_type: integration ? integration.feed_type : null,
+      feed_type: integration ? integration.feed_type : IntegrationTypes.rss,
       store_id: integration ? integration.store_id : null,
-      priority: integration ? integration.priority : null
+      priority: integration ? integration.priority : AnnouncementPriority.regular
     };
 
     const fb = new FormBuilder();

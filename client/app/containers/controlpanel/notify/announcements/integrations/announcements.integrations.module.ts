@@ -1,3 +1,4 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -6,24 +7,31 @@ import { NgModule } from '@angular/core';
 import { reducers, effects } from './store';
 import { ModalService } from '@shared/services';
 import { SharedModule } from '@shared/shared.module';
-import { IntegrationsListComponent } from './components';
 import { IntegrationsService } from './integrations.service';
 import { AnnouncementsIntegrationListComponent } from './list';
 import { AnnouncementsIntegrationDeleteComponent } from './delete';
+import { AnnouncementsIntegrationCreateComponent } from './create/create.component';
 import { AnnouncementIntegrationsRoutingModule } from './integrations-routing.module';
 import { CommonIntegrationsModule } from '@libs/integrations/common/common-integrations.module';
+import { IntegrationsListComponent, AnnouncementsIntegrationFormComponent } from './components';
 
 @NgModule({
-  entryComponents: [AnnouncementsIntegrationDeleteComponent],
+  entryComponents: [
+    AnnouncementsIntegrationDeleteComponent,
+    AnnouncementsIntegrationCreateComponent
+  ],
   providers: [IntegrationsService, ModalService],
   declarations: [
     IntegrationsListComponent,
     AnnouncementsIntegrationListComponent,
-    AnnouncementsIntegrationDeleteComponent
+    AnnouncementsIntegrationFormComponent,
+    AnnouncementsIntegrationDeleteComponent,
+    AnnouncementsIntegrationCreateComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
+    ReactiveFormsModule,
     CommonIntegrationsModule,
     EffectsModule.forFeature(effects),
     AnnouncementIntegrationsRoutingModule,
