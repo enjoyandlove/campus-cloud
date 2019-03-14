@@ -10,7 +10,7 @@ import {
 
 @Injectable()
 export class CategoriesUtilsService {
-  constructor(public cpTracking: CPTrackingService) {}
+  constructor(private cpTracking: CPTrackingService) {}
 
   getCategoriesAmplitudeProperties(isLocation?: boolean) {
     const page_type = isLocation
