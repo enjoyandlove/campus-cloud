@@ -24,7 +24,7 @@ export class LocationsCommonListComponent implements OnInit {
   sortingLabels;
   defaultImage = `${environment.root}public/default/user.png`;
 
-  constructor(public cpI18n: CPI18nService, public cpTracking: CPTrackingService) {}
+  constructor(private cpI18n: CPI18nService, private cpTracking: CPTrackingService) {}
 
   ngOnInit() {
     this.sortingLabels = {
