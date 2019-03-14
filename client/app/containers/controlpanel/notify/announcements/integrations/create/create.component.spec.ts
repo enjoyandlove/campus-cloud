@@ -5,11 +5,10 @@ import { StoreModule } from '@ngrx/store';
 
 import { reducers } from '../store';
 import { CPSession } from '@app/session';
-import { mockIntegration } from '../tests/mock';
+import { filledForm } from '../tests/mock';
 import { configureTestSuite } from '@shared/tests';
 import mockSession from '@app/session/mock/session';
 import { SharedModule } from '@shared/shared.module';
-import { AnnouncementIntegrationModel } from '../model';
 import { AnnouncementsIntegrationFormComponent } from '../components';
 import { ModalService, MODAL_DATA, CPI18nService } from '@shared/services';
 import { AnnouncementsIntegrationCreateComponent } from './create.component';
@@ -65,13 +64,11 @@ describe('AnnouncementsIntegrationCreateComponent', () => {
 
   it('should submit', () => {
     const spy = spyOn(component, 'doSubmit');
-    component.form = AnnouncementIntegrationModel.form(mockIntegration);
+    component.form.setValue(filledForm);
     fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      const submitBtn = fixture.debugElement.query(By.css('[data-target="submit"]'));
-      submitBtn.nativeElement.click();
-      expect(spy).toHaveBeenCalledTimes(1);
-    });
+    const submitBtn = fixture.debugElement.query(By.css('[data-target="submit"]'));
+    submitBtn.nativeElement.click();
+    expect(spy).toHaveBeenCalledTimes(1);
   });
 
   it('should close', () => {
