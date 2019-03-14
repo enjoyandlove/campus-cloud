@@ -6,6 +6,8 @@ import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromActions from '../actions';
+import { amplitudeEvents } from '@shared/constants';
+import { CPTrackingService } from '@shared/services';
 import { ILocation } from '@libs/locations/common/model';
 import { LocationsService } from '../../locations.service';
 import * as fromCategoryStore from '../../categories/store';
@@ -17,6 +19,7 @@ export class LocationsEffect {
     public router: Router,
     public actions$: Actions,
     public service: LocationsService,
+    public cpTracking: CPTrackingService,
     public store: Store<fromCategoryStore.ICategoriesState>
   ) {}
 
@@ -167,7 +170,14 @@ export class LocationsEffect {
       return this.service
         .deleteLocationById(locationId, params)
         .pipe(
-          map(() => new fromActions.DeleteLocationSuccess({ deletedId: locationId, categoryId })),
+          map(() => {
+            const eventName = amplitudeEvents.DELETED_ITEM;
+            const eventProperties = this.cpTracking.getEventProperties();
+
+            this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+
+            return new fromActions.DeleteLocationSuccess({ deletedId: locationId, categoryId });
+          }),
           catchError((error) => of(new fromActions.DeleteLocationFail(error)))
         );
     })

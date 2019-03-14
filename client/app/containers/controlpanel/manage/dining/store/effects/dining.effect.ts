@@ -9,11 +9,12 @@ import { Store } from '@ngrx/store';
 import { ISnackbar } from '@app/store';
 import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
-import { CPI18nService } from '@shared/services';
 import { baseActionClass } from '@app/store/base';
+import { amplitudeEvents } from '@shared/constants';
 import { DiningService } from '../../dining.service';
 import { IDining } from '@libs/locations/common/model';
 import * as fromDiningCategoryStore from '../../categories/store';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 import { ICategory } from '@libs/locations/common/categories/model';
 
 @Injectable()
@@ -24,7 +25,8 @@ export class DiningEffect {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: DiningService,
-    public store: Store<ISnackbar>
+    public store: Store<ISnackbar>,
+    public cpTracking: CPTrackingService
   ) {}
 
   @Effect()
@@ -185,7 +187,14 @@ export class DiningEffect {
       return this.service
         .deleteDiningById(diningId, params)
         .pipe(
-          map(() => new fromActions.DeleteDiningSuccess({ deletedId: diningId, categoryId })),
+          map(() => {
+            const eventName = amplitudeEvents.DELETED_ITEM;
+            const eventProperties = this.cpTracking.getEventProperties();
+
+            this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+
+            return new fromActions.DeleteDiningSuccess({ deletedId: diningId, categoryId });
+          }),
           catchError((error) => of(new fromActions.DeleteDiningFail(error)))
         );
     })

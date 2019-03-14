@@ -181,6 +181,8 @@ export const amplitudeEvents = {
 
   CHANGED_SCHOOL: 'Changed School',
 
+  DINING_CATEGORY: 'Dining Category',
+
   CC_WEB_CHECK_IN: 'CC Web Check-In',
 
   DYNAMIC_AUDIENCE: 'Dynamic Audience',
@@ -196,6 +198,8 @@ export const amplitudeEvents = {
   WALL_MOVED_POST: 'Wall - Moved Post',
 
   EXISTING_SECTION: 'Existing Section',
+
+  LOCATION_CATEGORY: 'Location Category',
 
   CLICKED_PAGE_ITEM: 'Clicked Page Item',
 
