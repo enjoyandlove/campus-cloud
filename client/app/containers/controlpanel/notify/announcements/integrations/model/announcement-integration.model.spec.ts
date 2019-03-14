@@ -1,6 +1,6 @@
 import { FormGroup, AbstractControl } from '@angular/forms';
 
-import { emptyForm, filledForm } from '../tests';
+import { defaultForm, filledForm } from '../tests';
 import { IntegrationTypes } from '@libs/integrations/common/model';
 import { AnnouncementPriority } from './../../announcements.interface';
 import { AnnouncementIntegrationModel } from './announcement-integration.model';
@@ -21,7 +21,7 @@ describe('AnnouncementIntegrationModel', () => {
     });
 
     it('should return announcements integration form', () => {
-      expect(form.value).toEqual(emptyForm);
+      expect(form.value).toEqual(defaultForm);
       expect(form instanceof FormGroup).toBe(true);
     });
 

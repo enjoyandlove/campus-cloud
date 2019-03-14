@@ -1,5 +1,7 @@
 import { Action } from '@ngrx/store';
-import { IAnnoucementsIntegration } from '../../model';
+
+import { IStore } from '@shared/services';
+import { IAnnouncementsIntegration } from '../../model';
 
 export enum IntegrationActions {
   GET_INTEGRATIONS = '[manage.notify.announcements] get integrations',
@@ -8,7 +10,11 @@ export enum IntegrationActions {
 
   DELETE_INTEGRATIONS = '[manage.notify.announcements] delete integrations',
   DELETE_INTEGRATIONS_SUCCESS = '[manage.notify.announcements] delete integrations success',
-  DELETE_INTEGRATIONS_FAIL = '[manage.notify.announcements] delete integrations fail'
+  DELETE_INTEGRATIONS_FAIL = '[manage.notify.announcements] delete integrations fail',
+
+  GET_SENDERS = '[manage.notify.announcements] get senders',
+  GET_SENDERS_SUCCESS = '[manage.notify.announcements] get senders success',
+  GET_SENDERS_FAIL = '[manage.notify.announcements] get senders fail'
 }
 
 export class GetIntegrations implements Action {
@@ -18,7 +24,7 @@ export class GetIntegrations implements Action {
 export class GetIntegrationsSuccess implements Action {
   readonly type = IntegrationActions.GET_INTEGRATIONS_SUCCESS;
 
-  constructor(public payload: { integrations: IAnnoucementsIntegration[] }) {}
+  constructor(public payload: { integrations: IAnnouncementsIntegration[] }) {}
 }
 
 export class GetIntegrationsFail implements Action {
@@ -41,10 +47,24 @@ export class DeleteIntegrationsFail implements Action {
   readonly type = IntegrationActions.DELETE_INTEGRATIONS_FAIL;
 }
 
+export class GetSenders implements Action {
+  readonly type = IntegrationActions.GET_SENDERS;
+}
+export class GetSendersSuccess implements Action {
+  readonly type = IntegrationActions.GET_SENDERS_SUCCESS;
+  constructor(public payload: IStore[]) {}
+}
+export class GetSendersFail implements Action {
+  readonly type = IntegrationActions.GET_SENDERS_FAIL;
+}
+
 export type Actions =
   | GetIntegrations
   | GetIntegrationsSuccess
   | GetIntegrationsFail
   | DeleteIntegrations
   | DeleteIntegrationsSuccess
-  | DeleteIntegrationsFail;
+  | DeleteIntegrationsFail
+  | GetSenders
+  | GetSendersSuccess
+  | GetSendersFail;

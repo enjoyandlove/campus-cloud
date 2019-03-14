@@ -1,6 +1,6 @@
 import { Component, Inject } from '@angular/core';
 
-import { IAnnoucementsIntegration } from '../model';
+import { IAnnouncementsIntegration } from '../model';
 import { MODAL_DATA, IModal } from '@shared/services';
 
 @Component({
@@ -9,7 +9,7 @@ import { MODAL_DATA, IModal } from '@shared/services';
   styleUrls: ['./delete.component.scss']
 })
 export class AnnouncementsIntegrationDeleteComponent {
-  integration: IAnnoucementsIntegration;
+  integration: IAnnouncementsIntegration;
 
   constructor(@Inject(MODAL_DATA) public modal: IModal) {
     this.integration = this.modal.data;
