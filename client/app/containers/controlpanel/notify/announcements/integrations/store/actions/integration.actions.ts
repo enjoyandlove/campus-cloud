@@ -14,7 +14,11 @@ export enum IntegrationActions {
 
   GET_SENDERS = '[manage.notify.announcements] get senders',
   GET_SENDERS_SUCCESS = '[manage.notify.announcements] get senders success',
-  GET_SENDERS_FAIL = '[manage.notify.announcements] get senders fail'
+  GET_SENDERS_FAIL = '[manage.notify.announcements] get senders fail',
+
+  CREATE_INTEGRATION = '[manage.notify.announcements] create integration',
+  CREATE_INTEGRATION_SUCCESS = '[manage.notify.announcements] create integration success',
+  CREATE_INTEGRATION_FAIL = '[manage.notify.announcements] create integration fail'
 }
 
 export class GetIntegrations implements Action {
@@ -58,6 +62,18 @@ export class GetSendersFail implements Action {
   readonly type = IntegrationActions.GET_SENDERS_FAIL;
 }
 
+export class CreateIntegration implements Action {
+  readonly type = IntegrationActions.CREATE_INTEGRATION;
+  constructor(public payload: IAnnouncementsIntegration) {}
+}
+export class CreateIntegrationSuccess implements Action {
+  readonly type = IntegrationActions.CREATE_INTEGRATION_SUCCESS;
+  constructor(public payload: IAnnouncementsIntegration) {}
+}
+export class CreateIntegrationFail implements Action {
+  readonly type = IntegrationActions.CREATE_INTEGRATION_FAIL;
+}
+
 export type Actions =
   | GetIntegrations
   | GetIntegrationsSuccess
@@ -67,4 +83,7 @@ export type Actions =
   | DeleteIntegrationsFail
   | GetSenders
   | GetSendersSuccess
-  | GetSendersFail;
+  | GetSendersFail
+  | CreateIntegration
+  | CreateIntegrationSuccess
+  | CreateIntegrationFail;
