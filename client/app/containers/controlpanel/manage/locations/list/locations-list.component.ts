@@ -57,7 +57,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService,
     public categoryUtils: CategoriesUtilsService,
-    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
+    public store: Store<fromStore.ILocationsState>
   ) {
     super();
   }
@@ -138,13 +138,6 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     };
 
     this.fetchFilteredLocations();
-  }
-
-  buildHeader() {
-    this.store.dispatch({
-      type: fromRoot.baseActions.HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
-    });
   }
 
   onLaunchDeleteModal(location: ILocation) {
@@ -241,7 +234,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
   }
 
   ngOnInit() {
-    this.buildHeader();
+    this.headerService.updateHeader();
     this.loadLocations();
     this.loadCategories();
     this.listenForErrors();

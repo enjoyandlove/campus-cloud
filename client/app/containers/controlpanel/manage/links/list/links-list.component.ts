@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Store } from '@ngrx/store';
 
+import { ManageHeaderService } from '../../utils';
 import * as fromLinks from '@app/store/manage/links';
 import { BaseComponent } from '@app/base/base.component';
 import { CP_TRACK_TO } from '@shared/directives/tracking';
@@ -35,6 +36,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     private modalService: ModalService,
     public cpTracking: CPTrackingService,
+    private headerService: ManageHeaderService,
     private store: Store<fromLinks.ILinksState>
   ) {
     super();
@@ -121,6 +123,8 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.headerService.updateHeader();
+
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM,

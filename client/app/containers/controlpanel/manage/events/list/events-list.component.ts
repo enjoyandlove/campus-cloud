@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Store } from '@ngrx/store';
 
+import { CPSession } from '@app/session';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
+import { CPI18nService } from '@shared/services/index';
 import { ManageHeaderService } from '../../utils/header';
 import { EventsComponent } from './base/events.component';
-import { baseActions, IHeader } from '../../../../../store/base';
-import { CPI18nService } from '../../../../../shared/services/index';
 
 @Component({
   selector: 'cp-events-list',
@@ -24,22 +22,14 @@ export class EventsListComponent extends EventsComponent implements OnInit {
 
   constructor(
     public session: CPSession,
-    private store: Store<IHeader>,
-    public service: EventsService,
     public cpI18n: CPI18nService,
+    public service: EventsService,
     private headerService: ManageHeaderService
   ) {
     super(session, cpI18n, service);
   }
 
-  private buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
-    });
-  }
-
   ngOnInit() {
-    this.buildHeader();
+    this.headerService.updateHeader();
   }
 }

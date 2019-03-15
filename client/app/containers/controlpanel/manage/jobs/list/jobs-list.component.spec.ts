@@ -57,7 +57,7 @@ describe('JobsListComponent', () => {
           fixture = TestBed.createComponent(JobsListComponent);
           component = fixture.componentInstance;
           component.session.g.set('school', mockSchool);
-          spyOn(component, 'buildHeader');
+          spyOn(component.headerService, 'updateHeader');
 
           search = new HttpParams()
             .append('store_id', null)
