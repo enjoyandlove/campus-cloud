@@ -75,6 +75,25 @@ export class AnnoucementIntegrationsEffects {
     )
   );
 
+  @Effect()
+  createIntegration$: Observable<
+    fromActions.CreateIntegrationSuccess | fromActions.CreateIntegrationFail
+  > = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.CREATE_INTEGRATION),
+    mergeMap((integration: IAnnouncementsIntegration) =>
+      this.service.createIntegration(integration, this.params).pipe(
+        map(
+          (newIntegration: IAnnouncementsIntegration) =>
+            new fromActions.CreateIntegrationSuccess(newIntegration)
+        ),
+        catchError(() => {
+          this.handleError();
+          return of(new fromActions.CreateIntegrationFail());
+        })
+      )
+    )
+  );
+
   private get params() {
     return new HttpParams().set('school_id', this.session.g.get('school').id);
   }
