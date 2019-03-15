@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Store } from '@ngrx/store';
 
+import { FORMAT } from '@shared/pipes';
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
 import { IDeal } from '../deals.interface';
 import { DealsService } from '../deals.service';
 import { ManageHeaderService } from '../../utils';
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
-import { FORMAT } from '../../../../../shared/pipes';
-import { baseActions, IHeader } from '../../../../../store/base';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 
 export interface IState {
   deals: Array<IDeal>;
@@ -46,7 +44,6 @@ export class DealsListComponent extends BaseComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public store: Store<IHeader>,
     public service: DealsService,
     public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService
@@ -120,13 +117,6 @@ export class DealsListComponent extends BaseComponent implements OnInit {
       .then((res) => (this.state = { ...this.state, deals: res.data }));
   }
 
-  buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
-    });
-  }
-
   ngOnInit() {
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
@@ -135,7 +125,7 @@ export class DealsListComponent extends BaseComponent implements OnInit {
     };
 
     this.fetch();
-    this.buildHeader();
+    this.headerService.updateHeader();
 
     this.sortingLabels = {
       name: this.cpI18n.translate('name'),

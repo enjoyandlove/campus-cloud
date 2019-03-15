@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { IUser } from '../../../session';
+import { IUser } from '@app/session';
 import { ManageHeaderService } from './utils/header';
-import { IHeader, baseActions, getHeaderState } from '../../../store/base';
+import { IHeader, getHeaderState } from '@app/store/base';
 
 @Component({
   selector: 'cp-manage',
@@ -18,9 +18,6 @@ export class ManageComponent implements OnInit {
     this.headerData$ = this.store.select(getHeaderState);
   }
   ngOnInit() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
-    });
+    this.headerService.updateHeader();
   }
 }

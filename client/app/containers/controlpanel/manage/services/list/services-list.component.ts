@@ -1,14 +1,12 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Store } from '@ngrx/store';
 
 import { CPSession } from '@app/session';
 import { CP_TRACK_TO } from '@shared/directives';
 import { ServicesDeleteComponent } from '../delete';
 import { ServicesService } from '../services.service';
 import { ServiceAttendance } from '../services.status';
-import { baseActions, IHeader } from '@app/store/base';
 import { BaseComponent } from '@app/base/base.component';
 import { ManageHeaderService } from './../../utils/header';
 import { amplitudeEvents } from '@shared/constants/analytics';
@@ -46,14 +44,12 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     public cpI18n: CPI18nService,
-    private store: Store<IHeader>,
     private service: ServicesService,
     private modalService: ModalService,
     private cpTracking: CPTrackingService,
     private headerService: ManageHeaderService
   ) {
     super();
-    this.buildHeader();
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
@@ -82,13 +78,6 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
 
     super.fetchData(stream$).then((res) => {
       this.state = Object.assign({}, this.state, { services: res.data });
-    });
-  }
-
-  private buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
     });
   }
 
@@ -136,6 +125,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.headerService.updateHeader();
     this.fetch();
     this.sortingLabels = {
       name: this.cpI18n.translate('name')

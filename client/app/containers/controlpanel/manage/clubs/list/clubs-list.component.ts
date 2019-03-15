@@ -223,10 +223,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
       [ClubStatus.pending]: this.cpI18n.translate('pending')
     };
 
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
-    });
+    this.headerService.updateHeader();
 
     this.sortingLabels = {
       name: this.cpI18n.translate('name')

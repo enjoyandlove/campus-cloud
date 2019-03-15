@@ -54,8 +54,8 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
     public cpI18n: CPI18nService,
     public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService,
-    public categoryUtils: CategoriesUtilsService,
-    public store: Store<fromStore.IDiningState | fromRoot.IHeader>
+    public store: Store<fromStore.IDiningState>,
+    public categoryUtils: CategoriesUtilsService
   ) {
     super();
   }
@@ -142,13 +142,6 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
     setTimeout(() => $('#diningDelete').modal());
   }
 
-  buildHeader() {
-    this.store.dispatch({
-      type: fromRoot.baseActions.HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
-    });
-  }
-
   loadDining() {
     this.store
       .select(fromStore.getDiningLoaded)
@@ -228,7 +221,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
 
   ngOnInit() {
     this.loadDining();
-    this.buildHeader();
+    this.headerService.updateHeader();
     this.loadCategories();
     this.listenForErrors();
 
