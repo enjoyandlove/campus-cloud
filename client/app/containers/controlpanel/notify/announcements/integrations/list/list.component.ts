@@ -8,9 +8,10 @@ import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { ModalService } from '@shared/services';
-import { IAnnoucementsIntegration } from '../model';
+import { IAnnouncementsIntegration } from '../model';
 import { BaseComponent } from '@app/base/base.component';
 import { AnnouncementsIntegrationDeleteComponent } from '../delete';
+import { AnnouncementsIntegrationCreateComponent } from '../create';
 
 @Component({
   selector: 'cp-announcements-integrations-list',
@@ -20,7 +21,7 @@ import { AnnouncementsIntegrationDeleteComponent } from '../delete';
 export class AnnouncementsIntegrationListComponent extends BaseComponent implements OnInit {
   activeModal: OverlayRef;
   loading$: Observable<boolean>;
-  integrations$: Observable<IAnnoucementsIntegration[]>;
+  integrations$: Observable<IAnnouncementsIntegration[]>;
 
   constructor(
     private session: CPSession,
@@ -61,7 +62,13 @@ export class AnnouncementsIntegrationListComponent extends BaseComponent impleme
   }
 
   onLaunchCreateModal() {
-    console.log('onLaunchCreateModal');
+    this.activeModal = this.modalService.open(
+      AnnouncementsIntegrationCreateComponent,
+      {},
+      {
+        onClose: this.onActiveModalTearDown.bind(this)
+      }
+    );
   }
 
   onSyncNow() {
@@ -73,7 +80,7 @@ export class AnnouncementsIntegrationListComponent extends BaseComponent impleme
     this.activeModal = null;
   }
 
-  onLaunchDeleteModal(integration: IAnnoucementsIntegration) {
+  onLaunchDeleteModal(integration: IAnnouncementsIntegration) {
     this.activeModal = this.modalService.open(
       AnnouncementsIntegrationDeleteComponent,
       {},

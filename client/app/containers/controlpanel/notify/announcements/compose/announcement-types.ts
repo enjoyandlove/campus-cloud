@@ -1,22 +1,23 @@
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { CPI18nService } from '@shared/services';
+import { AnnouncementPriority } from '../announcements.interface';
 
 const cpI18n = new CPI18nService();
 
 export const types = [
   {
-    action: 2,
+    action: AnnouncementPriority.regular,
     disabled: false,
     label: cpI18n.translate('regular'),
     description: cpI18n.translate('announcements_regular_help')
   },
   {
-    action: 1,
+    action: AnnouncementPriority.urgent,
     disabled: false,
     label: cpI18n.translate('urgent'),
     description: cpI18n.translate('announcements_urgent_help')
   },
   {
-    action: 0,
+    action: AnnouncementPriority.emergency,
     disabled: true,
     label: cpI18n.translate('emergency'),
     description: cpI18n.translate('announcements_emergency_help')

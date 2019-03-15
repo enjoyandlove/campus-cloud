@@ -35,7 +35,6 @@ export class PersonasService extends HTTPService {
     const url = `${common}/1;3000`;
 
     return super.get(url, search, true).pipe(
-      startWith([{ label: '---' }]),
       map((services: any[]) => {
         return [
           { label: '---', value: null },
@@ -50,7 +49,8 @@ export class PersonasService extends HTTPService {
           })
         ];
       }),
-      catchError(() => [{ label: '---' }])
+      startWith([{ label: '---' }]),
+      catchError(() => [])
     );
   }
 

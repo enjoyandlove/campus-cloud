@@ -1,5 +1,5 @@
+import { combineLatest, of as observableOf, Observable } from 'rxjs';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { combineLatest, of as observableOf } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
@@ -10,8 +10,8 @@ import { CPI18nService } from './i18n.service';
 import { CP_PRIVILEGES_MAP } from '../constants';
 import { HTTPService } from '@app/base/http.service';
 import { amplitudeEvents } from '../constants/analytics';
+import { isClubAthletic } from '@controlpanel/manage/clubs/clubs.athletics.labels';
 import { canAccountLevelReadResource, canSchoolReadResource } from '../utils/privileges';
-import { isClubAthletic } from '@app/containers/controlpanel/manage/clubs/clubs.athletics.labels';
 
 const cpI18n = new CPI18nService();
 
@@ -151,7 +151,10 @@ export class StoreService extends HTTPService {
     );
   }
 
-  getStores(search: HttpParams, placeHolder = cpI18n.translate('select_host')) {
+  getStores(
+    search: HttpParams,
+    placeHolder = cpI18n.translate('select_host')
+  ): Observable<IStore[]> {
     /**
      * Check for user privileges before masking the call
      * to Stores/Clubs to avoid errors in Sentry

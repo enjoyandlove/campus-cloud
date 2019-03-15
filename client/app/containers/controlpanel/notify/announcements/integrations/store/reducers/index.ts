@@ -1,6 +1,6 @@
 import { ActionReducerMap } from '@ngrx/store';
 
-import { IAnnoucementsIntegrationState as State, reducer } from './integration.reducer';
+import { IAnnouncementsIntegrationState as State, reducer } from './integration.reducer';
 
 export interface IAnnoucementsIntegrationState {
   integrations: State;
