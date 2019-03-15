@@ -18,7 +18,7 @@ export const filledForm = {
 export const mockLinksData = [
   {
     url: '',
-    label: ''
+    label: 'Menu'
   }
 ];
 

@@ -28,7 +28,8 @@ export const initialState: IAnnouncementsIntegrationState = adapter.getInitialSt
 export function reducer(state = initialState, action: Actions): IAnnouncementsIntegrationState {
   switch (action.type) {
     case IntegrationActions.GET_INTEGRATIONS:
-    case IntegrationActions.DELETE_INTEGRATIONS: {
+    case IntegrationActions.DELETE_INTEGRATIONS:
+    case IntegrationActions.CREATE_INTEGRATION: {
       return {
         ...state,
         error: false,
@@ -37,7 +38,8 @@ export function reducer(state = initialState, action: Actions): IAnnouncementsIn
     }
 
     case IntegrationActions.GET_INTEGRATIONS_FAIL:
-    case IntegrationActions.DELETE_INTEGRATIONS_FAIL: {
+    case IntegrationActions.DELETE_INTEGRATIONS_FAIL:
+    case IntegrationActions.CREATE_INTEGRATION_FAIL: {
       return {
         ...state,
         error: true,
@@ -69,6 +71,13 @@ export function reducer(state = initialState, action: Actions): IAnnouncementsIn
         ...state,
         senders
       };
+    }
+
+    case IntegrationActions.CREATE_INTEGRATION_SUCCESS: {
+      return adapter.upsertOne(action.payload, {
+        ...state,
+        loading: false
+      });
     }
 
     default: {

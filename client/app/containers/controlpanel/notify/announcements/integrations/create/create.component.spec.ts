@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule, Store } from '@ngrx/store';
 import { By } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
 
-import { reducers } from '../store';
+import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { filledForm } from '../tests/mock';
 import { configureTestSuite } from '@shared/tests';
@@ -22,7 +22,7 @@ describe('AnnouncementsIntegrationCreateComponent', () => {
           SharedModule,
           ReactiveFormsModule,
           StoreModule.forRoot({}),
-          StoreModule.forFeature('announcementIntegrations', reducers)
+          StoreModule.forFeature('announcementIntegrations', fromStore.reducers)
         ],
         providers: [
           ModalService,
@@ -62,13 +62,20 @@ describe('AnnouncementsIntegrationCreateComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should submit', () => {
-    const spy = spyOn(component, 'doSubmit');
+  it('should submit and dispatch create action', () => {
+    const spy = spyOn(component, 'doSubmit').and.callThrough();
+    const store = TestBed.get(Store);
+    const dispatchSpy = spyOn(store, 'dispatch');
+
     component.form.setValue(filledForm);
     fixture.detectChanges();
     const submitBtn = fixture.debugElement.query(By.css('[data-target="submit"]'));
     submitBtn.nativeElement.click();
+
+    const payload = component.form.value;
     expect(spy).toHaveBeenCalledTimes(1);
+    expect(dispatchSpy).toHaveBeenCalledTimes(1);
+    expect(dispatchSpy).toHaveBeenCalledWith(new fromStore.CreateIntegration(payload));
   });
 
   it('should close', () => {
