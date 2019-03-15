@@ -1,19 +1,24 @@
 import { Injectable } from '@angular/core';
+import { Store } from '@ngrx/store';
 
-import {
-  canSchoolReadResource,
-  canAccountLevelReadResource
-} from './../../../../shared/utils/privileges';
-
-import { CPSession } from './../../../../session/index';
-import { CP_PRIVILEGES_MAP } from './../../../../shared/constants';
+import * as fromStore from '@app/store';
+import { CPSession } from '@app/session/index';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { canSchoolReadResource, canAccountLevelReadResource } from '@shared/utils/privileges';
 
 @Injectable()
 export class ManageHeaderService {
   privileges;
 
-  constructor(private session: CPSession) {
+  constructor(private session: CPSession, private store: Store<fromStore.IHeader>) {
     this.privileges = require('../manage.header.json');
+  }
+
+  updateHeader() {
+    this.store.dispatch({
+      type: fromStore.baseActions.HEADER_UPDATE,
+      payload: this.filterByPrivileges()
+    });
   }
 
   filterByPrivileges() {

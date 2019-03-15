@@ -1,7 +1,6 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { Store } from '@ngrx/store';
 
 import { CPSession } from '@app/session';
 import { BaseComponent } from '@app/base';
@@ -9,7 +8,6 @@ import { FORMAT } from '@shared/pipes/date';
 import { CP_TRACK_TO } from '@shared/directives';
 import { ManageHeaderService } from '../../utils';
 import { amplitudeEvents } from '@shared/constants';
-import { baseActions, IHeader } from '@app/store/base';
 import { ProgramDuration } from '../orientation.status';
 import { OrientationService } from '../orientation.services';
 import { OrientationProgramDeleteComponent } from '../delete';
@@ -42,7 +40,6 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     public el: ElementRef,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public store: Store<IHeader>,
     private modalService: ModalService,
     public service: OrientationService,
     public cpTracking: CPTrackingService,
@@ -121,13 +118,6 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
-    });
-  }
-
   public fetch() {
     const search = new HttpParams()
       .set('search_str', this.state.search_str)
@@ -152,7 +142,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     this.noDuration = ProgramDuration.disabled;
-    this.buildHeader();
+    this.headerService.updateHeader();
     this.fetch();
     this.label = {
       name: this.cpI18n.translate('name')

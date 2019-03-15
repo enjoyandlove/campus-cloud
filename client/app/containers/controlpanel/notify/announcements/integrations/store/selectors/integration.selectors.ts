@@ -15,3 +15,4 @@ export const getIntegrations = createSelector(
 );
 export const getError = createSelector(getIntegrationState, fromIntegrations.getError);
 export const getLoading = createSelector(getIntegrationState, fromIntegrations.getLoading);
+export const getSenders = createSelector(getIntegrationState, fromIntegrations.getSenders);

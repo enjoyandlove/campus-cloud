@@ -71,6 +71,9 @@ export class DashboardUtilsService {
   }
 
   parseOrientationResponse(items: Array<any>) {
+    if (!items) {
+      return new Promise(() => []);
+    }
     return new Promise((resolve) => {
       resolve(
         items.map((item) => {
@@ -89,6 +92,9 @@ export class DashboardUtilsService {
   }
 
   parseEventsResponse(items: Array<any>) {
+    if (!items) {
+      return new Promise(() => []);
+    }
     return new Promise((resolve) => {
       resolve(
         items.map((item) => {
@@ -107,6 +113,9 @@ export class DashboardUtilsService {
   }
 
   parseServicesResponse(items: Array<any>) {
+    if (!items) {
+      return new Promise(() => []);
+    }
     return new Promise((resolve) => {
       resolve(
         items.map((item) => {
