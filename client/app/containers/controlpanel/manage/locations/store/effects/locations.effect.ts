@@ -4,8 +4,8 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
-
 import { Store } from '@ngrx/store';
+
 import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
 import { amplitudeEvents } from '@shared/constants';
