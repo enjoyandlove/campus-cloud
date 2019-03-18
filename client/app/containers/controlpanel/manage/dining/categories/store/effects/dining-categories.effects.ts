@@ -86,7 +86,10 @@ export class DiningCategoriesEffects {
           this.handleSuccess('t_category_successfully_created');
 
           const eventName = amplitudeEvents.MANAGE_CREATED_CATEGORY;
-          const eventProperties = this.utils.getParsedCategoriesEventProperties(data);
+          const eventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(data),
+            page_type: amplitudeEvents.DINING_CATEGORY
+          };
 
           this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
@@ -135,7 +138,10 @@ export class DiningCategoriesEffects {
           this.handleSuccess('t_category_successfully_edited');
 
           const eventName = amplitudeEvents.MANAGE_UPDATED_CATEGORY;
-          const eventProperties = this.utils.getParsedCategoriesEventProperties(data);
+          const eventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(data),
+            page_type: amplitudeEvents.DINING_CATEGORY
+          };
 
           this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
@@ -186,10 +192,16 @@ export class DiningCategoriesEffects {
 
           const deletedItemEventName = amplitudeEvents.DELETED_ITEM;
           const deletedCategoryEventName = amplitudeEvents.MANAGE_DELETED_CATEGORY;
-          const deletedItemEventProperties = this.utils.getCategoriesAmplitudeProperties();
-          const deletedCategoryEventProperties = this.utils.getParsedCategoriesEventProperties(
-            action.payload
-          );
+
+          const deletedItemEventProperties = {
+            ...this.cpTracking.getEventProperties(),
+            page_type: amplitudeEvents.DINING_CATEGORY
+          };
+
+          const deletedCategoryEventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(action.payload),
+            page_type: amplitudeEvents.DINING_CATEGORY
+          };
 
           this.cpTracking.amplitudeEmitEvent(deletedItemEventName, deletedItemEventProperties);
           this.cpTracking.amplitudeEmitEvent(

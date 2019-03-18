@@ -92,7 +92,10 @@ export class CategoriesEffects {
           this.handleSuccess('t_category_successfully_created');
 
           const eventName = amplitudeEvents.MANAGE_CREATED_CATEGORY;
-          const eventProperties = this.utils.getParsedCategoriesEventProperties(data, true);
+          const eventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(data),
+            page_type: amplitudeEvents.LOCATION_CATEGORY
+          };
 
           this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
@@ -116,7 +119,10 @@ export class CategoriesEffects {
           this.handleSuccess('t_category_successfully_edited');
 
           const eventName = amplitudeEvents.MANAGE_UPDATED_CATEGORY;
-          const eventProperties = this.utils.getParsedCategoriesEventProperties(data, true);
+          const eventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(data),
+            page_type: amplitudeEvents.LOCATION_CATEGORY
+          };
 
           this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
@@ -163,11 +169,15 @@ export class CategoriesEffects {
 
           const deletedItemEventName = amplitudeEvents.DELETED_ITEM;
           const deletedCategoryEventName = amplitudeEvents.MANAGE_DELETED_CATEGORY;
-          const deletedItemEventProperties = this.utils.getCategoriesAmplitudeProperties(true);
-          const deletedCategoryEventProperties = this.utils.getParsedCategoriesEventProperties(
-            body,
-            true
-          );
+          const deletedCategoryEventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(body),
+            page_type: amplitudeEvents.LOCATION_CATEGORY
+          };
+
+          const deletedItemEventProperties = {
+            ...this.cpTracking.getEventProperties(),
+            page_type: amplitudeEvents.LOCATION_CATEGORY
+          };
 
           this.cpTracking.amplitudeEmitEvent(deletedItemEventName, deletedItemEventProperties);
           this.cpTracking.amplitudeEmitEvent(

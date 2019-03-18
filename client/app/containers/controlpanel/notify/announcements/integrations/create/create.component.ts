@@ -43,7 +43,7 @@ export class AnnouncementsIntegrationCreateComponent implements OnInit, OnDestro
 
   doSubmit() {
     const body = this.form.value;
-    console.log('TCL: AnnouncementsIntegrationCreateComponent -> doSubmit -> body', body);
+    this.store.dispatch(new fromStore.CreateIntegration(body));
   }
 
   ngOnInit() {

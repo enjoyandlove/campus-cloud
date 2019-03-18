@@ -16,7 +16,6 @@ import { mockCategories } from '@libs/locations/common/categories/tests';
 import { CategoryTypePipe } from '@libs/locations/common/categories/pipes';
 import { DiningCategoriesListComponent } from './dining-categories-list.component';
 import { CategoriesActionBoxComponent } from '@libs/locations/common/categories/components';
-import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 describe('DiningCategoriesListComponent', () => {
   configureTestSuite();
@@ -25,7 +24,7 @@ describe('DiningCategoriesListComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, Actions, CategoriesUtilsService],
+        providers: [CPSession, CPI18nService, Actions],
         declarations: [
           DiningCategoriesListComponent,
           CategoryTypePipe,
