@@ -307,6 +307,8 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_LOCATION: 'Manage - Updated Location',
 
+  MANAGE_DELETED_LOCATION: 'Manage - Deleted Location',
+
   STUDIO_MOVED_EXPERIENCE: 'Studio - Moved Experience',
 
   MANAGE_CREATED_AUDIENCE: 'Manage - Created Audience',

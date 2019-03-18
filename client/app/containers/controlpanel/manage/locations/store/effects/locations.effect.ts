@@ -1,10 +1,12 @@
 import { map, tap, mergeMap, catchError, filter, withLatestFrom } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
-import { Store } from '@ngrx/store';
 
+import { Store } from '@ngrx/store';
+import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
 import { amplitudeEvents } from '@shared/constants';
 import { CPTrackingService } from '@shared/services';
@@ -12,13 +14,16 @@ import { ILocation } from '@libs/locations/common/model';
 import { LocationsService } from '../../locations.service';
 import * as fromCategoryStore from '../../categories/store';
 import { ICategory } from '@libs/locations/common/categories/model';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
 
 @Injectable()
 export class LocationsEffect {
   constructor(
     public router: Router,
     public actions$: Actions,
+    public session: CPSession,
     public service: LocationsService,
+    public utils: LocationsUtilsService,
     public cpTracking: CPTrackingService,
     public store: Store<fromCategoryStore.ICategoriesState>
   ) {}
@@ -82,13 +87,20 @@ export class LocationsEffect {
     mergeMap((action: fromActions.PostLocation) => {
       const { body, params } = action.payload;
 
-      return this.service
-        .createLocation(body, params)
-        .pipe(
-          map((data: ILocation) => new fromActions.PostLocationSuccess(data)),
-          tap((data) => this.router.navigate([`/manage/locations/${data.payload.id}/info`])),
-          catchError((error) => of(new fromActions.PostLocationFail(error)))
-        );
+      return this.service.createLocation(body, params).pipe(
+        map((data: ILocation) => {
+          const eventName = amplitudeEvents.MANAGE_CREATED_LOCATION;
+          const properties = {
+            ...this.utils.parsedEventProperties(data),
+            location_id: data.id
+          };
+
+          this.cpTracking.amplitudeEmitEvent(eventName, properties);
+          return new fromActions.PostLocationSuccess(data);
+        }),
+        tap((data) => this.router.navigate([`/manage/locations/${data.payload.id}/info`])),
+        catchError((error) => of(new fromActions.PostLocationFail(error)))
+      );
     })
   );
 
@@ -119,15 +131,23 @@ export class LocationsEffect {
   > = this.actions$.pipe(
     ofType(fromActions.locationActions.EDIT_LOCATION),
     mergeMap((action: fromActions.EditLocation) => {
-      const { locationId, categoryId, body, params } = action.payload;
+      const { updatedCategory, locationId, categoryId, body, params } = action.payload;
 
-      return this.service
-        .updateLocation(body, locationId, params)
-        .pipe(
-          map((data: ILocation) => new fromActions.EditLocationSuccess({ data: data, categoryId })),
-          tap((_) => this.router.navigate([`/manage/locations/${locationId}/info`])),
-          catchError((error) => of(new fromActions.EditLocationFail(error)))
-        );
+      return this.service.updateLocation(body, locationId, params).pipe(
+        map((data: ILocation) => {
+          const eventName = amplitudeEvents.MANAGE_UPDATED_LOCATION;
+          const properties = {
+            ...this.utils.parsedEventProperties(data),
+            location_id: data.id,
+            updated_category: updatedCategory
+          };
+
+          this.cpTracking.amplitudeEmitEvent(eventName, properties);
+          return new fromActions.EditLocationSuccess({ data: data, categoryId });
+        }),
+        tap((_) => this.router.navigate([`/manage/locations/${locationId}/info`])),
+        catchError((error) => of(new fromActions.EditLocationFail(error)))
+      );
     })
   );
 
@@ -165,21 +185,30 @@ export class LocationsEffect {
   > = this.actions$.pipe(
     ofType(fromActions.locationActions.DELETE_LOCATION),
     mergeMap((action: fromActions.DeleteLocation) => {
-      const { locationId, categoryId, params } = action.payload;
+      const locationId = action.payload.id;
+      const categoryId = action.payload.category_id;
+      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
 
-      return this.service
-        .deleteLocationById(locationId, params)
-        .pipe(
-          map(() => {
-            const eventName = amplitudeEvents.DELETED_ITEM;
-            const eventProperties = this.cpTracking.getEventProperties();
+      return this.service.deleteLocationById(locationId, params).pipe(
+        map(() => {
+          const deletedItemEventName = amplitudeEvents.DELETED_ITEM;
+          const deletedLocationEventName = amplitudeEvents.MANAGE_DELETED_LOCATION;
+          const deletedItemEventProperties = this.cpTracking.getEventProperties();
+          const deletedLocationEventProperties = {
+            ...this.utils.parsedEventProperties(action.payload),
+            location_id: action.payload.id
+          };
 
-            this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+          this.cpTracking.amplitudeEmitEvent(deletedItemEventName, deletedItemEventProperties);
+          this.cpTracking.amplitudeEmitEvent(
+            deletedLocationEventName,
+            deletedLocationEventProperties
+          );
 
-            return new fromActions.DeleteLocationSuccess({ deletedId: locationId, categoryId });
-          }),
-          catchError((error) => of(new fromActions.DeleteLocationFail(error)))
-        );
+          return new fromActions.DeleteLocationSuccess({ deletedId: locationId, categoryId });
+        }),
+        catchError((error) => of(new fromActions.DeleteLocationFail(error)))
+      );
     })
   );
 

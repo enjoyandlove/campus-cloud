@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 
@@ -16,6 +16,8 @@ export class LocationFormComponent implements OnInit {
   @Input() locationForm: FormGroup;
   @Input() selectedCategory: IItem;
   @Input() categories$: Observable<IItem[]>;
+
+  @Output() changeCategory: EventEmitter<null> = new EventEmitter();
 
   school: ISchool;
   maxFileSize = '5e6'; // 5MB
@@ -86,6 +88,7 @@ export class LocationFormComponent implements OnInit {
   }
 
   onSelectedCategory(category) {
+    this.changeCategory.emit();
     this.locationForm.get('category_id').setValue(category.action);
   }
 

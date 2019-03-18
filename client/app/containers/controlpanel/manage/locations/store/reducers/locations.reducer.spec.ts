@@ -96,6 +96,7 @@ describe('Locations Reducer', () => {
     const payload = {
       body,
       params,
+      updatedCategory: 'No',
       locationId: mockLocations[0].id,
       categoryId: mockLocations[0].category_id
     };
@@ -134,13 +135,8 @@ describe('Locations Reducer', () => {
 
   it('should DELETE location', () => {
     const { initialState } = fromReducer;
-    const payload = {
-      params,
-      locationId: mockLocations[0].id,
-      categoryId: mockLocations[0].category_id
-    };
 
-    const action = new fromActions.DeleteLocation(payload);
+    const action = new fromActions.DeleteLocation(mockLocations[0]);
     const { error, loaded, loading } = fromReducer.reducer(initialState, action);
 
     expect(error).toBe(false);
