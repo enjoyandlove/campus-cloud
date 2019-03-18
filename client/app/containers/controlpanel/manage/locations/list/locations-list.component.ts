@@ -19,7 +19,6 @@ import { ICategory } from '@libs/locations/common/categories/model';
 import { CPI18nService, CPTrackingService } from '@shared/services';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
-import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 interface IState {
   search_str: string;
@@ -56,7 +55,6 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     public cpI18n: CPI18nService,
     public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService,
-    public categoryUtils: CategoriesUtilsService,
     public store: Store<fromStore.ILocationsState>
   ) {
     super();
@@ -226,7 +224,10 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
   onCategoriesClick() {
     const eventName = amplitudeEvents.CLICKED_PAGE_ITEM;
-    const eventProperties = this.categoryUtils.getCategoriesAmplitudeProperties(true);
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_type: amplitudeEvents.LOCATION_CATEGORY
+    };
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 

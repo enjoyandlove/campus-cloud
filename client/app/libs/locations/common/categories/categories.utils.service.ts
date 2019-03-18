@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { amplitudeEvents } from '@shared/constants';
-import { CPTrackingService } from '@shared/services';
 import { ICategory } from '@libs/locations/common/categories/model';
 import { categoryTypes } from '@libs/locations/common/categories/categories.status';
 
@@ -18,34 +16,17 @@ export const categoryIconType = {
   [dbPath + 'location_category_parking.png']: 'Parking',
   [dbPath + 'location_category_housing.png']: 'Building',
   [dbPath + 'location_category_information.png']: 'Information',
-  [dbPath + 'location_category_accessability.png']: 'Accessibility',
+  [dbPath + 'location_category_accessability.png']: 'Accessibility'
 };
 
 @Injectable()
 export class CategoriesUtilsService {
-  constructor(private cpTracking: CPTrackingService) {}
-
-  getCategoriesAmplitudeProperties(isLocation?: boolean) {
-    const page_type = isLocation
-      ? amplitudeEvents.LOCATION_CATEGORY
-      : amplitudeEvents.DINING_CATEGORY;
-
-    return {
-      ...this.cpTracking.getEventProperties(),
-      page_type
-    };
-  }
-
-  getParsedCategoriesEventProperties(category: ICategory, isLocation?: boolean) {
+  getParsedCategoriesEventProperties(category: ICategory) {
     const icon_type = categoryIconType[category.img_url];
     const category_type = categoryTypes[category.category_type_id];
-    const page_type = isLocation
-      ? amplitudeEvents.LOCATION_CATEGORY
-      : amplitudeEvents.DINING_CATEGORY;
 
     return {
       icon_type,
-      page_type,
       category_type,
       category_id: category.id
     };

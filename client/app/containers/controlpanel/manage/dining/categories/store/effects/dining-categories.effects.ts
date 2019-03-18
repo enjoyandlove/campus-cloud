@@ -176,7 +176,10 @@ export class DiningCategoriesEffects {
           this.handleSuccess('t_category_successfully_deleted');
 
           const eventName = amplitudeEvents.DELETED_ITEM;
-          const eventProperties = this.utils.getCategoriesAmplitudeProperties();
+          const eventProperties = {
+            ...this.cpTracking.getEventProperties(),
+            page_type: amplitudeEvents.DINING_CATEGORY
+          };
 
           this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 

@@ -81,7 +81,10 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
 
   onLaunchCreateModal() {
     const eventName = amplitudeEvents.CLICKED_CREATE_ITEM;
-    const eventProperties = this.utils.getCategoriesAmplitudeProperties();
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_type: amplitudeEvents.DINING_CATEGORY
+    };
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
     this.modal = this.modalService.open(DiningCategoriesCreateComponent, null, {
@@ -93,8 +96,9 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
     const eventName = amplitudeEvents.VIEWED_ITEM;
 
     const eventProperties = {
-      ...this.utils.getCategoriesAmplitudeProperties(),
-      page_name: amplitudeEvents.INFO
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.INFO,
+      page_type: amplitudeEvents.DINING_CATEGORY
     };
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);

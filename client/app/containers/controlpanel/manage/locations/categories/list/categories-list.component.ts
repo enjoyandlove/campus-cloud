@@ -15,7 +15,6 @@ import { LocationType } from '@libs/locations/common/utils';
 import { CPI18nService, CPTrackingService } from '@shared/services';
 import { ICategory, DeleteError } from '@libs/locations/common/categories/model';
 import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
-import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 interface IState {
   search_str: string;
@@ -51,7 +50,6 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public cpTracking: CPTrackingService,
-    public utils: CategoriesUtilsService,
     public store: Store<fromStore.ICategoriesState | fromRoot.IHeader | fromRoot.ISnackbar>
   ) {}
 
@@ -76,7 +74,10 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
 
   onLaunchCreateModal() {
     const eventName = amplitudeEvents.CLICKED_CREATE_ITEM;
-    const eventProperties = this.utils.getCategoriesAmplitudeProperties(true);
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_type: amplitudeEvents.LOCATION_CATEGORY
+    };
 
     this.showCreateModal = true;
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
@@ -88,8 +89,9 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     const eventName = amplitudeEvents.VIEWED_ITEM;
 
     const eventProperties = {
-      ...this.utils.getCategoriesAmplitudeProperties(true),
-      page_name: amplitudeEvents.INFO
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.INFO,
+      page_type: amplitudeEvents.LOCATION_CATEGORY
     };
 
     this.showEditModal = true;
