@@ -15,7 +15,6 @@ import { DiningCategoriesCreateComponent } from '../create';
 import { DiningCategoriesDeleteComponent } from '../delete';
 import { CPI18nService, CPTrackingService, ModalService } from '@shared/services';
 import { ICategory, ICategoriesApiQuery } from '@libs/locations/common/categories/model';
-import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 @Mixin([Destroyable])
 @Component({
@@ -38,7 +37,6 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
     public cpI18n: CPI18nService,
     private modalService: ModalService,
     public cpTracking: CPTrackingService,
-    public utils: CategoriesUtilsService,
     public store: Store<fromStore.ICategoriesState | fromRoot.IHeader | fromRoot.ISnackbar>
   ) {}
 

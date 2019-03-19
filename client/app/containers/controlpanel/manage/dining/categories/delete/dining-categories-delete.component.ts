@@ -18,9 +18,7 @@ export class DiningCategoriesDeleteComponent implements OnInit {
   ) {}
 
   onDelete() {
-    const categoryId = this.modal.data.id;
-
-    this.store.dispatch(new fromStore.DeleteCategories({ categoryId }));
+    this.store.dispatch(new fromStore.DeleteCategories(this.modal.data));
     this.resetModal();
   }
 

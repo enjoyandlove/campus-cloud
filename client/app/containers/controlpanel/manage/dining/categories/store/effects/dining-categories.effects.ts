@@ -81,6 +81,14 @@ export class DiningCategoriesEffects {
         map((data: ICategory) => {
           this.handleSuccess('t_category_successfully_created');
 
+          const eventName = amplitudeEvents.MANAGE_CREATED_CATEGORY;
+          const eventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(data),
+            page_type: amplitudeEvents.DINING_CATEGORY
+          };
+
+          this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+
           return new fromActions.PostCategorySuccess(data);
         }),
         catchError((error) => {
@@ -125,6 +133,14 @@ export class DiningCategoriesEffects {
         map((data: ICategory) => {
           this.handleSuccess('t_category_successfully_edited');
 
+          const eventName = amplitudeEvents.MANAGE_UPDATED_CATEGORY;
+          const eventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(data),
+            page_type: amplitudeEvents.DINING_CATEGORY
+          };
+
+          this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+
           return new fromActions.EditCategorySuccess(data);
         }),
         catchError(() => {
@@ -164,22 +180,32 @@ export class DiningCategoriesEffects {
   > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.DELETE_CATEGORIES),
     mergeMap((action: fromActions.DeleteCategories) => {
-      const { categoryId } = action.payload;
       const params = new HttpParams().set('school_id', this.session.g.get('school').id);
 
-      return this.service.deleteCategoryById(categoryId, params).pipe(
+      return this.service.deleteCategoryById(action.payload.id, params).pipe(
         map(() => {
           this.handleSuccess('t_category_successfully_deleted');
 
-          const eventName = amplitudeEvents.DELETED_ITEM;
-          const eventProperties = {
+          const deletedItemEventName = amplitudeEvents.DELETED_ITEM;
+          const deletedCategoryEventName = amplitudeEvents.MANAGE_DELETED_CATEGORY;
+
+          const deletedItemEventProperties = {
             ...this.cpTracking.getEventProperties(),
             page_type: amplitudeEvents.DINING_CATEGORY
           };
 
-          this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+          const deletedCategoryEventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(action.payload),
+            page_type: amplitudeEvents.DINING_CATEGORY
+          };
 
-          return new fromActions.DeleteCategoriesSuccess({ deletedId: categoryId });
+          this.cpTracking.amplitudeEmitEvent(deletedItemEventName, deletedItemEventProperties);
+          this.cpTracking.amplitudeEmitEvent(
+            deletedCategoryEventName,
+            deletedCategoryEventProperties
+          );
+
+          return new fromActions.DeleteCategoriesSuccess({ deletedId: action.payload.id });
         }),
         catchError(() => {
           this.handleError();
