@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
-import { Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
 
 import * as fromRoot from '@app/store';
@@ -25,7 +24,7 @@ describe('CategoriesListComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, Actions],
+        providers: [CPSession, CPI18nService],
         declarations: [CategoriesListComponent, CategoryTypePipe, CategoriesActionBoxComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

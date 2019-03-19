@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeUntil, tap, take } from 'rxjs/operators';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Subject, Observable } from 'rxjs';
-import { Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -14,9 +13,8 @@ import { Destroyable, Mixin } from '@shared/mixins';
 import { DiningCategoriesEditComponent } from '../edit';
 import { DiningCategoriesCreateComponent } from '../create';
 import { DiningCategoriesDeleteComponent } from '../delete';
-import { ICategory } from '@libs/locations/common/categories/model';
 import { CPI18nService, CPTrackingService, ModalService } from '@shared/services';
-import { ICategoriesApiQuery } from '@libs/locations/common/categories/categories.status';
+import { ICategory, ICategoriesApiQuery } from '@libs/locations/common/categories/model';
 import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 @Mixin([Destroyable])
@@ -36,7 +34,6 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
   emitDestroy() {}
 
   constructor(
-    public actions$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
     private modalService: ModalService,

@@ -2,8 +2,7 @@ import { createEntityAdapter, Dictionary, EntityAdapter, EntityState } from '@ng
 
 import { IItem } from '@shared/components';
 import * as fromCategories from '../actions';
-import { ICategory } from '@libs/locations/common/categories/model';
-import { ICategoriesApiQuery } from '@libs/locations/common/categories/categories.status';
+import { ICategory, ICategoriesApiQuery } from '@libs/locations/common/categories/model';
 
 export interface ICategoriesState extends EntityState<ICategory> {
   error: boolean;

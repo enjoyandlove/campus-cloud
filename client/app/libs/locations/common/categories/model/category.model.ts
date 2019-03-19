@@ -7,10 +7,6 @@ import { CustomValidators } from '@shared/validators';
 import { environment } from '@client/environments/environment';
 import { ICategory, ICategoryType } from './categories.interface';
 
-export enum DeleteError {
-  'locations_associated_to_category' = 't_error_category_associated_to_location'
-}
-
 const dbPath = 'https://d38h7mnlv8qddx.cloudfront.net/';
 const assetPath = `${environment.root}public/svg/locations/categories/`;
 
