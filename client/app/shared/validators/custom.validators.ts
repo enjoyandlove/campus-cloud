@@ -25,7 +25,8 @@ export class CustomValidators {
 
   static commaSeparated = (validator: Function) => {
     return (control: AbstractControl) => {
-      if (control.value === null) {
+      const hasValue = control.value && control.value.replace(/,/g, '').length;
+      if (!hasValue) {
         return { required: true };
       }
       const separated = control.value.split(',');
