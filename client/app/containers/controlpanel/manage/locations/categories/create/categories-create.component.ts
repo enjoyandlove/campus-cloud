@@ -8,8 +8,7 @@ import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
-import { CategoryModel} from '@libs/locations/common/categories/model';
-import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
+import { CategoryModel, LocationCategoryLocale } from '@libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-categories-create',
@@ -39,11 +38,10 @@ export class CategoriesCreateComponent implements OnInit, OnDestroy {
 
   get defaultParams(): HttpParams {
     const locale = CPI18nService.getLocale().startsWith('fr')
-      ? LocationCategoryLocale.fr : LocationCategoryLocale.eng;
+      ? LocationCategoryLocale.fr
+      : LocationCategoryLocale.eng;
 
-    return new HttpParams()
-      .set('locale', locale)
-      .set('school_id', this.session.g.get('school').id);
+    return new HttpParams().set('locale', locale).set('school_id', this.session.g.get('school').id);
   }
 
   doSubmit() {

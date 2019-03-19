@@ -15,13 +15,9 @@ import { amplitudeEvents } from '@shared/constants';
 import { IDining } from '@libs/locations/common/model';
 import { LocationType } from '@libs/locations/common/utils';
 import { CPI18nService, CPTrackingService } from '@shared/services';
-import { ICategory } from '@libs/locations/common/categories/model';
 import { DiningCategoriesService } from '../../dining-categories.service';
 import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
-import {
-  ICategoriesApiQuery,
-  LocationCategoryLocale
-} from '@libs/locations/common/categories/categories.status';
+import { ICategory, ICategoriesApiQuery, LocationCategoryLocale } from '@libs/locations/common/categories/model';
 
 @Injectable()
 export class DiningCategoriesEffects {

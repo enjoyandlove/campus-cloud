@@ -15,10 +15,9 @@ import { ILocation } from '@libs/locations/common/model';
 import { BaseComponent } from '@app/base/base.component';
 import * as fromCategoryStore from '../categories/store';
 import { LocationType } from '@libs/locations/common/utils';
-import { ICategory } from '@libs/locations/common/categories/model';
 import { CPI18nService, CPTrackingService } from '@shared/services';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
-import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
+import { ICategory, LocationCategoryLocale } from '@libs/locations/common/categories/model';
 
 interface IState {
   search_str: string;

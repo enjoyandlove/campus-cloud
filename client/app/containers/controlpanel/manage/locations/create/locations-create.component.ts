@@ -16,9 +16,8 @@ import { LatLngValidators } from '@shared/validators';
 import * as fromCategoryStore from '../categories/store';
 import { LocationType } from '@libs/locations/common/utils';
 import { LocationModel } from '@libs/locations/common/model';
-import { ICategory } from '@libs/locations/common/categories/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
-import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
+import { ICategory, LocationCategoryLocale } from '@libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-locations-create',

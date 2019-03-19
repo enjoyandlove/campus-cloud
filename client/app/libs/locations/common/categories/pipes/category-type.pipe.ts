@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { isDefault } from '../categories.status';
+import { isDefault } from '../model';
 
 @Pipe({ name: 'cpIsDefaultCategory' })
 export class CategoryTypePipe implements PipeTransform {
