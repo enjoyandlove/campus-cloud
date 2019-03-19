@@ -60,7 +60,7 @@ export class JobsFormComponent implements OnInit {
     } else {
       this.form.controls['posting_end'].setValue(deadline);
       this.postingEndDatePickerOptions.defaultDate =
-        deadline > 0 ? CPDate.fromEpoch(deadline, this.session.tz).format() : null;
+        deadline > 0 ? CPDate.fromEpochLocal(deadline, this.session.tz).format() : null;
     }
   }
 
@@ -110,28 +110,28 @@ export class JobsFormComponent implements OnInit {
     this.postingStartDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: this.utils.isDateSet(posting_start)
-        ? CPDate.fromEpoch(posting_start, _self.session.tz).format()
+        ? CPDate.fromEpochLocal(posting_start, _self.session.tz).format()
         : null
     };
 
     this.postingEndDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: this.utils.isDateSet(posting_end)
-        ? CPDate.fromEpoch(posting_end, _self.session.tz).format()
+        ? CPDate.fromEpochLocal(posting_end, _self.session.tz).format()
         : null
     };
 
     this.contractStartDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: this.utils.isDateSet(contract_start)
-        ? CPDate.fromEpoch(contract_start, _self.session.tz).format()
+        ? CPDate.fromEpochLocal(contract_start, _self.session.tz).format()
         : null
     };
 
     this.applicationDeadlineDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate: this.utils.isDateSet(application_deadline)
-        ? CPDate.fromEpoch(application_deadline, _self.session.tz).format()
+        ? CPDate.fromEpochLocal(application_deadline, _self.session.tz).format()
         : null,
       onChange: function(_, dataStr) {
         _self.form.controls['application_deadline'].setValue(
