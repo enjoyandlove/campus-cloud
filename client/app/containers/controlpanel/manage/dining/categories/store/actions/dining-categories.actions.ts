@@ -1,8 +1,7 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
-import { ICategory } from '@libs/locations/common/categories/model';
-import { ICategoriesApiQuery } from '@libs/locations/common/categories/categories.status';
+import { ICategory, ICategoriesApiQuery } from '@libs/locations/common/categories/model';
 
 export enum CategoriesActions {
   GET_CATEGORIES = '[manage.dining.categories] get categories',
@@ -113,7 +112,7 @@ export class EditCategorySuccess implements Action {
 export class DeleteCategories implements Action {
   readonly type = CategoriesActions.DELETE_CATEGORIES;
 
-  constructor(public payload: { categoryId: number }) {}
+  constructor(public payload: ICategory) {}
 }
 
 export class DeleteCategoriesSuccess implements Action {

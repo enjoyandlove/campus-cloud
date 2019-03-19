@@ -1,7 +1,6 @@
 import { takeUntil, tap, take, filter } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Actions, ofType } from '@ngrx/effects';
 import { Subject, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -13,9 +12,7 @@ import { baseActions } from '@app/store/base';
 import { amplitudeEvents } from '@shared/constants';
 import { LocationType } from '@libs/locations/common/utils';
 import { CPI18nService, CPTrackingService } from '@shared/services';
-import { ICategory, DeleteError } from '@libs/locations/common/categories/model';
-import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
-import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
+import { ICategory, LocationCategoryLocale } from '@libs/locations/common/categories/model';
 
 interface IState {
   search_str: string;
@@ -47,11 +44,9 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   constructor(
-    public actions$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public cpTracking: CPTrackingService,
-    public utils: CategoriesUtilsService,
     public store: Store<fromStore.ICategoriesState | fromRoot.IHeader | fromRoot.ISnackbar>
   ) {}
 
@@ -76,7 +71,10 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
 
   onLaunchCreateModal() {
     const eventName = amplitudeEvents.CLICKED_CREATE_ITEM;
-    const eventProperties = this.utils.getCategoriesAmplitudeProperties(true);
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_type: amplitudeEvents.LOCATION_CATEGORY
+    };
 
     this.showCreateModal = true;
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
@@ -88,8 +86,9 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     const eventName = amplitudeEvents.VIEWED_ITEM;
 
     const eventProperties = {
-      ...this.utils.getCategoriesAmplitudeProperties(true),
-      page_name: amplitudeEvents.INFO
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.INFO,
+      page_type: amplitudeEvents.LOCATION_CATEGORY
     };
 
     this.showEditModal = true;
@@ -197,16 +196,6 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  listenDeleteErrors() {
-    this.actions$
-      .pipe(ofType(fromStore.CategoriesActions.DELETE_CATEGORIES_FAIL), takeUntil(this.destroy$))
-      .subscribe((action: fromStore.DeleteCategoriesFail) => {
-        const body = DeleteError[action.payload];
-
-        this.handleError(body);
-      });
-  }
-
   listenErrors() {
     this.store
       .select(fromStore.getCategoriesError)
@@ -245,7 +234,6 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.updateHeader();
     this.listenErrors();
     this.loadCategories();
-    this.listenDeleteErrors();
     this.loadCategoryTypes();
 
     this.loading$ = this.store

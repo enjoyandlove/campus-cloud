@@ -10,8 +10,7 @@ import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { Destroyable, Mixin } from '@shared/mixins';
 import { CPI18nService, IModal, MODAL_DATA } from '@shared/services';
-import { CategoryModel } from '@libs/locations/common/categories/model';
-import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
+import { CategoryModel, LocationCategoryLocale } from '@libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-dining-categories-create',

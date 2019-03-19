@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
-import { Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
 
 import { CPSession } from '@app/session';
@@ -16,7 +15,6 @@ import { mockCategories } from '@libs/locations/common/categories/tests';
 import { CategoryTypePipe } from '@libs/locations/common/categories/pipes';
 import { DiningCategoriesListComponent } from './dining-categories-list.component';
 import { CategoriesActionBoxComponent } from '@libs/locations/common/categories/components';
-import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 describe('DiningCategoriesListComponent', () => {
   configureTestSuite();
@@ -25,7 +23,7 @@ describe('DiningCategoriesListComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, Actions, CategoriesUtilsService],
+        providers: [CPSession, CPI18nService],
         declarations: [
           DiningCategoriesListComponent,
           CategoryTypePipe,

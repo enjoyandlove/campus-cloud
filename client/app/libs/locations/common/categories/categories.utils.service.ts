@@ -1,20 +1,21 @@
 import { Injectable } from '@angular/core';
 
-import { amplitudeEvents } from '@shared/constants';
-import { CPTrackingService } from '@shared/services';
+import {
+  ICategory,
+  categoryTypes,
+  categoryIconType
+} from '@libs/locations/common/categories/model';
 
 @Injectable()
 export class CategoriesUtilsService {
-  constructor(private cpTracking: CPTrackingService) {}
-
-  getCategoriesAmplitudeProperties(isLocation?: boolean) {
-    const page_type = isLocation
-      ? amplitudeEvents.LOCATION_CATEGORY
-      : amplitudeEvents.DINING_CATEGORY;
+  getParsedCategoriesEventProperties(category: ICategory) {
+    const icon_type = categoryIconType[category.img_url];
+    const category_type = categoryTypes[category.category_type_id];
 
     return {
-      ...this.cpTracking.getEventProperties(),
-      page_type
+      icon_type,
+      category_type,
+      category_id: category.id
     };
   }
 }

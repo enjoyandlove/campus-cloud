@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeUntil, tap, take } from 'rxjs/operators';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Subject, Observable } from 'rxjs';
-import { Actions } from '@ngrx/effects';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -14,10 +13,8 @@ import { Destroyable, Mixin } from '@shared/mixins';
 import { DiningCategoriesEditComponent } from '../edit';
 import { DiningCategoriesCreateComponent } from '../create';
 import { DiningCategoriesDeleteComponent } from '../delete';
-import { ICategory } from '@libs/locations/common/categories/model';
 import { CPI18nService, CPTrackingService, ModalService } from '@shared/services';
-import { ICategoriesApiQuery } from '@libs/locations/common/categories/categories.status';
-import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
+import { ICategory, ICategoriesApiQuery } from '@libs/locations/common/categories/model';
 
 @Mixin([Destroyable])
 @Component({
@@ -36,12 +33,10 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
   emitDestroy() {}
 
   constructor(
-    public actions$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
     private modalService: ModalService,
     public cpTracking: CPTrackingService,
-    public utils: CategoriesUtilsService,
     public store: Store<fromStore.ICategoriesState | fromRoot.IHeader | fromRoot.ISnackbar>
   ) {}
 
@@ -81,7 +76,10 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
 
   onLaunchCreateModal() {
     const eventName = amplitudeEvents.CLICKED_CREATE_ITEM;
-    const eventProperties = this.utils.getCategoriesAmplitudeProperties();
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_type: amplitudeEvents.DINING_CATEGORY
+    };
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
     this.modal = this.modalService.open(DiningCategoriesCreateComponent, null, {
@@ -93,8 +91,9 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
     const eventName = amplitudeEvents.VIEWED_ITEM;
 
     const eventProperties = {
-      ...this.utils.getCategoriesAmplitudeProperties(),
-      page_name: amplitudeEvents.INFO
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.INFO,
+      page_type: amplitudeEvents.DINING_CATEGORY
     };
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);

@@ -17,7 +17,6 @@ import * as fromCategoryStore from '../categories/store';
 import { ICategory } from '@libs/locations/common/categories/model';
 import { CPI18nService, CPTrackingService } from '@shared/services';
 import { LocationsUtilsService, LocationType } from '@libs/locations/common/utils';
-import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 interface IState {
   search_str: string;
@@ -54,8 +53,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
     public cpI18n: CPI18nService,
     public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService,
-    public store: Store<fromStore.IDiningState>,
-    public categoryUtils: CategoriesUtilsService
+    public store: Store<fromStore.IDiningState>
   ) {
     super();
   }
@@ -212,7 +210,10 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
 
   onCategoriesClick() {
     const eventName = amplitudeEvents.CLICKED_PAGE_ITEM;
-    const eventProperties = this.categoryUtils.getCategoriesAmplitudeProperties();
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_type: amplitudeEvents.DINING_CATEGORY
+    };
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 

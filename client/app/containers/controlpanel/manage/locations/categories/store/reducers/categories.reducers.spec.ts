@@ -130,7 +130,7 @@ describe('Categories Reducer', () => {
     const { initialState } = fromReducer;
     const payload = {
       params,
-      categoryId: mockCategories[0].id
+      body: mockCategories[0]
     };
 
     const action = new fromActions.DeleteCategories(payload);

@@ -1,4 +1,4 @@
-import { isDefault } from '../categories.status';
+import { isDefault } from '../model';
 import { CategoryTypePipe } from './category-type.pipe';
 
 describe('CategoryTypePipe', () => {

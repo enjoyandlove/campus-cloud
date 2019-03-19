@@ -17,10 +17,9 @@ import { amplitudeEvents } from '@shared/constants';
 import { LatLngValidators } from '@shared/validators';
 import * as fromCategoryStore from '../categories/store';
 import { LocationType } from '@libs/locations/common/utils';
-import { ICategory } from '@libs/locations/common/categories/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 import { LocationModel, ILocation } from '@libs/locations/common/model';
-import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
+import { ICategory, LocationCategoryLocale } from '@libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-locations-edit',
