@@ -50,7 +50,7 @@ export class LocationModel {
 
     return fb.group({
       url: [links.length ? links[0]['url'] : ''],
-      label: [links.length ? links[0]['label'] : 'Menu'],
+      label: [links.length ? links[0]['label'] : ''],
     });
   }
 }
