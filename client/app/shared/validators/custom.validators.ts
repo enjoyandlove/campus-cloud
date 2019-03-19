@@ -1,4 +1,4 @@
-import { AbstractControl, ValidationErrors, FormControl } from '@angular/forms';
+import { AbstractControl, ValidationErrors, FormControl, Validators } from '@angular/forms';
 
 export class CustomValidators {
   static positiveInteger(control: AbstractControl): ValidationErrors | null {
@@ -43,4 +43,18 @@ export class CustomValidators {
         }, null);
     };
   };
+
+  static emailWithTopLevelDomain(control: AbstractControl): ValidationErrors | null {
+    const emailErrors = Validators.email(control);
+    if (emailErrors) {
+      return emailErrors;
+    }
+    const domain = control.value.split('@')[1];
+    const validDomain = /([A-Z0-9]+\.)+[A-Z0-9]+/i;
+    const isValid = validDomain.test(domain);
+    if (!isValid) {
+      return { topLevelDomain: true };
+    }
+    return null;
+  }
 }
