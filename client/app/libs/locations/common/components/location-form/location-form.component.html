@@ -157,7 +157,8 @@
         cpTarget="label"
         placeholder="Menu"
         class="form-control"
-        formControlName="label">
+        formControlName="label"
+        [placeholder]="locationForm.get('notes') ? 'Menu': ''">
     </div>
 
     <div class="col-6" [formGroupName]="0">
