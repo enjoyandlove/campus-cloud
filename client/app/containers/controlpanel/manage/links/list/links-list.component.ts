@@ -104,6 +104,8 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   }
 
   onDeletedLink() {
+    this.resetModal();
+
     if (this.state.links.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
       this.fetch();
