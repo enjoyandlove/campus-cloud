@@ -22,10 +22,16 @@
           <div class="row">
             <div class="col-12">
               <label for="emails">{{ 't_sandbox_email_addresses' | cpI18n }}</label>
-              <input
-                type="text"
+              <textarea
                 cpTarget="emails"
-                formControlName="emails">
+                cdkTextareaAutosize
+                class="emails-input"
+                cdkAutosizeMinRows="1"
+                cdkAutosizeMaxRows="3"
+                formControlName="emails"
+                placeholder="{{ 't_sandbox_email_addresses_hint' | cpI18n }}"
+                (keydown.enter)="$event.preventDefault()">
+              </textarea>
             </div>
           </div>
         </div>

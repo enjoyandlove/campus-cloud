@@ -1,3 +1,4 @@
+import { TextFieldModule } from '@angular/cdk/text-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { EffectsModule } from '@ngrx/effects';
@@ -30,6 +31,7 @@ import { TestersActionBoxComponent } from './list/components/testers-action-box/
   imports: [
     SharedModule,
     CommonModule,
+    TextFieldModule,
     ReactiveFormsModule,
     CampusTestersRoutingModule,
     EffectsModule.forFeature([TestersEffects]),
