@@ -159,6 +159,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
         this.attendeesLoading = false;
         this.attendees = res;
         this.totalAttendees.next(res);
+        this.updatePagination(res);
       });
   }
 
