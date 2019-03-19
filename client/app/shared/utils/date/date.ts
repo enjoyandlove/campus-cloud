@@ -14,11 +14,7 @@ function toEpoch(date, tz): number {
 }
 
 function fromEpoch(timestamp, tz): moment.Moment {
-  const schoolOffset = moment.tz(timestamp, tz).utcOffset();
-  const localOffset = moment(timestamp).utcOffset();
-  const localMoment = moment(timestamp * 1000);
-  localMoment.add(schoolOffset - localOffset, 'minutes');
-  return localMoment;
+  return moment.tz(timestamp * 1000, tz);
 }
 
 function fromEpochLocal(timestamp, tz): moment.Moment {
