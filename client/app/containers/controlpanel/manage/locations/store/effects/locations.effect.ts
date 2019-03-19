@@ -19,13 +19,13 @@ import { LocationsUtilsService } from '@libs/locations/common/utils';
 @Injectable()
 export class LocationsEffect {
   constructor(
-    public router: Router,
-    public actions$: Actions,
-    public session: CPSession,
-    public service: LocationsService,
-    public utils: LocationsUtilsService,
-    public cpTracking: CPTrackingService,
-    public store: Store<fromCategoryStore.ICategoriesState>
+    private router: Router,
+    private actions$: Actions,
+    private session: CPSession,
+    private service: LocationsService,
+    private utils: LocationsUtilsService,
+    private cpTracking: CPTrackingService,
+    private store: Store<fromCategoryStore.ICategoriesState>
   ) {}
 
   @Effect()
@@ -145,7 +145,7 @@ export class LocationsEffect {
           this.cpTracking.amplitudeEmitEvent(eventName, properties);
           return new fromActions.EditLocationSuccess({ data: data, categoryId });
         }),
-        tap((_) => this.router.navigate([`/manage/locations/${locationId}/info`])),
+        tap(() => this.router.navigate([`/manage/locations/${locationId}/info`])),
         catchError((error) => of(new fromActions.EditLocationFail(error)))
       );
     })

@@ -3,6 +3,7 @@ import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import * as fromActions from '../actions';
 import { mockSchool } from '@app/session/mock';
 import * as fromReducer from './locations.reducer';
+import { amplitudeEvents } from '@shared/constants';
 import { mockLocations } from '@libs/locations/common/tests';
 
 const httpErrorResponse = new HttpErrorResponse({ error: true });
@@ -11,7 +12,6 @@ const pagination = {
   startRange: 1,
   endRange: 2
 };
-
 
 const params = new HttpParams().set('school_id', mockSchool.id.toString());
 
@@ -96,8 +96,8 @@ describe('Locations Reducer', () => {
     const payload = {
       body,
       params,
-      updatedCategory: 'No',
       locationId: mockLocations[0].id,
+      updatedCategory: amplitudeEvents.NO,
       categoryId: mockLocations[0].category_id
     };
 
