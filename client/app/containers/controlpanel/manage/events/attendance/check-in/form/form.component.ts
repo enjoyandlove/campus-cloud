@@ -42,14 +42,16 @@ export class CheckInFormComponent implements OnInit {
 
     this.checkInDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: checkInTime ? CPDate.fromEpoch(checkInTime, _self.session.tz).format() : null
+      defaultDate: checkInTime
+        ? CPDate.fromEpochLocal(checkInTime, _self.session.tz).format()
+        : null
     };
 
     this.checkOutDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
       defaultDate:
         checkOutTime !== CheckInOutTime.empty
-          ? CPDate.fromEpoch(checkOutTime, _self.session.tz).format()
+          ? CPDate.fromEpochLocal(checkOutTime, _self.session.tz).format()
           : null
     };
   }
