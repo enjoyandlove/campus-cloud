@@ -3,6 +3,7 @@ import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import * as fromActions from '../actions';
 import { mockSchool } from '@app/session/mock';
 import * as fromReducer from './locations.reducer';
+import { amplitudeEvents } from '@shared/constants';
 import { mockLocations } from '@libs/locations/common/tests';
 
 const httpErrorResponse = new HttpErrorResponse({ error: true });
@@ -11,7 +12,6 @@ const pagination = {
   startRange: 1,
   endRange: 2
 };
-
 
 const params = new HttpParams().set('school_id', mockSchool.id.toString());
 
@@ -97,6 +97,7 @@ describe('Locations Reducer', () => {
       body,
       params,
       locationId: mockLocations[0].id,
+      updatedCategory: amplitudeEvents.NO,
       categoryId: mockLocations[0].category_id
     };
 
@@ -134,13 +135,8 @@ describe('Locations Reducer', () => {
 
   it('should DELETE location', () => {
     const { initialState } = fromReducer;
-    const payload = {
-      params,
-      locationId: mockLocations[0].id,
-      categoryId: mockLocations[0].category_id
-    };
 
-    const action = new fromActions.DeleteLocation(payload);
+    const action = new fromActions.DeleteLocation(mockLocations[0]);
     const { error, loaded, loading } = fromReducer.reducer(initialState, action);
 
     expect(error).toBe(false);

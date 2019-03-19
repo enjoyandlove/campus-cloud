@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { getItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants';
 import { ScheduleModel, scheduleLabels } from '../model';
 import { ICategory } from '@libs/locations/common/categories/model';
 import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
@@ -304,5 +305,27 @@ export class LocationsUtilsService {
     });
 
     return openingHours;
+  }
+
+  parsedEventProperties(data) {
+    const label = data.links.length ? data.links[0].label : false;
+
+    const hours_of_operations = data.schedule.length;
+    const link = label ? amplitudeEvents.YES : amplitudeEvents.NO;
+    const email = data.email ? amplitudeEvents.YES : amplitudeEvents.NO;
+    const acronym = data.short_name ? amplitudeEvents.YES : amplitudeEvents.NO;
+    const phone_number = data.phone ? amplitudeEvents.YES : amplitudeEvents.NO;
+    const added_address = data.address ? amplitudeEvents.YES : amplitudeEvents.NO;
+    const uploaded_image = data.image_url ? amplitudeEvents.YES : amplitudeEvents.NO;
+
+    return {
+      link,
+      email,
+      acronym,
+      phone_number,
+      added_address,
+      uploaded_image,
+      hours_of_operations
+    };
   }
 }
