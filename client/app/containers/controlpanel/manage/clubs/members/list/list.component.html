@@ -1,9 +1,9 @@
-<cp-clubs-members-action-box
-  [hasMembers]="state.members.length"
+<cp-members-action-box
   (search)="onSearch($event)"
   (download)="onDownloadCsvFile()"
-  (create)="onLaunchCreateModal()">
-</cp-clubs-members-action-box>
+  (create)="onLaunchCreateModal()"
+  [showDownloadButton]="state.members.length > 0">
+</cp-members-action-box>
 
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
@@ -11,103 +11,21 @@
   <div *ngSwitchCase="false">
     <cp-no-content
       *ngIf="!state.members.length"
-      noContentText="No Members Found...">
+      [noContentText]="['t_members_no_results_found' | cpI18n]">
     </cp-no-content>
 
     <div *ngIf="state.members.length">
-      <ul class="members cp-form">
-        <li class="cp-form__header col-12">
-          <div class="row">
-            <cp-sorting-header
-              class="col-3"
-              sortLabel="username"
-              [label]="sortingLabels.name"
-              (click)="doSort('username')"
-              [sortField]="state.sort_field"
-              [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
-
-            <cp-sorting-header
-              class="col-2"
-              sortLabel="member_type"
-              (click)="doSort('member_type')"
-              [sortField]="state.sort_field"
-              [label]="sortingLabels.member_type"
-              [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
-
-            <span class="col-4" i18n>{{ 'email' | cpI18n }}</span>
-            <span class="col-2" *ngIf="showStudentIds">{{ 'student_id' | cpI18n }}</span>
-            <span
-              [class]="showStudentIds ? 'col-1' : 'col-1 offset-2'">
-            </span>
-          </div>
-        </li>
-
-        <li
-          class="cp-form__item col-12"
-          *ngFor="let member of state.members | cpFilterPipe: { query: query, filterBy: ['firstname', 'lastname'] }">
-
-          <div class="row" *ngIf="member.noResults">
-            <p class="text-center">
-              <strong>{{ 'clubs_no_members_found' | cpI18n }}</strong>
-            </p>
-          </div>
-
-          <div class="row" *ngIf="!member.noResults">
-            <span class="col-3 text-truncate members__thumbnail">
-              <img
-                class="rounded img-fit-cover"
-                [src]="member.avatar_url"
-                *ngIf="member.avatar_url !== ''">
-              <img
-                class="rounded img-fit-cover"
-                [src]="defaultImage"
-                *ngIf="member.avatar_url === ''">
-              <strong>
-                <ng-container *ngIf="limitedAdmin">
-                  {{ member.firstname }} {{ member.lastname }}
-                </ng-container>
-                <button
-                  cpTracker
-                  [eventData]="eventData"
-                  *ngIf="!limitedAdmin"
-                  (click)="isEdit = true"
-                  (click)="editMember = member"
-                  class="cpbtn cpbtn--link-dark member__title"
-                  data-toggle="modal" data-target="#membersEdit">
-                  {{ member.firstname }} {{ member.lastname }}
-                </button>
-              </strong>
-              <br>
-              <span
-                class="text-muted"
-                *ngIf="member.member_type === executiveLeaderType">
-                {{ member.member_position }}
-              </span>
-            </span>
-            <span class="col-2 text-truncate">
-              {{ member.member_type === executiveLeaderType ? executiveLeader : 'member' | cpI18n }}
-            </span>
-
-            <span class="col-4 text-truncate">
-              {{ member.email }}
-            </span>
-
-            <span class="col-2 text-truncate" *ngIf="showStudentIds">
-              {{ member.student_identifier }}
-            </span>
-
-            <span
-              *ngIf="!limitedAdmin"
-              (click)="deleteMember = member"
-              data-toggle="modal" data-target="#membersDelete"
-              [class]="showStudentIds ? 'col-1 float-right text-center delete-member hover' : 'col-1 offset-2 float-right text-center delete-member hover'">
-              &times;
-            </span>
-          </div>
-        </li>
-      </ul>
+      <cp-members-list
+        (sort)="doSort($event)"
+        [members]="state.members"
+        [canEdit]="!limitedAdmin"
+        [canDelete]="!limitedAdmin"
+        [sortBy]="state.sort_field"
+        (editClick)="onEditClick($event)"
+        (deleteClick)="onDeleteClick($event)"
+        [sortDirection]="state.sort_direction"
+        [withStudentIdentifier]="showStudentIds">
+      </cp-members-list>
 
       <div class="row">
         <div class="col-12">
@@ -122,29 +40,33 @@
       </div>
     </div>
 
-    <cp-modal modalId="membersEdit">
+    <cp-modal
+      *ngIf="isEdit"
+      modalId="membersEdit">
       <cp-members-edit
-        *ngIf="isEdit"
         [groupId]="groupId"
-        [member]="editMember"
-        [isOrientation]="isOrientation"
         (edited)="forceRefresh()"
-        (teardown)="isEdit = false">
+        [member]="selectedMember"
+        (teardown)="onEditTeaDown()">
       </cp-members-edit>
     </cp-modal>
 
-    <cp-modal modalId="membersDelete">
+    <cp-modal
+      *ngIf="isDelete"
+      modalId="membersDelete">
       <cp-members-delete
         [groupId]="groupId"
-        [member]="deleteMember"
-        (deleted)="forceRefresh()">
+        [member]="selectedMember"
+        (deleted)="forceRefresh()"
+        (teardown)="onDeleteTearDown()">
       </cp-members-delete>
     </cp-modal>
 
-    <cp-modal modalId="membersCreate">
+    <cp-modal
+      *ngIf="isCreate"
+      modalId="membersCreate">
       <cp-members-create
         [groupId]="groupId"
-        [isOrientation]="isOrientation"
         (added)="forceRefresh()">
       </cp-members-create>
     </cp-modal>

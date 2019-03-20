@@ -9,7 +9,9 @@ export class LatLngValidators {
   constructor(public locationService: CPLocationsService) {}
 
   validateLatitude(lng: AbstractControl): AsyncValidatorFn {
-    return (lat: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+    return (
+      lat: AbstractControl
+    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       if (this.validateCords(lat.value)) {
         return of({ invalidCords: true });
       }
@@ -19,7 +21,9 @@ export class LatLngValidators {
   }
 
   validateLongitude(lat: AbstractControl): AsyncValidatorFn {
-    return (lng: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+    return (
+      lng: AbstractControl
+    ): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
       if (this.validateCords(lng.value)) {
         return of({ invalidCords: true });
       }
@@ -44,9 +48,7 @@ export class LatLngValidators {
       lng: Number(lng.value)
     };
 
-    await this.locationService
-      .geoCode(location)
-      .catch(() => required = { invalidCords: true });
+    await this.locationService.geoCode(location).catch(() => (required = { invalidCords: true }));
 
     return required;
   }

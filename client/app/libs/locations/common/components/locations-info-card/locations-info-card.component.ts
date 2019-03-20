@@ -12,4 +12,3 @@ export class LocationsInfoCardComponent {
   @Input() location: ILocation;
   @Input() mapCenter: BehaviorSubject<any>;
 }
-

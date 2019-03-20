@@ -1,0 +1,47 @@
+<form [formGroup]="form">
+  <div class="form-group dropdown">
+    <label>{{ 'clubs_member_label_name' | cpI18n }}</label>
+    <input
+      #input
+      type="text"
+      cpTarget="member"
+      class="form-control"
+      [disabled]="form.get('member').disabled"
+      [attr.placeholder]="[form.get('member').disabled ? form.get('member').value : '']">
+
+      <input type="hidden" formControlName="member">
+
+      <ul
+        class="membersBox"
+        *ngIf="members.length">
+        <li
+          class="list-as-anchor"
+          *ngFor="let member of members"
+          (click)="onMemberSelected(member)">
+          {{ member.label }}
+        </li>
+      </ul>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 'clubs_label_member_type' | cpI18n }}</label>
+      <cp-dropdown
+        [items]="memberTypes"
+        cpTarget="member_type"
+        [selectedItem]="selectedType"
+        (selected)="onTypeChange($event)">
+      </cp-dropdown>
+    </div>
+    <div
+      class="col-6"
+      *ngIf="showPosition">
+      <label>{{ 'clubs_label_executive_position' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        cpTarget="member_position"
+        formControlName="member_position">
+    </div>
+  </div>
+</form>

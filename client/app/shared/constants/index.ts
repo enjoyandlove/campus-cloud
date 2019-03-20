@@ -3,6 +3,7 @@ export * from './flags';
 export * from './google';
 export * from './params';
 export * from './status';
+export * from './params';
 export * from './symbols';
 export * from './settings';
 export * from './analytics';

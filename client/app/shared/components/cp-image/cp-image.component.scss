@@ -1,0 +1,10 @@
+.cp-image {
+  &.small {
+    width: 30px;
+    height: 30px;
+  }
+
+  &.fitCover {
+    object-fit: cover;
+  }
+}

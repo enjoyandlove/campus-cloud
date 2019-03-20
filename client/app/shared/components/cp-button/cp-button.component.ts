@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, HostListener } from '@angular/core';
 
-import { isProd } from './../../../config/env';
-import { CPTrackingService } from './../../services/tracking.service';
+import { isProd } from '@app/config/env';
+import { CPTrackingService } from '@shared/services/tracking.service';
 
-interface IProps {
+export interface ICPButtonProps {
   text: string;
   class: string;
   disabled?: boolean;
@@ -19,7 +19,7 @@ interface IProps {
   styleUrls: ['./cp-button.component.scss']
 })
 export class CPButtonComponent implements OnInit {
-  @Input() props: IProps;
+  @Input() props: ICPButtonProps;
   @Input() listenForEnterKeyEvent = false;
 
   @Output() buttonClick: EventEmitter<Event> = new EventEmitter();

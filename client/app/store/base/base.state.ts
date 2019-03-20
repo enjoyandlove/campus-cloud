@@ -1,3 +1,7 @@
+import { RouterReducerState } from '@ngrx/router-store';
+
+import { RouterStateUrl } from '@app/store/serializers';
+
 export interface IAlert {
   body: string;
   class: string;
@@ -33,8 +37,9 @@ export interface IBaseState {
   CLUBS: any;
   ALERT: IAlert;
   HEADER: IHeader;
-  SNACKBAR: ISnackbar;
-  AUDIENCE: IAudience;
   EVENTS_MODAL: any;
   SERVICES_MODAL: any;
+  SNACKBAR: ISnackbar;
+  AUDIENCE: IAudience;
+  ROUTER: RouterReducerState<RouterStateUrl>;
 }

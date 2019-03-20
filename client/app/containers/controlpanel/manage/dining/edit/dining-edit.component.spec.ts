@@ -60,12 +60,17 @@ describe('DiningEditComponent', () => {
   });
 
   it('should populate form with values', () => {
-    let expected = omit(mockDining[0], ['category_img_url', 'category_name', 'category_color', 'id']);
+    let expected = omit(mockDining[0], [
+      'category_img_url',
+      'category_name',
+      'category_color',
+      'id'
+    ]);
 
     expected = {
       ...expected,
       links: mockLinksData,
-      schedule: mockScheduleData(),
+      schedule: mockScheduleData()
     };
 
     fillForm(component.diningForm, filledForm);
