@@ -1,12 +1,13 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { isProd } from './../../../config/env';
+
+import { isProd } from '@app/config/env';
 import { CP_PRIVILEGES_MAP } from './../../constants';
-import { canAccountLevelReadResource, canSchoolReadResource } from './../../utils/privileges';
 import { CPSession, ISchool, IUser } from '../../../session';
-import { amplitudeEvents } from '../../constants/analytics';
-import { CPTrackingService } from '../../services';
-import { environment } from './../../../../environments/environment';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { environment } from '@client/environments/environment';
+import { CPTrackingService, RouteLevel } from '@shared/services';
+import { canAccountLevelReadResource, canSchoolReadResource } from '@shared/utils/privileges';
 
 @Component({
   selector: 'cp-topbar',
@@ -82,6 +83,18 @@ export class CPTopBarComponent implements OnInit {
   trackMenu(menu_name) {
     const eventName = amplitudeEvents.CLICKED_MENU;
     const eventProperties = { menu_name };
+
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+  }
+
+  trackViewedNotification() {
+    const eventName = amplitudeEvents.VIEWED_NOTIFICATION;
+
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth),
+      notification_type: amplitudeEvents.BEAMER
+    };
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
