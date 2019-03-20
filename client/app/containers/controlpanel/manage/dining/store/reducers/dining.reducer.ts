@@ -166,13 +166,17 @@ export function reducer(state = initialState, action: fromDining.DiningAction) {
 
     case fromDining.diningActions.DELETE_DINING_SUCCESS: {
       const deletedId = action.payload.deletedId;
-
-      return diningAdaptor.removeOne(deletedId, {
+      const data = diningAdaptor.removeOne(deletedId, {
         ...state,
         error: false,
         loaded: true,
         loading: false
       });
+
+      return {
+        ...data,
+        filteredDining: state.filteredDining.filter((d: IDining) => d.id !== deletedId)
+      };
     }
 
     case fromDining.diningActions.DELETE_DINING_FAIL: {
