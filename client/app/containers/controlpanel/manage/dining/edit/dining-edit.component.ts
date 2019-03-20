@@ -12,6 +12,7 @@ import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
 import { Destroyable, Mixin } from '@shared/mixins';
+import { amplitudeEvents } from '@shared/constants';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
 import * as fromCategoryStore from '../categories/store';
@@ -36,6 +37,7 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
   selectedCategory: IItem;
   loading$: Observable<boolean>;
   categories$: Observable<IItem[]>;
+  updatedCategory = amplitudeEvents.NO;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -74,7 +76,8 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
       body,
       params,
       diningId: this.diningId,
-      categoryId: this.categoryId
+      categoryId: this.categoryId,
+      updatedCategory: this.updatedCategory
     };
 
     this.store.dispatch(new fromStore.EditDining(payload));
@@ -155,6 +158,10 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
         autoClose: true
       }
     });
+  }
+
+  onChangeCategory() {
+    this.updatedCategory = amplitudeEvents.YES;
   }
 
   ngOnInit() {
