@@ -3,6 +3,7 @@ import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import * as fromActions from '../actions';
 import { mockSchool } from '@app/session/mock';
 import * as fromReducer from './dining.reducer';
+import { amplitudeEvents } from '@shared/constants';
 import { mockLocations as mockDining } from '@libs/locations/common/tests';
 
 const httpErrorResponse = new HttpErrorResponse({ error: true });
@@ -87,6 +88,7 @@ describe('Dining Reducer', () => {
       body,
       params,
       diningId: mockDining[0].id,
+      updatedCategory: amplitudeEvents.NO,
       categoryId: mockDining[0].category_id
     };
 
@@ -120,13 +122,7 @@ describe('Dining Reducer', () => {
   });
 
   it('should DELETE dining', () => {
-    const payload = {
-      params,
-      diningId: mockDining[0].id,
-      categoryId: mockDining[0].category_id
-    };
-
-    const action = new fromActions.DeleteDining(payload);
+    const action = new fromActions.DeleteDining(mockDining[0]);
     const { error, loaded, loading } = fromReducer.reducer(initialState, action);
 
     expect(error).toBe(false);

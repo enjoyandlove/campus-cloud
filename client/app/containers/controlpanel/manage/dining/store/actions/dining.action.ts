@@ -96,7 +96,13 @@ export class PostDiningSuccess implements Action {
 export class EditDining implements Action {
   readonly type = diningActions.EDIT_DINING;
   constructor(
-    public payload: { diningId: number; body: IDining; categoryId: number; params: HttpParams }
+    public payload: {
+      body: IDining;
+      diningId: number;
+      categoryId: number;
+      params: HttpParams;
+      updatedCategory: string;
+    }
   ) {}
 }
 
@@ -112,7 +118,7 @@ export class EditDiningSuccess implements Action {
 
 export class DeleteDining implements Action {
   readonly type = diningActions.DELETE_DINING;
-  constructor(public payload: { diningId: number; categoryId: number; params: HttpParams }) {}
+  constructor(public payload: IDining) {}
 }
 
 export class DeleteDiningFail implements Action {

@@ -16,7 +16,8 @@
                 [formErrors]="formErrors"
                 [categories$]="categories$"
                 [locationForm]="diningForm"
-                [selectedCategory]="selectedCategory">
+                [selectedCategory]="selectedCategory"
+                (changeCategory)="onChangeCategory()">
               </cp-location-form>
             </div>
           </div>
