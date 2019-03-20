@@ -20,7 +20,7 @@ const RESET = Symbol('reset');
   templateUrl: './cp-searchbox.component.html',
   styleUrls: ['./cp-searchbox.component.scss']
 })
-export class CPSearchBoxComponent implements AfterViewInit, OnDestroy {
+export class CPSearchBoxComponent implements AfterViewInit, OnInit {
   @Input() fixed: true;
   @Input() placeholder: string;
 
@@ -29,7 +29,6 @@ export class CPSearchBoxComponent implements AfterViewInit, OnDestroy {
   @Output() query: EventEmitter<string> = new EventEmitter();
   @Output() searching: EventEmitter<boolean> = new EventEmitter();
 
-  destroy$ = new Subject();
   stream$: Observable<string>;
   reset$: BehaviorSubject<symbol> = new BehaviorSubject(RESET);
   isSearch$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -75,8 +74,5 @@ export class CPSearchBoxComponent implements AfterViewInit, OnDestroy {
       });
   }
 
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
-  }
+  ngOnInit() {}
 }
