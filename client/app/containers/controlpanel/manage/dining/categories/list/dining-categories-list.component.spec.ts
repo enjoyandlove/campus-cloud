@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
-import { Actions } from '@ngrx/effects';
 import { of } from 'rxjs';
 
 import { CPSession } from '@app/session';
@@ -24,8 +23,12 @@ describe('DiningCategoriesListComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, Actions],
-        declarations: [DiningCategoriesListComponent, CategoryTypePipe, CategoriesActionBoxComponent],
+        providers: [CPSession, CPI18nService],
+        declarations: [
+          DiningCategoriesListComponent,
+          CategoryTypePipe,
+          CategoriesActionBoxComponent
+        ],
         schemas: [NO_ERRORS_SCHEMA]
       });
 

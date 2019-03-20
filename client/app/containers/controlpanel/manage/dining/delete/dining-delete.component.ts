@@ -1,5 +1,4 @@
 import { Input, EventEmitter, Output } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
@@ -17,23 +16,10 @@ export class DiningDeleteComponent implements OnInit {
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
-  constructor(
-    public session: CPSession,
-    public store: Store<fromStore.IDiningState>) {}
+  constructor(public session: CPSession, public store: Store<fromStore.IDiningState>) {}
 
   onDelete() {
-    const diningId = this.dining.id;
-    const categoryId = this.dining.category_id;
-    const school_id = this.session.g.get('school').id;
-    const params = new HttpParams().set('school_id', school_id);
-
-    const payload = {
-      params,
-      diningId,
-      categoryId
-    };
-
-    this.store.dispatch(new fromStore.DeleteDining(payload));
+    this.store.dispatch(new fromStore.DeleteDining(this.dining));
     this.resetModal();
   }
 

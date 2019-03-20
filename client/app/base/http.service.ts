@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { catchError, delay, flatMap, retryWhen } from 'rxjs/operators';
+import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Observable, of as observableOf, throwError as observableThrowError } from 'rxjs';
-import { catchError, delay, flatMap, retryWhen } from 'rxjs/operators';
-import { API } from '../config/api';
-import { appStorage, CPObj } from '../shared/utils';
+
+import { API } from '@app/config/api';
+import { appStorage, CPObj } from '@shared/utils';
 
 /**
  * Base HTTP Service
@@ -12,7 +13,7 @@ import { appStorage, CPObj } from '../shared/utils';
  * getHeaders() if you need a new header
  */
 const defaultRetries = 1;
-const emptyResponse = observableOf(new HttpResponse({ body: JSON.stringify([]) }));
+const emptyResponse = of(new HttpResponse({ body: JSON.stringify([]) }));
 
 @Injectable()
 export abstract class HTTPService {
@@ -25,10 +26,10 @@ export abstract class HTTPService {
         if (retries > 0) {
           retries -= 1;
 
-          return observableOf(e).pipe(delay(1200));
+          return of(e).pipe(delay(1200));
         }
 
-        return observableThrowError(e);
+        return throwError(e);
       })
     );
   }
@@ -76,8 +77,8 @@ export abstract class HTTPService {
     return this.http.get(url, { headers, params }).pipe(
       retryWhen((err) => this.waitAndRetry(err, retries)),
       catchError((err) => {
-        if (silent) {
-          return observableThrowError(err);
+        if (silent && err.status !== 401) {
+          return throwError(err);
         }
 
         if (err.status === 403) {
@@ -102,7 +103,7 @@ export abstract class HTTPService {
       .post(url, this.sanitizeEntries(data), { headers, params })
       .pipe(
         retryWhen((err) => this.waitAndRetry(err, retries)),
-        catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
+        catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.catchError(err)))
       );
   }
 
@@ -118,7 +119,7 @@ export abstract class HTTPService {
       .put(url, this.sanitizeEntries(data), { headers, params })
       .pipe(
         retryWhen((err) => this.waitAndRetry(err, retries)),
-        catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
+        catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.catchError(err)))
       );
   }
 
@@ -139,7 +140,7 @@ export abstract class HTTPService {
       .delete(url, { headers, params, ...extraOptions })
       .pipe(
         retryWhen((err) => this.waitAndRetry(err, retries)),
-        catchError((err) => (silent ? observableThrowError(err) : this.catchError(err)))
+        catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.catchError(err)))
       );
   }
 
@@ -159,7 +160,7 @@ export abstract class HTTPService {
         return emptyResponse;
 
       default:
-        return observableThrowError(err);
+        return throwError(err);
     }
   }
 }

@@ -199,7 +199,10 @@ export class CalendarsItemFormComponent implements OnInit {
     if (this.form.controls['start'].value) {
       this.startdatePickerOpts = {
         ...this.startdatePickerOpts,
-        defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format()
+        defaultDate: CPDate.fromEpochLocal(
+          this.form.controls['start'].value,
+          _self.session.tz
+        ).format()
       };
     }
 
@@ -210,7 +213,10 @@ export class CalendarsItemFormComponent implements OnInit {
     if (this.form.controls['end'].value) {
       this.enddatePickerOpts = {
         ...this.enddatePickerOpts,
-        defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format()
+        defaultDate: CPDate.fromEpochLocal(
+          this.form.controls['end'].value,
+          _self.session.tz
+        ).format()
       };
     }
 

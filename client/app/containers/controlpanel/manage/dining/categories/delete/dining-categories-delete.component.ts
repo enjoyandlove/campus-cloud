@@ -15,12 +15,10 @@ export class DiningCategoriesDeleteComponent implements OnInit {
     @Inject(MODAL_DATA) public modal: IModal,
     public session: CPSession,
     public store: Store<fromStore.ICategoriesState>
-    ) {}
+  ) {}
 
   onDelete() {
-    const categoryId = this.modal.data.id;
-
-    this.store.dispatch(new fromStore.DeleteCategories({ categoryId }));
+    this.store.dispatch(new fromStore.DeleteCategories(this.modal.data));
     this.resetModal();
   }
 

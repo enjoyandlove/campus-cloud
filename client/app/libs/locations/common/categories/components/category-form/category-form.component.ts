@@ -38,7 +38,7 @@ export class CategoryFormComponent implements OnInit {
       name: this.form.get('name'),
       color: this.form.get('color'),
       icon: this.form.get('img_url'),
-      type: this.form.get('category_type_id'),
+      type: this.form.get('category_type_id')
     };
   }
 

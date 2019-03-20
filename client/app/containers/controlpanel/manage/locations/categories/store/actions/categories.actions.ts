@@ -120,7 +120,7 @@ export class EditCategorySuccess implements Action {
 export class DeleteCategories implements Action {
   readonly type = CategoriesActions.DELETE_CATEGORIES;
 
-  constructor(public payload: { categoryId: number; params: HttpParams }) {}
+  constructor(public payload: { body: ICategory; params: HttpParams }) {}
 }
 
 export class DeleteCategoriesSuccess implements Action {

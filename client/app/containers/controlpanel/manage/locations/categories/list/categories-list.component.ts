@@ -1,7 +1,6 @@
 import { takeUntil, tap, take, filter } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Actions, ofType } from '@ngrx/effects';
 import { Subject, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -10,10 +9,10 @@ import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
-import { CPI18nService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants';
 import { LocationType } from '@libs/locations/common/utils';
-import { ICategory, DeleteError } from '@libs/locations/common/categories/model';
-import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
+import { CPI18nService, CPTrackingService } from '@shared/services';
+import { ICategory, LocationCategoryLocale } from '@libs/locations/common/categories/model';
 
 interface IState {
   search_str: string;
@@ -45,9 +44,9 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   constructor(
-    public actions$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public cpTracking: CPTrackingService,
     public store: Store<fromStore.ICategoriesState | fromRoot.IHeader | fromRoot.ISnackbar>
   ) {}
 
@@ -71,14 +70,30 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   onLaunchCreateModal() {
+    const eventName = amplitudeEvents.CLICKED_CREATE_ITEM;
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_type: amplitudeEvents.LOCATION_CATEGORY
+    };
+
     this.showCreateModal = true;
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
     setTimeout(() => $('#categoriesCreate').modal());
   }
 
   onLaunchEditModal(category: ICategory) {
+    const eventName = amplitudeEvents.VIEWED_ITEM;
+
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: amplitudeEvents.INFO,
+      page_type: amplitudeEvents.LOCATION_CATEGORY
+    };
+
     this.showEditModal = true;
     this.selectedCategory = category;
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
     setTimeout(() => $('#categoriesEdit').modal());
   }
@@ -109,7 +124,8 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
 
   get defaultParams(): HttpParams {
     const locale = CPI18nService.getLocale().startsWith('fr')
-      ? LocationCategoryLocale.fr : LocationCategoryLocale.eng;
+      ? LocationCategoryLocale.fr
+      : LocationCategoryLocale.eng;
 
     return new HttpParams()
       .set('locale', locale)
@@ -176,26 +192,15 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
             this.store.dispatch(new fromStore.GetCategoriesType({ params }));
           }
         })
-      ).subscribe();
-  }
-
-  listenDeleteErrors() {
-    this.actions$
-      .pipe(ofType(fromStore.CategoriesActions.DELETE_CATEGORIES_FAIL), takeUntil(this.destroy$))
-      .subscribe((action: fromStore.DeleteCategoriesFail) => {
-        const body = DeleteError[action.payload];
-
-        this.handleError(body);
-      });
+      )
+      .subscribe();
   }
 
   listenErrors() {
-    this.store.select(fromStore.getCategoriesError)
-      .pipe(
-        takeUntil(this.destroy$),
-        filter((error) => error),
-        tap(() => this.handleError())
-      ).subscribe();
+    this.store
+      .select(fromStore.getCategoriesError)
+      .pipe(takeUntil(this.destroy$), filter((error) => error), tap(() => this.handleError()))
+      .subscribe();
   }
 
   resetErrors() {
@@ -229,7 +234,6 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.updateHeader();
     this.listenErrors();
     this.loadCategories();
-    this.listenDeleteErrors();
     this.loadCategoryTypes();
 
     this.loading$ = this.store
@@ -243,4 +247,3 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.destroy$.unsubscribe();
   }
 }
-

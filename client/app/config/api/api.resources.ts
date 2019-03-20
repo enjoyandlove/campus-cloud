@@ -81,6 +81,8 @@ export const API_ENDPOINTS = {
 
   ORIENTATION_EVENTS: 'orientation_item',
 
+  USER_ACCESS_LEVEL: 'user_access_level',
+
   CALENDAR_ITEMS: 'academic_calendar_item',
 
   STUDENT_ENGAGEMENT: 'student_engagement',

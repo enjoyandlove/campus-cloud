@@ -1,17 +1,16 @@
+import { OverlayRef } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Store } from '@ngrx/store';
 
+import { CPSession } from '@app/session';
+import { CP_TRACK_TO } from '@shared/directives';
+import { ServicesDeleteComponent } from '../delete';
 import { ServicesService } from '../services.service';
 import { ServiceAttendance } from '../services.status';
-import { CPSession } from './../../../../../session/index';
+import { BaseComponent } from '@app/base/base.component';
 import { ManageHeaderService } from './../../utils/header';
-import { baseActions, IHeader } from '../../../../../store/base';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CPTrackingService } from '../../../../../shared/services';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPI18nService, CPTrackingService, ModalService } from '@shared/services';
 
 interface IState {
   search_text: string;
@@ -38,20 +37,19 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
   loading;
   eventData;
   sortingLabels;
-  deleteService = '';
   state: IState = state;
+  activeModal: OverlayRef;
   attendanceEnabled = ServiceAttendance.enabled;
 
   constructor(
     private session: CPSession,
     public cpI18n: CPI18nService,
-    private store: Store<IHeader>,
     private service: ServicesService,
+    private modalService: ModalService,
     private cpTracking: CPTrackingService,
     private headerService: ManageHeaderService
   ) {
     super();
-    this.buildHeader();
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 
@@ -83,13 +81,6 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
     });
   }
 
-  private buildHeader() {
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
-    });
-  }
-
   onPaginationNext() {
     super.goToNext();
     this.fetch();
@@ -111,19 +102,30 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
   }
 
   onDelete(service) {
-    this.deleteService = service;
+    this.activeModal = this.modalService.open(
+      ServicesDeleteComponent,
+      {},
+      {
+        data: service,
+        onClose: this.onDeleted.bind(this)
+      }
+    );
   }
 
-  onDeleted(serviceId: number) {
-    this.deleteService = '';
-    const _state = Object.assign({}, this.state);
+  onDeleted(serviceId?: number) {
+    this.modalService.close(this.activeModal);
+    this.activeModal = null;
 
-    _state.services = _state.services.filter((service) => service.id !== serviceId);
-
-    this.state = Object.assign({}, this.state, { services: _state.services });
+    if (serviceId) {
+      this.state = {
+        ...this.state,
+        services: this.state.services.filter((s) => s.id !== serviceId)
+      };
+    }
   }
 
   ngOnInit() {
+    this.headerService.updateHeader();
     this.fetch();
     this.sortingLabels = {
       name: this.cpI18n.translate('name')

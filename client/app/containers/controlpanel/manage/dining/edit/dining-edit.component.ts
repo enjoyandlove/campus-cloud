@@ -12,6 +12,7 @@ import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
 import { Destroyable, Mixin } from '@shared/mixins';
+import { amplitudeEvents } from '@shared/constants';
 import { CPI18nService } from '@app/shared/services';
 import { LatLngValidators } from '@shared/validators';
 import * as fromCategoryStore from '../categories/store';
@@ -20,7 +21,6 @@ import { DiningModel, IDining } from '@libs/locations/common/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 
 @Mixin([Destroyable])
-
 @Component({
   selector: 'cp-dining-edit',
   templateUrl: './dining-edit.component.html',
@@ -37,6 +37,7 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
   selectedCategory: IItem;
   loading$: Observable<boolean>;
   categories$: Observable<IItem[]>;
+  updatedCategory = amplitudeEvents.NO;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -75,7 +76,8 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
       body,
       params,
       diningId: this.diningId,
-      categoryId: this.categoryId
+      categoryId: this.categoryId,
+      updatedCategory: this.updatedCategory
     };
 
     this.store.dispatch(new fromStore.EditDining(payload));
@@ -96,18 +98,21 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
   }
 
   loadDining() {
-    this.store.select(fromStore.getSelectedDining).pipe(
-      takeUntil(this.destroy$),
-      filter((dining: IDining) => !!dining),
-      map((dining: IDining) => {
-        const schedule = dining['schedule'];
-        this.openingHours = !!schedule.length;
-        this.diningId = dining.id;
-        this.categoryId = dining.category_id;
-        this.diningForm = DiningModel.form(dining);
-        LocationsUtilsService.setScheduleFormControls(this.diningForm, schedule);
-      })
-    ).subscribe();
+    this.store
+      .select(fromStore.getSelectedDining)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((dining: IDining) => !!dining),
+        map((dining: IDining) => {
+          const schedule = dining['schedule'];
+          this.openingHours = !!schedule.length;
+          this.diningId = dining.id;
+          this.categoryId = dining.category_id;
+          this.diningForm = DiningModel.form(dining);
+          LocationsUtilsService.setScheduleFormControls(this.diningForm, schedule);
+        })
+      )
+      .subscribe();
   }
 
   loadCategories() {
@@ -120,7 +125,7 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
         }
       }),
       map((categories) => LocationsUtilsService.setCategoriesDropDown(categories, categoryLabel)),
-      map(parsedCategories => {
+      map((parsedCategories) => {
         Promise.resolve().then(() => {
           this.selectedCategory = parsedCategories.find((c) => c.action === this.categoryId);
         });
@@ -153,6 +158,10 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
         autoClose: true
       }
     });
+  }
+
+  onChangeCategory() {
+    this.updatedCategory = amplitudeEvents.YES;
   }
 
   ngOnInit() {

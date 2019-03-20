@@ -57,24 +57,18 @@
           <i
             cpTarget="edit"
             (click)="editClick.emit(category)"
-            class="material-icons hover action-button margin-right">
-              edit
-          </i>
+            class="material-icons hover action-button margin-right">edit</i>
           <i
             cpTarget="delete"
             *ngIf="!category.locations_count"
             (click)="deleteClick.emit(category)"
-            class="material-icons hover action-button">
-              close
-          </i>
+            class="material-icons hover action-button">close</i>
           <i
             cpTarget="delete"
             [cpTooltip]="tooltipOptions"
             *ngIf="category.locations_count"
             [attr.title]="'t_categories_can_not_be_delete' | cpI18n"
-            class="material-icons hover action-button disabled">
-              close
-          </i>
+            class="material-icons hover action-button disabled">close</i>
         </span>
       </span>
     </div>

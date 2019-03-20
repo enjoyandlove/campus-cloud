@@ -10,25 +10,24 @@ import { ServicesInfoComponent } from './info';
 import { ServicesExcelComponent } from './excel';
 import { ServicesDeleteComponent } from './delete';
 import { ServicesCreateComponent } from './create';
-import { ServicesAttendanceComponent } from './attendance';
-import { LayoutsModule } from '@app/layouts/layouts.module';
-import { ServicesListActionBoxComponent } from './list/components';
-import { ServicesExcelModalComponent, ServicesImportTopBarComponent } from './excel/components';
-
 import { ServicesService } from './services.service';
 import { ProvidersService } from './providers.service';
 import { ServicesResolver } from './services.resolver';
 import { AssessModule } from '../../assess/assess.module';
+import { ServicesAttendanceComponent } from './attendance';
+import { LayoutsModule } from '@app/layouts/layouts.module';
+import { ModalService, AdminService } from '@shared/services';
 import { SharedModule } from '../../../../shared/shared.module';
 import { ServicesUtilsService } from './services.utils.service';
 import { ServicesRoutingModule } from './services.routing.module';
 import { ProvidersUtilsService } from './providers.utils.service';
+import { ServicesListActionBoxComponent } from './list/components';
 import { ServicesFeedsModule } from './feeds/services-feeds.module';
 import { ServicesEventsModule } from './events/services-events.module';
-import { AdminService } from '../../../../shared/services/admin.service';
 import { ServicesMembersModule } from './members/services-members.module';
 import { EngagementModule } from '../../assess/engagement/engagement.module';
 import { CheckInModule } from '../events/attendance/check-in/check-in.module';
+import { ServicesExcelModalComponent, ServicesImportTopBarComponent } from './excel/components';
 
 import {
   ServicesProviderAddComponent,
@@ -54,31 +53,32 @@ import {
 } from './attendance/components/providers-details/components';
 
 @NgModule({
+  entryComponents: [ServicesDeleteComponent],
   declarations: [
+    ServicesEditComponent,
+    ServicesInfoComponent,
     ServicesListComponent,
-    ServicesProviderStatsComponent,
-    ServicesProviderActionBoxComponent,
-    ServicesListActionBoxComponent,
+    ServicesExcelComponent,
+    ServicesCreateComponent,
     ServicesDeleteComponent,
     ServicesExcelModalComponent,
     ServicesAttendanceComponent,
-    ServicesCreateComponent,
-    ServicesEditComponent,
-    ServicesInfoComponent,
     ServicesProviderAddComponent,
-    ServicesProviderDeleteComponent,
-    ServicesExcelComponent,
     ServicesImportTopBarComponent,
-    ServicesProvidersListComponent,
-    ServicesProviderDetailsComponent,
-    ServicesProvidersAttendeesListComponent,
     ServiceProvidersEditComponent,
     ServicesProvidersFormComponent,
-    ServicesProvidersAttendeesStatsComponent,
-    ServicesProvidersAttendeesActionBoxComponent,
-    ServicesProvidersCheckInCreateComponent,
+    ServicesProvidersListComponent,
+    ServicesProviderStatsComponent,
+    ServicesListActionBoxComponent,
+    ServicesProviderDeleteComponent,
+    ServicesProviderDetailsComponent,
+    ServicesProviderActionBoxComponent,
     ServicesProvidersCheckInEditComponent,
-    ServicesProvidersCheckInDeleteComponent
+    ServicesProvidersAttendeesListComponent,
+    ServicesProvidersCheckInDeleteComponent,
+    ServicesProvidersCheckInCreateComponent,
+    ServicesProvidersAttendeesStatsComponent,
+    ServicesProvidersAttendeesActionBoxComponent
   ],
 
   imports: [
@@ -98,6 +98,7 @@ import {
 
   providers: [
     AdminService,
+    ModalService,
     ServicesService,
     ProvidersService,
     ServicesResolver,

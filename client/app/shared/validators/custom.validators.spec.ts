@@ -89,4 +89,29 @@ describe('CustomValidators', () => {
       expect(ctrl.valid).toBe(true);
     });
   });
+
+  describe('emailWithTopLevelDomain', () => {
+    let ctrl: FormControl;
+    beforeEach(() => {
+      ctrl = createControl();
+      ctrl.setValidators(CustomValidators.emailWithTopLevelDomain);
+    });
+
+    it('should fail invalid email', () => {
+      ctrl.setValue('address');
+      expect(ctrl.valid).toBe(false);
+    });
+
+    it('should fail missing TLD', () => {
+      ctrl.setValue('address@domain');
+      expect(ctrl.errors.topLevelDomain).toBe(true);
+      expect(ctrl.valid).toBe(false);
+    });
+
+    it('should pass valid address', () => {
+      ctrl.setValue('address@domain.tld');
+      expect(ctrl.errors).toBe(null);
+      expect(ctrl.valid).toBe(true);
+    });
+  });
 });

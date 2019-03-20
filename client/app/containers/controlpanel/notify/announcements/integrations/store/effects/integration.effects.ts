@@ -8,9 +8,9 @@ import { Store } from '@ngrx/store';
 import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
 import * as fromRoot from '@app/store/base';
-import { CPI18nService } from '@shared/services';
-import { IAnnoucementsIntegration } from '../../model';
+import { IAnnouncementsIntegration } from '../../model';
 import { IntegrationsService } from '../../integrations.service';
+import { CPI18nService, StoreService, IStore } from '@shared/services';
 
 @Injectable()
 export class AnnoucementIntegrationsEffects {
@@ -18,6 +18,7 @@ export class AnnoucementIntegrationsEffects {
     private actions$: Actions,
     private session: CPSession,
     private cpI18n: CPI18nService,
+    private storeService: StoreService,
     private service: IntegrationsService,
     private store: Store<fromRoot.ISnackbar>
   ) {}
@@ -30,7 +31,7 @@ export class AnnoucementIntegrationsEffects {
     mergeMap(() => {
       return this.service.getIntegrations(1, 100, this.params).pipe(
         map(
-          (integrations: IAnnoucementsIntegration[]) =>
+          (integrations: IAnnouncementsIntegration[]) =>
             new fromActions.GetIntegrationsSuccess({ integrations })
         ),
         catchError(() => {
@@ -56,6 +57,41 @@ export class AnnoucementIntegrationsEffects {
         })
       );
     })
+  );
+
+  @Effect()
+  getSenders$: Observable<
+    fromActions.GetSendersSuccess | fromActions.GetSendersFail
+  > = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.GET_SENDERS),
+    mergeMap(() =>
+      this.storeService.getStores(this.params).pipe(
+        map((stores: IStore[]) => new fromActions.GetSendersSuccess(stores)),
+        catchError(() => {
+          this.handleError();
+          return of(new fromActions.GetSendersFail());
+        })
+      )
+    )
+  );
+
+  @Effect()
+  createIntegration$: Observable<
+    fromActions.CreateIntegrationSuccess | fromActions.CreateIntegrationFail
+  > = this.actions$.pipe(
+    ofType(fromActions.IntegrationActions.CREATE_INTEGRATION),
+    mergeMap((integration: IAnnouncementsIntegration) =>
+      this.service.createIntegration(integration, this.params).pipe(
+        map(
+          (newIntegration: IAnnouncementsIntegration) =>
+            new fromActions.CreateIntegrationSuccess(newIntegration)
+        ),
+        catchError(() => {
+          this.handleError();
+          return of(new fromActions.CreateIntegrationFail());
+        })
+      )
+    )
   );
 
   private get params() {

@@ -1,40 +1,33 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { SharedModule } from '../../../../shared/shared.module';
-import { EventsModule } from '../events/events.module';
-import { FeedsModule } from '../feeds/feeds.module';
-
-import { ClubsRoutingModule } from './clubs.routing.module';
+import { ClubsEditComponent } from './edit';
+import { ClubsListComponent } from './list';
+import { ClubsExcelComponent } from './excel';
 import { ClubsService } from './clubs.service';
-import { ClubsUtilsService } from './clubs.utils.service';
+import { ModalService } from '@shared/services';
 import { ClubsCreateComponent } from './create';
 import { ClubsDeleteComponent } from './delete';
-import { ClubsEditComponent } from './edit';
-import { ClubsExcelComponent } from './excel';
+import { FeedsModule } from '../feeds/feeds.module';
+import { SharedModule } from '@shared/shared.module';
+import { EventsModule } from '../events/events.module';
+import { ClubsUtilsService } from './clubs.utils.service';
+import { ClubsRoutingModule } from './clubs.routing.module';
 import { ClubsExcelModalComponent } from './excel/components';
-import { ClubsListComponent } from './list';
 import { ClubsListActionBoxComponent } from './list/components';
 
-/**
- * CRUD
- */
-
-/**
- * External Modules
- */
-
 @NgModule({
+  entryComponents: [ClubsDeleteComponent],
   declarations: [
+    ClubsEditComponent,
     ClubsListComponent,
+    ClubsExcelComponent,
     ClubsCreateComponent,
     ClubsDeleteComponent,
-    ClubsListActionBoxComponent,
     ClubsExcelModalComponent,
-    ClubsExcelComponent,
-    ClubsEditComponent
+    ClubsListActionBoxComponent
   ],
 
   imports: [
@@ -48,15 +41,16 @@ import { ClubsListActionBoxComponent } from './list/components';
   ],
 
   exports: [
+    ClubsEditComponent,
     ClubsListComponent,
+    ClubsExcelComponent,
+    ClubsExcelComponent,
     ClubsCreateComponent,
     ClubsDeleteComponent,
-    ClubsListActionBoxComponent,
     ClubsExcelModalComponent,
-    ClubsExcelComponent,
-    ClubsEditComponent
+    ClubsListActionBoxComponent
   ],
 
-  providers: [ClubsService, ClubsUtilsService]
+  providers: [ClubsService, ModalService, ClubsUtilsService]
 })
 export class ClubsModule {}

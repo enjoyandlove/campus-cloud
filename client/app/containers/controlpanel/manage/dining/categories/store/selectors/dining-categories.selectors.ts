@@ -9,10 +9,7 @@ export const getCategoriesState = createSelector(
   (state: fromFeature.ICategoriesState) => state.diningCategories
 );
 
-export const getCategories = createSelector(
-  getCategoriesState,
-  fromCategories.getCategories
-);
+export const getCategories = createSelector(getCategoriesState, fromCategories.getCategories);
 
 export const getCategoriesType = createSelector(
   getCategoriesState,

@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 
-import { MockRouter } from '../../__tests__/dashboard.activatedroute';
-import { MockDashboardService } from '../../__tests__/dashboard.service';
-import { CPSession } from '../../../../../session';
-import { configureTestSuite } from '../../../../../shared/tests';
-import { DashboardUtilsService } from '../../dashboard.utils.service';
+import { CPSession } from '@app/session';
+import { configureTestSuite } from '@shared/tests';
 import { DashboardModule } from '../../dashboard.module';
 import { DashboardService } from '../../dashboard.service';
+import { MockRouter } from '../../tests/dashboard.activatedroute';
+import { MockDashboardService } from '../../tests/dashboard.service';
+import { DashboardUtilsService } from '../../dashboard.utils.service';
 import { DashboardCampusTileComponent } from './dashboard-campus-tile.component';
 
 describe('DashboardCampusTileComponent', () => {

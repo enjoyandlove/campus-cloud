@@ -11,7 +11,6 @@ import { ILocation } from '@libs/locations/common/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 
 @Mixin([Destroyable])
-
 @Component({
   selector: 'cp-locations-info',
   templateUrl: './locations-info.component.html',
@@ -52,32 +51,38 @@ export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
   }
 
   loadLocationDetail() {
-    this.store.select(fromStore.getSelectedLocation).pipe(
-      takeUntil(this.destroy$),
-      filter((location: ILocation) => !!location),
-      map((location: ILocation) => {
-        this.location = location;
-        this.buildHeader(location);
+    this.store
+      .select(fromStore.getSelectedLocation)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((location: ILocation) => !!location),
+        map((location: ILocation) => {
+          this.location = location;
+          this.buildHeader(location);
 
-        this.resourceBanner = {
-          heading: location.name,
-          image: location.image_url,
-          subheading: location.category_name
-        };
+          this.resourceBanner = {
+            heading: location.name,
+            image: location.image_url,
+            subheading: location.category_name
+          };
 
-        this.mapCenter = new BehaviorSubject({
-          lat: location.latitude,
-          lng: location.longitude
-        });
+          this.mapCenter = new BehaviorSubject({
+            lat: location.latitude,
+            lng: location.longitude
+          });
 
-        this.hasMetaData = location.short_name || location.description
-          || location.links[0].label || location.links[0].url;
+          const hasLinks = location.links.length
+            ? location.links[0].label || location.links[0].url
+            : false;
 
-        if (location.schedule.length) {
-          this.openingHours = this.locationUtils.parsedSchedule(location.schedule);
-        }
-      })
-    ).subscribe();
+          this.hasMetaData = Boolean(location.short_name || location.description || hasLinks);
+
+          if (location.schedule.length) {
+            this.openingHours = this.locationUtils.parsedSchedule(location.schedule);
+          }
+        })
+      )
+      .subscribe();
   }
 
   onEditClick() {
@@ -91,6 +96,6 @@ export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
   }
 
   ngOnDestroy() {
-   this.emitDestroy();
+    this.emitDestroy();
   }
 }

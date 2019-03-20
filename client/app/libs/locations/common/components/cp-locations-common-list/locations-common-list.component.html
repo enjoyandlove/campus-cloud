@@ -25,8 +25,10 @@
           [src]="location.image_url ? location.image_url : defaultImage">
         <strong>
           <a
+            cpTracker
             cpTarget="view_info"
             class="cp-form__title"
+            [eventData]="eventData"
             [routerLink]="[location.id + '/info']">
             {{ location.name }}
           </a>

@@ -22,12 +22,7 @@ import {
   EventAttendance
 } from '../event.status';
 
-import {
-  AdminService,
-  CPI18nService,
-  CPTrackingService,
-  StoreService
-} from '@shared/services';
+import { AdminService, CPI18nService, CPTrackingService, StoreService } from '@shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';

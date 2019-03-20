@@ -1,23 +1,23 @@
+import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../../../../shared/shared.module';
-import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
 
-import { OrientationService } from './orientation.services';
-import { OrientationUtilsService } from './orientation.utils.service';
-import { OrientationRoutingModule } from './orientation.routing.module';
-
+import { ModalService } from '@shared/services';
 import { OrientationListComponent } from './list';
+import { ClubsModule } from '../clubs/clubs.module';
+import { SharedModule } from '@shared/shared.module';
+import { OrientationService } from './orientation.services';
 import { OrientationProgramCreateComponent } from './create';
 import { OrientationProgramDeleteComponent } from './delete';
+import { CalendarsModule } from '../calendars/calendars.module';
 import { OrientationDuplicateProgramComponent } from './duplicate';
+import { OrientationUtilsService } from './orientation.utils.service';
+import { OrientationRoutingModule } from './orientation.routing.module';
 import { OrientationListActionBoxComponent } from './list/components/action-box';
 
-import { CalendarsModule } from '../calendars/calendars.module';
-import { ClubsModule } from '../clubs/clubs.module';
-
 @NgModule({
+  entryComponents: [OrientationProgramDeleteComponent],
   declarations: [
     OrientationListComponent,
     OrientationListActionBoxComponent,
@@ -36,6 +36,6 @@ import { ClubsModule } from '../clubs/clubs.module';
     ClubsModule
   ],
 
-  providers: [OrientationService, OrientationUtilsService]
+  providers: [OrientationService, ModalService, OrientationUtilsService]
 })
 export class OrientationModule {}

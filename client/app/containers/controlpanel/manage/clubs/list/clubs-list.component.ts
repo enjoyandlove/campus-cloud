@@ -1,21 +1,23 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { OverlayRef } from '@angular/cdk/overlay';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '@app/session';
 import { IClub } from '../club.interface';
+import { baseActions } from '@app/store/base';
 import { ClubsService } from '../clubs.service';
-import { CPSession } from '../../../../../session';
-import { baseActions } from '../../../../../store/base';
+import { ClubsDeleteComponent } from '../delete';
+import { CP_TRACK_TO } from '@shared/directives';
+import { amplitudeEvents } from '@shared/constants';
+import { BaseComponent } from '@app/base/base.component';
 import { ManageHeaderService } from './../../utils/header';
 import { ClubsUtilsService } from '../clubs.utils.service';
 import { ClubSocialGroup, ClubStatus } from '../club.status';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { environment } from './../../../../../../environments/environment';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { environment } from '@client/environments/environment';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { CPI18nService, CPTrackingService, ModalService } from '@shared/services';
 
 interface IState {
   clubs: IClub[];
@@ -46,7 +48,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   eventData;
   clubStatus;
   sortingLabels;
-  deleteClub = '';
+  activeModal: OverlayRef;
   state: IState = state;
   ACTIVE_STATUS = ClubStatus.active;
   PENDING_STATUS = ClubStatus.pending;
@@ -66,6 +68,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     private cpI18n: CPI18nService,
     private utils: ClubsUtilsService,
     private clubsService: ClubsService,
+    private modalService: ModalService,
     private cpTracking: CPTrackingService,
     private headerService: ManageHeaderService
   ) {
@@ -122,6 +125,37 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     );
   }
 
+  onDelete(club) {
+    this.activeModal = this.modalService.open(
+      ClubsDeleteComponent,
+      {},
+      {
+        data: {
+          club,
+          isAthletic: this.isAthletic
+        },
+        onClose: this.onDeletedClub.bind(this)
+      }
+    );
+  }
+
+  onDeletedClub(clubId?: number) {
+    if (clubId) {
+      this.state = {
+        ...this.state,
+        clubs: this.state.clubs.filter((club) => club.id !== clubId)
+      };
+
+      if (this.state.clubs.length === 0 && this.pageNumber > 1) {
+        this.resetPagination();
+        this.fetch();
+      }
+    }
+
+    this.modalService.close(this.activeModal);
+    this.activeModal = null;
+  }
+
   trackEvent(res) {
     this.eventProperties = {
       ...this.eventProperties,
@@ -150,17 +184,6 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
     }
 
     this.fetch();
-  }
-
-  onDeletedClub(clubId) {
-    this.state = Object.assign({}, this.state, {
-      clubs: this.state.clubs.filter((club) => club.id !== clubId)
-    });
-
-    if (this.state.clubs.length === 0 && this.pageNumber > 1) {
-      this.resetPagination();
-      this.fetch();
-    }
   }
 
   onPaginationNext() {
@@ -200,10 +223,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
       [ClubStatus.pending]: this.cpI18n.translate('pending')
     };
 
-    this.store.dispatch({
-      type: baseActions.HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
-    });
+    this.headerService.updateHeader();
 
     this.sortingLabels = {
       name: this.cpI18n.translate('name')

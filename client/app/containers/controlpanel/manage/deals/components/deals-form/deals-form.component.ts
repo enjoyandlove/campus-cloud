@@ -62,7 +62,9 @@ export class DealsFormComponent implements OnInit {
     } else {
       this.form.controls['expiration'].setValue(this.expiration);
       this.postingEndDatePickerOptions.defaultDate =
-        this.expiration > 0 ? CPDate.fromEpoch(this.expiration, this.session.tz).format() : null;
+        this.expiration > 0
+          ? CPDate.fromEpochLocal(this.expiration, this.session.tz).format()
+          : null;
     }
   }
 
@@ -90,12 +92,16 @@ export class DealsFormComponent implements OnInit {
 
     this.postingStartDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: posting_start ? CPDate.fromEpoch(posting_start, _self.session.tz).format() : null
+      defaultDate: posting_start
+        ? CPDate.fromEpochLocal(posting_start, _self.session.tz).format()
+        : null
     };
 
     this.postingEndDatePickerOptions = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: posting_end ? CPDate.fromEpoch(posting_end, _self.session.tz).format() : null
+      defaultDate: posting_end
+        ? CPDate.fromEpochLocal(posting_end, _self.session.tz).format()
+        : null
     };
   }
 }

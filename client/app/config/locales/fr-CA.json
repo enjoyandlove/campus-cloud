@@ -2292,6 +2292,9 @@
   "t_admin_invite_studio_limited_tooltip": {
     "message": "Un accès complet à Studio nécessite les permissions vers les clubs sportifs, les événements, les clubs, les services, les calendriers et l'orientation. Votre accès pour ajouter des ressources sera limité sans ces permissions."
   },
+  "t_announcement_type": {
+    "message": "Type d'annonce"
+  },
   "t_assess_all_orientations": {
     "message": "Tous les programmes d'orientation"
   },
@@ -2307,11 +2310,32 @@
   "t_assess_checkout_time_out": {
     "message": "Heure de sortie"
   },
+  "t_assess_email": {
+    "message": "Courriel"
+  },
+  "t_assess_first_name": {
+    "message": "Prénom"
+  },
+  "t_assess_last_name": {
+    "message": "Nom de famille"
+  },
+  "t_assess_list_event_names": {
+    "message": "Liste présence aux événements"
+  },
+  "t_assess_list_service_names": {
+    "message": "Liste de services visités"
+  },
   "t_assess_no_orientation_data": {
     "message": "Aucune donnée d'orientation"
   },
   "t_assess_no_orientation_data_help": {
     "message": "Pour voir les données des programmes d'orientation, utilisez le filtre d'implication"
+  },
+  "t_assess_number_events": {
+    "message": "Nombre d'événements"
+  },
+  "t_assess_number_services": {
+    "message": "Nombre de services"
   },
   "t_assess_orientation_programs": {
     "message": "Programmes d'orientation"
@@ -2327,6 +2351,9 @@
   },
   "t_assess_top_orientation_programs": {
     "message": "Programmes populaires"
+  },
+  "t_assess_total_engagement": {
+    "message": "Total de l'engagement (nombre d'événements + nombre de services)"
   },
   "t_assess_total_orientation_programs": {
     "message": "Total de programmes"
@@ -2373,6 +2400,9 @@
   "t_customise_personas": {
     "message": "Expériences d'application"
   },
+  "t_dashboard_build_experience": {
+    "message": "Créer expérience d'application"
+  },
   "t_dashboard_chart_tooltip_label_downloads": {
     "message": "Téléchargements"
   },
@@ -2381,6 +2411,12 @@
   },
   "t_dashboard_top_orientation": {
     "message": "Palmarès des orientations"
+  },
+  "t_dashboard_welcome": {
+    "message": "Bienvenue sur Campus Cloud"
+  },
+  "t_dashboard_welcome_subheader": {
+    "message": "Vous pouvez mesurer l'engagement avec votre application et le contenu après avoir lancé votre expérience d'application"
   },
   "t_datepicker_clear": {
     "message": "Réinitialiser"

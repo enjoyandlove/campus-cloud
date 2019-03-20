@@ -9,15 +9,15 @@ import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
-import { CPI18nService } from '@shared/services';
 import { ManageHeaderService } from '../../utils';
+import { amplitudeEvents } from '@shared/constants';
 import { ILocation } from '@libs/locations/common/model';
 import { BaseComponent } from '@app/base/base.component';
 import * as fromCategoryStore from '../categories/store';
 import { LocationType } from '@libs/locations/common/utils';
-import { ICategory } from '@libs/locations/common/categories/model';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
-import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
+import { ICategory, LocationCategoryLocale } from '@libs/locations/common/categories/model';
 
 interface IState {
   search_str: string;
@@ -52,8 +52,9 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService,
-    public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
+    public store: Store<fromStore.ILocationsState>
   ) {
     super();
   }
@@ -136,13 +137,6 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     this.fetchFilteredLocations();
   }
 
-  buildHeader() {
-    this.store.dispatch({
-      type: fromRoot.baseActions.HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
-    });
-  }
-
   onLaunchDeleteModal(location: ILocation) {
     this.showDeleteModal = true;
     this.deleteLocation = location;
@@ -157,7 +151,8 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       tap((categories: ICategory[]) => {
         if (!categories.length) {
           const locale = CPI18nService.getLocale().startsWith('fr')
-            ? LocationCategoryLocale.fr : LocationCategoryLocale.eng;
+            ? LocationCategoryLocale.fr
+            : LocationCategoryLocale.eng;
 
           const params = new HttpParams()
             .set('locale', locale)
@@ -227,11 +222,19 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
   }
 
   onCategoriesClick() {
+    const eventName = amplitudeEvents.CLICKED_PAGE_ITEM;
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_type: amplitudeEvents.LOCATION_CATEGORY
+    };
+
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+
     this.router.navigate(['/manage/locations/categories']);
   }
 
   ngOnInit() {
-    this.buildHeader();
+    this.headerService.updateHeader();
     this.loadLocations();
     this.loadCategories();
     this.listenForErrors();

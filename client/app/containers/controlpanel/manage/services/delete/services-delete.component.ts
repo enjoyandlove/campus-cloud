@@ -1,12 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 
 import { IService } from '../service.interface';
+import { amplitudeEvents } from '@shared/constants';
 import { ServicesService } from '../services.service';
-import { CPTrackingService } from '../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-
-declare var $: any;
+import { CPTrackingService, CPI18nService, MODAL_DATA, IModal } from '@shared/services';
 
 @Component({
   selector: 'cp-services-delete',
@@ -14,24 +11,30 @@ declare var $: any;
   styleUrls: ['./services-delete.component.scss']
 })
 export class ServicesDeleteComponent implements OnInit {
-  @Input() service: IService;
-  @Output() deleted: EventEmitter<number> = new EventEmitter();
-
-  buttonData;
   eventProperties;
+  service: IService;
+  deleteWarnings = [
+    this.cpI18n.translate('t_shared_delete_resource_warning_wall_posts'),
+    this.cpI18n.translate('t_shared_delete_resource_warning_assessment_data'),
+    this.cpI18n.translate('t_shared_delete_resource_warning_events'),
+    this.cpI18n.translate('t_shared_delete_resource_warning_service_providers')
+  ];
 
   constructor(
+    @Inject(MODAL_DATA) private modal: IModal,
     private cpI18n: CPI18nService,
     private cpTracking: CPTrackingService,
     public servicesService: ServicesService
   ) {}
 
+  onClose() {
+    this.modal.onClose();
+  }
+
   onDelete() {
     this.servicesService.deleteService(this.service.id).subscribe((_) => {
       this.trackEvent();
-      this.deleted.emit(this.service.id);
-      $('#deleteServicesModal').modal('hide');
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+      this.modal.onClose(this.service.id);
     });
   }
 
@@ -45,9 +48,6 @@ export class ServicesDeleteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.buttonData = {
-      class: 'danger',
-      text: this.cpI18n.translate('delete')
-    };
+    this.service = this.modal.data;
   }
 }

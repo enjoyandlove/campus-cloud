@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 
-import { AuthGuard } from '@app/config/guards';
-
+import { PrivilegesGuard } from '@app/config/guards';
 import { ManageComponent } from './manage.component';
+import { CP_PRIVILEGES_MAP } from '@shared/constants/privileges';
 import { CanDeactivateDining } from './dining/guards/dining-guard';
 import { CanDeactivateLocations } from './locations/locations.guard';
 
@@ -13,85 +13,97 @@ const appRoutes: Routes = [
   {
     path: '',
     component: ManageComponent,
-    canActivate: [AuthGuard],
     children: [
       {
         path: 'events',
-        data: { zendesk: 'events' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'events', privilege: CP_PRIVILEGES_MAP.events },
         loadChildren: './events/events.module#EventsModule'
       },
 
       {
         path: 'services',
-        data: { zendesk: 'services' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'services', privilege: CP_PRIVILEGES_MAP.services },
         loadChildren: './services/services.module#ServicesModule'
       },
 
       {
         path: 'clubs',
-        data: { zendesk: 'clubs' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'clubs', privilege: CP_PRIVILEGES_MAP.clubs },
         loadChildren: './clubs/clubs.module#ClubsModule'
       },
 
       {
         path: 'athletics',
-        data: { zendesk: 'athletics' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'athletics', privilege: CP_PRIVILEGES_MAP.athletics },
         loadChildren: './athletics/athletics.module#AthleticsModule'
       },
 
       {
         path: 'links',
-        data: { zendesk: 'links' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'links', privilege: CP_PRIVILEGES_MAP.links },
         loadChildren: './links/links.module#LinksModule'
       },
 
       {
         path: 'feeds',
-        data: { zendesk: 'walls' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'walls', privilege: CP_PRIVILEGES_MAP.moderation },
         loadChildren: './feeds/feeds.module#FeedsModule'
       },
 
       {
         path: 'clubs',
-        data: { zendesk: 'clubs' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'clubs', privilege: CP_PRIVILEGES_MAP.clubs },
         loadChildren: './clubs/clubs.module#ClubsModule'
       },
 
       {
         path: 'calendars',
-        data: { zendesk: 'calendars' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'calendars', privilege: CP_PRIVILEGES_MAP.calendar },
         loadChildren: './calendars/calendars.module#CalendarsModule'
       },
 
       {
         path: 'locations',
-        data: { zendesk: 'locations' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'locations', privilege: CP_PRIVILEGES_MAP.campus_maps },
         canDeactivate: [CanDeactivateLocations],
         loadChildren: './locations/locations.module#LocationsModule'
       },
 
       {
         path: 'dining',
-        data: { zendesk: 'dining' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'dining', privilege: CP_PRIVILEGES_MAP.dining },
         canDeactivate: [CanDeactivateDining],
         loadChildren: './dining/dining.module#DiningModule'
       },
 
       {
         path: 'orientation',
-        data: { zendesk: 'orientation' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'orientation', privilege: CP_PRIVILEGES_MAP.orientation },
         loadChildren: './orientation/orientation.module#OrientationModule'
       },
 
       {
         path: 'jobs',
-        data: { zendesk: 'jobs' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'jobs', privilege: CP_PRIVILEGES_MAP.jobs },
         loadChildren: './jobs/jobs.module#JobsModule'
       },
 
       {
         path: 'deals',
-        data: { zendesk: 'deals' },
+        canActivate: [PrivilegesGuard],
+        data: { zendesk: 'deals', privilege: CP_PRIVILEGES_MAP.deals },
         loadChildren: './deals/deals.module#DealsModule'
       }
     ]

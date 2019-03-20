@@ -51,6 +51,8 @@ export const amplitudeEvents = {
 
   CUSTOM: 'Custom',
 
+  DEFAULT: 'Default',
+
   COMMENT: 'Comment',
 
   REGULAR: 'Regular',
@@ -181,6 +183,8 @@ export const amplitudeEvents = {
 
   CHANGED_SCHOOL: 'Changed School',
 
+  DINING_CATEGORY: 'Dining Category',
+
   CC_WEB_CHECK_IN: 'CC Web Check-In',
 
   DYNAMIC_AUDIENCE: 'Dynamic Audience',
@@ -196,6 +200,8 @@ export const amplitudeEvents = {
   WALL_MOVED_POST: 'Wall - Moved Post',
 
   EXISTING_SECTION: 'Existing Section',
+
+  LOCATION_CATEGORY: 'Location Category',
 
   CLICKED_PAGE_ITEM: 'Clicked Page Item',
 
@@ -271,6 +277,18 @@ export const amplitudeEvents = {
 
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
 
+  MANAGE_CREATED_DINING: 'Manage - Created Dining',
+
+  MANAGE_UPDATED_DINING: 'Manage - Updated Dining',
+
+  MANAGE_DELETED_DINING: 'Manage - Deleted Dining',
+
+  MANAGE_CREATED_CATEGORY: 'Manage Created Category',
+
+  MANAGE_UPDATED_CATEGORY: 'Manage Updated Category',
+
+  MANAGE_DELETED_CATEGORY: 'Manage Deleted Category',
+
   STUDIO_DRAG_DROP_TILE: 'Studio - Drag & Drop Tile',
 
   MANAGE_CHANGED_QR_CODE: 'Manage - Changed QR Code',
@@ -302,6 +320,8 @@ export const amplitudeEvents = {
   MANAGE_CREATED_CALENDAR: 'Manage - Created Calendar',
 
   MANAGE_UPDATED_LOCATION: 'Manage - Updated Location',
+
+  MANAGE_DELETED_LOCATION: 'Manage - Deleted Location',
 
   STUDIO_MOVED_EXPERIENCE: 'Studio - Moved Experience',
 

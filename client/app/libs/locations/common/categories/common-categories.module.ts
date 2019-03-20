@@ -5,6 +5,8 @@ import { NgModule } from '@angular/core';
 
 import { CategoryTypePipe } from './pipes';
 import { SharedModule } from '@client/app/shared/shared.module';
+import { CategoriesUtilsService } from './categories.utils.service';
+
 import {
   CategoryFormComponent,
   CategoriesActionBoxComponent,
@@ -18,16 +20,8 @@ import {
     CategoriesActionBoxComponent,
     CategoriesCommonListComponent
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    RouterModule,
-    ReactiveFormsModule
-  ],
-  exports: [
-    CategoryFormComponent,
-    CategoriesActionBoxComponent,
-    CategoriesCommonListComponent
-  ]
+  providers: [CategoriesUtilsService],
+  imports: [CommonModule, SharedModule, RouterModule, ReactiveFormsModule],
+  exports: [CategoryFormComponent, CategoriesActionBoxComponent, CategoriesCommonListComponent]
 })
 export class CommonCategoriesModule {}

@@ -33,7 +33,6 @@ export enum diningActions {
   DESTROY = '[manage.dining] destroy'
 }
 
-
 export class GetDining implements Action {
   readonly type = diningActions.GET_DINING;
   constructor(public payload: { startRange: number; endRange: number; params: HttpParams }) {}
@@ -96,7 +95,15 @@ export class PostDiningSuccess implements Action {
 
 export class EditDining implements Action {
   readonly type = diningActions.EDIT_DINING;
-  constructor(public payload: { diningId: number; body: IDining; categoryId: number; params: HttpParams }) {}
+  constructor(
+    public payload: {
+      body: IDining;
+      diningId: number;
+      categoryId: number;
+      params: HttpParams;
+      updatedCategory: string;
+    }
+  ) {}
 }
 
 export class EditDiningFail implements Action {
@@ -106,12 +113,12 @@ export class EditDiningFail implements Action {
 
 export class EditDiningSuccess implements Action {
   readonly type = diningActions.EDIT_DINING_SUCCESS;
-  constructor(public payload: { data: IDining, categoryId: number }) {}
+  constructor(public payload: { data: IDining; categoryId: number }) {}
 }
 
 export class DeleteDining implements Action {
   readonly type = diningActions.DELETE_DINING;
-  constructor(public payload: { diningId: number; categoryId: number; params: HttpParams }) {}
+  constructor(public payload: IDining) {}
 }
 
 export class DeleteDiningFail implements Action {

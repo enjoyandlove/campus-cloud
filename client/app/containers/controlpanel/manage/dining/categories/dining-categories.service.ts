@@ -18,37 +18,37 @@ export class DiningCategoriesService extends HTTPService {
   }
 
   getCategories(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.LOCATIONS_CATEGORIES}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS_CATEGORIES}/`;
 
     return super.get(url, search, true);
   }
 
   getCategoriesType(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.LOCATION_CATEGORY_TYPE}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATION_CATEGORY_TYPE}/`;
 
     return <Observable<IItem[]>>super
-      .get(url, search, true).pipe(map(CategoryModel.setCategoryTypes));
+      .get(url, search, true)
+      .pipe(map(CategoryModel.setCategoryTypes));
   }
 
   createCategory(body, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.LOCATIONS_CATEGORIES}/`;
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS_CATEGORIES}/`;
 
     return super.post(url, body, search, true);
   }
 
   updateCategory(body, categoryId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.LOCATIONS_CATEGORIES}/${categoryId}`;
+      API.ENDPOINTS.LOCATIONS_CATEGORIES
+    }/${categoryId}`;
 
     return super.update(url, body, search, true);
   }
 
   deleteCategoryById(categoryId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.LOCATIONS_CATEGORIES}/${categoryId}`;
+      API.ENDPOINTS.LOCATIONS_CATEGORIES
+    }/${categoryId}`;
 
     return super.delete(url, search, true);
   }

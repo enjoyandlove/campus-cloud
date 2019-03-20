@@ -7,13 +7,15 @@ import { Store } from '@ngrx/store';
 
 import { ISnackbar } from '@app/store';
 import * as fromActions from '../actions';
-import { CPI18nService } from '@shared/services';
 import { baseActionClass } from '@app/store/base';
 import * as fromLocationStore from '../../../store';
+import { amplitudeEvents } from '@shared/constants';
 import { parseErrorResponse } from '@shared/utils/http';
 import { ILocation } from '@libs/locations/common/model';
 import { CategoriesService } from '../../categories.service';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 import { ICategory } from '@libs/locations/common/categories/model';
+import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
 
 @Injectable()
 export class CategoriesEffects {
@@ -21,6 +23,8 @@ export class CategoriesEffects {
     public actions$: Actions,
     public cpI18n: CPI18nService,
     public service: CategoriesService,
+    public cpTracking: CPTrackingService,
+    public utils: CategoriesUtilsService,
     public store: Store<fromLocationStore.ILocationsState | ISnackbar>
   ) {}
 
@@ -85,11 +89,15 @@ export class CategoriesEffects {
 
       return this.service.createCategory(body, params).pipe(
         map((data: ICategory) => {
-          this.store.dispatch(
-            new baseActionClass.SnackbarSuccess({
-              body: this.cpI18n.translate('t_category_successfully_created')
-            })
-          );
+          this.handleSuccess('t_category_successfully_created');
+
+          const eventName = amplitudeEvents.MANAGE_CREATED_CATEGORY;
+          const eventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(data),
+            page_type: amplitudeEvents.LOCATION_CATEGORY
+          };
+
+          this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
           return new fromActions.PostCategorySuccess(data);
         }),
@@ -108,11 +116,15 @@ export class CategoriesEffects {
 
       return this.service.updateCategory(body, categoryId, params).pipe(
         map((data: ICategory) => {
-          this.store.dispatch(
-            new baseActionClass.SnackbarSuccess({
-              body: this.cpI18n.translate('t_category_successfully_edited')
-            })
-          );
+          this.handleSuccess('t_category_successfully_edited');
+
+          const eventName = amplitudeEvents.MANAGE_UPDATED_CATEGORY;
+          const eventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(data),
+            page_type: amplitudeEvents.LOCATION_CATEGORY
+          };
+
+          this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
           return new fromActions.EditCategorySuccess(data);
         }),
@@ -149,17 +161,31 @@ export class CategoriesEffects {
   > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.DELETE_CATEGORIES),
     mergeMap((action: fromActions.DeleteCategories) => {
-      const { categoryId, params } = action.payload;
+      const { body, params } = action.payload;
 
-      return this.service.deleteCategoryById(categoryId, params).pipe(
+      return this.service.deleteCategoryById(body.id, params).pipe(
         map(() => {
-          this.store.dispatch(
-            new baseActionClass.SnackbarSuccess({
-              body: this.cpI18n.translate('t_category_successfully_deleted')
-            })
+          this.handleSuccess('t_category_successfully_deleted');
+
+          const deletedItemEventName = amplitudeEvents.DELETED_ITEM;
+          const deletedCategoryEventName = amplitudeEvents.MANAGE_DELETED_CATEGORY;
+          const deletedCategoryEventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(body),
+            page_type: amplitudeEvents.LOCATION_CATEGORY
+          };
+
+          const deletedItemEventProperties = {
+            ...this.cpTracking.getEventProperties(),
+            page_type: amplitudeEvents.LOCATION_CATEGORY
+          };
+
+          this.cpTracking.amplitudeEmitEvent(deletedItemEventName, deletedItemEventProperties);
+          this.cpTracking.amplitudeEmitEvent(
+            deletedCategoryEventName,
+            deletedCategoryEventProperties
           );
 
-          return new fromActions.DeleteCategoriesSuccess({ deletedId: categoryId });
+          return new fromActions.DeleteCategoriesSuccess({ deletedId: body.id });
         }),
         catchError((error) =>
           of(new fromActions.DeleteCategoriesFail(parseErrorResponse(error.error)))
@@ -167,4 +193,12 @@ export class CategoriesEffects {
       );
     })
   );
+
+  private handleSuccess(key) {
+    this.store.dispatch(
+      new baseActionClass.SnackbarSuccess({
+        body: this.cpI18n.translate(key)
+      })
+    );
+  }
 }

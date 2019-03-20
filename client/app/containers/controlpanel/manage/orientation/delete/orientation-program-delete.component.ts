@@ -1,11 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { OrientationService } from './../orientation.services';
+import { Component, OnInit, Inject } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from './../../../../../session';
-import { CPTrackingService } from '../../../../../shared/services';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPSession } from '@app/session';
+import { amplitudeEvents } from '@shared/constants';
+import { OrientationService } from './../orientation.services';
+import { CPI18nService, CPTrackingService, IModal, MODAL_DATA } from '@shared/services';
 
 @Component({
   selector: 'cp-orientation-program-delete',
@@ -13,14 +12,17 @@ import { amplitudeEvents } from '../../../../../shared/constants/analytics';
   styleUrls: ['./orientation-program-delete.component.scss']
 })
 export class OrientationProgramDeleteComponent implements OnInit {
-  @Input() orientationProgram;
-  @Output() deleted: EventEmitter<number> = new EventEmitter();
-  @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
-
-  buttonData;
   eventProperties;
+  orientationProgram;
+  deleteWarnings = [
+    this.cpI18n.translate('t_shared_delete_resource_warning_wall_posts'),
+    this.cpI18n.translate('t_shared_delete_resource_warning_assessment_data'),
+    this.cpI18n.translate('t_shared_delete_resource_warning_events'),
+    this.cpI18n.translate('t_shared_delete_resource_warning_todos')
+  ];
 
   constructor(
+    @Inject(MODAL_DATA) private modal: IModal,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: OrientationService,
@@ -32,14 +34,12 @@ export class OrientationProgramDeleteComponent implements OnInit {
 
     this.service.deleteProgram(this.orientationProgram.id, search).subscribe(() => {
       this.trackEvent();
-      this.deleted.emit(this.orientationProgram.id);
-      this.resetDeleteModal.emit();
-      $('#programDelete').modal('hide');
-
-      this.buttonData = Object.assign({}, this.buttonData, {
-        disabled: false
-      });
+      this.modal.onClose(this.orientationProgram.id);
     });
+  }
+
+  onClose() {
+    this.modal.onClose();
   }
 
   trackEvent() {
@@ -52,9 +52,6 @@ export class OrientationProgramDeleteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.buttonData = {
-      text: this.cpI18n.translate('delete'),
-      class: 'danger'
-    };
+    this.orientationProgram = this.modal.data;
   }
 }

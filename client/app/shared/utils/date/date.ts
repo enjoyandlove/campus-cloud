@@ -17,6 +17,15 @@ function fromEpoch(timestamp, tz): moment.Moment {
   return moment.tz(timestamp * 1000, tz);
 }
 
+function fromEpochLocal(timestamp, tz): moment.Moment {
+  const schoolOffset = fromEpoch(timestamp, tz).utcOffset();
+  const localMoment = moment(timestamp * 1000);
+  const localOffset = localMoment.utcOffset();
+  localMoment.add(schoolOffset - localOffset, 'minutes');
+
+  return localMoment;
+}
+
 function getMonth(date, tz) {
   const epochDate = fromEpoch(date, tz);
 
@@ -39,5 +48,6 @@ export const CPDate = {
   toEpoch,
   getMonth,
   fromEpoch,
+  fromEpochLocal,
   getTimeDuration
 };

@@ -2,18 +2,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { CPSession } from '../../../session';
-import { DashboardModule } from './dashboard.module';
-import { DashboardService } from './dashboard.service';
-import { DashboardComponent } from './dashboard.component';
-import { configureTestSuite } from '../../../shared/tests';
-import { DashboardUtilsService } from './dashboard.utils.service';
-import { MockRouter } from './__tests__/dashboard.activatedroute';
-import { MockDashboardService } from './__tests__/dashboard.service';
-import { CPI18nService } from './../../../shared/services/i18n.service';
-import { mockUser, mockSchool } from '../../../session/mock';
+import * as tests from '../tests/';
+import { CPSession } from '@app/session';
+import { configureTestSuite } from '@shared/tests';
+import { DashboardModule } from '../dashboard.module';
+import { DashboardService } from '../dashboard.service';
+import { mockUser, mockSchool } from '@app/session/mock';
+import { DashboardBaseComponent } from './base.component';
+import { CPI18nService } from '@shared/services/i18n.service';
+import { DashboardUtilsService } from '../dashboard.utils.service';
 
-describe('DashboardComponent', () => {
+describe('DashboardBaseComponent', () => {
   configureTestSuite();
 
   beforeAll((done) =>
@@ -24,9 +23,9 @@ describe('DashboardComponent', () => {
           DashboardUtilsService,
           CPSession,
           CPI18nService,
-          { provide: DashboardService, useClass: MockDashboardService },
-          { provide: Router, useClass: MockRouter },
-          { provide: ActivatedRoute, useClass: MockRouter }
+          { provide: DashboardService, useClass: tests.MockDashboardService },
+          { provide: Router, useClass: tests.MockRouter },
+          { provide: ActivatedRoute, useClass: tests.MockRouter }
         ]
       });
 
@@ -36,12 +35,12 @@ describe('DashboardComponent', () => {
       .catch(done.fail)
   );
 
-  let route: MockRouter;
-  let comp: DashboardComponent;
-  let fixture: ComponentFixture<DashboardComponent>;
+  let route: tests.MockRouter;
+  let comp: DashboardBaseComponent;
+  let fixture: ComponentFixture<DashboardBaseComponent>;
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(DashboardComponent);
+    fixture = TestBed.createComponent(DashboardBaseComponent);
     comp = fixture.componentInstance;
     route = TestBed.get(ActivatedRoute);
 

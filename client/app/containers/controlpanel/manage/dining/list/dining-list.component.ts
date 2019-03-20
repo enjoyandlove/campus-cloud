@@ -9,12 +9,13 @@ import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
-import { CPI18nService } from '@shared/services';
 import { ManageHeaderService } from '../../utils';
+import { amplitudeEvents } from '@shared/constants';
 import { IDining } from '@libs/locations/common/model';
 import { BaseComponent } from '@app/base/base.component';
 import * as fromCategoryStore from '../categories/store';
 import { ICategory } from '@libs/locations/common/categories/model';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 import { LocationsUtilsService, LocationType } from '@libs/locations/common/utils';
 
 interface IState {
@@ -50,8 +51,9 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
     public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public cpTracking: CPTrackingService,
     public headerService: ManageHeaderService,
-    public store: Store<fromStore.IDiningState | fromRoot.IHeader>
+    public store: Store<fromStore.IDiningState>
   ) {
     super();
   }
@@ -138,13 +140,6 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
     setTimeout(() => $('#diningDelete').modal());
   }
 
-  buildHeader() {
-    this.store.dispatch({
-      type: fromRoot.baseActions.HEADER_UPDATE,
-      payload: this.headerService.filterByPrivileges()
-    });
-  }
-
   loadDining() {
     this.store
       .select(fromStore.getDiningLoaded)
@@ -214,12 +209,20 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
   }
 
   onCategoriesClick() {
+    const eventName = amplitudeEvents.CLICKED_PAGE_ITEM;
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_type: amplitudeEvents.DINING_CATEGORY
+    };
+
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+
     this.router.navigate(['/manage/dining/categories']);
   }
 
   ngOnInit() {
     this.loadDining();
-    this.buildHeader();
+    this.headerService.updateHeader();
     this.loadCategories();
     this.listenForErrors();
 

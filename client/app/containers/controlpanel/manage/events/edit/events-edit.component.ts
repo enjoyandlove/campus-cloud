@@ -298,11 +298,14 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
 
     this.startdatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['start'].value, _self.session.tz).format()
+      defaultDate: CPDate.fromEpochLocal(
+        this.form.controls['start'].value,
+        _self.session.tz
+      ).format()
     };
     this.enddatePickerOpts = {
       ...COMMON_DATE_PICKER_OPTIONS,
-      defaultDate: CPDate.fromEpoch(this.form.controls['end'].value, _self.session.tz).format()
+      defaultDate: CPDate.fromEpochLocal(this.form.controls['end'].value, _self.session.tz).format()
     };
   }
 
@@ -464,6 +467,7 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
   toggleEventAttendance(value) {
     value = value ? EventAttendance.enabled : EventAttendance.disabled;
 
+    this.selectedQRCode = this.eventQRCodes[0];
     this.enableStudentFeedbackOnAttendanceToggle(value);
     this.form.controls['event_attendance'].setValue(value);
     this.form.controls['attend_verification_methods'].setValue([

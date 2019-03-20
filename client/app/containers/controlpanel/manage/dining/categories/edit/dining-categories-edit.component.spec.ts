@@ -19,11 +19,7 @@ describe('DiningCategoriesEditComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [
-          CPSession,
-          CPI18nService,
-          { provide: MODAL_DATA, useClass: MockModalData }
-        ],
+        providers: [CPSession, CPI18nService, { provide: MODAL_DATA, useClass: MockModalData }],
         declarations: [DiningCategoriesEditComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

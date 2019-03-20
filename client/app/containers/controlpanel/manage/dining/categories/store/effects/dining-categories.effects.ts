@@ -10,13 +10,14 @@ import { ISnackbar } from '@app/store';
 import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
 import * as fromDining from '../../../store';
-import { CPI18nService } from '@shared/services';
 import { baseActionClass } from '@app/store/base';
+import { amplitudeEvents } from '@shared/constants';
 import { IDining } from '@libs/locations/common/model';
 import { LocationType } from '@libs/locations/common/utils';
-import { ICategory } from '@libs/locations/common/categories/model';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 import { DiningCategoriesService } from '../../dining-categories.service';
-import { ICategoriesApiQuery, LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
+import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
+import { ICategory, ICategoriesApiQuery, LocationCategoryLocale } from '@libs/locations/common/categories/model';
 
 @Injectable()
 export class DiningCategoriesEffects {
@@ -24,121 +25,135 @@ export class DiningCategoriesEffects {
     public actions$: Actions,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    public cpTracking: CPTrackingService,
+    public utils: CategoriesUtilsService,
     public service: DiningCategoriesService,
     public store: Store<fromDining.IDiningState | ISnackbar>
   ) {}
 
   @Effect()
-  getCategories$: Observable<fromActions.GetCategoriesSuccess | fromActions.GetCategoriesFail>
-    = this.actions$.pipe(
+  getCategories$: Observable<
+    fromActions.GetCategoriesSuccess | fromActions.GetCategoriesFail
+  > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.GET_CATEGORIES),
     mergeMap(() => {
       const search = this.getCategoryParams();
 
-      return this.service.getCategories(search)
-        .pipe(
-          map((data: ICategory[]) => new fromActions.GetCategoriesSuccess(data)),
-          catchError((error) => {
-            this.handleError();
+      return this.service.getCategories(search).pipe(
+        map((data: ICategory[]) => new fromActions.GetCategoriesSuccess(data)),
+        catchError((error) => {
+          this.handleError();
 
-            return of(new fromActions.GetCategoriesFail(error));
-          })
-        );
+          return of(new fromActions.GetCategoriesFail(error));
+        })
+      );
     })
   );
 
   @Effect()
-  getCategoriesTypes$: Observable<fromActions.GetCategoriesTypeSuccess | fromActions.GetCategoriesTypeFail>
-    = this.actions$.pipe(
+  getCategoriesTypes$: Observable<
+    fromActions.GetCategoriesTypeSuccess | fromActions.GetCategoriesTypeFail
+  > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.GET_CATEGORIES_TYPE),
     mergeMap(() => {
       const search = this.getCategoryParams();
 
-      return this.service.getCategoriesType(search)
-        .pipe(
-          map((data) => new fromActions.GetCategoriesTypeSuccess(data)),
-          catchError((error) => {
-            this.handleError();
+      return this.service.getCategoriesType(search).pipe(
+        map((data) => new fromActions.GetCategoriesTypeSuccess(data)),
+        catchError((error) => {
+          this.handleError();
 
-            return of(new fromActions.GetCategoriesTypeFail(error));
-          })
-        );
+          return of(new fromActions.GetCategoriesTypeFail(error));
+        })
+      );
     })
   );
 
   @Effect()
-  createCategory$: Observable<fromActions.PostCategorySuccess | fromActions.PostCategoryFail>
-    = this.actions$.pipe(
+  createCategory$: Observable<
+    fromActions.PostCategorySuccess | fromActions.PostCategoryFail
+  > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.POST_CATEGORY),
     mergeMap((action: fromActions.PostCategory) => {
       const { body, params } = action.payload;
 
-      return this.service
-        .createCategory(body, params)
-        .pipe(
-          map((data: ICategory) => {
-            this.handleSuccess('t_category_successfully_created');
+      return this.service.createCategory(body, params).pipe(
+        map((data: ICategory) => {
+          this.handleSuccess('t_category_successfully_created');
 
-            return new fromActions.PostCategorySuccess(data);
-          }),
-          catchError((error) => {
-            this.handleError();
+          const eventName = amplitudeEvents.MANAGE_CREATED_CATEGORY;
+          const eventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(data),
+            page_type: amplitudeEvents.DINING_CATEGORY
+          };
 
-            return of(new fromActions.PostCategoryFail(error));
-          })
-        );
+          this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+
+          return new fromActions.PostCategorySuccess(data);
+        }),
+        catchError((error) => {
+          this.handleError();
+
+          return of(new fromActions.PostCategoryFail(error));
+        })
+      );
     })
   );
 
   @Effect()
-  getFilteredCategories$: Observable<fromActions.GetFilteredCategoriesSuccess | fromActions.GetFilteredCategoriesFail>
-    = this.actions$.pipe(
+  getFilteredCategories$: Observable<
+    fromActions.GetFilteredCategoriesSuccess | fromActions.GetFilteredCategoriesFail
+  > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.GET_FILTERED_CATEGORIES),
     withLatestFrom(this.store.select(fromStore.getCategoriesParamState)),
     mergeMap(([_, params]) => {
       const search = this.getCategoryParams(params);
 
-      return this.service.getCategories(search)
-        .pipe(
-          map((data: ICategory[]) => new fromActions.GetFilteredCategoriesSuccess(data)),
-          catchError((error) => {
-            this.handleError();
+      return this.service.getCategories(search).pipe(
+        map((data: ICategory[]) => new fromActions.GetFilteredCategoriesSuccess(data)),
+        catchError((error) => {
+          this.handleError();
 
-            return of(new fromActions.GetFilteredCategoriesFail(error));
-          })
-        );
+          return of(new fromActions.GetFilteredCategoriesFail(error));
+        })
+      );
     })
   );
 
   @Effect()
-  editCategory$: Observable<fromActions.EditCategorySuccess | fromActions.EditCategoryFail>
-    = this.actions$.pipe(
+  editCategory$: Observable<
+    fromActions.EditCategorySuccess | fromActions.EditCategoryFail
+  > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.EDIT_CATEGORY),
     mergeMap((action: fromActions.EditCategory) => {
       const { body, categoryId } = action.payload;
-      const params = new HttpParams()
-        .set('school_id', this.session.g.get('school').id);
+      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
 
-      return this.service
-        .updateCategory(body, categoryId, params)
-        .pipe(
-          map((data: ICategory) => {
-            this.handleSuccess('t_category_successfully_edited');
+      return this.service.updateCategory(body, categoryId, params).pipe(
+        map((data: ICategory) => {
+          this.handleSuccess('t_category_successfully_edited');
 
-            return new fromActions.EditCategorySuccess(data);
-          }),
-          catchError(() => {
-            this.handleError();
+          const eventName = amplitudeEvents.MANAGE_UPDATED_CATEGORY;
+          const eventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(data),
+            page_type: amplitudeEvents.DINING_CATEGORY
+          };
 
-            return of(new fromActions.EditCategoryFail());
-          })
-        );
+          this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+
+          return new fromActions.EditCategorySuccess(data);
+        }),
+        catchError(() => {
+          this.handleError();
+
+          return of(new fromActions.EditCategoryFail());
+        })
+      );
     })
   );
 
   @Effect()
-  editCategorySuccess$: Observable<fromDining.GetDiningSuccess>
-    = this.actions$.pipe(
+  editCategorySuccess$: Observable<fromDining.GetDiningSuccess> = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.EDIT_CATEGORY_SUCCESS),
     map((action: fromActions.EditCategorySuccess) => action.payload),
     withLatestFrom(this.store.select(fromDining.getDining)),
@@ -160,34 +175,51 @@ export class DiningCategoriesEffects {
   );
 
   @Effect()
-  deleteCategory$: Observable<fromActions.DeleteCategoriesSuccess | fromActions.DeleteCategoriesFail>
-    = this.actions$.pipe(
+  deleteCategory$: Observable<
+    fromActions.DeleteCategoriesSuccess | fromActions.DeleteCategoriesFail
+  > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.DELETE_CATEGORIES),
     mergeMap((action: fromActions.DeleteCategories) => {
-      const { categoryId } = action.payload;
-      const params = new HttpParams()
-        .set('school_id', this.session.g.get('school').id);
+      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
 
-      return this.service
-        .deleteCategoryById(categoryId, params)
-        .pipe(
-          map(() => {
-            this.handleSuccess('t_category_successfully_deleted');
+      return this.service.deleteCategoryById(action.payload.id, params).pipe(
+        map(() => {
+          this.handleSuccess('t_category_successfully_deleted');
 
-            return new fromActions.DeleteCategoriesSuccess({ deletedId: categoryId });
-          }),
-          catchError(() => {
-            this.handleError();
+          const deletedItemEventName = amplitudeEvents.DELETED_ITEM;
+          const deletedCategoryEventName = amplitudeEvents.MANAGE_DELETED_CATEGORY;
 
-            return of(new fromActions.DeleteCategoriesFail());
-          })
-        );
+          const deletedItemEventProperties = {
+            ...this.cpTracking.getEventProperties(),
+            page_type: amplitudeEvents.DINING_CATEGORY
+          };
+
+          const deletedCategoryEventProperties = {
+            ...this.utils.getParsedCategoriesEventProperties(action.payload),
+            page_type: amplitudeEvents.DINING_CATEGORY
+          };
+
+          this.cpTracking.amplitudeEmitEvent(deletedItemEventName, deletedItemEventProperties);
+          this.cpTracking.amplitudeEmitEvent(
+            deletedCategoryEventName,
+            deletedCategoryEventProperties
+          );
+
+          return new fromActions.DeleteCategoriesSuccess({ deletedId: action.payload.id });
+        }),
+        catchError(() => {
+          this.handleError();
+
+          return of(new fromActions.DeleteCategoriesFail());
+        })
+      );
     })
   );
 
   private getCategoryParams(state?: ICategoriesApiQuery) {
     const locale = CPI18nService.getLocale().startsWith('fr')
-      ? LocationCategoryLocale.fr : LocationCategoryLocale.eng;
+      ? LocationCategoryLocale.fr
+      : LocationCategoryLocale.eng;
 
     return new HttpParams()
       .set('locale', locale)

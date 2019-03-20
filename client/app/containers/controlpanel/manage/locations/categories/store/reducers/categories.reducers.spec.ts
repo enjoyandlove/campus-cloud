@@ -12,7 +12,6 @@ const pagination = {
   endRange: 2
 };
 
-
 const params = new HttpParams().set('school_id', mockSchool.id.toString());
 
 describe('Categories Reducer', () => {
@@ -131,7 +130,7 @@ describe('Categories Reducer', () => {
     const { initialState } = fromReducer;
     const payload = {
       params,
-      categoryId: mockCategories[0].id
+      body: mockCategories[0]
     };
 
     const action = new fromActions.DeleteCategories(payload);

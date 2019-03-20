@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpParams } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
@@ -8,7 +7,6 @@ import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { CPI18nService } from '@shared/services';
 import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
 import { mockLocations } from '@libs/locations/common/tests';
 import { LocationsDeleteComponent } from './locations-delete.component';
@@ -38,7 +36,6 @@ describe('LocationsDeleteComponent', () => {
     fixture = TestBed.createComponent(LocationsDeleteComponent);
     component = fixture.componentInstance;
     component.location = mockLocations[0];
-    component.session.g.set('school', mockSchool);
   });
 
   it('should init', () => {
@@ -53,11 +50,8 @@ describe('LocationsDeleteComponent', () => {
     expect(component.store.dispatch).toHaveBeenCalled();
 
     const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
-    const { params, locationId } = payload;
-    const expectedParams = new HttpParams().set('school_id', <any>mockSchool.id);
 
-    expect(params).toEqual(expectedParams);
-    expect(locationId).toBe(mockLocations[0].id);
+    expect(payload).toBe(mockLocations[0]);
     expect(type).toBe(fromStore.locationActions.DELETE_LOCATION);
   });
 });

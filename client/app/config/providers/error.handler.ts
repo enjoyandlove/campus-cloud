@@ -16,7 +16,11 @@ export class CPErrorHandler extends ErrorHandler {
     CPLogger.init({
       environment: environment.envName,
       blacklistUrls: [DEV_SERVER_URL, LOCAL_PROD_URL],
-      dsn: environment.keys.sentryDsn
+      dsn: environment.keys.sentryDsn,
+      beforeSend(event) {
+        const e2eUserId = '18845';
+        return event.user.id === e2eUserId ? null : event;
+      }
     });
   }
 

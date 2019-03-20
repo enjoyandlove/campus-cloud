@@ -11,22 +11,23 @@ import * as fromRoot from '@app/store';
 import { BaseComponent } from '@app/base';
 import { IItem } from '@shared/components';
 import { baseActions } from '@app/store/base';
+import { CPI18nService } from '@shared/services';
 import { CPSession, ISchool } from '@app/session';
-import { CPI18nService } from '@app/shared/services';
+import { amplitudeEvents } from '@shared/constants';
 import { LatLngValidators } from '@shared/validators';
 import * as fromCategoryStore from '../categories/store';
 import { LocationType } from '@libs/locations/common/utils';
-import { ICategory } from '@libs/locations/common/categories/model';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 import { LocationModel, ILocation } from '@libs/locations/common/model';
-import { LocationCategoryLocale } from '@libs/locations/common/categories/categories.status';
+import { ICategory, LocationCategoryLocale } from '@libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-locations-edit',
   templateUrl: './locations-edit.component.html',
   styleUrls: ['./locations-edit.component.scss']
 })
-export class LocationsEditComponent extends BaseComponent implements OnInit, OnDestroy, AfterViewInit {
+export class LocationsEditComponent extends BaseComponent
+  implements OnInit, OnDestroy, AfterViewInit {
   school: ISchool;
   formErrors: boolean;
   locationId: number;
@@ -38,6 +39,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
   selectedCategory: IItem;
   loading$: Observable<boolean>;
   categories$: Observable<IItem[]>;
+  updatedCategory = amplitudeEvents.NO;
 
   private destroy$ = new Subject();
 
@@ -46,7 +48,9 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
     public session: CPSession,
     public cpI18n: CPI18nService,
     public latLng: LatLngValidators,
-    public store: Store<fromStore.ILocationsState | fromCategoryStore.ICategoriesState | fromRoot.IHeader>,
+    public store: Store<
+      fromStore.ILocationsState | fromCategoryStore.ICategoriesState | fromRoot.IHeader
+    >
   ) {
     super();
   }
@@ -65,7 +69,10 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
     }
 
     const body = this.locationForm.value;
-    body['schedule'] = LocationsUtilsService.filteredScheduleControls(this.locationForm, this.openingHours);
+    body['schedule'] = LocationsUtilsService.filteredScheduleControls(
+      this.locationForm,
+      this.openingHours
+    );
 
     const locationId = this.locationId;
     const school_id = this.session.g.get('school').id;
@@ -75,7 +82,8 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
       body,
       params,
       locationId,
-      categoryId: this.categoryId
+      categoryId: this.categoryId,
+      updatedCategory: this.updatedCategory
     };
 
     this.store.dispatch(new fromStore.EditLocation(payload));
@@ -94,7 +102,8 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
   }
 
   setErrors() {
-    this.store.select(fromStore.getLocationsError)
+    this.store
+      .select(fromStore.getLocationsError)
       .pipe(
         takeUntil(this.destroy$),
         filter((error) => error),
@@ -143,18 +152,21 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
   }
 
   loadLocation() {
-    this.store.select(fromStore.getSelectedLocation).pipe(
-      takeUntil(this.destroy$),
-      filter((location: ILocation) => !! location),
-      map((location: ILocation) => {
-        const schedule = location['schedule'];
-        this.openingHours = !!schedule.length;
-        this.locationId = location.id;
-        this.categoryId = location.category_id;
-        this.locationForm = LocationModel.form(location);
-        LocationsUtilsService.setScheduleFormControls(this.locationForm, schedule);
-      })
-    ).subscribe();
+    this.store
+      .select(fromStore.getSelectedLocation)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((location: ILocation) => !!location),
+        map((location: ILocation) => {
+          const schedule = location['schedule'];
+          this.openingHours = !!schedule.length;
+          this.locationId = location.id;
+          this.categoryId = location.category_id;
+          this.locationForm = LocationModel.form(location);
+          LocationsUtilsService.setScheduleFormControls(this.locationForm, schedule);
+        })
+      )
+      .subscribe();
   }
 
   loadCategories() {
@@ -164,7 +176,8 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
       tap((categories: ICategory[]) => {
         if (!categories.length) {
           const locale = CPI18nService.getLocale().startsWith('fr')
-            ? LocationCategoryLocale.fr : LocationCategoryLocale.eng;
+            ? LocationCategoryLocale.fr
+            : LocationCategoryLocale.eng;
 
           const params = new HttpParams()
             .set('locale', locale)
@@ -175,7 +188,7 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
         }
       }),
       map((categories) => LocationsUtilsService.setCategoriesDropDown(categories, categoryLabel)),
-      map(parsedCategories => {
+      map((parsedCategories) => {
         Promise.resolve().then(() => {
           this.selectedCategory = parsedCategories.find((c) => c.action === this.categoryId);
         });
@@ -183,6 +196,10 @@ export class LocationsEditComponent extends BaseComponent implements OnInit, OnD
         return parsedCategories;
       })
     );
+  }
+
+  onChangeCategory() {
+    this.updatedCategory = amplitudeEvents.YES;
   }
 
   ngOnInit() {

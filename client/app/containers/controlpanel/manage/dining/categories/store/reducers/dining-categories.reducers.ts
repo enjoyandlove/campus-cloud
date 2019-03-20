@@ -2,8 +2,7 @@ import { createEntityAdapter, Dictionary, EntityAdapter, EntityState } from '@ng
 
 import { IItem } from '@shared/components';
 import * as fromCategories from '../actions';
-import { ICategory } from '@libs/locations/common/categories/model';
-import { ICategoriesApiQuery } from '@libs/locations/common/categories/categories.status';
+import { ICategory, ICategoriesApiQuery } from '@libs/locations/common/categories/model';
 
 export interface ICategoriesState extends EntityState<ICategory> {
   error: boolean;
@@ -95,7 +94,7 @@ export function reducer(state = initialState, action: fromCategories.Actions) {
     }
 
     case fromCategories.CategoriesActions.POST_CATEGORY_SUCCESS: {
-      const result =  categoryAdaptor.addOne(action.payload, {
+      const result = categoryAdaptor.addOne(action.payload, {
         ...state,
         error: false,
         loaded: true,

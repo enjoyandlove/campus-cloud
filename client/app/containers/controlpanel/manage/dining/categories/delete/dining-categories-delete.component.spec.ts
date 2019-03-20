@@ -82,9 +82,8 @@ describe('DiningCategoriesDeleteComponent', () => {
     expect(component.store.dispatch).toHaveBeenCalled();
 
     const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
-    const { categoryId } = payload;
 
-    expect(categoryId).toBe(mockCategories[0].id);
+    expect(payload).toEqual(mockCategories[0]);
     expect(type).toBe(fromStore.CategoriesActions.DELETE_CATEGORIES);
   });
 });

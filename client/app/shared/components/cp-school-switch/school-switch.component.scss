@@ -1,4 +1,5 @@
 @import '~client/style/core/colors';
+@import '~client/style/core/typography';
 @import '~client/style/components/button';
 @import '~client/style/components/dropdown';
 
@@ -11,7 +12,7 @@
 
   width: 245px;
   overflow-y: auto;
-  max-height: 245px;
+  max-height: 292px;
   overflow-x: hidden;
   border-radius: 4px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
@@ -61,7 +62,16 @@
 
     &__name,
     &__default {
-      padding-top: 6px;
+      height: 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+
+    &__label {
+      @include font-semi-bold();
+
+      font-size: 10px;
     }
   }
 }

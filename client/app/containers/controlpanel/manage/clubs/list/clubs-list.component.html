@@ -79,8 +79,7 @@
             </span>
 
             <span
-              (click)="deleteClub = club"
-              data-toggle="modal" data-target="#deleteClubsModal"
+              (click)="onDelete(club)"
               class="col-1 hover text-right text-truncate delete-club float-right">
               &times;
             </span>
@@ -108,14 +107,5 @@
     </cp-no-content>
   </div>
 </div>
-
-<cp-modal modalId="deleteClubsModal">
-  <cp-clubs-delete
-    [club]="deleteClub"
-    (error)="onError($event)"
-    [isAthletic]="isAthletic"
-    (deletedClub)="onDeletedClub($event)">
-  </cp-clubs-delete>
-</cp-modal>
 
 

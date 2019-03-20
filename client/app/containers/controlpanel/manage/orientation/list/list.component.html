@@ -44,7 +44,7 @@
                 <span class="col-1 hover"></span>
               </div>
             </li>
-    
+
             <li class="cp-form__item col-12" *ngFor="let program of state.orientationPrograms;">
               <div class="row">
                 <span class="col-5 text-truncate hover">
@@ -79,8 +79,6 @@
                     <i class="material-icons">control_point_duplicate</i>
                   </button>
                   <button
-                    data-toggle="modal"
-                    data-target="#programDelete"
                     class="cpbtn cpbtn--link-dark"
                     (click)="onClickDelete(program)">
                     <i class="material-icons">close</i>
@@ -118,12 +116,4 @@
     [orientationProgram]="selectedProgram"
     (resetDuplicateModal)="launchDuplicateModal = false">
   </cp-orientation-duplicate-program>
-</cp-modal>
-
-<cp-modal modalId="programDelete" *ngIf="launchDeleteModal">
-  <cp-orientation-program-delete
-    (deleted)="onDeleted($event)"
-    [orientationProgram]="selectedProgram"
-    (resetDeleteModal)="launchDeleteModal = false">
-  </cp-orientation-program-delete>
 </cp-modal>

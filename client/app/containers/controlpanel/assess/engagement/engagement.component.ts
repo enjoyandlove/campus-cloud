@@ -220,62 +220,35 @@ export class EngagementComponent extends BaseComponent implements OnInit {
       .then((data: any) => {
         this.trackDownloadEvent(engagement_type);
 
-        const columns = [
-          this.cpI18n.translate('assess_student_name'),
-          this.cpI18n.translate('assess_number_of_checkins'),
-          this.cpI18n.translate('assess_number_of_responses'),
-          this.cpI18n.translate('assess_response_rate'),
-          this.cpI18n.translate('assess_average_rating'),
-          this.cpI18n.translate('assess_number_of_event_checkins'),
-          this.cpI18n.translate('assess_event_responses'),
-          this.cpI18n.translate('assess_event_responses_rate'),
-          this.cpI18n.translate('assess_event_rating_average'),
-          this.cpI18n.translate('assess_service_checkins'),
-          this.cpI18n.translate('assess_service_responses'),
-          this.cpI18n.translate('assess_service_responses_rate'),
-          this.cpI18n.translate('assess_service_rating_average'),
-          this.cpI18n.translate('assess_student_id')
-        ];
+        const dataMap = [
+          { label: 't_assess_first_name', key: 'firstname' },
+          { label: 't_assess_last_name', key: 'lastname' },
+          { label: 't_assess_email', key: 'email' },
+          { label: 'assess_student_id', key: 'student_identifier' },
+          { label: 't_assess_number_events', key: 'event_checkins' },
+          { label: 't_assess_list_event_names', key: 'event_names' },
+          { label: 't_assess_number_services', key: 'service_checkins' },
+          { label: 't_assess_list_service_names', key: 'service_names' },
+          { label: 't_assess_total_engagement', key: 'total_checkins' }
+        ].map(({ label, key }) => ({ label: this.cpI18n.translate(label), key }));
 
-        const parsedData = data.download_data.map((item) => {
-          return {
-            [this.cpI18n.translate('assess_student_name')]: `${item.firstname} ${item.lastname}`,
+        const columns = dataMap.map(({ label }) => label);
 
-            [this.cpI18n.translate('assess_number_of_checkins')]: item.total_checkins,
-
-            [this.cpI18n.translate('assess_number_of_responses')]: item.total_responses,
-
-            [this.cpI18n.translate('assess_response_rate')]: `${item.total_response_rate.toFixed(
-              1
-            )}%`,
-
-            [this.cpI18n.translate('assess_average_rating')]: `${(item.event_ratings +
-              item.service_ratings) /
-              2}%`,
-
-            [this.cpI18n.translate('assess_number_of_event_checkins')]: item.event_checkins,
-
-            [this.cpI18n.translate('assess_event_responses')]: item.event_responses,
-
-            [this.cpI18n.translate(
-              'assess_event_responses_rate'
-            )]: `${item.event_response_rate.toFixed(1)}%`,
-
-            [this.cpI18n.translate('assess_event_rating_average')]: item.event_ratings,
-
-            [this.cpI18n.translate('assess_service_checkins')]: item.service_checkins,
-
-            [this.cpI18n.translate('assess_service_responses')]: item.service_responses,
-
-            [this.cpI18n.translate(
-              'assess_service_responses_rate'
-            )]: `${item.service_response_rate.toFixed(1)}%`,
-
-            [this.cpI18n.translate('assess_service_rating_average')]: item.service_ratings,
-
-            [this.cpI18n.translate('assess_student_id')]: item.student_identifier
-          };
+        let parsedData = [];
+        data.download_data.forEach((item) => {
+          let parsedItem = {};
+          dataMap.forEach((mapping) => {
+            const itemValue = item[mapping.key];
+            if (itemValue) {
+              parsedItem = {
+                ...parsedItem,
+                [mapping.label]: itemValue
+              };
+            }
+          });
+          parsedData = [...parsedData, parsedItem];
         });
+
         createSpreadSheet(parsedData, columns, fileName);
       });
   }
