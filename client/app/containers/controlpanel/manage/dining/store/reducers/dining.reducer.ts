@@ -171,7 +171,8 @@ export function reducer(state = initialState, action: fromDining.DiningAction) {
         ...state,
         error: false,
         loaded: true,
-        loading: false
+        loading: false,
+        filteredDining: state.filteredDining.filter((d: IDining) => d.id !== deletedId)
       });
     }
 
