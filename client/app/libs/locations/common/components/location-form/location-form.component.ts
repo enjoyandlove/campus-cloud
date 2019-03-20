@@ -26,7 +26,6 @@ export class LocationFormComponent implements OnInit {
 
   constructor(private session: CPSession) {}
 
-
   onResetMap() {
     CPMap.setFormLocationData(this.locationForm, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
@@ -69,7 +68,7 @@ export class LocationFormComponent implements OnInit {
     const cpMap = CPMap.getBaseMapObject(data);
     const lat = this.locationForm.get('latitude');
     const lng = this.locationForm.get('longitude');
-    const options = {onlySelf: true, emitEvent: false};
+    const options = { onlySelf: true, emitEvent: false };
 
     const location = { ...cpMap, address: data.name };
 
@@ -108,7 +107,7 @@ export class LocationFormComponent implements OnInit {
       name: this.locationForm.get('name'),
       latitude: this.locationForm.get('latitude'),
       longitude: this.locationForm.get('longitude'),
-      category: this.locationForm.get('category_id'),
+      category: this.locationForm.get('category_id')
     };
   }
 

@@ -9,10 +9,7 @@ export const getCategoriesState = createSelector(
   (state: fromFeature.ICategoriesState) => state.categories
 );
 
-export const getCategories = createSelector(
-  getCategoriesState,
-  fromCategories.getCategories
-);
+export const getCategories = createSelector(getCategoriesState, fromCategories.getCategories);
 
 export const getFilteredCategories = createSelector(
   getCategoriesState,
@@ -43,6 +40,3 @@ export const getCategoriesErrorMessage = createSelector(
   getCategoriesState,
   fromCategories.getCategoriesErrorMessage
 );
-
-
-

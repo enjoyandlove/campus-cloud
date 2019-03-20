@@ -6,7 +6,6 @@ import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
 import { reducers, effects } from './store';
-
 import { DiningExistGuard } from './guards';
 import { DiningListComponent } from './list';
 import { DiningInfoComponent } from './info';
@@ -16,10 +15,10 @@ import { DiningDeleteComponent } from './delete';
 
 import { DiningService } from './dining.service';
 import { SharedModule } from '@shared/shared.module';
+import { CustomSerializer } from '@app/store/serializers';
 import { LayoutsModule } from '@app/layouts/layouts.module';
 import { DiningRoutingModule } from './dining.routing.module';
 import { LocationsModule } from '../locations/locations.module';
-import { CustomSerializer } from '@app/store/base/router-state';
 import { DiningCategoriesModule } from './categories/dining-categories.module';
 import { CommonLocationsModule } from '@libs/locations/common/common-locations.module';
 

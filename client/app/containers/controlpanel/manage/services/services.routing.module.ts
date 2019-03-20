@@ -10,8 +10,8 @@ import { ServicesInfoComponent } from './info';
 import { ServicesFeedsComponent } from './feeds';
 import { ServicesCreateComponent } from './create';
 import { ServicesEventsComponent } from './events';
-import { ServicesMembersComponent } from './members';
 import { ServicesAttendanceComponent } from './attendance';
+import { ServicesListMembersComponent } from './members/list/list.component';
 
 import {
   ServicesEventsEditComponent,
@@ -61,7 +61,7 @@ const appRoutes: Routes = [
   {
     path: ':serviceId/members',
     canActivate: [PrivilegesGuard],
-    component: ServicesMembersComponent,
+    component: ServicesListMembersComponent,
     data: { zendesk: 'services' },
     resolve: { service: ServicesResolver }
   },

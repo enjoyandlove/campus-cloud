@@ -30,7 +30,7 @@ import { CommonCategoriesModule } from '@libs/locations/common/categories/common
     CommonCategoriesModule,
     CategoriesRoutingModule,
     EffectsModule.forFeature(effects),
-    StoreModule.forFeature('locationCategories', reducers),
+    StoreModule.forFeature('locationCategories', reducers)
   ],
 
   providers: [CategoriesService]

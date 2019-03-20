@@ -12,7 +12,12 @@ import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { configureTestSuite } from '@app/shared/tests';
 import { DiningCreateComponent } from './dining-create.component';
-import { emptyForm, filledForm, mockLinksData, mockScheduleData } from '@libs/locations/common/tests';
+import {
+  emptyForm,
+  filledForm,
+  mockLinksData,
+  mockScheduleData
+} from '@libs/locations/common/tests';
 
 describe('DiningCreateComponent', () => {
   configureTestSuite();

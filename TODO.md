@@ -14,7 +14,7 @@
   * [] Create an Event Form component
   * [] Move Attendnace out of event and treat as an add-on that could be added to amny resource
 
-* Refactor Members:
+* Refactor Members (Andres):
 
   > Similar to Events avoid passing `isXXX` inputs
 
@@ -57,9 +57,10 @@
   This applies to any module that has routes imported. Sometimes we need to import a module to reference its components/services and we also import the routes. If we import this additional module before the routing module, the new module's routes take precedence:
 
   Need to fix in following Module
-    > services.module.ts
-    > events.module.ts
-    > dining.module.ts
+
+  > services.module.ts
+  > events.module.ts
+  > dining.module.ts
 
   Inside ModuleA
 

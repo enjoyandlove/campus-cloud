@@ -1,12 +1,25 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { ClubsModule } from '../../clubs/clubs.module';
-import { ServicesMembersComponent } from './services-members.component';
-import { ClubsMembersModule } from '../../clubs/members/members.module';
+import { ServicesListMembersComponent } from './list';
+import { ServicesMembersEditComponent } from './edit';
+import { ServicesMembersCreateComponent } from './create';
+import { ServicesMembersDeleteComponent } from './delete';
+import { SharedModule } from '@client/app/shared/shared.module';
+import { LibsCommonMembersService } from '@libs/members/common/providers';
+import { LibsCommmonMembersModule } from '@libs/members/common/common-members.module';
+import { LibsCommonMembersUtilsService } from '@libs/members/common/providers/common.utils';
 
 @NgModule({
-  declarations: [ServicesMembersComponent],
+  declarations: [
+    ServicesMembersEditComponent,
+    ServicesListMembersComponent,
+    ServicesMembersCreateComponent,
+    ServicesMembersDeleteComponent
+  ],
 
-  imports: [ClubsModule, ClubsMembersModule]
+  providers: [LibsCommonMembersUtilsService, LibsCommonMembersService],
+
+  imports: [CommonModule, SharedModule, LibsCommmonMembersModule]
 })
 export class ServicesMembersModule {}

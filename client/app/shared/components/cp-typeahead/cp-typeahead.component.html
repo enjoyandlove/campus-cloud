@@ -10,12 +10,12 @@
           <div class="row">
             <div [class]="[ props.withSwitcher ? 'col-9 no-right-padding' : 'col-12' ]">
               <cp-chip
-              [chip]="chip"
-              [props]="chipOptions"
-              class="typeahead__input-wrapper__chip"
-              (handleClose)="onHandleRemove($event)"
-              *ngFor="let chip of state.chips">
-            </cp-chip>
+                [chip]="chip"
+                [props]="chipOptions"
+                class="typeahead__input-wrapper__chip"
+                (handleClose)="onHandleRemove($event)"
+                *ngFor="let chip of state.chips">
+              </cp-chip>
             <input
               #input
               type="text"

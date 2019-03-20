@@ -16,7 +16,7 @@ export class DiningService extends HTTPService {
   getDining(startRange: number, endRange: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${
       API.ENDPOINTS.LOCATIONS
-      }/${startRange};${endRange}`;
+    }/${startRange};${endRange}`;
 
     return super.get(url, search);
   }
