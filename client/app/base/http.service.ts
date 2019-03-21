@@ -1,11 +1,11 @@
-import { HttpClient, HttpHeaders, HttpParams, HttpResponse } from '@angular/common/http';
+import { HttpResponse, HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, delay, flatMap, retryWhen } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { API } from '@app/config/api';
-import { appStorage, CPObj } from '@shared/utils';
+import { appStorage, CPObj, DefaultEncoder } from '@shared/utils';
 
 /**
  * Base HTTP Service
@@ -57,7 +57,7 @@ export abstract class HTTPService {
   }
 
   clearNullValues(params: HttpParams): HttpParams {
-    let cleanParams = new HttpParams();
+    let cleanParams = new HttpParams({ encoder: new DefaultEncoder() });
     params.keys().forEach((key) => {
       if (params.get(key) !== null && params.get(key) !== undefined) {
         cleanParams = cleanParams.set(key, params.get(key));
