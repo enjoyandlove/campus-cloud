@@ -53,6 +53,8 @@ export const amplitudeEvents = {
 
   DEFAULT: 'Default',
 
+  BEAMER: 'Beamer',
+
   COMMENT: 'Comment',
 
   REGULAR: 'Regular',
@@ -100,6 +102,8 @@ export const amplitudeEvents = {
   ATHLETICS: 'Athletics',
 
   NO_ACCESS: 'No Access',
+
+  HELP_DESK: 'Help Desk',
 
   LOGGED_IN: 'Logged In',
 
@@ -205,8 +209,6 @@ export const amplitudeEvents = {
 
   CLICKED_PAGE_ITEM: 'Clicked Page Item',
 
-  VISITED_HELP_DESK: 'Visited Help Desk',
-
   ORIENTATION_EVENT: 'Orientation Event',
 
   INSTITUTION_EVENT: 'Institution Event',
@@ -214,6 +216,8 @@ export const amplitudeEvents = {
   EMAIL_WEB_CHECK_IN: 'Email Web Check-In',
 
   WALL_DELETED_POST: 'Wall - Deleted Post',
+
+  VIEWED_NOTIFICATION: 'Viewed Notification',
 
   CLICKED_CREATE_ITEM: 'Clicked Create Item',
 

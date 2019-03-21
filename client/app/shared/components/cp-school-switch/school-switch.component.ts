@@ -53,6 +53,18 @@ export class SchoolSwitchComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
 
+  trackViewedNotification() {
+    const eventName = amplitudeEvents.VIEWED_NOTIFICATION;
+
+    const eventProperties = {
+      ...this.cpTracking.getEventProperties(),
+      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth),
+      notification_type: amplitudeEvents.HELP_DESK
+    };
+
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+  }
+
   ngOnInit() {
     this.helpDeskUrl = ZendeskService.zdRoot();
 
@@ -82,8 +94,7 @@ export class SchoolSwitchComponent implements OnInit {
 
     this.amplitudeEvents = {
       logged_out: amplitudeEvents.LOGGED_OUT,
-      changed_school: amplitudeEvents.CHANGED_SCHOOL,
-      visited_help_desk: amplitudeEvents.VISITED_HELP_DESK
+      changed_school: amplitudeEvents.CHANGED_SCHOOL
     };
   }
 }
