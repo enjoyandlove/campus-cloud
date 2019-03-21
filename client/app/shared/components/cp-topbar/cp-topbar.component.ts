@@ -2,11 +2,10 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { isProd } from '@app/config/env';
-import { CP_PRIVILEGES_MAP } from './../../constants';
-import { CPSession, ISchool, IUser } from '../../../session';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPSession, ISchool, IUser } from '@app/session';
 import { environment } from '@client/environments/environment';
 import { CPTrackingService, RouteLevel } from '@shared/services';
+import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@shared/constants';
 import { canAccountLevelReadResource, canSchoolReadResource } from '@shared/utils/privileges';
 
 @Component({
