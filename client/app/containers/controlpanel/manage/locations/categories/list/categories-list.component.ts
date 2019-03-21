@@ -1,5 +1,5 @@
-import { takeUntil, tap, take, filter } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { takeUntil, tap, take } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -8,7 +8,6 @@ import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
-import { baseActions } from '@app/store/base';
 import { amplitudeEvents } from '@shared/constants';
 import { LocationType } from '@libs/locations/common/utils';
 import { CPI18nService, CPTrackingService } from '@shared/services';
@@ -196,43 +195,8 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
       .subscribe();
   }
 
-  listenErrors() {
-    this.store
-      .select(fromStore.getCategoriesError)
-      .pipe(takeUntil(this.destroy$), filter((error) => error), tap(() => this.handleError()))
-      .subscribe();
-  }
-
-  resetErrors() {
-    this.store.dispatch(new fromStore.ResetErrorMessage());
-  }
-
-  handleError(message?) {
-    const errorMessage = message ? message : 'something_went_wrong';
-
-    const options = {
-      class: 'danger',
-      body: this.cpI18n.translate(errorMessage)
-    };
-
-    this.dispatchSnackBar(options);
-  }
-
-  dispatchSnackBar(options) {
-    this.store.dispatch({
-      type: baseActions.SNACKBAR_SHOW,
-      payload: {
-        ...options,
-        sticky: true,
-        autoClose: true
-      }
-    });
-  }
-
   ngOnInit() {
-    this.resetErrors();
     this.updateHeader();
-    this.listenErrors();
     this.loadCategories();
     this.loadCategoryTypes();
 

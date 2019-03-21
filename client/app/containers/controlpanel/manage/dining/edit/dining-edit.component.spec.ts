@@ -61,10 +61,11 @@ describe('DiningEditComponent', () => {
 
   it('should populate form with values', () => {
     let expected = omit(mockDining[0], [
-      'category_img_url',
+      'id',
       'category_name',
       'category_color',
-      'id'
+      'category_img_url',
+      'category_is_default'
     ]);
 
     expected = {
