@@ -1,17 +1,17 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 
+import { CPSession } from '@app/session';
+import { RootStoreModule } from '@app/store';
+import { CPI18nService } from '@shared/services';
+import { configureTestSuite } from '@shared/tests';
 import { mkSearch } from '../../../../tests/utils';
 import { mockProvider } from '../../../../tests/mock';
-import { CPSession } from '../../../../../../../../../session';
 import { ServicesModule } from '../../../../../services.module';
-import { RootStoreModule } from '../../../../../../../../../store';
 import { ProvidersService } from '../../../../../providers.service';
-import { CPI18nService } from '../../../../../../../../../shared/services';
-import { configureTestSuite } from '../../../../../../../../../shared/tests';
 import { ServicesProvidersAttendeesListComponent } from './providers-attendees-list.component';
 
 class MockService {
@@ -71,5 +71,21 @@ describe('ServicesProvidersAttendeesListComponent', () => {
         search
       );
     });
+  });
+
+  it('should get all for download', () => {
+    const spy = spyOn(component.providersService, 'getProviderAssessments').and.returnValue(of({}));
+    let search = new HttpParams()
+      .set('service_id', component.provider.campus_service_id.toString())
+      .set('service_provider_id', component.provider.id.toString())
+      .set('sort_field', component.state.sort_field)
+      .set('sort_direction', component.state.sort_direction)
+      .set('all', '1');
+    search = component.providerUtils.addSearchParams(search, component.filterState);
+
+    component.fetchAllRecords();
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
   });
 });

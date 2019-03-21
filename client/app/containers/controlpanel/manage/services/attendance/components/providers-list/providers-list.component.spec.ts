@@ -1,5 +1,6 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 
@@ -83,6 +84,7 @@ describe('ProvidersListComponent', () => {
   });
 
   let spy;
+  let assessSpy;
   let component: ServicesProvidersListComponent;
   let fixture: ComponentFixture<ServicesProvidersListComponent>;
 
@@ -103,7 +105,9 @@ describe('ProvidersListComponent', () => {
 
       spyOn(component.hasProviders, 'emit');
 
-      spyOn(component.providersService, 'getProviderAssessments').and.returnValue(observableOf({}));
+      assessSpy = spyOn(component.providersService, 'getProviderAssessments').and.returnValue(
+        observableOf({})
+      );
 
       spy = spyOn(component.providersService, 'getProviders').and.returnValue(
         observableOf(mockProvider)
@@ -167,4 +171,16 @@ describe('ProvidersListComponent', () => {
       expect(component.hasProviders.emit).toHaveBeenCalledTimes(1);
     })
   );
+
+  it('should get all for download', () => {
+    let search = new HttpParams()
+      .set('service_id', component.service.id.toString())
+      .set('all', '1');
+    search = component.providerUtils.addSearchParams(search, component.filterState);
+
+    component.downloadProvidersCSV();
+
+    expect(assessSpy).toHaveBeenCalledTimes(1);
+    expect(assessSpy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
+  });
 });
