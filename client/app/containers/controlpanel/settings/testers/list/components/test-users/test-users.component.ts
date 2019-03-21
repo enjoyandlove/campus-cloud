@@ -10,9 +10,9 @@ import { ITestUser } from '../../../models/test-user.interface';
 })
 export class TestUsersComponent implements OnInit {
   @Input() users: ITestUser[];
+  @Input() noContentText: string;
   @Input() sortDirection: SortDirection;
 
-  @Output() onCreate: EventEmitter<null> = new EventEmitter();
   @Output() onResend: EventEmitter<number> = new EventEmitter();
   @Output() onDelete: EventEmitter<number> = new EventEmitter();
   @Output() onSort: EventEmitter<SortDirection> = new EventEmitter();

@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 
 import { reducerMap } from '../store';
+import { mockTesters } from '../tests';
 import { CPSession } from '@app/session';
 import { configureTestSuite } from '@shared/tests';
 import * as actions from '../store/testers.actions';
@@ -52,7 +53,7 @@ describe('TestersListComponent', () => {
       component = fixture.componentInstance;
 
       spyFetch = spyOn(component, 'fetch').and.callThrough();
-      spyDispatch = spyOn(component.store, 'dispatch');
+      spyDispatch = spyOn(component.store, 'dispatch').and.callThrough();
 
       fixture.detectChanges();
     })
@@ -77,5 +78,21 @@ describe('TestersListComponent', () => {
     component.doSort(SortDirection.ASC);
     expect(spyDispatch).toHaveBeenCalledWith(new actions.SetTestersSort(SortDirection.DESC));
     expect(spyFetch).toHaveBeenCalled();
+  });
+
+  it('should set isEmpty true', () => {
+    component.doSearch('');
+    component.store.dispatch(new actions.LoadTestersOK([]));
+    expect(component.isEmpty).toBe(true);
+  });
+
+  it('should set isEmpty false if testers exist', () => {
+    component.store.dispatch(new actions.LoadTestersOK(mockTesters));
+    expect(component.isEmpty).toBe(false);
+  });
+
+  it('should set isEmpty false if user searched', () => {
+    component.doSearch('test');
+    expect(component.isEmpty).toBe(false);
   });
 });

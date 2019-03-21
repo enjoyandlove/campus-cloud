@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subject, Observable, combineLatest } from 'rxjs';
 import { OverlayRef } from '@angular/cdk/overlay';
-import { Subject, Observable } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
@@ -24,7 +24,9 @@ import { TestersDeleteComponent } from '../delete/testers-delete.component';
 })
 @Mixin([Destroyable])
 export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
+  isEmpty = false;
   modal: OverlayRef;
+  search$: Observable<string>;
   testers$: Observable<ITestUser[]>;
   testersLoading$: Observable<boolean>;
   sortDirection$: Observable<SortDirection>;
@@ -104,12 +106,20 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
 
   initSelectors() {
     this.testers$ = this.store.select(selectors.getTesters).pipe(takeUntil(this.destroy$));
+    this.search$ = this.store.select(selectors.getTestersSearch).pipe(takeUntil(this.destroy$));
     this.testersLoading$ = this.store
       .select(selectors.getTestersLoading)
       .pipe(takeUntil(this.destroy$));
     this.sortDirection$ = this.store
       .select(selectors.getSortDirection)
       .pipe(takeUntil(this.destroy$));
+    combineLatest(this.testers$, this.search$)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        const noTesters = res[0].length === 0;
+        const noSearch = !res[1];
+        this.isEmpty = noTesters && noSearch;
+      });
   }
 
   ngOnInit() {

@@ -47,14 +47,14 @@ describe('TestUsersComponent', () => {
     component.users = [];
     fixture.detectChanges();
     const testUsers = debugEl.queryAll(By.css('.cp-form__item'));
-    const noContent = debugEl.query(By.css('cp-no-testers'));
+    const noContent = debugEl.query(By.css('cp-no-content'));
     expect(testUsers.length).toBe(0);
     expect(noContent).toBeTruthy();
   });
 
   it('should have testers', () => {
     const testUsers = debugEl.queryAll(By.css('.cp-form__item'));
-    const noContent = debugEl.query(By.css('cp-no-testers'));
+    const noContent = debugEl.query(By.css('cp-no-content'));
     expect(testUsers.length).toBe(1);
     expect(noContent).toBeNull();
   });
