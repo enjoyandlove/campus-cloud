@@ -6,7 +6,6 @@ import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
 import { CPI18nService } from '@shared/services';
 import { configureTestSuite } from '@shared/tests';
@@ -36,7 +35,6 @@ describe('CategoriesListComponent', () => {
   );
 
   let fetchSpy: jasmine.Spy;
-  let dispatchSpy: jasmine.Spy;
   let component: CategoriesListComponent;
   let actionBox: CategoriesActionBoxComponent;
   let fixture: ComponentFixture<CategoriesListComponent>;
@@ -45,7 +43,6 @@ describe('CategoriesListComponent', () => {
     fixture = TestBed.createComponent(CategoriesListComponent);
     component = fixture.componentInstance;
     component.session.g.set('school', mockSchool);
-    dispatchSpy = spyOn(component.store, 'dispatch');
     fetchSpy = spyOn(component, 'fetchFilteredCategories');
 
     actionBox = fixture.debugElement.query(By.directive(CategoriesActionBoxComponent))
@@ -81,19 +78,5 @@ describe('CategoriesListComponent', () => {
     expect(fetchSpy).toHaveBeenCalled();
     expect(fetchSpy).toHaveBeenCalledTimes(1);
     expect(component.state.sort_field).toEqual('name');
-  });
-
-  it('should set error message', () => {
-    const errorKey = 'something_went_wrong';
-    const errorMessage = 'Something went wrong';
-
-    spyOn(component.store, 'select').and.returnValue(of(true));
-
-    component.handleError(errorKey);
-    const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
-
-    expect(payload.body).toEqual(errorMessage);
-    expect(payload.class).toBe('danger');
-    expect(type).toBe(fromRoot.baseActions.SNACKBAR_SHOW);
   });
 });
