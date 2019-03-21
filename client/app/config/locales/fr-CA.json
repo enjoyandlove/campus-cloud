@@ -3050,6 +3050,9 @@
   "t_sandbox_invite_users": {
     "message": "Inviter utilisateurs"
   },
+  "t_sandbox_no_results_found": {
+    "message": "Aucun utilisateur de test trouvé"
+  },
   "t_sandbox_no_test_users": {
     "message": "Aucun utilisateur de test"
   },
@@ -3196,6 +3199,24 @@
   },
   "t_shared_delete_confirmation": {
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
+  },
+  "t_shared_delete_modal_warning": {
+    "message": "Attention: Cette action ne peut pas être annulée."
+  },
+  "t_shared_delete_resource_warning_assessment_data": {
+    "message": "Toutes les données d'évaluation seront supprimées"
+  },
+  "t_shared_delete_resource_warning_events": {
+    "message": "Tous les événements seront supprimés"
+  },
+  "t_shared_delete_resource_warning_service_providers": {
+    "message": "Tous les fournisseurs de service seront supprimés"
+  },
+  "t_shared_delete_resource_warning_todos": {
+    "message": "Toutes les dates limites seront supprimées"
+  },
+  "t_shared_delete_resource_warning_wall_posts": {
+    "message": "Toutes les publications et commentaires seront supprimées"
   },
   "t_shared_edit": {
     "message": "Éditer"

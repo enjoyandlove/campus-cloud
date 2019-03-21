@@ -2,7 +2,7 @@
   <ul
     *ngSwitchCase="true"  
     class="test-users cp-form">
-    <li class="cp-form__header col-12">
+    <li class="cp-form__header">
       <div class="row">
         <cp-sorting-header
           class="col-12"
@@ -15,7 +15,7 @@
     
     <li
       *ngFor="let user of users; index as i"
-      class="cp-form__item col-12"
+      class="cp-form__item"
       [cpTarget]="['test_user_' + i]">
       <div class="row">
         <span class="col-9">
@@ -38,9 +38,11 @@
       </div>
     </li>
   </ul>
-  <cp-no-testers
+  <div
     *ngSwitchCase="false"
-    class="add-margin"
-    (onCreate)="onCreate.emit()">
-  </cp-no-testers>
+    class="row add-margin">
+    <div class="col-12">
+      <cp-no-content [noContentText]="noContentText"></cp-no-content>
+    </div>
+  </div>
 </ng-container>

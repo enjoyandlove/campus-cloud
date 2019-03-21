@@ -11,6 +11,10 @@ export const getTestersState = createSelector(getTesterFeature, (feature: ITeste
 });
 
 export const getTesters = createSelector(getTestersState, reducer.getTesters);
+export const getTestersSearch = createSelector(
+  getTestersState,
+  (state: ITestersState) => state.searchStr
+);
 export const getTestersLoading = createSelector(
   getTestersState,
   (state: ITestersState) => state.loading

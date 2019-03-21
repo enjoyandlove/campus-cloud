@@ -1,4 +1,4 @@
-<cp-card class="col-12">
+<cp-card>
   <div class="row">
     <cp-searchbox
       class="col-3"
@@ -6,12 +6,12 @@
       (query)="onSearch.emit($event)">
     </cp-searchbox>
     <div class="col-9">
-      <a
+      <button
         cpTarget="invite_test_users"
         class="cpbtn cpbtn--primary float-right"
         (click)="onCreate.emit()">
         {{ 't_sandbox_invite_users' | cpI18n }}
-      </a>
+      </button>
     </div>
   </div>
 </cp-card>
