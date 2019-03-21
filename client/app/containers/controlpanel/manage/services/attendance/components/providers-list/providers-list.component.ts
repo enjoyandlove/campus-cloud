@@ -65,7 +65,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     private utils: ServicesUtilsService,
     private cpTracking: CPTrackingService,
     public providersService: ProvidersService,
-    private providerUtils: ProvidersUtilsService
+    public providerUtils: ProvidersUtilsService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -149,7 +149,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   }
 
   downloadProvidersCSV() {
-    let search = new HttpParams().append('service_id', this.service.id.toString());
+    let search = new HttpParams().set('service_id', this.service.id.toString()).set('all', '1');
 
     search = this.providerUtils.addSearchParams(search, this.filterState);
 

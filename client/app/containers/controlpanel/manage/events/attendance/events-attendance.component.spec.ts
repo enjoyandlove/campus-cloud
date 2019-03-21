@@ -321,4 +321,15 @@ describe('EventAttendanceComponent', () => {
     component.ngOnInit();
     expect(component.showStudentIds).toBe(false);
   });
+
+  it('should get all for download', () => {
+    const excelSpy = spyOn(component.utils, 'createExcel');
+    component.onCreateExcel();
+
+    const params = component.getAttendeesSearch().set('all', '1');
+
+    expect(spyAttendee).toHaveBeenCalledTimes(1);
+    expect(spyAttendee).toHaveBeenCalledWith(component.startRange, component.endRange, params);
+    expect(excelSpy).toHaveBeenCalledTimes(1);
+  });
 });
