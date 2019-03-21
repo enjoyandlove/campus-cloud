@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpParams } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
@@ -53,11 +52,8 @@ describe('DiningDeleteComponent', () => {
     expect(component.store.dispatch).toHaveBeenCalled();
 
     const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
-    const { params, diningId } = payload;
-    const expectedParams = new HttpParams().set('school_id', <any>mockSchool.id);
 
-    expect(params).toEqual(expectedParams);
-    expect(diningId).toBe(mockDining[0].id);
+    expect(payload).toBe(mockDining[0]);
     expect(type).toBe(fromStore.diningActions.DELETE_DINING);
   });
 });

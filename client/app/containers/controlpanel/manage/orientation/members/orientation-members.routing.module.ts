@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { OrientationMembersComponent } from './orientation-members.component';
+import { OrientationMembersListComponent } from './list';
 
-const appRoutes: Routes = [{ path: '', component: OrientationMembersComponent }];
+const appRoutes: Routes = [{ path: '', component: OrientationMembersListComponent }];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
   exports: [RouterModule]

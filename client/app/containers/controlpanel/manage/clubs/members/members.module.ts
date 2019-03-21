@@ -1,30 +1,26 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
-import { SharedModule } from '../../../../../shared/shared.module';
-
+import { ClubsMembersComponent } from './list';
+import { ClubsMembersEditComponent } from './edit';
+import { SharedModule } from '@shared/shared.module';
 import { ClubsMembersCreateComponent } from './create';
 import { ClubsMembersDeleteComponent } from './delete';
-import { ClubsMembersEditComponent } from './edit';
-import { ClubsMembersComponent } from './list';
-import { ClubsMembersActionBoxComponent } from './list/components';
 import { ClubsMembersRoutingModule } from './members.routing.module';
-import { MembersService } from './members.service';
-import { MembersUtilsService } from './members.utils.service';
-
-/**
- * CRUD
- */
+import { LibsCommmonMembersModule } from '@libs/members/common/common-members.module';
+import {
+  LibsCommonMembersService,
+  LibsCommonMembersUtilsService
+} from '@libs/members/common/providers';
 
 @NgModule({
   declarations: [
     ClubsMembersComponent,
-    ClubsMembersActionBoxComponent,
-    ClubsMembersCreateComponent,
     ClubsMembersEditComponent,
-    ClubsMembersDeleteComponent
+    ClubsMembersDeleteComponent,
+    ClubsMembersCreateComponent
   ],
 
   imports: [
@@ -32,17 +28,17 @@ import { MembersUtilsService } from './members.utils.service';
     SharedModule,
     RouterModule,
     ReactiveFormsModule,
+    LibsCommmonMembersModule,
     ClubsMembersRoutingModule
   ],
 
   exports: [
     ClubsMembersComponent,
-    ClubsMembersActionBoxComponent,
-    ClubsMembersCreateComponent,
     ClubsMembersEditComponent,
-    ClubsMembersDeleteComponent
+    ClubsMembersDeleteComponent,
+    ClubsMembersCreateComponent
   ],
 
-  providers: [MembersService, MembersUtilsService]
+  providers: [LibsCommonMembersService, LibsCommonMembersUtilsService]
 })
 export class ClubsMembersModule {}

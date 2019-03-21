@@ -51,6 +51,8 @@ export const amplitudeEvents = {
 
   CUSTOM: 'Custom',
 
+  DEFAULT: 'Default',
+
   BEAMER: 'Beamer',
 
   COMMENT: 'Comment',
@@ -278,6 +280,12 @@ export const amplitudeEvents = {
   WALL_UPDATED_SETTINGS: 'Wall - Updated Settings',
 
   CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
+
+  MANAGE_CREATED_DINING: 'Manage - Created Dining',
+
+  MANAGE_UPDATED_DINING: 'Manage - Updated Dining',
+
+  MANAGE_DELETED_DINING: 'Manage - Deleted Dining',
 
   MANAGE_CREATED_CATEGORY: 'Manage Created Category',
 

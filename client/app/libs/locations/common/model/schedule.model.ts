@@ -17,7 +17,7 @@ export const scheduleLabels = {
   [ScheduleDays.Tuesday]: 't_shared_tuesday',
   [ScheduleDays.Thursday]: 't_shared_thursday',
   [ScheduleDays.Saturday]: 't_shared_saturday',
-  [ScheduleDays.Wednesday]: 't_shared_wednesday',
+  [ScheduleDays.Wednesday]: 't_shared_wednesday'
 };
 
 export class ScheduleModel {

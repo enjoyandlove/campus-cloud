@@ -1,4 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
+
 import { IBaseState } from './base.state';
 
 export const getBaseState = createFeatureSelector<IBaseState>('base');
@@ -7,6 +8,11 @@ export const getHeaderState = createSelector(getBaseState, (state: IBaseState) =
 export const getClubsState = createSelector(getBaseState, (state: IBaseState) => state.CLUBS);
 export const getAlertState = createSelector(getBaseState, (state: IBaseState) => state.ALERT);
 export const getAudienceState = createSelector(getBaseState, (state: IBaseState) => state.AUDIENCE);
+
+export const getRouterState = createSelector(
+  getBaseState,
+  (state: IBaseState) => state.ROUTER.state
+);
 export const getEventsModalState = createSelector(
   getBaseState,
   (state: IBaseState) => state.EVENTS_MODAL

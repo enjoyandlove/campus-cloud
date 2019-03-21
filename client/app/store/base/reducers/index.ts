@@ -1,3 +1,4 @@
+import { routerReducer } from '@ngrx/router-store';
 import { ActionReducerMap } from '@ngrx/store';
 
 import { IBaseState } from '../base.state';
@@ -10,6 +11,7 @@ import * as fromEvents from './events-modal.reducer';
 import * as fromServices from './services-modal.reducer';
 
 export const baseReducers: ActionReducerMap<IBaseState> = {
+  ROUTER: routerReducer,
   CLUBS: fromClubs.reducer,
   ALERT: fromAlerts.reducer,
   HEADER: fromHeaders.reducer,

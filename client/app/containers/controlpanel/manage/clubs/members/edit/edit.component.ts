@@ -1,23 +1,12 @@
+import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
+import { FormGroup, AbstractControl } from '@angular/forms';
+
+import { IItem } from '@shared/components';
+import { MemberModel, IMember, MemberType } from '@libs/members/common/model';
 import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-  ViewChild
-} from '@angular/core';
-
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-import { MemberType } from '../member.status';
-import { MembersService } from '../members.service';
-import { MembersUtilsService } from '../members.utils.service';
-import { CPTrackingService } from '../../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-
-declare var $: any;
+  LibsCommonMembersService,
+  LibsCommonMembersUtilsService
+} from '@libs/members/common/providers';
 
 @Component({
   selector: 'cp-members-edit',
@@ -25,44 +14,22 @@ declare var $: any;
   styleUrls: ['./edit.component.scss']
 })
 export class ClubsMembersEditComponent implements OnInit {
-  @Input() member: any;
+  @Input() member: IMember;
   @Input() groupId: number;
-  @Input() isOrientation: boolean;
 
-  @ViewChild('input') input: ElementRef;
-  @Output() edited: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
+  @Output() edited: EventEmitter<IMember> = new EventEmitter();
 
-  formErrors;
-  memberTypes;
-  defaultType;
-  members = [];
   form: FormGroup;
+  selectedType: IItem;
+  memberTypes: IItem[];
+  members: IMember[] = [];
   isExecutiveLeader = MemberType.executive_leader;
 
-  eventProperties = {
-    member_id: null,
-    member_type: null
-  };
-
   constructor(
-    private fb: FormBuilder,
-    private cpI18n: CPI18nService,
-    private service: MembersService,
-    private utils: MembersUtilsService,
-    private cpTracking: CPTrackingService
+    private service: LibsCommonMembersService,
+    private utils: LibsCommonMembersUtilsService
   ) {}
-
-  onMemberSelected(member) {
-    this.members = [];
-    this.input.nativeElement.value = member.label;
-    this.form.controls['member'].setValue(member.id);
-  }
-
-  onTypeChange(type): void {
-    const control = this.form.controls['member_type'];
-    control.setValue(type);
-  }
 
   doTearDown() {
     this.teardown.emit();
@@ -70,68 +37,38 @@ export class ClubsMembersEditComponent implements OnInit {
   }
 
   onSave() {
-    this.formErrors = false;
-
     if (!this.form.valid) {
-      this.formErrors = true;
-
       return;
     }
 
-    const group_id = this.groupId;
-    const member_type = this.form.value.member_type;
-    const member_position =
-      this.form.value.member_type === MemberType.executive_leader
-        ? this.form.value.member_position
-        : '';
+    const memberPostion: AbstractControl = this.form.get('member_position');
+    const memberTypeControl: AbstractControl = this.form.get('member_type');
 
-    this.service.addMember({ member_type, group_id, member_position }, this.member.id).subscribe(
-      (member) => {
-        this.trackEvent(member);
-        this.edited.emit(member);
-        $('#membersEdit').modal('hide');
-        this.form.reset();
-        this.doTearDown();
-      },
-      (err) => {
-        throw new Error(err);
-      }
-    );
-  }
+    if (memberTypeControl.value !== MemberType.executive_leader) {
+      memberPostion.setValue('');
+    }
 
-  trackEvent(res) {
-    this.eventProperties = {
-      ...this.eventProperties,
-      member_id: res.id,
-      member_type: this.utils.getMemberTypeLabel(res.member_type)
-    };
-
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.MANAGE_UPDATED_CLUB_MEMBER,
-      this.eventProperties
-    );
+    this.service.addMember(this.form.value, this.member.id).subscribe((member: IMember) => {
+      this.utils.trackMemberEdit(member);
+      this.edited.emit(member);
+      this.form.reset();
+      this.doTearDown();
+    });
   }
 
   ngOnInit() {
-    this.memberTypes = [
-      {
-        label: this.cpI18n.translate('member'),
-        action: MemberType.member
-      },
-      {
-        label: this.utils.getMemberType(this.isOrientation),
-        action: MemberType.executive_leader
-      }
-    ];
+    this.memberTypes = this.utils.getMemberDropdown('executive');
+    const selectedType = (type: IItem) => type.action === this.member.member_type;
+    this.selectedType = this.memberTypes.find(selectedType);
 
-    this.defaultType = this.memberTypes.filter(
-      (type) => type.action === this.member.member_type
-    )[0];
+    this.form = MemberModel.form(this.member);
+    this.form.get('group_id').setValue(this.groupId);
 
-    this.form = this.fb.group({
-      member: [null],
-      member_position: [this.member.member_position],
-      member_type: [this.defaultType.action, Validators.required]
-    });
+    // set placeholder for disabled field
+    const memberPlaceHolder = `${this.member.firstname} ${this.member.lastname} (${
+      this.member.email
+    })`;
+    this.form.get('member').setValue(memberPlaceHolder);
+    this.form.get('member').disable();
   }
 }

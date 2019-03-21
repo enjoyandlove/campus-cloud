@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { MembersService } from '../members.service';
-import { CPTrackingService, RouteLevel } from '../../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-
-declare var $: any;
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPI18nService } from '@shared/services/i18n.service';
+import { ICPButtonProps } from '@client/app/shared/components';
+import { CPTrackingService, RouteLevel } from '@shared/services';
+import { LibsCommonMembersService } from '@libs/members/common/providers';
+import { IMember, MemerUpdateType } from '@client/app/libs/members/common/model';
 
 @Component({
   selector: 'cp-members-delete',
@@ -13,26 +13,30 @@ declare var $: any;
   styleUrls: ['./delete.component.scss']
 })
 export class ClubsMembersDeleteComponent implements OnInit {
-  @Input() member: any;
+  @Input() member: IMember;
   @Input() groupId: number;
 
+  @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
-  buttonData;
-  eventProperties;
+  buttonData: ICPButtonProps;
 
   constructor(
     private cpI18n: CPI18nService,
-    private service: MembersService,
-    private cpTracking: CPTrackingService
+    private cpTracking: CPTrackingService,
+    private service: LibsCommonMembersService
   ) {}
+
+  resetModal() {
+    this.teardown.emit();
+  }
 
   onDelete() {
     this.service
       .removeMember(
         {
-          member_type: -1,
-          group_id: this.groupId
+          group_id: this.groupId,
+          member_type: MemerUpdateType.remove
         },
         this.member.id
       )
@@ -40,27 +44,28 @@ export class ClubsMembersDeleteComponent implements OnInit {
         (_) => {
           this.trackEvent();
           this.deleted.emit(this.member.id);
-          $('#membersDelete').modal('hide');
-          this.buttonData = Object.assign({}, this.buttonData, {
-            disabled: true
-          });
+          this.resetModal();
+          this.buttonData = {
+            ...this.buttonData,
+            disabled: false
+          };
         },
-        (err) => {
-          this.buttonData = Object.assign({}, this.buttonData, {
-            disabled: true
-          });
-          throw new Error(err);
+        () => {
+          this.buttonData = {
+            ...this.buttonData,
+            disabled: false
+          };
         }
       );
   }
 
   trackEvent() {
-    this.eventProperties = {
+    const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, eventProperties);
   }
 
   ngOnInit() {
