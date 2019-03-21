@@ -1,5 +1,6 @@
 export * from './map';
 export * from './date';
+export * from './http';
 export * from './type';
 export * from './router';
 export * from './object';
