@@ -12,7 +12,6 @@ import { IItem } from '@shared/components/cp-dropdown';
 export class EventIntegrationFormComponent implements OnInit {
   @Input() selectedHost;
   @Input() form: FormGroup;
-  @Input() showImage = true;
   @Input() showHosts = true;
   @Input() selectedType: IItem;
   @Input() typesDropdown: Array<IItem>;
@@ -26,13 +25,6 @@ export class EventIntegrationFormComponent implements OnInit {
 
   onTypeSelected({ action }) {
     this.form.get('feed_type').setValue(action);
-  }
-
-  onImageUpload(image: string) {
-    const imageStringOrEmpty = image ? image : '';
-
-    this.form.get('poster_url').setValue(imageStringOrEmpty);
-    this.form.get('poster_thumb_url').setValue(imageStringOrEmpty);
   }
 
   ngOnInit(): void {}
