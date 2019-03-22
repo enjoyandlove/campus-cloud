@@ -1,4 +1,4 @@
-<ng-container [ngSwitch]="isEmpty">
+<ng-container [ngSwitch]="isEmpty && !isLoading">
   <cp-no-testers
     *ngSwitchCase="true"
     (onCreate)="doCreateModal()">
@@ -12,7 +12,7 @@
         </cp-testers-action-box>
       </div>
     </div>
-    <div [ngSwitch]="testersLoading$ | async">
+    <div [ngSwitch]="isLoading">
       <cp-spinner *ngSwitchCase="true"></cp-spinner>
       <cp-test-users
         *ngSwitchCase="false"

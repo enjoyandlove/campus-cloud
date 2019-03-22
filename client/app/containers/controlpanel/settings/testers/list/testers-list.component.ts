@@ -25,10 +25,10 @@ import { TestersDeleteComponent } from '../delete/testers-delete.component';
 @Mixin([Destroyable])
 export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
   isEmpty = false;
+  isLoading = false;
   modal: OverlayRef;
   search$: Observable<string>;
   testers$: Observable<ITestUser[]>;
-  testersLoading$: Observable<boolean>;
   sortDirection$: Observable<SortDirection>;
 
   // Destroyable
@@ -107,12 +107,13 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
   initSelectors() {
     this.testers$ = this.store.select(selectors.getTesters).pipe(takeUntil(this.destroy$));
     this.search$ = this.store.select(selectors.getTestersSearch).pipe(takeUntil(this.destroy$));
-    this.testersLoading$ = this.store
-      .select(selectors.getTestersLoading)
-      .pipe(takeUntil(this.destroy$));
     this.sortDirection$ = this.store
       .select(selectors.getSortDirection)
       .pipe(takeUntil(this.destroy$));
+    this.store
+      .select(selectors.getTestersLoading)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loading: boolean) => (this.isLoading = loading));
     combineLatest(this.testers$, this.search$)
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
