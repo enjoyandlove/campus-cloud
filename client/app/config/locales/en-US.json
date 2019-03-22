@@ -3026,6 +3026,9 @@
   "t_persona_list_button_notify": {
     "message": "Notify"
   },
+  "t_sandbox_already_invited": {
+    "message": "Invites already sent"
+  },
   "t_sandbox_delete_invite": {
     "message": "Delete Invite"
   },
