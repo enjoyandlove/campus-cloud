@@ -24,21 +24,14 @@ export const getLocationsLoaded = createSelector(
   fromLocations.getLocationsLoaded
 );
 
-export const getLocationsById = createSelector(getLocationState, fromLocations.getLocationEntities);
+export const getLocationsById = (id: number) =>
+  createSelector(getLocationState, (locations) => locations.entities[id]);
 
 export const getFilteredLocations = createSelector(
   getLocationState,
   fromLocations.getFilteredLocations
 );
 
-export const getSelectedLocation = createSelector(
-  getLocationsById,
-  getRouterState,
-  (locations, router) => {
-    const locationId = parseInt(router.params.locationId, 10);
-
-    if (locations[locationId]) {
-      return locations[locationId];
-    }
-  }
+export const getSelectedLocation = createSelector(getRouterState, (routeterState) =>
+  getLocationsById(+routeterState.params.locationId)
 );
