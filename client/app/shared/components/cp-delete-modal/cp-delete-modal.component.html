@@ -33,6 +33,7 @@
             </div>
           </div>
           <div
+            [cpTarget]="['chechbox_' + index]"
             class="row cpmodal__body__warning__item"
             *ngFor="let warning of _warnings; index as index">
             <cp-checkbox
@@ -51,6 +52,7 @@
       <div class="col-6 text-right">
         <button
           type="button"
+          cpTarget="cancel"
           (click)="resetModal()"
           class="cpbtn cpbtn--cancel js_cancel_button">
           {{ 'cancel' | cpI18n }}
@@ -58,6 +60,7 @@
 
         <button
           type="button"
+          cpTarget="delete"
           (click)="onDeleteClick()"
           [disabled]="disableSubmit"
           class="cpbtn cpbtn--danger js_delete_button">
