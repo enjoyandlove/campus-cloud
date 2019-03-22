@@ -42,8 +42,8 @@ export class CPFeatureToggleDirective implements OnInit {
       return false;
     }
 
-    const isInternalButNotPublic = feature.internal && !feature.active;
+    const { id } = this.session.g.get('school');
 
-    return isInternalButNotPublic ? this.session.isInternal : feature.active;
+    return this.session.isInternal || feature.whitelist.includes(id);
   }
 }

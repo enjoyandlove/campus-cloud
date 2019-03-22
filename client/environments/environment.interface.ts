@@ -4,8 +4,7 @@ interface IWildCard {
 
 interface IFeatureFlag {
   [key: string]: {
-    active: boolean;
-    internal?: boolean;
+    whitelist: number[];
   };
 }
 

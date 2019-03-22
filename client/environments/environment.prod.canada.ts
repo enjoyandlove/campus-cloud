@@ -5,24 +5,16 @@ export const environment: IEnvironment = {
   production: true,
   flags: {
     EVENTS_INTEGRATION: {
-      active: false,
-      internal: true
+      whitelist: []
     },
     ITEMS_INTEGRATION: {
-      active: false,
-      internal: true
+      whitelist: []
     },
     WALLS_INTEGRATION: {
-      active: false,
-      internal: true
+      whitelist: []
     },
     ANNOUNCEMENT_INTEGRATION: {
-      active: false,
-      internal: true
-    },
-    DINING: {
-      active: false,
-      internal: true
+      whitelist: []
     }
   },
   envName: 'production_canada',
