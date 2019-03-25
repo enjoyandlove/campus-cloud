@@ -14,34 +14,30 @@ export class DiningExistGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
     this.diningId = parseInt(route.params.diningId, 10);
-    return this.checkStore().pipe(
-      switchMap(() => this.hasDining(this.diningId))
-    );
+    return this.checkStore().pipe(switchMap(() => this.hasDining(this.diningId)));
   }
 
   hasDining(id: number): Observable<boolean> {
-    return this.store.select(fromStore.getDiningEntities)
-      .pipe(
-        map((dining) => !!dining[id]),
-        take(1)
-      );
+    return this.store
+      .select(fromStore.getDiningEntities)
+      .pipe(map((dining) => !!dining[id]), take(1));
   }
 
   checkStore() {
-    return this.store.select(fromStore.getDiningEntities)
-      .pipe(
-        tap((dining) => {
-          const diningId = this.diningId;
+    return this.store.select(fromStore.getDiningEntities).pipe(
+      tap((dining) => {
+        const diningId = this.diningId;
 
-          const hasSchedule = Object.keys(dining).length
-            ? Boolean(dining[this.diningId].schedule.length) : false;
+        const hasSchedule = Object.keys(dining).length
+          ? Boolean(dining[this.diningId].schedule.length)
+          : false;
 
-          if (!hasSchedule) {
-            this.store.dispatch(new fromStore.GetDiningById({ diningId }));
-          }
-        }),
-        filter((dining) => !!dining[this.diningId]),
-        take(1)
-      );
+        if (!hasSchedule) {
+          this.store.dispatch(new fromStore.GetDiningById({ diningId }));
+        }
+      }),
+      filter((dining) => !!dining[this.diningId]),
+      take(1)
+    );
   }
 }

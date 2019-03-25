@@ -318,6 +318,10 @@ export class LocationsUtilsService {
     const added_address = data.address ? amplitudeEvents.YES : amplitudeEvents.NO;
     const uploaded_image = data.image_url ? amplitudeEvents.YES : amplitudeEvents.NO;
 
+    const category_status = data.category_is_default
+      ? amplitudeEvents.DEFAULT
+      : amplitudeEvents.CUSTOM;
+
     return {
       link,
       email,
@@ -325,6 +329,7 @@ export class LocationsUtilsService {
       phone_number,
       added_address,
       uploaded_image,
+      category_status,
       hours_of_operations
     };
   }

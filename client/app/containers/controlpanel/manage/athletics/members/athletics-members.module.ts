@@ -1,12 +1,28 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { AthleticsMembersComponent } from './athletics-members.component';
-import { ClubsMembersModule } from '../../clubs/members/members.module';
+import { SharedModule } from '@shared/shared.module';
+import { AthleticsListMembersComponent } from './list';
+import { AthleticsMembersEditComponent } from './edit';
+import { AthleticsMembersDeleteComponent } from './delete';
+import { AthleticsMembersCreateComponent } from './create';
 import { AthleticsMembersRoutingModule } from './athletics-members.routing.module';
+import { LibsCommmonMembersModule } from '@libs/members/common/common-members.module';
+import {
+  LibsCommonMembersService,
+  LibsCommonMembersUtilsService
+} from '@libs/members/common/providers';
 
 @NgModule({
-  declarations: [AthleticsMembersComponent],
+  declarations: [
+    AthleticsListMembersComponent,
+    AthleticsMembersCreateComponent,
+    AthleticsMembersEditComponent,
+    AthleticsMembersDeleteComponent
+  ],
 
-  imports: [AthleticsMembersRoutingModule, ClubsMembersModule]
+  providers: [LibsCommonMembersService, LibsCommonMembersUtilsService],
+
+  imports: [CommonModule, SharedModule, LibsCommmonMembersModule, AthleticsMembersRoutingModule]
 })
 export class AthleticsMembersModule {}

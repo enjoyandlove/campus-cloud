@@ -38,7 +38,7 @@ export class LocationOpeningHoursFormComponent implements OnInit {
   }
 
   getSelectedTime(selectedTime) {
-   return this.locationTiming.find((time) => time.value === selectedTime);
+    return this.locationTiming.find((time) => time.value === selectedTime);
   }
 
   ngOnInit(): void {

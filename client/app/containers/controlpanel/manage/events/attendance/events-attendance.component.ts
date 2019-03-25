@@ -93,7 +93,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     private store: Store<IHeader>,
     private route: ActivatedRoute,
     public service: EventsService,
-    private utils: EventUtilService,
+    public utils: EventUtilService,
     public cpTracking: CPTrackingService
   ) {
     super(session, cpI18n, service);
@@ -245,7 +245,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   }
 
   onCreateExcel() {
-    const search = this.getAttendeesSearch();
+    const search = this.getAttendeesSearch().set('all', '1');
 
     const stream$ = this.service.getEventAttendanceByEventId(
       this.startRange,

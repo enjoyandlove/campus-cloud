@@ -29,7 +29,7 @@
       (click)="close.emit()">
       <a
         [href]="helpDeskUrl"
-        (click)="trackEvent(amplitudeEvents.visited_help_desk)"
+        (click)="trackViewedNotification()"
         target="_blank">{{ 'help_desk' | cpI18n }}</a>
     </li>
 

@@ -13,7 +13,6 @@ import { LocationsUtilsService } from '@libs/locations/common/utils';
 import { IDining, IOpeningHours } from '@libs/locations/common/model';
 
 @Mixin([Destroyable])
-
 @Component({
   selector: 'cp-dining-info',
   templateUrl: './dining-info.component.html',
@@ -54,34 +53,38 @@ export class DiningInfoComponent implements OnInit, OnDestroy, Destroyable {
   }
 
   loadDiningDetail() {
-    this.store.select(fromStore.getSelectedDining).pipe(
-      takeUntil(this.destroy$),
-      filter((dining: IDining) => !!dining),
-      map((dining: IDining) => {
-        this.dining = dining;
-        this.buildHeader(dining);
+    this.store
+      .select(fromStore.getSelectedDining)
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((dining: IDining) => !!dining),
+        map((dining: IDining) => {
+          this.dining = dining;
+          this.buildHeader(dining);
 
-        this.resourceBanner = {
-          heading: dining.name,
-          image: dining.image_url,
-          subheading: dining.category_name
-        };
+          this.resourceBanner = {
+            heading: dining.name,
+            image: dining.image_url,
+            subheading: dining.category_name
+          };
 
-        this.mapCenter = new BehaviorSubject({
-          lat: dining.latitude,
-          lng: dining.longitude
-        });
+          this.mapCenter = new BehaviorSubject({
+            lat: dining.latitude,
+            lng: dining.longitude
+          });
 
-        const hasLinks = dining.links.length
-          ? (dining.links[0].label || dining.links[0].url) : false;
+          const hasLinks = dining.links.length
+            ? dining.links[0].label || dining.links[0].url
+            : false;
 
-        this.hasMetaData = Boolean(dining.short_name || dining.description || hasLinks);
+          this.hasMetaData = Boolean(dining.short_name || dining.description || hasLinks);
 
-        if (dining.schedule.length) {
-          this.openingHours = this.locationUtils.parsedSchedule(dining.schedule);
-        }
-      })
-    ).subscribe();
+          if (dining.schedule.length) {
+            this.openingHours = this.locationUtils.parsedSchedule(dining.schedule);
+          }
+        })
+      )
+      .subscribe();
   }
 
   listenForErrors() {

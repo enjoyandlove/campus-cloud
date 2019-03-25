@@ -85,7 +85,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     private eventUtils: EventUtilService,
     private cpTracking: CPTrackingService,
     public providersService: ProvidersService,
-    private providerUtils: ProvidersUtilsService
+    public providerUtils: ProvidersUtilsService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -131,10 +131,11 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
   fetchAllRecords(): Promise<any> {
     let search = new HttpParams()
-      .append('service_id', this.provider.campus_service_id.toString())
-      .append('service_provider_id', this.provider.id.toString())
-      .append('sort_field', this.state.sort_field)
-      .append('sort_direction', this.state.sort_direction);
+      .set('service_id', this.provider.campus_service_id.toString())
+      .set('service_provider_id', this.provider.id.toString())
+      .set('sort_field', this.state.sort_field)
+      .set('sort_direction', this.state.sort_direction)
+      .set('all', '1');
 
     search = this.providerUtils.addSearchParams(search, this.filterState);
 

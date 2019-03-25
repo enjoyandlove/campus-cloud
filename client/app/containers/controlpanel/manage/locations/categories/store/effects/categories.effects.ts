@@ -20,12 +20,12 @@ import { CategoriesUtilsService } from '@libs/locations/common/categories/catego
 @Injectable()
 export class CategoriesEffects {
   constructor(
-    public actions$: Actions,
-    public cpI18n: CPI18nService,
-    public service: CategoriesService,
-    public cpTracking: CPTrackingService,
-    public utils: CategoriesUtilsService,
-    public store: Store<fromLocationStore.ILocationsState | ISnackbar>
+    private actions$: Actions,
+    private cpI18n: CPI18nService,
+    private service: CategoriesService,
+    private cpTracking: CPTrackingService,
+    private utils: CategoriesUtilsService,
+    private store: Store<fromLocationStore.ILocationsState | ISnackbar>
   ) {}
 
   @Effect()
@@ -36,12 +36,13 @@ export class CategoriesEffects {
     mergeMap((action: fromActions.GetCategories) => {
       const { params } = action.payload;
 
-      return this.service
-        .getCategories(params)
-        .pipe(
-          map((data: ICategory[]) => new fromActions.GetCategoriesSuccess(data)),
-          catchError((error) => of(new fromActions.GetCategoriesFail(error)))
-        );
+      return this.service.getCategories(params).pipe(
+        map((data: ICategory[]) => new fromActions.GetCategoriesSuccess(data)),
+        catchError((error) => {
+          this.handleError();
+          return of(new fromActions.GetCategoriesFail(error));
+        })
+      );
     })
   );
 
@@ -53,12 +54,13 @@ export class CategoriesEffects {
     mergeMap((action: fromActions.GetFilteredCategories) => {
       const { params } = action.payload;
 
-      return this.service
-        .getCategories(params)
-        .pipe(
-          map((data: ICategory[]) => new fromActions.GetFilteredCategoriesSuccess(data)),
-          catchError((error) => of(new fromActions.GetFilteredCategoriesFail(error)))
-        );
+      return this.service.getCategories(params).pipe(
+        map((data: ICategory[]) => new fromActions.GetFilteredCategoriesSuccess(data)),
+        catchError((error) => {
+          this.handleError();
+          return of(new fromActions.GetFilteredCategoriesFail(error));
+        })
+      );
     })
   );
 
@@ -70,12 +72,13 @@ export class CategoriesEffects {
     mergeMap((action: fromActions.GetCategoriesType) => {
       const { params } = action.payload;
 
-      return this.service
-        .getCategoriesType(params)
-        .pipe(
-          map((data) => new fromActions.GetCategoriesTypeSuccess(data)),
-          catchError((error) => of(new fromActions.GetCategoriesTypeFail(error)))
-        );
+      return this.service.getCategoriesType(params).pipe(
+        map((data) => new fromActions.GetCategoriesTypeSuccess(data)),
+        catchError((error) => {
+          this.handleError();
+          return of(new fromActions.GetCategoriesTypeFail(error));
+        })
+      );
     })
   );
 
@@ -101,7 +104,10 @@ export class CategoriesEffects {
 
           return new fromActions.PostCategorySuccess(data);
         }),
-        catchError((error) => of(new fromActions.PostCategoryFail(error)))
+        catchError((error) => {
+          this.handleError();
+          return of(new fromActions.PostCategoryFail(error));
+        })
       );
     })
   );
@@ -128,7 +134,10 @@ export class CategoriesEffects {
 
           return new fromActions.EditCategorySuccess(data);
         }),
-        catchError((error) => of(new fromActions.EditCategoryFail(error)))
+        catchError((error) => {
+          this.handleError();
+          return of(new fromActions.EditCategoryFail(error));
+        })
       );
     })
   );
@@ -187,9 +196,10 @@ export class CategoriesEffects {
 
           return new fromActions.DeleteCategoriesSuccess({ deletedId: body.id });
         }),
-        catchError((error) =>
-          of(new fromActions.DeleteCategoriesFail(parseErrorResponse(error.error)))
-        )
+        catchError((error) => {
+          this.handleError();
+          return of(new fromActions.DeleteCategoriesFail(parseErrorResponse(error.error)));
+        })
       );
     })
   );
@@ -198,6 +208,14 @@ export class CategoriesEffects {
     this.store.dispatch(
       new baseActionClass.SnackbarSuccess({
         body: this.cpI18n.translate(key)
+      })
+    );
+  }
+
+  private handleError() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body: this.cpI18n.translate('something_went_wrong')
       })
     );
   }

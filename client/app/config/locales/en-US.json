@@ -3026,6 +3026,9 @@
   "t_persona_list_button_notify": {
     "message": "Notify"
   },
+  "t_sandbox_already_invited": {
+    "message": "Invites already sent"
+  },
   "t_sandbox_delete_invite": {
     "message": "Delete Invite"
   },
@@ -3049,6 +3052,9 @@
   },
   "t_sandbox_invite_users": {
     "message": "Invite Users"
+  },
+  "t_sandbox_no_results_found": {
+    "message": "No test users found"
   },
   "t_sandbox_no_test_users": {
     "message": "No Test Users"

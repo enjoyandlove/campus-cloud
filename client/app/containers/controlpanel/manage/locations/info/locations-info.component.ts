@@ -1,7 +1,7 @@
 import { OnInit, Component, OnDestroy } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { map, filter, takeUntil } from 'rxjs/operators';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -30,6 +30,7 @@ export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
 
   constructor(
     public router: Router,
+    private route: ActivatedRoute,
     public locationUtils: LocationsUtilsService,
     public store: Store<fromStore.ILocationsState | fromRoot.IHeader>
   ) {}
@@ -52,7 +53,7 @@ export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
 
   loadLocationDetail() {
     this.store
-      .select(fromStore.getSelectedLocation)
+      .select(fromStore.getLocationsById(this.route.snapshot.params['locationId']))
       .pipe(
         takeUntil(this.destroy$),
         filter((location: ILocation) => !!location),

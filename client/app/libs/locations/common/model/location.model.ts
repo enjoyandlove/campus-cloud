@@ -21,7 +21,7 @@ export class LocationModel {
       short_name: location ? location.short_name : null,
       description: location ? location.description : null,
       postal_code: location ? location.postal_code : null,
-      category_id: location ? location.category_id : null,
+      category_id: location ? location.category_id : null
     };
 
     return fb.group({
@@ -36,11 +36,11 @@ export class LocationModel {
       postal_code: [_location.postal_code],
       description: [_location.description],
       name: [_location.name, Validators.required],
-      latitude: [_location.latitude, { updateOn: 'blur'}],
-      longitude: [_location.longitude, { updateOn: 'blur'}],
+      latitude: [_location.latitude, { updateOn: 'blur' }],
+      longitude: [_location.longitude, { updateOn: 'blur' }],
       category_id: [_location.category_id, Validators.required],
       links: fb.array([this.setLinks(location)]),
-      schedule: fb.array([]),
+      schedule: fb.array([])
     });
   }
 

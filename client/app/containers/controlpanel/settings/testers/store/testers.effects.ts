@@ -65,11 +65,19 @@ export class TestersEffects {
     mergeMap((emails: string[]) => {
       return this.service.createUsers(emails).pipe(
         map((testers: ITestUser[]) => {
-          this.store.dispatch(
-            new baseActionClass.SnackbarSuccess({
-              body: this.cpI18n.translate('t_sandbox_invite_testers_success')
-            })
-          );
+          if (testers.length) {
+            this.store.dispatch(
+              new baseActionClass.SnackbarSuccess({
+                body: this.cpI18n.translate('t_sandbox_invite_testers_success')
+              })
+            );
+          } else {
+            this.store.dispatch(
+              new baseActionClass.SnackbarError({
+                body: this.cpI18n.translate('t_sandbox_already_invited')
+              })
+            );
+          }
           return new actions.CreateTestersOK(testers);
         }),
         catchError(() => this.errorSnackbarAndFail(new actions.CreateTestersFail()))

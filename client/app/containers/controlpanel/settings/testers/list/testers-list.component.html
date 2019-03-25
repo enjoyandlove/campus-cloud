@@ -1,16 +1,28 @@
-<cp-testers-action-box
-  (onCreate)="doCreateModal()"
-  (onSearch)="doSearch($event)">
-</cp-testers-action-box>
-<div [ngSwitch]="testersLoading$ | async">
-  <cp-spinner *ngSwitchCase="true"></cp-spinner>
-  <cp-test-users
-    *ngSwitchCase="false"
-    [users]="testers$ | async"
-    [sortDirection]="sortDirection$ | async"
-    (onSort)="doSort($event)"
-    (onCreate)="doCreateModal()"
-    (onResend)="doResend($event)"
-    (onDelete)="doDelete($event)">
-  </cp-test-users>
-</div>
+<ng-container [ngSwitch]="isEmpty && !isLoading">
+  <cp-no-testers
+    *ngSwitchCase="true"
+    (onCreate)="doCreateModal()">
+  </cp-no-testers>
+  <ng-container *ngSwitchCase="false">
+    <div class="row">
+      <div class="col-12">
+        <cp-testers-action-box
+          (onCreate)="doCreateModal()"
+          (onSearch)="doSearch($event)">
+        </cp-testers-action-box>
+      </div>
+    </div>
+    <div [ngSwitch]="isLoading">
+      <cp-spinner *ngSwitchCase="true"></cp-spinner>
+      <cp-test-users
+        *ngSwitchCase="false"
+        [users]="testers$ | async"
+        [sortDirection]="sortDirection$ | async"
+        [noContentText]="cpI18n.translate('t_sandbox_no_results_found')"
+        (onSort)="doSort($event)"
+        (onResend)="doResend($event)"
+        (onDelete)="doDelete($event)">
+      </cp-test-users>
+    </div>
+  </ng-container>
+</ng-container>

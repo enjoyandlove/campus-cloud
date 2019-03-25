@@ -46,4 +46,6 @@ export interface ILocation {
   category_color: string;
 
   category_img_url: string;
+
+  category_is_default: boolean;
 }

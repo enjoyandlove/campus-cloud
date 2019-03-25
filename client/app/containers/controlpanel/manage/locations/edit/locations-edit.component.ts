@@ -1,9 +1,9 @@
 import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
 import { filter, map, takeUntil, tap } from 'rxjs/operators';
+import { Router, ActivatedRoute } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { Subject, Observable } from 'rxjs';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -47,6 +47,7 @@ export class LocationsEditComponent extends BaseComponent
     public router: Router,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    private route: ActivatedRoute,
     public latLng: LatLngValidators,
     public store: Store<
       fromStore.ILocationsState | fromCategoryStore.ICategoriesState | fromRoot.IHeader
@@ -153,7 +154,7 @@ export class LocationsEditComponent extends BaseComponent
 
   loadLocation() {
     this.store
-      .select(fromStore.getSelectedLocation)
+      .select(fromStore.getLocationsById(this.route.snapshot.params['locationId']))
       .pipe(
         takeUntil(this.destroy$),
         filter((location: ILocation) => !!location),

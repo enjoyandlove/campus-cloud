@@ -305,6 +305,10 @@
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@ngrx/router-store/-/router-store-7.0.0.tgz#a273fc3288a2b256b07e9014e7b87d6ebfa3641d"
 
+"@ngrx/store-devtools@7.3.0":
+  version "7.3.0"
+  resolved "https://registry.yarnpkg.com/@ngrx/store-devtools/-/store-devtools-7.3.0.tgz#a178e66083343d81e554cfc092101f5bf8311908"
+
 "@ngrx/store@7.0.0":
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/@ngrx/store/-/store-7.0.0.tgz#5472000197c2a388b09afceb2d062cb37b03d334"

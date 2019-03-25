@@ -55,7 +55,6 @@
     },
     {
       "privilege": 36,
-      "flag": "DINING",
       "clearParams": true,
       "label": "dining",
       "amplitude": "Dining",

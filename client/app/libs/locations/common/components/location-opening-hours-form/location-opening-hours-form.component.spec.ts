@@ -44,7 +44,7 @@ describe('LocationOpeningHoursFormComponent', () => {
   });
 
   it('should get selected time', () => {
-    const selectedTime  = component.getSelectedTime(mockTime.value);
+    const selectedTime = component.getSelectedTime(mockTime.value);
 
     expect(selectedTime).toEqual(mockTime);
   });
@@ -100,7 +100,6 @@ describe('LocationOpeningHoursFormComponent', () => {
   });
 
   it('should get day label', () => {
-
     const day = component.getDayLabel(ScheduleDays.Wednesday);
 
     expect(day).toEqual(scheduleLabels[ScheduleDays.Wednesday]);
