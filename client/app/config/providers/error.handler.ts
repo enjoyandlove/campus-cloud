@@ -19,7 +19,9 @@ export class CPErrorHandler extends ErrorHandler {
       dsn: environment.keys.sentryDsn,
       beforeSend(event) {
         const e2eUserId = '18845';
-        return event.user.id === e2eUserId ? null : event;
+        const userId = _get(event, ['user', 'id'], null);
+
+        return userId === e2eUserId ? null : event;
       }
     });
   }
