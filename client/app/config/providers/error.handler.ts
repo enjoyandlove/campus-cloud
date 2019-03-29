@@ -30,7 +30,6 @@ export class CPErrorHandler extends ErrorHandler {
     const chunkFailedMessage = /Loading chunk [\d]+ failed/;
 
     if (chunkFailedMessage.test(err.message)) {
-      CPLogger.log('caught loading chunk error');
       location.reload();
       return;
     }

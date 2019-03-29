@@ -1,4 +1,4 @@
-import { HttpResponse, HttpHeaders, HttpClient, HttpParams } from '@angular/common/http';
+import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { catchError, delay, flatMap, retryWhen } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -13,7 +13,6 @@ import { appStorage, CPObj, DefaultEncoder } from '@shared/utils';
  * getHeaders() if you need a new header
  */
 const defaultRetries = 1;
-const emptyResponse = of(new HttpResponse({ body: JSON.stringify([]) }));
 
 @Injectable()
 export abstract class HTTPService {
@@ -81,10 +80,6 @@ export abstract class HTTPService {
           return throwError(err);
         }
 
-        if (err.status === 403) {
-          return emptyResponse;
-        }
-
         return this.catchError(err);
       })
     );
@@ -144,20 +139,18 @@ export abstract class HTTPService {
       );
   }
 
-  catchError(err) {
+  catchError(err: HttpErrorResponse) {
     switch (err.status) {
       case 401:
         this.router.navigate(['/logout']);
-
-        return emptyResponse;
+        return;
 
       case 404:
       case 403:
       case 500:
       case 503:
         this.router.navigate(['/dashboard']);
-
-        return emptyResponse;
+        return;
 
       default:
         return throwError(err);
