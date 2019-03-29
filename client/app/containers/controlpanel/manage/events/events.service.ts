@@ -1,11 +1,13 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
 
-import { API } from '../../../../config/api';
-import { baseActions } from '../../../../store/base';
-import { HTTPService } from '../../../../base/http.service';
+import { API } from '@app/config/api';
+import { baseActions } from '@app/store/base';
+import { HTTPService } from '@app/base/http.service';
 
 @Injectable()
 export class EventsService extends HTTPService {
@@ -43,7 +45,14 @@ export class EventsService extends HTTPService {
     const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EVENT_ASSESMENT}`;
     const url = `${common}/${startRage};${endRage}`;
 
-    return super.get(url, search);
+    return super.get(url, search, true).pipe(
+      catchError((err) => {
+        if (err.status === 403) {
+          return of(new HttpResponse({ body: JSON.stringify([]) }));
+        }
+        return err;
+      })
+    );
   }
 
   getEventAttendanceSummary(eventId: number, search?: HttpParams) {
