@@ -221,6 +221,8 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onServicesModalSelected(services) {
+    this.doServicesCleanUp();
+
     const servicesLength = Object.keys(services).length;
     this.servicesCount = servicesLength
       ? { label: `${servicesLength} ${this.cpI18n.translate('admin_form_label_services')}` }
@@ -230,7 +232,6 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onServicesSelected(service) {
-    this.doServicesCleanUp();
     if (service.action === serviceMenu.selectServices) {
       this.isServiceModal = true;
 
@@ -246,6 +247,7 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (service.action === serviceMenu.noAccess) {
+      this.doServicesCleanUp();
       this.resetServiceModal$.next(true);
 
       if (this.schoolPrivileges) {
@@ -258,6 +260,7 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (service.action === serviceMenu.allServices) {
+      this.doServicesCleanUp();
       this.resetServiceModal$.next(true);
 
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
@@ -270,6 +273,8 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onClubsModalSelected(clubs) {
+    this.doClubsCleanUp();
+
     const clubsLength = Object.keys(clubs).length;
     this.clubsCount = clubsLength
       ? { label: `${clubsLength} ${this.cpI18n.translate('admin_form_label_clubs')}` }
@@ -279,6 +284,8 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onAthleticsModalSelected(athletics) {
+    this.doAthleticsCleanUp();
+
     const athleticsLength = Object.keys(athletics).length;
     this.athleticsCount = athleticsLength
       ? { label: `${athleticsLength} ${this.cpI18n.translate('admin_form_label_athletics')}` }
@@ -324,7 +331,6 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onClubsSelected(club) {
-    this.doClubsCleanUp();
     if (club.action === clubMenu.selectClubs) {
       this.isClubsModal = true;
       setTimeout(
@@ -339,12 +345,14 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (club.action === clubMenu.noAccess) {
+      this.doClubsCleanUp();
       this.resetClubsModal$.next(true);
 
       return;
     }
 
     if (club.action === clubMenu.allClubs) {
+      this.doClubsCleanUp();
       this.resetClubsModal$.next(true);
 
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
@@ -357,7 +365,6 @@ export class TeamCreateComponent implements OnInit {
   }
 
   onAthleticsSelected(athletic) {
-    this.doAthleticsCleanUp();
     if (athletic.action === athleticMenu.selectAthletic) {
       this.isAthleticsModal = true;
       setTimeout(
@@ -372,12 +379,14 @@ export class TeamCreateComponent implements OnInit {
     }
 
     if (athletic.action === athleticMenu.noAccess) {
+      this.doAthleticsCleanUp();
       this.resetAthleticsModal$.next(true);
 
       return;
     }
 
     if (athletic.action === athleticMenu.allAthletics) {
+      this.doAthleticsCleanUp();
       this.resetAthleticsModal$.next(true);
 
       this.schoolPrivileges = Object.assign({}, this.schoolPrivileges, {
