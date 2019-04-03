@@ -11,6 +11,7 @@ import { baseActions } from '@app/store/base';
 import { CPDate, CPMap } from '@shared/utils';
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '@app/session';
+import { CustomValidators } from '@shared/validators';
 import { EventUtilService } from '../events.utils.service';
 import { amplitudeEvents } from '@shared/constants/analytics';
 import { EventsComponent } from '../list/base/events.component';
@@ -489,7 +490,7 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
         end: [null, Validators.required],
         attendance_manager_email: [null],
         start: [null, Validators.required],
-        title: [null, Validators.required],
+        title: [null, Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])],
         poster_url: [null, Validators.required],
         event_feedback: [EventFeedback.enabled],
         has_checkout: [attendanceType.checkInOnly],

@@ -9,10 +9,11 @@ import { Store } from '@ngrx/store';
 import { CPMap } from '@shared/utils';
 import { membershipTypes } from '../create';
 import { CPSession, ISchool } from '@app/session';
+import { amplitudeEvents } from '@shared/constants';
 import { ServicesService } from '../services.service';
+import { CustomValidators } from '@shared/validators';
 import { baseActions, IHeader } from '@app/store/base';
 import { BaseComponent } from '@app/base/base.component';
-import { amplitudeEvents } from '@shared/constants/analytics';
 import { ServicesUtilsService } from '../services.utils.service';
 import { RatingScale, ServiceAttendance } from '../services.status';
 import { CPI18nService, CPTrackingService } from '@shared/services';
@@ -116,7 +117,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
   buildForm(service) {
     this.form = this.fb.group({
-      name: [service.name, Validators.required],
+      name: [
+        service.name,
+        Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])
+      ],
       logo_url: [service.logo_url, Validators.required],
       category: [service.category, Validators.required],
       location: [service.location],
