@@ -1,7 +1,8 @@
 import { FormBuilder, Validators } from '@angular/forms';
-
 import { get as _get } from 'lodash';
+
 import { ILocation } from './locations.interface';
+import { CustomValidators } from '@shared/validators';
 
 export class LocationModel {
   static form(location?: ILocation) {
@@ -35,7 +36,10 @@ export class LocationModel {
       short_name: [_location.short_name],
       postal_code: [_location.postal_code],
       description: [_location.description],
-      name: [_location.name, Validators.required],
+      name: [
+        _location.name,
+        Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])
+      ],
       latitude: [_location.latitude, { updateOn: 'blur' }],
       longitude: [_location.longitude, { updateOn: 'blur' }],
       category_id: [_location.category_id, Validators.required],
@@ -50,7 +54,7 @@ export class LocationModel {
 
     return fb.group({
       url: [links.length ? links[0]['url'] : ''],
-      label: [links.length ? links[0]['label'] : ''],
+      label: [links.length ? links[0]['label'] : '']
     });
   }
 }

@@ -5,17 +5,17 @@ import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import { CPMap } from '@shared/utils';
+import { CPSession } from '@app/session';
+import { baseActions } from '@app/store/base';
 import { ClubsService } from '../clubs.service';
-import { CPSession } from '../../../../../session';
-import { CPMap } from '../../../../../shared/utils';
-import { baseActions } from '../../../../../store/base';
+import { amplitudeEvents } from '@shared/constants';
+import { CustomValidators } from '@shared/validators';
+import { BaseComponent } from '@app/base/base.component';
 import { ClubsUtilsService } from './../clubs.utils.service';
-import { CPTrackingService } from '../../../../../shared/services';
-import { BaseComponent } from '../../../../../base/base.component';
 import { advisorDataRequired } from './custom-validators.directive';
 import { membershipTypes, statusTypes } from '../create/permissions';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { CPTrackingService, CPI18nService } from '@shared/services';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 
 @Component({
@@ -119,7 +119,10 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
   buildForm() {
     this.form = this.fb.group({
-      name: [{ value: this.club.name, disabled: this.limitedAdmin }, Validators.required],
+      name: [
+        { value: this.club.name, disabled: this.limitedAdmin },
+        Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])
+      ],
       logo_url: [this.club.logo_url, Validators.required],
       status: [{ value: this.club.status, disabled: this.limitedAdmin }, Validators.required],
       has_membership: [this.club.has_membership, Validators.required],

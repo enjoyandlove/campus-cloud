@@ -9,6 +9,7 @@ import { CPMap } from '@shared/utils';
 import { membershipTypes } from './index';
 import { IService } from '../service.interface';
 import { CPSession, ISchool } from '@app/session';
+import { CustomValidators } from '@shared/validators';
 import { ServicesService } from '../services.service';
 import { ServiceAttendance } from '../services.status';
 import { baseActions, IHeader } from '@app/store/base';
@@ -279,7 +280,7 @@ export class ServicesCreateComponent implements OnInit {
       has_membership: [null],
       service_attendance: [null],
       rating_scale_maximum: [null],
-      name: [null, Validators.required],
+      name: [null, Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])],
       logo_url: [null, Validators.required],
       category: [null, Validators.required],
       default_basic_feedback_label: [this.cpI18n.translate('services_default_feedback_question')]

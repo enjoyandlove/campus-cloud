@@ -10,6 +10,7 @@ import { CPSession } from '@app/session';
 import { ClubStatus } from '../club.status';
 import { ClubsService } from '../clubs.service';
 import { CPTrackingService } from '@shared/services';
+import { CustomValidators } from '@shared/validators';
 import { ClubsUtilsService } from '../clubs.utils.service';
 import { membershipTypes, statusTypes } from './permissions';
 import { CPI18nService } from '@shared/services/i18n.service';
@@ -231,7 +232,7 @@ export class ClubsCreateComponent implements OnInit {
     };
 
     this.form = this.fb.group({
-      name: [null, Validators.required],
+      name: [null, Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])],
       logo_url: [null, Validators.required],
       status: [ClubStatus.active, Validators.required],
       has_membership: [true, Validators.required],
