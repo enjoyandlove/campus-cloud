@@ -1,8 +1,12 @@
-import { appStorage } from './../utils/storage/storage';
-import { API } from './../../config/api/index';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { CPI18nService } from './index';
+import { throwError } from 'rxjs';
+
+import { API } from '@app/config/api';
+import { CPLogger } from '@shared/services';
+import { CPI18nService } from '@shared/services';
+import { appStorage } from '@shared/utils/storage';
 
 const maxAllowed = 5e6; // 5MB
 
@@ -122,6 +126,11 @@ export class FileUploadService {
 
     formData.append('file', media, media.name);
 
-    return this.http.post(url, formData, { headers: customHeaders ? customHeaders : headers });
+    return this.http.post(url, formData, { headers: customHeaders ? customHeaders : headers }).pipe(
+      catchError((err) => {
+        CPLogger.log(`Failed to upload ${media.name} ${media.size}`);
+        return throwError(err);
+      })
+    );
   }
 }
