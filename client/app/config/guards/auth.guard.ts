@@ -3,12 +3,12 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 
-import { CPSession } from '../../session';
-import { appStorage } from '../../shared/utils';
+import { appStorage } from '@shared/utils';
+import { CPSession, ISchool } from '@app/session';
 import { CPLogger } from '@shared/services/logger';
-import { base64 } from './../../shared/utils/encrypt/encrypt';
-import { environment } from './../../../environments/environment';
-import { AdminService, SchoolService, StoreService, ZendeskService } from '../../shared/services';
+import { base64 } from '@shared/utils/encrypt/encrypt';
+import { environment } from '@client/environments/environment';
+import { AdminService, SchoolService, StoreService, ZendeskService } from '@shared/services';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -44,10 +44,18 @@ export class AuthGuard implements CanActivate {
     return this.schoolService
       .getSchools()
       .pipe(
-        map((schools) => {
+        map((schools: ISchool[]) => {
           let schoolIdInUrl;
           let schoolObjFromUrl;
-          const storedSchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
+          let storedSchool: ISchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
+
+          if (storedSchool) {
+            const removeSchool = !schools.find((school) => school.id === storedSchool.id);
+            if (removeSchool) {
+              storedSchool = null;
+              appStorage.remove(appStorage.keys.DEFAULT_SCHOOL);
+            }
+          }
 
           try {
             schoolIdInUrl = base64.decode(route.queryParams.school);
