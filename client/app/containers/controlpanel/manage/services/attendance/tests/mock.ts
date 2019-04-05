@@ -1,6 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { of } from 'rxjs';
 
+import { IDateRange } from '@shared/components';
 import IServiceProvider from '../../providers.interface';
 import { IFilterState } from '../../providers.utils.service';
 
@@ -33,6 +34,12 @@ export const mockFilter: IFilterState = {
     listId: 12345,
     cohort_type: 'Experience'
   }
+};
+
+export const mockDateRange: IDateRange = {
+  label: 'label',
+  start: 1,
+  end: 2
 };
 
 export class MockProvidersService {

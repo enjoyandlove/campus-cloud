@@ -2,15 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { CPSession } from '@app/session';
+import { IDateRange } from '@shared/components';
 import { CPI18nService } from '@shared/services';
-import { EngagementService } from '@containers/controlpanel/assess/engagement/engagement.service';
+import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
-
-export interface IDateRange {
-  end: number;
-  start: number;
-  label: string;
-}
 
 @Component({
   selector: 'cp-providers-action-box',
@@ -48,7 +43,14 @@ export class ServicesProviderActionBoxComponent implements OnInit {
     this.search.emit(query);
   }
 
-  onDateChange(dateRange: IDateRange) {
+  onDateChange(dateRange) {
+    if (dateRange.payload) {
+      dateRange = {
+        label: dateRange.label,
+        start: dateRange.payload.range.start,
+        end: dateRange.payload.range.end
+      };
+    }
     this.filterByDates.emit(dateRange);
   }
 
