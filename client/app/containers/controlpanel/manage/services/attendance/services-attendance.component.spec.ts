@@ -5,9 +5,9 @@ import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { CPSession } from '@app/session';
-import { IDateRange } from './components';
 import { RootStoreModule } from '@app/store';
 import { mockSchool } from '@app/session/mock';
+import { IDateRange } from '@shared/components';
 import { CPI18nService } from '@shared/services';
 import { configureTestSuite } from '@shared/tests';
 import { MockServicesService } from '../tests/mock';
