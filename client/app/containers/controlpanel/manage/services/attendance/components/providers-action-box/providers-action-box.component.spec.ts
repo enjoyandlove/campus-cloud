@@ -1,7 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NO_ERRORS_SCHEMA, Component } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { CPSession } from '@app/session';
 import { CPI18nPipe } from '@shared/pipes';
@@ -9,13 +9,15 @@ import { mockDateRange } from '../../tests/mock';
 import { CPI18nService } from '@shared/services';
 import { configureTestSuite } from '@shared/tests';
 import mockSession from '@app/session/mock/session';
-import { CPRangePickerStubComponent } from '@shared/tests/stubs';
 import { ServicesProviderActionBoxComponent } from './providers-action-box.component';
 import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import {
   IDateFilter,
   EngagementUtilsService
 } from '@controlpanel/assess/engagement/engagement.utils.service';
+
+@Component({ selector: 'cp-range-picker', template: '' })
+export class CPRangePickerStubComponent {}
 
 describe('ServicesProviderActionBoxComponent', () => {
   configureTestSuite();
