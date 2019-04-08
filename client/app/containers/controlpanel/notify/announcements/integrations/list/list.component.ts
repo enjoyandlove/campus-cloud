@@ -1,14 +1,15 @@
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { OverlayRef } from '@angular/cdk/overlay';
+import { tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
-import { ModalService } from '@shared/services';
 import { IAnnouncementsIntegration } from '../model';
+import { ModalService, IStore } from '@shared/services';
 import { BaseComponent } from '@app/base/base.component';
 import { AnnouncementsIntegrationDeleteComponent } from '../delete';
 import { AnnouncementsIntegrationCreateComponent } from '../create';
@@ -21,6 +22,7 @@ import { AnnouncementsIntegrationCreateComponent } from '../create';
 export class AnnouncementsIntegrationListComponent extends BaseComponent implements OnInit {
   activeModal: OverlayRef;
   loading$: Observable<boolean>;
+  senders$: Observable<IStore[]>;
   integrations$: Observable<IAnnouncementsIntegration[]>;
 
   constructor(
@@ -71,10 +73,6 @@ export class AnnouncementsIntegrationListComponent extends BaseComponent impleme
     );
   }
 
-  onSyncNow() {
-    console.log('onSyncNow');
-  }
-
   onActiveModalTearDown() {
     this.modalService.close(this.activeModal);
     this.activeModal = null;
@@ -86,9 +84,14 @@ export class AnnouncementsIntegrationListComponent extends BaseComponent impleme
       {},
       {
         data: integration,
+        onAction: this.onDelete.bind(this),
         onClose: this.onActiveModalTearDown.bind(this)
       }
     );
+  }
+
+  onDelete(integrationId: number) {
+    this.store.dispatch(new fromStore.DeleteIntegrations({ integrationId }));
   }
 
   fetch() {
@@ -98,6 +101,13 @@ export class AnnouncementsIntegrationListComponent extends BaseComponent impleme
   ngOnInit() {
     this.loading$ = this.store.select(fromStore.getLoading);
     this.integrations$ = this.store.select(fromStore.getIntegrations);
+    this.senders$ = this.store.select(fromStore.getSenders).pipe(
+      tap((stores: IStore[]) => {
+        if (!stores.length) {
+          this.store.dispatch(new fromStore.GetSenders());
+        }
+      })
+    );
 
     this.updateHeader();
     this.fetch();

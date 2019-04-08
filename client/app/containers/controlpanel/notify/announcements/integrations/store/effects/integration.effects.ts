@@ -80,6 +80,7 @@ export class AnnoucementIntegrationsEffects {
     fromActions.CreateIntegrationSuccess | fromActions.CreateIntegrationFail
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.CREATE_INTEGRATION),
+    map((action: fromActions.CreateIntegration) => action.payload),
     mergeMap((integration: IAnnouncementsIntegration) =>
       this.service.createIntegration(integration, this.params).pipe(
         map(

@@ -45,7 +45,7 @@ export class AnnouncementIntegrationModel {
         _integration.priority,
         Validators.compose([
           Validators.required,
-          CustomValidators.oneOf([AnnouncementPriority.regular, AnnouncementPriority.emergency])
+          CustomValidators.oneOf([AnnouncementPriority.regular, AnnouncementPriority.urgent])
         ])
       ]
     });

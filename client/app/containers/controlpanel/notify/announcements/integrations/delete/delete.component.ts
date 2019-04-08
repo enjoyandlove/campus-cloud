@@ -16,7 +16,8 @@ export class AnnouncementsIntegrationDeleteComponent {
   }
 
   onDeleteClick() {
-    console.log('should delete');
+    this.modal.onAction(this.integration.id);
+    this.modal.onClose();
   }
 
   onCancelClick() {

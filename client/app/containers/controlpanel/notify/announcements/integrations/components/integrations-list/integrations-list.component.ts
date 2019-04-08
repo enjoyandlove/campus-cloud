@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { FORMAT } from '@shared/pipes';
+import { IStore } from '@shared/services';
 import { IAnnouncementsIntegration } from '../../model';
 import { SyncStatus } from '@libs/integrations/common/model';
 
@@ -11,14 +12,18 @@ import { SyncStatus } from '@libs/integrations/common/model';
   styleUrls: ['./integrations-list.component.scss']
 })
 export class IntegrationsListComponent implements OnInit {
+  @Input() senders: IStore[];
   @Input() integrations$: Observable<IAnnouncementsIntegration[]>;
 
-  @Output() syncClick: EventEmitter<number> = new EventEmitter();
   @Output() deleteClick: EventEmitter<IAnnouncementsIntegration> = new EventEmitter();
 
   dateFormat = FORMAT.DATETIME;
   notSynced = SyncStatus.notSynced;
   constructor() {}
+
+  getSender(id: number) {
+    return this.senders.find((store: IStore) => store.value === id);
+  }
 
   ngOnInit() {}
 }
