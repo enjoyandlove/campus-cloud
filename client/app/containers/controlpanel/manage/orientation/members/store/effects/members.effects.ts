@@ -1,7 +1,8 @@
-import { map, mergeMap, catchError, withLatestFrom, switchMap, delay } from 'rxjs/operators';
+import { map, mergeMap, catchError, switchMap } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { RouterReducerState } from '@ngrx/router-store';
 import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -10,9 +11,9 @@ import { CPSession } from '@app/session';
 import { Paginated } from '@shared/utils/http';
 import { commonParams } from '@shared/constants';
 import { CPI18nService } from '@shared/services';
+import { baseActionClass } from '@app/store/base';
 import { IMember } from '@libs/members/common/model';
 import * as fromActions from '../actions/members.actions';
-import { baseActionClass, getRouterState } from '@app/store/base';
 import * as fromSocialGroup from '../actions/social-groups.actions';
 import {
   LibsCommonMembersService,
@@ -25,6 +26,7 @@ export class OrientationMembersEffects extends Paginated {
     private actions$: Actions,
     private session: CPSession,
     private cpI18n: CPI18nService,
+    private route: ActivatedRoute,
     private store: Store<RouterReducerState>,
     private service: LibsCommonMembersService,
     private membersUtils: LibsCommonMembersUtilsService
@@ -38,9 +40,9 @@ export class OrientationMembersEffects extends Paginated {
   > = this.actions$.pipe(
     ofType(fromActions.MembersType.GET_MEMBERS),
     map((action: fromActions.GetMembers) => action.payload),
-    withLatestFrom(this.store.select(getRouterState)),
-    delay(100),
-    switchMap(([{ groupId }, { queryParams }]) => {
+    switchMap(({ groupId }) => {
+      const queryParams = this.route.snapshot.queryParams;
+
       const allowedQueryParams = [
         commonParams.page,
         commonParams.searchStr,

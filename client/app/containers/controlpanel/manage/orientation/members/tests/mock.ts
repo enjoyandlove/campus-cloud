@@ -31,3 +31,15 @@ export class MockLibsCommonMembersService {
     return of(body);
   }
 }
+export class MockActivatedRoute {
+  snapshot = {
+    queryParams: {},
+    parent: {
+      parent: {
+        params: {
+          orientationId: 1
+        }
+      }
+    }
+  };
+}
