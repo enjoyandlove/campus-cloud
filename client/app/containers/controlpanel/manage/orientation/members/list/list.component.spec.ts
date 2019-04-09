@@ -3,6 +3,7 @@ import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { StoreModule, Store } from '@ngrx/store';
+import { ActivatedRoute } from '@angular/router';
 import { MockStore } from '@ngrx/store/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
@@ -10,6 +11,7 @@ import { of } from 'rxjs';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
+import { MockActivatedRoute } from '../tests';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockMember } from '@libs/members/common/tests';
@@ -53,6 +55,7 @@ describe('OrientationMembersListComponent', () => {
           RouterParamsUtils,
           CPTrackingService,
           LibsCommonMembersUtilsService,
+          { provide: ActivatedRoute, useClass: MockActivatedRoute },
           { provide: RouterStateSerializer, useClass: CustomSerializer }
         ]
       });
@@ -137,7 +140,6 @@ describe('OrientationMembersListComponent', () => {
         fixture.ngZone.run(() => {
           membersList.sort.emit('some');
         });
-
         expect(component.doSort).toHaveBeenCalled();
         expect(component.fetch).toHaveBeenCalled();
       });

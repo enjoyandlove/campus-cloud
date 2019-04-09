@@ -248,7 +248,6 @@ export class FeedInputBoxComponent implements OnInit {
 
     this.fileUploadService.uploadFile(file, url, headers).subscribe(
       (res: any) => {
-        console.log('res', res);
         this.image$.next(res.image_url);
         this.form.controls['message_image_url_list'].setValue([res.image_url]);
         this.trackUploadImageEvent();
