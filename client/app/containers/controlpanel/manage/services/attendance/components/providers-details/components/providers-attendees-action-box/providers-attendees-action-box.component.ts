@@ -63,7 +63,14 @@ export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
     this.onToggleQr.emit(this.hasQr);
   }
 
-  onDateChange(dateRange: IDateRange) {
+  onDateChange(dateRange) {
+    if (dateRange.payload) {
+      dateRange = {
+        label: dateRange.label,
+        start: dateRange.payload.range.start,
+        end: dateRange.payload.range.end
+      };
+    }
     this.filterByDates.emit(dateRange);
   }
 
