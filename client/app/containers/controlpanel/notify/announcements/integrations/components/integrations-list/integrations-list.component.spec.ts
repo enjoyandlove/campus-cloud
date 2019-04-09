@@ -5,10 +5,10 @@ import { DebugElement } from '@angular/core';
 import { of } from 'rxjs';
 
 import { CPSession } from '@app/session';
-import { mockIntegration } from '../../tests';
 import { CPI18nService } from '@shared/services';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
+import { mockIntegration, mockSender } from '../../tests';
 import { IntegrationsListComponent } from './integrations-list.component';
 import { CommonIntegrationsModule } from '@libs/integrations/common/common-integrations.module';
 
@@ -54,6 +54,7 @@ describe('IntegrationsListComponent', () => {
 
     expect(listItems.length).toBe(0);
 
+    component.senders = [mockSender];
     component.integrations$ = of([mockIntegration]);
     fixture.detectChanges();
 
