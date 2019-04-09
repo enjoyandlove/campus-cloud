@@ -233,6 +233,7 @@
   *ngIf="isSendMessageModal">
   <cp-students-compose
     [props]="messageData"
+    [fromDisabled]="true"
     (teardown)="onComposeTeardown()"
     (success)="onFlashMessage($event)">
   </cp-students-compose>
