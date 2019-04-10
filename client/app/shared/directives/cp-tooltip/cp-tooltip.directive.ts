@@ -1,4 +1,4 @@
-import { Directive, ElementRef, AfterViewInit, Input } from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges } from '@angular/core';
 import { TooltipOption } from 'bootstrap';
 
 // https://getbootstrap.com/docs/4.1/components/tooltips/#options
@@ -9,12 +9,12 @@ const defaultOptions: TooltipOption = {
 @Directive({
   selector: '[cpTooltip]'
 })
-export class CPToolTipDirective implements AfterViewInit {
+export class CPToolTipDirective implements OnChanges {
   @Input() cpTooltip: TooltipOption;
 
   constructor(private el: ElementRef) {}
 
-  ngAfterViewInit() {
+  ngOnChanges() {
     if (typeof this.cpTooltip === 'boolean' && !this.cpTooltip) {
       return;
     }

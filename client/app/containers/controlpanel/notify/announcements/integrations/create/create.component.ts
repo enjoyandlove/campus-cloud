@@ -44,6 +44,7 @@ export class AnnouncementsIntegrationCreateComponent implements OnInit, OnDestro
   doSubmit() {
     const body = this.form.value;
     this.store.dispatch(new fromStore.CreateIntegration(body));
+    this.modal.onClose();
   }
 
   ngOnInit() {

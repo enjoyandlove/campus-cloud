@@ -6,7 +6,7 @@
           <span>
             <div class="row">
               <div class="col-9 text-truncate">
-                {{ 'services_visits' | cpI18n }}
+                {{ 't_services_total_visits' | cpI18n }}
               </div>
               <div class="col-3">
                 <strong>{{ service.total_visits }}</strong>
@@ -60,7 +60,8 @@
           [maxRate]="service.rating_scale_maximum">
         </cp-stars>
       </p>
-      <p>{{ 't_shared_average_rating' | cpI18n }}</p>
+      <p>{{ 't_shared_average_rating' | cpI18n }} {{ service.avg_rating_percent !== -1 ? serviceRating : '0.0' }}
+      </p>
     </div>
   </div>
 </div>

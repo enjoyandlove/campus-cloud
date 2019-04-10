@@ -246,11 +246,16 @@ export class FeedInputBoxComponent implements OnInit {
       Authorization: auth
     });
 
-    this.fileUploadService.uploadFile(file, url, headers).subscribe((res: any) => {
-      this.image$.next(res.image_url);
-      this.form.controls['message_image_url_list'].setValue([res.image_url]);
-      this.trackUploadImageEvent();
-    });
+    this.fileUploadService.uploadFile(file, url, headers).subscribe(
+      (res: any) => {
+        this.image$.next(res.image_url);
+        this.form.controls['message_image_url_list'].setValue([res.image_url]);
+        this.trackUploadImageEvent();
+      },
+      () => {
+        this.imageError = this.cpI18n.translate('something_went_wrong');
+      }
+    );
   }
 
   trackUploadImageEvent() {

@@ -1,37 +1,35 @@
 <div class="row location">
   <div class="col-12">
     <cp-card class="location__details">
-      <div *ngIf="location.short_name">
+      <ng-container *ngIf="location.short_name">
         <p>
           <strong>
             {{ 'locations_label_acronym' | cpI18n }}
           </strong>
         </p>
         <p cpTarget="acronym">{{ location.short_name }}</p>
-      </div>
+      </ng-container>
 
-      <div *ngIf="location.description">
+      <ng-container *ngIf="location.description">
         <p>
           <strong>
             {{ 'description' | cpI18n }}
           </strong>
         </p>
-        <p
-          cpTarget="description"
-          class="render_line_breaks">
+        <p cpTarget="description">
           {{ location.description }}
         </p>
-      </div>
+      </ng-container>
 
-      <div *ngIf="location.links[0]?.label">
+      <ng-container *ngIf="location.links[0]?.label">
         <p>
           <strong cpTarget="label">
             {{ location.links[0].label }}
           </strong>
         </p>
-      </div>
+      </ng-container>
 
-      <div *ngIf="location.links[0]?.url">
+      <ng-container *ngIf="location.links[0]?.url">
         <p>
           <a
             cpTarget="url"
@@ -41,20 +39,18 @@
             {{ location.links[0].url }}
           </a>
         </p>
-      </div>
+      </ng-container>
 
-      <div *ngIf="hasNotes">
+      <ng-container *ngIf="hasNotes">
         <p>
           <strong>
             {{ 't_dining_dietary_notes' | cpI18n }}
           </strong>
         </p>
-        <p
-          cpTarget="notes"
-          class="render_line_breaks">
+        <p cpTarget="notes">
           {{ location.notes }}
         </p>
-      </div>
+      </ng-container>
     </cp-card>
   </div>
 </div>

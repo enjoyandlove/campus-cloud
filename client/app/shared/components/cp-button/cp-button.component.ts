@@ -28,7 +28,7 @@ export class CPButtonComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   onEnter(event) {
-    if (event.keyCode === 13 && !this.props.disabled && this.listenForEnterKeyEvent) {
+    if (event.keyCode === 13 && this.listenForEnterKeyEvent && !this.props.disabled) {
       this.onClick(event);
     }
   }

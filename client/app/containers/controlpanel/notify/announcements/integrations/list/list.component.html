@@ -14,8 +14,8 @@
       </cp-no-content>
       <ng-container *ngSwitchCase="false">
         <cp-integrations-list
+          [senders]="senders$ | async"
           [integrations$]="integrations$"
-          (syncClick)="onSyncNow($event)"
           (deleteClick)="onLaunchDeleteModal($event)">
         </cp-integrations-list>
 

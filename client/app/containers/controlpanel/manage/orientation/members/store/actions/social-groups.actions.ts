@@ -11,6 +11,8 @@ export enum SocialGroupTypes {
 
 export class GetSocialGroups implements Action {
   readonly type = SocialGroupTypes.GET_SOCIAL_GROUPS;
+
+  constructor(public payload: { orientationId: number }) {}
 }
 
 export class GetSocialGroupsFail implements Action {

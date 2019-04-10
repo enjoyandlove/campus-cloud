@@ -5,8 +5,8 @@ import { switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import { IDateRange } from '@shared/components';
 import { CPI18nService } from '@shared/services';
-import { IDateRange } from '../providers-action-box';
 import { baseActions, IHeader } from '@app/store/base';
 import { BaseComponent } from '@app/base/base.component';
 import IServiceProvider from '../../../providers.interface';

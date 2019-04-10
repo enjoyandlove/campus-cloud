@@ -2644,9 +2644,6 @@
   "t_event_check_in_attendee_already_exist": {
     "message": "Cette personne s'est déjà enregistrée."
   },
-  "t_event_integration_form_default_image": {
-    "message": "Image de l'événement"
-  },
   "t_external_checkin_already_checked_in": {
     "message": "Cette personne s'est déjà enregistrée."
   },
@@ -3112,6 +3109,9 @@
   },
   "t_services_service_qr_enabled": {
     "message": "Code QR"
+  },
+  "t_services_total_visits": {
+    "message": "Total de visites"
   },
   "t_services_wall_settings_modal_title": {
     "message": "Réglages du mur du service"

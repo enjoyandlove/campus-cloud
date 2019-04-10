@@ -11,6 +11,7 @@ import { CPDate, CPMap } from '@shared/utils';
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '@app/session';
 import { baseActions, IHeader } from '@app/store/base';
+import { CustomValidators } from '@shared/validators';
 import { EventUtilService } from '../events.utils.service';
 import { amplitudeEvents } from '@shared/constants/analytics';
 import { CPI18nService } from '@shared/services/i18n.service';
@@ -233,7 +234,10 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
         has_checkout: [res.has_checkout],
         end: [res.end, Validators.required],
         event_feedback: [res.event_feedback],
-        title: [res.title, Validators.required],
+        title: [
+          res.title,
+          Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])
+        ],
         start: [res.start, Validators.required],
         event_attendance: [res.event_attendance],
         event_manager_id: [res.event_manager_id],

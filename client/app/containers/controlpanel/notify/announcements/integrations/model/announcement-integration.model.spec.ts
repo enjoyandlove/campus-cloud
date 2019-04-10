@@ -56,7 +56,7 @@ describe('AnnouncementIntegrationModel', () => {
 
     it('should validate priority', () => {
       ctrl = form.get('priority');
-      validateOneOf(ctrl, [AnnouncementPriority.regular, AnnouncementPriority.emergency]);
+      validateOneOf(ctrl, [AnnouncementPriority.regular, AnnouncementPriority.urgent]);
     });
   });
 });

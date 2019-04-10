@@ -1,3 +1,4 @@
+import { IStore } from '@shared/services';
 import { mockSchool } from '@app/session/mock';
 import { IAnnouncementsIntegration } from './../model';
 import { IntegrationTypes } from '@libs/integrations/common/model';
@@ -28,4 +29,9 @@ export const mockIntegration: IAnnouncementsIntegration = {
   priority: 1,
   sync_status: 1,
   last_successful_sync_epoch: 1541794599
+};
+
+export const mockSender: IStore = {
+  value: 28677,
+  label: 'label'
 };

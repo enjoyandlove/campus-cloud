@@ -23,7 +23,7 @@ export class CustomValidators {
     return control.value.trim() ? null : { required: true };
   }
 
-  static commaSeparated = (validator: Function) => {
+  static commaSeparated = (validators: Function[]) => {
     return (control: AbstractControl) => {
       const hasValue = control.value && control.value.replace(/,/g, '').length;
       if (!hasValue) {
@@ -32,14 +32,16 @@ export class CustomValidators {
       const separated = control.value.split(',');
       return separated
         .map((value: string) => value.trim())
-        .reduce((errors: ValidationErrors | null, value: string) => {
-          if (value) {
-            return {
-              ...errors,
-              ...validator(new FormControl(value))
-            };
-          }
-          return errors;
+        .reduce((valueErrors: ValidationErrors | null, value: string) => {
+          return validators.reduce(
+            (validatorErrors: ValidationErrors | null, validator: Function) => {
+              return {
+                ...validatorErrors,
+                ...validator(new FormControl(value))
+              };
+            },
+            valueErrors
+          );
         }, null);
     };
   };

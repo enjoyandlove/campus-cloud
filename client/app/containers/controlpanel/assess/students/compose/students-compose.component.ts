@@ -14,6 +14,7 @@ import { BehaviorSubject } from 'rxjs';
 
 import { CPSession } from '@app/session';
 import { StoreService } from '@shared/services';
+import { CustomValidators } from '@shared/validators';
 import { StudentsService } from './../students.service';
 import { CPI18nService } from '@shared/services/i18n.service';
 
@@ -27,6 +28,7 @@ declare var $;
   styleUrls: ['./students-compose.component.scss']
 })
 export class StudentsComposeComponent implements OnInit {
+  @Input() fromDisabled = false;
   @Input() props: { name: string; userIds: Array<number>; storeId: number };
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
@@ -145,8 +147,14 @@ export class StudentsComposeComponent implements OnInit {
       user_ids: [this.props.userIds],
       is_school_wide: false,
       store_id: [this.props.storeId ? this.props.storeId : defaultHost, Validators.required],
-      subject: [null, [Validators.required, Validators.maxLength(128)]],
-      message: [null, [Validators.required, Validators.maxLength(400)]],
+      subject: [
+        null,
+        [Validators.required, Validators.maxLength(128), CustomValidators.requiredNonEmpty]
+      ],
+      message: [
+        null,
+        [Validators.required, Validators.maxLength(400), CustomValidators.requiredNonEmpty]
+      ],
       priority: [2, Validators.required]
     });
 

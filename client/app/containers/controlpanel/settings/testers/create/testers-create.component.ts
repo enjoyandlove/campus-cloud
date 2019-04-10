@@ -1,5 +1,5 @@
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
 
 import { CustomValidators } from '@shared/validators';
 import { MODAL_DATA, IModal } from '@shared/services';
@@ -30,7 +30,14 @@ export class TestersCreateComponent implements OnInit {
 
   ngOnInit() {
     this.form = new FormBuilder().group({
-      emails: [null, CustomValidators.commaSeparated(CustomValidators.emailWithTopLevelDomain)]
+      emails: [
+        null,
+        CustomValidators.commaSeparated([
+          Validators.required,
+          CustomValidators.requiredNonEmpty,
+          CustomValidators.emailWithTopLevelDomain
+        ])
+      ]
     });
   }
 }

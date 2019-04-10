@@ -1,8 +1,8 @@
-/*tslint:disable:max-line-length */
 import { ErrorHandler } from '@angular/core';
 import { get as _get } from 'lodash';
 
 import { CPLogger } from '@shared/services';
+import { isSupported } from '@shared/utils/browser';
 import { environment } from '@client/environments/environment';
 import { DEV_SERVER_URL, LOCAL_PROD_URL } from '@shared/constants';
 
@@ -18,6 +18,14 @@ export class CPErrorHandler extends ErrorHandler {
       blacklistUrls: [DEV_SERVER_URL, LOCAL_PROD_URL],
       dsn: environment.keys.sentryDsn,
       beforeSend(event) {
+        let supportedBrowser = true;
+        try {
+          supportedBrowser = isSupported();
+        } catch (error) {}
+
+        if (!supportedBrowser) {
+          return null;
+        }
         const e2eUserId = '18845';
         const userId = _get(event, ['user', 'id'], null);
 
@@ -30,7 +38,6 @@ export class CPErrorHandler extends ErrorHandler {
     const chunkFailedMessage = /Loading chunk [\d]+ failed/;
 
     if (chunkFailedMessage.test(err.message)) {
-      CPLogger.log('caught loading chunk error');
       location.reload();
       return;
     }

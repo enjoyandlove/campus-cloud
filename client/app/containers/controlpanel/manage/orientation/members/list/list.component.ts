@@ -2,6 +2,7 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { takeUntil, take, filter } from 'rxjs/operators';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -43,6 +44,7 @@ export class OrientationMembersListComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
+    private route: ActivatedRoute,
     private modalService: ModalService,
     private cpTracking: CPTrackingService,
     private routerUtils: RouterParamsUtils,
@@ -53,7 +55,6 @@ export class OrientationMembersListComponent implements OnInit {
   doSort(sortField: string) {
     const currentDirection = this.routerUtils.getQueryParamByKeyName(commonParams.sortDirection);
     const sortDirection = this.routerUtils.toggleDirection(currentDirection as string);
-
     this.routerUtils.appendParamToRoute({
       [commonParams.sortField]: sortField,
       [commonParams.sortDirection]: sortDirection
@@ -73,7 +74,8 @@ export class OrientationMembersListComponent implements OnInit {
 
   fetch(withGroups = false) {
     if (withGroups) {
-      this.store.dispatch(new fromStore.GetSocialGroups());
+      const { orientationId } = this.route.snapshot.parent.parent.params;
+      this.store.dispatch(new fromStore.GetSocialGroups({ orientationId }));
     } else {
       this.store
         .select(fromStore.getGroupId)
