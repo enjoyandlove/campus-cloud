@@ -5,13 +5,14 @@ import { Component, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
+import { CPI18nService } from '@shared/services';
 import { dealDateValidator } from '../deals.utils';
-import { BaseComponent } from '../../../../../base';
+import { CustomValidators } from '@shared/validators';
+import { baseActions, IHeader } from '@app/store/base';
 import { DealsService, DateStatus } from '../deals.service';
 import { DealsStoreService } from './../stores/store.service';
-import { CPI18nService } from '../../../../../shared/services';
-import { baseActions, IHeader } from '../../../../../store/base';
 
 @Component({
   selector: 'cp-deals-edit',
@@ -136,7 +137,14 @@ export class DealsEditComponent extends BaseComponent implements OnInit {
   buildDealsForm(data) {
     this.form = this.fb.group(
       {
-        title: [data.title, [Validators.required, Validators.maxLength(120)]],
+        title: [
+          data.title,
+          Validators.compose([
+            Validators.required,
+            Validators.maxLength(120),
+            CustomValidators.requiredNonEmpty
+          ])
+        ],
         store_id: [data.store_id, Validators.required],
         image_url: [data.image_url, Validators.required],
         image_thumb_url: [data.image_thumb_url],
