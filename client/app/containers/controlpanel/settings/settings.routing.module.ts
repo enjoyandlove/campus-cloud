@@ -12,8 +12,7 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'team',
-        canActivate: [PrivilegesGuard],
-        data: { zendesk: 'team settings', privilege: CP_PRIVILEGES_MAP.manage_admin },
+        data: { zendesk: 'team settings' },
         loadChildren: './team/team.module#TeamModule'
       },
       {
