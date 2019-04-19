@@ -2301,6 +2301,9 @@
   "t_assess_chart_tooltip_label_engagements": {
     "message": "Engagement(s)"
   },
+  "t_assess_checkin_method": {
+    "message": "Check-in Method"
+  },
   "t_assess_checkin_time_in": {
     "message": "Check-in Time"
   },

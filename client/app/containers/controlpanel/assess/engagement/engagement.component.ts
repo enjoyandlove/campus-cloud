@@ -5,15 +5,16 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from './../../../../session/index';
+import { CPSession } from '@app/session';
+import { CheckinMethod } from '../constants';
+import { baseActions } from '@app/store/base';
+import { CPTrackingService } from '@shared/services';
+import { BaseComponent } from '@app/base/base.component';
 import { EngagementService } from './engagement.service';
-import { baseActions } from '../../../../store/base/index';
+import { createSpreadSheet } from '@shared/utils/csv/parser';
 import { AssessUtilsService } from '../assess.utils.service';
-import { CPTrackingService } from '../../../../shared/services';
-import { BaseComponent } from '../../../../base/base.component';
-import { amplitudeEvents } from '../../../../shared/constants/analytics';
-import { createSpreadSheet } from './../../../../shared/utils/csv/parser';
-import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { CPI18nService } from '@shared/services/i18n.service';
+import { amplitudeEvents } from '@shared/constants/analytics';
 import {
   DivideBy,
   groupByWeek,
@@ -21,7 +22,7 @@ import {
   groupByQuarter,
   CPLineChartUtilsService,
   groupByYear
-} from '../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
+} from '@shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 declare var $;
 
@@ -225,6 +226,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
           { label: 't_assess_last_name', key: 'lastname' },
           { label: 't_assess_email', key: 'email' },
           { label: 'assess_student_id', key: 'student_identifier' },
+          { label: 't_assess_checkin_method', key: 'checkin_method' },
           { label: 't_assess_number_events', key: 'event_checkins' },
           { label: 't_assess_list_event_names', key: 'event_names' },
           { label: 't_assess_number_services', key: 'service_checkins' },
@@ -238,7 +240,10 @@ export class EngagementComponent extends BaseComponent implements OnInit {
         data.download_data.forEach((item) => {
           let parsedItem = {};
           dataMap.forEach((mapping) => {
-            const itemValue = item[mapping.key];
+            let itemValue = item[mapping.key];
+            if (mapping.key === 'checkin_method') {
+              itemValue = CheckinMethod[itemValue];
+            }
             if (itemValue) {
               parsedItem = {
                 ...parsedItem,

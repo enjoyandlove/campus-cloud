@@ -2301,6 +2301,9 @@
   "t_assess_chart_tooltip_label_engagements": {
     "message": "Implication(s)"
   },
+  "t_assess_checkin_method": {
+    "message": "Méthode d'enregistrement"
+  },
   "t_assess_checkin_time_in": {
     "message": "Heure d'entrée"
   },

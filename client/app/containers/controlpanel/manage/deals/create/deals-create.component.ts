@@ -5,12 +5,13 @@ import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '@app/session';
 import { DealsService } from '../deals.service';
-import { CPSession } from '../../../../../session';
+import { CPI18nService } from '@shared/services';
 import { dealDateValidator } from '../deals.utils';
+import { CustomValidators } from '@shared/validators';
+import { baseActions, IHeader } from '@app/store/base';
 import { DealsStoreService } from '../stores/store.service';
-import { CPI18nService } from '../../../../../shared/services';
-import { baseActions, IHeader } from '../../../../../store/base';
 
 @Component({
   selector: 'cp-deals-create',
@@ -120,7 +121,14 @@ export class DealsCreateComponent implements OnInit {
   buildDealsForm() {
     this.form = this.fb.group(
       {
-        title: [null, [Validators.required, Validators.maxLength(120)]],
+        title: [
+          null,
+          Validators.compose([
+            Validators.required,
+            Validators.maxLength(120),
+            CustomValidators.requiredNonEmpty
+          ])
+        ],
         store_id: [null, Validators.required],
         image_url: [null, Validators.required],
         image_thumb_url: [null],
