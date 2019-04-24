@@ -13,12 +13,11 @@ import {
 import { CPSession } from '@app/session';
 import { CPDate } from '@shared/utils/date';
 import { DATE_FILTER } from './events-filters';
+import { amplitudeEvents } from '@shared/constants';
 import { CP_PRIVILEGES_MAP } from '@shared/constants';
 import { EventAttendance } from '../../../event.status';
 import { CP_TRACK_TO } from '@shared/directives/tracking';
-import { CPI18nService } from '@shared/services/i18n.service';
-import { amplitudeEvents, EVENTS_INTEGRATION } from '@shared/constants';
-import { CPTrackingService, RouteLevel, StoreService } from '@shared/services';
+import { CPTrackingService, RouteLevel, StoreService, CPI18nService } from '@shared/services';
 
 import {
   canAccountLevelWriteResource,
@@ -51,7 +50,6 @@ export class ListActionBoxComponent implements OnInit {
   eventFilter;
   dateFilterOpts;
   canCreateEvent;
-  featureName = EVENTS_INTEGRATION;
   threeYearsFromNow = CPDate.now(this.session.tz)
     .add(3, 'years')
     .unix();

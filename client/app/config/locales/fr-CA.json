@@ -519,7 +519,7 @@
     "message": "Description"
   },
   "athletics_label_athletic_details": {
-    "message": "Détails"
+    "message": "Détail"
   },
   "athletics_label_athletic_membership": {
     "message": "Membres"
@@ -757,7 +757,7 @@
     "message": "Liste des présents"
   },
   "checkin_manual_checkin": {
-    "message": "Vérification de présence manuel"
+    "message": "Vérification de présence manuelle"
   },
   "checkin_scannable_qr_code": {
     "message": "Code QR"

@@ -11,6 +11,7 @@ import { getElementByCPTargetValue } from '@shared/utils/tests';
 import { WallsIntegrationFormComponent } from './integration-form.component';
 import { WallsIntegrationModel } from '../../model/walls.integrations.model';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
+import { IntegrationRequiredFieldsComponent } from '@libs/integrations/common/components';
 
 describe('WallsIntegrationFormComponent', () => {
   configureTestSuite();
@@ -20,7 +21,7 @@ describe('WallsIntegrationFormComponent', () => {
       TestBed.configureTestingModule({
         providers: [CPI18nService],
         imports: [SharedModule, ReactiveFormsModule, HttpClientModule],
-        declarations: [WallsIntegrationFormComponent]
+        declarations: [WallsIntegrationFormComponent, IntegrationRequiredFieldsComponent]
       });
 
       await TestBed.compileComponents();

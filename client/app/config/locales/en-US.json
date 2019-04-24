@@ -2689,6 +2689,9 @@
   "t_external_check_in_not_found_error": {
     "message": "The event cannot be found"
   },
+  "t_integration_form_required_fields": {
+    "message": "Make sure your feeds contain the required fields"
+  },
   "t_integration_sync_button_int_not_ready_to_sync_tooltip": {
     "message": "You can only manually sync your feed once per minute"
   },
