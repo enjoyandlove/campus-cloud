@@ -6,7 +6,7 @@ import { CP_PRIVILEGES_MAP } from '@shared/constants';
 import { CustomiseComponent } from './customise.component';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'experiences', pathMatch: 'full' },
+  { path: '', redirectTo: 'branding', pathMatch: 'full' },
   {
     path: '',
     component: CustomiseComponent,
