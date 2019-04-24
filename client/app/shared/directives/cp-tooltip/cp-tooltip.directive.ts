@@ -11,6 +11,7 @@ const defaultOptions: TooltipOption = {
 })
 export class CPToolTipDirective implements OnChanges {
   @Input() cpTooltip: TooltipOption;
+  @Input('attr.title') title: string;
 
   constructor(private el: ElementRef) {}
 
@@ -19,9 +20,12 @@ export class CPToolTipDirective implements OnChanges {
       return;
     }
 
-    $(this.el.nativeElement).tooltip({
-      ...defaultOptions,
-      ...this.cpTooltip
-    });
+    $(this.el.nativeElement)
+      .tooltip('dispose')
+      .tooltip({
+        ...defaultOptions,
+        ...this.cpTooltip,
+        title: this.title
+      });
   }
 }
