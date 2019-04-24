@@ -4,14 +4,14 @@
   "em": null,
   "children": [
     {
-      "amplitude": "App Experiences",
-      "label": "t_customise_personas",
-      "url": "/studio/experiences"
-    },
-    {
       "amplitude": "Branding",
       "label": "customise_banner",
       "url": "/studio/branding"
+    },
+    {
+      "amplitude": "App Experiences",
+      "label": "t_customise_personas",
+      "url": "/studio/experiences"
     }
   ]
 }
