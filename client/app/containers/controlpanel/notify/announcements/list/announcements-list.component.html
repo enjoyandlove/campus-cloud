@@ -53,10 +53,16 @@
               {{ message.sent_time | cpDatePipe:dateFormat }}
             </span>
 
-            <span
-              (click)="onLauncDeleteModal(message)"
-              class="col-1 text-right hover delete-message">
-              &times;
+            <span class="col-1 text-right actions">
+              <img
+                cpTooltip
+                [attr.title]="isExternalToolTip"
+                [src]="1 | integrationSourceToIcon">
+              <span
+                class=" hover delete-message"
+                (click)="onLauncDeleteModal(message)">
+                &times;
+              </span>
             </span>
           </div>
         </li>

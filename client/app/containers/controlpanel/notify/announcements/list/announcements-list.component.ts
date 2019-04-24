@@ -46,6 +46,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
   state: IState = state;
   deleteAnnouncement = null;
   dateFormat = FORMAT.DATETIME;
+  isExternalToolTip = this.cpI18n.translate('t_announcements_list_external_source_tooltip');
 
   constructor(
     private session: CPSession,

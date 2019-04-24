@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { SharedModule } from '@client/app/shared/shared.module';
-import { IntegrationTypePipe, IntegrationStatusPipe } from './pipes';
+import { SharedModule } from '@shared/shared.module';
+import { IntegrationTypePipe, IntegrationStatusPipe, IntegrationSourceToIconPipe } from './pipes';
 import {
   IntegrationsDeleteComponent,
   IntegrationsActionBoxComponent,
@@ -14,6 +14,7 @@ import {
     IntegrationTypePipe,
     IntegrationStatusPipe,
     IntegrationsDeleteComponent,
+    IntegrationSourceToIconPipe,
     IntegrationsActionBoxComponent,
     IntegrationsSyncNowButtonComponent
   ],
@@ -22,6 +23,7 @@ import {
     IntegrationTypePipe,
     IntegrationStatusPipe,
     IntegrationsDeleteComponent,
+    IntegrationSourceToIconPipe,
     IntegrationsActionBoxComponent,
     IntegrationsSyncNowButtonComponent
   ]

@@ -1,16 +1,6 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../../../../shared/shared.module';
-
-import { AnnouncementsListComponent } from './list';
-import { AnnouncementDeleteComponent } from './delete';
-import { AnnouncementsConfirmComponent } from './confirm';
-import { AnnouncementsComposeComponent } from './compose';
-
-import { AudienceModule } from './../../audience/audience.module';
-
-import { AudienceSharedModule } from './../../audience/shared/audience.shared.module';
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 
 import {
   AnnouncementsListActionBoxComponent,
@@ -18,19 +8,26 @@ import {
   AnnouncementsListSummaryComponent
 } from './list/components';
 
-import { AnnouncementsRoutingModule } from './announcements.routing.module';
-
+import { AnnouncementsListComponent } from './list';
+import { SharedModule } from '@shared/shared.module';
+import { AnnouncementDeleteComponent } from './delete';
+import { AnnouncementsConfirmComponent } from './confirm';
+import { AnnouncementsComposeComponent } from './compose';
 import { AnnouncementsService } from './announcements.service';
+import { AudienceModule } from './../../audience/audience.module';
+import { AnnouncementsRoutingModule } from './announcements.routing.module';
+import { AudienceSharedModule } from './../../audience/shared/audience.shared.module';
+import { CommonIntegrationsModule } from '@libs/integrations/common/common-integrations.module';
 
 @NgModule({
   declarations: [
     AnnouncementsListComponent,
-    AnnouncementsListActionBoxComponent,
+    AnnouncementDeleteComponent,
     AnnouncementsComposeComponent,
     AnnouncementsConfirmComponent,
-    AnnouncementDeleteComponent,
-    AnnouncementsListRecipientsComponent,
-    AnnouncementsListSummaryComponent
+    AnnouncementsListSummaryComponent,
+    AnnouncementsListActionBoxComponent,
+    AnnouncementsListRecipientsComponent
   ],
 
   exports: [
@@ -44,6 +41,7 @@ import { AnnouncementsService } from './announcements.service';
     SharedModule,
     AudienceSharedModule,
     AnnouncementsRoutingModule,
+    CommonIntegrationsModule,
     AudienceModule,
     ReactiveFormsModule
   ],
