@@ -4,15 +4,6 @@ export const environment: IEnvironment = {
   root: '/dist/',
   production: true,
   flags: {
-    EVENTS_INTEGRATION: {
-      whitelist: []
-    },
-    ITEMS_INTEGRATION: {
-      whitelist: []
-    },
-    WALLS_INTEGRATION: {
-      whitelist: []
-    },
     ANNOUNCEMENT_INTEGRATION: {
       whitelist: []
     }

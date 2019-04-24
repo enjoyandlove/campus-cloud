@@ -26,6 +26,7 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
   calendarId: number;
   typesDropdown: IItem[];
   destroy$ = new Subject();
+  calendarItemIntegrationPkdbUrl = 'https://support.readyeducation.com/hc/en-us/articles/360022156453';
 
   constructor(
     public session: CPSession,

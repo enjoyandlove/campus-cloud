@@ -6,7 +6,8 @@ import { IntegrationTypePipe, IntegrationStatusPipe } from './pipes';
 import {
   IntegrationsDeleteComponent,
   IntegrationsActionBoxComponent,
-  IntegrationsSyncNowButtonComponent
+  IntegrationsSyncNowButtonComponent,
+  IntegrationRequiredFieldsComponent
 } from './components';
 
 @NgModule({
@@ -15,7 +16,8 @@ import {
     IntegrationStatusPipe,
     IntegrationsDeleteComponent,
     IntegrationsActionBoxComponent,
-    IntegrationsSyncNowButtonComponent
+    IntegrationsSyncNowButtonComponent,
+    IntegrationRequiredFieldsComponent
   ],
   imports: [CommonModule, SharedModule],
   exports: [
@@ -23,7 +25,8 @@ import {
     IntegrationStatusPipe,
     IntegrationsDeleteComponent,
     IntegrationsActionBoxComponent,
-    IntegrationsSyncNowButtonComponent
+    IntegrationsSyncNowButtonComponent,
+    IntegrationRequiredFieldsComponent
   ]
 })
 export class CommonIntegrationsModule {}
