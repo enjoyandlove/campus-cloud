@@ -56,8 +56,9 @@
             <span class="col-1 text-right actions">
               <img
                 cpTooltip
+                *ngIf="message.is_external"
                 [attr.title]="isExternalToolTip"
-                [src]="1 | integrationSourceToIcon">
+                [src]="message.source | integrationSourceToIcon">
               <span
                 class=" hover delete-message"
                 (click)="onLauncDeleteModal(message)">
