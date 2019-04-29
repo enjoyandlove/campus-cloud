@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
 import { FormArray, FormGroup } from '@angular/forms';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { CPMap } from '@shared/utils';
 import { IItem } from '@shared/components';
