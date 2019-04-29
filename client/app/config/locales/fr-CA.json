@@ -2120,7 +2120,7 @@
     "message": "Aucun services trouvés"
   },
   "services_providers_no_results": {
-    "message": "Il n'y a aucun fournisseur de service pour ce service. Utilisez \"Créer un fournisseur de service\" pour en créer un.\n\nLes fournisseurs de service peuvent Évaler pour rassembler le retour des étudiants et suivre les vérifications de présence."
+    "message": "Il n'y a aucun fournisseur de service pour ce service. Utilisez \"Créer un fournisseur de service\" pour en créer un.\n\nLes fournisseurs de service peuvent Évaluer pour rassembler le retour des étudiants et suivre les vérifications de présence."
   },
   "services_provider_button_add_another": {
     "message": "Ajouter un autre fournisseur de service"

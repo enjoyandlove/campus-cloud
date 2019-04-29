@@ -15,8 +15,6 @@ import {
   EventsImportTopBarComponent
 } from './excel/components';
 
-import { EventSourceToIconPipe } from './pipes';
-
 import { EventsEditComponent } from './edit';
 import { EventsListComponent } from './list';
 import { EventsInfoComponent } from './info';
@@ -37,6 +35,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { CheckInModule } from './attendance/check-in/check-in.module';
 import { EngagementModule } from '../../assess/engagement/engagement.module';
 import { EngagementStudentsModule } from '../../assess/students/students.module';
+import { CommonIntegrationsModule } from '@libs/integrations/common/common-integrations.module';
 
 @NgModule({
   declarations: [
@@ -48,7 +47,6 @@ import { EngagementStudentsModule } from '../../assess/students/students.module'
     EventsExcelComponent,
     EventsCreateComponent,
     EventsDeleteComponent,
-    EventSourceToIconPipe,
     ListUpcomingComponent,
     ListActionBoxComponent,
     EventsAttendanceComponent,
@@ -65,6 +63,7 @@ import { EngagementStudentsModule } from '../../assess/students/students.module'
     CheckInModule,
     EventsRoutingModule,
     ReactiveFormsModule,
+    CommonIntegrationsModule,
     EngagementStudentsModule,
     AssessModule, // sorting based on route loading
     EngagementModule
@@ -81,7 +80,6 @@ import { EngagementStudentsModule } from '../../assess/students/students.module'
     EventsExcelComponent,
     EventsCreateComponent,
     ListUpcomingComponent,
-    EventSourceToIconPipe,
     EventsDeleteComponent,
     ListActionBoxComponent,
     EventsAttendanceComponent,
