@@ -1,7 +1,7 @@
 import { OnInit, Component, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { map, filter, takeUntil } from 'rxjs/operators';
-import { BehaviorSubject, of, Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -17,12 +17,12 @@ import { LocationsUtilsService } from '@libs/locations/common/utils';
   styleUrls: ['./locations-info.component.scss']
 })
 export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
+  loading$;
   hasMetaData;
   openingHours;
   resourceBanner;
   draggable = false;
   location: ILocation;
-  loading$ = of(true);
   mapCenter: BehaviorSubject<any>;
 
   destroy$ = new Subject<null>();
@@ -91,7 +91,7 @@ export class LocationsInfoComponent implements OnInit, OnDestroy, Destroyable {
   }
 
   ngOnInit() {
-    setTimeout(() => (this.loading$ = this.store.select(fromStore.getLocationsLoading)), 1000);
+    this.loading$ = this.store.select(fromStore.getLocationsLoading);
 
     this.loadLocationDetail();
   }
