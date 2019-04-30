@@ -2292,6 +2292,9 @@
   "t_admin_invite_studio_limited_tooltip": {
     "message": "Full access to Studio requires permission to Athletics, Events, Clubs, Services, Calendar and Orientation. Your access to add resources will be limited without those permissions."
   },
+  "t_announcements_list_external_source_tooltip": {
+    "message": "This announcement was integrated. It will be automatically updated from the integration."
+  },
   "t_announcement_type": {
     "message": "Announcement Type"
   },
