@@ -34,3 +34,14 @@
   padding: 0;
   list-style: none;
 }
+
+.actions {
+  color: $color-secondary-text;
+
+  i,
+  img {
+    top: -5px;
+    right: 10px;
+    position: relative;
+  }
+}

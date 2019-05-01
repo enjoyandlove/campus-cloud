@@ -2292,6 +2292,9 @@
   "t_admin_invite_studio_limited_tooltip": {
     "message": "Full access to Studio requires permission to Athletics, Events, Clubs, Services, Calendar and Orientation. Your access to add resources will be limited without those permissions."
   },
+  "t_announcements_list_external_source_tooltip": {
+    "message": "This announcement was integrated. It will be automatically updated from the integration."
+  },
   "t_announcement_type": {
     "message": "Announcement Type"
   },
@@ -2688,6 +2691,9 @@
   },
   "t_external_check_in_not_found_error": {
     "message": "The event cannot be found"
+  },
+  "t_integration_form_required_fields": {
+    "message": "Make sure your feeds contain the required fields"
   },
   "t_integration_sync_button_int_not_ready_to_sync_tooltip": {
     "message": "You can only manually sync your feed once per minute"

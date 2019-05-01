@@ -3,8 +3,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { environment } from '@client/environments/environment';
 import { IntegrationTypes } from '@libs/integrations/common/model/integration.interface';
 
-@Pipe({ name: 'eventSourceToIcon' })
-export class EventSourceToIconPipe implements PipeTransform {
+@Pipe({ name: 'integrationSourceToIcon' })
+export class IntegrationSourceToIconPipe implements PipeTransform {
   transform(source: number) {
     const pathToAsset = `${environment.root}public/svg/events`;
 
@@ -15,7 +15,5 @@ export class EventSourceToIconPipe implements PipeTransform {
     } else if (source === IntegrationTypes.ical) {
       return `${pathToAsset}/int_ical.svg`;
     }
-    // temporary
-    return `${pathToAsset}/int_rss.svg`;
   }
 }

@@ -29,6 +29,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   selectedType: IItem | null;
   stores$: Observable<IStore[] | IItem[]>;
+  eventIntegrationPkdbUrl = 'https://support.readyeducation.com/hc/en-us/articles/360021952274';
 
   constructor(public session: CPSession, public store: Store<fromStore.IEventIntegrationState>) {}
 

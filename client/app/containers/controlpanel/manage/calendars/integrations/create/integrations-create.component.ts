@@ -22,6 +22,7 @@ export class ItemsIntegrationsCreateComponent implements OnInit {
   form: FormGroup;
   calendarId: number;
   typesDropdown: IItem[];
+  calendarItemIntegrationPkdbUrl = 'https://support.readyeducation.com/hc/en-us/articles/360022156453';
 
   constructor(
     public session: CPSession,

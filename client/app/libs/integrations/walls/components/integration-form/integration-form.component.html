@@ -11,6 +11,11 @@
           [disabled]="form.get('feed_type').disabled">
         </cp-dropdown>
       </div>
+      <div class="col-6 no-left-padding">
+        <cp-integration-required-fields
+          [linkUrl]="wallIntegrationPkdbUrl">
+        </cp-integration-required-fields>
+      </div>
     </div>
   </div>
 

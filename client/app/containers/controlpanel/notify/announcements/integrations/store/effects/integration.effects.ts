@@ -1,6 +1,6 @@
+import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { mergeMap, map, catchError } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
-import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -11,6 +11,7 @@ import * as fromRoot from '@app/store/base';
 import { IAnnouncementsIntegration } from '../../model';
 import { IntegrationsService } from '../../integrations.service';
 import { CPI18nService, StoreService, IStore } from '@shared/services';
+import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 
 @Injectable()
 export class AnnoucementIntegrationsEffects {
@@ -20,7 +21,8 @@ export class AnnoucementIntegrationsEffects {
     private cpI18n: CPI18nService,
     private storeService: StoreService,
     private service: IntegrationsService,
-    private store: Store<fromRoot.ISnackbar>
+    private store: Store<fromRoot.ISnackbar>,
+    private commonUtils: CommonIntegrationUtilsService
   ) {}
 
   @Effect()
@@ -87,8 +89,9 @@ export class AnnoucementIntegrationsEffects {
           (newIntegration: IAnnouncementsIntegration) =>
             new fromActions.CreateIntegrationSuccess(newIntegration)
         ),
-        catchError(() => {
-          this.handleError();
+        catchError(({ error }: HttpErrorResponse) => {
+          const errMessage = this.commonUtils.handleCreateUpdateError(error).error;
+          this.handleError(errMessage);
           return of(new fromActions.CreateIntegrationFail());
         })
       )
@@ -99,10 +102,10 @@ export class AnnoucementIntegrationsEffects {
     return new HttpParams().set('school_id', this.session.g.get('school').id);
   }
 
-  private handleError() {
+  private handleError(body = this.cpI18n.translate('something_went_wrong')) {
     this.store.dispatch(
       new fromRoot.baseActionClass.SnackbarError({
-        body: this.cpI18n.translate('something_went_wrong')
+        body
       })
     );
   }

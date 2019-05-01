@@ -7,7 +7,6 @@ import { Observable } from 'rxjs';
 import { CPSession } from '@app/session';
 import { FeedsService } from '../../../feeds.service';
 import { GroupType } from '../../../feeds.utils.service';
-import { WALLS_INTEGRATION } from '@shared/constants/flags';
 import { CPI18nService } from '@shared/services/i18n.service';
 
 const campusWall = {
@@ -65,7 +64,6 @@ export class FeedFiltersComponent implements OnInit {
   campusWallView;
   socialGroups = [];
   walls$: Observable<any>;
-  featureName = WALLS_INTEGRATION;
 
   constructor(
     private session: CPSession,

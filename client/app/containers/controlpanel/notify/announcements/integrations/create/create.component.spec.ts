@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule, Store } from '@ngrx/store';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import * as fromStore from '../store';
@@ -24,6 +25,7 @@ describe('AnnouncementsIntegrationCreateComponent', () => {
           StoreModule.forRoot({}),
           StoreModule.forFeature('announcementIntegrations', fromStore.reducers)
         ],
+        schemas: [NO_ERRORS_SCHEMA],
         providers: [
           ModalService,
           CPI18nService,

@@ -1,6 +1,7 @@
-import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { isProd } from './config/env/index';
+import { NgModule } from '@angular/core';
+
+import { isProd } from '@app/config/env';
 import { LoginComponent, LogoutComponent, LostPasswordComponent } from './containers/auth';
 
 const routes: Routes = [
@@ -36,6 +37,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       useHash: true,
       onSameUrlNavigation: 'reload',
+      scrollPositionRestoration: 'enabled',
       preloadingStrategy: isProd ? PreloadAllModules : null
     })
   ],

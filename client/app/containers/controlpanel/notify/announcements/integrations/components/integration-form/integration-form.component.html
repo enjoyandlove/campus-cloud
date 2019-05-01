@@ -10,6 +10,10 @@
           (selected)="onTypeSelected($event)">
         </cp-dropdown>
       </div>
+      <div class="col-6">
+        <cp-integration-required-fields linkUrl="#">
+        </cp-integration-required-fields>
+      </div>
     </div>
   </div>
 
@@ -50,10 +54,10 @@
       </div>
     </div>
   </div>
-  
+
   <div class="form-group">
     <div class="row">
-      <div class="col-12">
+      <div class="col-6">
         <label for="priority">{{ 't_announcement_type' | cpI18n }}</label>
         <cp-check-dropdown
           cpTarget="priority"

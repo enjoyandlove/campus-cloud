@@ -10,6 +10,7 @@ import { SharedModule } from '@shared/shared.module';
 import { IntegrationsService } from './integrations.service';
 import { AnnouncementsIntegrationListComponent } from './list';
 import { AnnouncementsIntegrationDeleteComponent } from './delete';
+import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { AnnouncementsIntegrationCreateComponent } from './create/create.component';
 import { AnnouncementIntegrationsRoutingModule } from './integrations-routing.module';
 import { CommonIntegrationsModule } from '@libs/integrations/common/common-integrations.module';
@@ -20,7 +21,7 @@ import { IntegrationsListComponent, AnnouncementsIntegrationFormComponent } from
     AnnouncementsIntegrationDeleteComponent,
     AnnouncementsIntegrationCreateComponent
   ],
-  providers: [IntegrationsService, ModalService],
+  providers: [IntegrationsService, ModalService, CommonIntegrationUtilsService],
   declarations: [
     IntegrationsListComponent,
     AnnouncementsIntegrationListComponent,

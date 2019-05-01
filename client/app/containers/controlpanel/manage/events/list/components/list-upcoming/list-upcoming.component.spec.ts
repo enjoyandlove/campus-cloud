@@ -5,13 +5,12 @@ import { DebugElement } from '@angular/core';
 
 import { CPSession } from '@app/session';
 import { configureTestSuite } from '@shared/tests';
+import { SharedModule } from '@shared/shared.module';
 import { mockSchool, mockUser } from '@app/session/mock';
-import { SharedModule } from '@app/shared/shared.module';
-import { EventSourceToIconPipe } from './../../../pipes';
-import { CPI18nService } from '@shared/services/i18n.service';
 import { ListUpcomingComponent } from './list-upcoming.component';
 import { EventUtilService } from './../../../events.utils.service';
-import { CPTrackingService } from '@shared/services/tracking.service';
+import { CPTrackingService, CPI18nService } from '@shared/services';
+import { IntegrationSourceToIconPipe } from '@libs/integrations/common/pipes/source-to-icon';
 
 const initialState = {
   start: null,
@@ -32,7 +31,7 @@ describe('ListUpcomingComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, RouterTestingModule],
-        declarations: [ListUpcomingComponent, EventSourceToIconPipe],
+        declarations: [ListUpcomingComponent, IntegrationSourceToIconPipe],
         providers: [CPI18nService, CPTrackingService, CPSession, EventUtilService]
       });
 

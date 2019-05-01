@@ -18,6 +18,7 @@ export class WallsIntegrationFormComponent implements OnInit {
   @Input() selectedChannel: IItem;
 
   showChannelName = false;
+  wallIntegrationPkdbUrl = 'https://support.readyeducation.com/hc/en-us/articles/360022154933';
 
   constructor() {}
 

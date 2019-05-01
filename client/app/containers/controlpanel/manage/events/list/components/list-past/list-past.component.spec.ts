@@ -5,12 +5,11 @@ import { DebugElement } from '@angular/core';
 
 import { CPSession } from '@app/session';
 import { configureTestSuite } from '@shared/tests';
-import { EventSourceToIconPipe } from './../../../pipes';
+import { SharedModule } from '@shared/shared.module';
 import { mockSchool, mockUser } from '@app/session/mock';
-import { SharedModule } from '@app/shared/shared.module';
 import { ListPastComponent } from './list-past.component';
-import { CPI18nService } from '@shared/services/i18n.service';
-import { CPTrackingService } from '@shared/services/tracking.service';
+import { CPTrackingService, CPI18nService } from '@shared/services';
+import { IntegrationSourceToIconPipe } from '@libs/integrations/common/pipes/source-to-icon';
 
 const initialState = {
   start: null,
@@ -31,7 +30,7 @@ describe('ListPastComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, RouterTestingModule],
-        declarations: [ListPastComponent, EventSourceToIconPipe],
+        declarations: [ListPastComponent, IntegrationSourceToIconPipe],
         providers: [CPI18nService, CPTrackingService, CPSession]
       });
 

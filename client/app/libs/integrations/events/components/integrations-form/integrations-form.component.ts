@@ -12,6 +12,7 @@ import { IItem } from '@shared/components/cp-dropdown';
 export class EventIntegrationFormComponent implements OnInit {
   @Input() selectedHost;
   @Input() form: FormGroup;
+  @Input() pkdbUrl: string;
   @Input() showHosts = true;
   @Input() selectedType: IItem;
   @Input() typesDropdown: Array<IItem>;

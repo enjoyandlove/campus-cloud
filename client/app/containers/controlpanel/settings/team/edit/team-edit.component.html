@@ -264,7 +264,7 @@
                 <button
                   cpTooltip
                   class="cpbtn cpbtn--link danger"
-                  [attr.title]="['t_admin_invite_studio_limited_tooltip' | cpI18n]"
+                  [attr.title]="'t_admin_invite_studio_limited_tooltip' | cpI18n"
                   *ngIf="utils.hasStudio(schoolPrivileges) && !utils.hasFullStudioPrivilege(schoolPrivileges)">
                   {{ 't_shared_limited' | cpI18n }}
                 </button>
