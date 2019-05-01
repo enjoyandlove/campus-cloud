@@ -15,5 +15,8 @@ export class IntegrationSourceToIconPipe implements PipeTransform {
     } else if (source === IntegrationTypes.ical) {
       return `${pathToAsset}/int_ical.svg`;
     }
+
+    // temporary need to disable OLLWAT event import
+    return `${pathToAsset}/int_ical.svg`;
   }
 }
