@@ -2,9 +2,14 @@ import { FormGroup, AbstractControl } from '@angular/forms';
 
 import { defaultForm, filledForm } from '../tests';
 import { IntegrationTypes } from '@libs/integrations/common/model';
-import { AnnouncementPriority } from './../../announcements.interface';
+import { AnnouncementPriority } from '../../announcements.interface';
 import { AnnouncementIntegrationModel } from './announcement-integration.model';
-import { validateOneOf, validatePositiveInteger, fillForm } from '@shared/utils/tests';
+import {
+  fillForm,
+  validateOneOf,
+  validateMaxLength,
+  validatePositiveInteger
+} from '@shared/utils/tests';
 
 describe('AnnouncementIntegrationModel', () => {
   describe('form', () => {
@@ -36,16 +41,7 @@ describe('AnnouncementIntegrationModel', () => {
       ctrl.setValue('');
       expect(ctrl.valid).toBe(false);
 
-      const protocol = 'http';
-      const availableCharsLeft = 1024 - protocol.length;
-
-      const valid = 'a'.repeat(availableCharsLeft);
-      ctrl.setValue(`${protocol}${valid}`);
-      expect(ctrl.valid).toBe(true);
-
-      const invalid = 'a'.repeat(availableCharsLeft + 1);
-      ctrl.setValue(`${protocol}${invalid}`);
-      expect(ctrl.valid).toBe(false);
+      validateMaxLength(ctrl, 1024);
     });
 
     it('should validate feed_type', () => {

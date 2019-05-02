@@ -27,7 +27,6 @@ export class AnnouncementIntegrationModel {
         Validators.compose([
           Validators.required,
           Validators.maxLength(1024),
-          Validators.pattern('^http.*'),
           CustomValidators.requiredNonEmpty
         ])
       ],

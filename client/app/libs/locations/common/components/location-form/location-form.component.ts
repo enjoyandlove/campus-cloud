@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormArray, FormGroup } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { FormGroup } from '@angular/forms';
 
 import { CPMap } from '@shared/utils';
 import { IItem } from '@shared/components';
@@ -103,7 +103,10 @@ export class LocationFormComponent implements OnInit {
   }
 
   get requiredControls() {
+    const links = <FormArray>this.locationForm.controls['links'];
+
     return {
+      links: links.controls[0],
       name: this.locationForm.get('name'),
       latitude: this.locationForm.get('latitude'),
       longitude: this.locationForm.get('longitude'),
