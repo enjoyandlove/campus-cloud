@@ -976,7 +976,7 @@
     "message": "Drag to Reposition Image"
   },
   "customization_title": {
-    "message": "Choose an App Banner"
+    "message": "Banner Image"
   },
   "dashboard_announcements": {
     "message": "Announcements"
@@ -2397,6 +2397,36 @@
   "t_changes_saved_ok": {
     "message": "Changes saved successfully"
   },
+  "t_checkin_pdf_download": {
+    "message": "Download it if you don't have it"
+  },
+  "t_checkin_pdf_event_assessment": {
+    "message": "with Event Assessment"
+  },
+  "t_checkin_pdf_give_feedback": {
+    "message": "Give Feedback"
+  },
+  "t_checkin_pdf_open_app": {
+    "message": "Open App"
+  },
+  "t_checkin_pdf_scan": {
+    "message": "Tap Scan"
+  },
+  "t_checkin_pdf_scan_instructions": {
+    "message": "Student Scan Instructions"
+  },
+  "t_checkin_pdf_scan_qr": {
+    "message": "Scan the QR Code"
+  },
+  "t_checkin_pdf_service_assessment": {
+    "message": "with Service Assessment"
+  },
+  "t_checkin_pdf_title": {
+    "message": "Scan and provide feedback on the %s app"
+  },
+  "t_checkin_pdf_view_feedback": {
+    "message": "View Feedback on your Campus Cloud Dashboard"
+  },
   "t_check_in_date_placeholder_text": {
     "message": "Now"
   },
@@ -2693,7 +2723,7 @@
     "message": "The event cannot be found"
   },
   "t_integration_form_required_fields": {
-    "message": "Make sure your feeds contain the required fields"
+    "message": "Make sure your feed contains the required fields."
   },
   "t_integration_sync_button_int_not_ready_to_sync_tooltip": {
     "message": "You can only manually sync your feed once per minute"
@@ -3382,6 +3412,15 @@
   },
   "t_studio": {
     "message": "Studio"
+  },
+  "t_studio_branding_header": {
+    "message": "Branding Color and Logo"
+  },
+  "t_studio_branding_image_req": {
+    "message": "PNG format only, Ideal size 480x99."
+  },
+  "t_studio_branding_remove_logo": {
+    "message": "Remove Logo"
   },
   "t_studio_section_delete_no_name": {
     "message": "Untitled"
