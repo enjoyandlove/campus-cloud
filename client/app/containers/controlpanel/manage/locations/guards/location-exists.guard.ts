@@ -22,7 +22,7 @@ export class LocationExistsGuard implements CanActivate {
   getFromStoreOrApi(locationId: number): Observable<boolean> {
     return this.store.select(fromStore.getLocationsById(locationId)).pipe(
       tap((location: any) => {
-        if (!location) {
+        if (!location || !location.schedule.length) {
           const search = new HttpParams().append('school_id', this.session.g.get('school').id);
           const payload = {
             locationId,
