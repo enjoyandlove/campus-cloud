@@ -1,0 +1,59 @@
+<div class="row branding-preview">
+  <div class="col-4">
+    <p><strong>{{ 't_shared_color' | cpI18n }}</strong></p>
+    <div
+      class="color-preview"
+      [ngStyle]="{'background-color': '#' + form.controls['branding_color'].value}">
+    </div>
+    <input
+      type="text"
+      class="hex"
+      cpTarget="branding_color"
+      [value]="form.controls['branding_color'].value"
+      [ngClass]="{'error': form.controls['branding_color'].errors}"
+      (input)="onChangeColor.emit($event.target.value)"/>
+  </div>
+  <div class="col-8">
+    <p><strong>{{ 't_shared_preview' | cpI18n }}</strong></p>
+    <div
+      class="logo-preview"
+      [ngStyle]="{'background-color': '#' + form.controls['branding_color'].value}">
+      <ng-container 
+        [ngSwitch]="form.controls['school_name_logo_url'].value.length > 0">
+        <img
+          *ngSwitchCase="true"
+          [src]="form.controls['school_name_logo_url'].value"/>
+        <div
+          *ngSwitchCase="false"
+          class="text-logo">
+          {{ textLogo }}
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <p><strong>{{ 't_shared_image' | cpI18n }}</strong></p>
+    <p class="text-muted">({{ 't_studio_branding_image_req' | cpI18n }})
+      <i
+        class="material-icons hover"
+        [attr.title]="tooltipContent"
+        [cpTooltip]="imageSizeToolTip">
+        info_outline
+      </i>
+    </p>
+    <cp-upload-button
+      cpTarget="upload_school_logo"
+      buttonClass="cpbtn cpbtn--link semi-bold"
+      [id]="'school_name_logo_url'"
+      [buttonText]="'upload_picture' | cpI18n"
+      (fileUpload)="onUploadLogo.emit($event)">
+    </cp-upload-button>
+    <span
+      class="cpbtn cpbtn--link remove-logo"
+      cpTarget="remove_school_logo"
+      (click)="onRemoveLogo.emit()">
+      {{ 't_studio_branding_remove_logo' | cpI18n }}</span>
+  </div>
+</div>

@@ -47,13 +47,16 @@ export class AuthGuard implements CanActivate {
         map((schools: ISchool[]) => {
           let schoolIdInUrl;
           let schoolObjFromUrl;
-          let storedSchool: ISchool = JSON.parse(appStorage.get(appStorage.keys.DEFAULT_SCHOOL));
+          const storedSchoolId: number = parseInt(
+            appStorage.get(appStorage.keys.DEFAULT_SCHOOL_ID),
+            10
+          );
+          let storedSchool;
 
-          if (storedSchool) {
-            const removeSchool = !schools.find((school) => school.id === storedSchool.id);
-            if (removeSchool) {
-              storedSchool = null;
-              appStorage.remove(appStorage.keys.DEFAULT_SCHOOL);
+          if (storedSchoolId) {
+            storedSchool = schools.find((school) => school.id === storedSchoolId);
+            if (!storedSchool) {
+              appStorage.remove(appStorage.keys.DEFAULT_SCHOOL_ID);
             }
           }
 

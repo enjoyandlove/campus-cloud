@@ -115,6 +115,11 @@ export class FileUploadService {
     return validTypes.includes(media.type);
   }
 
+  uploadImage(media: File) {
+    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
+    return this.uploadFile(media, url);
+  }
+
   uploadFile(media: File, url: string = this.imageUploadUrl, customHeaders?: HttpHeaders) {
     const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 

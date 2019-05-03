@@ -1,0 +1,59 @@
+@import '~client/style/core/typography';
+@import '~client/style/components/form';
+@import '~client/style/components/button';
+@import '~client/style/components/tooltip';
+
+p {
+  margin-bottom: 3px;
+}
+
+i {
+  @include toolTipIcon;
+}
+
+.branding-preview { 
+  margin-top: 1em;
+
+  p {
+    margin-bottom: 1em;
+  }
+}
+
+div.color-preview {
+  width: 28px;
+  height: 28px;
+  border-radius: 14px;
+}
+
+input.hex {
+  top: -32px;
+  left: 48px;
+  max-width: 100px;
+  position: relative;
+}
+
+.logo-preview {
+  width: 400px;
+  height: 82.5px;
+
+  img {
+    width: 100%;
+    max-width: 400px;
+    max-height: 82.5px;
+  }
+
+  .text-logo {
+    width: 100%;
+    font-size: 2em;
+    text-align: center;
+    line-height: 82.5px;
+  }
+}
+
+cp-upload-button {
+  margin-right: 25px;
+}
+
+span.remove-logo {
+  @include font-semi-bold();
+}
