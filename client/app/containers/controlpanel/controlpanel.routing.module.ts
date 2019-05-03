@@ -36,11 +36,6 @@ const appRoutes: Routes = [
       },
 
       {
-        path: 'demo',
-        loadChildren: './request-demo/request-demo.module#RequestDemoModule'
-      },
-
-      {
         path: 'settings',
         loadChildren: './settings/settings.module#SettingsModule'
       }
