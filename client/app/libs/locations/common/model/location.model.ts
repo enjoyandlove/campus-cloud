@@ -62,8 +62,8 @@ export class LocationModel {
   }
 
   static customLinksValidator(controls: FormGroup): ValidationErrors | null {
-    const url = controls.get('url').value.trim();
-    const label = controls.get('label').value.trim();
+    const url = controls.get('url').value;
+    const label = controls.get('label').value;
 
     if (url && !label) {
       return { labelRequired: true };
