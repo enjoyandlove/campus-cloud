@@ -23,7 +23,7 @@ export class LocationExistsGuard implements CanActivate {
   getFromStoreOrApi(locationId: number): Observable<boolean> {
     return this.store.select(fromStore.getLocationsById(locationId)).pipe(
       tap((location: any) => {
-        // some old location items doesn't have schedule property to avoid sentry error we used _get
+        // legacy locations do not return a schedule key
         const schedule = _get(location, 'schedule', []);
 
         if (!schedule.length) {
