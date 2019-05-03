@@ -3,7 +3,7 @@ import { base64 } from '../encrypt';
 const STORAGE_KEYS = {
   SESSION: 'session',
   LANGUAGE: 'language',
-  DEFAULT_SCHOOL: 'default_school'
+  DEFAULT_SCHOOL_ID: 'default_school_id'
 };
 
 function storageAvailable() {

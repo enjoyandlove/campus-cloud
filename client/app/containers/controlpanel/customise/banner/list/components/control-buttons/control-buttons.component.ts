@@ -37,7 +37,7 @@ export class BannerControlButtonsComponent implements OnInit {
 
     this.buttonData = {
       class: 'primary',
-      text: this.cpI18n.translate('save')
+      text: this.cpI18n.translate('done')
     };
   }
 }

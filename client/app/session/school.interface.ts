@@ -18,4 +18,15 @@ export interface ISchool {
   wall_unlocked: boolean;
   client_id: number;
   is_sandbox: boolean;
+  school_name_logo_url?: string;
+}
+
+export const LOGO_URL = 'logo_url';
+export const BRANDING_COLOR = 'branding_color';
+export const SCHOOL_LOGO_URL = 'school_name_logo_url';
+
+export interface ISchoolBranding {
+  [LOGO_URL]?: string;
+  [BRANDING_COLOR]?: string;
+  [SCHOOL_LOGO_URL]?: string;
 }
