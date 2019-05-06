@@ -90,7 +90,7 @@ describe('LocationsCreateComponent', () => {
 
     const links = <FormArray>component.locationForm.controls['links'];
 
-    links.controls[0].get('label').setValue(null);
+    links.controls[0].get('label').setValue('');
     links.controls[0].get('url').setValue(someValue);
 
     component.doSubmit();
@@ -98,7 +98,7 @@ describe('LocationsCreateComponent', () => {
     expect(links.controls[0].errors.labelRequired).toBe(true);
 
     links.controls[0].get('label').setValue(someValue);
-    links.controls[0].get('url').setValue(null);
+    links.controls[0].get('url').setValue('');
 
     component.doSubmit();
 
