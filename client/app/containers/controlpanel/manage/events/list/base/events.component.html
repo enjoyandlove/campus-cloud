@@ -55,11 +55,14 @@
   </div>
 </div>
 
-<cp-modal modalId="deleteEventsModal">
+<cp-modal
+  *ngIf="showDeleteModal"
+  modalId="deleteEventsModal">
   <cp-events-delete
     [event]="deletedEvent"
     [orientationId]="orientationId"
     [isOrientation]="orientation"
+    (teardown)="onTearDown()"
     (deletedEvent)="onDeletedEvent($event)">
   </cp-events-delete>
 </cp-modal>

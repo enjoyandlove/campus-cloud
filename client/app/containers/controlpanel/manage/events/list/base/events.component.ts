@@ -1,11 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
 import { EventType } from '../../event.status';
+import { CPI18nService } from '@shared/services';
 import { EventsService } from '../../events.service';
-import { CPSession } from '../../../../../../session';
-import { BaseComponent } from '../../../../../../base/base.component';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 interface IState {
   start: number;
@@ -56,6 +56,7 @@ export class EventsComponent extends BaseComponent {
   isUpcoming;
   orientation;
   deletedEvent = '';
+  showDeleteModal = false;
   eventState: IState = state;
 
   constructor(
@@ -161,9 +162,16 @@ export class EventsComponent extends BaseComponent {
     this.fetch(this.service.getEvents(start, end, search));
   }
 
+  onTearDown() {
+    this.showDeleteModal = false;
+    $('#deleteEventsModal').modal('hide');
+  }
+
   onDeleteEvent(event) {
     this.deletedEvent = event;
+    this.showDeleteModal = true;
     this.orientation = this.isOrientation;
+    setTimeout(() => $('#deleteEventsModal').modal());
   }
 
   onDeletedEvent(eventId) {
