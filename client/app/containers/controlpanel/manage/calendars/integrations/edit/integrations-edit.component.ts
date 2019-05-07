@@ -7,7 +7,8 @@ import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
-import { IItem } from '@client/app/shared/components';
+import { IItem } from '@shared/components';
+import { ZendeskService } from '@shared/services';
 import { ItemsIntegrationsUitlsService } from '../items-integrations.utils.service';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { IEventIntegration, EventIntegration } from '@libs/integrations/events/model';
@@ -26,7 +27,7 @@ export class ItemsIntegrationEditComponent implements OnInit, OnDestroy {
   calendarId: number;
   typesDropdown: IItem[];
   destroy$ = new Subject();
-  calendarItemIntegrationPkdbUrl = 'https://support.readyeducation.com/hc/en-us/articles/360022156453';
+  calendarItemIntegrationPkdbUrl = `${ZendeskService.getUrl('articles/360022156453')}`;
 
   constructor(
     public session: CPSession,
