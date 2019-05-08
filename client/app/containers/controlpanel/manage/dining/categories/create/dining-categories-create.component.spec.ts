@@ -13,6 +13,7 @@ import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
+import { categoryTypes } from '@libs/locations/common/categories/model';
 import { DiningCategoriesCreateComponent } from './dining-categories-create.component';
 import { emptyForm, filledForm, MockModalData } from '@libs/locations/common/categories/tests';
 
@@ -83,8 +84,12 @@ describe('DiningCategoriesCreateComponent', () => {
   });
 
   it('should create an empty form', () => {
+    const _emptyForm = {
+      ...emptyForm,
+      category_type_id: categoryTypes.dining
+    };
     const result = component.form.value;
-    expect(result).toEqual(emptyForm);
+    expect(result).toEqual(_emptyForm);
   });
 
   it('should show form errors true', () => {
