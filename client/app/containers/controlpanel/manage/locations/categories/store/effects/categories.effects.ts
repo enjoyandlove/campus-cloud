@@ -65,24 +65,6 @@ export class CategoriesEffects {
   );
 
   @Effect()
-  getCategoriesTypes$: Observable<
-    fromActions.GetCategoriesTypeSuccess | fromActions.GetCategoriesTypeFail
-  > = this.actions$.pipe(
-    ofType(fromActions.CategoriesActions.GET_CATEGORIES_TYPE),
-    mergeMap((action: fromActions.GetCategoriesType) => {
-      const { params } = action.payload;
-
-      return this.service.getCategoriesType(params).pipe(
-        map((data) => new fromActions.GetCategoriesTypeSuccess(data)),
-        catchError((error) => {
-          this.handleError();
-          return of(new fromActions.GetCategoriesTypeFail(error));
-        })
-      );
-    })
-  );
-
-  @Effect()
   createCategory$: Observable<
     fromActions.PostCategorySuccess | fromActions.PostCategoryFail
   > = this.actions$.pipe(

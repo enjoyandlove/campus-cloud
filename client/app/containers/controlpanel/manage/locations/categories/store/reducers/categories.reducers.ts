@@ -1,4 +1,3 @@
-import { IItem } from '@shared/components';
 import * as fromLocations from '../actions';
 import { ICategory } from '@libs/locations/common/categories/model';
 
@@ -8,7 +7,6 @@ export interface ICategoriesState {
   loading: boolean;
   data: ICategory[];
   errorMessage: string;
-  categoryTypes: IItem[];
   filteredCategories: ICategory[];
 }
 
@@ -18,7 +16,6 @@ export const initialState: ICategoriesState = {
   loaded: false,
   loading: false,
   errorMessage: null,
-  categoryTypes: [],
   filteredCategories: []
 };
 
@@ -108,13 +105,6 @@ export function reducer(state = initialState, action: fromLocations.Actions) {
       };
     }
 
-    case fromLocations.CategoriesActions.GET_CATEGORIES_TYPE_SUCCESS: {
-      return {
-        ...state,
-        categoryTypes: [...action.payload]
-      };
-    }
-
     case fromLocations.CategoriesActions.EDIT_CATEGORY: {
       return {
         ...state,
@@ -199,6 +189,5 @@ export const getCategories = (state: ICategoriesState) => state.data;
 export const getCategoriesError = (state: ICategoriesState) => state.error;
 export const getCategoriesLoaded = (state: ICategoriesState) => state.loaded;
 export const getCategoriesLoading = (state: ICategoriesState) => state.loading;
-export const getCategoriesType = (state: ICategoriesState) => state.categoryTypes;
 export const getCategoriesErrorMessage = (state: ICategoriesState) => state.errorMessage;
 export const getFilteredCategories = (state: ICategoriesState) => state.filteredCategories;

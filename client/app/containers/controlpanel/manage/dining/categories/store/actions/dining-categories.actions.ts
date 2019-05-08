@@ -12,10 +12,6 @@ export enum CategoriesActions {
   GET_FILTERED_CATEGORIES_SUCCESS = '[manage.dining.categories] get filtered categories success',
   GET_FILTERED_CATEGORIES_FAIL = '[manage.dining.categories] get filtered categories fail',
 
-  GET_CATEGORIES_TYPE = '[manage.dining.categories] get type categories',
-  GET_CATEGORIES_TYPE_SUCCESS = '[manage.dining.categories] get categories type success',
-  GET_CATEGORIES_TYPE_FAIL = '[manage.dining.categories] get categories type fail',
-
   POST_CATEGORY = '[manage.dining.categories] create categories',
   POST_CATEGORY_SUCCESS = '[manage.dining.categories] create categories success',
   POST_CATEGORY_FAIL = '[manage.dining.categories] create create fail',
@@ -63,23 +59,6 @@ export class GetFilteredCategoriesFail implements Action {
 
   constructor(public payload: HttpErrorResponse) {}
 }
-
-export class GetCategoriesType implements Action {
-  readonly type = CategoriesActions.GET_CATEGORIES_TYPE;
-}
-
-export class GetCategoriesTypeSuccess implements Action {
-  readonly type = CategoriesActions.GET_CATEGORIES_TYPE_SUCCESS;
-
-  constructor(public payload: any) {}
-}
-
-export class GetCategoriesTypeFail implements Action {
-  readonly type = CategoriesActions.GET_CATEGORIES_TYPE_FAIL;
-
-  constructor(public payload: HttpErrorResponse) {}
-}
-
 export class PostCategory implements Action {
   readonly type = CategoriesActions.POST_CATEGORY;
   constructor(public payload: { body: any; params: HttpParams }) {}
@@ -142,9 +121,6 @@ export type Actions =
   | GetFilteredCategories
   | GetFilteredCategoriesFail
   | GetFilteredCategoriesSuccess
-  | GetCategoriesType
-  | GetCategoriesTypeFail
-  | GetCategoriesTypeSuccess
   | PostCategory
   | PostCategoryFail
   | PostCategorySuccess
