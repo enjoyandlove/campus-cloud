@@ -1,14 +1,19 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
-import { CategoryModel, LocationCategoryLocale } from '@libs/locations/common/categories/model';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
+import {
+  categoryTypes,
+  CategoryModel,
+  LocationCategoryLocale
+} from '@libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-categories-create',
@@ -19,15 +24,18 @@ export class CategoriesCreateComponent implements OnInit, OnDestroy {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   formError;
-  form: FormGroup;
-  categoryTypes$: Observable<IItem[]>;
+  form: FormGroup = CategoryModel.form();
   categoryIcons = CategoryModel.categoryIcons();
+  categoryTypes: IItem[] = this.locationUtils
+    .getLocationTypes()
+    .filter((l: IItem) => l.action !== categoryTypes.dining);
 
   private destroy$ = new Subject();
 
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
+    private locationUtils: LocationsUtilsService,
     public store: Store<fromStore.ICategoriesState>
   ) {}
 
@@ -66,10 +74,7 @@ export class CategoriesCreateComponent implements OnInit, OnDestroy {
     this.resetModal();
   }
 
-  ngOnInit(): void {
-    this.form = CategoryModel.form();
-    this.categoryTypes$ = this.store.select(fromStore.getCategoriesType);
-  }
+  ngOnInit(): void {}
 
   ngOnDestroy() {
     this.destroy$.next();

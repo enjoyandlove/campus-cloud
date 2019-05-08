@@ -11,6 +11,8 @@ import { MODAL_DATA } from '@app/shared/services';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
 import { DiningCategoriesCreateComponent } from './dining-categories-create.component';
 import { emptyForm, filledForm, MockModalData } from '@libs/locations/common/categories/tests';
 
@@ -21,7 +23,13 @@ describe('DiningCategoriesCreateComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, { provide: MODAL_DATA, useClass: MockModalData }],
+        providers: [
+          CPSession,
+          CPI18nService,
+          LocationsUtilsService,
+          LocationsTimeLabelPipe,
+          { provide: MODAL_DATA, useClass: MockModalData }
+        ],
         declarations: [DiningCategoriesCreateComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

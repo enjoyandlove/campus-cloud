@@ -17,7 +17,11 @@ import { LocationType } from '@libs/locations/common/utils';
 import { CPI18nService, CPTrackingService } from '@shared/services';
 import { DiningCategoriesService } from '../../dining-categories.service';
 import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
-import { ICategory, ICategoriesApiQuery, LocationCategoryLocale } from '@libs/locations/common/categories/model';
+import {
+  ICategory,
+  ICategoriesApiQuery,
+  LocationCategoryLocale
+} from '@libs/locations/common/categories/model';
 
 @Injectable()
 export class DiningCategoriesEffects {
@@ -45,25 +49,6 @@ export class DiningCategoriesEffects {
           this.handleError();
 
           return of(new fromActions.GetCategoriesFail(error));
-        })
-      );
-    })
-  );
-
-  @Effect()
-  getCategoriesTypes$: Observable<
-    fromActions.GetCategoriesTypeSuccess | fromActions.GetCategoriesTypeFail
-  > = this.actions$.pipe(
-    ofType(fromActions.CategoriesActions.GET_CATEGORIES_TYPE),
-    mergeMap(() => {
-      const search = this.getCategoryParams();
-
-      return this.service.getCategoriesType(search).pipe(
-        map((data) => new fromActions.GetCategoriesTypeSuccess(data)),
-        catchError((error) => {
-          this.handleError();
-
-          return of(new fromActions.GetCategoriesTypeFail(error));
         })
       );
     })
