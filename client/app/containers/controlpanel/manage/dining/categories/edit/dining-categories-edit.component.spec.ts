@@ -11,6 +11,7 @@ import { mockSchool } from '@app/session/mock/school';
 import { CPI18nService, MODAL_DATA } from '@shared/services';
 import { LocationsUtilsService } from '@libs/locations/common/utils';
 import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
+import { categoryTypes } from '@client/app/libs/locations/common/categories/model';
 import { DiningCategoriesEditComponent } from './dining-categories-edit.component';
 import { filledForm, mockCategories, MockModalData } from '@libs/locations/common/categories/tests';
 
@@ -81,8 +82,12 @@ describe('DiningCategoriesEditComponent', () => {
   });
 
   it('should create form with values', () => {
+    const _filledForm = {
+      ...filledForm,
+      category_type_id: categoryTypes.dining
+    };
     const result = component.form.value;
-    expect(result).toEqual(filledForm);
+    expect(result).toEqual(_filledForm);
   });
 
   it('should show form errors true', () => {
