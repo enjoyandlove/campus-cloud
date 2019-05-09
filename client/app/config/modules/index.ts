@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { SortablejsModule } from 'angular-sortablejs';
 
+import { ccTheme } from '../../themes';
 import { RootStoreModule } from '@app/store';
 import { SharedModule } from '@shared/shared.module';
 import { TopLevelRoutesModule } from '@app/app.routing';
@@ -11,9 +12,11 @@ import { AuthModule } from '@containers/auth/auth.module';
 import { LayoutsModule } from '@app/layouts/layouts.module';
 import { environment } from '@client/environments/environment';
 import { ControlPanelModule } from '@containers/controlpanel/controlpanel.module';
+import { ThemeProviderModule } from 'libraries/ui/src/lib/theme-provider/theme-provider.module';
 
 export const APP_MODULES = [
   RootStoreModule,
+  ThemeProviderModule.forRoot(ccTheme),
   FormsModule,
   BrowserModule,
   HttpClientModule,

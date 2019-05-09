@@ -19,7 +19,9 @@
       "@libs/*": ["client/app/libs/*"],
       "@shared/*": ["client/app/shared/*"],
       "@containers/*": ["client/app/containers/*"],
-      "@controlpanel/*": ["client/app/containers/controlpanel/*"]
+      "@controlpanel/*": ["client/app/containers/controlpanel/*"],
+      "ui": ["dist/ui"],
+      "ui/*": ["dist/ui/*"]
     }
   },
   "compileOnSave": false,
