@@ -44,8 +44,8 @@
     <div class="form-group">
       <label>{{ 't_shared_type' | cpI18n }}</label>
       <cp-dropdown
+        [items]="categoryTypes"
         cpTarget="category_type"
-        [items]="categoryTypes$ | async"
         [selectedItem]="selectedCategory"
         (selected)="onCategoryTypeSelect($event)"
         [isRequiredError]="formError && requiredControls.type.invalid">

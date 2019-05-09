@@ -11,6 +11,9 @@ import { MODAL_DATA } from '@app/shared/services';
 import { configureTestSuite } from '@shared/tests';
 import { SharedModule } from '@shared/shared.module';
 import { mockSchool } from '@app/session/mock/school';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
+import { categoryTypes } from '@libs/locations/common/categories/model';
 import { DiningCategoriesCreateComponent } from './dining-categories-create.component';
 import { emptyForm, filledForm, MockModalData } from '@libs/locations/common/categories/tests';
 
@@ -21,7 +24,13 @@ describe('DiningCategoriesCreateComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, { provide: MODAL_DATA, useClass: MockModalData }],
+        providers: [
+          CPSession,
+          CPI18nService,
+          LocationsUtilsService,
+          LocationsTimeLabelPipe,
+          { provide: MODAL_DATA, useClass: MockModalData }
+        ],
         declarations: [DiningCategoriesCreateComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
@@ -75,8 +84,12 @@ describe('DiningCategoriesCreateComponent', () => {
   });
 
   it('should create an empty form', () => {
+    const _emptyForm = {
+      ...emptyForm,
+      category_type_id: categoryTypes.dining
+    };
     const result = component.form.value;
-    expect(result).toEqual(emptyForm);
+    expect(result).toEqual(_emptyForm);
   });
 
   it('should show form errors true', () => {

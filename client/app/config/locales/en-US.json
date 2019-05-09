@@ -2780,6 +2780,15 @@
   "t_location_categories_delete_modal_title": {
     "message": "Delete Category"
   },
+  "t_location_category_type_building": {
+    "message": "Building"
+  },
+  "t_location_category_type_dining": {
+    "message": "Dining"
+  },
+  "t_location_category_type_location": {
+    "message": "Location"
+  },
   "t_longitude": {
     "message": "Longitude"
   },

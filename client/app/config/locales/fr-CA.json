@@ -2395,16 +2395,16 @@
     "message": "Changements enregistrés avec succès"
   },
   "t_checkin_pdf_download": {
-    "message": "Télécharger l'appli si vous ne l'avez pas"
+    "message": "Téléchargez l'appli si vous ne l'avez pas"
   },
   "t_checkin_pdf_event_assessment": {
     "message": "avec l'évaluation des événements"
   },
   "t_checkin_pdf_give_feedback": {
-    "message": "Donner un feedback"
+    "message": "Donner un retour"
   },
   "t_checkin_pdf_open_app": {
-    "message": "Ouvrir l'appli"
+    "message": "Ouvrez l'appli"
   },
   "t_checkin_pdf_scan": {
     "message": "Cliquez scanner"
@@ -2413,7 +2413,7 @@
     "message": "Instructions de scan pour étudiants"
   },
   "t_checkin_pdf_scan_qr": {
-    "message": "Scanner le code QR"
+    "message": "Scannez le code QR"
   },
   "t_checkin_pdf_service_assessment": {
     "message": "avec l'évaluation des services"
@@ -2776,6 +2776,15 @@
   },
   "t_location_categories_delete_modal_title": {
     "message": "Supprimer catégorie"
+  },
+  "t_location_category_type_building": {
+    "message": "Immeuble"
+  },
+  "t_location_category_type_dining": {
+    "message": "À manger"
+  },
+  "t_location_category_type_location": {
+    "message": "Emplacement"
   },
   "t_longitude": {
     "message": "Longitude"

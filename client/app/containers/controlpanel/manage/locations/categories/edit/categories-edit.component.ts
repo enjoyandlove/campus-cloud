@@ -1,16 +1,17 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { map, takeUntil } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
 import {
   ICategory,
+  categoryTypes,
   CategoryModel,
   LocationCategoryLocale
 } from '@libs/locations/common/categories/model';
@@ -28,7 +29,7 @@ export class CategoriesEditComponent implements OnInit, OnDestroy {
   formError;
   form: FormGroup;
   selectedCategory;
-  categoryTypes$: Observable<IItem[]>;
+  categoryTypes: IItem[];
   categoryIcons = CategoryModel.categoryIcons();
 
   private destroy$ = new Subject();
@@ -36,6 +37,7 @@ export class CategoriesEditComponent implements OnInit, OnDestroy {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
+    private locationUtils: LocationsUtilsService,
     public store: Store<fromStore.ICategoriesState>
   ) {}
 
@@ -76,17 +78,12 @@ export class CategoriesEditComponent implements OnInit, OnDestroy {
   }
 
   loadCategoryTypes() {
-    this.categoryTypes$ = this.store.select(fromStore.getCategoriesType).pipe(
-      takeUntil(this.destroy$),
-      map((categoryTypes) => {
-        Promise.resolve().then(() => {
-          this.selectedCategory = categoryTypes.find(
-            (c) => c.action === this.category.category_type_id
-          );
-        });
+    this.categoryTypes = this.locationUtils
+      .getLocationTypes()
+      .filter((l: IItem) => l.action !== categoryTypes.dining);
 
-        return categoryTypes;
-      })
+    this.selectedCategory = this.categoryTypes.find(
+      (c) => c.action === this.category.category_type_id
     );
   }
 

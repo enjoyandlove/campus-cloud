@@ -19,6 +19,7 @@ export interface ISchool {
   client_id: number;
   is_sandbox: boolean;
   school_name_logo_url?: string;
+  has_guide_customization: boolean;
 }
 
 export const LOGO_URL = 'logo_url';
