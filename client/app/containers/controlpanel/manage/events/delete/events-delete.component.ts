@@ -15,7 +15,6 @@ export class EventsDeleteComponent implements OnInit {
   @Input() event: IEvent;
   @Input() orientationId: number;
   @Input() isOrientation: boolean;
-  @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() deletedEvent: EventEmitter<number> = new EventEmitter();
 
   deleteWarnings = [this.cpI18n.translate('t_shared_delete_resource_warning_assessment_data')];
@@ -27,7 +26,6 @@ export class EventsDeleteComponent implements OnInit {
   ) {}
 
   onClose() {
-    this.teardown.emit();
     $('#deleteEventsModal').modal('hide');
   }
 

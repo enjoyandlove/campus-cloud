@@ -1,12 +1,4 @@
-import {
-  Input,
-  OnInit,
-  Output,
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener
-} from '@angular/core';
+import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
 
 import { CPI18nService } from '@shared/services';
 
@@ -40,15 +32,7 @@ export class CPDeleteModalComponent implements OnInit {
   disableSubmit: boolean;
   _warnings: IWarning[] = [];
 
-  constructor(public el: ElementRef, public cpI18n: CPI18nService) {}
-
-  @HostListener('document:click', ['$event'])
-  onClick(event) {
-    // out of modal click
-    if (event.target.contains(this.el.nativeElement)) {
-      this.resetModal();
-    }
-  }
+  constructor(public cpI18n: CPI18nService) {}
 
   resetModal() {
     this.cancelClick.emit();

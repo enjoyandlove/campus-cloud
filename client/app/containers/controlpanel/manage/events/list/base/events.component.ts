@@ -162,11 +162,6 @@ export class EventsComponent extends BaseComponent {
     this.fetch(this.service.getEvents(start, end, search));
   }
 
-  onTearDown() {
-    this.showDeleteModal = false;
-    $('#deleteEventsModal').modal('hide');
-  }
-
   onDeleteEvent(event) {
     this.deletedEvent = event;
     this.showDeleteModal = true;
