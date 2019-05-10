@@ -1,3 +1,4 @@
+@import '~client/style/core/colors';
 @import '~client/style/core/typography';
 @import '~client/style/components/form';
 @import '~client/style/components/button';
@@ -35,18 +36,22 @@ input.hex {
 .logo-preview {
   width: 400px;
   height: 82.5px;
+  text-align: center;
 
   img {
-    width: 100%;
     max-width: 400px;
     max-height: 82.5px;
+    object-fit: cover;
   }
 
   .text-logo {
+    @include font-bold();
+
     width: 100%;
     font-size: 2em;
     text-align: center;
     line-height: 82.5px;
+    color: $color-white;
   }
 }
 
