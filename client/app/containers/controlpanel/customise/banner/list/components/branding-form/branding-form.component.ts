@@ -9,8 +9,7 @@ import { FormGroup } from '@angular/forms';
 export class BrandingFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() textLogo: string;
-  @Input() imageSizeToolTip;
-  @Input() tooltipContent: string;
+  @Input() pkdbLink: string;
 
   @Output() onUploadLogo: EventEmitter<any> = new EventEmitter();
   @Output() onRemoveLogo: EventEmitter<null> = new EventEmitter();
