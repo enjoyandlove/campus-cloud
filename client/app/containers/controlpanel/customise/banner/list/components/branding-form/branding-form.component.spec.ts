@@ -38,7 +38,6 @@ describe('BrandingFormComponent', () => {
         branding_color: '0076FF',
         school_name_logo_url: 'school_logo_url'
       });
-      component.tooltipContent = 'tooltip';
 
       fixture.detectChanges();
     })
