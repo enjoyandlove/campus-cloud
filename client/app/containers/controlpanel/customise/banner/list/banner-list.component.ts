@@ -24,12 +24,12 @@ import {
 })
 export class BannerListComponent implements OnInit {
   isEdit;
-  tooltipContent;
   form: FormGroup;
   textLogo: string;
-  imageSizeToolTip;
   uploading = false;
+  bannerPkdbLink: string;
   canvas: CPCroppieService;
+  brandingPkdbLink: string;
   state: school.ISchoolBranding;
   layoutWidth = LayoutWidth.third;
 
@@ -213,16 +213,8 @@ export class BannerListComponent implements OnInit {
 
     const zendesk = ZendeskService.zdRoot();
 
-    this.imageSizeToolTip = {
-      html: true,
-      trigger: 'click'
-    };
-
-    this.tooltipContent = `<a
-    class='cpbtn cpbtn--link'
-    href='${zendesk}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud'>
-    ${this.cpI18n.translate('learn_more')}
-    </a>`;
+    this.brandingPkdbLink = `${zendesk}/articles/360022846813`;
+    this.bannerPkdbLink = `${zendesk}//articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud`;
 
     this.textLogo = this.session.school.short_name;
     this.state = {
