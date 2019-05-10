@@ -50,10 +50,11 @@
       [buttonText]="'upload_picture' | cpI18n"
       (fileUpload)="onUploadLogo.emit($event)">
     </cp-upload-button>
-    <span
-      class="cpbtn cpbtn--link remove-logo"
+    <button
       cpTarget="remove_school_logo"
+      class="cpbtn cpbtn--link remove-logo"
+      [disabled]="!form.controls['school_name_logo_url'].value"
       (click)="onRemoveLogo.emit()">
-      {{ 't_studio_branding_remove_logo' | cpI18n }}</span>
+      {{ 't_studio_branding_remove_logo' | cpI18n }}</button>
   </div>
 </div>

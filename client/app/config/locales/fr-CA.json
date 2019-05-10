@@ -961,7 +961,7 @@
     "message": "Studio"
   },
   "customise_banner": {
-    "message": "Bannière"
+    "message": "Marque"
   },
   "customization_description": {
     "message": "(Les images haute résolution fonctionnent le mieux. Format JPEG ou PNG, 5 Mo ou moins. Vous pouvez faire défiler avec votre souris pour zoomer ou dézoomer l'image.)"
@@ -970,7 +970,7 @@
     "message": "Quelque chose a échoué durant le téléversement de votre image"
   },
   "customization_image_upload_success": {
-    "message": "Bannière mise à jour avec succès"
+    "message": "Marque mise à jour avec succès"
   },
   "customization_instructions": {
     "message": "Glissez pour re-positionner la photo"
@@ -3423,7 +3423,7 @@
     "message": "Couleur et image de marque"
   },
   "t_studio_branding_image_req": {
-    "message": "Format PNG seulement, taille idéale de 480x99."
+    "message": "Format PNG seulement. Taille idéale de 480x99."
   },
   "t_studio_branding_remove_logo": {
     "message": "Supprimer logo"
