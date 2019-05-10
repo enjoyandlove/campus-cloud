@@ -970,7 +970,7 @@
     "message": "Something went wrong while uploading your image"
   },
   "customization_image_upload_success": {
-    "message": "Banner updated successfully "
+    "message": "Branding updated successfully"
   },
   "customization_instructions": {
     "message": "Drag to Reposition Image"
@@ -3426,7 +3426,7 @@
     "message": "Branding Color and Logo"
   },
   "t_studio_branding_image_req": {
-    "message": "PNG format only, Ideal size 480x99."
+    "message": "PNG format only. Ideal size 480x99."
   },
   "t_studio_branding_remove_logo": {
     "message": "Remove Logo"
