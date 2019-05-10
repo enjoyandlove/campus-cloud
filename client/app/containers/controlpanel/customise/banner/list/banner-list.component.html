@@ -14,7 +14,7 @@
       (onChangeColor)="onChangeColor($event)">
     </cp-branding-form>
   </cp-card>
-  <cp-card>
+  <cp-card class="banner">
     <div class="row">
       <header class="col-12">
         <p class="card__title">{{ 'customization_title' | cpI18n }}</p>
@@ -40,7 +40,7 @@
     </cp-banner-upload>
   </cp-card>
   <cp-form-fixed-footer
-    [submitButtonDisabled]="form.pristine || form.invalid"
+    [submitButtonDisabled]="saveDisabled()"
     (submitClick)="onSave()"
     (cancelClick)="onCancel()">
   </cp-form-fixed-footer>

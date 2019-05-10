@@ -34,7 +34,13 @@
 }
 
 .input {
+  width: 100%;
+  text-align: start;
   display: inline-block;
+
+  label {
+    width: 100%;
+  }
 
   &.default {
     label {
