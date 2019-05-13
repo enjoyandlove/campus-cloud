@@ -17,6 +17,11 @@ import {
   FileUploadService
 } from '@shared/services';
 
+const IMAGE_SIZE = {
+  width: 664,
+  height: 332
+};
+
 @Component({
   selector: 'cp-banner-list',
   templateUrl: './banner-list.component.html',
@@ -24,12 +29,12 @@ import {
 })
 export class BannerListComponent implements OnInit {
   isEdit;
-  tooltipContent;
   form: FormGroup;
   textLogo: string;
-  imageSizeToolTip;
   uploading = false;
+  bannerPkdbLink: string;
   canvas: CPCroppieService;
+  brandingPkdbLink: string;
   state: school.ISchoolBranding;
   layoutWidth = LayoutWidth.third;
 
@@ -125,8 +130,8 @@ export class BannerListComponent implements OnInit {
       showZoomer: false,
       enableResize: false,
       enableOrientation: true,
-      viewport: { width: 320, height: 180 },
-      boundary: { width: 665, height: 270 },
+      viewport: { width: 400, height: 200 },
+      boundary: IMAGE_SIZE,
       url: `${image}?disableCache=true`
     };
 
@@ -136,12 +141,13 @@ export class BannerListComponent implements OnInit {
   imageToBase64(): Promise<any> {
     return this.canvas.result({
       type: 'base64',
-      size: 'original',
+      size: IMAGE_SIZE,
       format: 'jpeg'
     });
   }
 
   uploadBase64Image(base64ImageData: string) {
+    this.uploading = true;
     const body = {
       base64_image: base64ImageData
     };
@@ -157,6 +163,10 @@ export class BannerListComponent implements OnInit {
     });
   }
 
+  saveDisabled() {
+    return this.form.invalid || this.form.pristine || this.uploading || this.isEdit;
+  }
+
   saveSchoolBranding() {
     const schoolBranding: school.ISchoolBranding = this.form.value;
     return this.schoolService
@@ -165,19 +175,15 @@ export class BannerListComponent implements OnInit {
   }
 
   onSave() {
-    let saveSchoolBrandingPromise = this.saveSchoolBranding();
-
     const logoControl = this.form.controls[school.LOGO_URL];
-    if (logoControl.dirty) {
-      this.uploading = true;
-      saveSchoolBrandingPromise = this.uploadBase64Image(logoControl.value).then(
-        (savedBase64Image: any) => {
+
+    const saveSchoolBrandingPromise = logoControl.dirty
+      ? this.uploadBase64Image(logoControl.value).then((savedBase64Image: any) => {
           this.uploading = false;
           logoControl.setValue(savedBase64Image.image_url);
           return this.saveSchoolBranding();
-        }
-      );
-    }
+        })
+      : this.saveSchoolBranding();
 
     saveSchoolBrandingPromise
       .then((branding: school.ISchoolBranding) => {
@@ -213,16 +219,8 @@ export class BannerListComponent implements OnInit {
 
     const zendesk = ZendeskService.zdRoot();
 
-    this.imageSizeToolTip = {
-      html: true,
-      trigger: 'click'
-    };
-
-    this.tooltipContent = `<a
-    class='cpbtn cpbtn--link'
-    href='${zendesk}/articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud'>
-    ${this.cpI18n.translate('learn_more')}
-    </a>`;
+    this.brandingPkdbLink = `${zendesk}/articles/360022846813`;
+    this.bannerPkdbLink = `${zendesk}//articles/360001101794-What-size-images-should-I-use-in-Campus-Cloud`;
 
     this.textLogo = this.session.school.short_name;
     this.state = {

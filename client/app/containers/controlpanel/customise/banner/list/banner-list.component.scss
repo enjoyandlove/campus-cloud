@@ -7,12 +7,14 @@ label.error {
   @include error-label();
 }
 
-.branding-form {
+cp-card {
   display: block;
   margin-bottom: 25px;
-}
 
-cp-card {
+  &.banner {
+    margin-bottom: 50px;
+  }
+
   p {
     margin-bottom: 3px;
   }

@@ -8,25 +8,24 @@
     <cp-branding-form
       [form]="form"
       [textLogo]="textLogo"
-      [tooltipContent]="tooltipContent"
-      [imageSizeToolTip]="imageSizeToolTip"
+      [pkdbLink]="brandingPkdbLink"
       (onRemoveLogo)="onRemoveLogo()"
       (onUploadLogo)="onUploadLogo($event)"
       (onChangeColor)="onChangeColor($event)">
     </cp-branding-form>
   </cp-card>
-  <cp-card>
+  <cp-card class="banner">
     <div class="row">
       <header class="col-12">
         <p class="card__title">{{ 'customization_title' | cpI18n }}</p>
-        <p class="text-muted">
-          {{ 'customization_description' | cpI18n }}
-          <i
-            class="material-icons hover"
-            [attr.title]="tooltipContent"
-            [cpTooltip]="imageSizeToolTip">
-            info_outline
-          </i>
+        <p>
+          <span class="text-muted">{{ 'customization_description' | cpI18n }} </span>
+          <a
+            target="_blank"
+            class="cpbtn cpbtn--link"
+            [href]="bannerPkdbLink">
+            {{ 'learn_more' | cpI18n }}
+          </a>
         </p>
       </header>
     </div>
@@ -41,7 +40,7 @@
     </cp-banner-upload>
   </cp-card>
   <cp-form-fixed-footer
-    [submitButtonDisabled]="form.pristine || form.invalid"
+    [submitButtonDisabled]="saveDisabled()"
     (submitClick)="onSave()"
     (cancelClick)="onCancel()">
   </cp-form-fixed-footer>
