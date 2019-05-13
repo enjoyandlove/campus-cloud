@@ -17,7 +17,13 @@ import { EventUtilService } from '../events.utils.service';
 import { CPImageUploadComponent } from '@shared/components';
 import { EventsComponent } from '../list/base/events.component';
 import { SnackbarError } from '@app/store/base/reducers/snackbar.reducer';
-import { AdminService, StoreService, CPI18nService, FileUploadService } from '@shared/services';
+import {
+  AdminService,
+  StoreService,
+  CPI18nService,
+  FileUploadService,
+  ModalService
+} from '@shared/services';
 
 import {
   isAllDay,
@@ -74,11 +80,12 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     public cpI18n: CPI18nService,
     public service: EventsService,
     private utils: EventUtilService,
+    public modalService: ModalService,
     private adminService: AdminService,
     private storeService: StoreService,
     private fileUploadService: FileUploadService
   ) {
-    super(session, cpI18n, service);
+    super(session, cpI18n, service, modalService);
     this.school = this.session.g.get('school');
     super.isLoading().subscribe((res) => (this.loading = res));
   }

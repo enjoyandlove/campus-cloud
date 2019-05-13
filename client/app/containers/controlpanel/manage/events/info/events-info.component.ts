@@ -1,4 +1,3 @@
-/*tslint:disable:max-line-length */
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -6,17 +5,17 @@ import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import IEvent from '../event.interface';
+import { CPSession } from '@app/session';
+import { FORMAT } from '@shared/pipes/date';
 import { EventsService } from '../events.service';
 import { EventAttendance } from '../event.status';
-import { CPSession } from '../../../../../session';
-import { FORMAT } from '../../../../../shared/pipes/date';
 import { EventUtilService } from './../events.utils.service';
 import { EventsComponent } from '../list/base/events.component';
 import { IHeader, baseActions } from '../../../../../store/base';
-import { environment } from './../../../../../../environments/environment';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
-import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
+import { environment } from '@client/environments/environment';
+import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPI18nService, CPTrackingService, RouteLevel, ModalService } from '@shared/services';
+import { IResourceBanner } from '@shared/components/cp-resource-banner/cp-resource.interface';
 
 @Component({
   selector: 'cp-events-info',
@@ -56,9 +55,10 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
     private route: ActivatedRoute,
     public utils: EventUtilService,
     public service: EventsService,
+    public modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
-    super(session, cpI18n, service);
+    super(session, cpI18n, service, modalService);
     this.dateFormat = FORMAT.DATETIME;
     this.eventId = this.route.snapshot.params['eventId'];
   }

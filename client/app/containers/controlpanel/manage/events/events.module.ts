@@ -25,19 +25,22 @@ import { EventsAttendanceComponent } from './attendance';
 import { EventsComponent } from './list/base/events.component';
 import { EventsAttendanceActionBoxComponent } from './attendance/components';
 
+import { ModalService } from '@shared/services';
 import { EventsService } from './events.service';
 import { EventUtilService } from './events.utils.service';
 import { OrientationEventsService } from '../orientation/events/orientation.events.service';
 
+import { SharedModule } from '@shared/shared.module';
 import { AssessModule } from '../../assess/assess.module';
 import { EventsRoutingModule } from './events.routing.module';
-import { SharedModule } from '../../../../shared/shared.module';
 import { CheckInModule } from './attendance/check-in/check-in.module';
 import { EngagementModule } from '../../assess/engagement/engagement.module';
 import { EngagementStudentsModule } from '../../assess/students/students.module';
 import { CommonIntegrationsModule } from '@libs/integrations/common/common-integrations.module';
 
 @NgModule({
+  entryComponents: [EventsDeleteComponent],
+
   declarations: [
     EventsComponent,
     ListPastComponent,
@@ -69,7 +72,7 @@ import { CommonIntegrationsModule } from '@libs/integrations/common/common-integ
     EngagementModule
   ],
 
-  providers: [EventsService, EventUtilService, OrientationEventsService],
+  providers: [ModalService, EventsService, EventUtilService, OrientationEventsService],
 
   exports: [
     EventsComponent,

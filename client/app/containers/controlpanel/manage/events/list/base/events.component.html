@@ -55,18 +55,6 @@
   </div>
 </div>
 
-<cp-modal
-  *ngIf="showDeleteModal"
-  modalId="deleteEventsModal"
-  (modalClose)="showDeleteModal = false">
-  <cp-events-delete
-    [event]="deletedEvent"
-    [orientationId]="orientationId"
-    [isOrientation]="orientation"
-    (deletedEvent)="onDeletedEvent($event)">
-  </cp-events-delete>
-</cp-modal>
-
 <cp-modal modalId="excelEventsModal">
   <cp-events-excel-modal
     [clubId]="clubId"
