@@ -3431,6 +3431,9 @@
   "t_studio_branding_remove_logo": {
     "message": "Remove Logo"
   },
+  "t_studio_branding_upload_logo": {
+    "message": "Upload Logo"
+  },
   "t_studio_section_delete_no_name": {
     "message": "Untitled"
   },
