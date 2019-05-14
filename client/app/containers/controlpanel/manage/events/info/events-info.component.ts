@@ -1,22 +1,22 @@
-/*tslint:disable:max-line-length */
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import { FORMAT } from '@shared/pipes';
 import IEvent from '../event.interface';
+import { CPSession } from '@app/session';
 import { EventsService } from '../events.service';
 import { EventAttendance } from '../event.status';
-import { CPSession } from '../../../../../session';
-import { FORMAT } from '../../../../../shared/pipes/date';
+import { amplitudeEvents } from '@shared/constants';
+import { IResourceBanner } from '@shared/components';
+import { IHeader, baseActions } from '@app/store/base';
 import { EventUtilService } from './../events.utils.service';
+import { environment } from '@client/environments/environment';
 import { EventsComponent } from '../list/base/events.component';
-import { IHeader, baseActions } from '../../../../../store/base';
-import { environment } from './../../../../../../environments/environment';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService, RouteLevel } from '../../../../../shared/services';
-import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
+import { EventsAmplitudeService } from '../events.amplitude.service';
+import { CPI18nService, CPTrackingService, RouteLevel } from '@shared/services';
 
 @Component({
   selector: 'cp-events-info',
@@ -123,7 +123,7 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
     const eventProperties = {
       source_id: event.encrypted_id,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
-      assessment_type: this.utils.getEventCategoryType(event.store_category)
+      assessment_type: EventsAmplitudeService.getEventCategoryType(event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_WEB_CHECK_IN, eventProperties);

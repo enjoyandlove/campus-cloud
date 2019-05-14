@@ -12,7 +12,7 @@ import { CPTrackingService, RouteLevel } from '@shared/services';
 import { IService } from '@containers/controlpanel/manage/services/service.interface';
 import IServiceProvider from '@containers/controlpanel/manage/services/providers.interface';
 import { ProvidersService } from '@containers/controlpanel/manage/services/providers.service';
-import { EventUtilService } from '@containers/controlpanel/manage/events/events.utils.service';
+import { EventsAmplitudeService } from '@controlpanel/manage/events/events.amplitude.service';
 import { ServicesUtilsService } from '@containers/controlpanel/manage/services/services.utils.service';
 import { ICheckIn } from '@containers/controlpanel/manage/events/attendance/check-in/check-in.interface';
 import { AMPLITUDE_INTERVAL_MAP } from '@containers/controlpanel/assess/engagement/engagement.utils.service';
@@ -82,7 +82,6 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   constructor(
     private cpI18n: CPI18nService,
     private utils: ServicesUtilsService,
-    private eventUtils: EventUtilService,
     private cpTracking: CPTrackingService,
     public providersService: ProvidersService,
     public providerUtils: ProvidersUtilsService
@@ -249,7 +248,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
   trackQrCodeEvent() {
     const eventProperties = {
-      ...this.eventUtils.getQRCodeCheckOutStatus(this.provider),
+      ...EventsAmplitudeService.getQRCodeCheckOutStatus(this.provider),
       assessment_type: amplitudeEvents.SERVICE_PROVIDER,
       source_id: this.provider.encrypted_campus_service_id,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
@@ -294,7 +293,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
 
   setCheckInEventProperties() {
     this.checkInEventProperties = {
-      ...this.eventUtils.getQRCodeCheckOutStatus(this.provider),
+      ...EventsAmplitudeService.getQRCodeCheckOutStatus(this.provider),
       source_id: this.provider.encrypted_campus_service_id,
       assessment_type: amplitudeEvents.SERVICE_PROVIDER,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
