@@ -961,7 +961,7 @@
     "message": "Studio"
   },
   "customise_banner": {
-    "message": "Bannière"
+    "message": "Marque"
   },
   "customization_description": {
     "message": "(Les images haute résolution fonctionnent le mieux. Format JPEG ou PNG, 5 Mo ou moins. Vous pouvez faire défiler avec votre souris pour zoomer ou dézoomer l'image.)"
@@ -970,7 +970,7 @@
     "message": "Quelque chose a échoué durant le téléversement de votre image"
   },
   "customization_image_upload_success": {
-    "message": "Bannière mise à jour avec succès"
+    "message": "Marque mise à jour avec succès"
   },
   "customization_instructions": {
     "message": "Glissez pour re-positionner la photo"
@@ -2394,6 +2394,36 @@
   "t_changes_saved_ok": {
     "message": "Changements enregistrés avec succès"
   },
+  "t_checkin_pdf_download": {
+    "message": "Téléchargez l'appli si vous ne l'avez pas"
+  },
+  "t_checkin_pdf_event_assessment": {
+    "message": "avec l'évaluation des événements"
+  },
+  "t_checkin_pdf_give_feedback": {
+    "message": "Donner un retour"
+  },
+  "t_checkin_pdf_open_app": {
+    "message": "Ouvrez l'appli"
+  },
+  "t_checkin_pdf_scan": {
+    "message": "Cliquez scanner"
+  },
+  "t_checkin_pdf_scan_instructions": {
+    "message": "Instructions de scan pour étudiants"
+  },
+  "t_checkin_pdf_scan_qr": {
+    "message": "Scannez le code QR"
+  },
+  "t_checkin_pdf_service_assessment": {
+    "message": "avec l'évaluation des services"
+  },
+  "t_checkin_pdf_title": {
+    "message": "Scanner et fournir un retour avec l'appli %s"
+  },
+  "t_checkin_pdf_view_feedback": {
+    "message": "Voir les retours sur le tableau des évaluations"
+  },
   "t_check_in_date_placeholder_text": {
     "message": "Maintenant"
   },
@@ -2689,6 +2719,9 @@
   "t_external_check_in_not_found_error": {
     "message": "Cet événement ne peut pas être trouvé"
   },
+  "t_integration_form_required_fields": {
+    "message": "Assurez-vous que votre flux contient les champs requis."
+  },
   "t_integration_sync_button_int_not_ready_to_sync_tooltip": {
     "message": "Vous pouvez synchroniser seulement une fois par minute"
   },
@@ -2743,6 +2776,15 @@
   },
   "t_location_categories_delete_modal_title": {
     "message": "Supprimer catégorie"
+  },
+  "t_location_category_type_building": {
+    "message": "Immeuble"
+  },
+  "t_location_category_type_dining": {
+    "message": "À manger"
+  },
+  "t_location_category_type_location": {
+    "message": "Emplacement"
   },
   "t_longitude": {
     "message": "Longitude"
@@ -3376,6 +3418,18 @@
   },
   "t_studio": {
     "message": "Studio"
+  },
+  "t_studio_branding_header": {
+    "message": "Couleur et image de marque"
+  },
+  "t_studio_branding_image_req": {
+    "message": "Format PNG seulement. Taille idéale de 480x99."
+  },
+  "t_studio_branding_remove_logo": {
+    "message": "Supprimer logo"
+  },
+  "t_studio_branding_upload_logo": {
+    "message": "Téléverser logo"
   },
   "t_studio_section_delete_no_name": {
     "message": "Sans Titre"

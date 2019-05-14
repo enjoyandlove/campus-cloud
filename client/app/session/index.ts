@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
 import { UserType } from '@shared/utils';
+import { ISchool } from './school.interface';
 import { CP_PRIVILEGES_MAP } from '@shared/constants/privileges';
 import { canSchoolWriteResource } from '@shared/utils/privileges/privileges';
 /**
@@ -65,8 +66,12 @@ export class CPSession {
     return UserType.isInternal(email);
   }
 
-  get school() {
+  get school(): ISchool {
     return this.g.get('school');
+  }
+
+  set school(school: ISchool) {
+    this.g.set('school', school);
   }
 
   get user() {

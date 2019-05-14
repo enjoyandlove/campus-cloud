@@ -23,9 +23,10 @@
           <a [routerLink]="['/notify']">{{ 'notify' | cpI18n }}</a>
         </li>
         <li
+          *ngIf="canAssess"
           routerLinkActive="active"
           (click)="trackMenu(amplitudeEvents.menu_assess)">
-          <a [routerLink]="[canAssess ? '/assess' : '/demo/assess']">{{ 'assess' | cpI18n }}</a>
+          <a [routerLink]="['/assess']">{{ 'assess' | cpI18n }}</a>
         </li>
         <li
           *ngIf="canCustomise"

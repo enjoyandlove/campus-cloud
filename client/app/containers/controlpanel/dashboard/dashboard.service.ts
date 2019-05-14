@@ -24,12 +24,18 @@ export class DashboardService extends HTTPService {
   getDownloads(search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBORD_USER_ACQUISITION}/`;
 
-    return super.get(url, search).pipe(
+    return super.get(url, search, true).pipe(
       map((data: any) => {
         return {
           series: [data.downloads.series, data.registrations.series],
           labels: data.downloads.labels
         };
+      }),
+      catchError(() => {
+        return of({
+          series: [],
+          labels: []
+        });
       })
     );
   }

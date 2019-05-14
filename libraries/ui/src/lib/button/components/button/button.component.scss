@@ -1,0 +1,102 @@
+@import '../../utils/sass/mixins.scss';
+
+button.ready-ui-button {
+  @include button_reset();
+
+  padding: 8px;
+  color: var(--color-grey-0);
+  border-radius: var(--setting-border-radius);
+
+  &:not(.transparent) {
+    background: white;
+  }
+
+  &.stroked {
+    background: white;
+    border: 1px solid var(--color-grey-150);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    color: var(--color-grey-50);
+    background: var(--color-grey-150);
+  }
+
+  &:not(:disabled) {
+    cursor: pointer;
+  }
+
+  &.primary:not(:disabled) {
+    color: var(--color-grey-255);
+    background: var(--color-primary);
+
+    &.stroked {
+      background: white;
+      color: var(--color-primary);
+      border: 1px solid var(--color-grey-150);
+    }
+
+    &.transparent {
+      background: transparent;
+      color: var(--color-primary);
+    }
+  }
+
+  &.secondary:not(:disabled) {
+    color: var(--color-grey-255);
+    background: var(--color-secondary);
+
+    &.stroked {
+      background: white;
+      color: var(--color-secondary);
+      border: 1px solid var(--color-grey-150);
+    }
+
+    &.transparent {
+      background: transparent;
+      color: var(--color-secondary);
+    }
+  }
+
+  &.danger:not(:disabled) {
+    color: var(--color-grey-255);
+    background: var(--color-danger);
+
+    &.stroked {
+      background: white;
+      color: var(--color-danger);
+      border: 1px solid var(--color-grey-150);
+    }
+
+    &.transparent {
+      background: transparent;
+      color: var(--color-danger);
+    }
+  }
+
+  &.success:not(:disabled) {
+    color: var(--color-grey-255);
+    background: var(--color-success);
+
+    &.stroked {
+      background: white;
+      color: var(--color-success);
+      border: 1px solid var(--color-grey-150);
+    }
+
+    &.transparent {
+      background: transparent;
+      color: var(--color-success);
+    }
+  }
+
+  &.raised {
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+      0 1px 5px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  &:focus,
+  &:active {
+    stroke: none;
+  }
+}

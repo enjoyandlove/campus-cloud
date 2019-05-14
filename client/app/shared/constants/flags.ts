@@ -1,1 +1,2 @@
-export const ANNOUNCEMENT_INTEGRATION = 'ANNOUNCEMENT_INTEGRATION';
+// avoid removing the export statement in contants/index.ts
+export const EMPTY_PLACEHOLDER = '';

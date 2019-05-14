@@ -120,6 +120,10 @@ a.cpbtn {
     vertical-align: baseline;
     border-color: transparent;
 
+    &:active {
+      color: $color-grey;
+    }
+
     &:disabled {
       color: $color-med-grey;
       background: transparent;

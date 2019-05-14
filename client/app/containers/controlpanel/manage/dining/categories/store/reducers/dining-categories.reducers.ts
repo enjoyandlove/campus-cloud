@@ -1,6 +1,5 @@
 import { createEntityAdapter, Dictionary, EntityAdapter, EntityState } from '@ngrx/entity';
 
-import { IItem } from '@shared/components';
 import * as fromCategories from '../actions';
 import { ICategory, ICategoriesApiQuery } from '@libs/locations/common/categories/model';
 
@@ -9,7 +8,6 @@ export interface ICategoriesState extends EntityState<ICategory> {
   loaded: boolean;
   loading: boolean;
   ids: Array<number>;
-  categoryTypes: IItem[];
   entities: Dictionary<ICategory>;
   filteredCategories: ICategory[];
   categoriesParamState: ICategoriesApiQuery;
@@ -21,7 +19,6 @@ const defaultCategory: ICategoriesState = {
   error: false,
   loaded: false,
   loading: false,
-  categoryTypes: [],
   filteredCategories: [],
   categoriesParamState: {
     search_str: null,
@@ -40,7 +37,6 @@ export function reducer(state = initialState, action: fromCategories.Actions) {
     case fromCategories.CategoriesActions.EDIT_CATEGORY:
     case fromCategories.CategoriesActions.GET_CATEGORIES:
     case fromCategories.CategoriesActions.DELETE_CATEGORIES:
-    case fromCategories.CategoriesActions.GET_CATEGORIES_TYPE:
     case fromCategories.CategoriesActions.GET_FILTERED_CATEGORIES: {
       return {
         ...state,
@@ -54,7 +50,6 @@ export function reducer(state = initialState, action: fromCategories.Actions) {
     case fromCategories.CategoriesActions.EDIT_CATEGORY_FAIL:
     case fromCategories.CategoriesActions.GET_CATEGORIES_FAIL:
     case fromCategories.CategoriesActions.DELETE_CATEGORIES_FAIL:
-    case fromCategories.CategoriesActions.GET_CATEGORIES_TYPE_FAIL:
     case fromCategories.CategoriesActions.GET_FILTERED_CATEGORIES_FAIL: {
       return {
         ...state,
@@ -80,16 +75,6 @@ export function reducer(state = initialState, action: fromCategories.Actions) {
         loaded: true,
         loading: false,
         filteredCategories: [...action.payload]
-      };
-    }
-
-    case fromCategories.CategoriesActions.GET_CATEGORIES_TYPE_SUCCESS: {
-      return {
-        ...state,
-        error: false,
-        loaded: true,
-        loading: false,
-        categoryTypes: [...action.payload]
       };
     }
 
@@ -170,6 +155,5 @@ export const getCategories = selectAll;
 export const getCategoriesError = (state: ICategoriesState) => state.error;
 export const getCategoriesLoaded = (state: ICategoriesState) => state.loaded;
 export const getCategoriesLoading = (state: ICategoriesState) => state.loading;
-export const getCategoriesType = (state: ICategoriesState) => state.categoryTypes;
 export const getFilteredCategories = (state: ICategoriesState) => state.filteredCategories;
 export const getCategoriesParamState = (state: ICategoriesState) => state.categoriesParamState;

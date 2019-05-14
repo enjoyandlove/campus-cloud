@@ -1,0 +1,14 @@
+.ready-ui-navigation {
+  ready-ui-navigation-brand {
+    margin-right: 20px;
+
+    img {
+      margin-right: 8px;
+      border-radius: var(--setting-border-radius);
+    }
+  }
+
+  ready-ui-navigation-item:not(:last-child) {
+    margin-right: 20px;
+  }
+}

@@ -101,8 +101,6 @@ export const API_ENDPOINTS = {
 
   DASHBOARD_CAMPUS_TILE: 'analytics/campus_guide',
 
-  LOCATION_CATEGORY_TYPE: 'location_category_type',
-
   EXTERNAL_EVENT_CHECKIN: 'external_event_checkin',
 
   WALLS_INTEGRATIONS: 'external_feed/campus_thread',

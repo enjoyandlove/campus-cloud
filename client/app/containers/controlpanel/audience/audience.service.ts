@@ -1,14 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { map, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
-import { API } from '../../../config/api';
-import { baseActions } from '../../../store/base';
+import { API } from '@app/config/api';
+import { HTTPService } from '@app/base';
+import { baseActions } from '@app/store/base';
 import { PersonaPermission } from './audience.status';
-import { HTTPService } from '../../../base/http.service';
 
 @Injectable()
 export class AudienceService extends HTTPService {
@@ -66,7 +66,8 @@ export class AudienceService extends HTTPService {
     return super
       .get(url, search, true)
       .pipe(
-        map((res: any) => res.filter((p) => p.login_requirement !== PersonaPermission.forbidden))
+        map((res: any) => res.filter((p) => p.login_requirement !== PersonaPermission.forbidden)),
+        catchError(() => of([]))
       );
   }
 

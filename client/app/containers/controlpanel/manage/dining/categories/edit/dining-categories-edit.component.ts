@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { map, takeUntil } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { Destroyable, Mixin } from '@shared/mixins';
 import { CPI18nService, IModal, MODAL_DATA } from '@shared/services';
-import { ICategory, CategoryModel } from '@libs/locations/common/categories/model';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { ICategory, CategoryModel, categoryTypes } from '@libs/locations/common/categories/model';
 
 @Mixin([Destroyable])
 @Component({
@@ -22,7 +22,7 @@ export class DiningCategoriesEditComponent implements OnInit, OnDestroy {
   selectedCategory;
   formError: boolean;
   category: ICategory;
-  categoryTypes$: Observable<IItem[]>;
+  categoryTypes: IItem[];
   categoryIcons = CategoryModel.diningCategoryIcons();
 
   destroy$ = new Subject<null>();
@@ -32,6 +32,7 @@ export class DiningCategoriesEditComponent implements OnInit, OnDestroy {
     @Inject(MODAL_DATA) public modal: IModal,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    private locationUtils: LocationsUtilsService,
     public store: Store<fromStore.ICategoriesState>
   ) {}
 
@@ -61,17 +62,12 @@ export class DiningCategoriesEditComponent implements OnInit, OnDestroy {
   }
 
   loadCategoryTypes() {
-    this.categoryTypes$ = this.store.select(fromStore.getCategoriesType).pipe(
-      takeUntil(this.destroy$),
-      map((categoryTypes) => {
-        Promise.resolve().then(() => {
-          this.selectedCategory = categoryTypes.find(
-            (c) => c.action === this.category.category_type_id
-          );
-        });
+    this.categoryTypes = this.locationUtils
+      .getLocationTypes()
+      .filter((l: IItem) => l.action === categoryTypes.dining);
 
-        return categoryTypes;
-      })
+    this.selectedCategory = this.categoryTypes.find(
+      (c) => c.action === this.category.category_type_id
     );
   }
 
@@ -79,6 +75,7 @@ export class DiningCategoriesEditComponent implements OnInit, OnDestroy {
     this.category = this.modal.data;
     this.loadCategoryTypes();
     this.form = CategoryModel.form(this.category);
+    this.form.get('category_type_id').setValue(categoryTypes.dining);
   }
 
   ngOnDestroy() {

@@ -1,4 +1,4 @@
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { get as _get } from 'lodash';
 
 import { ILocation } from './locations.interface';
@@ -52,9 +52,27 @@ export class LocationModel {
     const fb = new FormBuilder();
     const links = _get(locations, 'links', []);
 
-    return fb.group({
-      url: [links.length ? links[0]['url'] : ''],
-      label: [links.length ? links[0]['label'] : '']
-    });
+    return fb.group(
+      {
+        url: [links.length ? links[0]['url'] : ''],
+        label: [links.length ? links[0]['label'] : '']
+      },
+      { validator: this.customLinksValidator }
+    );
+  }
+
+  static customLinksValidator(controls: FormGroup): ValidationErrors | null {
+    const url = controls.get('url').value.trim();
+    const label = controls.get('label').value.trim();
+
+    if (url && !label) {
+      return { labelRequired: true };
+    }
+
+    if (label && !url) {
+      return { urlRequired: true };
+    }
+
+    return null;
   }
 }

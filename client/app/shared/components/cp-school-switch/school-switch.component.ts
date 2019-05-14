@@ -27,14 +27,14 @@ export class SchoolSwitchComponent implements OnInit {
 
   constructor(public session: CPSession, public cpTracking: CPTrackingService) {}
 
-  onSwitchSchool(event, school) {
+  onSwitchSchool(event, school: ISchool) {
     event.preventDefault();
 
     if (school.id === this.selectedSchool.id) {
       return;
     }
 
-    appStorage.set(appStorage.keys.DEFAULT_SCHOOL, JSON.stringify(school));
+    appStorage.set(appStorage.keys.DEFAULT_SCHOOL_ID, school.id.toString());
     window.location.replace('/');
   }
 

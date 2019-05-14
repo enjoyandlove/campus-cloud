@@ -1,16 +1,20 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
 import { IItem } from '@shared/components';
 import { Destroyable, Mixin } from '@shared/mixins';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
 import { CPI18nService, IModal, MODAL_DATA } from '@shared/services';
-import { CategoryModel, LocationCategoryLocale } from '@libs/locations/common/categories/model';
+import {
+  categoryTypes,
+  CategoryModel,
+  LocationCategoryLocale
+} from '@libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-dining-categories-create',
@@ -20,9 +24,11 @@ import { CategoryModel, LocationCategoryLocale } from '@libs/locations/common/ca
 @Mixin([Destroyable])
 export class DiningCategoriesCreateComponent implements OnInit, OnDestroy {
   formError;
-  form: FormGroup;
-  categoryTypes$: Observable<IItem[]>;
+  form: FormGroup = CategoryModel.form();
   categoryIcons = CategoryModel.diningCategoryIcons();
+  categoryTypes: IItem[] = this.locationUtils
+    .getLocationTypes()
+    .filter((l: IItem) => l.action === categoryTypes.dining);
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -31,6 +37,7 @@ export class DiningCategoriesCreateComponent implements OnInit, OnDestroy {
     @Inject(MODAL_DATA) private modal: IModal,
     public session: CPSession,
     public cpI18n: CPI18nService,
+    private locationUtils: LocationsUtilsService,
     public store: Store<fromStore.ICategoriesState>
   ) {}
 
@@ -69,11 +76,7 @@ export class DiningCategoriesCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.form = CategoryModel.form();
-
-    this.categoryTypes$ = this.store
-      .select(fromStore.getCategoriesType)
-      .pipe(takeUntil(this.destroy$));
+    this.form.get('category_type_id').setValue(categoryTypes.dining);
   }
 
   ngOnDestroy() {
