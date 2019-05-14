@@ -10,6 +10,7 @@ import { CPI18nService } from './i18n.service';
 import { CP_PRIVILEGES_MAP } from '../constants';
 import { HTTPService } from '@app/base/http.service';
 import { amplitudeEvents } from '../constants/analytics';
+import { ClubStatus } from '@controlpanel/manage/clubs/club.status';
 import { isClubAthletic } from '@controlpanel/manage/clubs/clubs.athletics.labels';
 import { canAccountLevelReadResource, canSchoolReadResource } from '../utils/privileges';
 
@@ -69,9 +70,12 @@ export class StoreService extends HTTPService {
   }
 
   private getAthletics(search: HttpParams) {
+    const ACTIVE_CLUBS = ClubStatus.active.toString();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/1;1000`;
 
-    search = search.append('category_id', isClubAthletic.athletic.toString());
+    search = search
+      .append('category_id', isClubAthletic.athletic.toString())
+      .append('status', ACTIVE_CLUBS);
 
     return super.get(url, search).pipe(
       startWith([
@@ -109,12 +113,10 @@ export class StoreService extends HTTPService {
   }
 
   private getClubs(search: HttpParams) {
-    const ACTIVE_CLUBS = '1';
+    const ACTIVE_CLUBS = ClubStatus.active.toString();
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/1;1000`;
 
-    search = search
-      ? search.append('status', ACTIVE_CLUBS)
-      : new HttpParams().append('status', ACTIVE_CLUBS);
+    search = search.append('status', ACTIVE_CLUBS);
 
     return super.get(url, search).pipe(
       startWith([
