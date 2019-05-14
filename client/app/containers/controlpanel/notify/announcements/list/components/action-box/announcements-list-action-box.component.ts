@@ -1,10 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { CPSession } from '@app/session';
-import { CP_TRACK_TO } from '@shared/directives/tracking';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { CP_TRACK_TO } from '@shared/directives';
 import { CPI18nService, CPTrackingService } from '@shared/services';
-import { CP_PRIVILEGES_MAP, ANNOUNCEMENT_INTEGRATION } from '@shared/constants';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@shared/constants';
 
 interface IState {
   query: string;
@@ -28,8 +27,6 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
   eventData;
   canCompose;
   state: IState = state;
-  featureName = ANNOUNCEMENT_INTEGRATION;
-
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
