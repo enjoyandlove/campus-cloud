@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { FormArray } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { omit } from 'lodash';
 
@@ -80,6 +81,28 @@ describe('LocationsCreateComponent', () => {
     component.doSubmit();
 
     expect(component.formErrors).toBe(true);
+  });
+
+  it('should validate links label with url & vice versa', () => {
+    const someValue = 'some value';
+
+    fillForm(component.locationForm, filledForm);
+
+    const links = <FormArray>component.locationForm.controls['links'];
+
+    links.controls[0].get('label').setValue('');
+    links.controls[0].get('url').setValue(someValue);
+
+    component.doSubmit();
+
+    expect(links.controls[0].errors.labelRequired).toBe(true);
+
+    links.controls[0].get('label').setValue(someValue);
+    links.controls[0].get('url').setValue('');
+
+    component.doSubmit();
+
+    expect(links.controls[0].errors.urlRequired).toBe(true);
   });
 
   it('should dispatch PostLocation action', () => {

@@ -1,13 +1,12 @@
-/*tslint:disable:max-line-length */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { combineLatest, Observable } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@app/session';
+import { CPI18nService } from '@shared/services';
 import { PersonaType, UserCount } from '../../audience.status';
-import { CPI18nService } from './../../../../../shared/services';
 import { AudienceUtilsService } from '../../audience.utils.service';
-import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
+import { AudienceService } from '@controlpanel/audience/audience.service';
 
 @Component({
   selector: 'cp-audience-saved-body',
@@ -41,9 +40,11 @@ export class AudienceSavedBodyComponent implements OnInit {
       .append('with_user_count', UserCount.withUserCount.toString())
       .append('platform', PersonaType.app.toString());
 
+    const isCustomizationEnabled = this.session.school.has_guide_customization;
+
     const audiences$ = this.service.getAudiences(search, 1, 1000);
 
-    const persona$ = this.service.getPersona(search, 1, 1000);
+    const persona$ = isCustomizationEnabled ? this.service.getPersona(search, 1, 1000) : of([]);
 
     const stream$ = combineLatest(audiences$, persona$, this.importedAudience$);
 

@@ -1,12 +1,12 @@
 import { FormArray, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
-import { getItem } from '@shared/components';
 import { CPI18nService } from '@shared/services';
+import { getItem, IItem } from '@shared/components';
 import { amplitudeEvents } from '@shared/constants';
 import { ScheduleModel, scheduleLabels } from '../model';
-import { ICategory } from '@libs/locations/common/categories/model';
 import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
+import { ICategory, categoryTypes } from '@libs/locations/common/categories/model';
 
 const days = Array.from(Array(7).keys());
 
@@ -332,5 +332,23 @@ export class LocationsUtilsService {
       category_status,
       hours_of_operations
     };
+  }
+
+  getLocationTypes(): Array<IItem> {
+    return [
+      { label: '---', action: null },
+      {
+        label: this.cpI18n.translate('t_location_category_type_building'),
+        action: categoryTypes.building
+      },
+      {
+        label: this.cpI18n.translate('t_location_category_type_dining'),
+        action: categoryTypes.dining
+      },
+      {
+        label: this.cpI18n.translate('t_location_category_type_location'),
+        action: categoryTypes.location
+      }
+    ];
   }
 }

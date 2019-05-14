@@ -1,12 +1,12 @@
-/* tslint:disable:quotemark */
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
+import { CPI18nPipe } from '@shared/pipes';
 import ICheckIn from '../checkin.interface';
-import { CPTrackingService } from '@shared/services';
 import { amplitudeEvents } from '@shared/constants/analytics';
 import { CheckinUtilsService } from '../checkin.utils.service';
 import { LayoutWidth, LayoutAlign } from '@app/layouts/interfaces';
+import { CPI18nService, CPTrackingService } from '@shared/services';
 
 const jsPDF = require('jspdf');
 
@@ -31,7 +31,8 @@ declare var $;
 @Component({
   selector: 'cp-base-checkin',
   templateUrl: './base-checkin.component.html',
-  styleUrls: ['./base-checkin.component.scss']
+  styleUrls: ['./base-checkin.component.scss'],
+  providers: [CPI18nPipe]
 })
 export class BaseCheckinComponent implements OnInit {
   @Input() data: any;
@@ -52,6 +53,7 @@ export class BaseCheckinComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private cpI18Pipe: CPI18nPipe,
     private utils: CheckinUtilsService,
     private cpTracking: CPTrackingService
   ) {
@@ -86,6 +88,7 @@ export class BaseCheckinComponent implements OnInit {
 
   handlePdf() {
     const doc = new jsPDF();
+    const localeFr = CPI18nService.getLocale().startsWith('fr');
 
     const imageFormat = decodeURIComponent(this.data.qr_img_base64)
       .split(',')[0]
@@ -164,10 +167,12 @@ export class BaseCheckinComponent implements OnInit {
 
     doc.setFontSize(20);
 
-    const pageOneFooter = doc.splitTextToSize('Scan and provide feedback on the', 130);
+    const pageOneFooter = doc.splitTextToSize(
+      this.cpI18Pipe.transform('t_checkin_pdf_title', this.data.school_name),
+      130
+    );
 
     doc.text(65, PAGE_HEIGHT - 30, pageOneFooter);
-    doc.text(65, PAGE_HEIGHT - 20, `${this.data.school_name} App`);
 
     doc.setFontSize(16);
 
@@ -179,21 +184,31 @@ export class BaseCheckinComponent implements OnInit {
     doc.setFontType('bold');
     doc.setTextColor(255, 255, 255);
 
-    doc.text('Give Feedback', 105, 28, 'center');
+    doc.text(this.cpI18Pipe.transform('t_checkin_pdf_give_feedback'), 105, 28, 'center');
 
     if (this.isService) {
+      const leftMargin = localeFr ? LEFT_MARGIN : LEFT_MARGIN + 13;
+
       doc.text(
-        LEFT_MARGIN + 13,
+        leftMargin,
         40,
-        doc.splitTextToSize('with Service Assessment', PAGE_WIDTH - LEFT_MARGIN)
+        doc.splitTextToSize(
+          this.cpI18Pipe.transform('t_checkin_pdf_service_assessment'),
+          PAGE_WIDTH - LEFT_MARGIN
+        )
       );
     }
 
     if (this.isEvent) {
+      const leftMargin = localeFr ? 20 : LEFT_MARGIN + 18;
+
       doc.text(
-        LEFT_MARGIN + 18,
+        leftMargin,
         40,
-        doc.splitTextToSize('with Event Assessment', PAGE_WIDTH - LEFT_MARGIN)
+        doc.splitTextToSize(
+          this.cpI18Pipe.transform('t_checkin_pdf_event_assessment'),
+          PAGE_WIDTH - LEFT_MARGIN
+        )
       );
     }
 
@@ -201,7 +216,11 @@ export class BaseCheckinComponent implements OnInit {
     doc.setFontType('normal');
     doc.setFontStyle('italic');
     doc.setTextColor(0, 0, 0);
-    doc.text(LEFT_MARGIN, 95, doc.splitTextToSize('Student Scan Instructions', 100));
+    doc.text(
+      LEFT_MARGIN,
+      95,
+      doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_scan_instructions'), 130)
+    );
 
     doc.addImage(
       decodeURIComponent(this.data.app_logo_img_base64),
@@ -214,23 +233,23 @@ export class BaseCheckinComponent implements OnInit {
 
     doc.setFontSize(26);
     doc.setFontType('bold');
-    doc.text(65, 123, doc.splitTextToSize('Open App', 120));
+    doc.text(65, 123, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_open_app'), 120));
     doc.setFontSize(18);
     doc.setFontType('normal');
-    doc.text(65, 133, doc.splitTextToSize("Download it if you don't have it", 160));
+    doc.text(65, 133, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_download'), 160));
 
     doc.addImage(TAP_IMAGE, 'PNG', LEFT_MARGIN, 160, THUMB_HEIGHT, THUMB_WIDTH);
     doc.setFontSize(26);
     doc.setFontType('bold');
-    doc.text(65, 173, doc.splitTextToSize('Tap Scan', 120));
+    doc.text(65, 173, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_scan'), 120));
 
     doc.setFontSize(18);
     doc.setFontType('normal');
-    doc.text(65, 183, doc.splitTextToSize('Scan the QR Code', 160));
+    doc.text(65, 183, doc.splitTextToSize(this.cpI18Pipe.transform('t_checkin_pdf_scan_qr'), 160));
 
     doc.rect(LEFT_MARGIN, PAGE_HEIGHT - 40, fullWidth, 0.1);
 
-    const feedbackText = 'View Feedback on your Campus Cloud Dashboard';
+    const feedbackText = this.cpI18Pipe.transform('t_checkin_pdf_view_feedback');
     const pageTwoFooter = doc.splitTextToSize(feedbackText, fullWidth);
 
     doc.text(pageTwoFooter, 105, PAGE_HEIGHT - 20, 'center');

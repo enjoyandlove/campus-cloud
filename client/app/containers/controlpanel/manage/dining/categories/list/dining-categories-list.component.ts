@@ -7,7 +7,6 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
-import { IItem } from '@shared/components';
 import { amplitudeEvents } from '@shared/constants';
 import { Destroyable, Mixin } from '@shared/mixins';
 import { DiningCategoriesEditComponent } from '../edit';
@@ -148,24 +147,9 @@ export class DiningCategoriesListComponent implements OnInit, OnDestroy {
     this.categories$ = this.store.select(fromStore.getCategories).pipe(takeUntil(this.destroy$));
   }
 
-  loadCategoryTypes() {
-    this.store
-      .select(fromStore.getCategoriesType)
-      .pipe(
-        takeUntil(this.destroy$),
-        tap((types: IItem[]) => {
-          if (!types.length) {
-            this.store.dispatch(new fromStore.GetCategoriesType());
-          }
-        })
-      )
-      .subscribe();
-  }
-
   ngOnInit() {
     this.updateHeader();
     this.loadCategories();
-    this.loadCategoryTypes();
 
     this.loading$ = this.store
       .select(fromStore.getCategoriesLoading)

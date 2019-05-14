@@ -7,8 +7,8 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
-import { IItem } from '@client/app/shared/components';
-import { IStore } from '@shared/services/store.service';
+import { IItem } from '@shared/components';
+import { IStore, ZendeskService } from '@shared/services';
 import { EventIntegration } from '@libs/integrations/events/model';
 import { IntegrationsUitlsService } from './../integrations.utils.service';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
@@ -26,7 +26,7 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
   typesDropdown: IItem[];
   selectedType: IItem | null;
   stores$: Observable<IStore[] | IItem[]>;
-  eventIntegrationPkdbUrl = 'https://support.readyeducation.com/hc/en-us/articles/360021952274';
+  eventIntegrationPkdbUrl = `${ZendeskService.getUrl('articles/360021952274')}`;
 
   constructor(public session: CPSession, public store: Store<fromStore.IEventIntegrationState>) {}
 

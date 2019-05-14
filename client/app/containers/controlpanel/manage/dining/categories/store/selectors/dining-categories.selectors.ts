@@ -11,11 +11,6 @@ export const getCategoriesState = createSelector(
 
 export const getCategories = createSelector(getCategoriesState, fromCategories.getCategories);
 
-export const getCategoriesType = createSelector(
-  getCategoriesState,
-  fromCategories.getCategoriesType
-);
-
 export const getFilteredCategories = createSelector(
   getCategoriesState,
   fromCategories.getFilteredCategories

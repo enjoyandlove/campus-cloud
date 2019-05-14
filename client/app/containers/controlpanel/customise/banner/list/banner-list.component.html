@@ -1,59 +1,47 @@
-<ng-container [ngSwitch]="loading">
-  <cp-spinner *ngSwitchCase="true"></cp-spinner>
-
-  <ng-container *ngSwitchCase="false">
-    <cp-one-column [width]="layoutWidth">
-      <cp-card>
-        <div class="row">
-          <header class="col-12">
-            <p class="card__title">{{ 'customization_title' | cpI18n }}</p>
-            <p class="text-muted">
-              {{ 'customization_description' | cpI18n }}
-              <i
-                class="material-icons hover"
-                [attr.title]="tooltipContent"
-                [cpTooltip]="imageSizeToolTip">
-                info_outline
-              </i>
-            </p>
-          </header>
-        </div>
-
-        <div class="row canvas">
-          <div class="col-12">
-            <div
-              id="canvas_wrapper"
-              *ngIf="!isEdit"
-              class="canvas__wrapper canvas__wrapper--image"
-              [ngStyle]="{'background-image': 'url(' + originalImage + ')'}">
-            </div>
-            <div
-              id="canvas_wrapper"
-              *ngIf="isEdit"
-              class="canvas__wrapper">
-              <div class="canvas__bounds"></div>
-            </div>
-
-            <cp-banner-upload-button
-              *ngIf="!isEdit"
-              class="upload-button"
-              (reset)="onReset()"
-              (error)="onError($event)"
-              (upload)="onUpload($event)">
-            </cp-banner-upload-button>
-
-            <cp-banner-control-buttons
-              *ngIf="isEdit"
-              (save)="onSave()"
-              (cancel)="onCancel()"
-              [loading]="uploading"
-              class="control-buttons">
-            </cp-banner-control-buttons>
-
-            <p class="tooltip" *ngIf="isEdit">{{ 'customization_instructions' | cpI18n }}</p>
-          </div>
-        </div>
-      </cp-card>
-    </cp-one-column>
-  </ng-container>
-</ng-container>
+<cp-one-column [width]="layoutWidth">
+  <cp-card class="branding-form">
+    <div class="row">
+      <header class="col-12">
+        <p class="card__title">{{ 't_studio_branding_header' | cpI18n }}</p>
+      </header>
+    </div>
+    <cp-branding-form
+      [form]="form"
+      [textLogo]="textLogo"
+      [pkdbLink]="brandingPkdbLink"
+      (onRemoveLogo)="onRemoveLogo()"
+      (onUploadLogo)="onUploadLogo($event)"
+      (onChangeColor)="onChangeColor($event)">
+    </cp-branding-form>
+  </cp-card>
+  <cp-card class="banner">
+    <div class="row">
+      <header class="col-12">
+        <p class="card__title">{{ 'customization_title' | cpI18n }}</p>
+        <p>
+          <span class="text-muted">{{ 'customization_description' | cpI18n }} </span>
+          <a
+            target="_blank"
+            class="cpbtn cpbtn--link"
+            [href]="bannerPkdbLink">
+            {{ 'learn_more' | cpI18n }}
+          </a>
+        </p>
+      </header>
+    </div>
+    <cp-banner-upload
+      [form]="form"
+      [isEdit]="isEdit"
+      [uploading]="uploading"
+      (onCrop)="onCrop()"
+      (onReset)="onReset()"
+      (onError)="onError($event)"
+      (onUpload)="onUpload($event)">
+    </cp-banner-upload>
+  </cp-card>
+  <cp-form-fixed-footer
+    [submitButtonDisabled]="saveDisabled()"
+    (submitClick)="onSave()"
+    (cancelClick)="onCancel()">
+  </cp-form-fixed-footer>
+</cp-one-column>

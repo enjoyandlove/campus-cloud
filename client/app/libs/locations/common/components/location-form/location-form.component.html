@@ -157,7 +157,8 @@
         cpTarget="label"
         class="form-control"
         formControlName="label"
-        [placeholder]="locationForm.get('notes') ? 'Menu': ''">
+        [placeholder]="locationForm.get('notes') ? 'Menu': ''"
+        [class.error]="requiredControls.links.errors?.labelRequired">
     </div>
 
     <div class="col-6" [formGroupName]="0">
@@ -167,7 +168,8 @@
         cpTarget="url"
         class="form-control"
         formControlName="url"
-        placeholder="http://www.example.com">
+        placeholder="http://www.example.com"
+        [class.error]="requiredControls.links.errors?.urlRequired">
     </div>
   </div>
 

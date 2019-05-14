@@ -3,7 +3,7 @@ import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
 import { IItem } from '@shared/components';
-import { CPI18nService, IStore } from '@shared/services';
+import { CPI18nService, IStore, ZendeskService } from '@shared/services';
 
 @Component({
   selector: 'cp-announcements-integrations-form',
@@ -20,6 +20,7 @@ export class AnnouncementsIntegrationFormComponent implements OnInit {
   @Input() stores$: Observable<IStore[]>;
 
   audiences: IItem[];
+  announcementIntegrationPkdb = `${ZendeskService.getUrl('articles/360022251034')}`;
 
   constructor(private cpI18n: CPI18nService) {}
 

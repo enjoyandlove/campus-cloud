@@ -19,6 +19,7 @@ import { CustomSerializer } from '@app/store/serializers';
 import { LayoutsModule } from '@app/layouts/layouts.module';
 import { DiningRoutingModule } from './dining.routing.module';
 import { LocationsModule } from '../locations/locations.module';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
 import { DiningCategoriesModule } from './categories/dining-categories.module';
 import { CommonLocationsModule } from '@libs/locations/common/common-locations.module';
 
@@ -47,6 +48,7 @@ import { CommonLocationsModule } from '@libs/locations/common/common-locations.m
   providers: [
     DiningService,
     DiningExistGuard,
+    LocationsUtilsService,
     {
       provide: RouterStateSerializer,
       useClass: CustomSerializer

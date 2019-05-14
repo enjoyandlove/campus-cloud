@@ -2,6 +2,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 
 import { IItem } from '@shared/components';
+import { ZendeskService } from '@shared/services';
 import { CustomValidators } from '@shared/validators';
 
 @Component({
@@ -18,7 +19,7 @@ export class WallsIntegrationFormComponent implements OnInit {
   @Input() selectedChannel: IItem;
 
   showChannelName = false;
-  wallIntegrationPkdbUrl = 'https://support.readyeducation.com/hc/en-us/articles/360022154933';
+  wallIntegrationPkdbUrl = `${ZendeskService.getUrl('articles/360022154933')}`;
 
   constructor() {}
 

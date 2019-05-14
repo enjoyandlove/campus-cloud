@@ -12,6 +12,7 @@ import { CategoriesCreateComponent } from './create';
 import { effects, reducers } from './store';
 import { SharedModule } from '@shared/shared.module';
 import { CategoriesService } from './categories.service';
+import { LocationsUtilsService } from '@libs/locations/common/utils';
 import { CategoriesRoutingModule } from './categories.routing.module';
 import { CommonCategoriesModule } from '@libs/locations/common/categories/common-categories.module';
 
@@ -33,6 +34,6 @@ import { CommonCategoriesModule } from '@libs/locations/common/categories/common
     StoreModule.forFeature('locationCategories', reducers)
   ],
 
-  providers: [CategoriesService]
+  providers: [CategoriesService, LocationsUtilsService]
 })
 export class CategoriesModule {}

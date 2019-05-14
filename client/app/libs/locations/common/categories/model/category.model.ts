@@ -1,11 +1,9 @@
 import { FormBuilder, Validators } from '@angular/forms';
 
 import { CPSession } from '@app/session';
-import { getItem } from '@shared/components';
-import { CPI18nService } from '@shared/services';
+import { ICategory } from './categories.interface';
 import { CustomValidators } from '@shared/validators';
 import { environment } from '@client/environments/environment';
-import { ICategory, ICategoryType } from './categories.interface';
 
 const dbPath = 'https://d38h7mnlv8qddx.cloudfront.net/';
 const assetPath = `${environment.root}public/svg/locations/categories/`;
@@ -29,22 +27,6 @@ export class CategoryModel {
       name: [_category.name, CustomValidators.requiredNonEmpty],
       category_type_id: [_category.category_type_id, Validators.required]
     });
-  }
-
-  static setCategoryTypes(categoryTypes: ICategoryType[]) {
-    const cpI18n = new CPI18nService();
-    const _heading = [
-      {
-        action: null,
-        label: cpI18n.translate('t_locations_category_type_select')
-      }
-    ];
-
-    const _categoryTypes = categoryTypes.map((types: ICategoryType) => {
-      return getItem(types, 'name', 'id');
-    });
-
-    return [..._heading, ..._categoryTypes];
   }
 
   static diningCategoryIcons() {

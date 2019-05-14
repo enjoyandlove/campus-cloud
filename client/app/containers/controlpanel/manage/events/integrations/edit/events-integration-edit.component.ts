@@ -7,8 +7,8 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@app/session';
-import { IItem } from '@client/app/shared/components';
-import { IStore } from '@shared/services/store.service';
+import { IItem } from '@shared/components';
+import { IStore, ZendeskService } from '@shared/services';
 import { IntegrationsUitlsService } from './../integrations.utils.service';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { IEventIntegration, EventIntegration } from '@libs/integrations/events/model';
@@ -29,7 +29,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
   destroy$ = new Subject();
   selectedType: IItem | null;
   stores$: Observable<IStore[] | IItem[]>;
-  eventIntegrationPkdbUrl = 'https://support.readyeducation.com/hc/en-us/articles/360021952274';
+  eventIntegrationPkdbUrl = `${ZendeskService.getUrl('articles/360021952274')}`;
 
   constructor(public session: CPSession, public store: Store<fromStore.IEventIntegrationState>) {}
 

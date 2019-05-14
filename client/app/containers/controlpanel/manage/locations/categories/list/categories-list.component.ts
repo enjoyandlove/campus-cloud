@@ -7,7 +7,6 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 import * as fromRoot from '@app/store';
 import { CPSession } from '@app/session';
-import { IItem } from '@shared/components';
 import { amplitudeEvents } from '@shared/constants';
 import { LocationType } from '@libs/locations/common/utils';
 import { CPI18nService, CPTrackingService } from '@shared/services';
@@ -179,26 +178,9 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.categories$ = this.store.select(fromStore.getCategories);
   }
 
-  loadCategoryTypes() {
-    this.store
-      .select(fromStore.getCategoriesType)
-      .pipe(
-        takeUntil(this.destroy$),
-        tap((types: IItem[]) => {
-          if (!types.length) {
-            const params = this.defaultParams;
-
-            this.store.dispatch(new fromStore.GetCategoriesType({ params }));
-          }
-        })
-      )
-      .subscribe();
-  }
-
   ngOnInit() {
     this.updateHeader();
     this.loadCategories();
-    this.loadCategoryTypes();
 
     this.loading$ = this.store
       .select(fromStore.getCategoriesLoading)

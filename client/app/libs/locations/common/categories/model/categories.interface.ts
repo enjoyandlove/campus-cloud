@@ -16,12 +16,6 @@ export interface ICategory {
   category_type_name: string;
 }
 
-export interface ICategoryType {
-  id?: number;
-
-  name: string;
-}
-
 export interface ICategoriesApiQuery {
   search_str: string;
   sort_field: string;
@@ -33,10 +27,16 @@ export const isDefault = {
   false: 't_shared_no'
 };
 
-export const categoryTypes = {
-  2: 'Dining',
-  1: 'Building',
-  3: 'Location'
+export enum categoryTypes {
+  'building' = 1,
+  'dining' = 2,
+  'location' = 3
+}
+
+export const categoryTypesMap = {
+  [categoryTypes.dining]: 'Dining',
+  [categoryTypes.building]: 'Building',
+  [categoryTypes.location]: 'Location'
 };
 
 export enum LocationCategoryLocale {
