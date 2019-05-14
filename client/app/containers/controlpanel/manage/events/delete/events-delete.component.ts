@@ -3,8 +3,10 @@ import { HttpParams } from '@angular/common/http';
 
 import IEvent from '../event.interface';
 import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
 import { EventsService } from '../events.service';
+import { amplitudeEvents } from '@shared/constants';
+import { CPI18nService, CPTrackingService } from '@shared/services';
+import { EventsAmplitudeService } from '../events.amplitude.service';
 
 @Component({
   selector: 'cp-events-delete',
@@ -22,7 +24,8 @@ export class EventsDeleteComponent implements OnInit {
   constructor(
     public session: CPSession,
     private cpI18n: CPI18nService,
-    public service: EventsService
+    public service: EventsService,
+    public cpTrackingService: CPTrackingService
   ) {}
 
   onClose() {
@@ -39,8 +42,21 @@ export class EventsDeleteComponent implements OnInit {
 
     this.service.deleteEventById(this.event.id, search).subscribe(() => {
       this.deletedEvent.emit(this.event.id);
+      this.trackDeletedEvent();
       this.onClose();
     });
+  }
+
+  trackDeletedEvent() {
+    const eventProperties = {
+      event_id: this.event.id,
+      ...EventsAmplitudeService.getEventProperties(this.event)
+    };
+
+    this.cpTrackingService.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DELETED_EVENT,
+      eventProperties
+    );
   }
 
   ngOnInit() {}
