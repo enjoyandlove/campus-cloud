@@ -26,10 +26,10 @@ import {
 
 import {
   AdminService,
-  CPI18nService,
-  CPTrackingService,
   ModalService,
-  StoreService
+  StoreService,
+  CPI18nService,
+  CPTrackingService
 } from '@shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';

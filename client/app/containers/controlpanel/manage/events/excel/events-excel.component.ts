@@ -20,9 +20,9 @@ import { SnackbarError } from '@app/store/base/reducers/snackbar.reducer';
 import {
   AdminService,
   StoreService,
+  ModalService,
   CPI18nService,
-  FileUploadService,
-  ModalService
+  FileUploadService
 } from '@shared/services';
 
 import {
