@@ -8,12 +8,12 @@ import {
 import { FORMAT } from '@shared/pipes';
 import { CPSession } from '@app/session';
 import IEvent from '../../../event.interface';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
 import { EventAttendance } from '../../../event.status';
 import { CP_TRACK_TO } from '@shared/directives/tracking';
-import { amplitudeEvents } from '@shared/constants/analytics';
 import { EventUtilService } from '../../../events.utils.service';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@shared/constants';
 import { CPI18nService, CPTrackingService, RouteLevel } from '@shared/services';
+import { EventsAmplitudeService } from '@controlpanel/manage/events/events.amplitude.service';
 
 interface ISort {
   sort_field: string;
@@ -89,7 +89,7 @@ export class ListUpcomingComponent implements OnInit {
     const eventProperties = {
       source_id: event.encrypted_id,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
-      assessment_type: this.utils.getEventCategoryType(event.store_category)
+      assessment_type: EventsAmplitudeService.getEventCategoryType(event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_WEB_CHECK_IN, eventProperties);

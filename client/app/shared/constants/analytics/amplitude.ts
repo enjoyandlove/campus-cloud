@@ -4,10 +4,6 @@ const amplitudeEventTypes = {
   BUTTON_CLICK: 'button_click'
 };
 
-export const cpTrackAmplitude = {
-  type: { ...amplitudeEventTypes }
-};
-
 export const amplitudeEvents = {
   NO: 'No',
 
@@ -16,6 +12,8 @@ export const amplitudeEvents = {
   NEW: 'New',
 
   WEB: 'Web',
+
+  CSV: 'CSV',
 
   WALL: 'Wall',
 
@@ -37,6 +35,8 @@ export const amplitudeEvents = {
 
   TODOS: 'To-Dos',
 
+  MANUAL: 'Manual',
+
   NORMAL: 'Normal',
 
   MOBILE: 'Mobile',
@@ -53,6 +53,8 @@ export const amplitudeEvents = {
 
   DEFAULT: 'Default',
 
+  NO_DATE: 'No Date',
+
   BEAMER: 'Beamer',
 
   COMMENT: 'Comment',
@@ -64,6 +66,8 @@ export const amplitudeEvents = {
   PENDING: 'Pending',
 
   ENABLED: 'Enabled',
+
+  END_DATE: 'End Date',
 
   INTERNAL: 'Internal',
 
@@ -111,6 +115,8 @@ export const amplitudeEvents = {
 
   EXPERIENCE: 'Experience',
 
+  START_DATE: 'Start Date',
+
   ATTENDANCE: 'Attendance',
 
   PAST_EVENT: 'Past Event',
@@ -118,6 +124,8 @@ export const amplitudeEvents = {
   CLUB_EVENT: 'Club Event',
 
   LOGGED_OUT: 'Logged Out',
+
+  NO_CHANGES: 'No Changes',
 
   ASSESSMENT: 'Assessment',
 
@@ -153,6 +161,8 @@ export const amplitudeEvents = {
 
   CHECKIN_ONLY: 'Check-in Only',
 
+  NO_ASSESSMENT: 'No Assessment',
+
   RESOURCE_LIST: 'Resource List',
 
   CAROUSEL_WHEEL: 'Carousel Wheel',
@@ -165,11 +175,17 @@ export const amplitudeEvents = {
 
   SERVICE_EVENT: 'Service Event',
 
+  ADDED_LOCATION: 'Added Location',
+
+  NO_DESCRIPTION: 'No Description',
+
   ATHLETIC_EVENT: 'Athletic Event',
 
   CUSTOM_AUDIENCE: 'Custom Audience',
 
   UPLOADED_PHOTO: 'Uploaded Photo',
+
+  START_END_DATE: 'Start & End Date',
 
   CREATED_ACCOUNT: 'Created Account',
 
@@ -193,6 +209,8 @@ export const amplitudeEvents = {
 
   DYNAMIC_AUDIENCE: 'Dynamic Audience',
 
+  REMOVED_LOCATION: 'Removed Location',
+
   CLICKED_MENU: 'Clicked Menu Item',
 
   SERVICE_PROVIDER: 'Service Provider',
@@ -204,6 +222,8 @@ export const amplitudeEvents = {
   WALL_MOVED_POST: 'Wall - Moved Post',
 
   EXISTING_SECTION: 'Existing Section',
+
+  ADDED_DESCRIPTION: 'Added Description',
 
   LOCATION_CATEGORY: 'Location Category',
 
@@ -236,6 +256,8 @@ export const amplitudeEvents = {
   UPDATED_TEAM_MEMBER: 'Updated Team Member',
 
   DELETED_TEAM_MEMBER: 'Deleted Team Member',
+
+  MANAGE_DELETED_EVENT: 'Manage Deleted Event',
 
   WALL_VIEWED_COMMENT: 'Wall - Viewed Comment',
 
@@ -380,4 +402,8 @@ export const amplitudeEvents = {
   MANAGE_DOWNLOAD_EVENT_ASSESS_DATA: 'Manage - Downloaded Event Assessment Data',
 
   MANAGE_DOWNLOAD_SERVICE_ASSESS_DATA: 'Manage - Downloaded Service Assessment Data'
+};
+
+export const cpTrackAmplitude = {
+  type: { ...amplitudeEventTypes }
 };
