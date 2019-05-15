@@ -5,4 +5,5 @@ export * from './resource-list-form';
 export * from './resource-stores-list';
 export * from './resource-type-search';
 export * from './resource-list-of-list';
+export * from './resource-external-app-open';
 export * from './resource-service-by-category';
