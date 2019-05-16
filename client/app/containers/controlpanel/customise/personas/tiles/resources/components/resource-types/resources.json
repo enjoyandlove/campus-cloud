@@ -209,7 +209,7 @@
       "is_system": 1,
       "link_params": {},
       "open_in_browser": 0,
-      "link_url": "oohlala://open_external_app"
+      "link_url": "open_external_app"
     }
   }
 ]
