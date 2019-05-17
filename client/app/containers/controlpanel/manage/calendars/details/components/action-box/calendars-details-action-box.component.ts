@@ -26,7 +26,7 @@ export class CalendarsDetailsActionBoxComponent implements OnInit {
   ngOnInit() {
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.MANUAL,
+      eventName: amplitudeEvents.MANAGE_VIEWED_FEED_INTEGRATION,
       eventProperties: { sub_menu_name: amplitudeEvents.CALENDAR }
     };
   }
