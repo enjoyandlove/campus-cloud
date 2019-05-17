@@ -1,20 +1,21 @@
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FormArray } from '@angular/forms/src/model';
 import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import { isDev } from '@app/config/env';
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
+import { CPI18nPipe } from '@shared/pipes';
 import { IItem } from './../item.interface';
-import { FormArray } from '@angular/forms/src/model';
-import { BaseComponent } from '../../../../../../base';
-import { isDev } from './../../../../../../config/env';
-import { CPSession } from './../../../../../../session';
-import { CPDate } from '../../../../../../shared/utils';
+import { CPDate, CPObj } from '@shared/utils';
+import { amplitudeEvents } from '@shared/constants';
+import { CPTrackingService } from '@shared/services';
+import { IHeader, baseActions } from '@app/store/base';
 import { CalendarsService } from '../../calendars.services';
-import { CPI18nPipe } from '../../../../../../shared/pipes';
-import { IHeader, baseActions } from './../../../../../../store/base';
-import { CPObj } from './../../../../../../shared/utils/object/object';
 
 const i18n = new CPI18nPipe();
 
@@ -40,7 +41,8 @@ export class CalendarsItemsBulkCreateComponent extends BaseComponent implements 
     public session: CPSession,
     public store: Store<IHeader>,
     public route: ActivatedRoute,
-    public service: CalendarsService
+    public service: CalendarsService,
+    public cpTracking: CPTrackingService
   ) {
     super();
     this.calendarId = this.route.snapshot.params['calendarId'];
@@ -61,6 +63,7 @@ export class CalendarsItemsBulkCreateComponent extends BaseComponent implements 
       this.launchConfirmationModal = true;
       this.confirmationData = confirmationData;
       this.originalData = items.items;
+      this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_IMPORTED_CALENDAR_EVENT);
 
       setTimeout(
         () => {

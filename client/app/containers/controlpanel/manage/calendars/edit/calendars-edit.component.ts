@@ -11,8 +11,11 @@ import {
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from './../../../../../session';
+import { CPSession } from '@app/session';
+import { amplitudeEvents } from '@shared/constants';
+import { CPTrackingService } from '@shared/services';
 import { CalendarsService } from '../calendars.services';
+import { CalendarAmplitudeService } from '../calendar.amplitude.service';
 
 @Component({
   selector: 'cp-calendars-edit',
@@ -37,7 +40,8 @@ export class CalendarsEditComponent implements OnInit {
     public el: ElementRef,
     public fb: FormBuilder,
     public session: CPSession,
-    public service: CalendarsService
+    public service: CalendarsService,
+    public cpTracking: CPTrackingService
   ) {}
 
   @HostListener('document:click', ['$event'])
@@ -63,8 +67,17 @@ export class CalendarsEditComponent implements OnInit {
         this.edited.emit(editedCalendar);
         this.resetModal();
       });
+
+    this.trackEvent();
     this.edited.emit(this.editForm.form.value);
     this.resetModal();
+  }
+
+  trackEvent() {
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_UPDATED_CALENDAR,
+      CalendarAmplitudeService.getCalendarUpdateEventProperties(this.editForm.form)
+    );
   }
 
   ngOnInit() {
