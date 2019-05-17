@@ -1,9 +1,3 @@
-const amplitudeEventTypes = {
-  PAGE_VIEW: 'page_view',
-
-  BUTTON_CLICK: 'button_click'
-};
-
 export const amplitudeEvents = {
   NO: 'No',
 
@@ -221,6 +215,8 @@ export const amplitudeEvents = {
 
   WALL_MOVED_POST: 'Wall - Moved Post',
 
+  FEED_INTEGRATION: 'Feed Integration',
+
   EXISTING_SECTION: 'Existing Section',
 
   ADDED_DESCRIPTION: 'Added Description',
@@ -307,7 +303,13 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_DINING: 'Manage - Updated Dining',
 
+  MANAGE_IMPORTED_EVENT: 'Manage - Imported Event',
+
   MANAGE_DELETED_DINING: 'Manage - Deleted Dining',
+
+  MANAGE_DELETED_CALENDAR: 'Manage Deleted Calendar',
+
+  MANAGE_UPDATED_CALENDAR: 'Manage Updated Calendar',
 
   MANAGE_CREATED_CATEGORY: 'Manage Created Category',
 
@@ -393,7 +395,11 @@ export const amplitudeEvents = {
 
   MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
 
+  MANAGE_DELETED_CALENDAR_EVENT: 'Manage - Deleted Calendar Event',
+
   MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
+
+  MANAGE_IMPORTED_CALENDAR_EVENT: 'Manage - Imported Calendar Event',
 
   MANAGE_CREATED_SERVICE_PROVIDER: 'Manage - Created Service Provider',
 
@@ -402,8 +408,4 @@ export const amplitudeEvents = {
   MANAGE_DOWNLOAD_EVENT_ASSESS_DATA: 'Manage - Downloaded Event Assessment Data',
 
   MANAGE_DOWNLOAD_SERVICE_ASSESS_DATA: 'Manage - Downloaded Service Assessment Data'
-};
-
-export const cpTrackAmplitude = {
-  type: { ...amplitudeEventTypes }
 };

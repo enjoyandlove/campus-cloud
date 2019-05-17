@@ -4,14 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
-import { BaseComponent } from '../../../../../../base';
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
+import { amplitudeEvents } from '@shared/constants';
+import { CPTrackingService } from '@shared/services';
 import { ICalendar } from '../../calendars.interface';
-import { CPSession } from './../../../../../../session';
+import { IHeader, baseActions } from '@app/store/base';
 import { CalendarsService } from '../../calendars.services';
-import { CalendarsItemsService } from '../item.utils.service';
-import { CPTrackingService } from '../../../../../../shared/services';
-import { IHeader, baseActions } from './../../../../../../store/base';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
+import { CalendarAmplitudeService } from '../../calendar.amplitude.service';
 
 @Component({
   selector: 'cp-calendars-items-edit',
@@ -27,14 +27,7 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
   loading = true;
   calendarId: number;
   calendar: ICalendar;
-
-  eventProperties = {
-    all_day: null,
-    location: null,
-    end_date: null,
-    start_date: null,
-    calendar_event_id: null
-  };
+  amplitudeLocationStatus = amplitudeEvents.NO_CHANGES;
 
   constructor(
     public router: Router,
@@ -43,7 +36,6 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
     public route: ActivatedRoute,
     public store: Store<IHeader>,
     public service: CalendarsService,
-    public utils: CalendarsItemsService,
     public cpTracking: CPTrackingService
   ) {
     super();
@@ -69,26 +61,32 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
     });
   }
 
+  onChangeLocation(amplitudeLocationStatus: string) {
+    this.amplitudeLocationStatus = amplitudeLocationStatus;
+  }
+
   onEdit(editedItem) {
     const search = new HttpParams()
       .append('school_id', this.session.g.get('school').id)
       .append('academic_calendar_id', this.calendarId.toString());
 
-    this.service.editItem(this.itemId, editedItem, search).subscribe((res) => {
-      this.trackEvent(res);
+    this.service.editItem(this.itemId, editedItem, search).subscribe(() => {
+      this.trackEvent();
       this.router.navigate(['/manage/calendars/' + this.calendarId]);
     });
   }
 
-  trackEvent(data) {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.utils.setEventProperties(data)
+  trackEvent() {
+    const desc = this.editForm.form.get('description');
+    const eventProperties = {
+      calendar_event_id: this.calendarId,
+      updated_location: this.amplitudeLocationStatus,
+      updated_description: CalendarAmplitudeService.getDescriptionStatus(desc)
     };
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_UPDATED_CALENDAR_EVENT,
-      this.eventProperties
+      eventProperties
     );
   }
 

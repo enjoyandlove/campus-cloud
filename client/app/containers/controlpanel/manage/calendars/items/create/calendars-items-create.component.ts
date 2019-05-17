@@ -4,13 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '@app/session';
+import { amplitudeEvents } from '@shared/constants';
+import { CPTrackingService } from '@shared/services';
+import { IHeader, baseActions } from '@app/store/base';
 import { ItemAllDay, IItem } from './../item.interface';
-import { CPSession } from './../../../../../../session';
 import { CalendarsService } from '../../calendars.services';
-import { CalendarsItemsService } from '../item.utils.service';
-import { CPTrackingService } from '../../../../../../shared/services';
-import { IHeader, baseActions } from './../../../../../../store/base';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
+import { CalendarAmplitudeService } from '../../calendar.amplitude.service';
 
 @Component({
   selector: 'cp-calendars-items-create',
@@ -23,14 +23,6 @@ export class CalendarsItemCreateComponent implements OnInit {
   form: FormGroup;
   calendarId: number;
 
-  eventProperties = {
-    all_day: null,
-    location: null,
-    end_date: null,
-    start_date: null,
-    calendar_event_id: null
-  };
-
   constructor(
     public router: Router,
     public fb: FormBuilder,
@@ -38,7 +30,6 @@ export class CalendarsItemCreateComponent implements OnInit {
     public route: ActivatedRoute,
     public store: Store<IHeader>,
     public service: CalendarsService,
-    public utils: CalendarsItemsService,
     public cpTracking: CPTrackingService
   ) {
     this.calendarId = this.route.snapshot.params['calendarId'];
@@ -65,21 +56,16 @@ export class CalendarsItemCreateComponent implements OnInit {
       .append('school_id', this.session.g.get('school').id)
       .append('academic_calendar_id', this.calendarId.toString());
 
-    this.service.createItem(newItem, search).subscribe((res) => {
+    this.service.createItem(newItem, search).subscribe((res: IItem) => {
       this.trackEvent(res);
       this.router.navigate(['/manage/calendars/' + this.calendarId]);
     });
   }
 
-  trackEvent(data) {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.utils.setEventProperties(data)
-    };
-
+  trackEvent(item: IItem) {
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_CREATED_CALENDAR_EVENT,
-      this.eventProperties
+      CalendarAmplitudeService.getCalendarEventItemProperties(item)
     );
   }
 

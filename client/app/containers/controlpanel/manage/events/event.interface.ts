@@ -70,4 +70,8 @@ export default interface IEvent {
   attendance_manager_email?: string;
 
   qr_img_url?: string;
+
+  is_external?: boolean;
+
+  integration_feed_id?: number;
 };
