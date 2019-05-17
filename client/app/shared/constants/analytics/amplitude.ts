@@ -13,6 +13,8 @@ export const amplitudeEvents = {
 
   WALL: 'Wall',
 
+  ICAL: 'iCAL',
+
   POST: 'Post',
 
   CLUB: 'Club',
@@ -89,6 +91,8 @@ export const amplitudeEvents = {
 
   DISABLED: 'Disabled',
 
+  CALENDAR: 'Calendar',
+
   MENU_MANAGE: 'Manage',
 
   MENU_ASSESS: 'Assess',
@@ -140,6 +144,8 @@ export const amplitudeEvents = {
   FULL_ACCESS: 'Full Access',
 
   VIEWED_ITEM: 'Viewed Item',
+
+  INSTITUTION: 'Institution',
 
   LAST_30_DAYS: 'Last 30 Days',
 
