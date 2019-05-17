@@ -39,7 +39,7 @@ describe('Announcements Integrations Reducer', () => {
   describe('DELETE_INTEGRATION', () => {
     it('should set loading flag to true', () => {
       const payload = {
-        integrationId: mockIntegration.id
+        integration: mockIntegration
       };
 
       const action = new fromActions.DeleteIntegrations(payload);

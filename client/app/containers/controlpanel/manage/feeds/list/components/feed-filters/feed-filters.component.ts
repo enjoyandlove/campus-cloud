@@ -5,9 +5,11 @@ import { get as _get, sortBy } from 'lodash';
 import { Observable } from 'rxjs';
 
 import { CPSession } from '@app/session';
+import { CP_TRACK_TO } from '@shared/directives';
+import { CPI18nService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants';
 import { FeedsService } from '../../../feeds.service';
 import { GroupType } from '../../../feeds.utils.service';
-import { CPI18nService } from '@shared/services/i18n.service';
 
 const campusWall = {
   label: 'Campus Wall',
@@ -60,6 +62,7 @@ export class FeedFiltersComponent implements OnInit {
   posts;
   channels;
   channels$;
+  eventData;
   state: IState;
   campusWallView;
   socialGroups = [];
@@ -205,6 +208,12 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.eventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.MANAGE_VIEWED_FEED_INTEGRATION,
+      eventProperties: { sub_menu_name: amplitudeEvents.WALL }
+    };
+
     this.posts = [
       {
         label: this.cpI18n.translate('feeds_all_posts'),

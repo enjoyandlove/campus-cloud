@@ -8,6 +8,7 @@ import * as fromStore from '../store';
 import { IItem } from '@shared/components';
 import { CPSession } from '@client/app/session';
 import { ISocialPostCategory } from '../../model';
+import { amplitudeEvents } from '@shared/constants';
 import { WallsIntegrationModel } from '@libs/integrations/walls/model';
 import { WallsIntegrationsService } from './../walls-integrations.service';
 import { SocialPostCategoryModel } from './../../model/social-post-category.model';
@@ -26,6 +27,8 @@ export class WallsIntegrationsCreateComponent implements OnInit {
   form: FormGroup;
   typesDropdown: IItem[];
   channels$: Observable<IItem[]>;
+  channelType = amplitudeEvents.EXISTING;
+
   constructor(
     private session: CPSession,
     private service: WallsIntegrationsService,
@@ -56,6 +59,7 @@ export class WallsIntegrationsCreateComponent implements OnInit {
       WallsIntegrationFormComponent.shouldCreateSocialPostCategory;
 
     if (shouldCreateSocialPost) {
+      this.channelType = amplitudeEvents.NEW;
       let newSocialPostCategory: ISocialPostCategory;
       const channelName = this.form.get('channel_name').value;
       const socialPostCategoryForm = SocialPostCategoryModel.form();
@@ -83,7 +87,8 @@ export class WallsIntegrationsCreateComponent implements OnInit {
 
     const payload = {
       body,
-      params
+      params,
+      channelType: this.channelType
     };
 
     this.store.dispatch(new fromStore.PostIntegration(payload));

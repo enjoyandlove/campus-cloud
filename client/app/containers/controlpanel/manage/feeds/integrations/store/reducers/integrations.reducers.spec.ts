@@ -21,6 +21,7 @@ function addIntegrationToState(
   };
 }
 
+const channelType = 'New';
 const httpErrorResponse = new HttpErrorResponse({ error: 'Mock Error' });
 
 const params = new HttpParams().set('school_id', mockSchool.id.toString());
@@ -72,7 +73,7 @@ describe('Walls Integrations Reducer', () => {
       const { initialState } = fromReducer;
       const payload = {
         params,
-        integrationId: mockIntegration.id
+        integration: mockIntegration
       };
 
       const action = new fromActions.DeleteIntegration(payload);
@@ -119,7 +120,8 @@ describe('Walls Integrations Reducer', () => {
       const body = mockIntegration;
       const payload = {
         body,
-        params
+        params,
+        channelType
       };
 
       const action = new fromActions.PostIntegration(payload);

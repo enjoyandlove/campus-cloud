@@ -123,7 +123,7 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
 
     const payload = {
       params,
-      integrationId: integration.id
+      integration
     };
 
     this.store.dispatch(new fromStore.DeleteIntegration(payload));

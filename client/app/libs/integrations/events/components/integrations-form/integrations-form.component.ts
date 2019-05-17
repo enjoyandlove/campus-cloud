@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
@@ -18,10 +18,13 @@ export class EventIntegrationFormComponent implements OnInit {
   @Input() typesDropdown: Array<IItem>;
   @Input() stores$: Observable<Array<{ label: string; value: number }>>;
 
+  @Output() hostSelected: EventEmitter<string> = new EventEmitter();
+
   constructor() {}
 
-  onHostSelected({ value }) {
-    this.form.get('feed_obj_id').setValue(value);
+  onHostSelected(store) {
+    this.hostSelected.emit(store.hostType);
+    this.form.get('feed_obj_id').setValue(store.value);
   }
 
   onTypeSelected({ action }) {

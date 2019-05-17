@@ -7,10 +7,11 @@ import { of, Observable } from 'rxjs';
 import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
 import { CPDate } from '@shared/utils/date';
-import { StoreService, CPI18nService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants';
 import { IntegrationsService } from './../../integrations.service';
 import { IEventIntegration } from '@libs/integrations/events/model';
 import { EventIntegration } from '@client/app/libs/integrations/events/model';
+import { StoreService, CPI18nService, CPTrackingService } from '@shared/services';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 
 @Injectable()
@@ -55,17 +56,24 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.POST_INTEGRATION),
     map((action: fromActions.PostIntegration) => action.payload),
-    mergeMap(({ body, params }) => {
-      return this.service
-        .createIntegration(body, params)
-        .pipe(
-          map(
-            (integration: IEventIntegration) => new fromActions.PostIntegrationSuccess(integration)
-          ),
-          catchError(({ error }: HttpErrorResponse) =>
-            of(new fromActions.PostIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
-          )
-        );
+    mergeMap(({ body, params, hostType }) => {
+      return this.service.createIntegration(body, params).pipe(
+        map((integration: IEventIntegration) => {
+          const eventProperties = {
+            host_type: hostType,
+            ...this.getEventProperties(integration)
+          };
+
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_ADDED_FEED_INTEGRATION,
+            eventProperties
+          );
+          return new fromActions.PostIntegrationSuccess(integration);
+        }),
+        catchError(({ error }: HttpErrorResponse) =>
+          of(new fromActions.PostIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
+        )
+      );
     })
   );
 
@@ -111,6 +119,11 @@ export class IntegrationsEffects {
 
       return this.service.syncNow(integration.id, search).pipe(
         map(() => {
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_SYNCED_FEED_INTEGRATION,
+            this.getEventProperties(integration)
+          );
+
           const editedIntegration = {
             ...integration,
             sync_status: EventIntegration.status.successful,
@@ -161,13 +174,18 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.DELETE_INTEGRATION),
     mergeMap((action: fromActions.DeleteIntegration) => {
-      const { integrationId, params } = action.payload;
-      return this.service
-        .deleteIntegration(integrationId, params)
-        .pipe(
-          map(() => new fromActions.DeleteIntegrationSuccess({ deletedId: integrationId })),
-          catchError(() => of(new fromActions.DeleteIntegrationFail(this.somethingWentWrong)))
-        );
+      const { integration, params } = action.payload;
+      return this.service.deleteIntegration(integration.id, params).pipe(
+        map(() => {
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_DELETED_FEED_INTEGRATION,
+            this.getEventProperties(integration)
+          );
+
+          return new fromActions.DeleteIntegrationSuccess({ deletedId: integration.id });
+        }),
+        catchError(() => of(new fromActions.DeleteIntegrationFail(this.somethingWentWrong)))
+      );
     })
   );
 
@@ -189,12 +207,21 @@ export class IntegrationsEffects {
     })
   );
 
+  private getEventProperties(integration) {
+    return {
+      feed_id: integration.id,
+      sub_menu_name: amplitudeEvents.EVENT,
+      feed_type: CommonIntegrationUtilsService.getSelectedType(integration.feed_type).label
+    };
+  }
+
   constructor(
     private actions$: Actions,
     private session: CPSession,
     private cpI18n: CPI18nService,
     private storeService: StoreService,
     private service: IntegrationsService,
+    private cpTracking: CPTrackingService,
     private commonUtils: CommonIntegrationUtilsService
   ) {}
 }
