@@ -26,6 +26,7 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
   types;
   eventData;
   canCompose;
+  viewedFeedEventData;
   state: IState = state;
   constructor(
     private session: CPSession,
@@ -48,6 +49,12 @@ export class AnnouncementsListActionBoxComponent implements OnInit {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
       eventProperties: this.cpTracking.getEventProperties()
+    };
+
+    this.viewedFeedEventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.MANAGE_VIEWED_FEED_INTEGRATION,
+      eventProperties: { sub_menu_name: amplitudeEvents.ANNOUNCEMENT }
     };
 
     const schoolPrivilege = this.session.g.get('user').school_level_privileges[

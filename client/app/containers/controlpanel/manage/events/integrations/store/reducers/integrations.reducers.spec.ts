@@ -10,6 +10,7 @@ const pagination = {
   endRange: 2
 };
 
+const hostType = 'Service';
 const httpErrorResponse = new HttpErrorResponse({ error: 'Mock Error' });
 
 const params = new HttpParams().set('school_id', mockSchool.id.toString());
@@ -69,7 +70,8 @@ describe('Event Integrations Reducer', () => {
       const body = mockIntegration;
       const payload = {
         body,
-        params
+        params,
+        hostType
       };
 
       const action = new fromActions.PostIntegration(payload);
@@ -108,7 +110,7 @@ describe('Event Integrations Reducer', () => {
       const { initialState } = fromReducer;
       const payload = {
         params,
-        integrationId: mockIntegration.id
+        integration: mockIntegration
       };
 
       const action = new fromActions.DeleteIntegration(payload);

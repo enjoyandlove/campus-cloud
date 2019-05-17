@@ -62,7 +62,7 @@ export class GetIntegrationsFail implements Action {
 export class DeleteIntegration implements Action {
   readonly type = IntegrationActions.DELETE_INTEGRATION;
 
-  constructor(public payload: { integrationId: number; params: HttpParams }) {}
+  constructor(public payload: { integration: IWallsIntegration; params: HttpParams }) {}
 }
 
 export class DeleteIntegrationSuccess implements Action {
@@ -80,7 +80,9 @@ export class DeleteIntegrationFail implements Action {
 export class PostIntegration implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION;
 
-  constructor(public payload: { body: IWallsIntegration; params: HttpParams }) {}
+  constructor(
+    public payload: { body: IWallsIntegration; params: HttpParams; channelType: string }
+  ) {}
 }
 
 export class PostIntegrationSuccess implements Action {
@@ -189,7 +191,9 @@ export class SyncNowFail implements Action {
 export class CreateAndSync implements Action {
   readonly type = IntegrationActions.CREATE_AND_SYNC;
 
-  constructor(public payload: { body: IWallsIntegration; params: HttpParams }) {}
+  constructor(
+    public payload: { body: IWallsIntegration; params: HttpParams; channelType: string }
+  ) {}
 }
 
 export class Destroy implements Action {

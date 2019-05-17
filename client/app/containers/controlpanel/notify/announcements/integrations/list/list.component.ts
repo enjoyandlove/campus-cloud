@@ -90,8 +90,8 @@ export class AnnouncementsIntegrationListComponent extends BaseComponent impleme
     );
   }
 
-  onDelete(integrationId: number) {
-    this.store.dispatch(new fromStore.DeleteIntegrations({ integrationId }));
+  onDelete(integration: IAnnouncementsIntegration) {
+    this.store.dispatch(new fromStore.DeleteIntegrations({ integration }));
   }
 
   fetch() {

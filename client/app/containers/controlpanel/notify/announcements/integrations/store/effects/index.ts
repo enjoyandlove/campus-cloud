@@ -1,3 +1,3 @@
-import { AnnoucementIntegrationsEffects } from './integration.effects';
+import { AnnouncementIntegrationsEffects } from './integration.effects';
 
-export const effects = [AnnoucementIntegrationsEffects];
+export const effects = [AnnouncementIntegrationsEffects];

@@ -60,7 +60,9 @@
     <div class="col-3 text-right float-right" *ngIf="canCreateEvent">
       <ng-container *ngIf="showIntegration">
         <a
+          cpTracker
           routerLink="integrations"
+          [eventData]="viewedIntegrationEventData"
           class="cpbtn cpbtn--cancel integrations">
           <i class="material-icons">link</i>
         </a>
