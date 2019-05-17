@@ -9,6 +9,8 @@ export const amplitudeEvents = {
 
   CSV: 'CSV',
 
+  RSS: 'RSS',
+
   WALL: 'Wall',
 
   POST: 'Post',
@@ -395,11 +397,19 @@ export const amplitudeEvents = {
 
   MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
 
+  MANAGE_ADDED_FEED_INTEGRATION: 'Manage - Added Feed Integration',
+
   MANAGE_DELETED_CALENDAR_EVENT: 'Manage - Deleted Calendar Event',
 
   MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
 
   MANAGE_IMPORTED_CALENDAR_EVENT: 'Manage - Imported Calendar Event',
+
+  MANAGE_SYNCED_FEED_INTEGRATION: 'Manage - Synced Feed Integration',
+
+  MANAGE_VIEWED_FEED_INTEGRATION: ' Manage - Viewed Feed Integration',
+
+  MANAGE_DELETED_FEED_INTEGRATION: 'Manage - Deleted Feed Integration',
 
   MANAGE_CREATED_SERVICE_PROVIDER: 'Manage - Created Service Provider',
 

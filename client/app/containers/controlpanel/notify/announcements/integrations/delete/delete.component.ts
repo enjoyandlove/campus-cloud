@@ -16,7 +16,7 @@ export class AnnouncementsIntegrationDeleteComponent {
   }
 
   onDeleteClick() {
-    this.modal.onAction(this.integration.id);
+    this.modal.onAction(this.integration);
     this.modal.onClose();
   }
 

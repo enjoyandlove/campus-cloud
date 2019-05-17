@@ -32,6 +32,10 @@ export class CommonIntegrationUtilsService {
     return [RSS_ITEM, ATOM_ITEM, ICAL_ITEM];
   }
 
+  static getSelectedType(typeAction: number) {
+    return this.typesDropdown().find((d) => d.action === typeAction);
+  }
+
   handleCreateUpdateError(error: any): { error: string } {
     const errorMessage = parseErrorResponse(error);
     const defaultError = this.cpI18n.translate('something_went_wrong');

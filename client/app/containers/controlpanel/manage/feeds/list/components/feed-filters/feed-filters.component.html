@@ -34,6 +34,8 @@
           <div class="row no-gutters text-center">
             <div class="col-6" *ngIf="!hideIntegrations">
               <a
+                cpTracker
+                [eventData]="eventData"
                 routerLink="integrations"
                 class="cpbtn cpbtn--cancel">
                 <i class="material-icons">link</i>
