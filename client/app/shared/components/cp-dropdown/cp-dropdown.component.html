@@ -36,6 +36,7 @@
       <li
         (click)="onClick(item)"
         class="cp-dropdown__list__item"
+        [class.no-hover]="item.heading"
         *ngFor="let item of items | cpFilterPipe: { query: query, filterBy: 'label' }">
         <span [class.isLabel]="item.heading">{{ item.label }}</span>
       </li>

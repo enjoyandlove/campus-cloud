@@ -6,6 +6,7 @@ import { HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import IEvent from '../event.interface';
 import { FORMAT } from '@shared/pipes/date';
 import { CPDate, CPMap } from '@shared/utils';
 import { CheckInMethod } from '../event.status';
@@ -88,6 +89,7 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
     feedback: null,
     host_type: null,
     qr_code_status: null,
+    creation_source: null,
     assessment_status: null,
     updated_description: null,
     updated_image: amplitudeEvents.NO,
@@ -180,7 +182,7 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
     }
 
     this.service.updateEvent(data, this.eventId, search).subscribe(
-      (_) => {
+      (event: IEvent) => {
         this.trackQrCode(data);
 
         const description = this.form.get('description');
@@ -189,6 +191,7 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
           ...this.eventProperties,
           ...EventsAmplitudeService.getEventProperties(this.form.value, true),
           event_id: this.eventId,
+          creation_source: EventsAmplitudeService.getEventType(event.is_external),
           updated_description: EventsAmplitudeService.getEventDescriptionStatus(description)
         };
 
@@ -578,6 +581,11 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
 
       this.form.controls['room_data'].setValue('');
       CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
+
+      this.eventProperties = {
+        ...this.eventProperties,
+        updated_location: amplitudeEvents.REMOVED_LOCATION
+      };
     }
   }
 

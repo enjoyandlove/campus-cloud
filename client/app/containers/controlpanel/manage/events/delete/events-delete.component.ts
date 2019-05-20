@@ -52,6 +52,7 @@ export class EventsDeleteComponent implements OnInit {
   trackDeletedEvent() {
     const eventProperties = {
       event_id: this.modal.data.event.id,
+      creation_source: EventsAmplitudeService.getEventType(this.modal.data.event.is_external),
       ...EventsAmplitudeService.getEventProperties(this.modal.data.event)
     };
 

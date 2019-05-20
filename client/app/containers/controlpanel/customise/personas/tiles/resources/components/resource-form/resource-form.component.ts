@@ -1,12 +1,12 @@
-import { CampusLink } from './../../../../../../manage/links/tile';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormControl } from '@angular/forms';
 
+import { CPI18nService } from '@shared/services';
 import { ITile } from './../../../tile.interface';
 import { IPersona } from './../../../../persona.interface';
-import { ILink } from '../../../../../../manage/links/link.interface';
+import { CampusLink } from '@controlpanel/manage/links/tile';
+import { ILink } from '@controlpanel/manage/links/link.interface';
 import { ResourcesUtilsService } from './../../resources.utils.service';
-import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-personas-resource-form',
@@ -37,8 +37,16 @@ export class PersonasResourceFormComponent implements OnInit {
   constructor(public cpI18n: CPI18nService, public utils: ResourcesUtilsService) {}
 
   updateFormMetaValues(data) {
+    if ('link_type' in data) {
+      this.form.addControl('link_type', new FormControl(data['link_type']));
+    } else {
+      this.form.removeControl('link_type');
+    }
+
     for (const key in data.meta) {
-      this.form.controls[key].setValue(data.meta[key]);
+      if (key in data.meta) {
+        this.form.controls[key].setValue(data.meta[key]);
+      }
     }
   }
 
@@ -70,6 +78,7 @@ export class PersonasResourceFormComponent implements OnInit {
   requiresLinkParams(linkUrl) {
     const requiresLinkParams = [
       CampusLink.store,
+      CampusLink.appOpen,
       CampusLink.storeList,
       CampusLink.campusService,
       CampusLink.subscribableCalendar,

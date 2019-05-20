@@ -62,4 +62,6 @@ export class CampusLink {
   public static readonly serviceByCategoryId = `${prefix}service_by_category_id`;
 
   public static readonly dining = `${prefix}campus_poi_list/dining`;
+
+  public static readonly appOpen = `open_external_app`;
 }

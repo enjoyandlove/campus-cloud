@@ -1,20 +1,16 @@
 <div class="cp-card feed">
-  <div class="row">
-    <div class="col-12">
-      <div class="feed__header">
-        <cp-feed-header
-          [feed]="feed"
-          (filterByCategory)="filterByCategory.emit($event)">
-        </cp-feed-header>
-        <div class="feed__more float-right">
-          <cp-feed-dropdown
-            *ngIf="!isRemovedPosts"
-            (selected)="onSelected($event)"
-            [isCampusWallView]="isCampusWallView"
-            [requiresApproval]="requiresApproval$">
-          </cp-feed-dropdown>
-        </div>
-      </div>
+  <div class="feed__header">
+    <cp-feed-header
+      [feed]="feed"
+      (filterByCategory)="filterByCategory.emit($event)">
+    </cp-feed-header>
+    <div class="feed__more">
+      <cp-feed-dropdown
+        *ngIf="!isRemovedPosts"
+        (selected)="onSelected($event)"
+        [isCampusWallView]="isCampusWallView"
+        [requiresApproval]="requiresApproval$">
+      </cp-feed-dropdown>
     </div>
   </div>
 

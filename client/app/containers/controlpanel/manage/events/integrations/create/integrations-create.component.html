@@ -23,7 +23,8 @@
       [stores$]="stores$"
       [selectedType]="selectedType"
       [typesDropdown]="typesDropdown"
-      [pkdbUrl]="eventIntegrationPkdbUrl">
+      [pkdbUrl]="eventIntegrationPkdbUrl"
+      (hostSelected)="onHostSelected($event)">
     </cp-events-integrations-form>
   </div>
 

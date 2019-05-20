@@ -16,6 +16,10 @@ export class EventsAmplitudeService {
     return data['has_checkout'] ? amplitudeEvents.ENABLED : amplitudeEvents.DISABLED;
   }
 
+  static getEventType(value) {
+    return value ? amplitudeEvents.FEED_INTEGRATION : amplitudeEvents.MANUAL;
+  }
+
   static getEventDescriptionStatus(control: AbstractControl) {
     return !control.value
       ? amplitudeEvents.NO_DESCRIPTION

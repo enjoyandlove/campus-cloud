@@ -11,6 +11,7 @@ import {
   PersonasResourceListOfListComponent,
   PersonasResourceStoresListComponent,
   PersonasResourceTypeSearchComponent,
+  PersonasResourceExternalAppOpenComponent,
   PersonasResourceServiceByCategoryComponent
 } from './components';
 
@@ -32,6 +33,7 @@ import { PersonaResourceCreateComponent } from './create/create.component';
     PersonasResourceStoresListComponent,
     PersonasResourceTypeSearchComponent,
     PersonasResourceListOfListComponent,
+    PersonasResourceExternalAppOpenComponent,
     PersonasResourceServiceByCategoryComponent
   ],
   imports: [CommonModule, SharedModule, ReactiveFormsModule, SortablejsModule],
@@ -46,6 +48,7 @@ import { PersonaResourceCreateComponent } from './create/create.component';
     PersonasResourceStoresListComponent,
     PersonasResourceTypeSearchComponent,
     PersonasResourceListOfListComponent,
+    PersonasResourceExternalAppOpenComponent,
     PersonasResourceServiceByCategoryComponent
   ]
 })

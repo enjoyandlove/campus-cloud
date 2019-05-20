@@ -2969,6 +2969,9 @@
   "t_personas_tile_create_resource_type_event_list": {
     "message": "Events"
   },
+  "t_personas_tile_create_resource_type_external_app_open": {
+    "message": "3rd Party App"
+  },
   "t_personas_tile_create_resource_type_job_list": {
     "message": "Jobs"
   },
@@ -3433,6 +3436,18 @@
   },
   "t_studio_branding_upload_logo": {
     "message": "Upload Logo"
+  },
+  "t_studio_resource_external_app_open_label_android_fallback": {
+    "message": "Android Fallback URL"
+  },
+  "t_studio_resource_external_app_open_label_android_package_name": {
+    "message": "Android Package Name"
+  },
+  "t_studio_resource_external_app_open_label_ios_fallback": {
+    "message": "iOS Fallback URL"
+  },
+  "t_studio_resource_external_app_open_label_ios_universal": {
+    "message": "iOS Universal URL"
   },
   "t_studio_section_delete_no_name": {
     "message": "Untitled"

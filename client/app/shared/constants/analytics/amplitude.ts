@@ -1,9 +1,3 @@
-const amplitudeEventTypes = {
-  PAGE_VIEW: 'page_view',
-
-  BUTTON_CLICK: 'button_click'
-};
-
 export const amplitudeEvents = {
   NO: 'No',
 
@@ -15,7 +9,11 @@ export const amplitudeEvents = {
 
   CSV: 'CSV',
 
+  RSS: 'RSS',
+
   WALL: 'Wall',
+
+  ICAL: 'iCAL',
 
   POST: 'Post',
 
@@ -93,6 +91,8 @@ export const amplitudeEvents = {
 
   DISABLED: 'Disabled',
 
+  CALENDAR: 'Calendar',
+
   MENU_MANAGE: 'Manage',
 
   MENU_ASSESS: 'Assess',
@@ -144,6 +144,8 @@ export const amplitudeEvents = {
   FULL_ACCESS: 'Full Access',
 
   VIEWED_ITEM: 'Viewed Item',
+
+  INSTITUTION: 'Institution',
 
   LAST_30_DAYS: 'Last 30 Days',
 
@@ -220,6 +222,8 @@ export const amplitudeEvents = {
   CHANGE_PASSWORD: 'Changed Password',
 
   WALL_MOVED_POST: 'Wall - Moved Post',
+
+  FEED_INTEGRATION: 'Feed Integration',
 
   EXISTING_SECTION: 'Existing Section',
 
@@ -307,7 +311,13 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_DINING: 'Manage - Updated Dining',
 
+  MANAGE_IMPORTED_EVENT: 'Manage - Imported Event',
+
   MANAGE_DELETED_DINING: 'Manage - Deleted Dining',
+
+  MANAGE_DELETED_CALENDAR: 'Manage Deleted Calendar',
+
+  MANAGE_UPDATED_CALENDAR: 'Manage Updated Calendar',
 
   MANAGE_CREATED_CATEGORY: 'Manage Created Category',
 
@@ -393,7 +403,19 @@ export const amplitudeEvents = {
 
   MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
 
+  MANAGE_ADDED_FEED_INTEGRATION: 'Manage - Added Feed Integration',
+
+  MANAGE_DELETED_CALENDAR_EVENT: 'Manage - Deleted Calendar Event',
+
   MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
+
+  MANAGE_IMPORTED_CALENDAR_EVENT: 'Manage - Imported Calendar Event',
+
+  MANAGE_SYNCED_FEED_INTEGRATION: 'Manage - Synced Feed Integration',
+
+  MANAGE_VIEWED_FEED_INTEGRATION: ' Manage - Viewed Feed Integration',
+
+  MANAGE_DELETED_FEED_INTEGRATION: 'Manage - Deleted Feed Integration',
 
   MANAGE_CREATED_SERVICE_PROVIDER: 'Manage - Created Service Provider',
 
@@ -402,8 +424,4 @@ export const amplitudeEvents = {
   MANAGE_DOWNLOAD_EVENT_ASSESS_DATA: 'Manage - Downloaded Event Assessment Data',
 
   MANAGE_DOWNLOAD_SERVICE_ASSESS_DATA: 'Manage - Downloaded Service Assessment Data'
-};
-
-export const cpTrackAmplitude = {
-  type: { ...amplitudeEventTypes }
 };

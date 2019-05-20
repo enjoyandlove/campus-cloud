@@ -7,13 +7,13 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { CPDate } from '@shared/utils';
-import { STATUS } from '@shared/constants';
+import { CPI18nPipe } from '@shared/pipes';
 import { baseActions } from '@app/store/base';
 import { getEventsModalState } from '@app/store';
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '@app/session';
-import { CPI18nPipe } from '@shared/pipes/i18n/i18n.pipe';
 import { EventUtilService } from '../events.utils.service';
+import { amplitudeEvents, STATUS } from '@shared/constants';
 import { CPImageUploadComponent } from '@shared/components';
 import { EventsComponent } from '../list/base/events.component';
 import { SnackbarError } from '@app/store/base/reducers/snackbar.reducer';
@@ -22,7 +22,8 @@ import {
   StoreService,
   ModalService,
   CPI18nService,
-  FileUploadService
+  FileUploadService,
+  CPTrackingService
 } from '@shared/services';
 
 import {
@@ -83,6 +84,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     public modalService: ModalService,
     private adminService: AdminService,
     private storeService: StoreService,
+    private cpTracking: CPTrackingService,
     private fileUploadService: FileUploadService
   ) {
     super(session, cpI18n, service, modalService);
@@ -440,7 +442,8 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     }
 
     this.service.createEvent(_events, search).subscribe(
-      (_) => {
+      () => {
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_IMPORTED_EVENT);
         this.router.navigate([this.urlPrefix]);
 
         return;

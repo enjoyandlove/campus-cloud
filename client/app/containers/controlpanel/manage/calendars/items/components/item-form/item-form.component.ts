@@ -2,10 +2,11 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
-import { CPSession } from './../../../../../../../session';
+import { CPSession } from '@app/session';
+import { CPDate, CPMap } from '@shared/utils';
+import { CPI18nService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants';
 import { CalendarsItemsService } from '../../item.utils.service';
-import { CPDate, CPMap } from '../../../../../../../shared/utils';
-import { CPI18nService } from '../../../../../../../shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -24,6 +25,7 @@ export class CalendarsItemFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() calendarId: number;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
+  @Output() amplitudeLocationStatus: EventEmitter<string> = new EventEmitter();
 
   formError;
   mapCenter;
@@ -81,6 +83,8 @@ export class CalendarsItemFormComponent implements OnInit {
 
     const school = this.session.g.get('school');
 
+    this.amplitudeLocationStatus.emit(amplitudeEvents.REMOVED_LOCATION);
+
     CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(school.latitude, school.longitude);
   }
@@ -109,6 +113,8 @@ export class CalendarsItemFormComponent implements OnInit {
     }
 
     this.drawMarker.next(true);
+
+    this.amplitudeLocationStatus.emit(amplitudeEvents.ADDED_LOCATION);
 
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
@@ -151,6 +157,7 @@ export class CalendarsItemFormComponent implements OnInit {
         lng: this.session.g.get('school').longitude
       });
 
+      this.amplitudeLocationStatus.emit(amplitudeEvents.REMOVED_LOCATION);
       CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     }
   }
