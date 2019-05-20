@@ -6,6 +6,7 @@ import { EventsService } from '../events.service';
 import { amplitudeEvents } from '@shared/constants';
 import { EventsAmplitudeService } from '../events.amplitude.service';
 import { CPI18nService, CPTrackingService, IModal, MODAL_DATA } from '@shared/services';
+import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
 @Component({
   selector: 'cp-events-delete',
@@ -13,14 +14,16 @@ import { CPI18nService, CPTrackingService, IModal, MODAL_DATA } from '@shared/se
   styleUrls: ['./events-delete.component.scss']
 })
 export class EventsDeleteComponent implements OnInit {
+  service: EventsService | OrientationEventsService;
   deleteWarnings = [this.cpI18n.translate('t_shared_delete_resource_warning_assessment_data')];
 
   constructor(
     @Inject(MODAL_DATA) public modal: IModal,
     public session: CPSession,
     private cpI18n: CPI18nService,
-    public service: EventsService,
-    public cpTrackingService: CPTrackingService
+    public eventService: EventsService,
+    public cpTrackingService: CPTrackingService,
+    public orientationService: OrientationEventsService
   ) {}
 
   onClose() {
@@ -28,12 +31,15 @@ export class EventsDeleteComponent implements OnInit {
   }
 
   onDelete() {
-    const eventId = this.modal.data.event.id;
     let search = new HttpParams();
-    if (this.modal.data.orientation_id) {
+    const orientationId = this.modal.data.orientation_id;
+    const eventId = this.modal.data.event.id;
+    this.service = orientationId ? this.orientationService : this.eventService;
+
+    if (orientationId) {
       search = search
-        .append('school_id', this.session.g.get('school').id)
-        .append('calendar_id', this.modal.data.orientation_id.toString());
+        .append('calendar_id', orientationId.toString())
+        .append('school_id', this.session.g.get('school').id);
     }
 
     this.service.deleteEventById(eventId, search).subscribe(() => {
