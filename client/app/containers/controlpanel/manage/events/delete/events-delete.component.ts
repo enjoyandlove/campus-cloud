@@ -14,7 +14,7 @@ import { OrientationEventsService } from '../../orientation/events/orientation.e
   styleUrls: ['./events-delete.component.scss']
 })
 export class EventsDeleteComponent implements OnInit {
-  service: EventsService | OrientationEventsService;
+  service;
   deleteWarnings = [this.cpI18n.translate('t_shared_delete_resource_warning_assessment_data')];
 
   constructor(
@@ -24,7 +24,9 @@ export class EventsDeleteComponent implements OnInit {
     public eventService: EventsService,
     public cpTrackingService: CPTrackingService,
     public orientationService: OrientationEventsService
-  ) {}
+  ) {
+    this.service = this.modal.data.orientation_id ? this.orientationService : this.eventService;
+  }
 
   onClose() {
     this.modal.onClose();
@@ -32,14 +34,12 @@ export class EventsDeleteComponent implements OnInit {
 
   onDelete() {
     let search = new HttpParams();
-    const orientationId = this.modal.data.orientation_id;
     const eventId = this.modal.data.event.id;
-    this.service = orientationId ? this.orientationService : this.eventService;
 
-    if (orientationId) {
+    if (this.modal.data.orientation_id) {
       search = search
-        .append('calendar_id', orientationId.toString())
-        .append('school_id', this.session.g.get('school').id);
+        .append('school_id', this.session.g.get('school').id)
+        .append('calendar_id', this.modal.data.orientation_id.toString());
     }
 
     this.service.deleteEventById(eventId, search).subscribe(() => {

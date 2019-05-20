@@ -14,6 +14,7 @@ import { CPDeleteModalComponent } from '@shared/components';
 import { CPI18nService, MODAL_DATA } from '@shared/services';
 import { configureTestSuite } from '@client/app/shared/tests';
 import { EventsDeleteComponent } from './events-delete.component';
+import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
 describe('EventDeleteComponent', () => {
   configureTestSuite();
@@ -26,10 +27,12 @@ describe('EventDeleteComponent', () => {
           CPSession,
           CPI18nService,
           { provide: EventsService, useClass: MockEventService },
+          { provide: OrientationEventsService, useClass: MockEventService },
           {
             provide: MODAL_DATA,
             useValue: {
               onClose: () => {},
+              onAction: () => {},
               data: mockEvent,
               orientation_id: 123
             }
