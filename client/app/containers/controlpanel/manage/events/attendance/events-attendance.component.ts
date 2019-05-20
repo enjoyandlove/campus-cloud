@@ -19,8 +19,8 @@ import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP, SortDirection } from '@shared/constants';
 import { EventsAmplitudeService } from '../events.amplitude.service';
 import { CheckInMethod, CheckInOutTime, CheckInOut } from '../event.status';
-import { CPI18nService, CPTrackingService, RouteLevel } from '@shared/services';
 import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
+import { CPI18nService, CPTrackingService, ModalService, RouteLevel } from '@shared/services';
 import { canSchoolReadResource, canSchoolWriteResource } from '@shared/utils/privileges/privileges';
 
 interface IState {
@@ -95,9 +95,10 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     private route: ActivatedRoute,
     public service: EventsService,
     public utils: EventUtilService,
+    public modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
-    super(session, cpI18n, service);
+    super(session, cpI18n, service, modalService);
     this.eventId = this.route.snapshot.params['eventId'];
     super.isLoading().subscribe((res) => (this.attendeesLoading = res));
   }

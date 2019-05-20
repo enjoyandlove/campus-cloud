@@ -1,11 +1,11 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@app/session';
 import { ServicesService } from '../services.service';
 import { EventsService } from '../../events/events.service';
+import { CPI18nService, ModalService } from '@shared/services';
 import { ServicesUtilsService } from '../services.utils.service';
-import { CPI18nService } from '../../../../../shared/services/index';
 import { EventsComponent } from '../../events/list/base/events.component';
 import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
@@ -25,12 +25,13 @@ export class ServicesEventsComponent extends EventsComponent {
     public session: CPSession,
     public cpI18n: CPI18nService,
     private route: ActivatedRoute,
+    public modalService: ModalService,
     public eventsService: EventsService,
     private utils: ServicesUtilsService,
     private serviceService: ServicesService,
     public orientationEventService: OrientationEventsService
   ) {
-    super(session, cpI18n, eventsService);
+    super(session, cpI18n, eventsService, modalService);
     this.serviceId = this.route.snapshot.params['serviceId'];
 
     this.fetchServiceData();

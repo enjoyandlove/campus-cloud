@@ -7,13 +7,14 @@ import { of } from 'rxjs';
 
 import { CPSession } from '@app/session';
 import { EventsModule } from '../events.module';
-import { CPI18nService } from '@shared/services';
 import { EventsService } from '../events.service';
 import { mockSchool } from '@app/session/mock/school';
 import { mockEvent, MockEventService } from './../tests';
 import { CPDeleteModalComponent } from '@shared/components';
+import { CPI18nService, MODAL_DATA } from '@shared/services';
 import { configureTestSuite } from '@client/app/shared/tests';
 import { EventsDeleteComponent } from './events-delete.component';
+import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
 describe('EventDeleteComponent', () => {
   configureTestSuite();
@@ -25,7 +26,17 @@ describe('EventDeleteComponent', () => {
         providers: [
           CPSession,
           CPI18nService,
-          { provide: EventsService, useClass: MockEventService }
+          { provide: EventsService, useClass: MockEventService },
+          { provide: OrientationEventsService, useClass: MockEventService },
+          {
+            provide: MODAL_DATA,
+            useValue: {
+              onClose: () => {},
+              onAction: () => {},
+              data: mockEvent,
+              orientation_id: 123
+            }
+          }
         ]
       });
       await TestBed.compileComponents();
@@ -49,9 +60,9 @@ describe('EventDeleteComponent', () => {
       de = fixture.debugElement;
       deleteModal = de.query(By.directive(CPDeleteModalComponent)).componentInstance;
 
-      component.event = mockEvent;
+      component.modal.data.event = mockEvent;
 
-      eventId = component.event.id;
+      eventId = component.modal.data.event.id;
       component.session.g.set('school', mockSchool);
     })
   );
@@ -71,11 +82,11 @@ describe('EventDeleteComponent', () => {
   });
 
   it('should delete orientation event', () => {
-    component.orientationId = 10045;
+    component.modal.data.orientation_id = 10045;
     spy = spyOn(component.service, 'deleteEventById').and.returnValue(of({}));
     search = new HttpParams()
       .append('school_id', component.session.g.get('school').id)
-      .append('calendar_id', component.orientationId.toString());
+      .append('calendar_id', component.modal.data.orientation_id.toString());
 
     component.onDelete();
     expect(spy).toHaveBeenCalledWith(eventId, search);

@@ -59,7 +59,6 @@ export class ListUpcomingComponent implements OnInit {
 
   onDelete(event) {
     this.deleteEvent.emit(event);
-    $('#deleteEventsModal').modal();
     this.trackDeleteEvent();
   }
 

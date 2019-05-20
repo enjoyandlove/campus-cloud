@@ -16,7 +16,7 @@ import { EventUtilService } from './../events.utils.service';
 import { environment } from '@client/environments/environment';
 import { EventsComponent } from '../list/base/events.component';
 import { EventsAmplitudeService } from '../events.amplitude.service';
-import { CPI18nService, CPTrackingService, RouteLevel } from '@shared/services';
+import { CPI18nService, CPTrackingService, RouteLevel, ModalService } from '@shared/services';
 
 @Component({
   selector: 'cp-events-info',
@@ -56,9 +56,10 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
     private route: ActivatedRoute,
     public utils: EventUtilService,
     public service: EventsService,
+    public modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
-    super(session, cpI18n, service);
+    super(session, cpI18n, service, modalService);
     this.dateFormat = FORMAT.DATETIME;
     this.eventId = this.route.snapshot.params['eventId'];
   }

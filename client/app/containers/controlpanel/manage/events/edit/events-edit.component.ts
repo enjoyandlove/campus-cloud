@@ -23,6 +23,7 @@ import {
   RouteLevel,
   AdminService,
   ErrorService,
+  ModalService,
   StoreService,
   CPI18nService,
   CPTrackingService
@@ -107,9 +108,10 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
     public storeService: StoreService,
     private errorService: ErrorService,
     public service: EventsService,
+    public modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
-    super(session, cpI18n, service);
+    super(session, cpI18n, service, modalService);
     this.school = this.session.g.get('school');
     this.eventId = this.route.snapshot.params['eventId'];
 

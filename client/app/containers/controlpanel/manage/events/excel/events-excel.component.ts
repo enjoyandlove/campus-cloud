@@ -20,6 +20,7 @@ import { SnackbarError } from '@app/store/base/reducers/snackbar.reducer';
 import {
   AdminService,
   StoreService,
+  ModalService,
   CPI18nService,
   FileUploadService,
   CPTrackingService
@@ -80,12 +81,13 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     public cpI18n: CPI18nService,
     public service: EventsService,
     private utils: EventUtilService,
+    public modalService: ModalService,
     private adminService: AdminService,
     private storeService: StoreService,
     private cpTracking: CPTrackingService,
     private fileUploadService: FileUploadService
   ) {
-    super(session, cpI18n, service);
+    super(session, cpI18n, service, modalService);
     this.school = this.session.g.get('school');
     super.isLoading().subscribe((res) => (this.loading = res));
   }
@@ -440,7 +442,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     }
 
     this.service.createEvent(_events, search).subscribe(
-      (_) => {
+      () => {
         this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_IMPORTED_EVENT);
         this.router.navigate([this.urlPrefix]);
 

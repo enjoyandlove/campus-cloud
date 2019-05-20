@@ -24,7 +24,13 @@ import {
   EventAttendance
 } from '../event.status';
 
-import { AdminService, CPI18nService, CPTrackingService, StoreService } from '@shared/services';
+import {
+  AdminService,
+  ModalService,
+  StoreService,
+  CPI18nService,
+  CPTrackingService
+} from '@shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -89,9 +95,10 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
     public utils: EventUtilService,
     public adminService: AdminService,
     public storeService: StoreService,
+    public modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
-    super(session, cpI18n, service);
+    super(session, cpI18n, service, modalService);
   }
 
   buildHeader() {
