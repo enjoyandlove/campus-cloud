@@ -49,10 +49,10 @@ export class AdminService extends HTTPService {
     return super.get(url);
   }
 
-  deleteAdminById(adminId: number) {
+  deleteAdminById(adminId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
 
-    return super.delete(url, null, true).pipe(catchError((err) => observableThrowError(err)));
+    return super.delete(url, search, true).pipe(catchError((err) => observableThrowError(err)));
   }
 
   createAdmin(data: any) {
