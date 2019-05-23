@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { HttpParams } from '@angular/common/http';
 
-import { AdminService, CPTrackingService } from '../../../../../shared/services';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CPSession } from '@app/session';
+import { CPI18nService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants';
+import { AdminService, CPTrackingService } from '@shared/services';
 
 declare var $: any;
 
@@ -19,6 +21,7 @@ export class TeamDeleteComponent implements OnInit {
   buttonData;
 
   constructor(
+    public session: CPSession,
     public cpI18n: CPI18nService,
     public adminService: AdminService,
     public cpTracking: CPTrackingService
@@ -29,7 +32,9 @@ export class TeamDeleteComponent implements OnInit {
       user_status: this.admin.account_activated ? amplitudeEvents.ACTIVE : amplitudeEvents.PENDING
     };
 
-    this.adminService.deleteAdminById(this.admin.id).subscribe(
+    const search = new HttpParams().append('school_ids', this.session.g.get('school').id);
+
+    this.adminService.deleteAdminById(this.admin.id, search).subscribe(
       () => {
         this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_TEAM_MEMBER, eventProperties);
         this.deleted.emit(this.admin.id);
