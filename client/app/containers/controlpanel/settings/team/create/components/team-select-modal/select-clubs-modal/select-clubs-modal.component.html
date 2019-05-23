@@ -3,7 +3,7 @@
   [data]="data$"
   [reset]="reset"
   [privileges]="privileges"
-  (cancel)="cancel.emit()"
+  (cancel)="cancel.emit($event)"
   (submit)="selected.emit($event)"
   [privilegeType]="privilegeType">
 </cp-team-select-modal>

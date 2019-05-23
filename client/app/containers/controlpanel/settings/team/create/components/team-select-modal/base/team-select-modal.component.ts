@@ -1,16 +1,21 @@
-/*tslint:disable:max-line-length */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
-import { get as _get } from 'lodash';
-
 import {
-  canSchoolWriteResource,
-  canStoreReadAndWriteResource
-} from './../../../../../../../../shared/utils/privileges/privileges';
-import { CPSession } from './../../../../../../../../session';
-import { BaseComponent } from '../../../../../../../../base/base.component';
+  OnInit,
+  Input,
+  Output,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener
+} from '@angular/core';
+
+import { get as _get } from 'lodash';
+import { Observable } from 'rxjs';
+
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
 import { permissions, permissionType, permissionIcon } from '../permissions';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../../shared/constants';
+import { canSchoolWriteResource, canStoreReadAndWriteResource } from '@shared/utils/privileges';
 
 interface ISelected {
   id: number;
@@ -41,16 +46,24 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   @Input() reset: Observable<boolean>;
 
   @Output() submit: EventEmitter<any> = new EventEmitter();
-  @Output() cancel: EventEmitter<null> = new EventEmitter();
+  @Output() cancel: EventEmitter<any> = new EventEmitter();
 
   loading;
+  item = {};
   query = null;
   state: IState = state;
   permissionType = permissionType;
 
-  constructor(public session: CPSession) {
+  constructor(public el: ElementRef, public session: CPSession) {
     super();
     this.privileges = permissions;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event) {
+    if (event.target.contains(this.el.nativeElement)) {
+      this.emitAndClose();
+    }
   }
 
   onCheckedItem(checked, store) {
@@ -96,16 +109,16 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   }
 
   emitAndClose() {
-    this.cancel.emit();
+    this.cancel.emit(this.item);
   }
 
   onSubmit() {
-    const _item = {};
+    this.item = {};
     const _state = [...this.state.selected];
 
     _state.map((item) => {
       if (item.checked) {
-        _item['store_id' in item.data ? item.data.store_id : item.data.id] = {
+        this.item['store_id' in item.data ? item.data.store_id : item.data.id] = {
           [this.privilegeType]: {
             r: true,
             w: item.type === permissionType.write
@@ -122,7 +135,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
 
         // if its a club we grant them access to extra privileges
         if (!('store_id' in item.data)) {
-          _item[item.data.id] = Object.assign({}, _item[item.data.id], {
+          this.item[item.data.id] = Object.assign({}, this.item[item.data.id], {
             [CP_PRIVILEGES_MAP.moderation]: {
               r: true,
               w: true
@@ -136,7 +149,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
       }
     });
 
-    this.submit.emit(_item);
+    this.submit.emit(this.item);
   }
 
   updateState(items) {

@@ -1,13 +1,14 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { CPSession } from '../../../../../../../../session';
-import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
-import { ClubsService } from '../../../../../../manage/clubs/clubs.service';
+
+import { CPSession } from '@app/session';
+import { clubOnlyPermissions } from '../permissions';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { ClubsService } from '@controlpanel/manage/clubs/clubs.service';
 import { clubAthleticStatus, isClubAthletic } from '../../../../team.utils.service';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
-import { clubOnlyPermissions } from '../permissions';
 
 @Component({
   selector: 'cp-select-clubs-modal',
@@ -23,8 +24,8 @@ export class SelectTeamClubsModalComponent extends BaseTeamSelectModalComponent 
 
   data$: BehaviorSubject<any> = new BehaviorSubject({});
 
-  constructor(public session: CPSession, private service: ClubsService) {
-    super(session);
+  constructor(public el: ElementRef, public session: CPSession, private service: ClubsService) {
+    super(el, session);
     this.privilegeType = CP_PRIVILEGES_MAP.clubs;
     this.privileges = clubOnlyPermissions;
   }

@@ -6,17 +6,13 @@ import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
-import { CPSession } from '../../../../../session';
-import { baseActions, IHeader } from '../../../../../store/base';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
-
-import {
-  accountsToStoreMap,
-  canAccountLevelReadResource
-} from './../../../../../shared/utils/privileges/privileges';
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
+import { MODAL_TYPE } from '@shared/components';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { baseActions, IHeader } from '@app/store/base';
+import { AdminService, ErrorService, CPI18nService } from '@shared/services';
+import { accountsToStoreMap, canAccountLevelReadResource } from '@shared/utils';
 
 import {
   clubMenu,
@@ -422,6 +418,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.accountPrivileges = {};
   }
 
+  onServicesModalCancel(services) {
+    Object.keys(services).length
+      ? this.onServicesModalSelected(services)
+      : this.updateServicesDropdownLabel();
+  }
+
   onServicesModalSelected(services) {
     this.doServicesCleanUp();
 
@@ -504,6 +506,10 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     }
   }
 
+  onClubsModalCancel(clubs) {
+    Object.keys(clubs).length ? this.onClubsModalSelected(clubs) : this.updateClubsDropdownLabel();
+  }
+
   onClubsModalSelected(clubs) {
     this.doClubsCleanUp();
     const clubsLength = Object.keys(clubs).length;
@@ -512,6 +518,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       : null;
 
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...clubs);
+  }
+
+  onAthleticsModalCancel(athletics) {
+    Object.keys(athletics).length
+      ? this.onAthleticsModalSelected(athletics)
+      : this.updateAthleticsDropdownLabel();
   }
 
   onAthleticsModalSelected(athletics) {
