@@ -38,6 +38,12 @@ export class BannerListComponent implements OnInit {
   state: school.ISchoolBranding;
   layoutWidth = LayoutWidth.third;
 
+  eventProperties = {
+    logo: null,
+    banner: amplitudeEvents.NO_CHANGES,
+    branding_color: amplitudeEvents.NO_CHANGES
+  };
+
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
@@ -80,6 +86,11 @@ export class BannerListComponent implements OnInit {
   onChangeColor(color) {
     this.form.controls[school.BRANDING_COLOR].setValue(color);
     this.form.controls[school.BRANDING_COLOR].markAsDirty();
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      branding_color: amplitudeEvents.CHANGED
+    };
   }
 
   onReset() {
@@ -160,6 +171,11 @@ export class BannerListComponent implements OnInit {
       this.form.controls[school.LOGO_URL].setValue(base64ImageData);
       this.form.controls[school.LOGO_URL].markAsDirty();
       this.onReset();
+
+      this.eventProperties = {
+        ...this.eventProperties,
+        banner: amplitudeEvents.CHANGED
+      };
     });
   }
 
@@ -190,10 +206,11 @@ export class BannerListComponent implements OnInit {
         this.state = {
           ...branding
         };
+
+        this.onSuccess();
+        this.trackEvent(branding.school_name_logo_url);
         this.form.reset(this.state);
         this.onReset();
-        this.onSuccess();
-        this.trackUploadImageEvent();
       })
       .catch((_) => {
         this.onError();
@@ -208,10 +225,28 @@ export class BannerListComponent implements OnInit {
     });
   }
 
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getEventProperties();
+  trackEvent(logUrl: string) {
+    const logo = logUrl ? amplitudeEvents.SCHOOL_LOGO : amplitudeEvents.SCHOOL_NAME;
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
+    this.eventProperties = {
+      ...this.eventProperties,
+      logo
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.CUSTOMIZE_CHANGED_BRANDING,
+      this.eventProperties
+    );
+
+    this.resetEventProperties();
+  }
+
+  resetEventProperties() {
+    this.eventProperties = {
+      logo: null,
+      banner: amplitudeEvents.NO_CHANGES,
+      branding_color: amplitudeEvents.NO_CHANGES
+    };
   }
 
   ngOnInit() {

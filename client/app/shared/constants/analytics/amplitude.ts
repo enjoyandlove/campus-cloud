@@ -57,6 +57,8 @@ export const amplitudeEvents = {
 
   COMMENT: 'Comment',
 
+  CHANGED: 'Changed',
+
   REGULAR: 'Regular',
 
   SERVICE: 'Service',
@@ -140,6 +142,10 @@ export const amplitudeEvents = {
   ORIENTATION: 'Orientation',
 
   ONE_SERVICE: 'One Service',
+
+  SCHOOL_NAME: 'School Name',
+
+  SCHOOL_LOGO: 'School Logo',
 
   FULL_ACCESS: 'Full Access',
 
@@ -305,8 +311,6 @@ export const amplitudeEvents = {
 
   WALL_UPDATED_SETTINGS: 'Wall - Updated Settings',
 
-  CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
-
   MANAGE_CREATED_DINING: 'Manage - Created Dining',
 
   MANAGE_UPDATED_DINING: 'Manage - Updated Dining',
@@ -369,8 +373,6 @@ export const amplitudeEvents = {
 
   MANAGE_ADDED_CLUB_MEMBER: 'Manage - Added Club Member',
 
-  CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
-
   NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
 
   MANAGE_IMPORTED_AUDIENCE: 'Manage - Imported Audience',
@@ -390,6 +392,8 @@ export const amplitudeEvents = {
   MANAGE_ADDED_WEB_CHECK_IN: 'Manage - Added Web Check-In',
 
   MANAGE_UPDATED_ATTENDANCE: 'Manage - Updated Attendance',
+
+  CUSTOMIZE_CHANGED_BRANDING: 'Customize - Changed Branding',
 
   STUDIO_CHANGED_TILE_STATUS: 'Studio - Changed Tile Status',
 
