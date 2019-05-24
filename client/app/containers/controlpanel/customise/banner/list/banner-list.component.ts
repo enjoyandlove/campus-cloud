@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { CPSession } from '@app/session';
+import { baseActionClass } from '@app/store';
 import { BannerService } from '../banner.service';
 import * as school from '@app/session/school.interface';
 import { baseActions, ISnackbar } from '@app/store/base';
@@ -115,24 +116,19 @@ export class BannerListComponent implements OnInit {
   }
 
   onSuccess(message = this.cpI18n.translate('customization_image_upload_success')) {
-    this.store.dispatch({
-      type: baseActions.SNACKBAR_SHOW,
-      payload: {
-        body: message,
-        autoClose: true
-      }
-    });
+    this.store.dispatch(
+      new baseActionClass.SnackbarSuccess({
+        body: message
+      })
+    );
   }
 
   onError(message = this.cpI18n.translate('something_went_wrong')) {
-    this.store.dispatch({
-      type: baseActions.SNACKBAR_SHOW,
-      payload: {
-        autoClose: true,
-        class: 'danger',
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
         body: message
-      }
-    });
+      })
+    );
   }
 
   canvasInit(image) {
