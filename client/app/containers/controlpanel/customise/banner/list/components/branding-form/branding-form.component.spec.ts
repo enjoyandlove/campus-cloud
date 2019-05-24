@@ -49,7 +49,7 @@ describe('BrandingFormComponent', () => {
 
   it('should change color', () => {
     const spy = spyOn(component.onChangeColor, 'emit');
-    const colorInput = de.query(By.css('.hex')).nativeElement;
+    const colorInput = de.query(By.css('[data-target="branding_color"]')).nativeElement;
 
     colorInput.value = 'FFFFFF';
     colorInput.dispatchEvent(new Event('input'));
