@@ -26,10 +26,10 @@ import { ServicesProviderDetailsComponent } from './attendance/components';
 /**
  * Excel
  */
-import { ServicesExcelComponent } from './excel';
-import { ServicesResolver } from './services.resolver';
-import { PrivilegesGuard } from '../../../../config/guards';
 import { metaTitle } from '@shared/constants';
+import { ServicesExcelComponent } from './excel';
+import { PrivilegesGuard } from '@app/config/guards';
+import { ServicesResolver } from './services.resolver';
 
 const appRoutes: Routes = [
   { path: 'import', redirectTo: '', pathMatch: 'full' },

@@ -2,6 +2,7 @@ import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
+
 import { metaTitle } from '@shared/constants/meta-title';
 
 @Component({
