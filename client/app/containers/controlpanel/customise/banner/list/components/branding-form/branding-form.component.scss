@@ -64,6 +64,9 @@ div.color-input {
   width: 400px;
   height: 82.5px;
   text-align: center;
+  transition-duration: 1s;
+  transition-timing-function: linear;
+  transition-property: background-color;
 
   img {
     max-width: 400px;
