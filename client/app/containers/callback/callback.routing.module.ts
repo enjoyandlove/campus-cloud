@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CallbackComponent } from './callback.component';
 import { CallbackPasswordResetComponent } from './password-reset';
 
+import { metaTitle } from '@shared/constants';
 import { AdminInviteComponent } from './admin-invite';
 
 import {
@@ -23,36 +24,36 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'password-reset/:key',
-        data: { zendesk: 'password' },
-        component: CallbackPasswordResetComponent
+        component: CallbackPasswordResetComponent,
+        data: { zendesk: 'password', title: metaTitle.RESET_PASSWORD }
       },
 
       {
         path: 'invite/:key',
         component: AdminInviteComponent,
-        data: { zendesk: 'password' }
+        data: { zendesk: 'password', title: metaTitle.CREATE_ACCOUNT }
       },
 
       {
         path: 'feedback/e/:event',
         component: FeedbackEventComponent,
-        data: { zendesk: 'assessment' }
+        data: { zendesk: 'assessment', title: metaTitle.WEB_CHECK_IN }
       },
       {
         path: 'feedback/o/:event',
         component: FeedbackOrientationEventComponent,
-        data: { zendesk: 'assessment' }
+        data: { zendesk: 'assessment', title: metaTitle.WEB_CHECK_IN }
       },
       {
         path: 'feedback/s/:service',
         component: FeedbackServiceComponent,
-        data: { zendesk: 'assessment' }
+        data: { zendesk: 'assessment', title: metaTitle.WEB_CHECK_IN }
       },
 
       {
         path: 'checkin/e/:event',
         component: CheckinEventsComponent,
-        data: { zendesk: 'assessment' }
+        data: { zendesk: 'assessment', title: metaTitle.WEB_CHECK_IN }
       },
       {
         path: 'checkin/o/:event',
@@ -61,8 +62,8 @@ const appRoutes: Routes = [
       },
       {
         path: 'checkin/s/:service/:provider',
-        data: { zendesk: 'assessment' },
-        component: CheckinServiceComponent
+        component: CheckinServiceComponent,
+        data: { zendesk: 'assessment', title: metaTitle.WEB_CHECK_IN }
       },
 
       { path: '**', redirectTo: '/login' }

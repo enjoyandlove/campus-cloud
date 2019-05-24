@@ -17,6 +17,7 @@ import { EventsExcelComponent } from './excel';
 /**
  * MISC
  */
+import { metaTitle } from '@shared/constants';
 import { EventsAttendanceComponent } from './attendance';
 
 const appRoutes: Routes = [
@@ -24,38 +25,39 @@ const appRoutes: Routes = [
 
   {
     path: 'integrations',
+    data: { title: metaTitle.MANAGE_EVENTS },
     loadChildren: './integrations/integrations.module#EventIntegrationsModule'
   },
 
   {
     path: '',
-    data: { zendesk: 'events' },
+    data: { zendesk: 'events', title: metaTitle.MANAGE_EVENTS },
     component: EventsListComponent
   },
   {
     path: 'create',
-    data: { zendesk: 'events' },
+    data: { zendesk: 'events', title: metaTitle.MANAGE_EVENTS },
     component: EventsCreateComponent
   },
   {
     path: ':eventId',
-    data: { zendesk: 'events' },
+    data: { zendesk: 'events', title: metaTitle.MANAGE_EVENTS },
     component: EventsAttendanceComponent
   },
   {
     path: ':eventId/edit',
-    data: { zendesk: 'events' },
+    data: { zendesk: 'events', title: metaTitle.MANAGE_EVENTS },
     component: EventsEditComponent
   },
   {
     path: ':eventId/info',
-    data: { zendesk: 'events' },
+    data: { zendesk: 'events', title: metaTitle.MANAGE_EVENTS },
     component: EventsInfoComponent
   },
 
   {
     path: 'import/excel',
-    data: { zendesk: 'events' },
+    data: { zendesk: 'events', title: metaTitle.MANAGE_EVENTS },
     component: EventsExcelComponent
   }
 ];

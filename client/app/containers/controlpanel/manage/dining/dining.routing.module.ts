@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { DiningListComponent } from './list';
 import { DiningInfoComponent } from './info';
 import { DiningEditComponent } from './edit';
+import { metaTitle } from '@shared/constants';
 import { DiningCreateComponent } from './create';
 import { DiningExistGuard } from './guards/dining-exist-guard';
 
@@ -11,24 +12,24 @@ const appRoutes: Routes = [
   {
     path: '',
     component: DiningListComponent,
-    data: { zendesk: 'dining' }
+    data: { zendesk: 'dining', title: metaTitle.MANAGE_DINING }
   },
   {
     path: ':diningId/info',
     canActivate: [DiningExistGuard],
     component: DiningInfoComponent,
-    data: { zendesk: 'dining' }
+    data: { zendesk: 'dining', title: metaTitle.MANAGE_DINING }
   },
   {
     path: 'create',
     component: DiningCreateComponent,
-    data: { zendesk: 'dining' }
+    data: { zendesk: 'dining', title: metaTitle.MANAGE_DINING }
   },
   {
     path: ':diningId/edit',
     canActivate: [DiningExistGuard],
     component: DiningEditComponent,
-    data: { zendesk: 'dining' }
+    data: { zendesk: 'dining', title: metaTitle.MANAGE_DINING }
   },
   {
     path: 'categories',

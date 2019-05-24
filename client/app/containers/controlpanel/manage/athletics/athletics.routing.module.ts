@@ -1,33 +1,34 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { metaTitle } from '@shared/constants';
 import { AthleticsListComponent } from './list';
-import { AthleticsCreateComponent } from './create';
-import { AthleticsExcelComponent } from './excel';
 import { AthleticsEditComponent } from './edit';
+import { AthleticsExcelComponent } from './excel';
+import { AthleticsCreateComponent } from './create';
 
 const appRoutes: Routes = [
   {
     path: '',
-    data: { zendesk: 'athletics' },
+    data: { zendesk: 'athletics', title: metaTitle.MANAGE_ATHLETICS },
     component: AthleticsListComponent
   },
 
   {
     path: 'create',
-    data: { zendesk: 'athletics' },
+    data: { zendesk: 'athletics', title: metaTitle.MANAGE_ATHLETICS },
     component: AthleticsCreateComponent
   },
 
   {
     path: ':clubId/edit',
-    data: { zendesk: 'athletics' },
+    data: { zendesk: 'athletics', title: metaTitle.MANAGE_ATHLETICS },
     component: AthleticsEditComponent
   },
 
   {
     path: 'import/excel',
-    data: { zendesk: 'athletics' },
+    data: { zendesk: 'athletics', title: metaTitle.MANAGE_ATHLETICS },
     component: AthleticsExcelComponent
   },
 

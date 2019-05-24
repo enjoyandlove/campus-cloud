@@ -2,8 +2,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { PrivilegesGuard } from '@app/config/guards';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
 import { CustomiseComponent } from './customise.component';
+import { CP_PRIVILEGES_MAP, metaTitle } from '@shared/constants';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'branding', pathMatch: 'full' },
@@ -14,14 +14,22 @@ const appRoutes: Routes = [
       {
         path: 'experiences',
         canActivate: [PrivilegesGuard],
-        data: { zendesk: 'experiences', privilege: CP_PRIVILEGES_MAP.app_customization },
-        loadChildren: './personas/personas.module#PersonasModule'
+        loadChildren: './personas/personas.module#PersonasModule',
+        data: {
+          zendesk: 'experiences',
+          title: metaTitle.STUDIO_EXPERIENCE,
+          privilege: CP_PRIVILEGES_MAP.app_customization
+        }
       },
       {
         path: 'branding',
         canActivate: [PrivilegesGuard],
-        data: { zendesk: 'experiences', privilege: CP_PRIVILEGES_MAP.app_customization },
-        loadChildren: './banner/banner.module#BannerModule'
+        loadChildren: './banner/banner.module#BannerModule',
+        data: {
+          zendesk: 'experiences',
+          title: metaTitle.STUDION_BRANDING,
+          privilege: CP_PRIVILEGES_MAP.app_customization
+        }
       }
     ]
   }

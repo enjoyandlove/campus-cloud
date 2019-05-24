@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { metaTitle } from '@shared/constants';
 import { LocationExistsGuard } from './guards';
 import { LocationsInfoComponent } from './info';
 import { LocationsListComponent } from './list';
@@ -11,24 +12,24 @@ const appRoutes: Routes = [
   {
     path: '',
     component: LocationsListComponent,
-    data: { zendesk: 'locations' }
+    data: { zendesk: 'locations', title: metaTitle.MANAGE_LOCATIONS }
   },
   {
     path: 'create',
     component: LocationsCreateComponent,
-    data: { zendesk: 'locations' }
+    data: { zendesk: 'locations', title: metaTitle.MANAGE_LOCATIONS }
   },
   {
     path: ':locationId/edit',
     canActivate: [LocationExistsGuard],
     component: LocationsEditComponent,
-    data: { zendesk: 'locations' }
+    data: { zendesk: 'locations', title: metaTitle.MANAGE_LOCATIONS }
   },
   {
     path: ':locationId/info',
     canActivate: [LocationExistsGuard],
     component: LocationsInfoComponent,
-    data: { zendesk: 'locations' }
+    data: { zendesk: 'locations', title: metaTitle.MANAGE_LOCATIONS }
   },
   {
     path: 'categories',
