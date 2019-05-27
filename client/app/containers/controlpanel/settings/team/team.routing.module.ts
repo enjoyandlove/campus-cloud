@@ -5,7 +5,7 @@ import { TeamEditComponent } from './edit';
 import { TeamListComponent } from './list';
 import { TeamCreateComponent } from './create';
 import { PrivilegesGuard } from '@app/config/guards';
-import { CP_PRIVILEGES_MAP, metaTitle } from '@shared/constants';
+import { CP_PRIVILEGES_MAP, pageTitle } from '@shared/constants';
 
 const appRoutes: Routes = [
   {
@@ -23,7 +23,7 @@ const appRoutes: Routes = [
   {
     path: ':adminId/edit',
     component: TeamEditComponent,
-    data: { zendesk: 'team', title: metaTitle.PROFILE }
+    data: { zendesk: 'team', title: pageTitle.PROFILE }
   }
 ];
 

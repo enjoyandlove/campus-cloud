@@ -1,4 +1,4 @@
-export const metaTitle = {
+export const pageTitle = {
   LOGIN: 'Login',
 
   PROFILE: 'Profile',

@@ -4,29 +4,29 @@ import { RouterModule, Routes } from '@angular/router';
 import { JobsListComponent } from './list';
 import { JobsInfoComponent } from './info';
 import { JobsEditComponent } from './edit';
-import { metaTitle } from '@shared/constants';
+import { pageTitle } from '@shared/constants';
 import { JobsCreateComponent } from './create';
 
 const appRoutes: Routes = [
   {
     path: '',
     component: JobsListComponent,
-    data: { zendesk: 'Jobs', title: metaTitle.MANAGE_JOBS }
+    data: { zendesk: 'Jobs', title: pageTitle.MANAGE_JOBS }
   },
   {
     path: 'create',
     component: JobsCreateComponent,
-    data: { zendesk: 'Jobs', title: metaTitle.MANAGE_JOBS }
+    data: { zendesk: 'Jobs', title: pageTitle.MANAGE_JOBS }
   },
   {
     path: ':jobId/edit',
     component: JobsEditComponent,
-    data: { zendesk: 'Jobs', title: metaTitle.MANAGE_JOBS }
+    data: { zendesk: 'Jobs', title: pageTitle.MANAGE_JOBS }
   },
   {
     path: ':jobId/info',
     component: JobsInfoComponent,
-    data: { zendesk: 'Jobs', title: metaTitle.MANAGE_JOBS }
+    data: { zendesk: 'Jobs', title: pageTitle.MANAGE_JOBS }
   },
   {
     path: 'employers',

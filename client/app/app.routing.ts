@@ -2,7 +2,7 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
 import { isProd } from '@app/config/env';
-import { metaTitle } from '@shared/constants';
+import { pageTitle } from '@shared/constants';
 import { LoginComponent, LogoutComponent, LostPasswordComponent } from './containers/auth';
 
 const routes: Routes = [
@@ -14,13 +14,13 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent,
-    data: { zendesk: 'login', title: metaTitle.LOGIN }
+    data: { zendesk: 'login', title: pageTitle.LOGIN }
   },
 
   {
     path: 'lost-password',
     component: LostPasswordComponent,
-    data: { zendesk: 'password', title: metaTitle.LOST_PASSWORD }
+    data: { zendesk: 'password', title: pageTitle.LOST_PASSWORD }
   },
 
   {

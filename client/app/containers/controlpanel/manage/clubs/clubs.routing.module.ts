@@ -4,32 +4,32 @@ import { NgModule } from '@angular/core';
 import { ClubsEditComponent } from './edit';
 import { ClubsListComponent } from './list';
 import { ClubsExcelComponent } from './excel';
-import { metaTitle } from '@shared/constants';
+import { pageTitle } from '@shared/constants';
 import { ClubsCreateComponent } from './create';
 
 const appRoutes: Routes = [
   {
     path: '',
     component: ClubsListComponent,
-    data: { zendesk: 'clubs', title: metaTitle.MANAGE_CLUBS }
+    data: { zendesk: 'clubs', title: pageTitle.MANAGE_CLUBS }
   },
 
   {
     path: 'create',
     component: ClubsCreateComponent,
-    data: { zendesk: 'clubs', title: metaTitle.MANAGE_CLUBS }
+    data: { zendesk: 'clubs', title: pageTitle.MANAGE_CLUBS }
   },
 
   {
     path: ':clubId/edit',
     component: ClubsEditComponent,
-    data: { zendesk: 'clubs', title: metaTitle.MANAGE_CLUBS }
+    data: { zendesk: 'clubs', title: pageTitle.MANAGE_CLUBS }
   },
 
   {
     path: 'import/excel',
     component: ClubsExcelComponent,
-    data: { zendesk: 'clubs', title: metaTitle.MANAGE_CLUBS }
+    data: { zendesk: 'clubs', title: pageTitle.MANAGE_CLUBS }
   },
 
   {

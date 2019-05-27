@@ -3,7 +3,7 @@ import { filter, map, mergeMap } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 
-import { metaTitle } from '@shared/constants/meta-title';
+import { pageTitle } from '@shared/constants';
 
 @Component({
   selector: 'cp-app',
@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
     private activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit() {
+  setPageTitle() {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -31,7 +31,15 @@ export class AppComponent implements OnInit {
         mergeMap((route) => route.data)
       )
       .subscribe((event) => {
-        this.titleService.setTitle(`${metaTitle.CAMPUS_CLOUD} ${event['title']}`);
+        const title = !event['title']
+          ? `${pageTitle.CAMPUS_CLOUD}`
+          : `${pageTitle.CAMPUS_CLOUD} ${event['title']}`;
+
+        this.titleService.setTitle(title);
       });
+  }
+
+  ngOnInit() {
+    this.setPageTitle();
   }
 }

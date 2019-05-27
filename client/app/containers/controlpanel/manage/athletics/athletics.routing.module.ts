@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { metaTitle } from '@shared/constants';
+import { pageTitle } from '@shared/constants';
 import { AthleticsListComponent } from './list';
 import { AthleticsEditComponent } from './edit';
 import { AthleticsExcelComponent } from './excel';
@@ -10,25 +10,25 @@ import { AthleticsCreateComponent } from './create';
 const appRoutes: Routes = [
   {
     path: '',
-    data: { zendesk: 'athletics', title: metaTitle.MANAGE_ATHLETICS },
+    data: { zendesk: 'athletics', title: pageTitle.MANAGE_ATHLETICS },
     component: AthleticsListComponent
   },
 
   {
     path: 'create',
-    data: { zendesk: 'athletics', title: metaTitle.MANAGE_ATHLETICS },
+    data: { zendesk: 'athletics', title: pageTitle.MANAGE_ATHLETICS },
     component: AthleticsCreateComponent
   },
 
   {
     path: ':clubId/edit',
-    data: { zendesk: 'athletics', title: metaTitle.MANAGE_ATHLETICS },
+    data: { zendesk: 'athletics', title: pageTitle.MANAGE_ATHLETICS },
     component: AthleticsEditComponent
   },
 
   {
     path: 'import/excel',
-    data: { zendesk: 'athletics', title: metaTitle.MANAGE_ATHLETICS },
+    data: { zendesk: 'athletics', title: pageTitle.MANAGE_ATHLETICS },
     component: AthleticsExcelComponent
   },
 

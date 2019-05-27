@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { PrivilegesGuard } from '@app/config/guards';
 import { CustomiseComponent } from './customise.component';
-import { CP_PRIVILEGES_MAP, metaTitle } from '@shared/constants';
+import { CP_PRIVILEGES_MAP, pageTitle } from '@shared/constants';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'branding', pathMatch: 'full' },
@@ -17,7 +17,7 @@ const appRoutes: Routes = [
         loadChildren: './personas/personas.module#PersonasModule',
         data: {
           zendesk: 'experiences',
-          title: metaTitle.STUDIO_EXPERIENCE,
+          title: pageTitle.STUDIO_EXPERIENCE,
           privilege: CP_PRIVILEGES_MAP.app_customization
         }
       },
@@ -27,7 +27,7 @@ const appRoutes: Routes = [
         loadChildren: './banner/banner.module#BannerModule',
         data: {
           zendesk: 'experiences',
-          title: metaTitle.STUDION_BRANDING,
+          title: pageTitle.STUDION_BRANDING,
           privilege: CP_PRIVILEGES_MAP.app_customization
         }
       }

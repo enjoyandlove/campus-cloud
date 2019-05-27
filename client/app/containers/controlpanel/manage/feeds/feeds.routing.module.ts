@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { FeedsListComponent } from './list';
-import { metaTitle } from '@shared/constants';
+import { pageTitle } from '@shared/constants';
 import { PrivilegesGuard } from '@app/config/guards';
 
 const appRoutes: Routes = [
@@ -10,11 +10,11 @@ const appRoutes: Routes = [
     path: '',
     canActivate: [PrivilegesGuard],
     component: FeedsListComponent,
-    data: { zendesk: 'walls', title: metaTitle.MANAGE_WALL }
+    data: { zendesk: 'walls', title: pageTitle.MANAGE_WALL }
   },
   {
     path: 'integrations',
-    data: { zendesk: 'walls', title: metaTitle.MANAGE_WALL },
+    data: { zendesk: 'walls', title: pageTitle.MANAGE_WALL },
     loadChildren: './integrations/walls-integrations.module#WallsIntegrationsModule'
   }
 ];

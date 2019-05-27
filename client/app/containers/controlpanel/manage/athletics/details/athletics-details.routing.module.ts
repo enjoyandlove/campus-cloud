@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AthleticsInfoComponent } from '../info';
 import { AthleticsWallComponent } from '../wall';
 
-import { metaTitle } from '@shared/constants';
+import { pageTitle } from '@shared/constants';
 import { AthleticsDetailsComponent } from './athletics-details.component';
 
 const appRoutes: Routes = [
@@ -15,24 +15,24 @@ const appRoutes: Routes = [
       {
         path: 'info',
         component: AthleticsInfoComponent,
-        data: { title: metaTitle.MANAGE_ATHLETICS }
+        data: { title: pageTitle.MANAGE_ATHLETICS }
       },
 
       {
         path: 'feeds',
         component: AthleticsWallComponent,
-        data: { title: metaTitle.MANAGE_ATHLETICS }
+        data: { title: pageTitle.MANAGE_ATHLETICS }
       },
 
       {
         path: 'events',
-        data: { title: metaTitle.MANAGE_ATHLETICS },
+        data: { title: pageTitle.MANAGE_ATHLETICS },
         loadChildren: '../events/athletics-events.module#AthleticsEventsModule'
       },
 
       {
         path: 'members',
-        data: { title: metaTitle.MANAGE_ATHLETICS },
+        data: { title: pageTitle.MANAGE_ATHLETICS },
         loadChildren: '../members/athletics-members.module#AthleticsMembersModule'
       }
     ]

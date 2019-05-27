@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { PrivilegesGuard } from '@app/config/guards';
 import { AssessComponent } from './assess.component';
-import { CP_PRIVILEGES_MAP, metaTitle } from '@shared/constants';
+import { CP_PRIVILEGES_MAP, pageTitle } from '@shared/constants';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
@@ -18,7 +18,7 @@ const appRoutes: Routes = [
         loadChildren: './engagement/engagement.module#EngagementModule',
         data: {
           zendesk: 'assessment',
-          title: metaTitle.ASSESS_ENGAGEMENT,
+          title: pageTitle.ASSESS_ENGAGEMENT,
           privilege: CP_PRIVILEGES_MAP.assessment
         }
       },
@@ -29,7 +29,7 @@ const appRoutes: Routes = [
         loadChildren: './students/students.module#EngagementStudentsModule',
         data: {
           zendesk: 'notify',
-          title: metaTitle.ASSESS_STUDENT,
+          title: pageTitle.ASSESS_STUDENT,
           privilege: CP_PRIVILEGES_MAP.assessment
         }
       }
