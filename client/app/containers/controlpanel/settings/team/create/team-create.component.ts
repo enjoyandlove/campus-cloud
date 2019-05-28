@@ -57,12 +57,12 @@ export class TeamCreateComponent implements OnInit {
   form: FormGroup;
   isAthleticsModal;
   canReadAthletics;
-  accountPrivileges;
   isAllAccessEnabled;
   clubsCount = null;
   servicesCount = null;
   athleticsCount = null;
   schoolPrivileges = {};
+  accountPrivileges = {};
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
 
@@ -133,6 +133,11 @@ export class TeamCreateComponent implements OnInit {
       });
 
       return;
+    }
+
+    if (!this.utils.hasStorePrivileges(this.schoolPrivileges, this.accountPrivileges)) {
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
+      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement];
     }
 
     const _data = {
