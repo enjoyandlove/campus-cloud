@@ -43,6 +43,7 @@ export class CPAmplitudeService {
       const userProperties = {
         is_oohlala: this.isInternal,
         school_name: this.school.name,
+        test_school: this.school.is_sandbox,
         jobs: userPermissions.jobs_permission,
         links: userPermissions.links_permission,
         deals: userPermissions.deals_permission,

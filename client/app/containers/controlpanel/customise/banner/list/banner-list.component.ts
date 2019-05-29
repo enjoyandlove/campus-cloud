@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { CPSession } from '@app/session';
+import { baseActionClass } from '@app/store';
 import { BannerService } from '../banner.service';
 import * as school from '@app/session/school.interface';
 import { baseActions, ISnackbar } from '@app/store/base';
@@ -37,6 +38,12 @@ export class BannerListComponent implements OnInit {
   brandingPkdbLink: string;
   state: school.ISchoolBranding;
   layoutWidth = LayoutWidth.third;
+
+  eventProperties = {
+    logo: null,
+    banner: amplitudeEvents.NO_CHANGES,
+    branding_color: amplitudeEvents.NO_CHANGES
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -80,6 +87,11 @@ export class BannerListComponent implements OnInit {
   onChangeColor(color) {
     this.form.controls[school.BRANDING_COLOR].setValue(color);
     this.form.controls[school.BRANDING_COLOR].markAsDirty();
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      branding_color: amplitudeEvents.CHANGED
+    };
   }
 
   onReset() {
@@ -104,24 +116,19 @@ export class BannerListComponent implements OnInit {
   }
 
   onSuccess(message = this.cpI18n.translate('customization_image_upload_success')) {
-    this.store.dispatch({
-      type: baseActions.SNACKBAR_SHOW,
-      payload: {
-        body: message,
-        autoClose: true
-      }
-    });
+    this.store.dispatch(
+      new baseActionClass.SnackbarSuccess({
+        body: message
+      })
+    );
   }
 
   onError(message = this.cpI18n.translate('something_went_wrong')) {
-    this.store.dispatch({
-      type: baseActions.SNACKBAR_SHOW,
-      payload: {
-        autoClose: true,
-        class: 'danger',
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
         body: message
-      }
-    });
+      })
+    );
   }
 
   canvasInit(image) {
@@ -160,6 +167,11 @@ export class BannerListComponent implements OnInit {
       this.form.controls[school.LOGO_URL].setValue(base64ImageData);
       this.form.controls[school.LOGO_URL].markAsDirty();
       this.onReset();
+
+      this.eventProperties = {
+        ...this.eventProperties,
+        banner: amplitudeEvents.CHANGED
+      };
     });
   }
 
@@ -190,10 +202,11 @@ export class BannerListComponent implements OnInit {
         this.state = {
           ...branding
         };
+
+        this.onSuccess();
+        this.trackEvent(branding.school_name_logo_url);
         this.form.reset(this.state);
         this.onReset();
-        this.onSuccess();
-        this.trackUploadImageEvent();
       })
       .catch((_) => {
         this.onError();
@@ -208,10 +221,28 @@ export class BannerListComponent implements OnInit {
     });
   }
 
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getEventProperties();
+  trackEvent(logUrl: string) {
+    const logo = logUrl ? amplitudeEvents.SCHOOL_LOGO : amplitudeEvents.SCHOOL_NAME;
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
+    this.eventProperties = {
+      ...this.eventProperties,
+      logo
+    };
+
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.CUSTOMIZE_CHANGED_BRANDING,
+      this.eventProperties
+    );
+
+    this.resetEventProperties();
+  }
+
+  resetEventProperties() {
+    this.eventProperties = {
+      logo: null,
+      banner: amplitudeEvents.NO_CHANGES,
+      branding_color: amplitudeEvents.NO_CHANGES
+    };
   }
 
   ngOnInit() {

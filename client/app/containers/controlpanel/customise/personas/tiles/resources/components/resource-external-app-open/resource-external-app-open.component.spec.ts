@@ -6,13 +6,13 @@ import { CampusLink } from '@controlpanel/manage/links/tile';
 import { PersonasResourceExternalAppOpenComponent } from './resource-external-app-open.component';
 
 const emptyForm = {
-  android: { store_url: '', package_name: '' },
-  ios: { store_url: '', http_url: '' }
+  android: { fallback_http_url: '', package_name: '' },
+  ios: { app_link: '', fallback_http_url: '' }
 };
 
 const validForm = {
-  android: { store_url: 'store_url', package_name: 'package_name' },
-  ios: { store_url: 'store_url', http_url: 'http_url' }
+  android: { fallback_http_url: 'fallback_http_url', package_name: 'package_name' },
+  ios: { app_link: 'app_link', fallback_http_url: 'fallback_http_url' }
 };
 
 describe('PersonasResourceExternalAppOpenComponent', () => {
@@ -42,9 +42,9 @@ describe('PersonasResourceExternalAppOpenComponent', () => {
     expect(component.form.value).toEqual(emptyForm);
   });
 
-  it('should invalidate iOS form group when both http_url and store_url are missing', () => {
+  it('should invalidate iOS form group when both fallback_http_url and fallback_http_url are missing', () => {
     const iOS = component.form.get('ios');
-    const fields = ['http_url', 'store_url'];
+    const fields = ['fallback_http_url', 'fallback_http_url'];
 
     fields.forEach((f) => {
       iOS.get(f).setValue('valid');
@@ -56,7 +56,7 @@ describe('PersonasResourceExternalAppOpenComponent', () => {
 
   it('should validate android form control', () => {
     const android = component.form.get('android');
-    const fields = ['package_name', 'store_url'];
+    const fields = ['package_name', 'fallback_http_url'];
 
     fields.forEach((f) => android.get(f).setValue(''));
     expect(android.valid).toBe(false);

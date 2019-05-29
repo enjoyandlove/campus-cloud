@@ -3,6 +3,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
 
+import { CPSession } from '@app/session';
 import { CPI18nService } from '@app/shared/services';
 import { CPDropdownComponent } from '@shared/components';
 import { configureTestSuite } from '@client/app/shared/tests';
@@ -19,7 +20,7 @@ describe('WallsIntegrationFormComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        providers: [CPI18nService],
+        providers: [CPI18nService, CPSession],
         imports: [SharedModule, ReactiveFormsModule, HttpClientModule],
         declarations: [WallsIntegrationFormComponent, IntegrationRequiredFieldsComponent]
       });

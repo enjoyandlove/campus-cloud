@@ -145,14 +145,10 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
 
   private buildGroup() {
     const control = <FormArray>this.form.controls['events'];
-    const selectedCheckInOption = this.checkInOptions.filter(
-      (selected) => selected.action === attendanceType.checkInOnly
-    )[0];
 
     this.events.forEach((event, index) => {
       control.push(this.buildEventControl(event));
       this.isSingleChecked.push({ index, checked: false });
-      this.selectedCheckInOption[index] = selectedCheckInOption;
     });
 
     this.isFormReady = true;
@@ -185,7 +181,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
       event_feedback: [EventFeedback.enabled],
       title: [event.title, Validators.required],
       has_checkout: [attendanceType.checkInOnly],
-      event_attendance: [EventAttendance.enabled],
+      event_attendance: [EventAttendance.disabled],
       managers: [[{ label: '---', event: null }]],
       poster_thumb_url: [null, Validators.required],
       end: [CPDate.toEpoch(event.end_date, this.session.tz), Validators.required],

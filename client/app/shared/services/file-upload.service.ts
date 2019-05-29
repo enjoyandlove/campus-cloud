@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 
 import { API } from '@app/config/api';
+import { CPSession } from '@app/session';
 import { CPLogger } from '@shared/services';
 import { CPI18nService } from '@shared/services';
 import { appStorage } from '@shared/utils/storage';
@@ -46,7 +47,11 @@ export class FileUploadService {
     });
   }
 
-  constructor(private http: HttpClient, private cpI18n: CPI18nService) {}
+  constructor(
+    private http: HttpClient,
+    private session: CPSession,
+    private cpI18n: CPI18nService
+  ) {}
 
   validImage(file: File, imageSize?: number): { valid: boolean; errors: Array<string> } {
     const maxSize = imageSize ? imageSize : this.maxImageSize;
@@ -129,7 +134,8 @@ export class FileUploadService {
 
     const formData: FormData = new FormData();
 
-    formData.append('file', media, media.name);
+    formData.set('tz', this.session.tz);
+    formData.set('file', media, media.name);
 
     return this.http.post(url, formData, { headers: customHeaders ? customHeaders : headers }).pipe(
       catchError((err) => {

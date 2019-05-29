@@ -23,8 +23,8 @@ export class PersonasResourceExternalAppOpenComponent implements OnInit {
   constructor(private fb: FormBuilder) {}
 
   validateIOS(control: FormControl) {
-    const httpUrl = control.get('http_url').value.trim();
-    const storeUrl = control.get('store_url').value.trim();
+    const httpUrl = control.get('app_link').value.trim();
+    const storeUrl = control.get('fallback_http_url').value.trim();
 
     return !httpUrl && !storeUrl ? { requiredField: true } : null;
   }
@@ -35,24 +35,24 @@ export class PersonasResourceExternalAppOpenComponent implements OnInit {
 
     const _linkParams = {
       android: {
-        store_url: android ? params.android.store_url : '',
+        fallback_http_url: android ? params.android.fallback_http_url : '',
         package_name: android ? params.android.package_name : ''
       },
       ios: {
-        store_url: ios ? params.ios.store_url : '',
-        http_url: ios ? params.ios.http_url : ''
+        fallback_http_url: ios ? params.ios.fallback_http_url : '',
+        app_link: ios ? params.ios.app_link : ''
       }
     };
 
     const form = this.fb.group({
       android: this.fb.group({
-        store_url: [_linkParams.android.store_url, Validators.required],
+        fallback_http_url: [_linkParams.android.fallback_http_url, Validators.required],
         package_name: [_linkParams.android.package_name, Validators.required]
       }),
       ios: this.fb.group(
         {
-          store_url: [_linkParams.ios.store_url],
-          http_url: [_linkParams.ios.http_url]
+          fallback_http_url: [_linkParams.ios.fallback_http_url],
+          app_link: [_linkParams.ios.app_link]
         },
         { validators: this.validateIOS }
       )

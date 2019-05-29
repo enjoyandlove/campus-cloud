@@ -1,13 +1,14 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
+import { pageTitle } from '@shared/constants';
 import { DiningCategoriesListComponent } from './list';
 
 const appRoutes: Routes = [
   {
     path: 'categories',
     component: DiningCategoriesListComponent,
-    data: { zendesk: 'categories' }
+    data: { zendesk: 'categories', title: pageTitle.MANAGE_DINING }
   }
 ];
 
