@@ -46,10 +46,9 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   @Input() reset: Observable<boolean>;
 
   @Output() submit: EventEmitter<any> = new EventEmitter();
-  @Output() cancel: EventEmitter<any> = new EventEmitter();
+  @Output() cancel: EventEmitter<null> = new EventEmitter();
 
   loading;
-  item = {};
   query = null;
   state: IState = state;
   permissionType = permissionType;
@@ -109,16 +108,16 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   }
 
   emitAndClose() {
-    this.cancel.emit(this.item);
+    this.cancel.emit();
   }
 
   onSubmit() {
-    this.item = {};
+    const _item = {};
     const _state = [...this.state.selected];
 
     _state.map((item) => {
       if (item.checked) {
-        this.item['store_id' in item.data ? item.data.store_id : item.data.id] = {
+        _item['store_id' in item.data ? item.data.store_id : item.data.id] = {
           [this.privilegeType]: {
             r: true,
             w: item.type === permissionType.write
@@ -135,7 +134,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
 
         // if its a club we grant them access to extra privileges
         if (!('store_id' in item.data)) {
-          this.item[item.data.id] = Object.assign({}, this.item[item.data.id], {
+          _item[item.data.id] = Object.assign({}, _item[item.data.id], {
             [CP_PRIVILEGES_MAP.moderation]: {
               r: true,
               w: true
@@ -149,7 +148,7 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
       }
     });
 
-    this.submit.emit(this.item);
+    this.submit.emit(_item);
   }
 
   updateState(items) {

@@ -418,10 +418,21 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.accountPrivileges = {};
   }
 
-  onServicesModalCancel(services) {
-    Object.keys(services).length
-      ? this.onServicesModalSelected(services)
-      : this.updateServicesDropdownLabel();
+  onServicesModalCancel() {
+    const numberOfServices = this.utils.getNumberOf(
+      CP_PRIVILEGES_MAP.services,
+      this.accountPrivileges
+    );
+
+    if (this.schoolPrivileges[CP_PRIVILEGES_MAP.services]) {
+      this.servicesCount = { label: this.cpI18n.translate('admin_all_services') };
+    } else if (numberOfServices) {
+      this.servicesCount = {
+        label: `${numberOfServices} ${this.cpI18n.translate('admin_form_label_services')}`
+      };
+    } else {
+      this.servicesCount = { label: this.cpI18n.translate('admin_no_access') };
+    }
   }
 
   onServicesModalSelected(services) {
@@ -506,8 +517,18 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     }
   }
 
-  onClubsModalCancel(clubs) {
-    Object.keys(clubs).length ? this.onClubsModalSelected(clubs) : this.updateClubsDropdownLabel();
+  onClubsModalCancel() {
+    const numberOfClubs = this.utils.getNumberOf(CP_PRIVILEGES_MAP.clubs, this.accountPrivileges);
+
+    if (this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs]) {
+      this.clubsCount = { label: this.cpI18n.translate('admin_all_clubs') };
+    } else if (numberOfClubs) {
+      this.clubsCount = {
+        label: `${numberOfClubs} ${this.cpI18n.translate('admin_form_label_clubs')}`
+      };
+    } else {
+      this.clubsCount = { label: this.cpI18n.translate('admin_no_access') };
+    }
   }
 
   onClubsModalSelected(clubs) {
@@ -520,10 +541,21 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...clubs);
   }
 
-  onAthleticsModalCancel(athletics) {
-    Object.keys(athletics).length
-      ? this.onAthleticsModalSelected(athletics)
-      : this.updateAthleticsDropdownLabel();
+  onAthleticsModalCancel() {
+    const numberOfAthletics = this.utils.getNumberOf(
+      CP_PRIVILEGES_MAP.athletics,
+      this.accountPrivileges
+    );
+
+    if (this.schoolPrivileges[CP_PRIVILEGES_MAP.athletics]) {
+      this.athleticsCount = { label: this.cpI18n.translate('admin_all_athletics') };
+    } else if (numberOfAthletics) {
+      this.athleticsCount = {
+        label: `${numberOfAthletics} ${this.cpI18n.translate('admin_form_label_athletics')}`
+      };
+    } else {
+      this.athleticsCount = { label: this.cpI18n.translate('admin_no_access') };
+    }
   }
 
   onAthleticsModalSelected(athletics) {

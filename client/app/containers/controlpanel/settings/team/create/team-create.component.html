@@ -414,7 +414,7 @@
   modalId="selectServicesModal">
   <cp-select-services-modal
     [reset]="resetServiceModal$"
-    (cancel)="onServicesModalSelected($event)"
+    (cancel)="onCancelServiceModal()"
     (selected)="onServicesModalSelected($event)">
   </cp-select-services-modal>
 </cp-modal>
@@ -425,7 +425,7 @@
   modalId="selectClubsModal">
   <cp-select-clubs-modal
     [reset]="resetClubsModal$"
-    (cancel)="onClubsModalSelected($event)"
+    (cancel)="onCancelClubsModal()"
     (selected)="onClubsModalSelected($event)">
   </cp-select-clubs-modal>
 </cp-modal>
@@ -436,7 +436,7 @@
   modalId="selectAthleticsModal">
   <cp-select-athletics-modal
     [reset]="resetAthleticsModal$"
-    (cancel)="onAthleticsModalSelected($event)"
+    (cancel)="onCancelAthleticsModal()"
     (selected)="onAthleticsModalSelected($event)"
     [selectedAthletics]="accountPrivileges">
   </cp-select-athletics-modal>

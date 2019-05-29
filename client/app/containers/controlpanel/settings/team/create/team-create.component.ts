@@ -57,12 +57,12 @@ export class TeamCreateComponent implements OnInit {
   form: FormGroup;
   isAthleticsModal;
   canReadAthletics;
-  accountPrivileges;
   isAllAccessEnabled;
   clubsCount = null;
   servicesCount = null;
   athleticsCount = null;
   schoolPrivileges = {};
+  accountPrivileges = {};
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
 
@@ -220,6 +220,23 @@ export class TeamCreateComponent implements OnInit {
     this.accountPrivileges = {};
   }
 
+  onCancelServiceModal() {
+    const numberOfServices = this.utils.getNumberOf(
+      CP_PRIVILEGES_MAP.services,
+      this.accountPrivileges
+    );
+
+    if (this.schoolPrivileges[CP_PRIVILEGES_MAP.services]) {
+      this.servicesCount = { label: this.cpI18n.translate('admin_all_services') };
+    } else if (numberOfServices) {
+      this.servicesCount = {
+        label: `${numberOfServices} ${this.cpI18n.translate('admin_form_label_services')}`
+      };
+    } else {
+      this.servicesCount = { label: this.cpI18n.translate('admin_no_access') };
+    }
+  }
+
   onServicesModalSelected(services) {
     this.doServicesCleanUp();
 
@@ -272,6 +289,20 @@ export class TeamCreateComponent implements OnInit {
     }
   }
 
+  onCancelClubsModal() {
+    const numberOfClubs = this.utils.getNumberOf(CP_PRIVILEGES_MAP.clubs, this.accountPrivileges);
+
+    if (this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs]) {
+      this.clubsCount = { label: this.cpI18n.translate('admin_all_clubs') };
+    } else if (numberOfClubs) {
+      this.clubsCount = {
+        label: `${numberOfClubs} ${this.cpI18n.translate('admin_form_label_clubs')}`
+      };
+    } else {
+      this.clubsCount = { label: this.cpI18n.translate('admin_no_access') };
+    }
+  }
+
   onClubsModalSelected(clubs) {
     this.doClubsCleanUp();
 
@@ -281,6 +312,23 @@ export class TeamCreateComponent implements OnInit {
       : null;
 
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...clubs);
+  }
+
+  onCancelAthleticsModal() {
+    const numberOfAthletics = this.utils.getNumberOf(
+      CP_PRIVILEGES_MAP.athletics,
+      this.accountPrivileges
+    );
+
+    if (this.schoolPrivileges[CP_PRIVILEGES_MAP.athletics]) {
+      this.athleticsCount = { label: this.cpI18n.translate('admin_all_athletics') };
+    } else if (numberOfAthletics) {
+      this.athleticsCount = {
+        label: `${numberOfAthletics} ${this.cpI18n.translate('admin_form_label_athletics')}`
+      };
+    } else {
+      this.athleticsCount = { label: this.cpI18n.translate('admin_no_access') };
+    }
   }
 
   onAthleticsModalSelected(athletics) {
