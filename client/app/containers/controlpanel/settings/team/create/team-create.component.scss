@@ -86,8 +86,7 @@ p {
     }
   }
 
-  &.isDisabled,
-  fieldset.isDisabled {
+  &.isDisabled {
     opacity: 0.5;
   }
 }

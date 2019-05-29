@@ -122,6 +122,25 @@ export class TeamCreateComponent implements OnInit {
     }
   }
 
+  hasStorePrivileges() {
+    const regular = this.schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
+    const emergency = this.schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement];
+
+    const storePrivileges = this.utils.hasStorePrivileges(
+      this.schoolPrivileges,
+      this.accountPrivileges
+    );
+
+    if (regular || emergency) {
+      this.buttonData = {
+        ...this.buttonData,
+        disabled: !storePrivileges
+      };
+    }
+
+    return storePrivileges;
+  }
+
   onSubmit(data) {
     this.formError = null;
     this.isFormError = false;
@@ -133,11 +152,6 @@ export class TeamCreateComponent implements OnInit {
       });
 
       return;
-    }
-
-    if (!this.utils.hasStorePrivileges(this.schoolPrivileges, this.accountPrivileges)) {
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
-      delete this.schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement];
     }
 
     const _data = {
