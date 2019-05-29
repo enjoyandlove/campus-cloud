@@ -126,7 +126,7 @@ export class TeamCreateComponent implements OnInit {
     const regular = this.schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
     const emergency = this.schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement];
 
-    const storePrivileges = this.utils.hasStorePrivileges(
+    const hasStorePrivileges = this.utils.hasStorePrivileges(
       this.schoolPrivileges,
       this.accountPrivileges
     );
