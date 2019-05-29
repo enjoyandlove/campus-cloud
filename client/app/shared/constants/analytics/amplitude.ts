@@ -49,6 +49,8 @@ export const amplitudeEvents = {
 
   CUSTOM: 'Custom',
 
+  SCHOOL: 'School',
+
   DEFAULT: 'Default',
 
   NO_DATE: 'No Date',
@@ -132,6 +134,8 @@ export const amplitudeEvents = {
   ASSESSMENT: 'Assessment',
 
   MENU_AUDIENCE: 'Audience',
+
+  TEST_SCHOOL: 'Test School',
 
   CAMPUS_WIDE: 'Campus Wide',
 

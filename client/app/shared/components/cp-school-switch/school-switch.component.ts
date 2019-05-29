@@ -44,9 +44,12 @@ export class SchoolSwitchComponent implements OnInit {
     this.isSchoolPanel = !this.isSchoolPanel;
   }
 
-  trackEvent(eventName) {
+  trackEvent(eventName, school) {
+    const name = school.is_sandbox ? amplitudeEvents.TEST_SCHOOL : amplitudeEvents.SCHOOL;
+
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
+      name,
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
 
