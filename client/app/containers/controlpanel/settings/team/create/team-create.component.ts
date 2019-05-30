@@ -134,11 +134,11 @@ export class TeamCreateComponent implements OnInit {
     if (regular || emergency) {
       this.buttonData = {
         ...this.buttonData,
-        disabled: !storePrivileges
+        disabled: !hasStorePrivileges
       };
     }
 
-    return storePrivileges;
+    return hasStorePrivileges;
   }
 
   onSubmit(data) {
