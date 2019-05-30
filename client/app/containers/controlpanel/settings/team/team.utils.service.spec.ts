@@ -1,6 +1,6 @@
+import { CPI18nService } from '@shared/services';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
 import { TeamUtilsService } from './team.utils.service';
-import { CPI18nService } from '../../../../shared/services';
-import { CP_PRIVILEGES_MAP } from './../../../../shared/constants/privileges';
 
 const privilegeSet = { r: true, w: true };
 
@@ -86,5 +86,36 @@ describe('TeamUtilsService', () => {
     };
 
     expect(service.hasFullStudioPrivilege(fullPrivileges)).toBe(true);
+  });
+
+  it('should check required privileges for notify', () => {
+    let schoolPrivileges = {};
+    let accountPrivileges = {};
+
+    expect(service.hasStorePrivileges(schoolPrivileges, accountPrivileges)).toBe(false);
+
+    schoolPrivileges = {
+      [CP_PRIVILEGES_MAP.athletics]: privilegeSet
+    };
+
+    expect(service.hasStorePrivileges(schoolPrivileges, accountPrivileges)).toBe(true);
+
+    schoolPrivileges = {
+      [CP_PRIVILEGES_MAP.services]: privilegeSet
+    };
+
+    expect(service.hasStorePrivileges(schoolPrivileges, accountPrivileges)).toBe(true);
+
+    schoolPrivileges = {
+      [CP_PRIVILEGES_MAP.clubs]: privilegeSet
+    };
+
+    expect(service.hasStorePrivileges(schoolPrivileges, accountPrivileges)).toBe(true);
+
+    accountPrivileges = {
+      [587]: { [CP_PRIVILEGES_MAP.clubs]: privilegeSet }
+    };
+
+    expect(service.hasStorePrivileges(schoolPrivileges, accountPrivileges)).toBe(true);
   });
 });

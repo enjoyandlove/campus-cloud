@@ -6,17 +6,13 @@ import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
-import { CPSession } from '../../../../../session';
-import { baseActions, IHeader } from '../../../../../store/base';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
-import { MODAL_TYPE } from '../../../../../shared/components/cp-modal';
-import { AdminService, ErrorService, CPI18nService } from '../../../../../shared/services';
-
-import {
-  accountsToStoreMap,
-  canAccountLevelReadResource
-} from './../../../../../shared/utils/privileges/privileges';
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
+import { MODAL_TYPE } from '@shared/components';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { baseActions, IHeader } from '@app/store/base';
+import { AdminService, ErrorService, CPI18nService } from '@shared/services';
+import { accountsToStoreMap, canAccountLevelReadResource } from '@shared/utils/privileges';
 
 import {
   clubMenu,
@@ -286,6 +282,25 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         disabled: !this.form.valid
       });
     });
+  }
+
+  hasStorePrivileges() {
+    const regular = this.schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
+    const emergency = this.schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement];
+
+    const storePrivileges = this.utils.hasStorePrivileges(
+      this.schoolPrivileges,
+      this.accountPrivileges
+    );
+
+    if (regular || emergency) {
+      this.buttonData = {
+        ...this.buttonData,
+        disabled: !storePrivileges
+      };
+    }
+
+    return storePrivileges;
   }
 
   onSubmit(data) {

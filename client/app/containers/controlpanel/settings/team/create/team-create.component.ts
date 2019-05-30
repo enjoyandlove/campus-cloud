@@ -57,12 +57,12 @@ export class TeamCreateComponent implements OnInit {
   form: FormGroup;
   isAthleticsModal;
   canReadAthletics;
-  accountPrivileges;
   isAllAccessEnabled;
   clubsCount = null;
   servicesCount = null;
   athleticsCount = null;
   schoolPrivileges = {};
+  accountPrivileges = {};
   MODAL_TYPE = MODAL_TYPE.WIDE;
   CP_PRIVILEGES_MAP = CP_PRIVILEGES_MAP;
 
@@ -120,6 +120,25 @@ export class TeamCreateComponent implements OnInit {
         }
       });
     }
+  }
+
+  hasStorePrivileges() {
+    const regular = this.schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
+    const emergency = this.schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement];
+
+    const hasStorePrivileges = this.utils.hasStorePrivileges(
+      this.schoolPrivileges,
+      this.accountPrivileges
+    );
+
+    if (regular || emergency) {
+      this.buttonData = {
+        ...this.buttonData,
+        disabled: !storePrivileges
+      };
+    }
+
+    return storePrivileges;
   }
 
   onSubmit(data) {
