@@ -288,7 +288,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     const regular = this.schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
     const emergency = this.schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement];
 
-    const storePrivileges = this.utils.hasStorePrivileges(
+    const hasStorePrivileges = this.utils.hasStorePrivileges(
       this.schoolPrivileges,
       this.accountPrivileges
     );
@@ -296,11 +296,11 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     if (regular || emergency) {
       this.buttonData = {
         ...this.buttonData,
-        disabled: !storePrivileges
+        disabled: !hasStorePrivileges
       };
     }
 
-    return storePrivileges;
+    return hasStorePrivileges;
   }
 
   onSubmit(data) {
