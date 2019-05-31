@@ -225,6 +225,17 @@
 
             <div
               class="col-4"
+              [class.isDisabled]="!formData.content.dining.active">
+              <cp-checkbox
+                class="cpcheckbox"
+                [label]="cpI18n.translate('dining')"
+                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.dining, formData.content.dining)"
+                [isDisabled]="!formData.content.dining.active">
+              </cp-checkbox>
+            </div>
+
+            <!-- <div
+              class="col-4"
               [class.isDisabled]="!formData.content.links.active">
               <cp-checkbox
                 class="cpcheckbox"
@@ -232,7 +243,7 @@
                 (toggle)="checkControl($event, CP_PRIVILEGES_MAP.links, formData.content.links)"
                 [isDisabled]="!formData.content.links.active">
               </cp-checkbox>
-            </div>
+            </div> -->
           </div>
 
           <div class="row options-row">
@@ -297,16 +308,6 @@
                 [label]="cpI18n.translate('deals')"
                 (toggle)="checkControl($event, CP_PRIVILEGES_MAP.deals, formData.content.deals)"
                 [isDisabled]="!formData.content.deals.active">
-              </cp-checkbox>
-            </div>
-            <div
-              class="col-4"
-              [class.isDisabled]="!formData.content.dining.active">
-              <cp-checkbox
-                class="cpcheckbox"
-                [label]="cpI18n.translate('dining')"
-                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.dining, formData.content.dining)"
-                [isDisabled]="!formData.content.dining.active">
               </cp-checkbox>
             </div>
           </div>
