@@ -36,13 +36,10 @@ p {
   &.section-description {
     color: $color-med-grey;
   }
+}
 
-  button {
-    @include font-12px();
-    @include font-normal();
-
-    margin-left: 10px;
-  }
+.material-icons {
+  @include font-14px();
 }
 
 .all-access {
