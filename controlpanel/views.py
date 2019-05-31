@@ -36,6 +36,7 @@ Parse Mass Event Invite
 '''
 @csrf_exempt
 def import_events(request):
+    time_zone = request.POST['tz'];
     csv_file = request.FILES['file']
     column_names = ['Title', 'Description', 'Start_Date', 'End_Date', 'Location', 'Room']
 
@@ -71,14 +72,14 @@ def import_events(request):
             item[column] = parser.date_str_to_formated_date(item[column])
 
 
-        if parser.date_not_in_past(item['start_date']) is False:
+        if parser.date_not_in_past(item['start_date'], time_zone) is False:
             error = '{} Start date can not be in the past'.format(item['title'])
 
             return JsonResponse({"error": error}, safe=False, status=400)
 
 
         if parser.future_dates_is_greater_than_past(item['end_date'],
-                                                    item['start_date']) is False:
+                                                    item['start_date'], time_zone) is False:
             error = '{} Start date can not be greater than end date'.format(item['title'])
             return JsonResponse({"error": error}, safe=False, status=400)
 

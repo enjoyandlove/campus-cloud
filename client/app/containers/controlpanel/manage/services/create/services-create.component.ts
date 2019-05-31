@@ -174,6 +174,7 @@ export class ServicesCreateComponent implements OnInit {
 
     if (!this.form.valid) {
       this.formError = true;
+      this.enableSaveButton();
 
       return;
     }
@@ -251,7 +252,7 @@ export class ServicesCreateComponent implements OnInit {
     this.categoryTooltip = this.cpI18n.translate('manage_create_service_category_tooltip');
 
     this.buttonData = {
-      disabled: true,
+      disabled: false,
       class: 'primary',
       text: this.cpI18n.translate('services_create_button_create')
     };
@@ -269,7 +270,6 @@ export class ServicesCreateComponent implements OnInit {
       longitude: [0],
       address: [null],
       country: [null],
-      website: [null],
       location: [null],
       province: [null],
       room_data: [null],
@@ -280,17 +280,11 @@ export class ServicesCreateComponent implements OnInit {
       has_membership: [null],
       service_attendance: [null],
       rating_scale_maximum: [null],
-      name: [null, Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])],
       logo_url: [null, Validators.required],
       category: [null, Validators.required],
-      default_basic_feedback_label: [this.cpI18n.translate('services_default_feedback_question')]
-    });
-
-    this.form.valueChanges.subscribe((_) => {
-      this.buttonData = {
-        ...this.buttonData,
-        disabled: !this.form.valid
-      };
+      website: [null, Validators.maxLength(120)],
+      default_basic_feedback_label: [this.cpI18n.translate('services_default_feedback_question')],
+      name: [null, Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])]
     });
   }
 }

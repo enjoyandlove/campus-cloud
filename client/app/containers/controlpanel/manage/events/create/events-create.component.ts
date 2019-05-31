@@ -15,6 +15,7 @@ import { CustomValidators } from '@shared/validators';
 import { EventUtilService } from '../events.utils.service';
 import { amplitudeEvents } from '@shared/constants/analytics';
 import { EventsComponent } from '../list/base/events.component';
+import { EventsAmplitudeService } from '../events.amplitude.service';
 import {
   isAllDay,
   CheckInMethod,
@@ -23,7 +24,13 @@ import {
   EventAttendance
 } from '../event.status';
 
-import { AdminService, CPI18nService, CPTrackingService, StoreService } from '@shared/services';
+import {
+  AdminService,
+  ModalService,
+  StoreService,
+  CPI18nService,
+  CPTrackingService
+} from '@shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';
@@ -62,6 +69,7 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
   startdatePickerOpts;
   eventFeedbackEnabled;
   showLocationDetails = false;
+  addedHost = amplitudeEvents.NO;
   mapCenter: BehaviorSubject<any>;
   managers: Array<any> = [{ label: '---' }];
   newAddress = new BehaviorSubject(null);
@@ -69,13 +77,12 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
 
   eventProperties = {
     event_id: null,
-    host_type: null,
-    start_date: null,
-    end_date: null,
     location: null,
-    assessment: null,
     feedback: null,
-    uploaded_photo: null
+    host_type: null,
+    description: null,
+    qr_code_status: null,
+    assessment_status: null
   };
 
   constructor(
@@ -88,9 +95,10 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
     public utils: EventUtilService,
     public adminService: AdminService,
     public storeService: StoreService,
+    public modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
-    super(session, cpI18n, service);
+    super(session, cpI18n, service, modalService);
   }
 
   buildHeader() {
@@ -131,6 +139,7 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
       host_type: host.hostType
     };
 
+    this.addedHost = amplitudeEvents.YES;
     this.fetchManagersBySelectedStore(host.value);
 
     this.form.controls['store_id'].setValue(host.value);
@@ -294,7 +303,7 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
       (res: any) => {
         this.eventProperties = {
           ...this.eventProperties,
-          ...this.utils.setEventProperties(this.form.controls),
+          ...EventsAmplitudeService.getEventProperties(this.form.value),
           event_id: res.id
         };
 
@@ -405,13 +414,16 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
   }
 
   trackCancelEvent() {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.utils.setEventProperties(this.form.controls),
-      uploaded_photo: this.utils.didUploadPhoto(this.form.controls['poster_url'].value)
+    const event = this.form.value;
+
+    const eventProperties = {
+      ...EventsAmplitudeService.getEventProperties(event),
+      added_host: this.addedHost,
+      added_date: EventsAmplitudeService.getDateStatus(event),
+      uploaded_image: EventsAmplitudeService.getPropertyStatus(event.poster_url)
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CANCELED_EVENT, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CANCELED_EVENT, eventProperties);
   }
 
   setStart(date) {

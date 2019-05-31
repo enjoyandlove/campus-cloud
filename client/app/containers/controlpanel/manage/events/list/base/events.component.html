@@ -55,15 +55,6 @@
   </div>
 </div>
 
-<cp-modal modalId="deleteEventsModal">
-  <cp-events-delete
-    [event]="deletedEvent"
-    [orientationId]="orientationId"
-    [isOrientation]="orientation"
-    (deletedEvent)="onDeletedEvent($event)">
-  </cp-events-delete>
-</cp-modal>
-
 <cp-modal modalId="excelEventsModal">
   <cp-events-excel-modal
     [clubId]="clubId"

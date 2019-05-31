@@ -5,7 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
  * CRUD
  */
 import { LinksListComponent } from './list';
-import { PrivilegesGuard } from '../../../../config/guards';
+import { pageTitle } from '@shared/constants';
+import { PrivilegesGuard } from '@app/config/guards';
 
 const appRoutes: Routes = [
   {
@@ -19,7 +20,7 @@ const appRoutes: Routes = [
     path: '',
     canActivate: [PrivilegesGuard],
     component: LinksListComponent,
-    data: { zendesk: 'links' }
+    data: { zendesk: 'links', title: pageTitle.MANAGE_LINKS }
   }
 ];
 @NgModule({

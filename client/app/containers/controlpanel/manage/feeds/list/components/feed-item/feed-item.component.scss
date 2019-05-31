@@ -12,19 +12,29 @@
     padding: 0;
   }
 
+  &__header {
+    display: flex;
+    padding-top: $default_padding;
+    justify-content: space-between;
+  }
+
   &__body,
   &__header,
   &__comments {
-    @include card-padding();
+    padding-left: $default_padding;
+    padding-right: $default_padding;
   }
 
-  &__comments {
-    border-radius: 0 0 4px 4px;
-    background: $color-text-alt;
-    border-top: 1px solid $color-med-grey;
+  &__body {
+    padding-top: $default_padding;
+    padding-bottom: $default_padding;
   }
 
   &__comments {
     padding-bottom: 10px;
+    border-radius: 0 0 4px 4px;
+    background: $color-text-alt;
+    padding-top: $default_padding;
+    border-top: 1px solid $color-med-grey;
   }
 }

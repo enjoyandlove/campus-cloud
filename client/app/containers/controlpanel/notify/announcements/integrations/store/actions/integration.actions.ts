@@ -38,7 +38,7 @@ export class GetIntegrationsFail implements Action {
 export class DeleteIntegrations implements Action {
   readonly type = IntegrationActions.DELETE_INTEGRATIONS;
 
-  constructor(public payload: { integrationId: number }) {}
+  constructor(public payload: { integration: IAnnouncementsIntegration }) {}
 }
 
 export class DeleteIntegrationsSuccess implements Action {

@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { pageTitle } from '@shared/constants';
 import { CategoriesListComponent } from './list';
 
 const appRoutes: Routes = [
   {
     path: 'categories',
     component: CategoriesListComponent,
-    data: { zendesk: 'categories' }
+    data: { zendesk: 'categories', title: pageTitle.MANAGE_LOCATIONS }
   }
 ];
 

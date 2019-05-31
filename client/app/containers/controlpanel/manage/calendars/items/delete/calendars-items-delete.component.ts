@@ -2,11 +2,11 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
-import { CPSession } from './../../../../../../session';
+import { CPSession } from '@app/session';
+import { amplitudeEvents } from '@shared/constants';
 import { CalendarsService } from '../../calendars.services';
-import { CPTrackingService } from '../../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { CPTrackingService, CPI18nService } from '@shared/services';
+import { CalendarAmplitudeService } from '../../calendar.amplitude.service';
 
 @Component({
   selector: 'cp-calendars-items-delete',
@@ -18,7 +18,6 @@ export class CalendarsItemsDeleteComponent implements OnInit {
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   buttonData;
-  eventProperties;
   calendarId: number;
 
   constructor(
@@ -48,13 +47,10 @@ export class CalendarsItemsDeleteComponent implements OnInit {
   }
 
   trackEvent() {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.CALENDAR_EVENTS
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.MANAGE_DELETED_CALENDAR_EVENT,
+      CalendarAmplitudeService.getCalendarEventItemProperties(this.item)
+    );
   }
 
   ngOnInit() {

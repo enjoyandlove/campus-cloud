@@ -2933,6 +2933,9 @@
   "t_personas_resource_edit_modal_title": {
     "message": "Éditer ressource"
   },
+  "t_personas_resource_web_link": {
+    "message": "Lien Web"
+  },
   "t_personas_section_button_add_section": {
     "message": "Ajouter section"
   },

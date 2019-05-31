@@ -66,3 +66,12 @@
     </cp-personas-resource-service-by-category>
   </div>
 </div>
+
+<div class="row" *ngIf="resourceSelection === 'external_app_open'">
+  <div class="col-12">
+    <cp-personas-resource-external-app-open
+      [params]="resource.link_params"
+      (selected)="selected.emit($event)">
+    </cp-personas-resource-external-app-open>
+  </div>
+</div>

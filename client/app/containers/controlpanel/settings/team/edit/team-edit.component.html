@@ -227,6 +227,18 @@
 
               <div
                 class="col-4"
+                [class.isDisabled]="!formData.content.dining.active">
+                <cp-checkbox
+                  class="cpcheckbox"
+                  [label]="cpI18n.translate('dining')"
+                  [isDisabled]="!formData.content.dining.active"
+                  [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.dining]"
+                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.dining, formData.content.dining)">
+                </cp-checkbox>
+              </div>
+
+              <!-- <div
+                class="col-4"
                 [class.isDisabled]="!formData.content.links.active">
                 <cp-checkbox
                   class="cpcheckbox"
@@ -235,7 +247,7 @@
                   [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.links]"
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.links, formData.content.links)">
                 </cp-checkbox>
-              </div>
+              </div> -->
             </div>
 
             <div class="row options-row">
@@ -307,18 +319,6 @@
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.deals, formData.content.deals)">
                 </cp-checkbox>
               </div>
-
-              <div
-                class="col-4"
-                [class.isDisabled]="!formData.content.dining.active">
-                <cp-checkbox
-                  class="cpcheckbox"
-                  [label]="cpI18n.translate('dining')"
-                  [isDisabled]="!formData.content.dining.active"
-                  [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.dining]"
-                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.dining, formData.content.dining)">
-                </cp-checkbox>
-              </div>
             </div>
           </div>
           <!-- END App Content -->
@@ -327,40 +327,47 @@
           <div class="section__item">
             <div class="row">
               <div class="col-12">
-                <p class="section-sub-title">{{ 'notify' | cpI18n }}</p>
+                <p class="section-sub-title">
+                  {{ 'notify' | cpI18n }}
+                    <i
+                      cpTooltip
+                      class="material-icons"
+                      *ngIf="!hasStorePrivileges()"
+                      [attr.title]="'t_admin_invite_notify_permission_tooltip' | cpI18n">
+                      lock
+                    </i>
+                </p>
                 <p class="section-description">
                   {{ 'admin_notify_help' | cpI18n }}
                 </p>
               </div>
             </div>
-            <div class="row">
-              <div class="col-12">
-                <div class="row options-row">
-                  <div
-                    class="col-5"
-                    [class.isDisabled]="!formData.notify.campus.active">
-                    <cp-checkbox
-                      class="cpcheckbox"
-                      [label]="cpI18n.translate('admin_campus_announcements')"
-                      [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements]"
-                      [isDisabled]="!formData.notify.campus.active"
-                      (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_announcements, formData.notify.campus)">
-                    </cp-checkbox>
-                  </div>
-                  <div
-                    class="col-5"
-                    [class.isDisabled]="!formData.notify.emergency.active">
-                    <cp-checkbox
-                      class="cpcheckbox"
-                      [isDisabled]="!formData.notify.emergency.active"
-                      [label]="cpI18n.translate('admin_emergency_announcements')"
-                      [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement]"
-                      (toggle)="checkControl($event, CP_PRIVILEGES_MAP.emergency_announcement, formData.notify.emergency)">
-                    </cp-checkbox>
+            <fieldset [disabled]="!hasStorePrivileges()">
+              <div class="section row" [class.isDisabled]="!hasStorePrivileges()">
+                <div class="col-12">
+                  <div class="row options-row">
+                    <div class="col-5" [class.isDisabled]="!formData.notify.campus.active">
+                      <cp-checkbox
+                        class="cpcheckbox"
+                        [isDisabled]="!formData.notify.campus.active"
+                        [label]="'admin_campus_announcements' | cpI18n"
+                        [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements]"
+                        (toggle)="checkControl($event, CP_PRIVILEGES_MAP.campus_announcements, formData.notify.campus)">
+                      </cp-checkbox>
+                    </div>
+                    <div class="col-5" [class.isDisabled]="!formData.notify.emergency.active">
+                      <cp-checkbox
+                        class="cpcheckbox"
+                        [isDisabled]="!formData.notify.emergency.active"
+                        [label]="'admin_emergency_announcements' | cpI18n"
+                        [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement]"
+                        (toggle)="checkControl($event, CP_PRIVILEGES_MAP.emergency_announcement, formData.notify.emergency)">
+                      </cp-checkbox>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </fieldset>
           </div>
           <!-- END Notify -->
 

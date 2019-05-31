@@ -2,29 +2,11 @@ import { Injectable } from '@angular/core';
 import { FormGroup, ValidationErrors } from '@angular/forms';
 
 import IEvent from './event.interface';
-import { CPSession } from '../../../../session';
-import { Formats } from '../../../../shared/utils/csv';
-import { CPI18nService } from '../../../../shared/services';
-import { CPDate } from './../../../../shared/utils/date/date';
-import IServiceProvider from '../services/providers.interface';
-import { CP_PRIVILEGES_MAP } from '../../../../shared/constants';
-import { amplitudeEvents } from '../../../../shared/constants/analytics';
-import { createSpreadSheet } from '../../../../shared/utils/csv/parser';
-
-import {
-  qrCode,
-  Location,
-  Feedback,
-  EventType,
-  Assessment,
-  CheckInMethod,
-  EventCategory,
-  UploadedPhoto,
-  EventFeedback,
-  attendanceType,
-  CheckInOutTime,
-  EventAttendance
-} from './event.status';
+import { CPSession } from '@app/session';
+import { CPI18nService } from '@shared/services';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { CPDate, Formats, createSpreadSheet } from '@shared/utils';
+import { qrCode, EventType, attendanceType, CheckInOutTime, EventAttendance } from './event.status';
 
 export interface IEventType {
   event_id?: number;
@@ -114,18 +96,6 @@ export class EventUtilService {
     return '/cb/checkin/e/';
   }
 
-  getEventCategoryType(category: Number) {
-    if (category === EventCategory.athletics) {
-      return amplitudeEvents.ATHLETIC_EVENT;
-    } else if (category === EventCategory.club) {
-      return amplitudeEvents.CLUB_EVENT;
-    } else if (category === EventCategory.services) {
-      return amplitudeEvents.SERVICE_EVENT;
-    } else {
-      return amplitudeEvents.ORIENTATION_EVENT;
-    }
-  }
-
   getAttendanceTypeOptions() {
     return [
       {
@@ -165,22 +135,6 @@ export class EventUtilService {
     ];
   }
 
-  hasLocation(location) {
-    return location ? Location.yes : Location.no;
-  }
-
-  didUploadPhoto(photo) {
-    return photo ? UploadedPhoto.yes : UploadedPhoto.no;
-  }
-
-  getFeedbackStatus(feedback) {
-    return feedback === EventFeedback.enabled ? Feedback.enabled : Feedback.disabled;
-  }
-
-  getAssessmentStatus(assessment) {
-    return assessment === EventAttendance.enabled ? Assessment.on : Assessment.off;
-  }
-
   assessmentEnableCustomValidator(controls: FormGroup): ValidationErrors | null {
     const managerId = controls.get('event_manager_id').value;
     const eventFeedback = controls.get('event_feedback').value;
@@ -202,41 +156,6 @@ export class EventUtilService {
     }
 
     return null;
-  }
-
-  setEventProperties(data) {
-    const start_date = data['start'].value
-      ? CPDate.getMonth(data['start'].value, this.session.tz)
-      : null;
-
-    const end_date = data['end'].value ? CPDate.getMonth(data['end'].value, this.session.tz) : null;
-
-    return {
-      end_date,
-      start_date,
-      assessment: this.getAssessmentStatus(data['event_attendance'].value),
-      location: this.hasLocation(data['location'].value),
-      feedback: this.getFeedbackStatus(data['event_feedback'].value)
-    };
-  }
-
-  getQRCodeCheckOutStatus(data: IEvent | IServiceProvider, isEvent = false) {
-    const verificationMethod = isEvent
-      ? data['attend_verification_methods']
-      : data['checkin_verification_methods'];
-
-    const check_out_status = data['has_checkout']
-      ? amplitudeEvents.ENABLED
-      : amplitudeEvents.DISABLED;
-
-    const qr_code_status = verificationMethod.includes(CheckInMethod.app)
-      ? amplitudeEvents.ENABLED
-      : amplitudeEvents.DISABLED;
-
-    return {
-      qr_code_status,
-      check_out_status
-    };
   }
 
   createExcel(stream, showStudentIds = false, event) {

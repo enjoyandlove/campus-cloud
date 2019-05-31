@@ -17,9 +17,10 @@ import { environment } from '@client/environments/environment';
 import { EventsComponent } from '../list/base/events.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP, SortDirection } from '@shared/constants';
+import { EventsAmplitudeService } from '../events.amplitude.service';
 import { CheckInMethod, CheckInOutTime, CheckInOut } from '../event.status';
-import { CPI18nService, CPTrackingService, RouteLevel } from '@shared/services';
 import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
+import { CPI18nService, CPTrackingService, ModalService, RouteLevel } from '@shared/services';
 import { canSchoolReadResource, canSchoolWriteResource } from '@shared/utils/privileges/privileges';
 
 interface IState {
@@ -94,9 +95,10 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     private route: ActivatedRoute,
     public service: EventsService,
     public utils: EventUtilService,
+    public modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
-    super(session, cpI18n, service);
+    super(session, cpI18n, service, modalService);
     this.eventId = this.route.snapshot.params['eventId'];
     super.isLoading().subscribe((res) => (this.attendeesLoading = res));
   }
@@ -279,7 +281,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
       assessment_status,
       source_id: this.event.encrypted_id,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
-      assessment_type: this.utils.getEventCategoryType(this.event.store_category)
+      assessment_type: EventsAmplitudeService.getEventCategoryType(this.event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(
@@ -513,7 +515,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     const eventProperties = {
       source_id: event.encrypted_id,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
-      assessment_type: this.utils.getEventCategoryType(event.store_category)
+      assessment_type: EventsAmplitudeService.getEventCategoryType(event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_WEB_CHECK_IN, eventProperties);
@@ -521,10 +523,10 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
 
   trackQrCode(event) {
     const eventProperties = {
-      ...this.utils.getQRCodeCheckOutStatus(event, true),
+      ...EventsAmplitudeService.getQRCodeCheckOutStatus(event, true),
       source_id: this.event.encrypted_id,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
-      assessment_type: this.utils.getEventCategoryType(this.event.store_category)
+      assessment_type: EventsAmplitudeService.getEventCategoryType(this.event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHANGED_QR_CODE, eventProperties);
@@ -532,10 +534,10 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
 
   setCheckInEventProperties() {
     this.checkInEventProperties = {
-      ...this.utils.getQRCodeCheckOutStatus(this.event, true),
+      ...EventsAmplitudeService.getQRCodeCheckOutStatus(this.event, true),
       source_id: this.event.encrypted_id,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
-      assessment_type: this.utils.getEventCategoryType(this.event.store_category)
+      assessment_type: EventsAmplitudeService.getEventCategoryType(this.event.store_category)
     };
   }
 

@@ -6,24 +6,27 @@ import { HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import IEvent from '../event.interface';
 import { FORMAT } from '@shared/pipes/date';
 import { CPDate, CPMap } from '@shared/utils';
+import { CheckInMethod } from '../event.status';
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '@app/session';
-import { baseActions, IHeader } from '@app/store/base';
 import { CustomValidators } from '@shared/validators';
+import { baseActions, IHeader } from '@app/store/base';
 import { EventUtilService } from '../events.utils.service';
 import { amplitudeEvents } from '@shared/constants/analytics';
-import { CPI18nService } from '@shared/services/i18n.service';
 import { EventsComponent } from '../list/base/events.component';
 import { EventAttendance, EventFeedback } from './../event.status';
-import { CheckInMethod } from '@containers/controlpanel/manage/events/event.status';
+import { EventsAmplitudeService } from '../events.amplitude.service';
 import {
   RouteLevel,
   AdminService,
-  CPTrackingService,
   ErrorService,
-  StoreService
+  ModalService,
+  StoreService,
+  CPI18nService,
+  CPTrackingService
 } from '@shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
@@ -83,12 +86,14 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
 
   eventProperties = {
     event_id: null,
+    feedback: null,
     host_type: null,
-    start_date: null,
-    end_date: null,
-    location: null,
-    assessment: null,
-    feedback: null
+    qr_code_status: null,
+    creation_source: null,
+    assessment_status: null,
+    updated_description: null,
+    updated_image: amplitudeEvents.NO,
+    updated_location: amplitudeEvents.NO_CHANGES
   };
 
   constructor(
@@ -103,9 +108,10 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
     public storeService: StoreService,
     private errorService: ErrorService,
     public service: EventsService,
+    public modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
-    super(session, cpI18n, service);
+    super(session, cpI18n, service, modalService);
     this.school = this.session.g.get('school');
     this.eventId = this.route.snapshot.params['eventId'];
 
@@ -118,6 +124,11 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
 
     if (image) {
       this.trackUploadImageEvent();
+
+      this.eventProperties = {
+        ...this.eventProperties,
+        updated_image: amplitudeEvents.YES
+      };
     }
   }
 
@@ -171,13 +182,17 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
     }
 
     this.service.updateEvent(data, this.eventId, search).subscribe(
-      (_) => {
+      (event: IEvent) => {
         this.trackQrCode(data);
+
+        const description = this.form.get('description');
 
         this.eventProperties = {
           ...this.eventProperties,
-          ...this.utils.setEventProperties(this.form.controls),
-          event_id: this.eventId
+          ...EventsAmplitudeService.getEventProperties(this.form.value, true),
+          event_id: this.eventId,
+          creation_source: EventsAmplitudeService.getEventType(event.is_external),
+          updated_description: EventsAmplitudeService.getEventDescriptionStatus(description)
         };
 
         this.cpTracking.amplitudeEmitEvent(
@@ -486,6 +501,11 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
     this.form.controls['room_data'].setValue('');
     CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     this.centerMap(this.school.latitude, this.school.longitude);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      updated_location: amplitudeEvents.REMOVED_LOCATION
+    };
   }
 
   onMapSelection(data) {
@@ -512,6 +532,11 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
     }
 
     this.drawMarker.next(true);
+
+    this.eventProperties = {
+      ...this.eventProperties,
+      updated_location: amplitudeEvents.ADDED_LOCATION
+    };
 
     if ('fromUsersLocations' in data) {
       this.updateWithUserLocation(data);
@@ -556,15 +581,20 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
 
       this.form.controls['room_data'].setValue('');
       CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
+
+      this.eventProperties = {
+        ...this.eventProperties,
+        updated_location: amplitudeEvents.REMOVED_LOCATION
+      };
     }
   }
 
   trackQrCode(event) {
     const eventProperties = {
-      ...this.utils.getQRCodeCheckOutStatus(event, true),
+      ...EventsAmplitudeService.getQRCodeCheckOutStatus(event, true),
       source_id: this.event.encrypted_id,
       sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
-      assessment_type: this.utils.getEventCategoryType(this.event.store_category)
+      assessment_type: EventsAmplitudeService.getEventCategoryType(this.event.store_category)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHANGED_QR_CODE, eventProperties);

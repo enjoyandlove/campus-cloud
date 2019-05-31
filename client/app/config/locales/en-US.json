@@ -2289,6 +2289,9 @@
   "t_admin_invite_already_activated_error": {
     "message": "Your account has already been activated, click below to login"
   },
+  "t_admin_invite_notify_permission_tooltip": {
+    "message": "Sending notifications requires access to a host (club, service or athletic). Please add at least one permission in order to enable notify permissions."
+  },
   "t_admin_invite_studio_limited_tooltip": {
     "message": "Full access to Studio requires permission to Athletics, Events, Clubs, Services, Calendar and Orientation. Your access to add resources will be limited without those permissions."
   },
@@ -2936,6 +2939,18 @@
   "t_personas_resource_edit_modal_title": {
     "message": "Edit Resource"
   },
+  "t_personas_resource_resource": {
+    "message": "Resource"
+  },
+  "t_personas_resource_single_item": {
+    "message": "Single Item"
+  },
+  "t_personas_resource_third_party_app": {
+    "message": "3rd Party App"
+  },
+  "t_personas_resource_web_link": {
+    "message": "Web Link"
+  },
   "t_personas_section_button_add_section": {
     "message": "Add Section"
   },
@@ -2968,6 +2983,9 @@
   },
   "t_personas_tile_create_resource_type_event_list": {
     "message": "Events"
+  },
+  "t_personas_tile_create_resource_type_external_app_open": {
+    "message": "3rd Party App"
   },
   "t_personas_tile_create_resource_type_job_list": {
     "message": "Jobs"
@@ -3003,7 +3021,7 @@
     "message": "Resource"
   },
   "t_personas_tile_create_type_resource_resource_list": {
-    "message": "Resource List"
+    "message": "Custom List"
   },
   "t_personas_tile_create_type_resource_web_link": {
     "message": "In-App Web Link"
@@ -3046,6 +3064,10 @@
   },
   "t_personas_tile_moved_success": {
     "message": "Tile saved."
+  },
+  "t_personas_tile_resource_web_type": {
+    "message": "Link Type",
+    "description": "Studio, when selecting to create a web/in app Link"
   },
   "t_personas_tile_update_header": {
     "message": "Edit Tile"
@@ -3433,6 +3455,18 @@
   },
   "t_studio_branding_upload_logo": {
     "message": "Upload Logo"
+  },
+  "t_studio_resource_external_app_open_label_android_fallback": {
+    "message": "Android Fallback URL"
+  },
+  "t_studio_resource_external_app_open_label_android_package_name": {
+    "message": "Android Package Name"
+  },
+  "t_studio_resource_external_app_open_label_ios_fallback": {
+    "message": "iOS Fallback URL"
+  },
+  "t_studio_resource_external_app_open_label_ios_universal": {
+    "message": "iOS Universal URL"
   },
   "t_studio_section_delete_no_name": {
     "message": "Untitled"

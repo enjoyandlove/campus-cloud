@@ -38,6 +38,10 @@ p {
   }
 }
 
+.material-icons {
+  @include font-14px();
+}
+
 .all-access {
   margin-top: 25px;
   padding: 12px 20px;

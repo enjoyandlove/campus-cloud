@@ -138,7 +138,7 @@ export class WallsIntegrationsListComponent extends BaseComponent implements OnI
 
     const payload = {
       params,
-      integrationId: integration.id
+      integration
     };
 
     this.store.dispatch(new fromStore.DeleteIntegration(payload));

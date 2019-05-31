@@ -7,17 +7,24 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { CPDate } from '@shared/utils';
-import { STATUS } from '@shared/constants';
+import { CPI18nPipe } from '@shared/pipes';
 import { baseActions } from '@app/store/base';
 import { getEventsModalState } from '@app/store';
 import { EventsService } from '../events.service';
 import { CPSession, ISchool } from '@app/session';
-import { CPI18nPipe } from '@shared/pipes/i18n/i18n.pipe';
 import { EventUtilService } from '../events.utils.service';
+import { amplitudeEvents, STATUS } from '@shared/constants';
 import { CPImageUploadComponent } from '@shared/components';
 import { EventsComponent } from '../list/base/events.component';
 import { SnackbarError } from '@app/store/base/reducers/snackbar.reducer';
-import { AdminService, StoreService, CPI18nService, FileUploadService } from '@shared/services';
+import {
+  AdminService,
+  StoreService,
+  ModalService,
+  CPI18nService,
+  FileUploadService,
+  CPTrackingService
+} from '@shared/services';
 
 import {
   isAllDay,
@@ -74,11 +81,13 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     public cpI18n: CPI18nService,
     public service: EventsService,
     private utils: EventUtilService,
+    public modalService: ModalService,
     private adminService: AdminService,
     private storeService: StoreService,
+    private cpTracking: CPTrackingService,
     private fileUploadService: FileUploadService
   ) {
-    super(session, cpI18n, service);
+    super(session, cpI18n, service, modalService);
     this.school = this.session.g.get('school');
     super.isLoading().subscribe((res) => (this.loading = res));
   }
@@ -136,14 +145,10 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
 
   private buildGroup() {
     const control = <FormArray>this.form.controls['events'];
-    const selectedCheckInOption = this.checkInOptions.filter(
-      (selected) => selected.action === attendanceType.checkInOnly
-    )[0];
 
     this.events.forEach((event, index) => {
       control.push(this.buildEventControl(event));
       this.isSingleChecked.push({ index, checked: false });
-      this.selectedCheckInOption[index] = selectedCheckInOption;
     });
 
     this.isFormReady = true;
@@ -176,7 +181,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
       event_feedback: [EventFeedback.enabled],
       title: [event.title, Validators.required],
       has_checkout: [attendanceType.checkInOnly],
-      event_attendance: [EventAttendance.enabled],
+      event_attendance: [EventAttendance.disabled],
       managers: [[{ label: '---', event: null }]],
       poster_thumb_url: [null, Validators.required],
       end: [CPDate.toEpoch(event.end_date, this.session.tz), Validators.required],
@@ -433,7 +438,8 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     }
 
     this.service.createEvent(_events, search).subscribe(
-      (_) => {
+      () => {
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_IMPORTED_EVENT);
         this.router.navigate([this.urlPrefix]);
 
         return;

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { CPSession } from '@app/session';
 import { EventsService } from '../events.service';
-import { CPI18nService } from '@shared/services/index';
 import { ManageHeaderService } from '../../utils/header';
 import { EventsComponent } from './base/events.component';
+import { CPI18nService, ModalService } from '@shared/services';
 
 @Component({
   selector: 'cp-events-list',
@@ -24,9 +24,10 @@ export class EventsListComponent extends EventsComponent implements OnInit {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: EventsService,
+    public modalService: ModalService,
     private headerService: ManageHeaderService
   ) {
-    super(session, cpI18n, service);
+    super(session, cpI18n, service, modalService);
   }
 
   ngOnInit() {

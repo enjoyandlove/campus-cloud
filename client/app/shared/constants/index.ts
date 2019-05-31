@@ -8,3 +8,4 @@ export * from './symbols';
 export * from './settings';
 export * from './analytics';
 export * from './privileges';
+export * from './page-title';

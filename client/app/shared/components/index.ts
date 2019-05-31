@@ -19,6 +19,7 @@ export * from './cp-dropdown';
 export * from './cp-checkbox';
 export * from './cp-lightbox';
 export * from './cp-searchbox';
+export * from './cp-form-label';
 export * from './cp-list-modal';
 export * from './cp-typeahead';
 export * from './cp-line-chart';

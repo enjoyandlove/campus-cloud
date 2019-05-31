@@ -128,7 +128,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       address: [service.address],
       description: [service.description],
       email: [service.email],
-      website: [service.website],
+      website: [service.website, Validators.maxLength(120)],
       contactphone: [service.contactphone],
       secondary_name: [service.secondary_name],
       city: [service.city],
@@ -142,13 +142,6 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       default_basic_feedback_label: [service.default_basic_feedback_label],
       has_membership: [service.has_membership]
     });
-
-    this.form.valueChanges.subscribe((_) => {
-      this.buttonData = {
-        ...this.buttonData,
-        disabled: !this.form.valid
-      };
-    });
   }
 
   onSelectedMembership(type) {
@@ -160,6 +153,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
     if (!this.form.valid) {
       this.formError = true;
+      this.enableSaveButton();
 
       return;
     }
