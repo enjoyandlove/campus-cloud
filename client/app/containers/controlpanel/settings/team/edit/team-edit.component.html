@@ -227,6 +227,18 @@
 
               <div
                 class="col-4"
+                [class.isDisabled]="!formData.content.dining.active">
+                <cp-checkbox
+                  class="cpcheckbox"
+                  [label]="cpI18n.translate('dining')"
+                  [isDisabled]="!formData.content.dining.active"
+                  [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.dining]"
+                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.dining, formData.content.dining)">
+                </cp-checkbox>
+              </div>
+
+              <!-- <div
+                class="col-4"
                 [class.isDisabled]="!formData.content.links.active">
                 <cp-checkbox
                   class="cpcheckbox"
@@ -235,7 +247,7 @@
                   [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.links]"
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.links, formData.content.links)">
                 </cp-checkbox>
-              </div>
+              </div> -->
             </div>
 
             <div class="row options-row">
@@ -305,18 +317,6 @@
                   [isDisabled]="!formData.content.deals.active"
                   [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.deals]"
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.deals, formData.content.deals)">
-                </cp-checkbox>
-              </div>
-
-              <div
-                class="col-4"
-                [class.isDisabled]="!formData.content.dining.active">
-                <cp-checkbox
-                  class="cpcheckbox"
-                  [label]="cpI18n.translate('dining')"
-                  [isDisabled]="!formData.content.dining.active"
-                  [isChecked]="schoolPrivileges[CP_PRIVILEGES_MAP.dining]"
-                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.dining, formData.content.dining)">
                 </cp-checkbox>
               </div>
             </div>
