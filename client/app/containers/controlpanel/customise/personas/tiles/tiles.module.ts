@@ -21,6 +21,7 @@ import { SharedModule } from '../../../../../shared/shared.module';
 import { PersonasService } from '../personas.service';
 import { SectionUtilsService } from '../sections/section.utils.service';
 import { SectionsService } from '../sections/sections.service';
+import { LibsStudioModule } from '@libs/studio/studio.module';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,14 @@ import { SectionsService } from '../sections/sections.service';
     PersonasTileContentComponent,
     PersonasTileAddButtonComponent
   ],
-  imports: [CommonModule, SharedModule, ReactiveFormsModule, RouterModule, PersonasResourceModule],
+  imports: [
+    CommonModule,
+    LibsStudioModule,
+    SharedModule,
+    ReactiveFormsModule,
+    RouterModule,
+    PersonasResourceModule
+  ],
   exports: [
     PersonasTileDeleteComponent,
     PersonasTileEditComponent,

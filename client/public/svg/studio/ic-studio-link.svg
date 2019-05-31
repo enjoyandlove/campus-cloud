@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="27px" viewBox="0 0 28 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>ic-studio-link</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Studio/Experiences" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="experiences/customize/edit-list" transform="translate(-943.000000, -347.000000)">
+            <g id="Group-4" transform="translate(741.000000, 330.000000)">
+                <g id="Group-6" transform="translate(195.000000, 17.500000)">
+                    <g id="ic-studio-link" transform="translate(7.500000, 0.000000)">
+                        <rect id="Rectangle" stroke="#D8D8D8" x="0.5" y="0.5" width="26" height="25"></rect>
+                        <g id="L/ic_link" transform="translate(13.667262, 13.167262) rotate(-45.000000) translate(-13.667262, -13.167262) translate(5.667262, 4.667262)">
+                            <g id="ic_link" transform="translate(0.000000, 0.041631)">
+                                <g id="Icon-24px">
+                                    <polygon id="Shape" points="0 0 16 0 16 16 0 16"></polygon>
+                                    <path d="M2.6,8 C2.6,6.86 3.52666667,5.93333333 4.66666667,5.93333333 L7.33333333,5.93333333 L7.33333333,4.66666667 L4.66666667,4.66666667 C2.82666667,4.66666667 1.33333333,6.16 1.33333333,8 C1.33333333,9.84 2.82666667,11.3333333 4.66666667,11.3333333 L7.33333333,11.3333333 L7.33333333,10.0666667 L4.66666667,10.0666667 C3.52666667,10.0666667 2.6,9.14 2.6,8 L2.6,8 Z M5.33333333,8.66666667 L10.6666667,8.66666667 L10.6666667,7.33333333 L5.33333333,7.33333333 L5.33333333,8.66666667 L5.33333333,8.66666667 Z M11.3333333,4.66666667 L8.66666667,4.66666667 L8.66666667,5.93333333 L11.3333333,5.93333333 C12.4733333,5.93333333 13.4,6.86 13.4,8 C13.4,9.14 12.4733333,10.0666667 11.3333333,10.0666667 L8.66666667,10.0666667 L8.66666667,11.3333333 L11.3333333,11.3333333 C13.1733333,11.3333333 14.6666667,9.84 14.6666667,8 C14.6666667,6.16 13.1733333,4.66666667 11.3333333,4.66666667 L11.3333333,4.66666667 Z" id="Shape" fill="#D8D8D8"></path>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

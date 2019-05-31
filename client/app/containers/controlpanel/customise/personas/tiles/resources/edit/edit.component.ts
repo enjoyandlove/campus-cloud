@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+import { CPI18nService } from '@shared/services';
 import { IPersona } from './../../../persona.interface';
 import { ResourceService } from './../resource.service';
 import { TilesUtilsService } from './../../tiles.utils.service';
-import { ILink } from '../../../../../manage/links/link.interface';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { ILink } from '@controlpanel/manage/links/link.interface';
 
 @Component({
   selector: 'cp-personas-resource-edit',

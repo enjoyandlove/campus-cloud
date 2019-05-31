@@ -21,6 +21,14 @@ export class PersonasUtilsService {
     return persona.localized_name_map[locale];
   }
 
+  static isWeb(type: PersonasType) {
+    return type === PersonasType.web;
+  }
+
+  static isLoginRequired(loginRequirement: PersonasLoginRequired) {
+    return loginRequirement === PersonasLoginRequired.required;
+  }
+
   constructor(
     public fb: FormBuilder,
     public session: CPSession,

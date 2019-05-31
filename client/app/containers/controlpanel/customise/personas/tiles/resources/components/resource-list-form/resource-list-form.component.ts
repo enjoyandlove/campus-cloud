@@ -1,10 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
+import { CPI18nService } from '@shared/services';
 import { IPersona } from '../../../../persona.interface';
+import { ContentUtilsProviders } from '@libs/studio/providers';
 import { TilesUtilsService } from '../../../tiles.utils.service';
-import { ILink } from '../../../../../../manage/links/link.interface';
-import { CPI18nService } from '../../../../../../../../shared/services';
+import { PersonasUtilsService } from '../../../../personas.utils.service';
 
 @Component({
   selector: 'cp-personas-resource-list-form',
@@ -13,13 +14,17 @@ import { CPI18nService } from '../../../../../../../../shared/services';
 })
 export class PersonasResourceListFormComponent implements OnInit {
   @Input() form: FormGroup;
+  @Input() isEdit: boolean;
   @Input() persona: IPersona;
-  @Input() resource: ILink;
 
   @Output() valueChanges: EventEmitter<FormGroup> = new EventEmitter();
 
   defaultImg;
+  filterByWeb = false;
   tileImageRequirements;
+  filterByLogin = false;
+  contentTypes = ContentUtilsProviders.contentTypes;
+  selectedContent = ContentUtilsProviders.contentTypes.single;
 
   constructor(public cpI18n: CPI18nService, public tileUtils: TilesUtilsService) {}
 
@@ -36,9 +41,35 @@ export class PersonasResourceListFormComponent implements OnInit {
     });
   }
 
+  onTypeChange(selectedContentId) {
+    this.selectedContent = selectedContentId;
+
+    this.form.patchValue({
+      link_url: null,
+      link_params: {}
+    });
+
+    this.valueChanges.emit(this.form);
+  }
+
+  onCampusLinkFormChange(newValues) {
+    this.form.patchValue(newValues);
+    this.valueChanges.emit(this.form);
+  }
+
+  updateState() {
+    this.selectedContent = ContentUtilsProviders.getContentTypeByCampusLink(this.form.value);
+  }
+
   ngOnInit() {
+    this.filterByWeb = PersonasUtilsService.isWeb(this.persona.platform);
+    this.filterByLogin = PersonasUtilsService.isLoginRequired(this.persona.login_requirement);
     this.tileImageRequirements = this.cpI18n.translate('t_personas_tile_image_requirements');
     this.form.valueChanges.subscribe((_) => this.valueChanges.emit(this.form));
     this.defaultImg = this.form.get('img_url').value;
+
+    if (this.isEdit) {
+      this.updateState();
+    }
   }
 }
