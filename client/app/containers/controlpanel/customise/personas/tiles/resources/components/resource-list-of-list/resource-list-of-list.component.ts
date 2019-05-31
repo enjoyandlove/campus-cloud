@@ -12,14 +12,15 @@ import {
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '@app/session';
+import { CPI18nService } from '@shared/services';
+import { parseErrorResponse } from '@shared/utils';
 import { TilesService } from '../../../tiles.service';
+import { baseActions, ISnackbar } from '@app/store/base';
 import { IPersona } from './../../../../persona.interface';
 import { ResourceService } from './../../resource.service';
-import { CPSession } from '../../../../../../../../session';
-import { ILink } from '../../../../../../manage/links/link.interface';
+import { ILink } from '@controlpanel/manage/links/link.interface';
 import { ResourcesUtilsService } from '../../resources.utils.service';
-import { CPI18nService } from '../../../../../../../../shared/services';
-import { baseActions, ISnackbar } from '../../../../../../../../store/base';
 
 interface IState {
   loading: boolean;
@@ -105,13 +106,15 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
     );
   }
 
-  errorHandler() {
+  errorHandler(message?: string) {
+    const body = message ? message : this.cpI18n.translate('something_went_wrong');
+
     this.store.dispatch({
       type: baseActions.SNACKBAR_SHOW,
       payload: {
+        body,
         sticky: true,
-        class: 'danger',
-        body: this.cpI18n.translate('something_went_wrong')
+        class: 'danger'
       }
     });
   }
@@ -122,6 +125,12 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
       showEditModal: false,
       showCreateModal: false
     };
+  }
+
+  onError(err) {
+    const error = parseErrorResponse(err.error);
+
+    this.errorHandler(error);
   }
 
   onTearDown() {

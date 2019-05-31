@@ -284,6 +284,25 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     });
   }
 
+  hasStorePrivileges() {
+    const regular = this.schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements];
+    const emergency = this.schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement];
+
+    const hasStorePrivileges = this.utils.hasStorePrivileges(
+      this.schoolPrivileges,
+      this.accountPrivileges
+    );
+
+    if (regular || emergency) {
+      this.buttonData = {
+        ...this.buttonData,
+        disabled: this.form.invalid || !hasStorePrivileges
+      };
+    }
+
+    return hasStorePrivileges;
+  }
+
   onSubmit(data) {
     this.formError = null;
     this.isFormError = false;

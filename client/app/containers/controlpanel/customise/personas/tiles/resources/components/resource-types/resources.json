@@ -199,17 +199,5 @@
       "open_in_browser": 0,
       "link_url": "oohlala://default_campus_link_list"
     }
-  },
-  {
-    "id": "external_app_open",
-    "login_required": false,
-    "link_type": 4,
-    "label": "t_personas_tile_create_resource_type_external_app_open",
-    "meta": {
-      "is_system": 1,
-      "link_params": {},
-      "open_in_browser": 0,
-      "link_url": "open_external_app"
-    }
   }
 ]

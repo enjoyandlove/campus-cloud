@@ -8,6 +8,13 @@ import { CPTrackingService, RouteLevel } from '../../services';
 import { ZendeskService } from './../../services/zendesk.service';
 import { environment } from './../../../../environments/environment';
 
+interface EventProperties {
+  name?: string;
+  page_name: string;
+  menu_name: string;
+  sub_menu_name: string;
+}
+
 @Component({
   selector: 'cp-school-switch',
   templateUrl: './school-switch.component.html',
@@ -44,14 +51,20 @@ export class SchoolSwitchComponent implements OnInit {
     this.isSchoolPanel = !this.isSchoolPanel;
   }
 
-  trackEvent(eventName, school) {
-    const name = school.is_sandbox ? amplitudeEvents.TEST_SCHOOL : amplitudeEvents.SCHOOL;
-
-    const eventProperties = {
+  trackEvent(eventName, school = null) {
+    let eventProperties: EventProperties = {
       ...this.cpTracking.getEventProperties(),
-      name,
       page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
     };
+
+    if (school) {
+      const name = school.is_sandbox ? amplitudeEvents.TEST_SCHOOL : amplitudeEvents.SCHOOL;
+
+      eventProperties = {
+        ...eventProperties,
+        name
+      };
+    }
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }

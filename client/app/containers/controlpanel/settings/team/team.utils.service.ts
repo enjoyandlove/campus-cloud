@@ -72,6 +72,15 @@ export class TeamUtilsService {
     );
   }
 
+  hasStorePrivileges(schoolPrivileges, acountPrivileges) {
+    const storeAccountWide = Object.keys(acountPrivileges).length > 0;
+    const clubsSchoolWide = CP_PRIVILEGES_MAP.clubs in schoolPrivileges;
+    const serviceSchoolWide = CP_PRIVILEGES_MAP.services in schoolPrivileges;
+    const athleticSchoolWide = CP_PRIVILEGES_MAP.athletics in schoolPrivileges;
+
+    return clubsSchoolWide || serviceSchoolWide || athleticSchoolWide || storeAccountWide;
+  }
+
   eventsDropdown(
     eventPrivilege = { r: false, w: false },
     eventAssessmentPrivilege = { r: false, w: false }
