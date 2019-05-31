@@ -8,6 +8,8 @@ import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
 import { IItem } from '@shared/components';
 import { CPDate } from '@shared/utils/date/date';
+import { amplitudeEvents } from '@shared/constants';
+import { CPTrackingService } from '@shared/services';
 import { WallsIntegrationsService } from '../../walls-integrations.service';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { IWallsIntegration, WallsIntegrationModel } from '@libs/integrations/walls/model';
@@ -17,6 +19,7 @@ export class IntegrationsEffects {
   constructor(
     private actions$: Actions,
     private session: CPSession,
+    private cpTracking: CPTrackingService,
     private service: WallsIntegrationsService,
     private commonUtils: CommonIntegrationUtilsService
   ) {}
@@ -45,16 +48,20 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.DELETE_INTEGRATION),
     mergeMap((action: fromActions.DeleteIntegration) => {
-      const { integrationId, params } = action.payload;
-      return this.service
-        .deleteIntegration(integrationId, params)
-        .pipe(
-          mergeMap(() => [
+      const { integration, params } = action.payload;
+      return this.service.deleteIntegration(integration.id, params).pipe(
+        mergeMap(() => {
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_DELETED_FEED_INTEGRATION,
+            this.getEventProperties(integration)
+          );
+          return [
             new fromActions.ResetSocialPostCategories(),
-            new fromActions.DeleteIntegrationSuccess({ deletedId: integrationId })
-          ]),
-          catchError((error) => of(new fromActions.DeleteIntegrationFail(error)))
-        );
+            new fromActions.DeleteIntegrationSuccess({ deletedId: integration.id })
+          ];
+        }),
+        catchError((error) => of(new fromActions.DeleteIntegrationFail(error)))
+      );
     })
   );
 
@@ -64,15 +71,23 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.POST_INTEGRATION),
     mergeMap((action: fromActions.PostIntegration) => {
-      const { body, params } = action.payload;
-      return this.service
-        .createIntegration(body, params)
-        .pipe(
-          map((data: IWallsIntegration) => new fromActions.PostIntegrationSuccess(data)),
-          catchError(({ error }: HttpErrorResponse) =>
-            of(new fromActions.PostIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
-          )
-        );
+      const { body, params, channelType } = action.payload;
+      return this.service.createIntegration(body, params).pipe(
+        map((data: IWallsIntegration) => {
+          const eventProperties = {
+            channel_type: channelType,
+            ...this.getEventProperties(data)
+          };
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_ADDED_FEED_INTEGRATION,
+            eventProperties
+          );
+          return new fromActions.PostIntegrationSuccess(data);
+        }),
+        catchError(({ error }: HttpErrorResponse) =>
+          of(new fromActions.PostIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
+        )
+      );
     })
   );
 
@@ -135,6 +150,10 @@ export class IntegrationsEffects {
 
       return this.service.syncNow(integration.id, search).pipe(
         map(() => {
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_SYNCED_FEED_INTEGRATION,
+            this.getEventProperties(integration)
+          );
           const editedIntegration = {
             ...integration,
             sync_status: WallsIntegrationModel.status.successful,
@@ -171,4 +190,12 @@ export class IntegrationsEffects {
     map((action: fromActions.CreateAndSync) => action.payload),
     mergeMap((payload) => of(new fromActions.PostIntegration(payload)))
   );
+
+  private getEventProperties(integration) {
+    return {
+      feed_id: integration.id,
+      sub_menu_name: amplitudeEvents.WALL,
+      feed_type: CommonIntegrationUtilsService.getSelectedType(integration.feed_type).label
+    };
+  }
 }

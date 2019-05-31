@@ -1,4 +1,5 @@
 import csv
+import pytz
 import datetime
 from operator import itemgetter
 from dateutil.parser import parse
@@ -61,17 +62,15 @@ class CSVParser:
     def date_str_to_formated_date(self, date_input, format="%Y-%m-%d %H:%M:%S"):
         return parse(date_input).strftime(format)
 
-    def date_not_in_past(self, date_value):
-        date_value = parse(date_value)
-        return date_value > datetime.datetime.now()
+    def date_not_in_past(self, date_value, tz):
+        date_value = pytz.timezone(tz).localize(parse(date_value))
+
+        return date_value > datetime.datetime.now(pytz.timezone(tz))
 
 
-    def future_dates_is_greater_than_past(self, future_date, past_date):
-        future_date = parse(future_date).timestamp()
-        past_date = parse(past_date).timestamp()
-        
-        if not future_date > past_date:
-            print(future_date, past_date)
+    def future_dates_is_greater_than_past(self, future_date, past_date, tz):
+        past_date = pytz.timezone(tz).localize(parse(past_date))
+        future_date = pytz.timezone(tz).localize(parse(future_date))
         
         return future_date > past_date
 

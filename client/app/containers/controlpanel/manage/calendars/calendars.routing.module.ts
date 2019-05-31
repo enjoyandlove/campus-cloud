@@ -11,24 +11,25 @@ import {
   CalendarsItemsEditComponent
 } from './items';
 
+import { pageTitle } from '@shared/constants';
 import { CalendarsItemsBulkCreateComponent } from './items/bulk-create/calendats-items-bulk-create.component';
 
 const appRoutes: Routes = [
   {
     path: '',
     component: CalendarsListComponent,
-    data: { zendesk: 'calendars' }
+    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS }
   },
   {
     path: ':calendarId',
     component: CalendarsDetailComponent,
-    data: { zendesk: 'calendars' }
+    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS }
   },
   // TODO Split to its own module
   {
     path: ':calendarId/items/create',
     component: CalendarsItemCreateComponent,
-    data: { zendesk: 'calendars' }
+    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS }
   },
   {
     path: ':calendarId/integrations',
@@ -36,18 +37,18 @@ const appRoutes: Routes = [
   },
   {
     path: ':calendarId/items/import',
-    data: { zendesk: 'calendars' },
-    component: CalendarsItemsBulkCreateComponent
+    component: CalendarsItemsBulkCreateComponent,
+    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS }
   },
   {
     path: ':calendarId/items/:itemId',
-    data: { zendesk: 'calendars' },
-    component: CalendarsItemsDetailsComponent
+    component: CalendarsItemsDetailsComponent,
+    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS }
   },
   {
     path: ':calendarId/items/:itemId/edit',
-    data: { zendesk: 'calendars' },
-    component: CalendarsItemsEditComponent
+    component: CalendarsItemsEditComponent,
+    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS }
   }
 ];
 @NgModule({

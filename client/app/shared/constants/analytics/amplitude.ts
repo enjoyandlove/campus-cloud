@@ -1,13 +1,3 @@
-const amplitudeEventTypes = {
-  PAGE_VIEW: 'page_view',
-
-  BUTTON_CLICK: 'button_click'
-};
-
-export const cpTrackAmplitude = {
-  type: { ...amplitudeEventTypes }
-};
-
 export const amplitudeEvents = {
   NO: 'No',
 
@@ -17,7 +7,13 @@ export const amplitudeEvents = {
 
   WEB: 'Web',
 
+  CSV: 'CSV',
+
+  RSS: 'RSS',
+
   WALL: 'Wall',
+
+  ICAL: 'iCAL',
 
   POST: 'Post',
 
@@ -37,6 +33,8 @@ export const amplitudeEvents = {
 
   TODOS: 'To-Dos',
 
+  MANUAL: 'Manual',
+
   NORMAL: 'Normal',
 
   MOBILE: 'Mobile',
@@ -51,11 +49,17 @@ export const amplitudeEvents = {
 
   CUSTOM: 'Custom',
 
+  SCHOOL: 'School',
+
   DEFAULT: 'Default',
+
+  NO_DATE: 'No Date',
 
   BEAMER: 'Beamer',
 
   COMMENT: 'Comment',
+
+  CHANGED: 'Changed',
 
   REGULAR: 'Regular',
 
@@ -64,6 +68,8 @@ export const amplitudeEvents = {
   PENDING: 'Pending',
 
   ENABLED: 'Enabled',
+
+  END_DATE: 'End Date',
 
   INTERNAL: 'Internal',
 
@@ -89,6 +95,8 @@ export const amplitudeEvents = {
 
   DISABLED: 'Disabled',
 
+  CALENDAR: 'Calendar',
+
   MENU_MANAGE: 'Manage',
 
   MENU_ASSESS: 'Assess',
@@ -111,6 +119,8 @@ export const amplitudeEvents = {
 
   EXPERIENCE: 'Experience',
 
+  START_DATE: 'Start Date',
+
   ATTENDANCE: 'Attendance',
 
   PAST_EVENT: 'Past Event',
@@ -119,9 +129,13 @@ export const amplitudeEvents = {
 
   LOGGED_OUT: 'Logged Out',
 
+  NO_CHANGES: 'No Changes',
+
   ASSESSMENT: 'Assessment',
 
   MENU_AUDIENCE: 'Audience',
+
+  TEST_SCHOOL: 'Test School',
 
   CAMPUS_WIDE: 'Campus Wide',
 
@@ -133,9 +147,15 @@ export const amplitudeEvents = {
 
   ONE_SERVICE: 'One Service',
 
+  SCHOOL_NAME: 'School Name',
+
+  SCHOOL_LOGO: 'School Logo',
+
   FULL_ACCESS: 'Full Access',
 
   VIEWED_ITEM: 'Viewed Item',
+
+  INSTITUTION: 'Institution',
 
   LAST_30_DAYS: 'Last 30 Days',
 
@@ -153,6 +173,8 @@ export const amplitudeEvents = {
 
   CHECKIN_ONLY: 'Check-in Only',
 
+  NO_ASSESSMENT: 'No Assessment',
+
   RESOURCE_LIST: 'Resource List',
 
   CAROUSEL_WHEEL: 'Carousel Wheel',
@@ -165,11 +187,17 @@ export const amplitudeEvents = {
 
   SERVICE_EVENT: 'Service Event',
 
+  ADDED_LOCATION: 'Added Location',
+
+  NO_DESCRIPTION: 'No Description',
+
   ATHLETIC_EVENT: 'Athletic Event',
 
   CUSTOM_AUDIENCE: 'Custom Audience',
 
   UPLOADED_PHOTO: 'Uploaded Photo',
+
+  START_END_DATE: 'Start & End Date',
 
   CREATED_ACCOUNT: 'Created Account',
 
@@ -193,6 +221,8 @@ export const amplitudeEvents = {
 
   DYNAMIC_AUDIENCE: 'Dynamic Audience',
 
+  REMOVED_LOCATION: 'Removed Location',
+
   CLICKED_MENU: 'Clicked Menu Item',
 
   SERVICE_PROVIDER: 'Service Provider',
@@ -203,7 +233,11 @@ export const amplitudeEvents = {
 
   WALL_MOVED_POST: 'Wall - Moved Post',
 
+  FEED_INTEGRATION: 'Feed Integration',
+
   EXISTING_SECTION: 'Existing Section',
+
+  ADDED_DESCRIPTION: 'Added Description',
 
   LOCATION_CATEGORY: 'Location Category',
 
@@ -236,6 +270,8 @@ export const amplitudeEvents = {
   UPDATED_TEAM_MEMBER: 'Updated Team Member',
 
   DELETED_TEAM_MEMBER: 'Deleted Team Member',
+
+  MANAGE_DELETED_EVENT: 'Manage Deleted Event',
 
   WALL_VIEWED_COMMENT: 'Wall - Viewed Comment',
 
@@ -279,13 +315,17 @@ export const amplitudeEvents = {
 
   WALL_UPDATED_SETTINGS: 'Wall - Updated Settings',
 
-  CUSTOMIZE_SAVED_PHOTO: 'Customize - Saved Photo',
-
   MANAGE_CREATED_DINING: 'Manage - Created Dining',
 
   MANAGE_UPDATED_DINING: 'Manage - Updated Dining',
 
+  MANAGE_IMPORTED_EVENT: 'Manage - Imported Event',
+
   MANAGE_DELETED_DINING: 'Manage - Deleted Dining',
+
+  MANAGE_DELETED_CALENDAR: 'Manage Deleted Calendar',
+
+  MANAGE_UPDATED_CALENDAR: 'Manage Updated Calendar',
 
   MANAGE_CREATED_CATEGORY: 'Manage Created Category',
 
@@ -337,8 +377,6 @@ export const amplitudeEvents = {
 
   MANAGE_ADDED_CLUB_MEMBER: 'Manage - Added Club Member',
 
-  CUSTOMIZE_CANCELED_PHOTO: 'Customize - Canceled Photo',
-
   NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
 
   MANAGE_IMPORTED_AUDIENCE: 'Manage - Imported Audience',
@@ -359,6 +397,8 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_ATTENDANCE: 'Manage - Updated Attendance',
 
+  CUSTOMIZE_CHANGED_BRANDING: 'Customize - Changed Branding',
+
   STUDIO_CHANGED_TILE_STATUS: 'Studio - Changed Tile Status',
 
   MANAGE_ADDED_WEB_CHECK_OUT: 'Manage - Added Web Check-Out',
@@ -371,7 +411,19 @@ export const amplitudeEvents = {
 
   MANAGE_CREATED_CALENDAR_EVENT: 'Manage - Created Calendar Event',
 
+  MANAGE_ADDED_FEED_INTEGRATION: 'Manage - Added Feed Integration',
+
+  MANAGE_DELETED_CALENDAR_EVENT: 'Manage - Deleted Calendar Event',
+
   MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
+
+  MANAGE_IMPORTED_CALENDAR_EVENT: 'Manage - Imported Calendar Event',
+
+  MANAGE_SYNCED_FEED_INTEGRATION: 'Manage - Synced Feed Integration',
+
+  MANAGE_VIEWED_FEED_INTEGRATION: ' Manage - Viewed Feed Integration',
+
+  MANAGE_DELETED_FEED_INTEGRATION: 'Manage - Deleted Feed Integration',
 
   MANAGE_CREATED_SERVICE_PROVIDER: 'Manage - Created Service Provider',
 

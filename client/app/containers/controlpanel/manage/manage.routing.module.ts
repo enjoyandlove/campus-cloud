@@ -44,9 +44,7 @@ const appRoutes: Routes = [
 
       {
         path: 'links',
-        canActivate: [PrivilegesGuard],
-        data: { zendesk: 'links', privilege: CP_PRIVILEGES_MAP.links },
-        loadChildren: './links/links.module#LinksModule'
+        redirectTo: ''
       },
 
       {

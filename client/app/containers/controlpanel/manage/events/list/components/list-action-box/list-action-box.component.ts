@@ -50,6 +50,7 @@ export class ListActionBoxComponent implements OnInit {
   eventFilter;
   dateFilterOpts;
   canCreateEvent;
+  viewedIntegrationEventData;
   threeYearsFromNow = CPDate.now(this.session.tz)
     .add(3, 'years')
     .unix();
@@ -187,6 +188,12 @@ export class ListActionBoxComponent implements OnInit {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName,
       eventProperties
+    };
+
+    this.viewedIntegrationEventData = {
+      type: CP_TRACK_TO.AMPLITUDE,
+      eventName: amplitudeEvents.MANAGE_VIEWED_FEED_INTEGRATION,
+      eventProperties: { sub_menu_name: amplitudeEvents.EVENT }
     };
 
     this.getStores();

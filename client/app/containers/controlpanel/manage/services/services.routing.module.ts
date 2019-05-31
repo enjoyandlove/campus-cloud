@@ -26,109 +26,110 @@ import { ServicesProviderDetailsComponent } from './attendance/components';
 /**
  * Excel
  */
+import { pageTitle } from '@shared/constants';
 import { ServicesExcelComponent } from './excel';
+import { PrivilegesGuard } from '@app/config/guards';
 import { ServicesResolver } from './services.resolver';
-import { PrivilegesGuard } from '../../../../config/guards';
 
 const appRoutes: Routes = [
   { path: 'import', redirectTo: '', pathMatch: 'full' },
 
   {
     path: '',
-    data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
-    component: ServicesListComponent
+    component: ServicesListComponent,
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
 
   {
     path: 'create',
     canActivate: [PrivilegesGuard],
     component: ServicesCreateComponent,
-    data: { zendesk: 'services' }
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
   {
     path: ':serviceId/info',
     canActivate: [PrivilegesGuard],
     component: ServicesInfoComponent,
-    data: { zendesk: 'services' }
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
   {
     path: ':serviceId/edit',
     canActivate: [PrivilegesGuard],
     component: ServicesEditComponent,
-    data: { zendesk: 'services' }
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
   {
     path: ':serviceId/members',
     canActivate: [PrivilegesGuard],
     component: ServicesListMembersComponent,
-    data: { zendesk: 'services' },
-    resolve: { service: ServicesResolver }
+    resolve: { service: ServicesResolver },
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
   {
     path: ':serviceId/feeds',
     canActivate: [PrivilegesGuard],
     component: ServicesFeedsComponent,
-    data: { zendesk: 'services' },
-    resolve: { service: ServicesResolver }
+    resolve: { service: ServicesResolver },
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
   {
     path: ':serviceId/events',
     canActivate: [PrivilegesGuard],
     component: ServicesEventsComponent,
-    data: { zendesk: 'services' }
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
 
   {
     path: ':serviceId/events/create',
-    data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
-    component: ServicesEventsCreateComponent
+    component: ServicesEventsCreateComponent,
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
   {
     path: ':serviceId/events/:eventId',
-    data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
-    component: ServicesEventsAttendanceComponent
+    component: ServicesEventsAttendanceComponent,
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
   {
-    data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
     path: ':serviceId/events/:eventId/info',
-    component: ServicesEventsInfoComponent
+    component: ServicesEventsInfoComponent,
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
 
   {
-    data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
     path: ':serviceId/events/:eventId/edit',
-    component: ServicesEventsEditComponent
+    component: ServicesEventsEditComponent,
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
   {
-    data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
     path: ':serviceId/events/import/excel',
-    component: ServicesEventsExcelComponent
+    component: ServicesEventsExcelComponent,
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
   {
     path: ':serviceId',
     canActivate: [PrivilegesGuard],
     component: ServicesAttendanceComponent,
-    data: { zendesk: 'services' }
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
 
   {
     path: ':serviceId/provider/:providerId',
-    data: { zendesk: 'services' },
     canActivate: [PrivilegesGuard],
-    component: ServicesProviderDetailsComponent
+    component: ServicesProviderDetailsComponent,
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   },
 
   {
     path: 'import/excel',
     canActivate: [PrivilegesGuard],
     component: ServicesExcelComponent,
-    data: { zendesk: 'services' }
+    data: { zendesk: 'services', title: pageTitle.MANAGE_SERVICES }
   }
 ];
 @NgModule({

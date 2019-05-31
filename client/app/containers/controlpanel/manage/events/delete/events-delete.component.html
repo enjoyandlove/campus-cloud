@@ -3,5 +3,5 @@
   (deleteClick)="onDelete()"
   [warnings]="deleteWarnings"
   [modalTitle]="['events_delete_modal_title' | cpI18n]"
-  [modalBody]="['events_delete_modal_body' | cpI18n:event.title]">
+  [modalBody]="['events_delete_modal_body' | cpI18n:modal.data.event.title]">
 </cp-delete-modal>

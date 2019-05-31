@@ -1,14 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { isDev } from '../../../../../../../config/env';
+import { isDev } from '@app/config/env';
+import { CPSession } from '@app/session';
 import { EventsService } from '../../../events.service';
-import { CPSession } from '../../../../../../../session';
+import { environment } from '@client/environments/environment';
 import { EventUtilService } from '../../../events.utils.service';
 import { EventsComponent } from '../../../list/base/events.component';
-import { FileUploadService } from '../../../../../../../shared/services';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { environment } from '../../../../../../../../environments/environment';
+import { FileUploadService, CPI18nService, ModalService } from '@shared/services';
 
 @Component({
   selector: 'cp-events-excel-modal',
@@ -36,9 +35,10 @@ export class EventsExcelModalComponent extends EventsComponent implements OnInit
     public cpI18n: CPI18nService,
     public service: EventsService,
     private utils: EventUtilService,
+    public modalService: ModalService,
     private fileService: FileUploadService
   ) {
-    super(session, cpI18n, service);
+    super(session, cpI18n, service, modalService);
   }
 
   parser(file) {

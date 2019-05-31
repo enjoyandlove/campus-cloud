@@ -10,10 +10,12 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from './../../../../../session';
+import { CPSession } from '@app/session';
+import { ICalendar } from '../calendars.interface';
+import { amplitudeEvents } from '@shared/constants';
+import { CPTrackingService } from '@shared/services';
 import { CalendarsService } from '../calendars.services';
-import { CPTrackingService } from '../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { CalendarAmplitudeService } from '../calendar.amplitude.service';
 
 @Component({
   selector: 'cp-calendars-create',
@@ -30,10 +32,6 @@ export class CalendarsCreateComponent implements OnInit {
   }> = new EventEmitter();
 
   form: FormGroup;
-
-  eventProperties = {
-    calendar_id: null
-  };
 
   constructor(
     public el: ElementRef,
@@ -66,15 +64,10 @@ export class CalendarsCreateComponent implements OnInit {
     });
   }
 
-  trackEvent(res) {
-    this.eventProperties = {
-      ...this.eventProperties,
-      calendar_id: res.id
-    };
-
+  trackEvent(calendar: ICalendar) {
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.MANAGE_CREATED_CALENDAR,
-      this.eventProperties
+      CalendarAmplitudeService.getCalendarEventProperties(calendar)
     );
   }
 

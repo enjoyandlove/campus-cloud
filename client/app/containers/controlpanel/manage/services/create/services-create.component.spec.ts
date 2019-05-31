@@ -120,7 +120,7 @@ describe('ServicesCreateComponent', () => {
 
     expect(component.formError).toBe(true);
     expect(component.form.valid).toBe(false);
-    expect(component.buttonData.disabled).toBe(true);
+    expect(component.buttonData.disabled).toBe(false);
   });
 
   it('should create service', () => {

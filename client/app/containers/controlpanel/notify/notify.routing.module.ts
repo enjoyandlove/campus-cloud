@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { PrivilegesGuard } from '@app/config/guards';
 import { NotifyComponent } from './notify.component';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { CP_PRIVILEGES_MAP, pageTitle } from '@shared/constants';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'announcements', pathMatch: 'full' },
@@ -15,15 +15,23 @@ const appRoutes: Routes = [
       {
         path: 'announcements',
         canActivate: [PrivilegesGuard],
-        data: { zendesk: 'announcements', privilege: CP_PRIVILEGES_MAP.campus_announcements },
-        loadChildren: './announcements/announcements.module#AnnouncementsModule'
+        loadChildren: './announcements/announcements.module#AnnouncementsModule',
+        data: {
+          zendesk: 'announcements',
+          title: pageTitle.NOTIFY_ANNOUNCEMENT,
+          privilege: CP_PRIVILEGES_MAP.campus_announcements
+        }
       },
 
       {
         path: 'templates',
         canActivate: [PrivilegesGuard],
-        data: { zendesk: 'templates', privilege: CP_PRIVILEGES_MAP.campus_announcements },
-        loadChildren: './templates/templates.module#TemplatesModule'
+        loadChildren: './templates/templates.module#TemplatesModule',
+        data: {
+          zendesk: 'templates',
+          title: pageTitle.NOTIFY_ANNOUNCEMENT,
+          privilege: CP_PRIVILEGES_MAP.campus_announcements
+        }
       }
     ]
   }

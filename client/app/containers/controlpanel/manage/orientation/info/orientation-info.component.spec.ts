@@ -1,14 +1,17 @@
-import { HttpParams } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
-import { CPSession } from './../../../../../session';
-import { OrientationInfoComponent } from './orientation-info.component';
-import { mockSchool } from '../../../../../session/mock/school';
-import { CPTrackingService } from '../../../../../shared/services';
-import { OrientationDetailsModule } from '../details/orientation-details.module';
+import { StoreModule } from '@ngrx/store';
+
+import { CPSession } from '@app/session';
+import { CPTrackingService } from '@shared/services';
+import { mockSchool } from '@app/session/mock/school';
 import { OrientationService } from '../orientation.services';
+import { OrientationUtilsService } from '../orientation.utils.service';
+import { OrientationInfoComponent } from './orientation-info.component';
+import { OrientationDetailsModule } from '../details/orientation-details.module';
 
 class MockOrientationService {
   dummy;
@@ -42,10 +45,11 @@ describe('OrientationInfoComponent', () => {
   beforeEach(
     async(() => {
       TestBed.configureTestingModule({
-        imports: [RouterTestingModule, OrientationDetailsModule],
+        imports: [StoreModule.forRoot({}), RouterTestingModule, OrientationDetailsModule],
         providers: [
           CPSession,
           CPTrackingService,
+          OrientationUtilsService,
           { provide: OrientationService, useClass: MockOrientationService },
           {
             provide: ActivatedRoute,

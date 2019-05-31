@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { API } from '../../../../config/api';
-import { baseActions } from '../../../../store/base';
-import { HTTPService } from '../../../../base/http.service';
+import { API } from '@app/config/api';
+import { baseActions } from '@app/store/base';
+import { HTTPService } from '@app/base/http.service';
 
 @Injectable()
 export class ClubsService extends HTTPService {
@@ -43,7 +43,7 @@ export class ClubsService extends HTTPService {
   updateClub(body, clubId: number, search: HttpParams) {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/${clubId}`;
 
-    return super.update(url, body, search);
+    return super.update(url, body, search, true);
   }
 
   setModalClubs(clubs: any[]): void {

@@ -1,17 +1,13 @@
 <div class="controls">
   <button
-    cpTracker
     type="button"
     (click)="cancel.emit()"
-    [eventData]="canceledPhoto"
     class="cpbtn cpbtn--cancel">
       {{ 'cancel' | cpI18n }}
   </button>
 
   <cp-button
-    cpTracker
     [props]="buttonData"
-    [eventData]="savedPhoto"
     (buttonClick)="save.emit()">
   </cp-button>
 </div>

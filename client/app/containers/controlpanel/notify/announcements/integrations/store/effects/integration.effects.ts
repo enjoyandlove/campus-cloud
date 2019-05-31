@@ -1,5 +1,5 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
-import { mergeMap, map, catchError } from 'rxjs/operators';
+import { mergeMap, map, catchError, take } from 'rxjs/operators';
 import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -7,20 +7,26 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
+import * as fromStore from '../../store';
 import * as fromRoot from '@app/store/base';
+import { amplitudeEvents } from '@shared/constants';
 import { IAnnouncementsIntegration } from '../../model';
 import { IntegrationsService } from '../../integrations.service';
-import { CPI18nService, StoreService, IStore } from '@shared/services';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
+import { types } from '@controlpanel/notify/announcements/compose/announcement-types';
+import { CPI18nService, StoreService, IStore, CPTrackingService } from '@shared/services';
 
 @Injectable()
-export class AnnoucementIntegrationsEffects {
+export class AnnouncementIntegrationsEffects {
+  hostType: string;
+
   constructor(
     private actions$: Actions,
     private session: CPSession,
     private cpI18n: CPI18nService,
     private storeService: StoreService,
     private service: IntegrationsService,
+    private cpTracking: CPTrackingService,
     private store: Store<fromRoot.ISnackbar>,
     private commonUtils: CommonIntegrationUtilsService
   ) {}
@@ -50,9 +56,15 @@ export class AnnoucementIntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.DELETE_INTEGRATIONS),
     map((action: fromActions.DeleteIntegrations) => action.payload),
-    mergeMap(({ integrationId }) => {
-      return this.service.deleteIntegration(integrationId, this.params).pipe(
-        map(() => new fromActions.DeleteIntegrationsSuccess({ integrationId })),
+    mergeMap(({ integration }) => {
+      return this.service.deleteIntegration(integration.id, this.params).pipe(
+        map(() => {
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_DELETED_FEED_INTEGRATION,
+            this.getEventProperties(integration)
+          );
+          return new fromActions.DeleteIntegrationsSuccess({ integrationId: integration.id });
+        }),
         catchError(() => {
           this.handleError();
           return of(new fromActions.DeleteIntegrationsFail());
@@ -85,10 +97,13 @@ export class AnnoucementIntegrationsEffects {
     map((action: fromActions.CreateIntegration) => action.payload),
     mergeMap((integration: IAnnouncementsIntegration) =>
       this.service.createIntegration(integration, this.params).pipe(
-        map(
-          (newIntegration: IAnnouncementsIntegration) =>
-            new fromActions.CreateIntegrationSuccess(newIntegration)
-        ),
+        map((newIntegration: IAnnouncementsIntegration) => {
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_ADDED_FEED_INTEGRATION,
+            this.getEventProperties(newIntegration)
+          );
+          return new fromActions.CreateIntegrationSuccess(newIntegration);
+        }),
         catchError(({ error }: HttpErrorResponse) => {
           const errMessage = this.commonUtils.handleCreateUpdateError(error).error;
           this.handleError(errMessage);
@@ -108,5 +123,28 @@ export class AnnoucementIntegrationsEffects {
         body
       })
     );
+  }
+
+  private setHostType(hostId: number) {
+    this.store
+      .select(fromStore.getSenders)
+      .pipe(take(1))
+      .subscribe(
+        (stores: IStore[]) =>
+          (this.hostType = stores.find((store: IStore) => store.value === hostId).hostType)
+      );
+  }
+
+  private getEventProperties(integration: IAnnouncementsIntegration) {
+    this.setHostType(integration.store_id);
+    const announcement_type = types.find((t) => t.action === integration.priority).label;
+
+    return {
+      announcement_type,
+      feed_id: integration.id,
+      host_type: this.hostType,
+      sub_menu_name: amplitudeEvents.ANNOUNCEMENT,
+      feed_type: CommonIntegrationUtilsService.getSelectedType(integration.feed_type).label
+    };
   }
 }

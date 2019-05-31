@@ -3,37 +3,33 @@
     <div [class]="[last ? 'comment isLast' : 'comment']">
       <div class="row">
         <div class="col-12">
-          <div class="row">
-            <div class="col-12">
-              <div class="comment__header">
-                <cp-feed-header
-                  [feed]="comment"
-                  [isComment]="isComment">
-                </cp-feed-header>
-                <div class="comment__more float-right">
-                  <cp-feed-dropdown
-                    [isComment]="isComment"
-                    (selected)="onSelected($event)"
-                    [isCampusWallView]="isCampusWallView"
-                    [requiresApproval]="requiresApproval$">
-                  </cp-feed-dropdown>
-                </div>
-              </div>
+          <div class="comment__header">
+            <cp-feed-header
+              [feed]="comment"
+              [isComment]="isComment">
+            </cp-feed-header>
+            <div class="comment__more">
+              <cp-feed-dropdown
+                [isComment]="isComment"
+                (selected)="onSelected($event)"
+                [isCampusWallView]="isCampusWallView"
+                [requiresApproval]="requiresApproval$">
+              </cp-feed-dropdown>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div class="row">
-            <div class="col-12">
-              <cp-feed-body
-                [feed]="comment"
-                [isComment]="true"
-                [groupType]="groupType"
-                [replyView]="replyView"
-                [wallCategory]="wallCategory"
-                [isCampusWallView]="isCampusWallView">
-              </cp-feed-body>
-            </div>
-          </div>
+      <div class="row">
+        <div class="col-12">
+          <cp-feed-body
+            [feed]="comment"
+            [isComment]="true"
+            [groupType]="groupType"
+            [replyView]="replyView"
+            [wallCategory]="wallCategory"
+            [isCampusWallView]="isCampusWallView">
+          </cp-feed-body>
         </div>
       </div>
     </div>

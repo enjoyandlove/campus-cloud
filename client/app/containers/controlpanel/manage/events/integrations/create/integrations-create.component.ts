@@ -22,6 +22,7 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   form: FormGroup;
+  hostType: string;
   destroy$ = new Subject();
   typesDropdown: IItem[];
   selectedType: IItem | null;
@@ -51,12 +52,17 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
 
     const payload = {
       body,
-      params
+      params,
+      hostType: this.hostType
     };
 
     this.store.dispatch(new fromStore.CreateAndSync(payload));
 
     this.resetModal();
+  }
+
+  onHostSelected(host_type) {
+    this.hostType = host_type;
   }
 
   ngOnInit(): void {

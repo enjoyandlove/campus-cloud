@@ -1,24 +1,27 @@
 <div class="row branding-preview">
-  <div class="col-4">
+  <div class="col-4 color-preview">
     <p><strong>{{ 't_shared_color' | cpI18n }}</strong></p>
     <div
-      class="color-preview"
+      class="color-display"
       [ngStyle]="{'background-color': '#' + form.controls['branding_color'].value}">
     </div>
-    <input
-      type="text"
-      class="hex"
-      cpTarget="branding_color"
-      [value]="form.controls['branding_color'].value"
-      [ngClass]="{'error': form.controls['branding_color'].errors}"
-      (input)="onChangeColor.emit($event.target.value)"/>
+    <div class="color-input">
+      <span>#</span>
+      <input
+        type="text"
+        maxlength="6"
+        cpTarget="branding_color"
+        [value]="form.controls['branding_color'].value"
+        [ngClass]="{'error': form.controls['branding_color'].errors}"
+        (input)="onChangeColor.emit($event.target.value)"/>
+    </div>
   </div>
   <div class="col-8">
     <p><strong>{{ 't_shared_preview' | cpI18n }}</strong></p>
     <div
       class="logo-preview"
       [ngStyle]="{'background-color': '#' + form.controls['branding_color'].value}">
-      <ng-container 
+      <ng-container
         [ngSwitch]="form.controls['school_name_logo_url'].value.length > 0">
         <img
           *ngSwitchCase="true"

@@ -1,8 +1,6 @@
 import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 
-import { CPI18nService } from '../../../../../../../shared/services';
-import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
+import { CPI18nService } from '@shared/services';
 
 @Component({
   selector: 'cp-banner-control-buttons',
@@ -14,8 +12,6 @@ export class BannerControlButtonsComponent implements OnInit {
   @Output() cancel: EventEmitter<null> = new EventEmitter();
 
   buttonData;
-  savedPhoto;
-  canceledPhoto;
 
   @Input()
   set loading(loading) {
@@ -25,16 +21,6 @@ export class BannerControlButtonsComponent implements OnInit {
   constructor(public cpI18n: CPI18nService) {}
 
   ngOnInit() {
-    this.savedPhoto = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.CUSTOMIZE_SAVED_PHOTO
-    };
-
-    this.canceledPhoto = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.CUSTOMIZE_CANCELED_PHOTO
-    };
-
     this.buttonData = {
       class: 'primary',
       text: this.cpI18n.translate('done')

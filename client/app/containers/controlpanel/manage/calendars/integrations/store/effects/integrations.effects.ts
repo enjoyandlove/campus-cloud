@@ -7,9 +7,10 @@ import { of, Observable } from 'rxjs';
 import { CPDate } from '@shared/utils';
 import { CPSession } from '@app/session';
 import * as fromActions from '../actions';
-import { StoreService, CPI18nService } from '@shared/services';
+import { amplitudeEvents } from '@shared/constants';
 import { ItemsIntegrationsService } from './../../integrations.service';
 import { EventIntegration } from '@client/app/libs/integrations/events/model';
+import { StoreService, CPI18nService, CPTrackingService } from '@shared/services';
 import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
 import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
 
@@ -56,12 +57,16 @@ export class IntegrationsEffects {
     ofType(fromActions.IntegrationActions.DELETE_INTEGRATION),
     mergeMap((action: fromActions.DeleteIntegration) => {
       const { integrationId, params } = action.payload;
-      return this.service
-        .deleteIntegration(integrationId, params)
-        .pipe(
-          map(() => new fromActions.DeleteIntegrationSuccess({ deletedId: integrationId })),
-          catchError(() => of(new fromActions.DeleteIntegrationFail(this.somethingWentWrong)))
-        );
+      return this.service.deleteIntegration(integrationId, params).pipe(
+        map(() => {
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_DELETED_FEED_INTEGRATION,
+            this.getEventProperties(integrationId)
+          );
+          return new fromActions.DeleteIntegrationSuccess({ deletedId: integrationId });
+        }),
+        catchError(() => of(new fromActions.DeleteIntegrationFail(this.somethingWentWrong)))
+      );
     })
   );
 
@@ -108,6 +113,10 @@ export class IntegrationsEffects {
     mergeMap(({ body, calendarId, params }) => {
       return this.service.createIntegration(body, params).pipe(
         map((integration: IEventIntegration) => {
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_ADDED_FEED_INTEGRATION,
+            this.getEventProperties(integration.id)
+          );
           return new fromActions.PostIntegrationSuccess({ integration, calendarId });
         }),
         catchError(({ error }: HttpErrorResponse) =>
@@ -145,6 +154,10 @@ export class IntegrationsEffects {
         .set('feed_obj_type', EventIntegration.objectType.academicEvent.toString());
       return this.service.syncNow(integration.id, search).pipe(
         map(() => {
+          this.cpTracking.amplitudeEmitEvent(
+            amplitudeEvents.MANAGE_SYNCED_FEED_INTEGRATION,
+            this.getEventProperties(integration.id)
+          );
           const editedIntegration = {
             ...integration,
             sync_status: EventIntegration.status.successful,
@@ -189,11 +202,21 @@ export class IntegrationsEffects {
     mergeMap((payload) => of(new fromActions.EditIntegration(payload)))
   );
 
+  private getEventProperties(feed_id) {
+    return {
+      feed_id,
+      feed_type: amplitudeEvents.ICAL,
+      host_type: amplitudeEvents.INSTITUTION,
+      sub_menu_name: amplitudeEvents.CALENDAR
+    };
+  }
+
   constructor(
     private actions$: Actions,
     private session: CPSession,
     private cpI18n: CPI18nService,
     private storeService: StoreService,
+    private cpTracking: CPTrackingService,
     private service: ItemsIntegrationsService,
     private commonUtils: CommonIntegrationUtilsService
   ) {}

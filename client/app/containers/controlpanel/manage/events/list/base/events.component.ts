@@ -1,11 +1,13 @@
+import { OverlayRef } from '@angular/cdk/overlay';
 import { Component, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
 import { EventType } from '../../event.status';
 import { EventsService } from '../../events.service';
-import { CPSession } from '../../../../../../session';
-import { BaseComponent } from '../../../../../../base/base.component';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { CPI18nService, ModalService } from '@shared/services';
+import { EventsDeleteComponent } from '@controlpanel/manage/events/delete';
 
 interface IState {
   start: number;
@@ -55,13 +57,14 @@ export class EventsComponent extends BaseComponent {
   pageNumber;
   isUpcoming;
   orientation;
-  deletedEvent = '';
+  modal: OverlayRef;
   eventState: IState = state;
 
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    public service: EventsService
+    public service: EventsService,
+    public modalService: ModalService
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -162,8 +165,16 @@ export class EventsComponent extends BaseComponent {
   }
 
   onDeleteEvent(event) {
-    this.deletedEvent = event;
-    this.orientation = this.isOrientation;
+    const data = {
+      event,
+      orientation_id: this.orientationId
+    };
+
+    this.modal = this.modalService.open(EventsDeleteComponent, null, {
+      data,
+      onClose: this.resetModal.bind(this),
+      onAction: this.onDeletedEvent.bind(this)
+    });
   }
 
   onDeletedEvent(eventId) {
@@ -175,6 +186,11 @@ export class EventsComponent extends BaseComponent {
       this.resetPagination();
       this.buildHeaders();
     }
+  }
+
+  resetModal() {
+    this.modalService.close(this.modal);
+    this.modal = null;
   }
 
   onPaginationNext() {
