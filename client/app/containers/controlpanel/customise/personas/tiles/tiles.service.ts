@@ -72,11 +72,11 @@ export class TilesService extends HTTPService {
       startWith([{ label: '---' }]),
       map((services: any[]) => {
         return [
-          { label: '---', value: null, heading: true },
+          { label: '---', action: null, heading: true },
 
           ...services.filter((s: any) => s.id).map((service: any) => {
             return {
-              value: service.id,
+              action: service.id,
               label: service.name
             };
           })
@@ -92,10 +92,10 @@ export class TilesService extends HTTPService {
       startWith([{ label: '---' }]),
       map((calendars: any[]) => {
         return [
-          { label: '---', value: null, heading: true },
+          { label: '---', action: null, heading: true },
           ...calendars.filter((c: any) => c.id).map((calendar: any) => {
             return {
-              value: calendar.id,
+              action: calendar.id,
               label: calendar.name
             };
           })

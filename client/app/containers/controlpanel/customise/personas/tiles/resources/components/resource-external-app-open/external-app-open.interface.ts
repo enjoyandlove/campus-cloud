@@ -5,10 +5,6 @@ export interface IExternalAppOpenLinkParams {
 
 export interface IExternalAppOpenFormDetails {
   link_type: number;
-  meta: {
-    is_system: number;
-    link_params: IExternalAppOpenLinkParams;
-    open_in_browser: number;
-    link_url: string;
-  };
+  link_url: string;
+  link_params: IExternalAppOpenLinkParams;
 }

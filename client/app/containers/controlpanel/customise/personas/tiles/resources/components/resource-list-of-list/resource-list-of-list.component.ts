@@ -36,8 +36,9 @@ interface IState {
   styleUrls: ['./resource-list-of-list.component.scss']
 })
 export class PersonasResourceListOfListComponent implements OnInit, AfterViewInit {
+  @Input() isEdit = false;
+  @Input() campusLink: ILink;
   @Input() persona: IPersona;
-  @Input() selectedIds: Number[];
 
   @Output() resourceAdded: EventEmitter<any> = new EventEmitter();
 
@@ -47,11 +48,9 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
   sortableOptions;
 
   meta = {
-    is_system: 1,
     link_params: {
       ids: []
     },
-    open_in_browser: 0,
     link_url: 'oohlala://campus_link_list'
   };
 
@@ -166,24 +165,32 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
       link_params: ids.length ? { ids } : null
     };
 
-    this.resourceAdded.emit({ meta: this.meta });
+    this.resourceAdded.emit(this.meta);
   }
 
   fetchLinks() {
+    const { link_params: { ids } } = this.campusLink;
+
+    if (!ids) {
+      return;
+    }
+
     this.state = {
       ...this.state,
       loading: true
     };
-    const campus_link_ids = this.selectedIds.map((n) => String(n)).join(',');
+
+    const campusLinkIdsString = ids.map((n) => String(n)).join(',');
 
     const search = new HttpParams()
-      .set('school_id', this.session.g.get('school').id)
-      .set('campus_link_ids', campus_link_ids);
+      .set('school_id', String(this.session.school.id))
+      .set('campus_link_ids', campusLinkIdsString);
+
     const stream$ = this.service.getCampusLink(search, 1, 9000);
 
     stream$.subscribe(
       (resources: any) => {
-        const sortedResources = this.selectedIds
+        const sortedResources = ids
           .map((id) => resources.filter((r) => r.id === id)[0])
           .map((r) => {
             return {
@@ -227,7 +234,7 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
       onUpdate: this.onDragged.bind(this)
     };
 
-    if (this.selectedIds) {
+    if (this.isEdit) {
       this.fetchLinks();
     }
   }

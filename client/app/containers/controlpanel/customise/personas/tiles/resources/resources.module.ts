@@ -6,18 +6,16 @@ import { NgModule } from '@angular/core';
 import {
   PersonasResourceFormComponent,
   PersonasResourceTypesComponent,
-  PersonasResourceTypeUrlComponent,
   PersonasResourceListFormComponent,
   PersonasResourceListOfListComponent,
-  PersonasResourceStoresListComponent,
   PersonasResourceTypeSearchComponent,
-  PersonasResourceExternalAppOpenComponent,
-  PersonasResourceServiceByCategoryComponent
+  PersonasResourceExternalAppOpenComponent
 } from './components';
 
 import { ResourceService } from './resource.service';
 import { PersonaResourceEditComponent } from './edit';
 import { TilesUtilsService } from '../tiles.utils.service';
+import { LibsStudioModule } from '@libs/studio/studio.module';
 import { ResourcesUtilsService } from './resources.utils.service';
 import { SharedModule } from '../../../../../../shared/shared.module';
 import { PersonaResourceCreateComponent } from './create/create.component';
@@ -28,28 +26,22 @@ import { PersonaResourceCreateComponent } from './create/create.component';
     PersonasResourceFormComponent,
     PersonaResourceCreateComponent,
     PersonasResourceTypesComponent,
-    PersonasResourceTypeUrlComponent,
     PersonasResourceListFormComponent,
-    PersonasResourceStoresListComponent,
     PersonasResourceTypeSearchComponent,
     PersonasResourceListOfListComponent,
-    PersonasResourceExternalAppOpenComponent,
-    PersonasResourceServiceByCategoryComponent
+    PersonasResourceExternalAppOpenComponent
   ],
-  imports: [CommonModule, SharedModule, ReactiveFormsModule, SortablejsModule],
+  imports: [CommonModule, LibsStudioModule, SharedModule, ReactiveFormsModule, SortablejsModule],
   providers: [TilesUtilsService, ResourceService, ResourcesUtilsService],
   exports: [
     PersonaResourceEditComponent,
     PersonasResourceFormComponent,
     PersonaResourceCreateComponent,
     PersonasResourceTypesComponent,
-    PersonasResourceTypeUrlComponent,
     PersonasResourceListFormComponent,
-    PersonasResourceStoresListComponent,
     PersonasResourceTypeSearchComponent,
     PersonasResourceListOfListComponent,
-    PersonasResourceExternalAppOpenComponent,
-    PersonasResourceServiceByCategoryComponent
+    PersonasResourceExternalAppOpenComponent
   ]
 })
 export class PersonasResourceModule {}

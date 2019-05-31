@@ -5,21 +5,21 @@ import { HttpParams } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
 import { ITile } from '../tile.interface';
 import { TilesService } from '../tiles.service';
+import { amplitudeEvents } from '@shared/constants';
 import { IPersona } from './../../persona.interface';
-import { CPSession } from '../../../../../../session';
-import { BaseComponent } from '../../../../../../base';
 import { PersonasService } from '../../personas.service';
 import { TilesUtilsService } from '../tiles.utils.service';
+import { ContentUtilsProviders } from '@libs/studio/providers';
 import { ICampusGuide } from '../../sections/section.interface';
+import { baseActions, IHeader, ISnackbar } from '@app/store/base';
 import { SectionsService } from '../../sections/sections.service';
-import { CPTrackingService } from '../../../../../../shared/services';
+import { CPTrackingService, CPI18nService } from '@shared/services';
 import { PersonasUtilsService } from './../../personas.utils.service';
 import { SectionUtilsService } from '../../sections/section.utils.service';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
-import { baseActions, IHeader, ISnackbar } from './../../../../../../store/base';
 
 @Component({
   selector: 'cp-personas-tile-create',
@@ -32,8 +32,11 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   persona: IPersona;
   personaId: number;
   guide: ICampusGuide;
+  filterByWeb = false;
+  filterByLogin = false;
   campusLinkForm: FormGroup;
   campusGuideTileForm: FormGroup;
+  contentTypes = ContentUtilsProviders.contentTypes;
 
   canceledTileEventProperties = {
     tile_type: amplitudeEvents.NORMAL,
@@ -185,7 +188,15 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     this.campusLinkForm.controls['img_url'].setValue(img_url);
   }
 
-  onCampusLinkFormChange() {
+  onCampusLinkFormChange(newValues) {
+    this.campusLinkForm.patchValue(newValues);
+    this.updateSubmitState();
+  }
+
+  onTypeChange() {
+    this.campusLinkForm.patchValue({
+      link_url: null
+    });
     this.updateSubmitState();
   }
 
@@ -213,6 +224,8 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       .then(({ data }: any) => {
         this.buildForm();
         this.persona = data;
+        this.filterByWeb = PersonasUtilsService.isWeb(this.persona.platform);
+        this.filterByLogin = PersonasUtilsService.isLoginRequired(this.persona.login_requirement);
         this.buildHeader(PersonasUtilsService.localizedPersonaName(data));
       })
       .catch(() => this.erroHandler());

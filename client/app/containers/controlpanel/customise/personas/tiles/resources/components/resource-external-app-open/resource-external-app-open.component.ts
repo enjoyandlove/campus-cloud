@@ -2,11 +2,9 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
 import { get as _get } from 'lodash';
 
-import {
-  IExternalAppOpenLinkParams,
-  IExternalAppOpenFormDetails
-} from './external-app-open.interface';
 import { CampusLink } from '@controlpanel/manage/links/tile';
+import { ILink } from '@controlpanel/manage/links/link.interface';
+import { IExternalAppOpenFormDetails } from './external-app-open.interface';
 
 @Component({
   selector: 'cp-personas-resource-external-app-open',
@@ -14,9 +12,11 @@ import { CampusLink } from '@controlpanel/manage/links/tile';
   styleUrls: ['./resource-external-app-open.component.scss']
 })
 export class PersonasResourceExternalAppOpenComponent implements OnInit {
-  @Input() params: IExternalAppOpenLinkParams | {};
+  @Input() isEdit = false;
+  @Input() campusLink: ILink;
 
-  @Output() selected: EventEmitter<IExternalAppOpenFormDetails | { meta: {} }> = new EventEmitter();
+  @Output()
+  valueChanges: EventEmitter<IExternalAppOpenFormDetails | { link_url: null }> = new EventEmitter();
 
   form: FormGroup;
 
@@ -29,7 +29,8 @@ export class PersonasResourceExternalAppOpenComponent implements OnInit {
     return !httpUrl && !storeUrl ? { requiredField: true } : null;
   }
 
-  getForm(params?: any): FormGroup {
+  getForm(): FormGroup {
+    const params = this.isEdit ? this.campusLink.link_params : {};
     const ios = _get(params, 'ios', false);
     const android = _get(params, 'android', false);
 
@@ -62,22 +63,18 @@ export class PersonasResourceExternalAppOpenComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.getForm(this.params);
+    this.form = this.getForm();
     this.form.valueChanges.subscribe(() => {
       const tooBig = JSON.stringify(this.form.value).length > 1024;
       const data =
         this.form.invalid || tooBig
-          ? { meta: {} }
+          ? { link_url: null }
           : {
               link_type: 4,
-              meta: {
-                is_system: 1,
-                link_params: this.form.value,
-                open_in_browser: 0,
-                link_url: CampusLink.appOpen
-              }
+              link_url: CampusLink.appOpen,
+              link_params: this.form.value
             };
-      this.selected.emit(data);
+      this.valueChanges.emit(data);
     });
   }
 }
