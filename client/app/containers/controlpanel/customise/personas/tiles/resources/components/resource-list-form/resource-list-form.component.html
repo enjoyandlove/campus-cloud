@@ -24,11 +24,58 @@
 </form>
 <div class="row">
   <div class="col-12">
-    <cp-personas-resource-form
-      [form]="form"
-      [persona]="persona"
-      [resource]="resource"
-      [hideTypeSelector]="[true]">
-    </cp-personas-resource-form>
+    <cp-resource-selector
+      [filterByWebApp]="filterByWeb"
+      [filterByLoginStatus]="filterByLogin"
+      (itemClicked)="onTypeChange($event)">
+      <cp-resource-selector-item
+        [resourceId]="contentTypes.single"
+        [active]="selectedContent === contentTypes.single"
+        [title]="'t_personas_resource_single_item' | cpI18n">
+        <cp-resource-selector-type-single
+          [isEdit]="[true]"
+          [campusLink]="form.value"
+          [filterByWebApp]="filterByWeb"
+          *ngIf="selectedContent === contentTypes.single"
+          [filterByLoginStatus]="filterByLogin"
+          (valueChanges)="onCampusLinkFormChange($event)">
+        </cp-resource-selector-type-single>
+      </cp-resource-selector-item>
+      <cp-resource-selector-item
+        [resourceId]="contentTypes.list"
+        [active]="selectedContent === contentTypes.list"
+        [title]="'t_personas_resource_resource' | cpI18n">
+        <cp-resource-selector-type-resource
+          [filterByWebApp]="filterByWeb"
+          [isEdit]="[true]"
+          [campusLink]="form.value"
+          *ngIf="selectedContent === contentTypes.list"
+          [filterByLoginStatus]="filterByLogin"
+          (valueChanges)="onCampusLinkFormChange($event)">
+        </cp-resource-selector-type-resource>
+      </cp-resource-selector-item>
+      <cp-resource-selector-item
+        [resourceId]="contentTypes.web"
+        [active]="selectedContent === contentTypes.web"
+        [title]="'t_personas_resource_web_link' | cpI18n">
+        <cp-resource-selector-type-web
+          [isEdit]="[true]"
+          [campusLink]="form.value"
+          *ngIf="selectedContent === contentTypes.web"
+          (valueChanges)="onCampusLinkFormChange($event)">
+        </cp-resource-selector-type-web>
+      </cp-resource-selector-item>
+      <cp-resource-selector-item
+        [resourceId]="contentTypes.thirdParty"
+        [active]="selectedContent === contentTypes.thirdParty"
+        [title]="'t_personas_resource_third_party_app' | cpI18n" >
+        <cp-personas-resource-external-app-open
+          [isEdit]="[true]"
+          [campusLink]="form.value"
+          (valueChanges)="onCampusLinkFormChange($event)"
+          *ngIf="selectedContent === contentTypes.thirdParty">
+        </cp-personas-resource-external-app-open>
+      </cp-resource-selector-item>
+    </cp-resource-selector>
   </div>
 </div>

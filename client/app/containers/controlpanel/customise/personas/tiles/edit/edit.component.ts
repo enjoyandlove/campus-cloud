@@ -5,20 +5,20 @@ import { HttpParams } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
 import { ITile } from './../tile.interface';
 import { TilesService } from '../tiles.service';
+import { amplitudeEvents } from '@shared/constants';
 import { IPersona } from './../../persona.interface';
-import { CPSession } from '../../../../../../session';
-import { BaseComponent } from '../../../../../../base';
 import { PersonasService } from '../../personas.service';
 import { TilesUtilsService } from '../tiles.utils.service';
+import { ContentUtilsProviders } from '@libs/studio/providers';
 import { ICampusGuide } from '../../sections/section.interface';
 import { SectionsService } from '../../sections/sections.service';
-import { CPTrackingService } from '../../../../../../shared/services';
+import { baseActions, IHeader, ISnackbar } from '@app/store/base';
+import { CPTrackingService, CPI18nService } from '@shared/services';
 import { PersonasUtilsService } from './../../personas.utils.service';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
-import { baseActions, IHeader, ISnackbar } from '../../../../../../store/base';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 
 @Component({
   selector: 'cp-personas-tile-edit',
@@ -34,9 +34,13 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   tile: ITile;
   persona: IPersona;
   personaId: number;
+  filterByWeb = false;
   guide: ICampusGuide;
+  filterByLogin = false;
   campusLinkForm: FormGroup;
   campusGuideTileForm: FormGroup;
+  contentTypes = ContentUtilsProviders.contentTypes;
+  selectedContent = ContentUtilsProviders.contentTypes.single;
 
   editedTileEventProperties = {
     status: null,
@@ -86,6 +90,16 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
         return this.service.updateCampusTile(this.tileId, data);
       })
     );
+  }
+
+  onTypeChange(selectedContentId) {
+    this.selectedContent = selectedContentId;
+    this.campusLinkForm.patchValue({
+      link_url: null,
+      link_params: {}
+    });
+
+    this.updateButtonDisableStatus();
   }
 
   erroHandler() {
@@ -146,7 +160,11 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     );
 
     this.setEditedTileEventProperties();
+
     this.editable = !this.utils.isCampaignTile(this.tile) && !this.utils.isDeprecated(this.tile);
+    this.selectedContent = ContentUtilsProviders.getContentTypeByCampusLink(
+      this.campusLinkForm.value
+    );
   }
 
   buildHeader(personaName: string) {
@@ -182,7 +200,8 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     this.campusLinkForm.controls['img_url'].setValue(img_url);
   }
 
-  onCampusLinkFormChange() {
+  onCampusLinkFormChange(newValues) {
+    this.campusLinkForm.patchValue(newValues);
     this.updateButtonDisableStatus();
   }
 
@@ -241,11 +260,11 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     super
       .fetchData(persona$)
       .then(({ data }) => {
-        const persona = data;
         this.buildForm();
-        this.persona = persona;
-
-        this.buildHeader(PersonasUtilsService.localizedPersonaName(persona));
+        this.persona = data;
+        this.filterByWeb = PersonasUtilsService.isWeb(this.persona.platform);
+        this.filterByLogin = PersonasUtilsService.isLoginRequired(this.persona.login_requirement);
+        this.buildHeader(PersonasUtilsService.localizedPersonaName(this.persona));
       })
       .catch(() => this.erroHandler());
   }

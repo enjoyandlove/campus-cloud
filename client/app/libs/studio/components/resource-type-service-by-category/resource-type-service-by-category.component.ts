@@ -3,10 +3,10 @@ import { Component, EventEmitter, OnInit, Output, Input, ViewChild } from '@angu
 import { HttpParams } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 
-import { TilesService } from '../../../tiles.service';
-import { CPSession } from '../../../../../../../../session';
-import { CPI18nService } from '../../../../../../../../shared/services';
-import { CPDropdownMultiSelectComponent } from './../../../../../../../../shared/components/cp-dropdown-multiselect/cp-dropdown-multiselect.component';
+import { CPSession } from '@app/session';
+import { CPI18nService } from '@shared/services';
+import { CPDropdownMultiSelectComponent } from '@shared/components';
+import { TilesService } from '@controlpanel/customise/personas/tiles/tiles.service';
 
 enum LinkParam {
   'includes' = 'category_ids',
@@ -14,11 +14,12 @@ enum LinkParam {
 }
 
 @Component({
-  selector: 'cp-personas-resource-service-by-category',
-  templateUrl: './resource-service-by-category.component.html',
-  styleUrls: ['./resource-service-by-category.component.scss']
+  selector: 'cp-resource-type-service-by-category',
+  templateUrl: './resource-type-service-by-category.component.html',
+  styleUrls: ['./resource-type-service-by-category.component.scss'],
+  providers: [TilesService]
 })
-export class PersonasResourceServiceByCategoryComponent implements OnInit {
+export class ResourceTypeServiceByCategoryComponent implements OnInit {
   @Input() params;
 
   @ViewChild('multiSelect') multiSelect: CPDropdownMultiSelectComponent;
@@ -26,7 +27,16 @@ export class PersonasResourceServiceByCategoryComponent implements OnInit {
   @Output() selected: EventEmitter<any> = new EventEmitter();
 
   items$;
-  options;
+  options = [
+    {
+      label: this.cpI18n.translate('t_personas_tile_form_categories_includes'),
+      action: LinkParam.includes
+    },
+    {
+      label: this.cpI18n.translate('t_personas_tile_form_categories_excludes'),
+      action: LinkParam.excludes
+    }
+  ];
   isEditView;
   selectedFilter;
   state = {
@@ -37,8 +47,8 @@ export class PersonasResourceServiceByCategoryComponent implements OnInit {
 
   constructor(
     public session: CPSession,
-    public tileService: TilesService,
-    public cpI18n: CPI18nService
+    public cpI18n: CPI18nService,
+    public tileService: TilesService
   ) {}
 
   onMultiSelect(selection) {
@@ -57,14 +67,7 @@ export class PersonasResourceServiceByCategoryComponent implements OnInit {
       [key]: [...this.state.selection]
     };
 
-    this.selected.emit({
-      meta: {
-        is_system: 1,
-        link_params,
-        open_in_browser: 0,
-        link_url: 'oohlala://campus_service_list'
-      }
-    });
+    this.selected.emit({ link_params });
   }
 
   onSelected({ action }) {
@@ -129,16 +132,6 @@ export class PersonasResourceServiceByCategoryComponent implements OnInit {
   ngOnInit(): void {
     this.isEditView = Object.keys(this.params).length > 0;
 
-    this.options = [
-      {
-        label: this.cpI18n.translate('t_personas_tile_form_categories_includes'),
-        action: LinkParam.includes
-      },
-      {
-        label: this.cpI18n.translate('t_personas_tile_form_categories_excludes'),
-        action: LinkParam.excludes
-      }
-    ];
     this.loadCategories();
 
     if (this.isEditView) {
