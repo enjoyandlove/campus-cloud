@@ -329,13 +329,13 @@
               <div class="col-12">
                 <p class="section-sub-title">
                   {{ 'notify' | cpI18n }}
-                  <button
-                    cpTooltip
-                    *ngIf="!hasStorePrivileges()"
-                    class="cpbtn cpbtn--link danger"
-                    [attr.title]="'t_admin_invite_notify_permission_tooltip' | cpI18n">
-                    {{ 't_shared_missing_permissions' | cpI18n }}
-                  </button>
+                    <i
+                      cpTooltip
+                      class="material-icons"
+                      *ngIf="!hasStorePrivileges()"
+                      [attr.title]="'t_admin_invite_notify_permission_tooltip' | cpI18n">
+                      lock
+                    </i>
                 </p>
                 <p class="section-description">
                   {{ 'admin_notify_help' | cpI18n }}
