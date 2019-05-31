@@ -75,11 +75,16 @@
 
                   <div class="row form-group">
                     <div class="col-6">
-                      <label>{{ 'website' | cpI18n }}</label>
+                      <cp-form-label
+                        [limit]="120"
+                        [controlValue]="form.controls['website'].value">
+                        <label>{{ 'website' | cpI18n }}</label>
+                      </cp-form-label>
                       <input
                         type="text"
                         class="form-control"
-                        formControlName="website">
+                        formControlName="website"
+                        [class.error]="formError && form.controls['website'].invalid">
                     </div>
                   </div>
 
