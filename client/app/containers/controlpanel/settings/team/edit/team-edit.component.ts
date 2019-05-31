@@ -296,7 +296,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     if (regular || emergency) {
       this.buttonData = {
         ...this.buttonData,
-        disabled: !hasStorePrivileges
+        disabled: this.form.invalid || !hasStorePrivileges
       };
     }
 
