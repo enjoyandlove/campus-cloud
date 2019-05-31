@@ -21,7 +21,7 @@
     <div
       class="logo-preview"
       [ngStyle]="{'background-color': '#' + form.controls['branding_color'].value}">
-      <ng-container 
+      <ng-container
         [ngSwitch]="form.controls['school_name_logo_url'].value.length > 0">
         <img
           *ngSwitchCase="true"
