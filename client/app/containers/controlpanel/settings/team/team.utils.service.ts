@@ -232,7 +232,7 @@ export class TeamUtilsService {
       items = [
         ...items,
         {
-          label: this.cpI18n.translate('admin_select_clubs'),
+          label: this.cpI18n.translate('admin_select_athletics'),
           action: athleticMenu.selectAthletic
         }
       ];
@@ -242,11 +242,11 @@ export class TeamUtilsService {
       items = [
         ...items,
         {
-          label: this.cpI18n.translate('admin_select_clubs'),
+          label: this.cpI18n.translate('admin_select_athletics'),
           action: athleticMenu.selectAthletic
         },
         {
-          label: this.cpI18n.translate('admin_all_clubs'),
+          label: this.cpI18n.translate('admin_all_athletics'),
           action: athleticMenu.allAthletics
         }
       ];

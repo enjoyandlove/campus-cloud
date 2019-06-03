@@ -1,9 +1,10 @@
-import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { CPSession } from './../../../../../../../../session';
-import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
-import { ServicesService } from '../../../../../../manage/services/services.service';
+import { HttpParams } from '@angular/common/http';
+
+import { CPSession } from '@app/session';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { ServicesService } from '@controlpanel/manage/services/services.service';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
 
 @Component({
@@ -21,8 +22,8 @@ export class SelectTeamServicesModalComponent extends BaseTeamSelectModalCompone
 
   data$: BehaviorSubject<any> = new BehaviorSubject({});
 
-  constructor(public session: CPSession, private service: ServicesService) {
-    super(session);
+  constructor(public el: ElementRef, public session: CPSession, private service: ServicesService) {
+    super(el, session);
     this.privilegeType = CP_PRIVILEGES_MAP.services;
   }
 

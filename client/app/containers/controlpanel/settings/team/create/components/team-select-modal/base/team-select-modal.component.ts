@@ -1,16 +1,21 @@
-/*tslint:disable:max-line-length */
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
-import { get as _get } from 'lodash';
-
 import {
-  canSchoolWriteResource,
-  canStoreReadAndWriteResource
-} from './../../../../../../../../shared/utils/privileges/privileges';
-import { CPSession } from './../../../../../../../../session';
-import { BaseComponent } from '../../../../../../../../base/base.component';
+  OnInit,
+  Input,
+  Output,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener
+} from '@angular/core';
+
+import { get as _get } from 'lodash';
+import { Observable } from 'rxjs';
+
+import { CPSession } from '@app/session';
+import { BaseComponent } from '@app/base';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
 import { permissions, permissionType, permissionIcon } from '../permissions';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../../shared/constants';
+import { canSchoolWriteResource, canStoreReadAndWriteResource } from '@shared/utils/privileges';
 
 interface ISelected {
   id: number;
@@ -48,9 +53,16 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   state: IState = state;
   permissionType = permissionType;
 
-  constructor(public session: CPSession) {
+  constructor(public el: ElementRef, public session: CPSession) {
     super();
     this.privileges = permissions;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onClick(event) {
+    if (event.target.contains(this.el.nativeElement)) {
+      this.emitAndClose();
+    }
   }
 
   onCheckedItem(checked, store) {
