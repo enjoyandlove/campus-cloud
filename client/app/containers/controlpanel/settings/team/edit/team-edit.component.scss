@@ -40,6 +40,9 @@ p {
 
 .material-icons {
   @include font-14px();
+
+  top: 2px;
+  position: relative;
 }
 
 .all-access {
