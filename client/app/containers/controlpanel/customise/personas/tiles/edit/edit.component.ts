@@ -95,6 +95,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   onTypeChange(selectedContentId) {
     this.selectedContent = selectedContentId;
     this.campusLinkForm.patchValue({
+      link_type: 3,
       link_url: null,
       link_params: {}
     });

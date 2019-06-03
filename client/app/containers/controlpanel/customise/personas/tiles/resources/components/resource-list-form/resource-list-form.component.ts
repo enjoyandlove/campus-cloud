@@ -45,6 +45,7 @@ export class PersonasResourceListFormComponent implements OnInit {
     this.selectedContent = selectedContentId;
 
     this.form.patchValue({
+      link_type: 3,
       link_url: null,
       link_params: {}
     });

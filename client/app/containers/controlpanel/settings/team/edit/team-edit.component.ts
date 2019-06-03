@@ -12,7 +12,7 @@ import { MODAL_TYPE } from '@shared/components';
 import { CP_PRIVILEGES_MAP } from '@shared/constants';
 import { baseActions, IHeader } from '@app/store/base';
 import { AdminService, ErrorService, CPI18nService } from '@shared/services';
-import { accountsToStoreMap, canAccountLevelReadResource } from '@shared/utils/privileges';
+import { accountsToStoreMap, canAccountLevelReadResource } from '@shared/utils';
 
 import {
   clubMenu,
@@ -77,7 +77,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private store: Store<IHeader>,
-    private cpI18n: CPI18nService,
+    public cpI18n: CPI18nService,
     public utils: TeamUtilsService,
     private adminService: AdminService,
     private errorService: ErrorService
@@ -437,15 +437,29 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     this.accountPrivileges = {};
   }
 
+  updateServiceDropdownLabel() {
+    const numberOfServices = this.utils.getNumberOf(
+      CP_PRIVILEGES_MAP.services,
+      this.accountPrivileges
+    );
+
+    if (this.schoolPrivileges[CP_PRIVILEGES_MAP.services]) {
+      this.servicesCount = { label: this.cpI18n.translate('admin_all_services') };
+    } else if (numberOfServices) {
+      this.servicesCount = {
+        label: `${numberOfServices} ${this.cpI18n.translate('admin_form_label_services')}`
+      };
+    } else {
+      this.servicesCount = { label: this.cpI18n.translate('admin_no_access') };
+    }
+  }
+
   onServicesModalSelected(services) {
     this.doServicesCleanUp();
 
-    const servicesLength = Object.keys(services).length;
-    this.servicesCount = servicesLength
-      ? { label: `${servicesLength} ${this.cpI18n.translate('admin_form_label_services')}` }
-      : null;
-
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...services);
+
+    this.updateServiceDropdownLabel();
   }
 
   onServicesSelected(service) {
@@ -519,25 +533,51 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     }
   }
 
+  updateClubDropdownLabel() {
+    const numberOfClubs = this.utils.getNumberOf(CP_PRIVILEGES_MAP.clubs, this.accountPrivileges);
+
+    if (this.schoolPrivileges[CP_PRIVILEGES_MAP.clubs]) {
+      this.clubsCount = { label: this.cpI18n.translate('admin_all_clubs') };
+    } else if (numberOfClubs) {
+      this.clubsCount = {
+        label: `${numberOfClubs} ${this.cpI18n.translate('admin_form_label_clubs')}`
+      };
+    } else {
+      this.clubsCount = { label: this.cpI18n.translate('admin_no_access') };
+    }
+  }
+
   onClubsModalSelected(clubs) {
     this.doClubsCleanUp();
-    const clubsLength = Object.keys(clubs).length;
-    this.clubsCount = clubsLength
-      ? { label: `${clubsLength} ${this.cpI18n.translate('admin_form_label_clubs')}` }
-      : null;
 
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...clubs);
+
+    this.updateClubDropdownLabel();
+  }
+
+  updateAthleticDropdownLabel() {
+    const numberOfAthletics = this.utils.getNumberOf(
+      CP_PRIVILEGES_MAP.athletics,
+      this.accountPrivileges
+    );
+
+    if (this.schoolPrivileges[CP_PRIVILEGES_MAP.athletics]) {
+      this.athleticsCount = { label: this.cpI18n.translate('admin_all_athletics') };
+    } else if (numberOfAthletics) {
+      this.athleticsCount = {
+        label: `${numberOfAthletics} ${this.cpI18n.translate('admin_form_label_athletics')}`
+      };
+    } else {
+      this.athleticsCount = { label: this.cpI18n.translate('admin_no_access') };
+    }
   }
 
   onAthleticsModalSelected(athletics) {
     this.doAthleticsCleanUp();
 
-    const athleticsLength = Object.keys(athletics).length;
-    this.athleticsCount = athleticsLength
-      ? { label: `${athleticsLength} ${this.cpI18n.translate('admin_form_label_athletics')}` }
-      : null;
-
     this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...athletics);
+
+    this.updateAthleticDropdownLabel();
   }
 
   onClubsSelected(club) {

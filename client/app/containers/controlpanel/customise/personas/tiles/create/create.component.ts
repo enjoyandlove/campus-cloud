@@ -195,7 +195,9 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
   onTypeChange() {
     this.campusLinkForm.patchValue({
-      link_url: null
+      link_type: 3,
+      link_url: null,
+      link_params: {}
     });
     this.updateSubmitState();
   }

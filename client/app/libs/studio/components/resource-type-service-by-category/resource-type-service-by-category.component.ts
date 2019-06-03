@@ -20,7 +20,7 @@ enum LinkParam {
   providers: [TilesService]
 })
 export class ResourceTypeServiceByCategoryComponent implements OnInit {
-  @Input() params;
+  @Input() params = {};
 
   @ViewChild('multiSelect') multiSelect: CPDropdownMultiSelectComponent;
 
