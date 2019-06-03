@@ -4,11 +4,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import {
-  PersonasResourceFormComponent,
-  PersonasResourceTypesComponent,
   PersonasResourceListFormComponent,
   PersonasResourceListOfListComponent,
-  PersonasResourceTypeSearchComponent,
   PersonasResourceExternalAppOpenComponent
 } from './components';
 
@@ -23,11 +20,8 @@ import { PersonaResourceCreateComponent } from './create/create.component';
 @NgModule({
   declarations: [
     PersonaResourceEditComponent,
-    PersonasResourceFormComponent,
     PersonaResourceCreateComponent,
-    PersonasResourceTypesComponent,
     PersonasResourceListFormComponent,
-    PersonasResourceTypeSearchComponent,
     PersonasResourceListOfListComponent,
     PersonasResourceExternalAppOpenComponent
   ],
@@ -35,11 +29,8 @@ import { PersonaResourceCreateComponent } from './create/create.component';
   providers: [TilesUtilsService, ResourceService, ResourcesUtilsService],
   exports: [
     PersonaResourceEditComponent,
-    PersonasResourceFormComponent,
     PersonaResourceCreateComponent,
-    PersonasResourceTypesComponent,
     PersonasResourceListFormComponent,
-    PersonasResourceTypeSearchComponent,
     PersonasResourceListOfListComponent,
     PersonasResourceExternalAppOpenComponent
   ]

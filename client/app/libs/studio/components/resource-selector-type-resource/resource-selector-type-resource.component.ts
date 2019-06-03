@@ -1,6 +1,6 @@
 import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { get as _get } from 'lodash';
+import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { get as _get, isEmpty } from 'lodash';
 
 import { CustomValidators } from '@shared/validators';
 import { ContentUtilsProviders } from '../../providers';
@@ -26,6 +26,7 @@ export class ResourceSelectorTypeResourceComponent implements OnInit {
   form: FormGroup;
   selectedItem = null;
   isServiceByCategory = false;
+  resourcesWithLinkParamsRequired = [CampusLink.storeList];
   items: IStudioContentResource[] = [{ id: null, label: '---' }];
 
   constructor(private contentUtils: ContentUtilsProviders, private fb: FormBuilder) {}
@@ -45,7 +46,8 @@ export class ResourceSelectorTypeResourceComponent implements OnInit {
 
     this.buildForm();
     this.form.valueChanges.subscribe(() => {
-      this.valueChanges.emit(this.form.value);
+      const value = this.form.valid ? this.form.value : { link_url: null };
+      this.valueChanges.emit(value);
     });
 
     if (this.isEdit) {
@@ -65,22 +67,27 @@ export class ResourceSelectorTypeResourceComponent implements OnInit {
   }
 
   buildForm() {
-    this.form = this.fb.group({
-      link_url: [
-        null,
-        Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])
-      ],
-      link_params: [{}]
-    });
+    this.form = this.fb.group(
+      {
+        link_url: [
+          null,
+          Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])
+        ],
+        link_params: [{}]
+      },
+      { validators: this.customLinkParamsValidator.bind(this) }
+    );
   }
 
-  validateLinkParams() {
-    const requiresLinkParams = [CampusLink.storeList];
+  customLinkParamsValidator(control: FormControl) {
+    const linkUrl = control.get('link_url').value;
+    const linkParams = control.get('link_params').value;
 
-    return this.items
-      .filter((i) => i.id)
-      .map((i: any) => i.meta)
-      .filter((i) => requiresLinkParams.includes(i.link_url));
+    if (this.resourcesWithLinkParamsRequired.includes(linkUrl)) {
+      return isEmpty(linkParams) ? { required: true } : null;
+    }
+
+    return null;
   }
 
   onService({ link_params }) {

@@ -10,7 +10,7 @@ export class ResourcesUtilsService {
   types: any[];
 
   constructor() {
-    this.types = require('./components/resource-types/resources.json');
+    this.types = require('./resources.json');
   }
 
   isListOfLists(link: ILink) {

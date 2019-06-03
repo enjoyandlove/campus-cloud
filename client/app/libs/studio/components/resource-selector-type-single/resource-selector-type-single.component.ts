@@ -115,6 +115,13 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
         if (this.isEdit) {
           this.updateState();
         }
+      },
+      () => {
+        this.storesByType = {
+          subscribable_calendar: [],
+          campus_service: [],
+          store: []
+        };
       }
     );
 
@@ -139,7 +146,6 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
 
   handleError(err: HttpErrorResponse) {
     const label = err.status === 403 ? '---' : 'Error';
-
     return of([{ ...placeHolder, label }]);
   }
 

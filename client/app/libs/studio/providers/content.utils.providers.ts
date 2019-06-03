@@ -1,5 +1,5 @@
+import { get as _get, sortBy } from 'lodash';
 import { Injectable } from '@angular/core';
-import { sortBy } from 'lodash';
 
 import { CPI18nService } from '@shared/services';
 import { CampusLink } from '@controlpanel/manage/links/tile';
@@ -30,11 +30,23 @@ export class ContentUtilsProviders {
   };
 
   static isWebAppContent(resource: IStudioContentResource) {
-    return TilesUtilsService.webAppSupportedLinkUrls.includes(resource.meta.link_url);
+    const linkUrl = _get(resource, ['meta', 'link_url'], false);
+
+    if (!linkUrl) {
+      return false;
+    }
+
+    return TilesUtilsService.webAppSupportedLinkUrls.includes(linkUrl);
   }
 
   static isLoginRequired(resource: IStudioContentResource) {
-    return TilesUtilsService.loginRequiredTiles.includes(resource.meta.link_url);
+    const linkUrl = _get(resource, ['meta', 'link_url'], false);
+
+    if (!linkUrl) {
+      return false;
+    }
+
+    return TilesUtilsService.loginRequiredTiles.includes(linkUrl);
   }
 
   static getContentTypeByCampusLink(campusLink) {
