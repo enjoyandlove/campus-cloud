@@ -3,15 +3,21 @@
 @import '~client/style/components/card';
 @import '~client/style/components/button';
 
-.cp-form__header {
-  span.hover {
-    position: relative;
+.cp-form {
+  &__title {
+    display: inherit;
+  }
 
-    > span i {
-      top: 1px;
-      font-size: 17px;
-      position: absolute;
-      padding-left: 6px;
+  &__header {
+    span.hover {
+      position: relative;
+
+      > span i {
+        top: 1px;
+        font-size: 17px;
+        position: absolute;
+        padding-left: 6px;
+      }
     }
   }
 }
