@@ -1,5 +1,5 @@
+import { tap, take, filter, switchMap, catchError } from 'rxjs/operators';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
-import { tap, take, switchMap, catchError } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
@@ -35,6 +35,7 @@ export class LocationExistsGuard implements CanActivate {
           this.store.dispatch(new fromStore.GetLocationById(payload));
         }
       }),
+      filter((location) => !!location),
       take(1)
     );
   }

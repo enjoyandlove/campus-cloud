@@ -39,18 +39,13 @@
           <div class="row">
             <span class="col-5 text-truncate clubs__thumbnail">
               <img
-                [src]="club.logo_url"
-                *ngIf="club.logo_url !== ''"
-                class="rounded img-fit-cover" />
-
-              <img
-                src="defaultImage"
-                *ngIf="club.logo_url === ''"
-                class="rounded img-fit-cover" />
+                class="rounded img-fit-cover"
+                [src]="club.logo_url ? club.logo_url : defaultImage"/>
 
               <strong>
                 <a
                   cpTracker
+                  class="cp-form__title"
                   [eventData]="eventData"
                   queryParamsHandling="merge"
                   [routerLink]="[club.id + '/info']">

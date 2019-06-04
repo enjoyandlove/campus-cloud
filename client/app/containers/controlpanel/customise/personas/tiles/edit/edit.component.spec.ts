@@ -1,276 +1,278 @@
-// import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
-// import { HttpErrorResponse, HttpParams } from '@angular/common/http';
-// import { RouterTestingModule } from '@angular/router/testing';
-// import { ActivatedRoute } from '@angular/router';
-// import { FormBuilder } from '@angular/forms';
-// import { StoreModule } from '@ngrx/store';
-// import { of } from 'rxjs';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
+import { of } from 'rxjs';
 
-// import mockSection from './mock';
-// import { TilesService } from '../tiles.service';
-// import { CPSession } from './../../../../../../session';
-// import { PersonasTilesModule } from './../tiles.module';
-// import { PersonasService } from '../../personas.service';
-// import { TilesUtilsService } from './../tiles.utils.service';
-// import { PersonasTileEditComponent } from './edit.component';
-// import { mockPersonas } from './../../__mock__/personas.mock';
-// import { CPI18nService } from '../../../../../../shared/services';
-// import { SectionsService } from '../../sections/sections.service';
-// import { mockSchool } from './../../../../../../session/mock/school';
-// import { PersonasUtilsService } from './../../personas.utils.service';
-// import { baseActions } from './../../../../../../store/base/reducers';
-// import { SectionUtilsService } from '../../sections/section.utils.service';
+import mockSection from './mock';
+import { TilesService } from '../tiles.service';
+import { CPSession } from '../../../../../../session';
+import { PersonasTilesModule } from '../tiles.module';
+import { PersonasService } from '../../personas.service';
+import { TilesUtilsService } from '../tiles.utils.service';
+import { PersonasTileEditComponent } from './edit.component';
+import { mockPersonas } from '../../__mock__/personas.mock';
+import { CPI18nService } from '../../../../../../shared/services';
+import { SectionsService } from '../../sections/sections.service';
+import { mockSchool } from '../../../../../../session/mock/school';
+import { PersonasUtilsService } from '../../personas.utils.service';
+import { baseActions } from '../../../../../../store/base/reducers';
+import { SectionUtilsService } from '../../sections/section.utils.service';
 
-// class MockPersonaService {
-//   placeholder;
+class MockPersonaService {
+  placeholder;
 
-//   getPersonaById(personaId, search) {
-//     this.placeholder = { personaId, search };
+  getPersonaById(personaId, search) {
+    this.placeholder = { personaId, search };
 
-//     return of(mockPersonas[0]);
-//   }
+    return of(mockPersonas[0]);
+  }
+}
+
+class MockSectionsService {
+  _guide = mockSection;
+
+  get guide() {
+    return this._guide;
+  }
+
+  set guide(g) {
+    this._guide = g;
+  }
+}
+
+class MockTilService {
+  placeholder;
+
+  updateCampusLink(campusLinkId, data) {
+    this.placeholder = { campusLinkId, data };
+
+    return of({ id: campusLinkId });
+  }
+}
+
+// function validCampusLinkForm(campusLinkForm: FormGroup) {
+//   campusLinkForm.controls['name'].setValue('hello');
+//   campusLinkForm.controls['link_url'].setValue('hello');
+//   campusLinkForm.controls['link_params'].setValue({});
+//   campusLinkForm.controls['img_url'].setValue('hello');
+//   campusLinkForm.controls['school_id'].setValue('157');
+
+//   return campusLinkForm;
 // }
 
-// class MockSectionsService {
-//   _guide = mockSection;
+// function validCampusGuideTileForm(campusGuideTileForm: FormGroup) {
+//   campusGuideTileForm.controls['school_id'].setValue(157);
+//   campusGuideTileForm.controls['school_persona_id'].setValue(1);
+//   campusGuideTileForm.controls['name'].setValue('hello');
+//   campusGuideTileForm.controls['rank'].setValue(1);
+//   campusGuideTileForm.controls['img_url'].setValue('img_url');
+//   campusGuideTileForm.controls['color'].setValue('cccccc');
+//   campusGuideTileForm.controls['featured_rank'].setValue(1);
 
-//   get guide() {
-//     return this._guide;
-//   }
-
-//   set guide(g) {
-//     this._guide = g;
-//   }
+//   return campusGuideTileForm;
 // }
 
-// class MockTilService {
-//   placeholder;
+describe('PersonasTileEditComponent', () => {
+  let guideService: SectionsService;
+  let personaService: PersonasService;
+  let component: PersonasTileEditComponent;
+  let fixture: ComponentFixture<PersonasTileEditComponent>;
 
-//   updateCampusLink(campusLinkId, data) {
-//     this.placeholder = { campusLinkId, data };
+  beforeEach(
+    async(() => {
+      TestBed.configureTestingModule({
+        imports: [PersonasTilesModule, RouterTestingModule, StoreModule.forRoot({})],
+        providers: [
+          CPSession,
+          FormBuilder,
+          CPI18nService,
+          TilesUtilsService,
+          SectionUtilsService,
+          SectionUtilsService,
+          PersonasUtilsService,
+          {
+            provide: ActivatedRoute,
+            useValue: { snapshot: { params: { tileId: mockSection.tiles[0].id } } }
+          },
+          { provide: TilesService, useClass: MockTilService },
+          { provide: SectionsService, useClass: MockSectionsService },
+          { provide: PersonasService, useClass: MockPersonaService }
+        ]
+      })
+        .compileComponents()
+        .then(() => {
+          fixture = TestBed.createComponent(PersonasTileEditComponent);
+          component = fixture.componentInstance;
 
-//     return of({ id: campusLinkId });
-//   }
-// }
+          component.personaId = 1;
+          component.session.g.set('school', mockSchool);
+          guideService = TestBed.get(SectionsService);
+          personaService = TestBed.get(PersonasService);
+        });
+    })
+  );
 
-// // function validCampusLinkForm(campusLinkForm: FormGroup) {
-// //   campusLinkForm.controls['name'].setValue('hello');
-// //   campusLinkForm.controls['link_url'].setValue('hello');
-// //   campusLinkForm.controls['link_params'].setValue({});
-// //   campusLinkForm.controls['img_url'].setValue('hello');
-// //   campusLinkForm.controls['school_id'].setValue('157');
+  it('should init', () => {
+    expect(component).toBeTruthy();
+  });
 
-// //   return campusLinkForm;
-// // }
+  it('should redirect if no guide is set', () => {
+    const routerSpy = spyOn(component.router, 'navigate');
+    spyOn(component, 'fetch');
 
-// // function validCampusGuideTileForm(campusGuideTileForm: FormGroup) {
-// //   campusGuideTileForm.controls['school_id'].setValue(157);
-// //   campusGuideTileForm.controls['school_persona_id'].setValue(1);
-// //   campusGuideTileForm.controls['name'].setValue('hello');
-// //   campusGuideTileForm.controls['rank'].setValue(1);
-// //   campusGuideTileForm.controls['img_url'].setValue('img_url');
-// //   campusGuideTileForm.controls['color'].setValue('cccccc');
-// //   campusGuideTileForm.controls['featured_rank'].setValue(1);
+    guideService.guide = null;
 
-// //   return campusGuideTileForm;
-// // }
+    fixture.detectChanges();
 
-// xdescribe('PersonasTileEditComponent', () => {
-//   let guideService: SectionsService;
-//   let personaService: PersonasService;
-//   let component: PersonasTileEditComponent;
-//   let fixture: ComponentFixture<PersonasTileEditComponent>;
+    expect(component.fetch).not.toHaveBeenCalled();
+    expect(routerSpy).toHaveBeenCalledWith(['/studio/experiences/', component.personaId]);
+    expect(component.router.navigate).toHaveBeenCalled();
+  });
 
-//   beforeEach(
-//     async(() => {
-//       TestBed.configureTestingModule({
-//         imports: [PersonasTilesModule, RouterTestingModule, StoreModule.forRoot({})],
-//         providers: [
-//           CPSession,
-//           FormBuilder,
-//           CPI18nService,
-//           TilesUtilsService,
-//           SectionUtilsService,
-//           SectionUtilsService,
-//           PersonasUtilsService,
-//           {
-//             provide: ActivatedRoute,
-//             useValue: { snapshot: { params: { tileId: mockSection.tiles[0].id } } }
-//           },
-//           { provide: TilesService, useClass: MockTilService },
-//           { provide: SectionsService, useClass: MockSectionsService },
-//           { provide: PersonasService, useClass: MockPersonaService }
-//         ]
-//       })
-//         .compileComponents()
-//         .then(() => {
-//           fixture = TestBed.createComponent(PersonasTileEditComponent);
-//           component = fixture.componentInstance;
+  it('should set guide from guideService', () => {
+    spyOn(component.router, 'navigate');
+    spyOn(component, 'fetch');
 
-//           component.personaId = 1;
-//           component.session.g.set('school', mockSchool);
-//           guideService = TestBed.get(SectionsService);
-//           personaService = TestBed.get(PersonasService);
-//         });
-//     })
-//   );
+    fixture.detectChanges();
 
-//   it('should init', () => {
-//     expect(component).toBeTruthy();
-//   });
+    expect(component.fetch).toHaveBeenCalled();
+    expect(component.router.navigate).not.toHaveBeenCalled();
+  });
 
-//   it('should redirect if no guide is set', () => {
-//     const routerSpy = spyOn(component.router, 'navigate');
-//     spyOn(component, 'fetch');
+  it(
+    'should catch fetch error',
+    fakeAsync(() => {
+      spyOn(component, 'erroHandler');
+      spyOn(component.personaService, 'getPersonaById').and.returnValue(
+        of(new HttpErrorResponse({ error: 'Mocked Error' }))
+      );
 
-//     guideService.guide = null;
+      component.fetch();
+      tick();
 
-//     fixture.detectChanges();
+      expect(component.erroHandler).toHaveBeenCalled();
+    })
+  );
 
-//     expect(component.fetch).not.toHaveBeenCalled();
-//     expect(routerSpy).toHaveBeenCalledWith(['/studio/experiences/', component.personaId]);
-//     expect(component.router.navigate).toHaveBeenCalled();
-//   });
+  it(
+    'should fetch personaById',
+    fakeAsync(() => {
+      fixture.detectChanges();
 
-//   it('should set guide from guideService', () => {
-//     spyOn(component.router, 'navigate');
-//     spyOn(component, 'fetch');
+      const params = new HttpParams().set('school_id', component.session.g.get('school').id);
 
-//     fixture.detectChanges();
+      spyOn(component, 'erroHandler');
+      spyOn(personaService, 'getPersonaById').and.returnValue(of(mockPersonas[0]));
 
-//     expect(component.fetch).toHaveBeenCalled();
-//     expect(component.router.navigate).not.toHaveBeenCalled();
-//   });
+      component.fetch();
+      tick();
 
-//   it(
-//     'should catch fetch error',
-//     fakeAsync(() => {
-//       spyOn(component, 'erroHandler');
-//       spyOn(component.personaService, 'getPersonaById').and.returnValue(
-//         of(new HttpErrorResponse({ error: 'Mocked Error' }))
-//       );
+      expect(component.campusLinkForm).toBeDefined();
+      expect(component.campusGuideTileForm).toBeDefined();
+      expect(component.erroHandler).not.toHaveBeenCalled();
+      expect(component.persona).toEqual(mockPersonas[0]);
+      expect(personaService.getPersonaById).toHaveBeenCalledWith(component.personaId, params);
+    })
+  );
 
-//       component.fetch();
-//       tick();
+  it('should update buttonData based on form validity', () => {
+    fixture.detectChanges();
+    component.buildForm();
+    component.updateButtonDisableStatus();
 
-//       expect(component.erroHandler).toHaveBeenCalled();
-//     })
-//   );
+    expect(component.buttonData.disabled).toBe(false);
 
-//   it(
-//     'should fetch personaById',
-//     fakeAsync(() => {
-//       fixture.detectChanges();
+    component.campusLinkForm.controls['link_url'].setValue(null);
+    component.updateButtonDisableStatus();
+    expect(component.buttonData.disabled).toBe(true);
 
-//       const params = new HttpParams().set('school_id', component.session.g.get('school').id);
+    component.campusLinkForm.controls['link_url'].setValue('a value');
+    component.updateButtonDisableStatus();
+    expect(component.buttonData.disabled).toBe(false);
 
-//       spyOn(component, 'erroHandler');
-//       spyOn(personaService, 'getPersonaById').and.returnValue(of(mockPersonas[0]));
+    component.campusGuideTileForm.controls['name'].setValue(null);
+    component.updateButtonDisableStatus();
+    expect(component.buttonData.disabled).toBe(true);
 
-//       component.fetch();
-//       tick();
+    component.campusGuideTileForm.controls['name'].setValue('some');
+    component.updateButtonDisableStatus();
+    expect(component.buttonData.disabled).toBe(false);
+  });
 
-//       expect(component.campusLinkForm).toBeDefined();
-//       expect(component.campusGuideTileForm).toBeDefined();
-//       expect(component.erroHandler).not.toHaveBeenCalled();
-//       expect(component.persona).toEqual(mockPersonas[0]);
-//       expect(personaService.getPersonaById).toHaveBeenCalledWith(component.personaId, params);
-//     })
-//   );
+  it('should call updateButtonDisableStatus', () => {
+    fixture.detectChanges();
+    component.buildForm();
+    spyOn(component, 'updateButtonDisableStatus');
 
-//   it('should update buttonData based on form validity', () => {
-//     fixture.detectChanges();
-//     component.buildForm();
-//     component.updateButtonDisableStatus();
+    component.onCampusLinkFormChange({});
 
-//     expect(component.buttonData.disabled).toBe(false);
+    expect(component.updateButtonDisableStatus).toHaveBeenCalled();
+  });
 
-//     component.campusLinkForm.controls['link_url'].setValue(null);
-//     component.updateButtonDisableStatus();
-//     expect(component.buttonData.disabled).toBe(true);
+  it('should update linkForm with guide tile form values', () => {
+    fixture.detectChanges();
+    component.buildForm();
+    spyOn(component, 'updateButtonDisableStatus');
 
-//     component.campusLinkForm.controls['link_url'].setValue('a value');
-//     component.updateButtonDisableStatus();
-//     expect(component.buttonData.disabled).toBe(false);
+    const linkForm = component.campusLinkForm;
+    const guideTileForm = component.campusGuideTileForm;
 
-//     component.campusGuideTileForm.controls['name'].setValue(null);
-//     component.updateButtonDisableStatus();
-//     expect(component.buttonData.disabled).toBe(true);
+    guideTileForm.controls['name'].setValue('some');
+    guideTileForm.controls['img_url'].setValue('test');
 
-//     component.campusGuideTileForm.controls['name'].setValue('some');
-//     component.updateButtonDisableStatus();
-//     expect(component.buttonData.disabled).toBe(false);
-//   });
+    component.onCampusGuideTileFormChange();
 
-//   it('should call updateButtonDisableStatus', () => {
-//     spyOn(component, 'updateButtonDisableStatus');
+    expect(linkForm.controls['name'].value).toBe('some');
+    expect(linkForm.controls['img_url'].value).toBe('test');
+    expect(component.updateButtonDisableStatus).toHaveBeenCalled();
+  });
 
-//     component.onCampusLinkFormChange();
+  it('should reset both forms', () => {
+    fixture.detectChanges();
+    component.buildForm();
 
-//     expect(component.updateButtonDisableStatus).toHaveBeenCalled();
-//   });
+    spyOn(component.campusLinkForm, 'reset');
+    spyOn(component.campusGuideTileForm, 'reset');
 
-//   it('should update linkForm with guide tile form values', () => {
-//     fixture.detectChanges();
-//     component.buildForm();
-//     spyOn(component, 'updateButtonDisableStatus');
+    component.doReset();
 
-//     const linkForm = component.campusLinkForm;
-//     const guideTileForm = component.campusGuideTileForm;
+    expect(component.campusLinkForm.reset).toHaveBeenCalled();
+    expect(component.campusGuideTileForm.reset).toHaveBeenCalled();
+  });
 
-//     guideTileForm.controls['name'].setValue('some');
-//     guideTileForm.controls['img_url'].setValue('test');
+  it('should create forms', () => {
+    expect(component.campusLinkForm).not.toBeDefined();
+    expect(component.campusGuideTileForm).not.toBeDefined();
 
-//     component.onCampusGuideTileFormChange();
+    fixture.detectChanges();
+    component.buildForm();
 
-//     expect(linkForm.controls['name'].value).toBe('some');
-//     expect(linkForm.controls['img_url'].value).toBe('test');
-//     expect(component.updateButtonDisableStatus).toHaveBeenCalled();
-//   });
+    expect(component.campusLinkForm).toBeDefined();
+    expect(component.campusGuideTileForm).toBeDefined();
+    expect(component.editable).toBe(true);
+  });
 
-//   it('should reset both forms', () => {
-//     fixture.detectChanges();
-//     component.buildForm();
+  it('should set editable false', () => {
+    component.route.snapshot.params.tileId = 12942;
+    fixture.detectChanges();
+    component.buildForm();
 
-//     spyOn(component.campusLinkForm, 'reset');
-//     spyOn(component.campusGuideTileForm, 'reset');
+    expect(component.editable).toBe(false);
+  });
 
-//     component.doReset();
+  it('should display alert snackbar', () => {
+    const spy = spyOn(component.store, 'dispatch');
 
-//     expect(component.campusLinkForm.reset).toHaveBeenCalled();
-//     expect(component.campusGuideTileForm.reset).toHaveBeenCalled();
-//   });
+    component.erroHandler();
 
-//   it('should create forms', () => {
-//     expect(component.campusLinkForm).not.toBeDefined();
-//     expect(component.campusGuideTileForm).not.toBeDefined();
+    expect(component.store.dispatch).toHaveBeenCalled();
 
-//     fixture.detectChanges();
-//     component.buildForm();
+    const args = spy.calls.mostRecent().args[0];
 
-//     expect(component.campusLinkForm).toBeDefined();
-//     expect(component.campusGuideTileForm).toBeDefined();
-//     expect(component.editable).toBe(true);
-//   });
-
-//   it('should set editable false', () => {
-//     component.route.snapshot.params.tileId = 12942;
-//     fixture.detectChanges();
-//     component.buildForm();
-
-//     expect(component.editable).toBe(false);
-//   });
-
-//   it('should display alert snackbar', () => {
-//     const spy = spyOn(component.store, 'dispatch');
-
-//     component.erroHandler();
-
-//     expect(component.store.dispatch).toHaveBeenCalled();
-
-//     const args = spy.calls.mostRecent().args[0];
-
-//     expect(args.payload.class).toBe('danger');
-//     expect(args.type).toBe(baseActions.SNACKBAR_SHOW);
-//   });
-// });
+    expect(args.payload.class).toBe('danger');
+    expect(args.type).toBe(baseActions.SNACKBAR_SHOW);
+  });
+});
