@@ -187,6 +187,7 @@ export class TilesUtilsService {
           link_url: null,
           link_params: {},
           img_url: null,
+          link_type: 3,
           open_in_browser: 0,
           is_system: 1,
           school_id: this.session.g.get('school').id
@@ -196,6 +197,7 @@ export class TilesUtilsService {
       {
         name: [_link.name, nameRequired ? Validators.required : null],
         link_url: [_link.link_url, Validators.required],
+        link_type: [_link.link_type, Validators.required],
         link_params: [_link.link_params, Validators.required],
         img_url: [_link.img_url, imageRequired ? Validators.required : null],
         open_in_browser: [_link.open_in_browser],

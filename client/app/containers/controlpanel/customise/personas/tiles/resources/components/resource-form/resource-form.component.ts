@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 
 import { CPI18nService } from '@shared/services';
 import { ITile } from './../../../tile.interface';
@@ -37,12 +37,6 @@ export class PersonasResourceFormComponent implements OnInit {
   constructor(public cpI18n: CPI18nService, public utils: ResourcesUtilsService) {}
 
   updateFormMetaValues(data) {
-    if ('link_type' in data) {
-      this.form.addControl('link_type', new FormControl(data['link_type']));
-    } else {
-      this.form.removeControl('link_type');
-    }
-
     for (const key in data.meta) {
       if (key in data.meta) {
         this.form.controls[key].setValue(data.meta[key]);
