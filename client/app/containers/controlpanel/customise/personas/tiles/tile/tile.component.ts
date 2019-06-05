@@ -26,7 +26,7 @@ import { ISnackbar, baseActions } from '../../../../../../store/base';
 export class PersonasTileComponent implements AfterViewInit, OnInit {
   @Input() tile: ITile;
 
-  @ViewChild('base') base;
+  @ViewChild('base', { static: true }) base;
 
   @Output() edit: EventEmitter<ITile> = new EventEmitter();
   @Output() edited: EventEmitter<ITile> = new EventEmitter();

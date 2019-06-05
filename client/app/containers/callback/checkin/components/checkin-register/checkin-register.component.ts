@@ -17,7 +17,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
   styleUrls: ['./checkin-register.component.scss']
 })
 export class CheckinRegisterComponent implements OnInit {
-  @ViewChild('selectedDate') selectedDate;
+  @ViewChild('selectedDate', { static: true }) selectedDate;
 
   @Input() data: ICheckIn;
   @Input() timeZone: string;

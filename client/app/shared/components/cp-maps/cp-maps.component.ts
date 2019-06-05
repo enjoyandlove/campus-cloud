@@ -20,7 +20,7 @@ import { CPLocationsService } from '../../services/locations.service';
   styleUrls: ['./cp-maps.component.scss']
 })
 export class CPMapsComponent implements OnInit, AfterViewInit {
-  @ViewChild('hostEl') hostEl: ElementRef;
+  @ViewChild('hostEl', { static: true }) hostEl: ElementRef;
 
   @Input() doubleClick = true;
   @Input() draggable = true;

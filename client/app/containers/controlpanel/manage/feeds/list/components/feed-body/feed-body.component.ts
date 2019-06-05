@@ -24,7 +24,7 @@ export class FeedBodyComponent implements OnInit {
   @Output() viewComments: EventEmitter<boolean> = new EventEmitter();
   @Output() toggleReplies: EventEmitter<boolean> = new EventEmitter();
 
-  @ViewChild(CPHostDirective) cpHost: CPHostDirective;
+  @ViewChild(CPHostDirective, { static: true }) cpHost: CPHostDirective;
 
   eventProperties = {
     post_id: null,

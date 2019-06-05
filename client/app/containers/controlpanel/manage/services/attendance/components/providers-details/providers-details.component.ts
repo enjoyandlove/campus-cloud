@@ -22,7 +22,7 @@ import { IStudentFilter } from '@containers/controlpanel/assess/engagement/engag
   styleUrls: ['./providers-details.component.scss']
 })
 export class ServicesProviderDetailsComponent extends BaseComponent implements OnInit {
-  @ViewChild('providerAttendees') providerAttendees;
+  @ViewChild('providerAttendees', { static: true }) providerAttendees;
 
   loading;
   service;
@@ -144,7 +144,7 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
   }
 
   getEventRating(avgRating: number) {
-    return (avgRating * this.MAX_RATE / 100).toFixed(1);
+    return ((avgRating * this.MAX_RATE) / 100).toFixed(1);
   }
 
   onToggleQr(isEnabled: boolean) {

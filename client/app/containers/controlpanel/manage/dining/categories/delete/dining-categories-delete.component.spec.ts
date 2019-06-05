@@ -43,16 +43,14 @@ describe('DiningCategoriesDeleteComponent', () => {
   let fixture: ComponentFixture<DiningCategoriesDeleteComponent>;
   let component: DiningCategoriesDeleteComponent;
 
-  beforeEach(
-    async(() => {
-      fixture = TestBed.createComponent(DiningCategoriesDeleteComponent);
-      component = fixture.componentInstance;
-      de = fixture.debugElement;
-      cpDeleteModal = de.query(By.directive(CPDeleteModalComponent)).componentInstance;
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(DiningCategoriesDeleteComponent);
+    component = fixture.componentInstance;
+    de = fixture.debugElement;
+    cpDeleteModal = de.query(By.directive(CPDeleteModalComponent)).componentInstance;
 
-      fixture.detectChanges();
-    })
-  );
+    fixture.detectChanges();
+  }));
 
   it('should init', () => {
     expect(component).toBeTruthy();
@@ -81,7 +79,7 @@ describe('DiningCategoriesDeleteComponent', () => {
 
     expect(component.store.dispatch).toHaveBeenCalled();
 
-    const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
+    const { payload, type } = dispatchSpy.calls.mostRecent().args[0] as any;
 
     expect(payload).toEqual(mockCategories[0]);
     expect(type).toBe(fromStore.CategoriesActions.DELETE_CATEGORIES);

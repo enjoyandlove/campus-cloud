@@ -18,7 +18,7 @@ import { CalendarAmplitudeService } from '../../calendar.amplitude.service';
   styleUrls: ['./calendars-items-create.component.scss']
 })
 export class CalendarsItemCreateComponent implements OnInit {
-  @ViewChild('createForm') createForm;
+  @ViewChild('createForm', { static: true }) createForm;
 
   form: FormGroup;
   calendarId: number;

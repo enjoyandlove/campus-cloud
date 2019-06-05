@@ -25,7 +25,7 @@ export class CPModalComponent implements OnInit {
 
   @Output() modalClose: EventEmitter<null> = new EventEmitter();
 
-  @ViewChild('cpModal') cpModal: ElementRef;
+  @ViewChild('cpModal', { static: true }) cpModal: ElementRef;
 
   class;
 

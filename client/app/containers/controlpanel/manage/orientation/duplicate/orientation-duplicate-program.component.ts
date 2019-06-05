@@ -21,7 +21,7 @@ import { OrientationService } from '../orientation.services';
   styleUrls: ['./orientation-duplicate-program.component.scss']
 })
 export class OrientationDuplicateProgramComponent implements OnInit {
-  @ViewChild('duplicateForm') duplicateForm;
+  @ViewChild('duplicateForm', { static: true }) duplicateForm;
 
   @Input() orientationProgram;
 

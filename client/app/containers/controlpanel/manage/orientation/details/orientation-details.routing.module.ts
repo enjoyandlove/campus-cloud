@@ -20,7 +20,7 @@ const appRoutes: Routes = [
       {
         path: 'todos',
         data: { title: pageTitle.MANAGE_ORIENTATION },
-        loadChildren: '../todos/todos.module#TodosModule'
+        loadChildren: () => import('../todos/todos.module').then((m) => m.TodosModule)
       },
 
       {
@@ -32,13 +32,15 @@ const appRoutes: Routes = [
       {
         path: 'events',
         data: { title: pageTitle.MANAGE_ORIENTATION },
-        loadChildren: '../events/orientation-events.module#OrientationEventsModule'
+        loadChildren: () =>
+          import('../events/orientation-events.module').then((m) => m.OrientationEventsModule)
       },
 
       {
         path: 'members',
         data: { title: pageTitle.MANAGE_ORIENTATION },
-        loadChildren: '../members/orientation-members.module#OrientationMembersModule'
+        loadChildren: () =>
+          import('../members/orientation-members.module').then((m) => m.OrientationMembersModule)
       }
     ]
   }

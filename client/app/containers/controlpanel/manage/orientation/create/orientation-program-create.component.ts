@@ -21,7 +21,7 @@ import { ProgramMembership } from '../orientation.status';
   styleUrls: ['./orientation-program-create.component.scss']
 })
 export class OrientationProgramCreateComponent implements OnInit {
-  @ViewChild('createForm') createForm;
+  @ViewChild('createForm', { static: true }) createForm;
 
   @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
 

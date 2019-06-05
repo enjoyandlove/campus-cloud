@@ -24,7 +24,7 @@ import { CPI18nService } from '../../../../../shared/services/i18n.service';
   styleUrls: ['./orientation-program-edit.component.scss']
 })
 export class OrientationProgramEditComponent implements OnInit {
-  @ViewChild('editForm') editForm;
+  @ViewChild('editForm', { static: true }) editForm;
 
   @Input() orientationProgram;
 

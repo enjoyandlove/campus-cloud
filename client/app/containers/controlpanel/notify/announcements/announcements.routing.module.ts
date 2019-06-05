@@ -17,7 +17,10 @@ const appRoutes: Routes = [
   },
   {
     path: 'integrations',
-    loadChildren: './integrations/announcements.integrations.module#AnnouncementIntegrationsModule'
+    loadChildren: () =>
+      import('./integrations/announcements.integrations.module').then(
+        (m) => m.AnnouncementIntegrationsModule
+      )
   }
 ];
 @NgModule({

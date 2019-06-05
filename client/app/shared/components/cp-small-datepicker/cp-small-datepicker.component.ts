@@ -35,7 +35,7 @@ declare var $: any;
 })
 export class CPSmallDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() options: any;
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
   @Output() reset: EventEmitter<null> = new EventEmitter();
   @Output() rangeChange: EventEmitter<string[]> = new EventEmitter();
 

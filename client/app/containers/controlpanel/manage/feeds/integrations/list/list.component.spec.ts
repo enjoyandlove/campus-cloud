@@ -23,24 +23,22 @@ describe('WallsIntegrationsListComponent', () => {
   let component: WallsIntegrationsListComponent;
   let fixture: ComponentFixture<WallsIntegrationsListComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        providers: [CPSession, CPI18nService],
-        imports: [
-          CommonIntegrationsModule,
-          SharedModule,
-          LibsWallsIntegrationsModule,
-          StoreModule.forRoot({
-            ...fromRoot.baseReducers,
-            wallsIntegrations: combineReducers(fromFeature.reducers)
-          })
-        ],
-        declarations: [WallsIntegrationsListComponent],
-        schemas: [NO_ERRORS_SCHEMA]
-      }).compileComponents();
-    })
-  );
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      providers: [CPSession, CPI18nService],
+      imports: [
+        CommonIntegrationsModule,
+        SharedModule,
+        LibsWallsIntegrationsModule,
+        StoreModule.forRoot({
+          ...fromRoot.baseReducers,
+          wallsIntegrations: combineReducers(fromFeature.reducers)
+        })
+      ],
+      declarations: [WallsIntegrationsListComponent],
+      schemas: [NO_ERRORS_SCHEMA]
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(WallsIntegrationsListComponent);
@@ -63,7 +61,7 @@ describe('WallsIntegrationsListComponent', () => {
     spyOn(component.store, 'select').and.returnValue(of(someKey));
 
     component.listenForCompletedActions();
-    const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
+    const { payload, type } = dispatchSpy.calls.mostRecent().args[0] as any;
 
     expect(payload.class).toBe('success');
     expect(payload.body).toContain(someKey);
@@ -74,7 +72,7 @@ describe('WallsIntegrationsListComponent', () => {
     spyOn(component.store, 'select').and.returnValue(of(true));
 
     component.listenForErrors();
-    const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
+    const { payload, type } = dispatchSpy.calls.mostRecent().args[0] as any;
 
     expect(payload.class).toBe('danger');
     expect(type).toBe(fromRoot.baseActions.SNACKBAR_SHOW);

@@ -67,40 +67,38 @@ describe('PersonasTileCreateComponent', () => {
   let comp: PersonasTileCreateComponent;
   let fixture: ComponentFixture<PersonasTileCreateComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          PersonasTilesModule,
-          SharedModule,
-          RouterTestingModule,
-          StoreModule.forRoot({
-            HEADER: baseReducers.HEADER,
-            SNACKBAR: baseReducers.SNACKBAR
-          })
-        ],
-        providers: [
-          CPI18nService,
-          FormBuilder,
-          CPSession,
-          SectionUtilsService,
-          SectionUtilsService,
-          PersonasUtilsService,
-          { provide: TilesService, useClass: MockTilesService },
-          { provide: PersonasService, useClass: MockPersonasService },
-          { provide: SectionsService, useClass: MockSectionsService }
-        ],
-        declarations: []
-      });
-      fixture = TestBed.createComponent(PersonasTileCreateComponent);
-      comp = fixture.componentInstance;
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        PersonasTilesModule,
+        SharedModule,
+        RouterTestingModule,
+        StoreModule.forRoot({
+          HEADER: baseReducers.HEADER,
+          SNACKBAR: baseReducers.SNACKBAR
+        })
+      ],
+      providers: [
+        CPI18nService,
+        FormBuilder,
+        CPSession,
+        SectionUtilsService,
+        SectionUtilsService,
+        PersonasUtilsService,
+        { provide: TilesService, useClass: MockTilesService },
+        { provide: PersonasService, useClass: MockPersonasService },
+        { provide: SectionsService, useClass: MockSectionsService }
+      ],
+      declarations: []
+    });
+    fixture = TestBed.createComponent(PersonasTileCreateComponent);
+    comp = fixture.componentInstance;
 
-      comp.personaId = 1;
-      comp.session.g.set('school', { id: 157 });
+    comp.personaId = 1;
+    comp.session.g.set('school', { id: 157 });
 
-      fixture.detectChanges();
-    })
-  );
+    fixture.detectChanges();
+  }));
 
   it('should init', () => {
     expect(comp).toBeTruthy();
@@ -109,7 +107,7 @@ describe('PersonasTileCreateComponent', () => {
 
   it('should redirect if no guide has been set', () => {
     spyOnProperty(comp.guideService, 'guide', 'get').and.returnValue(null);
-    spyOn(comp.router, 'navigate').and.returnValue(Promise.resolve());
+    spyOn(comp.router, 'navigate').and.returnValue(Promise.resolve(true));
 
     const expected = ['/studio/experiences/', comp.personaId];
 
@@ -119,46 +117,40 @@ describe('PersonasTileCreateComponent', () => {
     expect(comp.router.navigate).toHaveBeenCalledWith(expected);
   });
 
-  it(
-    'fetch',
-    fakeAsync(() => {
-      spyOn(comp.personaService, 'getPersonaById').and.callThrough();
-      spyOn(comp, 'buildForm');
-      spyOn(comp, 'buildHeader');
+  it('fetch', fakeAsync(() => {
+    spyOn(comp.personaService, 'getPersonaById').and.callThrough();
+    spyOn(comp, 'buildForm');
+    spyOn(comp, 'buildHeader');
 
-      comp.fetch();
+    comp.fetch();
 
-      expect(comp.personaService.getPersonaById).toHaveBeenCalled();
+    expect(comp.personaService.getPersonaById).toHaveBeenCalled();
 
-      tick();
+    tick();
 
-      expect(comp.campusLinkForm).toBeDefined();
-      expect(comp.campusGuideTileForm).toBeDefined();
+    expect(comp.campusLinkForm).toBeDefined();
+    expect(comp.campusGuideTileForm).toBeDefined();
 
-      expect(comp.buildForm).toHaveBeenCalled();
-      expect(comp.buildHeader).toHaveBeenCalled();
-    })
-  );
+    expect(comp.buildForm).toHaveBeenCalled();
+    expect(comp.buildHeader).toHaveBeenCalled();
+  }));
 
-  it(
-    'fetch with errors',
-    fakeAsync(() => {
-      spyOn(comp, 'erroHandler');
-      spyOn(comp, 'buildForm');
-      spyOn(comp, 'buildHeader');
-      spyOn(comp.personaService, 'getPersonaById').and.returnValue(
-        throwError(new HttpErrorResponse({ error: 'error' }))
-      );
+  it('fetch with errors', fakeAsync(() => {
+    spyOn(comp, 'erroHandler');
+    spyOn(comp, 'buildForm');
+    spyOn(comp, 'buildHeader');
+    spyOn(comp.personaService, 'getPersonaById').and.returnValue(
+      throwError(new HttpErrorResponse({ error: 'error' }))
+    );
 
-      comp.fetch();
+    comp.fetch();
 
-      tick();
+    tick();
 
-      expect(comp.buildForm).not.toHaveBeenCalled();
-      expect(comp.buildHeader).not.toHaveBeenCalled();
-      expect(comp.erroHandler).toHaveBeenCalled();
-    })
-  );
+    expect(comp.buildForm).not.toHaveBeenCalled();
+    expect(comp.buildHeader).not.toHaveBeenCalled();
+    expect(comp.erroHandler).toHaveBeenCalled();
+  }));
 
   it('should show snackbar on erroHandler', () => {
     spyOn(comp.store, 'dispatch');

@@ -26,7 +26,8 @@ const appRoutes: Routes = [
   {
     path: 'integrations',
     data: { title: pageTitle.MANAGE_EVENTS },
-    loadChildren: './integrations/integrations.module#EventIntegrationsModule'
+    loadChildren: () =>
+      import('./integrations/integrations.module').then((m) => m.EventIntegrationsModule)
   },
 
   {
