@@ -137,7 +137,7 @@ export class TilesUtilsService {
           name: null,
           rank: guide._featuredTile ? TileCategoryRank.hidden : lastRank,
           img_url: null,
-          color: 'FFFFFF',
+          color: this.session.school.branding_color,
           extra_info: null,
           visibility_status: TileVisibility.visible,
           tile_category_id: guide._featuredTile ? 0 : guide.id,
