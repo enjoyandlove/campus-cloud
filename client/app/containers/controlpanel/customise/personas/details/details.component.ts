@@ -86,8 +86,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     this.setGuideDisabledStatus(true);
 
     this.state.guides.splice(nextGuideIndex, 0, newGuide);
-    this.state.guides = this.state.guides.map(
-      (guide, index) => (index > nextGuideIndex ? { ...guide, rank: guide.rank + 1 } : guide)
+    this.state.guides = this.state.guides.map((guide, index) =>
+      index > nextGuideIndex ? { ...guide, rank: guide.rank + 1 } : guide
     );
   }
 

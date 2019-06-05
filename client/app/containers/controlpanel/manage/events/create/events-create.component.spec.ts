@@ -31,44 +31,41 @@ describe('EventCreateComponent', () => {
   let component: EventsCreateComponent;
   let fixture: ComponentFixture<EventsCreateComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          HttpClientModule,
-          EventsModule,
-          RouterTestingModule,
-          StoreModule.forRoot({
-            HEADER: baseReducers.HEADER,
-            SNACKBAR: baseReducers.SNACKBAR
-          })
-        ],
-        providers: [
-          CPSession,
-          FormBuilder,
-          AdminService,
-          StoreService,
-          CPI18nService,
-          EventUtilService,
-          { provide: EventsService, useClass: MockService }
-        ]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(EventsCreateComponent);
-
-          component = fixture.componentInstance;
-          component.session.g.set('school', mockSchool);
-          component.attendance = true;
-
-          fixture.detectChanges();
-
-          spyOn(component, 'router');
-          spyOn(component, 'buildHeader');
-          spy = spyOn(component.service, 'createEvent').and.returnValue(observableOf({}));
-        });
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientModule,
+        EventsModule,
+        RouterTestingModule,
+        StoreModule.forRoot({
+          HEADER: baseReducers.HEADER,
+          SNACKBAR: baseReducers.SNACKBAR
+        })
+      ],
+      providers: [
+        CPSession,
+        FormBuilder,
+        AdminService,
+        StoreService,
+        CPI18nService,
+        EventUtilService,
+        { provide: EventsService, useClass: MockService }
+      ]
     })
-  );
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(EventsCreateComponent);
+
+        component = fixture.componentInstance;
+        component.session.g.set('school', mockSchool);
+        component.attendance = true;
+
+        fixture.detectChanges();
+
+        spyOn(component, 'buildHeader');
+        spy = spyOn(component.service, 'createEvent').and.returnValue(observableOf({}));
+      });
+  }));
 
   it('should toggle is_all_day', () => {
     component.onAllDayToggle(true);

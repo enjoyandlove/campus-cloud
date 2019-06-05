@@ -81,39 +81,37 @@ describe('PersonasTileEditComponent', () => {
   let component: PersonasTileEditComponent;
   let fixture: ComponentFixture<PersonasTileEditComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [PersonasTilesModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [
-          CPSession,
-          FormBuilder,
-          CPI18nService,
-          TilesUtilsService,
-          SectionUtilsService,
-          SectionUtilsService,
-          PersonasUtilsService,
-          {
-            provide: ActivatedRoute,
-            useValue: { snapshot: { params: { tileId: mockSection.tiles[0].id } } }
-          },
-          { provide: TilesService, useClass: MockTilService },
-          { provide: SectionsService, useClass: MockSectionsService },
-          { provide: PersonasService, useClass: MockPersonaService }
-        ]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(PersonasTileEditComponent);
-          component = fixture.componentInstance;
-
-          component.personaId = 1;
-          component.session.g.set('school', mockSchool);
-          guideService = TestBed.get(SectionsService);
-          personaService = TestBed.get(PersonasService);
-        });
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [PersonasTilesModule, RouterTestingModule, StoreModule.forRoot({})],
+      providers: [
+        CPSession,
+        FormBuilder,
+        CPI18nService,
+        TilesUtilsService,
+        SectionUtilsService,
+        SectionUtilsService,
+        PersonasUtilsService,
+        {
+          provide: ActivatedRoute,
+          useValue: { snapshot: { params: { tileId: mockSection.tiles[0].id } } }
+        },
+        { provide: TilesService, useClass: MockTilService },
+        { provide: SectionsService, useClass: MockSectionsService },
+        { provide: PersonasService, useClass: MockPersonaService }
+      ]
     })
-  );
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(PersonasTileEditComponent);
+        component = fixture.componentInstance;
+
+        component.personaId = 1;
+        component.session.g.set('school', mockSchool);
+        guideService = TestBed.get(SectionsService);
+        personaService = TestBed.get(PersonasService);
+      });
+  }));
 
   it('should init', () => {
     expect(component).toBeTruthy();
@@ -142,41 +140,35 @@ describe('PersonasTileEditComponent', () => {
     expect(component.router.navigate).not.toHaveBeenCalled();
   });
 
-  it(
-    'should catch fetch error',
-    fakeAsync(() => {
-      spyOn(component, 'erroHandler');
-      spyOn(component.personaService, 'getPersonaById').and.returnValue(
-        of(new HttpErrorResponse({ error: 'Mocked Error' }))
-      );
+  it('should catch fetch error', fakeAsync(() => {
+    spyOn(component, 'erroHandler');
+    spyOn(component.personaService, 'getPersonaById').and.returnValue(
+      of(new HttpErrorResponse({ error: 'Mocked Error' }))
+    );
 
-      component.fetch();
-      tick();
+    component.fetch();
+    tick();
 
-      expect(component.erroHandler).toHaveBeenCalled();
-    })
-  );
+    expect(component.erroHandler).toHaveBeenCalled();
+  }));
 
-  it(
-    'should fetch personaById',
-    fakeAsync(() => {
-      fixture.detectChanges();
+  it('should fetch personaById', fakeAsync(() => {
+    fixture.detectChanges();
 
-      const params = new HttpParams().set('school_id', component.session.g.get('school').id);
+    const params = new HttpParams().set('school_id', component.session.g.get('school').id);
 
-      spyOn(component, 'erroHandler');
-      spyOn(personaService, 'getPersonaById').and.returnValue(of(mockPersonas[0]));
+    spyOn(component, 'erroHandler');
+    spyOn(personaService, 'getPersonaById').and.returnValue(of(mockPersonas[0]));
 
-      component.fetch();
-      tick();
+    component.fetch();
+    tick();
 
-      expect(component.campusLinkForm).toBeDefined();
-      expect(component.campusGuideTileForm).toBeDefined();
-      expect(component.erroHandler).not.toHaveBeenCalled();
-      expect(component.persona).toEqual(mockPersonas[0]);
-      expect(personaService.getPersonaById).toHaveBeenCalledWith(component.personaId, params);
-    })
-  );
+    expect(component.campusLinkForm).toBeDefined();
+    expect(component.campusGuideTileForm).toBeDefined();
+    expect(component.erroHandler).not.toHaveBeenCalled();
+    expect(component.persona).toEqual(mockPersonas[0]);
+    expect(personaService.getPersonaById).toHaveBeenCalledWith(component.personaId, params);
+  }));
 
   it('should update buttonData based on form validity', () => {
     fixture.detectChanges();
@@ -270,7 +262,7 @@ describe('PersonasTileEditComponent', () => {
 
     expect(component.store.dispatch).toHaveBeenCalled();
 
-    const args = spy.calls.mostRecent().args[0];
+    const args = spy.calls.mostRecent().args[0] as any;
 
     expect(args.payload.class).toBe('danger');
     expect(args.type).toBe(baseActions.SNACKBAR_SHOW);

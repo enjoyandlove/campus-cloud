@@ -50,7 +50,7 @@ import 'flatpickr';
   encapsulation: ViewEncapsulation.None
 })
 export class CPRangePickerComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('calendarEl') calendarEl: ElementRef;
+  @ViewChild('calendarEl', { static: true }) calendarEl: ElementRef;
 
   @Input() label;
   @Input() dateRanges;

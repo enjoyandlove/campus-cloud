@@ -51,7 +51,7 @@ describe('DiningDeleteComponent', () => {
 
     expect(component.store.dispatch).toHaveBeenCalled();
 
-    const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
+    const { payload, type } = dispatchSpy.calls.mostRecent().args[0] as any;
 
     expect(payload).toBe(mockDining[0]);
     expect(type).toBe(fromStore.diningActions.DELETE_DINING);

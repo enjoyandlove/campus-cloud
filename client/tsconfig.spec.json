@@ -2,6 +2,7 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "outDir": "../out-tsc/spec",
+    "lib": ["es2017", "dom"],
     "typeRoots": ["../node_modules/@types"]
   },
   "files": ["test.ts", "polyfills.ts"],

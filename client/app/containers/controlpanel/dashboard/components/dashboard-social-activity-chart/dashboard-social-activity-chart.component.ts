@@ -10,7 +10,7 @@ require('chartist-plugin-tooltips');
   encapsulation: ViewEncapsulation.None
 })
 export class DashboardSocialActivyChartComponent implements OnInit {
-  @ViewChild('socialActivity') socialActivity: ElementRef;
+  @ViewChild('socialActivity', { static: true }) socialActivity: ElementRef;
   series;
   labels;
   percentages;

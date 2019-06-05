@@ -24,66 +24,60 @@ describe('PersonasTileDeleteComponent', () => {
   let comp: PersonasTileDeleteComponent;
   let fixture: ComponentFixture<PersonasTileDeleteComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [SharedModule, PersonasTilesModule, RouterTestingModule],
-        providers: [CPSession, CPI18nService, { provide: TilesService, useClass: MockTilesService }]
-      });
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [SharedModule, PersonasTilesModule, RouterTestingModule],
+      providers: [CPSession, CPI18nService, { provide: TilesService, useClass: MockTilesService }]
+    });
 
-      fixture = TestBed.createComponent(PersonasTileDeleteComponent);
-      comp = fixture.componentInstance;
+    fixture = TestBed.createComponent(PersonasTileDeleteComponent);
+    comp = fixture.componentInstance;
 
-      comp.tile = mockTile;
-      comp.session.g.set('school', { id: 1 });
+    comp.tile = mockTile;
+    comp.session.g.set('school', { id: 1 });
 
-      fixture.detectChanges();
-    })
-  );
+    fixture.detectChanges();
+  }));
 
   it('should init', () => {
     expect(comp).toBeTruthy();
   });
 
-  it(
-    'onDelete',
-    fakeAsync(() => {
-      spyOn(comp.error, 'emit');
-      spyOn(comp.deleted, 'emit');
-      spyOn(comp.teardown, 'emit');
+  it('onDelete', fakeAsync(() => {
+    spyOn(comp.error, 'emit');
+    spyOn(comp.deleted, 'emit');
+    spyOn(comp.teardown, 'emit');
 
-      comp.onDelete();
+    comp.onDelete();
 
-      tick();
+    tick();
 
-      expect(comp.deleted.emit).toHaveBeenCalled();
-      expect(comp.teardown.emit).toHaveBeenCalled();
-      expect(comp.error.emit).not.toHaveBeenCalled();
-      expect(comp.deleted.emit).toHaveBeenCalledWith(mockTile);
+    expect(comp.deleted.emit).toHaveBeenCalled();
+    expect(comp.teardown.emit).toHaveBeenCalled();
+    expect(comp.error.emit).not.toHaveBeenCalled();
+    expect(comp.deleted.emit).toHaveBeenCalledWith(mockTile);
 
-      spyOn(comp.service, 'deleteTile').and.returnValue(new HttpErrorResponse({ error: 'error' }));
-    })
-  );
+    spyOn(comp.service, 'deleteTile').and.returnValue(
+      of(new HttpErrorResponse({ error: 'error' }))
+    );
+  }));
 
-  it(
-    'onDelete errors',
-    fakeAsync(() => {
-      spyOn(comp.error, 'emit');
-      spyOn(comp.deleted, 'emit');
-      spyOn(comp.teardown, 'emit');
+  it('onDelete errors', fakeAsync(() => {
+    spyOn(comp.error, 'emit');
+    spyOn(comp.deleted, 'emit');
+    spyOn(comp.teardown, 'emit');
 
-      const error = new HttpErrorResponse({ error: 'error' });
+    const error = new HttpErrorResponse({ error: 'error' });
 
-      spyOn(comp.service, 'deleteTile').and.returnValue(throwError(error));
+    spyOn(comp.service, 'deleteTile').and.returnValue(throwError(error));
 
-      comp.onDelete();
+    comp.onDelete();
 
-      tick();
+    tick();
 
-      expect(comp.error.emit).toHaveBeenCalled();
-      expect(comp.teardown.emit).toHaveBeenCalled();
-      expect(comp.deleted.emit).not.toHaveBeenCalled();
-      expect(comp.error.emit).toHaveBeenCalledWith(error);
-    })
-  );
+    expect(comp.error.emit).toHaveBeenCalled();
+    expect(comp.teardown.emit).toHaveBeenCalled();
+    expect(comp.deleted.emit).not.toHaveBeenCalled();
+    expect(comp.error.emit).toHaveBeenCalledWith(error);
+  }));
 });

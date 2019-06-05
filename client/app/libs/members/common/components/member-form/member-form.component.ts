@@ -23,7 +23,7 @@ export class LibsMembersFormComponent implements AfterViewInit, OnDestroy {
   @Input() memberTypes: IItem[];
   @Input() showPosition = false;
 
-  @ViewChild('input') input: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
 
   members: IItem[] = [];
   destroy$ = new Subject();

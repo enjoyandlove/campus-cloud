@@ -112,7 +112,7 @@ describe('DiningCategoriesCreateComponent', () => {
     expect(component.resetModal).toHaveBeenCalled();
     expect(component.store.dispatch).toHaveBeenCalled();
 
-    const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
+    const { payload, type } = dispatchSpy.calls.mostRecent().args[0] as any;
     const { body } = payload;
 
     expect(body).toEqual(expected.payload);

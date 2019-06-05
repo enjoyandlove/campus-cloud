@@ -27,7 +27,7 @@ import { CPI18nService } from '@shared/services/i18n.service';
   styleUrls: ['./employer-edit.component.scss']
 })
 export class EmployerEditComponent implements OnInit, OnDestroy {
-  @ViewChild('editForm') editForm;
+  @ViewChild('editForm', { static: true }) editForm;
 
   @Input() employer: IEmployer;
 
@@ -85,7 +85,10 @@ export class EmployerEditComponent implements OnInit, OnDestroy {
     });
 
     this.updates$
-      .pipe(ofType(fromJobs.EDIT_EMPLOYER_SUCCESS), takeUntil(this.destroy$))
+      .pipe(
+        ofType(fromJobs.EDIT_EMPLOYER_SUCCESS),
+        takeUntil(this.destroy$)
+      )
       .subscribe((action: fromJobs.EditEmployerSuccess) => {
         this.edited.emit(action.payload);
         this.resetModal();

@@ -33,8 +33,8 @@ const DATETIME_FORMAT = 'MMMM D, YYYY h:mm A';
   encapsulation: ViewEncapsulation.None
 })
 export class CPDatePickerComponent implements AfterViewInit, OnInit, OnChanges {
-  @ViewChild('input') input: ElementRef;
-  @ViewChild('calendarEl') calendarEl: ElementRef;
+  @ViewChild('input', { static: true }) input: ElementRef;
+  @ViewChild('calendarEl', { static: true }) calendarEl: ElementRef;
 
   @Input() options: any;
   @Input() error: boolean;

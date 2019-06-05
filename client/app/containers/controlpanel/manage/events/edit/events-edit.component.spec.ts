@@ -70,47 +70,45 @@ describe('EventEditComponent', () => {
     }
   ];
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [
-          HttpClientModule,
-          EventsModule,
-          RouterTestingModule,
-          StoreModule.forRoot({
-            HEADER: baseReducers.HEADER,
-            SNACKBAR: baseReducers.SNACKBAR
-          })
-        ],
-        providers: [
-          CPSession,
-          FormBuilder,
-          AdminService,
-          ErrorService,
-          StoreService,
-          CPI18nService,
-          EventUtilService,
-          { provide: EventsService, useClass: MockService }
-        ]
-      })
-        .compileComponents()
-        .then(() => {
-          fixture = TestBed.createComponent(EventsEditComponent);
-
-          component = fixture.componentInstance;
-          component.eventId = 1002;
-          component.session.g.set('school', mockSchool);
-          component.isFormReady = true;
-          component.ngOnInit();
-
-          spyOn(component, 'buildHeader');
-          spyOn(component.service, 'getEventById').and.returnValue(observableOf(mockEvent));
-          spyOn(component.storeService, 'getStores').and.returnValue(observableOf(mockStore));
-          spy = spyOn(component.service, 'updateEvent').and.returnValue(observableOf({}));
-          spyOn(component.router, 'navigate').and.returnValue(true);
-        });
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientModule,
+        EventsModule,
+        RouterTestingModule,
+        StoreModule.forRoot({
+          HEADER: baseReducers.HEADER,
+          SNACKBAR: baseReducers.SNACKBAR
+        })
+      ],
+      providers: [
+        CPSession,
+        FormBuilder,
+        AdminService,
+        ErrorService,
+        StoreService,
+        CPI18nService,
+        EventUtilService,
+        { provide: EventsService, useClass: MockService }
+      ]
     })
-  );
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(EventsEditComponent);
+
+        component = fixture.componentInstance;
+        component.eventId = 1002;
+        component.session.g.set('school', mockSchool);
+        component.isFormReady = true;
+        component.ngOnInit();
+
+        spyOn(component, 'buildHeader');
+        spyOn(component.service, 'getEventById').and.returnValue(observableOf(mockEvent));
+        spyOn(component.storeService, 'getStores').and.returnValue(observableOf(mockStore));
+        spy = spyOn(component.service, 'updateEvent').and.returnValue(observableOf({}));
+        spyOn(component.router, 'navigate').and.returnValue(Promise.resolve(true));
+      });
+  }));
 
   it('should toggle is_all_day', () => {
     component.onAllDayToggle(true);
@@ -260,68 +258,59 @@ describe('EventEditComponent', () => {
     expect(component.buttonData.disabled).toBeFalsy();
   });
 
-  it(
-    'form validation should fail - end date should be greater than start date',
-    fakeAsync(() => {
-      component.orientationId = 1001;
-      component.isOrientation = true;
-      const dateError = component.cpI18n.translate('events_error_end_date_before_start');
-      component.fetch();
-      tick();
+  it('form validation should fail - end date should be greater than start date', fakeAsync(() => {
+    component.orientationId = 1001;
+    component.isOrientation = true;
+    const dateError = component.cpI18n.translate('events_error_end_date_before_start');
+    component.fetch();
+    tick();
 
-      const eventEndDateBeforeStart = 1492342527;
+    const eventEndDateBeforeStart = 1492342527;
 
-      component.form.controls['end'].setValue(eventEndDateBeforeStart);
-      component.form.controls['event_attendance'].setValue(EventAttendance.disabled);
-      component.onSubmit(observableOf({}));
+    component.form.controls['end'].setValue(eventEndDateBeforeStart);
+    component.form.controls['event_attendance'].setValue(EventAttendance.disabled);
+    component.onSubmit(observableOf({}));
 
-      expect(component.formMissingFields).toBeTruthy();
-      expect(component.isDateError).toBeTruthy();
-      expect(component.buttonData.disabled).toBeFalsy();
-      expect(component.dateErrorMessage).toEqual(dateError);
-    })
-  );
+    expect(component.formMissingFields).toBeTruthy();
+    expect(component.isDateError).toBeTruthy();
+    expect(component.buttonData.disabled).toBeFalsy();
+    expect(component.dateErrorMessage).toEqual(dateError);
+  }));
 
-  it(
-    'form validation should fail - event end date should be in future',
-    fakeAsync(() => {
-      component.orientationId = 1001;
-      component.isOrientation = true;
-      const dateError = component.cpI18n.translate('events_error_end_date_after_now');
-      component.fetch();
-      tick();
+  it('form validation should fail - event end date should be in future', fakeAsync(() => {
+    component.orientationId = 1001;
+    component.isOrientation = true;
+    const dateError = component.cpI18n.translate('events_error_end_date_after_now');
+    component.fetch();
+    tick();
 
-      const eventStartDate = 1460806527;
-      const eventEndDateInPast = 1492342527;
+    const eventStartDate = 1460806527;
+    const eventEndDateInPast = 1492342527;
 
-      component.form.controls['start'].setValue(eventStartDate);
-      component.form.controls['end'].setValue(eventEndDateInPast);
-      component.form.controls['event_attendance'].setValue(EventAttendance.disabled);
-      component.onSubmit(observableOf({}));
+    component.form.controls['start'].setValue(eventStartDate);
+    component.form.controls['end'].setValue(eventEndDateInPast);
+    component.form.controls['event_attendance'].setValue(EventAttendance.disabled);
+    component.onSubmit(observableOf({}));
 
-      expect(component.formMissingFields).toBeTruthy();
-      expect(component.isDateError).toBeTruthy();
-      expect(component.buttonData.disabled).toBeFalsy();
-      expect(component.dateErrorMessage).toEqual(dateError);
-    })
-  );
+    expect(component.formMissingFields).toBeTruthy();
+    expect(component.isDateError).toBeTruthy();
+    expect(component.buttonData.disabled).toBeFalsy();
+    expect(component.dateErrorMessage).toEqual(dateError);
+  }));
 
-  it(
-    'should edit an event',
-    fakeAsync(() => {
-      component.orientationId = 1001;
-      component.isOrientation = true;
-      component.fetch();
-      tick();
+  it('should edit an event', fakeAsync(() => {
+    component.orientationId = 1001;
+    component.isOrientation = true;
+    component.fetch();
+    tick();
 
-      component.form.controls['event_attendance'].setValue(EventAttendance.disabled);
+    component.form.controls['event_attendance'].setValue(EventAttendance.disabled);
 
-      component.onSubmit(component.form.value);
-      expect(spy).toHaveBeenCalled();
-      expect(component.form.valid).toBeTruthy();
-      expect(component.formMissingFields).toBeFalsy();
-      expect(component.isDateError).toBeFalsy();
-      expect(spy.calls.count()).toBe(1);
-    })
-  );
+    component.onSubmit(component.form.value);
+    expect(spy).toHaveBeenCalled();
+    expect(component.form.valid).toBeTruthy();
+    expect(component.formMissingFields).toBeFalsy();
+    expect(component.isDateError).toBeFalsy();
+    expect(spy.calls.count()).toBe(1);
+  }));
 });

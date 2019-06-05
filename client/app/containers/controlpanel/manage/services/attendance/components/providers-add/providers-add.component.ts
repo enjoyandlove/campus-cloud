@@ -18,7 +18,7 @@ declare var $: any;
   styleUrls: ['./providers-add.component.scss']
 })
 export class ServicesProviderAddComponent implements OnInit {
-  @ViewChild('createForm') createForm;
+  @ViewChild('createForm', { static: true }) createForm;
 
   @Input() service: IService;
 

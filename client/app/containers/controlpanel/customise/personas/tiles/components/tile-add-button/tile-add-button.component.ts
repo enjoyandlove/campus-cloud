@@ -17,7 +17,7 @@ import {
 export class PersonasTileAddButtonComponent implements AfterViewInit, OnInit {
   @Input() disabled;
 
-  @ViewChild('base') base;
+  @ViewChild('base', { static: true }) base;
 
   @Output() buttonClick: EventEmitter<null> = new EventEmitter();
 

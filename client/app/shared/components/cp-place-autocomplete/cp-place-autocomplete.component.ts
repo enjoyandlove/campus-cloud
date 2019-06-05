@@ -26,7 +26,7 @@ interface IState {
   styleUrls: ['./cp-place-autocomplete.component.scss']
 })
 export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
-  @ViewChild('hostEl') hostEl: ElementRef;
+  @ViewChild('hostEl', { static: true }) hostEl: ElementRef;
 
   @Input() placeHolder: string;
   @Input() defaultValue: string;

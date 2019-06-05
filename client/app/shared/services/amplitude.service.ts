@@ -25,7 +25,7 @@ export class CPAmplitudeService {
       ? '24c823bab76344e912538ef6a942f517'
       : '434caff2f839c60ab12edd1119ec7641';
 
-    require('node_modules/amplitude-js/src/amplitude-snippet.js');
+    require('node_modules/amplitude-js');
 
     try {
       window.amplitude.getInstance().init(api_key, this.getSchoolUserID(this.user));

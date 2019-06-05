@@ -49,7 +49,7 @@ describe('LocationsDeleteComponent', () => {
 
     expect(component.store.dispatch).toHaveBeenCalled();
 
-    const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
+    const { payload, type } = dispatchSpy.calls.mostRecent().args[0] as any;
 
     expect(payload).toBe(mockLocations[0]);
     expect(type).toBe(fromStore.locationActions.DELETE_LOCATION);

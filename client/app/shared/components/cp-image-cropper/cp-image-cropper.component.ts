@@ -20,7 +20,7 @@ import { MODAL_TYPE } from './../cp-modal/cp-modal.component';
 export class CPImageCropperComponent implements AfterViewInit, OnInit {
   @Input() imageUrl: String;
 
-  @ViewChild('canvas') canvas: ElementRef;
+  @ViewChild('canvas', { static: true }) canvas: ElementRef;
 
   @Output() cancel: EventEmitter<null> = new EventEmitter();
   @Output() result: EventEmitter<string> = new EventEmitter();
@@ -45,7 +45,7 @@ export class CPImageCropperComponent implements AfterViewInit, OnInit {
 
     this.croppie = new CPCroppieService(hostEl, canvasOptions);
 
-    return this.croppie.bind({url: `${this.imageUrl}?disableCache=true`});
+    return this.croppie.bind({ url: `${this.imageUrl}?disableCache=true` });
   }
 
   onCancel() {
@@ -55,7 +55,9 @@ export class CPImageCropperComponent implements AfterViewInit, OnInit {
 
   ngAfterViewInit() {
     $('#imageCropper').on('show.bs.modal', () => {
-      this.initCanvas().then(() => { this.buttonData.disabled = false; });
+      this.initCanvas().then(() => {
+        this.buttonData.disabled = false;
+      });
     });
     $('#imageCropper').modal();
   }

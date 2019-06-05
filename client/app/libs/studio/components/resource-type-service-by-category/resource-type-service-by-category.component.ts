@@ -22,7 +22,7 @@ enum LinkParam {
 export class ResourceTypeServiceByCategoryComponent implements OnInit {
   @Input() params = {};
 
-  @ViewChild('multiSelect') multiSelect: CPDropdownMultiSelectComponent;
+  @ViewChild('multiSelect', { static: true }) multiSelect: CPDropdownMultiSelectComponent;
 
   @Output() selected: EventEmitter<any> = new EventEmitter();
 
@@ -118,9 +118,10 @@ export class ResourceTypeServiceByCategoryComponent implements OnInit {
 
   loadCategories() {
     const headers = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.items$ = this.tileService
-      .getServiceCategories(headers)
-      .pipe(map(this.updateItems.bind(this)), tap(this.updateMultiSelectPlaceholder.bind(this)));
+    this.items$ = this.tileService.getServiceCategories(headers).pipe(
+      map(this.updateItems.bind(this)),
+      tap(this.updateMultiSelectPlaceholder.bind(this))
+    );
   }
 
   updateState() {

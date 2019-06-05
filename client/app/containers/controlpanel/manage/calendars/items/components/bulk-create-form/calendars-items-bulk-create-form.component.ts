@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormArray } from '@angular/forms/src/model';
+import { FormArray } from '@angular/forms';
 
 import { CPSession } from '../../../../../../../session';
 

@@ -22,7 +22,7 @@ import { PersonasFormComponent } from './../components/personas-form/personas-fo
   styleUrls: ['./create.component.scss']
 })
 export class PersonasCreateComponent implements OnInit {
-  @ViewChild('createForm') createForm: PersonasFormComponent;
+  @ViewChild('createForm', { static: true }) createForm: PersonasFormComponent;
 
   services$;
   buttonData;

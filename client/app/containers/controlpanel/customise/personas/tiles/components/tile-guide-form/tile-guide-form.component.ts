@@ -34,10 +34,10 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
   @Input() form: FormGroup;
   @Input() uploadButtonId: number;
 
-  @ViewChild('base') base;
-  @ViewChild('hexInput') hexInput: ElementRef;
-  @ViewChild(CPHostDirective) cpHost: CPHostDirective;
-  @ViewChild(CPColorPickerDirective) cpColorPicker: CPColorPickerDirective;
+  @ViewChild('base', { static: true }) base;
+  @ViewChild('hexInput', { static: true }) hexInput: ElementRef;
+  @ViewChild(CPHostDirective, { static: true }) cpHost: CPHostDirective;
+  @ViewChild(CPColorPickerDirective, { static: true }) cpColorPicker: CPColorPickerDirective;
 
   @Output() imageChanged: EventEmitter<boolean> = new EventEmitter();
   @Output() formChange: EventEmitter<FormGroup> = new EventEmitter();
@@ -111,16 +111,18 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
   onFileChanged(file) {
     const validateTileImage = this.utils.validateTileImage(file, 5e6);
 
-    validateTileImage.then(() => this.uploadImage(file)).catch((body) => {
-      this.store.dispatch({
-        type: baseActions.SNACKBAR_SHOW,
-        payload: {
-          autoClose: true,
-          class: 'warning',
-          body
-        }
+    validateTileImage
+      .then(() => this.uploadImage(file))
+      .catch((body) => {
+        this.store.dispatch({
+          type: baseActions.SNACKBAR_SHOW,
+          payload: {
+            autoClose: true,
+            class: 'warning',
+            body
+          }
+        });
       });
-    });
   }
 
   addSubscribers() {

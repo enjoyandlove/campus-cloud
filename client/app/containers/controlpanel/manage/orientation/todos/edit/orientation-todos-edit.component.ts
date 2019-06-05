@@ -21,7 +21,7 @@ import { TodosService } from '../todos.service';
   styleUrls: ['./orientation-todos-edit.component.scss']
 })
 export class OrientationTodosEditComponent implements OnInit {
-  @ViewChild('editForm') editForm;
+  @ViewChild('editForm', { static: true }) editForm;
 
   @Input() todo: ITodo;
 

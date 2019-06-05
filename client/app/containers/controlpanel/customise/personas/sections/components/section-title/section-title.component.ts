@@ -27,7 +27,7 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
 
   @Input() noNameChange = false;
 
-  @ViewChild('inputEl') inputEl: ElementRef;
+  @ViewChild('inputEl', { static: true }) inputEl: ElementRef;
 
   @Output() nameChanged: EventEmitter<string> = new EventEmitter();
 
@@ -45,7 +45,10 @@ export class PersonasSectionTitleComponent implements AfterViewInit, OnInit, OnD
     const stream$ = fromEvent(this.inputEl.nativeElement, 'blur');
 
     stream$
-      .pipe(takeWhile(() => this.isAlive), map((e: any) => e.target.value))
+      .pipe(
+        takeWhile(() => this.isAlive),
+        map((e: any) => e.target.value)
+      )
       .subscribe((title) => {
         this.form.get('name').setValue(title);
         this.onSubmit();

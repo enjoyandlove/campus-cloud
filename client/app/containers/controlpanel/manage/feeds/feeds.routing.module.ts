@@ -15,7 +15,8 @@ const appRoutes: Routes = [
   {
     path: 'integrations',
     data: { zendesk: 'walls', title: pageTitle.MANAGE_WALL },
-    loadChildren: './integrations/walls-integrations.module#WallsIntegrationsModule'
+    loadChildren: () =>
+      import('./integrations/walls-integrations.module').then((m) => m.WallsIntegrationsModule)
   }
 ];
 @NgModule({

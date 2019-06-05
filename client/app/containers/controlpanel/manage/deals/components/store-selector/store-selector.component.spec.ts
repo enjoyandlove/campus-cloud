@@ -2,7 +2,7 @@ import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
-import { of as observableOf } from 'rxjs';
+import { of } from 'rxjs';
 
 import { DealsModule } from '../../deals.module';
 import { DealsService } from '../../deals.service';
@@ -17,7 +17,7 @@ class MockDealsService {
   getDealStores(label: string) {
     this.dummy = { label };
 
-    return observableOf({});
+    return of({});
   }
 }
 
@@ -39,17 +39,15 @@ describe('StoreSelectorComponent', () => {
   let component: StoreSelectorComponent;
   let fixture: ComponentFixture<StoreSelectorComponent>;
 
-  beforeEach(
-    async(() => {
-      fixture = TestBed.createComponent(StoreSelectorComponent);
-      component = fixture.componentInstance;
-      component.form = new FormBuilder().group({
-        store_id: '47332'
-      });
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(StoreSelectorComponent);
+    component = fixture.componentInstance;
+    component.form = new FormBuilder().group({
+      store_id: '47332'
+    });
 
-      spyStores = spyOn(component.service, 'getDealStores').and.returnValue(observableOf({}));
-    })
-  );
+    spyStores = spyOn(component.service, 'getDealStores').and.returnValue(of([]));
+  }));
 
   it('should call getDealStores once ngOnInit', () => {
     component.ngOnInit();

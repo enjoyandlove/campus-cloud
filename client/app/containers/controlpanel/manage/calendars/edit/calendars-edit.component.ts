@@ -23,7 +23,7 @@ import { CalendarAmplitudeService } from '../calendar.amplitude.service';
   styleUrls: ['./calendars-edit.component.scss']
 })
 export class CalendarsEditComponent implements OnInit {
-  @ViewChild('editForm') editForm;
+  @ViewChild('editForm', { static: true }) editForm;
 
   @Input() calendar;
 

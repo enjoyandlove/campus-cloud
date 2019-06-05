@@ -1,4 +1,4 @@
-import { AbstractControl } from '@angular/forms/src/model';
+import { AbstractControl } from '@angular/forms';
 import { FormGroup } from '@angular/forms';
 
 import { filledForm } from './mocks';
