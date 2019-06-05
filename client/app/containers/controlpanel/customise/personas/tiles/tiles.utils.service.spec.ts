@@ -172,7 +172,7 @@ describe('TilesUtilsService', () => {
       name: 'Mock Tile',
       rank: 1,
       img_url: 'img_url',
-      color: 'FFFFFF',
+      color: mockSchool.branding_color,
       extra_info: {},
       visibility_status: 1,
       tile_category_id: 1,
