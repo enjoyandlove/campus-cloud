@@ -1,4 +1,5 @@
 import { ITile } from './../tile.interface';
+import { mockSchool } from '@client/app/session/mock';
 
 export const mockTile: ITile = {
   id: 1,
@@ -8,7 +9,7 @@ export const mockTile: ITile = {
   description: '',
   rank: 1,
   featured_rank: -1,
-  color: 'FFFFFF',
+  color: mockSchool.branding_color,
   img_url: 'img_url',
   type: 8,
   extra_info: {},

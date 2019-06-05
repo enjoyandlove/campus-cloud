@@ -5,18 +5,18 @@ import { FormBuilder } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { of, throwError } from 'rxjs';
 
+import { CPSession } from '@app/session';
+import { CPI18nService } from '@shared/services';
 import { TilesService } from './../tiles.service';
+import { SharedModule } from '@shared/shared.module';
 import { PersonasTilesModule } from './../tiles.module';
 import { PersonasService } from './../../personas.service';
-import { CPSession } from './../../../../../../session/index';
+import { baseReducers, baseActions } from '@app/store/base';
 import { PersonasTileCreateComponent } from './create.component';
 import { mockPersonas } from './../../mock/personas.service.mock';
-import { SectionsService } from './../../sections/sections.service';
-import { SharedModule } from '../../../../../../shared/shared.module';
-import { baseReducers, baseActions } from './../../../../../../store/base';
-import { SectionUtilsService } from './../../sections/section.utils.service';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 import { PersonasUtilsService } from '../../personas.utils.service';
+import { SectionsService } from './../../sections/sections.service';
+import { SectionUtilsService } from './../../sections/section.utils.service';
 
 class MockPersonasService {
   dummy;
@@ -187,7 +187,7 @@ describe('PersonasTileCreateComponent', () => {
       name: null,
       rank: 1,
       img_url: null,
-      color: 'FFFFFF',
+      color: null,
       extra_info: { id: 1 },
       visibility_status: 1,
       tile_category_id: 1,
