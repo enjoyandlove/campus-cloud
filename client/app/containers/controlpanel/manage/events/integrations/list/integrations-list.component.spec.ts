@@ -60,7 +60,7 @@ describe('EventsIntegrationsListComponent', () => {
     spyOn(component.store, 'select').and.returnValue(of(someKey));
 
     component.listenForCompletedActions();
-    const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
+    const { payload, type } = dispatchSpy.calls.mostRecent().args[0] as any;
 
     expect(payload.class).toBe('success');
     expect(payload.body).toContain(someKey);
@@ -71,7 +71,7 @@ describe('EventsIntegrationsListComponent', () => {
     spyOn(component.store, 'select').and.returnValue(of(true));
 
     component.listenForErrors();
-    const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
+    const { payload, type } = dispatchSpy.calls.mostRecent().args[0] as any;
 
     expect(payload.class).toBe('danger');
     expect(type).toBe(fromRoot.baseActions.SNACKBAR_SHOW);

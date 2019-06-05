@@ -43,8 +43,9 @@ export class CPColorPickerDirective implements OnInit {
         hue: true,
         opacity: false,
 
-        output: {
-          hex: true,
+        interaction: {
+          hex: false,
+          save: true,
           input: false
         }
       },

@@ -4,22 +4,25 @@ import settings from '../../../../../../../config/settings';
 
 @Component({
   selector: 'cp-personas-tile-base',
-  template: `<div #host class="tile">
-    <ng-content></ng-content>
-  </div>`,
+  template: `
+    <div #host class="tile">
+      <ng-content></ng-content>
+    </div>
+  `,
   styles: [
     `
-    .tile {
-      width: 100%;
-      position: relative;
-      box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
-    }`
+      .tile {
+        width: 100%;
+        position: relative;
+        box-shadow: 0 2px 8px 0 rgba(0, 0, 0, 0.2);
+      }
+    `
   ]
 })
 export class PersonasTileBaseComponent implements AfterViewInit, OnInit {
   @Input() ratio = settings.imageRatio;
 
-  @ViewChild('host') host: ElementRef;
+  @ViewChild('host', { static: true }) host: ElementRef;
 
   tileHeight: number;
 

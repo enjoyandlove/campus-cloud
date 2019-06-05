@@ -21,7 +21,7 @@ import { TodosService } from '../todos.service';
   styleUrls: ['./orientation-todos-create.component.scss']
 })
 export class OrientationTodosCreateComponent implements OnInit {
-  @ViewChild('createForm') createForm;
+  @ViewChild('createForm', { static: true }) createForm;
 
   @Output() created: EventEmitter<ITodo> = new EventEmitter();
   @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();

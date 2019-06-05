@@ -2,11 +2,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, startWith, catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { sortBy } from 'lodash';
 
 import { API } from '@app/config/api';
 import { HTTPService } from '@app/base/http.service';
 import { ICampusGuide } from './sections/section.interface';
+import { ITile } from './tiles/tile.interface';
 
 @Injectable()
 export class PersonasService extends HTTPService {
@@ -104,10 +106,10 @@ export class PersonasService extends HTTPService {
     return super.update(url, body, search, true);
   }
 
-  getTilesByPersona(search: HttpParams) {
+  getTilesByPersona(search: HttpParams): Observable<ITile[]> {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/1;90000`;
 
-    return super.get(url, search).pipe(map((res) => sortBy(res, (t: any) => t.rank)));
+    return super.get(url, search).pipe(map((res: ITile[]) => sortBy(res, (t: any) => t.rank)));
   }
 
   getTilesCategories(search: HttpParams) {

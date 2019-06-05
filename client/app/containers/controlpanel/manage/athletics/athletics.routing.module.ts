@@ -34,7 +34,8 @@ const appRoutes: Routes = [
 
   {
     path: ':clubId',
-    loadChildren: './details/athletics-details.module#AthleticsDetailsModule'
+    loadChildren: () =>
+      import('./details/athletics-details.module').then((m) => m.AthleticsDetailsModule)
   }
 ];
 @NgModule({

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Delta } from 'quill';
 
 const Quill = require('quill');
 
@@ -47,7 +46,7 @@ export class QuillService {
     return this.editor.on(eventName, callback);
   }
 
-  insertImage(image): Delta {
+  insertImage(image) {
     const content = this.editor.getContents();
 
     // delete old image if any

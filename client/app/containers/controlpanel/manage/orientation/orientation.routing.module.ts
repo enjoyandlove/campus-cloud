@@ -12,7 +12,8 @@ const appRoutes: Routes = [
   },
   {
     path: ':orientationId',
-    loadChildren: './details/orientation-details.module#OrientationDetailsModule',
+    loadChildren: () =>
+      import('./details/orientation-details.module').then((m) => m.OrientationDetailsModule),
     data: { zendesk: 'Orientation' }
   }
 ];

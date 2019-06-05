@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { FormArray } from '@angular/forms/src/model';
+import { FormArray } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -25,7 +25,7 @@ const i18n = new CPI18nPipe();
   styleUrls: ['./calendats-items-bulk-create.component.scss']
 })
 export class CalendarsItemsBulkCreateComponent extends BaseComponent implements OnInit, OnDestroy {
-  @ViewChild('createForm') createForm;
+  @ViewChild('createForm', { static: true }) createForm;
 
   items: IItem[] = [];
   ready = false;

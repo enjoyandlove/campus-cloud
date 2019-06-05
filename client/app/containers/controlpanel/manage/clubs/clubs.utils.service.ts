@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
-import { get as _get } from 'lodash';
 
 import { IClub } from './club.interface';
 import { ClubStatus, HasData } from './club.status';
-import { CP_PRIVILEGES_MAP } from './../../../../shared/constants/privileges';
+import { CP_PRIVILEGES_MAP } from '@shared/constants';
 
 import {
   canStoreReadResource,
   canSchoolReadResource,
   canSchoolWriteResource,
   canStoreReadAndWriteResource
-} from './../../../../shared/utils/privileges/privileges';
+} from '@shared/utils';
 
 @Injectable()
 export class ClubsUtilsService {
   isSJSU(club: IClub) {
-    return _get(club, 'advisor_firstname', false);
+    return 'advisor_firstname' in club;
   }
 
   limitedAdmin(sessionG, storeId) {

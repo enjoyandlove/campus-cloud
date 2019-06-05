@@ -24,7 +24,7 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
   @Input() fixed: true;
   @Input() placeholder: string;
 
-  @ViewChild('q') q: ElementRef;
+  @ViewChild('q', { static: true }) q: ElementRef;
 
   @Output() query: EventEmitter<string> = new EventEmitter();
   @Output() searching: EventEmitter<boolean> = new EventEmitter();
@@ -58,7 +58,10 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
         map((res: any) => res.target.value)
       )
     )
-      .pipe(distinctUntilChanged(), filter((value) => value !== RESET))
+      .pipe(
+        distinctUntilChanged(),
+        filter((value) => value !== RESET)
+      )
       .subscribe((query) => {
         if (!query) {
           this.query.emit(null);

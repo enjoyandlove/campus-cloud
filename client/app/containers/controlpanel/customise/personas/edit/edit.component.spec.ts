@@ -11,57 +11,53 @@ import { baseActions } from './../../../../../store/base';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { MockPersonasService, mockPersonas } from './../mock/personas.service.mock';
+import { mockTile } from '../tiles/__mock__';
 
 describe('PersonasEditComponent', () => {
   let comp: PersonasEditComponent;
   let fixture: ComponentFixture<PersonasEditComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [PersonasModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [
-          CPSession,
-          FormBuilder,
-          CPI18nService,
-          PersonasUtilsService,
-          { provide: PersonasService, useClass: MockPersonasService }
-        ]
-      });
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [PersonasModule, RouterTestingModule, StoreModule.forRoot({})],
+      providers: [
+        CPSession,
+        FormBuilder,
+        CPI18nService,
+        PersonasUtilsService,
+        { provide: PersonasService, useClass: MockPersonasService }
+      ]
+    });
 
-      fixture = TestBed.createComponent(PersonasEditComponent);
-      comp = fixture.componentInstance;
+    fixture = TestBed.createComponent(PersonasEditComponent);
+    comp = fixture.componentInstance;
 
-      comp.session.g.set('school', { id: 157 });
-      comp.personaId = 1;
+    comp.session.g.set('school', { id: 157 });
+    comp.personaId = 1;
 
-      fixture.detectChanges();
-    })
-  );
+    fixture.detectChanges();
+  }));
 
   it('should init', () => {
     expect(comp).toBeTruthy();
   });
 
-  it(
-    'fetch',
-    fakeAsync(() => {
-      spyOn(comp, 'getCampusSecurity').and.returnValue(Promise.resolve({ name: 'fake' }));
-      const buildForm = spyOn(comp, 'buildForm');
-      const buildHeader = spyOn(comp, 'buildHeader');
+  it('fetch', fakeAsync(() => {
+    spyOn(comp, 'getCampusSecurity').and.returnValue(Promise.resolve(mockTile));
+    const buildForm = spyOn(comp, 'buildForm');
+    const buildHeader = spyOn(comp, 'buildHeader');
 
-      comp.fetch();
-      tick();
+    comp.fetch();
+    tick();
 
-      expect(comp.persona).toEqual(mockPersonas[0]);
+    expect(comp.persona).toEqual(mockPersonas[0]);
 
-      expect(buildHeader).toHaveBeenCalled();
-      expect(buildHeader).toHaveBeenCalledTimes(1);
+    expect(buildHeader).toHaveBeenCalled();
+    expect(buildHeader).toHaveBeenCalledTimes(1);
 
-      expect(buildForm).toHaveBeenCalledWith(mockPersonas[0]);
-      expect(buildForm).toHaveBeenCalledTimes(1);
-    })
-  );
+    expect(buildForm).toHaveBeenCalledWith(mockPersonas[0]);
+    expect(buildForm).toHaveBeenCalledTimes(1);
+  }));
 
   it('form Validation', () => {
     comp.buildForm(mockPersonas[0]);
@@ -110,7 +106,7 @@ describe('PersonasEditComponent', () => {
   it('buildForm', () => {
     const expected = {
       school_id: 157,
-      name: "Student's Tile",
+      name: mockPersonas[0].localized_name_map.en,
       platform: 0,
       rank: 1,
       login_requirement: 1,

@@ -10,7 +10,7 @@ require('chartist-plugin-tooltips');
   encapsulation: ViewEncapsulation.None
 })
 export class CPLineChartComponent implements OnInit {
-  @ViewChild('chart') chart: ElementRef;
+  @ViewChild('chart', { static: true }) chart: ElementRef;
 
   @Input() series;
   @Input() labels;

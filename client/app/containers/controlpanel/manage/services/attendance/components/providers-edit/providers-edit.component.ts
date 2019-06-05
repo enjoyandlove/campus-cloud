@@ -17,7 +17,7 @@ declare var $: any;
   styleUrls: ['./providers-edit.component.scss']
 })
 export class ServiceProvidersEditComponent implements OnInit {
-  @ViewChild('editForm') editForm;
+  @ViewChild('editForm', { static: true }) editForm;
 
   @Input() service: IService;
   @Input() provider: IServiceProvider;

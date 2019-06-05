@@ -117,7 +117,7 @@ describe('LocationsCreateComponent', () => {
 
     const expected = new fromStore.PostLocation(component.locationForm.value);
 
-    const { payload, type } = dispatchSpy.calls.mostRecent().args[0];
+    const { payload, type } = dispatchSpy.calls.mostRecent().args[0] as any;
     const { body } = payload;
 
     expect(body).toEqual(expected.payload);

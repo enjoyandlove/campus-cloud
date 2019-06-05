@@ -26,7 +26,7 @@ import { CPI18nService } from '@shared/services/i18n.service';
   styleUrls: ['./employer-create.component.scss']
 })
 export class EmployerCreateComponent implements OnInit, OnDestroy {
-  @ViewChild('createForm') createForm;
+  @ViewChild('createForm', { static: true }) createForm;
 
   @Output() created: EventEmitter<IEmployer> = new EventEmitter();
   @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
@@ -81,7 +81,10 @@ export class EmployerCreateComponent implements OnInit, OnDestroy {
     });
 
     this.updates$
-      .pipe(ofType(fromJobs.CREATE_EMPLOYER_SUCCESS), takeUntil(this.destroy$))
+      .pipe(
+        ofType(fromJobs.CREATE_EMPLOYER_SUCCESS),
+        takeUntil(this.destroy$)
+      )
       .subscribe((action: fromJobs.CreateEmployerSuccess) => {
         this.created.emit(action.payload);
         this.resetModal();

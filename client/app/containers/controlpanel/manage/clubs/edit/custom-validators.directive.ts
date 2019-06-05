@@ -1,5 +1,4 @@
-import { ValidatorFn } from '@angular/forms/src/directives/validators';
-import { AbstractControl } from '@angular/forms/src/model';
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
 export function advisorDataRequired(isSJSU): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } => {

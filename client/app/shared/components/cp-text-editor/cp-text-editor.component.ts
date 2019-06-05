@@ -33,7 +33,7 @@ export class CPTextEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() image$: Subject<string>;
   @Input() reset$: Subject<boolean>;
   @Output() contentChange: EventEmitter<IState> = new EventEmitter();
-  @ViewChild('editor') editor: ElementRef;
+  @ViewChild('editor', { static: true }) editor: ElementRef;
 
   quillInstance;
   subscriptions = [];

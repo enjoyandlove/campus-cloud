@@ -12,14 +12,15 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'team',
-        loadChildren: './team/team.module#TeamModule',
+        loadChildren: () => import('./team/team.module').then((m) => m.TeamModule),
         data: { zendesk: 'team settings', title: pageTitle.TEAM_SETTINGS }
       },
       {
         path: 'testers',
         canActivate: [PrivilegesGuard],
         data: { privilege: CP_PRIVILEGES_MAP.test_users },
-        loadChildren: './testers/campus-testers.module#CampusTestersModule'
+        loadChildren: () =>
+          import('./testers/campus-testers.module').then((m) => m.CampusTestersModule)
       }
     ]
   }
