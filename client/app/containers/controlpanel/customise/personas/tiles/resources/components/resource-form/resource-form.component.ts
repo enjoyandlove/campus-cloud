@@ -83,6 +83,9 @@ export class PersonasResourceFormComponent implements OnInit {
   }
 
   onResourceTypeSelected(resourceType) {
+    const isWebLink = ['external_link', 'web_link'].includes(resourceType.id);
+    this.form.get('link_type').setValue(isWebLink ? 0 : 3);
+
     this.changedResource.emit(true);
     this.form.controls['link_url'].setValue(null);
     this.form.controls['link_params'].setValue({});
