@@ -14,42 +14,30 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule)
+        loadChildren: './dashboard/dashboard.module#DashboardModule'
       },
 
-      {
-        path: 'manage',
-        loadChildren: () => import('./manage/manage.module').then((m) => m.ManageModule)
-      },
+      { path: 'manage', loadChildren: './manage/manage.module#ManageModule' },
 
-      {
-        path: 'notify',
-        loadChildren: () => import('./notify/notify.module').then((m) => m.NotifyModule)
-      },
+      { path: 'notify', loadChildren: './notify/notify.module#NotifyModule' },
 
-      {
-        path: 'assess',
-        loadChildren: () => import('./assess/assess.module').then((m) => m.AssessModule)
-      },
+      { path: 'assess', loadChildren: './assess/assess.module#AssessModule' },
 
-      {
-        path: 'audience',
-        loadChildren: () => import('./audience/audience.module').then((m) => m.AudienceModule)
-      },
+      { path: 'audience', loadChildren: './audience/audience.module#AudienceModule' },
 
       {
         path: 'studio',
-        loadChildren: () => import('./customise/customise.module').then((m) => m.CustomiseModule)
+        loadChildren: './customise/customise.module#CustomiseModule'
       },
 
       {
         path: 'account',
-        loadChildren: () => import('./account/account.module').then((m) => m.AccountModule)
+        loadChildren: './account/account.module#AccountModule'
       },
 
       {
         path: 'settings',
-        loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule)
+        loadChildren: './settings/settings.module#SettingsModule'
       }
     ]
   }

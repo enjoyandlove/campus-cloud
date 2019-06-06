@@ -18,13 +18,13 @@ const appRoutes: Routes = [
       {
         path: 'events',
         data: { title: pageTitle.MANAGE_CLUBS },
-        loadChildren: () => import('../events/events.module').then((m) => m.ClubsEventsModule)
+        loadChildren: '../events/events.module#ClubsEventsModule'
       },
 
       {
         path: 'members',
         data: { title: pageTitle.MANAGE_CLUBS },
-        loadChildren: () => import('../members/members.module').then((m) => m.ClubsMembersModule)
+        loadChildren: '../members/members.module#ClubsMembersModule'
       }
     ]
   }
