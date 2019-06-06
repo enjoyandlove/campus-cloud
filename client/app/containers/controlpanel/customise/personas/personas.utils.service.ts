@@ -26,7 +26,7 @@ export class PersonasUtilsService {
   }
 
   static isLoginRequired(loginRequirement: PersonasLoginRequired) {
-    return loginRequirement === PersonasLoginRequired.required;
+    return loginRequirement === PersonasLoginRequired.forbidden;
   }
 
   constructor(
