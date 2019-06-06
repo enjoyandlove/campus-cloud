@@ -33,8 +33,7 @@ const appRoutes: Routes = [
   },
   {
     path: ':calendarId/integrations',
-    loadChildren: () =>
-      import('./integrations/items-integrations.module').then((m) => m.ItemsIntegrationsModule)
+    loadChildren: './integrations/items-integrations.module#ItemsIntegrationsModule'
   },
   {
     path: ':calendarId/items/import',

@@ -18,28 +18,28 @@ const appRoutes: Routes = [
         path: 'events',
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'events', privilege: CP_PRIVILEGES_MAP.events },
-        loadChildren: () => import('./events/events.module').then((m) => m.EventsModule)
+        loadChildren: './events/events.module#EventsModule'
       },
 
       {
         path: 'services',
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'services', privilege: CP_PRIVILEGES_MAP.services },
-        loadChildren: () => import('./services/services.module').then((m) => m.ServicesModule)
+        loadChildren: './services/services.module#ServicesModule'
       },
 
       {
         path: 'clubs',
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'clubs', privilege: CP_PRIVILEGES_MAP.clubs },
-        loadChildren: () => import('./clubs/clubs.module').then((m) => m.ClubsModule)
+        loadChildren: './clubs/clubs.module#ClubsModule'
       },
 
       {
         path: 'athletics',
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'athletics', privilege: CP_PRIVILEGES_MAP.athletics },
-        loadChildren: () => import('./athletics/athletics.module').then((m) => m.AthleticsModule)
+        loadChildren: './athletics/athletics.module#AthleticsModule'
       },
 
       {
@@ -51,21 +51,21 @@ const appRoutes: Routes = [
         path: 'feeds',
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'walls', privilege: CP_PRIVILEGES_MAP.moderation },
-        loadChildren: () => import('./feeds/feeds.module').then((m) => m.FeedsModule)
+        loadChildren: './feeds/feeds.module#FeedsModule'
       },
 
       {
         path: 'clubs',
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'clubs', privilege: CP_PRIVILEGES_MAP.clubs },
-        loadChildren: () => import('./clubs/clubs.module').then((m) => m.ClubsModule)
+        loadChildren: './clubs/clubs.module#ClubsModule'
       },
 
       {
         path: 'calendars',
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'calendars', privilege: CP_PRIVILEGES_MAP.calendar },
-        loadChildren: () => import('./calendars/calendars.module').then((m) => m.CalendarsModule)
+        loadChildren: './calendars/calendars.module#CalendarsModule'
       },
 
       {
@@ -73,7 +73,7 @@ const appRoutes: Routes = [
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'locations', privilege: CP_PRIVILEGES_MAP.campus_maps },
         canDeactivate: [CanDeactivateLocations],
-        loadChildren: () => import('./locations/locations.module').then((m) => m.LocationsModule)
+        loadChildren: './locations/locations.module#LocationsModule'
       },
 
       {
@@ -81,29 +81,28 @@ const appRoutes: Routes = [
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'dining', privilege: CP_PRIVILEGES_MAP.dining },
         canDeactivate: [CanDeactivateDining],
-        loadChildren: () => import('./dining/dining.module').then((m) => m.DiningModule)
+        loadChildren: './dining/dining.module#DiningModule'
       },
 
       {
         path: 'orientation',
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'orientation', privilege: CP_PRIVILEGES_MAP.orientation },
-        loadChildren: () =>
-          import('./orientation/orientation.module').then((m) => m.OrientationModule)
+        loadChildren: './orientation/orientation.module#OrientationModule'
       },
 
       {
         path: 'jobs',
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'jobs', privilege: CP_PRIVILEGES_MAP.jobs },
-        loadChildren: () => import('./jobs/jobs.module').then((m) => m.JobsModule)
+        loadChildren: './jobs/jobs.module#JobsModule'
       },
 
       {
         path: 'deals',
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'deals', privilege: CP_PRIVILEGES_MAP.deals },
-        loadChildren: () => import('./deals/deals.module').then((m) => m.DealsModule)
+        loadChildren: './deals/deals.module#DealsModule'
       }
     ]
   }

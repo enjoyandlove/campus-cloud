@@ -34,7 +34,7 @@ const appRoutes: Routes = [
 
   {
     path: ':clubId',
-    loadChildren: () => import('./details/details.module').then((m) => m.ClubsDetailsModule)
+    loadChildren: './details/details.module#ClubsDetailsModule'
   }
 ];
 @NgModule({

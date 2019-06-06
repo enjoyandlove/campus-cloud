@@ -31,7 +31,7 @@ const appRoutes: Routes = [
   {
     path: 'employers',
     data: { zendesk: 'employers' },
-    loadChildren: () => import('./employers/employer.module').then((m) => m.EmployerModule)
+    loadChildren: './employers/employer.module#EmployerModule'
   }
 ];
 

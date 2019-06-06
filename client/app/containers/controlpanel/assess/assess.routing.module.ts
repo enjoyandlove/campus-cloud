@@ -15,8 +15,7 @@ const appRoutes: Routes = [
       {
         path: 'dashboard',
         canActivate: [PrivilegesGuard],
-        loadChildren: () =>
-          import('./engagement/engagement.module').then((m) => m.EngagementModule),
+        loadChildren: './engagement/engagement.module#EngagementModule',
         data: {
           zendesk: 'assessment',
           title: pageTitle.ASSESS_ENGAGEMENT,
@@ -27,8 +26,7 @@ const appRoutes: Routes = [
       {
         path: 'students',
         canActivate: [PrivilegesGuard],
-        loadChildren: () =>
-          import('./students/students.module').then((m) => m.EngagementStudentsModule),
+        loadChildren: './students/students.module#EngagementStudentsModule',
         data: {
           zendesk: 'notify',
           title: pageTitle.ASSESS_STUDENT,
