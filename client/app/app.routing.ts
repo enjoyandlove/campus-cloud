@@ -8,8 +8,7 @@ import { LoginComponent, LogoutComponent, LostPasswordComponent } from './contai
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./containers/controlpanel/controlpanel.module').then((m) => m.ControlPanelModule)
+    loadChildren: './containers/controlpanel/controlpanel.module#ControlPanelModule'
   },
 
   {
@@ -26,8 +25,7 @@ const routes: Routes = [
 
   {
     path: 'cb',
-    loadChildren: () =>
-      import('./containers/callback/callback.module').then((m) => m.CallbackModule)
+    loadChildren: './containers/callback/callback.module#CallbackModule'
   },
 
   { path: 'logout', component: LogoutComponent },

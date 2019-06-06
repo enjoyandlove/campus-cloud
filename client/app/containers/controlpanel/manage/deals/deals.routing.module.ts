@@ -31,7 +31,7 @@ const appRoutes: Routes = [
   {
     path: 'stores',
     data: { zendesk: 'stores' },
-    loadChildren: () => import('./stores/store.module').then((m) => m.StoreModule)
+    loadChildren: './stores/store.module#StoreModule'
   }
 ];
 
