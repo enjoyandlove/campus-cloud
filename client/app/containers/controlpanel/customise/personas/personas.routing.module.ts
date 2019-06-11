@@ -37,11 +37,6 @@ const appRoutes: Routes = [
     path: ':personaId/tiles/:tileId/edit',
     data: { zendesk: 'experiences' },
     component: PersonasTileEditComponent
-  },
-  {
-    path: ':personaId/tiles/:tileId',
-    data: { zendesk: 'experiences' },
-    component: PersonasEditComponent
   }
 ];
 @NgModule({

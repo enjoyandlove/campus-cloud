@@ -9,15 +9,13 @@ describe('ResourceSelectorTypeWebComponent', () => {
   let component: ResourceSelectorTypeWebComponent;
   let fixture: ComponentFixture<ResourceSelectorTypeWebComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        providers: [CPI18nService],
-        imports: [ReactiveFormsModule, SharedModule],
-        declarations: [ResourceSelectorTypeWebComponent]
-      }).compileComponents();
-    })
-  );
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      providers: [CPI18nService],
+      imports: [ReactiveFormsModule, SharedModule],
+      declarations: [ResourceSelectorTypeWebComponent]
+    }).compileComponents();
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ResourceSelectorTypeWebComponent);
@@ -32,6 +30,7 @@ describe('ResourceSelectorTypeWebComponent', () => {
   it('should have a form', () => {
     const expected = {
       link_url: '',
+      link_type: 0,
       link_params: {},
       open_in_browser: null
     };
@@ -62,6 +61,7 @@ describe('ResourceSelectorTypeWebComponent', () => {
       it('should emit form value when valid', () => {
         const valueChangesSpy = spyOn(component.valueChanges, 'emit');
         const validForm = {
+          link_type: 0,
           link_url: 'http://google.com',
           open_in_browser: 0
         };
