@@ -16,18 +16,13 @@ describe('ResourceSelectorTypeResourceComponent', () => {
   let component: ResourceSelectorTypeResourceComponent;
   let fixture: ComponentFixture<ResourceSelectorTypeResourceComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [SharedModule, HttpClientModule, RouterTestingModule],
-        providers: [CPSession, CPI18nService, ContentUtilsProviders],
-        declarations: [
-          ResourceSelectorTypeResourceComponent,
-          ResourceTypeServiceByCategoryComponent
-        ]
-      });
-    })
-  );
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [SharedModule, HttpClientModule, RouterTestingModule],
+      providers: [CPSession, CPI18nService, ContentUtilsProviders],
+      declarations: [ResourceSelectorTypeResourceComponent, ResourceTypeServiceByCategoryComponent]
+    });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ResourceSelectorTypeResourceComponent);
@@ -58,7 +53,7 @@ describe('ResourceSelectorTypeResourceComponent', () => {
 
     fixture.detectChanges();
 
-    const expected = { link_url: null, link_params: {} };
+    const expected = { link_url: null, link_params: {}, link_type: 3 };
 
     expect(component.form.value).toEqual(expected);
   });

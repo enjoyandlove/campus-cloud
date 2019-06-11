@@ -73,6 +73,7 @@ export class ResourceSelectorTypeResourceComponent implements OnInit {
           null,
           Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])
         ],
+        link_type: [3],
         link_params: [{}]
       },
       { validators: this.customLinkParamsValidator.bind(this) }

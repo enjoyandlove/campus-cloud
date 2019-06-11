@@ -39,6 +39,7 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
           CustomValidators.requiredNonEmpty
         ])
       ],
+      link_type: [0],
       link_params: [{}],
       open_in_browser: [null, Validators.required]
     });

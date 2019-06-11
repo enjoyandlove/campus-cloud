@@ -60,6 +60,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
 
   buildForm() {
     this.form = this.fb.group({
+      link_type: [3],
       link_url: [null, Validators.required],
       link_params: [null, Validators.required]
     });
@@ -151,22 +152,18 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
 
   loadServices() {
     const headers = this.defaultHeaders;
-    return this.tileService
-      .getSchoolServices(headers)
-      .pipe(
-        map((stores) => this.updateValues(stores, CampusLink.campusService)),
-        catchError((err) => this.handleError(err))
-      );
+    return this.tileService.getSchoolServices(headers).pipe(
+      map((stores) => this.updateValues(stores, CampusLink.campusService)),
+      catchError((err) => this.handleError(err))
+    );
   }
 
   loadCalendars() {
     const headers = this.defaultHeaders;
-    return this.tileService
-      .getSchoolCalendars(headers)
-      .pipe(
-        map((stores) => this.updateValues(stores, CampusLink.subscribableCalendar)),
-        catchError((err) => this.handleError(err))
-      );
+    return this.tileService.getSchoolCalendars(headers).pipe(
+      map((stores) => this.updateValues(stores, CampusLink.subscribableCalendar)),
+      catchError((err) => this.handleError(err))
+    );
   }
 
   loadStores() {

@@ -51,6 +51,7 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
     link_params: {
       ids: []
     },
+    link_type: 3,
     link_url: 'oohlala://campus_link_list'
   };
 
@@ -169,7 +170,9 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
   }
 
   fetchLinks() {
-    const { link_params: { ids } } = this.campusLink;
+    const {
+      link_params: { ids }
+    } = this.campusLink;
 
     if (!ids) {
       return;
