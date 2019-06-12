@@ -19,24 +19,22 @@ describe('ResourceSelectorTypeSingleComponent', () => {
   let component: ResourceSelectorTypeSingleComponent;
   let fixture: ComponentFixture<ResourceSelectorTypeSingleComponent>;
 
-  beforeEach(
-    async(() => {
-      TestBed.configureTestingModule({
-        imports: [SharedModule, HttpClientModule, RouterTestingModule],
-        providers: [
-          CPSession,
-          CPI18nService,
-          ContentUtilsProviders,
-          { provide: StoreService, useClass: MockStoreService }
-        ],
-        declarations: [ResourceSelectorTypeSingleComponent]
-      }).overrideComponent(ResourceSelectorTypeSingleComponent, {
-        set: {
-          providers: [{ provide: TilesService, useClass: MockTilesService }]
-        }
-      });
-    })
-  );
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      imports: [SharedModule, HttpClientModule, RouterTestingModule],
+      providers: [
+        CPSession,
+        CPI18nService,
+        ContentUtilsProviders,
+        { provide: StoreService, useClass: MockStoreService }
+      ],
+      declarations: [ResourceSelectorTypeSingleComponent]
+    }).overrideComponent(ResourceSelectorTypeSingleComponent, {
+      set: {
+        providers: [{ provide: TilesService, useClass: MockTilesService }]
+      }
+    });
+  }));
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ResourceSelectorTypeSingleComponent);
@@ -63,7 +61,7 @@ describe('ResourceSelectorTypeSingleComponent', () => {
 
     fixture.detectChanges();
 
-    const expected = { link_url: null, link_params: null };
+    const expected = { link_url: null, link_params: null, link_type: 3 };
 
     expect(component.form.value).toEqual(expected);
   });

@@ -28,7 +28,7 @@ import { PersonasFormComponent } from './../components/personas-form/personas-fo
   styleUrls: ['./edit.component.scss']
 })
 export class PersonasEditComponent extends BaseComponent implements OnInit, OnDestroy {
-  @ViewChild('editForm', { static: true }) editForm: PersonasFormComponent;
+  @ViewChild('editForm', { static: false }) editForm: PersonasFormComponent;
 
   services$;
   form: FormGroup;
