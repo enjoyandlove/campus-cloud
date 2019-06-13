@@ -1,6 +1,7 @@
 /* tslint:disable: max-line-length */
-import { Injectable } from '@angular/core';
 import { PRIMARY_OUTLET, Router } from '@angular/router';
+import { Injectable } from '@angular/core';
+import * as amplitude from 'amplitude-js';
 
 import { get as _get } from 'lodash';
 import { isProd, isStaging } from './../../config/env';
@@ -77,7 +78,7 @@ export class CPTrackingService {
       return;
     }
 
-    window.amplitude.getInstance().logEvent(eventName, eventProperties);
+    amplitude.getInstance().logEvent(eventName, eventProperties);
   }
 
   gaTrackPage(pageName) {
@@ -108,6 +109,6 @@ export class CPTrackingService {
   }
 
   _isAmplitudeAvailable() {
-    return !!window.amplitude;
+    return !!amplitude;
   }
 }
