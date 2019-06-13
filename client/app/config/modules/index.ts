@@ -12,11 +12,9 @@ import { AuthModule } from '@containers/auth/auth.module';
 import { LayoutsModule } from '@app/layouts/layouts.module';
 import { environment } from '@client/environments/environment';
 import { ControlPanelModule } from '@containers/controlpanel/controlpanel.module';
-import { ThemeProviderModule } from 'libraries/ui/src/lib/theme-provider/theme-provider.module';
 
 export const APP_MODULES = [
   RootStoreModule,
-  ThemeProviderModule.forRoot(ccTheme),
   FormsModule,
   BrowserModule,
   HttpClientModule,
