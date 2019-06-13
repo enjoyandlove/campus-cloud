@@ -1,13 +1,12 @@
 /* tslint:disable: max-line-length */
 import { Injectable } from '@angular/core';
+import * as amplitude from 'amplitude-js';
 import { get as _get } from 'lodash';
 
 import { CPSession } from '../../session';
 import { amplitudeEvents } from '../constants/analytics';
 import { CP_PRIVILEGES_MAP } from '../constants/privileges';
 import { isCanada, isProd, isUsa } from '../../config/env';
-
-declare var window: any;
 
 @Injectable()
 export class CPAmplitudeService {
@@ -25,15 +24,9 @@ export class CPAmplitudeService {
       ? '24c823bab76344e912538ef6a942f517'
       : '434caff2f839c60ab12edd1119ec7641';
 
-    require('node_modules/amplitude-js');
-
-    try {
-      window.amplitude.getInstance().init(api_key, this.getSchoolUserID(this.user));
-    } catch {
-      return;
-    }
-
-    this.setIdentity();
+    amplitude.init(api_key, this.getSchoolUserID(this.user), {}, () => {
+      this.setIdentity();
+    });
   }
 
   setIdentity() {
@@ -63,7 +56,7 @@ export class CPAmplitudeService {
         athletics_executive: userPermissions.athletic_permission
       };
 
-      window.amplitude.getInstance().setUserProperties(userProperties);
+      amplitude.getInstance().setUserProperties(userProperties);
     }
   }
 
