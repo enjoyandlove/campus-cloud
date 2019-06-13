@@ -2966,6 +2966,9 @@
   "t_personas_tile_create_resource_type_default_campus_link_list": {
     "message": "Liens"
   },
+  "t_personas_tile_create_resource_type_directory": {
+    "message": "Directoire"
+  },
   "t_personas_tile_create_resource_type_event_list": {
     "message": "Événements"
   },
@@ -3236,6 +3239,9 @@
   "t_shared_color": {
     "message": "Couleur"
   },
+  "t_shared_contact_us": {
+    "message": "Contact Us"
+  },
   "t_shared_cpimage_icon_heading": {
     "message": "Téléverser votre icône"
   },
@@ -3436,6 +3442,18 @@
   },
   "t_studio_section_delete_no_name": {
     "message": "Sans Titre"
+  },
+  "t_support_contact_label_comment": {
+    "message": "Comment pouvons-nous vous aider?"
+  },
+  "t_support_contact_label_email": {
+    "message": "Adresse électronique"
+  },
+  "t_support_contact_us_error_header": {
+    "message": "Quelque chose s'est mal passé"
+  },
+  "t_support_footer_cant_find": {
+    "message": "Can't find what you are looking for?"
   },
   "t_tile_button_default": {
     "message": "Défaut"

@@ -66,14 +66,14 @@ export abstract class HTTPService {
     return cleanParams;
   }
 
-  get(url: string, params?: HttpParams, silent = false, retries = defaultRetries) {
+  get<T>(url: string, params?: HttpParams, silent = false, retries = defaultRetries) {
     if (params) {
       params = this.clearNullValues(params);
     }
 
     const headers = this.getHeaders();
 
-    return this.http.get(url, { headers, params }).pipe(
+    return this.http.get<T>(url, { headers, params }).pipe(
       retryWhen((err) => this.waitAndRetry(err, retries)),
       catchError((err) => {
         if (silent && err.status !== 401) {
@@ -94,12 +94,10 @@ export abstract class HTTPService {
 
     const headers = this.getHeaders();
 
-    return this.http
-      .post(url, this.sanitizeEntries(data), { headers, params })
-      .pipe(
-        retryWhen((err) => this.waitAndRetry(err, retries)),
-        catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.catchError(err)))
-      );
+    return this.http.post(url, this.sanitizeEntries(data), { headers, params }).pipe(
+      retryWhen((err) => this.waitAndRetry(err, retries)),
+      catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.catchError(err)))
+    );
   }
 
   update(url: string, data: any, params?: HttpParams, silent = false, retries = defaultRetries) {
@@ -110,12 +108,10 @@ export abstract class HTTPService {
     data = CPObj.cleanNullValues(data);
     const headers = this.getHeaders();
 
-    return this.http
-      .put(url, this.sanitizeEntries(data), { headers, params })
-      .pipe(
-        retryWhen((err) => this.waitAndRetry(err, retries)),
-        catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.catchError(err)))
-      );
+    return this.http.put(url, this.sanitizeEntries(data), { headers, params }).pipe(
+      retryWhen((err) => this.waitAndRetry(err, retries)),
+      catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.catchError(err)))
+    );
   }
 
   delete(
@@ -131,12 +127,10 @@ export abstract class HTTPService {
 
     const headers = this.getHeaders();
 
-    return this.http
-      .delete(url, { headers, params, ...extraOptions })
-      .pipe(
-        retryWhen((err) => this.waitAndRetry(err, retries)),
-        catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.catchError(err)))
-      );
+    return this.http.delete(url, { headers, params, ...extraOptions }).pipe(
+      retryWhen((err) => this.waitAndRetry(err, retries)),
+      catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.catchError(err)))
+    );
   }
 
   catchError(err: HttpErrorResponse) {

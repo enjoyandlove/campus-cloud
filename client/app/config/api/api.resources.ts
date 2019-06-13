@@ -73,6 +73,8 @@ export const API_ENDPOINTS = {
 
   AUDIENCE_FILTERS: 'filter_attribute',
 
+  INTEGRATION_DATA: 'integration_data',
+
   SERVICE_PROVIDER: 'service_provider',
 
   ORIENTATION_TODOS: 'orientation_todos',

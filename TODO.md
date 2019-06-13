@@ -69,3 +69,7 @@
   > > ModuleB, // here ModuleB's routes get imported first\
   > >  ModuleARouting\
   > > ]
+
+* Refactor `cp-dropdown`
+  * Number of input attributes in the items is expanding
+  * We can refactor this into `cp-dropdown` and `cp-dropdown-item` which will render the element in `<ng-content>`

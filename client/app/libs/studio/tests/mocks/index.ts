@@ -1,6 +1,9 @@
 import { ContentUtilsProviders } from '@libs/studio/providers';
 import { of } from 'rxjs';
 
+import { mockSchool } from '@app/session/mock';
+import { IIntegrationData, ExtraDataType, IExtraData } from '../../models';
+
 export class MockTilesService {
   placeholder;
 
@@ -37,3 +40,21 @@ export const mockStudioContentResource = {
   id: ContentUtilsProviders.contentTypes.single,
   label: 'some label'
 };
+
+export const mockExtraData: IExtraData = {
+  school_id: mockSchool.id,
+  extra_data_type: ExtraDataType.DIRECTORY,
+  config_data: { client_int: [] }
+};
+
+export const mockIntegrationData: IIntegrationData[] = [
+  {
+    extra_data: [mockExtraData]
+  }
+];
+
+export class MockIntegrationDataService {
+  getIntegrationData() {
+    return of(mockIntegrationData);
+  }
+}
