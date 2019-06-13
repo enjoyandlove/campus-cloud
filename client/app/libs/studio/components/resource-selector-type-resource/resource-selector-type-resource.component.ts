@@ -1,12 +1,13 @@
-import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
+import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { get as _get, isEmpty } from 'lodash';
 
+import { IIntegrationData } from '../../models';
 import { CustomValidators } from '@shared/validators';
 import { ContentUtilsProviders } from '../../providers';
 import { CampusLink } from '@controlpanel/manage/links/tile';
 import { ILink } from '@controlpanel/manage/links/link.interface';
-import { IStudioContentResource } from './../../providers/content.utils.providers';
+import { IntegrationDataService, IStudioContentResource } from './../../providers';
 
 @Component({
   selector: 'cp-resource-selector-type-resource',
@@ -29,20 +30,21 @@ export class ResourceSelectorTypeResourceComponent implements OnInit {
   resourcesWithLinkParamsRequired = [CampusLink.storeList];
   items: IStudioContentResource[] = [{ id: null, label: '---' }];
 
-  constructor(private contentUtils: ContentUtilsProviders, private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private contentUtils: ContentUtilsProviders,
+    private integrationDataService: IntegrationDataService
+  ) {}
 
   ngOnInit() {
-    const filters = [
-      this.filterByWebApp ? ContentUtilsProviders.isWebAppContent : null,
-      this.filterByLoginStatus ? ContentUtilsProviders.isLoginRequired : null
-    ].filter((f) => f);
-
-    this.resources = ContentUtilsProviders.getResourcesForType(
-      ContentUtilsProviders.contentTypes.list,
-      filters
+    this.integrationDataService.getIntegrationData().subscribe(
+      (integrationData: IIntegrationData[]) => {
+        this.initResources(integrationData);
+      },
+      () => {
+        this.initResources();
+      }
     );
-
-    this.items = this.contentUtils.resourcesToIItem(this.resources);
 
     this.buildForm();
     this.form.valueChanges.subscribe(() => {
@@ -53,6 +55,23 @@ export class ResourceSelectorTypeResourceComponent implements OnInit {
     if (this.isEdit) {
       this.updateState();
     }
+  }
+
+  initResources(integrationData = null) {
+    const filters = [
+      this.filterByWebApp ? ContentUtilsProviders.isWebAppContent : null,
+      this.filterByLoginStatus ? ContentUtilsProviders.isLoginRequired : null,
+      integrationData
+        ? ContentUtilsProviders.isIntegration(integrationData, this.filterByLoginStatus)
+        : null
+    ].filter((f) => f);
+
+    this.resources = ContentUtilsProviders.getResourcesForType(
+      ContentUtilsProviders.contentTypes.list,
+      filters
+    );
+
+    this.items = this.contentUtils.resourcesToIItem(this.resources);
   }
 
   updateState() {

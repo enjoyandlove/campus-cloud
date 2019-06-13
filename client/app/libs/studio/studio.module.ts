@@ -1,7 +1,9 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '@shared/shared.module';
+import { IntegrationDataService } from './providers';
 
 import {
   ResourceSelectorComponent,
@@ -12,7 +14,6 @@ import {
   ResourceSelectorTypeResourceComponent,
   ResourceTypeServiceByCategoryComponent
 } from './components';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   exports: [
@@ -33,6 +34,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ResourceSelectorTypeResourceComponent,
     ResourceTypeServiceByCategoryComponent
   ],
-  imports: [CommonModule, ReactiveFormsModule, SharedModule]
+  imports: [CommonModule, ReactiveFormsModule, SharedModule],
+  providers: [IntegrationDataService]
 })
 export class LibsStudioModule {}
