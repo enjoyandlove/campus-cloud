@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 
 import { CPI18nService } from '@shared/services';
 import { CampusLink } from '@controlpanel/manage/links/tile';
+import { IntegrationDataUtils } from './integration-data-utils.service';
+import { IIntegrationData, ExtraDataType, IExtraData } from '../models';
 import { TilesUtilsService } from '@controlpanel/customise/personas/tiles/tiles.utils.service';
 
 export interface IStudioContentResource {
@@ -14,6 +16,7 @@ export interface IStudioContentResource {
     link_params: any;
     link_url?: string;
     open_in_browser?: number;
+    extra_data_type?: ExtraDataType;
   };
 }
 
@@ -48,6 +51,28 @@ export class ContentUtilsProviders {
 
     return TilesUtilsService.loginRequiredTiles.includes(linkUrl);
   }
+
+  static isIntegration = (integrationData: IIntegrationData[], personaIsNoLogin: boolean) => (
+    resource: IStudioContentResource
+  ) => {
+    const extraDataType: ExtraDataType = _get(resource, ['meta', 'extra_data_type'], false);
+    if (!extraDataType) {
+      return true;
+    }
+
+    const extraData: IExtraData = IntegrationDataUtils.getExtraData(integrationData, extraDataType);
+    if (!extraData) {
+      return false;
+    }
+
+    const loginRequired = _get(
+      extraData,
+      ['config_data', 'client_int', 0, 'request', 'cookies', 'rea.auth'],
+      undefined
+    );
+
+    return loginRequired ? !personaIsNoLogin : true;
+  };
 
   static getContentTypeByCampusLink(campusLink) {
     let resource;
@@ -166,6 +191,15 @@ export class ContentUtilsProviders {
           meta: {
             link_params: {},
             link_url: CampusLink.dining
+          }
+        },
+        {
+          id: 'directory',
+          label: 't_personas_tile_create_resource_type_directory',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.directory,
+            extra_data_type: ExtraDataType.DIRECTORY
           }
         },
         {

@@ -1,13 +1,14 @@
-import { CampusLink } from '@controlpanel/manage/links/tile';
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 
 import { CPSession } from '@app/session';
+import { mockSchool } from '@app/session/mock';
 import { CPI18nService } from '@shared/services';
-import { mockSchool } from '@client/app/session/mock';
-import { SharedModule } from '@client/app/shared/shared.module';
-import { ContentUtilsProviders } from './../../providers/content.utils.providers';
+import { SharedModule } from '@shared/shared.module';
+import { CampusLink } from '@controlpanel/manage/links/tile';
+import { MockIntegrationDataService } from '../../tests/mocks';
+import { IntegrationDataService, ContentUtilsProviders } from '../../providers';
 import { ResourceTypeServiceByCategoryComponent } from './../resource-type-service-by-category';
 import { ResourceSelectorTypeResourceComponent } from './resource-selector-type-resource.component';
 
@@ -19,7 +20,12 @@ describe('ResourceSelectorTypeResourceComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [SharedModule, HttpClientModule, RouterTestingModule],
-      providers: [CPSession, CPI18nService, ContentUtilsProviders],
+      providers: [
+        CPSession,
+        CPI18nService,
+        ContentUtilsProviders,
+        { provide: IntegrationDataService, useClass: MockIntegrationDataService }
+      ],
       declarations: [ResourceSelectorTypeResourceComponent, ResourceTypeServiceByCategoryComponent]
     });
   }));
@@ -102,7 +108,7 @@ describe('ResourceSelectorTypeResourceComponent', () => {
       });
     });
 
-    it('should set correct fiters based on filterByWebApp, filterByLoginStatus', () => {
+    it('should set correct filters based on filterByWebApp, filterByLoginStatus', fakeAsync(() => {
       component.filterByWebApp = true;
       component.filterByLoginStatus = true;
 
@@ -111,10 +117,12 @@ describe('ResourceSelectorTypeResourceComponent', () => {
         'getResourcesForType'
       );
 
+      fixture.detectChanges();
       component.ngOnInit();
+      tick();
       const [name, validators] = getResourcesForTypeSpy.calls.mostRecent().args;
 
-      expect(validators.length).toBe(2);
+      expect(validators.length).toBe(3);
       expect(name).toEqual(ContentUtilsProviders.contentTypes.list);
 
       const webAppFilter = validators.find((v) => v === ContentUtilsProviders.isWebAppContent);
@@ -124,7 +132,7 @@ describe('ResourceSelectorTypeResourceComponent', () => {
 
       expect(webAppFilter).toBeDefined();
       expect(loginRequiredFilter).toBeDefined();
-    });
+    }));
 
     it('should set form to invalid when link params is empty when required', () => {
       expect(component.form.valid).toBe(false);
@@ -137,41 +145,48 @@ describe('ResourceSelectorTypeResourceComponent', () => {
       });
     });
 
-    it('should set correct resources based on filterByWebApp, filterByLoginStatus', () => {
+    it('should filter resources by webapp=true, login=true', fakeAsync(() => {
       component.filterByWebApp = true;
       component.filterByLoginStatus = true;
 
       fixture.detectChanges();
       component.ngOnInit();
-
+      tick();
+      expect(component.resources).toBeDefined();
       expect(component.resources.length).toBe(1);
+    }));
 
+    it('should filter resources by webapp=false, login=false', fakeAsync(() => {
       component.filterByWebApp = false;
       component.filterByLoginStatus = false;
 
       fixture.detectChanges();
       component.ngOnInit();
-
+      tick();
       expect(component.resources).toBeDefined();
-      expect(component.resources.length).toBe(14);
+      expect(component.resources.length).toBe(15);
+    }));
 
+    it('should filter resources by webapp=true, login=false', fakeAsync(() => {
       component.filterByWebApp = true;
       component.filterByLoginStatus = false;
 
       fixture.detectChanges();
       component.ngOnInit();
-
+      tick();
       expect(component.resources).toBeDefined();
       expect(component.resources.length).toBe(8);
+    }));
 
+    it('should filter resources by webapp=false, login=true', fakeAsync(() => {
       component.filterByWebApp = false;
       component.filterByLoginStatus = true;
 
       fixture.detectChanges();
       component.ngOnInit();
-
+      tick();
       expect(component.resources).toBeDefined();
       expect(component.resources.length).toBe(5);
-    });
+    }));
   });
 });
