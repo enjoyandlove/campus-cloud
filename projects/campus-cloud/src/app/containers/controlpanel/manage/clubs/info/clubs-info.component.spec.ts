@@ -14,7 +14,7 @@ import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
 import { FileUploadService } from './../../../../../shared/services/file-upload.service';
-import { configureTestSuite } from '@campus-cloud/src/app/shared/tests';
+import { configureTestSuite } from '@projects/campus-cloud/src/app/shared/tests';
 
 const mockClub = {
   name: 'mock name',

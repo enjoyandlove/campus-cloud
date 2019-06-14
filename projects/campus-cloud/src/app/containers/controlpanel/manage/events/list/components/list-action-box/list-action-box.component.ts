@@ -10,19 +10,24 @@ import {
   Output
 } from '@angular/core';
 
-import { CPSession } from '@app/session';
-import { CPDate } from '@shared/utils/date';
+import { CPSession } from '@campus-cloud/session';
+import { CPDate } from '@campus-cloud/shared/utils/date';
 import { DATE_FILTER } from './events-filters';
-import { amplitudeEvents } from '@shared/constants';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { EventAttendance } from '../../../event.status';
-import { CP_TRACK_TO } from '@shared/directives/tracking';
-import { CPTrackingService, RouteLevel, StoreService, CPI18nService } from '@shared/services';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
+import {
+  CPTrackingService,
+  RouteLevel,
+  StoreService,
+  CPI18nService
+} from '@campus-cloud/shared/services';
 
 import {
   canAccountLevelWriteResource,
   canSchoolWriteResource
-} from '@shared/utils/privileges/privileges';
+} from '@campus-cloud/shared/utils/privileges/privileges';
 
 interface IState {
   end: number;

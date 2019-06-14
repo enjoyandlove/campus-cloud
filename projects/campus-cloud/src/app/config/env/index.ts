@@ -1,4 +1,4 @@
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 /**
  * General Prod

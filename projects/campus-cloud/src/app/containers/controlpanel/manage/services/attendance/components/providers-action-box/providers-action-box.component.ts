@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { IDateRange } from '@shared/components';
-import { CPI18nService } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { IDateRange } from '@campus-cloud/shared/components';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
 

@@ -3,11 +3,11 @@ import { BehaviorSubject, of as observableOf } from 'rxjs';
 import { flatMap, map, startWith } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession, ISchool } from '@app/session';
+import { CPSession, ISchool } from '@campus-cloud/session';
 import { EventAttendance } from '../../../event.status';
-import { BaseComponent } from '@app/base/base.component';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import { EventUtilService } from '../../../events.utils.service';
-import { AdminService, CPI18nService, StoreService, IAdmin } from '@shared/services';
+import { AdminService, CPI18nService, StoreService, IAdmin } from '@campus-cloud/shared/services';
 
 interface IState {
   store_id: any;

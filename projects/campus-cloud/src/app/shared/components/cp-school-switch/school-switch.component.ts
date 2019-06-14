@@ -6,7 +6,7 @@ import { CPSession, ISchool, IUser } from '../../../session';
 import { CP_PRIVILEGES_MAP } from '../../constants';
 import { CPTrackingService, RouteLevel } from '../../services';
 import { ZendeskService } from '../../services/zendesk.service';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 interface EventProperties {
   name?: string;

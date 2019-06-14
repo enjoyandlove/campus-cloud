@@ -2,29 +2,29 @@ import { Component, OnInit, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { get as _get } from 'lodash';
 
-import { FORMAT } from '@shared/pipes/date';
-import { DEFAULT } from '@shared/constants';
-import { BaseComponent } from '@app/base/base.component';
-import { CPI18nService } from '@shared/services/i18n.service';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { environment } from '@campus-cloud/src/environments/environment';
-import { CPTrackingService, RouteLevel } from '@shared/services';
-import { IService } from '@containers/controlpanel/manage/services/service.interface';
-import IServiceProvider from '@containers/controlpanel/manage/services/providers.interface';
-import { ProvidersService } from '@containers/controlpanel/manage/services/providers.service';
+import { FORMAT } from '@campus-cloud/shared/pipes/date';
+import { DEFAULT } from '@campus-cloud/shared/constants';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
+import { CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
+import { IService } from '@campus-cloud/containers/controlpanel/manage/services/service.interface';
+import IServiceProvider from '@campus-cloud/containers/controlpanel/manage/services/providers.interface';
+import { ProvidersService } from '@campus-cloud/containers/controlpanel/manage/services/providers.service';
 import { EventsAmplitudeService } from '@controlpanel/manage/events/events.amplitude.service';
-import { ServicesUtilsService } from '@containers/controlpanel/manage/services/services.utils.service';
-import { ICheckIn } from '@containers/controlpanel/manage/events/attendance/check-in/check-in.interface';
-import { AMPLITUDE_INTERVAL_MAP } from '@containers/controlpanel/assess/engagement/engagement.utils.service';
+import { ServicesUtilsService } from '@campus-cloud/containers/controlpanel/manage/services/services.utils.service';
+import { ICheckIn } from '@campus-cloud/containers/controlpanel/manage/events/attendance/check-in/check-in.interface';
+import { AMPLITUDE_INTERVAL_MAP } from '@campus-cloud/containers/controlpanel/assess/engagement/engagement.utils.service';
 import {
   CheckInOut,
   CheckInMethod,
   CheckInOutTime
-} from '@containers/controlpanel/manage/events/event.status';
+} from '@campus-cloud/containers/controlpanel/manage/events/event.status';
 import {
   IFilterState,
   ProvidersUtilsService
-} from '@containers/controlpanel/manage/services/providers.utils.service';
+} from '@campus-cloud/containers/controlpanel/manage/services/providers.utils.service';
 
 interface IState {
   end: string;

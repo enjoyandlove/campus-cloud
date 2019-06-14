@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { CPDate, CPMap } from '@shared/utils';
-import { CPI18nService } from '@shared/services';
-import { amplitudeEvents } from '@shared/constants';
+import { CPSession } from '@campus-cloud/session';
+import { CPDate, CPMap } from '@campus-cloud/shared/utils';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CalendarsItemsService } from '../../item.utils.service';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';

@@ -7,15 +7,15 @@ import { EffectsModule } from '@ngrx/effects';
 import { DebugElement } from '@angular/core';
 import { of } from 'rxjs';
 
-import * as fromRoot from '@app/store';
-import { CPSession } from '@app/session';
+import * as fromRoot from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session';
 import { mockIntegration } from '../tests';
-import { mockSchool } from '@app/session/mock';
-import { CPI18nService } from '@shared/services';
-import { configureTestSuite } from '@shared/tests';
-import { CPNoContentComponent } from '@shared/components';
+import { mockSchool } from '@campus-cloud/session/mock';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { CPNoContentComponent } from '@campus-cloud/shared/components';
 import { AnnouncementsIntegrationListComponent } from './list.component';
-import { IntegrationsActionBoxComponent } from '@libs/integrations/common/components';
+import { IntegrationsActionBoxComponent } from '@campus-cloud/libs/integrations/common/components';
 import { AnnouncementIntegrationsModule } from '../announcements.integrations.module';
 
 describe('AnnouncementsIntegrationListComponent', () => {

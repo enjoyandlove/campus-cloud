@@ -2,10 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { ILocation } from '../../model';
-import { CP_TRACK_TO } from '@shared/directives';
-import { amplitudeEvents } from '@shared/constants';
-import { environment } from '@campus-cloud/src/environments/environment';
-import { CPI18nService, CPTrackingService } from '@shared/services';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-locations-common-list',

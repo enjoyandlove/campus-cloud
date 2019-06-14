@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ChangeDetectionStrategy } from '@angular/core';
 
-import { MODAL_DATA, IModal } from '@shared/services';
+import { MODAL_DATA, IModal } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-testers-delete',

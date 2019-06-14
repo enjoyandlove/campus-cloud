@@ -5,14 +5,14 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import * as fromRoot from '@app/store';
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
-import { configureTestSuite } from '@app/shared/tests';
+import * as fromRoot from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { LocationsListComponent } from './locations-list.component';
-import { ManageHeaderService } from '@containers/controlpanel/manage/utils';
+import { ManageHeaderService } from '@campus-cloud/containers/controlpanel/manage/utils';
 
 describe('LocationsListComponent', () => {
   configureTestSuite();

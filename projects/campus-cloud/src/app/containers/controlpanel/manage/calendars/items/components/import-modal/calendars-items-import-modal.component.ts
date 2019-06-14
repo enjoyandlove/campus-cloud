@@ -5,7 +5,7 @@ import { isDev } from '../../../../../../../config/env';
 import { CalendarsService } from '../../../calendars.services';
 import { FileUploadService } from '../../../../../../../shared/services';
 import { CPI18nService } from '../../../../../../../shared/services/i18n.service';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
   selector: 'cp-calendars-items-import-modal',

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { CPI18nService } from '@shared/services';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 
 export enum clubAthleticStatus {
   active = 1

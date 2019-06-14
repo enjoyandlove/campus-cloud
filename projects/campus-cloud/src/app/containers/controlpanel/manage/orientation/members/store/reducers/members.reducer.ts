@@ -1,7 +1,7 @@
 import { EntityState, createEntityAdapter, EntityAdapter, Dictionary } from '@ngrx/entity';
 
 import * as fromMembers from '../actions/members.actions';
-import { IMember } from '@libs/members/common/model';
+import { IMember } from '@campus-cloud/libs/members/common/model';
 
 export interface OrientationMemberState extends EntityState<IMember> {
   next: boolean;

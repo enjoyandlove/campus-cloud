@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { FORMAT } from '@shared/pipes';
-import { IStore } from '@shared/services';
+import { FORMAT } from '@campus-cloud/shared/pipes';
+import { IStore } from '@campus-cloud/shared/services';
 import { IAnnouncementsIntegration } from '../../model';
-import { SyncStatus } from '@libs/integrations/common/model';
+import { SyncStatus } from '@campus-cloud/libs/integrations/common/model';
 
 @Component({
   selector: 'cp-integrations-list',

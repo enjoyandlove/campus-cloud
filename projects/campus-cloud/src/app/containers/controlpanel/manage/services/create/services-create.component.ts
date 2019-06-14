@@ -5,17 +5,17 @@ import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { CPMap } from '@shared/utils';
+import { CPMap } from '@campus-cloud/shared/utils';
 import { membershipTypes } from './index';
 import { IService } from '../service.interface';
-import { CPSession, ISchool } from '@app/session';
-import { CustomValidators } from '@shared/validators';
+import { CPSession, ISchool } from '@campus-cloud/session';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { ServicesService } from '../services.service';
 import { ServiceAttendance } from '../services.status';
-import { baseActions, IHeader } from '@app/store/base';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { baseActions, IHeader } from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { ServicesUtilsService } from '../services.utils.service';
-import { CPI18nService, CPTrackingService } from '@shared/services';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-services-create',

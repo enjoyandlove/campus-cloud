@@ -1,4 +1,4 @@
-import { IFeedIntegration } from '@libs/integrations/common/model';
+import { IFeedIntegration } from '@campus-cloud/libs/integrations/common/model';
 
 export interface IAnnoucementsIntegration extends IFeedIntegration {
   poster_url: string;

@@ -3,9 +3,9 @@ import { Component, EventEmitter, OnInit, Output, Input, ViewChild } from '@angu
 import { HttpParams } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';
 
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { CPDropdownMultiSelectComponent } from '@shared/components';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPDropdownMultiSelectComponent } from '@campus-cloud/shared/components';
 import { TilesService } from '@controlpanel/customise/personas/tiles/tiles.service';
 
 enum LinkParam {

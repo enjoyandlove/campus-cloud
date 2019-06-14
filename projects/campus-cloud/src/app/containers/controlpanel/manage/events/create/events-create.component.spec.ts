@@ -5,16 +5,16 @@ import { FormBuilder } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { CPDate } from '@app/shared/utils';
+import { CPSession } from '@campus-cloud/session';
+import { CPDate } from '@campus-cloud/shared/utils';
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
 import { EventAttendance } from '../event.status';
-import { mockSchool } from '@app/session/mock/school';
-import { baseReducers } from '@app/store/base/reducers';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { baseReducers } from '@campus-cloud/store/base/reducers';
 import { EventUtilService } from '../events.utils.service';
 import { EventsCreateComponent } from './events-create.component';
-import { AdminService, CPI18nService, StoreService } from '@app/shared/services';
+import { AdminService, CPI18nService, StoreService } from '@campus-cloud/shared/services';
 
 class MockService {
   dummy;

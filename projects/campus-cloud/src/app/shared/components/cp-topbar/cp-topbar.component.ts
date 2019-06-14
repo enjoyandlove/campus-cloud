@@ -1,12 +1,15 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { isProd } from '@app/config/env';
-import { CPSession, ISchool, IUser } from '@app/session';
-import { environment } from '@campus-cloud/src/environments/environment';
-import { CPTrackingService, RouteLevel } from '@shared/services';
-import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@shared/constants';
-import { canAccountLevelReadResource, canSchoolReadResource } from '@shared/utils/privileges';
+import { isProd } from '@campus-cloud/config/env';
+import { CPSession, ISchool, IUser } from '@campus-cloud/session';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
+import { CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
+import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
+import {
+  canAccountLevelReadResource,
+  canSchoolReadResource
+} from '@campus-cloud/shared/utils/privileges';
 
 @Component({
   selector: 'cp-topbar',

@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { IItem } from '@shared/components';
+import { IItem } from '@campus-cloud/shared/components';
 import { CategoryModel } from '../../model';
 
 @Component({

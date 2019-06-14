@@ -1,10 +1,10 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component } from '@angular/core';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { ServicesService } from '../services.service';
 import { EventsService } from '../../events/events.service';
-import { CPI18nService, ModalService } from '@shared/services';
+import { CPI18nService, ModalService } from '@campus-cloud/shared/services';
 import { ServicesUtilsService } from '../services.utils.service';
 import { EventsComponent } from '../../events/list/base/events.component';
 import { OrientationEventsService } from '../../orientation/events/orientation.events.service';

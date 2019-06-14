@@ -2,13 +2,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from '@campus-cloud/src/app/shared/shared.module';
-import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
-import { CommonIntegrationsModule } from '@libs/integrations/common/common-integrations.module';
+import { SharedModule } from '@projects/campus-cloud/src/app/shared/shared.module';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
+import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common/common-integrations.module';
 import {
   WallsIntegrationFormComponent,
   WallsIntegrationListComponent
-} from '@libs/integrations/walls/components';
+} from '@campus-cloud/libs/integrations/walls/components';
 
 import { WallsSocialPostCategoryIdToNamePipe } from './pipes';
 

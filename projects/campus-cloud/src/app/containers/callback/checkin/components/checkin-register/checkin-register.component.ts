@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { CPDate } from '@shared/utils';
+import { CPDate } from '@campus-cloud/shared/utils';
 import IAttendee from '../attendee.interface';
 import ICheckIn from '../../checkin.interface';
-import { CPI18nService } from '@shared/services';
-import { CheckInMethod } from '@containers/controlpanel/manage/events/event.status';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { CheckInMethod } from '@campus-cloud/containers/controlpanel/manage/events/event.status';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   enableTime: true

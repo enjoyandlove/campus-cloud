@@ -7,18 +7,18 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
-import { Paginated } from '@shared/utils/http';
-import { commonParams } from '@shared/constants';
-import { CPI18nService } from '@shared/services';
-import { baseActionClass } from '@app/store/base';
-import { IMember } from '@libs/members/common/model';
+import { CPSession } from '@campus-cloud/session';
+import { Paginated } from '@campus-cloud/shared/utils/http';
+import { commonParams } from '@campus-cloud/shared/constants';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { baseActionClass } from '@campus-cloud/store/base';
+import { IMember } from '@campus-cloud/libs/members/common/model';
 import * as fromActions from '../actions/members.actions';
 import * as fromSocialGroup from '../actions/social-groups.actions';
 import {
   LibsCommonMembersService,
   LibsCommonMembersUtilsService
-} from '@libs/members/common/providers';
+} from '@campus-cloud/libs/members/common/providers';
 
 @Injectable()
 export class OrientationMembersEffects extends Paginated {

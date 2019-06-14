@@ -4,18 +4,18 @@ import { NgModule } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
 import { reducers, effects } from './store';
-import { ModalService } from '@shared/services';
-import { SharedModule } from '@shared/shared.module';
+import { ModalService } from '@campus-cloud/shared/services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { OrientationMembersEditComponent } from './edit';
 import { OrientationMembersListComponent } from './list';
 import { OrientationMembersDeleteComponent } from './delete';
 import { OrientationMembersCreateComponent } from './create';
-import { LibsCommmonMembersModule } from '@libs/members/common/common-members.module';
+import { LibsCommmonMembersModule } from '@campus-cloud/libs/members/common/common-members.module';
 import { OrientationMembersRoutingModule } from './orientation-members.routing.module';
 import {
   LibsCommonMembersUtilsService,
   LibsCommonMembersService
-} from '@libs/members/common/providers';
+} from '@campus-cloud/libs/members/common/providers';
 
 @NgModule({
   entryComponents: [

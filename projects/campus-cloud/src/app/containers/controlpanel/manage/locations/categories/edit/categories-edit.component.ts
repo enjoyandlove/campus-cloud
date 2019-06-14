@@ -5,16 +5,16 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { IItem } from '@shared/components';
-import { CPI18nService } from '@shared/services';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { CPSession } from '@campus-cloud/session';
+import { IItem } from '@campus-cloud/shared/components';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 import {
   ICategory,
   categoryTypes,
   CategoryModel,
   LocationCategoryLocale
-} from '@libs/locations/common/categories/model';
+} from '@campus-cloud/libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-categories-edit',

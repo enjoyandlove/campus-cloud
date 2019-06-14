@@ -4,16 +4,16 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { CPI18nService } from '@shared/services';
-import { SortDirection } from '@shared/constants';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { SortDirection } from '@campus-cloud/shared/constants';
 import * as actions from '../store/testers.actions';
-import { Mixin, Destroyable } from '@shared/mixins';
-import { ModalService } from '@shared/services/modal';
+import { Mixin, Destroyable } from '@campus-cloud/shared/mixins';
+import { ModalService } from '@campus-cloud/shared/services/modal';
 import { ITestersState } from '../store/testers.state';
 import * as selectors from '../store/testers.selectors';
 import { ITestUser } from '../models/test-user.interface';
 import { CampusTestersService } from '../campus-testers.service';
-import { baseActions, ISnackbar, baseActionClass } from '@app/store';
+import { baseActions, ISnackbar, baseActionClass } from '@campus-cloud/store';
 import { TestersCreateComponent } from '../create/testers-create.component';
 import { TestersDeleteComponent } from '../delete/testers-delete.component';
 

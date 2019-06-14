@@ -1,8 +1,8 @@
 import { HttpParams } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
-import { IStore } from '@shared/services/store.service';
-import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
+import { IStore } from '@campus-cloud/shared/services/store.service';
+import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model/event-integration.interface';
 
 export enum IntegrationActions {
   DESTROY = '[manage.events.integrations] destroy',

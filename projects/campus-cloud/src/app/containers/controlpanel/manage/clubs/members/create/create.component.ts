@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
-import { CPI18nService } from '@shared/services';
-import { IItem, ICPButtonProps } from '@shared/components';
-import { MemberModel, IMember, MemberType } from '@libs/members/common/model';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { IItem, ICPButtonProps } from '@campus-cloud/shared/components';
+import { MemberModel, IMember, MemberType } from '@campus-cloud/libs/members/common/model';
 import {
   LibsCommonMembersService,
   LibsCommonMembersUtilsService
-} from '@libs/members/common/providers';
+} from '@campus-cloud/libs/members/common/providers';
 
 @Component({
   selector: 'cp-members-create',

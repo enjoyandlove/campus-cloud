@@ -6,17 +6,17 @@ import { map } from 'rxjs/operators';
 import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
-import { CPMap } from '@shared/utils';
+import { CPMap } from '@campus-cloud/shared/utils';
 import { membershipTypes } from '../create';
-import { CPSession, ISchool } from '@app/session';
-import { amplitudeEvents } from '@shared/constants';
+import { CPSession, ISchool } from '@campus-cloud/session';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { ServicesService } from '../services.service';
-import { CustomValidators } from '@shared/validators';
-import { baseActions, IHeader } from '@app/store/base';
-import { BaseComponent } from '@app/base/base.component';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { baseActions, IHeader } from '@campus-cloud/store/base';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ServicesUtilsService } from '../services.utils.service';
 import { RatingScale, ServiceAttendance } from '../services.status';
-import { CPI18nService, CPTrackingService } from '@shared/services';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-services-edit',

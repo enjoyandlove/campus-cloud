@@ -1,7 +1,7 @@
 import { get as _get, sortBy } from 'lodash';
 import { Injectable } from '@angular/core';
 
-import { CPI18nService } from '@shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { CampusLink } from '@controlpanel/manage/links/tile';
 import { IntegrationDataUtils } from './integration-data-utils.service';
 import { IIntegrationData, ExtraDataType, IExtraData } from '../models';

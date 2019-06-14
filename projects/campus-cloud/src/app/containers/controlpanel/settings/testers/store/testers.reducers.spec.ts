@@ -3,7 +3,7 @@ import { reducer } from './testers.reducers';
 import * as actions from './testers.actions';
 import { ITestersState } from './testers.state';
 import { defaultState } from './testers.reducers';
-import { SortDirection } from '@shared/constants';
+import { SortDirection } from '@campus-cloud/shared/constants';
 
 describe('TestersReducer', () => {
   let state: ITestersState;

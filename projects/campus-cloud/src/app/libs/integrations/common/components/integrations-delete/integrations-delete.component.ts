@@ -1,7 +1,7 @@
 import { Input, EventEmitter, Output } from '@angular/core';
 import { Component, OnInit } from '@angular/core';
 
-import { CPI18nService } from '@shared/services/i18n.service';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { FeedIntegration } from './../../model/integration.model';
 
 @Component({

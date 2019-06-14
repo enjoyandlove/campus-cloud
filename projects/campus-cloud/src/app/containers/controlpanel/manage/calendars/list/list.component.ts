@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { BaseComponent } from '@app/base';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { ManageHeaderService } from '../../utils';
 import { ICalendar } from './../calendars.interface';
-import { FORMAT } from '@shared/pipes/date/date.pipe';
-import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { FORMAT } from '@campus-cloud/shared/pipes/date/date.pipe';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
 import { CalendarsService } from './../calendars.services';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '@shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-calendars-list',

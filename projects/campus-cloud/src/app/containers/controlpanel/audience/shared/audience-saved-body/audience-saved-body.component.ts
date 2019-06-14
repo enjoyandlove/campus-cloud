@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { combineLatest, Observable, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { PersonaType, UserCount } from '../../audience.status';
 import { AudienceUtilsService } from '../../audience.utils.service';
 import { AudienceService } from '@controlpanel/audience/audience.service';

@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { CPI18nService } from '@shared/services';
-import { SharedModule } from '@shared/shared.module';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { ResourceSelectorTypeWebComponent } from './resource-selector-type-web.component';
 
 describe('ResourceSelectorTypeWebComponent', () => {

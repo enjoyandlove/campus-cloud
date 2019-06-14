@@ -5,9 +5,9 @@ import { of, BehaviorSubject, forkJoin } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { isEmpty } from 'lodash';
 
-import { CPSession } from '@app/session';
-import { IItem } from '@shared/components';
-import { StoreService } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { IItem } from '@campus-cloud/shared/components';
+import { StoreService } from '@campus-cloud/shared/services';
 import { ContentUtilsProviders } from '../../providers';
 import { CampusLink } from '@controlpanel/manage/links/tile';
 import { ILink } from '@controlpanel/manage/links/link.interface';

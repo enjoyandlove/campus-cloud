@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
 import { ITestersRange } from './testers.state';
-import { SortDirection } from '@shared/constants';
+import { SortDirection } from '@campus-cloud/shared/constants';
 import { ITestUser } from '../models/test-user.interface';
 
 export enum TestersActions {

@@ -3,13 +3,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
 import { of } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { configureTestSuite } from '@shared/tests';
-import { mockSchool } from '@app/session/mock/school';
+import { CPSession } from '@campus-cloud/session';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { OrientationModule } from '../orientation.module';
 import { OrientationService } from '../orientation.services';
 import { MockOrientationService, mockPrograms } from '../tests';
-import { CPI18nService, CPTrackingService, MODAL_DATA } from '@shared/services';
+import { CPI18nService, CPTrackingService, MODAL_DATA } from '@campus-cloud/shared/services';
 import { OrientationProgramDeleteComponent } from './orientation-program-delete.component';
 
 describe('OrientationProgramDeleteComponent', () => {

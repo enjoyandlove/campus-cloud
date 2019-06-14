@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { FORMAT } from '@shared/pipes';
+import { FORMAT } from '@campus-cloud/shared/pipes';
 import ICheckIn from '../../checkin.interface';
 import IAttendee from '../attendee.interface';
 import { CheckInOutTime, CheckInType } from '../../../callback.status';

@@ -1,10 +1,10 @@
 import { ErrorHandler } from '@angular/core';
 import { get as _get } from 'lodash';
 
-import { CPLogger } from '@shared/services';
-import { isSupported } from '@shared/utils/browser';
-import { environment } from '@campus-cloud/src/environments/environment';
-import { DEV_SERVER_URL, LOCAL_PROD_URL } from '@shared/constants';
+import { CPLogger } from '@campus-cloud/shared/services';
+import { isSupported } from '@campus-cloud/shared/utils/browser';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
+import { DEV_SERVER_URL, LOCAL_PROD_URL } from '@campus-cloud/shared/constants';
 
 export class CPErrorHandler extends ErrorHandler {
   constructor() {

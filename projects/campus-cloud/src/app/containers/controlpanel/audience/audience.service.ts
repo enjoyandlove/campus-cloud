@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { API } from '@app/config/api';
-import { HTTPService } from '@app/base';
-import { baseActions } from '@app/store/base';
+import { API } from '@campus-cloud/config/api';
+import { HTTPService } from '@campus-cloud/base';
+import { baseActions } from '@campus-cloud/store/base';
 import { PersonaPermission } from './audience.status';
 
 @Injectable()

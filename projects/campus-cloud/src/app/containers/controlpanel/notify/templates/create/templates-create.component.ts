@@ -4,14 +4,19 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { HttpParams } from '@angular/common/http';
 import { TooltipOption } from 'bootstrap';
 
-import { CPSession } from '@app/session';
-import { canSchoolWriteResource } from '@shared/utils';
+import { CPSession } from '@campus-cloud/session';
+import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { TemplatesService } from './../templates.service';
-import { CustomValidators } from '@shared/validators';
-import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@shared/constants';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 import { TemplatesComposeComponent } from '../compose/templates-compose.component';
-import { CPI18nService, StoreService, CPTrackingService, ZendeskService } from '@shared/services';
+import {
+  CPI18nService,
+  StoreService,
+  CPTrackingService,
+  ZendeskService
+} from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-templates-create',

@@ -1,6 +1,6 @@
 import * as actions from './deals.actions';
 import { IDealsState } from './deals.state';
-import { IItem, getItem } from '@app/shared/components';
+import { IItem, getItem } from '@campus-cloud/shared/components';
 
 export const initialState: IDealsState = {
   stores: [],

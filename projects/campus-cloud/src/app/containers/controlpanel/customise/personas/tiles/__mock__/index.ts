@@ -1,5 +1,5 @@
 import { ITile } from './../tile.interface';
-import { mockSchool } from '@campus-cloud/src/app/session/mock';
+import { mockSchool } from '@projects/campus-cloud/src/app/session/mock';
 
 export const mockTile: ITile = {
   id: 1,

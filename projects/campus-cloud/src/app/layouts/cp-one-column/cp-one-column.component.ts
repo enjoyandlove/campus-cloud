@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
-import { WidthToClassPipe } from '@app/layouts/pipes';
-import { LayoutWidth, LayoutAlign } from '@app/layouts/interfaces';
+import { WidthToClassPipe } from '@campus-cloud/layouts/pipes';
+import { LayoutWidth, LayoutAlign } from '@campus-cloud/layouts/interfaces';
 
 @Component({
   selector: 'cp-one-column',

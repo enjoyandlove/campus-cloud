@@ -5,12 +5,12 @@ import { switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { DealsService } from '../deals.service';
-import { CPI18nService } from '@shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { dealDateValidator } from '../deals.utils';
-import { CustomValidators } from '@shared/validators';
-import { baseActions, IHeader } from '@app/store/base';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { baseActions, IHeader } from '@campus-cloud/store/base';
 import { DealsStoreService } from '../stores/store.service';
 
 @Component({

@@ -2,8 +2,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { pageTitle } from '@shared/constants';
-import { PrivilegesGuard } from '@app/config/guards';
+import { pageTitle } from '@campus-cloud/shared/constants';
+import { PrivilegesGuard } from '@campus-cloud/config/guards';
 import { ItemsIntegrationsListComponent } from './list/integrations-list.component';
 
 const routes: Routes = [

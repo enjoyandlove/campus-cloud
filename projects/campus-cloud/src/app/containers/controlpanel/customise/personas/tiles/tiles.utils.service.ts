@@ -3,10 +3,10 @@ import { get as _get, sortBy } from 'lodash';
 import { Injectable } from '@angular/core';
 
 import { ITile } from './tile.interface';
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { CampusLink } from '@controlpanel/manage/links/tile';
 import { ICampusGuide } from './../sections/section.interface';
-import { FileUploadService, CPI18nService } from '@shared/services';
+import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
 import { SectionUtilsService } from './../sections/section.utils.service';
 import { CampusLinkType, TileCategoryRank, TileFeatureRank, TileVisibility } from './tiles.status';
 

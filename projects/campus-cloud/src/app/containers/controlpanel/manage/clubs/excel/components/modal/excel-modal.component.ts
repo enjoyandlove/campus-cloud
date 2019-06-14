@@ -5,7 +5,7 @@ import { ClubsService } from '../../../clubs.service';
 import { isClubAthletic, clubAthleticLabels } from '../../../clubs.athletics.labels';
 import { isDev } from '../../../../../../../config/env';
 import { CPI18nService, FileUploadService } from '../../../../../../../shared/services';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
   selector: 'cp-clubs-excel-modal',

@@ -2,13 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { TooltipOption } from 'bootstrap';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import IEvent from '../../../event.interface';
-import { CPI18nService } from '@shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { CheckInMethod } from '../../../event.status';
 import { EventUtilService } from '../../../events.utils.service';
-import { CP_PRIVILEGES_MAP } from '@shared/constants/privileges';
-import { canSchoolWriteResource } from '@shared/utils/privileges/privileges';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants/privileges';
+import { canSchoolWriteResource } from '@campus-cloud/shared/utils/privileges/privileges';
 import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
 

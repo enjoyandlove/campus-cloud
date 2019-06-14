@@ -15,11 +15,11 @@ import {
   OnDestroy
 } from '@angular/core';
 
-import { CPSession } from '@app/session';
-import { IJobsState } from '@campus-cloud/src/app/store';
+import { CPSession } from '@campus-cloud/session';
+import { IJobsState } from '@projects/campus-cloud/src/app/store';
 import { IEmployer } from '../employer.interface';
-import * as fromJobs from '@app/store/manage/jobs';
-import { CPI18nService } from '@shared/services/i18n.service';
+import * as fromJobs from '@campus-cloud/store/manage/jobs';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 
 @Component({
   selector: 'cp-employer-edit',

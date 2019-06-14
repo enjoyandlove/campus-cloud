@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute } from '@angular/router';
 
-import { CPSession } from '@app/session';
-import { configureTestSuite } from '@shared/tests';
+import { CPSession } from '@campus-cloud/session';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { DashboardModule } from '../../dashboard.module';
 import { DashboardService } from '../../dashboard.service';
 import { MockRouter } from '../../tests/dashboard.activatedroute';

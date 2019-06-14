@@ -6,17 +6,17 @@ import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { CPDate } from '@shared/utils';
-import { CPI18nPipe } from '@shared/pipes';
-import { baseActions } from '@app/store/base';
-import { getEventsModalState } from '@app/store';
+import { CPDate } from '@campus-cloud/shared/utils';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { baseActions } from '@campus-cloud/store/base';
+import { getEventsModalState } from '@campus-cloud/store';
 import { EventsService } from '../events.service';
-import { CPSession, ISchool } from '@app/session';
+import { CPSession, ISchool } from '@campus-cloud/session';
 import { EventUtilService } from '../events.utils.service';
-import { amplitudeEvents, STATUS } from '@shared/constants';
-import { CPImageUploadComponent } from '@shared/components';
+import { amplitudeEvents, STATUS } from '@campus-cloud/shared/constants';
+import { CPImageUploadComponent } from '@campus-cloud/shared/components';
 import { EventsComponent } from '../list/base/events.component';
-import { SnackbarError } from '@app/store/base/reducers/snackbar.reducer';
+import { SnackbarError } from '@campus-cloud/store/base/reducers/snackbar.reducer';
 import {
   AdminService,
   StoreService,
@@ -24,7 +24,7 @@ import {
   CPI18nService,
   FileUploadService,
   CPTrackingService
-} from '@shared/services';
+} from '@campus-cloud/shared/services';
 
 import {
   isAllDay,

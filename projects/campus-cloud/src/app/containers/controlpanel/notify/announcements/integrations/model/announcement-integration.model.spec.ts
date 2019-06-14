@@ -1,7 +1,7 @@
 import { FormGroup, AbstractControl } from '@angular/forms';
 
 import { defaultForm, filledForm } from '../tests';
-import { IntegrationTypes } from '@libs/integrations/common/model';
+import { IntegrationTypes } from '@campus-cloud/libs/integrations/common/model';
 import { AnnouncementPriority } from '../../announcements.interface';
 import { AnnouncementIntegrationModel } from './announcement-integration.model';
 import {
@@ -9,7 +9,7 @@ import {
   validateOneOf,
   validateMaxLength,
   validatePositiveInteger
-} from '@shared/utils/tests';
+} from '@campus-cloud/shared/utils/tests';
 
 describe('AnnouncementIntegrationModel', () => {
   describe('form', () => {

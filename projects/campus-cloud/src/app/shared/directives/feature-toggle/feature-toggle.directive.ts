@@ -1,8 +1,8 @@
 import { Directive, OnInit, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 import { get as _get } from 'lodash';
 
-import { CPSession } from '@app/session';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { CPSession } from '@campus-cloud/session';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Directive({
   selector: '[cpFeatureToggle]'

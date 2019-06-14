@@ -1,6 +1,6 @@
 import { RouterReducerState } from '@ngrx/router-store';
 
-import { RouterStateUrl } from '@app/store/serializers';
+import { RouterStateUrl } from '@campus-cloud/store/serializers';
 
 export interface IAlert {
   body: string;

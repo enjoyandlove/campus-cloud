@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
-import { CPI18nService } from '@shared/services';
-import { amplitudeEvents } from '@shared/constants';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 
 @Injectable()
 export class AudienceUtilsService {

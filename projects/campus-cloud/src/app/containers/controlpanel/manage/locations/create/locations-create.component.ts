@@ -7,17 +7,20 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '@app/store';
-import { IItem } from '@shared/components';
-import { baseActions } from '@app/store/base';
-import { CPSession, ISchool } from '@app/session';
-import { CPI18nService } from '@app/shared/services';
-import { LatLngValidators } from '@shared/validators';
+import * as fromRoot from '@campus-cloud/store';
+import { IItem } from '@campus-cloud/shared/components';
+import { baseActions } from '@campus-cloud/store/base';
+import { CPSession, ISchool } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { LatLngValidators } from '@campus-cloud/shared/validators';
 import * as fromCategoryStore from '../categories/store';
-import { LocationType } from '@libs/locations/common/utils';
-import { LocationModel } from '@libs/locations/common/model';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
-import { ICategory, LocationCategoryLocale } from '@libs/locations/common/categories/model';
+import { LocationType } from '@campus-cloud/libs/locations/common/utils';
+import { LocationModel } from '@campus-cloud/libs/locations/common/model';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
+import {
+  ICategory,
+  LocationCategoryLocale
+} from '@campus-cloud/libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-locations-create',

@@ -17,7 +17,7 @@ import { EventsExcelComponent } from './excel';
 /**
  * MISC
  */
-import { pageTitle } from '@shared/constants';
+import { pageTitle } from '@campus-cloud/shared/constants';
 import { EventsAttendanceComponent } from './attendance';
 
 const appRoutes: Routes = [

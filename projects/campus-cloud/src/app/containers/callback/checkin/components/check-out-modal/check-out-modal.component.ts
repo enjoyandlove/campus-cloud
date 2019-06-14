@@ -12,10 +12,10 @@ import {
   HostListener
 } from '@angular/core';
 
-import { CPDate } from '@shared/utils';
+import { CPDate } from '@campus-cloud/shared/utils';
 import IAttendee from '../attendee.interface';
 import { CheckinService } from '../../checkin.service';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { CheckinUtilsService } from '../../checkin.utils.service';
 
 const COMMON_DATE_PICKER_OPTIONS = {

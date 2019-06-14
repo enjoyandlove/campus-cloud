@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { FormGroup, ValidationErrors } from '@angular/forms';
 
 import IEvent from './event.interface';
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
-import { CPDate, Formats, createSpreadSheet } from '@shared/utils';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { CPDate, Formats, createSpreadSheet } from '@campus-cloud/shared/utils';
 import { qrCode, EventType, attendanceType, CheckInOutTime, EventAttendance } from './event.status';
 
 export interface IEventType {

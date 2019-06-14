@@ -6,17 +6,17 @@ import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { ISnackbar } from '@app/store';
-import { CPSession } from '@app/session';
+import { ISnackbar } from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session';
 import * as fromActions from '../actions';
-import { baseActionClass } from '@app/store/base';
-import { amplitudeEvents } from '@shared/constants';
+import { baseActionClass } from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { DiningService } from '../../dining.service';
-import { IDining } from '@libs/locations/common/model';
+import { IDining } from '@campus-cloud/libs/locations/common/model';
 import * as fromDiningCategoryStore from '../../categories/store';
-import { CPI18nService, CPTrackingService } from '@shared/services';
-import { ICategory } from '@libs/locations/common/categories/model';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 
 @Injectable()
 export class DiningEffect {

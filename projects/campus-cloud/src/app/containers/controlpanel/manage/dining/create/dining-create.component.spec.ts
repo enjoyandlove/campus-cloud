@@ -5,19 +5,19 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { fillForm } from '@shared/utils/tests/form';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
-import { configureTestSuite } from '@app/shared/tests';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { fillForm } from '@campus-cloud/shared/utils/tests/form';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { DiningCreateComponent } from './dining-create.component';
 import {
   emptyForm,
   filledForm,
   mockLinksData,
   mockScheduleData
-} from '@libs/locations/common/tests';
+} from '@campus-cloud/libs/locations/common/tests';
 
 describe('DiningCreateComponent', () => {
   configureTestSuite();

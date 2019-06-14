@@ -5,16 +5,16 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
-import { IItem } from '@shared/components';
-import { CPSession } from '@campus-cloud/src/app/session';
+import { IItem } from '@campus-cloud/shared/components';
+import { CPSession } from '@projects/campus-cloud/src/app/session';
 import { ISocialPostCategory } from '../../model';
-import { amplitudeEvents } from '@shared/constants';
-import { WallsIntegrationModel } from '@libs/integrations/walls/model';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { WallsIntegrationModel } from '@campus-cloud/libs/integrations/walls/model';
 import { WallsIntegrationsService } from './../walls-integrations.service';
 import { SocialPostCategoryModel } from './../../model/social-post-category.model';
-import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
-import { WallsIntegrationFormComponent } from '@libs/integrations/walls/components';
-import { FeedIntegration } from '@libs/integrations/common/model/integration.model';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
+import { WallsIntegrationFormComponent } from '@campus-cloud/libs/integrations/walls/components';
+import { FeedIntegration } from '@campus-cloud/libs/integrations/common/model/integration.model';
 
 @Component({
   selector: 'cp-walls-integrations-create',

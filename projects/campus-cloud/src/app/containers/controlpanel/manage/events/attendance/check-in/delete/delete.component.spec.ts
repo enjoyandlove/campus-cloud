@@ -3,10 +3,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { mockCheckIn } from '../../../tests';
-import { mockSchool } from '@app/session/mock';
-import { CPI18nService } from '@shared/services';
+import { mockSchool } from '@campus-cloud/session/mock';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { EventsModule } from '../../../events.module';
 import { attendanceType } from '../../../event.status';
 import { EventsService } from '../../../events.service';

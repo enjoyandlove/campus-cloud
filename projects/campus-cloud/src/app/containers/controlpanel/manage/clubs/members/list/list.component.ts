@@ -3,18 +3,18 @@ import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
-import { CPSession } from '@app/session';
-import { IMember } from '@libs/members/common/model';
+import { CPSession } from '@campus-cloud/session';
+import { IMember } from '@campus-cloud/libs/members/common/model';
 import { ISocialGroup } from './../../../feeds/model';
-import { BaseComponent } from '@app/base/base.component';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ClubsUtilsService } from './../../clubs.utils.service';
-import { canSchoolReadResource } from '@shared/utils/privileges';
-import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@shared/constants';
-import { CPI18nService, CPTrackingService, RouteLevel } from '@shared/services';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils/privileges';
+import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPI18nService, CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
 import {
   LibsCommonMembersService,
   LibsCommonMembersUtilsService
-} from '@libs/members/common/providers';
+} from '@campus-cloud/libs/members/common/providers';
 
 interface IState {
   members: Array<IMember>;

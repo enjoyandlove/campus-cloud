@@ -1,5 +1,5 @@
 import { WallsIntegrationsService } from '../walls-integrations.service';
-import { CPI18nService } from '@app/shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -7,14 +7,14 @@ import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 
-import { CPSession } from '@app/session';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
+import { CPSession } from '@campus-cloud/session';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { WallsIntegrationsCreateComponent } from './create.component';
-import { FeedIntegration } from '@libs/integrations/common/model/integration.model';
+import { FeedIntegration } from '@campus-cloud/libs/integrations/common/model/integration.model';
 import { emptyForm, fillForm, resetForm, MockWallsIntegrationsService } from '../tests';
-import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers/integrations.utils.service';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers/integrations.utils.service';
 
 describe('WallsIntegrationsCreateComponent', () => {
   configureTestSuite();

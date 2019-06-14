@@ -1,6 +1,6 @@
 import { HttpParams } from '@angular/common/http';
 
-import { EventIntegration } from '@libs/integrations/events/model';
+import { EventIntegration } from '@campus-cloud/libs/integrations/events/model';
 import { IntegrationsUitlsService } from './integrations.utils.service';
 
 describe('IntegrationsUitlsService', () => {

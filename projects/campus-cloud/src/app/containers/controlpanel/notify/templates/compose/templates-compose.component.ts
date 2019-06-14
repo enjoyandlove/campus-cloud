@@ -14,12 +14,17 @@ import { TooltipOption } from 'bootstrap';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { CPSession } from '@app/session';
-import { canSchoolWriteResource } from '@shared/utils';
-import { CustomValidators } from '@shared/validators';
-import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@shared/constants';
+import { CPSession } from '@campus-cloud/session';
+import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@campus-cloud/shared/constants';
 import { AnnouncementsService } from './../../announcements/announcements.service';
-import { CPI18nService, StoreService, CPTrackingService, ZendeskService } from '@shared/services';
+import {
+  CPI18nService,
+  StoreService,
+  CPTrackingService,
+  ZendeskService
+} from '@campus-cloud/shared/services';
 
 interface IState {
   isUrgent: boolean;

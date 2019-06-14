@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { mockTesters } from '../tests';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { TestersCreateComponent } from './testers-create.component';
-import { CPI18nService, ModalService, MODAL_DATA } from '@shared/services';
+import { CPI18nService, ModalService, MODAL_DATA } from '@campus-cloud/shared/services';
 
 describe('TestersCreateComponent', () => {
   configureTestSuite();

@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { IOpeningHours } from '@libs/locations/common/model';
+import { IOpeningHours } from '@campus-cloud/libs/locations/common/model';
 
 @Component({
   selector: 'cp-dining-opening-hours',

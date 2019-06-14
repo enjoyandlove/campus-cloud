@@ -3,11 +3,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 
-import { IDateRange } from '@shared/components';
-import { CPI18nService } from '@shared/services';
+import { IDateRange } from '@campus-cloud/shared/components';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { ServicesService } from '../services.service';
-import { STAR_SIZE } from '@shared/components/cp-stars';
-import { BaseComponent } from '@app/base/base.component';
+import { STAR_SIZE } from '@campus-cloud/shared/components/cp-stars';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ServicesUtilsService } from '../services.utils.service';
 import { IFilterState, ProvidersUtilsService } from '../providers.utils.service';
 import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';

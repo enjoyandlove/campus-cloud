@@ -5,23 +5,31 @@ import { BehaviorSubject } from 'rxjs/index';
 import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
-import { FORMAT } from '@shared/pipes';
+import { FORMAT } from '@campus-cloud/shared/pipes';
 import IEvent from '../event.interface';
-import { CPSession, IUser } from '@app/session';
+import { CPSession, IUser } from '@campus-cloud/session';
 import { EventsService } from '../events.service';
-import { IHeader, baseActions } from '@app/store/base';
+import { IHeader, baseActions } from '@campus-cloud/store/base';
 import { ICheckIn } from './check-in/check-in.interface';
 import { EventUtilService } from './../events.utils.service';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { EventsComponent } from '../list/base/events.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
-import { CP_PRIVILEGES_MAP, SortDirection } from '@shared/constants';
+import { CP_PRIVILEGES_MAP, SortDirection } from '@campus-cloud/shared/constants';
 import { EventsAmplitudeService } from '../events.amplitude.service';
 import { CheckInMethod, CheckInOutTime, CheckInOut } from '../event.status';
 import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
-import { CPI18nService, CPTrackingService, ModalService, RouteLevel } from '@shared/services';
-import { canSchoolReadResource, canSchoolWriteResource } from '@shared/utils/privileges/privileges';
+import {
+  CPI18nService,
+  CPTrackingService,
+  ModalService,
+  RouteLevel
+} from '@campus-cloud/shared/services';
+import {
+  canSchoolReadResource,
+  canSchoolWriteResource
+} from '@campus-cloud/shared/utils/privileges/privileges';
 
 interface IState {
   sortField: string;

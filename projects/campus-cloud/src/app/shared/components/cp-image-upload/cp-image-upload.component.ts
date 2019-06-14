@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 
-import { API } from '@app/config/api';
-import { appStorage } from '@shared/utils';
-import { FileUploadService } from '@shared/services';
+import { API } from '@campus-cloud/config/api';
+import { appStorage } from '@campus-cloud/shared/utils';
+import { FileUploadService } from '@campus-cloud/shared/services';
 import { CPI18nService, ZendeskService } from '../../services';
 
 @Component({

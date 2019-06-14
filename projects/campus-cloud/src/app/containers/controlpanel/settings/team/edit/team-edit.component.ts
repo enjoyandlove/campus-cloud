@@ -6,13 +6,13 @@ import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
-import { CPSession } from '@app/session';
-import { BaseComponent } from '@app/base';
-import { MODAL_TYPE } from '@shared/components';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
-import { baseActions, IHeader } from '@app/store/base';
-import { AdminService, ErrorService, CPI18nService } from '@shared/services';
-import { accountsToStoreMap, canAccountLevelReadResource } from '@shared/utils';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
+import { MODAL_TYPE } from '@campus-cloud/shared/components';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { baseActions, IHeader } from '@campus-cloud/store/base';
+import { AdminService, ErrorService, CPI18nService } from '@campus-cloud/shared/services';
+import { accountsToStoreMap, canAccountLevelReadResource } from '@campus-cloud/shared/utils';
 
 import {
   clubMenu,

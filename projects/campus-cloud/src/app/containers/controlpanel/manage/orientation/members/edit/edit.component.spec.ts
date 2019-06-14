@@ -5,17 +5,17 @@ import { StoreModule, Store } from '@ngrx/store';
 import { DebugElement } from '@angular/core';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { RootStoreModule } from '@app/store';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
+import { CPSession } from '@campus-cloud/session';
+import { RootStoreModule } from '@campus-cloud/store';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { OrientationMembersEditComponent } from './edit.component';
-import { mockMember, filledForm } from '@libs/members/common/tests';
-import { MODAL_DATA, CPI18nService, IModal } from '@shared/services';
-import { MemberType, MemberModel } from '@libs/members/common/model';
-import { getElementByCPTargetValue, fillForm } from '@shared/utils/tests';
-import { LibsCommmonMembersModule } from '@libs/members/common/common-members.module';
-import { LibsCommonMembersUtilsService } from '@libs/members/common/providers/common.utils';
+import { mockMember, filledForm } from '@campus-cloud/libs/members/common/tests';
+import { MODAL_DATA, CPI18nService, IModal } from '@campus-cloud/shared/services';
+import { MemberType, MemberModel } from '@campus-cloud/libs/members/common/model';
+import { getElementByCPTargetValue, fillForm } from '@campus-cloud/shared/utils/tests';
+import { LibsCommmonMembersModule } from '@campus-cloud/libs/members/common/common-members.module';
+import { LibsCommonMembersUtilsService } from '@campus-cloud/libs/members/common/providers/common.utils';
 
 describe('OrientationMembersEditComponent', () => {
   configureTestSuite();

@@ -1,4 +1,4 @@
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { CPDatePipe, FORMAT } from './date.pipe';
 
 const mockSession = new CPSession();

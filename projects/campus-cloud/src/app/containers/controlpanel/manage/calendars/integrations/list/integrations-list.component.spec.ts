@@ -5,17 +5,20 @@ import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import * as fromRoot from '@app/store';
+import * as fromRoot from '@campus-cloud/store';
 
-import { CPSession } from '@app/session';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
-import { CPNoContentComponent } from '@shared/components';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { CPSession } from '@campus-cloud/session';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { CPNoContentComponent } from '@campus-cloud/shared/components';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { MockActivatedRoute, mockIntegration } from '../tests';
 import { ItemsIntegrationsListComponent } from './integrations-list.component';
-import { IntegrationStatusPipe, IntegrationTypePipe } from '@libs/integrations/common/pipes';
+import {
+  IntegrationStatusPipe,
+  IntegrationTypePipe
+} from '@campus-cloud/libs/integrations/common/pipes';
 
 describe('ItemsIntegrationsListComponent', () => {
   configureTestSuite();

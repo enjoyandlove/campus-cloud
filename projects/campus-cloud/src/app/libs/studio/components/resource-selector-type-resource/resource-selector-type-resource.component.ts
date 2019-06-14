@@ -3,7 +3,7 @@ import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { get as _get, isEmpty } from 'lodash';
 
 import { IIntegrationData } from '../../models';
-import { CustomValidators } from '@shared/validators';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { ContentUtilsProviders } from '../../providers';
 import { CampusLink } from '@controlpanel/manage/links/tile';
 import { ILink } from '@controlpanel/manage/links/link.interface';

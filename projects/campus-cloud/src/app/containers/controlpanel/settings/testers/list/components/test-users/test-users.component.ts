@@ -1,6 +1,6 @@
 import { EventEmitter, Component, OnInit, Output, Input } from '@angular/core';
 
-import { SortDirection } from '@shared/constants';
+import { SortDirection } from '@campus-cloud/shared/constants';
 import { ITestUser } from '../../../models/test-user.interface';
 
 @Component({

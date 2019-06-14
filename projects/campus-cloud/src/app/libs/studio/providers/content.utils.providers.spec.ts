@@ -1,6 +1,6 @@
 import { async, TestBed } from '@angular/core/testing';
 
-import { CPI18nService } from '@shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { mockStudioContentResource } from './../tests/mocks';
 import { CampusLink } from '@controlpanel/manage/links/tile';
 import { ContentUtilsProviders } from './content.utils.providers';

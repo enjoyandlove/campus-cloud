@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AccountService } from './account.service';
-import { SharedModule } from '@shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { ChangePasswordComponent } from './change-password';
 import { AccountRoutingModule } from './account.routing.module';
 

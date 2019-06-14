@@ -3,10 +3,10 @@ import { startWith, map } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
-import { BaseComponent } from '@app/base';
-import * as fromJobs from '@app/store/manage';
+import { BaseComponent } from '@campus-cloud/base';
+import * as fromJobs from '@campus-cloud/store/manage';
 import { JobsService } from '../../jobs.service';
-import { CPI18nService } from '@shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-employer-selector',

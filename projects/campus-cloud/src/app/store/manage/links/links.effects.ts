@@ -5,11 +5,11 @@ import { Action, Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import * as fromActions from './links.actions';
 import { getLinksState } from '../manage.selectors';
-import { ILink } from '@app/containers/controlpanel/manage/links/link.interface';
-import { LinksService } from '@app/containers/controlpanel/manage/links/links.service';
+import { ILink } from '@campus-cloud/containers/controlpanel/manage/links/link.interface';
+import { LinksService } from '@campus-cloud/containers/controlpanel/manage/links/links.service';
 
 @Injectable()
 export class LinksEffects {

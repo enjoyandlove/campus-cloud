@@ -2,8 +2,8 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
-import { CPSession } from '@app/session';
-import { IDateRange } from '@shared/components';
+import { CPSession } from '@campus-cloud/session';
+import { IDateRange } from '@campus-cloud/shared/components';
 import { IStudentFilter } from '../../assess/engagement/engagement.utils.service';
 
 export interface IFilterState {

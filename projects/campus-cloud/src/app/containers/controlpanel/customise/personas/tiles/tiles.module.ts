@@ -21,7 +21,7 @@ import { SharedModule } from '../../../../../shared/shared.module';
 import { PersonasService } from '../personas.service';
 import { SectionUtilsService } from '../sections/section.utils.service';
 import { SectionsService } from '../sections/sections.service';
-import { LibsStudioModule } from '@libs/studio/studio.module';
+import { LibsStudioModule } from '@campus-cloud/libs/studio/studio.module';
 
 @NgModule({
   declarations: [

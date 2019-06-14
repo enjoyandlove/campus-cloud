@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { CPI18nService } from '@shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { IPersona } from '../../../../persona.interface';
-import { ContentUtilsProviders } from '@libs/studio/providers';
+import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 import { TilesUtilsService } from '../../../tiles.utils.service';
 import { PersonasUtilsService } from '../../../../personas.utils.service';
 

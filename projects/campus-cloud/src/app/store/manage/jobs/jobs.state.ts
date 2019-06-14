@@ -1,4 +1,4 @@
-import { IItem } from '@app//shared/components';
+import { IItem } from '@campus-cloud//shared/components';
 
 export interface IJobsState {
   employers: IItem[];

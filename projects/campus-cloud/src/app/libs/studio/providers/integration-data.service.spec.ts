@@ -3,9 +3,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 
-import { API } from '@app/config/api';
-import { CPSession } from '@app/session';
-import { MockCPSession, mockSchool } from '@app/session/mock';
+import { API } from '@campus-cloud/config/api';
+import { CPSession } from '@campus-cloud/session';
+import { MockCPSession, mockSchool } from '@campus-cloud/session/mock';
 import { IntegrationDataService } from './integration-data.service';
 
 describe('IntegrationDataService', () => {

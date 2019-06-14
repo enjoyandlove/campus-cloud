@@ -3,8 +3,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
-import { CPSession } from '@app/session';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { CPSession } from '@campus-cloud/session';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { ClubsService } from '@controlpanel/manage/clubs/clubs.service';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
 import { clubAthleticStatus, isClubAthletic } from '../../../../team.utils.service';

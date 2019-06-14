@@ -10,11 +10,11 @@ import {
 
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { AudienceService } from '../audience.service';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { AudienceUtilsService } from '../audience.utils.service';
-import { CPI18nService, CPTrackingService } from '@shared/services';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 const AUDIENCE_USED_IN_TEMPLATE = 409;
 

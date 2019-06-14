@@ -1,7 +1,7 @@
 import { Routes, RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { PrivilegesGuard } from '@app/config/guards';
+import { PrivilegesGuard } from '@campus-cloud/config/guards';
 import { AnnouncementsIntegrationListComponent } from './list/list.component';
 
 const routes: Routes = [

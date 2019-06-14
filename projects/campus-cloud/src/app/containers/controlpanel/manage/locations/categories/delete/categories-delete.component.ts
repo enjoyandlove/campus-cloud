@@ -4,8 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { ICategory } from '@libs/locations/common/categories/model';
+import { CPSession } from '@campus-cloud/session';
+import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-categories-delete',

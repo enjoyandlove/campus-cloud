@@ -7,14 +7,14 @@ import { NgModule } from '@angular/core';
 
 import { reducers } from './store';
 import { effects } from './store/effects';
-import { SharedModule } from '@shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { EventsIntegrationEditComponent } from './edit';
 import { EventsIntegrationsListComponent } from './list';
 import { EventsIntegrationsCreateComponent } from './create';
 import { IntegrationsService } from './integrations.service';
 import { EventIntegrationRoutingModule } from './integrations.routing.module';
-import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
-import { EventsIntegrationsModule } from '@libs/integrations/events/events-integrations.module';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
+import { EventsIntegrationsModule } from '@campus-cloud/libs/integrations/events/events-integrations.module';
 
 @NgModule({
   declarations: [

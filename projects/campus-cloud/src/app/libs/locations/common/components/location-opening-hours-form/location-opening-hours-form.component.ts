@@ -1,8 +1,8 @@
 import { FormArray, FormGroup } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 
-import { ILocationTiming } from '@libs/locations/common/model';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { ILocationTiming } from '@campus-cloud/libs/locations/common/model';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 
 @Component({
   selector: 'cp-location-opening-hours-form',

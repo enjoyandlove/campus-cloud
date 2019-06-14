@@ -2,8 +2,8 @@ import { Component, ElementRef, EventEmitter, Input, OnInit, Output } from '@ang
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { CPSession } from '@campus-cloud/session';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { ServicesService } from '@controlpanel/manage/services/services.service';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';
 

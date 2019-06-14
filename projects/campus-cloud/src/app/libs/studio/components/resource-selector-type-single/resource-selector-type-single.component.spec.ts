@@ -2,12 +2,12 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { mockSchool } from '@app/session/mock';
-import { CPI18nService, StoreService } from '@shared/services';
-import { SharedModule } from '@shared/shared.module';
+import { CPSession } from '@campus-cloud/session';
+import { mockSchool } from '@campus-cloud/session/mock';
+import { CPI18nService, StoreService } from '@campus-cloud/shared/services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CampusLink } from '@controlpanel/manage/links/tile';
-import { ContentUtilsProviders } from '@libs/studio/providers';
+import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 import { MockTilesService, MockStoreService } from '../../tests/mocks';
 import { TilesService } from '@controlpanel/customise/personas/tiles/tiles.service';
 import { ResourceSelectorTypeSingleComponent } from './resource-selector-type-single.component';

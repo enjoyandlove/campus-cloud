@@ -5,15 +5,18 @@ import { Subject, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '@app/store';
-import { CPSession } from '@app/session';
-import { amplitudeEvents } from '@shared/constants';
-import { Destroyable, Mixin } from '@shared/mixins';
+import * as fromRoot from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { DiningCategoriesEditComponent } from '../edit';
 import { DiningCategoriesCreateComponent } from '../create';
 import { DiningCategoriesDeleteComponent } from '../delete';
-import { CPI18nService, CPTrackingService, ModalService } from '@shared/services';
-import { ICategory, ICategoriesApiQuery } from '@libs/locations/common/categories/model';
+import { CPI18nService, CPTrackingService, ModalService } from '@campus-cloud/shared/services';
+import {
+  ICategory,
+  ICategoriesApiQuery
+} from '@campus-cloud/libs/locations/common/categories/model';
 
 @Mixin([Destroyable])
 @Component({

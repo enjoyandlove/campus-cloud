@@ -4,15 +4,15 @@ import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 import { CategoriesEditComponent } from './categories-edit.component';
-import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
-import { filledForm, mockCategories } from '@libs/locations/common/categories/tests';
+import { LocationsTimeLabelPipe } from '@campus-cloud/libs/locations/common/pipes';
+import { filledForm, mockCategories } from '@campus-cloud/libs/locations/common/categories/tests';
 
 describe('CategoriesEditComponent', () => {
   configureTestSuite();

@@ -5,11 +5,11 @@ import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { IItem } from '@shared/components';
-import { ZendeskService } from '@shared/services';
-import { EventIntegration } from '@libs/integrations/events/model';
-import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
+import { CPSession } from '@campus-cloud/session';
+import { IItem } from '@campus-cloud/shared/components';
+import { ZendeskService } from '@campus-cloud/shared/services';
+import { EventIntegration } from '@campus-cloud/libs/integrations/events/model';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import { ItemsIntegrationsUitlsService } from '../items-integrations.utils.service';
 
 @Component({

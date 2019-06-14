@@ -10,10 +10,10 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { ICalendar } from '../calendars.interface';
-import { amplitudeEvents } from '@shared/constants';
-import { CPTrackingService } from '@shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 import { CalendarsService } from '../calendars.services';
 import { CalendarAmplitudeService } from '../calendar.amplitude.service';
 

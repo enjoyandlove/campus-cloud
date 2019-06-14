@@ -2,14 +2,19 @@ import { Router, CanActivate, CanActivateChild, ActivatedRouteSnapshot } from '@
 import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
-import { CPSession } from '@app/session';
-import { AdminService, SchoolService, StoreService, ZendeskService } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import {
+  AdminService,
+  SchoolService,
+  StoreService,
+  ZendeskService
+} from '@campus-cloud/shared/services';
 
 import {
   canClientReadResource,
   canSchoolReadResource,
   canAccountLevelReadResource
-} from '@shared/utils';
+} from '@campus-cloud/shared/utils';
 
 @Injectable()
 export class PrivilegesGuard implements CanActivate, CanActivateChild {

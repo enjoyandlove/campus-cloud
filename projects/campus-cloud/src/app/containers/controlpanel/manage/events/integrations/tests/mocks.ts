@@ -1,4 +1,4 @@
-import { IEventIntegration } from '@libs/integrations/events/model';
+import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model';
 
 export const emptyForm = {
   school_id: 157,

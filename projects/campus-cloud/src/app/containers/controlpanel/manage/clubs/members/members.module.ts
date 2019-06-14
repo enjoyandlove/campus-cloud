@@ -5,15 +5,15 @@ import { NgModule } from '@angular/core';
 
 import { ClubsMembersComponent } from './list';
 import { ClubsMembersEditComponent } from './edit';
-import { SharedModule } from '@shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { ClubsMembersCreateComponent } from './create';
 import { ClubsMembersDeleteComponent } from './delete';
 import { ClubsMembersRoutingModule } from './members.routing.module';
-import { LibsCommmonMembersModule } from '@libs/members/common/common-members.module';
+import { LibsCommmonMembersModule } from '@campus-cloud/libs/members/common/common-members.module';
 import {
   LibsCommonMembersService,
   LibsCommonMembersUtilsService
-} from '@libs/members/common/providers';
+} from '@campus-cloud/libs/members/common/providers';
 
 @NgModule({
   declarations: [

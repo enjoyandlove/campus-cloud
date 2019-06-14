@@ -4,18 +4,18 @@ import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import * as fromRoot from '@app/store';
+import * as fromRoot from '@campus-cloud/store';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { mockIntegration } from '../tests';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
-import { CPNoContentComponent } from '@shared/components';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { CPNoContentComponent } from '@campus-cloud/shared/components';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { EventsIntegrationsListComponent } from './integrations-list.component';
-import { IntegrationTypePipe } from '@campus-cloud/src/app/libs/integrations/common/pipes';
-import { IntegrationStatusPipe } from '@libs/integrations/common/pipes/status.pipe';
+import { IntegrationTypePipe } from '@projects/campus-cloud/src/app/libs/integrations/common/pipes';
+import { IntegrationStatusPipe } from '@campus-cloud/libs/integrations/common/pipes/status.pipe';
 
 describe('EventsIntegrationsListComponent', () => {
   configureTestSuite();

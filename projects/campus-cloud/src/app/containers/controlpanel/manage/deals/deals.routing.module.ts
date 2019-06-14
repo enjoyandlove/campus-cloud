@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DealsListComponent } from './list';
 import { DealsEditComponent } from './edit';
 import { DealsInfoComponent } from './info';
-import { pageTitle } from '@shared/constants';
+import { pageTitle } from '@campus-cloud/shared/constants';
 import { DealsCreateComponent } from './create';
 
 const appRoutes: Routes = [

@@ -3,13 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { appStorage } from '@shared/utils';
+import { appStorage } from '@campus-cloud/shared/utils';
 
 import { AuthService } from '../auth.service';
-import { baseActions } from '@app/store/base';
-import { environment } from '@campus-cloud/src/environments/environment';
-import { LayoutWidth, LayoutAlign } from '@app/layouts/interfaces';
-import { CPI18nService, ErrorService, ZendeskService } from '@shared/services';
+import { baseActions } from '@campus-cloud/store/base';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
+import { LayoutWidth, LayoutAlign } from '@campus-cloud/layouts/interfaces';
+import { CPI18nService, ErrorService, ZendeskService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-login',

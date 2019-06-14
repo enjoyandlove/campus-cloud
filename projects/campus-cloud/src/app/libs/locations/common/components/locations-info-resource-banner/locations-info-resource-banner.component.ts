@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { IResourceBanner } from '@shared/components';
-import { ILocation } from '@libs/locations/common/model';
+import { IResourceBanner } from '@campus-cloud/shared/components';
+import { ILocation } from '@campus-cloud/libs/locations/common/model';
 
 @Component({
   selector: 'cp-locations-info-resource-banner',

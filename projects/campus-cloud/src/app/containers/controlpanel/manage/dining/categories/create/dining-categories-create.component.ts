@@ -5,16 +5,16 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { IItem } from '@shared/components';
-import { Destroyable, Mixin } from '@shared/mixins';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
-import { CPI18nService, IModal, MODAL_DATA } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { IItem } from '@campus-cloud/shared/components';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
+import { CPI18nService, IModal, MODAL_DATA } from '@campus-cloud/shared/services';
 import {
   categoryTypes,
   CategoryModel,
   LocationCategoryLocale
-} from '@libs/locations/common/categories/model';
+} from '@campus-cloud/libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-dining-categories-create',

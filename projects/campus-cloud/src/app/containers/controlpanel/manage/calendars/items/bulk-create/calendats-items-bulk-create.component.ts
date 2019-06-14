@@ -6,15 +6,15 @@ import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { isDev } from '@app/config/env';
-import { CPSession } from '@app/session';
-import { BaseComponent } from '@app/base';
-import { CPI18nPipe } from '@shared/pipes';
+import { isDev } from '@campus-cloud/config/env';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { IItem } from './../item.interface';
-import { CPDate, CPObj } from '@shared/utils';
-import { amplitudeEvents } from '@shared/constants';
-import { CPTrackingService } from '@shared/services';
-import { IHeader, baseActions } from '@app/store/base';
+import { CPDate, CPObj } from '@campus-cloud/shared/utils';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { IHeader, baseActions } from '@campus-cloud/store/base';
 import { CalendarsService } from '../../calendars.services';
 
 const i18n = new CPI18nPipe();

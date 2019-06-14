@@ -4,13 +4,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 
-import { CPSession } from '@app//session';
-import { configureTestSuite } from '@app//shared/tests';
-import { CPI18nService, StoreService } from '@app//shared/services';
-import { SharedModule } from '@app//shared/shared.module';
-import { mockSchool, mockUser } from '@app/session/mock';
+import { CPSession } from '@campus-cloud//session';
+import { configureTestSuite } from '@campus-cloud//shared/tests';
+import { CPI18nService, StoreService } from '@campus-cloud//shared/services';
+import { SharedModule } from '@campus-cloud//shared/shared.module';
+import { mockSchool, mockUser } from '@campus-cloud/session/mock';
 import { ListActionBoxComponent } from './list-action-box.component';
-import { CPTrackingService } from '@app//shared/services/tracking.service';
+import { CPTrackingService } from '@campus-cloud//shared/services/tracking.service';
 
 describe('ListActionBoxComponent', () => {
   configureTestSuite();

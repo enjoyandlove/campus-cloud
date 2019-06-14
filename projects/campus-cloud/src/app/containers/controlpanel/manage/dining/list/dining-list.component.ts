@@ -6,17 +6,17 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '@app/store';
-import { CPSession } from '@app/session';
-import { IItem } from '@shared/components';
+import * as fromRoot from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session';
+import { IItem } from '@campus-cloud/shared/components';
 import { ManageHeaderService } from '../../utils';
-import { amplitudeEvents } from '@shared/constants';
-import { IDining } from '@libs/locations/common/model';
-import { BaseComponent } from '@app/base/base.component';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { IDining } from '@campus-cloud/libs/locations/common/model';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import * as fromCategoryStore from '../categories/store';
-import { ICategory } from '@libs/locations/common/categories/model';
-import { CPI18nService, CPTrackingService } from '@shared/services';
-import { LocationsUtilsService, LocationType } from '@libs/locations/common/utils';
+import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { LocationsUtilsService, LocationType } from '@campus-cloud/libs/locations/common/utils';
 
 interface IState {
   search_str: string;

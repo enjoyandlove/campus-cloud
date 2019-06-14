@@ -2,7 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 
 import { CP_TRACK_TO } from '../../directives';
 import { isCanada } from '../../../config/env';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
   selector: 'cp-top-ga-modal',

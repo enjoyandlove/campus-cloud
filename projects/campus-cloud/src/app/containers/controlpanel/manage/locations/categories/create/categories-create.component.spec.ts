@@ -4,16 +4,16 @@ import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { fillForm } from '@shared/utils/tests';
-import { CPI18nService } from '@shared/services';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
-import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
+import { CPSession } from '@campus-cloud/session';
+import { fillForm } from '@campus-cloud/shared/utils/tests';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
+import { LocationsTimeLabelPipe } from '@campus-cloud/libs/locations/common/pipes';
 import { CategoriesCreateComponent } from './categories-create.component';
-import { emptyForm, filledForm } from '@libs/locations/common/categories/tests';
+import { emptyForm, filledForm } from '@campus-cloud/libs/locations/common/categories/tests';
 
 describe('CategoriesCreateComponent', () => {
   configureTestSuite();

@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { WidthToClassPipe } from './pipes';
-import { LayoutFullWidthComponent } from '@app/layouts/cp-full-width';
-import { LayoutOneColumnComponent } from '@app/layouts/cp-one-column';
-import { LayoutTwoColumnsComponent } from '@app/layouts/cp-two-columns';
+import { LayoutFullWidthComponent } from '@campus-cloud/layouts/cp-full-width';
+import { LayoutOneColumnComponent } from '@campus-cloud/layouts/cp-one-column';
+import { LayoutTwoColumnsComponent } from '@campus-cloud/layouts/cp-two-columns';
 
 @NgModule({
   declarations: [

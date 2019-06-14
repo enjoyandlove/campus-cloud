@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
-import { commonParams } from '@shared/constants/params';
+import { commonParams } from '@campus-cloud/shared/constants/params';
 
 @Injectable()
 export class RouterParamsUtils {

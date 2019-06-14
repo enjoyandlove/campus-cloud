@@ -3,8 +3,8 @@ import { of as observableOf, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { API } from '@app/config/api';
-import { HTTPService } from '@app/base';
+import { API } from '@campus-cloud/config/api';
+import { HTTPService } from '@campus-cloud/base';
 import { IItem } from './items/item.interface';
 
 @Injectable()

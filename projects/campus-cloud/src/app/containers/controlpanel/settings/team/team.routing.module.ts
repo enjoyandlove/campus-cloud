@@ -4,8 +4,8 @@ import { NgModule } from '@angular/core';
 import { TeamEditComponent } from './edit';
 import { TeamListComponent } from './list';
 import { TeamCreateComponent } from './create';
-import { PrivilegesGuard } from '@app/config/guards';
-import { CP_PRIVILEGES_MAP, pageTitle } from '@shared/constants';
+import { PrivilegesGuard } from '@campus-cloud/config/guards';
+import { CP_PRIVILEGES_MAP, pageTitle } from '@campus-cloud/shared/constants';
 
 const appRoutes: Routes = [
   {

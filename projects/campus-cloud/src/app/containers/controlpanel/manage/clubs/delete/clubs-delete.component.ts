@@ -1,9 +1,14 @@
 import { Component, OnInit, Inject } from '@angular/core';
 
 import { ClubsService } from '../clubs.service';
-import { amplitudeEvents } from '@shared/constants';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
-import { CPTrackingService, CPI18nService, MODAL_DATA, IModal } from '@shared/services';
+import {
+  CPTrackingService,
+  CPI18nService,
+  MODAL_DATA,
+  IModal
+} from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-clubs-delete',

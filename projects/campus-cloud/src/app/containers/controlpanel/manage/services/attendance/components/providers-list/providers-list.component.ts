@@ -2,19 +2,19 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { get as _get } from 'lodash';
 
-import { DEFAULT } from '@shared/constants';
-import { RouteLevel } from '@shared/services';
+import { DEFAULT } from '@campus-cloud/shared/constants';
+import { RouteLevel } from '@campus-cloud/shared/services';
 import { IService } from '../../../service.interface';
-import { BaseComponent } from '@app/base/base.component';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import IServiceProvider from '../../../providers.interface';
-import { CPI18nService } from '@shared/services/i18n.service';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { ProvidersService } from '../../../providers.service';
-import { CPTrackingService } from '@shared/services/tracking.service';
+import { CPTrackingService } from '@campus-cloud/shared/services/tracking.service';
 import { ServicesUtilsService } from '../../../services.utils.service';
-import { CP_TRACK_TO } from '@shared/directives/tracking/tracking.directive';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking/tracking.directive';
 import { IFilterState, ProvidersUtilsService } from '../../../providers.utils.service';
-import { AMPLITUDE_INTERVAL_MAP } from '@containers/controlpanel/assess/engagement/engagement.utils.service';
+import { AMPLITUDE_INTERVAL_MAP } from '@campus-cloud/containers/controlpanel/assess/engagement/engagement.utils.service';
 
 interface IState {
   providers: Array<IServiceProvider>;

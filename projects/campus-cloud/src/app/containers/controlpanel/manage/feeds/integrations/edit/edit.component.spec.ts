@@ -6,16 +6,16 @@ import { omit } from 'lodash';
 
 import * as fromStore from '../store';
 
-import { CPSession } from '@app/session';
-import { configureTestSuite } from '@shared/tests';
-import { CPI18nService } from '@app/shared/services';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
+import { CPSession } from '@campus-cloud/session';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { WallsIntegrationsEditComponent } from './edit.component';
 import { WallsIntegrationsService } from '../walls-integrations.service';
-import { FeedIntegration } from '@libs/integrations/common/model/integration.model';
+import { FeedIntegration } from '@campus-cloud/libs/integrations/common/model/integration.model';
 import { fillForm, resetForm, MockWallsIntegrationsService, mockIntegration } from '../tests';
-import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers/integrations.utils.service';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers/integrations.utils.service';
 
 describe('WallsIntegrationsEditComponent', () => {
   configureTestSuite();

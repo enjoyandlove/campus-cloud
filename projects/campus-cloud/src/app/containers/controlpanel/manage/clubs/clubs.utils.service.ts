@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { IClub } from './club.interface';
 import { ClubStatus, HasData } from './club.status';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 
 import {
   canStoreReadResource,
   canSchoolReadResource,
   canSchoolWriteResource,
   canStoreReadAndWriteResource
-} from '@shared/utils';
+} from '@campus-cloud/shared/utils';
 
 @Injectable()
 export class ClubsUtilsService {

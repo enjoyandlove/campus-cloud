@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { CategoryTypePipe } from './pipes';
-import { SharedModule } from '@campus-cloud/src/app/shared/shared.module';
+import { SharedModule } from '@projects/campus-cloud/src/app/shared/shared.module';
 import { CategoriesUtilsService } from './categories.utils.service';
 
 import {

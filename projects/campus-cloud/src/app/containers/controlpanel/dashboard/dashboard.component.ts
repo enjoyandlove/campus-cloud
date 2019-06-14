@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { BaseComponent } from '@app/base';
-import { CPSession, IUser } from '@app/session';
-import { CPI18nService } from '@shared/services';
+import { BaseComponent } from '@campus-cloud/base';
+import { CPSession, IUser } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-dashboard',

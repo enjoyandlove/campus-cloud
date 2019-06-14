@@ -2,10 +2,10 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
-import { UserType } from '@shared/utils';
+import { UserType } from '@campus-cloud/shared/utils';
 import { ISchool } from './school.interface';
-import { CP_PRIVILEGES_MAP } from '@shared/constants/privileges';
-import { canSchoolWriteResource } from '@shared/utils/privileges/privileges';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants/privileges';
+import { canSchoolWriteResource } from '@campus-cloud/shared/utils/privileges/privileges';
 /**
  * All session data should be set
  * as part of the g (global) Map

@@ -6,13 +6,13 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import * as fromRoot from '@app//store';
-import { CPSession } from '@app//session';
-import { baseActionClass } from '@app//store/base';
+import * as fromRoot from '@campus-cloud//store';
+import { CPSession } from '@campus-cloud//session';
+import { baseActionClass } from '@campus-cloud//store/base';
 import { ISocialGroup } from '../../../../feeds/model';
-import { CPI18nService } from '@shared//services';
+import { CPI18nService } from '@campus-cloud/shared//services';
 import * as fromActions from '../actions/social-groups.actions';
-import { LibsCommonMembersService } from '@app//libs/members/common/providers';
+import { LibsCommonMembersService } from '@campus-cloud//libs/members/common/providers';
 
 @Injectable()
 export class OrientationSocialGroupEffects {

@@ -1,7 +1,7 @@
-import { IItem } from '@shared/components';
+import { IItem } from '@campus-cloud/shared/components';
 import * as fromIntegrations from '../actions';
-import { IStore } from '@shared/services/store.service';
-import { IWallsIntegration } from '@libs/integrations/walls/model';
+import { IStore } from '@campus-cloud/shared/services/store.service';
+import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
 
 export interface IntegrationsState {
   error: string;

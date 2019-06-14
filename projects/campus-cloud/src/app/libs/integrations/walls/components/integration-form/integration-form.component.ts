@@ -1,9 +1,9 @@
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
 
-import { IItem } from '@shared/components';
-import { ZendeskService } from '@shared/services';
-import { CustomValidators } from '@shared/validators';
+import { IItem } from '@campus-cloud/shared/components';
+import { ZendeskService } from '@campus-cloud/shared/services';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 
 @Component({
   selector: 'cp-walls-integration-form',

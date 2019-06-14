@@ -5,16 +5,16 @@ import { switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { IDateRange } from '@shared/components';
-import { CPI18nService } from '@shared/services';
-import { baseActions, IHeader } from '@app/store/base';
-import { BaseComponent } from '@app/base/base.component';
+import { IDateRange } from '@campus-cloud/shared/components';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { baseActions, IHeader } from '@campus-cloud/store/base';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import IServiceProvider from '../../../providers.interface';
 import { ServicesService } from './../../../services.service';
 import { ProvidersService } from '../../../providers.service';
 import { CheckInMethod } from '../../../../events/event.status';
 import { IFilterState, ProvidersUtilsService } from '../../../providers.utils.service';
-import { IStudentFilter } from '@containers/controlpanel/assess/engagement/engagement.utils.service';
+import { IStudentFilter } from '@campus-cloud/containers/controlpanel/assess/engagement/engagement.utils.service';
 
 @Component({
   selector: 'cp-providers-details',

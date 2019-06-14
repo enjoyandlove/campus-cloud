@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
 
-import { IItem } from '@shared/components';
-import { CPI18nService } from '@shared/services';
-import { ICPButtonProps } from '@shared/components';
-import { MemberModel, IMember, MemberType } from '@libs/members/common/model';
+import { IItem } from '@campus-cloud/shared/components';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { ICPButtonProps } from '@campus-cloud/shared/components';
+import { MemberModel, IMember, MemberType } from '@campus-cloud/libs/members/common/model';
 import {
   LibsCommonMembersService,
   LibsCommonMembersUtilsService
-} from '@libs/members/common/providers';
+} from '@campus-cloud/libs/members/common/providers';
 
 @Component({
   selector: 'cp-ahtletics-members-create',

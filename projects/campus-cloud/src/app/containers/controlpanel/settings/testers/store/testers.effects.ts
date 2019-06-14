@@ -6,10 +6,10 @@ import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as actions from './testers.actions';
-import { baseActionClass } from '@app/store';
+import { baseActionClass } from '@campus-cloud/store';
 import { ITestersState } from './testers.state';
 import * as selectors from './testers.selectors';
-import { CPI18nService } from '@shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { ITestUser } from '../models/test-user.interface';
 import { CampusTestersService } from '../campus-testers.service';
 

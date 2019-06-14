@@ -1,9 +1,9 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
-import { CPSession } from '@app/session';
-import { CP_TRACK_TO } from '@shared/directives';
-import { CPI18nService, CPTrackingService } from '@shared/services';
-import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@shared/constants';
+import { CPSession } from '@campus-cloud/session';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 
 interface IState {
   query: string;

@@ -3,17 +3,17 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { Store } from '@ngrx/store';
 
 import { ManageHeaderService } from '../../utils';
-import * as fromLinks from '@app/store/manage/links';
-import { BaseComponent } from '@app/base/base.component';
-import { CP_TRACK_TO } from '@shared/directives/tracking';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { environment } from '@campus-cloud/src/environments/environment';
-import * as selectors from '@app/store/manage/manage.selectors';
+import * as fromLinks from '@campus-cloud/store/manage/links';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
+import * as selectors from '@campus-cloud/store/manage/manage.selectors';
 import { LinksEditComponent } from './../edit/links-edit.component';
 import { LinksDeleteComponent } from './../delete/links-delete.component';
 import { LinksCreateComponent } from './../create/links-create.component';
-import { ILink } from '@app/containers/controlpanel/manage/links/link.interface';
-import { CPI18nService, CPTrackingService, ModalService } from '@shared/services';
+import { ILink } from '@campus-cloud/containers/controlpanel/manage/links/link.interface';
+import { CPI18nService, CPTrackingService, ModalService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-links-list',

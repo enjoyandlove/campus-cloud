@@ -1,9 +1,9 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 
 import * as fromActions from '../actions';
-import { mockSchool } from '@app/session/mock';
+import { mockSchool } from '@campus-cloud/session/mock';
 import * as fromReducer from './categories.reducers';
-import { mockCategories } from '@libs/locations/common/categories/tests';
+import { mockCategories } from '@campus-cloud/libs/locations/common/categories/tests';
 
 const httpErrorResponse = new HttpErrorResponse({ error: true });
 

@@ -5,8 +5,8 @@ import { RouterModule, Routes } from '@angular/router';
  * CRUD
  */
 import { LinksListComponent } from './list';
-import { pageTitle } from '@shared/constants';
-import { PrivilegesGuard } from '@app/config/guards';
+import { pageTitle } from '@campus-cloud/shared/constants';
+import { PrivilegesGuard } from '@campus-cloud/config/guards';
 
 const appRoutes: Routes = [
   {

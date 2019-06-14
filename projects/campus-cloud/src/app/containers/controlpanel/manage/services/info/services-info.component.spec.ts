@@ -3,17 +3,17 @@ import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { mockService } from '../tests/mock';
-import { RootStoreModule } from '@app/store';
-import mockSession from '@app/session/mock/session';
+import { RootStoreModule } from '@campus-cloud/store';
+import mockSession from '@campus-cloud/session/mock/session';
 import { ServicesModule } from '../services.module';
 import { ServicesService } from '../services.service';
-import { configureTestSuite } from '@app/shared/tests';
-import { CP_PRIVILEGES_MAP } from '@app/shared/constants';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { ServicesUtilsService } from '../services.utils.service';
 import { ServicesInfoComponent } from './services-info.component';
-import { CPI18nService, AdminService } from '@app/shared/services';
+import { CPI18nService, AdminService } from '@campus-cloud/shared/services';
 
 class MockService {
   dummy;

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { EventsService } from '../events.service';
 import { ManageHeaderService } from '../../utils/header';
 import { EventsComponent } from './base/events.component';
-import { CPI18nService, ModalService } from '@shared/services';
+import { CPI18nService, ModalService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-events-list',

@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { IUser } from '@app/session';
+import { IUser } from '@campus-cloud/session';
 import { ManageHeaderService } from './utils/header';
-import { IHeader, getHeaderState } from '@app/store/base';
+import { IHeader, getHeaderState } from '@campus-cloud/store/base';
 
 @Component({
   selector: 'cp-manage',

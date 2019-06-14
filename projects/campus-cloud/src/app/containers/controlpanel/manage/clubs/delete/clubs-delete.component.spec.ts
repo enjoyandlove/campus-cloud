@@ -4,11 +4,11 @@ import { By } from '@angular/platform-browser';
 
 import { MockClubService } from '../tests';
 import { ClubsService } from './../clubs.service';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { CPDeleteModalComponent } from '@shared/components';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
 import { ClubsDeleteComponent } from './clubs-delete.component';
-import { MODAL_DATA, CPI18nService, CPTrackingService } from '@shared/services';
+import { MODAL_DATA, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { isClubAthletic } from '@controlpanel/manage/clubs/clubs.athletics.labels';
 
 describe('ClubsDeleteComponent', () => {

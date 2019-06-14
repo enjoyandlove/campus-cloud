@@ -1,9 +1,9 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { PrivilegesGuard } from '@app/config/guards';
+import { PrivilegesGuard } from '@campus-cloud/config/guards';
 import { ManageComponent } from './manage.component';
-import { CP_PRIVILEGES_MAP } from '@shared/constants/privileges';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants/privileges';
 import { CanDeactivateDining } from './dining/guards/dining-guard';
 import { CanDeactivateLocations } from './locations/locations.guard';
 

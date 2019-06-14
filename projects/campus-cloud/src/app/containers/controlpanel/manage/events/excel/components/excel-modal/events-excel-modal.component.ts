@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { isDev } from '@app/config/env';
-import { CPSession } from '@app/session';
+import { isDev } from '@campus-cloud/config/env';
+import { CPSession } from '@campus-cloud/session';
 import { EventsService } from '../../../events.service';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { EventUtilService } from '../../../events.utils.service';
 import { EventsComponent } from '../../../list/base/events.component';
-import { FileUploadService, CPI18nService, ModalService } from '@shared/services';
+import { FileUploadService, CPI18nService, ModalService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-events-excel-modal',

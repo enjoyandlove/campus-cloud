@@ -5,12 +5,15 @@ import { Subject, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '@app/store';
-import { CPSession } from '@app/session';
-import { amplitudeEvents } from '@shared/constants';
-import { LocationType } from '@libs/locations/common/utils';
-import { CPI18nService, CPTrackingService } from '@shared/services';
-import { ICategory, LocationCategoryLocale } from '@libs/locations/common/categories/model';
+import * as fromRoot from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { LocationType } from '@campus-cloud/libs/locations/common/utils';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import {
+  ICategory,
+  LocationCategoryLocale
+} from '@campus-cloud/libs/locations/common/categories/model';
 
 interface IState {
   search_str: string;

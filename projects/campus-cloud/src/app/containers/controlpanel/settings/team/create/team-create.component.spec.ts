@@ -4,13 +4,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { CPSession } from '@campus-cloud/session';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { TeamUtilsService } from '../team.utils.service';
 import { TeamCreateComponent } from './team-create.component';
-import { AdminService, CPI18nService, ErrorService } from '@shared/services';
+import { AdminService, CPI18nService, ErrorService } from '@campus-cloud/shared/services';
 
 const privilegeSet = { r: true, w: true };
 

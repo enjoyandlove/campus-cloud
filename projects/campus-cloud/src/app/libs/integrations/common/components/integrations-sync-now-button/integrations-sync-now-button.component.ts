@@ -1,10 +1,10 @@
 import { Component, Output, EventEmitter, Input } from '@angular/core';
 
-import { CPSession } from '@campus-cloud/src/app/session';
-import { CPI18nService } from '@shared/services';
-import { FeedIntegration } from '@libs/integrations/common/model';
-import { IWallsIntegration } from '@libs/integrations/walls/model';
-import { IEventIntegration } from '@libs/integrations/events/model';
+import { CPSession } from '@projects/campus-cloud/src/app/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { FeedIntegration } from '@campus-cloud/libs/integrations/common/model';
+import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
+import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model';
 
 @Component({
   selector: 'cp-integrations-sync-now-button',

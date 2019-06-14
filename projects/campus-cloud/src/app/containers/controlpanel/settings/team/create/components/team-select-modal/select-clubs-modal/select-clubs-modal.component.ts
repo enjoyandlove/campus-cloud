@@ -3,9 +3,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { clubOnlyPermissions } from '../permissions';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { ClubsService } from '@controlpanel/manage/clubs/clubs.service';
 import { clubAthleticStatus, isClubAthletic } from '../../../../team.utils.service';
 import { BaseTeamSelectModalComponent } from '../base/team-select-modal.component';

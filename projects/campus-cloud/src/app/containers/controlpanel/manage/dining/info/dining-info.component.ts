@@ -5,12 +5,12 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '@app/store';
-import { CPI18nService } from '@shared/services';
-import { Destroyable, Mixin } from '@shared/mixins';
-import { IResourceBanner } from '@shared/components';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
-import { IDining, IOpeningHours } from '@libs/locations/common/model';
+import * as fromRoot from '@campus-cloud/store';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { IResourceBanner } from '@campus-cloud/shared/components';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
+import { IDining, IOpeningHours } from '@campus-cloud/libs/locations/common/model';
 
 @Mixin([Destroyable])
 @Component({

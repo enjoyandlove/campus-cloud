@@ -5,8 +5,8 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { sortBy } from 'lodash';
 
-import { API } from '@app/config/api';
-import { HTTPService } from '@app/base/http.service';
+import { API } from '@campus-cloud/config/api';
+import { HTTPService } from '@campus-cloud/base/http.service';
 import { ICampusGuide } from './sections/section.interface';
 import { ITile } from './tiles/tile.interface';
 

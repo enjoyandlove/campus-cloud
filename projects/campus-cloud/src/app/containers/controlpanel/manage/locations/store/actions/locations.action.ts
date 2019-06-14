@@ -1,7 +1,7 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
-import { ILocation } from '@libs/locations/common/model';
+import { ILocation } from '@campus-cloud/libs/locations/common/model';
 
 export enum locationActions {
   GET_LOCATIONS = '[manage.locations] get locations',

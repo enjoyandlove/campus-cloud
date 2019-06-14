@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 
 import { IAnnouncementsIntegration } from '../model';
-import { MODAL_DATA, IModal } from '@shared/services';
+import { MODAL_DATA, IModal } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-announcements-integrations-delete',

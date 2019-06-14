@@ -6,12 +6,12 @@ import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { IItem } from '@shared/components';
-import { IStore, ZendeskService } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { IItem } from '@campus-cloud/shared/components';
+import { IStore, ZendeskService } from '@campus-cloud/shared/services';
 import { IntegrationsUitlsService } from './../integrations.utils.service';
-import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
-import { IEventIntegration, EventIntegration } from '@libs/integrations/events/model';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
+import { IEventIntegration, EventIntegration } from '@campus-cloud/libs/integrations/events/model';
 
 @Component({
   selector: 'cp-events-integration-edit',

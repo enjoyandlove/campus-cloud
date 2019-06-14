@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
-import { ILocation } from '@libs/locations/common/model';
+import { ILocation } from '@campus-cloud/libs/locations/common/model';
 
 @Component({
   selector: 'cp-locations-info-card',

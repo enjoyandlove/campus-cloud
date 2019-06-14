@@ -11,14 +11,14 @@ import { LocationsListComponent } from './list';
 import { LocationsEditComponent } from './edit';
 import { LocationsDeleteComponent } from './delete';
 import { LocationsCreateComponent } from './create';
-import { SharedModule } from '@shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { LocationsService } from './locations.service';
-import { LayoutsModule } from '@app/layouts/layouts.module';
+import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 import { CategoriesModule } from './categories/categories.module';
 import { LocationsRoutingModule } from './locations.routing.module';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
-import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
-import { CommonLocationsModule } from '@libs/locations/common/common-locations.module';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
+import { LocationsTimeLabelPipe } from '@campus-cloud/libs/locations/common/pipes';
+import { CommonLocationsModule } from '@campus-cloud/libs/locations/common/common-locations.module';
 
 @NgModule({
   declarations: [

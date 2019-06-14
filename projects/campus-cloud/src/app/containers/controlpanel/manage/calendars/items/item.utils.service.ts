@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 
 @Injectable()
 export class CalendarsItemsService {

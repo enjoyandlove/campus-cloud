@@ -1,7 +1,7 @@
-import { IStore } from '@shared/services';
-import { mockSchool } from '@app/session/mock';
+import { IStore } from '@campus-cloud/shared/services';
+import { mockSchool } from '@campus-cloud/session/mock';
 import { IAnnouncementsIntegration } from './../model';
-import { IntegrationTypes } from '@libs/integrations/common/model';
+import { IntegrationTypes } from '@campus-cloud/libs/integrations/common/model';
 import { AnnouncementPriority } from './../../announcements.interface';
 
 export const defaultForm = {

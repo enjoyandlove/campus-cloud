@@ -7,13 +7,13 @@ import { TooltipOption } from 'bootstrap';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
-import { API } from '@app/config/api';
-import { CPSession } from '@app/session';
-import { appStorage } from '@shared/utils';
+import { API } from '@campus-cloud/config/api';
+import { CPSession } from '@campus-cloud/session';
+import { appStorage } from '@campus-cloud/shared/utils';
 import { LinksService } from '../links.service';
-import * as fromLinks from '@app/store/manage/links';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { Destroyable, Mixin } from '@campus-cloud/src/app/shared/mixins';
+import * as fromLinks from '@campus-cloud/store/manage/links';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { Destroyable, Mixin } from '@projects/campus-cloud/src/app/shared/mixins';
 import {
   IModal,
   MODAL_DATA,
@@ -21,7 +21,7 @@ import {
   ZendeskService,
   CPTrackingService,
   FileUploadService
-} from '@shared/services';
+} from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-links-create',

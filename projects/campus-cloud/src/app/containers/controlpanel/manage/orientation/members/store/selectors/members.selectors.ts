@@ -1,7 +1,7 @@
 import { createSelector } from '@ngrx/store';
 
 import * as fromFeature from '../reducers';
-import { getRouterState } from '@campus-cloud/src/app/store';
+import { getRouterState } from '@projects/campus-cloud/src/app/store';
 import * as fromMembers from '../reducers/members.reducer';
 
 export const getOrientationMemberState = createSelector(

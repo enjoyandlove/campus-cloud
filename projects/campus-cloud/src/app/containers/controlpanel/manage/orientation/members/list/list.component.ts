@@ -7,20 +7,25 @@ import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { Mixin } from '@shared/mixins';
-import { CPSession } from '@app/session';
-import { commonParams } from '@shared/constants';
-import { IMember } from '@libs/members/common/model';
-import { RouterParamsUtils } from '@shared/utils/router';
-import { Destroyable } from '@shared/mixins/destroyable';
-import { IPaginationParam, IFilterParam } from '@shared/types';
-import { canSchoolReadResource } from '@shared/utils/privileges';
-import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@shared/constants';
+import { Mixin } from '@campus-cloud/shared/mixins';
+import { CPSession } from '@campus-cloud/session';
+import { commonParams } from '@campus-cloud/shared/constants';
+import { IMember } from '@campus-cloud/libs/members/common/model';
+import { RouterParamsUtils } from '@campus-cloud/shared/utils/router';
+import { Destroyable } from '@campus-cloud/shared/mixins/destroyable';
+import { IPaginationParam, IFilterParam } from '@campus-cloud/shared/types';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils/privileges';
+import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
 import { OrientationMembersEditComponent } from '../edit/edit.component';
-import { LibsCommonMembersUtilsService } from '@libs/members/common/providers';
+import { LibsCommonMembersUtilsService } from '@campus-cloud/libs/members/common/providers';
 import { OrientationMembersCreateComponent } from '../create/create.component';
 import { OrientationMembersDeleteComponent } from '../delete/delete.component';
-import { CPI18nService, CPTrackingService, RouteLevel, ModalService } from '@shared/services';
+import {
+  CPI18nService,
+  CPTrackingService,
+  RouteLevel,
+  ModalService
+} from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-orientation-members-list',

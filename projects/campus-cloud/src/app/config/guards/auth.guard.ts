@@ -3,12 +3,17 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 
-import { appStorage } from '@shared/utils';
-import { CPSession, ISchool } from '@app/session';
-import { CPLogger } from '@shared/services/logger';
-import { base64 } from '@shared/utils/encrypt/encrypt';
-import { environment } from '@campus-cloud/src/environments/environment';
-import { AdminService, SchoolService, StoreService, ZendeskService } from '@shared/services';
+import { appStorage } from '@campus-cloud/shared/utils';
+import { CPSession, ISchool } from '@campus-cloud/session';
+import { CPLogger } from '@campus-cloud/shared/services/logger';
+import { base64 } from '@campus-cloud/shared/utils/encrypt/encrypt';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
+import {
+  AdminService,
+  SchoolService,
+  StoreService,
+  ZendeskService
+} from '@campus-cloud/shared/services';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

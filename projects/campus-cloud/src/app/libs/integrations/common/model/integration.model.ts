@@ -1,4 +1,4 @@
-import { CPDate } from '@shared/utils/date/date';
+import { CPDate } from '@campus-cloud/shared/utils/date/date';
 import { IntegrationTypes, IntegrationStatus } from './integration.interface';
 
 export class FeedIntegration {

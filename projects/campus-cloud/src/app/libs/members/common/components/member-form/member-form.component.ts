@@ -5,10 +5,10 @@ import { map } from 'rxjs/internal/operators';
 import { of, fromEvent, Subject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { MemberType } from '../../model';
-import { CPI18nService } from '@shared/services';
-import { IItem } from '@campus-cloud/src/app/shared/components';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { IItem } from '@projects/campus-cloud/src/app/shared/components';
 import { LibsCommonMembersService } from '../../providers';
 
 @Component({

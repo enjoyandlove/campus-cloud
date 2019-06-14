@@ -4,12 +4,12 @@ import { DebugElement } from '@angular/core';
 import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { CPDeleteModalComponent } from '@shared/components';
-import { CPI18nService, MODAL_DATA } from '@shared/services';
-import { mockCategories } from '@libs/locations/common/categories/tests';
+import { CPSession } from '@campus-cloud/session';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
+import { CPI18nService, MODAL_DATA } from '@campus-cloud/shared/services';
+import { mockCategories } from '@campus-cloud/libs/locations/common/categories/tests';
 import { DiningCategoriesDeleteComponent } from './dining-categories-delete.component';
 
 describe('DiningCategoriesDeleteComponent', () => {

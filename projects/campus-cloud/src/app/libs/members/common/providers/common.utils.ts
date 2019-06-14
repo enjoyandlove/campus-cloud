@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
-import { IItem } from '@shared/components';
-import { CPI18nService } from '@shared/services';
-import { createSpreadSheet } from '@shared/utils/csv';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { IMember, MemberType } from '@libs/members/common/model';
-import { CPTrackingService, RouteLevel } from '@shared/services';
+import { IItem } from '@campus-cloud/shared/components';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { createSpreadSheet } from '@campus-cloud/shared/utils/csv';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { IMember, MemberType } from '@campus-cloud/libs/members/common/model';
+import { CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
 
 @Injectable()
 export class LibsCommonMembersUtilsService {

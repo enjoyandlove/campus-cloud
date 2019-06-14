@@ -5,17 +5,17 @@ import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { ISnackbar } from '@app/store';
+import { ISnackbar } from '@campus-cloud/store';
 import * as fromActions from '../actions';
-import { baseActionClass } from '@app/store/base';
+import { baseActionClass } from '@campus-cloud/store/base';
 import * as fromLocationStore from '../../../store';
-import { amplitudeEvents } from '@shared/constants';
-import { parseErrorResponse } from '@shared/utils/http';
-import { ILocation } from '@libs/locations/common/model';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { parseErrorResponse } from '@campus-cloud/shared/utils/http';
+import { ILocation } from '@campus-cloud/libs/locations/common/model';
 import { CategoriesService } from '../../categories.service';
-import { CPI18nService, CPTrackingService } from '@shared/services';
-import { ICategory } from '@libs/locations/common/categories/model';
-import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
+import { CategoriesUtilsService } from '@campus-cloud/libs/locations/common/categories/categories.utils.service';
 
 @Injectable()
 export class CategoriesEffects {

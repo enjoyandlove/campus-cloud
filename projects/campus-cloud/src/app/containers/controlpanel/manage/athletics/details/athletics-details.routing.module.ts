@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AthleticsInfoComponent } from '../info';
 import { AthleticsWallComponent } from '../wall';
 
-import { pageTitle } from '@shared/constants';
+import { pageTitle } from '@campus-cloud/shared/constants';
 import { AthleticsDetailsComponent } from './athletics-details.component';
 
 const appRoutes: Routes = [

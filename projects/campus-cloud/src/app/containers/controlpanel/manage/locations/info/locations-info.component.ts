@@ -5,10 +5,10 @@ import { BehaviorSubject, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '@app/store';
-import { Destroyable, Mixin } from '@shared/mixins';
-import { ILocation } from '@libs/locations/common/model';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
+import * as fromRoot from '@campus-cloud/store';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { ILocation } from '@campus-cloud/libs/locations/common/model';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 
 @Mixin([Destroyable])
 @Component({

@@ -2,7 +2,7 @@ import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/f
 import { get as _get } from 'lodash';
 
 import { ILocation } from './locations.interface';
-import { CustomValidators } from '@shared/validators';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 
 export class LocationModel {
   static form(location?: ILocation) {

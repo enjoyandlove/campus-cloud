@@ -1,7 +1,7 @@
 import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
 
 import * as moment from 'moment';
-import { CPI18nService } from '@shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 
 interface IProps {
   ends: number;

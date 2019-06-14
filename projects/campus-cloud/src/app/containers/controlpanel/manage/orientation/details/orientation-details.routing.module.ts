@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { pageTitle } from '@shared/constants';
+import { pageTitle } from '@campus-cloud/shared/constants';
 import { OrientationInfoComponent } from '../info';
 import { OrientationWallComponent } from '../wall';
 import { OrientationDetailsComponent } from './orientation-details.component';

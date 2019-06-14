@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { ICPButtonProps } from '@shared/components';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { CPI18nService } from '@shared/services/i18n.service';
-import { CPTrackingService, RouteLevel } from '@shared/services';
-import { LibsCommonMembersService } from '@libs/members/common/providers';
-import { IMember, MemerUpdateType } from '@campus-cloud/src/app/libs/members/common/model';
+import { ICPButtonProps } from '@campus-cloud/shared/components';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
+import { LibsCommonMembersService } from '@campus-cloud/libs/members/common/providers';
+import { IMember, MemerUpdateType } from '@projects/campus-cloud/src/app/libs/members/common/model';
 
 @Component({
   selector: 'cp-ahtletics-members-delete',

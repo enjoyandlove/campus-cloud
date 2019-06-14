@@ -1,6 +1,6 @@
 import { IMember } from '../model';
-import { Gender } from '@shared/models/user';
-import { MemberType } from '@libs/members/common/model';
+import { Gender } from '@campus-cloud/shared/models/user';
+import { MemberType } from '@campus-cloud/libs/members/common/model';
 
 export const mockMember: IMember = {
   id: 365241,

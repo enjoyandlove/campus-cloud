@@ -3,16 +3,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import { AuthService } from '../auth.service';
-import { baseActions } from '@app/store/base';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { LayoutWidth, LayoutAlign } from '@app/layouts/interfaces';
+import { baseActions } from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { LayoutWidth, LayoutAlign } from '@campus-cloud/layouts/interfaces';
 
 import {
   ErrorService,
   CPI18nService,
   CPTrackingService,
   CPAmplitudeService
-} from '@shared/services';
+} from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-lost-password',

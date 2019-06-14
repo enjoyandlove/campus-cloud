@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import * as fromStore from '@app/store';
-import { CPSession } from '@app/session/index';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
-import { canSchoolReadResource, canAccountLevelReadResource } from '@shared/utils/privileges';
+import * as fromStore from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session/index';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import {
+  canSchoolReadResource,
+  canAccountLevelReadResource
+} from '@campus-cloud/shared/utils/privileges';
 
 @Injectable()
 export class ManageHeaderService {

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { IItem } from '@shared/components/cp-dropdown';
+import { IItem } from '@campus-cloud/shared/components/cp-dropdown';
 
 @Component({
   selector: 'cp-events-integrations-form',

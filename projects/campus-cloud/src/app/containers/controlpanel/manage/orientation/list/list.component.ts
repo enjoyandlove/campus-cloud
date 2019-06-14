@@ -2,16 +2,16 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { OverlayRef } from '@angular/cdk/overlay';
 
-import { CPSession } from '@app/session';
-import { BaseComponent } from '@app/base';
-import { FORMAT } from '@shared/pipes/date';
-import { CP_TRACK_TO } from '@shared/directives';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
+import { FORMAT } from '@campus-cloud/shared/pipes/date';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { ManageHeaderService } from '../../utils';
-import { amplitudeEvents } from '@shared/constants';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { ProgramDuration } from '../orientation.status';
 import { OrientationService } from '../orientation.services';
 import { OrientationProgramDeleteComponent } from '../delete';
-import { CPI18nService, CPTrackingService, ModalService } from '@shared/services';
+import { CPI18nService, CPTrackingService, ModalService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-list-orientation',

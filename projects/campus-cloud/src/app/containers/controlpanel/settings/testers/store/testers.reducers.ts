@@ -1,7 +1,7 @@
 import { EntityAdapter, createEntityAdapter } from '@ngrx/entity';
 
 import { ITestersState } from './testers.state';
-import { SortDirection } from '@shared/constants';
+import { SortDirection } from '@campus-cloud/shared/constants';
 import { ITestUser } from '../models/test-user.interface';
 import { TestersActionType, TestersActions } from './testers.actions';
 

@@ -4,11 +4,11 @@ import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { SharedModule } from '@shared/shared.module';
-import { configureTestSuite } from '@app/shared/tests';
-import { mockLocations } from '@libs/locations/common/tests';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { mockLocations } from '@campus-cloud/libs/locations/common/tests';
 import { LocationsDeleteComponent } from './locations-delete.component';
 
 describe('LocationsDeleteComponent', () => {

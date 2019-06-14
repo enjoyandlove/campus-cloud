@@ -4,8 +4,8 @@ import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { API } from '@app/config/api';
-import { appStorage, CPObj, DefaultEncoder } from '@shared/utils';
+import { API } from '@campus-cloud/config/api';
+import { appStorage, CPObj, DefaultEncoder } from '@campus-cloud/shared/utils';
 
 /**
  * Base HTTP Service

@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { FORMAT } from '@shared/pipes';
-import { CP_TRACK_TO } from '@shared/directives/tracking';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { CPI18nService, CPTrackingService, RouteLevel } from '@shared/services';
+import { FORMAT } from '@campus-cloud/shared/pipes';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { CPI18nService, CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
 
 interface ISort {
   sort_field: string;

@@ -1,10 +1,10 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 
 import * as fromActions from '../actions';
-import { mockSchool } from '@app/session/mock';
+import { mockSchool } from '@campus-cloud/session/mock';
 import * as fromReducer from './locations.reducer';
-import { amplitudeEvents } from '@shared/constants';
-import { mockLocations } from '@libs/locations/common/tests';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { mockLocations } from '@campus-cloud/libs/locations/common/tests';
 
 const httpErrorResponse = new HttpErrorResponse({ error: true });
 

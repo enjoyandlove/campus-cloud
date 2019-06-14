@@ -7,17 +7,17 @@ import { StoreModule } from '@ngrx/store';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { RootStoreModule } from '@app/store';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { mockMember } from '@libs/members/common/tests';
-import { CPDeleteModalComponent } from '@shared/components';
-import { MODAL_DATA, CPI18nService } from '@shared/services';
-import { MemerUpdateType } from '@libs/members/common/model';
+import { CPSession } from '@campus-cloud/session';
+import { RootStoreModule } from '@campus-cloud/store';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockMember } from '@campus-cloud/libs/members/common/tests';
+import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
+import { MODAL_DATA, CPI18nService } from '@campus-cloud/shared/services';
+import { MemerUpdateType } from '@campus-cloud/libs/members/common/model';
 import { OrientationMembersDeleteComponent } from './delete.component';
-import { LibsCommmonMembersModule } from '@libs/members/common/common-members.module';
-import { LibsCommonMembersUtilsService } from '@libs/members/common/providers/common.utils';
+import { LibsCommmonMembersModule } from '@campus-cloud/libs/members/common/common-members.module';
+import { LibsCommonMembersUtilsService } from '@campus-cloud/libs/members/common/providers/common.utils';
 
 describe('OrientationMembersDeleteComponent', () => {
   configureTestSuite();

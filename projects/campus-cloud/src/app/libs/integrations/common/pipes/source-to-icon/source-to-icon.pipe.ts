@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { environment } from '@campus-cloud/src/environments/environment';
-import { IntegrationTypes } from '@libs/integrations/common/model/integration.interface';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
+import { IntegrationTypes } from '@campus-cloud/libs/integrations/common/model/integration.interface';
 
 @Pipe({ name: 'integrationSourceToIcon' })
 export class IntegrationSourceToIconPipe implements PipeTransform {

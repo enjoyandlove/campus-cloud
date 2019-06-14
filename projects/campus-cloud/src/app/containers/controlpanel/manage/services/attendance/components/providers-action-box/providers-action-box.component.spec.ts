@@ -3,12 +3,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NO_ERRORS_SCHEMA, Component } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { CPI18nPipe } from '@shared/pipes';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { mockDateRange } from '../../tests/mock';
-import { CPI18nService } from '@shared/services';
-import { configureTestSuite } from '@shared/tests';
-import mockSession from '@app/session/mock/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import mockSession from '@campus-cloud/session/mock/session';
 import { ServicesProviderActionBoxComponent } from './providers-action-box.component';
 import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import {

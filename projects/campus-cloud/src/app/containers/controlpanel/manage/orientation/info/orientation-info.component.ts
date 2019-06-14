@@ -3,9 +3,9 @@ import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import * as fromRoot from '@app/store';
-import { CPSession } from '@app/session';
-import { BaseComponent } from '@app/base';
+import * as fromRoot from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { OrientationService } from '../orientation.services';
 import { OrientationUtilsService } from './../orientation.utils.service';
 

@@ -1,7 +1,7 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
-import { IDining } from '@libs/locations/common/model';
+import { IDining } from '@campus-cloud/libs/locations/common/model';
 
 export enum diningActions {
   GET_DINING = '[manage.dining] get dining locations',
