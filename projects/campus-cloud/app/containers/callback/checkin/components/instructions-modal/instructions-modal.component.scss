@@ -1,0 +1,19 @@
+@import '~projects/campus-cloud/style/components/modal';
+@import '~projects/campus-cloud/style/components/button';
+@import '~projects/campus-cloud/style/core/typography';
+
+ul {
+  padding-left: 0;
+  list-style: none;
+
+  li {
+    padding: 10px 0;
+    p {
+      margin-bottom: 0;
+
+      &.title {
+        @include font-semi-bold();
+      }
+    }
+  }
+}

@@ -1,0 +1,36 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/card';
+@import '~projects/campus-cloud/style/components/button';
+
+.visits {
+  span {
+    display: block;
+    text-align: left;
+    margin-bottom: 14px;
+    color: $color-med-grey;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    strong {
+      float: right;
+      color: $color-black;
+    }
+  }
+}
+
+.content .cp-card {
+  @include card-margin();
+
+  margin-top: 0;
+}
+
+.header {
+  &__digit {
+    @include font-semi-bold();
+
+    font-size: 2.4em;
+    margin-bottom: 4px;
+  }
+}

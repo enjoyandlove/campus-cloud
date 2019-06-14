@@ -1,0 +1,15 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/button';
+@import '~projects/campus-cloud/style/components/dropdown';
+
+.cp-dropdown {
+  position: relative;
+
+  ul {
+    @include cpDropdownMenu();
+  }
+}
+
+.dropdown-menu {
+  min-width: 130px;
+}

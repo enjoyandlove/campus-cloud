@@ -1,0 +1,34 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/card';
+@import '~projects/campus-cloud/style/components/table';
+@import '~projects/campus-cloud/style/components/button';
+
+.delete-provider {
+  font-size: 2em;
+}
+
+.cp-table {
+  &__header {
+    span.hover {
+      position: relative;
+
+      > span i {
+        top: 1px;
+        font-size: 17px;
+        position: absolute;
+        padding-left: 6px;
+      }
+    }
+  }
+
+  &__item {
+    span i.action-button {
+      color: $color-secondary-text;
+    }
+
+    a.startcheckin {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+}

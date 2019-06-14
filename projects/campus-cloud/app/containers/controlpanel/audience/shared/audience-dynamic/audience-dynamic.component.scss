@@ -1,0 +1,21 @@
+@import '~projects/campus-cloud/style/components/button';
+
+.footer {
+  > div {
+    margin-top: 15px;
+  }
+}
+
+.group-item {
+  margin-top: 10px;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.delete-button {
+  top: -4px;
+  font-size: 2em;
+  position: relative;
+}

@@ -1,0 +1,184 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/core/typography';
+@import '~projects/campus-cloud/style/components/button';
+@import '~projects/campus-cloud/style/components/dropdown';
+
+.wrapper {
+  overflow: visible;
+  background: $color-black;
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    padding-top: 6px;
+    display: inline-block;
+
+    img {
+      width: 40px;
+      height: 40px;
+    }
+  }
+
+  .nav__links,
+  .nav__school {
+    padding-top: 20px;
+  }
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    &.nav__links {
+      padding-left: 25px;
+      display: inline-block;
+    }
+
+    li {
+      margin-right: 25px;
+
+      &:first-child {
+        padding-left: 0;
+      }
+    }
+  }
+
+  li {
+    position: relative;
+    display: inline-block;
+
+    .promote-badge {
+      top: -5px;
+      right: -45px;
+      padding: 3px;
+      line-height: 1;
+      font-size: 7px;
+      border-radius: 2px;
+      position: absolute;
+      text-transform: uppercase;
+      color: #ff0000 !important;
+      transition: color 300ms ease-in-out;
+    }
+
+    a,
+    span {
+      @include font-16px();
+
+      width: 100%;
+      height: 100%;
+      display: block;
+      color: $color-grey;
+      padding-bottom: 8px;
+      transition: color 300ms ease-in-out;
+      border-bottom: 3px solid transparent;
+
+      &:hover {
+        cursor: pointer;
+        color: $color-white;
+      }
+    }
+
+    &.active {
+      a {
+        border-bottom: 3px solid $color-brand;
+      }
+
+      a,
+      span {
+        color: $color-white;
+      }
+    }
+  }
+}
+
+.nav__school {
+  width: 200px;
+  max-width: 200px;
+  position: relative;
+
+  &.show {
+    .nav__school--menu {
+      display: block;
+    }
+  }
+
+  &--menu {
+    top: 115%;
+    z-index: 991;
+    right: 20px;
+    display: none;
+    position: absolute;
+  }
+
+  &:hover,
+  &--active {
+    cursor: pointer;
+    .nav__school__user,
+    .nav__school__name,
+    .nav__school__arrow i {
+      color: $color-white;
+    }
+  }
+
+  &__arrow i {
+    margin-top: 7px;
+  }
+
+  &__name,
+  &__user,
+  &__arrow i {
+    display: block;
+    color: $color-grey;
+    transition: color 300ms ease-in-out;
+  }
+
+  &__user {
+    @include font-semi-bold();
+
+    i {
+      padding-top: 8px;
+    }
+  }
+
+  &__thumb {
+    width: 40px;
+    height: 40px;
+    margin-right: 8px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  &__name {
+    font-size: 0.9em;
+  }
+}
+
+.dropdown-menu {
+  @include font-14px();
+
+  border: none;
+  background: transparent;
+}
+
+.extras,
+.nav__school {
+  display: inline-block;
+}
+
+.extras {
+  margin-right: 25px;
+
+  button {
+    top: 9px;
+    padding: 0;
+    line-height: 1;
+    position: relative;
+    background: transparent;
+
+    i {
+      font-size: 2em;
+      color: $color-grey;
+    }
+  }
+}

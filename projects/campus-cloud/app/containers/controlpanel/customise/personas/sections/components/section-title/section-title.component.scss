@@ -1,0 +1,25 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/core/typography';
+@import '~projects/campus-cloud/style/components/button';
+
+.input__wrapper {
+  position: relative;
+
+  input {
+    @include font-24px();
+
+    width: calc(100% - 15px);
+    border: 1px solid transparent;
+
+    &:disabled {
+      cursor: not-allowed;
+      background: transparent;
+    }
+  }
+
+  &__spinner {
+    top: 4px;
+    right: 0;
+    position: absolute;
+  }
+}

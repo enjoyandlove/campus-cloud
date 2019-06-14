@@ -1,0 +1,37 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/form';
+@import '~projects/campus-cloud/style/components/card';
+@import '~projects/campus-cloud/style/components/button';
+
+.no-content {
+  @include card-margin();
+}
+
+.delete-button {
+  font-size: 2em;
+}
+
+.action-button {
+  top: 8px;
+  font-size: 1.8em;
+  position: relative;
+  color: $color-secondary-text;
+}
+
+.cp-form__header {
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: 1px;
+      font-size: 17px;
+      position: absolute;
+      padding-left: 6px;
+    }
+  }
+}
+
+.items {
+  padding: 0;
+  list-style: none;
+}

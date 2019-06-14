@@ -1,0 +1,307 @@
+<div class="margin-bottom">
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col">
+        <div class="cp-card">
+          <div class="row">
+            <div class="col-12">
+              <p class="title">{{ 'events_event_banner' | cpI18n }}</p>
+              <div class="margin-top">
+                <cp-image-upload
+                  (uploaded)="onUploadedImage($event)"
+                  [required]="formError && form.controls['poster_url'].hasError('required')"
+                >
+                </cp-image-upload>
+              </div>
+            </div>
+          </div>
+
+          <div class="row event-details">
+            <div class="col-12">
+              <p class="title">{{ 'events_event_details' | cpI18n }}</p>
+              <div class="form-group margin-top">
+                <label>{{ 'events_event_name' | cpI18n }}</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="title"
+                  [class.error]="formError && form.controls['title'].hasError('required')"
+                />
+              </div>
+
+              <div class="row form-group" *ngIf="!isClub && !isService && !isOrientation">
+                <div class="col-12">
+                  <label>{{ 'select_host' | cpI18n }}</label>
+                  <cp-dropdown
+                    [items]="stores$ | async"
+                    [selectedItem]="session.defaultHost"
+                    (selected)="onSelectedHost($event)"
+                    [isRequiredError]="formError && form.controls['store_id'].hasError('required')"
+                  >
+                  </cp-dropdown>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-6">
+                  <label>{{ 'start_date' | cpI18n }}</label>
+                  <cp-datepicker
+                    [options]="startdatePickerOpts"
+                    [error]="formError && form.controls['start'].hasError('required')"
+                    (dateSet)="setStart($event)"
+                  >
+                  </cp-datepicker>
+                </div>
+                <div class="col-6">
+                  <label>{{ 'end_date' | cpI18n }}</label>
+                  <cp-datepicker
+                    [options]="enddatePickerOpts"
+                    [error]="formError && form.controls['end'].hasError('required')"
+                    (dateSet)="setEnd($event)"
+                  >
+                  </cp-datepicker>
+                </div>
+              </div>
+
+              <div class="row form-group" *ngIf="isOrientation">
+                <div class="col-12">
+                  <cp-checkbox
+                    class="checkbox"
+                    (toggle)="onAllDayToggle($event)"
+                    [label]="cpI18n.translate('all_day')"
+                  >
+                  </cp-checkbox>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>{{ 'events_event_description' | cpI18n }}</label>
+                <textarea formControlName="description"></textarea>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-12">
+                  <cp-checkbox
+                    class="checkbox"
+                    (toggle)="onLocationToggle($event)"
+                    [label]="cpI18n.translate('t_shared_label_location_toggle')"
+                  >
+                  </cp-checkbox>
+                </div>
+              </div>
+
+              <div *ngIf="showLocationDetails">
+                <div class="row">
+                  <div class="col-12">
+                    <label>{{ 'location' | cpI18n }}</label>
+                    <div class="row form-group">
+                      <div class="col-12">
+                        <cp-place-autocomplete
+                          [newAddress]="newAddress"
+                          (backToDefault)="onResetMap()"
+                          (placeChange)="onPlaceChange($event)"
+                          [defaultValue]="form.controls.address.value"
+                        >
+                        </cp-place-autocomplete>
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col-6">
+                        <label>{{ 'building' | cpI18n }}</label>
+                        <input type="text" class="form-control" formControlName="location" />
+                      </div>
+
+                      <div class="col-6">
+                        <label>{{ 'room' | cpI18n }}</label>
+                        <input type="text" class="form-control" formControlName="room_data" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-12">
+                    <div class="maps">
+                      <cp-maps
+                        [center]="mapCenter"
+                        [drawMarker]="drawMarker"
+                        (mapSelection)="onMapSelection($event)"
+                      >
+                      </cp-maps>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="cp-card">
+          <div class="row">
+            <div class="col-12">
+              <p class="title">{{ 'assessment' | cpI18n }}</p>
+              <span class="float-right">
+                <cp-switch
+                  [id]="attendance"
+                  (toggle)="attendance = !attendance"
+                  (toggle)="toggleEventAttendance($event)"
+                >
+                </cp-switch>
+              </span>
+            </div>
+          </div>
+
+          <div *ngIf="attendance">
+            <div class="row margin-top">
+              <div class="col-6">
+                <div class="form-group attendance-type-tooltip">
+                  <label class="with-tooltip">
+                    {{ 't_events_attendance_type' | cpI18n }}
+                    <i
+                      cpTooltip
+                      class="material-icons"
+                      [attr.title]="'t_events_event_attendance_type_tooltip' | cpI18n"
+                    >
+                      info_outline
+                    </i>
+                  </label>
+                  <cp-dropdown
+                    [items]="attendanceTypes"
+                    (selected)="onSelectedAttendanceType($event)"
+                  >
+                  </cp-dropdown>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group event-qr-enable-tooltip">
+                  <label class="with-tooltip">
+                    {{ 't_events_event_qr_enabled' | cpI18n }}
+                    <i
+                      cpTooltip
+                      class="material-icons"
+                      [attr.title]="'t_events_event_qr_code_tooltip' | cpI18n"
+                    >
+                      info_outline
+                    </i>
+                  </label>
+                  <cp-dropdown [items]="eventQRCodes" (selected)="onSelectedQRCode($event.action)">
+                  </cp-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-6">
+                <div class="form-group event-manager-tooltip">
+                  <label class="with-tooltip">
+                    {{ 'events_event_manager' | cpI18n }}
+                    <i
+                      cpTooltip
+                      class="material-icons"
+                      [attr.title]="'events_event_manager_tooltip' | cpI18n"
+                    >
+                      info_outline
+                    </i>
+                  </label>
+                  <cp-dropdown
+                    [items]="managers"
+                    (selected)="onSelectedManager($event)"
+                    [isRequiredError]="formError && form.errors?.eventManagerRequired"
+                  >
+                  </cp-dropdown>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="form-group attendance-manager-tooltip">
+                  <label class="with-tooltip">
+                    {{ 'events_attendance_manager_full' | cpI18n }}
+                    <i
+                      cpTooltip
+                      class="material-icons"
+                      [attr.title]="'events_attendance_manager_tooltip' | cpI18n"
+                    >
+                      info_outline
+                    </i>
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="attendance_manager_email"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <div class="row form-group student-feedback-tooltip">
+              <div class="col-6">
+                <label class="with-tooltip">
+                  {{ 'student_feedback' | cpI18n }}
+                  <i
+                    cpTooltip
+                    class="material-icons"
+                    [attr.title]="'events_event_feedback_tooltip' | cpI18n"
+                  >
+                    info_outline
+                  </i>
+                </label>
+                <cp-dropdown
+                  [items]="attendanceFeedback"
+                  (selected)="onEventFeedbackChange($event)"
+                  [isRequiredError]="
+                    formError && form.controls['event_feedback'].hasError('required')
+                  "
+                >
+                </cp-dropdown>
+              </div>
+            </div>
+
+            <div
+              class="row form-group"
+              *ngIf="form.controls['event_feedback'].value === eventFeedbackEnabled"
+            >
+              <div class="col-12">
+                <label>{{ 'events_default_question' | cpI18n }}</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="custom_basic_feedback_label"
+                  [class.error]="formError && form.errors?.feedbackLabelRequired"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer">
+        <div class="cp-wrapper cp-wrapper--outer">
+          <div class="col-12">
+            <div class="row">
+              <div class="col-12">
+                <div class="text-right">
+                  <label class="error" *ngIf="formError">
+                    <span>&#x26A0;</span>
+                    {{
+                      isDateError
+                        ? dateErrorMessage
+                        : cpI18n.translate('error_fill_out_marked_fields')
+                    }}
+                  </label>
+                  <a
+                    (click)="trackCancelEvent()"
+                    [routerLink]="['../']"
+                    class="cpbtn cpbtn--cancel"
+                  >
+                    {{ 'cancel' | cpI18n }}
+                  </a>
+                  <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

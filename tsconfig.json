@@ -14,14 +14,12 @@
     "skipLibCheck": true,
     "typeRoots": ["node_modules/@types"],
     "paths": {
-      "@client/*": ["client/*"],
-      "@app/*": ["client/app/*"],
-      "@libs/*": ["client/app/libs/*"],
-      "@shared/*": ["client/app/shared/*"],
-      "@containers/*": ["client/app/containers/*"],
-      "@controlpanel/*": ["client/app/containers/controlpanel/*"],
-      "ui": ["dist/ui"],
-      "ui/*": ["dist/ui/*"]
+      "@campus-cloud/*": ["projects/campus-cloud/*"],
+      "@app/*": ["projects/campus-cloud/app/*"],
+      "@libs/*": ["projects/campus-cloud/app/libs/*"],
+      "@shared/*": ["projects/campus-cloud/app/shared/*"],
+      "@containers/*": ["projects/campus-cloud/app/containers/*"],
+      "@controlpanel/*": ["projects/campus-cloud/app/containers/controlpanel/*"]
     }
   },
   "compileOnSave": false,

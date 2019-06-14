@@ -1,0 +1,30 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/core/typography';
+
+.cppagination {
+  margin: 15px auto;
+
+  span {
+    &.disabled {
+      i {
+        color: $color-med-grey;
+      }
+
+      &:hover {
+        cursor: default;
+      }
+    }
+  }
+
+  &__page {
+    @include font-semi-bold();
+    padding: 0 18px;
+    color: $color-brand;
+  }
+
+  i {
+    font-size: 22px;
+    color: $color-text;
+    vertical-align: -6px;
+  }
+}

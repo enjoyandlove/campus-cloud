@@ -1,0 +1,43 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/utils/button-reset.mixin';
+
+button {
+  @include button_reset();
+
+  width: 100%;
+  height: 75px;
+  display: flex;
+  cursor: pointer;
+  font-size: 0.7rem;
+  align-items: flex-end;
+  justify-content: center;
+  transition: all 300ms ease-in-out;
+
+  &.active {
+    color: $color-white;
+    background: $color-secondary-text;
+  }
+
+  img {
+    transition: transform 200ms ease-in;
+  }
+
+  &:hover:not(.active) {
+    img {
+      transform: scale(0.9, 0.9);
+    }
+  }
+}
+
+.wrapper {
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  justify-content: space-around;
+
+  img {
+    margin-bottom: 10px;
+  }
+}

@@ -1,0 +1,54 @@
+<form [formGroup]="form">
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 't_events_attendance_add_edit_check_in_first_name' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="firstname"
+        [class.error]="formErrors && form.controls.firstname.hasError('required')"
+      />
+    </div>
+    <div class="col-6">
+      <label>{{ 't_events_attendance_add_edit_check_in_last_name' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="lastname"
+        [class.error]="formErrors && form.controls.lastname.hasError('required')"
+      />
+    </div>
+  </div>
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ 't_events_attendance_add_edit_check_in_email' | cpI18n }}</label>
+      <input
+        type="text"
+        class="form-control"
+        formControlName="email"
+        [attr.disabled]="isEdit ? 'disabled' : null"
+        [class.error]="formErrors && form.controls.email.hasError('required')"
+      />
+    </div>
+  </div>
+  <div class="row form-group item-details">
+    <div class="col-6">
+      <label>{{ 't_events_attendance_add_edit_check_in_check_in_time' | cpI18n }}</label>
+      <cp-datepicker
+        [options]="checkInDatePickerOptions"
+        [error]="formErrors && form.controls['check_in_time'].hasError('required')"
+        (dateSet)="setCheckin($event)"
+      >
+      </cp-datepicker>
+    </div>
+    <div class="col-6" *ngIf="data.has_checkout">
+      <label>{{ 't_events_attendance_add_edit_check_in_check_out_time' | cpI18n }}</label>
+      <cp-datepicker
+        [options]="checkOutDatePickerOptions"
+        [error]="formErrors && form.controls['check_out_time_epoch'].hasError('required')"
+        (dateSet)="setCheckout($event)"
+      >
+      </cp-datepicker>
+    </div>
+  </div>
+</form>

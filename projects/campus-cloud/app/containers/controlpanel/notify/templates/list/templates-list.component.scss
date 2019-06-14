@@ -1,0 +1,33 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/form';
+@import '~projects/campus-cloud/style/components/button';
+
+.delete-template {
+  font-size: 2em;
+}
+
+.cp-form {
+  margin-top: 0;
+}
+
+.cp-form__header {
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: 1px;
+      font-size: 17px;
+      position: absolute;
+      padding-left: 6px;
+    }
+  }
+}
+
+.templates {
+  padding: 0;
+  list-style: none;
+
+  .no-content {
+    padding: 15px 0;
+  }
+}

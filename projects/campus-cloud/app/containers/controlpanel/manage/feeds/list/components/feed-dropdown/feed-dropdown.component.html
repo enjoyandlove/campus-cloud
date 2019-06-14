@@ -1,0 +1,20 @@
+<div *ngIf="options.length === 1">
+  <button type="button" class="cpbtn cpbtn--link-dark" (click)="selected.emit(3)">
+    <i class="material-icons">close</i>
+  </button>
+</div>
+
+<div class="cp-dropdown" *ngIf="options.length > 1">
+  <button type="button" data-toggle="dropdown" class="cpbtn cpbtn--link-dark">
+    <i class="material-icons">keyboard_arrow_down</i>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right">
+    <li
+      class="list-as-anchor"
+      *ngFor="let option of options"
+      (click)="selected.emit(option.action)"
+    >
+      {{ option.label }}
+    </li>
+  </ul>
+</div>

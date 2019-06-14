@@ -1,0 +1,13 @@
+@import '~projects/campus-cloud/style/components/form';
+@import '~projects/campus-cloud/style/components/modal';
+@import '~projects/campus-cloud/style/components/button';
+
+.error {
+  i {
+    @include font-16px();
+  }
+}
+
+.cpmodal__body {
+  margin-top: 15px;
+}

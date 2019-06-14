@@ -1,0 +1,18 @@
+@import '~projects/campus-cloud/style/components/form';
+@import '~projects/campus-cloud/style/components/modal';
+@import '~projects/campus-cloud/style/components/button';
+
+:host {
+  width: 100%;
+  display: block;
+}
+
+.cpmodal__body {
+  margin-top: 15px;
+}
+
+.emails-input {
+  resize: none;
+  height: 40px;
+  min-height: 40px;
+}

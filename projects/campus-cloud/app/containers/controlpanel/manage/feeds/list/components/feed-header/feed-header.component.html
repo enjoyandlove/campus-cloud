@@ -1,0 +1,23 @@
+<div class="feed__meta">
+  <div class="avatar avatar--small" [attr.data-background-src]="feed.avatar_thumb"></div>
+  <div>
+    <span class="name">
+      {{ feed.display_name }}
+    </span>
+    <span class="email" *ngIf="feed.email && feed.email !== ''">
+      {{ emailTextContent }}
+    </span>
+    <ng-container *ngIf="!isComment && feed.channelName">
+      <span class="text-muted">
+        {{ 'feeds_posted_in' | cpI18n }}
+      </span>
+      <span class="cpbtn cpbtn--link" (click)="loadCategory(feed)">
+        {{ feed.channelName }}
+      </span>
+    </ng-container>
+    <br />
+    <span class="text-muted">
+      {{ feed.added_time | cpDatePipe: FORMAT }}
+    </span>
+  </div>
+</div>

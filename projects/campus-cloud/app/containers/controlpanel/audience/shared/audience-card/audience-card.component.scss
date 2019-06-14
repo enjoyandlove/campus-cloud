@@ -1,0 +1,19 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/card';
+@import '~projects/campus-cloud/style/core/typography';
+@import '~projects/campus-cloud/style/components/form';
+@import '~projects/campus-cloud/style/components/button';
+
+.cp-card {
+  @include card-margin();
+  margin-top: 0;
+}
+
+.section__name {
+  @include font-bold();
+  @include font-24px();
+}
+
+.saved_audience__counter {
+  margin-top: 30px;
+}

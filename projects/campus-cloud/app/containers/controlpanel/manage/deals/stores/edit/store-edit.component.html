@@ -1,0 +1,44 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span
+          ><strong>{{ 'stores_edit_modal_title' | cpI18n }}</strong></span
+        >
+
+        <span
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="float-right hover cpmodal__header__close"
+        >
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <cp-store-form [storeForm]="storeForm"> </cp-store-form>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row justify-content-end">
+      <div class="col-12 text-right">
+        <label class="error" *ngIf="error">
+          <i class="material-icons">warning</i>
+          {{ errorMessage }}
+        </label>
+        <button
+          type="button"
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="cpbtn cpbtn--cancel"
+        >
+          {{ 'cancel' | cpI18n }}
+        </button>
+
+        <cp-button (buttonClick)="onSubmit()" [props]="buttonData"> </cp-button>
+      </div>
+    </div>
+  </div>
+</div>

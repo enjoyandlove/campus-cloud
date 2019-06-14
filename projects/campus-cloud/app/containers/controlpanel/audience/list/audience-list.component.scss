@@ -1,0 +1,24 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/form';
+@import '~projects/campus-cloud/style/components/card';
+@import '~projects/campus-cloud/style/components/button';
+
+.no-content {
+  @include card-margin();
+}
+
+.delete-list {
+  font-size: 2em;
+}
+
+.cp-form__item {
+  span i {
+    font-size: 18px;
+    vertical-align: -6px;
+  }
+}
+
+.audiences {
+  padding: 0;
+  list-style: none;
+}

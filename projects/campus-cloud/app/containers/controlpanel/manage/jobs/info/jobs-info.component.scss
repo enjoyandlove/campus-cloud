@@ -1,0 +1,58 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/card';
+@import '~projects/campus-cloud/style/components/button';
+@import '~projects/campus-cloud/style/core/typography';
+
+$img_height: 108px;
+$img_width: 108px;
+
+p.no-margin-bottom {
+  margin-bottom: 0;
+}
+
+.cp-card {
+  @include card-margin();
+
+  margin-bottom: 0;
+}
+
+.job,
+.employer {
+  &__title {
+    @include font-bold();
+    @include font-24px();
+
+    margin-top: 15px;
+    margin-bottom: 0;
+  }
+
+  &__description,
+  &__how-to-apply {
+    margin-top: 20px;
+  }
+
+  &__image {
+    border-radius: 4px;
+    position: relative;
+    height: $img_height;
+    width: $img_width;
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 1px solid $border-color;
+    background-position: center center;
+  }
+}
+
+.meta {
+  &__item {
+    margin-bottom: 4px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__type {
+    @include font-semi-bold();
+  }
+}

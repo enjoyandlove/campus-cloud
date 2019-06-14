@@ -1,0 +1,72 @@
+@import '~projects/campus-cloud/style/components/card';
+@import '~projects/campus-cloud/style/components/button';
+@import '~projects/campus-cloud/style/core/typography';
+
+p.no-margin-bottom {
+  margin-bottom: 0;
+}
+
+strong {
+  @include font-semi-bold();
+
+  color: $color-black;
+}
+
+cp-card,
+cp-resource-banner {
+  display: block;
+  margin-bottom: $default_margin;
+}
+
+.services {
+  &__map {
+    height: 225px;
+    margin-top: 15px;
+  }
+
+  &__admins {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid $border-color;
+
+    &__title {
+      @include font-16px();
+      @include font-semi-bold();
+    }
+
+    &__list {
+      padding-left: 0;
+      margin-bottom: 0;
+      list-style: none;
+    }
+
+    &__admin {
+      padding: 12px 0;
+
+      span {
+        font-size: 0.9em;
+      }
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+
+  &__buttons {
+    margin-bottom: 15px;
+
+    a {
+      margin-right: 10px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

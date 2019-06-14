@@ -1,0 +1,107 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/core/typography';
+@import '~projects/campus-cloud/style/components/modal';
+@import '~projects/campus-cloud/style/components/button';
+
+.checkbox {
+  margin-top: -3px;
+}
+
+.delete-button {
+  font-size: 2em;
+  line-height: 1;
+}
+
+.cpmodal {
+  &__body {
+    padding: 0 15px;
+    height: 360px;
+    overflow: hidden;
+  }
+
+  .privileges-menu i {
+    font-size: 20px;
+    vertical-align: -7px;
+  }
+
+  .items-list {
+    border-right: 1px solid $border-color;
+
+    &:last-child {
+      border-right: none;
+    }
+    p.title {
+      padding-top: 20px;
+      color: $color-secondary-text;
+    }
+
+    &__thumbnail {
+      img {
+        float: left;
+        width: 30px;
+        height: 30px;
+        margin-top: 5px;
+        margin-right: 10px;
+      }
+    }
+
+    &__results {
+      height: 283px;
+      list-style: none;
+      margin-bottom: 0;
+      overflow-y: scroll;
+      overflow-x: hidden;
+
+      &--full-height {
+        height: 321px;
+      }
+
+      li {
+        padding: 12px 0;
+      }
+    }
+
+    &__search-box {
+      padding: 20px 0;
+      border-bottom: 1px solid $border-color;
+    }
+  }
+}
+
+.privileges-menu {
+  &__list {
+    top: 45px;
+    margin: 0;
+    padding: 0;
+    width: 400px;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
+  }
+
+  &__icon {
+    i {
+      vertical-align: -5px;
+    }
+  }
+
+  &__item {
+    padding: 15px;
+    transition: all 300ms ease-in-out;
+    border-bottom: 1px solid $border-color;
+
+    &:hover {
+      background: $color-light-grey;
+    }
+
+    &:last-child {
+      border-bottom: none;
+    }
+    &--title {
+      @include font-semi-bold();
+
+      margin-bottom: 6px;
+    }
+    &--description {
+      color: $color-secondary-text;
+    }
+  }
+}

@@ -1,0 +1,48 @@
+<cp-members-action-box
+  (search)="onSearch($event)"
+  (download)="onDownloadCsvFile()"
+  (create)="onLaunchCreateModal()"
+  [showDownloadButton]="(members$ | async)?.length > 0"
+>
+</cp-members-action-box>
+
+<ng-container [ngSwitch]="loading$ | async">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <ng-container *ngSwitchCase="false">
+    <cp-no-content
+      *ngIf="!(members$ | async)?.length"
+      [noContentText]="['t_members_no_results_found' | cpI18n]"
+    >
+    </cp-no-content>
+
+    <ng-container *ngIf="(members$ | async)?.length">
+      <cp-members-list
+        [canEdit]="[true]"
+        [canDelete]="[true]"
+        executiveLabel="leader"
+        (sort)="doSort($event)"
+        [members]="members$ | async"
+        (editClick)="onEditClick($event)"
+        (deleteClick)="onDeleteClick($event)"
+        [withStudentIdentifier]="showStudentIds"
+        [sortBy]="(filters$ | async)?.sort_field"
+        [sortDirection]="(filters$ | async)?.sort_direction"
+      >
+      </cp-members-list>
+
+      <div class="row">
+        <div class="col-12">
+          <cp-pagination
+            (next)="onPaginationNext($event)"
+            [pagePrev]="(previous$ | async)?.next"
+            [pageNext]="(pagination$ | async)?.next"
+            (previous)="onPaginationPrevious($event)"
+            [pageNumber]="(pagination$ | async)?.page"
+          >
+          </cp-pagination>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>

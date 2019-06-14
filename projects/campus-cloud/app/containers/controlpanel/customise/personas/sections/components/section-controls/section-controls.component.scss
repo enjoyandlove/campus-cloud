@@ -1,0 +1,21 @@
+@import '~projects/campus-cloud/style/components/button';
+
+.controls {
+  button {
+    margin-right: 25px;
+    display: inline-block;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    i {
+      line-height: 1;
+      vertical-align: middle;
+    }
+
+    span {
+      margin-left: 5px;
+    }
+  }
+}

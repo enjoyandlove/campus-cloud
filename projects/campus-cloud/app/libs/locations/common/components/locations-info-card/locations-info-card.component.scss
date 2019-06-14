@@ -1,0 +1,19 @@
+@import '~projects/campus-cloud/style/core/typography';
+@import '~projects/campus-cloud/style/components/card';
+
+strong {
+  @include font-semi-bold();
+
+  color: $color-black;
+}
+
+.location {
+  &__map {
+    height: 225px;
+  }
+
+  &__details {
+    display: block;
+    margin-top: $default_margin;
+  }
+}

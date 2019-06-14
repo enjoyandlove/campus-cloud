@@ -1,0 +1,57 @@
+@import '~projects/campus-cloud/style/components/form';
+@import '~projects/campus-cloud/style/components/button';
+
+.dining {
+  .checkbox {
+    display: flex;
+  }
+
+  .margin-right {
+    margin-right: 5px;
+  }
+
+  p.heading {
+    @include font-16px();
+    @include font-semi-bold();
+  }
+
+  &__item {
+    &:first-child {
+      .margin-top {
+        margin-top: 33px;
+      }
+
+      .dining__item__horizontal {
+        margin-top: 28px;
+
+        &:first-child {
+          display: block;
+          margin-top: 0;
+        }
+      }
+    }
+
+    &__horizontal {
+      display: flex;
+      margin-top: 8px;
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  &__day {
+    margin-top: 10px;
+  }
+
+  .margin-top {
+    margin-top: 15px;
+  }
+
+  .margin-left {
+    margin-left: 26px;
+  }
+
+  button {
+    margin: 10px 0;
+  }
+}

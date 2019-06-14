@@ -1,0 +1,102 @@
+@import '~projects/campus-cloud/style/core/colors';
+
+:host {
+  width: 100%;
+  display: block;
+}
+
+.control {
+  display: block;
+  cursor: pointer;
+  font-weight: 400;
+  position: relative;
+
+  &.labelRight {
+    .control__indicator {
+      top: 2px;
+      left: -10px;
+      float: left;
+      position: relative;
+    }
+
+    .control__indicator:after {
+      left: 6.5px;
+    }
+  }
+
+  input {
+    width: 0;
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
+  }
+
+  &__indicator {
+    width: 20px;
+    height: 20px;
+    float: right;
+    margin-left: 8px;
+    border-radius: 4px;
+    background: $color-white;
+    border: 1px solid $color-med-grey;
+    transition: border 300ms ease-in-out;
+    transition: background 200ms ease-in;
+
+    &:hover {
+      border: 1px solid $color-text;
+    }
+  }
+}
+
+/* Hover and focus states */
+.control:hover input ~ .control__indicator,
+.control input:focus ~ .control__indicator {
+  // background: #ccc;
+}
+
+/* Checked state */
+.control input:checked ~ .control__indicator {
+  background: $color-brand;
+  border: 1px solid $color-brand;
+}
+
+/* Hover state whilst checked */
+.control:hover input:not([disabled]):checked ~ .control__indicator,
+.control input:checked:focus ~ .control__indicator {
+  // background: $color-med-grey;
+}
+
+/* Disabled state */
+.control input:disabled ~ .control__indicator {
+  pointer-events: none;
+  opacity: 0.6;
+  // background: $color-white;
+}
+
+/* Check mark */
+.control__indicator:after {
+  position: absolute;
+  display: none;
+  content: '';
+}
+
+/* Show check mark */
+.control input:checked ~ .control__indicator:after {
+  display: block;
+}
+
+/* Checkbox tick */
+.control--checkbox .control__indicator:after {
+  top: 1px;
+  width: 6px;
+  right: 7px;
+  height: 13px;
+  transform: rotate(45deg);
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+}
+
+/* Disabled tick colour */
+.control--checkbox input:disabled ~ .control__indicator:after {
+  border-color: #7b7b7b;
+}

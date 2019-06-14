@@ -1,0 +1,11 @@
+@import '~projects/campus-cloud/style/components/button';
+
+.controls {
+  button {
+    margin-right: 12px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}

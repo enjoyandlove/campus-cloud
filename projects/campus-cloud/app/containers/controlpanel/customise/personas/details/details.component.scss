@@ -1,0 +1,9 @@
+@import '~projects/campus-cloud/style/components/card';
+@import '~projects/campus-cloud/style/core/typography';
+
+span.title {
+  @include font-16px();
+
+  display: block;
+  text-transform: uppercase;
+}

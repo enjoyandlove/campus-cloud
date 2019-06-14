@@ -1,0 +1,91 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/card';
+@import '~projects/campus-cloud/style/core/typography';
+@import '~projects/campus-cloud/style/components/form';
+@import '~projects/campus-cloud/style/components/button';
+@import '~node_modules/bootstrap/scss/functions';
+@import '~node_modules/bootstrap/scss/variables';
+@import '~node_modules/bootstrap/scss/mixins/breakpoints';
+
+:host {
+  display: block;
+}
+
+.registration {
+  @include card-shadow();
+  border-radius: 4px;
+
+  &__header {
+    @include card-padding();
+
+    border-radius: 4px 4px 0 0;
+    background: $color-text-alt;
+    border: 1px solid $border-color;
+    border-bottom: none;
+
+    span {
+      @include font-semi-bold();
+    }
+  }
+
+  &__form {
+    @include card-padding();
+
+    background: $color-white;
+    border-radius: 0 0 4px 4px;
+    border: 1px solid $border-color;
+
+    &__qr_image {
+      height: 310px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: left center;
+    }
+
+    &__overlay_wrappe {
+      position: relative;
+    }
+
+    &__overlay {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      opacity: 0.9;
+      height: 310px;
+      margin: 0 auto;
+      position: absolute;
+      background-color: #fff;
+
+      span {
+        @include font-16px();
+
+        position: absolute;
+        font-weight: normal;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      span i {
+        @include font-16px();
+
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .registration {
+    &__header {
+      display: none;
+    }
+
+    &__form {
+      &__qr_image {
+        background-position: center;
+      }
+    }
+  }
+}

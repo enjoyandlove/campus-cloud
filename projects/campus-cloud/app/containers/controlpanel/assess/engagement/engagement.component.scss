@@ -1,0 +1,20 @@
+@import '~projects/campus-cloud/style/core/typography';
+@import '~projects/campus-cloud/style/components/card';
+
+.chart {
+  @include card-margin();
+
+  height: 416px;
+  display: block;
+}
+
+.chart--title {
+  @include font-24px;
+  @include font-bold();
+
+  margin-bottom: 25px;
+}
+
+.margin-top {
+  margin-top: 15px;
+}

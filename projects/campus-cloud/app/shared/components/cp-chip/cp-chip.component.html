@@ -1,0 +1,11 @@
+<div class="chip">
+  <i *ngIf="props.withAvatar" class="chip__avatar material-icons">
+    {{ props.icon }}
+  </i>
+
+  <span>{{ chip.label }}</span>
+
+  <button type="button" *ngIf="props.withClose" (click)="onHandleClose(chip)">
+    &times;
+  </button>
+</div>

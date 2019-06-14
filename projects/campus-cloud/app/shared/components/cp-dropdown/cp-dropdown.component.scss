@@ -1,0 +1,80 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/core/typography';
+@import '~projects/campus-cloud/style/components/button';
+
+:host {
+  width: 100%;
+  display: inline-block;
+}
+
+.cp-dropdown {
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+
+  &--arrow {
+    top: 2px;
+    right: 8px;
+    line-height: 1;
+    font-size: 18px;
+    position: absolute;
+    transition: transform 200ms ease-in-out;
+  }
+
+  &__button {
+    width: 100%;
+    text-align: left;
+    position: relative;
+    transition: border 300ms ease-in-out;
+
+    &:hover {
+      color: $color-text;
+      border: 1px solid $color-text;
+    }
+  }
+
+  &__list {
+    top: 110%;
+    padding: 0;
+    max-width: 500px;
+    max-height: 197px;
+    overflow-y: scroll;
+    position: absolute;
+    border-radius: 4px;
+    background-color: $color-white;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
+
+    &__item {
+      padding: 10px;
+      text-align: left;
+      color: $color-secondary-text;
+      transition: background 100ms ease-in;
+
+      span.isLabel {
+        @include font-semi-bold();
+
+        color: $color-text;
+      }
+
+      &:hover:not(.no-hover) {
+        cursor: pointer;
+        color: $color-white;
+        background: $color-brand;
+
+        span.isLabel {
+          color: $color-white;
+        }
+      }
+
+      &--spinner {
+        height: 197px;
+      }
+
+      &--search {
+        padding: 5px 0;
+        border-bottom: 1px solid $border-color;
+      }
+    }
+  }
+}

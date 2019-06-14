@@ -1,0 +1,63 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/core/typography';
+
+.bar {
+  left: 0;
+  z-index: 9;
+  top: 235px;
+  width: 100%;
+  position: absolute;
+
+  &.sticky {
+    top: 20px;
+    position: fixed;
+  }
+
+  &--wrapper {
+    padding: 9px 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
+
+    &--icon {
+      top: 4px;
+      font-size: 1.4em;
+      margin-right: 2px;
+      position: relative;
+    }
+
+    &--close {
+      top: 2px;
+      font-size: 1.4em;
+      position: relative;
+    }
+
+    p {
+      font-size: 1.1em;
+      letter-spacing: 0.1px;
+    }
+
+    p,
+    span {
+      @include font-normal();
+
+      margin-bottom: 0;
+      color: $color-white;
+    }
+
+    &.success {
+      background: $color-success;
+    }
+
+    &.danger {
+      background: $color-danger;
+    }
+
+    &.info {
+      background: $color-info;
+    }
+
+    &.warning {
+      background: $color-warning;
+    }
+  }
+}

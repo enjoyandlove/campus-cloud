@@ -1,0 +1,38 @@
+@import '~projects/campus-cloud/style/components/card';
+@import '~projects/campus-cloud/style/core/typography';
+@import '~projects/campus-cloud/style/components/button';
+
+p.no-margin-bottom {
+  margin-bottom: 0;
+}
+
+cp-card {
+  @include card-margin();
+
+  display: block;
+  margin-bottom: 0;
+}
+
+strong {
+  @include font-semi-bold();
+
+  color: $color-black;
+}
+
+.event {
+  &__map {
+    height: 225px;
+    margin-top: 15px;
+  }
+
+  &__buttons {
+    margin-top: 15px;
+    a {
+      margin-right: 10px;
+
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}

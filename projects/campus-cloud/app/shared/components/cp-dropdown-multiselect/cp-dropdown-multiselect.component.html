@@ -1,0 +1,56 @@
+<div class="component">
+  <button
+    data-toggle="dropdown"
+    [disabled]="!items.length"
+    class="cpbtn cpbtn--cancel text-truncate component__button"
+  >
+    <div class="row">
+      <div class="col-10 no-right-padding text-truncate">
+        {{ state.label ? state.label : placeholder }}
+      </div>
+      <div class="col-2 no-right-padding">
+        <i class="material-icons cp-dropdown--arrow">keyboard_arrow_down</i>
+      </div>
+    </div>
+  </button>
+
+  <ul class="component__content dropdown-menu">
+    <li *ngIf="items.length > MIN_RESULTS_FOR_SEARCH" class="component__content__search no-hover">
+      <div class="row">
+        <cp-searchbox
+          class="col-12"
+          fixed="true"
+          (query)="onSearch($event)"
+          (searching)="isSearching = $event"
+        >
+        </cp-searchbox>
+      </div>
+    </li>
+
+    <li *ngIf="isSearching" class="component__content--spinner">
+      <cp-spinner theme="small"></cp-spinner>
+    </li>
+
+    <ng-container *ngIf="!isSearching">
+      <li
+        class="hover"
+        (click)="onToggle($event, opt)"
+        *ngFor="let opt of items | cpFilterPipe: { query: query, filterBy: 'label' }"
+      >
+        <div class="row">
+          <div class="col-12">
+            <p *ngIf="!opt.heading">
+              <cp-checkbox
+                [label]="opt.label"
+                (toggle)="onToggle(null, opt)"
+                [isChecked]="opt.selected"
+              >
+              </cp-checkbox>
+            </p>
+            <p *ngIf="opt.heading">{{ opt.label }}</p>
+          </div>
+        </div>
+      </li>
+    </ng-container>
+  </ul>
+</div>

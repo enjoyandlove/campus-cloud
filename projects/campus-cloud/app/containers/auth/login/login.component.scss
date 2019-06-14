@@ -1,0 +1,44 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/form';
+@import '~projects/campus-cloud/style/components/button';
+
+:host {
+  height: 100%;
+  display: block;
+}
+
+.footer {
+  margin-top: 30px;
+}
+
+form {
+  padding: 30px;
+  margin-top: 180px;
+  border-radius: 4px;
+  background: $color-white;
+  border: 1px solid $border-color;
+  box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.16);
+
+  button {
+    width: 100%;
+  }
+
+  .heading {
+    &__image {
+      width: 100%;
+      height: 64px;
+      margin-bottom: 30px;
+
+      img {
+        height: 100%;
+        max-width: 100%;
+      }
+    }
+    p {
+      font-size: 1.8em;
+      color: $color-black;
+      text-transform: uppercase;
+      margin: 10px auto 40px auto;
+    }
+  }
+}

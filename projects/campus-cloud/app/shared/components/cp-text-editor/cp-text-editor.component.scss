@@ -1,0 +1,46 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/button';
+
+.ql-snow .ql-editor img {
+  display: block;
+  margin-top: 15px;
+  max-width: 180px;
+}
+
+.ql-container.ql-snow {
+  min-height: 80px;
+  border-radius: 4px;
+  background-color: $color-white;
+  border: 1px solid $border-color;
+}
+
+.ql-editor.ql-blank::before {
+  font-style: normal;
+  color: $color-med-grey;
+}
+
+.ql-container {
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.cp-editor-image {
+  padding: 15px;
+  position: relative;
+
+  img {
+    max-width: 150px;
+    transition: opacity 300ms;
+  }
+
+  button {
+    top: 23px;
+    left: 20px;
+    padding: 0;
+    font-size: 1.5em;
+    position: absolute;
+    color: $color-white;
+    background: transparent;
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.7);
+  }
+}

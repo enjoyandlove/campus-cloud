@@ -1,0 +1,43 @@
+<ng-container [ngSwitch]="loading">
+  <div class="cp-card events events--no-data" *ngSwitchCase="true">
+    <div class="row">
+      <div class="col-12">
+        <p class="events--heading">{{ 'events' | cpI18n }}</p>
+
+        <div class="events--no-data-wrapper text-center">
+          <cp-spinner *ngSwitchCase="true"></cp-spinner>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ng-container *ngSwitchCase="false">
+    <ng-container [ngSwitch]="isDisable">
+      <div class="cp-card events events--no-data" *ngSwitchCase="true">
+        <div class="row">
+          <div class="col-12">
+            <p class="events--heading">{{ 'events' | cpI18n }}</p>
+
+            <div class="events--no-data-wrapper text-center">
+              <p class="heading">{{ 'assess_no_event_data' | cpI18n }}</p>
+              <p class="text-muted">{{ 'assess_no_event_data_help' | cpI18n }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cp-card events" *ngSwitchCase="false">
+        <cp-engagement-resource-stats
+          [stats]="stats"
+          [labels]="labels"
+          [loading]="loading"
+          [isSorting]="isSorting"
+          [items]="eventsRanking"
+          [sortingBy]="sortingBy"
+          (sortBy)="onSortBy($event)"
+        >
+        </cp-engagement-resource-stats>
+      </div>
+    </ng-container>
+  </ng-container>
+</ng-container>

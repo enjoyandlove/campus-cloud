@@ -1,0 +1,33 @@
+<div class="row canvas">
+  <div class="col-12">
+    <div
+      *ngIf="!isEdit"
+      id="canvas_wrapper"
+      class="canvas__wrapper canvas__wrapper--image"
+      [ngStyle]="{ 'background-image': 'url(' + form.controls['logo_url'].value + ')' }"
+    ></div>
+    <div *ngIf="isEdit" id="canvas_wrapper" class="canvas__wrapper">
+      <div class="canvas__bounds"></div>
+    </div>
+
+    <cp-banner-upload-button
+      *ngIf="!isEdit"
+      class="upload-button"
+      (reset)="onReset.emit()"
+      (error)="onError.emit($event)"
+      (upload)="onUpload.emit($event)"
+    >
+    </cp-banner-upload-button>
+
+    <cp-banner-control-buttons
+      *ngIf="isEdit"
+      class="control-buttons"
+      [loading]="uploading"
+      (save)="onCrop.emit()"
+      (cancel)="onReset.emit()"
+    >
+    </cp-banner-control-buttons>
+
+    <p class="tooltip" *ngIf="isEdit">{{ 'customization_instructions' | cpI18n }}</p>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/core/typography';
+@import '~projects/campus-cloud/style/components/card';
+@import '~projects/campus-cloud/style/components/form';
+@import '~projects/campus-cloud/style/components/button';
+@import '~projects/campus-cloud/style/components/dropdown';
+
+.actions {
+  label {
+    @include font-normal();
+
+    display: inline-block;
+    vertical-align: -8px;
+  }
+
+  .checkbox {
+    height: 21px;
+    margin-top: 6px;
+    margin-bottom: 0;
+    display: inline-block;
+  }
+
+  label {
+    line-height: 2.5;
+    margin-bottom: 0;
+    margin-right: 10px;
+    display: inline-block;
+  }
+}
+
+.action-dropdown {
+  margin-left: -3px;
+  position: relative;
+
+  i {
+    padding: 4px;
+    font-size: 23px;
+  }
+
+  .dropdown-menu {
+    @include cpDropdownMenu();
+    top: 115%;
+  }
+
+  a {
+    padding: 0;
+  }
+
+  li {
+    padding: 12px;
+  }
+
+  a,
+  li {
+    @include font-normal();
+    color: $color-text;
+
+    &:hover {
+      cursor: pointer;
+      background: none;
+    }
+  }
+}

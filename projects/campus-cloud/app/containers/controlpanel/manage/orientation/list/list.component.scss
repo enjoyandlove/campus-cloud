@@ -1,0 +1,71 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/form';
+@import '~projects/campus-cloud/style/components/card';
+@import '~projects/campus-cloud/style/components/button';
+@import '~projects/campus-cloud/style/components/dropdown';
+
+.no-content {
+  @include card-margin();
+}
+
+.cp-form {
+  &__header {
+    span.hover {
+      position: relative;
+
+      > span i {
+        top: 1px;
+        font-size: 17px;
+        position: absolute;
+        padding-left: 6px;
+      }
+    }
+  }
+}
+
+.action {
+  text-align: center;
+
+  button {
+    &:first-child {
+      float: left;
+    }
+
+    &:last-child {
+      float: right;
+    }
+  }
+}
+
+.orientation {
+  padding: 0;
+  list-style: none;
+
+  &__dropdown {
+    right: 50px;
+    position: absolute;
+    z-index: 1000;
+
+    ul {
+      @include cpDropdownMenu();
+
+      width: 245px;
+      border-radius: 4px;
+      overflow-y: auto;
+      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
+
+      li {
+        padding: 10px 0 10px 0;
+
+        span {
+          padding: 2px 0 0 8px;
+        }
+      }
+    }
+  }
+}
+
+.dropdown-menu {
+  border: none;
+  background: transparent;
+}

@@ -1,0 +1,61 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/form';
+@import '~projects/campus-cloud/style/components/button';
+
+.avatar {
+  margin-right: 8px;
+}
+
+.deleteButton {
+  top: 4px;
+  left: 0px;
+  font-size: 1.5em;
+  position: absolute;
+}
+
+.delete-button {
+  font-size: 2em;
+}
+
+.cp-form__header {
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: -2px;
+      position: absolute;
+    }
+  }
+}
+
+.clubs {
+  padding: 0;
+  list-style: none;
+
+  &__thumbnail {
+    img {
+      width: auto;
+      height: 35px;
+      width: 35px;
+    }
+  }
+}
+
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  padding: 15px 0;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+
+  a {
+    margin-right: 5px;
+  }
+}

@@ -1,0 +1,63 @@
+<ng-container [ngSwitch]="loading">
+  <div class="row justify-content-around" lazy-load-images>
+    <div class="col-8">
+      <cp-feed-filters
+        [groupId]="groupId"
+        [groupType]="groupType"
+        [selectedItem]="selectedItem"
+        (doFilter)="onDoFilter($event)"
+        [isCampusWallView]="isCampusWallView$"
+        [hideIntegrations]="hideIntegrations"
+      >
+      </cp-feed-filters>
+
+      <cp-feed-input-box
+        [groupId]="groupId"
+        [groupType]="groupType"
+        [isCampusWallView]="isCampusWallView$"
+        [disablePost]="
+          state.currentView ? state.currentView.postingMemberType === disablePost : false
+        "
+        (created)="onCreated($event)"
+      >
+      </cp-feed-input-box>
+
+      <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+      <ng-container *ngSwitchCase="false">
+        <cp-feed-item
+          *ngFor="let feed of state.feeds"
+          [feed]="feed"
+          [groupId]="groupId"
+          [groupType]="groupType"
+          [isCampusWallView]="isCampusWallView$"
+          [isFilteredByRemovedPosts]="isFilteredByRemovedPosts$"
+          (moved)="fetch()"
+          (deleted)="onDeleted($event)"
+          (filterByCategory)="onFilterByCategory($event)"
+        >
+        </cp-feed-item>
+
+        <cp-no-content
+          class="no-content"
+          *ngIf="!state.feeds.length"
+          noContentText="No Posts found..."
+        >
+        </cp-no-content>
+
+        <div class="row">
+          <div class="col-12">
+            <cp-pagination
+              [pageNext]="pageNext"
+              [pagePrev]="pagePrev"
+              [pageNumber]="pageNumber"
+              (next)="onPaginationNext()"
+              (previous)="onPaginationPrevious()"
+            >
+            </cp-pagination>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</ng-container>

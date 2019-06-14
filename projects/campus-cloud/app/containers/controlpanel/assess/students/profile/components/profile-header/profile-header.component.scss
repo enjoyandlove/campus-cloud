@@ -1,0 +1,33 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/components/card';
+@import '~projects/campus-cloud/style/components/button';
+@import '~projects/campus-cloud/style/core/typography';
+
+.card {
+  height: 215px;
+  position: relative;
+}
+
+.student {
+  p {
+    margin-bottom: 0;
+  }
+
+  &__profile {
+    img {
+      width: 165px;
+      height: 165px;
+      max-width: 100%;
+    }
+  }
+
+  &__name {
+    @include font-24px();
+    @include font-bold();
+  }
+
+  &__message {
+    top: 135px;
+    position: absolute;
+  }
+}

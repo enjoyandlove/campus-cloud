@@ -1,0 +1,5 @@
+@import '~projects/campus-cloud/style/core/typography';
+
+span {
+  @include font-normal();
+}

@@ -1,0 +1,20 @@
+@import '~projects/campus-cloud/style/core/colors';
+@import '~projects/campus-cloud/style/core/typography';
+
+.tile {
+  &--title {
+    @include font-24px();
+    @include font-bold();
+
+    margin-bottom: 30px;
+  }
+
+  &--stat {
+    color: $color-secondary-text;
+  }
+
+  &--amount {
+    @include font-semi-bold();
+    color: $color-text;
+  }
+}
