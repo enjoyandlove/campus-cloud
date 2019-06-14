@@ -15,11 +15,11 @@
     "typeRoots": ["node_modules/@types"],
     "paths": {
       "@campus-cloud/*": ["projects/campus-cloud/*"],
-      "@app/*": ["projects/campus-cloud/app/*"],
-      "@libs/*": ["projects/campus-cloud/app/libs/*"],
-      "@shared/*": ["projects/campus-cloud/app/shared/*"],
-      "@containers/*": ["projects/campus-cloud/app/containers/*"],
-      "@controlpanel/*": ["projects/campus-cloud/app/containers/controlpanel/*"]
+      "@app/*": ["projects/campus-cloud/src/app/*"],
+      "@libs/*": ["projects/campus-cloud/src/app/libs/*"],
+      "@shared/*": ["projects/campus-cloud/src/app/shared/*"],
+      "@containers/*": ["projects/campus-cloud/src/app/containers/*"],
+      "@controlpanel/*": ["projects/campus-cloud/src/app/containers/controlpanel/*"]
     }
   },
   "compileOnSave": false,

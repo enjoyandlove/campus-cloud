@@ -5,6 +5,6 @@
     "lib": ["es2017", "dom"],
     "typeRoots": ["../../node_modules/@types"]
   },
-  "files": ["test.ts", "polyfills.ts"],
+  "files": ["src/test.ts", "src/polyfills.ts"],
   "include": ["**/*.ts", "**/*.d.ts"]
 }
