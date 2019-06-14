@@ -19,7 +19,7 @@ export class DashboardCampusTileComponent extends BaseComponent implements OnIni
   loading;
   items = [];
   selectedPersona;
-  defaultImage = `${environment.root}assets/default/user.png`;
+  defaultImage = `${environment.root}src/assets/default/user.png`;
 
   constructor(
     private session: CPSession,

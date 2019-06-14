@@ -53,7 +53,7 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
   ACTIVE_STATUS = ClubStatus.active;
   PENDING_STATUS = ClubStatus.pending;
   disabledWall = ClubSocialGroup.disabled;
-  defaultImage = `${environment.root}assets/default/user.png`;
+  defaultImage = `${environment.root}src/assets/default/user.png`;
 
   eventProperties = {
     club_id: null,

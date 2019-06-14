@@ -47,7 +47,7 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
   mapCenter: BehaviorSubject<any>;
   attendanceEnabled = EventAttendance.enabled;
 
-  defaultImage = `${environment.root}assets/assets/default/image.png`;
+  defaultImage = `${environment.root}src/assets/assets/default/image.png`;
 
   constructor(
     public session: CPSession,

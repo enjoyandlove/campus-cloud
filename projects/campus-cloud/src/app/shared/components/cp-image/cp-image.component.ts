@@ -13,7 +13,7 @@ const allowedAttributes = ['cp-image', 'rounded', 'small', 'fitCover'];
 export class CPImageComponent implements OnInit {
   constructor(private elementRef: ElementRef) {
     const el = this.getHostElement();
-    const defaultImage = `${environment.root}assets/default/user.png`;
+    const defaultImage = `${environment.root}src/assets/default/user.png`;
 
     el.src = el.src === '' ? defaultImage : el.src;
 

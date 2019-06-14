@@ -54,7 +54,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   dateFormat = FORMAT.DATETIME;
   isStudentComposeModal = false;
   avatarCustomCodeThreshold = 3;
-  defaultImage = `${environment.root}assets/default/user.png`;
+  defaultImage = `${environment.root}src/assets/default/user.png`;
 
   constructor(
     private router: Router,

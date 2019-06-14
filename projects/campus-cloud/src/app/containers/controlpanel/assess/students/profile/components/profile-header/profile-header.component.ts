@@ -16,7 +16,7 @@ export class StudentsProfileHeaderComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    const defaultAvatar = `${environment.root}assets/default/user.png`;
+    const defaultAvatar = `${environment.root}src/assets/default/user.png`;
 
     this.avatarUrl = this.student.avatar <= 3 ? defaultAvatar : this.student.avatar_url;
   }

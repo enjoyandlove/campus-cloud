@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   buttonData;
   goTo: string;
   form: FormGroup;
-  logo = `${environment.root}assets/svg/full-logo.svg`;
+  logo = `${environment.root}src/assets/svg/full-logo.svg`;
   layoutWidth = LayoutWidth.fourth;
   layoutAlign = LayoutAlign.center;
 

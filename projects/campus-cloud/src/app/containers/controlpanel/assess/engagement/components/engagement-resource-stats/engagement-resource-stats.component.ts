@@ -19,7 +19,7 @@ export class EngagementResourceStatsComponent implements OnInit {
   @Output() sortBy: EventEmitter<null> = new EventEmitter();
 
   sortyBy;
-  defaultImage = `${environment.root}assets/default/user.png`;
+  defaultImage = `${environment.root}src/assets/default/user.png`;
 
   constructor(public utils: EngagementUtilsService) {}
 

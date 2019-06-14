@@ -57,7 +57,7 @@ export class ClubsExcelModalComponent implements OnInit {
 
     const templateUrl = isDev
       ? `/assets/templates/${this.fileName}`
-      : `${environment.root}assets/templates/${this.fileName}`;
+      : `${environment.root}src/assets/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,

@@ -30,7 +30,7 @@ export class SchoolSwitchComponent implements OnInit {
   canManageTestUsers;
   selectedSchool: ISchool;
   schools: Array<ISchool> = [];
-  defaultImage = `${environment.root}assets/default/user.png`;
+  defaultImage = `${environment.root}src/assets/default/user.png`;
 
   constructor(public session: CPSession, public cpTracking: CPTrackingService) {}
 

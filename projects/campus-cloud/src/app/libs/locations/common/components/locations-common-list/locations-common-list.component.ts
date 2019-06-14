@@ -22,7 +22,7 @@ export class LocationsCommonListComponent implements OnInit {
 
   eventData;
   sortingLabels;
-  defaultImage = `${environment.root}assets/default/user.png`;
+  defaultImage = `${environment.root}src/assets/default/user.png`;
 
   constructor(private cpI18n: CPI18nService, private cpTracking: CPTrackingService) {}
 

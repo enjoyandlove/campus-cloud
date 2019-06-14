@@ -79,7 +79,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   emptyCheckOutTime = CheckInOutTime.empty;
   updateQrCode = new BehaviorSubject(null);
   totalAttendees = new BehaviorSubject(null);
-  defaultImage = `${environment.root}assets/default/user.png`;
+  defaultImage = `${environment.root}src/assets/default/user.png`;
 
   eventProperties = {
     host_type: null,

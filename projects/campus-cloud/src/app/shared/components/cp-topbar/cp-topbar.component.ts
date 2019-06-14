@@ -26,8 +26,8 @@ export class CPTopBarComponent implements OnInit {
   manageHomePage: string;
 
   isManageActiveRoute;
-  logo = `${environment.root}assets/svg/logo.svg`;
-  defaultImage = `${environment.root}assets/default/user.png`;
+  logo = `${environment.root}src/assets/svg/logo.svg`;
+  defaultImage = `${environment.root}src/assets/default/user.png`;
 
   constructor(
     public el: ElementRef,
