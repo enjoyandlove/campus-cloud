@@ -1,5 +1,5 @@
-@import '~projects/campus-cloud/style/core/colors';
-@import '~projects/campus-cloud/style/utils/button-reset.mixin';
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/utils/button-reset.mixin';
 
 button {
   @include button_reset();
