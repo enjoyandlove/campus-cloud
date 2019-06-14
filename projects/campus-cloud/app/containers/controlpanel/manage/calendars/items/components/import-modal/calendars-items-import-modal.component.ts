@@ -55,8 +55,8 @@ export class CalendarsItemsImportModalComponent implements OnInit {
     this.fileName = 'mass_calendar_item_invite_sample.csv';
 
     const templateUrl = isDev
-      ? `/public/templates/${this.fileName}`
-      : `${environment.root}public/templates/${this.fileName}`;
+      ? `/assets/templates/${this.fileName}`
+      : `${environment.root}assets/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,

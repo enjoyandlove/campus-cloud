@@ -127,27 +127,27 @@ export class EngagementOrientationsBoxComponent extends BaseComponent implements
           {
             value: res.data.total_events,
             label: this.cpI18n.translate('t_assess_total_orientation_programs'),
-            icon: `${environment.root}public/png/assess/chart_service.png`
+            icon: `${environment.root}assets/png/assess/chart_service.png`
           },
           {
             value: res.data.total_events_with_attendance,
             label: this.cpI18n.translate('t_assess_total_orientation_programs_assessed'),
-            icon: `${environment.root}public/png/assess/chart_service_assess.png`
+            icon: `${environment.root}assets/png/assess/chart_service_assess.png`
           },
           {
             value: res.data.total_attendees,
             label: this.cpI18n.translate('assess_total_attendees'),
-            icon: `${environment.root}public/png/assess/chart_attendee.png`
+            icon: `${environment.root}assets/png/assess/chart_attendee.png`
           },
           {
             value: ((res.data.avg_feedbacks / 100) * 5).toFixed(1),
             label: this.cpI18n.translate('assess_average_rating'),
-            icon: `${environment.root}public/png/assess/chart_rating.png`
+            icon: `${environment.root}assets/png/assess/chart_rating.png`
           },
           {
             value: res.data.total_feedbacks,
             label: this.cpI18n.translate('assess_feedback_received'),
-            icon: `${environment.root}public/png/assess/chart_feedback.png`
+            icon: `${environment.root}assets/png/assess/chart_feedback.png`
           }
         ];
       },

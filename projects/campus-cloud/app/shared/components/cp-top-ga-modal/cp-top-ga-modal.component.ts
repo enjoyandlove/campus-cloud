@@ -20,7 +20,7 @@ export class CPTopGaModalComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.brandingImage = `${environment.root}public/png/branding-image/brand-image.png`;
+    this.brandingImage = `${environment.root}assets/png/branding-image/brand-image.png`;
 
     this.goToOldCPEventData = {
       type: CP_TRACK_TO.GA,

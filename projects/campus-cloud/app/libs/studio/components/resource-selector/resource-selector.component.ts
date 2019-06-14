@@ -60,19 +60,19 @@ export class ResourceSelectorComponent implements AfterContentInit {
   resourceIdToImageMap = {
     [ContentUtilsProviders.contentTypes.single]: `${
       environment.root
-    }public/svg/studio/ic-studio-item.svg`,
+    }assets/svg/studio/ic-studio-item.svg`,
     [ContentUtilsProviders.contentTypes.list]: `${
       environment.root
-    }public/svg/studio/ic-studio-resource.svg`,
+    }assets/svg/studio/ic-studio-resource.svg`,
     [ContentUtilsProviders.contentTypes.web]: `${
       environment.root
-    }public/svg/studio/ic-studio-link.svg`,
+    }assets/svg/studio/ic-studio-link.svg`,
     [ContentUtilsProviders.contentTypes.thirdParty]: `${
       environment.root
-    }public/svg/studio/ic-studio-app.svg`,
+    }assets/svg/studio/ic-studio-app.svg`,
     [ContentUtilsProviders.contentTypes.resourceList]: `${
       environment.root
-    }public/svg/studio/ic-studio-list.svg`
+    }assets/svg/studio/ic-studio-list.svg`
   };
 
   destroy$ = new Subject<null>();

@@ -23,7 +23,7 @@
             "showCircularDependencies": false,
             "polyfills": "projects/campus-cloud/polyfills.ts",
             "tsConfig": "projects/campus-cloud/tsconfig.app.json",
-            "assets": ["projects/campus-cloud/favicon.ico", "projects/campus-cloud/public"],
+            "assets": ["projects/campus-cloud/favicon.ico", "projects/campus-cloud/assets"],
             "styles": [
               "node_modules/@angular/cdk/overlay-prebuilt.css",
               "node_modules/pickr-widget/dist/pickr.min.css",
@@ -172,7 +172,7 @@
               "node_modules/flatpickr/dist/flatpickr.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ],
-            "assets": ["projects/campus-cloud/favicon.ico", "projects/campus-cloud/public"]
+            "assets": ["projects/campus-cloud/favicon.ico", "projects/campus-cloud/assets"]
           }
         },
         "lint": {

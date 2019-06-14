@@ -89,8 +89,8 @@ export class AudienceImportComponent implements OnInit {
     this.fileName = 'mass_user_upload.csv';
 
     const templateUrl = isDev
-      ? `/public/templates/${this.fileName}`
-      : `${environment.root}public/templates/${this.fileName}`;
+      ? `/assets/templates/${this.fileName}`
+      : `${environment.root}assets/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,

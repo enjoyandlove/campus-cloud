@@ -77,7 +77,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   dateFormat = FORMAT.DATETIME_SHORT;
   webCheckInMethod = CheckInMethod.web;
   emptyCheckOutTime = CheckInOutTime.empty;
-  defaultImage = `${environment.root}public/default/user.png`;
+  defaultImage = `${environment.root}assets/default/user.png`;
 
   constructor(
     private cpI18n: CPI18nService,

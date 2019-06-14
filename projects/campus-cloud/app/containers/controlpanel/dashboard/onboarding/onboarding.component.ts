@@ -8,7 +8,7 @@ import { environment } from '@campus-cloud/environments/environment';
   styleUrls: ['./onboarding.component.scss']
 })
 export class DashboardOnboardingComponent implements OnInit {
-  onboardingImg = `${environment.root}public/default/onboarding.jpg`;
+  onboardingImg = `${environment.root}assets/default/onboarding.jpg`;
 
   constructor() {}
 

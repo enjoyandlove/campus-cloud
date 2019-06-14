@@ -6,7 +6,7 @@ import { IntegrationTypes } from '@libs/integrations/common/model/integration.in
 @Pipe({ name: 'integrationSourceToIcon' })
 export class IntegrationSourceToIconPipe implements PipeTransform {
   transform(source: number) {
-    const pathToAsset = `${environment.root}public/svg/events`;
+    const pathToAsset = `${environment.root}assets/svg/events`;
 
     if (source === IntegrationTypes.rss) {
       return `${pathToAsset}/int_rss.svg`;

@@ -30,7 +30,7 @@ export class LinksListComponent extends BaseComponent implements OnInit {
   loading = true;
   modal: OverlayRef;
   state: fromLinks.ILinksState;
-  defaultImage = `${environment.root}public/default/user.png`;
+  defaultImage = `${environment.root}assets/default/user.png`;
 
   constructor(
     public cpI18n: CPI18nService,

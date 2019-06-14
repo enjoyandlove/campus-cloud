@@ -20,7 +20,7 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
   loading;
   items = [];
   isSuperAdmin;
-  defaultImage = `${environment.root}public/default/user.png`;
+  defaultImage = `${environment.root}assets/default/user.png`;
 
   @Input()
   set dates(dates) {

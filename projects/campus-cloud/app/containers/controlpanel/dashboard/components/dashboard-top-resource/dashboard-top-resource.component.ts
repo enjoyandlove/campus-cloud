@@ -14,7 +14,7 @@ export class DashboardTopResourceComponent implements OnInit {
   @Input() items;
   @Input() canNavigate;
 
-  defaultImage = `${environment.root}public/default/user.png`;
+  defaultImage = `${environment.root}assets/default/user.png`;
 
   constructor() {}
 
