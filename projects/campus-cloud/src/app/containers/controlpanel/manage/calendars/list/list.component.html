@@ -1,0 +1,120 @@
+<div class="row">
+  <div class="col-12">
+    <cp-calendars-list-action-box
+      (search)="onSearch($event)"
+      (launchCreateModal)="onLaunchCreateModal()"
+    >
+    </cp-calendars-list-action-box>
+  </div>
+</div>
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      class="no-content"
+      *ngIf="!state.calendars.length"
+      [noContentText]="cpI18n.translate('calendars_no_results_found')"
+    >
+    </cp-no-content>
+
+    <div *ngIf="state.calendars.length">
+      <ul class="calendars cp-form">
+        <li class="cp-form__header col-12">
+          <div class="row">
+            <cp-sorting-header
+              class="col-5"
+              sortLabel="name"
+              (click)="doSort('name')"
+              [label]="sortingLabels.name"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction"
+            >
+            </cp-sorting-header>
+
+            <cp-sorting-header
+              class="col-5"
+              sortLabel="created_time"
+              [label]="sortingLabels.created"
+              (click)="doSort('created_time')"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction"
+            >
+            </cp-sorting-header>
+            <span class="col-2"></span>
+          </div>
+        </li>
+
+        <li class="cp-form__item col-12" *ngFor="let calendar of state.calendars">
+          <div class="row">
+            <span class="col-5 text-truncate hover">
+              <a cpTracker [eventData]="eventData" [routerLink]="calendar.id">
+                <strong>
+                  {{ calendar.name }}
+                </strong>
+              </a>
+              <br />
+              {{ calendar.description }}
+            </span>
+            <span class="col-5 text-truncate">
+              {{ calendar.created_time | cpDatePipe: dateFormat }}
+            </span>
+            <span class="col-2 text-right">
+              <span
+                data-toggle="modal"
+                data-target="#calendarEdit"
+                (click)="launchEditModal = true"
+                (click)="selectedCalendar = calendar"
+                class="hover action-button material-icons text-right"
+              >
+                mode_edit
+              </span>
+              <span
+                data-toggle="modal"
+                data-target="#calendarDelete"
+                (click)="launchDeleteModal = true"
+                (click)="selectedCalendar = calendar"
+                class="hover action-button delete-button text-center"
+              >
+                &times;
+              </span>
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      <cp-pagination
+        [pageNext]="pageNext"
+        [pagePrev]="pagePrev"
+        [pageNumber]="pageNumber"
+        (next)="onPaginationNext()"
+        (previous)="onPaginationPrevious()"
+      >
+      </cp-pagination>
+    </div>
+  </div>
+</div>
+
+<cp-modal modalId="calendarsCreate" *ngIf="launchCreateModal">
+  <cp-calendars-create (created)="onCreated($event)" (resetCreateModal)="launchCreateModal = false">
+  </cp-calendars-create>
+</cp-modal>
+
+<cp-modal modalId="calendarDelete" *ngIf="launchDeleteModal">
+  <cp-calendars-delete
+    [calendar]="selectedCalendar"
+    (deleted)="onDeleted($event)"
+    (resetDeleteModal)="launchDeleteModal = false"
+  >
+  </cp-calendars-delete>
+</cp-modal>
+
+<cp-modal modalId="calendarEdit" *ngIf="launchEditModal">
+  <cp-calendars-edit
+    [calendar]="selectedCalendar"
+    (edited)="onEditedLink($event)"
+    (reset)="launchEditModal = false"
+  >
+  </cp-calendars-edit>
+</cp-modal>

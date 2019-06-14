@@ -1,0 +1,38 @@
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+form {
+  .margin-top {
+    margin-top: 24px;
+  }
+
+  .add-margin {
+    margin-top: 10px;
+  }
+
+  .item-details {
+    margin-top: 40px;
+  }
+
+  label.no-margin {
+    margin: 0;
+  }
+
+  p.title {
+    @include font-24px();
+    @include font-bold();
+
+    margin: 0;
+    display: inline-block;
+  }
+
+  label {
+    margin-top: 10px;
+    display: inline-block;
+
+    i {
+      @include font-14px();
+    }
+  }
+}

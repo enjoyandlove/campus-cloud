@@ -1,0 +1,18 @@
+<div>
+  <div class="summary-line">
+    <strong *ngIf="message.is_school_wide">
+      {{ 'campus_wide' | cpI18n }}
+    </strong>
+    <strong>
+      <cp-list-recipients
+        [lists]="message.list_details"
+        [users]="message.user_details"
+        *ngIf="!message.is_school_wide"
+        (viewMoreModal)="viewMoreModal.emit($event)"
+      >
+      </cp-list-recipients>
+    </strong>
+  </div>
+  <div class="summary-line">{{ message.subject }}</div>
+  <div class="summary-line text-muted">{{ message.message }}</div>
+</div>

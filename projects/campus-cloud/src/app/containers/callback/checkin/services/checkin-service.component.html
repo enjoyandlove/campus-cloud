@@ -1,0 +1,20 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngIf="isExist">
+    <cp-base-checkin
+      *ngSwitchCase="false"
+      [timeZone]="timeZone"
+      [data]="state.services"
+      [isService]="isService"
+      [serviceId]="serviceId"
+      (send)="onSubmit($event)"
+      (checkout)="onCheckout($event)"
+    >
+    </cp-base-checkin>
+  </div>
+
+  <div *ngIf="!isExist" class="col-8 offset-2 text-center">
+    <p>{{ 'service_or_service_provider_error_not_found' | cpI18n }}</p>
+  </div>
+</div>

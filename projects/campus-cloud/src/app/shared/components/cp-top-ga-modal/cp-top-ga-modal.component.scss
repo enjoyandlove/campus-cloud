@@ -1,0 +1,31 @@
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~projects/campus-cloud/src/sass/core/colors';
+
+.cpmodal {
+  a {
+    color: $color-brand;
+  }
+  &__body {
+    padding-top: 40px;
+    min-height: 321px;
+    max-height: 321px;
+    img {
+      padding-bottom: 20px;
+    }
+
+    p {
+      text-align: left;
+      margin-top: 20px;
+      padding: 0 25px 0 25px;
+    }
+  }
+
+  &__footer {
+    padding-bottom: 16px;
+
+    button {
+      padding: 12px 25px 12px 25px;
+      margin-bottom: 10px;
+    }
+  }
+}

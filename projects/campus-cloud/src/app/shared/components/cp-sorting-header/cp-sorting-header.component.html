@@ -1,0 +1,8 @@
+<span class="hover">
+  {{ label }}
+  <span *ngIf="sortField === sortLabel">
+    <i class="material-icons">
+      {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+    </i>
+  </span>
+</span>

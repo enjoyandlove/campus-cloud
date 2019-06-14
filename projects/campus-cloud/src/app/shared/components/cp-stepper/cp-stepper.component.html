@@ -1,0 +1,28 @@
+<div class="stepwizard">
+  <hr />
+  <div class="row">
+    <div class="col-3">
+      <button
+        class="cpbtn cpbtn--cancel float-left"
+        (click)="backStep(currentStep)"
+        *ngIf="currentStep > start"
+      >
+        {{ 'back' | cpI18n }}
+      </button>
+    </div>
+    <div class="col-6 text-center">
+      <ul>
+        <li *ngFor="let step of totalSteps" [class.current]="step === currentStep">&nbsp;</li>
+      </ul>
+    </div>
+    <div class="col-3">
+      <button
+        [disabled]="disabled"
+        class="cpbtn cpbtn--primary float-right"
+        (click)="nextStep(currentStep)"
+      >
+        {{ currentStep >= totalSteps.length ? ('done' | cpI18n) : ('next' | cpI18n) }}
+      </button>
+    </div>
+  </div>
+</div>

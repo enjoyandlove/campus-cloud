@@ -1,0 +1,15 @@
+<div class="row">
+  <div class="col-4">
+    <cp-dropdown [items]="options" [selectedItem]="selectedFilter" (selected)="onSelected($event)">
+    </cp-dropdown>
+  </div>
+  <div class="col-8">
+    <cp-dropdown-multiselect
+      #multiSelect
+      [items]="items$ | async"
+      (selection)="onMultiSelect($event)"
+      [placeholder]="[multiSelectPlaceholder ? multiSelectPlaceholder : '...']"
+    >
+    </cp-dropdown-multiselect>
+  </div>
+</div>

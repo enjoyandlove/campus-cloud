@@ -1,0 +1,123 @@
+<cp-templates-top-bar (query)="onFilter($event)" (create)="onLaunchCreateModal()">
+</cp-templates-top-bar>
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      class="no-content"
+      *ngIf="!state.templates.length"
+      noContentText="No Templates Found..."
+    >
+    </cp-no-content>
+
+    <div *ngIf="state.templates.length">
+      <ul class="templates cp-form">
+        <li class="cp-form__header col-12">
+          <div class="row">
+            <cp-sorting-header
+              class="col-2"
+              sortLabel="name"
+              (click)="doSort('name')"
+              [label]="sortingLabels.name"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction"
+            >
+            </cp-sorting-header>
+            <span class="col-2">{{ 'recipient' | cpI18n }}</span>
+            <span class="col-3">{{ 'subject' | cpI18n }}</span>
+            <span class="col-4">{{ 'body' | cpI18n }}</span>
+            <span class="col-1"></span>
+          </div>
+        </li>
+
+        <li class="cp-form__item col-12" *ngFor="let template of state.templates">
+          <div class="row">
+            <span class="col-2">
+              <strong
+                cpTracker
+                class="hover"
+                [eventData]="eventData"
+                (click)="onLaunchComposeModal(template)"
+              >
+                {{ template.name }}
+              </strong>
+            </span>
+
+            <span class="col-2" *ngIf="template.is_school_wide">
+              {{ 'campus_wide' | cpI18n }}
+            </span>
+
+            <span class="col-2" *ngIf="!template.is_school_wide">
+              <cp-list-recipients
+                [lists]="template.list_details"
+                [users]="template.user_details"
+                (viewMoreModal)="onViewMoreModal($event)"
+              >
+              </cp-list-recipients>
+            </span>
+
+            <span class="col-3">
+              {{ template.subject }}
+            </span>
+
+            <span class="col-4 text-muted">
+              {{ template.message }}
+            </span>
+
+            <span
+              data-toggle="modal"
+              data-target="#templatesDelete"
+              (click)="onLauncDeleteModal(template)"
+              class="col-1 text-right delete-template hover"
+            >
+              &times;
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      <div class="row">
+        <div class="col-12">
+          <cp-pagination
+            [pageNext]="pageNext"
+            [pagePrev]="pagePrev"
+            [pageNumber]="pageNumber"
+            (next)="onPaginationNext()"
+            (previous)="onPaginationPrevious()"
+          >
+          </cp-pagination>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<cp-modal modalId="templateComposeModal" *ngIf="isTemplateComposeModal">
+  <cp-templates-compose
+    [data]="templateData"
+    (created)="onComposed($event)"
+    (teardown)="doComposeModalTeardown()"
+  >
+  </cp-templates-compose>
+</cp-modal>
+
+<cp-modal modalId="templateCreateModal" *ngIf="isTemplateCreateModal">
+  <cp-templates-create (created)="onCreated($event)" (teardown)="isTemplateCreateModal = false">
+  </cp-templates-create>
+</cp-modal>
+
+<cp-modal *ngIf="isTemplateDelete" modalId="deleteTemplateModal">
+  <cp-templates-delete
+    [item]="deleteTemplate"
+    (deleted)="onDeleted($event)"
+    (teardown)="isTemplateDelete = false"
+  >
+  </cp-templates-delete>
+</cp-modal>
+
+<cp-modal modalId="viewMoreModal">
+  <cp-list-modal [buttonText]="buttonText" [headerText]="headerText" [list]="viewMoreRecipients">
+  </cp-list-modal>
+</cp-modal>

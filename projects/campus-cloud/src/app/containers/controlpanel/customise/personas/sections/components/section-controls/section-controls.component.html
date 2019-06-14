@@ -1,0 +1,26 @@
+<div class="row controls">
+  <div class="col-12">
+    <button type="button" [disabled]="disableUp" (click)="moveUp.emit()" class="cpbtn cpbtn--link">
+      <i class="material-icons">keyboard_arrow_up</i>
+    </button>
+
+    <button
+      type="button"
+      [disabled]="disableDown"
+      class="cpbtn cpbtn--link"
+      (click)="moveDown.emit()"
+    >
+      <i class="material-icons">keyboard_arrow_down</i>
+    </button>
+
+    <button
+      type="button"
+      [disabled]="!canDelete"
+      class="cpbtn cpbtn--link"
+      (click)="deleteClick.emit()"
+    >
+      <i class="material-icons">close</i>
+      <span>{{ 't_shared_delete' | cpI18n }}</span>
+    </button>
+  </div>
+</div>

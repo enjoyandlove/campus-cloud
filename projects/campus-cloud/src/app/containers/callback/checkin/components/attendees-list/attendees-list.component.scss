@@ -1,0 +1,85 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~node_modules/bootstrap/scss/functions';
+@import '~node_modules/bootstrap/scss/variables';
+@import '~node_modules/bootstrap/scss/mixins/breakpoints';
+
+:host {
+  display: block;
+}
+
+.attendees {
+  @include card-shadow();
+  border-radius: 4px;
+  margin-bottom: 20px;
+
+  &__header {
+    @include card-padding();
+
+    border-radius: 4px 4px 0 0;
+    background: $color-text-alt;
+    border: 1px solid $border-color;
+    border-bottom: none;
+
+    p {
+      @include font-semi-bold();
+
+      margin-bottom: 0;
+    }
+  }
+
+  &__list {
+    @include card-padding();
+
+    padding-top: 0;
+    list-style: none;
+    background: $color-white;
+    border-radius: 0 0 4px 4px;
+    border: 1px solid $border-color;
+  }
+
+  &__item {
+    padding: 10px 0;
+    border-bottom: 1px solid $border-color;
+
+    &:last-child {
+      border: none;
+      padding-bottom: 0;
+    }
+  }
+
+  // todo remove
+  &__name {
+    @include font-semi-bold();
+  }
+
+  &__icon {
+    display: block;
+    margin-top: -10px;
+    color: $color-success;
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .attendees {
+    &__header {
+      display: none;
+    }
+
+    strong {
+      @include font-12px();
+      @include font-semi-bold();
+
+      margin-top: 5px;
+    }
+
+    strong.check-in-out-label {
+      @include font-bold();
+
+      display: block;
+    }
+  }
+}

@@ -1,0 +1,40 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+:host {
+  display: block;
+  @include card-margin();
+}
+
+.feed {
+  &.cp-card {
+    padding: 0;
+  }
+
+  &__header {
+    display: flex;
+    padding-top: $default_padding;
+    justify-content: space-between;
+  }
+
+  &__body,
+  &__header,
+  &__comments {
+    padding-left: $default_padding;
+    padding-right: $default_padding;
+  }
+
+  &__body {
+    padding-top: $default_padding;
+    padding-bottom: $default_padding;
+  }
+
+  &__comments {
+    padding-bottom: 10px;
+    border-radius: 0 0 4px 4px;
+    background: $color-text-alt;
+    padding-top: $default_padding;
+    border-top: 1px solid $color-med-grey;
+  }
+}

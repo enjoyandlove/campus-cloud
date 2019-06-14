@@ -1,0 +1,75 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span
+          ><strong class="js_title">{{ modalTitle }}</strong></span
+        >
+
+        <span (click)="resetModal()" class="float-right hover cpmodal__header__close">
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <div class="row">
+      <div class="col-10 offset-1">
+        <div class="row">
+          <div class="col-12">
+            <p class="text-center js_body">
+              {{ modalBody }}
+            </p>
+          </div>
+        </div>
+        <ng-container *ngIf="_warnings.length">
+          <div class="row cpmodal__body__warning">
+            <div class="col-12">
+              <p class="text-center text-danger">
+                {{ 't_shared_delete_modal_warning' | cpI18n }}
+              </p>
+            </div>
+          </div>
+          <div
+            [cpTarget]="['chechbox_' + index]"
+            class="row cpmodal__body__warning__item"
+            *ngFor="let warning of _warnings; index as index"
+          >
+            <cp-checkbox
+              class="col-12"
+              [label]="warning.label"
+              (toggle)="onWarningToogle($event, index)"
+            >
+            </cp-checkbox>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row justify-content-end">
+      <div class="col-6 text-right">
+        <button
+          type="button"
+          cpTarget="cancel"
+          (click)="resetModal()"
+          class="cpbtn cpbtn--cancel js_cancel_button"
+        >
+          {{ 'cancel' | cpI18n }}
+        </button>
+
+        <button
+          type="button"
+          cpTarget="delete"
+          (click)="onDeleteClick()"
+          [disabled]="disableSubmit"
+          class="cpbtn cpbtn--danger js_delete_button"
+        >
+          {{ 'delete' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

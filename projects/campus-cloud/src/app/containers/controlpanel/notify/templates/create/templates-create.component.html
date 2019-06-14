@@ -1,0 +1,190 @@
+<div [ngSwitch]="shouldConfirm">
+  <div class="cpmodal" *ngSwitchCase="false">
+    <div class="cpmodal__header">
+      <div class="row">
+        <div class="col-12 text-center">
+          <span
+            ><strong>{{ 'templates_crate_modal_title' | cpI18n }}</strong></span
+          >
+
+          <span
+            data-dismiss="modal"
+            (click)="resetModal()"
+            class="float-right hover cpmodal__header__close"
+          >
+            &times;
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="cpmodal__body">
+      <div class="row">
+        <div class="col-12">
+          <form [formGroup]="form">
+            <div class="row form-group">
+              <div class="col-12">
+                <label>{{ 'templates_crate_label_template_name' | cpI18n }}</label>
+                <input type="text" class="form-control" formControlName="name" />
+              </div>
+            </div>
+            <div class="form-group campus-switch" [class.isActive]="state.isCampusWide">
+              <div class="row">
+                <div class="col-8">
+                  <p class="title">{{ 'campus_wide' | cpI18n }}</p>
+                  <p class="text-muted">{{ 'templates_create_label_all_students' | cpI18n }}</p>
+                </div>
+                <div class="col-4">
+                  <div class="float-right">
+                    <cp-switch
+                      class="campus-switch__toggle"
+                      (toggle)="onHandleToggle($event)"
+                      [isChecked]="state.isCampusWide"
+                    >
+                    </cp-switch>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group" *ngIf="!state.isCampusWide">
+              <label class="with-tooltip">
+                {{ 'recipient' | cpI18n }}
+                <i
+                  class="material-icons hover"
+                  [cpTooltip]="toolTipOptions"
+                  [attr.title]="toolTipContent"
+                >
+                  info_outline
+                </i>
+              </label>
+              <div class="row">
+                <div class="col-12">
+                  <cp-typeahead
+                    [props]="typeAheadOpts"
+                    (query)="onSearch($event)"
+                    (selection)="onTypeAheadChange($event)"
+                    (typeChange)="onSwitchSearchType($event)"
+                  >
+                  </cp-typeahead>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row">
+                <div class="col-6">
+                  <label>{{ 'announcements_type' | cpI18n }}</label>
+                  <div class="row">
+                    <div class="col-12">
+                      <cp-check-dropdown
+                        [items]="types"
+                        [reset]="resetCustomFields$"
+                        [selectedItem]="selectedType"
+                        buttonClass="cpbtn cpbtn--cancel"
+                        (selected)="onTypeChanged($event)"
+                      >
+                      </cp-check-dropdown>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="row">
+                    <div class="col-12">
+                      <label>{{ 'from' | cpI18n }}</label>
+                      <cp-dropdown
+                        [items]="stores$ | async"
+                        [reset]="resetCustomFields$"
+                        [selectedItem]="selectedHost"
+                        (selected)="onSelectedStore($event)"
+                      >
+                      </cp-dropdown>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>
+                {{ 'subject' | cpI18n }}
+                <span class="float-right">
+                  <cp-char-counter
+                    class="float-right"
+                    [limit]="128"
+                    [charCount]="getSubjectLength()"
+                  >
+                  </cp-char-counter>
+                </span>
+              </label>
+              <div class="cpInput subject-input">
+                <div class="row">
+                  <div class="col-2" *ngIf="subject_prefix.label">
+                    <span [class]="'subject-input__label text-center ' + subject_prefix.type">
+                      {{ subject_prefix.label }}
+                    </span>
+                  </div>
+                  <div [class]="subject_prefix.label ? 'col-10' : 'col-12'">
+                    <input
+                      type="text"
+                      formControlName="subject"
+                      class="form-control transparent subject-input__input"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>
+                {{ 'message_noun' | cpI18n }}
+                <span class="float-right">
+                  {{ form.controls.message.value ? form.controls.message.value.length : 0 }}/400
+                </span>
+              </label>
+              <textarea class="form-control" formControlName="message"> </textarea>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <div class="row" *ngIf="isError">
+        <div class="col-12 text-center">
+          <label class="error">{{ errorMessage }}</label>
+        </div>
+      </div>
+    </div>
+
+    <div class="cpmodal__footer">
+      <div class="row justify-content-end">
+        <div class="col-6 text-right">
+          <button
+            type="button"
+            data-dismiss="modal"
+            (click)="resetModal()"
+            class="cpbtn cpbtn--cancel"
+          >
+            {{ 'cancel' | cpI18n }}
+          </button>
+
+          <button
+            type="button"
+            (click)="doSubmit()"
+            [disabled]="!isFormValid"
+            class="cpbtn cpbtn--primary"
+            i18n
+          >
+            {{ 'save' | cpI18n }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <cp-announcements-confirm
+    *ngSwitchCase="true"
+    (confirmed)="onConfirmed()"
+    (teardown)="shouldConfirm = false"
+  >
+  </cp-announcements-confirm>
+</div>

@@ -1,0 +1,51 @@
+<div class="audience">
+  <div class="row">
+    <div class="col-6">
+      <label>{{ 'audience_label_type' | cpI18n }}</label>
+      <fieldset [disabled]="disableTypeSelection">
+        <cp-dropdown
+          [items]="audienceTypes"
+          [selectedItem]="selectedType"
+          (selected)="onTypeSelected($event)"
+        >
+        </cp-dropdown>
+      </fieldset>
+    </div>
+  </div>
+  <div class="row content">
+    <div class="col-12">
+      <cp-audience-custom
+        [message]="message"
+        *ngIf="state.custom"
+        [withChips]="withChips"
+        (users)="onUsers($event)"
+        [importButton]="importButton"
+        (importClick)="importClick.emit()"
+      >
+      </cp-audience-custom>
+
+      <cp-audience-dynamic
+        [message]="message"
+        [audience]="audience"
+        *ngIf="state.dynamic"
+        [counting]="state.couting"
+        (filters)="onFilters($event)"
+        (saveAudience)="saveAudience.emit()"
+      >
+      </cp-audience-dynamic>
+    </div>
+  </div>
+
+  <div class="row footer" *ngIf="showSaveButton">
+    <div class="col-12">
+      <button
+        type="button"
+        class="cpbtn cpbtn--link"
+        [disabled]="!state.canSave"
+        (click)="saveAudience.emit()"
+      >
+        {{ 'audience_dynamic_button_save_audience' | cpI18n }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+:host {
+  width: 100%;
+  display: block;
+}
+
+.component {
+  position: relative;
+
+  &.show {
+    .component__content {
+      display: block;
+    }
+  }
+
+  &__button {
+    width: 100%;
+    position: relative;
+
+    i {
+      top: 2px;
+      right: 8px;
+      line-height: 1;
+      font-size: 18px;
+      position: absolute;
+      transition: transform 200ms ease-in-out;
+    }
+  }
+
+  &__content {
+    top: 40px;
+    z-index: 1;
+    width: 100%;
+    display: none;
+    padding-left: 0;
+    list-style: none;
+    max-height: 197px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    border-radius: 4px;
+    background: $color-white;
+    border: 1px solid $border-color;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
+
+    &--spinner {
+      height: 197px;
+    }
+
+    &__search {
+      padding: 5px;
+      text-align: left;
+      color: $color-secondary-text;
+      border-bottom: 1px solid $border-color;
+    }
+
+    li {
+      transition: all 200ms ease-in-out;
+
+      p {
+        padding: 10px;
+        margin-bottom: 0;
+      }
+
+      &:hover:not(.no-hover) {
+        color: $color-white;
+        background: $color-brand;
+      }
+    }
+  }
+}
+
+.dropdown-menu {
+  padding: 0;
+}

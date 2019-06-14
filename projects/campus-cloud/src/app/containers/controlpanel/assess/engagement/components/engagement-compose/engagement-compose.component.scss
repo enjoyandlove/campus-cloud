@@ -1,0 +1,22 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/modal';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+label {
+  span {
+    @include font-normal();
+
+    color: $color-secondary-text;
+  }
+}
+
+.border {
+  top: 1px;
+  left: 1px;
+  height: 31px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid transparent;
+}

@@ -1,0 +1,48 @@
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/table';
+@import '~projects/campus-cloud/src/sass/core/colors';
+
+.cp-table {
+  &__item {
+    span i.action-button {
+      color: $color-secondary-text;
+    }
+  }
+
+  span.disabled {
+    cursor: default;
+    color: $color-med-grey;
+  }
+
+  &__feedback {
+    padding: 10px;
+    margin: 5px 0 0 0;
+    background-color: $color-light-grey;
+  }
+
+  .margin-right {
+    margin-right: 10px;
+  }
+
+  .avatar {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+  }
+}
+
+.add-card-margin {
+  @include card-margin();
+}
+
+.header {
+  @include card-margin();
+  margin-top: 0;
+
+  &__digit {
+    @include font-semi-bold();
+
+    font-size: 2.4em;
+  }
+}

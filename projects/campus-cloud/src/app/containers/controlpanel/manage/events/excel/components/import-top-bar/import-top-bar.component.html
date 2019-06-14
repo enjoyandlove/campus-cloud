@@ -1,0 +1,36 @@
+<div class="header">
+  <div class="row">
+    <div class="col-2 no-left-padding">
+      <div class="row">
+        <cp-checkbox
+          [isChecked]="isChecked"
+          class="col-1 checkbox"
+          (toggle)="this.checkAll.emit($event)"
+        >
+        </cp-checkbox>
+        <div class="col-2">
+          <cp-upload-button
+            [buttonText]="buttonText"
+            [buttonClass]="['cpbtn cpbtn--' + props.class]"
+            (fileUpload)="onFileUpload($event)"
+            [props]="props"
+          >
+          </cp-upload-button>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 no-left-padding">
+      <cp-import-action-dropdown
+        [props]="props"
+        [storeId]="storeId"
+        [clubId]="clubId"
+        [isClub]="isClub"
+        [serviceId]="serviceId"
+        [isService]="isService"
+        [isOrientation]="isOrientation"
+        (bulkAction)="bulkChange.emit($event)"
+      >
+      </cp-import-action-dropdown>
+    </div>
+  </div>
+</div>

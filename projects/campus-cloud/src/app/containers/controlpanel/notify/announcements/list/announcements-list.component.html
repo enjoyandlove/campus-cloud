@@ -1,0 +1,95 @@
+<div class="row">
+  <div class="col-12">
+    <cp-announcements-list-action-box (filter)="doFilter($event)">
+    </cp-announcements-list-action-box>
+  </div>
+</div>
+
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <ng-container *ngSwitchCase="false">
+    <cp-no-content
+      class="no-content"
+      *ngIf="!state.messages.length"
+      noContentText="No messages found..."
+    >
+    </cp-no-content>
+
+    <div *ngIf="state.messages.length">
+      <ul class="messages cp-form">
+        <li class="cp-form__header col-12">
+          <div class="row">
+            <span class="col-5">{{ 'recipient' | cpI18n }}</span>
+            <span class="col-3">{{ 'announcements_type' | cpI18n }}</span>
+            <cp-sorting-header
+              class="col-3"
+              sortLabel="sent_time"
+              [label]="sortingLabels.sent"
+              (click)="doSort('sent_time')"
+              [sortField]="state.sort_field"
+              [sortDirection]="state.sort_direction"
+            >
+            </cp-sorting-header>
+            <span class="col-1"></span>
+          </div>
+        </li>
+
+        <li class="cp-form__item col-12" *ngFor="let message of state.messages">
+          <div class="row">
+            <span class="col-5">
+              <cp-announcement-summary
+                [message]="message"
+                (viewMoreModal)="onViewMoreModal($event)"
+              >
+              </cp-announcement-summary>
+            </span>
+
+            <span class="col-3">
+              {{ messageType[message.priority] }}
+            </span>
+
+            <span class="col-3">
+              {{ message.sent_time | cpDatePipe: dateFormat }}
+            </span>
+
+            <span class="col-1 text-right actions">
+              <img
+                cpTooltip
+                *ngIf="message.is_external"
+                [attr.title]="isExternalToolTip"
+                [src]="message.source | integrationSourceToIcon"
+              />
+              <span class=" hover delete-message" (click)="onLauncDeleteModal(message)">
+                &times;
+              </span>
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      <cp-pagination
+        [pageNext]="pageNext"
+        [pagePrev]="pagePrev"
+        [pageNumber]="pageNumber"
+        (next)="onPaginationNext()"
+        (previous)="onPaginationPrevious()"
+      >
+      </cp-pagination>
+    </div>
+  </ng-container>
+</ng-container>
+
+<cp-modal *ngIf="isDeleteModal" modalId="deleteAnnouncementModal">
+  <cp-announcements-delete
+    [item]="deleteAnnouncement"
+    (deleted)="onDeleted($event)"
+    (teardown)="isDeleteModal = false"
+  >
+  </cp-announcements-delete>
+</cp-modal>
+
+<cp-modal modalId="viewMoreModal">
+  <cp-list-modal [buttonText]="buttonText" [headerText]="headerText" [list]="viewMoreRecipients">
+  </cp-list-modal>
+</cp-modal>

@@ -1,0 +1,17 @@
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+form {
+  margin-top: 60px;
+
+  button {
+    width: 100%;
+    margin-top: 12px;
+  }
+}
+
+p {
+  @include font-bold();
+  @include font-36px();
+
+  margin-top: 90px;
+}

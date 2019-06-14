@@ -1,0 +1,52 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+p.title {
+  @include font-24px();
+  @include font-bold();
+
+  margin-bottom: 38px;
+}
+
+@mixin badge() {
+  top: 5px;
+  left: 4px;
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  position: absolute;
+}
+
+.legend {
+  padding: 12px 0 0 0;
+
+  span {
+    @include font-semi-bold();
+
+    display: inline-block;
+  }
+
+  &--downloads {
+    position: relative;
+    padding-left: 20px;
+    margin-right: 25px;
+
+    &:before {
+      @include badge();
+
+      background: $color-brand;
+    }
+  }
+
+  &--registrations {
+    position: relative;
+    padding-left: 20px;
+
+    &:before {
+      @include badge();
+
+      background: $color-warning;
+    }
+  }
+}

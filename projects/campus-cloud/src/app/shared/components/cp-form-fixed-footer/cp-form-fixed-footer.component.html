@@ -1,0 +1,30 @@
+<div class="footer">
+  <div class="cp-wrapper cp-wrapper--outer">
+    <div class="col-12">
+      <div class="row">
+        <div class="col-12">
+          <div class="text-right">
+            <button
+              type="button"
+              cpTarget="cancel"
+              (click)="cancelClick.emit()"
+              class="cpbtn cpbtn--cancel"
+            >
+              {{ 'cancel' | cpI18n }}
+            </button>
+
+            <button
+              type="button"
+              cpTarget="submit"
+              class="cpbtn cpbtn--primary"
+              (click)="submitClick.emit()"
+              [disabled]="submitButtonDisabled"
+            >
+              {{ submitButtonText | cpI18n }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

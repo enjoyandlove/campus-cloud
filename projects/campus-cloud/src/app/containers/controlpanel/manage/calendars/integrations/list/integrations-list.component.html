@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-12">
+    <cp-integrations-action-box (launchCreateModal)="onLaunchCreateModal()">
+    </cp-integrations-action-box>
+  </div>
+</div>
+
+<div [ngSwitch]="loading$ | async">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <cp-no-content
+      class="no-content"
+      *ngIf="!(integrations$ | async)?.length"
+      [noContentText]="cpI18n.translate('t_shared_no_integrations_found')"
+    >
+    </cp-no-content>
+
+    <div *ngIf="(integrations$ | async)?.length">
+      <cp-event-integrations-list
+        [integrations$]="integrations$"
+        (syncClick)="onSyncNow($event)"
+        (deleteClick)="onLaunchDeleteModal($event)"
+      >
+      </cp-event-integrations-list>
+
+      <cp-pagination
+        [pageNext]="pageNext"
+        [pagePrev]="pagePrev"
+        [pageNumber]="pageNumber"
+        (next)="onPaginationNext()"
+        (previous)="onPaginationPrevious()"
+      >
+      </cp-pagination>
+    </div>
+  </div>
+</div>
+
+<cp-modal *ngIf="showDeleteModal" modalId="integrationDelete">
+  <cp-integrations-delete
+    (teardown)="onDeleteTeardown()"
+    (deleteClick)="onDeleteClick($event)"
+    [eventIntegration]="selectedIntegration"
+  >
+  </cp-integrations-delete>
+</cp-modal>
+
+<cp-modal *ngIf="showCreateModal" modalId="integrationCreate" (modalClose)="onCreateTeardown()">
+  <cp-items-integrations-create (teardown)="onCreateTeardown()"> </cp-items-integrations-create>
+</cp-modal>

@@ -1,0 +1,75 @@
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~node_modules/bootstrap/scss/functions';
+@import '~node_modules/bootstrap/scss/variables';
+@import '~node_modules/bootstrap/scss/mixins/breakpoints';
+
+$card_padding: 24px;
+$banner_height: 225px;
+
+.resource_banner {
+  position: relative;
+
+  &__background {
+    position: static;
+    height: $banner_height;
+    border-radius: 0.25rem;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+  }
+
+  &__meta {
+    left: 20px;
+    bottom: 20px;
+    position: absolute;
+    overflow-y: hidden;
+    max-height: calc(100% - 40px);
+    max-width: calc(100% - 40px);
+
+    p {
+      @include font-16px();
+
+      margin-bottom: 0;
+      color: $color-white;
+
+      &.resource_banner__title {
+        @include font-semi-bold();
+        @include font-24px();
+
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+@include media-breakpoint-down(sm) {
+  .resource_banner {
+    &__background {
+      top: -#{$card_padding};
+      left: -#{$card_padding};
+      position: absolute;
+      width: calc(100% + #{$card_padding} * 2);
+    }
+
+    &__meta {
+      max-width: 100%;
+      position: static;
+      padding-top: $banner_height;
+
+      p {
+        &.resource_banner__title {
+          @include font-16px();
+          @include font-bold();
+
+          color: $color-black;
+        }
+
+        &.resource_banner__subheading {
+          @include font-12px();
+
+          color: $color-secondary-text;
+        }
+      }
+    }
+  }
+}

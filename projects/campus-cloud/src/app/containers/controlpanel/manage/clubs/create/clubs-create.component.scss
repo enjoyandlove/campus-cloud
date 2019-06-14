@@ -1,0 +1,119 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.form__image {
+  height: 108px;
+  padding-top: 15px;
+  position: relative;
+}
+
+.form__dropdown {
+  position: relative;
+
+  button {
+    width: 100%;
+    height: 33px;
+    text-align: left;
+
+    i {
+      font-size: 20px;
+    }
+  }
+
+  ul {
+    top: 115%;
+  }
+}
+
+.form__upload {
+  bottom: 0;
+  left: 15px;
+  position: absolute;
+}
+
+.event-image {
+  height: 108px;
+
+  img {
+    height: 100%;
+    width: auto;
+    max-width: 108px;
+  }
+}
+
+.deletebutton {
+  font-size: 2em;
+  margin-top: 32px;
+}
+
+form {
+  .margin-top {
+    margin-top: 24px;
+  }
+
+  label.no-margin {
+    margin: 0;
+  }
+
+  .maps {
+    height: 200px;
+  }
+
+  p.title {
+    @include font-24px();
+    @include font-bold();
+
+    margin-bottom: 15px;
+    display: inline-block;
+  }
+
+  .club-details {
+    margin-top: 40px;
+  }
+
+  label {
+    margin-top: 10px;
+    display: inline-block;
+  }
+
+  .text-muted {
+    font-size: 0.8em;
+  }
+
+  .checkbox {
+    margin-top: 20px;
+  }
+
+  .tooltip {
+    width: 15px;
+    height: 15px;
+    font-size: 0.7em;
+    text-align: center;
+    border-radius: 50%;
+    color: $color-white;
+    display: inline-block;
+    background: $color-black;
+  }
+}
+
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  padding: 15px 0;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+
+  a {
+    margin-right: 5px;
+  }
+}

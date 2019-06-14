@@ -1,0 +1,55 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.list {
+  &__items {
+    margin-top: 15px;
+  }
+
+  &__item {
+    cursor: grab;
+    padding: 18px 0;
+
+    i {
+      top: 9px;
+      left: -5px;
+      position: relative;
+      color: $color-med-grey;
+    }
+
+    .name i {
+      top: 7px;
+      left: 3px;
+    }
+
+    > div {
+      line-height: 1;
+    }
+
+    span.disabled {
+      cursor: not-allowed;
+    }
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $border-color;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    .image {
+      margin-right: 8px;
+      img {
+        width: 30px;
+        height: 30px;
+      }
+    }
+
+    .title {
+    }
+    .close-button {
+      font-size: 2em;
+    }
+  }
+}

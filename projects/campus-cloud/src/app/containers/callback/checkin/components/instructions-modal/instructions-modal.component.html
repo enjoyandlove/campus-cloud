@@ -1,0 +1,46 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span i18n
+          ><strong>{{ 'instructions' | cpI18n }}</strong></span
+        >
+
+        <span data-dismiss="modal" class="float-right hover cpmodal__header__close">
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <div class="row">
+      <div class="col-10 offset-1">
+        <ul>
+          <li>
+            <p class="title" i18n>{{ 'qr_code' | cpI18n }}</p>
+            <p i18n>{{ 'checkin_instructions_one' | cpI18n }}</p>
+          </li>
+          <li>
+            <p class="title" i18n>{{ 'checkin_list' | cpI18n }}</p>
+            <p i18n>{{ 'checkin_instructions_two' | cpI18n }}</p>
+          </li>
+          <li>
+            <p class="title" i18n>{{ 'results' | cpI18n }}</p>
+            <p i18n>{{ 'checkin_instructions_three' | cpI18n }}</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row">
+      <div class="col-6 offset-6 text-right">
+        <button type="button" data-dismiss="modal" class="cpbtn cpbtn--primary" i18n>
+          {{ 'done' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

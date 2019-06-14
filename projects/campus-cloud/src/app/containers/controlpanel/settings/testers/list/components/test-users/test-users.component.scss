@@ -1,0 +1,18 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.test-users {
+  padding: 0;
+  list-style: none;
+
+  .delete {
+    top: -5px;
+    font-size: 2em;
+    position: relative;
+  }
+}
+
+.add-margin {
+  margin-top: 24px;
+}

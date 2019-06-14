@@ -1,0 +1,16 @@
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.cp-card {
+  .margin-top {
+    margin-top: 24px;
+  }
+
+  p.title {
+    @include font-24px();
+    @include font-bold();
+
+    margin: 0;
+    display: inline-block;
+  }
+}

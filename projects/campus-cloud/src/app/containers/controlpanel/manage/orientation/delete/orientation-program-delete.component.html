@@ -1,0 +1,8 @@
+<cp-delete-modal
+  (cancelClick)="onClose()"
+  (deleteClick)="onDelete()"
+  [warnings]="deleteWarnings"
+  [modalTitle]="['orientation_delete_program' | cpI18n]"
+  [modalBody]="['orientation_delete_modal_body' | cpI18n: orientationProgram.name]"
+>
+</cp-delete-modal>

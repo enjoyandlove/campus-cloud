@@ -1,0 +1,18 @@
+<div class="cp-card">
+  <div class="row justify-content-between">
+    <div class="col-3">
+      <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
+    </div>
+
+    <div class="col-7 text-right">
+      <button
+        cpTracker
+        (click)="onLaunchCreateModal()"
+        class="cpbtn cpbtn--primary"
+        [eventData]="eventData"
+      >
+        {{ 'stores_create_store' | cpI18n }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,27 @@
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~projects/campus-cloud/src/sass/components/dropdown';
+
+.upload-menu {
+  button {
+    line-height: 1;
+  }
+  i {
+    font-size: 20px;
+  }
+
+  .pencil {
+  }
+
+  .down {
+  }
+
+  .dropdown-menu {
+    @include cpDropdownMenu();
+
+    top: 115%;
+  }
+
+  cp-upload-button {
+    width: 100%;
+  }
+}

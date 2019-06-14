@@ -1,0 +1,107 @@
+<div class="row">
+  <div class="col-12">
+    <div class="cp-card">
+      <div class="row">
+        <div class="col-4">
+          <cp-searchbox
+            (query)="onSearch($event)"
+            [placeholder]="cpI18n.translate('admin_search_by_email_or_email')"
+          >
+          </cp-searchbox>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <ul class="cp-form">
+      <li class="cp-form__header col-12">
+        <div class="row">
+          <cp-sorting-header
+            class="col-5"
+            sortLabel="firstname"
+            [label]="sortingLabels.name"
+            (click)="doSort('firstname')"
+            [sortField]="state.sort_field"
+            [sortDirection]="state.sort_direction"
+          >
+          </cp-sorting-header>
+
+          <cp-sorting-header
+            class="col-5"
+            sortLabel="status"
+            (click)="doSort('status')"
+            [label]="sortingLabels.status"
+            [sortField]="state.sort_field"
+            [sortDirection]="state.sort_direction"
+          >
+          </cp-sorting-header>
+
+          <span class="col-2"></span>
+        </div>
+      </li>
+
+      <li class="cp-form__item col-12" *ngFor="let admin of state.admins">
+        <div class="row">
+          <span class="col-5 text-truncate">
+            <strong>
+              <a [routerLink]="[admin.id + '/edit']">
+                {{ admin.firstname }} {{ admin.lastname }}
+                <span *ngIf="admin.is_current_user">({{ 'you' | cpI18n }})</span>
+              </a>
+            </strong>
+            <br />
+            <small class="text-muted">{{ admin.email }}</small>
+          </span>
+
+          <span class="col-5 text-truncate">
+            {{ admin.account_activated ? cpI18n.translate('active') : cpI18n.translate('pending') }}
+          </span>
+
+          <span class="col-1 offset-1 text-center">
+            <button
+              type="button"
+              (click)="deleteAdmin = admin"
+              *ngIf="!admin.is_current_user"
+              class="cpbtn cpbtn--link-dark deletebutton"
+              data-toggle="modal"
+              data-target="#teamDeleteModal"
+            >
+              &times;
+            </button>
+          </span>
+        </div>
+      </li>
+    </ul>
+
+    <div class="row">
+      <div class="col-12">
+        <cp-pagination
+          [pageNext]="pageNext"
+          [pagePrev]="pagePrev"
+          [pageNumber]="pageNumber"
+          (next)="onPaginationNext()"
+          (previous)="onPaginationPrevious()"
+        >
+        </cp-pagination>
+      </div>
+    </div>
+  </div>
+</div>
+
+<cp-modal modalId="teamDeleteModal">
+  <cp-team-delete
+    [admin]="deleteAdmin"
+    (unauthorized)="onForbidden()"
+    (deleted)="onDeleted($event)"
+  >
+  </cp-team-delete>
+</cp-modal>
+
+<cp-modal modalId="teamUnauthorziedModal">
+  <cp-team-unauthorized></cp-team-unauthorized>
+</cp-modal>

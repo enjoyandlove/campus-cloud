@@ -1,0 +1,51 @@
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/components/form';
+
+.no-content {
+  @include card-margin();
+}
+
+.cp-form {
+  padding: 0;
+  list-style: none;
+
+  &__item {
+    .height {
+      height: 18px;
+    }
+
+    .margin-right {
+      margin-right: 5px;
+    }
+
+    .icon {
+      top: 8px;
+      width: 38px;
+      height: 38px;
+      padding: 9px;
+      display: block;
+      border-radius: 20px;
+      position: absolute;
+      text-align: center;
+      transform: translate(0, -50%);
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .action-icons {
+      top: -5px;
+      font-size: 2em;
+      position: relative;
+    }
+
+    span i.action-button {
+      color: $color-secondary-text;
+    }
+
+    span i.disabled {
+      color: $color-med-grey;
+    }
+  }
+}

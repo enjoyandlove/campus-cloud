@@ -1,0 +1,114 @@
+<ul class="stats">
+  <li class="stats--item">
+    <div class="row">
+      <div class="col-5 no-right-padding">
+        <p class="heading">
+          {{ props.repeat_engagements.length | cpStatsFormatter }} ({{
+            repeatEngagementPercentage
+          }}%)
+        </p>
+        <p
+          cpTooltip
+          class="text-muted with-tooltip"
+          [attr.title]="'assess_repeat_engagement_tooltip' | cpI18n"
+        >
+          {{ 'assess_repeat_engagement' | cpI18n }}
+          <i class="material-icons">info_outline</i>
+        </p>
+      </div>
+      <div class="stats--buttons col-7 text-right">
+        <button
+          type="button"
+          class="cpbtn cpbtn--primary"
+          (click)="download.emit(REPEAT_ENGAGEMENT)"
+          [disabled]="!props.repeat_engagements.length"
+        >
+          {{ 'download' | cpI18n }}
+        </button>
+
+        <button
+          type="button"
+          class="cpbtn cpbtn--primary"
+          [disabled]="!props.repeat_engagements.length"
+          (click)="onCompose('Repeat Engagement', props.repeat_engagements)"
+        >
+          {{ 'message_action' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </li>
+  <li class="stats--item">
+    <div class="row">
+      <div class="col-5 no-right-padding">
+        <p class="heading">
+          {{ props.one_engagements.length | cpStatsFormatter }} ({{ oneEngagementPercentage }}%)
+        </p>
+        <p
+          cpTooltip
+          class="text-muted with-tooltip"
+          [attr.title]="'assess_one_engagement_tooltip' | cpI18n"
+        >
+          {{ 'assess_one_engagement' | cpI18n }}
+          <i class="material-icons">
+            info_outline
+          </i>
+        </p>
+      </div>
+      <div class="stats--buttons col-7 text-right">
+        <button
+          type="button"
+          class="cpbtn cpbtn--primary"
+          (click)="download.emit(ONE_ENGAGEMENT)"
+          [disabled]="!props.one_engagements.length"
+        >
+          {{ 'download' | cpI18n }}
+        </button>
+
+        <button
+          type="button"
+          class="cpbtn cpbtn--primary"
+          [disabled]="!props.one_engagements.length"
+          (click)="onCompose('One Engagement', props.one_engagements)"
+        >
+          {{ 'message_action' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </li>
+  <li class="stats--item">
+    <div class="row">
+      <div class="col-5 no-right-padding">
+        <p class="heading">
+          {{ props.zero_engagements.length | cpStatsFormatter }} ({{ noEngagementPercentage }}%)
+        </p>
+        <p
+          cpTooltip
+          class="text-muted with-tooltip"
+          [attr.title]="'assess_no_engagement_tooltip' | cpI18n"
+        >
+          {{ 'assess_no_engagement' | cpI18n }}
+          <i class="material-icons">info_outline</i>
+        </p>
+      </div>
+      <div class="stats--buttons col-7 text-right">
+        <button
+          type="button"
+          class="cpbtn cpbtn--primary"
+          (click)="download.emit(ZERO_ENGAGEMENT)"
+          [disabled]="!props.zero_engagements.length"
+        >
+          {{ 'download' | cpI18n }}
+        </button>
+
+        <button
+          type="button"
+          class="cpbtn cpbtn--primary"
+          [disabled]="!props.zero_engagements.length"
+          (click)="onCompose('No Engagement', props.zero_engagements)"
+        >
+          {{ 'message_action' | cpI18n }}
+        </button>
+      </div>
+    </div>
+  </li>
+</ul>

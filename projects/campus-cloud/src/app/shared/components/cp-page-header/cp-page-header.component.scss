@@ -1,0 +1,56 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~projects/campus-cloud/src/sass/components/dropdown';
+
+.header {
+  height: 170px;
+  padding-top: 38px;
+  margin-bottom: 25px;
+  background: $color-black;
+
+  em,
+  &__sub-title {
+    top: 50px;
+    position: absolute;
+  }
+
+  em {
+    margin-bottom: 15px;
+    display: inline-block;
+    color: $color-med-grey;
+  }
+
+  &__title {
+    @include font-heading();
+
+    color: $color-white;
+    position: relative;
+  }
+
+  &__breadcrumb {
+    top: -20px;
+    position: absolute;
+
+    a {
+      @include font-normal();
+
+      color: $color-grey;
+      transition: color 300ms ease-in-out;
+
+      i {
+        font-size: 1.4em;
+        vertical-align: -4px;
+      }
+
+      &:hover {
+        color: $color-white;
+      }
+    }
+  }
+
+  &__sub-title {
+    font-size: 1.5em;
+    color: $color-white;
+  }
+}

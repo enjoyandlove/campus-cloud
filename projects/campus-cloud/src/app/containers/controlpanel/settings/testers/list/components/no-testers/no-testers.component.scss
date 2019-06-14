@@ -1,0 +1,10 @@
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+cp-card {
+  text-align: center;
+
+  h5 {
+    @include font-semi-bold();
+  }
+}

@@ -1,0 +1,49 @@
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~projects/campus-cloud/src/sass/components/dropdown';
+
+.delete-provider {
+  font-size: 2em;
+}
+
+.actions {
+  @include card-margin();
+
+  margin-top: 0;
+}
+
+.action-dropdown {
+  margin-left: -3px;
+  position: relative;
+
+  i {
+    padding: 4px;
+    font-size: 23px;
+  }
+
+  .dropdown-menu {
+    top: 115%;
+    padding: 0;
+    min-width: 200px;
+  }
+
+  a {
+    padding: 0;
+  }
+
+  li {
+    padding: 12px;
+  }
+
+  a,
+  li {
+    @include font-normal();
+
+    color: $color-text;
+
+    &:hover {
+      cursor: pointer;
+      background: none;
+    }
+  }
+}

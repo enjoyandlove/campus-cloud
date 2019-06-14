@@ -1,0 +1,41 @@
+<div class="cpmodal">
+  <div class="cpmodal__header">
+    <div class="row">
+      <div class="col-12 text-center">
+        <span i18n
+          ><strong>{{ 'orientation_create_program' | cpI18n }}</strong></span
+        >
+
+        <span
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="float-right hover cpmodal__header__close"
+        >
+          &times;
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="cpmodal__body">
+    <cp-calendar-form #createForm [form]="form" [isOrientation]="isOrientation"> </cp-calendar-form>
+  </div>
+
+  <div class="cpmodal__footer">
+    <div class="row justify-content-end">
+      <div class="col-6 text-right">
+        <button
+          type="button"
+          data-dismiss="modal"
+          (click)="resetModal()"
+          class="cpbtn cpbtn--cancel"
+          i18n
+        >
+          {{ 'cancel' | cpI18n }}
+        </button>
+
+        <cp-button (buttonClick)="onSubmit()" [props]="buttonData"> </cp-button>
+      </div>
+    </div>
+  </div>
+</div>

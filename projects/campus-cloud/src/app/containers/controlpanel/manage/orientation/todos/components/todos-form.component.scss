@@ -1,0 +1,9 @@
+@import '~projects/campus-cloud/src/sass/components/form';
+
+label {
+  span {
+    @include font-normal();
+
+    color: $color-secondary-text;
+  }
+}

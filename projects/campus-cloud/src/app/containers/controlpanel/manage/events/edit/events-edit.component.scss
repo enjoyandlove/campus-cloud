@@ -1,0 +1,94 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/tooltip';
+
+.maps {
+  height: 200px;
+}
+
+.event-image {
+  height: 108px;
+
+  img {
+    height: 100%;
+    width: auto;
+    max-width: 108px;
+  }
+}
+
+form {
+  .margin-top {
+    margin-top: 24px;
+  }
+
+  label.no-margin {
+    margin: 0;
+  }
+
+  p.title {
+    @include font-24px();
+    @include font-bold();
+
+    margin: 0;
+    display: inline-block;
+  }
+
+  .event-details {
+    margin-top: 40px;
+  }
+
+  label {
+    margin-top: 10px;
+    display: inline-block;
+
+    &.with-tooltip {
+      i {
+        @include toolTipIcon();
+      }
+    }
+  }
+
+  .text-muted {
+    font-size: 0.8em;
+  }
+
+  .tooltip {
+    width: 15px;
+    height: 15px;
+    font-size: 0.7em;
+    text-align: center;
+    border-radius: 50%;
+    color: $color-white;
+    display: inline-block;
+    background: $color-black;
+  }
+
+  .checkbox {
+    margin-top: 20px;
+  }
+
+  .isDisabled {
+    opacity: 0.5;
+  }
+}
+
+.margin-bottom {
+  // to account for the fixed footer
+  padding-bottom: 90px;
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  padding: 15px 0;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+
+  a {
+    margin-right: 5px;
+  }
+}
