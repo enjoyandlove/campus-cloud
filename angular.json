@@ -55,6 +55,8 @@
                   "with": "projects/campus-cloud/src/index.prod.html"
                 }
               ],
+              "statsJson": true,
+              "deployUrl": "/dist/",
               "optimization": false,
               "outputHashing": "all",
               "sourceMap": true,
@@ -85,6 +87,7 @@
               ],
               "verbose": true,
               "progress": false,
+              "deployUrl": "/dist/",
               "optimization": false,
               "outputHashing": "all",
               "sourceMap": true,
@@ -113,6 +116,7 @@
                   "with": "projects/campus-cloud/src/index.prod.html"
                 }
               ],
+              "deployUrl": "/dist/",
               "optimization": false,
               "outputHashing": "all",
               "sourceMap": true,

@@ -7,9 +7,11 @@
   },
   "scripts": {
     "i18n": "phraseapp pull",
-    "production-usa": "node --max_old_space_size=8192 node_modules/.bin/ng build --c=production_usa --deployUrl=/dist/ && rimraf dist && mv _dist dist",
-    "production-canada": "node --max_old_space_size=8192 node_modules/.bin/ng build --c=production_canada --deployUrl=/dist/ && rimraf dist && mv _dist dist",
-    "staging": "node --max_old_space_size=8192 node_modules/.bin/ng build --c=staging --deployUrl=/dist/ && rimraf dist && mv _dist dist",
+    "clean-dist": "rimraf dist && mv _dist dist",
+    "analyze": "webpack-bundle-analyzer dist/stats.json",
+    "production-usa": "node --max_old_space_size=8192 node_modules/.bin/ng build --c=production_usa && yarn run clean-dist",
+    "production-canada": "node --max_old_space_size=8192 node_modules/.bin/ng build --c=production_canada && yarn run clean-dist",
+    "staging": "node --max_old_space_size=8192 node_modules/.bin/ng build --c=staging  && yarn run clean-dist",
     "build:prod-usa": "yarn run production-usa",
     "build:prod-can": "yarn run production-canada",
     "build:staging": "yarn run staging",
@@ -116,7 +118,8 @@
     "tslib": "^1.9.0",
     "tslint": "5.17.0",
     "typedoc": "0.14.2",
-    "typescript": "3.4.5"
+    "typescript": "3.4.5",
+    "webpack-bundle-analyzer": "3.3.2"
   },
   "optionalDependencies": {
     "puppeteer": "1.10.0"
