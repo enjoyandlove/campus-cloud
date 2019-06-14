@@ -6,7 +6,7 @@ import { CustomValidators } from '@shared/validators';
 import { environment } from '@campus-cloud/src/environments/environment';
 
 const dbPath = 'https://d38h7mnlv8qddx.cloudfront.net/';
-const assetPath = `${environment.root}src/assets/svg/locations/categories/`;
+const assetPath = `${environment.root}assets/svg/locations/categories/`;
 
 export class CategoryModel {
   constructor(public session: CPSession) {}

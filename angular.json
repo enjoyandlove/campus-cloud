@@ -3,9 +3,9 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "cp": {
+    "campus-cloud": {
       "root": "projects/campus-cloud",
-      "sourceRoot": "projects/campus-cloud",
+      "sourceRoot": "projects/campus-cloud/src",
       "projectType": "application",
       "prefix": "cp",
       "schematics": {
@@ -35,7 +35,7 @@
               "projects/campus-cloud/src/styles.scss"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["projects/campus-cloud/style"]
+              "includePaths": ["projects/campus-cloud/src/styles"]
             },
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -140,24 +140,18 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
             "port": 3030,
-            "browserTarget": "cp:build"
+            "browserTarget": "campus-cloud:build"
           },
           "configurations": {
             "staging": {
-              "browserTarget": "cp:build:staging"
+              "browserTarget": "campus-cloud:build:staging"
             },
             "production_usa": {
-              "browserTarget": "cp:build:production_usa"
+              "browserTarget": "campus-cloud:build:production_usa"
             },
             "production_canada": {
-              "browserTarget": "cp:build:production_canada"
+              "browserTarget": "campus-cloud:build:production_canada"
             }
-          }
-        },
-        "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "browserTarget": "cp:build"
           }
         },
         "test": {
@@ -169,7 +163,7 @@
             "karmaConfig": "projects/campus-cloud/karma.conf.js",
             "styles": ["projects/campus-cloud/src/styles.scss"],
             "stylePreprocessorOptions": {
-              "includePaths": ["projects/campus-cloud/style"]
+              "includePaths": ["projects/campus-cloud/src/styles"]
             },
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -190,30 +184,9 @@
           }
         }
       }
-    },
-    "cp-e2e": {
-      "root": "e2e/",
-      "projectType": "application",
-      "prefix": "",
-      "architect": {
-        "e2e": {
-          "builder": "@angular-devkit/build-angular:protractor",
-          "options": {
-            "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "cp:serve"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
-            "exclude": ["**/node_modules/**"]
-          }
-        }
-      }
     }
   },
-  "defaultProject": "cp",
+  "defaultProject": "campus-cloud",
   "schematics": {
     "@schematics/angular:component": {
       "styleext": "scss"

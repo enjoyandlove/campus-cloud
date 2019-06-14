@@ -127,27 +127,27 @@ export class EngagementServicesBoxComponent extends BaseComponent implements OnI
           {
             value: res.data.total_services,
             label: this.cpI18n.translate('assess_total_services'),
-            icon: `${environment.root}src/assets/png/assess/chart_service.png`
+            icon: `${environment.root}assets/png/assess/chart_service.png`
           },
           {
             value: res.data.total_services_with_attendance,
             label: this.cpI18n.translate('assess_services_assessed'),
-            icon: `${environment.root}src/assets/png/assess/chart_service_assess.png`
+            icon: `${environment.root}assets/png/assess/chart_service_assess.png`
           },
           {
             value: res.data.total_attendees,
             label: this.cpI18n.translate('assess_total_attendees'),
-            icon: `${environment.root}src/assets/png/assess/chart_attendee.png`
+            icon: `${environment.root}assets/png/assess/chart_attendee.png`
           },
           {
             value: ((res.data.avg_feedbacks / 100) * 5).toFixed(1),
             label: this.cpI18n.translate('assess_average_rating'),
-            icon: `${environment.root}src/assets/png/assess/chart_rating.png`
+            icon: `${environment.root}assets/png/assess/chart_rating.png`
           },
           {
             value: res.data.total_feedbacks,
             label: this.cpI18n.translate('assess_feedback_received'),
-            icon: `${environment.root}src/assets/png/assess/chart_feedback.png`
+            icon: `${environment.root}assets/png/assess/chart_feedback.png`
           }
         ];
       },

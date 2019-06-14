@@ -25,26 +25,26 @@ export class CPOnboardingComponent implements OnInit {
     this.onBoardingSteps = [
       {
         id: 1,
-        img: `${environment.root}src/assets/png/onboarding/step_1.png`,
+        img: `${environment.root}assets/png/onboarding/step_1.png`,
         title: this.cpI18n.translate('on_boarding_step_1_title'),
         description_1: this.cpI18n.translate('on_boarding_step_1_description_1'),
         description: this.cpI18n.translate('on_boarding_step_1_description')
       },
       {
         id: 2,
-        img: `${environment.root}src/assets/png/onboarding/step_2.png`,
+        img: `${environment.root}assets/png/onboarding/step_2.png`,
         title: this.cpI18n.translate('on_boarding_step_2_title'),
         description: this.cpI18n.translate('on_boarding_step_2_description')
       },
       {
         id: 3,
-        img: `${environment.root}src/assets/png/onboarding/step_3.png`,
+        img: `${environment.root}assets/png/onboarding/step_3.png`,
         title: this.cpI18n.translate('on_boarding_step_3_title'),
         description: this.cpI18n.translate('on_boarding_step_3_description')
       },
       {
         id: 4,
-        img: `${environment.root}src/assets/png/onboarding/step_4.png`,
+        img: `${environment.root}assets/png/onboarding/step_4.png`,
         title: this.cpI18n.translate('on_boarding_step_4_title'),
         description: this.cpI18n.translate('on_boarding_step_4_description')
       }
