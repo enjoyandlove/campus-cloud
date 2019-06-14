@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { pageTitle } from '@shared/constants';
+import { pageTitle } from '@campus-cloud/shared/constants';
 import { AthleticsListComponent } from './list';
 import { AthleticsEditComponent } from './edit';
 import { AthleticsExcelComponent } from './excel';

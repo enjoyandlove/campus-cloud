@@ -5,11 +5,11 @@ import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import * as fromActions from './jobs.actions';
-import { JobsService } from '@app/containers/controlpanel/manage/jobs/jobs.service';
-import { IEmployer } from '@app/containers/controlpanel/manage/jobs/employers/employer.interface';
-import { EmployerService } from '@app/containers/controlpanel/manage/jobs/employers/employer.service';
+import { JobsService } from '@campus-cloud/containers/controlpanel/manage/jobs/jobs.service';
+import { IEmployer } from '@campus-cloud/containers/controlpanel/manage/jobs/employers/employer.interface';
+import { EmployerService } from '@campus-cloud/containers/controlpanel/manage/jobs/employers/employer.service';
 
 @Injectable()
 export class JobsEffects {

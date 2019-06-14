@@ -3,12 +3,12 @@ import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { EventsModule } from '../../events.module';
 import { EventsService } from '../../events.service';
 import { EventsComponent } from './events.component';
-import { mockSchool } from '@app/session/mock/school';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 
 class MockService {
   dummy;

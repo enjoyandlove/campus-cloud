@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { FeedsComponent } from './base';
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../feeds.service';
 import { GroupType } from '../feeds.utils.service';
 import { ManageHeaderService } from '@controlpanel/manage/utils';

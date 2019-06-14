@@ -3,11 +3,11 @@ import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 
-import { API } from '@app/config/api';
-import { CPSession } from '@app/session';
-import { CPLogger } from '@shared/services';
-import { CPI18nService } from '@shared/services';
-import { appStorage } from '@shared/utils/storage';
+import { API } from '@campus-cloud/config/api';
+import { CPSession } from '@campus-cloud/session';
+import { CPLogger } from '@campus-cloud/shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { appStorage } from '@campus-cloud/shared/utils/storage';
 
 const maxAllowed = 5e6; // 5MB
 

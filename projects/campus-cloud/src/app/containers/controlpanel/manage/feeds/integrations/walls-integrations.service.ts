@@ -4,13 +4,13 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { API } from '@app//config/api';
-import { HTTPService } from '@app//base/http.service';
-import { IItem } from '@app//shared/components';
-import { CPDropdownComponent } from '@app//shared/components';
-import { CPI18nService } from '@app//shared/services/i18n.service';
+import { API } from '@campus-cloud//config/api';
+import { HTTPService } from '@campus-cloud//base/http.service';
+import { IItem } from '@campus-cloud//shared/components';
+import { CPDropdownComponent } from '@campus-cloud//shared/components';
+import { CPI18nService } from '@campus-cloud//shared/services/i18n.service';
 import { ISocialPostCategory } from '../model/feeds.interfaces';
-import { IWallsIntegration } from '@app/libs/integrations/walls/model';
+import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
 
 @Injectable()
 export class WallsIntegrationsService extends HTTPService {

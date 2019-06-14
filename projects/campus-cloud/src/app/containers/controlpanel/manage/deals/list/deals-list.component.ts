@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { FORMAT } from '@shared/pipes';
-import { CPSession } from '@app/session';
-import { BaseComponent } from '@app/base';
+import { FORMAT } from '@campus-cloud/shared/pipes';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { IDeal } from '../deals.interface';
 import { DealsService } from '../deals.service';
 import { ManageHeaderService } from '../../utils';
-import { CP_TRACK_TO } from '@shared/directives/tracking';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '@shared/services';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 export interface IState {
   deals: Array<IDeal>;

@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 
-import { IMember } from '@libs/members/common/model';
-import { PaginatedResult } from '@shared/utils/http';
+import { IMember } from '@campus-cloud/libs/members/common/model';
+import { PaginatedResult } from '@campus-cloud/shared/utils/http';
 
 export enum MembersType {
   GET_MEMBERS = '[manage.orientation.members] get members',

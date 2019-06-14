@@ -1,10 +1,15 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { amplitudeEvents } from '@shared/constants';
+import { CPSession } from '@campus-cloud/session';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { OrientationService } from './../orientation.services';
-import { CPI18nService, CPTrackingService, IModal, MODAL_DATA } from '@shared/services';
+import {
+  CPI18nService,
+  CPTrackingService,
+  IModal,
+  MODAL_DATA
+} from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-orientation-program-delete',

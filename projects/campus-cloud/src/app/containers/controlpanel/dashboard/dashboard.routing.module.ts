@@ -3,8 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { DashboardComponent } from './dashboard.component';
 import { DashboardBaseComponent } from './base/base.component';
-import { AuthGuard, PrivilegesGuard } from '@app/config/guards';
-import { CP_PRIVILEGES_MAP, pageTitle } from '@shared/constants';
+import { AuthGuard, PrivilegesGuard } from '@campus-cloud/config/guards';
+import { CP_PRIVILEGES_MAP, pageTitle } from '@campus-cloud/shared/constants';
 import { DashboardOnboardingComponent } from './onboarding/onboarding.component';
 
 const appRoutes: Routes = [

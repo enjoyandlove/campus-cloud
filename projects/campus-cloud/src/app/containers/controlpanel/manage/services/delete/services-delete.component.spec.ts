@@ -3,12 +3,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 
-import { configureTestSuite } from '@shared/tests';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { ServicesModule } from '../services.module';
 import { ServicesService } from '../services.service';
-import { CPDeleteModalComponent } from '@shared/components';
+import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
 import { MockServicesService, mockService } from '../tests';
-import { CPI18nService, MODAL_DATA } from '@shared/services';
+import { CPI18nService, MODAL_DATA } from '@campus-cloud/shared/services';
 import { ServicesDeleteComponent } from './services-delete.component';
 
 describe('ServicesDeleteComponent', () => {

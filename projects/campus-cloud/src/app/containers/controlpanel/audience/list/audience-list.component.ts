@@ -2,16 +2,16 @@ import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { AudienceType } from './../audience.status';
 import { AudienceService } from '../audience.service';
-import { BaseComponent } from '@app/base/base.component';
-import { ISnackbar, baseActions } from '@app/store/base';
-import { CP_TRACK_TO } from '@shared/directives/tracking';
-import { createSpreadSheet } from '@shared/utils/csv/parser';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { ISnackbar, baseActions } from '@campus-cloud/store/base';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
+import { createSpreadSheet } from '@campus-cloud/shared/utils/csv/parser';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { AudienceUtilsService } from '../audience.utils.service';
-import { CPI18nService, CPTrackingService } from '@shared/services';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 interface IState {
   audiences: Array<any>;

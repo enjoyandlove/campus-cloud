@@ -2,8 +2,8 @@ import { Component, Input, EventEmitter } from '@angular/core';
 import { Output } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { IItem } from '@shared/components';
-import { FORMAT } from '@campus-cloud/src/app/shared/pipes';
+import { IItem } from '@campus-cloud/shared/components';
+import { FORMAT } from '@projects/campus-cloud/src/app/shared/pipes';
 import { IWallsIntegration } from './../../model';
 import { SyncStatus } from '../../../common/model';
 

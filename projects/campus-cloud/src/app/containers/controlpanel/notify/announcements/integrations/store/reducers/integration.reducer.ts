@@ -1,6 +1,6 @@
 import { EntityState, EntityAdapter, createEntityAdapter, Dictionary } from '@ngrx/entity';
 
-import { IStore } from '@shared/services';
+import { IStore } from '@campus-cloud/shared/services';
 import { IAnnouncementsIntegration } from '../../model';
 import { IntegrationActions, Actions } from '../actions';
 

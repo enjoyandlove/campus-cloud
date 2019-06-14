@@ -1,4 +1,4 @@
-export { IUser as IMember } from '@shared/models/user';
+export { IUser as IMember } from '@campus-cloud/shared/models/user';
 
 export enum MemerUpdateType {
   'remove' = -1,

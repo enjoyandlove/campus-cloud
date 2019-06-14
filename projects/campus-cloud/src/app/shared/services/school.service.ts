@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 
 import { API } from '../../config/api';
 import { HTTPService } from '../../base/http.service';
-import { CPSession, ISchool, ISchoolBranding } from '@app/session';
+import { CPSession, ISchool, ISchoolBranding } from '@campus-cloud/session';
 
 @Injectable()
 export class SchoolService extends HTTPService {

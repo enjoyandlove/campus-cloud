@@ -1,6 +1,6 @@
 import * as fromIntegrations from '../actions';
-import { IStore } from '@shared/services/store.service';
-import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
+import { IStore } from '@campus-cloud/shared/services/store.service';
+import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model/event-integration.interface';
 
 export interface IntegrationsState {
   error: string;

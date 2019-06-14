@@ -5,16 +5,16 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { CheckinMethod } from '../constants';
-import { baseActions } from '@app/store/base';
-import { CPTrackingService } from '@shared/services';
-import { BaseComponent } from '@app/base/base.component';
+import { baseActions } from '@campus-cloud/store/base';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import { EngagementService } from './engagement.service';
-import { createSpreadSheet } from '@shared/utils/csv/parser';
+import { createSpreadSheet } from '@campus-cloud/shared/utils/csv/parser';
 import { AssessUtilsService } from '../assess.utils.service';
-import { CPI18nService } from '@shared/services/i18n.service';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import {
   DivideBy,
   groupByWeek,
@@ -22,7 +22,7 @@ import {
   groupByQuarter,
   CPLineChartUtilsService,
   groupByYear
-} from '@shared/components/cp-line-chart/cp-line-chart.utils.service';
+} from '@campus-cloud/shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 declare var $;
 

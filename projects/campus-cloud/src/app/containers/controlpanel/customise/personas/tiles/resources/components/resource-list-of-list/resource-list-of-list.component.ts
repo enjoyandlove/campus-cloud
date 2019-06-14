@@ -12,11 +12,11 @@ import {
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { parseErrorResponse } from '@shared/utils';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { parseErrorResponse } from '@campus-cloud/shared/utils';
 import { TilesService } from '../../../tiles.service';
-import { baseActions, ISnackbar } from '@app/store/base';
+import { baseActions, ISnackbar } from '@campus-cloud/store/base';
 import { IPersona } from './../../../../persona.interface';
 import { ResourceService } from './../../resource.service';
 import { ILink } from '@controlpanel/manage/links/link.interface';

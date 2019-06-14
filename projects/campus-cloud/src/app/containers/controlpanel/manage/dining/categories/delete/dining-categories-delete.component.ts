@@ -2,8 +2,8 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { IModal, MODAL_DATA } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { IModal, MODAL_DATA } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-dining-categories-delete',

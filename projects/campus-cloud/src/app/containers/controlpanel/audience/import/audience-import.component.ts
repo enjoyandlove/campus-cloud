@@ -7,7 +7,7 @@ import { isDev } from '../../../../config/env';
 import { CPSession } from '../../../../session';
 import { AudienceService } from '../audience.service';
 import { FileUploadService, CPI18nService } from '../../../../shared/services';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
   selector: 'cp-audience-import',

@@ -2,15 +2,18 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 
-import { CPSession } from '@app/session';
-import { BaseComponent } from '@app/base';
-import { IDateRange } from '@shared/components';
-import { CPI18nService } from '@shared/services';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
+import { IDateRange } from '@campus-cloud/shared/components';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { DashboardService } from '../dashboard.service';
 import { PersonaType } from '../../audience/audience.status';
 import { DashboardUtilsService } from '../dashboard.utils.service';
-import { canSchoolReadResource, canSchoolWriteResource } from '@shared/utils/privileges';
+import {
+  canSchoolReadResource,
+  canSchoolWriteResource
+} from '@campus-cloud/shared/utils/privileges';
 
 @Component({
   selector: 'cp-dashboard',

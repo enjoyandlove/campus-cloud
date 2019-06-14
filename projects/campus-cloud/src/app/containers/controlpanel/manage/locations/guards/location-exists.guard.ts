@@ -7,7 +7,7 @@ import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 
 @Injectable()
 export class LocationExistsGuard implements CanActivate {

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { CPI18nService } from '@shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { IPersona } from './../../../persona.interface';
 import { ResourceService } from './../resource.service';
 import { TilesUtilsService } from './../../tiles.utils.service';

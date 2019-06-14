@@ -1,5 +1,5 @@
 import * as fromLocations from '../actions';
-import { ICategory } from '@libs/locations/common/categories/model';
+import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
 
 export interface ICategoriesState {
   error: boolean;

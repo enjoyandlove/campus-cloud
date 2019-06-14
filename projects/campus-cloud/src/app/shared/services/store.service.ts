@@ -4,11 +4,11 @@ import { map, startWith } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { API } from '@app/config/api';
-import { CPSession } from '@app/session';
+import { API } from '@campus-cloud/config/api';
+import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from './i18n.service';
 import { CP_PRIVILEGES_MAP } from '../constants';
-import { HTTPService } from '@app/base/http.service';
+import { HTTPService } from '@campus-cloud/base/http.service';
 import { amplitudeEvents } from '../constants/analytics';
 import { ClubStatus } from '@controlpanel/manage/clubs/club.status';
 import { isClubAthletic } from '@controlpanel/manage/clubs/clubs.athletics.labels';

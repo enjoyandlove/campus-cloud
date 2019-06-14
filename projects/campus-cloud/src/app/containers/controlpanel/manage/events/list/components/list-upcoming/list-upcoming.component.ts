@@ -3,16 +3,16 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import {
   canSchoolWriteResource,
   canAccountLevelReadResource
-} from '@shared/utils/privileges/privileges';
+} from '@campus-cloud/shared/utils/privileges/privileges';
 
-import { FORMAT } from '@shared/pipes';
-import { CPSession } from '@app/session';
+import { FORMAT } from '@campus-cloud/shared/pipes';
+import { CPSession } from '@campus-cloud/session';
 import IEvent from '../../../event.interface';
 import { EventAttendance } from '../../../event.status';
-import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
 import { EventUtilService } from '../../../events.utils.service';
-import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@shared/constants';
-import { CPI18nService, CPTrackingService, RouteLevel } from '@shared/services';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { CPI18nService, CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
 import { EventsAmplitudeService } from '@controlpanel/manage/events/events.amplitude.service';
 
 interface ISort {

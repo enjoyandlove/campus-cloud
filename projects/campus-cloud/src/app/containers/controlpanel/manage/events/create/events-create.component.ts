@@ -6,14 +6,14 @@ import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import * as fromRoot from '@app/store/base';
-import { baseActions } from '@app/store/base';
-import { CPDate, CPMap } from '@shared/utils';
+import * as fromRoot from '@campus-cloud/store/base';
+import { baseActions } from '@campus-cloud/store/base';
+import { CPDate, CPMap } from '@campus-cloud/shared/utils';
 import { EventsService } from '../events.service';
-import { CPSession, ISchool } from '@app/session';
-import { CustomValidators } from '@shared/validators';
+import { CPSession, ISchool } from '@campus-cloud/session';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { EventUtilService } from '../events.utils.service';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { EventsComponent } from '../list/base/events.component';
 import { EventsAmplitudeService } from '../events.amplitude.service';
 import {
@@ -30,7 +30,7 @@ import {
   StoreService,
   CPI18nService,
   CPTrackingService
-} from '@shared/services';
+} from '@campus-cloud/shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';

@@ -4,7 +4,7 @@ import { ActionReducerMap } from '@ngrx/store';
 import { ITestersState } from './testers.state';
 import * as testersReducer from './testers.reducers';
 import { ITestUser } from '../models/test-user.interface';
-import { SortDirection, SETTINGS_TESTERS } from '@shared/constants';
+import { SortDirection, SETTINGS_TESTERS } from '@campus-cloud/shared/constants';
 
 export interface ITestersRange {
   start: number;

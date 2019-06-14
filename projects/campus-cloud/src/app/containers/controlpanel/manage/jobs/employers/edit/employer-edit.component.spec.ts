@@ -5,12 +5,12 @@ import { StoreModule, Store } from '@ngrx/store';
 import { FormBuilder } from '@angular/forms';
 import { Actions } from '@ngrx/effects';
 
-import { CPSession } from '@app/session';
-import { configureTestSuite } from '@shared/tests';
-import * as fromJobs from '@app/store/manage/jobs';
+import { CPSession } from '@campus-cloud/session';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import * as fromJobs from '@campus-cloud/store/manage/jobs';
 import { EmployerModule } from '../employer.module';
-import { mockSchool } from '@app/session/mock/school';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { EmployerEditComponent } from './employer-edit.component';
 
 describe('EmployerEditComponent', () => {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { AuthGuard } from '@app/config/guards';
+import { AuthGuard } from '@campus-cloud/config/guards';
 import { ControlPanelComponent } from './controlpanel.component';
 
 const appRoutes: Routes = [

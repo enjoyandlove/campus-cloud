@@ -3,13 +3,13 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import * as tests from '../tests/';
-import { CPSession } from '@app/session';
-import { configureTestSuite } from '@shared/tests';
+import { CPSession } from '@campus-cloud/session';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { DashboardModule } from '../dashboard.module';
 import { DashboardService } from '../dashboard.service';
-import { mockUser, mockSchool } from '@app/session/mock';
+import { mockUser, mockSchool } from '@campus-cloud/session/mock';
 import { DashboardBaseComponent } from './base.component';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { DashboardUtilsService } from '../dashboard.utils.service';
 
 describe('DashboardBaseComponent', () => {

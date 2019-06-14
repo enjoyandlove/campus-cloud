@@ -3,17 +3,17 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '@app/store';
+import * as fromRoot from '@campus-cloud/store';
 
-import { BaseComponent } from '@app/base';
-import { IItem } from '@shared/components';
-import { CPI18nService } from '@shared/services/i18n.service';
-import { Mixin, Destroyable } from '@campus-cloud/src/app/shared/mixins';
-import { IWallsIntegration } from '@libs/integrations/walls/model';
+import { BaseComponent } from '@campus-cloud/base';
+import { IItem } from '@campus-cloud/shared/components';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { Mixin, Destroyable } from '@projects/campus-cloud/src/app/shared/mixins';
+import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
 
 @Component({
   selector: 'cp-walls-integrations-list',

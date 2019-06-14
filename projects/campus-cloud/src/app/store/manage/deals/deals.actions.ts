@@ -1,5 +1,5 @@
 import { Action } from '@ngrx/store';
-import { IStore } from '@campus-cloud/src/app/containers/controlpanel/manage/deals/stores/store.interface';
+import { IStore } from '@projects/campus-cloud/src/app/containers/controlpanel/manage/deals/stores/store.interface';
 
 export const LOAD_STORES = 'manage.deals.load stores';
 export const LOAD_STORES_FAIL = 'manage.deals.load stores fail';

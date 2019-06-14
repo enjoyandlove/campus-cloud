@@ -6,15 +6,15 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
-import { IItem } from '@app//shared/components';
-import { CPSession } from '@app//session';
-import { WallsIntegrationModel } from '@app//libs/integrations/walls/model';
+import { IItem } from '@campus-cloud//shared/components';
+import { CPSession } from '@campus-cloud//session';
+import { WallsIntegrationModel } from '@campus-cloud//libs/integrations/walls/model';
 import { WallsIntegrationsService } from '../walls-integrations.service';
 import { ISocialPostCategory, SocialPostCategoryModel } from '../../model';
-import { IWallsIntegration } from '@app/libs/integrations/walls/model';
-import { CommonIntegrationUtilsService } from '@app//libs/integrations/common/providers';
-import { WallsIntegrationFormComponent } from '@app//libs/integrations/walls/components';
-import { FeedIntegration } from '@app//libs/integrations/common/model/integration.model';
+import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
+import { CommonIntegrationUtilsService } from '@campus-cloud//libs/integrations/common/providers';
+import { WallsIntegrationFormComponent } from '@campus-cloud//libs/integrations/walls/components';
+import { FeedIntegration } from '@campus-cloud//libs/integrations/common/model/integration.model';
 
 @Component({
   selector: 'cp-walls-integrations-edit',

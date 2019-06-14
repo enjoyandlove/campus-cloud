@@ -1,7 +1,10 @@
 import { createEntityAdapter, Dictionary, EntityAdapter, EntityState } from '@ngrx/entity';
 
 import * as fromCategories from '../actions';
-import { ICategory, ICategoriesApiQuery } from '@libs/locations/common/categories/model';
+import {
+  ICategory,
+  ICategoriesApiQuery
+} from '@campus-cloud/libs/locations/common/categories/model';
 
 export interface ICategoriesState extends EntityState<ICategory> {
   error: boolean;

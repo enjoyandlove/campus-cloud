@@ -2,8 +2,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { SharedModule } from '@app/shared/shared.module';
+import { CPSession } from '@campus-cloud/session';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CPPageHeaderComponent } from './cp-page-header.component';
 
 describe('CPPageHeaderComponent', () => {

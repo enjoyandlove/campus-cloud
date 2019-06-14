@@ -2,8 +2,8 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { MODAL_DATA, IModal } from '@shared/services';
-import { IMember, MemerUpdateType } from '@libs/members/common/model';
+import { MODAL_DATA, IModal } from '@campus-cloud/shared/services';
+import { IMember, MemerUpdateType } from '@campus-cloud/libs/members/common/model';
 
 @Component({
   selector: 'cp-orientation-members-delete',

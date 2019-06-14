@@ -5,9 +5,9 @@ import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
-import { CPTrackingService } from '@shared/services';
-import { mockSchool } from '@app/session/mock/school';
+import { CPSession } from '@campus-cloud/session';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { OrientationService } from '../orientation.services';
 import { OrientationUtilsService } from '../orientation.utils.service';
 import { OrientationInfoComponent } from './orientation-info.component';

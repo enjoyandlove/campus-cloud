@@ -4,7 +4,7 @@ import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
 import { baseReducers } from './reducers';
-import { CustomSerializer } from '@app/store/serializers';
+import { CustomSerializer } from '@campus-cloud/store/serializers';
 
 @NgModule({
   imports: [

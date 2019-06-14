@@ -6,13 +6,13 @@ import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 
-import { CPSession } from '@app/session';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
+import { CPSession } from '@campus-cloud/session';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockSchool } from '../../../../../../session/mock';
 import { mockIntegration, MockActivatedRoute, resetForm } from '../tests';
 import { ItemsIntegrationEditComponent } from './integrations-edit.component';
-import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers/integrations.utils.service';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers/integrations.utils.service';
 
 describe('ItemsIntegrationEditComponent', () => {
   configureTestSuite();

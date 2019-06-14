@@ -5,13 +5,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { Actions } from '@ngrx/effects';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { StoreModule } from '../store.module';
-import { configureTestSuite } from '@shared/tests';
-import * as fromDeals from '@app/store/manage/deals';
-import { mockSchool } from '@app/session/mock/school';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import * as fromDeals from '@campus-cloud/store/manage/deals';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { StoreEditComponent } from './store-edit.component';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { StoreFormComponent } from '../components/store-form';
 
 describe('DealsStoreEditComponent', () => {

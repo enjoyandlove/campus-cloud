@@ -4,10 +4,10 @@ import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
-import { Destroyable, Mixin } from '@shared/mixins';
-import * as fromLinks from '@app/store/manage/links';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { CPTrackingService, ErrorService, IModal, MODAL_DATA } from '@shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import * as fromLinks from '@campus-cloud/store/manage/links';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { CPTrackingService, ErrorService, IModal, MODAL_DATA } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-links-delete',

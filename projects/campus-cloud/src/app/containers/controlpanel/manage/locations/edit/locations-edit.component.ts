@@ -7,19 +7,22 @@ import { Subject, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '@app/store';
-import { BaseComponent } from '@app/base';
-import { IItem } from '@shared/components';
-import { baseActions } from '@app/store/base';
-import { CPI18nService } from '@shared/services';
-import { CPSession, ISchool } from '@app/session';
-import { amplitudeEvents } from '@shared/constants';
-import { LatLngValidators } from '@shared/validators';
+import * as fromRoot from '@campus-cloud/store';
+import { BaseComponent } from '@campus-cloud/base';
+import { IItem } from '@campus-cloud/shared/components';
+import { baseActions } from '@campus-cloud/store/base';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPSession, ISchool } from '@campus-cloud/session';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { LatLngValidators } from '@campus-cloud/shared/validators';
 import * as fromCategoryStore from '../categories/store';
-import { LocationType } from '@libs/locations/common/utils';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
-import { LocationModel, ILocation } from '@libs/locations/common/model';
-import { ICategory, LocationCategoryLocale } from '@libs/locations/common/categories/model';
+import { LocationType } from '@campus-cloud/libs/locations/common/utils';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
+import { LocationModel, ILocation } from '@campus-cloud/libs/locations/common/model';
+import {
+  ICategory,
+  LocationCategoryLocale
+} from '@campus-cloud/libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-locations-edit',

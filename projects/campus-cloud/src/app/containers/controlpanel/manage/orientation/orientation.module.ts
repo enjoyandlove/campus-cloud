@@ -3,10 +3,10 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { ModalService } from '@shared/services';
+import { ModalService } from '@campus-cloud/shared/services';
 import { OrientationListComponent } from './list';
 import { ClubsModule } from '../clubs/clubs.module';
-import { SharedModule } from '@shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { OrientationService } from './orientation.services';
 import { OrientationProgramCreateComponent } from './create';
 import { OrientationProgramDeleteComponent } from './delete';

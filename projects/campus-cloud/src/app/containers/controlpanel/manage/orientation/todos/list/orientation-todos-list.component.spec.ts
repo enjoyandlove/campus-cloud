@@ -4,12 +4,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { TodosModule } from '../todos.module';
 import { TodosService } from '../todos.service';
-import { configureTestSuite } from '@shared/tests';
-import { mockSchool } from '@app/session/mock/school';
-import { CPTrackingService, CPI18nService } from '@shared/services';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 import { mockTodo, MockTodosService, MockActivatedRoute } from '../tests';
 import { OrientationTodosListComponent } from './orientation-todos-list.component';
 

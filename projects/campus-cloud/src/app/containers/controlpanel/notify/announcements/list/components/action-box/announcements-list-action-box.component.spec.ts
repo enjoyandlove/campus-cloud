@@ -2,12 +2,12 @@ import { ComponentFixture, async, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement } from '@angular/core';
 
-import { CPSession } from '@app/session';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { mockUser, mockSchool } from '@app/session/mock';
-import { getElementByCPTargetValue } from '@shared/utils/tests';
-import { CPI18nService, CPTrackingService } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockUser, mockSchool } from '@campus-cloud/session/mock';
+import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { AnnouncementsListActionBoxComponent } from './announcements-list-action-box.component';
 
 describe('AnnouncementsListActionBoxComponent', () => {

@@ -14,10 +14,10 @@ import {
   OnDestroy
 } from '@angular/core';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { IStore } from '../store.interface';
-import * as fromDeals from '@app/store/manage/deals';
-import { CPI18nService } from '@app/shared/services/i18n.service';
+import * as fromDeals from '@campus-cloud/store/manage/deals';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 
 @Component({
   selector: 'cp-store-edit',

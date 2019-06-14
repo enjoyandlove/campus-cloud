@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 import { EngagementUtilsService } from '../../engagement.utils.service';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
   selector: 'cp-engagement-resource-stats',

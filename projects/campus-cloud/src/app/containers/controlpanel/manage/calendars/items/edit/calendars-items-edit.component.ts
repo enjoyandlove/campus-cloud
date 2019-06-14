@@ -4,12 +4,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
-import { BaseComponent } from '@app/base';
-import { amplitudeEvents } from '@shared/constants';
-import { CPTrackingService } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 import { ICalendar } from '../../calendars.interface';
-import { IHeader, baseActions } from '@app/store/base';
+import { IHeader, baseActions } from '@campus-cloud/store/base';
 import { CalendarsService } from '../../calendars.services';
 import { CalendarAmplitudeService } from '../../calendar.amplitude.service';
 

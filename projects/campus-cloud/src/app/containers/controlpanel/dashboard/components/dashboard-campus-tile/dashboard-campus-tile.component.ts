@@ -6,7 +6,7 @@ import { HttpParams } from '@angular/common/http';
 import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { DashboardService } from '../../dashboard.service';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
   selector: 'cp-dashboard-campus-tile',

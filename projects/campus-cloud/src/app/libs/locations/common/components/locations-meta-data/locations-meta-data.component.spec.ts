@@ -3,11 +3,11 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { SharedModule } from '@shared/shared.module';
-import { configureTestSuite } from '@app/shared/tests';
-import { getElementByCPTargetValue } from '@shared/utils/tests';
-import { mockLinks, mockLocations } from '@libs/locations/common/tests';
+import { CPSession } from '@campus-cloud/session';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
+import { mockLinks, mockLocations } from '@campus-cloud/libs/locations/common/tests';
 import { LocationsMetaDataComponent } from './locations-meta-data.component';
 
 describe('LocationsMetaDataComponent', () => {

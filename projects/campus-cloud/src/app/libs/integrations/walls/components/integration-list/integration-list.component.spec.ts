@@ -1,10 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CPSession } from '@app/session';
-import { SharedModule } from '@shared/shared.module';
+import { CPSession } from '@campus-cloud/session';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { WallsSocialPostCategoryIdToNamePipe } from './../../pipes';
 import { WallsIntegrationListComponent } from './integration-list.component';
-import { CommonIntegrationsModule } from '@libs/integrations/common/common-integrations.module';
+import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common/common-integrations.module';
 
 describe('WallsIntegrationListComponent', () => {
   let component: WallsIntegrationListComponent;

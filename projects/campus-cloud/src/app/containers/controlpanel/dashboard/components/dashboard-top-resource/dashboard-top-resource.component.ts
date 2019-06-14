@@ -3,7 +3,7 @@
  * between top-events and top services
  */
 import { Component, OnInit, Input } from '@angular/core';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
   selector: 'cp-dashboard-top-resource',

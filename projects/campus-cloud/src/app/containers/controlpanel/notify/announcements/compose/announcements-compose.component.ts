@@ -5,15 +5,15 @@ import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
-import { baseActions, IHeader } from '@app/store';
-import { canSchoolReadResource } from '@shared/utils';
-import { parseErrorResponse } from '@shared/utils/http';
-import { CustomValidators } from '@shared/validators';
+import { CPSession } from '@campus-cloud/session';
+import { baseActions, IHeader } from '@campus-cloud/store';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils';
+import { parseErrorResponse } from '@campus-cloud/shared/utils/http';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { AnnouncementsService } from '../announcements.service';
 import { AudienceType } from '@controlpanel/audience/audience.status';
-import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@shared/constants';
-import { CPI18nService, StoreService, CPTrackingService } from '@shared/services';
+import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPI18nService, StoreService, CPTrackingService } from '@campus-cloud/shared/services';
 import { AudienceUtilsService } from '@controlpanel/audience/audience.utils.service';
 
 interface IState {

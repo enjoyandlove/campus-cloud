@@ -7,15 +7,15 @@ import { map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import IEvent from '../event.interface';
-import { FORMAT } from '@shared/pipes/date';
-import { CPDate, CPMap } from '@shared/utils';
+import { FORMAT } from '@campus-cloud/shared/pipes/date';
+import { CPDate, CPMap } from '@campus-cloud/shared/utils';
 import { CheckInMethod } from '../event.status';
 import { EventsService } from '../events.service';
-import { CPSession, ISchool } from '@app/session';
-import { CustomValidators } from '@shared/validators';
-import { baseActions, IHeader } from '@app/store/base';
+import { CPSession, ISchool } from '@campus-cloud/session';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { baseActions, IHeader } from '@campus-cloud/store/base';
 import { EventUtilService } from '../events.utils.service';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { EventsComponent } from '../list/base/events.component';
 import { EventAttendance, EventFeedback } from './../event.status';
 import { EventsAmplitudeService } from '../events.amplitude.service';
@@ -27,7 +27,7 @@ import {
   StoreService,
   CPI18nService,
   CPTrackingService
-} from '@shared/services';
+} from '@campus-cloud/shared/services';
 
 const FORMAT_WITH_TIME = 'F j, Y h:i K';
 const FORMAT_WITHOUT_TIME = 'F j, Y';

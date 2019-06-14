@@ -4,13 +4,13 @@ import { RouterModule } from '@angular/router';
 import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
-import { configureTestSuite } from '@app/shared/tests';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { DiningDeleteComponent } from './dining-delete.component';
-import { mockLocations as mockDining } from '@libs/locations/common/tests';
+import { mockLocations as mockDining } from '@campus-cloud/libs/locations/common/tests';
 
 describe('DiningDeleteComponent', () => {
   configureTestSuite();

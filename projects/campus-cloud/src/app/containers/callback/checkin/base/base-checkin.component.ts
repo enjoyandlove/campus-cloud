@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { CPI18nPipe } from '@shared/pipes';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import ICheckIn from '../checkin.interface';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CheckinUtilsService } from '../checkin.utils.service';
-import { LayoutWidth, LayoutAlign } from '@app/layouts/interfaces';
-import { CPI18nService, CPTrackingService } from '@shared/services';
+import { LayoutWidth, LayoutAlign } from '@campus-cloud/layouts/interfaces';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 const jsPDF = require('jspdf');
 

@@ -6,12 +6,12 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { IItem } from '@shared/components';
-import { ZendeskService } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { IItem } from '@campus-cloud/shared/components';
+import { ZendeskService } from '@campus-cloud/shared/services';
 import { ItemsIntegrationsUitlsService } from '../items-integrations.utils.service';
-import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
-import { IEventIntegration, EventIntegration } from '@libs/integrations/events/model';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
+import { IEventIntegration, EventIntegration } from '@campus-cloud/libs/integrations/events/model';
 
 @Component({
   selector: 'cp-items-integrations-edit',

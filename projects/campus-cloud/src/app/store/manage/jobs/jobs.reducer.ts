@@ -1,6 +1,6 @@
 import * as actions from './jobs.actions';
 import { IJobsState } from './jobs.state';
-import { IItem, getItem } from '@campus-cloud/src/app/shared/components';
+import { IItem, getItem } from '@projects/campus-cloud/src/app/shared/components';
 
 export const initialState: IJobsState = {
   employers: [],

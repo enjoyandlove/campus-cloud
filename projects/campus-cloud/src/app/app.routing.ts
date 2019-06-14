@@ -1,8 +1,8 @@
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { isProd } from '@app/config/env';
-import { pageTitle } from '@shared/constants';
+import { isProd } from '@campus-cloud/config/env';
+import { pageTitle } from '@campus-cloud/shared/constants';
 import { LoginComponent, LogoutComponent, LostPasswordComponent } from './containers/auth';
 
 const routes: Routes = [

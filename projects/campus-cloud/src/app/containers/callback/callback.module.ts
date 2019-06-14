@@ -9,10 +9,10 @@ import { CallbackRoutingModule } from './callback.routing.module';
 import { CallbackPasswordResetComponent } from './password-reset';
 
 import { AuthService } from '../auth/auth.service';
-import { SharedModule } from '@shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CallbackService } from './callback.service';
 import { CheckinService } from './checkin/checkin.service';
-import { LayoutsModule } from '@app/layouts/layouts.module';
+import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 import { FeedbackService } from './feedback/feedback.service';
 import { CheckinUtilsService } from './checkin/checkin.utils.service';
 

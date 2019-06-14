@@ -1,17 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from '@shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { AthleticsListMembersComponent } from './list';
 import { AthleticsMembersEditComponent } from './edit';
 import { AthleticsMembersDeleteComponent } from './delete';
 import { AthleticsMembersCreateComponent } from './create';
 import { AthleticsMembersRoutingModule } from './athletics-members.routing.module';
-import { LibsCommmonMembersModule } from '@libs/members/common/common-members.module';
+import { LibsCommmonMembersModule } from '@campus-cloud/libs/members/common/common-members.module';
 import {
   LibsCommonMembersService,
   LibsCommonMembersUtilsService
-} from '@libs/members/common/providers';
+} from '@campus-cloud/libs/members/common/providers';
 
 @NgModule({
   declarations: [

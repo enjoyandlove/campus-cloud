@@ -11,11 +11,14 @@ import {
 import { get as _get } from 'lodash';
 import { Observable } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { BaseComponent } from '@app/base';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { permissions, permissionType, permissionIcon } from '../permissions';
-import { canSchoolWriteResource, canStoreReadAndWriteResource } from '@shared/utils/privileges';
+import {
+  canSchoolWriteResource,
+  canStoreReadAndWriteResource
+} from '@campus-cloud/shared/utils/privileges';
 
 interface ISelected {
   id: number;

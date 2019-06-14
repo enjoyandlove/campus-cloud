@@ -7,18 +7,18 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '@app/store';
-import { CPSession } from '@app/session';
-import { IItem } from '@shared/components';
-import { baseActions } from '@app/store/base';
-import { Destroyable, Mixin } from '@shared/mixins';
-import { amplitudeEvents } from '@shared/constants';
-import { CPI18nService } from '@app/shared/services';
-import { LatLngValidators } from '@shared/validators';
+import * as fromRoot from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session';
+import { IItem } from '@campus-cloud/shared/components';
+import { baseActions } from '@campus-cloud/store/base';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { LatLngValidators } from '@campus-cloud/shared/validators';
 import * as fromCategoryStore from '../categories/store';
-import { ICategory } from '@libs/locations/common/categories/model';
-import { DiningModel, IDining } from '@libs/locations/common/model';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
+import { DiningModel, IDining } from '@campus-cloud/libs/locations/common/model';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 
 @Mixin([Destroyable])
 @Component({

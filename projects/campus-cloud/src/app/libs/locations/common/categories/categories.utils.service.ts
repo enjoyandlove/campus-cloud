@@ -4,7 +4,7 @@ import {
   ICategory,
   categoryTypesMap,
   categoryIconType
-} from '@libs/locations/common/categories/model';
+} from '@campus-cloud/libs/locations/common/categories/model';
 
 @Injectable()
 export class CategoriesUtilsService {

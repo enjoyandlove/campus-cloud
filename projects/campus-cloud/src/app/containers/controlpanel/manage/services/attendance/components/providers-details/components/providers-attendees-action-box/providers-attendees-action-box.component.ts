@@ -2,11 +2,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CheckInMethod } from '@controlpanel/manage/events/event.status';
-import { CP_TRACK_TO } from '@shared/directives/tracking/tracking.directive';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking/tracking.directive';
 import IServiceProvider from '@controlpanel/manage/services/providers.interface';
 import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';

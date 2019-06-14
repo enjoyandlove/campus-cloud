@@ -1,10 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { amplitudeEvents } from '@shared/constants';
-import { AdminService, CPTrackingService } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { AdminService, CPTrackingService } from '@campus-cloud/shared/services';
 
 declare var $: any;
 

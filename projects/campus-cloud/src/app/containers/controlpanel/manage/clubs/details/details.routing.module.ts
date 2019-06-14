@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ClubsInfoComponent } from '../info';
 import { ClubsWallComponent } from '../wall';
-import { pageTitle } from '@shared/constants';
+import { pageTitle } from '@campus-cloud/shared/constants';
 import { ClubsDetailsComponent } from './details.component';
 
 const appRoutes: Routes = [

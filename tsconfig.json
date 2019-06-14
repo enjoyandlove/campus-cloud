@@ -14,11 +14,8 @@
     "skipLibCheck": true,
     "typeRoots": ["node_modules/@types"],
     "paths": {
-      "@campus-cloud/*": ["projects/campus-cloud/*"],
-      "@app/*": ["projects/campus-cloud/src/app/*"],
-      "@libs/*": ["projects/campus-cloud/src/app/libs/*"],
-      "@shared/*": ["projects/campus-cloud/src/app/shared/*"],
-      "@containers/*": ["projects/campus-cloud/src/app/containers/*"],
+      "@projects/*": ["projects/*"],
+      "@campus-cloud/*": ["projects/campus-cloud/src/app/*"],
       "@controlpanel/*": ["projects/campus-cloud/src/app/containers/controlpanel/*"]
     }
   },

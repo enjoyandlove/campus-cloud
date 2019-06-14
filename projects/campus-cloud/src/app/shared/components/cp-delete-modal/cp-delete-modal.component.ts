@@ -1,6 +1,6 @@
 import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
 
-import { CPI18nService } from '@shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 
 interface IWarning {
   label: string;

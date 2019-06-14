@@ -1,7 +1,7 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
-import { ICategory } from '@libs/locations/common/categories/model';
+import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
 
 export enum CategoriesActions {
   GET_CATEGORIES = '[manage.events.locations.categories] get categories',

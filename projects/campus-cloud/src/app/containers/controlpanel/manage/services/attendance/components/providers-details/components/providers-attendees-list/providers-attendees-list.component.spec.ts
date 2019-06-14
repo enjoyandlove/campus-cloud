@@ -4,10 +4,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { RootStoreModule } from '@app/store';
-import { CPI18nService } from '@shared/services';
-import { configureTestSuite } from '@shared/tests';
+import { CPSession } from '@campus-cloud/session';
+import { RootStoreModule } from '@campus-cloud/store';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { mkSearch } from '../../../../tests/utils';
 import { mockProvider } from '../../../../tests/mock';
 import { ServicesModule } from '../../../../../services.module';

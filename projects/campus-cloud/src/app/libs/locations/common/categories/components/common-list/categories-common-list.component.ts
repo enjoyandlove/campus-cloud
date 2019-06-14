@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { TooltipOption } from 'bootstrap';
 import { Observable } from 'rxjs';
 
-import { ICategory } from '@libs/locations/common/categories/model';
+import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-categories-common-list',

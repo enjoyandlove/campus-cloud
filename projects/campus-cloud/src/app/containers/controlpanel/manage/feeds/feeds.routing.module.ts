@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { FeedsListComponent } from './list';
-import { pageTitle } from '@shared/constants';
-import { PrivilegesGuard } from '@app/config/guards';
+import { pageTitle } from '@campus-cloud/shared/constants';
+import { PrivilegesGuard } from '@campus-cloud/config/guards';
 
 const appRoutes: Routes = [
   {

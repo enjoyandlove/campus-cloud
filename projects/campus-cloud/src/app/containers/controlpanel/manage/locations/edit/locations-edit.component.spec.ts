@@ -7,14 +7,14 @@ import { omit } from 'lodash';
 import { of } from 'rxjs';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { fillForm } from '@shared/utils/tests/form';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
-import { configureTestSuite } from '@app/shared/tests';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { fillForm } from '@campus-cloud/shared/utils/tests/form';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { LocationsEditComponent } from './locations-edit.component';
-import { mockLocations, filledForm } from '@libs/locations/common/tests';
+import { mockLocations, filledForm } from '@campus-cloud/libs/locations/common/tests';
 
 describe('LocationsEditComponent', () => {
   configureTestSuite();

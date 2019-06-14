@@ -26,9 +26,9 @@ import { ServicesProviderDetailsComponent } from './attendance/components';
 /**
  * Excel
  */
-import { pageTitle } from '@shared/constants';
+import { pageTitle } from '@campus-cloud/shared/constants';
 import { ServicesExcelComponent } from './excel';
-import { PrivilegesGuard } from '@app/config/guards';
+import { PrivilegesGuard } from '@campus-cloud/config/guards';
 import { ServicesResolver } from './services.resolver';
 
 const appRoutes: Routes = [

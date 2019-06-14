@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { IItem } from '@shared/components';
-import { CP_TRACK_TO } from '@shared/directives';
-import { amplitudeEvents } from '@shared/constants';
-import { CPTrackingService } from '@shared/services';
+import { IItem } from '@campus-cloud/shared/components';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-locations-list-top-bar',

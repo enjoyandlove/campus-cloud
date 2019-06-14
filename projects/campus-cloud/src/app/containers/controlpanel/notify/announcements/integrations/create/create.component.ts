@@ -5,14 +5,14 @@ import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { IItem } from '@shared/components';
-import { Mixin, Destroyable } from '@shared/mixins';
+import { CPSession } from '@campus-cloud/session';
+import { IItem } from '@campus-cloud/shared/components';
+import { Mixin, Destroyable } from '@campus-cloud/shared/mixins';
 import { AnnouncementIntegrationModel } from '../model';
 import { types } from '../../compose/announcement-types';
-import { IStore, IModal, MODAL_DATA } from '@shared/services';
+import { IStore, IModal, MODAL_DATA } from '@campus-cloud/shared/services';
 import { AnnouncementPriority } from '../../announcements.interface';
-import { RSS_ITEM, ATOM_ITEM } from '@libs/integrations/common/providers';
+import { RSS_ITEM, ATOM_ITEM } from '@campus-cloud/libs/integrations/common/providers';
 import { IAnnouncementsIntegrationState } from '../store/reducers/integration.reducer';
 
 @Component({

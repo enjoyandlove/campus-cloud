@@ -5,9 +5,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { sortBy } from 'lodash';
 
-import { API } from '@app/config/api';
-import { HTTPService } from '@app/base';
-import { CPI18nService } from '@shared/services';
+import { API } from '@campus-cloud/config/api';
+import { HTTPService } from '@campus-cloud/base';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { IPersona } from '../customise/personas/persona.interface';
 
 @Injectable()

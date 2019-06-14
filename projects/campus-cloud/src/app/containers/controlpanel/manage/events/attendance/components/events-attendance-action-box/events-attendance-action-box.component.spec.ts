@@ -3,11 +3,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/index';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { mockAttendees } from '../../../tests';
-import { CPI18nService } from '@shared/services';
-import { mockUser } from '@app/session/mock/user';
-import { mockSchool } from '@app/session/mock/school';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { mockUser } from '@campus-cloud/session/mock/user';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EventsModule } from '../../../events.module';
 import { CheckInMethod } from '../../../event.status';
 import { EventUtilService } from '../../../events.utils.service';

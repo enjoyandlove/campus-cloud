@@ -4,20 +4,20 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { IClub } from '../club.interface';
-import { baseActions } from '@app/store/base';
+import { baseActions } from '@campus-cloud/store/base';
 import { ClubsService } from '../clubs.service';
 import { ClubsDeleteComponent } from '../delete';
-import { CP_TRACK_TO } from '@shared/directives';
-import { amplitudeEvents } from '@shared/constants';
-import { BaseComponent } from '@app/base/base.component';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ManageHeaderService } from './../../utils/header';
 import { ClubsUtilsService } from '../clubs.utils.service';
 import { ClubSocialGroup, ClubStatus } from '../club.status';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
-import { CPI18nService, CPTrackingService, ModalService } from '@shared/services';
+import { CPI18nService, CPTrackingService, ModalService } from '@campus-cloud/shared/services';
 
 interface IState {
   clubs: IClub[];

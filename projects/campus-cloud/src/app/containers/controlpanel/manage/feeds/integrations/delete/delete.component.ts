@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
-import { IWallsIntegration } from '@libs/integrations/walls/model';
+import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
 
 @Component({
   selector: 'cp-walls-integrations-delete',

@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CPI18nService } from '@shared/services';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { TestersActionBoxComponent } from './testers-action-box.component';
 
 describe('TestersActionBoxComponent', () => {

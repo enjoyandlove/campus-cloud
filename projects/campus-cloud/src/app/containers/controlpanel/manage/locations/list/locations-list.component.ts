@@ -6,18 +6,21 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '@app/store';
-import { CPSession } from '@app/session';
-import { IItem } from '@shared/components';
+import * as fromRoot from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session';
+import { IItem } from '@campus-cloud/shared/components';
 import { ManageHeaderService } from '../../utils';
-import { amplitudeEvents } from '@shared/constants';
-import { ILocation } from '@libs/locations/common/model';
-import { BaseComponent } from '@app/base/base.component';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { ILocation } from '@campus-cloud/libs/locations/common/model';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import * as fromCategoryStore from '../categories/store';
-import { LocationType } from '@libs/locations/common/utils';
-import { CPI18nService, CPTrackingService } from '@shared/services';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
-import { ICategory, LocationCategoryLocale } from '@libs/locations/common/categories/model';
+import { LocationType } from '@campus-cloud/libs/locations/common/utils';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
+import {
+  ICategory,
+  LocationCategoryLocale
+} from '@campus-cloud/libs/locations/common/categories/model';
 
 interface IState {
   search_str: string;

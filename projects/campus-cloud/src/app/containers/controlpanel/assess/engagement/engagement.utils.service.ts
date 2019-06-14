@@ -4,14 +4,14 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { canSchoolReadResource } from '@shared/utils';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { EngagementService } from './engagement.service';
 import { AudienceType } from '../../audience/audience.status';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { DEFAULT, CP_PRIVILEGES_MAP } from '@shared/constants';
-import * as DATE_RANGE from '@shared/components/cp-range-picker';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { DEFAULT, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import * as DATE_RANGE from '@campus-cloud/shared/components/cp-range-picker';
 import { AssessType, FilterType, PersonaType } from './engagement.status';
 
 export interface IStudentFilter {

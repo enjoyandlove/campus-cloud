@@ -3,14 +3,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { CPSession } from '@app/session';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool, mockUser } from '@app/session/mock';
+import { CPSession } from '@campus-cloud/session';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool, mockUser } from '@campus-cloud/session/mock';
 import { ListUpcomingComponent } from './list-upcoming.component';
 import { EventUtilService } from './../../../events.utils.service';
-import { CPTrackingService, CPI18nService } from '@shared/services';
-import { IntegrationSourceToIconPipe } from '@libs/integrations/common/pipes/source-to-icon';
+import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
+import { IntegrationSourceToIconPipe } from '@campus-cloud/libs/integrations/common/pipes/source-to-icon';
 
 const initialState = {
   start: null,

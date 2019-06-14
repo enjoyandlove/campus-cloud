@@ -12,11 +12,11 @@ import { HttpParams } from '@angular/common/http';
 import { tap } from 'rxjs/internal/operators';
 import { BehaviorSubject } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { StoreService } from '@shared/services';
-import { CustomValidators } from '@shared/validators';
+import { CPSession } from '@campus-cloud/session';
+import { StoreService } from '@campus-cloud/shared/services';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { StudentsService } from './../students.service';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 
 const THROTTLED_STATUS = 1;
 

@@ -1,15 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormArray, FormGroup } from '@angular/forms';
 
-import { CPI18nService } from '@shared/services';
-import { SharedModule } from '@shared/shared.module';
-import { configureTestSuite } from '@app/shared/tests';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { getElementByCPTargetValue } from '@shared/utils/tests';
-import { mockScheduleData } from '@libs/locations/common/tests';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
-import { LocationsDayLabelPipe } from '@libs/locations/common/pipes';
-import { DiningModel, ScheduleModel } from '@libs/locations/common/model';
+import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
+import { mockScheduleData } from '@campus-cloud/libs/locations/common/tests';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
+import { LocationsDayLabelPipe } from '@campus-cloud/libs/locations/common/pipes';
+import { DiningModel, ScheduleModel } from '@campus-cloud/libs/locations/common/model';
 import { DiningOpeningHoursFormComponent } from './dining-opening-hours-form.component';
 
 describe('DiningOpeningHoursFormComponent', () => {

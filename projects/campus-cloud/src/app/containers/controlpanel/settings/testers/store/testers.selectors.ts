@@ -1,7 +1,7 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import * as reducer from './testers.reducers';
-import { SETTINGS_TESTERS } from '@shared/constants';
+import { SETTINGS_TESTERS } from '@campus-cloud/shared/constants';
 import { ITestersFeature, ITestersState } from './testers.state';
 
 const getTesterFeature = createFeatureSelector<ITestersFeature>(SETTINGS_TESTERS);

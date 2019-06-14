@@ -2,10 +2,10 @@ import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { mockSchool } from '@app/session/mock';
-import { CPI18nService } from '@shared/services';
-import { SharedModule } from '@shared/shared.module';
+import { CPSession } from '@campus-cloud/session';
+import { mockSchool } from '@campus-cloud/session/mock';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CampusLink } from '@controlpanel/manage/links/tile';
 import { MockIntegrationDataService } from '../../tests/mocks';
 import { IntegrationDataService, ContentUtilsProviders } from '../../providers';

@@ -10,27 +10,27 @@ import { DebugElement } from '@angular/core';
 import { of } from 'rxjs';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { MockActivatedRoute } from '../tests';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { mockMember } from '@libs/members/common/tests';
-import { RouterParamsUtils } from '@shared/utils/router';
-import { CustomSerializer } from '@app/store/serializers';
-import { RootStoreModule } from '@app/store/root-store.module';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockMember } from '@campus-cloud/libs/members/common/tests';
+import { RouterParamsUtils } from '@campus-cloud/shared/utils/router';
+import { CustomSerializer } from '@campus-cloud/store/serializers';
+import { RootStoreModule } from '@campus-cloud/store/root-store.module';
 import { OrientationMembersListComponent } from './list.component';
-import { LibsCommonMembersUtilsService } from '@libs/members/common/providers';
-import { CPTrackingService, CPI18nService, ModalService } from '@shared/services';
-import { LibsCommmonMembersModule } from '@libs/members/common/common-members.module';
+import { LibsCommonMembersUtilsService } from '@campus-cloud/libs/members/common/providers';
+import { CPTrackingService, CPI18nService, ModalService } from '@campus-cloud/shared/services';
+import { LibsCommmonMembersModule } from '@campus-cloud/libs/members/common/common-members.module';
 import {
   CPSpinnerComponent,
   CPNoContentComponent,
   CPPaginationComponent
-} from '@shared/components';
+} from '@campus-cloud/shared/components';
 import {
   LibsMembersListComponent,
   MembersActionBoxComponent
-} from '@libs/members/common/components';
+} from '@campus-cloud/libs/members/common/components';
 
 describe('OrientationMembersListComponent', () => {
   configureTestSuite();

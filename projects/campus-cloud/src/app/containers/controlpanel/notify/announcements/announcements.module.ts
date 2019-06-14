@@ -9,7 +9,7 @@ import {
 } from './list/components';
 
 import { AnnouncementsListComponent } from './list';
-import { SharedModule } from '@shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { AnnouncementDeleteComponent } from './delete';
 import { AnnouncementsConfirmComponent } from './confirm';
 import { AnnouncementsComposeComponent } from './compose';
@@ -17,7 +17,7 @@ import { AnnouncementsService } from './announcements.service';
 import { AudienceModule } from './../../audience/audience.module';
 import { AnnouncementsRoutingModule } from './announcements.routing.module';
 import { AudienceSharedModule } from './../../audience/shared/audience.shared.module';
-import { CommonIntegrationsModule } from '@libs/integrations/common/common-integrations.module';
+import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common/common-integrations.module';
 
 @NgModule({
   declarations: [

@@ -10,10 +10,10 @@ import { DiningCategoriesCreateComponent } from './create';
 import { DiningCategoriesDeleteComponent } from './delete';
 
 import { effects, reducers } from './store';
-import { SharedModule } from '@shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { DiningCategoriesService } from './dining-categories.service';
 import { DiningCategoriesRoutingModule } from './dining-categories.routing.module';
-import { CommonCategoriesModule } from '@libs/locations/common/categories/common-categories.module';
+import { CommonCategoriesModule } from '@campus-cloud/libs/locations/common/categories/common-categories.module';
 
 @NgModule({
   declarations: [

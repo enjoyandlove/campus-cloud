@@ -1,9 +1,9 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { PrivilegesGuard } from '@app/config/guards';
+import { PrivilegesGuard } from '@campus-cloud/config/guards';
 import { NotifyComponent } from './notify.component';
-import { CP_PRIVILEGES_MAP, pageTitle } from '@shared/constants';
+import { CP_PRIVILEGES_MAP, pageTitle } from '@campus-cloud/shared/constants';
 
 const appRoutes: Routes = [
   { path: '', redirectTo: 'announcements', pathMatch: 'full' },

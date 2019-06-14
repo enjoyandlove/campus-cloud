@@ -5,17 +5,17 @@ import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPMap } from '@shared/utils';
-import { CPSession } from '@app/session';
+import { CPMap } from '@campus-cloud/shared/utils';
+import { CPSession } from '@campus-cloud/session';
 import { ClubStatus } from '../club.status';
 import { ClubsService } from '../clubs.service';
-import { CPTrackingService } from '@shared/services';
-import { CustomValidators } from '@shared/validators';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { ClubsUtilsService } from '../clubs.utils.service';
 import { membershipTypes, statusTypes } from './permissions';
-import { CPI18nService } from '@shared/services/i18n.service';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { baseActions, baseActionClass } from '@app/store/base';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { baseActions, baseActionClass } from '@campus-cloud/store/base';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 
 @Component({

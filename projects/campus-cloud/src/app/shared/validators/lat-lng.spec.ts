@@ -1,10 +1,10 @@
 import { TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { CPSession } from '@app/session';
-import { CPLocationsService } from '@shared/services';
-import { LatLngValidators } from '@shared/validators/lat-lng';
-import { LocationsService } from '@containers/controlpanel/manage/locations/locations.service';
+import { CPSession } from '@campus-cloud/session';
+import { CPLocationsService } from '@campus-cloud/shared/services';
+import { LatLngValidators } from '@campus-cloud/shared/validators/lat-lng';
+import { LocationsService } from '@campus-cloud/containers/controlpanel/manage/locations/locations.service';
 
 const fb = new FormBuilder();
 class MockLocationsService {}

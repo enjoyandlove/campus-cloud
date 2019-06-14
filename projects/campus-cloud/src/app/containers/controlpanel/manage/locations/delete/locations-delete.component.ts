@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '@app/store';
-import { ILocation } from '@libs/locations/common/model';
+import * as fromRoot from '@campus-cloud/store';
+import { ILocation } from '@campus-cloud/libs/locations/common/model';
 
 declare var $: any;
 

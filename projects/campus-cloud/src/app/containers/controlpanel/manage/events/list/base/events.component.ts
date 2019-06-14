@@ -2,11 +2,11 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { Component, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { BaseComponent } from '@app/base';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { EventType } from '../../event.status';
 import { EventsService } from '../../events.service';
-import { CPI18nService, ModalService } from '@shared/services';
+import { CPI18nService, ModalService } from '@campus-cloud/shared/services';
 import { EventsDeleteComponent } from '@controlpanel/manage/events/delete';
 
 interface IState {

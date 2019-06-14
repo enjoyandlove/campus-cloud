@@ -2,7 +2,7 @@ import { EntityState, EntityAdapter, createEntityAdapter, Dictionary } from '@ng
 
 import * as fromDining from '../actions';
 
-import { IDining } from '@libs/locations/common/model';
+import { IDining } from '@campus-cloud/libs/locations/common/model';
 
 export interface IDiningState extends EntityState<IDining> {
   error: boolean;

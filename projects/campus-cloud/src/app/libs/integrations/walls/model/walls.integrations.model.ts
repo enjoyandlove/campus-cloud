@@ -1,7 +1,7 @@
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
 import { FeedIntegration } from '../../common/model';
-import { CustomValidators } from '@shared/validators';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { IWallsIntegration } from './walls.integrations.interface';
 
 export class WallsIntegrationModel extends FeedIntegration {

@@ -5,14 +5,14 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { of } from 'rxjs';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
-import { mockSchool } from '@app/session/mock/school';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { mockEvent, MockEventService } from './../tests';
-import { CPDeleteModalComponent } from '@shared/components';
-import { CPI18nService, MODAL_DATA } from '@shared/services';
-import { configureTestSuite } from '@campus-cloud/src/app/shared/tests';
+import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
+import { CPI18nService, MODAL_DATA } from '@campus-cloud/shared/services';
+import { configureTestSuite } from '@projects/campus-cloud/src/app/shared/tests';
 import { EventsDeleteComponent } from './events-delete.component';
 import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 

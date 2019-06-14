@@ -1,7 +1,7 @@
 import { HttpParams } from '@angular/common/http';
 import { of } from 'rxjs';
 
-import { IDateRange } from '@shared/components';
+import { IDateRange } from '@campus-cloud/shared/components';
 import IServiceProvider from '../../providers.interface';
 import { IFilterState } from '../../providers.utils.service';
 

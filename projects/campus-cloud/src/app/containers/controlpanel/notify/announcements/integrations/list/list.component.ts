@@ -6,11 +6,11 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
-import * as fromRoot from '@app/store';
-import { CPSession } from '@app/session';
+import * as fromRoot from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session';
 import { IAnnouncementsIntegration } from '../model';
-import { ModalService, IStore } from '@shared/services';
-import { BaseComponent } from '@app/base/base.component';
+import { ModalService, IStore } from '@campus-cloud/shared/services';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import { AnnouncementsIntegrationDeleteComponent } from '../delete';
 import { AnnouncementsIntegrationCreateComponent } from '../create';
 

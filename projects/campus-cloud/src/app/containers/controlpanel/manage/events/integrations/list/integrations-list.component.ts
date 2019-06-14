@@ -6,12 +6,12 @@ import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import * as fromRoot from '@app/store';
-import { BaseComponent } from '@app/base';
-import { CPSession } from '@app/session';
-import { FORMAT } from '@shared/pipes/date/date.pipe';
-import { CPI18nService } from '@shared/services/i18n.service';
-import { IEventIntegration } from '@libs/integrations/events/model';
+import * as fromRoot from '@campus-cloud/store';
+import { BaseComponent } from '@campus-cloud/base';
+import { CPSession } from '@campus-cloud/session';
+import { FORMAT } from '@campus-cloud/shared/pipes/date/date.pipe';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model';
 import { IntegrationsUitlsService } from './../integrations.utils.service';
 
 @Component({

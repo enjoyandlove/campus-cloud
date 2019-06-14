@@ -14,14 +14,14 @@ import { DiningCreateComponent } from './create';
 import { DiningDeleteComponent } from './delete';
 
 import { DiningService } from './dining.service';
-import { SharedModule } from '@shared/shared.module';
-import { CustomSerializer } from '@app/store/serializers';
-import { LayoutsModule } from '@app/layouts/layouts.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { CustomSerializer } from '@campus-cloud/store/serializers';
+import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 import { DiningRoutingModule } from './dining.routing.module';
 import { LocationsModule } from '../locations/locations.module';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 import { DiningCategoriesModule } from './categories/dining-categories.module';
-import { CommonLocationsModule } from '@libs/locations/common/common-locations.module';
+import { CommonLocationsModule } from '@campus-cloud/libs/locations/common/common-locations.module';
 
 @NgModule({
   declarations: [

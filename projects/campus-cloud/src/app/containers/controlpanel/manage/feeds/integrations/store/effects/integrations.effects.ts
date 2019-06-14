@@ -4,15 +4,18 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import * as fromActions from '../actions';
-import { IItem } from '@shared/components';
-import { CPDate } from '@shared/utils/date/date';
-import { amplitudeEvents } from '@shared/constants';
-import { CPTrackingService } from '@shared/services';
+import { IItem } from '@campus-cloud/shared/components';
+import { CPDate } from '@campus-cloud/shared/utils/date/date';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 import { WallsIntegrationsService } from '../../walls-integrations.service';
-import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
-import { IWallsIntegration, WallsIntegrationModel } from '@libs/integrations/walls/model';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
+import {
+  IWallsIntegration,
+  WallsIntegrationModel
+} from '@campus-cloud/libs/integrations/walls/model';
 
 @Injectable()
 export class IntegrationsEffects {

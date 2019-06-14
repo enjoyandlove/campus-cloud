@@ -1,14 +1,14 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LayoutWidth } from '@app/layouts/interfaces';
+import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
-import { baseActionClass } from '@app/store';
+import { CPSession } from '@campus-cloud/session';
+import { baseActionClass } from '@campus-cloud/store';
 import { BannerService } from '../banner.service';
-import * as school from '@app/session/school.interface';
-import { baseActions, ISnackbar } from '@app/store/base';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import * as school from '@campus-cloud/session/school.interface';
+import { baseActions, ISnackbar } from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import {
   CPI18nService,
   SchoolService,
@@ -16,7 +16,7 @@ import {
   CPCroppieService,
   CPTrackingService,
   FileUploadService
-} from '@shared/services';
+} from '@campus-cloud/shared/services';
 
 const IMAGE_SIZE = {
   width: 664,

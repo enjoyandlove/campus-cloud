@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 
 interface IChildren {
   url: string;

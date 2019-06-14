@@ -11,7 +11,7 @@ import {
   CalendarsItemsEditComponent
 } from './items';
 
-import { pageTitle } from '@shared/constants';
+import { pageTitle } from '@campus-cloud/shared/constants';
 import { CalendarsItemsBulkCreateComponent } from './items/bulk-create/calendats-items-bulk-create.component';
 
 const appRoutes: Routes = [

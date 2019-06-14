@@ -1,7 +1,7 @@
 import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 
 import * as fromActions from '../actions';
-import { mockSchool } from '@app/session/mock';
+import { mockSchool } from '@campus-cloud/session/mock';
 import { mockIntegration } from '../../tests/mocks';
 import * as fromReducer from './integrations.reducers';
 

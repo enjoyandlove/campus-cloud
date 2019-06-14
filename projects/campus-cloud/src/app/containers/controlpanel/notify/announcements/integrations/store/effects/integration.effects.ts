@@ -5,16 +5,21 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import * as fromActions from '../actions';
 import * as fromStore from '../../store';
-import * as fromRoot from '@app/store/base';
-import { amplitudeEvents } from '@shared/constants';
+import * as fromRoot from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { IAnnouncementsIntegration } from '../../model';
 import { IntegrationsService } from '../../integrations.service';
-import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import { types } from '@controlpanel/notify/announcements/compose/announcement-types';
-import { CPI18nService, StoreService, IStore, CPTrackingService } from '@shared/services';
+import {
+  CPI18nService,
+  StoreService,
+  IStore,
+  CPTrackingService
+} from '@campus-cloud/shared/services';
 
 @Injectable()
 export class AnnouncementIntegrationsEffects {

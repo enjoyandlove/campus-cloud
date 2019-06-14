@@ -8,10 +8,10 @@ import {
   AfterContentInit,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { Mixin, Destroyable } from '@shared/mixins';
+import { Mixin, Destroyable } from '@campus-cloud/shared/mixins';
 import { Subject } from 'rxjs';
 
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { ResourceSelectorItemComponent } from '../resource-selector-item';
 import { ContentUtilsProviders } from './../../providers/content.utils.providers';
 

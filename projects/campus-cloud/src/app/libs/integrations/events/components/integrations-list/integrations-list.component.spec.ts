@@ -3,18 +3,18 @@ import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { mockSchool } from '@app/session/mock';
+import { CPSession } from '@campus-cloud/session';
+import { mockSchool } from '@campus-cloud/session/mock';
 import { IEventIntegration } from '../../model';
-import { CPI18nService } from '@shared/services';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { getElementByCPTargetValue } from '@shared/utils/tests';
-import { EventIntegration } from '@libs/integrations/events/model';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
+import { EventIntegration } from '@campus-cloud/libs/integrations/events/model';
 import { EventIntegrationsListComponent } from './integrations-list.component';
-import { mockIntegration } from '@containers/controlpanel/manage/events/integrations/tests';
-import { CommonIntegrationsModule } from '@libs/integrations/common/common-integrations.module';
-import { EventsIntegrationsModule } from '@libs/integrations/events/events-integrations.module';
+import { mockIntegration } from '@campus-cloud/containers/controlpanel/manage/events/integrations/tests';
+import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common/common-integrations.module';
+import { EventsIntegrationsModule } from '@campus-cloud/libs/integrations/events/events-integrations.module';
 
 describe('EventIntegrationsListComponent', () => {
   let de: DebugElement;

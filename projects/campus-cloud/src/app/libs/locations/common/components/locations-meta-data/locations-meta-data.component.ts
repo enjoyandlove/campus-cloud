@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { IDining, ILocation } from '@libs/locations/common/model';
+import { IDining, ILocation } from '@campus-cloud/libs/locations/common/model';
 
 @Component({
   selector: 'cp-locations-meta-data',

@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { amplitudeEvents } from '@app//shared/constants/analytics';
-import { CPI18nService } from '@app//shared/services/i18n.service';
-import { ICPButtonProps } from '@app//shared/components';
-import { CPTrackingService, RouteLevel } from '@app//shared/services';
-import { LibsCommonMembersService } from '@app//libs/members/common/providers';
-import { IMember, MemerUpdateType } from '@app/libs/members/common/model';
+import { amplitudeEvents } from '@campus-cloud//shared/constants/analytics';
+import { CPI18nService } from '@campus-cloud//shared/services/i18n.service';
+import { ICPButtonProps } from '@campus-cloud//shared/components';
+import { CPTrackingService, RouteLevel } from '@campus-cloud//shared/services';
+import { LibsCommonMembersService } from '@campus-cloud//libs/members/common/providers';
+import { IMember, MemerUpdateType } from '@campus-cloud/libs/members/common/model';
 
 @Component({
   selector: 'cp-members-delete',

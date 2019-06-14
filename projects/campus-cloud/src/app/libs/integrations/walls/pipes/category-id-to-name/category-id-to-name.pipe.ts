@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { IItem } from '@shared/components';
+import { IItem } from '@campus-cloud/shared/components';
 
 @Pipe({
   name: 'socialPostcategoryIdToName'

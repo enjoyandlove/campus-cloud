@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 
-import { CPSession } from '@app/session';
-import { CPDate } from '@shared/utils/date';
-import { mockSchool } from '@app/session/mock';
-import { CPI18nService } from '@shared/services';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { getElementByCPTargetValue } from '@shared/utils/tests';
+import { CPSession } from '@campus-cloud/session';
+import { CPDate } from '@campus-cloud/shared/utils/date';
+import { mockSchool } from '@campus-cloud/session/mock';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
 import { IntegrationStatus } from './../../model/integration.interface';
 import { IEventIntegration } from './../../../events/model/event-integration.interface';
 import { IntegrationsSyncNowButtonComponent } from './integrations-sync-now-button.component';
-import { mockIntegration } from '@containers/controlpanel/manage/calendars/integrations/tests';
+import { mockIntegration } from '@campus-cloud/containers/controlpanel/manage/calendars/integrations/tests';
 
 describe('IntegrationsSyncNowButtonComponent', () => {
   let de: DebugElement;

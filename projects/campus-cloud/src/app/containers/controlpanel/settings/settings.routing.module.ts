@@ -1,9 +1,9 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { PrivilegesGuard } from '@app/config/guards';
+import { PrivilegesGuard } from '@campus-cloud/config/guards';
 import { SettingsComponent } from './settings.component';
-import { pageTitle, CP_PRIVILEGES_MAP } from '@shared/constants';
+import { pageTitle, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 
 const appRoutes: Routes = [
   {

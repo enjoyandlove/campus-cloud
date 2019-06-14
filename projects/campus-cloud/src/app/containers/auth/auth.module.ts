@@ -6,9 +6,9 @@ import { NgModule } from '@angular/core';
 import { LoginComponent } from './login';
 import { LogoutComponent } from './logout';
 import { AuthService } from './auth.service';
-import { SharedModule } from '@shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { LostPasswordComponent } from './lost-password';
-import { LayoutsModule } from '@app/layouts/layouts.module';
+import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 
 @NgModule({
   declarations: [LoginComponent, LogoutComponent, LostPasswordComponent],

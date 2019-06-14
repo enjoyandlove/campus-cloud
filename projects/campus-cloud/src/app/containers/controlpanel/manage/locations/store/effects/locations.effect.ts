@@ -6,15 +6,15 @@ import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import * as fromActions from '../actions';
-import { amplitudeEvents } from '@shared/constants';
-import { CPTrackingService } from '@shared/services';
-import { ILocation } from '@libs/locations/common/model';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { ILocation } from '@campus-cloud/libs/locations/common/model';
 import { LocationsService } from '../../locations.service';
 import * as fromCategoryStore from '../../categories/store';
-import { ICategory } from '@libs/locations/common/categories/model';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 
 @Injectable()
 export class LocationsEffect {

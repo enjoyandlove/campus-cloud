@@ -1,7 +1,7 @@
-import { CPDate } from '@shared/utils';
+import { CPDate } from '@campus-cloud/shared/utils';
 import { IFeedIntegration } from './integration.interface';
-import { FeedIntegration } from '@libs/integrations/common/model';
-import { mockIntegration } from '@containers/controlpanel/manage/events/integrations/tests';
+import { FeedIntegration } from '@campus-cloud/libs/integrations/common/model';
+import { mockIntegration } from '@campus-cloud/containers/controlpanel/manage/events/integrations/tests';
 
 describe('FeedIntegration', () => {
   describe('isNotRunning', () => {

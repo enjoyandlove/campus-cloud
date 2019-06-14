@@ -1,6 +1,6 @@
 import { Action } from '@ngrx/store';
 
-import { IStore } from '@shared/services';
+import { IStore } from '@campus-cloud/shared/services';
 import { IAnnouncementsIntegration } from '../../model';
 
 export enum IntegrationActions {

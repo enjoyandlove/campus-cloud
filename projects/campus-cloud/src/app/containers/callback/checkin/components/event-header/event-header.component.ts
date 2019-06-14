@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { CPSession } from '@app//session';
-import { FORMAT, CPDatePipe } from '@app//shared/pipes/date';
-import { IResourceBanner } from '@shared//components';
+import { CPSession } from '@campus-cloud//session';
+import { FORMAT, CPDatePipe } from '@campus-cloud//shared/pipes/date';
+import { IResourceBanner } from '@campus-cloud/shared//components';
 
 @Component({
   selector: 'cp-event-header',

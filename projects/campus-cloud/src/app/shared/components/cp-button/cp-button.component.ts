@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, HostListener } from '@angular/core';
 
-import { isProd } from '@app/config/env';
-import { CPTrackingService } from '@shared/services/tracking.service';
+import { isProd } from '@campus-cloud/config/env';
+import { CPTrackingService } from '@campus-cloud/shared/services/tracking.service';
 
 export interface ICPButtonProps {
   text: string;

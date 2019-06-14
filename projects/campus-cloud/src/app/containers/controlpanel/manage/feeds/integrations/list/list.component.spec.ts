@@ -4,18 +4,18 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
-import * as fromRoot from '@app/store';
+import * as fromRoot from '@campus-cloud/store';
 import * as fromFeature from '../store';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { mockIntegration } from '../tests';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
-import { CPNoContentComponent } from '@shared/components';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { CPNoContentComponent } from '@campus-cloud/shared/components';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { WallsIntegrationsListComponent } from './list.component';
-import { CommonIntegrationsModule } from '@libs/integrations/common/common-integrations.module';
-import { LibsWallsIntegrationsModule } from '@libs/integrations/walls/walls-integrations.module';
+import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common/common-integrations.module';
+import { LibsWallsIntegrationsModule } from '@campus-cloud/libs/integrations/walls/walls-integrations.module';
 
 describe('WallsIntegrationsListComponent', () => {
   let session: CPSession;

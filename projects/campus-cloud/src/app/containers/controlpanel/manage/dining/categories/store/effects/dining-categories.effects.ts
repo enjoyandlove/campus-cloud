@@ -6,22 +6,22 @@ import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../';
-import { ISnackbar } from '@app/store';
-import { CPSession } from '@app/session';
+import { ISnackbar } from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session';
 import * as fromActions from '../actions';
 import * as fromDining from '../../../store';
-import { baseActionClass } from '@app/store/base';
-import { amplitudeEvents } from '@shared/constants';
-import { IDining } from '@libs/locations/common/model';
-import { LocationType } from '@libs/locations/common/utils';
-import { CPI18nService, CPTrackingService } from '@shared/services';
+import { baseActionClass } from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { IDining } from '@campus-cloud/libs/locations/common/model';
+import { LocationType } from '@campus-cloud/libs/locations/common/utils';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { DiningCategoriesService } from '../../dining-categories.service';
-import { CategoriesUtilsService } from '@libs/locations/common/categories/categories.utils.service';
+import { CategoriesUtilsService } from '@campus-cloud/libs/locations/common/categories/categories.utils.service';
 import {
   ICategory,
   ICategoriesApiQuery,
   LocationCategoryLocale
-} from '@libs/locations/common/categories/model';
+} from '@campus-cloud/libs/locations/common/categories/model';
 
 @Injectable()
 export class DiningCategoriesEffects {

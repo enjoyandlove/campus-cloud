@@ -2,8 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-import { IItem } from '@shared/components';
-import { CPI18nService, IStore, ZendeskService } from '@shared/services';
+import { IItem } from '@campus-cloud/shared/components';
+import { CPI18nService, IStore, ZendeskService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-announcements-integrations-form',

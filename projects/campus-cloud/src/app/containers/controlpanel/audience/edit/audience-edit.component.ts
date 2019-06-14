@@ -12,15 +12,15 @@ import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { isEqual } from 'lodash';
 
-import { CPSession } from '@app/session';
-import { BaseComponent } from '@app/base';
-import { ISnackbar } from '@app/store/base';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
+import { ISnackbar } from '@campus-cloud/store/base';
 import { AudienceType } from './../audience.status';
-import { amplitudeEvents } from '@shared/constants';
-import { CPTrackingService } from '@shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 import { AudienceService } from '../audience.service';
-import { parseErrorResponse } from '@shared/utils/http';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { parseErrorResponse } from '@campus-cloud/shared/utils/http';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { AudienceUtilsService } from '../audience.utils.service';
 
 @Component({

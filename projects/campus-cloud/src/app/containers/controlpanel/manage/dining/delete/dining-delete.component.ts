@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { IDining } from '@libs/locations/common/model';
+import { CPSession } from '@campus-cloud/session';
+import { IDining } from '@campus-cloud/libs/locations/common/model';
 
 @Component({
   selector: 'cp-dining-delete',

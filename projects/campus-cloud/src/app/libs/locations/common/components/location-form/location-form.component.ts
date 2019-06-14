@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormGroup } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-import { CPMap } from '@shared/utils';
-import { IItem } from '@shared/components';
-import { CPSession, ISchool } from '@app/session';
+import { CPMap } from '@campus-cloud/shared/utils';
+import { IItem } from '@campus-cloud/shared/components';
+import { CPSession, ISchool } from '@campus-cloud/session';
 
 @Component({
   selector: 'cp-location-form',

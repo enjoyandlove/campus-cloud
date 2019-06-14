@@ -3,11 +3,11 @@ import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { CheckinService } from '../checkin.service';
-import { BaseComponent } from '@app/base/base.component';
-import { ISnackbar, baseActions } from '@app/store/base';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { ISnackbar, baseActions } from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CheckinUtilsService } from '../checkin.utils.service';
 import { CheckInOutTime, CheckInType } from '../../callback.status';
 
@@ -16,7 +16,7 @@ import {
   CPI18nService,
   CPTrackingService,
   CPAmplitudeService
-} from '@shared/services';
+} from '@campus-cloud/shared/services';
 
 interface IState {
   events: Array<any>;

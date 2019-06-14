@@ -3,12 +3,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule, Store } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 
-import { CPSession } from '@app/session';
-import * as fromJobs from '@app/store/manage/jobs';
-import { configureTestSuite } from '@shared/tests';
+import { CPSession } from '@campus-cloud/session';
+import * as fromJobs from '@campus-cloud/store/manage/jobs';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { EmployerModule } from '../employer.module';
-import { CPTrackingService } from '@shared/services';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { EmployerDeleteComponent } from './employer-delete.component';
 
 describe('EmployerDeleteComponent', () => {

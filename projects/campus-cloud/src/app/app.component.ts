@@ -3,7 +3,7 @@ import { filter, map, mergeMap } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 
-import { pageTitle } from '@shared/constants';
+import { pageTitle } from '@campus-cloud/shared/constants';
 
 @Component({
   selector: 'cp-app',

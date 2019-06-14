@@ -2,7 +2,7 @@ import { AbstractControl } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
 import IEvent from './event.interface';
-import { amplitudeEvents } from '@shared/constants';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import IServiceProvider from '@controlpanel/manage/services/providers.interface';
 import { EventFeedback, Feedback, CheckInMethod, EventCategory } from './event.status';
 

@@ -4,10 +4,10 @@ import { map, startWith } from 'rxjs/operators';
 import { get as _get, sortBy } from 'lodash';
 import { Observable } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { CP_TRACK_TO } from '@shared/directives';
-import { CPI18nService } from '@shared/services';
-import { amplitudeEvents } from '@shared/constants';
+import { CPSession } from '@campus-cloud/session';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { FeedsService } from '../../../feeds.service';
 import { GroupType } from '../../../feeds.utils.service';
 

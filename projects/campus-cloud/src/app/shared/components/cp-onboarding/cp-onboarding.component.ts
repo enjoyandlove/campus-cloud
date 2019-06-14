@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { CPI18nService } from '../../services';
 
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
   selector: 'cp-onboarding',

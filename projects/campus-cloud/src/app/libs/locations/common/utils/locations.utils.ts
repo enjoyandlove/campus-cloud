@@ -1,12 +1,12 @@
 import { FormArray, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
-import { CPI18nService } from '@shared/services';
-import { getItem, IItem } from '@shared/components';
-import { amplitudeEvents } from '@shared/constants';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { getItem, IItem } from '@campus-cloud/shared/components';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { ScheduleModel, scheduleLabels } from '../model';
-import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
-import { ICategory, categoryTypes } from '@libs/locations/common/categories/model';
+import { LocationsTimeLabelPipe } from '@campus-cloud/libs/locations/common/pipes';
+import { ICategory, categoryTypes } from '@campus-cloud/libs/locations/common/categories/model';
 
 const days = Array.from(Array(7).keys());
 

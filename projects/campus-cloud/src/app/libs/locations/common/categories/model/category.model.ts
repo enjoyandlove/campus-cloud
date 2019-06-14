@@ -1,9 +1,9 @@
 import { FormBuilder, Validators } from '@angular/forms';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { ICategory } from './categories.interface';
-import { CustomValidators } from '@shared/validators';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 const dbPath = 'https://d38h7mnlv8qddx.cloudfront.net/';
 const assetPath = `${environment.root}assets/svg/locations/categories/`;

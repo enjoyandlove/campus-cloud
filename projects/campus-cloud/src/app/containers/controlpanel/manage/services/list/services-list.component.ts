@@ -2,15 +2,15 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { CP_TRACK_TO } from '@shared/directives';
+import { CPSession } from '@campus-cloud/session';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { ServicesDeleteComponent } from '../delete';
 import { ServicesService } from '../services.service';
 import { ServiceAttendance } from '../services.status';
-import { BaseComponent } from '@app/base/base.component';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ManageHeaderService } from './../../utils/header';
-import { amplitudeEvents } from '@shared/constants/analytics';
-import { CPI18nService, CPTrackingService, ModalService } from '@shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { CPI18nService, CPTrackingService, ModalService } from '@campus-cloud/shared/services';
 
 interface IState {
   search_text: string;

@@ -8,7 +8,7 @@ import { AssessUtilsService } from '../../../assess.utils.service';
 import { CPTrackingService } from '../../../../../../shared/services';
 import { BaseComponent } from '../../../../../../base/base.component';
 import { EngagementUtilsService } from '../../engagement.utils.service';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
 import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 

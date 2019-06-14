@@ -4,13 +4,13 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { of } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockIntegration, mockSender } from '../../tests';
 import { IntegrationsListComponent } from './integrations-list.component';
-import { CommonIntegrationsModule } from '@libs/integrations/common/common-integrations.module';
+import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common/common-integrations.module';
 
 describe('IntegrationsListComponent', () => {
   configureTestSuite();

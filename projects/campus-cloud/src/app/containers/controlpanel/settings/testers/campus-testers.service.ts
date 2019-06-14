@@ -2,9 +2,9 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { API } from '@app/config/api';
-import { HTTPService } from '@app/base';
-import { CPSession } from '@app/session';
+import { API } from '@campus-cloud/config/api';
+import { HTTPService } from '@campus-cloud/base';
+import { CPSession } from '@campus-cloud/session';
 
 @Injectable()
 export class CampusTestersService extends HTTPService {

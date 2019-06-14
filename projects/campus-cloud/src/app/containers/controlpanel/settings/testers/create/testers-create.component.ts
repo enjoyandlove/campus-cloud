@@ -1,8 +1,8 @@
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Inject } from '@angular/core';
 
-import { CustomValidators } from '@shared/validators';
-import { MODAL_DATA, IModal } from '@shared/services';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { MODAL_DATA, IModal } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-testers-create',

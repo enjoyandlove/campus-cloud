@@ -4,19 +4,24 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { FORMAT } from '@shared/pipes';
+import { FORMAT } from '@campus-cloud/shared/pipes';
 import IEvent from '../event.interface';
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { EventsService } from '../events.service';
 import { EventAttendance } from '../event.status';
-import { amplitudeEvents } from '@shared/constants';
-import { IResourceBanner } from '@shared/components';
-import { IHeader, baseActions } from '@app/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { IResourceBanner } from '@campus-cloud/shared/components';
+import { IHeader, baseActions } from '@campus-cloud/store/base';
 import { EventUtilService } from './../events.utils.service';
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { EventsComponent } from '../list/base/events.component';
 import { EventsAmplitudeService } from '../events.amplitude.service';
-import { CPI18nService, CPTrackingService, RouteLevel, ModalService } from '@shared/services';
+import {
+  CPI18nService,
+  CPTrackingService,
+  RouteLevel,
+  ModalService
+} from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-events-info',

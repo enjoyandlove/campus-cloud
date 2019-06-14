@@ -1,10 +1,10 @@
 import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
 import { FormGroup, AbstractControl } from '@angular/forms';
 
-import { IItem } from '@shared/components';
-import { LibsCommonMembersService } from '@libs/members/common/providers';
-import { MemberModel, IMember, MemberType } from '@libs/members/common/model';
-import { LibsCommonMembersUtilsService } from '@libs/members/common/providers';
+import { IItem } from '@campus-cloud/shared/components';
+import { LibsCommonMembersService } from '@campus-cloud/libs/members/common/providers';
+import { MemberModel, IMember, MemberType } from '@campus-cloud/libs/members/common/model';
+import { LibsCommonMembersUtilsService } from '@campus-cloud/libs/members/common/providers';
 
 @Component({
   selector: 'cp-services-members-edit',

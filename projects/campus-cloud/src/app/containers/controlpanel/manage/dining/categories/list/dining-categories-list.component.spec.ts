@@ -6,15 +6,15 @@ import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
-import { mockCategories } from '@libs/locations/common/categories/tests';
-import { CategoryTypePipe } from '@libs/locations/common/categories/pipes';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { mockCategories } from '@campus-cloud/libs/locations/common/categories/tests';
+import { CategoryTypePipe } from '@campus-cloud/libs/locations/common/categories/pipes';
 import { DiningCategoriesListComponent } from './dining-categories-list.component';
-import { CategoriesActionBoxComponent } from '@libs/locations/common/categories/components';
+import { CategoriesActionBoxComponent } from '@campus-cloud/libs/locations/common/categories/components';
 
 describe('DiningCategoriesListComponent', () => {
   configureTestSuite();

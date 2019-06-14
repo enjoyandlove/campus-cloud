@@ -4,16 +4,20 @@ import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@app/session';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
-import { mockSchool } from '@app/session/mock/school';
-import { CPI18nService, MODAL_DATA } from '@shared/services';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
-import { LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
-import { categoryTypes } from '@campus-cloud/src/app/libs/locations/common/categories/model';
+import { CPSession } from '@campus-cloud/session';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { CPI18nService, MODAL_DATA } from '@campus-cloud/shared/services';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
+import { LocationsTimeLabelPipe } from '@campus-cloud/libs/locations/common/pipes';
+import { categoryTypes } from '@projects/campus-cloud/src/app/libs/locations/common/categories/model';
 import { DiningCategoriesEditComponent } from './dining-categories-edit.component';
-import { filledForm, mockCategories, MockModalData } from '@libs/locations/common/categories/tests';
+import {
+  filledForm,
+  mockCategories,
+  MockModalData
+} from '@campus-cloud/libs/locations/common/categories/tests';
 
 describe('DiningCategoriesEditComponent', () => {
   configureTestSuite();

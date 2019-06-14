@@ -4,11 +4,11 @@ import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { CPTrackingService } from '@shared/services';
-import * as fromDeals from '@app/store/manage/deals';
-import { CPI18nService } from '@shared/services/i18n.service';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { CPSession } from '@campus-cloud/session';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import * as fromDeals from '@campus-cloud/store/manage/deals';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 
 @Component({
   selector: 'cp-store-delete',

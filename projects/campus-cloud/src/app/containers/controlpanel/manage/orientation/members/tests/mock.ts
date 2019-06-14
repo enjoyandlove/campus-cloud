@@ -1,7 +1,7 @@
 import { HttpParams, HttpResponse } from '@angular/common/http';
 import { of } from 'rxjs';
 
-import { mockMember } from '@libs/members/common/tests';
+import { mockMember } from '@campus-cloud/libs/members/common/tests';
 import { mockSocialPostCategory } from '../../../feeds/tests';
 
 export class MockLibsCommonMembersService {

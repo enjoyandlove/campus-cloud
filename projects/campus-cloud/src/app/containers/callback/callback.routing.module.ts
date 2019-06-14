@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CallbackComponent } from './callback.component';
 import { CallbackPasswordResetComponent } from './password-reset';
 
-import { pageTitle } from '@shared/constants';
+import { pageTitle } from '@campus-cloud/shared/constants';
 import { AdminInviteComponent } from './admin-invite';
 
 import {

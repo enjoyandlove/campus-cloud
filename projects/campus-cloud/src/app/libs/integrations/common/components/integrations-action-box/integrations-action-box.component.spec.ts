@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SharedModule } from '@shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { IntegrationsActionBoxComponent } from './integrations-action-box.component';
 
 describe('IntegrationsActionBoxComponent', () => {

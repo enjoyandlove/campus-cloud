@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { JobsListComponent } from './list';
 import { JobsInfoComponent } from './info';
 import { JobsEditComponent } from './edit';
-import { pageTitle } from '@shared/constants';
+import { pageTitle } from '@campus-cloud/shared/constants';
 import { JobsCreateComponent } from './create';
 
 const appRoutes: Routes = [

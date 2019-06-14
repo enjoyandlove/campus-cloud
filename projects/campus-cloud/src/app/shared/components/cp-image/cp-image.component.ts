@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewEncapsulation } from '@angular/core';
 
-import { environment } from '@campus-cloud/src/environments/environment';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 const allowedAttributes = ['cp-image', 'rounded', 'small', 'fitCover'];
 

@@ -4,16 +4,16 @@ import { HttpParams } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { ManageHeaderService } from '../../utils';
-import { configureTestSuite } from '@shared/tests';
-import { mockSchool } from '@app/session/mock/school';
-import { baseReducers } from '@app/store/base/reducers';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { baseReducers } from '@campus-cloud/store/base/reducers';
 import { OrientationModule } from '../orientation.module';
 import { OrientationListComponent } from './list.component';
 import { OrientationService } from '../orientation.services';
 import { MockOrientationService, mockPrograms } from '../tests';
-import { CPI18nService, CPTrackingService } from '@shared/services';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 describe('OrientationListComponent', () => {
   configureTestSuite();

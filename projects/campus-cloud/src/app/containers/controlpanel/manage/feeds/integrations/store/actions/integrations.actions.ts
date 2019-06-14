@@ -2,8 +2,8 @@ import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
 import { ISocialPostCategory } from '../../../model';
-import { IItem } from '@campus-cloud/src/app/shared/components';
-import { IWallsIntegration } from '@libs/integrations/walls/model';
+import { IItem } from '@projects/campus-cloud/src/app/shared/components';
+import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
 
 export enum IntegrationActions {
   GET_INTEGRATIONS = '[manage.walls.integrations] get integrations',

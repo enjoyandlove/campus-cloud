@@ -1,8 +1,8 @@
 import { OnInit, Output, Component, EventEmitter } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { EngagementUtilsService } from '../../engagement.utils.service';
 
 interface IState {

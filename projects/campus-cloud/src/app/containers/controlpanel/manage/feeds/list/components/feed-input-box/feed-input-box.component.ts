@@ -5,20 +5,20 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { API } from '@app/config/api';
-import { appStorage } from '@shared/utils';
+import { API } from '@campus-cloud/config/api';
+import { appStorage } from '@campus-cloud/shared/utils';
 import { validThread } from '../../../validators';
-import { CPSession, ISchool } from '@app/session';
+import { CPSession, ISchool } from '@campus-cloud/session';
 import { FeedsService } from '../../../feeds.service';
-import { ISnackbar, baseActions } from '@app/store/base';
-import { amplitudeEvents } from '@shared/constants/analytics';
+import { ISnackbar, baseActions } from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import {
   CPTrackingService,
   FileUploadService,
   StoreService,
   CPI18nService
-} from '@shared/services';
+} from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-feed-input-box',

@@ -3,13 +3,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Store, StoreModule as NgrxStore } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { StoreModule } from '../store.module';
-import { configureTestSuite } from '@shared/tests';
-import * as fromDeals from '@app/store/manage/deals';
-import { CPTrackingService } from '@shared/services';
-import { mockSchool } from '@app/session/mock/school';
-import { CPI18nService } from '@shared/services/i18n.service';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import * as fromDeals from '@campus-cloud/store/manage/deals';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { StoreDeleteComponent } from './store-delete.component';
 
 describe('DealsStoreDeleteComponent', () => {

@@ -2,7 +2,7 @@ import { createSelector } from '@ngrx/store';
 
 import * as fromFeature from '../reducers';
 import { getFeatureState } from './feature.selector';
-import { IWallsIntegration } from '@libs/integrations/walls/model';
+import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
 import * as fromIntegrations from '../reducers/integrations.reducers';
 
 export const getIntegrationsState = createSelector(

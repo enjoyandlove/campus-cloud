@@ -1,10 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { CPI18nService } from '@app/shared/services';
-import { SharedModule } from '@shared/shared.module';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { IntegrationsDeleteComponent } from './integrations-delete.component';
-import { mockIntegration } from '@campus-cloud/src/app/containers/controlpanel/manage/calendars/integrations/tests';
+import { mockIntegration } from '@projects/campus-cloud/src/app/containers/controlpanel/manage/calendars/integrations/tests';
 
 describe('IntegrationsDeleteComponent', () => {
   let component: IntegrationsDeleteComponent;

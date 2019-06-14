@@ -5,10 +5,10 @@ import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { Action } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import * as fromActions from './deals.actions';
-import { DealsService } from '@app/containers/controlpanel/manage/deals/deals.service';
-import { DealsStoreService } from '@app/containers/controlpanel/manage/deals/stores/store.service';
+import { DealsService } from '@campus-cloud/containers/controlpanel/manage/deals/deals.service';
+import { DealsStoreService } from '@campus-cloud/containers/controlpanel/manage/deals/stores/store.service';
 
 @Injectable()
 export class DealsEffects {

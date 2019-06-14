@@ -3,15 +3,18 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { SharedModule } from '@shared/shared.module';
-import { configureTestSuite } from '@app/shared/tests';
-import { mockSchedule } from '@libs/locations/common/tests';
-import { getElementByCPTargetValue } from '@shared/utils/tests';
-import { LocationsUtilsService } from '@libs/locations/common/utils';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { mockSchedule } from '@campus-cloud/libs/locations/common/tests';
+import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 import { DiningOpeningHoursComponent } from './dining-opening-hours.component';
-import { LocationsDayLabelPipe, LocationsTimeLabelPipe } from '@libs/locations/common/pipes';
+import {
+  LocationsDayLabelPipe,
+  LocationsTimeLabelPipe
+} from '@campus-cloud/libs/locations/common/pipes';
 
 describe('DiningOpeningHoursComponent', () => {
   configureTestSuite();

@@ -5,8 +5,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { BannerListComponent } from './list';
 import { BannerService } from './banner.service';
-import { SharedModule } from '@shared/shared.module';
-import { LayoutsModule } from '@app/layouts/layouts.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 import { BannerRoutingModule } from './banner.routing.module';
 
 import {

@@ -4,13 +4,13 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { SortablejsModule } from 'angular-sortablejs';
 
-import { RootStoreModule } from '@app/store';
-import { SharedModule } from '@shared/shared.module';
-import { TopLevelRoutesModule } from '@app/app.routing';
-import { AuthModule } from '@containers/auth/auth.module';
-import { LayoutsModule } from '@app/layouts/layouts.module';
-import { environment } from '@campus-cloud/src/environments/environment';
-import { ControlPanelModule } from '@containers/controlpanel/controlpanel.module';
+import { RootStoreModule } from '@campus-cloud/store';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { TopLevelRoutesModule } from '@campus-cloud/app.routing';
+import { AuthModule } from '@campus-cloud/containers/auth/auth.module';
+import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
+import { ControlPanelModule } from '@campus-cloud/containers/controlpanel/controlpanel.module';
 
 export const APP_MODULES = [
   RootStoreModule,

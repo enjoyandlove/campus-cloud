@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 
 import { IItem } from './items/item.interface';
 import { ICalendar } from './calendars.interface';
-import { amplitudeEvents } from '@shared/constants';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 
 @Injectable()
 export class CalendarAmplitudeService {

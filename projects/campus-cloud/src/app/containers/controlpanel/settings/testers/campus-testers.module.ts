@@ -5,9 +5,9 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
-import { ModalService } from '@shared/services';
-import { SharedModule } from '@shared/shared.module';
-import { SETTINGS_TESTERS } from '@shared/constants';
+import { ModalService } from '@campus-cloud/shared/services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { SETTINGS_TESTERS } from '@campus-cloud/shared/constants';
 import { reducerMap, TestersEffects } from './store';
 import { CampusTestersService } from './campus-testers.service';
 import { TestersListComponent } from './list/testers-list.component';

@@ -3,9 +3,9 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { configureTestSuite } from '@shared/tests';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { BannerModule } from '../../../banner.module';
 import { BrandingFormComponent } from './branding-form.component';
 

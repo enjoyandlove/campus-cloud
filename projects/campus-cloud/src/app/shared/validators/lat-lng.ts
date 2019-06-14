@@ -2,7 +2,7 @@ import { AbstractControl, AsyncValidatorFn, ValidationErrors } from '@angular/fo
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
-import { CPLocationsService } from '@shared/services';
+import { CPLocationsService } from '@campus-cloud/shared/services';
 
 @Injectable()
 export class LatLngValidators {

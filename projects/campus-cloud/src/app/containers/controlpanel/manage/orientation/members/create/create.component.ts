@@ -3,10 +3,10 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { IItem } from '@shared/components';
-import { MODAL_DATA, IModal } from '@shared/services';
-import { MemberModel, MemberType } from '@libs/members/common/model';
-import { LibsCommonMembersUtilsService } from '@libs/members/common/providers';
+import { IItem } from '@campus-cloud/shared/components';
+import { MODAL_DATA, IModal } from '@campus-cloud/shared/services';
+import { MemberModel, MemberType } from '@campus-cloud/libs/members/common/model';
+import { LibsCommonMembersUtilsService } from '@campus-cloud/libs/members/common/providers';
 
 @Component({
   selector: 'cp-orientation-members-create',

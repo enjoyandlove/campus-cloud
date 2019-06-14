@@ -1,11 +1,16 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
+import { CPSession } from '@campus-cloud/session';
 import { EventsService } from '../events.service';
-import { amplitudeEvents } from '@shared/constants';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { EventsAmplitudeService } from '../events.amplitude.service';
-import { CPI18nService, CPTrackingService, IModal, MODAL_DATA } from '@shared/services';
+import {
+  CPI18nService,
+  CPTrackingService,
+  IModal,
+  MODAL_DATA
+} from '@campus-cloud/shared/services';
 import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
 @Component({

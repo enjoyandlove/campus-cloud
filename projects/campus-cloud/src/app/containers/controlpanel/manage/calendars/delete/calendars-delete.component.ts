@@ -2,9 +2,9 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CalendarsService } from './../calendars.services';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { amplitudeEvents } from '@shared/constants';
-import { CPTrackingService, CPI18nService } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 import { CalendarAmplitudeService } from '../calendar.amplitude.service';
 
 @Component({

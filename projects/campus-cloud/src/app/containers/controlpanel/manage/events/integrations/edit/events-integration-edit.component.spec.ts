@@ -5,12 +5,12 @@ import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 
-import { CPSession } from '@app/session';
-import { mockSchool } from '@app/session/mock';
-import { configureTestSuite } from '@shared/tests';
-import { SharedModule } from '@shared/shared.module';
+import { CPSession } from '@campus-cloud/session';
+import { mockSchool } from '@campus-cloud/session/mock';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockIntegration, resetForm } from '../tests';
-import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import { EventsIntegrationEditComponent } from './events-integration-edit.component';
 
 describe('EventsIntegrationEditComponent', () => {

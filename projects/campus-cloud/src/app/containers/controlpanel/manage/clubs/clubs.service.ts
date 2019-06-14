@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { API } from '@app/config/api';
-import { baseActions } from '@app/store/base';
-import { HTTPService } from '@app/base/http.service';
+import { API } from '@campus-cloud/config/api';
+import { baseActions } from '@campus-cloud/store/base';
+import { HTTPService } from '@campus-cloud/base/http.service';
 
 @Injectable()
 export class ClubsService extends HTTPService {

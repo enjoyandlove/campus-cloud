@@ -1,7 +1,7 @@
 import { OnInit, Output, Component, EventEmitter } from '@angular/core';
 
-import { amplitudeEvents } from '@shared/constants';
-import { CP_TRACK_TO } from '@shared/directives/tracking';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
 
 @Component({
   selector: 'cp-calendars-details-action-box',

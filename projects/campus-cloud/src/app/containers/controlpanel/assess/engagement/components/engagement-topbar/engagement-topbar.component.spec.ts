@@ -4,10 +4,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 
-import { CPSession } from '@app/session';
-import { CPI18nService } from '@shared/services';
-import { mockUser } from '@app/session/mock/user';
-import { mockSchool } from '@app/session/mock/school';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { mockUser } from '@campus-cloud/session/mock/user';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EngagementService } from '../../engagement.service';
 import { EngagementUtilsService } from './../../engagement.utils.service';
 import { EngagementTopBarComponent } from './engagement-topbar.component';

@@ -5,12 +5,12 @@ import { Component, OnInit } from '@angular/core';
 import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@app/session';
-import { BaseComponent } from '@app/base';
-import { CPI18nService } from '@shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { dealDateValidator } from '../deals.utils';
-import { CustomValidators } from '@shared/validators';
-import { baseActions, IHeader } from '@app/store/base';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { baseActions, IHeader } from '@campus-cloud/store/base';
 import { DealsService, DateStatus } from '../deals.service';
 import { DealsStoreService } from './../stores/store.service';
 

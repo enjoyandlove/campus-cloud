@@ -4,15 +4,15 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
-import { CPDate } from '@shared/utils';
-import { CPSession } from '@app/session';
+import { CPDate } from '@campus-cloud/shared/utils';
+import { CPSession } from '@campus-cloud/session';
 import * as fromActions from '../actions';
-import { amplitudeEvents } from '@shared/constants';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { ItemsIntegrationsService } from './../../integrations.service';
-import { EventIntegration } from '@campus-cloud/src/app/libs/integrations/events/model';
-import { StoreService, CPI18nService, CPTrackingService } from '@shared/services';
-import { CommonIntegrationUtilsService } from '@libs/integrations/common/providers';
-import { IEventIntegration } from '@libs/integrations/events/model/event-integration.interface';
+import { EventIntegration } from '@projects/campus-cloud/src/app/libs/integrations/events/model';
+import { StoreService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
+import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model/event-integration.interface';
 
 @Injectable()
 export class IntegrationsEffects {

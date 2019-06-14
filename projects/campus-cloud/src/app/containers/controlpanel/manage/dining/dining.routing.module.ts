@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { DiningListComponent } from './list';
 import { DiningInfoComponent } from './info';
 import { DiningEditComponent } from './edit';
-import { pageTitle } from '@shared/constants';
+import { pageTitle } from '@campus-cloud/shared/constants';
 import { DiningCreateComponent } from './create';
 import { DiningExistGuard } from './guards/dining-exist-guard';
 

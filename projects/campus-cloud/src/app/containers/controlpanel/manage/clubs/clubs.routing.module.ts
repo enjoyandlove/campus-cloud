@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { ClubsEditComponent } from './edit';
 import { ClubsListComponent } from './list';
 import { ClubsExcelComponent } from './excel';
-import { pageTitle } from '@shared/constants';
+import { pageTitle } from '@campus-cloud/shared/constants';
 import { ClubsCreateComponent } from './create';
 
 const appRoutes: Routes = [

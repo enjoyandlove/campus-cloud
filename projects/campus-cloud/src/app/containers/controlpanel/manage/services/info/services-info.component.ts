@@ -6,14 +6,14 @@ import { map, switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
 import { IService } from '../service.interface';
-import { CPSession, ISchool } from '@app/session';
-import { LayoutWidth } from '@app/layouts/interfaces';
+import { CPSession, ISchool } from '@campus-cloud/session';
+import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { ServicesService } from '../services.service';
-import { CP_PRIVILEGES_MAP } from '@shared/constants';
-import { AdminService, IAdmin } from '@shared/services';
-import { BaseComponent } from '@app/base/base.component';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { AdminService, IAdmin } from '@campus-cloud/shared/services';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ServicesUtilsService } from '../services.utils.service';
-import { IResourceBanner } from '@shared/components/cp-resource-banner';
+import { IResourceBanner } from '@campus-cloud/shared/components/cp-resource-banner';
 
 @Component({
   selector: 'cp-services-info',

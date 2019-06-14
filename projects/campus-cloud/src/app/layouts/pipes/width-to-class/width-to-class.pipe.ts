@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
-import { LayoutWidth } from '@app/layouts/interfaces';
+import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 
 @Pipe({
   name: 'widthToClass'

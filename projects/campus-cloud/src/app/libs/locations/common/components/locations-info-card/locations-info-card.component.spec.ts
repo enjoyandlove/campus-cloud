@@ -3,11 +3,11 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 
-import { CPSession } from '@app/session';
-import { SharedModule } from '@shared/shared.module';
-import { configureTestSuite } from '@app/shared/tests';
-import { mockLocations } from '@libs/locations/common/tests';
-import { getElementByCPTargetValue } from '@shared/utils/tests';
+import { CPSession } from '@campus-cloud/session';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { mockLocations } from '@campus-cloud/libs/locations/common/tests';
+import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
 import { LocationsInfoCardComponent } from './locations-info-card.component';
 
 describe('LocationsInfoCardComponent', () => {

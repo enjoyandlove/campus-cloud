@@ -5,17 +5,22 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { API } from '@app/config/api';
-import { CPSession } from '@app/session';
+import { API } from '@campus-cloud/config/api';
+import { CPSession } from '@campus-cloud/session';
 import { ClubStatus } from '../club.status';
 import { ClubsService } from '../clubs.service';
-import { BaseComponent } from '@app/base/base.component';
-import { baseActions, ISnackbar } from '@app/store/base';
-import { CP_PRIVILEGES_MAP } from '@app/shared/constants';
-import { appStorage } from '@shared/utils/storage/storage';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { baseActions, ISnackbar } from '@campus-cloud/store/base';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { appStorage } from '@campus-cloud/shared/utils/storage/storage';
 import { ClubsUtilsService } from '../clubs.utils.service';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
-import { CPI18nService, FileUploadService, AdminService, IAdmin } from '@shared/services';
+import {
+  CPI18nService,
+  FileUploadService,
+  AdminService,
+  IAdmin
+} from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-clubs-info',
