@@ -17,6 +17,7 @@ import { ILink } from '@controlpanel/manage/links/link.interface';
 export class ResourceSelectorTypeWebComponent implements OnInit {
   @Input() isEdit = false;
   @Input() campusLink: ILink;
+  @Input() filterByWebApp = false;
 
   @Output() valueChanges: EventEmitter<any> = new EventEmitter();
 
@@ -64,8 +65,13 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
   }
 
   ngOnInit() {
+    const filters = [this.filterByWebApp ? ContentUtilsProviders.isOpenInAppBrowser : null].filter(
+      (f) => f
+    );
+
     this.resources = ContentUtilsProviders.getResourcesForType(
-      ContentUtilsProviders.contentTypes.web
+      ContentUtilsProviders.contentTypes.web,
+      filters
     );
 
     this.items = this.contentUtils.resourcesToIItem(this.resources);
