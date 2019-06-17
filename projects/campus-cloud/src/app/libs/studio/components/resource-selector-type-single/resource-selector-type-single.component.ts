@@ -7,11 +7,11 @@ import { isEmpty } from 'lodash';
 
 import { CPSession } from '@campus-cloud/session';
 import { IItem } from '@campus-cloud/shared/components';
-import { StoreService } from '@campus-cloud/shared/services';
 import { ContentUtilsProviders } from '../../providers';
+import { IStudioContentResource } from '../../providers';
 import { CampusLink } from '@controlpanel/manage/links/tile';
+import { StoreService } from '@campus-cloud/shared/services';
 import { ILink } from '@controlpanel/manage/links/link.interface';
-import { IStudioContentResource } from './../../providers/content.utils.providers';
 import { TilesService } from '@controlpanel/customise/personas/tiles/tiles.service';
 
 const placeHolder: IStudioContentResource = { id: null, label: '---', meta: null };
@@ -98,7 +98,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
   ngOnInit() {
     const filters = [
       this.filterByWebApp ? ContentUtilsProviders.isWebAppContent : null,
-      this.filterByLoginStatus ? ContentUtilsProviders.isLoginRequired : null
+      this.filterByLoginStatus ? ContentUtilsProviders.isPublicContent : null
     ].filter((f) => f);
 
     this.resources = ContentUtilsProviders.getResourcesForType(

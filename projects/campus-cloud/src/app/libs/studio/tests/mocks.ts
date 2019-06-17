@@ -2,7 +2,7 @@ import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 import { of } from 'rxjs';
 
 import { mockSchool } from '@campus-cloud/session/mock';
-import { IIntegrationData, ExtraDataType, IExtraData } from '../../models';
+import { IIntegrationData, ExtraDataType, IExtraData } from '../models';
 
 export class MockTilesService {
   placeholder;

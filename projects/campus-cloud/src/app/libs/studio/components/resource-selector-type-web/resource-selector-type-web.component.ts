@@ -1,12 +1,12 @@
 import { Input, Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
+import { ContentUtilsProviders } from '../../providers';
+import { IStudioContentResource } from '../../providers';
 import { validUrl } from '@campus-cloud/shared/utils/forms';
 import { ZendeskService } from '@campus-cloud/shared/services';
 import { CustomValidators } from '@campus-cloud/shared/validators';
-import { ContentUtilsProviders } from '../../providers';
 import { ILink } from '@controlpanel/manage/links/link.interface';
-import { IStudioContentResource } from './../../providers/content.utils.providers';
 
 @Component({
   selector: 'cp-resource-selector-type-web',

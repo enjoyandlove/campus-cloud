@@ -1,10 +1,10 @@
 import { get as _get, sortBy } from 'lodash';
 import { Injectable } from '@angular/core';
 
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { CampusLink } from '@controlpanel/manage/links/tile';
-import { IntegrationDataUtils } from './integration-data-utils.service';
-import { IIntegrationData, ExtraDataType, IExtraData } from '../models';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { IntegrationDataUtils } from '../integration-data-utils';
+import { IIntegrationData, ExtraDataType, IExtraData } from '../../models';
 import { TilesUtilsService } from '@controlpanel/customise/personas/tiles/tiles.utils.service';
 
 export interface IStudioContentResource {
@@ -42,14 +42,14 @@ export class ContentUtilsProviders {
     return TilesUtilsService.webAppSupportedLinkUrls.includes(linkUrl);
   }
 
-  static isLoginRequired(resource: IStudioContentResource) {
+  static isPublicContent(resource: IStudioContentResource) {
     const linkUrl = _get(resource, ['meta', 'link_url'], false);
 
     if (!linkUrl) {
-      return false;
+      return true;
     }
 
-    return TilesUtilsService.loginRequiredTiles.includes(linkUrl);
+    return !TilesUtilsService.loginRequiredTiles.includes(linkUrl);
   }
 
   static isIntegration = (integrationData: IIntegrationData[], personaIsNoLogin: boolean) => (
@@ -216,14 +216,6 @@ export class ContentUtilsProviders {
           meta: {
             link_params: {},
             link_url: CampusLink.jobList
-          }
-        },
-        {
-          id: 'default_campus_link_list',
-          label: 't_personas_tile_create_resource_type_default_campus_link_list',
-          meta: {
-            link_params: {},
-            link_url: CampusLink.defaultCampusLinkList
           }
         },
         {

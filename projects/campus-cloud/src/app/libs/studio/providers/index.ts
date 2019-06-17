@@ -1,3 +1,3 @@
-export * from './content.utils.providers';
-export * from './integration-data.service';
-export * from './integration-data-utils.service';
+export * from './content-utils';
+export * from './integration-data';
+export * from './integration-data-utils';

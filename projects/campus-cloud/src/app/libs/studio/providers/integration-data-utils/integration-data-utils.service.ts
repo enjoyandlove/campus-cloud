@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { IIntegrationData, ExtraDataType, IExtraData } from '../models';
+import { IIntegrationData, ExtraDataType, IExtraData } from '../../models';
 
 @Injectable()
 export class IntegrationDataUtils {

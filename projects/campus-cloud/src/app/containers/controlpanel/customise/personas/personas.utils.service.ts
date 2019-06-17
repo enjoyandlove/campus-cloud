@@ -25,7 +25,7 @@ export class PersonasUtilsService {
     return type === PersonasType.web;
   }
 
-  static isLoginRequired(loginRequirement: PersonasLoginRequired) {
+  static isLoginForbidden(loginRequirement: PersonasLoginRequired) {
     return loginRequirement === PersonasLoginRequired.forbidden;
   }
 

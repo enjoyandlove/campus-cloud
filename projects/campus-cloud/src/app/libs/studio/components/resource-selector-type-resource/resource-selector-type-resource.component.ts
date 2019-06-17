@@ -63,7 +63,7 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
   initResources(integrationData = null) {
     const filters = [
       this.filterByWebApp ? ContentUtilsProviders.isWebAppContent : null,
-      this.filterByLoginStatus ? ContentUtilsProviders.isLoginRequired : null,
+      this.filterByLoginStatus ? ContentUtilsProviders.isPublicContent : null,
       integrationData
         ? ContentUtilsProviders.isIntegration(integrationData, this.filterByLoginStatus)
         : null
