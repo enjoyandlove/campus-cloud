@@ -2786,9 +2786,6 @@
   "t_personas_create_label_campus_security": {
     "message": "Service de sécurité du campus"
   },
-  "t_personas_create_submit_button": {
-    "message": "Enregistrer les changements"
-  },
   "t_personas_create_tile_heading_left": {
     "message": "Apparence"
   },
@@ -2834,14 +2831,8 @@
   "t_personas_edit_label_campus_security": {
     "message": "Service de sécurité du campus"
   },
-  "t_personas_edit_message_on_save_ok": {
-    "message": "Changements enregistrés."
-  },
   "t_personas_edit_missing_resource": {
     "message": "La ressource associée avec cette tuile n'a pas été trouvée."
-  },
-  "t_personas_edit_submit_button": {
-    "message": "Enregistrer les changements"
   },
   "t_personas_edit_tile_locked": {
     "message": "Pour apporter des changements au contenu de cette tuile, contactez votre représentant du succès de la clientèle ou contactez-nous via le soutien."

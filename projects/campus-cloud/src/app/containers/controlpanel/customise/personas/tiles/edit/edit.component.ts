@@ -282,7 +282,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     this.buttonData = {
       class: 'primary',
       disabled: false,
-      text: this.cpI18n.translate('t_personas_create_submit_button')
+      text: this.cpI18n.translate('save')
     };
 
     this.fetch();

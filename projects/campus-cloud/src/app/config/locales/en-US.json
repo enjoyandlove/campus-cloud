@@ -2792,9 +2792,6 @@
   "t_personas_create_label_campus_security": {
     "message": "Campus Security Service"
   },
-  "t_personas_create_submit_button": {
-    "message": "Save Changes"
-  },
   "t_personas_create_tile_heading_left": {
     "message": "Appearance"
   },
@@ -2840,14 +2837,8 @@
   "t_personas_edit_label_campus_security": {
     "message": "Campus Security Service"
   },
-  "t_personas_edit_message_on_save_ok": {
-    "message": "Changes saved."
-  },
   "t_personas_edit_missing_resource": {
     "message": "The resource associated with this tile was not found."
-  },
-  "t_personas_edit_submit_button": {
-    "message": "Save Changes"
   },
   "t_personas_edit_tile_locked": {
     "message": "To make changes to the content of this tile, reach out to your customer success representative or contact us through the helpdesk."
