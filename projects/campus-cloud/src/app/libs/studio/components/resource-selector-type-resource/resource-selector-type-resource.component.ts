@@ -1,12 +1,14 @@
+import { Input, Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { Input, Component, Output, EventEmitter, OnInit } from '@angular/core';
 import { get as _get, isEmpty } from 'lodash';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { IIntegrationData } from '../../models';
-import { CustomValidators } from '@campus-cloud/shared/validators';
 import { ContentUtilsProviders } from '../../providers';
 import { CampusLink } from '@controlpanel/manage/links/tile';
 import { ILink } from '@controlpanel/manage/links/link.interface';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { IntegrationDataService, IStudioContentResource } from './../../providers';
 
 @Component({
@@ -15,7 +17,7 @@ import { IntegrationDataService, IStudioContentResource } from './../../provider
   styleUrls: ['./resource-selector-type-resource.component.scss'],
   providers: [ContentUtilsProviders]
 })
-export class ResourceSelectorTypeResourceComponent implements OnInit {
+export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy {
   @Input() isEdit = false;
   @Input() campusLink: ILink;
   @Input() filterByWebApp = false;
@@ -26,6 +28,7 @@ export class ResourceSelectorTypeResourceComponent implements OnInit {
   resources = [];
   form: FormGroup;
   selectedItem = null;
+  destroy$ = new Subject();
   isServiceByCategory = false;
   resourcesWithLinkParamsRequired = [CampusLink.storeList];
   items: IStudioContentResource[] = [{ id: null, label: '---' }];
@@ -37,24 +40,24 @@ export class ResourceSelectorTypeResourceComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.integrationDataService.getIntegrationData().subscribe(
-      (integrationData: IIntegrationData[]) => {
-        this.initResources(integrationData);
-      },
-      () => {
-        this.initResources();
-      }
-    );
+    this.integrationDataService
+      .getIntegrationData()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (integrationData: IIntegrationData[]) => this.initResources(integrationData),
+        () => this.initResources()
+      );
 
     this.buildForm();
     this.form.valueChanges.subscribe(() => {
       const value = this.form.valid ? this.form.value : { link_url: null };
       this.valueChanges.emit(value);
     });
+  }
 
-    if (this.isEdit) {
-      this.updateState();
-    }
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   initResources(integrationData = null) {
@@ -72,13 +75,16 @@ export class ResourceSelectorTypeResourceComponent implements OnInit {
     );
 
     this.items = this.contentUtils.resourcesToIItem(this.resources);
+
+    if (this.isEdit) {
+      this.updateState();
+    }
   }
 
   updateState() {
     this.selectedItem = this.items
       .filter((item: IStudioContentResource) => item.meta)
       .find((item: IStudioContentResource) => item.meta.link_url === this.campusLink.link_url);
-
     const { link_url, link_params } = this.campusLink;
     this.isServiceByCategory = link_url === CampusLink.campusServiceList;
 
