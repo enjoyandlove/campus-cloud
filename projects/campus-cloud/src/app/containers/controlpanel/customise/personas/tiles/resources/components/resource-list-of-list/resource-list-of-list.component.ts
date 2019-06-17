@@ -13,12 +13,12 @@ import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
 import { CPSession } from '@campus-cloud/session';
+import { TilesService } from '../../../tiles.service';
+import { ResourceService } from './../../resource.service';
+import { IPersona } from './../../../../persona.interface';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { parseErrorResponse } from '@campus-cloud/shared/utils';
-import { TilesService } from '../../../tiles.service';
 import { baseActions, ISnackbar } from '@campus-cloud/store/base';
-import { IPersona } from './../../../../persona.interface';
-import { ResourceService } from './../../resource.service';
 import { ILink } from '@controlpanel/manage/links/link.interface';
 import { ResourcesUtilsService } from '../../resources.utils.service';
 
