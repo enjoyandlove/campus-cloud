@@ -11,9 +11,9 @@ import {
 import { Mixin, Destroyable } from '@campus-cloud/shared/mixins';
 import { Subject } from 'rxjs';
 
-import { environment } from '@projects/campus-cloud/src/environments/environment';
+import { ContentUtilsProviders } from '../../providers';
 import { ResourceSelectorItemComponent } from '../resource-selector-item';
-import { ContentUtilsProviders } from './../../providers/content.utils.providers';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
   selector: 'cp-resource-selector',
@@ -58,21 +58,16 @@ export class ResourceSelectorComponent implements AfterContentInit {
   _items: ResourceSelectorItemComponent[] = [];
 
   resourceIdToImageMap = {
-    [ContentUtilsProviders.contentTypes.single]: `${
-      environment.root
-    }assets/svg/studio/ic-studio-item.svg`,
-    [ContentUtilsProviders.contentTypes.list]: `${
-      environment.root
-    }assets/svg/studio/ic-studio-resource.svg`,
-    [ContentUtilsProviders.contentTypes.web]: `${
-      environment.root
-    }assets/svg/studio/ic-studio-link.svg`,
-    [ContentUtilsProviders.contentTypes.thirdParty]: `${
-      environment.root
-    }assets/svg/studio/ic-studio-app.svg`,
-    [ContentUtilsProviders.contentTypes.resourceList]: `${
-      environment.root
-    }assets/svg/studio/ic-studio-list.svg`
+    [ContentUtilsProviders.contentTypes
+      .single]: `${environment.root}assets/svg/studio/ic-studio-item.svg`,
+    [ContentUtilsProviders.contentTypes
+      .list]: `${environment.root}assets/svg/studio/ic-studio-resource.svg`,
+    [ContentUtilsProviders.contentTypes
+      .web]: `${environment.root}assets/svg/studio/ic-studio-link.svg`,
+    [ContentUtilsProviders.contentTypes
+      .thirdParty]: `${environment.root}assets/svg/studio/ic-studio-app.svg`,
+    [ContentUtilsProviders.contentTypes
+      .resourceList]: `${environment.root}assets/svg/studio/ic-studio-list.svg`
   };
 
   destroy$ = new Subject<null>();
@@ -83,7 +78,7 @@ export class ResourceSelectorComponent implements AfterContentInit {
   updateContentTypeByPersona() {
     const filters = [
       this.filterByWebApp ? ContentUtilsProviders.isWebAppContent : null,
-      this.filterByLoginStatus ? ContentUtilsProviders.isLoginRequired : null
+      this.filterByLoginStatus ? ContentUtilsProviders.isPublicContent : null
     ].filter((f) => f);
 
     const resourceItemComponents = [...this.items.map((r: ResourceSelectorItemComponent) => r)];

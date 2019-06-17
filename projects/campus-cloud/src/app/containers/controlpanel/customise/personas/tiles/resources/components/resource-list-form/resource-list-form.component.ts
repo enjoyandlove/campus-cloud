@@ -64,7 +64,7 @@ export class PersonasResourceListFormComponent implements OnInit {
 
   ngOnInit() {
     this.filterByWeb = PersonasUtilsService.isWeb(this.persona.platform);
-    this.filterByLogin = PersonasUtilsService.isLoginRequired(this.persona.login_requirement);
+    this.filterByLogin = PersonasUtilsService.isLoginForbidden(this.persona.login_requirement);
     this.tileImageRequirements = this.cpI18n.translate('t_personas_tile_image_requirements');
     this.form.valueChanges.subscribe((_) => this.valueChanges.emit(this.form));
     this.defaultImg = this.form.get('img_url').value;

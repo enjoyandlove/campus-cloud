@@ -5,8 +5,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { API } from '@campus-cloud/config/api';
 import { CPSession } from '@campus-cloud/session';
-import { MockCPSession, mockSchool } from '@campus-cloud/session/mock';
 import { IntegrationDataService } from './integration-data.service';
+import { MockCPSession, mockSchool } from '@campus-cloud/session/mock';
 
 describe('IntegrationDataService', () => {
   let service: IntegrationDataService;

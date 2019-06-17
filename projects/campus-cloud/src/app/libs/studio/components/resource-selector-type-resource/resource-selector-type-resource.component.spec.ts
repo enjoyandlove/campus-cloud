@@ -4,10 +4,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { CPSession } from '@campus-cloud/session';
 import { mockSchool } from '@campus-cloud/session/mock';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { getLinkUrlFromResourceList } from '../../tests';
 import { CampusLink } from '@controlpanel/manage/links/tile';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { MockIntegrationDataService } from '../../tests/mocks';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { IntegrationDataService, ContentUtilsProviders } from '../../providers';
 import { ResourceTypeServiceByCategoryComponent } from '../resource-type-service-by-category';
 import { ResourceSelectorTypeResourceComponent } from './resource-selector-type-resource.component';
@@ -135,47 +136,116 @@ describe('ResourceSelectorTypeResourceComponent', () => {
     });
 
     it('should filter resources by webapp=true, login=true', fakeAsync(() => {
+      let resultResources = [];
+      const expectedResources = [
+        CampusLink.dining,
+        CampusLink.storeList,
+        CampusLink.eventList,
+        CampusLink.dealStoreList,
+        CampusLink.campusPoiList,
+        CampusLink.campusServiceList
+      ];
+
       component.filterByWebApp = true;
       component.filterByLoginStatus = true;
 
       fixture.detectChanges();
       component.ngOnInit();
+      resultResources = getLinkUrlFromResourceList(component.resources);
+
       tick();
       expect(component.resources).toBeDefined();
-      expect(component.resources.length).toBe(1);
+      expect(component.resources.length).toBe(7);
+
+      resultResources.forEach((resource) => {
+        expect(expectedResources.includes(resource)).toBe(true, `missing ${resource}`);
+      });
     }));
 
     it('should filter resources by webapp=false, login=false', fakeAsync(() => {
+      let resultResources = [];
+      const expectedResources = [
+        CampusLink.dining,
+        CampusLink.jobList,
+        CampusLink.storeList,
+        CampusLink.timetable,
+        CampusLink.directory,
+        CampusLink.eventList,
+        CampusLink.courseSearch,
+        CampusLink.dealStoreList,
+        CampusLink.campusPoiList,
+        CampusLink.campusServiceList,
+        CampusLink.academicCalendarList,
+        CampusLink.orientationCalendarList,
+        CampusLink.userOrientationCalendarList
+      ];
+
       component.filterByWebApp = false;
       component.filterByLoginStatus = false;
 
       fixture.detectChanges();
       component.ngOnInit();
+      resultResources = getLinkUrlFromResourceList(component.resources);
       tick();
+
       expect(component.resources).toBeDefined();
-      expect(component.resources.length).toBe(15);
+      expect(component.resources.length).toBe(14);
+      resultResources.forEach((resource) => {
+        expect(expectedResources.includes(resource)).toBe(true, `missing ${resource}`);
+      });
     }));
 
     it('should filter resources by webapp=true, login=false', fakeAsync(() => {
+      let resultResources = [];
+      const expectedResources = [
+        CampusLink.dining,
+        CampusLink.jobList,
+        CampusLink.storeList,
+        CampusLink.eventList,
+        CampusLink.dealStoreList,
+        CampusLink.campusPoiList,
+        CampusLink.campusServiceList
+      ];
+
       component.filterByWebApp = true;
       component.filterByLoginStatus = false;
 
       fixture.detectChanges();
       component.ngOnInit();
+      resultResources = getLinkUrlFromResourceList(component.resources);
       tick();
+
       expect(component.resources).toBeDefined();
       expect(component.resources.length).toBe(8);
+      resultResources.forEach((resource) => {
+        expect(expectedResources.includes(resource)).toBe(true, `missing ${resource}`);
+      });
     }));
 
     it('should filter resources by webapp=false, login=true', fakeAsync(() => {
+      let resultResources = [];
+      const expectedResources = [
+        CampusLink.dining,
+        CampusLink.storeList,
+        CampusLink.directory,
+        CampusLink.eventList,
+        CampusLink.dealStoreList,
+        CampusLink.campusPoiList,
+        CampusLink.campusServiceList,
+        CampusLink.orientationCalendarList
+      ];
       component.filterByWebApp = false;
       component.filterByLoginStatus = true;
 
       fixture.detectChanges();
       component.ngOnInit();
+      resultResources = getLinkUrlFromResourceList(component.resources);
       tick();
       expect(component.resources).toBeDefined();
-      expect(component.resources.length).toBe(5);
+      expect(component.resources.length).toBe(9);
+      resultResources.forEach((resource) => {
+        expect(expectedResources.includes(resource)).toBe(true, `missing ${resource}`);
+      });
     }));
   });
 

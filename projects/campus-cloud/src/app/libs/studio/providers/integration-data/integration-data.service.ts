@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { API } from '@campus-cloud/config/api';
+import { IIntegrationData } from '../../models';
 import { HTTPService } from '@campus-cloud/base';
 import { CPSession } from '@campus-cloud/session';
-import { IIntegrationData } from '../models';
 
 @Injectable()
 export class IntegrationDataService extends HTTPService {
