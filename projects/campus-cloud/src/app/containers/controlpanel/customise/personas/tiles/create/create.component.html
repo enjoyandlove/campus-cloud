@@ -52,7 +52,9 @@
               [resourceId]="contentTypes.web"
               [title]="'t_personas_resource_web_link' | cpI18n"
             >
-              <cp-resource-selector-type-web (valueChanges)="onCampusLinkFormChange($event)">
+              <cp-resource-selector-type-web
+                [filterByWebApp]="filterByWeb"
+                (valueChanges)="onCampusLinkFormChange($event)">
               </cp-resource-selector-type-web>
             </cp-resource-selector-item>
             <cp-resource-selector-item

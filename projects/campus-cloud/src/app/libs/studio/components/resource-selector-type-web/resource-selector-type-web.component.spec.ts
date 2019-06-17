@@ -57,6 +57,35 @@ describe('ResourceSelectorTypeWebComponent', () => {
       expect(buildFormSpy).toHaveBeenCalled();
     });
 
+    it('should filter resources based on filterByWebApp', () => {
+      let resultResourcesIds = [];
+      let expectedResourcesIds = [];
+
+      component.filterByWebApp = false;
+      fixture.detectChanges();
+      component.ngOnInit();
+      resultResourcesIds = component.resources.map((m) => m.id);
+      expectedResourcesIds = ['web_link', 'external_link'];
+
+      expect(component.items.length).toBe(3);
+      expect(component.resources.length).toBe(2);
+      expectedResourcesIds.forEach((resource) => {
+        expect(resultResourcesIds.includes(resource)).toBe(true, `missing ${resource}`);
+      });
+
+      component.filterByWebApp = true;
+      fixture.detectChanges();
+      component.ngOnInit();
+      resultResourcesIds = component.resources.map((m) => m.id);
+      expectedResourcesIds = ['web_link'];
+
+      expect(component.items.length).toBe(2);
+      expect(component.resources.length).toBe(1);
+      expectedResourcesIds.forEach((resource) => {
+        expect(resultResourcesIds.includes(resource)).toBe(true, `missing ${resource}`);
+      });
+    });
+
     describe('valueChanges', () => {
       it('should emit form value when valid', () => {
         const valueChangesSpy = spyOn(component.valueChanges, 'emit');

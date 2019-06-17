@@ -67,8 +67,9 @@
             >
               <cp-resource-selector-type-web
                 [isEdit]="[true]"
-                *ngIf="selectedContent === contentTypes.web"
+                [filterByWebApp]="filterByWeb"
                 [campusLink]="campusLinkForm.value"
+                *ngIf="selectedContent === contentTypes.web"
                 (valueChanges)="onCampusLinkFormChange($event)"
               >
               </cp-resource-selector-type-web>
