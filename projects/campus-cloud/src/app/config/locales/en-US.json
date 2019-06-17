@@ -1820,33 +1820,6 @@
   "ok": {
     "message": "Ok"
   },
-  "on_boarding_step_1_description": {
-    "message": "Manage your campus app and increase student engagement."
-  },
-  "on_boarding_step_1_description_1": {
-    "message": "Rebuilt from the ground up."
-  },
-  "on_boarding_step_1_title": {
-    "message": "Welcome to the all new Campus Cloud!"
-  },
-  "on_boarding_step_2_description": {
-    "message": "All your campus resources including events, services, clubs and more."
-  },
-  "on_boarding_step_2_title": {
-    "message": "Manage your campus content"
-  },
-  "on_boarding_step_3_description": {
-    "message": "Send campus announcements or target messages for specific students."
-  },
-  "on_boarding_step_3_title": {
-    "message": "Notify your campus and send targeted messages"
-  },
-  "on_boarding_step_4_description": {
-    "message": "Understand student engagement with campus events and services."
-  },
-  "on_boarding_step_4_title": {
-    "message": "Assess campus activities"
-  },
   "optional": {
     "message": "Optional"
   },

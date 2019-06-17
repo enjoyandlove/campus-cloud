@@ -1,11 +1,9 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, AfterViewInit } from '@angular/core';
 
-import { isProd } from '../../config/env';
-import { CPSession } from './../../session';
-import { amplitudeEvents } from '../../shared/constants/analytics';
-import { CPAmplitudeService, userType } from '../../shared/services';
-import { CPTrackingService } from './../../shared/services/tracking.service';
+import { isProd } from '@campus-cloud/config/env';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService, CPAmplitudeService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-controlpanel',
@@ -14,11 +12,9 @@ import { CPTrackingService } from './../../shared/services/tracking.service';
 })
 export class ControlPanelComponent implements AfterViewInit {
   isProd = isProd;
-  is_onboarded = true;
 
   constructor(
     private router: Router,
-    private session: CPSession,
     private route: ActivatedRoute,
     private cpTrackingService: CPTrackingService,
     private cpAmplitudeService: CPAmplitudeService
@@ -26,27 +22,13 @@ export class ControlPanelComponent implements AfterViewInit {
 
   trackLoggedInEvent() {
     const isLogin = 'login' in this.route.snapshot.queryParams;
-    const user_type = this.is_onboarded ? userType.existing : userType.new;
 
     if (isLogin) {
-      this.cpTrackingService.amplitudeEmitEvent(amplitudeEvents.LOGGED_IN, { user_type });
+      this.cpTrackingService.amplitudeEmitEvent(amplitudeEvents.LOGGED_IN);
     }
   }
 
   ngAfterViewInit() {
-    this.is_onboarded = this.session.g.get('user').flags.is_onboarding;
-    if (!this.is_onboarded) {
-      setTimeout(
-        () => {
-          $('#openOnboardingModal').modal({
-            keyboard: false,
-            backdrop: 'static'
-          });
-        },
-
-        1
-      );
-    }
     /**
      * this gets initilized only once
      * so we track the first page load here
