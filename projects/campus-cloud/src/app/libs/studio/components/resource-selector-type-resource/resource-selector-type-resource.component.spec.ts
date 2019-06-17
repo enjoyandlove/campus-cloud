@@ -9,7 +9,7 @@ import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CampusLink } from '@controlpanel/manage/links/tile';
 import { MockIntegrationDataService } from '../../tests/mocks';
 import { IntegrationDataService, ContentUtilsProviders } from '../../providers';
-import { ResourceTypeServiceByCategoryComponent } from './../resource-type-service-by-category';
+import { ResourceTypeServiceByCategoryComponent } from '../resource-type-service-by-category';
 import { ResourceSelectorTypeResourceComponent } from './resource-selector-type-resource.component';
 
 describe('ResourceSelectorTypeResourceComponent', () => {
@@ -72,17 +72,6 @@ describe('ResourceSelectorTypeResourceComponent', () => {
 
       expect(component.form).toBeDefined();
       expect(component.buildForm).toHaveBeenCalled();
-    });
-
-    it('should call updateState when isEdit is true', () => {
-      spyOn(component, 'updateState');
-
-      component.isEdit = true;
-      fixture.detectChanges();
-
-      component.ngOnInit();
-
-      expect(component.updateState).toHaveBeenCalled();
     });
 
     describe('valueChanges', () => {
@@ -188,5 +177,18 @@ describe('ResourceSelectorTypeResourceComponent', () => {
       expect(component.resources).toBeDefined();
       expect(component.resources.length).toBe(5);
     }));
+  });
+
+  describe('initResources', () => {
+    it('should call updateState when isEdit is true', () => {
+      spyOn(component, 'updateState');
+
+      component.isEdit = true;
+      fixture.detectChanges();
+
+      component.initResources();
+
+      expect(component.updateState).toHaveBeenCalled();
+    });
   });
 });
