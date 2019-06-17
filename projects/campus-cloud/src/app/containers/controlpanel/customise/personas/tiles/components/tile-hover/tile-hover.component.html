@@ -5,12 +5,8 @@
         class="content__wrapper d-flex h-100 align-items-center justify-content-center flex-column"
       >
         <button type="button" (click)="toggleVisibility.emit()">
-          <i class="material-icons">
-            {{ visible ? 'visibility_off' : 'visibility' }}
-          </i>
-          <span>
-            {{ visible ? ['t_shared_hide' | cpI18n] : ('t_shared_show' | cpI18n) }}
-          </span>
+          <i class="material-icons">{{ visible ? 'visibility_off' : 'visibility' }}</i>
+          <span>{{ visible ? ('t_shared_hide' | cpI18n) : ('t_shared_show' | cpI18n) }}</span>
         </button>
 
         <button type="button" (click)="editClick.emit()">
