@@ -2931,7 +2931,7 @@
     "message": "Web"
   },
   "t_personas_resource_add_resource": {
-    "message": "Add Resource"
+    "message": "Add Row"
   },
   "t_personas_resource_create_modal_title": {
     "message": "New Resource"
@@ -2978,9 +2978,6 @@
   "t_personas_tile_create_resource_type_deal_store_list": {
     "message": "Deals"
   },
-  "t_personas_tile_create_resource_type_default_campus_link_list": {
-    "message": "Links"
-  },
   "t_personas_tile_create_resource_type_directory": {
     "message": "Directory"
   },
@@ -2989,6 +2986,9 @@
   },
   "t_personas_tile_create_resource_type_external_app_open": {
     "message": "3rd Party App"
+  },
+  "t_personas_tile_create_resource_type_external_web_app": {
+    "message": "Web SDK"
   },
   "t_personas_tile_create_resource_type_job_list": {
     "message": "Jobs"
@@ -3520,11 +3520,11 @@
   "t_team_settings_resend_invite": {
     "message": "Resend Invite"
   },
+  "t_team_settings_resend_invite_admin_already_activated": {
+    "message": "Admin account already activated"
+  },
   "t_team_settings_resend_invite_success": {
     "message": "Resend invitation successfully sent"
-  },
-  "t_team_settings_resend_invite_threshold_error": {
-    "message": "You just resend invite try again after 10 minutes threshold"
   },
   "t_tile_button_default": {
     "message": "Default"

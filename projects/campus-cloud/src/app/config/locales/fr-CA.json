@@ -2925,7 +2925,7 @@
     "message": "Web"
   },
   "t_personas_resource_add_resource": {
-    "message": "Ajouter ressource"
+    "message": "Ajouter une rangée"
   },
   "t_personas_resource_create_modal_title": {
     "message": "Nouvelle ressource"
@@ -2962,9 +2962,6 @@
   },
   "t_personas_tile_create_resource_type_deal_store_list": {
     "message": "Emplois"
-  },
-  "t_personas_tile_create_resource_type_default_campus_link_list": {
-    "message": "Liens"
   },
   "t_personas_tile_create_resource_type_directory": {
     "message": "Directoire"

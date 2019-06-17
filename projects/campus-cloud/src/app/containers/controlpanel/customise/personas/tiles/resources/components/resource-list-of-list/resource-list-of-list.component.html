@@ -1,3 +1,4 @@
+<label>{{ 't_personas_tile_create_type_resource_resource_list' | cpI18n }}</label>
 <div class="row list">
   <div class="col-12">
     <div class="row list__header">
@@ -18,7 +19,7 @@
         >
           <div class="row list__item" *ngFor="let resource of state.resources">
             <div class="col-11 text-truncate" (click)="onEditModal(resource)">
-              <i class="material-icons">drag_indicator</i>
+              <i class="material-icons">drag_handle</i>
               <span class="image">
                 <img [src]="resource.img_url" class="img-fluid rounded" />
               </span>
