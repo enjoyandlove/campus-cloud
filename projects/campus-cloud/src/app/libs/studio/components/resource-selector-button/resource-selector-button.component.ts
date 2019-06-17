@@ -4,10 +4,8 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
   selector: 'cp-resource-selector-button',
   template: `
     <button [ngClass]="classes" (click)="onClick.emit()">
-      <div class="wrapper">
-        <img [src]="iconSrc" />
-        <ng-content></ng-content>
-      </div>
+      <img [src]="iconSrc" />
+      <span><ng-content></ng-content></span>
     </button>
   `,
   styleUrls: ['./resource-selector-button.component.scss']
