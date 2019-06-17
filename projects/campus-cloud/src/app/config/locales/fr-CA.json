@@ -1820,33 +1820,6 @@
   "ok": {
     "message": "Ok"
   },
-  "on_boarding_step_1_description": {
-    "message": "Gérer votre application du campus et augmentez l'implication des étudiants."
-  },
-  "on_boarding_step_1_description_1": {
-    "message": "Complètement re-construit."
-  },
-  "on_boarding_step_1_title": {
-    "message": "Bienvenue sur le tout nouveau Campus Cloud !"
-  },
-  "on_boarding_step_2_description": {
-    "message": "Toutes vos ressources du campus incluant événements, services, clubs et plus."
-  },
-  "on_boarding_step_2_title": {
-    "message": "Gérer votre contenu du campus"
-  },
-  "on_boarding_step_3_description": {
-    "message": "Envoyez des annonces au campus ou ciblez vos messages pour des étudiants spécifiques."
-  },
-  "on_boarding_step_3_title": {
-    "message": "Notifiez votre campus et envoyez des messages ciblés"
-  },
-  "on_boarding_step_4_description": {
-    "message": "Comprenez l'implication des étudiants dans les événements et les services."
-  },
-  "on_boarding_step_4_title": {
-    "message": "Évaluez les activités du campus"
-  },
   "optional": {
     "message": "Optionnel"
   },
