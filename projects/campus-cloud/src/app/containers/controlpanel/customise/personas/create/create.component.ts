@@ -185,7 +185,7 @@ export class PersonasCreateComponent implements OnInit {
     this.buttonData = {
       class: 'primary',
       disabled: true,
-      text: this.cpI18n.translate('t_personas_create_submit_button')
+      text: this.cpI18n.translate('save')
     };
   }
 }

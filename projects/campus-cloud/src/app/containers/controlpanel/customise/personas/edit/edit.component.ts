@@ -321,7 +321,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
 
     this.submitButtonData = {
       class: 'primary',
-      text: this.cpI18n.translate('t_personas_edit_submit_button')
+      text: this.cpI18n.translate('save')
     };
   }
 }
