@@ -61,10 +61,8 @@
               [resourceId]="contentTypes.thirdParty"
               [title]="'t_personas_resource_third_party_app' | cpI18n"
             >
-              <cp-personas-resource-external-app-open
-                (valueChanges)="onCampusLinkFormChange($event)"
-              >
-              </cp-personas-resource-external-app-open>
+              <cp-resource-selector-type-external (valueChanges)="onCampusLinkFormChange($event)">
+              </cp-resource-selector-type-external>
             </cp-resource-selector-item>
             <cp-resource-selector-item
               [resourceId]="contentTypes.resourceList"

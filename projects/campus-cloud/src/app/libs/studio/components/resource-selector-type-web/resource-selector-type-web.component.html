@@ -13,8 +13,11 @@
     </div>
   </form>
   <p>
-    {{ 't_personas_tile_link_donation_message' | cpI18n }}
-    <a target="_blank" class="cpbtn cpbtn--link" [attr.href]="inappLinkMessage">
+    {{ hintText.message | cpI18n }}
+    <a
+      target="_blank"
+      class="cpbtn cpbtn--link"
+      [attr.href]="hintText.link">
       {{ 'learn_more' | cpI18n }}
     </a>
   </p>

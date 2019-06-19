@@ -5,8 +5,7 @@ import { NgModule } from '@angular/core';
 
 import {
   PersonasResourceListFormComponent,
-  PersonasResourceListOfListComponent,
-  PersonasResourceExternalAppOpenComponent
+  PersonasResourceListOfListComponent
 } from './components';
 
 import { ResourceService } from './resource.service';
@@ -22,8 +21,7 @@ import { PersonaResourceCreateComponent } from './create/create.component';
     PersonaResourceEditComponent,
     PersonaResourceCreateComponent,
     PersonasResourceListFormComponent,
-    PersonasResourceListOfListComponent,
-    PersonasResourceExternalAppOpenComponent
+    PersonasResourceListOfListComponent
   ],
   imports: [CommonModule, LibsStudioModule, SharedModule, ReactiveFormsModule, SortablejsModule],
   providers: [TilesUtilsService, ResourceService, ResourcesUtilsService],
@@ -31,8 +29,7 @@ import { PersonaResourceCreateComponent } from './create/create.component';
     PersonaResourceEditComponent,
     PersonaResourceCreateComponent,
     PersonasResourceListFormComponent,
-    PersonasResourceListOfListComponent,
-    PersonasResourceExternalAppOpenComponent
+    PersonasResourceListOfListComponent
   ]
 })
 export class PersonasResourceModule {}

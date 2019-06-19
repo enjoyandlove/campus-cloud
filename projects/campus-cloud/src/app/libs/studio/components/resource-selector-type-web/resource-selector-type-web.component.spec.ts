@@ -48,9 +48,9 @@ describe('ResourceSelectorTypeWebComponent', () => {
 
     it('should set resources', () => {
       expect(component.items).toBeDefined();
-      expect(component.items.length).toBe(3);
+      expect(component.items.length).toBe(4);
       expect(component.resources).toBeDefined();
-      expect(component.resources.length).toBe(2);
+      expect(component.resources.length).toBe(3);
     });
 
     it('should call buildForm', () => {
@@ -65,10 +65,10 @@ describe('ResourceSelectorTypeWebComponent', () => {
       fixture.detectChanges();
       component.ngOnInit();
       resultResourcesIds = component.resources.map((m) => m.id);
-      expectedResourcesIds = ['web_link', 'external_link'];
+      expectedResourcesIds = ['web_link', 'external_link', 'external_web_app'];
 
-      expect(component.items.length).toBe(3);
-      expect(component.resources.length).toBe(2);
+      expect(component.items.length).toBe(4);
+      expect(component.resources.length).toBe(3);
       expectedResourcesIds.forEach((resource) => {
         expect(resultResourcesIds.includes(resource)).toBe(true, `missing ${resource}`);
       });
@@ -100,7 +100,7 @@ describe('ResourceSelectorTypeWebComponent', () => {
         expect(valueChangesSpy).toHaveBeenCalledWith(component.form.value);
       });
 
-      it('should emit form value when invalid', () => {
+      it('should emit { link_url: "" } when invalid', () => {
         const valueChangesSpy = spyOn(component.valueChanges, 'emit');
         const invalidForm = {
           link_url: null,
@@ -109,10 +109,7 @@ describe('ResourceSelectorTypeWebComponent', () => {
 
         component.form.patchValue(invalidForm);
 
-        expect(valueChangesSpy).toHaveBeenCalledWith({
-          link_url: '',
-          link_params: {}
-        });
+        expect(valueChangesSpy).toHaveBeenCalledWith({ link_url: '' });
       });
     });
   });

@@ -44,8 +44,9 @@ export class ContentUtilsProviders {
 
   static isOpenInAppBrowser(resource: IStudioContentResource) {
     const openInBrowser = _get(resource, ['meta', 'open_in_browser'], 0);
+    const linkType = _get(resource, ['link_type'], 0);
 
-    return openInBrowser !== 0;
+    return openInBrowser !== 0 && linkType === 0;
   }
 
   static isPublicContent(resource: IStudioContentResource) {
@@ -260,6 +261,7 @@ export class ContentUtilsProviders {
       [ContentUtilsProviders.contentTypes.web]: [
         {
           id: 'web_link',
+          link_type: 0,
           label: 't_personas_tile_create_type_resource_web_link',
           meta: {
             link_params: {},
@@ -268,10 +270,20 @@ export class ContentUtilsProviders {
         },
         {
           id: 'external_link',
+          link_type: 0,
           label: 't_personas_tile_create_type_resource_external_link',
           meta: {
             link_params: {},
             open_in_browser: 1
+          }
+        },
+        {
+          id: '',
+          link_type: 5,
+          label: 't_personas_tile_create_resource_type_external_web_app',
+          meta: {
+            link_params: {},
+            open_in_browser: 0
           }
         }
       ],

@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { IntegrationDataService } from './providers';
+import { ContentUtilsProviders, IntegrationDataService } from './providers';
 
 import {
   ResourceSelectorComponent,
@@ -12,7 +12,9 @@ import {
   ResourceSelectorTypeWebComponent,
   ResourceSelectorTypeSingleComponent,
   ResourceSelectorTypeResourceComponent,
-  ResourceTypeServiceByCategoryComponent
+  ResourceSelectorTypeExternalComponent,
+  ResourceTypeServiceByCategoryComponent,
+  PersonasResourceExternalAppOpenComponent
 } from './components';
 
 @NgModule({
@@ -23,6 +25,7 @@ import {
     ResourceSelectorTypeWebComponent,
     ResourceSelectorTypeSingleComponent,
     ResourceSelectorTypeResourceComponent,
+    ResourceSelectorTypeExternalComponent,
     ResourceTypeServiceByCategoryComponent
   ],
   declarations: [
@@ -32,9 +35,11 @@ import {
     ResourceSelectorTypeWebComponent,
     ResourceSelectorTypeSingleComponent,
     ResourceSelectorTypeResourceComponent,
-    ResourceTypeServiceByCategoryComponent
+    ResourceSelectorTypeExternalComponent,
+    ResourceTypeServiceByCategoryComponent,
+    PersonasResourceExternalAppOpenComponent
   ],
   imports: [CommonModule, ReactiveFormsModule, SharedModule],
-  providers: [IntegrationDataService]
+  providers: [ContentUtilsProviders, IntegrationDataService]
 })
 export class LibsStudioModule {}

@@ -2952,7 +2952,7 @@
     "message": "3rd Party App"
   },
   "t_personas_tile_create_resource_type_external_web_app": {
-    "message": "Web SDK"
+    "message": "Authenticated Web App"
   },
   "t_personas_tile_create_resource_type_job_list": {
     "message": "Jobs"
@@ -3004,6 +3004,9 @@
   },
   "t_personas_tile_link_donation_message": {
     "message": "Certain types of links including donations will result in the app being rejected in the App Review Process. Use External Web Link instead."
+  },
+  "t_personas_tile_link_external_webapp_message": {
+    "message": "To setup an authenticated web app, please refer to the documentation."
   },
   "t_personas_tile_locked_tooltip": {
     "message": "Contact your Customer Support representative to make changes to this tile"
