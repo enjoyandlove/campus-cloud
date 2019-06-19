@@ -75,13 +75,13 @@
         [active]="selectedContent === contentTypes.thirdParty"
         [title]="'t_personas_resource_third_party_app' | cpI18n"
       >
-        <cp-personas-resource-external-app-open
+        <cp-resource-selector-type-external
           [isEdit]="[true]"
           [campusLink]="form.value"
           (valueChanges)="onCampusLinkFormChange($event)"
           *ngIf="selectedContent === contentTypes.thirdParty"
         >
-        </cp-personas-resource-external-app-open>
+        </cp-resource-selector-type-external>
       </cp-resource-selector-item>
     </cp-resource-selector>
   </div>

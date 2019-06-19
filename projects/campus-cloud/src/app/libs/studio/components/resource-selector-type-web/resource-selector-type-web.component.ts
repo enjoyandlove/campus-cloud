@@ -25,10 +25,29 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
   form: FormGroup;
   showForm = false;
   selectedItem = null;
-  inappLinkMessage = ZendeskService.getUrl('articles/360011676854');
+
   items: IStudioContentResource[] = [{ label: '---', id: null, meta: null }];
 
   constructor(private contentUtils: ContentUtilsProviders, private fb: FormBuilder) {}
+
+  get hintText() {
+    const linkType = this.form.get('link_type').value;
+
+    const message =
+      linkType === 5
+        ? 't_personas_tile_link_external_webapp_message'
+        : 't_personas_tile_link_donation_message';
+
+    const link =
+      linkType === 5
+        ? ZendeskService.getUrl('articles/360025009414')
+        : ZendeskService.getUrl('articles/360011676854');
+
+    return {
+      link,
+      message
+    };
+  }
 
   buildForm() {
     this.form = this.fb.group({
@@ -49,15 +68,18 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
   updateState() {
     this.selectedItem = this.items
       .filter((i: IStudioContentResource) => i.meta)
-      .find(
-        (i: IStudioContentResource) =>
-          Boolean(i.meta.open_in_browser) === this.campusLink.open_in_browser
-      );
+      .find((i: IStudioContentResource) => {
+        const regularWebLinkType = this.campusLink.link_type === 0;
+        return regularWebLinkType
+          ? Boolean(i.meta.open_in_browser) === this.campusLink.open_in_browser
+          : i.link_type === this.campusLink.link_type;
+      });
 
-    const { link_url, open_in_browser } = this.campusLink;
+    const { link_url, open_in_browser, link_type } = this.campusLink;
 
     this.form.patchValue({
       link_url,
+      link_type,
       open_in_browser
     });
 
@@ -78,13 +100,7 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
 
     this.buildForm();
     this.form.valueChanges.subscribe(() => {
-      const value = this.form.valid
-        ? this.form.value
-        : {
-            link_url: '',
-            link_params: {}
-          };
-
+      const value = this.form.valid ? this.form.value : { link_url: '' };
       this.valueChanges.emit(value);
     });
 
@@ -100,6 +116,7 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
 
     this.form.patchValue({
       link_url: '',
+      link_type: selection.link_type,
       open_in_browser: openInBrowser
     });
   }
