@@ -77,7 +77,7 @@ describe('ResourceSelectorTypeWebComponent', () => {
       fixture.detectChanges();
       component.ngOnInit();
       resultResourcesIds = component.resources.map((m) => m.id);
-      expectedResourcesIds = ['web_link'];
+      expectedResourcesIds = ['external_link'];
 
       expect(component.items.length).toBe(2);
       expect(component.resources.length).toBe(1);

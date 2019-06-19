@@ -45,7 +45,7 @@ export class ContentUtilsProviders {
   static isOpenInAppBrowser(resource: IStudioContentResource) {
     const openInBrowser = _get(resource, ['meta', 'open_in_browser'], 0);
 
-    return openInBrowser === 0;
+    return openInBrowser !== 0;
   }
 
   static isPublicContent(resource: IStudioContentResource) {
