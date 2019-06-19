@@ -34,16 +34,20 @@ export abstract class HTTPService {
   }
 
   sanitizeEntries(formData) {
-    for (const key in formData) {
-      if (typeof formData[key] === 'string' || formData[key] instanceof String) {
-        formData = {
-          ...formData,
-          [key]: formData[key].trim()
-        };
-      }
+    if (!Array.isArray(formData) && typeof formData != 'object') {
+      return formData;
     }
 
-    return formData;
+    return Object.keys(formData).reduce(
+      (acc, key) => {
+        acc[key.trim()] =
+          typeof formData[key] == 'string'
+            ? formData[key].trim()
+            : this.sanitizeEntries(formData[key]);
+        return acc;
+      },
+      Array.isArray(formData) ? [] : {}
+    );
   }
 
   getHeaders() {
