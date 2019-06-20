@@ -133,6 +133,8 @@ export const amplitudeEvents = {
 
   ASSESSMENT: 'Assessment',
 
+  NEW_INVITE: 'New Invite',
+
   MENU_AUDIENCE: 'Audience',
 
   TEST_SCHOOL: 'Test School',
@@ -172,6 +174,8 @@ export const amplitudeEvents = {
   ANNOUNCEMENT: 'Announcement',
 
   CHECKIN_ONLY: 'Check-in Only',
+
+  RESENT_INVITE: 'Resent Invite',
 
   NO_ASSESSMENT: 'No Assessment',
 
