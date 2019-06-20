@@ -102,7 +102,7 @@ describe('ResourceTypeServiceByCategoryComponent', () => {
       const type = ContentUtilsProviders.contentTypes.web;
       const contentTypes = ContentUtilsProviders.getResourcesForType(type);
 
-      expect(contentTypes.length).toBe(2);
+      expect(contentTypes.length).toBe(3);
     });
 
     it('should return third party type items', () => {

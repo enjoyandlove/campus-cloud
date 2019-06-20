@@ -278,7 +278,7 @@ export class ContentUtilsProviders {
           }
         },
         {
-          id: '',
+          id: 'external_web_app',
           link_type: 5,
           label: 't_personas_tile_create_resource_type_external_web_app',
           meta: {
