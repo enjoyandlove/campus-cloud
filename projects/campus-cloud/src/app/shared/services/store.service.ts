@@ -189,7 +189,7 @@ export class StoreService extends HTTPService {
 
     const services$ = canReadServices ? this.getServices(search) : observableOf([]);
 
-    const stream$ = combineLatest(services$, clubs$, athletics$);
+    const stream$ = combineLatest([services$, clubs$, athletics$]);
 
     return stream$.pipe(
       map((res) => {

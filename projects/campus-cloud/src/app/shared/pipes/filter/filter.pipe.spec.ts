@@ -6,7 +6,7 @@ const mockData = [
 ];
 
 describe('CPFilterPipe', () => {
-  let pipe = new CPFilterPipe();
+  const pipe = new CPFilterPipe();
 
   it('Should return "filterBy" attribute with "No Results" if filterBy is an Array', () => {
     const query = pipe.transform(mockData, { query: 'xxxx', filterBy: ['firstname', 'lastname'] });

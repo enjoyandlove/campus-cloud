@@ -53,7 +53,7 @@ describe('PersonasListComponent', () => {
   });
 
   it('onRankDown', fakeAsync(() => {
-    expect(comp.state.personas[0].localized_name_map.en).toBe("Student's Tile");
+    expect(comp.state.personas[0].localized_name_map.en).toBe('Students Tile');
 
     comp.onRankDown(comp.state.personas[0], 0);
 
@@ -63,7 +63,7 @@ describe('PersonasListComponent', () => {
   }));
 
   it('onRankUp', fakeAsync(() => {
-    expect(comp.state.personas[0].localized_name_map.en).toBe("Student's Tile");
+    expect(comp.state.personas[0].localized_name_map.en).toBe('Students Tile');
 
     comp.onRankUp(comp.state.personas[1], 1);
 
@@ -75,10 +75,10 @@ describe('PersonasListComponent', () => {
   it('movePersonaToIndex', () => {
     const expected = comp.movePersonaToIndex(comp.state.personas[0], 0, 1);
 
-    expect(comp.state.personas[0].localized_name_map.en).toBe("Student's Tile");
+    expect(comp.state.personas[0].localized_name_map.en).toBe('Students Tile');
 
     expect(expected[0].localized_name_map.en).toBe('Web Persona');
-    expect(expected[1].localized_name_map.en).toBe("Student's Tile");
+    expect(expected[1].localized_name_map.en).toBe('Students Tile');
   });
 
   it('handleUpdateError', () => {

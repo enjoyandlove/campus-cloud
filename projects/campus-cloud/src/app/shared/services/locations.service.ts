@@ -116,7 +116,7 @@ export class CPLocationsService {
     const google$ = this.getGoogleSuggestions(input, lat, lng);
     const locations$ = this.getLocations(input);
 
-    return combineLatest(locations$, google$);
+    return combineLatest([locations$, google$]);
   }
 
   getLocationDetails(placeId: string, el: HTMLDivElement) {

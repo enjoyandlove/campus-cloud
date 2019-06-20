@@ -83,7 +83,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       })
     );
 
-    const stream$ = combineLatest(service$, categories$);
+    const stream$ = combineLatest([service$, categories$]);
     super.fetchData(stream$).then((res) => {
       const lat = res.data[0].latitude;
 

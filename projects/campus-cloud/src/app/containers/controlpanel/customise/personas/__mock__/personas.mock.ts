@@ -5,8 +5,8 @@ export const mockPersonas = [
     rank: 1,
     platform: 0,
     localized_name_map: {
-      fr: "Students' Tile",
-      en: "Students' Tile"
+      fr: 'Students Tile',
+      en: 'Students Tile'
     },
     pretour_enabled: false,
     id: 807

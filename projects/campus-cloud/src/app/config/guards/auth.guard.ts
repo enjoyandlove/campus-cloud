@@ -8,12 +8,7 @@ import { CPSession, ISchool } from '@campus-cloud/session';
 import { CPLogger } from '@campus-cloud/shared/services/logger';
 import { base64 } from '@campus-cloud/shared/utils/encrypt/encrypt';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
-import {
-  AdminService,
-  SchoolService,
-  StoreService,
-  ZendeskService
-} from '@campus-cloud/shared/services';
+import { AdminService, SchoolService, StoreService } from '@campus-cloud/shared/services';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -22,12 +17,11 @@ export class AuthGuard implements CanActivate {
     public session: CPSession,
     public storeService: StoreService,
     public adminService: AdminService,
-    public schoolService: SchoolService,
-    public zendeskService: ZendeskService
+    public schoolService: SchoolService
   ) {}
 
   preLoadUser(): Promise<any> {
-    const search = new HttpParams().set('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().set('school_id', this.session.school.id.toString());
 
     return this.adminService
       .getAdmins(1, 1, search)
@@ -88,7 +82,7 @@ export class AuthGuard implements CanActivate {
   }
 
   fetchStores(): Promise<any> {
-    const search = new HttpParams().set('school_id', this.session.g.get('school').id.toString());
+    const search = new HttpParams().set('school_id', this.session.school.id.toString());
 
     return this.storeService.getStores(search).toPromise();
   }
@@ -97,7 +91,7 @@ export class AuthGuard implements CanActivate {
     let defaultHost = null;
 
     return new Promise((resolve) => {
-      const schoolDefaultHost = this.session.g.get('school').main_union_store_id;
+      const schoolDefaultHost = this.session.school.main_union_store_id;
 
       stores.map((store) => {
         if (store.value === schoolDefaultHost) {
@@ -134,8 +128,6 @@ export class AuthGuard implements CanActivate {
   }
 
   async canActivate(activatedRoute, state) {
-    this.setZendesk(activatedRoute.data);
-
     const sessionKey = appStorage.storageAvailable()
       ? appStorage.get(appStorage.keys.SESSION)
       : null;
@@ -158,13 +150,5 @@ export class AuthGuard implements CanActivate {
     }
 
     return this.redirectAndSaveGoTo(state.url);
-  }
-
-  private setZendesk(routeObj) {
-    if ('zendesk' in routeObj) {
-      this.zendeskService.setHelpCenterSuggestions({
-        labels: [routeObj['zendesk']]
-      });
-    }
   }
 }

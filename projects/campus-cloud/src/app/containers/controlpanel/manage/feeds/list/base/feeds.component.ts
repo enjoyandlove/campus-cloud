@@ -161,7 +161,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
       const channels$ = this.service.getChannelsBySchoolId(1, 1000, _search);
 
-      stream$ = combineLatest(campusThread$, channels$).pipe(
+      stream$ = combineLatest([campusThread$, channels$]).pipe(
         map((res: any) => {
           const result = [];
           const threads = res[0];

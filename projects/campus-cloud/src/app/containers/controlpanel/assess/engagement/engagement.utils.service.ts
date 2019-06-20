@@ -1,7 +1,7 @@
-import { map, startWith, concat, reduce } from 'rxjs/operators';
+import { map, startWith, reduce } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, concat } from 'rxjs';
 import * as moment from 'moment';
 
 import { CPSession } from '@campus-cloud/session';
@@ -268,12 +268,11 @@ export class EngagementUtilsService {
     const canReadAudience = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.audience);
     if (canReadAudience) {
       const audienceSearch = schoolSearch;
-      filter$ = filter$.pipe(
-        concat(
-          this.engageService
-            .getLists(undefined, undefined, audienceSearch)
-            .pipe(map((res) => this.parsedAudiences(res)))
-        )
+      filter$ = concat(
+        filter$,
+        this.engageService
+          .getLists(undefined, undefined, audienceSearch)
+          .pipe(map((res) => this.parsedAudiences(res)))
       );
     }
 
