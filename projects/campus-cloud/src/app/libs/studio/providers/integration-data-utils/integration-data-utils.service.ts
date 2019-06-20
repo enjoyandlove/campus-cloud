@@ -6,8 +6,11 @@ import { IIntegrationData, ExtraDataType, IExtraData } from '../../models';
 export class IntegrationDataUtils {
   constructor() {}
 
-  private static findExtraData = (integrationData: IIntegrationData, type: ExtraDataType) =>
-    integrationData.extra_data.find((extraData: IExtraData) => extraData.extra_data_type === type);
+  private static findExtraData(integrationData: IIntegrationData, type: ExtraDataType) {
+    return integrationData.extra_data.find(
+      (extraData: IExtraData) => extraData.extra_data_type === type
+    );
+  }
 
   static getExtraData(integrations: IIntegrationData[], type: ExtraDataType): IExtraData {
     const integration = integrations.find(

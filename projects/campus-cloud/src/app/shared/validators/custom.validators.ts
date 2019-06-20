@@ -9,11 +9,11 @@ export class CustomValidators {
     return null;
   }
 
-  static oneOf = (options: Array<string | number>) => {
+  static oneOf(options: Array<string | number>) {
     return (control: AbstractControl) => {
       return options.includes(control.value) ? null : { oneOf: true };
     };
-  };
+  }
 
   static requiredNonEmpty(control: AbstractControl): ValidationErrors | null {
     if (control.value === null) {
@@ -23,7 +23,7 @@ export class CustomValidators {
     return control.value.trim() ? null : { required: true };
   }
 
-  static commaSeparated = (validators: Function[]) => {
+  static commaSeparated(validators: Function[]) {
     return (control: AbstractControl) => {
       const hasValue = control.value && control.value.replace(/,/g, '').length;
       if (!hasValue) {
@@ -44,7 +44,7 @@ export class CustomValidators {
           );
         }, null);
     };
-  };
+  }
 
   static emailWithTopLevelDomain(control: AbstractControl): ValidationErrors | null {
     const emailErrors = Validators.email(control);

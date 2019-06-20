@@ -11,7 +11,17 @@ import { ManageStoreModule } from './manage';
     CommonModule,
     BaseStoreModule,
     ManageStoreModule,
-    StoreModule.forRoot({}),
+    StoreModule.forRoot(
+      {},
+      {
+        runtimeChecks: {
+          strictStateImmutability: true,
+          strictActionImmutability: true,
+          strictStateSerializability: true,
+          strictActionSerializability: false
+        }
+      }
+    ),
     EffectsModule.forRoot([])
   ],
   declarations: []

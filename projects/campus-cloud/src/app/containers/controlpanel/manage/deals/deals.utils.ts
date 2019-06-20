@@ -3,6 +3,14 @@ import { ValidatorFn, FormGroup, ValidationErrors } from '@angular/forms';
 import { CPDate } from '../../../../shared/utils';
 
 export const dealDateValidator = (tz: string): ValidatorFn => {
+  const expirationError = (start: number, expiration: number, now: number) => {
+    return expiration < now
+      ? { expirationBeforeNow: true }
+      : expiration < start
+      ? { expirationBeforeStart: true }
+      : null;
+  };
+
   return (control: FormGroup): ValidationErrors | null => {
     const ongoing = control.get('ongoing').value;
     if (ongoing) {
@@ -18,12 +26,4 @@ export const dealDateValidator = (tz: string): ValidatorFn => {
       ? { expirationInvalid: true }
       : expirationError(start, expiration, now);
   };
-};
-
-const expirationError = (start: number, expiration: number, now: number) => {
-  return expiration < now
-    ? { expirationBeforeNow: true }
-    : expiration < start
-    ? { expirationBeforeStart: true }
-    : null;
 };

@@ -441,7 +441,7 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
     }
 
     const event$ = this.service.getEventById(this.eventId, search);
-    const stream$ = combineLatest(event$, stores$);
+    const stream$ = combineLatest([event$, stores$]);
 
     super
       .fetchData(stream$)

@@ -101,7 +101,7 @@ export class DashboardService extends HTTPService {
     const eventAssessment$ = this.eventAssessment.asObservable();
     const serviceAssessment$ = this.serviceAssessment.asObservable();
 
-    return combineLatest(eventAssessment$, serviceAssessment$);
+    return combineLatest([eventAssessment$, serviceAssessment$]);
   }
 
   getIntegrations(search: HttpParams) {

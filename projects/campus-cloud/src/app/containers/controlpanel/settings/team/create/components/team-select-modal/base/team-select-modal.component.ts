@@ -196,12 +196,15 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
 
       if (res.selected) {
         for (const store in res.selected) {
-          const canAccountWrite = _get(res.selected[store], 'write', true);
+          if (store in res.selected) {
+            const canAccountWrite = _get(res.selected[store], 'write', true);
 
-          const value = canAccountWrite ? permissionType.write : permissionType.read;
-          const icon = value === permissionType.write ? permissionIcon.write : permissionIcon.read;
+            const value = canAccountWrite ? permissionType.write : permissionType.read;
+            const icon =
+              value === permissionType.write ? permissionIcon.write : permissionIcon.read;
 
-          this.updateItem(res.selected[store].id, 'type', value, icon);
+            this.updateItem(res.selected[store].id, 'type', value, icon);
+          }
         }
       }
     });

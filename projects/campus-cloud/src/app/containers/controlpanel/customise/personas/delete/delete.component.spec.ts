@@ -36,7 +36,7 @@ describe('PersonasDeleteComponent', () => {
 
   it('should create', () => {
     expect(comp).toBeTruthy();
-    expect(comp.personaName).toBe("Student's Tile");
+    expect(comp.personaName).toBe('Students Tile');
   });
 
   it('resetModal', () => {

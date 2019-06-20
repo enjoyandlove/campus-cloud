@@ -69,7 +69,7 @@ export class CalendarsItemsDetailsComponent extends BaseComponent implements OnI
 
     const item$ = this.service.getItemById(this.itemId, itemSearch);
     const calendar$ = this.service.getCalendarById(this.calendarId, calendarSearch);
-    const stream$ = combineLatest(item$, calendar$);
+    const stream$ = combineLatest([item$, calendar$]);
 
     super.fetchData(stream$).then((res) => {
       this.item = res.data[0];

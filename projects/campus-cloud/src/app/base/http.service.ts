@@ -34,14 +34,14 @@ export abstract class HTTPService {
   }
 
   sanitizeEntries(formData) {
-    if (!Array.isArray(formData) && typeof formData != 'object') {
+    if (!Array.isArray(formData) && typeof formData !== 'object') {
       return formData;
     }
 
     return Object.keys(formData).reduce(
       (acc, key) => {
         acc[key.trim()] =
-          typeof formData[key] == 'string'
+          typeof formData[key] === 'string'
             ? formData[key].trim()
             : this.sanitizeEntries(formData[key]);
         return acc;

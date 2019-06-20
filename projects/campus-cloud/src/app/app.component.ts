@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { Component, OnInit } from '@angular/core';
 
 import { pageTitle } from '@campus-cloud/shared/constants';
+import { ZendeskService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-app',
@@ -13,8 +14,17 @@ export class AppComponent implements OnInit {
   constructor(
     private router: Router,
     private titleService: Title,
+    private zendeskService: ZendeskService,
     private activatedRoute: ActivatedRoute
   ) {}
+
+  setZendesk(routeObj) {
+    if ('zendesk' in routeObj) {
+      this.zendeskService.setHelpCenterSuggestions({
+        labels: [routeObj['zendesk']]
+      });
+    }
+  }
 
   setPageTitle() {
     this.router.events
@@ -31,6 +41,7 @@ export class AppComponent implements OnInit {
         mergeMap((route) => route.data)
       )
       .subscribe((event) => {
+        this.setZendesk(event);
         const title = !event['title']
           ? `${pageTitle.CAMPUS_CLOUD}`
           : `${pageTitle.CAMPUS_CLOUD} ${event['title']}`;

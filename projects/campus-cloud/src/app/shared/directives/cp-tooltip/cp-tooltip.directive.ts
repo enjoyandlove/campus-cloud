@@ -11,6 +11,7 @@ const defaultOptions: TooltipOption = {
 })
 export class CPToolTipDirective implements OnChanges {
   @Input() cpTooltip: TooltipOption;
+  // tslint:disable-next-line:no-input-rename
   @Input('attr.title') title: string;
 
   constructor(private el: ElementRef) {}

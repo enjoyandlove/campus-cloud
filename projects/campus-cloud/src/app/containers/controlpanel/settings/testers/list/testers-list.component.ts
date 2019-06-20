@@ -114,7 +114,7 @@ export class TestersListComponent implements OnInit, OnDestroy, Destroyable {
       .select(selectors.getTestersLoading)
       .pipe(takeUntil(this.destroy$))
       .subscribe((loading: boolean) => (this.isLoading = loading));
-    combineLatest(this.testers$, this.search$)
+    combineLatest([this.testers$, this.search$])
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         const noTesters = res[0].length === 0;

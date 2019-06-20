@@ -3,12 +3,7 @@ import { Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
 import { CPSession } from '@campus-cloud/session';
-import {
-  AdminService,
-  SchoolService,
-  StoreService,
-  ZendeskService
-} from '@campus-cloud/shared/services';
+import { AdminService, SchoolService, StoreService } from '@campus-cloud/shared/services';
 
 import {
   canClientReadResource,
@@ -23,8 +18,7 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
     public session: CPSession,
     public storeService: StoreService,
     public adminService: AdminService,
-    public schoolService: SchoolService,
-    public zendeskService: ZendeskService
+    public schoolService: SchoolService
   ) {}
 
   canActivateChild(activatedRoute: ActivatedRouteSnapshot) {
@@ -33,7 +27,6 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
       return true;
     }
 
-    this.setZendesk(activatedRoute.data);
     return this.checkPrivilege(privilege);
   }
 
@@ -67,13 +60,5 @@ export class PrivilegesGuard implements CanActivate, CanActivateChild {
       canSchoolReadResource(this.session.g, privilege) ||
       canAccountLevelReadResource(this.session.g, privilege)
     );
-  }
-
-  private setZendesk(routeObj) {
-    if ('zendesk' in routeObj) {
-      this.zendeskService.setHelpCenterSuggestions({
-        labels: [routeObj['zendesk']]
-      });
-    }
   }
 }

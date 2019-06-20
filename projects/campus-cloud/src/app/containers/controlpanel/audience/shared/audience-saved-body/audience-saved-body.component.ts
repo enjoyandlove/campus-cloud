@@ -46,7 +46,7 @@ export class AudienceSavedBodyComponent implements OnInit {
 
     const persona$ = isCustomizationEnabled ? this.service.getPersona(search, 1, 1000) : of([]);
 
-    const stream$ = combineLatest(audiences$, persona$, this.importedAudience$);
+    const stream$ = combineLatest([audiences$, persona$, this.importedAudience$]);
 
     stream$.subscribe((res: any) => {
       let [audiences, personas, importedAudience] = res;
