@@ -101,17 +101,18 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
       this.filterByLoginStatus ? ContentUtilsProviders.isPublicContent : null
     ].filter((f) => f);
 
-    this.resources = ContentUtilsProviders.getResourcesForType(
-      ContentUtilsProviders.contentTypes.single,
-      filters
-    );
-    this.items = this.contentUtils.resourcesToIItem(this.resources);
-
     forkJoin([this.loadCalendars(), this.loadServices(), this.loadStores()]).subscribe(
       ([calendars, services, stores]) => {
         this.storesByType['subscribable_calendar'] = calendars;
         this.storesByType['campus_service'] = services;
         this.storesByType['store'] = stores;
+
+        this.resources = ContentUtilsProviders.getResourcesForType(
+          ContentUtilsProviders.contentTypes.single,
+          filters
+        );
+
+        this.items = this.contentUtils.resourcesToIItem(this.resources);
 
         if (this.isEdit) {
           this.updateState();

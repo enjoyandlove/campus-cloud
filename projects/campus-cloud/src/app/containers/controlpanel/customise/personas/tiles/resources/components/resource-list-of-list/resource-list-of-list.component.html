@@ -50,17 +50,18 @@
     [resource]="state.editingResource"
     (error)="onError($event)"
     (teardown)="onTearDown()"
-    (success)="onEditedResource($event)"
-  >
+    (success)="onEditedResource($event)">
   </cp-personas-resource-edit>
 </cp-modal>
 
-<cp-modal *ngIf="state.showCreateModal" modalId="resourceCreateModal" (modalClose)="onModalClose()">
+<cp-modal
+  *ngIf="state.showCreateModal"
+  modalId="resourceCreateModal"
+  (modalClose)="onModalClose()">
   <cp-personas-resource-create
     [persona]="persona"
     (error)="onError($event)"
     (teardown)="onTearDown()"
-    (success)="onCreatedResource($event)"
-  >
+    (success)="onCreatedResource($event)">
   </cp-personas-resource-create>
 </cp-modal>

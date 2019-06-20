@@ -32,7 +32,7 @@
         [title]="'t_personas_resource_single_item' | cpI18n"
       >
         <cp-resource-selector-type-single
-          [isEdit]="[true]"
+          [isEdit]="isEdit"
           [campusLink]="form.value"
           [filterByWebApp]="filterByWeb"
           *ngIf="selectedContent === contentTypes.single"
@@ -48,7 +48,7 @@
       >
         <cp-resource-selector-type-resource
           [filterByWebApp]="filterByWeb"
-          [isEdit]="[true]"
+          [isEdit]="isEdit"
           [campusLink]="form.value"
           *ngIf="selectedContent === contentTypes.list"
           [filterByLoginStatus]="filterByLogin"
@@ -62,7 +62,7 @@
         [title]="'t_personas_resource_web_link' | cpI18n"
       >
         <cp-resource-selector-type-web
-          [isEdit]="[true]"
+          [isEdit]="isEdit"
           [campusLink]="form.value"
           [filterByWebApp]="filterByWeb"
           *ngIf="selectedContent === contentTypes.web"
@@ -76,7 +76,7 @@
         [title]="'t_personas_resource_third_party_app' | cpI18n"
       >
         <cp-resource-selector-type-external
-          [isEdit]="[true]"
+          [isEdit]="isEdit"
           [campusLink]="form.value"
           (valueChanges)="onCampusLinkFormChange($event)"
           *ngIf="selectedContent === contentTypes.thirdParty"
