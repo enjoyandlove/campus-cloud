@@ -46,6 +46,20 @@ export enum manageAdminMenu {
   enabled = 1
 }
 
+export enum RequestParams {
+  resend = 1
+}
+
+export enum HttpErrorResponseMessage {
+  adminActivated = 'admin_already_activated'
+}
+
+export enum PhraseAppKeys {
+  somethingWrong = 'something_went_wrong',
+  inviteSuccess = 't_team_settings_resend_invite_success',
+  inviteFail = 't_team_settings_resend_invite_admin_already_activated'
+}
+
 @Injectable()
 export class TeamUtilsService {
   constructor(public cpI18n: CPI18nService) {}

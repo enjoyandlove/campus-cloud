@@ -5,8 +5,7 @@
         <div class="col-4">
           <cp-searchbox
             (query)="onSearch($event)"
-            [placeholder]="cpI18n.translate('admin_search_by_email_or_email')"
-          >
+            [placeholder]="'admin_search_by_email_or_email' | cpI18n">
           </cp-searchbox>
         </div>
       </div>
@@ -27,25 +26,26 @@
             [label]="sortingLabels.name"
             (click)="doSort('firstname')"
             [sortField]="state.sort_field"
-            [sortDirection]="state.sort_direction"
-          >
+            [sortDirection]="state.sort_direction">
           </cp-sorting-header>
 
           <cp-sorting-header
-            class="col-5"
+            class="col-4"
             sortLabel="status"
             (click)="doSort('status')"
             [label]="sortingLabels.status"
             [sortField]="state.sort_field"
-            [sortDirection]="state.sort_direction"
-          >
+            [sortDirection]="state.sort_direction">
           </cp-sorting-header>
 
           <span class="col-2"></span>
+          <span class="col-1"></span>
         </div>
       </li>
 
-      <li class="cp-form__item col-12" *ngFor="let admin of state.admins">
+      <li
+        class="cp-form__item col-12"
+        *ngFor="let admin of state.admins; let i = index">
         <div class="row">
           <span class="col-5 text-truncate">
             <strong>
@@ -54,23 +54,33 @@
                 <span *ngIf="admin.is_current_user">({{ 'you' | cpI18n }})</span>
               </a>
             </strong>
-            <br />
+            <br>
             <small class="text-muted">{{ admin.email }}</small>
           </span>
 
-          <span class="col-5 text-truncate">
+          <span class="col-4 text-truncate">
             {{ admin.account_activated ? cpI18n.translate('active') : cpI18n.translate('pending') }}
           </span>
 
-          <span class="col-1 offset-1 text-center">
+          <span class="col-2">
+            <button
+              cpTarget="resend_invite"
+              class="cpbtn cpbtn--link"
+              *ngIf="!admin.account_activated"
+              (click)="onResendInvite(admin, i)"
+              [disabled]="disabledSendInviteButtons[i]">
+              {{ 't_team_settings_resend_invite' | cpI18n }}
+            </button>
+          </span>
+
+          <span class="col-1 text-center">
             <button
               type="button"
               (click)="deleteAdmin = admin"
               *ngIf="!admin.is_current_user"
               class="cpbtn cpbtn--link-dark deletebutton"
               data-toggle="modal"
-              data-target="#teamDeleteModal"
-            >
+              data-target="#teamDeleteModal">
               &times;
             </button>
           </span>
@@ -85,8 +95,7 @@
           [pagePrev]="pagePrev"
           [pageNumber]="pageNumber"
           (next)="onPaginationNext()"
-          (previous)="onPaginationPrevious()"
-        >
+          (previous)="onPaginationPrevious()">
         </cp-pagination>
       </div>
     </div>
@@ -97,8 +106,7 @@
   <cp-team-delete
     [admin]="deleteAdmin"
     (unauthorized)="onForbidden()"
-    (deleted)="onDeleted($event)"
-  >
+    (deleted)="onDeleted($event)">
   </cp-team-delete>
 </cp-modal>
 

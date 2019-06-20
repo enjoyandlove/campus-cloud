@@ -189,7 +189,12 @@ export class TeamCreateComponent implements OnInit {
           ? amplitudeEvents.INTERNAL
           : amplitudeEvents.EXTERNAL;
 
-        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.INVITED_TEAM_MEMBER, { source });
+        const eventProperties = {
+          source,
+          invite_type: amplitudeEvents.NEW_INVITE
+        };
+
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.INVITED_TEAM_MEMBER, eventProperties);
         this.router.navigate(['/settings/team']);
       },
       (err) => {
