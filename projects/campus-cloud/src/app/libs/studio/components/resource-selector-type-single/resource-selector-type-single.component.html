@@ -1,6 +1,9 @@
 <div class="form-group">
   <label>{{ 't_personas_tile_modal_create_resource_type' | cpI18n }}</label>
-  <cp-dropdown [items]="items" [selectedItem]="selectedType" (selected)="onItemClicked($event)">
+  <cp-dropdown
+    [items]="items"
+    [selectedItem]="selectedType"
+    (selected)="onItemClicked($event)">
   </cp-dropdown>
 </div>
 
@@ -9,7 +12,6 @@
     [reset]="resetHosts$"
     [selectedItem]="selectedStore"
     [items]="getStoresBySelection()"
-    (selected)="onHostSelected($event)"
-  >
+    (selected)="onHostSelected($event)">
   </cp-dropdown>
 </div>
