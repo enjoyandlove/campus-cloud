@@ -42,7 +42,6 @@ export class TilesUtilsService {
 
   static loginRequiredTiles = [
     CampusLink.jobList,
-    CampusLink.appOpen,
     CampusLink.timetable,
     CampusLink.courseSearch,
     CampusLink.campusLinkList,
