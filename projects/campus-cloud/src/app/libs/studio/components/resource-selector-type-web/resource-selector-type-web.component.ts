@@ -18,6 +18,7 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
   @Input() isEdit = false;
   @Input() campusLink: ILink;
   @Input() filterByWebApp = false;
+  @Input() filterByLoginStatus = false;
 
   @Output() valueChanges: EventEmitter<any> = new EventEmitter();
 
@@ -87,9 +88,12 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
   }
 
   ngOnInit() {
-    const filters = [this.filterByWebApp ? ContentUtilsProviders.isOpenInAppBrowser : null].filter(
-      (f) => f
-    );
+    const filters = [
+      this.filterByWebApp ? ContentUtilsProviders.isOpenInAppBrowser : null,
+      this.filterByLoginStatus
+        ? (resource: IStudioContentResource) => resource.id !== 'external_web_app'
+        : null
+    ].filter((f) => f);
 
     this.resources = ContentUtilsProviders.getResourcesForType(
       ContentUtilsProviders.contentTypes.web,

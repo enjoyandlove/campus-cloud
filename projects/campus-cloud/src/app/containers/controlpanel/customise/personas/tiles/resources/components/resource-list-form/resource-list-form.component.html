@@ -65,6 +65,7 @@
           [isEdit]="isEdit"
           [campusLink]="form.value"
           [filterByWebApp]="filterByWeb"
+          [filterByLoginStatus]="filterByLogin"
           *ngIf="selectedContent === contentTypes.web"
           (valueChanges)="onCampusLinkFormChange($event)"
         >
