@@ -3,7 +3,8 @@
   <cp-dropdown
     [items]="items"
     [selectedItem]="selectedType"
-    (selected)="onItemClicked($event)">
+    (selected)="onItemClicked($event)"
+    [isRequiredError]="showErrors && form.get('link_url').invalid">
   </cp-dropdown>
 </div>
 
@@ -12,6 +13,7 @@
     [reset]="resetHosts$"
     [selectedItem]="selectedStore"
     [items]="getStoresBySelection()"
-    (selected)="onHostSelected($event)">
+    (selected)="onHostSelected($event)"
+    [isRequiredError]="showErrors && form.invalid">
   </cp-dropdown>
 </div>

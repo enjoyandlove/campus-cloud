@@ -20,6 +20,7 @@ import { IntegrationDataService, IStudioContentResource } from './../../provider
 export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy {
   @Input() isEdit = false;
   @Input() campusLink: ILink;
+  @Input() showErrors = false;
   @Input() filterByWebApp = false;
   @Input() filterByLoginStatus = false;
 

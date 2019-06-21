@@ -2400,6 +2400,9 @@
   "t_check_in_date_placeholder_text": {
     "message": "Maintenant"
   },
+  "t_choose_a_file": {
+    "message": "Choisissez un fichier"
+  },
   "t_clubs_admin": {
     "message": "Administrateur"
   },
@@ -2985,7 +2988,7 @@
     "message": "Certains types de liens, y compris des dons, entraîneront le rejet de l'application dans le processus de révision des applications. Utilisez plutôt un lien Web externe."
   },
   "t_personas_tile_link_external_webapp_message": {
-    "message": "To setup an authenticated, please refer to the documentation."
+    "message": "To setup an authenticated web app, please refer to the documentation."
   },
   "t_personas_tile_locked_tooltip": {
     "message": "Contactez votre représentant du service clientèle pour modifier cette tuile."

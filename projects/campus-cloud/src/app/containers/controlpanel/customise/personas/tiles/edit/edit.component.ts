@@ -29,15 +29,16 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   tileId;
   loading;
   editable;
-  buttonData;
   campusLinkId;
   tile: ITile;
   persona: IPersona;
   personaId: number;
   filterByWeb = false;
   guide: ICampusGuide;
+  formHasErrors = false;
   filterByLogin = false;
   campusLinkForm: FormGroup;
+  disableSubmitButton = false;
   campusGuideTileForm: FormGroup;
   contentTypes = ContentUtilsProviders.contentTypes;
   selectedContent = ContentUtilsProviders.contentTypes.single;
@@ -99,8 +100,6 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
       link_url: null,
       link_params: {}
     });
-
-    this.updateButtonDisableStatus();
   }
 
   erroHandler() {
@@ -115,15 +114,19 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   }
 
   onSubmit() {
+    this.formHasErrors = false;
+    if (this.campusGuideTileForm.invalid || this.campusLinkForm.invalid) {
+      this.formHasErrors = true;
+      return;
+    }
+
+    this.disableSubmitButton = true;
+
     const stream$ = this.updateGuideTile();
 
     stream$.subscribe(
       () => {
-        this.buttonData = {
-          ...this.buttonData,
-          disabled: false
-        };
-
+        this.disableSubmitButton = false;
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.STUDIO_UPDATED_TILE,
           this.editedTileEventProperties
@@ -132,11 +135,8 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
         this.router.navigate(['/studio/experiences', this.personaId]);
       },
       (_) => {
-        this.buttonData = {
-          ...this.buttonData,
-          disabled: false
-        };
         this.erroHandler();
+        this.disableSubmitButton = false;
       }
     );
   }
@@ -184,16 +184,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     });
   }
 
-  updateButtonDisableStatus() {
-    this.buttonData = {
-      ...this.buttonData,
-      disabled: !(this.campusGuideTileForm.valid && this.campusLinkForm.valid)
-    };
-  }
-
   onCampusGuideTileFormChange() {
-    this.updateButtonDisableStatus();
-
     const name = this.campusGuideTileForm.controls['name'].value;
     const img_url = this.campusGuideTileForm.controls['img_url'].value;
 
@@ -203,7 +194,6 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
 
   onCampusLinkFormChange(newValues) {
     this.campusLinkForm.patchValue(newValues);
-    this.updateButtonDisableStatus();
   }
 
   onChangedImage(isChanged: boolean) {
@@ -278,12 +268,6 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
 
       return;
     }
-
-    this.buttonData = {
-      class: 'primary',
-      disabled: false,
-      text: this.cpI18n.translate('save')
-    };
 
     this.fetch();
   }

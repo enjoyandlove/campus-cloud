@@ -8,10 +8,10 @@
             {{ 't_personas_create_tile_heading_left' | cpI18n }}
           </p>
           <cp-personas-tile-guide-form
+            [showErrors]="formHasErrors"
             [form]="campusGuideTileForm"
             uploadButtonId="tile_guide_upload_button"
-            (formChange)="onCampusGuideTileFormChange(campusGuideTileForm)"
-          >
+            (formChange)="onCampusGuideTileFormChange(campusGuideTileForm)">
           </cp-personas-tile-guide-form>
         </div>
       </div>
@@ -23,36 +23,33 @@
           <cp-resource-selector
             (itemClicked)="onTypeChange()"
             [filterByWebApp]="filterByWeb"
-            [filterByLoginStatus]="filterByLogin"
-          >
+            [filterByLoginStatus]="filterByLogin">
             <cp-resource-selector-item
               [active]="[true]"
               [resourceId]="contentTypes.single"
-              [title]="'t_personas_resource_single_item' | cpI18n"
-            >
+              [title]="'t_personas_resource_single_item' | cpI18n">
               <cp-resource-selector-type-single
+                [showErrors]="formHasErrors"
                 [filterByWebApp]="filterByWeb"
                 [filterByLoginStatus]="filterByLogin"
-                (valueChanges)="onCampusLinkFormChange($event)"
-              >
+                (valueChanges)="onCampusLinkFormChange($event)">
               </cp-resource-selector-type-single>
             </cp-resource-selector-item>
             <cp-resource-selector-item
               [resourceId]="contentTypes.list"
-              [title]="'t_personas_resource_resource' | cpI18n"
-            >
+              [title]="'t_personas_resource_resource' | cpI18n">
               <cp-resource-selector-type-resource
+                [showErrors]="formHasErrors"
                 [filterByWebApp]="filterByWeb"
                 [filterByLoginStatus]="filterByLogin"
-                (valueChanges)="onCampusLinkFormChange($event)"
-              >
+                (valueChanges)="onCampusLinkFormChange($event)">
               </cp-resource-selector-type-resource>
             </cp-resource-selector-item>
             <cp-resource-selector-item
               [resourceId]="contentTypes.web"
-              [title]="'t_personas_resource_web_link' | cpI18n"
-            >
+              [title]="'t_personas_resource_web_link' | cpI18n">
               <cp-resource-selector-type-web
+                [showErrors]="formHasErrors"
                 [filterByWebApp]="filterByWeb"
                 [filterByLoginStatus]="filterByLogin"
                 (valueChanges)="onCampusLinkFormChange($event)">
@@ -60,19 +57,19 @@
             </cp-resource-selector-item>
             <cp-resource-selector-item
               [resourceId]="contentTypes.thirdParty"
-              [title]="'t_personas_resource_third_party_app' | cpI18n"
-            >
-              <cp-resource-selector-type-external (valueChanges)="onCampusLinkFormChange($event)">
+              [title]="'t_personas_resource_third_party_app' | cpI18n">
+              <cp-resource-selector-type-external
+                [showErrors]="formHasErrors"
+                (valueChanges)="onCampusLinkFormChange($event)">
               </cp-resource-selector-type-external>
             </cp-resource-selector-item>
             <cp-resource-selector-item
               [resourceId]="contentTypes.resourceList"
-              [title]="'t_personas_tile_create_type_resource_resource_list' | cpI18n"
-            >
+              [title]="'t_personas_tile_create_type_resource_resource_list' | cpI18n">
               <cp-personas-resource-list-of-list
                 [persona]="persona"
-                (resourceAdded)="onCampusLinkFormChange($event)"
-              >
+                [showErrors]="formHasErrors"
+                (resourceAdded)="onCampusLinkFormChange($event)">
               </cp-personas-resource-list-of-list>
             </cp-resource-selector-item>
           </cp-resource-selector>
@@ -86,10 +83,19 @@
           <div class="row">
             <div class="col-12">
               <div class="text-right">
-                <a [routerLink]="['../']" (click)="trackCanceledTile()" class="cpbtn cpbtn--cancel">
+                <a
+                  routerLink="../"
+                  (click)="trackCanceledTile()"
+                  class="cpbtn cpbtn--cancel">
                   {{ 'cancel' | cpI18n }}
                 </a>
-                <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>
+                <button
+                  type="submit"
+                  (click)="onSubmit()"
+                  class="cpbtn cpbtn--primary"
+                  [disabled]="disableSubmitButton">
+                  {{ 'save' | cpI18n }}
+                </button>
               </div>
             </div>
           </div>

@@ -39,6 +39,7 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
   @Input() isEdit = false;
   @Input() campusLink: ILink;
   @Input() persona: IPersona;
+  @Input() showErrors = false;
 
   @Output() resourceAdded: EventEmitter<any> = new EventEmitter();
 

@@ -2,7 +2,11 @@
   <div class="row form__row">
     <div class="col-12">
       <label>{{ 'name' | cpI18n }}</label>
-      <input type="text" class="form-control" formControlName="name" />
+      <input
+        type="text"
+        class="form-control"
+        formControlName="name"
+        [class.error]="showErrors && form.get('name').invalid" />
     </div>
   </div>
   <div class="row form__row">
@@ -26,6 +30,7 @@
         [buttonText]="uploadImageBtn"
         buttonClass="cpbtn cpbtn--link"
         (fileUpload)="onFileChanged($event)"
+        [isRequired]="showErrors && form.get('img_url').invalid"
       >
       </cp-upload-button>
     </div>

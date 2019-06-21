@@ -2406,6 +2406,9 @@
   "t_check_in_date_placeholder_text": {
     "message": "Now"
   },
+  "t_choose_a_file": {
+    "message": "Choose a file"
+  },
   "t_clubs_admin": {
     "message": "Admin"
   },

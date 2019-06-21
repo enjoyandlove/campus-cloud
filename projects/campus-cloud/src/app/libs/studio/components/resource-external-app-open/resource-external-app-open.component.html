@@ -8,7 +8,7 @@
         name="ios_app_link"
         cpTarget="ios_app_link"
         formControlName="app_link"
-        [class.error]="form.get('ios').dirty && form.get('ios').hasError('requiredField')"
+        [class.error]="showErrors && form.get('ios').hasError('requiredField')"
       />
     </div>
     <div class="form-group">
@@ -19,7 +19,7 @@
         class="form-control"
         formControlName="fallback_http_url"
         cpTarget="ios_fallback_http_url"
-        [class.error]="form.get('ios').dirty && form.get('ios').hasError('requiredField')"
+        [class.error]="showErrors && form.get('ios').hasError('requiredField')"
       />
     </div>
   </ng-container>
@@ -34,7 +34,7 @@
         formControlName="package_name"
         cpTarget="android_package_name"
         [class.error]="
-          form.get('android').dirty &&
+          showErrors &&
           form
             .get('android')
             .get('package_name')
@@ -51,7 +51,7 @@
         cpTarget="android_fallback_http_url"
         formControlName="fallback_http_url"
         [class.error]="
-          form.get('android').dirty &&
+          showErrors &&
           form
             .get('android')
             .get('fallback_http_url')
