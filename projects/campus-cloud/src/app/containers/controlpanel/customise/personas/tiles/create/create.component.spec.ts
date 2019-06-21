@@ -102,7 +102,6 @@ describe('PersonasTileCreateComponent', () => {
 
   it('should init', () => {
     expect(comp).toBeTruthy();
-    expect(comp.buttonData.disabled).toBeTruthy();
   });
 
   it('should redirect if no guide has been set', () => {
@@ -198,32 +197,8 @@ describe('PersonasTileCreateComponent', () => {
     expect(spyOnCampusGuideTileForm).toHaveBeenCalled();
   });
 
-  it('updateSubmitState', () => {
-    comp.updateSubmitState();
-
-    expect(comp.buttonData.disabled).toBeTruthy();
-
-    Object.keys(comp.campusGuideTileForm.value).forEach((key) =>
-      comp.campusGuideTileForm.controls[key].setValue(1)
-    );
-
-    comp.updateSubmitState();
-
-    expect(comp.buttonData.disabled).toBeTruthy();
-
-    Object.keys(comp.campusLinkForm.value).forEach((key) =>
-      comp.campusLinkForm.controls[key].setValue(1)
-    );
-
-    comp.updateSubmitState();
-
-    expect(comp.buttonData.disabled).toBeFalsy();
-  });
-
   it('onCampusGuideTileFormChange', () => {
     const [name, image] = ['name', 'image'];
-
-    spyOn(comp, 'updateSubmitState');
 
     comp.campusGuideTileForm.controls['name'].setValue(name);
     comp.campusGuideTileForm.controls['img_url'].setValue(image);
@@ -233,17 +208,7 @@ describe('PersonasTileCreateComponent', () => {
     const campusLinkFormName = comp.campusLinkForm.controls['name'].value;
     const campusLinkFormImage = comp.campusLinkForm.controls['img_url'].value;
 
-    expect(comp.updateSubmitState).toHaveBeenCalled();
-
     expect(campusLinkFormName).toBe(name);
     expect(campusLinkFormImage).toBe(image);
-  });
-
-  it('onCampusLinkFormChange', () => {
-    spyOn(comp, 'updateSubmitState');
-
-    comp.onCampusLinkFormChange({});
-
-    expect(comp.updateSubmitState).toHaveBeenCalled();
   });
 });

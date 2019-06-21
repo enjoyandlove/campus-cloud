@@ -171,15 +171,6 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     });
   }
 
-  // updateSubmitState() {
-  //   this.buttonData = {
-  //     ...this.buttonData,
-  //     disabled: !(this.campusGuideTileForm.valid && this.campusLinkForm.valid)
-  //   };
-
-  //   this.setCanceledTileProperties(this.campusLinkForm.value);
-  // }
-
   onCampusGuideTileFormChange() {
     const name = this.campusGuideTileForm.controls['name'].value;
     const img_url = this.campusGuideTileForm.controls['img_url'].value;

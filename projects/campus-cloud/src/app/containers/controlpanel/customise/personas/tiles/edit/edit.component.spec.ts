@@ -170,44 +170,9 @@ describe('PersonasTileEditComponent', () => {
     expect(personaService.getPersonaById).toHaveBeenCalledWith(component.personaId, params);
   }));
 
-  it('should update buttonData based on form validity', () => {
-    fixture.detectChanges();
-    component.buildForm();
-    component.updateButtonDisableStatus();
-
-    expect(component.buttonData.disabled).toBe(false);
-
-    component.campusLinkForm.controls['link_url'].setValue(null);
-    component.updateButtonDisableStatus();
-    expect(component.buttonData.disabled).toBe(true);
-
-    component.campusLinkForm.controls['link_url'].setValue('a value');
-    component.updateButtonDisableStatus();
-    expect(component.buttonData.disabled).toBe(false);
-
-    component.campusGuideTileForm.controls['name'].setValue(null);
-    component.updateButtonDisableStatus();
-    expect(component.buttonData.disabled).toBe(true);
-
-    component.campusGuideTileForm.controls['name'].setValue('some');
-    component.updateButtonDisableStatus();
-    expect(component.buttonData.disabled).toBe(false);
-  });
-
-  it('should call updateButtonDisableStatus', () => {
-    fixture.detectChanges();
-    component.buildForm();
-    spyOn(component, 'updateButtonDisableStatus');
-
-    component.onCampusLinkFormChange({});
-
-    expect(component.updateButtonDisableStatus).toHaveBeenCalled();
-  });
-
   it('should update linkForm with guide tile form values', () => {
     fixture.detectChanges();
     component.buildForm();
-    spyOn(component, 'updateButtonDisableStatus');
 
     const linkForm = component.campusLinkForm;
     const guideTileForm = component.campusGuideTileForm;
@@ -219,7 +184,6 @@ describe('PersonasTileEditComponent', () => {
 
     expect(linkForm.controls['name'].value).toBe('some');
     expect(linkForm.controls['img_url'].value).toBe('test');
-    expect(component.updateButtonDisableStatus).toHaveBeenCalled();
   });
 
   it('should reset both forms', () => {
