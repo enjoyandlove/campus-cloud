@@ -17,6 +17,7 @@ import { ILink } from '@controlpanel/manage/links/link.interface';
 export class ResourceSelectorTypeWebComponent implements OnInit {
   @Input() isEdit = false;
   @Input() campusLink: ILink;
+  @Input() showErrors = false;
   @Input() filterByWebApp = false;
   @Input() filterByLoginStatus = false;
 
@@ -60,7 +61,7 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
           CustomValidators.requiredNonEmpty
         ])
       ],
-      link_type: [0],
+      link_type: [null, Validators.required],
       link_params: [{}],
       open_in_browser: [null, Validators.required]
     });

@@ -30,7 +30,7 @@ describe('ResourceSelectorTypeWebComponent', () => {
   it('should have a form', () => {
     const expected = {
       link_url: '',
-      link_type: 0,
+      link_type: null,
       link_params: {},
       open_in_browser: null
     };

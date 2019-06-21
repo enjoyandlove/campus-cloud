@@ -3,7 +3,10 @@
   <div class="col-12">
     <div class="row list__header">
       <div class="col-12">
-        <button (click)="onCreateModal()" class="cpbtn cpbtn--cancel">
+        <button
+          (click)="onCreateModal()"
+          class="cpbtn cpbtn--cancel"
+          [class.cpbtn--cancel--error]="showErrors">
           {{ 't_personas_resource_add_resource' | cpI18n }}
         </button>
       </div>

@@ -1,15 +1,14 @@
-/* tslint:disable:max-line-length */
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ComponentFactoryResolver,
-  EventEmitter,
   Input,
   OnInit,
   Output,
+  Component,
   ViewChild,
-  ElementRef
+  ElementRef,
+  EventEmitter,
+  AfterViewInit,
+  ChangeDetectorRef,
+  ComponentFactoryResolver
 } from '@angular/core';
 import { map, filter } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
@@ -18,12 +17,10 @@ import { fromEvent } from 'rxjs';
 
 import { TilesService } from './../../tiles.service';
 import { TilesUtilsService } from './../../tiles.utils.service';
-import { FileUploadService } from '../../../../../../../shared/services';
-import { baseActions, ISnackbar } from '../../../../../../../store/base';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { CPHostDirective } from './../../../../../../../shared/directives/cp-host/cp-host.directive';
-import { CPColorPickerDirective } from './../../../../../../../shared/directives/color-picker/color-picker.directive';
-import { CPImageCropperComponent } from './../../../../../../../shared/components/cp-image-cropper/cp-image-cropper.component';
+import { baseActions, ISnackbar } from '@campus-cloud/store/base';
+import { CPImageCropperComponent } from '@campus-cloud/shared/components';
+import { CPI18nService, FileUploadService } from '@campus-cloud/shared/services';
+import { CPHostDirective, CPColorPickerDirective } from '@campus-cloud/shared/directives';
 
 @Component({
   selector: 'cp-personas-tile-guide-form',
@@ -32,6 +29,7 @@ import { CPImageCropperComponent } from './../../../../../../../shared/component
 })
 export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
   @Input() form: FormGroup;
+  @Input() showErrors = false;
   @Input() uploadButtonId: number;
 
   @ViewChild('base', { static: true }) base;

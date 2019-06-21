@@ -14,6 +14,7 @@ import { IExternalAppOpenFormDetails } from './external-app-open.interface';
 export class PersonasResourceExternalAppOpenComponent implements OnInit {
   @Input() isEdit = false;
   @Input() campusLink: ILink;
+  @Input() showErrors = false;
 
   @Output()
   valueChanges: EventEmitter<IExternalAppOpenFormDetails | { link_url: null }> = new EventEmitter();

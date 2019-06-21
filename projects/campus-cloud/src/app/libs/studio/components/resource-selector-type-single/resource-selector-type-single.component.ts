@@ -31,6 +31,7 @@ const linkUrlToIdMap = {
 export class ResourceSelectorTypeSingleComponent implements OnInit {
   @Input() isEdit = false;
   @Input() campusLink: ILink;
+  @Input() showErrors = false;
   @Input() filterByWebApp = false;
   @Input() filterByLoginStatus = false;
 

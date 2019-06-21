@@ -1,25 +1,25 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@campus-cloud/session';
-import { BaseComponent } from '@campus-cloud/base';
 import { ITile } from '../tile.interface';
 import { TilesService } from '../tiles.service';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { IPersona } from './../../persona.interface';
 import { PersonasService } from '../../personas.service';
 import { TilesUtilsService } from '../tiles.utils.service';
-import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 import { ICampusGuide } from '../../sections/section.interface';
-import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { SectionsService } from '../../sections/sections.service';
-import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 import { PersonasUtilsService } from './../../personas.utils.service';
+import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
 import { SectionUtilsService } from '../../sections/section.utils.service';
+import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
+import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-personas-tile-create',
@@ -28,13 +28,14 @@ import { SectionUtilsService } from '../../sections/section.utils.service';
 })
 export class PersonasTileCreateComponent extends BaseComponent implements OnInit, OnDestroy {
   loading;
-  buttonData;
   persona: IPersona;
   personaId: number;
   guide: ICampusGuide;
   filterByWeb = false;
+  formHasErrors = false;
   filterByLogin = false;
   campusLinkForm: FormGroup;
+  disableSubmitButton = false;
   campusGuideTileForm: FormGroup;
   contentTypes = ContentUtilsProviders.contentTypes;
 
@@ -106,6 +107,12 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   }
 
   onSubmit() {
+    this.formHasErrors = false;
+    if (this.campusGuideTileForm.invalid || this.campusLinkForm.invalid) {
+      this.formHasErrors = true;
+      return;
+    }
+    this.disableSubmitButton = true;
     let stream$ = this.createGuideLink();
     const emptySection = this.guideUtils.isTemporaryGuide(this.guide);
 
@@ -123,22 +130,17 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       );
     }
 
-    stream$.subscribe(
+    return stream$.subscribe(
       (tile: ITile) => {
-        this.buttonData = {
-          ...this.buttonData,
-          disabled: false
-        };
-
         this.trackCreatedTile(tile);
+        this.disableSubmitButton = false;
+        this.setCanceledTileProperties();
         this.router.navigate(['/studio/experiences', this.personaId]);
       },
       (_) => {
-        this.buttonData = {
-          ...this.buttonData,
-          disabled: false
-        };
         this.erroHandler();
+        this.setCanceledTileProperties();
+        this.disableSubmitButton = false;
       }
     );
   }
@@ -169,28 +171,27 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     });
   }
 
-  updateSubmitState() {
-    this.buttonData = {
-      ...this.buttonData,
-      disabled: !(this.campusGuideTileForm.valid && this.campusLinkForm.valid)
-    };
+  // updateSubmitState() {
+  //   this.buttonData = {
+  //     ...this.buttonData,
+  //     disabled: !(this.campusGuideTileForm.valid && this.campusLinkForm.valid)
+  //   };
 
-    this.setCanceledTileProperties(this.campusLinkForm.value);
-  }
+  //   this.setCanceledTileProperties(this.campusLinkForm.value);
+  // }
 
   onCampusGuideTileFormChange() {
-    this.updateSubmitState();
-
     const name = this.campusGuideTileForm.controls['name'].value;
     const img_url = this.campusGuideTileForm.controls['img_url'].value;
 
     this.campusLinkForm.controls['name'].setValue(name);
     this.campusLinkForm.controls['img_url'].setValue(img_url);
+    this.setCanceledTileProperties();
   }
 
   onCampusLinkFormChange(newValues) {
     this.campusLinkForm.patchValue(newValues);
-    this.updateSubmitState();
+    this.setCanceledTileProperties();
   }
 
   onTypeChange() {
@@ -199,7 +200,8 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       link_url: null,
       link_params: {}
     });
-    this.updateSubmitState();
+
+    this.setCanceledTileProperties();
   }
 
   onChangedContent(resourceType: number) {
@@ -257,7 +259,8 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     );
   }
 
-  setCanceledTileProperties(linkForm) {
+  setCanceledTileProperties() {
+    const linkForm = this.campusLinkForm.value;
     const uploaded_image = linkForm.img_url ? amplitudeEvents.YES : amplitudeEvents.NO;
     const added_resource = linkForm.link_url ? amplitudeEvents.YES : amplitudeEvents.NO;
 
@@ -276,12 +279,6 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
       return;
     }
-
-    this.buttonData = {
-      class: 'primary',
-      disabled: true,
-      text: this.cpI18n.translate('save')
-    };
 
     this.fetch();
   }

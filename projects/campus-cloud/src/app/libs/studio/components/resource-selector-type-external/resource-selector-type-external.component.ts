@@ -10,6 +10,7 @@ import { ILink } from '@campus-cloud/containers/controlpanel/manage/links/link.i
 export class ResourceSelectorTypeExternalComponent implements OnInit {
   @Input() isEdit = false;
   @Input() campusLink: ILink;
+  @Input() showErrors = false;
 
   @Output() valueChanges: EventEmitter<any> = new EventEmitter();
 

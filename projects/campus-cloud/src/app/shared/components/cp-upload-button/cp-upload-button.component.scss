@@ -40,6 +40,10 @@
 
   label {
     width: 100%;
+
+    &.isRequired {
+      color: $color-danger;
+    }
   }
 
   &.default {
@@ -49,6 +53,11 @@
       background-color: transparent;
       border: 1px solid $border-color;
       transition: border 300ms ease-in-out;
+
+      &.isRequired {
+        border: 1px solid $color-danger;
+        background-color: rgba(255, 96, 89, 0.25);
+      }
     }
 
     label:hover,
