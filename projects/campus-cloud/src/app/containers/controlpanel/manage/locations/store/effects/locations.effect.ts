@@ -6,13 +6,13 @@ import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@campus-cloud/session';
 import * as fromActions from '../actions';
+import { CPSession } from '@campus-cloud/session';
+import { LocationsService } from '../../locations.service';
+import * as fromCategoryStore from '../../categories/store';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { ILocation } from '@campus-cloud/libs/locations/common/model';
-import { LocationsService } from '../../locations.service';
-import * as fromCategoryStore from '../../categories/store';
 import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
 import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 
