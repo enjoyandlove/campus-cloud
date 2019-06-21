@@ -16,7 +16,7 @@ import { ManageStoreModule } from './manage';
       {
         runtimeChecks: {
           strictStateImmutability: true,
-          strictActionImmutability: true,
+          strictActionImmutability: false,
           strictStateSerializability: true,
           strictActionSerializability: false
         }
