@@ -71,12 +71,11 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
     this.selectedItem = this.items
       .filter((i: IStudioContentResource) => i.meta)
       .find((i: IStudioContentResource) => {
-        const regularWebLinkType = this.campusLink.link_type === 0;
-        return regularWebLinkType
-          ? Boolean(i.meta.open_in_browser) === this.campusLink.open_in_browser
-          : i.link_type === this.campusLink.link_type;
+        return (
+          this.campusLink.link_type === i.link_type &&
+          Boolean(i.meta.open_in_browser) === Boolean(this.campusLink.open_in_browser)
+        );
       });
-
     const { link_url, open_in_browser, link_type } = this.campusLink;
 
     this.form.patchValue({

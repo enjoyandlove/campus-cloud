@@ -3,6 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { ILink } from '@controlpanel/manage/links/link.interface';
 import { ResourceSelectorTypeWebComponent } from './resource-selector-type-web.component';
 
 describe('ResourceSelectorTypeWebComponent', () => {
@@ -111,6 +112,81 @@ describe('ResourceSelectorTypeWebComponent', () => {
 
         expect(valueChangesSpy).toHaveBeenCalledWith({ link_url: '' });
       });
+    });
+  });
+
+  describe('updateState', () => {
+    it('should set showForm to true', () => {
+      expect(component.showForm).toBe(false);
+
+      const testLink = {
+        link_type: 0,
+        link_url: 'some',
+        open_in_browser: false
+      } as ILink;
+
+      component.campusLink = testLink;
+      fixture.detectChanges();
+
+      component.updateState();
+
+      expect(component.showForm).toBe(true);
+    });
+
+    it('should patch form value with campusLink values', () => {
+      const testLink = {
+        link_type: 0,
+        link_url: 'some',
+        open_in_browser: true
+      } as ILink;
+
+      component.campusLink = testLink;
+      fixture.detectChanges();
+
+      component.updateState();
+
+      const { link_url, link_type, open_in_browser } = component.form.value;
+
+      expect(link_url).toEqual(testLink.link_url);
+      expect(link_type).toEqual(testLink.link_type);
+      expect(open_in_browser).toEqual(testLink.open_in_browser);
+    });
+
+    it('should populate correct selectedItem', () => {
+      let testLink = {
+        link_type: 0,
+        link_url: 'some',
+        open_in_browser: false
+      } as ILink;
+
+      component.campusLink = testLink;
+      fixture.detectChanges();
+
+      component.updateState();
+      expect(component.selectedItem.id).toBe('web_link');
+
+      testLink = {
+        ...testLink,
+        open_in_browser: true
+      };
+
+      component.campusLink = testLink;
+      fixture.detectChanges();
+
+      component.updateState();
+      expect(component.selectedItem.id).toBe('external_link');
+
+      testLink = {
+        ...testLink,
+        link_type: 5,
+        open_in_browser: false
+      };
+
+      component.campusLink = testLink;
+      fixture.detectChanges();
+
+      component.updateState();
+      expect(component.selectedItem.id).toBe('external_web_app');
     });
   });
 
