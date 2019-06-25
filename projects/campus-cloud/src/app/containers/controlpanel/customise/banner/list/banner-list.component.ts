@@ -63,7 +63,11 @@ export class BannerListComponent implements OnInit {
 
     const validate = this.fileUploadService.validImage(file);
     if (!validate.valid) {
-      this.onError(this.cpI18n.translate('customization_image_upload_error'));
+      this.onError(
+        validate.errors.length
+          ? validate.errors[0]
+          : this.cpI18n.translate('t_studio_branding_image_req')
+      );
       return;
     }
 
