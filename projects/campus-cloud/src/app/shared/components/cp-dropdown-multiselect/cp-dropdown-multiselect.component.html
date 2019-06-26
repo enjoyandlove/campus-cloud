@@ -2,6 +2,7 @@
   <button
     data-toggle="dropdown"
     [disabled]="!items.length"
+    [class.cpbtn--cancel--error]="showErrors"
     class="cpbtn cpbtn--cancel text-truncate component__button"
   >
     <div class="row">

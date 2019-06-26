@@ -23,6 +23,7 @@
           <cp-resource-selector
             (itemClicked)="onTypeChange()"
             [filterByWebApp]="filterByWeb"
+            #resourceSelector="resourceSelector"
             [filterByLoginStatus]="filterByLogin">
             <cp-resource-selector-item
               [active]="[true]"
@@ -32,7 +33,8 @@
                 [showErrors]="formHasErrors"
                 [filterByWebApp]="filterByWeb"
                 [filterByLoginStatus]="filterByLogin"
-                (valueChanges)="onCampusLinkFormChange($event)">
+                (valueChanges)="onCampusLinkFormChange($event)"
+                *ngIf="resourceSelector.activeTab === contentTypes.single">
               </cp-resource-selector-type-single>
             </cp-resource-selector-item>
             <cp-resource-selector-item
@@ -42,7 +44,8 @@
                 [showErrors]="formHasErrors"
                 [filterByWebApp]="filterByWeb"
                 [filterByLoginStatus]="filterByLogin"
-                (valueChanges)="onCampusLinkFormChange($event)">
+                (valueChanges)="onCampusLinkFormChange($event)"
+                *ngIf="resourceSelector.activeTab === contentTypes.list">
               </cp-resource-selector-type-resource>
             </cp-resource-selector-item>
             <cp-resource-selector-item
@@ -52,7 +55,8 @@
                 [showErrors]="formHasErrors"
                 [filterByWebApp]="filterByWeb"
                 [filterByLoginStatus]="filterByLogin"
-                (valueChanges)="onCampusLinkFormChange($event)">
+                (valueChanges)="onCampusLinkFormChange($event)"
+                *ngIf="resourceSelector.activeTab === contentTypes.web">
               </cp-resource-selector-type-web>
             </cp-resource-selector-item>
             <cp-resource-selector-item
@@ -60,7 +64,8 @@
               [title]="'t_personas_resource_third_party_app' | cpI18n">
               <cp-resource-selector-type-external
                 [showErrors]="formHasErrors"
-                (valueChanges)="onCampusLinkFormChange($event)">
+                (valueChanges)="onCampusLinkFormChange($event)"
+                *ngIf="resourceSelector.activeTab === contentTypes.thirdParty">
               </cp-resource-selector-type-external>
             </cp-resource-selector-item>
             <cp-resource-selector-item
@@ -69,7 +74,8 @@
               <cp-personas-resource-list-of-list
                 [persona]="persona"
                 [showErrors]="formHasErrors"
-                (resourceAdded)="onCampusLinkFormChange($event)">
+                (resourceAdded)="onCampusLinkFormChange($event)"
+                *ngIf="resourceSelector.activeTab === contentTypes.resourceList">
               </cp-personas-resource-list-of-list>
             </cp-resource-selector-item>
           </cp-resource-selector>
