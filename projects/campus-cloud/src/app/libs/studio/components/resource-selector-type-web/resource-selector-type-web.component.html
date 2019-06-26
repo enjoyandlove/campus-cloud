@@ -3,7 +3,7 @@
   [items]="items"
   [selectedItem]="selectedItem"
   (selected)="onItemSelected($event)"
-  [isRequiredError]="showErrors && form.get('link_type').invalid">
+  [isRequiredError]="showErrors && !selectedItem">
 </cp-dropdown>
 
 <ng-container *ngIf="showForm">

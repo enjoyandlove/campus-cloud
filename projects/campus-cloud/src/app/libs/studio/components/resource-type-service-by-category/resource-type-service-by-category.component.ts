@@ -21,6 +21,7 @@ enum LinkParam {
 })
 export class ResourceTypeServiceByCategoryComponent implements OnInit {
   @Input() params = {};
+  @Input() showErrors = false;
 
   @ViewChild('multiSelect', { static: true }) multiSelect: CPDropdownMultiSelectComponent;
 

@@ -11,6 +11,7 @@
       #multiSelect
       [items]="items$ | async"
       (selection)="onMultiSelect($event)"
+      [showErrors]="showErrors && state.selection.length === 0"
       [placeholder]="[multiSelectPlaceholder ? multiSelectPlaceholder : '...']">
     </cp-dropdown-multiselect>
   </div>

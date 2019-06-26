@@ -104,7 +104,7 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
 
     this.buildForm();
     this.form.valueChanges.subscribe(() => {
-      const value = this.form.valid ? this.form.value : { link_url: '' };
+      const value = this.form.valid && this.selectedItem ? this.form.value : { link_url: '' };
       this.valueChanges.emit(value);
     });
 
@@ -115,6 +115,7 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
 
   onItemSelected(selection) {
     this.form.markAsPristine();
+    this.selectedItem = selection.id ? selection : null;
     this.showForm = Boolean(selection.id);
     const openInBrowser = selection.id ? selection.meta.open_in_browser : null;
 
