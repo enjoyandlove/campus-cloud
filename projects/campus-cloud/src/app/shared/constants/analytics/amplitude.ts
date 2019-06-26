@@ -37,6 +37,8 @@ export const amplitudeEvents = {
 
   NORMAL: 'Normal',
 
+  BANNER: 'Banner',
+
   MOBILE: 'Mobile',
 
   EVENTS: 'Events',

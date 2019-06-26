@@ -1,7 +1,9 @@
 <div class="wrapper">
   <div class="cp-wrapper cp-wrapper--outer d-flex justify-content-between">
     <nav>
-      <div class="avatar">
+      <div
+        class="avatar"
+        (click)="trackMenu(amplitudeEvents.menu_home)">
         <a [routerLink]="['/dashboard']">
           <img [src]="logo" alt="Control Panel" class="rounded img-fit-cover" />
         </a>
