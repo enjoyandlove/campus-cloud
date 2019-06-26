@@ -20,6 +20,7 @@ interface IItem {
   styleUrls: ['./cp-dropdown-multiselect.component.scss']
 })
 export class CPDropdownMultiSelectComponent implements OnInit, OnChanges {
+  @Input() showErrors = false;
   @Input() placeholder = '...';
   @Input() items: IItem[] = [];
 
