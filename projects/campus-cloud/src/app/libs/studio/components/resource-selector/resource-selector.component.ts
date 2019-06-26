@@ -16,6 +16,7 @@ import { ResourceSelectorItemComponent } from '../resource-selector-item';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
+  exportAs: 'resourceSelector',
   selector: 'cp-resource-selector',
   template: `
     <div class="resource_selector">
@@ -48,6 +49,8 @@ import { environment } from '@projects/campus-cloud/src/environments/environment
 })
 @Mixin([Destroyable])
 export class ResourceSelectorComponent implements AfterContentInit {
+  public activeTab: string = null;
+
   @Input() filterByWebApp = false;
   @Input() filterByLoginStatus = false;
 
@@ -108,6 +111,8 @@ export class ResourceSelectorComponent implements AfterContentInit {
 
     if (!anyActiveTypeAfterFiltering) {
       Promise.resolve().then(() => this.selectTab(this._items[0]));
+    } else {
+      Promise.resolve().then(() => (this.activeTab = anyActiveTypeAfterFiltering.resourceId));
     }
   }
 
@@ -116,6 +121,7 @@ export class ResourceSelectorComponent implements AfterContentInit {
   }
 
   selectTab(resource: ResourceSelectorItemComponent) {
+    this.activeTab = resource.resourceId;
     this.items.forEach((r: ResourceSelectorItemComponent) => (r.active = false));
     resource.active = true;
     this.itemClicked.emit(resource.resourceId);
