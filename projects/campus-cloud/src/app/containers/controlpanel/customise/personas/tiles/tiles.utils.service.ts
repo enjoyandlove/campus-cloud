@@ -6,8 +6,9 @@ import { ITile } from './tile.interface';
 import { CPSession } from '@campus-cloud/session';
 import { CampusLink } from '@controlpanel/manage/links/tile';
 import { ICampusGuide } from './../sections/section.interface';
-import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { SectionUtilsService } from './../sections/section.utils.service';
+import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
 import { CampusLinkType, TileCategoryRank, TileFeatureRank, TileVisibility } from './tiles.status';
 
 const threeHundrendKb = 3e5;
@@ -146,7 +147,7 @@ export class TilesUtilsService {
     return this.fb.group({
       school_id: [this.session.g.get('school').id, Validators.required],
       school_persona_id: [personaId, Validators.required],
-      name: [_tile.name, Validators.required],
+      name: [_tile.name, CustomValidators.requiredNonEmpty],
       rank: [_tile.rank, Validators.required],
       img_url: [_tile.img_url, Validators.required],
       color: [_tile.color, Validators.required],
@@ -204,7 +205,7 @@ export class TilesUtilsService {
 
     return this.fb.group(
       {
-        name: [_link.name, nameRequired ? Validators.required : null],
+        name: [_link.name, nameRequired ? CustomValidators.requiredNonEmpty : null],
         link_url: [_link.link_url, Validators.required],
         link_type: [_link.link_type, Validators.required],
         link_params: [_link.link_params, Validators.required],
