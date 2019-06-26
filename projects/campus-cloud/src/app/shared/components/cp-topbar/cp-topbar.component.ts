@@ -121,6 +121,7 @@ export class CPTopBarComponent implements OnInit {
     });
 
     this.amplitudeEvents = {
+      menu_home: amplitudeEvents.BANNER,
       menu_manage: amplitudeEvents.MENU_MANAGE,
       menu_notify: amplitudeEvents.MENU_NOTIFY,
       menu_assess: amplitudeEvents.MENU_ASSESS,
