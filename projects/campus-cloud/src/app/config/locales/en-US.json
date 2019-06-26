@@ -3494,7 +3494,7 @@
     "message": "Admin account already activated"
   },
   "t_team_settings_resend_invite_success": {
-    "message": "Resend invitation successfully sent"
+    "message": "Invite Resent!"
   },
   "t_tile_button_default": {
     "message": "Default"
