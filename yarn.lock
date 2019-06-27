@@ -1821,7 +1821,7 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@^2.11.0, commander@^2.12.1, commander@^2.18.0, commander@^2.19.0:
+commander@^2.11.0, commander@^2.12.1, commander@^2.18.0, commander@^2.19.0, commander@^2.20.0:
   version "2.20.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.20.0.tgz#d58bb2b5c1ee8f87b0d340027e9e94e222c5a422"
 
@@ -3292,6 +3292,13 @@ gzip-size@^5.0.0:
   dependencies:
     duplexer "^0.1.1"
     pify "^4.0.1"
+
+gzipper@2.8.0:
+  version "2.8.0"
+  resolved "https://registry.yarnpkg.com/gzipper/-/gzipper-2.8.0.tgz#5cea4692eea90c35ce22766caa794ce5f6adb01b"
+  dependencies:
+    commander "^2.20.0"
+    uuid "^3.3.2"
 
 handle-thing@^2.0.0:
   version "2.0.0"
