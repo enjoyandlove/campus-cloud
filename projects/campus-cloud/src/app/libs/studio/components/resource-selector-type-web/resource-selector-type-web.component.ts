@@ -42,7 +42,7 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
 
     const link =
       linkType === 5
-        ? ZendeskService.getUrl('articles/360025009414')
+        ? ZendeskService.getUrl('articles/360025351694')
         : ZendeskService.getUrl('articles/360011676854');
 
     return {
