@@ -6,6 +6,7 @@ import { ITile } from './tile.interface';
 import { CPSession } from '@campus-cloud/session';
 import { CampusLink } from '@controlpanel/manage/links/tile';
 import { ICampusGuide } from './../sections/section.interface';
+import { hexColorString } from '@campus-cloud/shared/utils/forms';
 import { CustomValidators } from '@campus-cloud/shared/validators';
 import { SectionUtilsService } from './../sections/section.utils.service';
 import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
@@ -150,7 +151,10 @@ export class TilesUtilsService {
       name: [_tile.name, CustomValidators.requiredNonEmpty],
       rank: [_tile.rank, Validators.required],
       img_url: [_tile.img_url, Validators.required],
-      color: [_tile.color, Validators.required],
+      color: [
+        _tile.color,
+        Validators.compose([Validators.required, Validators.pattern(hexColorString)])
+      ],
       extra_info: [_tile.extra_info],
       visibility_status: [_tile.visibility_status],
       tile_category_id: [_tile.tile_category_id, null],
