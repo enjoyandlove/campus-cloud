@@ -1,12 +1,12 @@
-import { mockSecurityTile, mockTile } from './tiles/__mock__/index';
-import { PersonasType, PersonasLoginRequired } from './personas.status';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { mockPersonas } from './__mock__/personas.mock';
-import mockSession from '../../../../session/mock/session';
+import mockSession from '@campus-cloud/session/mock/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { PersonasUtilsService } from './personas.utils.service';
 import { TilesUtilsService } from './tiles/tiles.utils.service';
-import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { mockSecurityTile, mockTile } from './tiles/tests/mocks';
+import { PersonasType, PersonasLoginRequired } from './personas.status';
 import { ResourcesUtilsService } from './tiles/resources/resources.utils.service';
 
 describe('PersonasUtilsService', () => {

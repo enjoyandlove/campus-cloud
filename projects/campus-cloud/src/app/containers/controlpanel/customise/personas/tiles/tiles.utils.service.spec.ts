@@ -1,13 +1,14 @@
 import { FormBuilder } from '@angular/forms';
-import { mockTile } from './__mock__';
-import { mockSchool } from './../../../../../session/mock/school';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { mockSection } from './../sections/__mock__/index';
-import { CampusLinkType, TileVisibility, TileCategoryRank } from './tiles.status';
-import { TilesUtilsService } from './tiles.utils.service';
-import { CPSession } from '../../../../../session';
+
+import { mockTile } from './tests/mocks';
+import { CPSession } from '@campus-cloud/session';
+import { mockSection } from './../sections/__mock__';
 import { CampusLink } from '../../../manage/links/tile';
+import { TilesUtilsService } from './tiles.utils.service';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { SectionUtilsService } from '../sections/section.utils.service';
+import { CampusLinkType, TileVisibility, TileCategoryRank } from './tiles.status';
 
 const session = new CPSession();
 session.g.set('school', mockSchool);

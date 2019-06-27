@@ -111,6 +111,17 @@ export class ContentUtilsProviders {
     return resource;
   }
 
+  static getWebLinkContentType(linkData) {
+    return ContentUtilsProviders.resourceTypes()[ContentUtilsProviders.contentTypes.web].find(
+      (l) => {
+        const regularWebLinkType = linkData.link_type === 0;
+        return regularWebLinkType
+          ? Boolean(l.meta.open_in_browser) === linkData.open_in_browser
+          : l.link_type === linkData.link_type;
+      }
+    ).label;
+  }
+
   static resourceTypes(): { [key: string]: Array<IStudioContentResource> } {
     return {
       [ContentUtilsProviders.contentTypes.single]: [

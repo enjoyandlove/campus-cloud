@@ -1,12 +1,13 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
-import { CPSession } from './../../../../../session';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+
+import { CPSession } from '@campus-cloud/session';
 import { PersonasModule } from './../personas.module';
 import { PersonasService } from './../personas.service';
 import { PersonasDeleteComponent } from './delete.component';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { mockPersonas, MockPersonasService } from '../mock/personas.service.mock';
 
 describe('PersonasDeleteComponent', () => {

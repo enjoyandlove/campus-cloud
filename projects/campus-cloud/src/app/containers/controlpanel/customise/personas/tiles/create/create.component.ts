@@ -9,15 +9,16 @@ import { ITile } from '../tile.interface';
 import { TilesService } from '../tiles.service';
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
-import { IPersona } from './../../persona.interface';
+import { IPersona } from '../../persona.interface';
 import { PersonasService } from '../../personas.service';
 import { TilesUtilsService } from '../tiles.utils.service';
 import { ICampusGuide } from '../../sections/section.interface';
 import { SectionsService } from '../../sections/sections.service';
-import { PersonasUtilsService } from './../../personas.utils.service';
-import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
+import { PersonasUtilsService } from '../../personas.utils.service';
 import { SectionUtilsService } from '../../sections/section.utils.service';
+import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
+import { PersonasAmplitudeService } from '../../personas.amplitude.service';
 import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 import { amplitudeEvents, STUDIO_THIRD_PARTY } from '@campus-cloud/shared/constants';
 
@@ -39,12 +40,13 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   campusGuideTileForm: FormGroup;
   featureFlagThirdParty = STUDIO_THIRD_PARTY;
   contentTypes = ContentUtilsProviders.contentTypes;
+  section = ContentUtilsProviders.contentTypes.single;
 
   canceledTileEventProperties = {
     tile_type: amplitudeEvents.NORMAL,
-    added_content: amplitudeEvents.NO,
-    added_resource: amplitudeEvents.NO,
-    uploaded_image: amplitudeEvents.NO
+    uploaded_image: amplitudeEvents.NO,
+    content_type: amplitudeEvents.NO_CONTENT,
+    section_type: amplitudeEvents.SINGLE_ITEM
   };
 
   constructor(
@@ -60,8 +62,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     public guideUtils: SectionUtilsService,
     public personaService: PersonasService,
     public store: Store<IHeader | ISnackbar>,
-    public sectionUtils: SectionUtilsService,
-    public personasUtils: PersonasUtilsService
+    public personasAmplitude: PersonasAmplitudeService
   ) {
     super();
     this.personaId = this.route.snapshot.params['personaId'];
@@ -135,12 +136,10 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       (tile: ITile) => {
         this.trackCreatedTile(tile);
         this.disableSubmitButton = false;
-        this.setCanceledTileProperties();
         this.router.navigate(['/studio/experiences', this.personaId]);
       },
       (_) => {
         this.erroHandler();
-        this.setCanceledTileProperties();
         this.disableSubmitButton = false;
       }
     );
@@ -178,31 +177,19 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
     this.campusLinkForm.controls['name'].setValue(name);
     this.campusLinkForm.controls['img_url'].setValue(img_url);
-    this.setCanceledTileProperties();
   }
 
   onCampusLinkFormChange(newValues) {
     this.campusLinkForm.patchValue(newValues);
-    this.setCanceledTileProperties();
   }
 
-  onTypeChange() {
+  onTypeChange(section: string) {
+    this.section = section;
     this.campusLinkForm.patchValue({
       link_type: 3,
       link_url: null,
       link_params: {}
     });
-
-    this.setCanceledTileProperties();
-  }
-
-  onChangedContent(resourceType: number) {
-    const added_content = resourceType ? amplitudeEvents.YES : amplitudeEvents.NO;
-
-    this.canceledTileEventProperties = {
-      ...this.canceledTileEventProperties,
-      added_content
-    };
   }
 
   ngOnDestroy() {
@@ -229,38 +216,30 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
   trackCreatedTile(tile: ITile) {
     const eventProperties = {
-      ...this.personasUtils.getTileAmplitudeProperties(tile)
+      ...this.personasAmplitude.getTileAmplitudeProperties(tile)
     };
 
-    delete eventProperties.status;
+    delete eventProperties.tile_status;
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_CREATED_TILE, eventProperties);
   }
 
   trackCanceledTile() {
-    const tile_type = this.guide._featuredTile ? amplitudeEvents.FEATURED : amplitudeEvents.NORMAL;
+    const properties = this.personasAmplitude.getCancelledTileAmplitudeProperties(
+      this.campusLinkForm.value,
+      this.section,
+      this.guide
+    );
 
     this.canceledTileEventProperties = {
       ...this.canceledTileEventProperties,
-      tile_type
+      ...properties
     };
 
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.STUDIO_CANCELED_TILE,
       this.canceledTileEventProperties
     );
-  }
-
-  setCanceledTileProperties() {
-    const linkForm = this.campusLinkForm.value;
-    const uploaded_image = linkForm.img_url ? amplitudeEvents.YES : amplitudeEvents.NO;
-    const added_resource = linkForm.link_url ? amplitudeEvents.YES : amplitudeEvents.NO;
-
-    this.canceledTileEventProperties = {
-      ...this.canceledTileEventProperties,
-      added_resource,
-      uploaded_image
-    };
   }
 
   ngOnInit(): void {
