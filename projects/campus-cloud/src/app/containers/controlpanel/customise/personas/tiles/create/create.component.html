@@ -61,6 +61,7 @@
             </cp-resource-selector-item>
             <cp-resource-selector-item
               [resourceId]="contentTypes.thirdParty"
+              *cpFeatureToggle="featureFlagThirdParty"
               [title]="'t_personas_resource_third_party_app' | cpI18n">
               <cp-resource-selector-type-external
                 [showErrors]="formHasErrors"

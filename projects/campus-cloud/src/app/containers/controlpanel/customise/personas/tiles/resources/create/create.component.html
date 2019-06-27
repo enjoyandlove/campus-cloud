@@ -11,8 +11,7 @@
         <span
           data-dismiss="modal"
           (click)="resetModal()"
-          class="float-right hover cpmodal__header__close"
-        >
+          class="float-right hover cpmodal__header__close">
           &times;
         </span>
       </div>
@@ -33,12 +32,14 @@
           type="button"
           data-dismiss="modal"
           (click)="resetModal()"
-          class="cpbtn cpbtn--cancel"
-        >
+          class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>
+        <cp-button
+          [props]="buttonData"
+          (buttonClick)="onSubmit()">
+        </cp-button>
       </div>
     </div>
   </div>

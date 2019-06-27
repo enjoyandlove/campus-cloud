@@ -291,7 +291,7 @@ export class ContentUtilsProviders {
         {
           id: 'external_app_open',
           link_type: 4,
-          label: 't_personas_tile_create_resource_type_external_app_open',
+          label: 't_personas_resource_third_party_app',
           meta: {
             link_params: {},
             link_url: CampusLink.appOpen
