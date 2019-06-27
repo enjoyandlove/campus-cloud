@@ -88,20 +88,22 @@ describe('ResourceSelectorTypeWebComponent', () => {
     });
 
     describe('valueChanges', () => {
-      it('should emit form value when valid', () => {
+      it('should emit form value when form is valid and selectedItem is defined', () => {
         const valueChangesSpy = spyOn(component.valueChanges, 'emit');
         const validForm = {
           link_type: 0,
           link_url: 'http://google.com',
           open_in_browser: 0
         };
-
+        component.selectedItem = 'notNull';
         component.form.patchValue(validForm);
 
         expect(valueChangesSpy).toHaveBeenCalledWith(component.form.value);
       });
 
-      it('should emit { link_url: "" } when invalid', () => {
+      it('should emit { link_url: "" } when invalid or selectedItem is not defined', () => {
+        component.selectedItem = null;
+        fixture.detectChanges();
         const valueChangesSpy = spyOn(component.valueChanges, 'emit');
         const invalidForm = {
           link_url: null,
@@ -111,6 +113,21 @@ describe('ResourceSelectorTypeWebComponent', () => {
         component.form.patchValue(invalidForm);
 
         expect(valueChangesSpy).toHaveBeenCalledWith({ link_url: '' });
+
+        const validForm = {
+          link_type: 0,
+          link_url: 'http://google.com',
+          open_in_browser: 0
+        };
+
+        component.form.patchValue(validForm);
+
+        expect(valueChangesSpy).toHaveBeenCalledWith({ link_url: '' });
+
+        component.selectedItem = 'notNull';
+        fixture.detectChanges();
+
+        // expect(valueChangesSpy).toHaveBeenCalledWith(component.form.value);
       });
     });
   });
