@@ -6,7 +6,7 @@
         <button
           (click)="onCreateModal()"
           class="cpbtn cpbtn--cancel"
-          [class.cpbtn--cancel--error]="showErrors && meta.link_params.ids.length === 0">
+          [class.cpbtn--cancel--error]="showErrors && state.resources.length === 0">
           {{ 't_personas_resource_add_resource' | cpI18n }}
         </button>
       </div>
