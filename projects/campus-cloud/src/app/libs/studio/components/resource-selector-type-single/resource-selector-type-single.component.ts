@@ -94,6 +94,12 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
     const contentId = linkUrlToIdMap[this.campusLink.link_url];
     this.selectedType = this.items.find((i: IStudioContentResource) => i.id === contentId);
     this.currentlyViewing = contentId;
+
+    this.form.patchValue({
+      link_type: this.campusLink.link_type,
+      link_url: this.campusLink.link_url,
+      link_params: this.selectedStore ? this.campusLink.link_params : null
+    });
   }
 
   ngOnInit() {
