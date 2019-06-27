@@ -6,6 +6,7 @@ import { CPSession } from '@campus-cloud/session';
 import { mockSchool } from '@campus-cloud/session/mock';
 import { CampusLink } from '@controlpanel/manage/links/tile';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { ILink } from '@controlpanel/manage/links/link.interface';
 import { CPI18nService, StoreService } from '@campus-cloud/shared/services';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 import { TilesService } from '@controlpanel/customise/personas/tiles/tiles.service';
@@ -64,6 +65,73 @@ describe('ResourceSelectorTypeSingleComponent', () => {
     const expected = { link_url: null, link_params: null, link_type: 3 };
 
     expect(component.form.value).toEqual(expected);
+  });
+
+  describe('updateState', () => {
+    it('should update form values with campusLink details', () => {
+      const campusLink = {
+        link_type: 3,
+        link_params: { id: 1 },
+        link_url: CampusLink.campusService
+      } as ILink;
+
+      component.campusLink = campusLink;
+      component.selectedStore = 'notNull';
+
+      fixture.detectChanges();
+      component.updateState();
+
+      expect(component.form.value).toEqual(campusLink);
+    });
+
+    it('should set form link_params control to null, when no selectedStore is found', () => {
+      const campusLink = {
+        link_type: 3,
+        link_params: null,
+        link_url: CampusLink.campusService
+      } as ILink;
+
+      component.campusLink = campusLink;
+
+      fixture.detectChanges();
+      component.updateState();
+
+      expect(component.form.valid).toBe(false);
+      expect(component.form.value).toEqual(campusLink);
+    });
+
+    it('should define currentlyViewing', () => {
+      expect(component.currentlyViewing).toBeNull();
+
+      const campusLink = {
+        link_type: 3,
+        link_params: null,
+        link_url: CampusLink.campusService
+      } as ILink;
+
+      component.campusLink = campusLink;
+
+      fixture.detectChanges();
+      component.updateState();
+      fixture.detectChanges();
+      expect(component.currentlyViewing).toBeDefined();
+    });
+
+    it('should define selectedType', () => {
+      expect(component.selectedType).toBeNull();
+
+      const campusLink = {
+        link_type: 3,
+        link_params: null,
+        link_url: CampusLink.campusService
+      } as ILink;
+
+      component.campusLink = campusLink;
+
+      fixture.detectChanges();
+      component.updateState();
+      expect(component.selectedType).toBeDefined();
+    });
   });
 
   describe('ngOnInit', () => {
