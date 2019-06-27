@@ -2901,10 +2901,10 @@
     "message": "Add Row"
   },
   "t_personas_resource_create_modal_title": {
-    "message": "New Resource"
+    "message": "New Row"
   },
   "t_personas_resource_edit_modal_title": {
-    "message": "Edit Resource"
+    "message": "Edit Row"
   },
   "t_personas_resource_resource": {
     "message": "Resource"
@@ -2950,9 +2950,6 @@
   },
   "t_personas_tile_create_resource_type_event_list": {
     "message": "Events"
-  },
-  "t_personas_tile_create_resource_type_external_app_open": {
-    "message": "3rd Party App"
   },
   "t_personas_tile_create_resource_type_external_web_app": {
     "message": "Authenticated Web App"
@@ -3446,46 +3443,6 @@
   },
   "t_studio_section_delete_no_name": {
     "message": "Untitled"
-  },
-  "t_support_contact_label_comment": {
-    "message": "How can we help you?"
-  },
-  "t_support_contact_label_email": {
-    "message": "Email address"
-  },
-  "t_support_contact_label_name": {
-    "message": "Name (optional)"
-  },
-  "t_support_contact_us_error_body": {
-    "message": "Try sending your message later"
-  },
-  "t_support_contact_us_error_header": {
-    "message": "Something went wrong"
-  },
-  "t_support_contact_us_footer": {
-    "message": "You can expect a reply at ",
-    "description": "You can expect a reply at some@email.com"
-  },
-  "t_support_contact_us_success_body": {
-    "message": "Thank you for contacting us. "
-  },
-  "t_support_contact_us_success_header": {
-    "message": "Your message was successfully sent"
-  },
-  "t_support_footer_cant_find": {
-    "message": "Can't find what you are looking for?"
-  },
-  "t_support_link_to_zendesk": {
-    "message": "Visit the complete Help Desk site"
-  },
-  "t_support_no_results_found": {
-    "message": "No articles found"
-  },
-  "t_support_results_heading": {
-    "message": "Relevant to the %s Page"
-  },
-  "t_support_search_placeholder": {
-    "message": "Looking for something?"
   },
   "t_team_settings_resend_invite": {
     "message": "Resend Invite"

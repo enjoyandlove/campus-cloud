@@ -2262,8 +2262,14 @@
   "t_admin_invite_already_activated_error": {
     "message": "Votre compte a déjà été activé, cliquez ci-dessous pour vous connecter"
   },
+  "t_admin_invite_notify_permission_tooltip": {
+    "message": "Envoyer des notifications requiert l'accès à un hôte (club, service ou club sportif). Veuillez ajouter au moins une permission afin d'activer la permission de notification."
+  },
   "t_admin_invite_studio_limited_tooltip": {
     "message": "Un accès complet à Studio nécessite les permissions vers les clubs sportifs, les événements, les clubs, les services, les calendriers et l'orientation. Votre accès pour ajouter des ressources sera limité sans ces permissions."
+  },
+  "t_announcements_list_external_source_tooltip": {
+    "message": "Cette annonce était intégrée. Elle sera automatiquement mise à jour depuis l'intégration."
   },
   "t_announcement_type": {
     "message": "Type d'annonce"
@@ -2895,10 +2901,19 @@
     "message": "Ajouter une rangée"
   },
   "t_personas_resource_create_modal_title": {
-    "message": "Nouvelle ressource"
+    "message": "Nouvelle rangée"
   },
   "t_personas_resource_edit_modal_title": {
-    "message": "Éditer ressource"
+    "message": "Editer la ligne"
+  },
+  "t_personas_resource_resource": {
+    "message": "Ressource"
+  },
+  "t_personas_resource_single_item": {
+    "message": "Un seul article"
+  },
+  "t_personas_resource_third_party_app": {
+    "message": "Application tierce"
   },
   "t_personas_resource_web_link": {
     "message": "Lien Web"
@@ -2936,6 +2951,9 @@
   "t_personas_tile_create_resource_type_event_list": {
     "message": "Événements"
   },
+  "t_personas_tile_create_resource_type_external_web_app": {
+    "message": "Web app authentifiée"
+  },
   "t_personas_tile_create_resource_type_job_list": {
     "message": "Emplois"
   },
@@ -2970,7 +2988,7 @@
     "message": "Ressource"
   },
   "t_personas_tile_create_type_resource_resource_list": {
-    "message": "Liste des ressources"
+    "message": "Liste customisée"
   },
   "t_personas_tile_create_type_resource_web_link": {
     "message": "Lien web dans l'application"
@@ -2988,7 +3006,7 @@
     "message": "Certains types de liens, y compris des dons, entraîneront le rejet de l'application dans le processus de révision des applications. Utilisez plutôt un lien Web externe."
   },
   "t_personas_tile_link_external_webapp_message": {
-    "message": "To setup an authenticated web app, please refer to the documentation."
+    "message": "Pour mettre en place une web app authentifiée, veuillez vous référer à la documentation."
   },
   "t_personas_tile_locked_tooltip": {
     "message": "Contactez votre représentant du service clientèle pour modifier cette tuile."
@@ -3016,6 +3034,10 @@
   },
   "t_personas_tile_moved_success": {
     "message": "Tuile enregistrée."
+  },
+  "t_personas_tile_resource_web_type": {
+    "message": "Type de lien",
+    "description": "Studio, when selecting to create a web/in app Link"
   },
   "t_personas_tile_update_header": {
     "message": "Éditer tuile"
@@ -3207,7 +3229,7 @@
     "message": "Couleur"
   },
   "t_shared_contact_us": {
-    "message": "Contact Us"
+    "message": "Contactez-nous"
   },
   "t_shared_cpimage_icon_heading": {
     "message": "Téléverser votre icône"
@@ -3407,20 +3429,29 @@
   "t_studio_branding_upload_logo": {
     "message": "Téléverser logo"
   },
+  "t_studio_resource_external_app_open_label_android_fallback": {
+    "message": "Lien de secours Android"
+  },
+  "t_studio_resource_external_app_open_label_android_package_name": {
+    "message": "Nom du package Android"
+  },
+  "t_studio_resource_external_app_open_label_ios_fallback": {
+    "message": "Lien de secours iOS"
+  },
+  "t_studio_resource_external_app_open_label_ios_universal": {
+    "message": "URL universelle iOS"
+  },
   "t_studio_section_delete_no_name": {
     "message": "Sans Titre"
   },
-  "t_support_contact_label_comment": {
-    "message": "Comment pouvons-nous vous aider?"
+  "t_team_settings_resend_invite": {
+    "message": "Renvoyer l'invitation"
   },
-  "t_support_contact_label_email": {
-    "message": "Adresse électronique"
+  "t_team_settings_resend_invite_admin_already_activated": {
+    "message": "Compte administrateur déjà activé"
   },
-  "t_support_contact_us_error_header": {
-    "message": "Quelque chose s'est mal passé"
-  },
-  "t_support_footer_cant_find": {
-    "message": "Can't find what you are looking for?"
+  "t_team_settings_resend_invite_success": {
+    "message": "Invitation renvoyée !"
   },
   "t_tile_button_default": {
     "message": "Défaut"
