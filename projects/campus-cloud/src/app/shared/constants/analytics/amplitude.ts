@@ -73,6 +73,8 @@ export const amplitudeEvents = {
 
   END_DATE: 'End Date',
 
+  WEB_LINK: 'Web Link',
+
   INTERNAL: 'Internal',
 
   EXTERNAL: 'External',
@@ -133,6 +135,8 @@ export const amplitudeEvents = {
 
   NO_CHANGES: 'No Changes',
 
+  NO_CONTENT: 'No Content',
+
   ASSESSMENT: 'Assessment',
 
   NEW_INVITE: 'New Invite',
@@ -140,6 +144,10 @@ export const amplitudeEvents = {
   MENU_AUDIENCE: 'Audience',
 
   TEST_SCHOOL: 'Test School',
+
+  CUSTOM_LIST: 'Custom List',
+
+  SINGLE_ITEM: 'Single Item',
 
   CAMPUS_WIDE: 'Campus Wide',
 
@@ -194,6 +202,8 @@ export const amplitudeEvents = {
   SERVICE_EVENT: 'Service Event',
 
   ADDED_LOCATION: 'Added Location',
+
+  THIRD_PARTY_APP: '3rd Party App',
 
   NO_DESCRIPTION: 'No Description',
 
@@ -252,6 +262,8 @@ export const amplitudeEvents = {
   ORIENTATION_EVENT: 'Orientation Event',
 
   INSTITUTION_EVENT: 'Institution Event',
+
+  MULTIPLE_RESOURCES: 'Multiple Resources',
 
   EMAIL_WEB_CHECK_IN: 'Email Web Check-In',
 

@@ -1,14 +1,15 @@
-import { HttpErrorResponse } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
-import { mockTile } from './../__mock__';
-import { CPSession } from './../../../../../../session/index';
-import { SharedModule } from './../../../../../../shared/shared.module';
+
+import { mockTile } from './../tests/mocks';
+import { CPSession } from '@campus-cloud/session';
 import { TilesService } from './../tiles.service';
-import { PersonasTileDeleteComponent } from './delete.component';
-import { CPI18nService } from '../../../../../../shared/services';
 import { PersonasTilesModule } from '../tiles.module';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { PersonasTileDeleteComponent } from './delete.component';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 
 class MockTilesService {
   dummy;

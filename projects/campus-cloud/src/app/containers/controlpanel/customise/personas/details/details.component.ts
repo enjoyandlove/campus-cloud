@@ -8,22 +8,23 @@ import { Store } from '@ngrx/store';
 
 import { IPersona } from './../persona.interface';
 import { ITile } from './../tiles/tile.interface';
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { TilesService } from '../tiles/tiles.service';
 import { PersonasService } from './../personas.service';
 import { ICampusGuide } from './../sections/section.interface';
 import { CampusGuideType } from './../sections/section.status';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { SectionsService } from './../sections/sections.service';
 import { CategoryDeleteErrors } from '../sections/section.status';
 import { TilesUtilsService } from './../tiles/tiles.utils.service';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { SectionUtilsService } from './../sections/section.utils.service';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
+import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
 import { PersonasType, PersonaValidationErrors } from './../personas.status';
-import { baseActions, IHeader, ISnackbar } from './../../../../../store/base';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { TileCategoryRank, TileFeatureRank, TileType } from './../tiles/tiles.status';
+import { PersonasAmplitudeService } from '@controlpanel/customise/personas/personas.amplitude.service';
 
 interface IState {
   working: boolean;
@@ -68,7 +69,8 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     public cpTracking: CPTrackingService,
     public sectionService: SectionsService,
     public store: Store<IHeader | ISnackbar>,
-    public sectionUtils: SectionUtilsService
+    public sectionUtils: SectionUtilsService,
+    public personaAmplitude: PersonasAmplitudeService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -720,21 +722,21 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   trackTileVisibility(tile: ITile) {
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.STUDIO_CHANGED_TILE_STATUS,
-      this.utils.getTileAmplitudeProperties(tile)
+      this.personaAmplitude.getTileAmplitudeProperties(tile)
     );
   }
 
   trackMovedTile(tile: ITile) {
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.STUDIO_DRAG_DROP_TILE,
-      this.utils.getTileAmplitudeProperties(tile)
+      this.personaAmplitude.getTileAmplitudeProperties(tile)
     );
   }
 
   trackDeleteTile(tile: ITile) {
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.STUDIO_DELETED_TILE,
-      this.utils.getTileAmplitudeProperties(tile)
+      this.personaAmplitude.getTileAmplitudeProperties(tile)
     );
   }
 

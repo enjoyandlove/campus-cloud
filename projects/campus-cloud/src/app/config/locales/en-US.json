@@ -2925,22 +2925,22 @@
     "message": "New Tile"
   },
   "t_personas_tile_create_resource_type_academic_calendar": {
-    "message": "Academic Calendars"
+    "message": "Calendars"
   },
   "t_personas_tile_create_resource_type_advisor_list": {
     "message": "Advisor List"
   },
   "t_personas_tile_create_resource_type_athletics_club": {
-    "message": "Athletic Clubs"
+    "message": "Athletics"
   },
   "t_personas_tile_create_resource_type_campus_poi_list": {
-    "message": "Maps"
+    "message": "Map"
   },
   "t_personas_tile_create_resource_type_campus_service": {
     "message": "Campus Service"
   },
   "t_personas_tile_create_resource_type_courses": {
-    "message": "Course Catalogue"
+    "message": "Course Catalog"
   },
   "t_personas_tile_create_resource_type_deal_store_list": {
     "message": "Deals"
@@ -2952,19 +2952,19 @@
     "message": "Events"
   },
   "t_personas_tile_create_resource_type_external_web_app": {
-    "message": "Authenticated Web App"
+    "message": "Web SDK"
   },
   "t_personas_tile_create_resource_type_job_list": {
     "message": "Jobs"
   },
   "t_personas_tile_create_resource_type_orientation_calendar_list": {
-    "message": "Orientation"
+    "message": "Orientation Programs"
   },
   "t_personas_tile_create_resource_type_service_by_category_id": {
-    "message": "List of Services by Category"
+    "message": "Services"
   },
   "t_personas_tile_create_resource_type_store": {
-    "message": "Service or Club"
+    "message": "Group & Club"
   },
   "t_personas_tile_create_resource_type_store_list": {
     "message": "List of Clubs by Type"
@@ -2979,10 +2979,10 @@
     "message": "My Orientation Calendars"
   },
   "t_personas_tile_create_store_list_groups_and_clubs": {
-    "message": "Groups and Clubs"
+    "message": "Groups & Clubs"
   },
   "t_personas_tile_create_type_resource_external_link": {
-    "message": "External Web Link"
+    "message": "External Link"
   },
   "t_personas_tile_create_type_resource_resource": {
     "message": "Resource"
@@ -2991,7 +2991,7 @@
     "message": "Custom List"
   },
   "t_personas_tile_create_type_resource_web_link": {
-    "message": "In-App Web Link"
+    "message": "In-App Link"
   },
   "t_personas_tile_form_categories_excludes": {
     "message": "Excludes"

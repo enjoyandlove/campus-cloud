@@ -6,17 +6,18 @@ import { StoreModule } from '@ngrx/store';
 import { of, throwError } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
+import { TilesService } from '../tiles.service';
+import { PersonasTilesModule } from '../tiles.module';
+import { PersonasService } from '../../personas.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { TilesService } from './../tiles.service';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { PersonasTilesModule } from './../tiles.module';
-import { PersonasService } from './../../personas.service';
-import { baseReducers, baseActions } from '@campus-cloud/store/base';
+import { mockPersonas } from '../../mock/personas.service.mock';
 import { PersonasTileCreateComponent } from './create.component';
-import { mockPersonas } from './../../mock/personas.service.mock';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { SectionsService } from '../../sections/sections.service';
 import { PersonasUtilsService } from '../../personas.utils.service';
-import { SectionsService } from './../../sections/sections.service';
-import { SectionUtilsService } from './../../sections/section.utils.service';
+import { baseReducers, baseActions } from '@campus-cloud/store/base';
+import { SectionUtilsService } from '../../sections/section.utils.service';
+import { PersonasAmplitudeService } from '../../personas.amplitude.service';
 
 class MockPersonasService {
   dummy;
@@ -85,6 +86,7 @@ describe('PersonasTileCreateComponent', () => {
         SectionUtilsService,
         SectionUtilsService,
         PersonasUtilsService,
+        PersonasAmplitudeService,
         { provide: TilesService, useClass: MockTilesService },
         { provide: PersonasService, useClass: MockPersonasService },
         { provide: SectionsService, useClass: MockSectionsService }

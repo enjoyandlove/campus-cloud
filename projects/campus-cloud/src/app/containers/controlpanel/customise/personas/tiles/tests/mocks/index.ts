@@ -1,5 +1,12 @@
-import { ITile } from './../tile.interface';
+import { ITile } from '../../tile.interface';
+import { CampusLink } from '@controlpanel/manage/links/tile';
 import { mockSchool } from '@projects/campus-cloud/src/app/session/mock';
+
+export const mockLinkData = {
+  link_type: 0,
+  open_in_browser: 0,
+  link_url: CampusLink.subscribableCalendar
+};
 
 export const mockTile: ITile = {
   id: 1,
