@@ -5,20 +5,20 @@ import { HttpParams } from '@angular/common/http';
 import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@campus-cloud/session';
-import { BaseComponent } from '@campus-cloud/base';
 import { ITile } from './../tile.interface';
 import { TilesService } from '../tiles.service';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { IPersona } from './../../persona.interface';
 import { PersonasService } from '../../personas.service';
 import { TilesUtilsService } from '../tiles.utils.service';
-import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 import { ICampusGuide } from '../../sections/section.interface';
 import { SectionsService } from '../../sections/sections.service';
-import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
-import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 import { PersonasUtilsService } from './../../personas.utils.service';
+import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
+import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
+import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
+import { amplitudeEvents, STUDIO_THIRD_PARTY } from '@campus-cloud/shared/constants';
 
 @Component({
   selector: 'cp-personas-tile-edit',
@@ -40,6 +40,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   campusLinkForm: FormGroup;
   disableSubmitButton = false;
   campusGuideTileForm: FormGroup;
+  featureFlagThirdParty = STUDIO_THIRD_PARTY;
   contentTypes = ContentUtilsProviders.contentTypes;
   selectedContent = ContentUtilsProviders.contentTypes.single;
 
