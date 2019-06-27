@@ -1,0 +1,31 @@
+<div class="picker dropdown">
+  <input
+    #input
+    type="text"
+    class="flatpickr"
+    data-toggle="dropdown"
+    [ngModel]="date"
+    [class.error]="error"
+    [attr.placeholder]="placeholder"
+  />
+  <div class="dropdown-menu picker--content">
+    <div class="row">
+      <div class="col-12">
+        <div class="picker--calendars" (click)="$event.stopPropagation()">
+          <div class="calendar">
+            <div #calendarEl></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="clearable" class="row">
+      <div class="col-12">
+        <div class="picker--controls">
+          <button type="button" class="cpbtn cpbtn--link" (click)="clearDate()">
+            {{ 't_datepicker_clear' | cpI18n }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

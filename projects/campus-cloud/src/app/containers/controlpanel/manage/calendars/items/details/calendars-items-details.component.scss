@@ -1,0 +1,35 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.map,
+.meta {
+  @include card-margin();
+  margin-top: 0;
+}
+
+.map__container {
+  height: 200px;
+}
+
+.address p {
+  margin-bottom: 0;
+}
+// .meta {
+//   &__item {
+//     margin-bottom: 12px;
+
+//     a {
+//       @include font-semi-bold();
+//     }
+
+//     &:last-child {
+//       margin-bottom: 0;
+//     }
+//   }
+
+//   &__type {
+//     @include font-semi-bold();
+//   }
+// }

@@ -1,0 +1,88 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/components/modal';
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~projects/campus-cloud/src/sass/components/tooltip';
+
+.cpmodal__body {
+  margin-top: 15px;
+}
+
+.subject-input {
+  width: 100%;
+
+  &__label {
+    @include font-semi-bold();
+
+    width: 83px;
+    height: 100%;
+    padding: 0 8px;
+    line-height: 3.1;
+    font-size: 0.8em;
+    color: $color-white;
+    display: inline-block;
+    text-transform: uppercase;
+    border-radius: 4px 0 0 4px;
+
+    &.warning {
+      background: $color-warning;
+    }
+
+    &.danger {
+      background: $color-danger;
+    }
+  }
+
+  &__input {
+    width: 100%;
+  }
+}
+
+label {
+  span {
+    @include font-normal();
+
+    color: $color-secondary-text;
+  }
+
+  &.with-tooltip {
+    i {
+      @include toolTipIcon();
+    }
+  }
+}
+
+.cpmodal__footer {
+  .from-label {
+    margin-top: 7px;
+  }
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.campus-switch {
+  padding: 12px 20px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  background: $color-text-alt;
+  border: 1px solid $border-color;
+  transition: all 200ms ease-in-out;
+
+  &__toggle {
+    top: 5px;
+    position: relative;
+  }
+
+  .title {
+    @include font-16px();
+    @include font-semi-bold();
+  }
+
+  &.isActive {
+    border: 1px solid $color-success;
+    background-color: rgba(40, 202, 66, 0.06);
+  }
+}

@@ -1,0 +1,92 @@
+<div class="wrapper">
+  <div class="cp-wrapper cp-wrapper--outer d-flex justify-content-between">
+    <nav>
+      <div
+        class="avatar"
+        (click)="trackMenu(amplitudeEvents.menu_home)">
+        <a [routerLink]="['/dashboard']">
+          <img [src]="logo" alt="Control Panel" class="rounded img-fit-cover" />
+        </a>
+      </div>
+      <ul class="nav__links">
+        <li
+          *ngIf="manageHomePage"
+          (click)="trackMenu(amplitudeEvents.menu_manage)"
+          [class.active]="isManageActiveRoute"
+        >
+          <a [routerLink]="['/manage/' + manageHomePage]">{{ 'manage' | cpI18n }}</a>
+        </li>
+        <li
+          *ngIf="canNotify"
+          routerLinkActive="active"
+          (click)="trackMenu(amplitudeEvents.menu_notify)"
+        >
+          <a [routerLink]="['/notify']">{{ 'notify' | cpI18n }}</a>
+        </li>
+        <li
+          *ngIf="canAssess"
+          routerLinkActive="active"
+          (click)="trackMenu(amplitudeEvents.menu_assess)"
+        >
+          <a [routerLink]="['/assess']">{{ 'assess' | cpI18n }}</a>
+        </li>
+        <li
+          *ngIf="canCustomise"
+          routerLinkActive="active"
+          (click)="trackMenu(amplitudeEvents.menu_studio)"
+        >
+          <a [routerLink]="['/studio']">{{ 't_studio' | cpI18n }}</a>
+        </li>
+        <li
+          *ngIf="canAudience"
+          routerLinkActive="active"
+          (click)="trackMenu(amplitudeEvents.menu_audience)"
+        >
+          <a [routerLink]="['/audience']">{{ 'audience' | cpI18n }}</a>
+        </li>
+      </ul>
+    </nav>
+    <div>
+      <div class="float-right">
+        <div class="extras" *ngIf="production">
+          <button
+            type="button"
+            id="beamerButton"
+            class="cpbtn cpbtn--link--dark"
+            (click)="trackViewedNotification()"
+          >
+            <i class="material-icons">notifications</i>
+          </button>
+        </div>
+        <div class="nav__school noselect">
+          <div class="row" data-toggle="dropdown">
+            <div class="col-10 no-left-padding no-right-padding">
+              <div
+                *ngIf="school.app_logo_url !== ''"
+                class="nav__school__thumb float-left rounded"
+                [ngStyle]="{ 'background-image': 'url(' + school.app_logo_url + ')' }"
+              ></div>
+              <div
+                *ngIf="school.app_logo_url === ''"
+                class="nav__school__thumb float-left rounded"
+                [ngStyle]="{ 'background-image': 'url( ' + defaultImage + ')' }"
+              ></div>
+              <div class="nav__school__user text-truncate">
+                <span>{{ user.firstname }}</span>
+              </div>
+              <div class="nav__school__name text-truncate">
+                {{ school.name }}
+              </div>
+            </div>
+            <div class="col-2 no-left-padding text-right nav__school__arrow">
+              <i class="material-icons float-right">expand_more</i>
+            </div>
+          </div>
+          <div class="nav__school--menu dropdown-menu">
+            <cp-school-switch></cp-school-switch>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

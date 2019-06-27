@@ -1,0 +1,14 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.comment {
+  margin-bottom: 25px;
+  padding-bottom: 25px;
+  border-bottom: 1px solid darken($color: $color-text-alt, $amount: 8);
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}

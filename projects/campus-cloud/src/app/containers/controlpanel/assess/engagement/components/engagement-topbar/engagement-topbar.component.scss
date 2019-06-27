@@ -1,0 +1,20 @@
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.topbar {
+  &--filter {
+    display: inline-block;
+  }
+
+  &--copy {
+    top: 7px;
+    // left: 6px;
+    font-style: italic;
+    position: relative;
+    display: inline-block;
+  }
+
+  // &--dropdown {
+  //   max-width: 85%;
+  // }
+}

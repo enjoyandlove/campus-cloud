@@ -1,0 +1,69 @@
+<fieldset [disabled]="guide._disabled || state.sorting">
+  <section class="new-section" *ngIf="showAddSection">
+    <div class="row">
+      <div class="col-12">
+        <cp-personas-section-add-button
+          (addSection)="onAddSection()"
+          [disabled]="state.working || disableAddSection"
+        >
+        </cp-personas-section-add-button>
+      </div>
+    </div>
+  </section>
+
+  <fieldset [disabled]="state.working">
+    <section class="section-details" [class.no_margin_top]="noMarginTop">
+      <div class="row">
+        <div class="col-8" *ngIf="!noTitle">
+          <cp-personas-section-title
+            [name]="guide.name"
+            (nameChanged)="onNameChange($event, guide)"
+            [noNameChange]="utils.isTemporaryGuide(guide)"
+          >
+          </cp-personas-section-title>
+        </div>
+        <div class="col-4 text-right" *ngIf="!noControls">
+          <cp-personas-section-controls
+            (moveUp)="onMove('up')"
+            [canDelete]="canDelete"
+            [disableUp]="!canMoveUp"
+            (moveDown)="onMove('down')"
+            [disableDown]="!canMoveDown"
+            (deleteClick)="deleteSectionClick.emit(guide)"
+          >
+          </cp-personas-section-controls>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-tiles">
+      <div
+        class="row"
+        [sortablejs]="guide.tiles"
+        [attr.data-section]="sectionId"
+        [sortablejsOptions]="sortableOptions"
+      >
+        <cp-personas-tile
+          class="tile"
+          [tile]="tile"
+          (edit)="onEditTile(tile)"
+          [attr.data-tile]="tile.id"
+          [class.sorting]="state.sorting"
+          (edited)="onEditedTile($event)"
+          [ngClass]="['col-' + tileWidth]"
+          [class.mb-4]="i % tileWidth === 0"
+          (deleteClick)="deleteTileClick.emit($event)"
+          *ngFor="let tile of guide.tiles; let i = index"
+        >
+        </cp-personas-tile>
+        <div class="js_do_not_drag tile" [ngClass]="['col-' + tileWidth]">
+          <cp-personas-tile-add-button
+            [disabled]="guide._disabled"
+            (buttonClick)="goToCreateTile()"
+          >
+          </cp-personas-tile-add-button>
+        </div>
+      </div>
+    </section>
+  </fieldset>
+</fieldset>

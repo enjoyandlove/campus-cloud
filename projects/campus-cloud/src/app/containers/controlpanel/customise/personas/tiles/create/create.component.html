@@ -1,0 +1,113 @@
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <ng-container *ngSwitchCase="false">
+    <div class="row margin-bottom">
+      <div class="col-6">
+        <div class="cp-card">
+          <p class="title">
+            {{ 't_personas_create_tile_heading_left' | cpI18n }}
+          </p>
+          <cp-personas-tile-guide-form
+            [showErrors]="formHasErrors"
+            [form]="campusGuideTileForm"
+            uploadButtonId="tile_guide_upload_button"
+            (formChange)="onCampusGuideTileFormChange(campusGuideTileForm)">
+          </cp-personas-tile-guide-form>
+        </div>
+      </div>
+      <div class="col-6">
+        <div class="cp-card">
+          <p class="title">
+            {{ 't_personas_create_tile_heading_right' | cpI18n }}
+          </p>
+          <cp-resource-selector
+            (itemClicked)="onTypeChange($event)"
+            [filterByWebApp]="filterByWeb"
+            #resourceSelector="resourceSelector"
+            [filterByLoginStatus]="filterByLogin">
+            <cp-resource-selector-item
+              [active]="[true]"
+              [resourceId]="contentTypes.single"
+              [title]="'t_personas_resource_single_item' | cpI18n">
+              <cp-resource-selector-type-single
+                [showErrors]="formHasErrors"
+                [filterByWebApp]="filterByWeb"
+                [filterByLoginStatus]="filterByLogin"
+                (valueChanges)="onCampusLinkFormChange($event)"
+                *ngIf="resourceSelector.activeTab === contentTypes.single">
+              </cp-resource-selector-type-single>
+            </cp-resource-selector-item>
+            <cp-resource-selector-item
+              [resourceId]="contentTypes.list"
+              [title]="'t_personas_resource_resource' | cpI18n">
+              <cp-resource-selector-type-resource
+                [showErrors]="formHasErrors"
+                [filterByWebApp]="filterByWeb"
+                [filterByLoginStatus]="filterByLogin"
+                (valueChanges)="onCampusLinkFormChange($event)"
+                *ngIf="resourceSelector.activeTab === contentTypes.list">
+              </cp-resource-selector-type-resource>
+            </cp-resource-selector-item>
+            <cp-resource-selector-item
+              [resourceId]="contentTypes.web"
+              [title]="'t_personas_resource_web_link' | cpI18n">
+              <cp-resource-selector-type-web
+                [showErrors]="formHasErrors"
+                [filterByWebApp]="filterByWeb"
+                [filterByLoginStatus]="filterByLogin"
+                (valueChanges)="onCampusLinkFormChange($event)"
+                *ngIf="resourceSelector.activeTab === contentTypes.web">
+              </cp-resource-selector-type-web>
+            </cp-resource-selector-item>
+            <cp-resource-selector-item
+              [resourceId]="contentTypes.thirdParty"
+              *cpFeatureToggle="featureFlagThirdParty"
+              [title]="'t_personas_resource_third_party_app' | cpI18n">
+              <cp-resource-selector-type-external
+                [showErrors]="formHasErrors"
+                (valueChanges)="onCampusLinkFormChange($event)"
+                *ngIf="resourceSelector.activeTab === contentTypes.thirdParty">
+              </cp-resource-selector-type-external>
+            </cp-resource-selector-item>
+            <cp-resource-selector-item
+              [resourceId]="contentTypes.resourceList"
+              [title]="'t_personas_tile_create_type_resource_resource_list' | cpI18n">
+              <cp-personas-resource-list-of-list
+                [persona]="persona"
+                [showErrors]="formHasErrors"
+                (resourceAdded)="onCampusLinkFormChange($event)"
+                *ngIf="resourceSelector.activeTab === contentTypes.resourceList">
+              </cp-personas-resource-list-of-list>
+            </cp-resource-selector-item>
+          </cp-resource-selector>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div class="cp-wrapper cp-wrapper--outer">
+        <div class="col-12">
+          <div class="row">
+            <div class="col-12">
+              <div class="text-right">
+                <a
+                  routerLink="../"
+                  (click)="trackCanceledTile()"
+                  class="cpbtn cpbtn--cancel">
+                  {{ 'cancel' | cpI18n }}
+                </a>
+                <button
+                  type="submit"
+                  (click)="onSubmit()"
+                  class="cpbtn cpbtn--primary"
+                  [disabled]="disableSubmitButton">
+                  {{ 'save' | cpI18n }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

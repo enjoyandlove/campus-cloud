@@ -1,0 +1,21 @@
+<div class="component">
+  <div class="row">
+    <div class="col-5">
+      <div class="component__border"></div>
+    </div>
+    <div class="col-2 text-center">
+      <button
+        type="button"
+        [disabled]="disabled"
+        class="cptbtn cpbtn--link"
+        (click)="addSection.emit()"
+      >
+        <i class="material-icons">add</i>
+        <span>{{ 't_personas_section_button_add_section' | cpI18n }}</span>
+      </button>
+    </div>
+    <div class="col-5">
+      <div class="component__border"></div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<form [formGroup]="employerForm">
+  <div class="form-group employer">
+    <div class="form-group">
+      <cp-image-upload
+        (uploaded)="onUploadedImage($event)"
+        [defaultImage]="employerForm.controls['logo_url'].value"
+        [required]="formError && employerForm.controls['logo_url'].hasError('required')"
+      >
+      </cp-image-upload>
+    </div>
+
+    <div class="form-group">
+      <label>
+        {{ 'employer_name' | cpI18n }}
+        <cp-char-counter
+          class="float-right"
+          [limit]="120"
+          [charCount]="employerForm.controls.name.value"
+        >
+        </cp-char-counter>
+      </label>
+      <input type="text" class="form-control" formControlName="name" />
+    </div>
+
+    <div class="form-group">
+      <label>{{ 'description' | cpI18n }}</label>
+      <textarea formControlName="description"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>{{ 'email' | cpI18n }}</label>
+      <input type="text" class="form-control" formControlName="email" />
+    </div>
+  </div>
+</form>

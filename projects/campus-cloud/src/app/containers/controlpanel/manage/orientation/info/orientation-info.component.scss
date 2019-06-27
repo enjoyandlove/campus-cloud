@@ -1,0 +1,22 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.orientation {
+  @include card-margin();
+
+  margin-top: 0;
+
+  &__title {
+    @include font-bold();
+    @include font-24px;
+
+    margin-bottom: 0;
+  }
+
+  &__description {
+    margin-top: 25px;
+    color: $color-secondary-text;
+  }
+}

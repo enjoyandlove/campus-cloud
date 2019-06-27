@@ -1,0 +1,6 @@
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+p {
+  @include font-24px();
+  @include font-bold();
+}

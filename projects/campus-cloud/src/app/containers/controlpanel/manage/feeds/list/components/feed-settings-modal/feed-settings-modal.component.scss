@@ -1,0 +1,35 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/modal';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.cpmodal {
+  display: block;
+  overflow: visible;
+
+  &__body {
+    max-height: 250px;
+    overflow: scroll;
+  }
+}
+
+.feed-form {
+  padding: 0 10px;
+  padding-bottom: 0;
+  overflow: visible;
+
+  &__header {
+    margin-bottom: 15px;
+  }
+
+  &__item {
+    padding: 12px 0;
+    border-top: 1px solid $border-color;
+
+    .title {
+      span {
+        margin-top: 5px;
+        display: inline-block;
+      }
+    }
+  }
+}

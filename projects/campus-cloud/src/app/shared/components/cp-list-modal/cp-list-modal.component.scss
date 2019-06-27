@@ -1,0 +1,12 @@
+@import '~projects/campus-cloud/src/sass/components/modal';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.cpmodal {
+  display: block;
+  overflow: visible;
+
+  &__body {
+    overflow: auto;
+    max-height: 320px;
+  }
+}

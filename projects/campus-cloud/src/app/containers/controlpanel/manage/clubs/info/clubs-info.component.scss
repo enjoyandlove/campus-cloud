@@ -1,0 +1,123 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+cp-card {
+  display: block;
+  margin-bottom: $default_margin;
+}
+
+.map__container {
+  height: 200px;
+}
+
+.club {
+  &__avatar {
+    width: auto;
+    height: 200px;
+    border-radius: 4px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+  }
+
+  &__title,
+  &__status {
+    margin-bottom: 0;
+  }
+
+  &__title {
+    @include font-bold();
+    @include font-24px;
+  }
+
+  &__status {
+    @include font-semi-bold();
+    @include font-16px;
+
+    margin-bottom: 10px;
+  }
+
+  &__status,
+  &__description {
+    color: $color-secondary-text;
+  }
+
+  &__admins {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid $border-color;
+
+    &__title {
+      @include font-16px();
+      @include font-semi-bold();
+    }
+
+    &__list {
+      padding-left: 0;
+      margin-bottom: 0;
+      list-style: none;
+    }
+
+    &__admin {
+      padding: 12px 0;
+
+      span {
+        font-size: 0.9em;
+      }
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
+.meta {
+  &__item {
+    margin-bottom: 12px;
+
+    a {
+      @include font-semi-bold();
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__type {
+    @include font-semi-bold();
+  }
+}
+
+.club-notes {
+  &__title {
+    @include font-bold();
+
+    margin-bottom: 15px;
+  }
+
+  &__item {
+    margin-bottom: 20px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__question {
+    display: block;
+    margin-bottom: 8px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}

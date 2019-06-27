@@ -1,0 +1,44 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.cp-form__header {
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: 1px;
+      font-size: 17px;
+      position: absolute;
+      padding-left: 6px;
+    }
+  }
+}
+
+.delete-service {
+  font-size: 2em;
+}
+
+.add-card-margin {
+  @include card-margin();
+}
+
+.services {
+  padding: 0;
+  list-style: none;
+
+  .no-content {
+    padding: 15px 0;
+  }
+
+  &__thumbnail {
+    img {
+      float: left;
+      width: 30px;
+      height: 30px;
+      margin-top: 5px;
+      margin-right: 10px;
+    }
+  }
+}

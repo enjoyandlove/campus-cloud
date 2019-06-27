@@ -1,0 +1,15 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <cp-base-checkin
+    [eventId]="eventId"
+    [isEvent]="isEvent"
+    *ngSwitchCase="false"
+    [data]="state.events"
+    [timeZone]="timeZone"
+    (send)="onSubmit($event)"
+    [isOrientation]="isOrientation"
+    (checkout)="onCheckout($event)"
+  >
+  </cp-base-checkin>
+</div>

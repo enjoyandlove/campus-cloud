@@ -1,0 +1,197 @@
+<div class="margin-bottom">
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-6">
+        <div class="cp-card">
+          <div class="row">
+            <div class="col-12">
+              <p class="title">{{ 'services_label_banner' | cpI18n }}</p>
+              <div class="margin-top row">
+                <cp-image-upload
+                  class="col-12"
+                  (uploaded)="onUploadedImage($event)"
+                  [required]="formError && form.controls['logo_url'].hasError('required')"
+                >
+                </cp-image-upload>
+              </div>
+            </div>
+          </div>
+
+          <div class="row margin-top">
+            <div class="col-12">
+              <p class="title">{{ 'services_label_details' | cpI18n }}</p>
+              <div class="form-group margin-top">
+                <label>{{ 'services_label_name' | cpI18n }}</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                  [class.error]="formError && form.controls['name'].hasError('required')"
+                />
+              </div>
+
+              <div class="row form-group">
+                <div class="col-6">
+                  <label class="with-tooltip">
+                    {{ 'select_category' | cpI18n }}
+                    <i cpTooltip class="material-icons" [attr.title]="categoryTooltip">
+                      info_outline
+                    </i>
+                  </label>
+                  <cp-dropdown
+                    [items]="categories$ | async"
+                    (selected)="onCategoryUpdate($event)"
+                    [isRequiredError]="formError && form.controls['category'].hasError('required')"
+                  >
+                  </cp-dropdown>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-6">
+                  <label>{{ 'phone_number' | cpI18n }}</label>
+                  <input type="text" class="form-control" formControlName="contactphone" />
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-6">
+                  <label>{{ 'email' | cpI18n }}</label>
+                  <input type="email" class="form-control" formControlName="email" />
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-6">
+                  <cp-form-label [limit]="120" [controlValue]="form.controls['website'].value">
+                    <label>{{ 'website' | cpI18n }}</label>
+                  </cp-form-label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    formControlName="website"
+                    [class.error]="formError && form.controls['website'].invalid"
+                  />
+                </div>
+              </div>
+
+              <div class="form-group form-group">
+                <label>{{ 'services_label_description' | cpI18n }}</label>
+                <textarea formControlName="description"></textarea>
+              </div>
+
+              <div class="row from-group">
+                <div class="col-6">
+                  <label>{{ 't_services_label_membership_wall' | cpI18n }}</label>
+                  <cp-check-dropdown
+                    [items]="membershipTypes"
+                    [selectedItem]="defaultMembership"
+                    buttonClass="cpbtn cpbtn--cancel"
+                    (selected)="onSelectedMembership($event)"
+                  >
+                  </cp-check-dropdown>
+                </div>
+              </div>
+
+              <div class="row form-group">
+                <div class="col-12">
+                  <cp-checkbox
+                    class="checkbox"
+                    (toggle)="onLocationToggle($event)"
+                    [label]="cpI18n.translate('t_shared_label_location_toggle')"
+                  >
+                  </cp-checkbox>
+                </div>
+              </div>
+
+              <div *ngIf="showLocationDetails">
+                <div class="row">
+                  <div class="col-12">
+                    <label>{{ 'location' | cpI18n }}</label>
+                    <div class="row form-group">
+                      <div class="col-12">
+                        <cp-place-autocomplete
+                          [newAddress]="newAddress"
+                          (backToDefault)="onResetMap()"
+                          (placeChange)="onPlaceChange($event)"
+                          [defaultValue]="form.controls.address.value"
+                        >
+                        </cp-place-autocomplete>
+                      </div>
+                    </div>
+                    <div class="row form-group">
+                      <div class="col-6">
+                        <label>{{ 'building' | cpI18n }}</label>
+                        <input type="text" class="form-control" formControlName="location" />
+                      </div>
+
+                      <div class="col-6">
+                        <div class="form-group">
+                          <label>{{ 'room' | cpI18n }}</label>
+                          <input type="text" class="form-control" formControlName="room_data" />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row form-group">
+                  <div class="col-12">
+                    <div class="maps">
+                      <cp-maps
+                        [center]="mapCenter"
+                        [drawMarker]="drawMarker"
+                        (mapSelection)="onMapSelection($event)"
+                      >
+                      </cp-maps>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-6">
+        <div class="cp-card">
+          <div class="row">
+            <div class="col-8">
+              <p class="title">{{ 'services_label_service_assessment' | cpI18n }}</p>
+            </div>
+            <div class="col-4 float-right">
+              <span class="float-right">
+                <cp-switch
+                  [id]="attendance"
+                  (toggle)="attendance = !attendance"
+                  (toggle)="onToggleAttendance($event)"
+                >
+                </cp-switch>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div class="form-footer">
+  <div class="cp-wrapper cp-wrapper--outer">
+    <div class="row">
+      <div class="col-12">
+        <div class="text-right">
+          <label class="error" *ngIf="formError">
+            <span>&#x26A0;</span>
+            {{ errorMessage ? errorMessage : ('error_fill_out_marked_fields' | cpI18n) }}
+          </label>
+          <a [routerLink]="['/manage/services']" class="cpbtn cpbtn--cancel">
+            {{ 'cancel' | cpI18n }}
+          </a>
+
+          <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+:host {
+  display: block;
+  padding: 55px 0;
+}
+
+p {
+  @include font-bold();
+  @include font-16px;
+
+  margin: 15px auto;
+}
+
+.check {
+  width: 90px;
+  height: 90px;
+  display: block;
+  border-radius: 50%;
+  margin: 0 auto 15px auto;
+  border: 4px solid $color-success;
+
+  i {
+    font-size: 5em;
+    margin-top: 8px;
+    color: $color-success;
+  }
+}

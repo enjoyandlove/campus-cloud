@@ -1,0 +1,82 @@
+<fieldset [disabled]="state.working">
+  <ng-container [ngSwitch]="loading">
+    <cp-spinner *ngSwitchCase="true"></cp-spinner>
+    <ng-container *ngSwitchCase="false">
+      <div class="cp-card mb-4">
+        <div class="row">
+          <div class="col-12">
+            <span class="title">{{ 't_personas_details_feature' | cpI18n }}</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <cp-personas-section
+              tileWidth="4"
+              [noTitle]="true"
+              [noControls]="true"
+              [noMarginTop]="true"
+              [personaId]="personaId"
+              [showAddSection]="false"
+              [guide]="state.featuredTiles"
+              (moveToSection)="onTileMoved($event)"
+              (moveWithinSection)="doBulkUpdate($event)"
+              (tileVisibility)="trackTileVisibility($event)"
+              (deleteTileClick)="onDeleteTileFromSection($event)"
+            >
+            </cp-personas-section>
+          </div>
+        </div>
+      </div>
+
+      <div class="cp-card">
+        <div
+          class="row"
+          *ngFor="let guide of state.guides; let first = first; let last = last; let i = index"
+        >
+          <div class="col-12">
+            <cp-personas-section
+              [guide]="guide"
+              [canMoveUp]="!first"
+              [noMarginTop]="first"
+              [canMoveDown]="!last"
+              [personaId]="personaId"
+              (deleted)="onDeletedSection($event)"
+              (moveToSection)="onTileMoved($event)"
+              (swap)="onSwapSection($event, guide)"
+              [canDelete]="state.guides.length > 1"
+              (removeSection)="onRemoveSection($event)"
+              (moveWithinSection)="doBulkUpdate($event)"
+              [disableAddSection]="temporaryGuides === 1"
+              (setSectionName)="onSetSectionName($event)"
+              (tileVisibility)="trackTileVisibility($event)"
+              (deleteSectionClick)="onDeleteSectionClick($event)"
+              (deleteTileClick)="onDeleteTileFromSection($event)"
+              (createNewSection)="onAddSectionBefore($event, guide.id)"
+            >
+            </cp-personas-section>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+  </ng-container>
+
+  <cp-modal [modalId]="tileDeleteModalId" *ngIf="state.showTileDeleteModal">
+    <cp-personas-tile-delete
+      [tile]="tileToDelete"
+      (error)="errorHandler($event)"
+      (deleted)="onTileDeleted($event)"
+      (teardown)="onTileDeleteTeardown()"
+    >
+    </cp-personas-tile-delete>
+  </cp-modal>
+
+  <cp-modal [modalId]="sectionDeleteModalId" *ngIf="state.showSectionDeleteModal">
+    <cp-personas-section-delete
+      [section]="sectionToDelete"
+      (error)="errorHandler($event)"
+      (deleted)="onRemoveSection($event)"
+      (teardown)="onSectionDeleteTeardown()"
+    >
+    </cp-personas-section-delete>
+  </cp-modal>
+</fieldset>

@@ -1,0 +1,30 @@
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.feedback-padding {
+  padding-left: 23px;
+}
+
+.orientation {
+  min-height: 817px;
+
+  &--no-data-wrapper {
+    margin-top: 300px;
+
+    p {
+      line-height: 1;
+      margin-bottom: 0;
+    }
+
+    p.heading {
+      @include font-24px();
+      @include font-semi-bold();
+
+      margin-bottom: 12px;
+    }
+  }
+
+  &--heading {
+    @include font-24px();
+    @include font-bold();
+  }
+}

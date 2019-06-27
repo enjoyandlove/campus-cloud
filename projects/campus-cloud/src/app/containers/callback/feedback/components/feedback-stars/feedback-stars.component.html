@@ -1,0 +1,48 @@
+<div class="row rate">
+  <div class="col-12 text-center">
+    <i
+      data-value="1"
+      (click)="onRate($event.target)"
+      [class.filled]="rating >= 1"
+      class="material-icons rate__item"
+    >
+      star
+    </i>
+
+    <i
+      data-value="2"
+      [class.filled]="rating >= 2"
+      (click)="onRate($event.target)"
+      class="material-icons rate__item"
+    >
+      star
+    </i>
+
+    <i
+      data-value="3"
+      [class.filled]="rating >= 3"
+      (click)="onRate($event.target)"
+      class="material-icons rate__item"
+    >
+      star
+    </i>
+
+    <i
+      data-value="4"
+      [class.filled]="rating >= 4"
+      (click)="onRate($event.target)"
+      class="material-icons rate__item"
+    >
+      star
+    </i>
+
+    <i
+      data-value="5"
+      [class.filled]="rating >= 5"
+      (click)="onRate($event.target)"
+      class="material-icons rate__item"
+    >
+      star
+    </i>
+  </div>
+</div>

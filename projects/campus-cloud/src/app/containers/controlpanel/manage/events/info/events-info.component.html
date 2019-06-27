@@ -1,0 +1,99 @@
+<div [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <div *ngSwitchCase="false">
+    <div class="row justify-content-center">
+      <div class="col-8 event">
+        <div class="cp-card event__header">
+          <div class="row">
+            <div class="col-12">
+              <cp-resource-banner [resourceBanner]="resourceBanner"></cp-resource-banner>
+              <div class="row event__buttons">
+                <div class="col-12">
+                  <a
+                    [routerLink]="['../edit']"
+                    class="cpbtn cpbtn--primary"
+                    *ngIf="!utils.isPastEvent(event)"
+                  >
+                    {{ 'edit' | cpI18n }}
+                  </a>
+                  <a
+                    target="_blank"
+                    class="cpbtn cpbtn--primary"
+                    (click)="trackCheckinEvent(event)"
+                    *ngIf="event.event_attendance === attendanceEnabled"
+                    [routerLink]="[eventCheckinRoute + event.encrypted_id]"
+                  >
+                    {{ 't_shared_web_checkin' | cpI18n }}
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <cp-card>
+              <div class="row">
+                <div class="col-12">
+                  <div class="row">
+                    <div class="col-2">
+                      <p>
+                        <strong *ngIf="!utils.isPastEvent(event)">{{ 'starts' | cpI18n }}</strong>
+                        <strong *ngIf="utils.isPastEvent(event)">{{ 'started' | cpI18n }}</strong>
+                      </p>
+                    </div>
+                    <div class="col-10">
+                      <p>{{ event.start | cpDatePipe: dateFormat }}</p>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-2">
+                      <p>
+                        <strong *ngIf="!utils.isPastEvent(event)">{{ 'ends' | cpI18n }}</strong>
+                        <strong *ngIf="utils.isPastEvent(event)">{{ 'ended' | cpI18n }}</strong>
+                      </p>
+                    </div>
+                    <div class="col-10">
+                      {{ event.end | cpDatePipe: dateFormat }}
+                    </div>
+                  </div>
+
+                  <div class="row" *ngIf="event.address">
+                    <div class="col-2">
+                      <p>
+                        <strong>{{ 'location' | cpI18n }}</strong>
+                      </p>
+                    </div>
+                    <div class="col-10">
+                      <p>{{ event.address }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="showLocationDetails">
+                <div class="col-12 event__map">
+                  <cp-maps [center]="mapCenter" [draggable]="draggable"> </cp-maps>
+                </div>
+              </div>
+            </cp-card>
+          </div>
+        </div>
+
+        <div class="row" *ngIf="event.description">
+          <div class="col-12">
+            <cp-card>
+              <p>
+                <strong>{{ 'description' | cpI18n }}</strong>
+              </p>
+              <p class="no-margin-bottom render_line_breaks">{{ event.description }}</p>
+            </cp-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

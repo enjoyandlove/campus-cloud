@@ -1,0 +1,29 @@
+<div class="row content">
+  <div class="col-4 text-center">
+    <div class="cp-card cp-card--half-padding">
+      <p class="header__digit">{{ provider.total_visits }}</p>
+      <p>{{ 't_shared_visits' | cpI18n }}</p>
+    </div>
+  </div>
+  <div class="col-4 text-center">
+    <div class="cp-card cp-card--half-padding">
+      <p class="header__digit">{{ provider.num_ratings }}</p>
+      <p>{{ 'total_ratings' | cpI18n }}</p>
+    </div>
+  </div>
+  <div class="col-4 text-center">
+    <div class="cp-card cp-card--half-padding rating-box">
+      <cp-stars
+        [size]="starSize"
+        class="rating-box__star"
+        [avgRate]="provider.avg_rating_percent"
+        [maxRate]="MAX_RATE"
+      >
+      </cp-stars>
+      <p>
+        {{ 't_shared_average_rating' | cpI18n }}
+        {{ provider.avg_rating_percent !== -1 ? eventRating : '0.0' }}
+      </p>
+    </div>
+  </div>
+</div>

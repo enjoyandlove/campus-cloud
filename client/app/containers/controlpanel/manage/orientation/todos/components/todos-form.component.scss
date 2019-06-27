@@ -1,9 +1,0 @@
-@import '~client/style/components/form';
-
-label {
-  span {
-    @include font-normal();
-
-    color: $color-secondary-text;
-  }
-}

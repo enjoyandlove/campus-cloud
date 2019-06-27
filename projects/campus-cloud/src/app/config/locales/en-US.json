@@ -1,0 +1,3527 @@
+{
+  "account_not_found": {
+    "message": "Please check your credentials and try again."
+  },
+  "active": {
+    "message": "Active",
+    "description": "Active Club"
+  },
+  "address": {
+    "message": "Address"
+  },
+  "admins_error_no_access_granted": {
+    "message": "You have not granted any access"
+  },
+  "admin_action_unauthorized": {
+    "message": "You do not have sufficient privileges to perform this action."
+  },
+  "admin_all_acceess_help": {
+    "message": "Grant the new team member the same Campus Cloud permissions as me."
+  },
+  "admin_all_access": {
+    "message": "Copy my Campus Cloud Permissions"
+  },
+  "admin_all_athletics": {
+    "message": "All Athletics"
+  },
+  "admin_all_clubs": {
+    "message": "All Clubs"
+  },
+  "admin_all_services": {
+    "message": "All Services"
+  },
+  "admin_app_content": {
+    "message": "Other"
+  },
+  "admin_app_content_help": {
+    "message": "Manage other kinds of app content"
+  },
+  "admin_assess_help": {
+    "message": "View the Assessment Dashboard"
+  },
+  "admin_athletics_owner": {
+    "message": "Athletics Club Owner"
+  },
+  "admin_athletics_owner_help": {
+    "message": "Create new athletics clubs; manage information, events and membership for all clubs or select clubs"
+  },
+  "admin_audience_help": {
+    "message": "Notify and assess specific segments (audiences) of users"
+  },
+  "admin_audience_menu_all_access": {
+    "message": "All Audiences"
+  },
+  "admin_audience_title": {
+    "message": "Audiences"
+  },
+  "admin_campus_announcements": {
+    "message": "Regular Announcements"
+  },
+  "admin_can_edit": {
+    "message": "Can Edit"
+  },
+  "admin_can_edit_help": {
+    "message": "See content created by other team members and create your own content"
+  },
+  "admin_can_read": {
+    "message": "Limited Edit",
+    "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
+  },
+  "admin_can_read_help": {
+    "message": "See content and create content, but not edit all club information",
+    "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
+  },
+  "admin_club_owner": {
+    "message": "Club Owner"
+  },
+  "admin_club_owner_help": {
+    "message": "Create new clubs; manage information, events and membership for all clubs or select clubs"
+  },
+  "admin_club_service_modal_title": {
+    "message": "Select %s"
+  },
+  "admin_create_account": {
+    "message": "Create Account"
+  },
+  "admin_create_button": {
+    "message": "Send Invite"
+  },
+  "admin_delete_user_error": {
+    "message": "We could not delete the selected user"
+  },
+  "admin_edit_profile": {
+    "message": "Edit Profile"
+  },
+  "admin_emergency_announcements": {
+    "message": "Emergency Announcements"
+  },
+  "admin_enabled": {
+    "message": "Enabled"
+  },
+  "admin_engagement_dashboard": {
+    "message": "Assessment Dashboard"
+  },
+  "admin_events_help": {
+    "message": "View events; view event assessment"
+  },
+  "admin_events_title": {
+    "message": "Event Viewer"
+  },
+  "admin_form_label_athletics": {
+    "message": "Athletic(s)"
+  },
+  "admin_form_label_clubs": {
+    "message": "Club(s)"
+  },
+  "admin_form_label_services": {
+    "message": "Service(s)"
+  },
+  "admin_grant_permissions": {
+    "message": "Invite new team members and assign permissions"
+  },
+  "admin_invite": {
+    "message": "Create New Team Member"
+  },
+  "admin_invitee": {
+    "message": "Invitee"
+  },
+  "admin_invite_heading": {
+    "message": "Create your Campus Cloud Account"
+  },
+  "admin_invite_invalid_invite_key_error": {
+    "message": "The activation link is invalid, please make sure you clicked on the right link"
+  },
+  "admin_manage_and_assess_events": {
+    "message": "View events and event assessment"
+  },
+  "admin_manage_events": {
+    "message": "View Events"
+  },
+  "admin_modal_delete_body": {
+    "message": "Are you sure you want to remove %s?"
+  },
+  "admin_modal_delete_title": {
+    "message": "Delete Team Member"
+  },
+  "admin_notify_help": {
+    "message": "Send messages to students' phones and/or send emergency announcements"
+  },
+  "admin_no_access": {
+    "message": "No Access"
+  },
+  "admin_password_sucess_redirect": {
+    "message": "Password saved, redirecting you to the login page"
+  },
+  "admin_permissions": {
+    "message": "Select Permissions"
+  },
+  "admin_search_by_email_or_email": {
+    "message": "Search by name or email..."
+  },
+  "admin_select_athletics": {
+    "message": "Select Athletics"
+  },
+  "admin_select_clubs": {
+    "message": "Select Clubs"
+  },
+  "admin_select_services": {
+    "message": "Select Services"
+  },
+  "admin_service_owner": {
+    "message": "Service Executive"
+  },
+  "admin_service_owner_help": {
+    "message": "Create new services; manage information, events and assessment for all services or select services"
+  },
+  "all": {
+    "message": "All Categories"
+  },
+  "all_day": {
+    "message": "All day"
+  },
+  "all_fields_are_required": {
+    "message": "All fields are required"
+  },
+  "and": {
+    "message": "and"
+  },
+  "announce": {
+    "message": "Announce"
+  },
+  "announcements": {
+    "message": "Announcements"
+  },
+  "announcements_compose_modal_help": {
+    "message": "Announce to all students"
+  },
+  "announcements_compose_modal_title": {
+    "message": "Create Announcement"
+  },
+  "announcements_delete_modal_body": {
+    "message": "Are you sure you want to delete this announcement?"
+  },
+  "announcements_delete_modal_body_warning": {
+    "message": "No more students will receive it."
+  },
+  "announcements_delete_modal_title": {
+    "message": "Delete Announcement"
+  },
+  "announcements_emergency_help": {
+    "message": "Overrides the user's push notifications settings and forces them to acknowledge the message"
+  },
+  "announcements_heading_create": {
+    "message": "Create Announcement"
+  },
+  "announcements_not_sent": {
+    "message": "Message not sent, please wait %s minutes before trying again"
+  },
+  "announcements_no_engagement_data": {
+    "message": "No engagement data"
+  },
+  "announcements_regular_help": {
+    "message": "Delivered as a regular push notification"
+  },
+  "announcements_type": {
+    "message": "Type"
+  },
+  "announcements_urgent_help": {
+    "message": "Overrides the user's push notification settings"
+  },
+  "announcement_and_more_text": {
+    "message": "and %s more..."
+  },
+  "announcement_confirm_campus_wide": {
+    "message": "Campus-Wide Announcement"
+  },
+  "announcement_confirm_campus_wide_and_emergency": {
+    "message": "Campus-Wide and Emergency Announcement"
+  },
+  "announcement_confirm_campus_wide_and_emergency_body": {
+    "message": "You are about to send a campus-wide emergency announcement."
+  },
+  "announcement_confirm_campus_wide_and_urgent": {
+    "message": "Campus-Wide and Urgent Announcement"
+  },
+  "announcement_confirm_campus_wide_and_urgent_body": {
+    "message": "You are about to send a campus-wide urgent announcement."
+  },
+  "announcement_confirm_campus_wide_body": {
+    "message": "You are about to send a campus-wide announcement."
+  },
+  "announcement_confirm_emergency": {
+    "message": "Emergency Announcement"
+  },
+  "announcement_confirm_emergency_body": {
+    "message": "You are about to send an emergency notification."
+  },
+  "announcement_confirm_urgent": {
+    "message": "Urgent Announcement"
+  },
+  "announcement_confirm_urgent_body": {
+    "message": "You are about to send an urgent notification."
+  },
+  "announcement_success_sent": {
+    "message": "Success! Your message has been sent"
+  },
+  "apply": {
+    "message": "Apply"
+  },
+  "approve": {
+    "message": "Approve"
+  },
+  "app_customization": {
+    "message": "App Customization"
+  },
+  "app_name": {
+    "message": "App Name"
+  },
+  "archive": {
+    "message": "Delete"
+  },
+  "are_you_sure?": {
+    "message": "Are you Sure?"
+  },
+  "assess": {
+    "message": "Assess"
+  },
+  "assessment": {
+    "message": "Assessment"
+  },
+  "assess_all_engagements": {
+    "message": "All Engagements"
+  },
+  "assess_all_events": {
+    "message": "All Events"
+  },
+  "assess_all_services": {
+    "message": "All Services"
+  },
+  "assess_all_students": {
+    "message": "All Students"
+  },
+  "assess_average_rating": {
+    "message": "Rating"
+  },
+  "assess_button_download_engagement_data": {
+    "message": "All Engagement"
+  },
+  "assess_checkin_date": {
+    "message": "Check-in Date"
+  },
+  "assess_check_in_time": {
+    "message": "Check-in Item"
+  },
+  "assess_demo_feature_four_description": {
+    "message": "Assessment enables you to easily identify which students are disengaged and send them targeted communications via the campus app."
+  },
+  "assess_demo_feature_four_title": {
+    "message": "Identify and Communicate"
+  },
+  "assess_demo_feature_one_description": {
+    "message": "Conveniently track student attendance at campus events and services without any additional hardware or software."
+  },
+  "assess_demo_feature_one_title": {
+    "message": "Communicate with Students"
+  },
+  "assess_demo_feature_three_description": {
+    "message": "Positive student engagement is the key to success. Get detailed insights on how students engaged and interacted with events or services."
+  },
+  "assess_demo_feature_three_title": {
+    "message": "Actionable Insights"
+  },
+  "assess_demo_feature_two_description": {
+    "message": "Get real-time feedback and input from your students on programs, including answers to custom questions for any events or services."
+  },
+  "assess_demo_feature_two_title": {
+    "message": "Attendance Tracking"
+  },
+  "assess_demo_footer_bottom": {
+    "message": "to set up Ready Education Assessment on your campus"
+  },
+  "assess_demo_footer_cta": {
+    "message": "Get Started Today"
+  },
+  "assess_demo_footer_top": {
+    "message": "Speak to your Customer Success Manager"
+  },
+  "assess_demo_hero_cta": {
+    "message": "Schedule a Demo Today!"
+  },
+  "assess_demo_hero_cta_help": {
+    "message": "or email us at cm@readyeducation.com"
+  },
+  "assess_demo_hero_description": {
+    "message": "READY Education Assessment enables you to measure and assess student activity outside of the classroom"
+  },
+  "assess_demo_hero_title": {
+    "message": "Measure Student Engagement Anywhere on Campus"
+  },
+  "assess_download_transcript": {
+    "message": "Download Assessment"
+  },
+  "assess_engagements_last_seven_days": {
+    "message": "Engagement (Last 7 Days)"
+  },
+  "assess_events_assessed": {
+    "message": "Events Assessed"
+  },
+  "assess_event_rating_average": {
+    "message": "Event Rating"
+  },
+  "assess_event_responses": {
+    "message": "Event Responses"
+  },
+  "assess_event_responses_rate": {
+    "message": "Event Response Rate"
+  },
+  "assess_feedback_received": {
+    "message": "Feedback Received"
+  },
+  "assess_last_30_days": {
+    "message": "Last 30 Days"
+  },
+  "assess_last_90_days": {
+    "message": "Last 90 Days"
+  },
+  "assess_last_engagement": {
+    "message": "Last Engaged"
+  },
+  "assess_last_month": {
+    "message": "Last Month"
+  },
+  "assess_last_seven_days": {
+    "message": "Last 7 Days"
+  },
+  "assess_last_six_weeks": {
+    "message": "Last 6 Weeks"
+  },
+  "assess_last_three_months": {
+    "message": "Last 3 Months"
+  },
+  "assess_last_year": {
+    "message": "Last Year"
+  },
+  "assess_message_student": {
+    "message": "Message Student"
+  },
+  "assess_new_message": {
+    "message": "New Message"
+  },
+  "assess_no_engagement": {
+    "message": "No Engagement"
+  },
+  "assess_no_engagement_tooltip": {
+    "message": "Students who had no attendance for the period selected"
+  },
+  "assess_no_event_data": {
+    "message": "No Event Data"
+  },
+  "assess_no_event_data_help": {
+    "message": "To see Events data use the Engagement filter"
+  },
+  "assess_no_service_data": {
+    "message": "No Service Data"
+  },
+  "assess_no_service_data_help": {
+    "message": "To see Service data use the Engagement filter"
+  },
+  "assess_number_of_checkins": {
+    "message": "Total Engagement"
+  },
+  "assess_number_of_event_checkins": {
+    "message": "Number of Events"
+  },
+  "assess_number_of_responses": {
+    "message": "# of Responses"
+  },
+  "assess_one_engagement": {
+    "message": "One Engagement"
+  },
+  "assess_one_engagement_tooltip": {
+    "message": "Students who checked in to a single Event or Service."
+  },
+  "assess_repeat_engagement": {
+    "message": "Multiple Engagements"
+  },
+  "assess_repeat_engagement_tooltip": {
+    "message": "Students who checked in to more than one Event or Service."
+  },
+  "assess_response_date": {
+    "message": "Response Date"
+  },
+  "assess_response_rate": {
+    "message": "Response Rate"
+  },
+  "assess_services_assessed": {
+    "message": "Services Assessed"
+  },
+  "assess_service_checkins": {
+    "message": "Number of Services"
+  },
+  "assess_service_rating_average": {
+    "message": "Service Rating"
+  },
+  "assess_service_responses": {
+    "message": "Service Responses"
+  },
+  "assess_service_responses_rate": {
+    "message": "Services Response Rate"
+  },
+  "assess_sort_by": {
+    "message": "Sort by"
+  },
+  "assess_student_id": {
+    "message": "Student ID"
+  },
+  "assess_student_name": {
+    "message": "Student Name"
+  },
+  "assess_top_events": {
+    "message": "Top Events"
+  },
+  "assess_top_services": {
+    "message": "Top Services"
+  },
+  "assess_total_attendees": {
+    "message": "Total Attendees"
+  },
+  "assess_total_events": {
+    "message": "Total Events"
+  },
+  "assess_total_services": {
+    "message": "Total Services"
+  },
+  "athletics": {
+    "message": "Athletics"
+  },
+  "athletics_all_athletics": {
+    "message": "All Athletics"
+  },
+  "athletics_button_create": {
+    "message": "Create Athletic Club"
+  },
+  "athletics_delete_modal_title": {
+    "message": "Delete Athletic"
+  },
+  "athletics_import_button_submit": {
+    "message": "Import Athletics"
+  },
+  "athletics_import_heading": {
+    "message": "Import Athletics from File"
+  },
+  "athletics_import_items_to_import": {
+    "message": "File contains data for %s athletic(s)."
+  },
+  "athletics_label_athletic_banner": {
+    "message": "Athletic Banner"
+  },
+  "athletics_label_athletic_description": {
+    "message": "Description"
+  },
+  "athletics_label_athletic_details": {
+    "message": "Details"
+  },
+  "athletics_label_athletic_membership": {
+    "message": "Membership"
+  },
+  "athletics_label_athletic_name": {
+    "message": "Name"
+  },
+  "athletics_label_athletic_status": {
+    "message": "Status"
+  },
+  "athletics_label_edit_athletic": {
+    "message": "Edit Athletic Club"
+  },
+  "attendee": {
+    "message": "Attendee"
+  },
+  "attendees": {
+    "message": "Attendees"
+  },
+  "audience": {
+    "message": "Audiences"
+  },
+  "audience_add_filter_button": {
+    "message": "Add Filter"
+  },
+  "audience_counter_users": {
+    "message": "Users Found"
+  },
+  "audience_create_error_duplicate_audience": {
+    "message": "That audience name is already in use."
+  },
+  "audience_create_modal_label_name": {
+    "message": "Audience Name"
+  },
+  "audience_dynamic_button_save_audience": {
+    "message": "Save Audience"
+  },
+  "audience_edit_modal_label_name": {
+    "message": "Edit Audience"
+  },
+  "audience_import_csv": {
+    "message": "Import from CSV"
+  },
+  "audience_import_success_message": {
+    "message": "File uploaded successfully"
+  },
+  "audience_label_audience": {
+    "message": "Audiences"
+  },
+  "audience_label_filters": {
+    "message": "Filters"
+  },
+  "audience_label_type": {
+    "message": "Type"
+  },
+  "audience_label_users": {
+    "message": "Users"
+  },
+  "audience_modal_label_audience_name": {
+    "message": "Audience Name"
+  },
+  "audience_my_audiences": {
+    "message": "My Audiences"
+  },
+  "audience_name": {
+    "message": "Audience Name"
+  },
+  "audience_type_all": {
+    "message": "All Audiences"
+  },
+  "audience_type_custom": {
+    "message": "Custom"
+  },
+  "audience_type_dynamic": {
+    "message": "Dynamic"
+  },
+  "auth_confirm_new_password": {
+    "message": "Confirm New Password"
+  },
+  "auth_old_password": {
+    "message": "Old Password"
+  },
+  "auth_password_reset_success": {
+    "message": "Your password has been changed"
+  },
+  "auth_pwd_reset_heading": {
+    "message": "Follow these steps to reset your password"
+  },
+  "auth_pwd_reset_step_one": {
+    "message": "Enter your email address and click \"Reset Password.\""
+  },
+  "auth_pwd_reset_step_three": {
+    "message": "Follow the instructions to reset your password."
+  },
+  "auth_pwd_reset_step_two": {
+    "message": "You will receive an email with step-by-step instructions."
+  },
+  "auth_reset_password": {
+    "message": "Reset Password"
+  },
+  "back": {
+    "message": "Back"
+  },
+  "beta_banner_go_back": {
+    "message": "Revert to Previous Version"
+  },
+  "body": {
+    "message": "Message"
+  },
+  "building": {
+    "message": "Building"
+  },
+  "button_add_photo": {
+    "message": "Upload Image"
+  },
+  "calendar": {
+    "message": "Calendar"
+  },
+  "calendars": {
+    "message": "Calendars"
+  },
+  "calendars_add_modal_title": {
+    "message": "Create Calendar"
+  },
+  "calendars_button_new": {
+    "message": "Create Calendar"
+  },
+  "calendars_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "calendars_delete_modal_title": {
+    "message": "Delete Calendar"
+  },
+  "calendars_edit_modal_title": {
+    "message": "Edit Calendar"
+  },
+  "calendars_form_submit_button_new": {
+    "message": "Create Item"
+  },
+  "calendars_items_button_new": {
+    "message": "Create Calendar Item"
+  },
+  "calendars_items_edit_btn": {
+    "message": "Edit Calendar Item"
+  },
+  "calendars_items_import_confirmation_modal_title": {
+    "message": "Import from File"
+  },
+  "calendars_items_import_csv_heading": {
+    "message": "Import Calendar Items from File"
+  },
+  "calendars_items_import_csv_sub_heading": {
+    "message": "File contains data for %s calendar item(s)"
+  },
+  "calendars_items_import_message_error": {
+    "message": "Failed to create %s items"
+  },
+  "calendars_items_import_message_success": {
+    "message": "Successfully created %s item(s)"
+  },
+  "calendars_items_no_results_found": {
+    "message": "No calendar items found"
+  },
+  "calendars_item_create_heading": {
+    "message": "Create Calendar Item"
+  },
+  "calendars_item_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "calendars_item_description_label": {
+    "message": "Item Description"
+  },
+  "calendars_item_details": {
+    "message": "Item details"
+  },
+  "calendars_item_edit_heading": {
+    "message": "Edit Calendar Item"
+  },
+  "calendars_item_modal_title": {
+    "message": "Delete Calendar Item"
+  },
+  "calendars_item_name_label": {
+    "message": "Item name"
+  },
+  "calendars_label_description": {
+    "message": "Description"
+  },
+  "calendars_label_name": {
+    "message": "Name"
+  },
+  "calendars_no_results_found": {
+    "message": "No calendars found"
+  },
+  "campus_wall": {
+    "message": "Campus Wall"
+  },
+  "campus_wide": {
+    "message": "Campus-Wide"
+  },
+  "cancel": {
+    "message": "Cancel"
+  },
+  "category": {
+    "message": "Category"
+  },
+  "change_password": {
+    "message": "Change Password"
+  },
+  "change_school": {
+    "message": "Change School"
+  },
+  "checkin_attendance_list": {
+    "message": "Attendance List"
+  },
+  "checkin_button_pdf_kit": {
+    "message": "PDF Kit Tool"
+  },
+  "checkin_download_qr_code": {
+    "message": "Download QR Code"
+  },
+  "checkin_header_title": {
+    "message": "Web Check-in",
+    "description": "Public Check-In Page (Title)\r\nhttps://ccstaging.oohlalamobile.com/#/cb/checkin/e/pNmRN94bVUbUI9qtz89i5A"
+  },
+  "checkin_instructions_one": {
+    "message": "Use QR codes to help attendees check in to an event. Print or share the QR code with your event attendance organizer."
+  },
+  "checkin_instructions_three": {
+    "message": "You can view assessment statistics in Event Info. Be sure to come back to view feedback and ratings."
+  },
+  "checkin_instructions_two": {
+    "message": "Attendees can check in by scanning the QR code with the app. QR Codes can be printed or shown directly on a laptop, phone or tablet screen"
+  },
+  "checkin_list": {
+    "message": "Attendee List"
+  },
+  "checkin_manual_checkin": {
+    "message": "Manual Check-In"
+  },
+  "checkin_scannable_qr_code": {
+    "message": "QR Code"
+  },
+  "clicks": {
+    "message": "Clicks"
+  },
+  "clubs": {
+    "message": "Clubs"
+  },
+  "clubs_all_clubs": {
+    "message": "All Clubs"
+  },
+  "clubs_and_groups": {
+    "message": "Clubs & Groups"
+  },
+  "clubs_button_create": {
+    "message": "Create Club"
+  },
+  "clubs_create_heading": {
+    "message": "Create Club"
+  },
+  "clubs_delete_error_unauthorized": {
+    "message": "You do not have permission to delete this club.",
+    "description": "In Manage Clubs, try to delete a club for which you have only the Limited Edit permission"
+  },
+  "clubs_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "clubs_delete_modal_title": {
+    "message": "Delete Club"
+  },
+  "clubs_disabled": {
+    "message": "Disabled"
+  },
+  "clubs_edit_heading": {
+    "message": "Edit Club"
+  },
+  "clubs_import_button_submit": {
+    "message": "Import Clubs"
+  },
+  "clubs_import_heading": {
+    "message": "Import Clubs from File"
+  },
+  "clubs_import_items_to_import": {
+    "message": "File contains data for %s club(s)."
+  },
+  "clubs_inactive": {
+    "message": "Inactive"
+  },
+  "clubs_label_advisor": {
+    "message": "Advisor"
+  },
+  "clubs_label_club_banner": {
+    "message": "Club Banner"
+  },
+  "clubs_label_club_description": {
+    "message": "Club Description"
+  },
+  "clubs_label_club_details": {
+    "message": "Club Details"
+  },
+  "clubs_label_club_membership": {
+    "message": "Club Membership"
+  },
+  "clubs_label_club_name": {
+    "message": "Club Name"
+  },
+  "clubs_label_club_status": {
+    "message": "Club Status"
+  },
+  "clubs_label_constitution": {
+    "message": "Constitution",
+    "description": "Form Label "
+  },
+  "clubs_label_edit_club": {
+    "message": "Edit Club"
+  },
+  "clubs_label_executive_position": {
+    "message": "Position"
+  },
+  "clubs_label_member_type": {
+    "message": "Member Type"
+  },
+  "clubs_membership_disabled": {
+    "message": "Users can view the club but cannot join or message other members"
+  },
+  "clubs_membership_enabled": {
+    "message": "Allows users to join the club and message other members"
+  },
+  "clubs_member_button_create": {
+    "message": "Add Member"
+  },
+  "clubs_member_create_modal_title": {
+    "message": "Add Member"
+  },
+  "clubs_member_delete_modal_body": {
+    "message": "Are you sure you want to remove %s?"
+  },
+  "clubs_member_delete_modal_title": {
+    "message": "Remove Member"
+  },
+  "clubs_member_edit_modal_title": {
+    "message": "Edit Member"
+  },
+  "clubs_member_label_name": {
+    "message": "Name (requires a campus app account)"
+  },
+  "clubs_no_members_found": {
+    "message": "No members found"
+  },
+  "clubs_no_results": {
+    "message": "No clubs found"
+  },
+  "clubs_status_active": {
+    "message": "Club is approved and is listed in the Campus App"
+  },
+  "clubs_status_inactive": {
+    "message": "Club is suspended and is not listed in the Campus App"
+  },
+  "clubs_status_pending": {
+    "message": "Club is awaiting approval and is not listed in the Campus App"
+  },
+  "club_info_notes": {
+    "message": "Club Notes",
+    "description": "As a club super editor, view a club info page with club notes. "
+  },
+  "club_membership_disabled_title": {
+    "message": "Disabled",
+    "description": "Create Club > Membership"
+  },
+  "club_membership_enabled_title": {
+    "message": "Enabled",
+    "description": "Create Club > Membership"
+  },
+  "club_status_active": {
+    "message": "Active",
+    "description": "Create Club > Status"
+  },
+  "club_status_inactive": {
+    "message": "Inactive",
+    "description": "Create Club > Status"
+  },
+  "club_status_pending": {
+    "message": "Pending",
+    "description": "Create Club > Status"
+  },
+  "comment": {
+    "message": "Comment",
+    "description": "Walls Comment"
+  },
+  "comments": {
+    "message": "Comments"
+  },
+  "component_cpimage_description": {
+    "message": "Upload your image"
+  },
+  "component_cpimage_help": {
+    "message": "JPG or PNG. Max size of 5MB"
+  },
+  "compose": {
+    "message": "Create Announcement"
+  },
+  "confirm": {
+    "message": "Confirm"
+  },
+  "confirm_password": {
+    "message": "Confirm Password"
+  },
+  "contact_details": {
+    "message": "Contact Details"
+  },
+  "cp_top_banner_copy": {
+    "message": "Campus Cloud is live"
+  },
+  "cp_top_banner_copy_link_text": {
+    "message": "For more information, visit our Help Desk."
+  },
+  "created": {
+    "message": "Date Created"
+  },
+  "csv_modal_anchor_text": {
+    "message": "Download CSV Sample File"
+  },
+  "csv_modal_body": {
+    "message": "Upload your CSV file or"
+  },
+  "csv_modal_button_text": {
+    "message": "Select a CSV file"
+  },
+  "csv_modal_instruction": {
+    "message": "Limit of 100 items to import at a time."
+  },
+  "csv_modal_instruction_audience": {
+    "message": "Limit of 10,000 items to import at a time."
+  },
+  "csv_modal_title": {
+    "message": "Upload CSV File"
+  },
+  "customise": {
+    "message": "Studio"
+  },
+  "customise_banner": {
+    "message": "Branding"
+  },
+  "customization_description": {
+    "message": "(JPEG or PNG format, 5 MB or smaller. You can scroll with your mouse to zoom in or out.)"
+  },
+  "customization_image_upload_error": {
+    "message": "Something went wrong while uploading your image"
+  },
+  "customization_image_upload_success": {
+    "message": "Branding updated successfully"
+  },
+  "customization_instructions": {
+    "message": "Drag to Reposition Image"
+  },
+  "customization_title": {
+    "message": "Banner Image"
+  },
+  "dashboard_announcements": {
+    "message": "Announcements"
+  },
+  "dashboard_assessment_event_checkins": {
+    "message": "Event Check-ins",
+    "description": "Dashboard Assessment tile"
+  },
+  "dashboard_assessment_feedback_rate": {
+    "message": "Feedback Rate"
+  },
+  "dashboard_assessment_lms": {
+    "message": "LMS"
+  },
+  "dashboard_assessment_service_checkins": {
+    "message": "Service Check-ins"
+  },
+  "dashboard_assessment_student": {
+    "message": "Student"
+  },
+  "dashboard_assessment_student_feedback": {
+    "message": "Feedback"
+  },
+  "dashboard_assessment_title": {
+    "message": "Assessment"
+  },
+  "dashboard_campus_tile_title": {
+    "message": "Campus Tile Activity"
+  },
+  "dashboard_club_views": {
+    "message": "Club Views"
+  },
+  "dashboard_downloads_title": {
+    "message": "Downloads & Registrations"
+  },
+  "dashboard_event_feedback": {
+    "message": "Event Feedback"
+  },
+  "dashboard_event_views": {
+    "message": "Event Views"
+  },
+  "dashboard_general_information": {
+    "message": "Campus App Activity"
+  },
+  "dashboard_integrations_courses": {
+    "message": "Courses"
+  },
+  "dashboard_integrations_sso": {
+    "message": "Single Sign-On"
+  },
+  "dashboard_integrations_title": {
+    "message": "Integrations"
+  },
+  "dashboard_last_30_days": {
+    "message": "Last 30 Days"
+  },
+  "dashboard_last_90_days": {
+    "message": "Last 90 Days"
+  },
+  "dashboard_last_year": {
+    "message": "Last Year"
+  },
+  "dashboard_no_data_found": {
+    "message": "No Results Found"
+  },
+  "dashboard_service_clicks": {
+    "message": "Service Clicks"
+  },
+  "dashboard_service_feedback": {
+    "message": "Service Feedback"
+  },
+  "dashboard_social_activity_comments": {
+    "message": "Comments"
+  },
+  "dashboard_social_activity_connections": {
+    "message": "Connections"
+  },
+  "dashboard_social_activity_likes": {
+    "message": "Likes"
+  },
+  "dashboard_social_activity_messages": {
+    "message": "Messages"
+  },
+  "dashboard_social_activity_title": {
+    "message": "Social Activity"
+  },
+  "dashboard_social_activity_total": {
+    "message": "Total Social Activity"
+  },
+  "dashboard_social_activity_wall_posts": {
+    "message": "Posts"
+  },
+  "dashboard_top_events": {
+    "message": "Top Events"
+  },
+  "dashboard_top_five_clubs_title": {
+    "message": "Top Clubs"
+  },
+  "dashboard_top_services": {
+    "message": "Top Services"
+  },
+  "deals": {
+    "message": "Deals"
+  },
+  "deals_create_deal": {
+    "message": "Create Deal"
+  },
+  "deals_manage_stores": {
+    "message": "Manage Stores"
+  },
+  "deals_no_results_found": {
+    "message": "No deals found."
+  },
+  "delete": {
+    "message": "Delete"
+  },
+  "description": {
+    "message": "Description"
+  },
+  "dining": {
+    "message": "Dining"
+  },
+  "done": {
+    "message": "Done"
+  },
+  "download": {
+    "message": "Download"
+  },
+  "downloads": {
+    "message": "Downloads"
+  },
+  "download_csv": {
+    "message": "Download Assessment"
+  },
+  "due_date": {
+    "message": "Due Date"
+  },
+  "duplicate_entry": {
+    "message": "There is already a user with that email address."
+  },
+  "duration": {
+    "message": "Dates",
+    "description": "Manage > Orientation > View Programs"
+  },
+  "edit": {
+    "message": "Edit"
+  },
+  "email": {
+    "message": "Email"
+  },
+  "email_does_not_exist": {
+    "message": "There is no user with that login information.",
+    "description": "Lost password view..."
+  },
+  "emergency": {
+    "message": "Emergency"
+  },
+  "employer": {
+    "message": "Employer"
+  },
+  "employers_create_employer": {
+    "message": "Create Employer"
+  },
+  "employers_create_modal_title": {
+    "message": "New Employer"
+  },
+  "employers_delete": {
+    "message": "Delete Employer"
+  },
+  "employers_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "employers_edit_employer": {
+    "message": "Edit Employer"
+  },
+  "employers_manage_employer": {
+    "message": "Manage Employers"
+  },
+  "employers_new_employer": {
+    "message": "---"
+  },
+  "employers_no_results_found": {
+    "message": "No employers found"
+  },
+  "employer_all_employers": {
+    "message": "All employers"
+  },
+  "employer_name": {
+    "message": "Employer Name"
+  },
+  "ended": {
+    "message": "End Date:"
+  },
+  "ends": {
+    "message": "End Date"
+  },
+  "end_date": {
+    "message": "End Date"
+  },
+  "engagement": {
+    "message": "Engagement"
+  },
+  "error_allow_local_storage_to_continue": {
+    "message": "Your browser does not allow cookies.  Enable cookies in your browser to continue."
+  },
+  "error_file_is_too_big": {
+    "message": "File too Big"
+  },
+  "error_fill_out_marked_fields": {
+    "message": "Please fill out the marked fields"
+  },
+  "error_invalid_extension": {
+    "message": "Invalid Extension"
+  },
+  "error_no_hosts_found_help": {
+    "message": "You do not have sufficient permissions to filter the list of events by host."
+  },
+  "event": {
+    "message": "Event"
+  },
+  "events": {
+    "message": "Events"
+  },
+  "events_attendance_feedback": {
+    "message": "Feedback"
+  },
+  "events_attendance_manager": {
+    "message": "Att. Manager"
+  },
+  "events_attendance_manager_full": {
+    "message": "Attendance Manager"
+  },
+  "events_attendance_manager_tooltip": {
+    "message": "Any valid email address.  The Attendance Manager receives email instructions about setting up check-ins for the event."
+  },
+  "events_button_new": {
+    "message": "Create Event"
+  },
+  "events_checked_in_method": {
+    "message": "Method"
+  },
+  "events_create_heading": {
+    "message": "Create Event"
+  },
+  "events_default_question": {
+    "message": "Feedback Question"
+  },
+  "events_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "events_delete_modal_title": {
+    "message": "Delete Event"
+  },
+  "events_disabled": {
+    "message": "Disabled"
+  },
+  "events_edit_event": {
+    "message": "Edit Event"
+  },
+  "events_error_end_date_after_now": {
+    "message": "The event's end time must be in the future."
+  },
+  "events_error_end_date_before_start": {
+    "message": "The event's end time must be later than its start time."
+  },
+  "events_event_attendance": {
+    "message": "Assessment"
+  },
+  "events_event_banner": {
+    "message": "Event Banner"
+  },
+  "events_event_description": {
+    "message": "Event Description"
+  },
+  "events_event_details": {
+    "message": "Event Details"
+  },
+  "events_event_feedback_tooltip": {
+    "message": "Events with Feedback enabled use a push notification to gather student feedback, including a star rating and response to the feedback question."
+  },
+  "events_event_manager": {
+    "message": "Event Manager"
+  },
+  "events_event_manager_tooltip": {
+    "message": "Select a Host (a Club or Service) before you select an Event Manager.  The Event Manager receives emails related to checking in users, and assessment reports once the event is finished."
+  },
+  "events_event_name": {
+    "message": "Event Name"
+  },
+  "events_facebook_add_button": {
+    "message": "Create Link"
+  },
+  "events_facebook_heading": {
+    "message": "Import Events from Facebook"
+  },
+  "events_facebook_help": {
+    "message": "Provide the link to the Facebook event page (e.g., https://www.facebook.com/readyeducation/events/)."
+  },
+  "events_facebook_label_host": {
+    "message": "Select Host"
+  },
+  "events_facebook_label_link": {
+    "message": "Facebook Event Link"
+  },
+  "events_facebook_link_delete_modal_body": {
+    "message": "Are you sure you want to delete this link?"
+  },
+  "events_facebook_link_delete_modal_title": {
+    "message": "Delete Event Link"
+  },
+  "events_hosted_by": {
+    "message": "Hosted by"
+  },
+  "events_import_bulk_update": {
+    "message": "Bulk Update"
+  },
+  "events_import_csv_heading": {
+    "message": "Import Events from File"
+  },
+  "events_import_csv_sub_heading": {
+    "message": "File contains data for %s calendar event(s)"
+  },
+  "events_import_from_facebook": {
+    "message": "Import Events from Facebook"
+  },
+  "events_label_past_events": {
+    "message": "Past Events"
+  },
+  "events_label_upcoming_events": {
+    "message": "Upcoming Events"
+  },
+  "events_no_attendees": {
+    "message": "No Attendees"
+  },
+  "events_no_events_found": {
+    "message": "No events found"
+  },
+  "events_user_feedback": {
+    "message": "Feedback"
+  },
+  "event_enabled": {
+    "message": "Enabled"
+  },
+  "executive": {
+    "message": "Executive"
+  },
+  "feature_name_banner": {
+    "message": "Banner"
+  },
+  "feedback": {
+    "message": "Feedback"
+  },
+  "feedback_form_event_help": {
+    "message": "Please click a star to rate the event"
+  },
+  "feedback_form_placeholder": {
+    "message": "Tells us what you think"
+  },
+  "feedback_form_service_help": {
+    "message": "Please click a star to rate the service"
+  },
+  "feedback_label_event_feedback": {
+    "message": "Event Feedback",
+    "description": "Single Event \r\nhttps://projects.invisionapp.com/d/main#/console/10688612/232187816/preview"
+  },
+  "feedback_label_rate_event": {
+    "message": "Rate Event"
+  },
+  "feedback_label_rate_service": {
+    "message": "Rate Service"
+  },
+  "feedback_label_service_feedback": {
+    "message": "Service Feedback",
+    "description": "Same as above"
+  },
+  "feedback_thank_you": {
+    "message": "Thanks for your feedback"
+  },
+  "feeds": {
+    "message": "Walls"
+  },
+  "feeds_all_posts": {
+    "message": "All Posts"
+  },
+  "feeds_approve_comment": {
+    "message": "Approve Comment"
+  },
+  "feeds_approve_comment_modal_body": {
+    "message": "Are you sure you want to approve this post?"
+  },
+  "feeds_approve_comment_modal_title": {
+    "message": "Approve Comment"
+  },
+  "feeds_approve_post": {
+    "message": "Approve Post"
+  },
+  "feeds_approve_post_modal_body": {
+    "message": "Are you sure you want to approve this post?"
+  },
+  "feeds_approve_post_modal_title": {
+    "message": "Approve Post"
+  },
+  "feeds_can_comment": {
+    "message": "Who can comment?"
+  },
+  "feeds_can_post": {
+    "message": "Who can post?"
+  },
+  "feeds_card_header_deleted_user": {
+    "message": "Deleted user"
+  },
+  "feeds_cc_admins": {
+    "message": "Campus Cloud Admins"
+  },
+  "feeds_club_members": {
+    "message": "Club Members"
+  },
+  "feeds_delete_comment": {
+    "message": "Delete Comment"
+  },
+  "feeds_delete_comment_modal_body": {
+    "message": "Are you sure you want to delete this comment?"
+  },
+  "feeds_delete_comment_modal_title": {
+    "message": "Delete Comment"
+  },
+  "feeds_delete_post": {
+    "message": "Delete Post"
+  },
+  "feeds_delete_post_modal_body": {
+    "message": "Are you sure you want to delete this post?"
+  },
+  "feeds_delete_post_modal_title": {
+    "message": "Delete Post"
+  },
+  "feeds_error_wall_is_disabled": {
+    "message": "To enable posting, change the settings for this wall."
+  },
+  "feeds_everyone": {
+    "message": "Club Members"
+  },
+  "feeds_flagged_posts": {
+    "message": "Flagged Posts"
+  },
+  "feeds_input_placeholder": {
+    "message": "Add some text to this post...."
+  },
+  "feeds_move_post": {
+    "message": "Move Post"
+  },
+  "feeds_move_post_from": {
+    "message": "Move post from"
+  },
+  "feeds_no_one": {
+    "message": "No One"
+  },
+  "feeds_posted_in": {
+    "message": "posted in"
+  },
+  "feeds_post_as": {
+    "message": "Select a Host"
+  },
+  "feeds_post_to": {
+    "message": "Post to"
+  },
+  "feeds_removed_posts": {
+    "message": "Removed Posts"
+  },
+  "feeds_team_members": {
+    "message": "Campus Cloud Admins"
+  },
+  "feeds_wall_name": {
+    "message": "Club Name"
+  },
+  "feeds_wall_settings_modal_title": {
+    "message": "Club Wall Settings"
+  },
+  "first_name": {
+    "message": "First Name"
+  },
+  "for": {
+    "message": "for"
+  },
+  "from": {
+    "message": "From"
+  },
+  "ga_onboarding_date": {
+    "message": "February 12, 2018"
+  },
+  "ga_onboarding_text_1": {
+    "message": "Campus Cloud is changing. We're making it a faster, powerful and smoother experience for you."
+  },
+  "ga_onboarding_text_2": {
+    "message": "The new Campus Cloud will become the default experience on"
+  },
+  "ga_onboarding_text_3": {
+    "message": "and the older version will no longer be accessible."
+  },
+  "ga_onboarding_text_4": {
+    "message": "You can learn all about the new Campus Cloud with guides, how-tos and troubleshooting in our new"
+  },
+  "ga_onboarding_text_5": {
+    "message": "If you have any questions, comments or feedback, we'd love to hear from you:"
+  },
+  "hello": {
+    "message": "Hello"
+  },
+  "help_desk": {
+    "message": "Help Desk"
+  },
+  "hide": {
+    "message": "Hide"
+  },
+  "host": {
+    "message": "Host"
+  },
+  "import": {
+    "message": "Import"
+  },
+  "import_from_csv": {
+    "message": "Import from CSV"
+  },
+  "in": {
+    "message": "in"
+  },
+  "info": {
+    "message": "Info"
+  },
+  "instructions": {
+    "message": "Instructions"
+  },
+  "invite_team_members": {
+    "message": "Create New Team Member"
+  },
+  "jobs": {
+    "message": "Jobs"
+  },
+  "jobs_application_deadline": {
+    "message": "Application Deadline"
+  },
+  "jobs_create_job": {
+    "message": "Create Job"
+  },
+  "jobs_delete": {
+    "message": "Delete Job"
+  },
+  "jobs_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "jobs_desired_study_masters": {
+    "message": "Masters"
+  },
+  "jobs_desired_study_phd": {
+    "message": "PhD"
+  },
+  "jobs_desired_study_ug_y1": {
+    "message": "Undergrad Y1"
+  },
+  "jobs_desired_study_ug_y2": {
+    "message": "Undergrad Y2"
+  },
+  "jobs_desired_study_ug_y3": {
+    "message": "Undergrad Y3"
+  },
+  "jobs_desired_study_ug_y4": {
+    "message": "Undergrad Y4"
+  },
+  "jobs_desired_year_of_study": {
+    "message": "Desired Year of Study"
+  },
+  "jobs_employer_details": {
+    "message": "Employer Details"
+  },
+  "jobs_error_end_date_after_now": {
+    "message": "The end date must be in the future."
+  },
+  "jobs_error_end_date_before_start": {
+    "message": "The posting end date cannot be before the start date."
+  },
+  "jobs_existing_employer": {
+    "message": "Existing Employer"
+  },
+  "jobs_how_to_apply": {
+    "message": "How to Apply"
+  },
+  "jobs_job_details": {
+    "message": "Job Details"
+  },
+  "jobs_job_edit": {
+    "message": "Edit Job"
+  },
+  "jobs_job_start_date": {
+    "message": "Job Start Date"
+  },
+  "jobs_job_title": {
+    "message": "Job Title"
+  },
+  "jobs_job_type": {
+    "message": "Job type"
+  },
+  "jobs_job_type_for_credit": {
+    "message": "For Credit"
+  },
+  "jobs_job_type_full_time": {
+    "message": "Full-time"
+  },
+  "jobs_job_type_internship": {
+    "message": "Internship"
+  },
+  "jobs_job_type_on_campus": {
+    "message": "On-campus"
+  },
+  "jobs_job_type_part_time": {
+    "message": "Part-time"
+  },
+  "jobs_job_type_summer": {
+    "message": "Summer"
+  },
+  "jobs_job_type_volunteer": {
+    "message": "Volunteer"
+  },
+  "jobs_manage_employer": {
+    "message": "Manage Employers"
+  },
+  "jobs_new_employer": {
+    "message": "New Employer"
+  },
+  "jobs_no_results_found": {
+    "message": "No jobs found"
+  },
+  "jobs_posting_end": {
+    "message": "Posting End"
+  },
+  "jobs_posting_end_date": {
+    "message": "Posting End"
+  },
+  "jobs_posting_start": {
+    "message": "Posting Start"
+  },
+  "jobs_posting_start_date": {
+    "message": "Posting Start"
+  },
+  "jobs_select_employer": {
+    "message": "Select Employer"
+  },
+  "last_name": {
+    "message": "Last Name"
+  },
+  "leader": {
+    "message": "Leader",
+    "description": "Manage > Orientation > Program > view program details \r\nAdd Member > Member Type dropdown"
+  },
+  "learn_more": {
+    "message": "Learn more",
+    "description": "Manage > Links > Create Link"
+  },
+  "links": {
+    "message": "Links"
+  },
+  "links_add_modal_title": {
+    "message": "Create Link"
+  },
+  "links_button_new": {
+    "message": "Create Link"
+  },
+  "links_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "links_delete_modal_title": {
+    "message": "Delete Link"
+  },
+  "links_edit_modal_title": {
+    "message": "Name"
+  },
+  "links_label_link_name": {
+    "message": "Name"
+  },
+  "links_label_link_url": {
+    "message": "URL"
+  },
+  "links_no_results_found": {
+    "message": "No Links found"
+  },
+  "link_label_description": {
+    "message": "Description"
+  },
+  "link_label_link_banner": {
+    "message": "Image"
+  },
+  "lists": {
+    "message": "Audiences"
+  },
+  "lists_button_create": {
+    "message": "Create Audience"
+  },
+  "lists_create_modal_title": {
+    "message": "Create Audience"
+  },
+  "lists_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "lists_delete_modal_title": {
+    "message": "Delete Audience"
+  },
+  "lists_edit_modal_title": {
+    "message": "Edit List"
+  },
+  "lists_error_template_conflict": {
+    "message": "This audience is being used in a notification template. To delete this audience, first delete all templates addressed to it, then try again."
+  },
+  "lists_label_list_description": {
+    "message": "Description"
+  },
+  "lists_label_list_name": {
+    "message": "Name"
+  },
+  "lists_no_results_found": {
+    "message": "No audiences found"
+  },
+  "lists_number_of_users": {
+    "message": "Number of Users"
+  },
+  "location": {
+    "message": "Location"
+  },
+  "locations": {
+    "message": "Locations"
+  },
+  "locations_btn_create": {
+    "message": "Create Location"
+  },
+  "locations_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "locations_delete_modal_title": {
+    "message": "Delete Location"
+  },
+  "locations_edit_modal_title": {
+    "message": "Edit Location"
+  },
+  "locations_label_acronym": {
+    "message": "Acronym"
+  },
+  "login": {
+    "message": "Login",
+    "description": "is the route name\r\nhttps://ccstaging.oohlalamobile.com/#/lost-password"
+  },
+  "logout": {
+    "message": "Logout"
+  },
+  "lost_password": {
+    "message": "Lost Password"
+  },
+  "lost_password_question": {
+    "message": "Lost your password?"
+  },
+  "lost_password_success": {
+    "message": "Thanks! Please check %s for a link to reset your password."
+  },
+  "manage": {
+    "message": "Manage"
+  },
+  "manage_create_service_category_tooltip": {
+    "message": "Select a category for your service.  Categories help filter and group content in the campus app."
+  },
+  "manage_create_service_feedback_tooltip": {
+    "message": "Services with Feedback enabled use a push notification to gather student feedback, including a star rating and response to the feedback question."
+  },
+  "manage_team_members": {
+    "message": "Team Members"
+  },
+  "maps": {
+    "message": "Locations"
+  },
+  "member": {
+    "message": "Member"
+  },
+  "members": {
+    "message": "Members"
+  },
+  "message": {
+    "message": "Message"
+  },
+  "message_action": {
+    "message": "Message"
+  },
+  "message_file_upload_error": {
+    "message": "Something went wrong, please try again"
+  },
+  "message_file_upload_success": {
+    "message": "File uploaded successfully"
+  },
+  "message_noun": {
+    "message": "Message"
+  },
+  "more": {
+    "message": "More"
+  },
+  "move": {
+    "message": "Move"
+  },
+  "name": {
+    "message": "Name"
+  },
+  "new_audience_tab_title": {
+    "message": "New Audience"
+  },
+  "new_password": {
+    "message": "New Password"
+  },
+  "new_tile": {
+    "message": "New Tile"
+  },
+  "next": {
+    "message": "Next"
+  },
+  "no": {
+    "message": "No"
+  },
+  "notify": {
+    "message": "Notify"
+  },
+  "notify_announcement_recipient": {
+    "message": "Recipients"
+  },
+  "notify_announcement_template_to_tooltip": {
+    "message": "Notifications can be sent to app users, which you can group together into Audiences.  For more info:"
+  },
+  "no_admins_found": {
+    "message": "No Admins found"
+  },
+  "no_hosts_available": {
+    "message": "No Hosts Available"
+  },
+  "no_one": {
+    "message": "No one"
+  },
+  "no_results": {
+    "message": "No Results"
+  },
+  "ok": {
+    "message": "Ok"
+  },
+  "optional": {
+    "message": "Optional"
+  },
+  "orientation": {
+    "message": "Orientation"
+  },
+  "orientation_create_program": {
+    "message": "Create Program"
+  },
+  "orientation_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "orientation_delete_program": {
+    "message": "Delete Program"
+  },
+  "orientation_duplicate_program": {
+    "message": "Duplicate Program"
+  },
+  "orientation_edit_program": {
+    "message": "Edit Program"
+  },
+  "orientation_enable_membership": {
+    "message": "Program membership"
+  },
+  "orientation_enable_membership_description": {
+    "message": "Creates an orientation wall where members can post messages."
+  },
+  "orientation_feeds_wall_settings_modal_title": {
+    "message": "Orientation Wall Settings",
+    "description": "Manage > Orientation > choose a program > Walls > Settings"
+  },
+  "orientation_no_results_found": {
+    "message": "No Programs found"
+  },
+  "orientation_wall_name": {
+    "message": "Program Name",
+    "description": "Manage > Orientation > choose program > Settings"
+  },
+  "password": {
+    "message": "Password"
+  },
+  "passwords_do_not_match": {
+    "message": "Passwords do not match"
+  },
+  "password_requirements_length": {
+    "message": "Your password must contain at least 6 characters."
+  },
+  "password_requirements_special_char": {
+    "message": "For added security, use numbers, letters and special characters such as @, #, $, &, etc"
+  },
+  "password_reset_success": {
+    "message": "Password saved. Redirecting you to the login page"
+  },
+  "pending": {
+    "message": "Pending"
+  },
+  "phone": {
+    "message": "Phone"
+  },
+  "phone_number": {
+    "message": "Phone Number"
+  },
+  "profile": {
+    "message": "Profile"
+  },
+  "qr_code": {
+    "message": "QR Code"
+  },
+  "rating": {
+    "message": "Rating"
+  },
+  "ratings": {
+    "message": "Ratings"
+  },
+  "recipient": {
+    "message": "To",
+    "description": "English To, French Destinataire "
+  },
+  "registrations": {
+    "message": "Registrations"
+  },
+  "regular": {
+    "message": "Regular",
+    "description": "Announcement Type"
+  },
+  "release_notes_july_10_item_one": {
+    "message": "Administrators can send Notifications to students' devices"
+  },
+  "release_notes_july_10_item_three": {
+    "message": "Bug fixes and usability improvements"
+  },
+  "release_notes_july_10_item_two": {
+    "message": "Administrators can create lists of users, to use in sending Notifications."
+  },
+  "release_notes_july_10_title": {
+    "message": "New as of July 10, 2017:"
+  },
+  "release_notes_june_2_item_one": {
+    "message": "Administrators can create Clubs and Groups"
+  },
+  "release_notes_june_2_title": {
+    "message": "New as of June 2, 2017:"
+  },
+  "release_notes_p_four": {
+    "message": "Ready Education"
+  },
+  "release_notes_p_two": {
+    "message": "Should you wish to return to the old Campus Cloud, you can always do so by clicking on the banner at the top of the screen. If you wish to provide any feedback on your experience with the new Campus Cloud, please contact us at "
+  },
+  "release_notes_sept_6_item_one": {
+    "message": "Student comments are now included in downloaded Assessment data"
+  },
+  "release_notes_sept_6_item_two": {
+    "message": "Notifications can be created and sent from Templates"
+  },
+  "release_notes_sept_6_title": {
+    "message": "New as of September 6, 2017:"
+  },
+  "release_notes_title": {
+    "message": "Welcome to the brand new Campus Cloud!"
+  },
+  "remove": {
+    "message": "Remove"
+  },
+  "reply_verb": {
+    "message": "Comment"
+  },
+  "response": {
+    "message": "Response"
+  },
+  "responses": {
+    "message": "Responses"
+  },
+  "results": {
+    "message": "Results"
+  },
+  "return_to_campus_cloud": {
+    "message": "Return to Campus Cloud"
+  },
+  "return_to_old_control_panel": {
+    "message": "Switch back to old version"
+  },
+  "reupload": {
+    "message": "Re-upload"
+  },
+  "room": {
+    "message": "Room"
+  },
+  "rsvp": {
+    "message": "RSVP"
+  },
+  "save": {
+    "message": "Save"
+  },
+  "saved_audience_tab_title": {
+    "message": "Saved Audiences"
+  },
+  "save_audience_modal_title": {
+    "message": "Save Audience"
+  },
+  "save_changes": {
+    "message": "Save Changes"
+  },
+  "search": {
+    "message": "Search"
+  },
+  "select_category": {
+    "message": "Select Category"
+  },
+  "select_filter": {
+    "message": "Select Filter"
+  },
+  "select_filter_value": {
+    "message": "Select Value"
+  },
+  "select_host": {
+    "message": "Select Host"
+  },
+  "send": {
+    "message": "Send"
+  },
+  "sent": {
+    "message": "Date Sent"
+  },
+  "service": {
+    "message": "Service"
+  },
+  "services": {
+    "message": "Services"
+  },
+  "services_admin": {
+    "message": "Admin"
+  },
+  "services_button_add_service_provider": {
+    "message": "Create Service Provider"
+  },
+  "services_button_create": {
+    "message": "Create Service"
+  },
+  "services_button_download_assessment_data": {
+    "message": "Download Assessment"
+  },
+  "services_button_download_attendance_data": {
+    "message": "Download Assessment"
+  },
+  "services_create_button_create": {
+    "message": "Create Service"
+  },
+  "services_create_heading": {
+    "message": "Create Service"
+  },
+  "services_default_feedback_question": {
+    "message": "How did you like the service?"
+  },
+  "services_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "services_delete_modal_title": {
+    "message": "Delete Service"
+  },
+  "services_disabled": {
+    "message": "Disabled"
+  },
+  "services_edit_heading": {
+    "message": "Edit Service"
+  },
+  "services_imports_heading": {
+    "message": "Import Services"
+  },
+  "services_import_button": {
+    "message": "Import Services"
+  },
+  "services_import_items_to_import": {
+    "message": "File contains data for %s service(s)."
+  },
+  "services_label_all_checkin_methods": {
+    "message": "Method"
+  },
+  "services_label_attendee_name": {
+    "message": "Name"
+  },
+  "services_label_banner": {
+    "message": "Service Banner"
+  },
+  "services_label_checked_in_method": {
+    "message": "Method"
+  },
+  "services_label_checkin_time": {
+    "message": "Check-in"
+  },
+  "services_label_default_question": {
+    "message": "Feedback Question"
+  },
+  "services_label_description": {
+    "message": "Description"
+  },
+  "services_label_details": {
+    "message": "Service Details"
+  },
+  "services_label_enable_service_feedback": {
+    "message": "Feedback"
+  },
+  "services_label_name": {
+    "message": "Service Name"
+  },
+  "services_label_service_assessment": {
+    "message": "Service Assessment",
+    "description": "Singular\r\nhttps://ccstaging.oohlalamobile.com/#/manage/services/create"
+  },
+  "services_no_service_found": {
+    "message": "No services found"
+  },
+  "services_providers_no_results": {
+    "message": "There are no service providers for this service.  Use \"Create Service Provider\" to create one. \n\nService Providers can use Assessment to take attendance and gather student feedback."
+  },
+  "services_provider_button_add_another": {
+    "message": "Add another Service Provider"
+  },
+  "services_provider_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "services_provider_delete_modal_title": {
+    "message": "Delete Service Provider"
+  },
+  "services_provider_label_add_service_provider": {
+    "message": "Create Service Provider"
+  },
+  "services_provider_label_default_question": {
+    "message": "Feedback Question"
+  },
+  "services_provider_label_edit_service_provider": {
+    "message": "Edit Service Provider"
+  },
+  "services_provider_search_tootlip": {
+    "message": "Search..."
+  },
+  "services_repeat_visits": {
+    "message": "Repeat Visits"
+  },
+  "services_unique_visits": {
+    "message": "Unique Visits"
+  },
+  "services_visits": {
+    "message": "Visits"
+  },
+  "service_enabled": {
+    "message": "Enabled"
+  },
+  "service_or_service_provider_error_not_found": {
+    "message": "The service provider does not exist.",
+    "description": "Create a service with assessment,\r\nAdd a service provider to that service\r\nOpen the ckeckin view on a new tab\r\nDelete the Service provider\r\nRefresh the checkin view and check your console"
+  },
+  "service_provider": {
+    "message": "Service Provider"
+  },
+  "service_provider_name": {
+    "message": "Service Provider Name"
+  },
+  "show": {
+    "message": "Show"
+  },
+  "something_went_wrong": {
+    "message": "Something went wrong"
+  },
+  "started": {
+    "message": "Start Date"
+  },
+  "starts": {
+    "message": "Start Date"
+  },
+  "start_date": {
+    "message": "Start Date"
+  },
+  "stores_create_modal_title": {
+    "message": "Create Store"
+  },
+  "stores_create_store": {
+    "message": "Create Store"
+  },
+  "stores_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "stores_delete_modal_title": {
+    "message": "Delete Store"
+  },
+  "stores_edit_modal_title": {
+    "message": "Edit Store"
+  },
+  "stores_manage_store": {
+    "message": "Manage Stores"
+  },
+  "stores_no_results_found": {
+    "message": "No stores found"
+  },
+  "store_name": {
+    "message": "Store Name"
+  },
+  "students": {
+    "message": "Students"
+  },
+  "student_engagements": {
+    "message": "Student Engagement",
+    "description": "Graph title\r\nhttps://ccstaging.oohlalamobile.com/#/assess/dashboard?engagement=all&for=all_students&range=last_week"
+  },
+  "student_feedback": {
+    "message": "Feedback"
+  },
+  "student_id": {
+    "message": "Student ID"
+  },
+  "subject": {
+    "message": "Subject"
+  },
+  "team_member_disabled": {
+    "message": "Disabled"
+  },
+  "team_settings": {
+    "message": "Team Settings"
+  },
+  "templates": {
+    "message": "Templates"
+  },
+  "templates_button_new": {
+    "message": "Create Template"
+  },
+  "templates_crate_label_template_name": {
+    "message": "Template Name"
+  },
+  "templates_crate_modal_title": {
+    "message": "Create Template"
+  },
+  "templates_create_label_all_students": {
+    "message": "Announce to all students"
+  },
+  "templates_delete_modal_body": {
+    "message": "Are you sure you want to delete this template?"
+  },
+  "templates_delete_modal_title": {
+    "message": "Delete Template"
+  },
+  "temporarily_disabled": {
+    "message": "Will be implemented in a future app release",
+    "description": "orientation event > edit > assessment"
+  },
+  "title": {
+    "message": "Title"
+  },
+  "to": {
+    "message": "To"
+  },
+  "to-dos": {
+    "message": "To-do's"
+  },
+  "todos_create": {
+    "message": "Create To-do"
+  },
+  "todos_delete": {
+    "message": "Delete To-do"
+  },
+  "todos_edit": {
+    "message": "Edit To-do",
+    "description": "Orientation > to-do > edit"
+  },
+  "todos_new": {
+    "message": "Create To-do"
+  },
+  "todos_no_results_found": {
+    "message": "No to-do's found",
+    "description": "Orientation Calendar > To-do's > no results"
+  },
+  "tooltip_more_text": {
+    "message": "(%s) More"
+  },
+  "total_ratings": {
+    "message": "Ratings"
+  },
+  "t_admin_invite_account_error": {
+    "message": "Activation failed, the account does not exist, please get a new invitation link"
+  },
+  "t_admin_invite_already_activated_error": {
+    "message": "Your account has already been activated, click below to login"
+  },
+  "t_admin_invite_notify_permission_tooltip": {
+    "message": "Sending notifications requires access to a host (club, service or athletic). Please add at least one permission in order to enable notify permissions."
+  },
+  "t_admin_invite_studio_limited_tooltip": {
+    "message": "Full access to Studio requires permission to Athletics, Events, Clubs, Services, Calendar and Orientation. Your access to add resources will be limited without those permissions."
+  },
+  "t_announcements_list_external_source_tooltip": {
+    "message": "This announcement was integrated. It will be automatically updated from the integration."
+  },
+  "t_announcement_type": {
+    "message": "Announcement Type"
+  },
+  "t_assess_all_orientations": {
+    "message": "All Orientation Programs"
+  },
+  "t_assess_chart_tooltip_label_engagements": {
+    "message": "Engagement(s)"
+  },
+  "t_assess_checkin_method": {
+    "message": "Check-in Method"
+  },
+  "t_assess_checkin_time_in": {
+    "message": "Check-in Time"
+  },
+  "t_assess_checkout_date": {
+    "message": "Check-out Date"
+  },
+  "t_assess_checkout_time_out": {
+    "message": "Check-out Time"
+  },
+  "t_assess_email": {
+    "message": "Email"
+  },
+  "t_assess_first_name": {
+    "message": "First Name"
+  },
+  "t_assess_last_name": {
+    "message": "Last Name"
+  },
+  "t_assess_list_event_names": {
+    "message": "List of Events Attended"
+  },
+  "t_assess_list_service_names": {
+    "message": "List of Services Visited"
+  },
+  "t_assess_no_orientation_data": {
+    "message": "No Orientation Data"
+  },
+  "t_assess_no_orientation_data_help": {
+    "message": "To see Orientation data, use the Engagement filter."
+  },
+  "t_assess_number_events": {
+    "message": "Number of Events"
+  },
+  "t_assess_number_services": {
+    "message": "Number of Services"
+  },
+  "t_assess_orientation_programs": {
+    "message": "Orientation Programs"
+  },
+  "t_assess_students_engagements": {
+    "message": "Engagements"
+  },
+  "t_assess_time_spent": {
+    "message": "Time Spent"
+  },
+  "t_assess_time_spent_seconds": {
+    "message": "Time Spent (Seconds)"
+  },
+  "t_assess_top_orientation_programs": {
+    "message": "Top Programs"
+  },
+  "t_assess_total_engagement": {
+    "message": "Total Engagement (Number of Events + Number of Services)"
+  },
+  "t_assess_total_orientation_programs": {
+    "message": "Total Programs"
+  },
+  "t_assess_total_orientation_programs_assessed": {
+    "message": "Programs Assessed"
+  },
+  "t_audience_dynamic_integration_disabled": {
+    "message": "To enable this feature, please contact your Customer Success manager."
+  },
+  "t_audience_save_modal_button_submit": {
+    "message": "Save"
+  },
+  "t_categories_can_not_be_delete": {
+    "message": "Categories with locations cannot be deleted."
+  },
+  "t_categories_icon_color_required": {
+    "message": "Map pin icon and color are required fields."
+  },
+  "t_categories_map_pin_color": {
+    "message": "Map Pin Color"
+  },
+  "t_categories_map_pin_icon": {
+    "message": "Map Pin Icon"
+  },
+  "t_category_successfully_created": {
+    "message": "Category successfully created"
+  },
+  "t_category_successfully_deleted": {
+    "message": "Category successfully deleted"
+  },
+  "t_category_successfully_edited": {
+    "message": "Category successfully edited"
+  },
+  "t_changes_saved_ok": {
+    "message": "Changes saved successfully"
+  },
+  "t_checkin_pdf_download": {
+    "message": "Download it if you don't have it"
+  },
+  "t_checkin_pdf_event_assessment": {
+    "message": "with Event Assessment"
+  },
+  "t_checkin_pdf_give_feedback": {
+    "message": "Give Feedback"
+  },
+  "t_checkin_pdf_open_app": {
+    "message": "Open App"
+  },
+  "t_checkin_pdf_scan": {
+    "message": "Tap Scan"
+  },
+  "t_checkin_pdf_scan_instructions": {
+    "message": "Student Scan Instructions"
+  },
+  "t_checkin_pdf_scan_qr": {
+    "message": "Scan the QR Code"
+  },
+  "t_checkin_pdf_service_assessment": {
+    "message": "with Service Assessment"
+  },
+  "t_checkin_pdf_title": {
+    "message": "Scan and provide feedback on the %s app"
+  },
+  "t_checkin_pdf_view_feedback": {
+    "message": "View Feedback on your Campus Cloud Dashboard"
+  },
+  "t_check_in_date_placeholder_text": {
+    "message": "Now"
+  },
+  "t_choose_a_file": {
+    "message": "Choose a file"
+  },
+  "t_clubs_admin": {
+    "message": "Admin"
+  },
+  "t_customise_personas": {
+    "message": "App Experiences"
+  },
+  "t_dashboard_build_experience": {
+    "message": "Build App Experience"
+  },
+  "t_dashboard_chart_tooltip_label_downloads": {
+    "message": "Downloads"
+  },
+  "t_dashboard_chart_tooltip_label_registrations": {
+    "message": "Registrations"
+  },
+  "t_dashboard_top_orientation": {
+    "message": "Top Orientation Programs"
+  },
+  "t_dashboard_welcome": {
+    "message": "Welcome to Campus Cloud"
+  },
+  "t_dashboard_welcome_subheader": {
+    "message": "You can measure your app and content engagement after launching your app experience"
+  },
+  "t_datepicker_clear": {
+    "message": "Clear"
+  },
+  "t_deals_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_deals_delete_modal_title": {
+    "message": "Delete Deal"
+  },
+  "t_deals_form_deal_banner": {
+    "message": "Upload your image"
+  },
+  "t_deals_form_deal_details": {
+    "message": "Deal Details"
+  },
+  "t_deals_form_deal_title": {
+    "message": "Title"
+  },
+  "t_deals_form_dropdown_label_select_store": {
+    "message": "Select Store"
+  },
+  "t_deals_form_error_end_date_after_now": {
+    "message": "The end date must be in the future."
+  },
+  "t_deals_form_error_end_date_before_start": {
+    "message": "The posting end date cannot be before the start date."
+  },
+  "t_deals_form_heading_create_deal": {
+    "message": "Create Deal"
+  },
+  "t_deals_form_heading_edit_deal": {
+    "message": "Edit Deal"
+  },
+  "t_deals_form_posting_end_date": {
+    "message": "Valid Until"
+  },
+  "t_deals_form_posting_start_date": {
+    "message": "Valid From"
+  },
+  "t_deals_form_store_details": {
+    "message": "Store Details"
+  },
+  "t_deals_form_tab_existing_store": {
+    "message": "Existing Store"
+  },
+  "t_deals_form_tab_new_store": {
+    "message": "Create Store"
+  },
+  "t_deals_list_dropdown_label_all_stores": {
+    "message": "All Stores"
+  },
+  "t_deals_list_dropdown_label_select_store": {
+    "message": "Select Store"
+  },
+  "t_deals_list_grid_column_store": {
+    "message": "Store"
+  },
+  "t_deals_ongoing": {
+    "message": "Ongoing",
+    "description": "Indicates that a deal is posted without an end date"
+  },
+  "t_dining_create_dining": {
+    "message": "Create Dining"
+  },
+  "t_dining_delete_modal_title": {
+    "message": "Delete Dining"
+  },
+  "t_dining_dietary_notes": {
+    "message": "Dietary Notes"
+  },
+  "t_dining_dining_details": {
+    "message": "Dining Details"
+  },
+  "t_dining_edit_dining": {
+    "message": "Edit Dining"
+  },
+  "t_dining_form_add_meal": {
+    "message": "+ Add Meal"
+  },
+  "t_dining_hours": {
+    "message": "Dining Hours"
+  },
+  "t_dining_no_record_found": {
+    "message": "No dining found..."
+  },
+  "t_error_category_associated_to_location": {
+    "message": "This category is associated to a location."
+  },
+  "t_events_assessment_add_checkin_modal_title": {
+    "message": "Check-in"
+  },
+  "t_events_assessment_add_check_in": {
+    "message": "Add Check-in"
+  },
+  "t_events_assessment_check_in_and_checkout": {
+    "message": "Check-in & Check-out"
+  },
+  "t_events_assessment_check_in_only": {
+    "message": "Check-in Only"
+  },
+  "t_events_assessment_disable_qr_check_in": {
+    "message": "Disable QR Code"
+  },
+  "t_events_assessment_enable_qr_check_in": {
+    "message": "Enable QR Code"
+  },
+  "t_events_assessment_message_attendees": {
+    "message": "Message Attendees"
+  },
+  "t_events_assessment_no_check_in": {
+    "message": "No Check-in"
+  },
+  "t_events_assessment_qr_enabled_no": {
+    "message": "Inactive"
+  },
+  "t_events_assessment_qr_enabled_yes": {
+    "message": "Active"
+  },
+  "t_events_attendance_add_check_in_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_events_attendance_add_check_in_delete_modal_title": {
+    "message": "Delete Check-in"
+  },
+  "t_events_attendance_add_check_in_error_check_in_time_after_now": {
+    "message": "Check-in time must be in future."
+  },
+  "t_events_attendance_add_check_in_error_check_out_time_after_check_in": {
+    "message": "Check-out time must be later than check-in time."
+  },
+  "t_events_attendance_add_check_in_error_fill_out_all_fields": {
+    "message": "Please fill out the marked fields"
+  },
+  "t_events_attendance_add_edit_check_in_check_in_time": {
+    "message": "Check-in Time"
+  },
+  "t_events_attendance_add_edit_check_in_check_out_time": {
+    "message": "Check-out Time"
+  },
+  "t_events_attendance_add_edit_check_in_email": {
+    "message": "Email"
+  },
+  "t_events_attendance_add_edit_check_in_first_name": {
+    "message": "First Name"
+  },
+  "t_events_attendance_add_edit_check_in_last_name": {
+    "message": "Last Name"
+  },
+  "t_events_attendance_no_permission_tooltip_text": {
+    "message": "Notify permission required"
+  },
+  "t_events_attendance_no_students_tooltip_text": {
+    "message": "There are no attendees to send a message to."
+  },
+  "t_events_attendance_type": {
+    "message": "Attendance Type"
+  },
+  "t_events_csv_column_check_in_date": {
+    "message": "Check-in Date"
+  },
+  "t_events_csv_column_check_out_date": {
+    "message": "Check-out Date"
+  },
+  "t_events_csv_column_email": {
+    "message": "Email"
+  },
+  "t_events_csv_column_feedback_question": {
+    "message": "Feedback Question"
+  },
+  "t_events_csv_column_first_name": {
+    "message": "First Name"
+  },
+  "t_events_csv_column_last_name": {
+    "message": "Last Name"
+  },
+  "t_events_csv_column_time_in": {
+    "message": "Check-in Time"
+  },
+  "t_events_csv_column_time_out": {
+    "message": "Check-out Time"
+  },
+  "t_events_csv_column_time_spent": {
+    "message": "Time Spent"
+  },
+  "t_events_csv_column_time_spent_seconds": {
+    "message": "Time Spent (Seconds)"
+  },
+  "t_events_default_feedback_question": {
+    "message": "How was your experience?"
+  },
+  "t_events_event_attendance_type_tooltip": {
+    "message": "\"Check-in\" records an attendee's name and email, and the time of the QR scan. \"Check-in & Check-out\" lets you scan attendees twice, and tracks start and finish time. Both options let you gather feedback."
+  },
+  "t_events_event_qr_code_tooltip": {
+    "message": "Make your event's QR code active to let students scan it, or you can deactivate the code."
+  },
+  "t_events_event_qr_enabled": {
+    "message": "QR Code"
+  },
+  "t_events_import_import_events": {
+    "message": "Import Events"
+  },
+  "t_events_import_upload_picture": {
+    "message": "Upload Image"
+  },
+  "t_events_list_external_source_tooltip": {
+    "message": "This event was integrated. It will be automatically updated from the integration."
+  },
+  "t_event_assessment_check_in_date": {
+    "message": "Check-in"
+  },
+  "t_event_assessment_check_out_date": {
+    "message": "Check-out"
+  },
+  "t_event_assessment_qr_code_disabled_success_message": {
+    "message": "QR Code successfully disabled"
+  },
+  "t_event_assessment_qr_code_enable_success_message": {
+    "message": "QR Code successfully enabled"
+  },
+  "t_event_assessment_web_checkin_page": {
+    "message": "Web Check-in"
+  },
+  "t_event_check_in_attendee_already_exist": {
+    "message": "This person has already checked in."
+  },
+  "t_external_checkin_already_checked_in": {
+    "message": "This person has already checked in."
+  },
+  "t_external_checkin_chechout": {
+    "message": "Check-out"
+  },
+  "t_external_checkin_method": {
+    "message": "Method"
+  },
+  "t_external_checkin_time": {
+    "message": "Check-in Time"
+  },
+  "t_external_check_in_bad_request_error": {
+    "message": "Error in the parameters"
+  },
+  "t_external_check_in_check_out_button": {
+    "message": "Check-out"
+  },
+  "t_external_check_in_check_out_modal_title": {
+    "message": "Check-out"
+  },
+  "t_external_check_in_check_out_time": {
+    "message": "Check-out Time"
+  },
+  "t_external_check_in_disable_manual_check_in": {
+    "message": "Web Check-in Disabled"
+  },
+  "t_external_check_in_disable_qr": {
+    "message": "QR Disabled"
+  },
+  "t_external_check_in_error_fill_out_all_fields": {
+    "message": "Please fill out the marked fields"
+  },
+  "t_external_check_in_forbidden_error": {
+    "message": "Cannot check user in to event as you do not have the proper privileges. "
+  },
+  "t_external_check_in_greater_than_checkout_error": {
+    "message": "Check-out time must be later than check-in time."
+  },
+  "t_external_check_in_not_found_error": {
+    "message": "The event cannot be found"
+  },
+  "t_integration_form_required_fields": {
+    "message": "Make sure your feed contains the required fields."
+  },
+  "t_integration_sync_button_int_not_ready_to_sync_tooltip": {
+    "message": "You can only manually sync your feed once per minute"
+  },
+  "t_integration_sync_button_int_running_tooltip": {
+    "message": "Integration in progress"
+  },
+  "t_jobs_ongoing": {
+    "message": "Ongoing",
+    "description": "Indicates that a job posting has no end date"
+  },
+  "t_latitude": {
+    "message": "Latitude"
+  },
+  "t_locations_category_create_category": {
+    "message": "Create Category"
+  },
+  "t_locations_category_type_select": {
+    "message": "Select Type"
+  },
+  "t_locations_create_location": {
+    "message": "Create Location"
+  },
+  "t_locations_edit_location": {
+    "message": "Edit Location"
+  },
+  "t_locations_link": {
+    "message": "Link"
+  },
+  "t_locations_link_label": {
+    "message": "Link Label"
+  },
+  "t_locations_location_details": {
+    "message": "Location Details"
+  },
+  "t_locations_manage_categories": {
+    "message": "Manage Categories"
+  },
+  "t_locations_no_location_found": {
+    "message": "No Locations Found"
+  },
+  "t_locations_no_record_found": {
+    "message": "No locations found..."
+  },
+  "t_locations_opening_hours": {
+    "message": "Opening Hours"
+  },
+  "t_locations_photo": {
+    "message": "Photo"
+  },
+  "t_location_categories_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_location_categories_delete_modal_title": {
+    "message": "Delete Category"
+  },
+  "t_location_category_type_building": {
+    "message": "Building"
+  },
+  "t_location_category_type_dining": {
+    "message": "Dining"
+  },
+  "t_location_category_type_location": {
+    "message": "Location"
+  },
+  "t_longitude": {
+    "message": "Longitude"
+  },
+  "t_members_no_results_found": {
+    "message": "No Members Found"
+  },
+  "t_notify_announcement_audiences_my_experiences": {
+    "message": "My Experiences"
+  },
+  "t_orientation_everyone": {
+    "message": "Event Members"
+  },
+  "t_personas": {
+    "message": "App Experiences"
+  },
+  "t_personas_button_list_create": {
+    "message": "Create Experience"
+  },
+  "t_personas_create_form_title": {
+    "message": "Experience Details"
+  },
+  "t_personas_create_header_title": {
+    "message": "Create Experience"
+  },
+  "t_personas_create_label_campus_security": {
+    "message": "Campus Security Service"
+  },
+  "t_personas_create_tile_heading_left": {
+    "message": "Appearance"
+  },
+  "t_personas_create_tile_heading_right": {
+    "message": "Content"
+  },
+  "t_personas_delete_error_last_persona": {
+    "message": "A school must have at least one experience enabled."
+  },
+  "t_personas_delete_error_persona_non_empty": {
+    "message": "Can not delete experience as it is in use by other users."
+  },
+  "t_personas_delete_error_users_associated": {
+    "message": "This experience has users associated, so you cannot delete it."
+  },
+  "t_personas_delete_guide_error_non_empty_category": {
+    "message": "To delete a section, delete all the tiles."
+  },
+  "t_personas_delete_tile_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_personas_delete_tile_modal_title": {
+    "message": "Delete Tile"
+  },
+  "t_personas_details_feature": {
+    "message": "Featured"
+  },
+  "t_personas_edit_delete_button": {
+    "message": "Delete Experience"
+  },
+  "t_personas_edit_error_customization_off": {
+    "message": "This school has not enabled campus guide customization"
+  },
+  "t_personas_edit_error_users_associated": {
+    "message": "This experience has users associated, so you cannot update its login requirements."
+  },
+  "t_personas_edit_form_title": {
+    "message": "Experience details"
+  },
+  "t_personas_edit_header_title": {
+    "message": "Edit Experience"
+  },
+  "t_personas_edit_label_campus_security": {
+    "message": "Campus Security Service"
+  },
+  "t_personas_edit_missing_resource": {
+    "message": "The resource associated with this tile was not found."
+  },
+  "t_personas_edit_tile_locked": {
+    "message": "To make changes to the content of this tile, reach out to your customer success representative or contact us through the helpdesk."
+  },
+  "t_personas_form_delete_button": {
+    "message": "Delete Experience"
+  },
+  "t_personas_form_dropdown_login_forbidden": {
+    "message": "No login"
+  },
+  "t_personas_form_dropdown_login_optional": {
+    "message": "Optional"
+  },
+  "t_personas_form_dropdown_login_required": {
+    "message": "Required"
+  },
+  "t_personas_form_label_persona_name": {
+    "message": "Experience Name"
+  },
+  "t_personas_form_label_platform": {
+    "message": "Platform"
+  },
+  "t_personas_form_label_requires_credentials": {
+    "message": "Requires Login"
+  },
+  "t_personas_form_personalized_page": {
+    "message": "Personalized Home Page"
+  },
+  "t_personas_form_personalized_page_help": {
+    "message": "This experience will provide a personalized home page for logged in users"
+  },
+  "t_personas_form_pretour": {
+    "message": "Pretour"
+  },
+  "t_personas_form_pretour_help": {
+    "message": "Provide an overview of the app before registration"
+  },
+  "t_personas_list_dropdown_all_experiences": {
+    "message": "All"
+  },
+  "t_personas_list_dropdown_mobile_experiences": {
+    "message": "Mobile"
+  },
+  "t_personas_list_dropdown_web_experiences": {
+    "message": "Web"
+  },
+  "t_personas_no_results_found": {
+    "message": "No experiences found"
+  },
+  "t_personas_platform_mobile": {
+    "message": "Mobile"
+  },
+  "t_personas_platform_web": {
+    "message": "Web"
+  },
+  "t_personas_resource_add_resource": {
+    "message": "Add Row"
+  },
+  "t_personas_resource_create_modal_title": {
+    "message": "New Row"
+  },
+  "t_personas_resource_edit_modal_title": {
+    "message": "Edit Row"
+  },
+  "t_personas_resource_resource": {
+    "message": "Resource"
+  },
+  "t_personas_resource_single_item": {
+    "message": "Single Item"
+  },
+  "t_personas_resource_third_party_app": {
+    "message": "3rd Party App"
+  },
+  "t_personas_resource_web_link": {
+    "message": "Web Link"
+  },
+  "t_personas_section_button_add_section": {
+    "message": "Add Section"
+  },
+  "t_personas_tile_create_header": {
+    "message": "New Tile"
+  },
+  "t_personas_tile_create_resource_type_academic_calendar": {
+    "message": "Calendars"
+  },
+  "t_personas_tile_create_resource_type_advisor_list": {
+    "message": "Advisor List"
+  },
+  "t_personas_tile_create_resource_type_athletics_club": {
+    "message": "Athletics"
+  },
+  "t_personas_tile_create_resource_type_campus_poi_list": {
+    "message": "Map"
+  },
+  "t_personas_tile_create_resource_type_campus_service": {
+    "message": "Campus Service"
+  },
+  "t_personas_tile_create_resource_type_courses": {
+    "message": "Course Catalog"
+  },
+  "t_personas_tile_create_resource_type_deal_store_list": {
+    "message": "Deals"
+  },
+  "t_personas_tile_create_resource_type_directory": {
+    "message": "Directory"
+  },
+  "t_personas_tile_create_resource_type_event_list": {
+    "message": "Events"
+  },
+  "t_personas_tile_create_resource_type_external_web_app": {
+    "message": "Web SDK"
+  },
+  "t_personas_tile_create_resource_type_job_list": {
+    "message": "Jobs"
+  },
+  "t_personas_tile_create_resource_type_orientation_calendar_list": {
+    "message": "Orientation Programs"
+  },
+  "t_personas_tile_create_resource_type_service_by_category_id": {
+    "message": "Services"
+  },
+  "t_personas_tile_create_resource_type_store": {
+    "message": "Group & Club"
+  },
+  "t_personas_tile_create_resource_type_store_list": {
+    "message": "List of Clubs by Type"
+  },
+  "t_personas_tile_create_resource_type_subscribable_calendar": {
+    "message": "Calendar"
+  },
+  "t_personas_tile_create_resource_type_timetable": {
+    "message": "My Calendar"
+  },
+  "t_personas_tile_create_resource_type_user_orientation_calendar_list": {
+    "message": "My Orientation Calendars"
+  },
+  "t_personas_tile_create_store_list_groups_and_clubs": {
+    "message": "Groups & Clubs"
+  },
+  "t_personas_tile_create_type_resource_external_link": {
+    "message": "External Link"
+  },
+  "t_personas_tile_create_type_resource_resource": {
+    "message": "Resource"
+  },
+  "t_personas_tile_create_type_resource_resource_list": {
+    "message": "Custom List"
+  },
+  "t_personas_tile_create_type_resource_web_link": {
+    "message": "In-App Link"
+  },
+  "t_personas_tile_form_categories_excludes": {
+    "message": "Excludes"
+  },
+  "t_personas_tile_form_categories_includes": {
+    "message": "Includes"
+  },
+  "t_personas_tile_image_requirements": {
+    "message": "300kB or less. Use JPEG or PNG."
+  },
+  "t_personas_tile_link_donation_message": {
+    "message": "Certain types of links including donations will result in the app being rejected in the App Review Process. Use External Web Link instead."
+  },
+  "t_personas_tile_link_external_webapp_message": {
+    "message": "To setup an authenticated web app, please refer to the documentation."
+  },
+  "t_personas_tile_locked_tooltip": {
+    "message": "Contact your Customer Support representative to make changes to this tile"
+  },
+  "t_personas_tile_modal_create_appearance": {
+    "message": "Appearance"
+  },
+  "t_personas_tile_modal_create_categories": {
+    "message": "Categories"
+  },
+  "t_personas_tile_modal_create_content": {
+    "message": "Content"
+  },
+  "t_personas_tile_modal_create_label_resources": {
+    "message": "Resource Type"
+  },
+  "t_personas_tile_modal_create_label_type": {
+    "message": "Type"
+  },
+  "t_personas_tile_modal_create_link_url": {
+    "message": "Link URL"
+  },
+  "t_personas_tile_modal_create_resource_type": {
+    "message": "Resource Type"
+  },
+  "t_personas_tile_moved_success": {
+    "message": "Tile saved."
+  },
+  "t_personas_tile_resource_web_type": {
+    "message": "Link Type",
+    "description": "Studio, when selecting to create a web/in app Link"
+  },
+  "t_personas_tile_update_header": {
+    "message": "Edit Tile"
+  },
+  "t_persona_create_cancel_button": {
+    "message": "Cancel"
+  },
+  "t_persona_delete_modal_body": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_persona_delete_modal_title": {
+    "message": "Delete Experience"
+  },
+  "t_persona_edit_cancel_button": {
+    "message": "Cancel"
+  },
+  "t_persona_list_button_customize": {
+    "message": "Customize"
+  },
+  "t_persona_list_button_edit": {
+    "message": "Edit"
+  },
+  "t_persona_list_button_notify": {
+    "message": "Notify"
+  },
+  "t_sandbox_already_invited": {
+    "message": "Invites already sent"
+  },
+  "t_sandbox_delete_invite": {
+    "message": "Delete Invite"
+  },
+  "t_sandbox_delete_modal_body": {
+    "message": "Are you sure you want to delete invite?"
+  },
+  "t_sandbox_email_addresses": {
+    "message": "Email Addresses (separated by comma)"
+  },
+  "t_sandbox_email_addresses_hint": {
+    "message": "e.g. (john@ready.edu, jane@ready.edu)"
+  },
+  "t_sandbox_invite": {
+    "message": "Invite"
+  },
+  "t_sandbox_invite_testers": {
+    "message": "Invite Testers"
+  },
+  "t_sandbox_invite_testers_success": {
+    "message": "Testers Invited!"
+  },
+  "t_sandbox_invite_users": {
+    "message": "Invite Users"
+  },
+  "t_sandbox_no_results_found": {
+    "message": "No test users found"
+  },
+  "t_sandbox_no_test_users": {
+    "message": "No Test Users"
+  },
+  "t_sandbox_resend_invite": {
+    "message": "Resend Invite"
+  },
+  "t_sandbox_resend_invite_success": {
+    "message": "Invitation Resent!"
+  },
+  "t_sandbox_sub_heading": {
+    "message": "Invite App Users to the Test Environment"
+  },
+  "t_sandbox_test_environment": {
+    "message": "TEST ENVIRONMENT"
+  },
+  "t_sandbox_test_environment_users": {
+    "message": "Test Environment Users"
+  },
+  "t_saving": {
+    "message": "Saving"
+  },
+  "t_services_assessment_disable_qr_check_in": {
+    "message": "Disable QR Code"
+  },
+  "t_services_assessment_enable_qr_check_in": {
+    "message": "Enable QR Code"
+  },
+  "t_services_assessment_qr_code_disabled_success_message": {
+    "message": "QR Code successfully disabled"
+  },
+  "t_services_assessment_qr_code_enable_success_message": {
+    "message": "QR Code successfully enabled"
+  },
+  "t_services_assessment_web_checkin_page": {
+    "message": "Web Check-in"
+  },
+  "t_services_attendance_type": {
+    "message": "Attendance Type"
+  },
+  "t_services_label_checkout_time": {
+    "message": "Check-out"
+  },
+  "t_services_label_membership_wall": {
+    "message": "Membership and Wall"
+  },
+  "t_services_membership_disabled": {
+    "message": "User can view the service but cannot join or message other members"
+  },
+  "t_services_membership_enabled": {
+    "message": "Allow users to register and message other members"
+  },
+  "t_services_no_service_provider_found": {
+    "message": "No Service Provider Found"
+  },
+  "t_services_service_qr_enabled": {
+    "message": "QR Code"
+  },
+  "t_services_total_visits": {
+    "message": "Total Visits"
+  },
+  "t_services_wall_settings_modal_title": {
+    "message": "Service Wall Settings"
+  },
+  "t_service_everyone": {
+    "message": "Service Members"
+  },
+  "t_service_provider_csv_column_check_in_date": {
+    "message": "Check-in Date"
+  },
+  "t_service_provider_csv_column_check_out_date": {
+    "message": "Check-out Date"
+  },
+  "t_service_provider_csv_column_first_name": {
+    "message": "First Name"
+  },
+  "t_service_provider_csv_column_last_name": {
+    "message": "Last Name"
+  },
+  "t_service_provider_csv_column_provider_name": {
+    "message": "Service Provider"
+  },
+  "t_service_provider_csv_column_ratings": {
+    "message": "Ratings"
+  },
+  "t_service_provider_csv_column_time_in": {
+    "message": "Check-in Time"
+  },
+  "t_service_provider_csv_column_time_out": {
+    "message": "Check-out Time"
+  },
+  "t_service_provider_csv_column_time_spent": {
+    "message": "Time Spent"
+  },
+  "t_service_provider_csv_column_time_spent_seconds": {
+    "message": "Time Spent (Seconds)"
+  },
+  "t_service_provider_feedback_yes": {
+    "message": "Yes"
+  },
+  "t_shared_add": {
+    "message": "Add"
+  },
+  "t_shared_average_rating": {
+    "message": "Average Rating"
+  },
+  "t_shared_btn_add_integration": {
+    "message": "Add Integration"
+  },
+  "t_shared_cancel": {
+    "message": "Cancel"
+  },
+  "t_shared_category_create_form_modal_title": {
+    "message": "New Category"
+  },
+  "t_shared_category_edit_form_modal_title": {
+    "message": "Edit Category"
+  },
+  "t_shared_category_name": {
+    "message": "Category Name"
+  },
+  "t_shared_channel": {
+    "message": "Channel"
+  },
+  "t_shared_checkin": {
+    "message": "Check-in"
+  },
+  "t_shared_checkins": {
+    "message": "Check-ins"
+  },
+  "t_shared_closed": {
+    "message": "Closed"
+  },
+  "t_shared_color": {
+    "message": "Color"
+  },
+  "t_shared_contact_us": {
+    "message": "Contact Us"
+  },
+  "t_shared_cpimage_icon_heading": {
+    "message": "Upload your icon"
+  },
+  "t_shared_cpimage_icon_help": {
+    "message": "Must be 128 x 128 in PNG format"
+  },
+  "t_shared_default": {
+    "message": "Default"
+  },
+  "t_shared_delete": {
+    "message": "Delete"
+  },
+  "t_shared_delete_confirmation": {
+    "message": "Are you sure you want to delete %s?"
+  },
+  "t_shared_delete_modal_warning": {
+    "message": "Warning: This cannot be undone"
+  },
+  "t_shared_delete_resource_warning_assessment_data": {
+    "message": "All assessment data will be deleted"
+  },
+  "t_shared_delete_resource_warning_events": {
+    "message": "All events will be deleted"
+  },
+  "t_shared_delete_resource_warning_service_providers": {
+    "message": "All service providers will be deleted"
+  },
+  "t_shared_delete_resource_warning_todos": {
+    "message": "All To-Do's will be deleted"
+  },
+  "t_shared_delete_resource_warning_wall_posts": {
+    "message": "All wall posts and comments will be deleted"
+  },
+  "t_shared_edit": {
+    "message": "Edit"
+  },
+  "t_shared_entry_deleted_successfully": {
+    "message": "Item deleted"
+  },
+  "t_shared_error": {
+    "message": "Error"
+  },
+  "t_shared_failed": {
+    "message": "Failed"
+  },
+  "t_shared_feature_integrations": {
+    "message": "Integrations"
+  },
+  "t_shared_friday": {
+    "message": "Friday"
+  },
+  "t_shared_from": {
+    "message": "From"
+  },
+  "t_shared_hide": {
+    "message": "Hide"
+  },
+  "t_shared_icon": {
+    "message": "Icon"
+  },
+  "t_shared_image": {
+    "message": "Image"
+  },
+  "t_shared_integration_create_error_duplicate_feed_url": {
+    "message": "Duplicate Feed URL"
+  },
+  "t_shared_integration_create_form_modal_title": {
+    "message": "New Integration"
+  },
+  "t_shared_integration_delete_modal_title": {
+    "message": "Delete Integration"
+  },
+  "t_shared_integration_edit_form_modal_title": {
+    "message": "Edit Integration"
+  },
+  "t_shared_invalid_cords": {
+    "message": "Invalid pair of coordinates"
+  },
+  "t_shared_invalid_url": {
+    "message": "Invalid URL (eg: https://google.com)"
+  },
+  "t_shared_items": {
+    "message": "Items"
+  },
+  "t_shared_label_location_toggle": {
+    "message": "Set Location"
+  },
+  "t_shared_last_synced": {
+    "message": "Last Synced"
+  },
+  "t_shared_limited": {
+    "message": "Limited"
+  },
+  "t_shared_meal": {
+    "message": "Meal"
+  },
+  "t_shared_monday": {
+    "message": "Monday"
+  },
+  "t_shared_no": {
+    "message": "No"
+  },
+  "t_shared_no_categories_found": {
+    "message": "No Category Found"
+  },
+  "t_shared_no_integrations_found": {
+    "message": "No integration found"
+  },
+  "t_shared_open": {
+    "message": "Open"
+  },
+  "t_shared_pending": {
+    "message": "Pending"
+  },
+  "t_shared_preview": {
+    "message": "Preview"
+  },
+  "t_shared_running": {
+    "message": "Running"
+  },
+  "t_shared_saturday": {
+    "message": "Saturday"
+  },
+  "t_shared_save": {
+    "message": "Done"
+  },
+  "t_shared_saved_update_success_message": {
+    "message": "Success! "
+  },
+  "t_shared_show": {
+    "message": "Show"
+  },
+  "t_shared_status": {
+    "message": "Status"
+  },
+  "t_shared_successful": {
+    "message": "Successful"
+  },
+  "t_shared_sunday": {
+    "message": "Sunday"
+  },
+  "t_shared_sync": {
+    "message": "Sync"
+  },
+  "t_shared_thursday": {
+    "message": "Thursday"
+  },
+  "t_shared_to": {
+    "message": "To"
+  },
+  "t_shared_tuesday": {
+    "message": "Tuesday"
+  },
+  "t_shared_type": {
+    "message": "Type"
+  },
+  "t_shared_update_map": {
+    "message": "Update Map"
+  },
+  "t_shared_upload_icon": {
+    "message": "Upload Icon"
+  },
+  "t_shared_url": {
+    "message": "URL"
+  },
+  "t_shared_visits": {
+    "message": "Visits"
+  },
+  "t_shared_web_checkin": {
+    "message": "Web Check-In"
+  },
+  "t_shared_wednesday": {
+    "message": "Wednesday"
+  },
+  "t_shared_wrong_dimensions": {
+    "message": "Must be JPG or PNG, 720*400px, smaller than 300KB "
+  },
+  "t_shared_yes": {
+    "message": "Yes"
+  },
+  "t_students_profile_students": {
+    "message": "Students"
+  },
+  "t_studio": {
+    "message": "Studio"
+  },
+  "t_studio_branding_header": {
+    "message": "Branding Color and Logo"
+  },
+  "t_studio_branding_image_req": {
+    "message": "PNG format only. Ideal size 480x99."
+  },
+  "t_studio_branding_remove_logo": {
+    "message": "Remove Logo"
+  },
+  "t_studio_branding_upload_logo": {
+    "message": "Upload Logo"
+  },
+  "t_studio_resource_external_app_open_label_android_fallback": {
+    "message": "Android Fallback URL"
+  },
+  "t_studio_resource_external_app_open_label_android_package_name": {
+    "message": "Android Package Name"
+  },
+  "t_studio_resource_external_app_open_label_ios_fallback": {
+    "message": "iOS Fallback URL"
+  },
+  "t_studio_resource_external_app_open_label_ios_universal": {
+    "message": "iOS Universal URL"
+  },
+  "t_studio_section_delete_no_name": {
+    "message": "Untitled"
+  },
+  "t_team_settings_resend_invite": {
+    "message": "Resend Invite"
+  },
+  "t_team_settings_resend_invite_admin_already_activated": {
+    "message": "Admin account already activated"
+  },
+  "t_team_settings_resend_invite_success": {
+    "message": "Invite Resent!"
+  },
+  "t_tile_button_default": {
+    "message": "Default"
+  },
+  "t_tile_button_locked": {
+    "message": "Locked"
+  },
+  "t_walls_integrations_error_could_not_create_channel": {
+    "message": "Error while creating channel"
+  },
+  "t_walls_integrations_form_label_channel_name": {
+    "message": "Channel Name"
+  },
+  "t_walls_integrations_form_label_poster_name": {
+    "message": "Poster Name"
+  },
+  "t_walls_integrations_new_channel": {
+    "message": "New Channel"
+  },
+  "t_walls_integration_form_default_image": {
+    "message": "Wall Image"
+  },
+  "update": {
+    "message": "Update",
+    "description": "Verb"
+  },
+  "uploading": {
+    "message": "Uploading",
+    "description": "CSV Upload process"
+  },
+  "upload_picture": {
+    "message": "Upload Image"
+  },
+  "urgent": {
+    "message": "Urgent"
+  },
+  "users": {
+    "message": "Users"
+  },
+  "users_found": {
+    "message": "Users Found"
+  },
+  "validate_password_min_length": {
+    "message": "Make sure your password is at least 6 characters long"
+  },
+  "view_more": {
+    "message": "View More"
+  },
+  "walls_button_create_post": {
+    "message": "Post"
+  },
+  "walls_comment_reply": {
+    "message": "Reply"
+  },
+  "website": {
+    "message": "Website"
+  },
+  "welcome": {
+    "message": "Welcome"
+  },
+  "yes": {
+    "message": "yes"
+  },
+  "yes_i_am_sure": {
+    "message": "Yes, I'm Sure"
+  },
+  "you": {
+    "message": "You"
+  },
+  "zero_quantity": {
+    "message": "No"
+  }
+}

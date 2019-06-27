@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-12">
+    <div class="cp-card">
+      <div class="row justify-content-between">
+        <div class="col-4">
+          <cp-dropdown [items]="dropdown" (selected)="filter.emit($event.action)"> </cp-dropdown>
+        </div>
+        <div class="col-3 float-right">
+          <button
+            type="button"
+            (click)="download.emit()"
+            class="cpbtn cpbtn--primary float-right"
+            i18n
+          >
+            {{ 'assess_download_transcript' | cpI18n }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

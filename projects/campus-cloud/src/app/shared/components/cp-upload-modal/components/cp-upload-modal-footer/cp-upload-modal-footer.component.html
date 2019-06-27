@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-12 text-right">
+    <button type="button" data-dismiss="modal" (click)="reset.emit()" class="cpbtn cpbtn--cancel">
+      {{ 'cancel' | cpI18n }}
+    </button>
+
+    <button
+      type="button"
+      data-dismiss="modal"
+      [disabled]="!isReady"
+      (click)="navigate.emit()"
+      class="cpbtn cpbtn--primary"
+    >
+      {{ 'import' | cpI18n }}
+    </button>
+  </div>
+</div>

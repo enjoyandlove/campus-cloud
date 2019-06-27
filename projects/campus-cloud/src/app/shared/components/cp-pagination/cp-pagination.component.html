@@ -1,0 +1,13 @@
+<div class="cppagination">
+  <div class="row">
+    <div class="col-12 text-center">
+      <span class="hover noselect" (click)="onPrevious()" [class.disabled]="!pagePrev">
+        <i class="material-icons">keyboard_arrow_left</i>
+      </span>
+      <span class="cppagination__page noselect">{{ pageNumber }}</span>
+      <span (click)="onNext()" class="hover noselect" [class.disabled]="!pageNext">
+        <i class="material-icons">keyboard_arrow_right</i>
+      </span>
+    </div>
+  </div>
+</div>

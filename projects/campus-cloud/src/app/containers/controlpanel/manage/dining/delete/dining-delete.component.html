@@ -1,0 +1,7 @@
+<cp-delete-modal
+  (deleteClick)="onDelete()"
+  (cancelClick)="resetModal()"
+  [modalTitle]="['t_dining_delete_modal_title' | cpI18n]"
+  [modalBody]="['t_shared_delete_confirmation' | cpI18n: dining.name]"
+>
+</cp-delete-modal>

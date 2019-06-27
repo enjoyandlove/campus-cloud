@@ -1,0 +1,31 @@
+<label>{{ 't_personas_tile_resource_web_type' | cpI18n }}</label>
+<cp-dropdown
+  [items]="items"
+  [selectedItem]="selectedItem"
+  (selected)="onItemSelected($event)"
+  [isRequiredError]="showErrors && !selectedItem">
+</cp-dropdown>
+
+<ng-container *ngIf="showForm">
+  <form [formGroup]="form">
+    <div class="form-group">
+      <label>{{ 't_personas_tile_modal_create_link_url' | cpI18n }}</label>
+      <input
+        type="text"
+        formControlName="link_url"
+        [class.error]="showErrors && form.get('link_url').invalid"/>
+      <small class="text-muted" *ngIf="form.dirty && form.invalid">
+        {{ 't_shared_invalid_url' | cpI18n }}
+      </small>
+    </div>
+  </form>
+  <p>
+    {{ hintText.message | cpI18n }}
+    <a
+      target="_blank"
+      class="cpbtn cpbtn--link"
+      [attr.href]="hintText.link">
+      {{ 'learn_more' | cpI18n }}
+    </a>
+  </p>
+</ng-container>

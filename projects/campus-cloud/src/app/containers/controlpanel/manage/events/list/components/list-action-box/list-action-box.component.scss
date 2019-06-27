@@ -1,0 +1,72 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~projects/campus-cloud/src/sass/components/dropdown';
+
+.integrations {
+  margin-right: 10px;
+  i {
+    font-size: 20px;
+    vertical-align: -5px;
+  }
+}
+
+.dropdown-menu,
+.action-dropdown-list {
+  @include cpDropdownMenu();
+}
+
+.actions {
+  label {
+    @include font-normal();
+
+    display: inline-block;
+    vertical-align: -8px;
+  }
+
+  .calendar {
+    &.isOpen {
+      border: 1px solid $color-black;
+    }
+
+    &.isSelected {
+      background: $color-brand;
+      border: 1px solid $color-brand;
+
+      i {
+        color: $color-white;
+      }
+    }
+
+    i {
+      padding: 5px;
+      font-size: 21px;
+    }
+  }
+
+  .checkbox {
+    margin-top: 5px;
+  }
+}
+
+.action-dropdown {
+  margin-left: -2px;
+  position: relative;
+
+  i {
+    padding: 4px;
+    font-size: 23px;
+  }
+
+  .dropdown-menu {
+    top: 115%;
+    padding: 0;
+    min-width: 200px;
+
+    a:hover {
+      background: none;
+    }
+  }
+}

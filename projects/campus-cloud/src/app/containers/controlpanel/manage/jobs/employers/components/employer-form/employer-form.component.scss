@@ -1,0 +1,8 @@
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.employer {
+  span {
+    @include font-normal();
+  }
+}

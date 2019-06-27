@@ -43,7 +43,7 @@ Thumbs.db
 # Dist #
 /dist
 /_dist
-/public/__build__/
+/assets/__build__/
 /src/*/__build__/
 __build__/**
 .webpack.json

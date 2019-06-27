@@ -1,0 +1,17 @@
+<!--
+removed tabindex="-1" because it was throwing
+[maximum call stack] error when we use datepicker
+inside modal for reference see below url.
+
+https://github.com/flatpickr/flatpickr/issues/248
+-->
+
+<div #cpModal role="dialog" class="modal" [id]="modalId" [attr.aria-labelledby]="modalId">
+  <div [class]="class" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <ng-content></ng-content>
+      </div>
+    </div>
+  </div>
+</div>

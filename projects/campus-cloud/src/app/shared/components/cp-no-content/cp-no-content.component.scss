@@ -1,0 +1,19 @@
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+:host {
+  width: 100%;
+  // margin-top: 25px;
+  display: inline-block;
+}
+
+.content {
+  padding: 30px 10px;
+  text-align: center;
+
+  p {
+    @include font-semi-bold();
+
+    margin-bottom: 0;
+  }
+}

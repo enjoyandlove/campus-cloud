@@ -1,0 +1,14 @@
+@import '~projects/campus-cloud/src/sass/components/form';
+
+.form {
+  &__row {
+    margin-bottom: 25px;
+  }
+}
+
+input.hex {
+  top: -8px;
+  left: 10px;
+  max-width: 100px;
+  position: relative;
+}

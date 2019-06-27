@@ -1,0 +1,152 @@
+@import 'colors';
+
+@mixin font_family() {
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  @include font_family();
+
+  color: $color-text;
+  font-size: 14px;
+}
+
+* {
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+.text-muted {
+  color: $color-secondary-text;
+}
+
+p.no-margin {
+  margin-bottom: 0;
+}
+
+.link {
+  color: $color-brand;
+}
+
+.text-truncate {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  min-width: 0;
+}
+
+.text-wrap {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none; /* Safari */
+  -khtml-user-select: none; /* Konqueror HTML */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.hover {
+  cursor: pointer;
+}
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.render_line_breaks {
+  white-space: normal;
+}
+
+a {
+  color: $color-black;
+  display: inline-block;
+
+  &:focus,
+  &:hover,
+  &:active {
+    text-decoration: none;
+  }
+
+  &:focus,
+  &:active {
+    outline: none;
+    outline-offset: 0;
+  }
+}
+
+@mixin error-label() {
+  @include font-normal();
+
+  height: 35px;
+  line-height: 1.8;
+  margin-bottom: 0;
+  padding: 5px 15px;
+  color: $color-white;
+  display: inline-block;
+  background: $color-danger;
+  margin-top: 0 !important;
+}
+
+@mixin font-heading() {
+  @include font-bold();
+  @include font-36px();
+}
+
+@mixin font-bold() {
+  font-weight: 700;
+}
+
+@mixin font-semi-bold() {
+  font-weight: 600;
+}
+
+@mixin font-normal() {
+  font-weight: 400;
+}
+
+@mixin font-12px() {
+  font-size: 0.9em;
+}
+
+@mixin font-14px() {
+  font-size: 1em;
+}
+
+@mixin font-16px() {
+  font-size: 1.15em;
+}
+
+@mixin font-24px() {
+  font-size: 1.72em;
+}
+
+@mixin font-36px() {
+  font-size: 2.58em;
+}
+
+form input,
+.dropdown-menu,
+input.flatpickr-input[readonly] {
+  @include font-14px();
+}
+
+.text-danger {
+  color: $color-danger;
+}

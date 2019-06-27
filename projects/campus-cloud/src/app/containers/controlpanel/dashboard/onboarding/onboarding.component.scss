@@ -1,0 +1,15 @@
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+.content {
+  text-align: center;
+
+  h4 {
+    @include font-bold();
+  }
+
+  img {
+    height: 300px;
+    margin-right: 48px;
+  }
+}
