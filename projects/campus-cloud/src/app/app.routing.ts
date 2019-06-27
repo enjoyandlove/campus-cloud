@@ -1,7 +1,6 @@
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { isProd } from '@campus-cloud/config/env';
 import { pageTitle } from '@campus-cloud/shared/constants';
 import { LoginComponent, LogoutComponent, LostPasswordComponent } from './containers/auth';
 
@@ -38,8 +37,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       useHash: true,
       onSameUrlNavigation: 'reload',
-      scrollPositionRestoration: 'enabled',
-      preloadingStrategy: isProd ? PreloadAllModules : null
+      scrollPositionRestoration: 'enabled'
     })
   ],
   exports: [RouterModule]
