@@ -2901,10 +2901,10 @@
     "message": "Add Row"
   },
   "t_personas_resource_create_modal_title": {
-    "message": "New Resource"
+    "message": "New Row"
   },
   "t_personas_resource_edit_modal_title": {
-    "message": "Edit Resource"
+    "message": "Edit Row"
   },
   "t_personas_resource_resource": {
     "message": "Resource"

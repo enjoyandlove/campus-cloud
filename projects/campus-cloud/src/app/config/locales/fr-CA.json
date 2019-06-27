@@ -2895,10 +2895,19 @@
     "message": "Ajouter une rangée"
   },
   "t_personas_resource_create_modal_title": {
-    "message": "Nouvelle ressource"
+    "message": "Nouvelle rangée"
   },
   "t_personas_resource_edit_modal_title": {
-    "message": "Éditer ressource"
+    "message": "Editer la ligne"
+  },
+  "t_personas_resource_resource": {
+    "message": "Ressource"
+  },
+  "t_personas_resource_single_item": {
+    "message": "Un seul article"
+  },
+  "t_personas_resource_third_party_app": {
+    "message": "3rd Party App"
   },
   "t_personas_resource_web_link": {
     "message": "Lien Web"
@@ -2970,7 +2979,7 @@
     "message": "Ressource"
   },
   "t_personas_tile_create_type_resource_resource_list": {
-    "message": "Liste des ressources"
+    "message": "Liste customisée"
   },
   "t_personas_tile_create_type_resource_web_link": {
     "message": "Lien web dans l'application"
