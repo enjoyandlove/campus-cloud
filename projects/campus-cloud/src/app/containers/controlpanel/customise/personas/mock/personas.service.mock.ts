@@ -1,4 +1,8 @@
 import { of } from 'rxjs';
+
+import { ITile } from '../tiles/tile.interface';
+import { TileVisibility } from '../tiles/tiles.status';
+
 export const mockPersonas = [
   {
     login_requirement: 1,
@@ -70,5 +74,15 @@ export class MockPersonasService {
 
   createPersona(body) {
     return of(body);
+  }
+}
+
+export class MockTilesUtilsService {
+  isFeatured(tile: ITile) {
+    return tile.featured_rank > -1;
+  }
+
+  isTileVisible(tile: ITile) {
+    return tile.visibility_status === TileVisibility.visible;
   }
 }

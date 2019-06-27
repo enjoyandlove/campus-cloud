@@ -1,21 +1,23 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PersonasFormComponent } from './components/personas-form/personas-form.component';
-import { PersonasCreateComponent } from './create/create.component';
-import { PersonasDeleteComponent } from './delete';
-import { PersonasDetailsComponent } from './details/details.component';
+import { NgModule } from '@angular/core';
+
 import { PersonasEditComponent } from './edit';
 import { PersonasListComponent } from './list';
-import { PersonasListActionBoxComponent } from './list/components';
-import { PersonasRoutingModule } from './personas.routing.module';
+import { PersonasDeleteComponent } from './delete';
 import { PersonasService } from './personas.service';
-import { PersonasUtilsService } from './personas.utils.service';
-import { SectionUtilsService } from './sections/section.utils.service';
-import { PersonasSectionsModule } from './sections/sections.module';
 import { PersonasTilesModule } from './tiles/tiles.module';
-import { SharedModule } from '../../../../shared/shared.module';
+import { PersonasUtilsService } from './personas.utils.service';
+import { PersonasRoutingModule } from './personas.routing.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { PersonasListActionBoxComponent } from './list/components';
+import { PersonasCreateComponent } from './create/create.component';
+import { PersonasSectionsModule } from './sections/sections.module';
+import { PersonasDetailsComponent } from './details/details.component';
+import { SectionUtilsService } from './sections/section.utils.service';
+import { PersonasFormComponent } from './components/personas-form/personas-form.component';
+import { PersonasAmplitudeService } from '@controlpanel/customise/personas/personas.amplitude.service';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,6 @@ import { SharedModule } from '../../../../shared/shared.module';
     PersonasTilesModule
   ],
 
-  providers: [PersonasService, PersonasUtilsService, SectionUtilsService]
+  providers: [PersonasService, PersonasUtilsService, SectionUtilsService, PersonasAmplitudeService]
 })
 export class PersonasModule {}

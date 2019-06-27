@@ -8,18 +8,19 @@ import { of } from 'rxjs';
 
 import mockSection from './mock';
 import { TilesService } from '../tiles.service';
-import { CPSession } from '../../../../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { PersonasTilesModule } from '../tiles.module';
 import { PersonasService } from '../../personas.service';
 import { TilesUtilsService } from '../tiles.utils.service';
 import { PersonasTileEditComponent } from './edit.component';
 import { mockPersonas } from '../../__mock__/personas.mock';
-import { CPI18nService } from '../../../../../../shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { baseActions } from '@campus-cloud/store/base/reducers';
 import { SectionsService } from '../../sections/sections.service';
-import { mockSchool } from '../../../../../../session/mock/school';
 import { PersonasUtilsService } from '../../personas.utils.service';
-import { baseActions } from '../../../../../../store/base/reducers';
 import { SectionUtilsService } from '../../sections/section.utils.service';
+import { PersonasAmplitudeService } from '../../personas.amplitude.service';
 
 class MockPersonaService {
   placeholder;
@@ -92,6 +93,7 @@ describe('PersonasTileEditComponent', () => {
         SectionUtilsService,
         SectionUtilsService,
         PersonasUtilsService,
+        PersonasAmplitudeService,
         {
           provide: ActivatedRoute,
           useValue: { snapshot: { params: { tileId: mockSection.tiles[0].id } } }

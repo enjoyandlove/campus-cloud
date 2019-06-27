@@ -3,15 +3,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import { mockTile } from './../__mock__';
+import { mockTile } from './../tests/mocks';
 import { TilesService } from './../tiles.service';
-import { CPSession } from '../../../../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { PersonasTilesModule } from '../tiles.module';
 import { PersonasTileComponent } from './tile.component';
 import { TilesUtilsService } from './../tiles.utils.service';
-import { CPI18nService } from '../../../../../../shared/services';
-import { mockSchool } from './../../../../../../session/mock/school';
-import { SharedModule } from '../../../../../../shared/shared.module';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 
 class MockTilesService {
   dummy;

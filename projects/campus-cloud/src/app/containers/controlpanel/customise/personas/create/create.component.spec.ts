@@ -4,15 +4,15 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import { CPSession } from './../../../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { PersonasModule } from './../personas.module';
 import { PersonasService } from './../personas.service';
+import { CPDate } from '@campus-cloud/shared/utils/date';
 import { PersonasCreateComponent } from './create.component';
-import { CPDate } from './../../../../../shared/utils/date/date';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { PersonasUtilsService } from './../personas.utils.service';
-import { PersonasType, PersonasLoginRequired } from './../personas.status';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { MockPersonasService } from './../mock/personas.service.mock';
+import { PersonasType, PersonasLoginRequired } from './../personas.status';
 
 describe('PersonasCreateComponent', () => {
   let comp: PersonasCreateComponent;

@@ -10,13 +10,13 @@ import { TilesService } from '../tiles.service';
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
 import { IPersona } from './../../persona.interface';
-import { PersonasService } from '../../personas.service';
 import { TilesUtilsService } from '../tiles.utils.service';
 import { ICampusGuide } from '../../sections/section.interface';
 import { SectionsService } from '../../sections/sections.service';
 import { PersonasUtilsService } from './../../personas.utils.service';
 import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
+import { PersonasAmplitudeService } from '../../personas.amplitude.service';
 import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 import { amplitudeEvents, STUDIO_THIRD_PARTY } from '@campus-cloud/shared/constants';
 
@@ -45,12 +45,14 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   selectedContent = ContentUtilsProviders.contentTypes.single;
 
   editedTileEventProperties = {
-    status: null,
     tile_id: null,
+    tile_status: null,
+    section_type: null,
+    content_type: null,
     tile_type: amplitudeEvents.NORMAL,
-    added_content: amplitudeEvents.NO,
-    added_resource: amplitudeEvents.NO,
-    uploaded_image: amplitudeEvents.NO
+    uploaded_image: amplitudeEvents.NO,
+    changed_content: amplitudeEvents.NO,
+    changed_section: amplitudeEvents.NO
   };
 
   constructor(
@@ -64,7 +66,8 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     public cpTracking: CPTrackingService,
     public guideService: SectionsService,
     public personaService: PersonasService,
-    public store: Store<IHeader | ISnackbar>
+    public store: Store<IHeader | ISnackbar>,
+    public personaAmplitude: PersonasAmplitudeService
   ) {
     super();
     this.tileId = this.route.snapshot.params['tileId'];
@@ -101,6 +104,11 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
       link_url: null,
       link_params: {}
     });
+
+    this.editedTileEventProperties = {
+      ...this.editedTileEventProperties,
+      changed_section: amplitudeEvents.YES
+    };
   }
 
   erroHandler() {
@@ -126,8 +134,13 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     const stream$ = this.updateGuideTile();
 
     stream$.subscribe(
-      () => {
+      (res) => {
         this.disableSubmitButton = false;
+        this.editedTileEventProperties = {
+          ...this.editedTileEventProperties,
+          ...this.personaAmplitude.getTileAmplitudeProperties(res)
+        };
+
         this.cpTracking.amplitudeEmitEvent(
           amplitudeEvents.STUDIO_UPDATED_TILE,
           this.editedTileEventProperties
@@ -161,8 +174,6 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
       this.tile
     );
 
-    this.setEditedTileEventProperties();
-
     this.editable = !this.utils.isCampaignTile(this.tile) && !this.utils.isDeprecated(this.tile);
     this.selectedContent = ContentUtilsProviders.getContentTypeByCampusLink(
       this.campusLinkForm.value
@@ -195,6 +206,11 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
 
   onCampusLinkFormChange(newValues) {
     this.campusLinkForm.patchValue(newValues);
+
+    this.editedTileEventProperties = {
+      ...this.editedTileEventProperties,
+      changed_content: amplitudeEvents.YES
+    };
   }
 
   onChangedImage(isChanged: boolean) {
@@ -203,39 +219,6 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     this.editedTileEventProperties = {
       ...this.editedTileEventProperties,
       uploaded_image
-    };
-  }
-
-  onChangedContent(contentType: number) {
-    const added_content = contentType ? amplitudeEvents.YES : amplitudeEvents.NO;
-
-    this.editedTileEventProperties = {
-      ...this.editedTileEventProperties,
-      added_content
-    };
-  }
-
-  onChangedResource(resourceType: boolean) {
-    const added_resource = resourceType ? amplitudeEvents.YES : amplitudeEvents.NO;
-
-    this.editedTileEventProperties = {
-      ...this.editedTileEventProperties,
-      added_resource
-    };
-  }
-
-  setEditedTileEventProperties() {
-    const status = this.utils.isTileVisible(this.tile)
-      ? amplitudeEvents.SHOWN
-      : amplitudeEvents.HIDDEN;
-
-    const tile_type = this.guide._featuredTile ? amplitudeEvents.FEATURED : amplitudeEvents.NORMAL;
-
-    this.editedTileEventProperties = {
-      ...this.editedTileEventProperties,
-      status,
-      tile_type,
-      tile_id: this.tile.id
     };
   }
 

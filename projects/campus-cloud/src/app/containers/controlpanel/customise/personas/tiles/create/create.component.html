@@ -21,7 +21,7 @@
             {{ 't_personas_create_tile_heading_right' | cpI18n }}
           </p>
           <cp-resource-selector
-            (itemClicked)="onTypeChange()"
+            (itemClicked)="onTypeChange($event)"
             [filterByWebApp]="filterByWeb"
             #resourceSelector="resourceSelector"
             [filterByLoginStatus]="filterByLogin">

@@ -3,15 +3,15 @@ import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms'
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { CPSession } from './../../../../../session';
+import { mockTile } from '../tiles/tests/mocks';
+import { CPSession } from '@campus-cloud/session';
 import { PersonasModule } from './../personas.module';
+import { baseActions } from '@campus-cloud/store/base';
 import { PersonasService } from './../personas.service';
 import { PersonasEditComponent } from './edit.component';
-import { baseActions } from './../../../../../store/base';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { PersonasUtilsService } from './../personas.utils.service';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { MockPersonasService, mockPersonas } from './../mock/personas.service.mock';
-import { mockTile } from '../tiles/__mock__';
 
 describe('PersonasEditComponent', () => {
   let comp: PersonasEditComponent;
