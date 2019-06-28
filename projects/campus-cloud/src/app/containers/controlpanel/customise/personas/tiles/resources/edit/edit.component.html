@@ -7,12 +7,10 @@
             {{ 't_personas_resource_edit_modal_title' | cpI18n }}
           </strong>
         </span>
-
         <span
           data-dismiss="modal"
           (click)="resetModal()"
-          class="float-right hover cpmodal__header__close"
-        >
+          class="float-right hover cpmodal__header__close">
           &times;
         </span>
       </div>
@@ -23,7 +21,8 @@
     <cp-personas-resource-list-form
       [isEdit]="[true]"
       [persona]="persona"
-      [form]="campusLinkForm">
+      [form]="campusLinkForm"
+      [showErrors]="showErrors">
     </cp-personas-resource-list-form>
   </div>
 
@@ -34,12 +33,16 @@
           type="button"
           data-dismiss="modal"
           (click)="resetModal()"
-          class="cpbtn cpbtn--cancel"
-        >
+          class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>
+        <button
+          type="submit"
+          (click)="onSubmit()"
+          class="cpbtn cpbtn--primary">
+          {{ 'save' | cpI18n }}
+        </button>
       </div>
     </div>
   </div>

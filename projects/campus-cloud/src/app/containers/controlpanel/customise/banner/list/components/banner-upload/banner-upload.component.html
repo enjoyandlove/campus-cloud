@@ -13,9 +13,9 @@
     <cp-banner-upload-button
       *ngIf="!isEdit"
       class="upload-button"
-      (reset)="onReset.emit()"
-      (error)="onError.emit($event)"
-      (upload)="onUpload.emit($event)"
+      (reset)="resetClick.emit()"
+      (error)="error.emit($event)"
+      (upload)="upload.emit($event)"
     >
     </cp-banner-upload-button>
 
@@ -23,8 +23,8 @@
       *ngIf="isEdit"
       class="control-buttons"
       [loading]="uploading"
-      (save)="onCrop.emit()"
-      (cancel)="onReset.emit()"
+      (save)="crop.emit()"
+      (cancel)="resetClick.emit()"
     >
     </cp-banner-control-buttons>
 
