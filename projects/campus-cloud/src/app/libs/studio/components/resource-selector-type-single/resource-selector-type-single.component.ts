@@ -9,9 +9,9 @@ import { CPSession } from '@campus-cloud/session';
 import { IItem } from '@campus-cloud/shared/components';
 import { ContentUtilsProviders } from '../../providers';
 import { IStudioContentResource } from '../../providers';
-import { CampusLink } from '@controlpanel/manage/links/tile';
 import { StoreService } from '@campus-cloud/shared/services';
-import { ILink } from '@controlpanel/manage/links/link.interface';
+import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
+import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { TilesService } from '@controlpanel/customise/personas/tiles/tiles.service';
 
 const placeHolder: IStudioContentResource = { id: null, label: '---', meta: null };

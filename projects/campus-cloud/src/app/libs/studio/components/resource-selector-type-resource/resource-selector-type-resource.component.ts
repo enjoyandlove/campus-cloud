@@ -6,9 +6,9 @@ import { Subject } from 'rxjs';
 
 import { IIntegrationData } from '../../models';
 import { ContentUtilsProviders } from '../../providers';
-import { CampusLink } from '@controlpanel/manage/links/tile';
-import { ILink } from '@controlpanel/manage/links/link.interface';
 import { CustomValidators } from '@campus-cloud/shared/validators';
+import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
+import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { IntegrationDataService, IStudioContentResource } from './../../providers';
 
 @Component({

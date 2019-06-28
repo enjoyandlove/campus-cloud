@@ -2,9 +2,9 @@ import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms'
 import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
 import { get as _get } from 'lodash';
 
-import { CampusLink } from '@controlpanel/manage/links/tile';
-import { ILink } from '@controlpanel/manage/links/link.interface';
+import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { IExternalAppOpenFormDetails } from './external-app-open.interface';
+import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 
 @Component({
   selector: 'cp-personas-resource-external-app-open',

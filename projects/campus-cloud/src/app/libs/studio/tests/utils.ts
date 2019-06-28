@@ -1,6 +1,6 @@
 import { IStudioContentResource } from './../providers';
-import { CampusLink } from '@controlpanel/manage/links/tile';
-import { TilesUtilsService } from '../../../containers/controlpanel/customise/personas/tiles/tiles.utils.service';
+import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
+import { TilesUtilsService } from '@controlpanel/customise/personas/tiles/tiles.utils.service';
 
 export function getLinkUrlFromResourceList(resources: IStudioContentResource[]) {
   return resources.map((resource) => resource.meta.link_url);

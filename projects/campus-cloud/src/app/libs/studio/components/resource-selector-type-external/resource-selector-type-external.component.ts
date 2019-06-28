@@ -1,6 +1,6 @@
 import { Input, Output, Component, OnInit, EventEmitter } from '@angular/core';
 
-import { ILink } from '@campus-cloud/containers/controlpanel/manage/links/link.interface';
+import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 
 @Component({
   selector: 'cp-resource-selector-type-external',
