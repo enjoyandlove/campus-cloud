@@ -19,8 +19,8 @@ import { IPersona } from './../../../../persona.interface';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { parseErrorResponse } from '@campus-cloud/shared/utils';
 import { baseActions, ISnackbar } from '@campus-cloud/store/base';
-import { ILink } from '@controlpanel/manage/links/link.interface';
 import { ResourcesUtilsService } from '../../resources.utils.service';
+import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 
 interface IState {
   loading: boolean;

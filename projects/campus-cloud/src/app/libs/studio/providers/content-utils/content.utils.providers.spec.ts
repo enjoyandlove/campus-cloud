@@ -1,9 +1,9 @@
 import { async, TestBed } from '@angular/core/testing';
 
 import { mockStudioContentResource } from '../../tests';
-import { CampusLink } from '@controlpanel/manage/links/tile';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { ContentUtilsProviders } from './content.utils.providers';
+import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 
 describe('ResourceTypeServiceByCategoryComponent', () => {
   let service: ContentUtilsProviders;

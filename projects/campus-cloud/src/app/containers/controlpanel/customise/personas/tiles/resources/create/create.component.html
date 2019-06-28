@@ -21,7 +21,8 @@
   <div class="cpmodal__body">
     <cp-personas-resource-list-form
       [persona]="persona"
-      [form]="campusLinkForm">
+      [form]="campusLinkForm"
+      [showErrors]="showErrors">
     </cp-personas-resource-list-form>
   </div>
 
@@ -35,11 +36,12 @@
           class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
-
-        <cp-button
-          [props]="buttonData"
-          (buttonClick)="onSubmit()">
-        </cp-button>
+        <button
+          type="submit"
+          (click)="onSubmit()"
+          class="cpbtn cpbtn--primary">
+          {{ 'save' | cpI18n }}
+        </button>
       </div>
     </div>
   </div>

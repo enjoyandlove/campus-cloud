@@ -4,11 +4,11 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { CPSession } from '@campus-cloud/session';
 import { mockSchool } from '@campus-cloud/session/mock';
-import { CampusLink } from '@controlpanel/manage/links/tile';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { ILink } from '@controlpanel/manage/links/link.interface';
+import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { CPI18nService, StoreService } from '@campus-cloud/shared/services';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
+import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { TilesService } from '@controlpanel/customise/personas/tiles/tiles.service';
 import { MockTilesService, MockStoreService, getLinkUrlFromResourceList } from '../../tests';
 import { ResourceSelectorTypeSingleComponent } from './resource-selector-type-single.component';

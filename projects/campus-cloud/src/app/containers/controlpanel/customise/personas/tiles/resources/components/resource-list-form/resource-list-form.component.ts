@@ -17,6 +17,7 @@ export class PersonasResourceListFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() isEdit: boolean;
   @Input() persona: IPersona;
+  @Input() showErrors = false;
 
   @Output() valueChanges: EventEmitter<FormGroup> = new EventEmitter();
 
@@ -70,7 +71,6 @@ export class PersonasResourceListFormComponent implements OnInit {
     this.tileImageRequirements = this.cpI18n.translate('t_personas_tile_image_requirements');
     this.form.valueChanges.subscribe((_) => this.valueChanges.emit(this.form));
     this.defaultImg = this.form.get('img_url').value;
-
     if (this.isEdit) {
       this.updateState();
     }

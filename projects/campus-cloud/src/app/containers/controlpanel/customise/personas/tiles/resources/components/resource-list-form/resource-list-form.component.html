@@ -7,7 +7,7 @@
         [description]="tileImageRequirements"
         [validationFn]="validateTileImage.bind(this)"
         [defaultImage]="defaultImg"
-      >
+        [required]="showErrors && form.get('img_url').invalid">
       </cp-image-upload>
     </div>
   </div>
@@ -15,7 +15,12 @@
   <div class="row form-group">
     <div class="col-12">
       <label for="resourceName">{{ 'name' | cpI18n }}</label>
-      <input type="text" id="resourceName" class="form-control" formControlName="name" />
+      <input
+        type="text"
+        id="resourceName"
+        class="form-control"
+        formControlName="name"
+        [class.error]="showErrors && form.get('name').invalid" />
     </div>
   </div>
 </form>
@@ -33,6 +38,7 @@
       >
         <cp-resource-selector-type-single
           [isEdit]="isEdit"
+          [showErrors]="showErrors"
           [campusLink]="form.value"
           [filterByWebApp]="filterByWeb"
           *ngIf="selectedContent === contentTypes.single"
@@ -49,6 +55,7 @@
         <cp-resource-selector-type-resource
           [filterByWebApp]="filterByWeb"
           [isEdit]="isEdit"
+          [showErrors]="showErrors"
           [campusLink]="form.value"
           *ngIf="selectedContent === contentTypes.list"
           [filterByLoginStatus]="filterByLogin"
@@ -64,6 +71,7 @@
         <cp-resource-selector-type-web
           [isEdit]="isEdit"
           [campusLink]="form.value"
+          [showErrors]="showErrors"
           [filterByWebApp]="filterByWeb"
           [filterByLoginStatus]="filterByLogin"
           *ngIf="selectedContent === contentTypes.web"
@@ -80,6 +88,7 @@
         <cp-resource-selector-type-external
           [isEdit]="isEdit"
           [campusLink]="form.value"
+          [showErrors]="showErrors"
           (valueChanges)="onCampusLinkFormChange($event)"
           *ngIf="selectedContent === contentTypes.thirdParty"
         >

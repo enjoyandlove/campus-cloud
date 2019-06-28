@@ -1,5 +1,5 @@
-import { CampusLink } from './../../../../../manage/links/tile';
-import { ILink } from '../../../../../manage/links/link.interface';
+import { CampusLink } from '../../tile';
+import { ILink } from '../../link.interface';
 
 export const mockResource: ILink = {
   id: 1,
