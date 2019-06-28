@@ -3,11 +3,11 @@ import { FormBuilder } from '@angular/forms';
 import { mockTile } from './tests/mocks';
 import { CPSession } from '@campus-cloud/session';
 import { mockSection } from './../sections/__mock__';
-import { CampusLink } from '../../../manage/links/tile';
 import { TilesUtilsService } from './tiles.utils.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { SectionUtilsService } from '../sections/section.utils.service';
+import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { CampusLinkType, TileVisibility, TileCategoryRank } from './tiles.status';
 
 const session = new CPSession();

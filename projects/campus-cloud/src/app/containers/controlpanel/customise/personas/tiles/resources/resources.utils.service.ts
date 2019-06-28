@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
+import { ILink } from '../link.interface';
 import { IPersona } from '../../persona.interface';
 import { PersonasType } from '../../personas.status';
 import { TilesUtilsService } from '../tiles.utils.service';
-import { ILink } from './../../../../manage/links/link.interface';
 
 @Injectable()
 export class ResourcesUtilsService {

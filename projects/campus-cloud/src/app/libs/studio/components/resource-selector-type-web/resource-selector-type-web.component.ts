@@ -6,7 +6,7 @@ import { IStudioContentResource } from '../../providers';
 import { validUrl } from '@campus-cloud/shared/utils/forms';
 import { ZendeskService } from '@campus-cloud/shared/services';
 import { CustomValidators } from '@campus-cloud/shared/validators';
-import { ILink } from '@controlpanel/manage/links/link.interface';
+import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 
 @Component({
   selector: 'cp-resource-selector-type-web',

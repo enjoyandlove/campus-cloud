@@ -1,5 +1,5 @@
 import { ITile } from '../../tile.interface';
-import { CampusLink } from '@controlpanel/manage/links/tile';
+import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { mockSchool } from '@projects/campus-cloud/src/app/session/mock';
 
 export const mockLinkData = {

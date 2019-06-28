@@ -1,9 +1,9 @@
 import { get as _get, sortBy } from 'lodash';
 import { Injectable } from '@angular/core';
 
-import { CampusLink } from '@controlpanel/manage/links/tile';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { IntegrationDataUtils } from '../integration-data-utils';
+import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { IIntegrationData, ExtraDataType, IExtraData } from '../../models';
 import { TilesUtilsService } from '@controlpanel/customise/personas/tiles/tiles.utils.service';
 

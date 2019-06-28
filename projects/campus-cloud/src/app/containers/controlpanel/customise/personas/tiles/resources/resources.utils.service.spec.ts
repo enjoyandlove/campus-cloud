@@ -1,8 +1,8 @@
-import { CampusLink } from './../../../../manage/links/tile';
-import { ResourcesUtilsService } from './resources.utils.service';
-import { mockPersonas } from '../../__mock__/personas.mock';
-import { PersonasType } from '../../personas.status';
 import { mockResource } from './__mock__';
+import { PersonasType } from '../../personas.status';
+import { mockPersonas } from '../../__mock__/personas.mock';
+import { ResourcesUtilsService } from './resources.utils.service';
+import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 
 describe('ResourcesUtilsService', () => {
   let service: ResourcesUtilsService;
