@@ -3,7 +3,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { ILink } from '@controlpanel/manage/links/link.interface';
+import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { ResourceSelectorTypeWebComponent } from './resource-selector-type-web.component';
 
 describe('ResourceSelectorTypeWebComponent', () => {

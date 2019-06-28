@@ -11,10 +11,10 @@ export class BannerUploadComponent implements OnInit {
   @Input() isEdit: boolean;
   @Input() uploading: boolean;
 
-  @Output() onCrop: EventEmitter<null> = new EventEmitter();
-  @Output() onReset: EventEmitter<null> = new EventEmitter();
-  @Output() onUpload: EventEmitter<any> = new EventEmitter();
-  @Output() onError: EventEmitter<string> = new EventEmitter();
+  @Output() crop: EventEmitter<null> = new EventEmitter();
+  @Output() upload: EventEmitter<any> = new EventEmitter();
+  @Output() error: EventEmitter<string> = new EventEmitter();
+  @Output() resetClick: EventEmitter<null> = new EventEmitter();
 
   constructor() {}
 

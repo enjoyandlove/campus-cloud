@@ -2,9 +2,9 @@ import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/f
 import { get as _get, sortBy } from 'lodash';
 import { Injectable } from '@angular/core';
 
+import { CampusLink } from './tile';
 import { ITile } from './tile.interface';
 import { CPSession } from '@campus-cloud/session';
-import { CampusLink } from '@controlpanel/manage/links/tile';
 import { ICampusGuide } from './../sections/section.interface';
 import { hexColorString } from '@campus-cloud/shared/utils/forms';
 import { CustomValidators } from '@campus-cloud/shared/validators';

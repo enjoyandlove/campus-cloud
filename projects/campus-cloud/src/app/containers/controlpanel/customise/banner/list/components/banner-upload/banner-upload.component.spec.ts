@@ -51,9 +51,9 @@ describe('BannerUploadComponent', () => {
     component.isEdit = false;
     fixture.detectChanges();
 
-    const uploadSpy = spyOn(component.onUpload, 'emit');
-    const errorSpy = spyOn(component.onError, 'emit');
-    const resetSpy = spyOn(component.onReset, 'emit');
+    const uploadSpy = spyOn(component.upload, 'emit');
+    const errorSpy = spyOn(component.error, 'emit');
+    const resetSpy = spyOn(component.resetClick, 'emit');
     const uploadBtn = de.query(By.css('.upload-button')).nativeElement;
 
     uploadBtn.dispatchEvent(new Event('upload'));
@@ -70,8 +70,8 @@ describe('BannerUploadComponent', () => {
     component.isEdit = true;
     fixture.detectChanges();
 
-    const cropSpy = spyOn(component.onCrop, 'emit');
-    const resetSpy = spyOn(component.onReset, 'emit');
+    const cropSpy = spyOn(component.crop, 'emit');
+    const resetSpy = spyOn(component.resetClick, 'emit');
     const controlBtns = de.query(By.css('.control-buttons')).nativeElement;
 
     controlBtns.dispatchEvent(new Event('save'));

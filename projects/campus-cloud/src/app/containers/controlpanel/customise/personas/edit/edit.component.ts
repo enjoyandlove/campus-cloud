@@ -13,7 +13,7 @@ import { CPSession } from '../../../../../session';
 import { BaseComponent } from '../../../../../base';
 import { PersonasService } from './../personas.service';
 import { TileVisibility } from './../tiles/tiles.status';
-import { CampusLink } from './../../../manage/links/tile';
+import { CampusLink } from '../tiles/tile';
 import { PersonaValidationErrors } from './../personas.status';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { baseActions, IHeader } from './../../../../../store/base';

@@ -3,10 +3,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ContentUtilsProviders } from '../../providers';
 import { IStudioContentResource } from '../../providers';
-import { validUrl } from '@campus-cloud/shared/utils/forms';
 import { ZendeskService } from '@campus-cloud/shared/services';
 import { CustomValidators } from '@campus-cloud/shared/validators';
-import { ILink } from '@controlpanel/manage/links/link.interface';
+import { validUrlRequiredProtocol } from '@campus-cloud/shared/utils/forms';
+import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 
 @Component({
   selector: 'cp-resource-selector-type-web',
@@ -57,8 +57,8 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
         '',
         Validators.compose([
           Validators.required,
-          Validators.pattern(validUrl),
-          CustomValidators.requiredNonEmpty
+          CustomValidators.requiredNonEmpty,
+          Validators.pattern(validUrlRequiredProtocol)
         ])
       ],
       link_type: [null, Validators.required],

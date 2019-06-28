@@ -30,11 +30,11 @@
     <cp-banner-upload
       [form]="form"
       [isEdit]="isEdit"
+      (crop)="onCrop()"
       [uploading]="uploading"
-      (onCrop)="onCrop()"
-      (onReset)="onReset()"
-      (onError)="onError($event)"
-      (onUpload)="onUpload($event)"
+      (error)="onError($event)"
+      (resetClick)="onReset()"
+      (upload)="onUpload($event)"
     >
     </cp-banner-upload>
   </cp-card>

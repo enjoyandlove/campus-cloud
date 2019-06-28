@@ -2,7 +2,6 @@ import { createFeatureSelector, createSelector } from '@ngrx/store';
 
 import { IJobsState } from './jobs';
 import { IDealsState } from './deals';
-import { ILinksState } from './links';
 import { IManageState } from './manage-store.module';
 
 export const getManageState = createFeatureSelector<IManageState>('manage');
@@ -41,30 +40,4 @@ export const getJobsEmployersLoaded = createSelector(
 export const getJobsEmployersLoading = createSelector(
   getJobsState,
   (state: IJobsState) => state.loading
-);
-
-// links
-export const getLinksState = createSelector(
-  getManageState,
-  (state: IManageState) => state.links
-);
-export const getLinksRange = createSelector(
-  getLinksState,
-  (state: ILinksState) => state.range
-);
-export const getLinksSort = createSelector(
-  getLinksState,
-  (state: ILinksState) => state.sort
-);
-export const getLinks = createSelector(
-  getLinksState,
-  (state: ILinksState) => state.links
-);
-export const getLinksLoaded = createSelector(
-  getLinksState,
-  (state: ILinksState) => state.loaded
-);
-export const getLinksLoading = createSelector(
-  getLinksState,
-  (state: ILinksState) => state.loading
 );

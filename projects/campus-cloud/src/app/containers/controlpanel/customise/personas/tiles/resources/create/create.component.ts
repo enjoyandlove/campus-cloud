@@ -18,7 +18,7 @@ export class PersonaResourceCreateComponent implements OnInit {
   @Output() success: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
-  buttonData;
+  showErrors = false;
   campusLinkForm: FormGroup;
 
   constructor(
@@ -37,6 +37,11 @@ export class PersonaResourceCreateComponent implements OnInit {
   }
 
   onSubmit() {
+    this.showErrors = false;
+    if (this.campusLinkForm.invalid) {
+      this.showErrors = true;
+      return;
+    }
     const post$ = this.resourceService.createCampusLink(this.campusLinkForm.value);
 
     post$.subscribe(
@@ -49,18 +54,6 @@ export class PersonaResourceCreateComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.buttonData = {
-      disabled: true,
-      class: 'primary',
-      text: this.cpI18n.translate('t_shared_save')
-    };
-
     this.campusLinkForm = this.tileUtils.campusLinkForm();
-    this.campusLinkForm.valueChanges.subscribe(() => {
-      this.buttonData = {
-        ...this.buttonData,
-        disabled: !this.campusLinkForm.valid
-      };
-    });
   }
 }

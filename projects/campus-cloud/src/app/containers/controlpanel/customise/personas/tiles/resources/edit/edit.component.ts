@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
-import { CPI18nService } from '@campus-cloud/shared/services';
+import { ILink } from '../../link.interface';
 import { IPersona } from './../../../persona.interface';
 import { ResourceService } from './../resource.service';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { TilesUtilsService } from './../../tiles.utils.service';
-import { ILink } from '@controlpanel/manage/links/link.interface';
 
 @Component({
   selector: 'cp-personas-resource-edit',
@@ -20,7 +20,7 @@ export class PersonaResourceEditComponent implements OnInit {
   @Output() success: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
-  buttonData;
+  showErrors = false;
   campusLinkForm: FormGroup;
 
   constructor(
@@ -39,6 +39,12 @@ export class PersonaResourceEditComponent implements OnInit {
   }
 
   onSubmit() {
+    this.showErrors = false;
+
+    if (this.campusLinkForm.invalid) {
+      this.showErrors = true;
+      return;
+    }
     const update$ = this.resourceService.updateCampusLink(
       this.resource.id,
       this.campusLinkForm.value
@@ -54,18 +60,6 @@ export class PersonaResourceEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.buttonData = {
-      disabled: true,
-      class: 'primary',
-      text: this.cpI18n.translate('t_shared_save')
-    };
-
     this.campusLinkForm = this.tileUtils.campusLinkForm(true, true, this.resource);
-    this.campusLinkForm.valueChanges.subscribe(() => {
-      this.buttonData = {
-        ...this.buttonData,
-        disabled: !this.campusLinkForm.valid
-      };
-    });
   }
 }

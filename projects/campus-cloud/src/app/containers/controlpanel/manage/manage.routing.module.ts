@@ -43,11 +43,6 @@ const appRoutes: Routes = [
       },
 
       {
-        path: 'links',
-        redirectTo: ''
-      },
-
-      {
         path: 'feeds',
         canActivate: [PrivilegesGuard],
         data: { zendesk: 'walls', privilege: CP_PRIVILEGES_MAP.moderation },
