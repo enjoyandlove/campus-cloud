@@ -20,7 +20,7 @@
             "outputPath": "_dist",
             "index": "projects/campus-cloud/src/index.html",
             "main": "projects/campus-cloud/src/main.ts",
-            "showCircularDependencies": false,
+            "showCircularDependencies": true,
             "polyfills": "projects/campus-cloud/src/polyfills.ts",
             "tsConfig": "projects/campus-cloud/tsconfig.app.json",
             "assets": ["projects/campus-cloud/src/favicon.ico", "projects/campus-cloud/src/assets"],
@@ -55,16 +55,16 @@
                   "with": "projects/campus-cloud/src/index.prod.html"
                 }
               ],
-              "statsJson": true,
+              "statsJson": false,
               "deployUrl": "/dist/",
               "optimization": false,
               "outputHashing": "all",
-              "sourceMap": true,
+              "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
+              "vendorChunk": true,
               "buildOptimizer": false,
               "budgets": [
                 {
@@ -90,12 +90,12 @@
               "deployUrl": "/dist/",
               "optimization": false,
               "outputHashing": "all",
-              "sourceMap": true,
+              "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
+              "vendorChunk": true,
               "buildOptimizer": false,
               "budgets": [
                 {
@@ -116,6 +116,7 @@
                   "with": "projects/campus-cloud/src/index.prod.html"
                 }
               ],
+              "statsJson": true,
               "deployUrl": "/dist/",
               "optimization": false,
               "outputHashing": "all",
@@ -124,7 +125,7 @@
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
-              "vendorChunk": false,
+              "vendorChunk": true,
               "buildOptimizer": false,
               "budgets": [
                 {
