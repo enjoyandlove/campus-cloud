@@ -5,9 +5,9 @@ import { throwError } from 'rxjs';
 
 import { API } from '@campus-cloud/config/api';
 import { CPSession } from '@campus-cloud/session';
-import { CPLogger } from '@campus-cloud/shared/services';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { appStorage } from '@campus-cloud/shared/utils/storage';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { CPLogger } from '@campus-cloud/shared/services/logger/sentry.service';
 
 const maxAllowed = 5e6; // 5MB
 
