@@ -8,6 +8,7 @@
   "scripts": {
     "i18n": "phraseapp pull",
     "clean-dist": "rimraf dist && mv _dist dist",
+    "prebuild:staging": "node scripts/campus-cloud/build.js",
     "analyze": "webpack-bundle-analyzer dist/stats.json",
     "production-usa": "node --max_old_space_size=8192 node_modules/.bin/ng build --c=production_usa && yarn run clean-dist && gzipper ./dist",
     "production-canada": "node --max_old_space_size=8192 node_modules/.bin/ng build --c=production_canada && yarn run clean-dist && gzipper ./dist",
