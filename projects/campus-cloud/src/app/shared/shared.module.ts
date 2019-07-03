@@ -1,4 +1,3 @@
-/*tslint:disable:max-line-length */
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';

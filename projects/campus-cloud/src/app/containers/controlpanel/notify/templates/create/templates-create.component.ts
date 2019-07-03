@@ -1,12 +1,11 @@
-/* tslint:disable:max-line-length */
 import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { TooltipOption } from 'bootstrap';
 
 import { CPSession } from '@campus-cloud/session';
-import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { TemplatesService } from './../templates.service';
+import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { CustomValidators } from '@campus-cloud/shared/validators';
 import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
 import { AnnouncementsService } from './../../announcements/announcements.service';

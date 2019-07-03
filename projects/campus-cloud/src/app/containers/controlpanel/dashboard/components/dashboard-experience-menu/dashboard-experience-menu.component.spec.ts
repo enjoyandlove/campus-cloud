@@ -1,17 +1,16 @@
-/*tslint:disable:max-line-length */
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, NavigationExtras } from '@angular/router';
 import { By } from '@angular/platform-browser';
 
 import { CPSession } from '@campus-cloud/session';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { DashboardModule } from '../../dashboard.module';
 import { DashboardService } from '../../dashboard.service';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { MockRouter } from '../../tests/dashboard.activatedroute';
 import { MockDashboardService } from '../../tests/dashboard.service';
 import { DashboardUtilsService } from '../../dashboard.utils.service';
+import { CPDropdownComponent } from '@campus-cloud/shared/components';
 import { DashboardExperienceMenuComponent } from './dashboard-experience-menu.component';
-import { CPDropdownComponent } from '@campus-cloud/shared/components/cp-dropdown/cp-dropdown.component';
 
 describe('DashboardExperienceMenuComponent', () => {
   configureTestSuite();

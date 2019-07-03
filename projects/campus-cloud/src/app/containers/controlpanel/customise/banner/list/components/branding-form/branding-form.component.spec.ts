@@ -46,7 +46,7 @@ describe('BrandingFormComponent', () => {
   });
 
   it('should change color', () => {
-    const spy = spyOn(component.onChangeColor, 'emit');
+    const spy = spyOn(component.changeColor, 'emit');
     const colorInput = de.query(By.css('[data-target="branding_color"]')).nativeElement;
 
     colorInput.value = 'FFFFFF';
@@ -57,7 +57,7 @@ describe('BrandingFormComponent', () => {
   });
 
   it('should emit upload', () => {
-    const spy = spyOn(component.onUploadLogo, 'emit');
+    const spy = spyOn(component.uploadLogo, 'emit');
     const uploadInput = de.query(By.css('[data-target="upload_school_logo"]')).nativeElement;
 
     uploadInput.dispatchEvent(new Event('fileUpload'));
@@ -66,7 +66,7 @@ describe('BrandingFormComponent', () => {
   });
 
   it('should emit remove', () => {
-    const spy = spyOn(component.onRemoveLogo, 'emit');
+    const spy = spyOn(component.removeLogo, 'emit');
     const uploadInput = de.query(By.css('[data-target="remove_school_logo"]')).nativeElement;
 
     uploadInput.dispatchEvent(new Event('click'));

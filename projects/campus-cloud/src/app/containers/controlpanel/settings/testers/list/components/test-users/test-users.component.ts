@@ -13,9 +13,9 @@ export class TestUsersComponent implements OnInit {
   @Input() noContentText: string;
   @Input() sortDirection: SortDirection;
 
-  @Output() onResend: EventEmitter<number> = new EventEmitter();
-  @Output() onDelete: EventEmitter<number> = new EventEmitter();
-  @Output() onSort: EventEmitter<SortDirection> = new EventEmitter();
+  @Output() resend: EventEmitter<number> = new EventEmitter();
+  @Output() delete: EventEmitter<number> = new EventEmitter();
+  @Output() sort: EventEmitter<SortDirection> = new EventEmitter();
 
   constructor() {}
 

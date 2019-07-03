@@ -58,7 +58,7 @@ describe('TestUsersComponent', () => {
   });
 
   it('should emit resend', () => {
-    const spy = spyOn(component.onResend, 'emit');
+    const spy = spyOn(component.resend, 'emit');
     const resendBtn = debugEl.query(By.css('.cpbtn--secondary'));
     resendBtn.triggerEventHandler('click', null);
     expect(spy).toHaveBeenCalledTimes(1);
@@ -66,7 +66,7 @@ describe('TestUsersComponent', () => {
   });
 
   it('should emit delete', () => {
-    const spy = spyOn(component.onDelete, 'emit');
+    const spy = spyOn(component.delete, 'emit');
     const deleteBtn = debugEl.query(By.css('.delete'));
     deleteBtn.triggerEventHandler('click', null);
     expect(spy).toHaveBeenCalledTimes(1);

@@ -49,7 +49,8 @@ export class AudienceSavedBodyComponent implements OnInit {
     const stream$ = combineLatest([audiences$, persona$, this.importedAudience$]);
 
     stream$.subscribe((res: any) => {
-      let [audiences, personas, importedAudience] = res;
+      let [audiences, personas] = res;
+      const importedAudience = res.importedAudience;
 
       personas = this.utils.parsedPersona(personas);
       audiences = this.utils.parsedAudience(audiences);

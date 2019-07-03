@@ -1,12 +1,11 @@
-/*tslint:disable:max-line-length */
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { CPSession } from '../../../../../session';
-import { CPI18nService } from '../../../../../shared/services';
-import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { AudienceService } from '@campus-cloud/containers/controlpanel/audience/audience.service';
 
 @Component({
   selector: 'cp-audience-users-typeahead',

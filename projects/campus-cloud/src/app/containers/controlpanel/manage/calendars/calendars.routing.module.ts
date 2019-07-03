@@ -1,18 +1,15 @@
-/* tslint:disable:max-line-length */
-
-import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 
 import { CalendarsListComponent } from './list';
 import { CalendarsDetailComponent } from './details';
-import {
-  CalendarsItemCreateComponent,
-  CalendarsItemsDetailsComponent,
-  CalendarsItemsEditComponent
-} from './items';
-
 import { pageTitle } from '@campus-cloud/shared/constants';
 import { CalendarsItemsBulkCreateComponent } from './items/bulk-create/calendats-items-bulk-create.component';
+import {
+  CalendarsItemsEditComponent,
+  CalendarsItemCreateComponent,
+  CalendarsItemsDetailsComponent
+} from './items';
 
 const appRoutes: Routes = [
   {

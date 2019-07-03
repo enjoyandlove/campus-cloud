@@ -1,10 +1,9 @@
-/*tslint:disable:max-line-length*/
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { ISnackbar, baseActions } from '../../../../../../../store/base';
-import { FileUploadService, CPI18nService } from '../../../../../../../shared/services';
-import { CPImageUploadComponent } from './../../../../../../../shared/components/cp-image-upload/cp-image-upload.component';
+import { ISnackbar, baseActions } from '@campus-cloud/store/base';
+import { CPImageUploadComponent } from '@campus-cloud/shared/components';
+import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-import-top-bar',

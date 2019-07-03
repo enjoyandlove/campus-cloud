@@ -7,8 +7,8 @@ import { Component, OnInit, Output, EventEmitter, ChangeDetectionStrategy } from
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TestersActionBoxComponent implements OnInit {
-  @Output() onCreate: EventEmitter<null> = new EventEmitter();
-  @Output() onSearch: EventEmitter<string> = new EventEmitter();
+  @Output() create: EventEmitter<null> = new EventEmitter();
+  @Output() search: EventEmitter<string> = new EventEmitter();
 
   constructor() {}
 
