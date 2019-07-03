@@ -40,7 +40,7 @@
     "@ngrx/router-store": "8.0.1",
     "@ngrx/store": "8.0.1",
     "@ngrx/store-devtools": "8.0.1",
-    "@sentry/browser": "5.4.0",
+    "@sentry/browser": "5.4.3",
     "amplitude-js": "5.2.2",
     "angular-sortablejs": "2.7.0",
     "bootstrap": "4.3.1",
