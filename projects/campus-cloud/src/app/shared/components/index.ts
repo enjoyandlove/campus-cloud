@@ -34,7 +34,6 @@ export * from './cp-range-picker';
 export * from './cp-char-counter';
 export * from './cp-image-upload';
 export * from './cp-upload-modal';
-export * from './cp-top-ga-modal';
 export * from './cp-image-cropper';
 export * from './cp-school-switch';
 export * from './cp-upload-button';

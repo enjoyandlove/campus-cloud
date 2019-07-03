@@ -113,13 +113,19 @@ export class StudentsComposeComponent implements OnInit {
      */
     this.selectedStore = this.props.storeId ? null : this.session.defaultHost;
 
-    this.stores$ = this.storeService.getStores(search, '---').pipe(
-      tap((stores) => {
-        if (this.props.storeId) {
-          this.getSelectedStore(stores);
-        }
+    this.stores$ = this.storeService
+      .getStores(search, {
+        label: '---',
+        value: null,
+        heading: true
       })
-    );
+      .pipe(
+        tap((stores) => {
+          if (this.props.storeId) {
+            this.getSelectedStore(stores);
+          }
+        })
+      );
   }
 
   getSelectedStore(stores) {
