@@ -1,26 +1,24 @@
-import { debounceTime, distinctUntilChanged, map, filter } from 'rxjs/operators';
-import { BehaviorSubject, fromEvent, Observable, merge } from 'rxjs';
+import { BehaviorSubject, fromEvent, Observable, Subject } from 'rxjs';
+import { debounceTime, map, filter, takeUntil } from 'rxjs/operators';
 import {
-  AfterViewInit,
-  EventEmitter,
-  ElementRef,
-  Component,
-  ViewChild,
-  OnInit,
   Output,
-  Input
+  Input,
+  Component,
+  OnDestroy,
+  ElementRef,
+  ViewChild,
+  AfterViewInit,
+  EventEmitter
 } from '@angular/core';
 
 import { CPI18nService } from '@campus-cloud/shared/services';
-
-const RESET = Symbol('reset');
 
 @Component({
   selector: 'cp-searchbox',
   templateUrl: './cp-searchbox.component.html',
   styleUrls: ['./cp-searchbox.component.scss']
 })
-export class CPSearchBoxComponent implements AfterViewInit, OnInit {
+export class CPSearchBoxComponent implements AfterViewInit, OnDestroy {
   @Input() fixed: true;
   @Input() placeholder: string;
 
@@ -30,37 +28,26 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
   @Output() searching: EventEmitter<boolean> = new EventEmitter();
 
   stream$: Observable<string>;
-  reset$: BehaviorSubject<symbol> = new BehaviorSubject(RESET);
+  destroy$ = new Subject();
   isSearch$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(public cpI18n: CPI18nService) {}
-
-  onClear() {
-    this.query.emit(null);
-    this.isSearch$.next(false);
-    this.q.nativeElement.value = '';
-    this.reset$.next(RESET);
-  }
 
   ngAfterViewInit() {
     const input = this.q.nativeElement;
     this.stream$ = fromEvent(input, 'keyup');
 
-    merge(
-      this.reset$,
-      this.stream$.pipe(
-        map((res) => {
+    this.stream$
+      .pipe(
+        takeUntil(this.destroy$),
+        map((event: any) => event.target.value),
+        filter((query: string) => query.trim().length > 0),
+        map((query: string) => {
           this.searching.emit(true);
 
-          return res;
+          return query;
         }),
-        debounceTime(501),
-        map((res: any) => res.target.value)
-      )
-    )
-      .pipe(
-        distinctUntilChanged(),
-        filter((value) => value !== RESET)
+        debounceTime(501)
       )
       .subscribe((query) => {
         if (!query) {
@@ -77,5 +64,14 @@ export class CPSearchBoxComponent implements AfterViewInit, OnInit {
       });
   }
 
-  ngOnInit() {}
+  ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  onClear() {
+    this.query.emit(null);
+    this.isSearch$.next(false);
+    this.q.nativeElement.value = '';
+  }
 }
