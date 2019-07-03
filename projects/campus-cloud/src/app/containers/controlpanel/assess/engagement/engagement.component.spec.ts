@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 
 import { CPSession } from '@campus-cloud/session';
 import { baseActions } from '@campus-cloud/store/base';
-import { STATUS } from '@campus-cloud/shared/constants';
 import { EngagementService } from './engagement.service';
 import { mockUser } from '@campus-cloud/session/mock/user';
 import { EngagementComponent } from './engagement.component';
@@ -132,7 +131,7 @@ describe('EngagementComponent', () => {
     const expected = {
       type: baseActions.SNACKBAR_SHOW,
       payload: {
-        body: STATUS.MESSAGE_SENT,
+        body: component.cpI18n.translate('announcement_success_sent'),
         autoClose: true
       }
     };
