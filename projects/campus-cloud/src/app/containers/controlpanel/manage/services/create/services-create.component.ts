@@ -5,16 +5,15 @@ import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { CPMap } from '@campus-cloud/shared/utils';
-import { membershipTypes } from './index';
 import { IService } from '../service.interface';
-import { CPSession, ISchool } from '@campus-cloud/session';
-import { CustomValidators } from '@campus-cloud/shared/validators';
+import { CPMap } from '@campus-cloud/shared/utils';
 import { ServicesService } from '../services.service';
 import { ServiceAttendance } from '../services.status';
+import { CPSession, ISchool } from '@campus-cloud/session';
 import { baseActions, IHeader } from '@campus-cloud/store/base';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { ServicesUtilsService } from '../services.utils.service';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
@@ -35,9 +34,9 @@ export class ServicesCreateComponent implements OnInit {
   showLocationDetails = false;
   categories$: Observable<any>;
   mapCenter: BehaviorSubject<any>;
-  membershipTypes = membershipTypes;
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
+  membershipTypes = this.utils.membershipTypes;
 
   eventProperties = {
     phone: null,

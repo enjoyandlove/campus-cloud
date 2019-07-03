@@ -5,11 +5,11 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { API } from '@campus-cloud/config/api';
-import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from './i18n.service';
 import { CP_PRIVILEGES_MAP } from '../constants';
-import { HTTPService } from '@campus-cloud/base/http.service';
+import { CPSession } from '@campus-cloud/session';
 import { amplitudeEvents } from '../constants/analytics';
+import { HTTPService } from '@campus-cloud/base/http.service';
 import { ClubStatus } from '@controlpanel/manage/clubs/club.status';
 import { isClubAthletic } from '@controlpanel/manage/clubs/clubs.athletics.labels';
 import { canAccountLevelReadResource, canSchoolReadResource } from '../utils/privileges';
@@ -19,7 +19,7 @@ const cpI18n = new CPI18nService();
 export interface IStore {
   label: string;
   value: number | null;
-  heading?: string;
+  heading?: boolean;
   hostType?: string;
 }
 
@@ -155,7 +155,11 @@ export class StoreService extends HTTPService {
 
   getStores(
     search: HttpParams,
-    placeHolder = cpI18n.translate('select_host')
+    placeHolder: IStore = {
+      label: cpI18n.translate('select_host'),
+      value: null,
+      heading: false
+    }
   ): Observable<IStore[]> {
     /**
      * Check for user privileges before masking the call
@@ -202,16 +206,7 @@ export class StoreService extends HTTPService {
           ];
         }
 
-        return [
-          {
-            label: placeHolder,
-            value: null,
-            heading: false
-          },
-          ...res[0],
-          ...res[1],
-          ...res[2]
-        ];
+        return [placeHolder, ...res[0], ...res[1], ...res[2]];
       })
     );
   }
