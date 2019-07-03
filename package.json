@@ -7,6 +7,7 @@
   },
   "scripts": {
     "i18n": "phraseapp pull",
+    "lint": "node_modules/.bin/ng lint",
     "clean-dist": "rimraf dist && mv _dist dist",
     "prebuild:staging": "node scripts/campus-cloud/build.js",
     "analyze": "webpack-bundle-analyzer dist/stats.json",

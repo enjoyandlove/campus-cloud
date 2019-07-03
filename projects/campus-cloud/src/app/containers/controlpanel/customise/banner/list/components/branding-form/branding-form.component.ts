@@ -11,9 +11,9 @@ export class BrandingFormComponent implements OnInit {
   @Input() textLogo: string;
   @Input() pkdbLink: string;
 
-  @Output() onUploadLogo: EventEmitter<any> = new EventEmitter();
-  @Output() onRemoveLogo: EventEmitter<null> = new EventEmitter();
-  @Output() onChangeColor: EventEmitter<string> = new EventEmitter();
+  @Output() uploadLogo: EventEmitter<any> = new EventEmitter();
+  @Output() removeLogo: EventEmitter<null> = new EventEmitter();
+  @Output() changeColor: EventEmitter<string> = new EventEmitter();
 
   constructor() {}
 

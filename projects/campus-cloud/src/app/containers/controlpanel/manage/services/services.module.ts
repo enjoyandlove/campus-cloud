@@ -1,4 +1,3 @@
-/* tslint:disable:max-line-length */
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -15,16 +14,16 @@ import { ProvidersService } from './providers.service';
 import { ServicesResolver } from './services.resolver';
 import { AssessModule } from '../../assess/assess.module';
 import { ServicesAttendanceComponent } from './attendance';
-import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
-import { ModalService, AdminService } from '@campus-cloud/shared/services';
 import { SharedModule } from '../../../../shared/shared.module';
 import { ServicesUtilsService } from './services.utils.service';
 import { ServicesRoutingModule } from './services.routing.module';
 import { ProvidersUtilsService } from './providers.utils.service';
 import { ServicesListActionBoxComponent } from './list/components';
 import { ServicesFeedsModule } from './feeds/services-feeds.module';
+import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 import { ServicesEventsModule } from './events/services-events.module';
 import { ServicesMembersModule } from './members/services-members.module';
+import { ModalService, AdminService } from '@campus-cloud/shared/services';
 import { EngagementModule } from '../../assess/engagement/engagement.module';
 import { CheckInModule } from '../events/attendance/check-in/check-in.module';
 import { ServicesExcelModalComponent, ServicesImportTopBarComponent } from './excel/components';

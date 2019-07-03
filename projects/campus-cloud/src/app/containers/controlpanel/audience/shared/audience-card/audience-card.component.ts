@@ -1,21 +1,20 @@
-/*tslint:disable:max-line-length*/
+import { BehaviorSubject } from 'rxjs';
+import { Store } from '@ngrx/store';
 import {
   Input,
-  Component,
   OnInit,
   Output,
+  QueryList,
+  Component,
   EventEmitter,
   ViewChildren,
-  AfterViewInit,
-  QueryList
+  AfterViewInit
 } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { BehaviorSubject } from 'rxjs';
 
-import { baseActions } from './../../../../../store/base';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { getAudienceState } from './../../../../../store/base/base.selectors';
-import { CPTabComponent } from './../../../../../shared/components/cp-tabs/components/cp-tab/cp-tab.component';
+import { baseActions } from '@campus-cloud/store/base';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPTabComponent } from '@campus-cloud/shared/components';
+import { getAudienceState } from '@campus-cloud/store/base/base.selectors';
 
 @Component({
   selector: 'cp-audience-card',

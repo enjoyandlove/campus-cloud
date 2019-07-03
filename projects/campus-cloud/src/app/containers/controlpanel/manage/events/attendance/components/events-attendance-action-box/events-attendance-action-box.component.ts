@@ -26,7 +26,7 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   @Output() addCheckIn: EventEmitter<null> = new EventEmitter();
   @Output() createExcel: EventEmitter<null> = new EventEmitter();
   @Output() sendMessage: EventEmitter<null> = new EventEmitter();
-  @Output() onToggleQr: EventEmitter<boolean> = new EventEmitter();
+  @Output() toggleQr: EventEmitter<boolean> = new EventEmitter();
   @Output() querySearch: EventEmitter<string> = new EventEmitter();
   @Output() trackClickCheckIn: EventEmitter<IEvent> = new EventEmitter();
   @Output() updateStudentFilter: EventEmitter<EngageUtils.IStudentFilter> = new EventEmitter();
@@ -72,7 +72,7 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   }
 
   onEnableDisableQR() {
-    this.onToggleQr.emit(this.hasQr);
+    this.toggleQr.emit(this.hasQr);
   }
 
   getStudentIds(attendees) {

@@ -1,27 +1,26 @@
-/* tslint:disable: max-line-length */
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@campus-cloud/session';
 import { CheckinMethod } from '../constants';
+import { CPSession } from '@campus-cloud/session';
 import { baseActions } from '@campus-cloud/store/base';
+import { EngagementService } from './engagement.service';
+import { AssessUtilsService } from '../assess.utils.service';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { BaseComponent } from '@campus-cloud/base/base.component';
-import { EngagementService } from './engagement.service';
 import { createSpreadSheet } from '@campus-cloud/shared/utils/csv/parser';
-import { AssessUtilsService } from '../assess.utils.service';
 import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import {
   DivideBy,
+  groupByYear,
   groupByWeek,
   groupByMonth,
   groupByQuarter,
-  CPLineChartUtilsService,
-  groupByYear
+  CPLineChartUtilsService
 } from '@campus-cloud/shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 declare var $;

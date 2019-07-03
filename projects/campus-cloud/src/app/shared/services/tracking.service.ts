@@ -1,4 +1,3 @@
-/* tslint:disable: max-line-length */
 import { PRIMARY_OUTLET, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import * as amplitude from 'amplitude-js';

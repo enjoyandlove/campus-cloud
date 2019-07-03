@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TestBed } from '@angular/core/testing';
+import { Type } from '@angular/core';
 
 import { HTTPService } from './http.service';
 
@@ -15,7 +16,7 @@ describe('HTTPService', () => {
   });
 
   beforeEach(() => {
-    service = TestBed.get(HTTPService);
+    service = TestBed.get(HTTPService as Type<HTTPService>);
   });
 
   it('should sanitize string', () => {

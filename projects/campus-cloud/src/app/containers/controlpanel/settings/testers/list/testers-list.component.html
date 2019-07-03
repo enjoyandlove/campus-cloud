@@ -1,9 +1,14 @@
 <ng-container [ngSwitch]="isEmpty && !isLoading">
-  <cp-no-testers *ngSwitchCase="true" (onCreate)="doCreateModal()"> </cp-no-testers>
+  <cp-no-testers
+    *ngSwitchCase="true"
+    (create)="doCreateModal()">
+  </cp-no-testers>
   <ng-container *ngSwitchCase="false">
     <div class="row">
       <div class="col-12">
-        <cp-testers-action-box (onCreate)="doCreateModal()" (onSearch)="doSearch($event)">
+        <cp-testers-action-box
+          (create)="doCreateModal()"
+          (search)="doSearch($event)">
         </cp-testers-action-box>
       </div>
     </div>
@@ -14,10 +19,9 @@
         [users]="testers$ | async"
         [sortDirection]="sortDirection$ | async"
         [noContentText]="cpI18n.translate('t_sandbox_no_results_found')"
-        (onSort)="doSort($event)"
-        (onResend)="doResend($event)"
-        (onDelete)="doDelete($event)"
-      >
+        (sort)="doSort($event)"
+        (resend)="doResend($event)"
+        (delete)="doDelete($event)">
       </cp-test-users>
     </div>
   </ng-container>

@@ -28,12 +28,12 @@ describe('AudienceSaveModalComponent', () => {
   });
 
   it('doSubmit', () => {
-    spyOn(comp.onSubmit, 'emit');
+    spyOn(comp.submitEvent, 'emit');
 
     comp.doSubmit();
 
-    expect(comp.onSubmit.emit).toHaveBeenCalledTimes(1);
-    expect(comp.onSubmit.emit).toHaveBeenCalledWith({ name: null });
+    expect(comp.submitEvent.emit).toHaveBeenCalledTimes(1);
+    expect(comp.submitEvent.emit).toHaveBeenCalledWith({ name: null });
   });
 
   it('ngOnInit', () => {
