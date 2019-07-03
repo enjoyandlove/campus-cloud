@@ -4,8 +4,8 @@ import { FormGroup, ValidationErrors } from '@angular/forms';
 import IEvent from './event.interface';
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { CPDate, Formats, createSpreadSheet } from '@campus-cloud/shared/utils';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { qrCode, EventType, attendanceType, CheckInOutTime, EventAttendance } from './event.status';
 
 export interface IEventType {
@@ -73,11 +73,15 @@ export class EventUtilService {
     const children = [
       {
         label: 'info',
+        isSubMenuItem: true,
+        amplitude: amplitudeEvents.INFO,
         url: `${urlPrefix}/${event.id}/info`
       },
       {
         label: 'assessment',
-        url: `${urlPrefix}/${event.id}`
+        isSubMenuItem: true,
+        url: `${urlPrefix}/${event.id}`,
+        amplitude: amplitudeEvents.ASSESSMENT
       }
     ];
 
