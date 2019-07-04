@@ -1,6 +1,7 @@
 import { FormControl } from '@angular/forms';
 
-import { LocationModel, IDining } from './';
+import { IDining } from './dining.interface';
+import { LocationModel } from './location.model';
 
 export class DiningModel {
   static form(dining?: IDining) {
