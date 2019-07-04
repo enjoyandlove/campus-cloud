@@ -9,7 +9,8 @@ import { DiningCategoriesEditComponent } from './edit';
 import { DiningCategoriesCreateComponent } from './create';
 import { DiningCategoriesDeleteComponent } from './delete';
 
-import { effects, reducers } from './store';
+import { reducers } from './store';
+import { effects } from './store/effects';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { DiningCategoriesService } from './dining-categories.service';
 import { DiningCategoriesRoutingModule } from './dining-categories.routing.module';

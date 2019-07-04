@@ -1,4 +1,3 @@
-/*tslint:disable:max-line-length*/
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
@@ -7,14 +6,13 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '@campus-cloud/session';
 import { baseActions, IHeader } from '@campus-cloud/store';
-import { canSchoolReadResource } from '@campus-cloud/shared/utils';
-import { parseErrorResponse } from '@campus-cloud/shared/utils/http';
-import { CustomValidators } from '@campus-cloud/shared/validators';
 import { AnnouncementsService } from '../announcements.service';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { AudienceType } from '@controlpanel/audience/audience.status';
+import { AudienceUtilsService } from '@controlpanel/audience/audience.utils.service';
+import { parseErrorResponse, canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPI18nService, StoreService, CPTrackingService } from '@campus-cloud/shared/services';
-import { AudienceUtilsService } from '@controlpanel/audience/audience.utils.service';
 
 interface IState {
   isUrgent: boolean;

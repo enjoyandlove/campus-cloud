@@ -1,21 +1,23 @@
-/* tslint:disable:max-line-length */
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { Router } from '@angular/router';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Store, StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
-import { CPSession } from './../../../../session';
-import { mockSchool } from './../../../../session/mock/school';
-import { mockUser } from './../../../../session/mock/user';
-import { STATUS } from './../../../../shared/constants/status';
-import { CPAmplitudeService } from './../../../../shared/services/amplitude.service';
-import { baseActions } from './../../../../store/base';
-import { EngagementComponent } from './engagement.component';
+import { Router } from '@angular/router';
+
+import { CPSession } from '@campus-cloud/session';
+import { baseActions } from '@campus-cloud/store/base';
 import { EngagementService } from './engagement.service';
-import { CPLineChartUtilsService } from '../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
-import { CPI18nService, CPTrackingService } from '../../../../shared/services';
-import { baseReducers } from '../../../../store/base/reducers';
+import { mockUser } from '@campus-cloud/session/mock/user';
+import { EngagementComponent } from './engagement.component';
 import { AssessUtilsService } from '../assess.utils.service';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { baseReducers } from '@campus-cloud/store/base/reducers';
+import { CPLineChartUtilsService } from '@campus-cloud/shared/components/cp-line-chart/cp-line-chart.utils.service';
+import {
+  CPI18nService,
+  CPTrackingService,
+  CPAmplitudeService
+} from '@campus-cloud/shared/services';
 
 const mockFilterState = {
   engagement: {
@@ -129,7 +131,7 @@ describe('EngagementComponent', () => {
     const expected = {
       type: baseActions.SNACKBAR_SHOW,
       payload: {
-        body: STATUS.MESSAGE_SENT,
+        body: component.cpI18n.translate('announcement_success_sent'),
         autoClose: true
       }
     };

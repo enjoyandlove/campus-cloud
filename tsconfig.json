@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "target": "ES5",
     "module": "commonjs",
+    "resolveJsonModule": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "sourceMap": true,

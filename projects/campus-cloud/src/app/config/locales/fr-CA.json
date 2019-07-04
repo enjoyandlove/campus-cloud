@@ -1463,24 +1463,6 @@
   "from": {
     "message": "Depuis"
   },
-  "ga_onboarding_date": {
-    "message": "12 fevrier, 2018"
-  },
-  "ga_onboarding_text_1": {
-    "message": "Le Campus Cloud change. Il sera plus rapide, plus puissant et plus fluide pour vous."
-  },
-  "ga_onboarding_text_2": {
-    "message": "Le campus cloud deviendra l'expérience par défaut le"
-  },
-  "ga_onboarding_text_3": {
-    "message": "et l'ancienne version ne sera plus disponible"
-  },
-  "ga_onboarding_text_4": {
-    "message": "Vous pouvez tout savoir à propos du Campus Cloud avec des guides et aides dans notre nouveau"
-  },
-  "ga_onboarding_text_5": {
-    "message": "Si vous avez des questions, commentaires ou retours, nous aimerions le savoir:"
-  },
   "hello": {
     "message": "Bonjour"
   },
@@ -1955,12 +1937,6 @@
   },
   "results": {
     "message": "Résultat"
-  },
-  "return_to_campus_cloud": {
-    "message": "Retourner au Campus Cloud"
-  },
-  "return_to_old_control_panel": {
-    "message": "Retourner à l'ancienne version"
   },
   "reupload": {
     "message": "Re-téléverser"

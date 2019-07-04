@@ -176,20 +176,26 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
 
   loadStores() {
     const headers = this.defaultHeaders;
-    return this.storeService.getStores(headers).pipe(
-      map((stores) =>
-        stores.map((s) => {
-          return s.value
-            ? {
-                ...s,
-                action: s.value
-              }
-            : s;
-        })
-      ),
-      map((stores) => this.updateValues(stores, CampusLink.store)),
-      catchError((err) => this.handleError(err))
-    );
+    return this.storeService
+      .getStores(headers, {
+        label: '---',
+        value: null,
+        heading: true
+      })
+      .pipe(
+        map((stores) =>
+          stores.map((s) => {
+            return s.value
+              ? {
+                  ...s,
+                  action: s.value
+                }
+              : s;
+          })
+        ),
+        map((stores) => this.updateValues(stores, CampusLink.store)),
+        catchError((err) => this.handleError(err))
+      );
   }
 
   updateValues(items, link_url) {

@@ -1,12 +1,11 @@
-/*tslint:disable:max-line-length*/
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
 import { CheckInMethod } from '@controlpanel/manage/events/event.status';
-import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking/tracking.directive';
 import IServiceProvider from '@controlpanel/manage/services/providers.interface';
 import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import * as EngageUtils from '@controlpanel/assess/engagement/engagement.utils.service';
@@ -30,7 +29,7 @@ export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
   @Output() download: EventEmitter<null> = new EventEmitter();
   @Output() search: EventEmitter<null> = new EventEmitter();
   @Output() addCheckIn: EventEmitter<null> = new EventEmitter();
-  @Output() onToggleQr: EventEmitter<boolean> = new EventEmitter();
+  @Output() toggleQr: EventEmitter<boolean> = new EventEmitter();
   @Output() filterByDates: EventEmitter<IDateRange> = new EventEmitter();
   @Output() updateStudentFilter: EventEmitter<EngageUtils.IStudentFilter> = new EventEmitter();
 
@@ -60,7 +59,7 @@ export class ServicesProvidersAttendeesActionBoxComponent implements OnInit {
   }
 
   onEnableDisableQR() {
-    this.onToggleQr.emit(this.hasQr);
+    this.toggleQr.emit(this.hasQr);
   }
 
   onDateChange(dateRange) {

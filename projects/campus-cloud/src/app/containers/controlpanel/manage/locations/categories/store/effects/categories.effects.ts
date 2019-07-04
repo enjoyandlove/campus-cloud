@@ -5,16 +5,18 @@ import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { ISnackbar } from '@campus-cloud/store';
 import * as fromActions from '../actions';
+import { ISnackbar } from '@campus-cloud/store';
 import { baseActionClass } from '@campus-cloud/store/base';
-import * as fromLocationStore from '../../../store';
+import { CategoriesService } from '../../categories.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { parseErrorResponse } from '@campus-cloud/shared/utils/http';
 import { ILocation } from '@campus-cloud/libs/locations/common/model';
-import { CategoriesService } from '../../categories.service';
+import { getLocations } from '@controlpanel/manage/locations/store/selectors';
+import { ILocationsState } from '@controlpanel/manage/locations/store/reducers';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
+import { GetLocationsSuccess } from '@controlpanel/manage/locations/store/actions';
 import { CategoriesUtilsService } from '@campus-cloud/libs/locations/common/categories/categories.utils.service';
 
 @Injectable()
@@ -25,7 +27,7 @@ export class CategoriesEffects {
     private service: CategoriesService,
     private cpTracking: CPTrackingService,
     private utils: CategoriesUtilsService,
-    private store: Store<fromLocationStore.ILocationsState | ISnackbar>
+    private store: Store<ILocationsState | ISnackbar>
   ) {}
 
   @Effect()
@@ -125,10 +127,10 @@ export class CategoriesEffects {
   );
 
   @Effect()
-  editCategoriesSuccess$: Observable<fromLocationStore.GetLocationsSuccess> = this.actions$.pipe(
+  editCategoriesSuccess$: Observable<GetLocationsSuccess> = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.EDIT_CATEGORY_SUCCESS),
     map((action: fromActions.EditCategorySuccess) => action.payload),
-    withLatestFrom(this.store.select(fromLocationStore.getLocations)),
+    withLatestFrom(this.store.select(getLocations)),
     map(([{ id, name, img_url, color }, locations]) => {
       return locations.map((l: ILocation) => {
         if (l.category_id === id) {
@@ -143,7 +145,7 @@ export class CategoriesEffects {
       });
     }),
     filter((l: ILocation[]) => coerceBooleanProperty(l.length)),
-    mergeMap((l) => of(new fromLocationStore.GetLocationsSuccess(l)))
+    mergeMap((l) => of(new GetLocationsSuccess(l)))
   );
 
   @Effect()

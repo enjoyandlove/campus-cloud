@@ -38,7 +38,7 @@ describe('NoTestersComponent', () => {
   });
 
   it('should emit create', () => {
-    const spy = spyOn(component.onCreate, 'emit');
+    const spy = spyOn(component.create, 'emit');
     const inviteBtn = debugEl.query(By.css('.cpbtn--primary'));
     inviteBtn.triggerEventHandler('click', null);
     expect(spy).toHaveBeenCalledTimes(1);

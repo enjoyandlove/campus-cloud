@@ -1,14 +1,13 @@
-/*tslint:disable:max-line-length */
-
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of as observableOf } from 'rxjs';
-import { AudienceService } from './../../../../../containers/controlpanel/audience/audience.service';
-import { CPSession } from './../../../../../session';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { AudienceUtilsService } from './../../audience.utils.service';
 import { AudienceSavedBodyComponent } from './audience-saved-body.component';
-import { SharedModule } from '../../../../../shared/shared.module';
+import { AudienceService } from '@campus-cloud/containers/controlpanel/audience/audience.service';
 
 const mockAudiences = [
   {

@@ -35,18 +35,11 @@
           >
             {{ 'services_button_add_service_provider' | cpI18n }}
           </button>
-          <div
-            class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown"
-          >
-            <i class="material-icons" data-toggle="dropdown">
-              expand_more
-            </i>
-            <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
-              <li *ngIf="!noProviders" (click)="onDownload()">
-                {{ 'services_button_download_assessment_data' | cpI18n }}
-              </li>
-            </ul>
-          </div>
+          <cp-menu>
+            <cp-menu-item *ngIf="!noProviders">
+              <span (click)="onDownload()">{{ 'services_button_download_assessment_data' | cpI18n }}</span>
+            </cp-menu-item>
+          </cp-menu>
         </div>
       </div>
     </div>

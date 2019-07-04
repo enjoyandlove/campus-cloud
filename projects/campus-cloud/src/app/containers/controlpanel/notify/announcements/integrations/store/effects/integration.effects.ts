@@ -5,19 +5,19 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@campus-cloud/session';
 import * as fromActions from '../actions';
-import * as fromStore from '../../store';
+import * as fromSelectors from '../selectors';
+import { CPSession } from '@campus-cloud/session';
 import * as fromRoot from '@campus-cloud/store/base';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { IAnnouncementsIntegration } from '../../model';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { IntegrationsService } from '../../integrations.service';
-import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import { types } from '@controlpanel/notify/announcements/compose/announcement-types';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import {
-  CPI18nService,
-  StoreService,
   IStore,
+  StoreService,
+  CPI18nService,
   CPTrackingService
 } from '@campus-cloud/shared/services';
 
@@ -132,7 +132,7 @@ export class AnnouncementIntegrationsEffects {
 
   private setHostType(hostId: number) {
     this.store
-      .select(fromStore.getSenders)
+      .select(fromSelectors.getSenders)
       .pipe(take(1))
       .subscribe(
         (stores: IStore[]) =>
