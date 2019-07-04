@@ -1,23 +1,22 @@
-/* tslint:disable:max-line-length */
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { CalendarRoutingModule } from './calendars.routing.module';
-import { CalendarsService } from './calendars.services';
-import { CalendarsFormComponent } from './components/calendar-form/index';
+import { NgModule } from '@angular/core';
+
+import { CalendarsListComponent } from './list';
+import { CalendarsEditComponent } from './edit';
 import { CalendarsCreateComponent } from './create';
 import { CalendarsDeleteComponent } from './delete';
 import { CalendarsDetailComponent } from './details';
-import { CalendarsDetailsActionBoxComponent } from './details/components/action-box/calendars-details-action-box.component';
-import { CalendarsEditComponent } from './edit';
-import { CalendarsItemCreateComponent } from './items/create/calendars-items-create.component';
+import { CalendarsService } from './calendars.services';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { CalendarRoutingModule } from './calendars.routing.module';
 import { CalendarsItemsService } from './items/item.utils.service';
-import { CalendarsListComponent } from './list';
 import { CalendarsListActionBoxComponent } from './list/components';
-import { SharedModule } from '../../../../shared/shared.module';
-
-import { CalendarsItemsImportConfirmationComponent } from './items/components/import-confirmation-modal/import-confirmation-modal.component';
+import { CalendarsFormComponent } from './components/calendar-form';
+import { CalendarsItemsImportConfirmationComponent } from './items/components';
+import { CalendarsItemCreateComponent } from './items/create/calendars-items-create.component';
+import { CalendarsDetailsActionBoxComponent } from './details/components/action-box/calendars-details-action-box.component';
 
 import {
   CalendarsItemsDeleteComponent,

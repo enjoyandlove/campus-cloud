@@ -1,20 +1,19 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject, combineLatest } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
 import { CPMap } from '@campus-cloud/shared/utils';
-import { membershipTypes } from '../create';
-import { CPSession, ISchool } from '@campus-cloud/session';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { ServicesService } from '../services.service';
-import { CustomValidators } from '@campus-cloud/shared/validators';
+import { CPSession, ISchool } from '@campus-cloud/session';
 import { baseActions, IHeader } from '@campus-cloud/store/base';
-import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ServicesUtilsService } from '../services.utils.service';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { RatingScale, ServiceAttendance } from '../services.status';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
@@ -39,9 +38,9 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   attendance = false;
   showLocationDetails = false;
   mapCenter: BehaviorSubject<any>;
-  membershipTypes = membershipTypes;
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
+  membershipTypes = this.utils.membershipTypes;
 
   eventProperties = {
     phone: null,

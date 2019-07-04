@@ -59,27 +59,30 @@ export class ContentUtilsProviders {
     return !TilesUtilsService.loginRequiredTiles.includes(linkUrl);
   }
 
-  static isIntegration = (integrationData: IIntegrationData[], personaIsNoLogin: boolean) => (
-    resource: IStudioContentResource
-  ) => {
-    const extraDataType: ExtraDataType = _get(resource, ['meta', 'extra_data_type'], false);
-    if (!extraDataType) {
-      return true;
-    }
+  static isIntegration(integrationData: IIntegrationData[], personaIsNoLogin: boolean) {
+    return (resource: IStudioContentResource) => {
+      const extraDataType: ExtraDataType = _get(resource, ['meta', 'extra_data_type'], false);
+      if (!extraDataType) {
+        return true;
+      }
 
-    const extraData: IExtraData = IntegrationDataUtils.getExtraData(integrationData, extraDataType);
-    if (!extraData) {
-      return false;
-    }
+      const extraData: IExtraData = IntegrationDataUtils.getExtraData(
+        integrationData,
+        extraDataType
+      );
+      if (!extraData) {
+        return false;
+      }
 
-    const loginRequired = _get(
-      extraData,
-      ['config_data', 'client_int', 0, 'request', 'cookies', 'rea.auth'],
-      undefined
-    );
+      const loginRequired = _get(
+        extraData,
+        ['config_data', 'client_int', 0, 'request', 'cookies', 'rea.auth'],
+        undefined
+      );
 
-    return loginRequired ? !personaIsNoLogin : true;
-  };
+      return loginRequired ? !personaIsNoLogin : true;
+    };
+  }
 
   static getContentTypeByCampusLink(campusLink) {
     let resource;
@@ -111,15 +114,15 @@ export class ContentUtilsProviders {
     return resource;
   }
 
-  static getWebLinkContentType(linkData) {
+  static getWebLinkContentType({ link_type, open_in_browser }): IStudioContentResource | undefined {
     return ContentUtilsProviders.resourceTypes()[ContentUtilsProviders.contentTypes.web].find(
       (l) => {
-        const regularWebLinkType = linkData.link_type === 0;
+        const regularWebLinkType = link_type === 0;
         return regularWebLinkType
-          ? Boolean(l.meta.open_in_browser) === linkData.open_in_browser
-          : l.link_type === linkData.link_type;
+          ? Boolean(l.meta.open_in_browser) === open_in_browser
+          : l.link_type === link_type;
       }
-    ).label;
+    );
   }
 
   static resourceTypes(): { [key: string]: Array<IStudioContentResource> } {

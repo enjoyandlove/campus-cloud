@@ -279,6 +279,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
           return g;
         })
       };
+
       if (this.isSectionEmpty(previousSectionId)) {
         this.deleteEmptySection(previousSectionId);
       }

@@ -1,13 +1,15 @@
 <cp-card>
   <div class="row">
-    <cp-searchbox class="col-3" cpTarget="search_test_users" (query)="onSearch.emit($event)">
+    <cp-searchbox
+      class="col-3"
+      cpTarget="search_test_users"
+      (query)="search.emit($event)">
     </cp-searchbox>
     <div class="col-9">
       <button
         cpTarget="invite_test_users"
         class="cpbtn cpbtn--primary float-right"
-        (click)="onCreate.emit()"
-      >
+        (click)="create.emit()">
         {{ 't_sandbox_invite_users' | cpI18n }}
       </button>
     </div>

@@ -1,4 +1,3 @@
-/*tslint:disable:max-line-length */
 import { Component, Input, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
@@ -6,13 +5,13 @@ import { map, switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
 import { IService } from '../service.interface';
+import { ServicesService } from '../services.service';
 import { CPSession, ISchool } from '@campus-cloud/session';
 import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
-import { ServicesService } from '../services.service';
+import { ServicesUtilsService } from '../services.utils.service';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { AdminService, IAdmin } from '@campus-cloud/shared/services';
-import { BaseComponent } from '@campus-cloud/base/base.component';
-import { ServicesUtilsService } from '../services.utils.service';
 import { IResourceBanner } from '@campus-cloud/shared/components/cp-resource-banner';
 
 @Component({

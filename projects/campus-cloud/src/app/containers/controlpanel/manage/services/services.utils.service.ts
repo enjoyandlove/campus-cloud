@@ -21,6 +21,19 @@ import { attendanceType, CheckInMethod, CheckInOutTime } from '../events/event.s
 
 @Injectable()
 export class ServicesUtilsService {
+  membershipTypes = [
+    {
+      action: true,
+      label: this.cpI18n.translate('service_enabled'),
+      description: this.cpI18n.translate('t_services_membership_enabled')
+    },
+    {
+      action: false,
+      label: this.cpI18n.translate('services_disabled'),
+      description: this.cpI18n.translate('t_services_membership_disabled')
+    }
+  ];
+
   constructor(
     public fb: FormBuilder,
     public session: CPSession,

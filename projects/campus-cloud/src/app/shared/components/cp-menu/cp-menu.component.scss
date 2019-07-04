@@ -1,0 +1,22 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+
+.menu-button {
+  position: relative;
+
+  &.disabled {
+    pointer-events: none;
+    background: $color-brand-off;
+  }
+
+  i {
+    padding: 4px;
+    font-size: 23px;
+    line-height: 1.1;
+  }
+
+  ul {
+    padding: 0;
+    width: 200px;
+    display: block;
+  }
+}

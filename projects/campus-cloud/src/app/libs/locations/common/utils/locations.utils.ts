@@ -1,18 +1,17 @@
 import { FormArray, FormGroup } from '@angular/forms';
 import { Injectable } from '@angular/core';
 
+import { ScheduleModel, scheduleLabels } from '../model';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { getItem, IItem } from '@campus-cloud/shared/components';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { ScheduleModel, scheduleLabels } from '../model';
-import { LocationsTimeLabelPipe } from '@campus-cloud/libs/locations/common/pipes';
 import { ICategory, categoryTypes } from '@campus-cloud/libs/locations/common/categories/model';
 
 const days = Array.from(Array(7).keys());
 
 @Injectable()
 export class LocationsUtilsService {
-  constructor(public cpI18n: CPI18nService, public timeLabelPipe: LocationsTimeLabelPipe) {}
+  constructor(public cpI18n: CPI18nService) {}
 
   static getScheduleLabel(day) {
     return scheduleLabels[day];
@@ -286,9 +285,10 @@ export class LocationsUtilsService {
           return {
             name: item.name,
             time:
-              this.timeLabelPipe.transform(item.start_time) +
+              LocationsUtilsService.getLocationTiming().find((t) => t.value === item.start_time)
+                .label +
               ' - ' +
-              this.timeLabelPipe.transform(item.end_time)
+              LocationsUtilsService.getLocationTiming().find((t) => t.value === item.end_time).label
           };
         });
 

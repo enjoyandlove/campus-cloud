@@ -1,0 +1,16 @@
+<div
+  #menuButton
+  class="menu-button"
+  [ngClass]="buttonClass"
+  [class.disabled]="disabled">
+  <i
+    class="material-icons"
+    (click)="visible = !visible">
+    {{icon}}</i>
+  <ul
+    *ngIf="visible"
+    class="dropdown-menu"
+    [ngStyle]="{'left': leftPosition + 'px'}">
+    <ng-content></ng-content>
+  </ul>
+</div>

@@ -1,14 +1,13 @@
-/*tslint:disable:max-line-length */
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 
+import { ServicesService } from '../services.service';
 import { IDateRange } from '@campus-cloud/shared/components';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { ServicesService } from '../services.service';
-import { STAR_SIZE } from '@campus-cloud/shared/components/cp-stars';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ServicesUtilsService } from '../services.utils.service';
+import { STAR_SIZE } from '@campus-cloud/shared/components/cp-stars';
 import { IFilterState, ProvidersUtilsService } from '../providers.utils.service';
 import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
 import { ServicesProvidersListComponent } from './components/providers-list/providers-list.component';

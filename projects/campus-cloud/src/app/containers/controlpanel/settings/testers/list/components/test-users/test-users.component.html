@@ -6,7 +6,7 @@
           class="col-12"
           [label]="'email' | cpI18n"
           [sortDirection]="sortDirection"
-          (click)="onSort.emit(sortDirection)"
+          (click)="sort.emit(sortDirection)"
         >
         </cp-sorting-header>
       </div>
@@ -24,13 +24,13 @@
         <span class="col-2 text-truncate">
           <a
             class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary"
-            (click)="onResend.emit(user.id)"
+            (click)="resend.emit(user.id)"
           >
             {{ 't_sandbox_resend_invite' | cpI18n }}
           </a>
         </span>
         <span class="col-1 text-right actions">
-          <span class="hover delete" (click)="onDelete.emit(user.id)">
+          <span class="hover delete" (click)="delete.emit(user.id)">
             &times;
           </span>
         </span>

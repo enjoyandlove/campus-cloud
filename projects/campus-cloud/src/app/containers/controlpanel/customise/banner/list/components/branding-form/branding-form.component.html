@@ -15,7 +15,7 @@
         cpTarget="branding_color"
         [value]="form.controls['branding_color'].value"
         [ngClass]="{ error: form.controls['branding_color'].errors }"
-        (input)="onChangeColor.emit($event.target.value)"
+        (input)="changeColor.emit($event.target.value)"
       />
     </div>
   </div>
@@ -52,14 +52,14 @@
       buttonClass="cpbtn cpbtn--link semi-bold"
       [id]="'school_name_logo_url'"
       [buttonText]="'t_studio_branding_upload_logo' | cpI18n"
-      (fileUpload)="onUploadLogo.emit($event)"
+      (fileUpload)="uploadLogo.emit($event)"
     >
     </cp-upload-button>
     <button
       cpTarget="remove_school_logo"
       class="cpbtn cpbtn--link remove-logo"
       [disabled]="!form.controls['school_name_logo_url'].value"
-      (click)="onRemoveLogo.emit()"
+      (click)="removeLogo.emit()"
     >
       {{ 't_studio_branding_remove_logo' | cpI18n }}
     </button>

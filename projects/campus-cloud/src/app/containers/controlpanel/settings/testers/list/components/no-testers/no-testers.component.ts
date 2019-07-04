@@ -6,7 +6,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./no-testers.component.scss']
 })
 export class NoTestersComponent implements OnInit {
-  @Output() onCreate: EventEmitter<null> = new EventEmitter();
+  @Output() create: EventEmitter<null> = new EventEmitter();
 
   constructor() {}
 

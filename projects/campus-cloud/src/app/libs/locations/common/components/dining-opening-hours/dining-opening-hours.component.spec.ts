@@ -9,12 +9,9 @@ import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { mockSchedule } from '@campus-cloud/libs/locations/common/tests';
 import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
-import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 import { DiningOpeningHoursComponent } from './dining-opening-hours.component';
-import {
-  LocationsDayLabelPipe,
-  LocationsTimeLabelPipe
-} from '@campus-cloud/libs/locations/common/pipes';
+import { LocationsDayLabelPipe } from '@campus-cloud/libs/locations/common/pipes';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 
 describe('DiningOpeningHoursComponent', () => {
   configureTestSuite();
@@ -43,8 +40,7 @@ describe('DiningOpeningHoursComponent', () => {
     component = fixture.componentInstance;
 
     const cpI18n = new CPI18nService();
-    const timeLabelPipe = new LocationsTimeLabelPipe();
-    const parseSchedule = new LocationsUtilsService(cpI18n, timeLabelPipe);
+    const parseSchedule = new LocationsUtilsService(cpI18n);
     component.openingHours = parseSchedule.parsedSchedule(mockSchedule);
     de = fixture.debugElement;
 

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { TilesUtilsService } from './tiles/tiles.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers/content-utils';
+import { CPI18nService, CPLogger } from '@campus-cloud/shared/services';
+import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 
 const contentTypeLabels = {
   webLink: amplitudeEvents.WEB_LINK,
@@ -30,7 +30,12 @@ export class PersonasAmplitudeService {
       return amplitudeEvents.MULTIPLE_RESOURCES;
     } else if (resourceType === ContentUtilsProviders.contentTypes.web) {
       const webLinkContentType = ContentUtilsProviders.getWebLinkContentType(linkData);
-      return this.cpI18n.translate(webLinkContentType);
+      if (webLinkContentType) {
+        return this.cpI18n.translate(webLinkContentType.label);
+      } else {
+        CPLogger.log(`getWebLinkContentType missing ${linkData}`);
+        return;
+      }
     }
 
     const linkLabel = ContentUtilsProviders.resourceTypes()[resourceType].find(

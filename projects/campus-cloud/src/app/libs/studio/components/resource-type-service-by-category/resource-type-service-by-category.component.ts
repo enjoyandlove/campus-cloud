@@ -1,4 +1,3 @@
-/*tslint:disable:max-line-length */
 import { Component, EventEmitter, OnInit, Output, Input, ViewChild } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { map, tap } from 'rxjs/operators';

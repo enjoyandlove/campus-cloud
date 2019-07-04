@@ -1,17 +1,16 @@
-/*tslint:disable:max-line-length */
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '../../../../../session';
-import { FORMAT } from '../../../../../shared/pipes/date';
+import { CPSession } from '@campus-cloud/session';
+import { FORMAT } from '@campus-cloud/shared/pipes';
 import { DateStatus, DealsService } from '../deals.service';
-import { IHeader, baseActions } from '../../../../../store/base';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CPI18nService } from '../../../../../shared/services/index';
-import { IResourceBanner } from '../../../../../shared/components/cp-resource-banner/cp-resource.interface';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { IHeader, baseActions } from '@campus-cloud/store/base';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { IResourceBanner } from '@campus-cloud/shared/components';
 
 @Component({
   selector: 'cp-deals-info',

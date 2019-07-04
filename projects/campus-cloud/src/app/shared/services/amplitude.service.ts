@@ -1,4 +1,3 @@
-/* tslint:disable: max-line-length */
 import { Injectable } from '@angular/core';
 import * as amplitude from 'amplitude-js';
 import { get as _get } from 'lodash';
