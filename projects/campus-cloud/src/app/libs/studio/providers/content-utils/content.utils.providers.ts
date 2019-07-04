@@ -59,27 +59,30 @@ export class ContentUtilsProviders {
     return !TilesUtilsService.loginRequiredTiles.includes(linkUrl);
   }
 
-  static isIntegration = (integrationData: IIntegrationData[], personaIsNoLogin: boolean) => (
-    resource: IStudioContentResource
-  ) => {
-    const extraDataType: ExtraDataType = _get(resource, ['meta', 'extra_data_type'], false);
-    if (!extraDataType) {
-      return true;
-    }
+  static isIntegration(integrationData: IIntegrationData[], personaIsNoLogin: boolean) {
+    return (resource: IStudioContentResource) => {
+      const extraDataType: ExtraDataType = _get(resource, ['meta', 'extra_data_type'], false);
+      if (!extraDataType) {
+        return true;
+      }
 
-    const extraData: IExtraData = IntegrationDataUtils.getExtraData(integrationData, extraDataType);
-    if (!extraData) {
-      return false;
-    }
+      const extraData: IExtraData = IntegrationDataUtils.getExtraData(
+        integrationData,
+        extraDataType
+      );
+      if (!extraData) {
+        return false;
+      }
 
-    const loginRequired = _get(
-      extraData,
-      ['config_data', 'client_int', 0, 'request', 'cookies', 'rea.auth'],
-      undefined
-    );
+      const loginRequired = _get(
+        extraData,
+        ['config_data', 'client_int', 0, 'request', 'cookies', 'rea.auth'],
+        undefined
+      );
 
-    return loginRequired ? !personaIsNoLogin : true;
-  };
+      return loginRequired ? !personaIsNoLogin : true;
+    };
+  }
 
   static getContentTypeByCampusLink(campusLink) {
     let resource;
