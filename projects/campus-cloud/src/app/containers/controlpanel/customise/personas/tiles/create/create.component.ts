@@ -13,6 +13,7 @@ import { IPersona } from '../../persona.interface';
 import { PersonasService } from '../../personas.service';
 import { TilesUtilsService } from '../tiles.utils.service';
 import { ICampusGuide } from '../../sections/section.interface';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { SectionsService } from '../../sections/sections.service';
 import { PersonasUtilsService } from '../../personas.utils.service';
 import { SectionUtilsService } from '../../sections/section.utils.service';
@@ -20,7 +21,6 @@ import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 import { PersonasAmplitudeService } from '../../personas.amplitude.service';
 import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
-import { amplitudeEvents, STUDIO_THIRD_PARTY } from '@campus-cloud/shared/constants';
 
 @Component({
   selector: 'cp-personas-tile-create',
@@ -38,7 +38,6 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   campusLinkForm: FormGroup;
   disableSubmitButton = false;
   campusGuideTileForm: FormGroup;
-  featureFlagThirdParty = STUDIO_THIRD_PARTY;
   contentTypes = ContentUtilsProviders.contentTypes;
   section = ContentUtilsProviders.contentTypes.single;
 

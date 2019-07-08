@@ -73,7 +73,6 @@
             </cp-resource-selector-item>
             <cp-resource-selector-item
               [resourceId]="contentTypes.thirdParty"
-              *cpFeatureToggle="featureFlagThirdParty"
               [active]="selectedContent === contentTypes.thirdParty"
               [title]="'t_personas_resource_third_party_app' | cpI18n">
               <cp-resource-selector-type-external

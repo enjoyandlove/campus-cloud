@@ -4,7 +4,6 @@ import { FormGroup } from '@angular/forms';
 import { IPersona } from '../../../../persona.interface';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { TilesUtilsService } from '../../../tiles.utils.service';
-import { STUDIO_THIRD_PARTY } from '@campus-cloud/shared/constants';
 import { PersonasUtilsService } from '../../../../personas.utils.service';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 
@@ -25,7 +24,6 @@ export class PersonasResourceListFormComponent implements OnInit {
   filterByWeb = false;
   tileImageRequirements;
   filterByLogin = false;
-  featureFlagThirdParty = STUDIO_THIRD_PARTY;
   contentTypes = ContentUtilsProviders.contentTypes;
   selectedContent = ContentUtilsProviders.contentTypes.single;
 
