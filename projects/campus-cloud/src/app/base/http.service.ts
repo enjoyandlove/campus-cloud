@@ -34,7 +34,7 @@ export abstract class HTTPService {
   }
 
   sanitizeEntries(formData) {
-    if (!Array.isArray(formData) && typeof formData !== 'object') {
+    if (formData === null || typeof formData !== 'object') {
       return formData;
     }
 

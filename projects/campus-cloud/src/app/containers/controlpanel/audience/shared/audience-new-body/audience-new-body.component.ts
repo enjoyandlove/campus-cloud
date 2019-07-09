@@ -57,6 +57,12 @@ export class AudienceNewBodyComponent implements OnInit {
   getUserCount(filters) {
     this.count.emit(0);
 
+    const noHttpCall = filters.filter((i) => i.attr_id === null).length;
+
+    if (noHttpCall !== 0) {
+      return;
+    }
+
     this.state = { ...this.state, couting: true };
 
     const search = new HttpParams()
