@@ -2,50 +2,69 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <ng-container *ngSwitchCase="false">
-    <div class="row margin-bottom">
-      <div class="col-6 offset-3">
-        <div class="cp-card persona">
-          <div class="row">
-            <div class="col-12">
-              <p class="title">{{ 't_personas_edit_form_title' | cpI18n }}</p>
-              <cp-personas-form
-                #editForm
-                [form]="form"
-                isEdit="true"
-                (valueChanges)="onFormValueChanges($event)"
-              >
-              </cp-personas-form>
+    <form [formGroup]="form" class="margin-bottom">
+      <cp-one-column [width]="layoutWidth">
+        <cp-card>
+            <div class="row form-group">
+              <div class="col-12">
+                <p class="title">{{ 't_personas_edit_form_title' | cpI18n }}</p>
+                <cp-personas-form
+                  #editForm
+                  [form]="form"
+                  isEdit="true"
+                  (valueChanges)="onFormValueChanges($event)">
+                </cp-personas-form>
+              </div>
             </div>
-          </div>
 
-          <div class="row">
-            <div class="col-6">
-              <label>{{ 't_personas_edit_label_campus_security' | cpI18n }}</label>
-              <cp-dropdown
-                [items]="services$ | async"
-                [selectedItem]="selectedSecurityService"
-                (selected)="onSecurityServiceChanged($event)"
-              >
-              </cp-dropdown>
+            <div class="row form-group">
+              <div class="col-12">
+                <p class="title">{{ 't_personas_form_title_home_customization' | cpI18n }}</p>
+              </div>
             </div>
-          </div>
-          <br />
-          <div class="row">
-            <div class="col-6">
-              <button
-                type="button"
-                data-toggle="modal"
-                class="cpbtn cpbtn--danger"
-                data-target="#personaDeleteModal"
-              >
-                {{ 't_personas_edit_delete_button' | cpI18n }}
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
 
+            <div class="row">
+              <div class="col-6">
+                <label>{{ 't_personas_edit_label_campus_security' | cpI18n }}</label>
+                <cp-dropdown
+                  [items]="services$ | async"
+                  [selectedItem]="selectedSecurityService"
+                  (selected)="onSecurityServiceChanged($event)">
+                </cp-dropdown>
+              </div>
+            </div>
+            <br/>
+            <div class="row" *ngFor="let home of homeExperience">
+              <div class="col-10">
+                <label class="heading">{{ home.heading | cpI18n }}</label>
+                <p>{{ home.subHeading | cpI18n }}</p>
+              </div>
+              <div class="col-2">
+              <span class="float-right switchbar">
+                <cp-switch
+                  [id]="home.id"
+                  [formControlName]="home.name"
+                  (toggle)="togglePersona($event, home.name)">
+                </cp-switch>
+              </span>
+              </div>
+            </div>
+
+            <br/>
+            <div class="row">
+              <div class="col-6">
+                <button
+                  type="button"
+                  data-toggle="modal"
+                  class="cpbtn cpbtn--danger"
+                  data-target="#personaDeleteModal">
+                  {{ 't_personas_edit_delete_button' | cpI18n }}
+                </button>
+              </div>
+            </div>
+        </cp-card>
+      </cp-one-column>
+    </form>
     <div class="footer">
       <div class="cp-wrapper cp-wrapper--outer">
         <div class="col-12">
@@ -67,8 +86,7 @@
       <cp-personas-delete
         [persona]="persona"
         (deleted)="onDeleted()"
-        (errorEvent)="onDeleteError($event)"
-      >
+        (errorEvent)="onDeleteError($event)">
       </cp-personas-delete>
     </cp-modal>
   </ng-container>

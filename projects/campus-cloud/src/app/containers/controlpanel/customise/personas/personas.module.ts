@@ -14,6 +14,7 @@ import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { PersonasListActionBoxComponent } from './list/components';
 import { PersonasCreateComponent } from './create/create.component';
 import { PersonasSectionsModule } from './sections/sections.module';
+import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 import { PersonasDetailsComponent } from './details/details.component';
 import { SectionUtilsService } from './sections/section.utils.service';
 import { PersonasFormComponent } from './components/personas-form/personas-form.component';
@@ -34,6 +35,7 @@ import { PersonasAmplitudeService } from '@controlpanel/customise/personas/perso
     CommonModule,
     SharedModule,
     RouterModule,
+    LayoutsModule,
     ReactiveFormsModule,
     PersonasRoutingModule,
     PersonasSectionsModule,

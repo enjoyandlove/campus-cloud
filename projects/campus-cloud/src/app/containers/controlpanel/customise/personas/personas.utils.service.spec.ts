@@ -1,6 +1,6 @@
 import { FormBuilder, FormGroup } from '@angular/forms';
 
-import { mockPersonas } from './__mock__/personas.mock';
+import { mockPersonas } from './tests';
 import mockSession from '@campus-cloud/session/mock/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { PersonasUtilsService } from './personas.utils.service';

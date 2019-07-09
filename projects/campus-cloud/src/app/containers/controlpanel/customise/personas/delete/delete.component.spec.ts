@@ -7,8 +7,8 @@ import { CPSession } from '@campus-cloud/session';
 import { PersonasModule } from './../personas.module';
 import { PersonasService } from './../personas.service';
 import { PersonasDeleteComponent } from './delete.component';
+import { mockPersonas, MockPersonasService } from '../tests';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { mockPersonas, MockPersonasService } from '../mock/personas.service.mock';
 
 describe('PersonasDeleteComponent', () => {
   let comp: PersonasDeleteComponent;

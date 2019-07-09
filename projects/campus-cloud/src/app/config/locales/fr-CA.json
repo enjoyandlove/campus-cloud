@@ -2855,6 +2855,9 @@
   "t_personas_form_pretour_help": {
     "message": "Fournit un aperçu de l'application avant l'enregistrement"
   },
+  "t_personas_form_sub_heading_upcoming_deadlines": {
+    "message": "Upcoming assignments and tests"
+  },
   "t_personas_list_dropdown_all_experiences": {
     "message": "Tout"
   },

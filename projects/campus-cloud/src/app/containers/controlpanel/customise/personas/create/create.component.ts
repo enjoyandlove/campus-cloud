@@ -7,12 +7,13 @@ import { Store } from '@ngrx/store';
 import { get as _get } from 'lodash';
 import { Observable } from 'rxjs';
 
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { PersonasService } from './../personas.service';
+import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
+import { baseActions, IHeader } from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { PersonasUtilsService } from './../personas.utils.service';
-import { baseActions, IHeader } from './../../../../../store/base';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { credentialType, PersonasType, PersonaValidationErrors } from './../personas.status';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 
@@ -29,6 +30,8 @@ export class PersonasCreateComponent implements OnInit {
   form: FormGroup;
   createdPersonaId;
   campusSecurityTile;
+  layoutWidth = LayoutWidth.half;
+  homeExperience = PersonasUtilsService.getHomeExperience();
 
   constructor(
     public router: Router,
@@ -59,6 +62,10 @@ export class PersonasCreateComponent implements OnInit {
     const serviceMeta = _get(selection, 'meta', null);
 
     this.campusSecurityTile = serviceMeta;
+  }
+
+  trackByFn(_, item) {
+    return item.id;
   }
 
   getCampusLinkForm() {
@@ -100,6 +107,10 @@ export class PersonasCreateComponent implements OnInit {
     return createCampusLink$.pipe(
       switchMap((link: any) => this.createCampusTile(link.id, personaId))
     );
+  }
+
+  togglePersona(value, name) {
+    this.form.get(name).setValue(value);
   }
 
   onSubmit() {

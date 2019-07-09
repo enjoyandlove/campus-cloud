@@ -2834,6 +2834,15 @@
   "t_personas_form_dropdown_login_required": {
     "message": "Required"
   },
+  "t_personas_form_heading_my_courses": {
+    "message": "My Courses"
+  },
+  "t_personas_form_heading_todays_schedule": {
+    "message": "Today's Schedule"
+  },
+  "t_personas_form_heading_upcoming_deadlines": {
+    "message": "Upcoming Deadlines"
+  },
   "t_personas_form_label_persona_name": {
     "message": "Experience Name"
   },
@@ -2854,6 +2863,18 @@
   },
   "t_personas_form_pretour_help": {
     "message": "Provide an overview of the app before registration"
+  },
+  "t_personas_form_sub_heading_my_courses": {
+    "message": "All current courses (suggested for online courses)"
+  },
+  "t_personas_form_sub_heading_todays_schedule": {
+    "message": "Upcoming classes and events from the schedule"
+  },
+  "t_personas_form_sub_heading_upcoming_deadlines": {
+    "message": "Upcoming assignments and tests"
+  },
+  "t_personas_form_title_home_customization": {
+    "message": "Home Customization"
   },
   "t_personas_list_dropdown_all_experiences": {
     "message": "All"
