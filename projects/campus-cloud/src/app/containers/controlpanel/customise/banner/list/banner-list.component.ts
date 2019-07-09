@@ -167,16 +167,18 @@ export class BannerListComponent implements OnInit {
   }
 
   onCrop() {
-    this.imageToBase64().then((base64ImageData) => {
-      this.form.controls[school.LOGO_URL].setValue(base64ImageData);
-      this.form.controls[school.LOGO_URL].markAsDirty();
-      this.onReset();
+    this.imageToBase64()
+      .then((base64ImageData) => {
+        this.form.controls[school.LOGO_URL].setValue(base64ImageData);
+        this.form.controls[school.LOGO_URL].markAsDirty();
+        this.onReset();
 
-      this.eventProperties = {
-        ...this.eventProperties,
-        banner: amplitudeEvents.CHANGED
-      };
-    });
+        this.eventProperties = {
+          ...this.eventProperties,
+          banner: amplitudeEvents.CHANGED
+        };
+      })
+      .catch(() => this.onError());
   }
 
   saveDisabled() {
