@@ -134,8 +134,8 @@ export class FileUploadService {
 
     const formData: FormData = new FormData();
 
-    formData.set('tz', this.session.tz);
-    formData.set('file', media, media.name);
+    formData.append('tz', this.session.tz);
+    formData.append('file', media, media.name);
 
     return this.http.post(url, formData, { headers: customHeaders ? customHeaders : headers }).pipe(
       catchError((err) => {
