@@ -1,11 +1,17 @@
-<div class="row margin-bottom">
-  <div class="col-6 offset-3">
-    <div class="cp-card persona">
-      <div class="row">
+<form [formGroup]="form" class="margin-bottom">
+  <cp-one-column [width]="layoutWidth">
+    <cp-card>
+      <div class="row form-group">
         <div class="col-12">
           <p class="title">{{ 't_personas_create_form_title' | cpI18n }}</p>
           <cp-personas-form #createForm [form]="form" (valueChanges)="onFormValueChanges($event)">
           </cp-personas-form>
+        </div>
+      </div>
+
+      <div class="row form-group">
+        <div class="col-12">
+          <p class="title">{{ 't_personas_form_title_home_customization' | cpI18n }}</p>
         </div>
       </div>
 
@@ -16,10 +22,25 @@
           </cp-dropdown>
         </div>
       </div>
-    </div>
-  </div>
-</div>
-
+      <br/>
+      <div class="row" *ngFor="let home of homeExperience; trackBy: trackByFn">
+        <div class="col-10">
+          <label class="heading">{{ home.heading | cpI18n }}</label>
+          <p>{{ home.subHeading | cpI18n }}</p>
+        </div>
+        <div class="col-2">
+          <span class="float-right switchbar">
+            <cp-switch
+              [id]="home.id"
+              [formControlName]="home.name"
+              (toggle)="togglePersona($event, home.name)">
+            </cp-switch>
+          </span>
+        </div>
+      </div>
+    </cp-card>
+  </cp-one-column>
+</form>
 <div class="footer">
   <div class="cp-wrapper cp-wrapper--outer">
     <div class="col-12">

@@ -7,13 +7,13 @@ import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import mockSection from './mock';
+import { mockPersonas } from '../../tests';
 import { TilesService } from '../tiles.service';
 import { CPSession } from '@campus-cloud/session';
 import { PersonasTilesModule } from '../tiles.module';
 import { PersonasService } from '../../personas.service';
 import { TilesUtilsService } from '../tiles.utils.service';
 import { PersonasTileEditComponent } from './edit.component';
-import { mockPersonas } from '../../__mock__/personas.mock';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { baseActions } from '@campus-cloud/store/base/reducers';

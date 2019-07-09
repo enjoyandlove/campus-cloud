@@ -10,8 +10,8 @@ import { baseActions } from '@campus-cloud/store/base';
 import { PersonasService } from './../personas.service';
 import { PersonasEditComponent } from './edit.component';
 import { CPI18nService } from '@campus-cloud/shared/services';
+import { MockPersonasService, mockPersonas } from './../tests';
 import { PersonasUtilsService } from './../personas.utils.service';
-import { MockPersonasService, mockPersonas } from './../mock/personas.service.mock';
 
 describe('PersonasEditComponent', () => {
   let comp: PersonasEditComponent;
@@ -104,16 +104,7 @@ describe('PersonasEditComponent', () => {
   });
 
   it('buildForm', () => {
-    const expected = {
-      school_id: 157,
-      name: mockPersonas[0].localized_name_map.en,
-      platform: 0,
-      rank: 1,
-      login_requirement: 1,
-      pretour_enabled: false,
-      cre_enabled: false,
-      clone_tiles: false
-    };
+    const expected = comp.utils.getPersonasForm(mockPersonas[0]).value;
 
     comp.buildForm(mockPersonas[0]);
 

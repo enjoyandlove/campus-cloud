@@ -28,6 +28,29 @@ export class PersonasUtilsService {
     return loginRequirement === PersonasLoginRequired.forbidden;
   }
 
+  static getHomeExperience() {
+    return [
+      {
+        id: 'schedule',
+        name: 'home_todays_schedule_enabled',
+        heading: 't_personas_form_heading_todays_schedule',
+        subHeading: 't_personas_form_sub_heading_todays_schedule'
+      },
+      {
+        id: 'courses',
+        name: 'home_my_courses_enabled',
+        heading: 't_personas_form_heading_my_courses',
+        subHeading: 't_personas_form_sub_heading_my_courses'
+      },
+      {
+        id: 'dates',
+        name: 'home_due_dates_enabled',
+        heading: 't_personas_form_heading_upcoming_deadlines',
+        subHeading: 't_personas_form_sub_heading_upcoming_deadlines'
+      }
+    ];
+  }
+
   constructor(
     public fb: FormBuilder,
     public session: CPSession,
@@ -100,14 +123,17 @@ export class PersonasUtilsService {
 
   getPersonasForm(persona: IPersona = null) {
     const _persona = {
+      clone_tiles: false,
       school_id: this.session.g.get('school').id,
+      cre_enabled: persona ? persona.cre_enabled : false,
       name: persona ? persona.localized_name_map.en : null,
       platform: persona ? persona.platform : PersonasType.mobile,
-      rank: persona ? persona.rank : CPDate.now(this.session.tz).unix(),
-      login_requirement: persona ? persona.login_requirement : PersonasLoginRequired.optional,
       pretour_enabled: persona ? persona.pretour_enabled : false,
-      cre_enabled: persona ? persona.cre_enabled : false,
-      clone_tiles: false
+      rank: persona ? persona.rank : CPDate.now(this.session.tz).unix(),
+      home_due_dates_enabled: persona ? persona.home_due_dates_enabled : true,
+      home_my_courses_enabled: persona ? persona.home_my_courses_enabled : true,
+      home_todays_schedule_enabled: persona ? persona.home_todays_schedule_enabled : true,
+      login_requirement: persona ? persona.login_requirement : PersonasLoginRequired.optional
     };
 
     return this.fb.group({
@@ -118,7 +144,10 @@ export class PersonasUtilsService {
       login_requirement: [_persona.login_requirement],
       pretour_enabled: [_persona.pretour_enabled],
       cre_enabled: [_persona.cre_enabled],
-      clone_tiles: [_persona.clone_tiles]
+      clone_tiles: [_persona.clone_tiles],
+      home_due_dates_enabled: [_persona.home_due_dates_enabled],
+      home_my_courses_enabled: [_persona.home_my_courses_enabled],
+      home_todays_schedule_enabled: [_persona.home_todays_schedule_enabled]
     });
   }
 

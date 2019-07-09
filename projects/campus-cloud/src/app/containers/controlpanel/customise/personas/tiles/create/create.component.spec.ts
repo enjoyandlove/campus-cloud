@@ -5,12 +5,12 @@ import { FormBuilder } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { of, throwError } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
+import { mockPersonas } from '../../tests';
 import { TilesService } from '../tiles.service';
+import { CPSession } from '@campus-cloud/session';
 import { PersonasTilesModule } from '../tiles.module';
 import { PersonasService } from '../../personas.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { mockPersonas } from '../../mock/personas.service.mock';
 import { PersonasTileCreateComponent } from './create.component';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { SectionsService } from '../../sections/sections.service';

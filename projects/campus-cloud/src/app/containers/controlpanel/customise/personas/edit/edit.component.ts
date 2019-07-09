@@ -7,19 +7,20 @@ import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
+import { CampusLink } from '../tiles/tile';
 import { IPersona } from '../persona.interface';
 import { ITile } from '../tiles/tile.interface';
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { PersonasService } from './../personas.service';
 import { TileVisibility } from './../tiles/tiles.status';
-import { CampusLink } from '../tiles/tile';
 import { PersonaValidationErrors } from './../personas.status';
+import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { credentialType, PersonasType } from '../personas.status';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { baseActions, IHeader } from './../../../../../store/base';
-import { credentialType, PersonasType } from '../personas.status';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 
 @Component({
@@ -39,6 +40,8 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   originalSecurityService;
   selectedSecurityService;
   securityTileChanged = false;
+  layoutWidth = LayoutWidth.half;
+  homeExperience = PersonasUtilsService.getHomeExperience();
 
   constructor(
     public router: Router,
@@ -213,6 +216,10 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
 
   buildForm(persona) {
     this.form = this.utils.getPersonasForm(persona);
+  }
+
+  togglePersona(value, name) {
+    this.form.get(name).setValue(value);
   }
 
   errorHandler(err = null) {

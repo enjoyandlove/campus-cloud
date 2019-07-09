@@ -1,7 +1,7 @@
 import { of } from 'rxjs';
 
-import { ITile } from '../tiles/tile.interface';
-import { TileVisibility } from '../tiles/tiles.status';
+import { ITile } from '../../tiles/tile.interface';
+import { TileVisibility } from '../../tiles/tiles.status';
 
 export const mockPersonas = [
   {
@@ -14,7 +14,10 @@ export const mockPersonas = [
       en: 'Students Tile'
     },
     pretour_enabled: false,
-    id: 1
+    id: 1,
+    home_todays_schedule_enabled: true,
+    home_my_courses_enabled: true,
+    home_due_dates_enabled: true
   },
   {
     login_requirement: -1,
@@ -26,7 +29,10 @@ export const mockPersonas = [
       en: 'Web Persona'
     },
     pretour_enabled: false,
-    id: 89
+    id: 89,
+    home_todays_schedule_enabled: true,
+    home_my_courses_enabled: true,
+    home_due_dates_enabled: true
   }
 ];
 
