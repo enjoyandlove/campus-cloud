@@ -23,6 +23,8 @@
   height: 373px;
   max-height: 373px;
   overflow-y: scroll;
+  position: relative;
+  z-index: 1;
 
   p {
     margin-bottom: 0;
