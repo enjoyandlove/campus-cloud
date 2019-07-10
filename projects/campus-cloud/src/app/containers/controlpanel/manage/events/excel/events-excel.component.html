@@ -16,8 +16,7 @@
           (checkAll)="onCheckAll($event)"
           (hostChange)="onHostBulkChange($event)"
           (imageChange)="onImageBulkChange($event)"
-          [props]="uploadButtonData"
-        >
+          [props]="uploadButtonData">
         </cp-import-top-bar>
       </div>
     </div>
@@ -36,32 +35,18 @@
             </div>
             <div
               class="row excel-form"
-              *ngFor="let event of form.controls.events.controls; let i = index"
-            >
+              *ngFor="let event of form.controls.events.controls; let i = index">
               <div [formGroupName]="i" class="col-12">
                 <div class="row form__item">
-                  <div
-                    [class]="[
-                      storeId || clubId || isOrientation
-                        ? 'col-5 text-truncate'
-                        : 'col-3 text-truncate'
-                    ]"
-                  >
+                  <div [class]="isEvent ? 'col-5 text-truncate' : 'col-3 text-truncate'">
                     <div class="row margin-top">
-                      <div
-                        [class]="[
-                          storeId || clubId || isOrientation
-                            ? 'col-3 no-left-padding'
-                            : 'col-4 no-left-padding'
-                        ]"
-                      >
+                      <div [class]="isEvent ? 'col-3' : 'col-4'">
                         <div class="row">
                           <div class="col-2">
                             <cp-checkbox
                               class="checkbox float-left"
                               [isChecked]="isSingleChecked[i].checked"
-                              (toggle)="onSingleCheck($event, i)"
-                            >
+                              (toggle)="onSingleCheck($event, i)">
                             </cp-checkbox>
                           </div>
                           <div class="col-8">
@@ -69,37 +54,26 @@
                               <span
                                 class="deleteButton hover"
                                 (click)="onRemoveImage(i)"
-                                *ngIf="event.controls['poster_url'].value"
-                              >
+                                *ngIf="event.controls['poster_url'].value">
                                 &times;
                               </span>
                               <cp-upload-button
                                 theme="small"
-                                [isRequired]="
-                                  formError && event.controls['poster_url'].hasError('required')
-                                "
+                                [isRequired]="formError && event.controls['poster_url'].hasError('required')"
                                 (fileUpload)="onImageUpload($event, i)"
                                 *ngIf="!event.controls['poster_url'].value"
-                                (click)="resetAllCheckboxes($event, i)"
-                              >
+                                (click)="resetAllCheckboxes($event, i)">
                               </cp-upload-button>
                               <img
                                 class="rounded img-fit-cover"
                                 *ngIf="event.controls['poster_url'].value"
-                                [src]="event.controls['poster_url'].value"
-                              />
+                                [src]="event.controls['poster_url'].value"/>
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      <div
-                        [class]="[
-                          storeId || clubId || isOrientation
-                            ? 'col-9 no-left-padding text-truncate'
-                            : 'col-8 no-left-padding text-truncate'
-                        ]"
-                      >
+                      <div [class]="isEvent? 'col-9 text-truncate no-left-padding': 'col-8 text-truncate'">
                         <span class="event__title">
                           <strong>{{ event.controls.title.value }}</strong>
                         </span>
@@ -116,8 +90,7 @@
                       [selectedItem]="selectedHost[i]"
                       [items]="stores"
                       (selected)="onSingleHostSelected($event, i)"
-                      [isRequiredError]="formError && event.controls.store_id.hasError('required')"
-                    >
+                      [isRequiredError]="formError && event.controls.store_id.hasError('required')">
                     </cp-dropdown>
                   </div>
                   <div class="col-2 no-left-padding">
@@ -125,8 +98,7 @@
                     <cp-dropdown
                       [items]="checkInOptions"
                       [selectedItem]="selectedCheckInOption[i]"
-                      (selected)="updateCheckInOption($event.action, i)"
-                    >
+                      (selected)="updateCheckInOption($event.action, i)">
                     </cp-dropdown>
                   </div>
                   <div class="col-5" *ngIf="event.controls.event_attendance.value">
@@ -137,10 +109,7 @@
                           [selectedItem]="attendanceFeedback[i]"
                           [items]="eventAttendanceFeedback"
                           (selected)="updateAttendanceFeedback($event, i)"
-                          [isRequiredError]="
-                            formError && event.controls.event_feedback.hasError('required')
-                          "
-                        >
+                          [isRequiredError]="formError && event.controls.event_feedback.hasError('required')">
                         </cp-dropdown>
                       </div>
                       <div class="col-4">
@@ -150,10 +119,7 @@
                           [reset]="resetManagerDropdown$"
                           [items]="event.controls['managers'].value"
                           (selected)="updateEventManager($event, i)"
-                          [isRequiredError]="
-                            formError && event.controls.event_manager_id.hasError('required')
-                          "
-                        >
+                          [isRequiredError]="formError && event.controls.event_manager_id.hasError('required')">
                         </cp-dropdown>
                       </div>
                       <div class="col-4">
@@ -161,8 +127,7 @@
                         <input
                           type="email"
                           class="form-control"
-                          formControlName="attendance_manager_email"
-                        />
+                          formControlName="attendance_manager_email"/>
                       </div>
                     </div>
                   </div>
