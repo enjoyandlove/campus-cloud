@@ -22,7 +22,7 @@ import { IStudentFilter } from '@campus-cloud/containers/controlpanel/assess/eng
   styleUrls: ['./providers-details.component.scss']
 })
 export class ServicesProviderDetailsComponent extends BaseComponent implements OnInit {
-  @ViewChild('providerAttendees', { static: true }) providerAttendees;
+  @ViewChild('providerAttendees', { static: false }) providerAttendees;
 
   loading;
   service;
