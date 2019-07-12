@@ -8,7 +8,7 @@ import { PersonasModule } from './../personas.module';
 import { PersonasService } from './../personas.service';
 import { PersonasDeleteComponent } from './delete.component';
 import { mockPersonas, MockPersonasService } from '../tests';
-import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPI18nService, MODAL_DATA } from '@campus-cloud/shared/services';
 
 describe('PersonasDeleteComponent', () => {
   let comp: PersonasDeleteComponent;
@@ -23,6 +23,14 @@ describe('PersonasDeleteComponent', () => {
         {
           provide: PersonasService,
           useClass: MockPersonasService
+        },
+        {
+          provide: MODAL_DATA,
+          useValue: {
+            onClose: () => {},
+            onAction: () => {},
+            data: mockPersonas[0]
+          }
         }
       ]
     });
@@ -37,21 +45,19 @@ describe('PersonasDeleteComponent', () => {
 
   it('should create', () => {
     expect(comp).toBeTruthy();
-    expect(comp.personaName).toBe('Students Tile');
   });
 
   it('resetModal', () => {
-    spyOn(comp.teardown, 'emit');
+    spyOn(comp.modal, 'onClose');
 
     comp.resetModal();
 
-    expect(comp.buttonData.disabled).toBeFalsy();
-    expect(comp.teardown.emit).toHaveBeenCalled();
+    expect(comp.modal.onClose).toHaveBeenCalled();
   });
 
   it('onDelete', () => {
-    spyOn(comp, 'resetModal');
-    spyOn(comp.deleted, 'emit');
+    spyOn(comp.modal, 'onClose');
+    spyOn(comp.modal, 'onAction');
     spyOn(comp.service, 'deletePersonaById').and.returnValue(of(comp.persona.id));
 
     comp.onDelete();
@@ -59,15 +65,15 @@ describe('PersonasDeleteComponent', () => {
     expect(comp.service.deletePersonaById).toHaveBeenCalled();
     expect(comp.service.deletePersonaById).toHaveBeenCalledTimes(1);
 
-    expect(comp.resetModal).toHaveBeenCalled();
-    expect(comp.resetModal).toHaveBeenCalledTimes(1);
+    expect(comp.modal.onClose).toHaveBeenCalled();
+    expect(comp.modal.onClose).toHaveBeenCalledTimes(1);
 
-    expect(comp.deleted.emit).toHaveBeenCalled();
-    expect(comp.deleted.emit).toHaveBeenCalledTimes(1);
+    expect(comp.modal.onAction).toHaveBeenCalled();
+    expect(comp.modal.onAction).toHaveBeenCalledTimes(1);
   });
 
   it('onDelete last persona', () => {
-    const spyOnerrorEvent = spyOn(comp.errorEvent, 'emit');
+    const spyOnerrorEvent = spyOn(comp.modal, 'onAction');
 
     spyOn(comp.service, 'deletePersonaById').and.returnValue(
       throwError(new HttpErrorResponse({ error: { response: 'last persona' } }))
@@ -82,7 +88,7 @@ describe('PersonasDeleteComponent', () => {
   });
 
   it('onDelete users associated', () => {
-    const spyOnerrorEvent = spyOn(comp.errorEvent, 'emit');
+    const spyOnerrorEvent = spyOn(comp.modal, 'onAction');
 
     spyOn(comp.service, 'deletePersonaById').and.returnValue(
       throwError(new HttpErrorResponse({ error: { response: 'users associated' } }))
@@ -97,7 +103,7 @@ describe('PersonasDeleteComponent', () => {
   });
 
   it('onDelete users persona non-empty', () => {
-    const spyOnerrorEvent = spyOn(comp.errorEvent, 'emit');
+    const spyOnerrorEvent = spyOn(comp.modal, 'onAction');
 
     spyOn(comp.service, 'deletePersonaById').and.returnValue(
       throwError(new HttpErrorResponse({ error: { response: 'persona non-empty' } }))

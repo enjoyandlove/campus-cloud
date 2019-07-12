@@ -9,11 +9,13 @@
         </div>
       </div>
 
-      <div class="row form-group">
-        <div class="col-12">
-          <p class="title">{{ 't_personas_form_title_home_customization' | cpI18n }}</p>
+      <ng-container *ngIf="showHomeExperience">
+        <div class="row form-group">
+          <div class="col-12">
+            <p class="title">{{ 't_personas_form_title_home_customization' | cpI18n }}</p>
+          </div>
         </div>
-      </div>
+      </ng-container>
 
       <div class="row">
         <div class="col-6">
@@ -23,12 +25,13 @@
         </div>
       </div>
       <br/>
-      <div class="row" *ngFor="let home of homeExperience; trackBy: trackByFn">
-        <div class="col-10">
-          <label class="heading">{{ home.heading | cpI18n }}</label>
-          <p>{{ home.subHeading | cpI18n }}</p>
-        </div>
-        <div class="col-2">
+      <ng-container *ngIf="showHomeExperience">
+        <div class="row" *ngFor="let home of homeExperience; trackBy: trackByFn">
+          <div class="col-10">
+            <label class="heading">{{ home.heading | cpI18n }}</label>
+            <p>{{ home.subHeading | cpI18n }}</p>
+          </div>
+          <div class="col-2">
           <span class="float-right switchbar">
             <cp-switch
               [id]="home.id"
@@ -36,8 +39,9 @@
               (toggle)="togglePersona($event, home.name)">
             </cp-switch>
           </span>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </cp-card>
   </cp-one-column>
 </form>

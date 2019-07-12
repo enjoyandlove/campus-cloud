@@ -9,17 +9,12 @@ import { CPDate } from '@campus-cloud/shared/utils';
 import { TileCategoryRank } from './tiles/tiles.status';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { TilesUtilsService } from './tiles/tiles.utils.service';
+import { CPDropdownComponent } from '@campus-cloud/shared/components';
 import { PersonasLoginRequired, PersonasType } from './personas.status';
 import { ResourcesUtilsService } from './tiles/resources/resources.utils.service';
 
 @Injectable()
 export class PersonasUtilsService {
-  static localizedPersonaName(persona: IPersona) {
-    const locale = CPI18nService.getLocale().startsWith('fr') ? 'fr' : 'en';
-
-    return persona.localized_name_map[locale];
-  }
-
   static isWeb(type: PersonasType) {
     return type === PersonasType.web;
   }
@@ -49,6 +44,19 @@ export class PersonasUtilsService {
         subHeading: 't_personas_form_sub_heading_upcoming_deadlines'
       }
     ];
+  }
+
+  static setPersonaDropDown(personas) {
+    const _heading = [CPDropdownComponent.defaultPlaceHolder()];
+
+    const _persona = personas.map((persona: IPersona) => {
+      return {
+        label: CPI18nService.getLocalizedLabel(persona.localized_name_map),
+        action: persona.id
+      };
+    });
+
+    return [..._heading, ..._persona];
   }
 
   constructor(

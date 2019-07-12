@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { OverlayRef } from '@angular/cdk/overlay';
 import { map, switchMap } from 'rxjs/operators';
 import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
@@ -16,17 +17,20 @@ import { PersonasService } from './../personas.service';
 import { TileVisibility } from './../tiles/tiles.status';
 import { PersonaValidationErrors } from './../personas.status';
 import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
+import { baseActions, IHeader } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { credentialType, PersonasType } from '../personas.status';
 import { PersonasUtilsService } from './../personas.utils.service';
-import { baseActions, IHeader } from './../../../../../store/base';
-import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { PersonasDeleteComponent } from '@controlpanel/customise/personas/delete';
+import { PersonasLoginRequired } from '@controlpanel/customise/personas/personas.status';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
+import { CPI18nService, CPTrackingService, ModalService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-personas-edit',
   templateUrl: './edit.component.html',
-  styleUrls: ['./edit.component.scss']
+  styleUrls: ['./edit.component.scss'],
+  providers: [ModalService]
 })
 export class PersonasEditComponent extends BaseComponent implements OnInit, OnDestroy {
   @ViewChild('editForm', { static: false }) editForm: PersonasFormComponent;
@@ -35,11 +39,13 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   form: FormGroup;
   submitButtonData;
   loading: boolean;
+  modal: OverlayRef;
   persona: IPersona;
   personaId: number;
   originalSecurityService;
   selectedSecurityService;
   securityTileChanged = false;
+  showHomeExperience: boolean;
   layoutWidth = LayoutWidth.half;
   homeExperience = PersonasUtilsService.getHomeExperience();
 
@@ -52,6 +58,7 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     public route: ActivatedRoute,
     public service: PersonasService,
     public utils: PersonasUtilsService,
+    private modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
     super();
@@ -263,6 +270,10 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
         this.buildHeader();
         this.buildForm(data);
         this.loadServices();
+
+        this.showHomeExperience =
+          this.persona.platform !== PersonasType.web &&
+          this.persona.login_requirement !== PersonasLoginRequired.forbidden;
       })
       .catch((err) => this.errorHandler(err));
   }
@@ -315,8 +326,26 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_UPDATED_EXPERIENCE, eventProperties);
   }
 
+  resetModal() {
+    this.modalService.close(this.modal);
+    this.modal = null;
+  }
+
+  doAction(errorMessage) {
+    if (!errorMessage) {
+      this.router.navigate(['/studio/experiences']);
+      return;
+    }
+
+    this.onDeleteError(errorMessage);
+  }
+
   onDeleted() {
-    this.router.navigate(['/studio/experiences']);
+    this.modal = this.modalService.open(PersonasDeleteComponent, null, {
+      data: this.persona,
+      onClose: this.resetModal.bind(this),
+      onAction: this.doAction.bind(this)
+    });
   }
 
   ngOnDestroy() {

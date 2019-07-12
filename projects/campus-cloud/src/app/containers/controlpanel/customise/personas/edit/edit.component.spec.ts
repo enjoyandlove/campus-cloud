@@ -77,12 +77,18 @@ describe('PersonasEditComponent', () => {
     expect(comp.form.valid).toBeFalsy();
   });
 
-  it('onDeleted', () => {
+  it('doAction', () => {
+    spyOn(comp, 'onDeleteError');
     spyOn(comp.router, 'navigate');
 
-    comp.onDeleted();
+    comp.doAction(null);
 
     expect(comp.router.navigate).toHaveBeenCalledWith(['/studio/experiences']);
+
+    comp.doAction('some error');
+
+    expect(comp.onDeleteError).toHaveBeenCalled();
+    expect(comp.onDeleteError).toHaveBeenCalledWith('some error');
   });
 
   it('onDeleteError', () => {
