@@ -239,7 +239,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
         this.persona = data;
         this.filterByWeb = PersonasUtilsService.isWeb(this.persona.platform);
         this.filterByLogin = PersonasUtilsService.isLoginForbidden(this.persona.login_requirement);
-        this.buildHeader(PersonasUtilsService.localizedPersonaName(this.persona));
+        this.buildHeader(CPI18nService.getLocalizedLabel(this.persona.localized_name_map));
       })
       .catch(() => this.erroHandler());
   }

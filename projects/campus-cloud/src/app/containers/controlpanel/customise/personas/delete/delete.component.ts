@@ -1,13 +1,26 @@
+import { Component, Inject, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { map, startWith } from 'rxjs/operators';
 
 import { IPersona } from './../persona.interface';
-import { CPSession } from './../../../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { PersonasService } from './../personas.service';
-import { CPTrackingService } from '../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { credentialType, PersonasType, PersonaValidationErrors } from '../personas.status';
+import { IItem } from '@campus-cloud/shared/components';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { PersonasUtilsService } from '../../personas/personas.utils.service';
+import {
+  credentialType,
+  PersonasType,
+  PersonaValidationErrors,
+  PersonasLoginRequired
+} from '../personas.status';
+
+import {
+  IModal,
+  MODAL_DATA,
+  CPI18nService,
+  CPTrackingService
+} from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-personas-delete',
@@ -15,31 +28,32 @@ import { credentialType, PersonasType, PersonaValidationErrors } from '../person
   styleUrls: ['./delete.component.scss']
 })
 export class PersonasDeleteComponent implements OnInit {
-  @Input() persona: IPersona;
-
-  @Output() deleted: EventEmitter<null> = new EventEmitter();
-  @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() errorEvent: EventEmitter<any> = new EventEmitter();
-
-  buttonData;
-  personaName;
+  loading = true;
+  personas: IItem[];
+  persona: IPersona;
+  canDelete: boolean;
 
   constructor(
+    @Inject(MODAL_DATA) public modal: IModal,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: PersonasService,
     public cpTracking: CPTrackingService
   ) {}
 
-  onDelete() {
-    const search = new HttpParams()
-      .append('force', 'true')
-      .append('school_id', this.session.g.get('school').id);
+  onDelete(substitutePersonaId = null) {
+    let search = new HttpParams()
+      .set('force', 'true')
+      .set('school_id', this.session.g.get('school').id);
+
+    if (substitutePersonaId) {
+      search = search.set('substitute_persona_id', String(substitutePersonaId));
+    }
 
     this.service.deletePersonaById(this.persona.id, search).subscribe(
       () => {
-        this.resetModal();
-        this.deleted.emit();
+        this.modal.onAction();
+        this.modal.onClose();
         this.trackDeleteExperienceEvent();
       },
       (err) => {
@@ -55,18 +69,33 @@ export class PersonasDeleteComponent implements OnInit {
           message = this.cpI18n.translate('t_personas_delete_error_persona_non_empty');
         }
 
-        this.resetModal();
-        this.errorEvent.emit(message);
+        this.modal.onAction(message);
+        this.modal.onClose();
       }
     );
   }
 
-  resetModal() {
-    $('#personaDeleteModal').modal('hide');
+  fetchPersonas() {
+    let search = new HttpParams()
+      .set('platform', String(PersonasType.mobile))
+      .set('school_id', this.session.g.get('school').id);
 
-    this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
-
-    this.teardown.emit();
+    this.service
+      .getPersonas(1, 10000, search)
+      .pipe(
+        map((persona: IPersona[]) =>
+          persona.filter(
+            (p) =>
+              p.login_requirement !== PersonasLoginRequired.forbidden && p.id !== this.persona.id
+          )
+        ),
+        map((persona: IPersona[]) => {
+          this.loading = false;
+          this.personas = PersonasUtilsService.setPersonaDropDown(persona);
+        }),
+        startWith([{ label: '---', action: null }])
+      )
+      .subscribe();
   }
 
   trackDeleteExperienceEvent() {
@@ -82,14 +111,12 @@ export class PersonasDeleteComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_DELETED_EXPERIENCE, eventProperties);
   }
 
-  ngOnInit() {
-    this.buttonData = {
-      text: this.cpI18n.translate('delete'),
-      class: 'danger'
-    };
+  resetModal() {
+    this.modal.onClose();
+  }
 
-    this.personaName = CPI18nService.getLocale().startsWith('fr')
-      ? this.persona.localized_name_map.fr
-      : this.persona.localized_name_map.en;
+  ngOnInit() {
+    this.persona = this.modal.data;
+    this.fetchPersonas();
   }
 }

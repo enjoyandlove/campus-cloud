@@ -14,8 +14,13 @@ import { baseActions, IHeader } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
-import { credentialType, PersonasType, PersonaValidationErrors } from './../personas.status';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
+import {
+  PersonasType,
+  credentialType,
+  PersonasLoginRequired,
+  PersonaValidationErrors
+} from './../personas.status';
 
 @Component({
   selector: 'cp-personas-create',
@@ -30,6 +35,7 @@ export class PersonasCreateComponent implements OnInit {
   form: FormGroup;
   createdPersonaId;
   campusSecurityTile;
+  showHomeExperience = true;
   layoutWidth = LayoutWidth.half;
   homeExperience = PersonasUtilsService.getHomeExperience();
 
@@ -160,6 +166,10 @@ export class PersonasCreateComponent implements OnInit {
 
   onFormValueChanges(form: FormGroup) {
     this.buttonData = { ...this.buttonData, disabled: !form.valid };
+
+    this.showHomeExperience =
+      form.value.platform !== PersonasType.web &&
+      form.value.login_requirement !== PersonasLoginRequired.forbidden;
   }
 
   buildForm() {

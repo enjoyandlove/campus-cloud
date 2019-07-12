@@ -1,13 +1,10 @@
 @import '~projects/campus-cloud/src/sass/components/modal';
 @import '~projects/campus-cloud/src/sass/components/button';
 
-:host {
-  width: 100%;
-  display: block;
+.title {
+  margin-top: 30px;
 }
 
-.working {
-  padding: 50px;
-  display: block;
-  text-align: center
+label {
+  @include font-semi-bold();
 }
