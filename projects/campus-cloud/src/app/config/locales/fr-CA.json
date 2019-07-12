@@ -2834,6 +2834,9 @@
   "t_personas_form_dropdown_login_required": {
     "message": "Requis"
   },
+  "t_personas_form_heading_upcoming_deadlines": {
+    "message": "Dates limites à venir"
+  },
   "t_personas_form_label_persona_name": {
     "message": "Nom de l'expérience"
   },
@@ -2854,6 +2857,9 @@
   },
   "t_personas_form_pretour_help": {
     "message": "Fournit un aperçu de l'application avant l'enregistrement"
+  },
+  "t_personas_form_sub_heading_upcoming_deadlines": {
+    "message": "Upcoming assignments and tests"
   },
   "t_personas_list_dropdown_all_experiences": {
     "message": "Tout"
@@ -3299,6 +3305,9 @@
   },
   "t_shared_limited": {
     "message": "Limité"
+  },
+  "t_shared_loading": {
+    "message": "Chargement en cours"
   },
   "t_shared_meal": {
     "message": "Repas"

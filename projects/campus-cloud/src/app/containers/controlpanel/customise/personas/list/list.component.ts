@@ -5,15 +5,14 @@ import { Store } from '@ngrx/store';
 import { pullAt } from 'lodash';
 
 import { IPersona } from './../persona.interface';
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { PersonasService } from './../personas.service';
-import { PersonaValidationErrors } from './../personas.status';
-import { credentialType, PersonasType } from '../personas.status';
-import { CPTrackingService } from '../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
-import { baseActions, IHeader, ISnackbar } from './../../../../../store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { personaTypeLabel, PersonaValidationErrors } from './../personas.status';
+import { credentialType, personaLoginRequiredLabel, PersonasType } from '../personas.status';
 
 @Component({
   selector: 'cp-personas-list',
@@ -28,6 +27,9 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
     search_str: null,
     personas: <Array<IPersona>>[]
   };
+
+  personaType = personaTypeLabel;
+  personaAuthentication = personaLoginRequiredLabel;
 
   constructor(
     public session: CPSession,

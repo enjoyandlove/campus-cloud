@@ -1,6 +1,6 @@
 import { mockResource } from './__mock__';
+import { mockPersonas } from '../../tests';
 import { PersonasType } from '../../personas.status';
-import { mockPersonas } from '../../__mock__/personas.mock';
 import { ResourcesUtilsService } from './resources.utils.service';
 import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 

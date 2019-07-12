@@ -2834,6 +2834,15 @@
   "t_personas_form_dropdown_login_required": {
     "message": "Required"
   },
+  "t_personas_form_heading_my_courses": {
+    "message": "My Courses"
+  },
+  "t_personas_form_heading_todays_schedule": {
+    "message": "Today's Schedule"
+  },
+  "t_personas_form_heading_upcoming_deadlines": {
+    "message": "Upcoming Due Dates"
+  },
   "t_personas_form_label_persona_name": {
     "message": "Experience Name"
   },
@@ -2842,6 +2851,9 @@
   },
   "t_personas_form_label_requires_credentials": {
     "message": "Requires Login"
+  },
+  "t_personas_form_list_login_forbidden": {
+    "message": "Forbidden"
   },
   "t_personas_form_personalized_page": {
     "message": "Personalized Home Page"
@@ -2854,6 +2866,18 @@
   },
   "t_personas_form_pretour_help": {
     "message": "Provide an overview of the app before registration"
+  },
+  "t_personas_form_sub_heading_my_courses": {
+    "message": "All current courses (suggested for online courses)"
+  },
+  "t_personas_form_sub_heading_todays_schedule": {
+    "message": "Upcoming classes and events from the schedule"
+  },
+  "t_personas_form_sub_heading_upcoming_deadlines": {
+    "message": "Upcoming assignments and tests"
+  },
+  "t_personas_form_title_home_customization": {
+    "message": "Home Customization"
   },
   "t_personas_list_dropdown_all_experiences": {
     "message": "All"
@@ -3018,6 +3042,12 @@
   "t_personas_tile_update_header": {
     "message": "Edit Tile"
   },
+  "t_persona_cant_delete_body": {
+    "message": "You need to create another experience with authentication to delete this experience"
+  },
+  "t_persona_cant_delete_title": {
+    "message": "Cannot Delete Experience"
+  },
   "t_persona_create_cancel_button": {
     "message": "Cancel"
   },
@@ -3026,6 +3056,9 @@
   },
   "t_persona_delete_modal_title": {
     "message": "Delete Experience"
+  },
+  "t_persona_delete_move_users_title": {
+    "message": "Move Users To"
   },
   "t_persona_edit_cancel_button": {
     "message": "Cancel"
@@ -3038,6 +3071,9 @@
   },
   "t_persona_list_button_notify": {
     "message": "Notify"
+  },
+  "t_persona_list_column_heading_authentication": {
+    "message": "Authentication"
   },
   "t_sandbox_already_invited": {
     "message": "Invites already sent"
@@ -3300,6 +3336,9 @@
   "t_shared_limited": {
     "message": "Limited"
   },
+  "t_shared_loading": {
+    "message": "Loading"
+  },
   "t_shared_meal": {
     "message": "Meal"
   },
@@ -3314,6 +3353,9 @@
   },
   "t_shared_no_integrations_found": {
     "message": "No integration found"
+  },
+  "t_shared_okay": {
+    "message": "Okay"
   },
   "t_shared_open": {
     "message": "Open"

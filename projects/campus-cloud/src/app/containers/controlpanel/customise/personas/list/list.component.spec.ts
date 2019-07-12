@@ -2,14 +2,14 @@ import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 
-import { BaseComponent } from '../../../../../base';
-import { CPSession } from './../../../../../session';
+import { MockPersonasService } from './../tests';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { PersonasModule } from './../personas.module';
 import { PersonasService } from './../personas.service';
 import { PersonasListComponent } from './list.component';
-import { baseReducers } from '../../../../../store/base/reducers';
-import { MockPersonasService } from './../mock/personas.service.mock';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { baseReducers } from '@campus-cloud/store/base/reducers';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 describe('PersonasListComponent', () => {
   let storeSpy;

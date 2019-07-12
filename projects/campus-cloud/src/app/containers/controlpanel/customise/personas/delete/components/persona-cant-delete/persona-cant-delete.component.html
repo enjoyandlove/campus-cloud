@@ -1,0 +1,27 @@
+<div class="cpmodal__body">
+  <div class="row">
+    <div class="col-12">
+      <p class="text-center text-danger warning">
+        {{ 't_persona_cant_delete_title' | cpI18n }}
+      </p>
+
+      <p class="text-center">
+        {{ 't_persona_cant_delete_body' | cpI18n }}
+      </p>
+    </div>
+  </div>
+</div>
+
+<div class="cpmodal__footer">
+  <div class="row">
+    <div class="col-6 offset-6 text-right">
+      <button
+        type="button"
+        data-dismiss="modal"
+        (click)="okClick.emit()"
+        class="cpbtn cpbtn--cancel">
+        {{ 't_shared_okay' | cpI18n }}
+      </button>
+    </div>
+  </div>
+</div>

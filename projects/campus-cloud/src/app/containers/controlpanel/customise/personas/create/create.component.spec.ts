@@ -4,15 +4,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
+import { MockPersonasService } from './../tests';
 import { CPSession } from '@campus-cloud/session';
 import { PersonasModule } from './../personas.module';
 import { PersonasService } from './../personas.service';
-import { CPDate } from '@campus-cloud/shared/utils/date';
 import { PersonasCreateComponent } from './create.component';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { PersonasUtilsService } from './../personas.utils.service';
-import { MockPersonasService } from './../mock/personas.service.mock';
-import { PersonasType, PersonasLoginRequired } from './../personas.status';
 
 describe('PersonasCreateComponent', () => {
   let comp: PersonasCreateComponent;
@@ -92,16 +90,7 @@ describe('PersonasCreateComponent', () => {
   });
 
   it('buildForm', () => {
-    const expected = {
-      school_id: 157,
-      name: null,
-      platform: PersonasType.mobile,
-      rank: CPDate.now('America/Toronto').unix(),
-      login_requirement: PersonasLoginRequired.optional,
-      pretour_enabled: false,
-      cre_enabled: false,
-      clone_tiles: false
-    };
+    const expected = comp.utils.getPersonasForm().value;
 
     comp.buildForm();
 

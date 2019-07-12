@@ -2,8 +2,7 @@
   <div class="col-12">
     <cp-personas-list-action-box
       (search)="onSearch($event)"
-      (filterBy)="onFilterByPersonaType($event)"
-    >
+      (filterBy)="onFilterByPersonaType($event)">
     </cp-personas-list-action-box>
   </div>
 </div>
@@ -15,40 +14,50 @@
     <cp-no-content
       class="no-content"
       *ngIf="!state.personas.length"
-      [noContentText]="cpI18n.translate('t_personas_no_results_found')"
-    >
+      [noContentText]="'t_personas_no_results_found' | cpI18n">
     </cp-no-content>
 
     <div *ngIf="state.personas.length">
       <ul class="personas cp-form">
+        <li class="cp-form__header col-12">
+          <div class="row">
+            <span class="col-4">{{ 'name' | cpI18n }}</span>
+            <span class="col-2">{{ 't_shared_type' | cpI18n }}</span>
+            <span class="col-2">{{ 't_persona_list_column_heading_authentication' | cpI18n }}</span>
+            <span class="col-4"></span>
+          </div>
+        </li>
+
         <li class="cp-form__item col-12" *ngFor="let persona of state.personas; let i = index">
           <div class="row">
-            <span class="col-5 text-truncate personas__name">
+            <span class="col-4 text-truncate personas__name">
               {{ persona.localized_name_map.en }}
             </span>
-            <span class="col-7 float-right personas__actions text-right">
+
+            <span class="col-2">{{ personaType[persona.platform] | cpI18n }}</span>
+
+            <span class="col-2">{{ personaAuthentication[persona.login_requirement] | cpI18n }}</span>
+
+            <span class="col-4 float-right personas__actions text-right">
               <fieldset [disabled]="state.updating">
                 <button
                   type="button"
                   [disabled]="i === 0"
                   class="cpbtn cpbtn--link"
-                  (click)="onRankUp(persona, i)"
-                >
+                  (click)="onRankUp(persona, i)">
                   <i class="material-icons">keyboard_arrow_up</i>
                 </button>
                 <button
                   type="button"
                   class="cpbtn cpbtn--link"
                   (click)="onRankDown(persona, i)"
-                  [disabled]="i === state.personas.length - 1"
-                >
+                  [disabled]="i === state.personas.length - 1">
                   <i class="material-icons">keyboard_arrow_down</i>
                 </button>
                 <a
                   [routerLink]="[persona.id]"
                   class="cpbtn cpbtn--link"
-                  (click)="trackViewedMovedExperience(persona, true)"
-                >
+                  (click)="trackViewedMovedExperience(persona, true)">
                   <i class="material-icons">settings_applications</i>
                   {{ 't_persona_list_button_customize' | cpI18n }}
                 </a>
@@ -67,8 +76,7 @@
         (next)="onPaginationNext()"
         (previous)="onPaginationPrevious()"
         [pageNext]="pageNext && !state.search_str"
-        [pagePrev]="pagePrev && !state.search_str"
-      >
+        [pagePrev]="pagePrev && !state.search_str">
       </cp-pagination>
     </div>
   </div>

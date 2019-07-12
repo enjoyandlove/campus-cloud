@@ -19,6 +19,17 @@ export enum PersonaValidationErrors {
   persona_non_empty = 'persona non-empty'
 }
 
+export const personaTypeLabel = {
+  [PersonasType.web]: 't_personas_platform_web',
+  [PersonasType.mobile]: 't_personas_platform_mobile'
+};
+
+export const personaLoginRequiredLabel = {
+  [PersonasLoginRequired.forbidden]: 't_personas_form_list_login_forbidden',
+  [PersonasLoginRequired.optional]: 't_personas_form_dropdown_login_optional',
+  [PersonasLoginRequired.required]: 't_personas_form_dropdown_login_required'
+};
+
 export const credentialType = {
   [PersonasLoginRequired.optional]: amplitudeEvents.OPTIONAL,
   [PersonasLoginRequired.required]: amplitudeEvents.REQUIRED,

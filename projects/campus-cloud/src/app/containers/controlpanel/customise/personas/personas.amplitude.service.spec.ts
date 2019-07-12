@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
+import { MockTilesUtilsService } from './tests';
 import { mockLinkData } from './tiles/tests/mocks';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { TilesUtilsService } from './tiles/tiles.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { MockTilesUtilsService } from './mock/personas.service.mock';
 import { PersonasAmplitudeService } from './personas.amplitude.service';
 import { mockTile } from '@controlpanel/customise/personas/tiles/tests/mocks';
 

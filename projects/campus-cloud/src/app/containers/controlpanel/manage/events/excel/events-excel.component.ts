@@ -56,6 +56,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
   error;
   events;
   stores;
+  isEvent;
   urlPrefix;
   formError;
   buttonData;
@@ -514,6 +515,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
 
   ngOnInit() {
     this.urlPrefix = this.utils.buildUrlPrefix(this.getEventType());
+    this.isEvent = this.storeId || this.clubId || this.isOrientation;
 
     this.isChecked = false;
     this.uploadButtonData = {

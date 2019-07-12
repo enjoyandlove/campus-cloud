@@ -15,6 +15,10 @@ export class CPI18nService {
     return locale;
   }
 
+  static getLocalizedLabel(label) {
+    return this.getLocale().startsWith('fr') ? label.fr : label.en;
+  }
+
   translate(key: string) {
     const doNotTranslate = noTranslateRegex.test(key);
 
