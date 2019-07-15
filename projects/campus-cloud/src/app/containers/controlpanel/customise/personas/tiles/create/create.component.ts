@@ -17,10 +17,10 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { SectionsService } from '../../sections/sections.service';
 import { PersonasUtilsService } from '../../personas.utils.service';
 import { SectionUtilsService } from '../../sections/section.utils.service';
-import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 import { PersonasAmplitudeService } from '../../personas.amplitude.service';
 import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
+import { baseActionClass, baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
 
 @Component({
   selector: 'cp-personas-tile-create',
@@ -96,15 +96,20 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     );
   }
 
-  erroHandler() {
-    this.store.dispatch({
-      type: baseActions.SNACKBAR_SHOW,
-      payload: {
-        sticky: true,
-        class: 'danger',
+  handleError() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
         body: this.cpI18n.translate('something_went_wrong')
-      }
-    });
+      })
+    );
+  }
+
+  handleSuccess(key) {
+    this.store.dispatch(
+      new baseActionClass.SnackbarSuccess({
+        body: this.cpI18n.translate(key)
+      })
+    );
   }
 
   onSubmit() {
@@ -135,10 +140,13 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
       (tile: ITile) => {
         this.trackCreatedTile(tile);
         this.disableSubmitButton = false;
-        this.router.navigate(['/studio/experiences', this.personaId]);
+
+        this.router
+          .navigate(['/studio/experiences', this.personaId])
+          .then(() => this.handleSuccess('t_persona_tile_saved_successfully'));
       },
       (_) => {
-        this.erroHandler();
+        this.handleError();
         this.disableSubmitButton = false;
       }
     );
@@ -210,7 +218,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
         this.filterByLogin = PersonasUtilsService.isLoginForbidden(this.persona.login_requirement);
         this.buildHeader(CPI18nService.getLocalizedLabel(data.localized_name_map));
       })
-      .catch(() => this.erroHandler());
+      .catch(() => this.handleError());
   }
 
   trackCreatedTile(tile: ITile) {

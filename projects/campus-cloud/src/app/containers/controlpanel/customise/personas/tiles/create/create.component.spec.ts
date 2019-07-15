@@ -137,7 +137,7 @@ describe('PersonasTileCreateComponent', () => {
   }));
 
   it('fetch with errors', fakeAsync(() => {
-    spyOn(comp, 'erroHandler');
+    spyOn(comp, 'handleError');
     spyOn(comp, 'buildForm');
     spyOn(comp, 'buildHeader');
     spyOn(comp.personaService, 'getPersonaById').and.returnValue(
@@ -150,13 +150,13 @@ describe('PersonasTileCreateComponent', () => {
 
     expect(comp.buildForm).not.toHaveBeenCalled();
     expect(comp.buildHeader).not.toHaveBeenCalled();
-    expect(comp.erroHandler).toHaveBeenCalled();
+    expect(comp.handleError).toHaveBeenCalled();
   }));
 
   it('should show snackbar on erroHandler', () => {
     spyOn(comp.store, 'dispatch');
 
-    comp.erroHandler();
+    comp.handleError();
 
     expect(comp.store.dispatch).toHaveBeenCalled();
   });
