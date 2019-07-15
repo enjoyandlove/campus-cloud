@@ -11,16 +11,17 @@ import { mockPersonas } from '../../tests';
 import { TilesService } from '../tiles.service';
 import { CPSession } from '@campus-cloud/session';
 import { PersonasTilesModule } from '../tiles.module';
+import { STATUS } from '@campus-cloud/shared/constants';
 import { PersonasService } from '../../personas.service';
 import { TilesUtilsService } from '../tiles.utils.service';
 import { PersonasTileEditComponent } from './edit.component';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { baseActions } from '@campus-cloud/store/base/reducers';
 import { SectionsService } from '../../sections/sections.service';
 import { PersonasUtilsService } from '../../personas.utils.service';
 import { SectionUtilsService } from '../../sections/section.utils.service';
 import { PersonasAmplitudeService } from '../../personas.amplitude.service';
+import { SNACKBAR_ERROR } from '@campus-cloud/store/base/reducers/snackbar.reducer';
 
 class MockPersonaService {
   placeholder;
@@ -143,7 +144,7 @@ describe('PersonasTileEditComponent', () => {
   });
 
   it('should catch fetch error', fakeAsync(() => {
-    spyOn(component, 'erroHandler');
+    spyOn(component, 'handleError');
     spyOn(component.personaService, 'getPersonaById').and.returnValue(
       of(new HttpErrorResponse({ error: 'Mocked Error' }))
     );
@@ -151,7 +152,7 @@ describe('PersonasTileEditComponent', () => {
     component.fetch();
     tick();
 
-    expect(component.erroHandler).toHaveBeenCalled();
+    expect(component.handleError).toHaveBeenCalled();
   }));
 
   it('should fetch personaById', fakeAsync(() => {
@@ -159,7 +160,7 @@ describe('PersonasTileEditComponent', () => {
 
     const params = new HttpParams().set('school_id', component.session.g.get('school').id);
 
-    spyOn(component, 'erroHandler');
+    spyOn(component, 'handleError');
     spyOn(personaService, 'getPersonaById').and.returnValue(of(mockPersonas[0]));
 
     component.fetch();
@@ -167,7 +168,7 @@ describe('PersonasTileEditComponent', () => {
 
     expect(component.campusLinkForm).toBeDefined();
     expect(component.campusGuideTileForm).toBeDefined();
-    expect(component.erroHandler).not.toHaveBeenCalled();
+    expect(component.handleError).not.toHaveBeenCalled();
     expect(component.persona).toEqual(mockPersonas[0]);
     expect(personaService.getPersonaById).toHaveBeenCalledWith(component.personaId, params);
   }));
@@ -224,13 +225,13 @@ describe('PersonasTileEditComponent', () => {
   it('should display alert snackbar', () => {
     const spy = spyOn(component.store, 'dispatch');
 
-    component.erroHandler();
+    component.handleError();
 
     expect(component.store.dispatch).toHaveBeenCalled();
 
     const args = spy.calls.mostRecent().args[0] as any;
 
-    expect(args.payload.class).toBe('danger');
-    expect(args.type).toBe(baseActions.SNACKBAR_SHOW);
+    expect(args.type).toBe(SNACKBAR_ERROR);
+    expect(args.payload.body).toBe(STATUS.SOMETHING_WENT_WRONG);
   });
 });

@@ -3075,6 +3075,9 @@
   "t_persona_list_column_heading_authentication": {
     "message": "Authentication"
   },
+  "t_persona_tile_saved_successfully": {
+    "message": "The tile has been saved successfully"
+  },
   "t_sandbox_already_invited": {
     "message": "Invites already sent"
   },
