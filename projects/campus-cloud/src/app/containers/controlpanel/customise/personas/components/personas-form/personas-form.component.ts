@@ -3,7 +3,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { PersonasUtilsService } from '../../personas.utils.service';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-personas-form',
@@ -23,18 +22,19 @@ export class PersonasFormComponent implements OnInit {
   selectedRequiresCredentials = null;
   loginRequired = PersonasLoginRequired.required;
 
-  constructor(public cpI18n: CPI18nService, public utils: PersonasUtilsService) {}
+  constructor(public utils: PersonasUtilsService) {}
 
   togglePretour(value) {
-    this.form.controls['pretour_enabled'].setValue(value);
+    this.form.get('pretour_enabled').setValue(value);
   }
 
   onPlatformChange({ id }) {
-    this.form.controls['platform'].setValue(id);
+    this.form.get('platform').setValue(id);
+    this.form.get('login_requirement').setValue(PersonasLoginRequired.optional);
   }
 
   onRequireCredentialsChange({ id }) {
-    this.form.controls['login_requirement'].setValue(id);
+    this.form.get('login_requirement').setValue(id);
   }
 
   setDefaultPlatform() {
