@@ -31,6 +31,8 @@ export class PersonasFormComponent implements OnInit {
   onPlatformChange({ id }) {
     this.form.get('platform').setValue(id);
     this.form.get('login_requirement').setValue(PersonasLoginRequired.optional);
+
+    this.setDefaultRequiresCredentials();
   }
 
   onRequireCredentialsChange({ id }) {
@@ -38,15 +40,17 @@ export class PersonasFormComponent implements OnInit {
   }
 
   setDefaultPlatform() {
-    this.selectedPlatform = this.platformMenu.filter(
+    this.selectedPlatform = this.platformMenu.find(
       (option) => option.id === this.form.value.platform
-    )[0];
+    );
   }
 
   setDefaultRequiresCredentials() {
-    this.selectedRequiresCredentials = this.requiresCredentialsMenu.filter(
-      (option) => option.id === this.form.value.login_requirement
-    )[0];
+    this.selectedRequiresCredentials = {
+      ...this.requiresCredentialsMenu.find(
+        (option) => option.id === this.form.value.login_requirement
+      )
+    };
   }
 
   ngOnInit(): void {
