@@ -25,7 +25,7 @@
     <ng-container *ngSwitchCase="false">
       <cp-persona-cant-delete
         (okClick)="resetModal()"
-        *ngIf="personas?.length <= 1">
+        *ngIf="personas?.length < 1">
       </cp-persona-cant-delete>
 
       <cp-persona-delete
@@ -33,7 +33,7 @@
         [personas]="personas"
         (cancelClick)="resetModal()"
         (deleteClick)="onDelete($event)"
-        *ngIf="personas?.length > 1">
+        *ngIf="personas?.length > 0">
       </cp-persona-delete>
     </ng-container>
   </ng-container>

@@ -9,7 +9,6 @@ import { CPDate } from '@campus-cloud/shared/utils';
 import { TileCategoryRank } from './tiles/tiles.status';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { TilesUtilsService } from './tiles/tiles.utils.service';
-import { CPDropdownComponent } from '@campus-cloud/shared/components';
 import { PersonasLoginRequired, PersonasType } from './personas.status';
 import { ResourcesUtilsService } from './tiles/resources/resources.utils.service';
 
@@ -47,16 +46,12 @@ export class PersonasUtilsService {
   }
 
   static setPersonaDropDown(personas) {
-    const _heading = [CPDropdownComponent.defaultPlaceHolder()];
-
-    const _persona = personas.map((persona: IPersona) => {
+    return personas.map((persona: IPersona) => {
       return {
-        label: CPI18nService.getLocalizedLabel(persona.localized_name_map),
-        action: persona.id
+        action: persona.id,
+        label: CPI18nService.getLocalizedLabel(persona.localized_name_map)
       };
     });
-
-    return [..._heading, ..._persona];
   }
 
   constructor(

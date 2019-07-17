@@ -40,7 +40,6 @@ export class PersonaDeleteComponent implements OnInit {
 
     this.buttonData = {
       class: 'danger',
-      disabled: !this.canDelete,
       text: this.cpI18n.translate('delete')
     };
 
