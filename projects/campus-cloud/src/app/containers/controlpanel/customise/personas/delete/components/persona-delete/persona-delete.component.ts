@@ -34,6 +34,9 @@ export class PersonaDeleteComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.substitutePersonaId =
+      this.persona.platform === PersonasType.web ? null : this.personas[0]['action'];
+
     this.canDelete =
       this.persona.platform === PersonasType.web ||
       this.persona.login_requirement === PersonasLoginRequired.forbidden;
