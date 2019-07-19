@@ -4,6 +4,7 @@ import { TilesUtilsService } from './tiles/tiles.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPI18nService, CPLogger } from '@campus-cloud/shared/services';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
+import { credentialType, PersonasType } from '@controlpanel/customise/personas/personas.status';
 
 const contentTypeLabels = {
   webLink: amplitudeEvents.WEB_LINK,
@@ -19,6 +20,28 @@ export class PersonasAmplitudeService {
 
   static getSectionType(contentType) {
     return contentTypeLabels[contentType];
+  }
+
+  static getStatus(status) {
+    return status ? amplitudeEvents.ENABLED : amplitudeEvents.DISABLED;
+  }
+
+  static getExperienceAmplitudeProperties(persona, isSecurityService = false, personaId = null) {
+    const experience_type =
+      persona.platform === PersonasType.web ? amplitudeEvents.WEB : amplitudeEvents.MOBILE;
+
+    const experience_id = personaId ? personaId : persona.id;
+    const campus_security = isSecurityService ? amplitudeEvents.YES : amplitudeEvents.NO;
+
+    return {
+      experience_id,
+      experience_type,
+      campus_security,
+      credential_type: credentialType[persona.login_requirement],
+      my_courses: PersonasAmplitudeService.getStatus(persona.home_my_courses_enabled),
+      upcoming_deadlines: PersonasAmplitudeService.getStatus(persona.home_due_dates_enabled),
+      todays_schedule: PersonasAmplitudeService.getStatus(persona.home_todays_schedule_enabled)
+    };
   }
 
   getContentType(linkData, resourceType) {

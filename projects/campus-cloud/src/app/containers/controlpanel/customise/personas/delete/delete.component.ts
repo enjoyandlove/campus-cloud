@@ -8,13 +8,8 @@ import { PersonasService } from './../personas.service';
 import { IItem } from '@campus-cloud/shared/components';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { PersonasUtilsService } from '../../personas/personas.utils.service';
-import {
-  credentialType,
-  PersonasType,
-  PersonaValidationErrors,
-  PersonasLoginRequired
-} from '../personas.status';
-
+import { PersonasType, PersonasLoginRequired, PersonaValidationErrors } from '../personas.status';
+import { PersonasAmplitudeService } from '@controlpanel/customise/personas/personas.amplitude.service';
 import {
   IModal,
   MODAL_DATA,
@@ -99,14 +94,10 @@ export class PersonasDeleteComponent implements OnInit {
   }
 
   trackDeleteExperienceEvent() {
-    const experience_type =
-      this.persona.platform === PersonasType.web ? amplitudeEvents.WEB : amplitudeEvents.MOBILE;
-
-    const eventProperties = {
-      experience_type,
-      experience_id: this.persona.id,
-      credential_type: credentialType[this.persona.login_requirement]
-    };
+    const {
+      campus_security, // ignoring campus_security property
+      ...eventProperties
+    } = PersonasAmplitudeService.getExperienceAmplitudeProperties(this.persona);
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_DELETED_EXPERIENCE, eventProperties);
   }
