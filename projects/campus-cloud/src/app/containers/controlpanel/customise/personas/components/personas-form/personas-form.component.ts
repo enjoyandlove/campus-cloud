@@ -29,8 +29,11 @@ export class PersonasFormComponent implements OnInit {
   }
 
   onPlatformChange({ id }) {
+    const loginRequirement =
+      id === PersonasType.web ? PersonasLoginRequired.forbidden : PersonasLoginRequired.optional;
+
     this.form.get('platform').setValue(id);
-    this.form.get('login_requirement').setValue(PersonasLoginRequired.optional);
+    this.form.get('login_requirement').setValue(loginRequirement);
 
     this.setDefaultRequiresCredentials();
   }
