@@ -12,6 +12,7 @@ import { CampusLink } from '../tiles/tile';
 import { IPersona } from '../persona.interface';
 import { ITile } from '../tiles/tile.interface';
 import { CPSession } from '@campus-cloud/session';
+import { PersonasType } from '../personas.status';
 import { BaseComponent } from '@campus-cloud/base';
 import { PersonasService } from './../personas.service';
 import { TileVisibility } from './../tiles/tiles.status';
@@ -19,12 +20,12 @@ import { PersonaValidationErrors } from './../personas.status';
 import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { baseActions, IHeader } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { credentialType, PersonasType } from '../personas.status';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { PersonasDeleteComponent } from '@controlpanel/customise/personas/delete';
 import { PersonasLoginRequired } from '@controlpanel/customise/personas/personas.status';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
 import { CPI18nService, CPTrackingService, ModalService } from '@campus-cloud/shared/services';
+import { PersonasAmplitudeService } from '@controlpanel/customise/personas/personas.amplitude.service';
 
 @Component({
   selector: 'cp-personas-edit',
@@ -184,8 +185,8 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     const stream$ = shouldCreateSecurityTile ? updatePersonaAndLink$ : updatePersona$;
 
     stream$.subscribe(
-      () => {
-        this.trackEditExperienceEvent(formData, this.personaId, securityService);
+      (persona: IPersona) => {
+        this.trackEditExperienceEvent(persona, securityService);
         this.router.navigate(['/studio/experiences']);
       },
       (err) => {
@@ -310,18 +311,11 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     );
   }
 
-  trackEditExperienceEvent(data, experience_id, securityService) {
-    const experience_type =
-      data.platform === PersonasType.web ? amplitudeEvents.WEB : amplitudeEvents.MOBILE;
-
-    const campus_security = securityService ? amplitudeEvents.YES : amplitudeEvents.NO;
-
-    const eventProperties = {
-      experience_id,
-      experience_type,
-      campus_security,
-      credential_type: credentialType[data.login_requirement]
-    };
+  trackEditExperienceEvent(persona, securityService) {
+    const eventProperties = PersonasAmplitudeService.getExperienceAmplitudeProperties(
+      persona,
+      securityService
+    );
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_UPDATED_EXPERIENCE, eventProperties);
   }
