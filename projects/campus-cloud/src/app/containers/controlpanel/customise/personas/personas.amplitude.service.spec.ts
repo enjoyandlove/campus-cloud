@@ -8,6 +8,7 @@ import { TilesUtilsService } from './tiles/tiles.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { PersonasAmplitudeService } from './personas.amplitude.service';
 import { mockTile } from '@controlpanel/customise/personas/tiles/tests/mocks';
+import { mockPersonas } from '@controlpanel/customise/personas/tests';
 
 describe('PersonasAmplitudeService', () => {
   configureTestSuite();
@@ -39,6 +40,12 @@ describe('PersonasAmplitudeService', () => {
     const result = amplitudeEvents.WEB_LINK;
 
     expect(PersonasAmplitudeService.getSectionType(sectionType)).toBe(result);
+  });
+
+  it('should get status type', () => {
+    const status = true;
+
+    expect(PersonasAmplitudeService.getStatus(status)).toBe(amplitudeEvents.ENABLED);
   });
 
   it('should get content type', () => {
@@ -86,6 +93,22 @@ describe('PersonasAmplitudeService', () => {
       tile_status: 'Shown',
       content_type: 'Calendar',
       section_type: 'Single Item'
+    };
+
+    expect(expected).toEqual(result);
+  });
+
+  it('should get experience amplitude properties', () => {
+    const expected = PersonasAmplitudeService.getExperienceAmplitudeProperties(mockPersonas[0]);
+
+    const result = {
+      experience_id: 1,
+      campus_security: 'No',
+      my_courses: 'Enabled',
+      experience_type: 'Mobile',
+      todays_schedule: 'Enabled',
+      credential_type: 'Required',
+      upcoming_deadlines: 'Enabled'
     };
 
     expect(expected).toEqual(result);

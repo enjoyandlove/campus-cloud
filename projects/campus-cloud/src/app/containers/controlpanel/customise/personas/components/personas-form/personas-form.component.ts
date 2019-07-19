@@ -3,7 +3,6 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { PersonasUtilsService } from '../../personas.utils.service';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 @Component({
   selector: 'cp-personas-form',
@@ -23,30 +22,38 @@ export class PersonasFormComponent implements OnInit {
   selectedRequiresCredentials = null;
   loginRequired = PersonasLoginRequired.required;
 
-  constructor(public cpI18n: CPI18nService, public utils: PersonasUtilsService) {}
+  constructor(public utils: PersonasUtilsService) {}
 
   togglePretour(value) {
-    this.form.controls['pretour_enabled'].setValue(value);
+    this.form.get('pretour_enabled').setValue(value);
   }
 
   onPlatformChange({ id }) {
-    this.form.controls['platform'].setValue(id);
+    const loginRequirement =
+      id === PersonasType.web ? PersonasLoginRequired.forbidden : PersonasLoginRequired.optional;
+
+    this.form.get('platform').setValue(id);
+    this.form.get('login_requirement').setValue(loginRequirement);
+
+    this.setDefaultRequiresCredentials();
   }
 
   onRequireCredentialsChange({ id }) {
-    this.form.controls['login_requirement'].setValue(id);
+    this.form.get('login_requirement').setValue(id);
   }
 
   setDefaultPlatform() {
-    this.selectedPlatform = this.platformMenu.filter(
+    this.selectedPlatform = this.platformMenu.find(
       (option) => option.id === this.form.value.platform
-    )[0];
+    );
   }
 
   setDefaultRequiresCredentials() {
-    this.selectedRequiresCredentials = this.requiresCredentialsMenu.filter(
-      (option) => option.id === this.form.value.login_requirement
-    )[0];
+    this.selectedRequiresCredentials = {
+      ...this.requiresCredentialsMenu.find(
+        (option) => option.id === this.form.value.login_requirement
+      )
+    };
   }
 
   ngOnInit(): void {

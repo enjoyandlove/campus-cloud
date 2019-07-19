@@ -2677,6 +2677,12 @@
   "t_external_check_in_not_found_error": {
     "message": "The event cannot be found"
   },
+  "t_help_desk_faq": {
+    "message": "Guides & FAQ"
+  },
+  "t_help_desk_wahts_new": {
+    "message": "What's new"
+  },
   "t_integration_form_required_fields": {
     "message": "Make sure your feed contains the required fields."
   },
@@ -3043,7 +3049,7 @@
     "message": "Edit Tile"
   },
   "t_persona_cant_delete_body": {
-    "message": "You need to create another experience with authentication to delete this experience"
+    "message": "You need to create another experience with authentication to delete this experience."
   },
   "t_persona_cant_delete_title": {
     "message": "Cannot Delete Experience"
@@ -3074,6 +3080,9 @@
   },
   "t_persona_list_column_heading_authentication": {
     "message": "Authentication"
+  },
+  "t_persona_tile_saved_successfully": {
+    "message": "The tile has been saved successfully"
   },
   "t_sandbox_already_invited": {
     "message": "Invites already sent"
@@ -3297,6 +3306,9 @@
   "t_shared_from": {
     "message": "From"
   },
+  "t_shared_help": {
+    "message": "Help"
+  },
   "t_shared_hide": {
     "message": "Hide"
   },
@@ -3332,6 +3344,9 @@
   },
   "t_shared_last_synced": {
     "message": "Last Synced"
+  },
+  "t_shared_last_update": {
+    "message": "Last update"
   },
   "t_shared_limited": {
     "message": "Limited"

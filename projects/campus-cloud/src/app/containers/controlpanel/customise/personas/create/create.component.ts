@@ -14,13 +14,9 @@ import { baseActions, IHeader } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { PersonasUtilsService } from './../personas.utils.service';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { PersonasAmplitudeService } from '../../personas/personas.amplitude.service';
 import { PersonasFormComponent } from './../components/personas-form/personas-form.component';
-import {
-  PersonasType,
-  credentialType,
-  PersonasLoginRequired,
-  PersonaValidationErrors
-} from './../personas.status';
+import { PersonasType, PersonasLoginRequired, PersonaValidationErrors } from './../personas.status';
 
 @Component({
   selector: 'cp-personas-create',
@@ -137,7 +133,7 @@ export class PersonasCreateComponent implements OnInit {
 
     stream$.subscribe(
       () => {
-        this.trackCreateExperienceEvent(formData, this.createdPersonaId, this.campusSecurityTile);
+        this.trackCreateExperienceEvent(formData, this.campusSecurityTile, this.createdPersonaId);
         this.router.navigate([`/studio/experiences/${this.createdPersonaId}`]);
       },
       (err) => {
@@ -182,18 +178,12 @@ export class PersonasCreateComponent implements OnInit {
     this.services$ = this.service.getServices(search);
   }
 
-  trackCreateExperienceEvent(data, experience_id, isSecurityService) {
-    const experience_type =
-      data.platform === PersonasType.web ? amplitudeEvents.WEB : amplitudeEvents.MOBILE;
-
-    const campus_security = isSecurityService ? amplitudeEvents.YES : amplitudeEvents.NO;
-
-    const eventProperties = {
-      experience_id,
-      experience_type,
-      campus_security,
-      credential_type: credentialType[data.login_requirement]
-    };
+  trackCreateExperienceEvent(data, isSecurityService, personaId) {
+    const eventProperties = PersonasAmplitudeService.getExperienceAmplitudeProperties(
+      data,
+      isSecurityService,
+      personaId
+    );
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_CREATED_EXPERIENCE, eventProperties);
   }

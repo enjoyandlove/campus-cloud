@@ -8,11 +8,12 @@ import { IPersona } from './../persona.interface';
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
 import { PersonasService } from './../personas.service';
+import { personaLoginRequiredLabel } from '../personas.status';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { personaTypeLabel, PersonaValidationErrors } from './../personas.status';
-import { credentialType, personaLoginRequiredLabel, PersonasType } from '../personas.status';
+import { PersonasAmplitudeService } from '@controlpanel/customise/personas/personas.amplitude.service';
 
 @Component({
   selector: 'cp-personas-list',
@@ -246,14 +247,10 @@ export class PersonasListComponent extends BaseComponent implements OnInit {
       ? amplitudeEvents.STUDIO_MOVED_EXPERIENCE
       : amplitudeEvents.STUDIO_VIEWED_CUSTOMIZATION_EXPERIENCE;
 
-    const experience_type =
-      persona.platform === PersonasType.web ? amplitudeEvents.WEB : amplitudeEvents.MOBILE;
-
-    const eventProperties = {
-      experience_type,
-      experience_id: persona.id,
-      credential_type: credentialType[persona.login_requirement]
-    };
+    const {
+      campus_security, // ignoring campus_security property
+      ...eventProperties
+    } = PersonasAmplitudeService.getExperienceAmplitudeProperties(persona);
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
