@@ -38,7 +38,7 @@
                         </span>
                         <cp-upload-button
                           theme="small"
-                          [id]="['upload_club_', i]"
+                          [id]="['upload_club_' + i]"
                           [isRequired]="formError && club.controls.logo_url.hasError('required')"
                           (fileUpload)="onImageUpload($event, i)"
                           *ngIf="!club.controls['logo_url'].value"
