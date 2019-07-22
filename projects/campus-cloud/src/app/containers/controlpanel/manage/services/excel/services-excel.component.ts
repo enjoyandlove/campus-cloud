@@ -4,14 +4,14 @@ import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { isDev } from '../../../../../config/env';
-import { CPSession } from '../../../../../session';
+import { isDev } from '@campus-cloud/config/env';
+import { CPSession } from '@campus-cloud/session';
 import { ServicesService } from '../services.service';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CPI18nPipe } from './../../../../../shared/pipes/i18n/i18n.pipe';
-import { CPImageUploadComponent } from '../../../../../shared/components';
-import { baseActions, getServicesModalState } from './../../../../../store/base';
-import { CPI18nService, FileUploadService } from '../../../../../shared/services';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { CPImageUploadComponent } from '@campus-cloud/shared/components';
+import { CPI18nService, FileUploadService } from '@campus-cloud/shared/services';
+import { baseActionClass, baseActions, getServicesModalState } from '@campus-cloud/store/base';
 
 const i18n = new CPI18nPipe();
 
@@ -231,14 +231,11 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   handleError(err?: string) {
-    this.store.dispatch({
-      type: baseActions.SNACKBAR_SHOW,
-      payload: {
-        class: 'danger',
-        sticky: true,
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
         body: err ? err : this.cpI18n.translate('something_went_wrong')
-      }
-    });
+      })
+    );
   }
 
   onImageUpload(image: string, index: number) {

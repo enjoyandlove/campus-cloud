@@ -5,14 +5,15 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
 import { ClubsService } from '../clubs.service';
-import { CPSession } from '../../../../../session';
-import { CPI18nPipe } from '../../../../../shared/pipes';
-import { getClubsState } from '../../../../../store';
-import { baseActions } from './../../../../../store/base/reducers';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CPImageUploadComponent } from '../../../../../shared/components';
+import { CPSession } from '@campus-cloud/session';
+import { getClubsState } from '@campus-cloud/store';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { baseActionClass } from '@campus-cloud/store/base';
+import { baseActions } from '@campus-cloud/store/base/reducers';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { CPImageUploadComponent } from '@campus-cloud/shared/components';
 import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
-import { CPI18nService, FileUploadService } from '../../../../../shared/services';
+import { CPI18nService, FileUploadService } from '@campus-cloud/shared/services';
 
 const i18n = new CPI18nPipe();
 
@@ -116,7 +117,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
         control.controls['logo_url'].setValue(res.image_url);
       })
       .catch((err) => {
-        throw new Error(err);
+        this.handleError(err);
       });
   }
 
@@ -133,9 +134,17 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
 
     this.clubService.createClub(this.form.value.clubs, search).subscribe(
       (_) => this.router.navigate(['/manage/' + this.labels.club_athletic]),
-      (err) => {
-        throw new Error(err);
+      () => {
+        this.handleError();
       }
+    );
+  }
+
+  handleError(err?: string) {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body: err ? err : this.cpI18n.translate('something_went_wrong')
+      })
     );
   }
 

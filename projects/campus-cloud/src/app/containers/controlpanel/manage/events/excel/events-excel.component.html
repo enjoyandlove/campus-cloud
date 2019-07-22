@@ -116,7 +116,6 @@
                         <label>{{ 'events_event_manager' | cpI18n }}</label>
                         <cp-dropdown
                           [selectedItem]="eventManager[i]"
-                          [reset]="resetManagerDropdown$"
                           [items]="event.controls['managers'].value"
                           (selected)="updateEventManager($event, i)"
                           [isRequiredError]="formError && event.controls.event_manager_id.hasError('required')">

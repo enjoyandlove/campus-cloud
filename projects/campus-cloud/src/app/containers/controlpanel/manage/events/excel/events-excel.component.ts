@@ -1,21 +1,21 @@
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPDate } from '@campus-cloud/shared/utils';
-import { CPI18nPipe } from '@campus-cloud/shared/pipes';
-import { baseActions } from '@campus-cloud/store/base';
-import { getEventsModalState } from '@campus-cloud/store';
 import { EventsService } from '../events.service';
+import { CPDate } from '@campus-cloud/shared/utils';
+import { baseActions } from '@campus-cloud/store/base';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { getEventsModalState } from '@campus-cloud/store';
 import { CPSession, ISchool } from '@campus-cloud/session';
 import { EventUtilService } from '../events.utils.service';
+import { EventsComponent } from '../list/base/events.component';
 import { amplitudeEvents, STATUS } from '@campus-cloud/shared/constants';
 import { CPImageUploadComponent } from '@campus-cloud/shared/components';
-import { EventsComponent } from '../list/base/events.component';
 import { SnackbarError } from '@campus-cloud/store/base/reducers/snackbar.reducer';
 import {
   AdminService,
@@ -72,7 +72,6 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
   attendanceFeedback = [];
   eventAttendanceFeedback;
   selectedCheckInOption = [];
-  resetManagerDropdown$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private router: Router,
@@ -254,7 +253,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
       control.controls['managers'].setValue(res);
     });
 
-    this.resetManagerDropdown$.next(true);
+    this.eventManager[index] = { label: '---' };
     control.controls['event_manager_id'].setValue(null);
     control.controls['store_id'].setValue(host.value);
   }
