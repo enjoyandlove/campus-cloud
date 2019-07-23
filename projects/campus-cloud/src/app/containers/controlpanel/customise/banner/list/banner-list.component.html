@@ -11,8 +11,7 @@
       [pkdbLink]="brandingPkdbLink"
       (removeLogo)="onRemoveLogo()"
       (uploadLogo)="onUploadLogo($event)"
-      (changeColor)="onChangeColor($event)"
-    >
+      (changeColor)="onChangeColor($event)">
     </cp-branding-form>
   </cp-card>
   <cp-card class="banner">
@@ -21,7 +20,10 @@
         <p class="card__title">{{ 'customization_title' | cpI18n }}</p>
         <p>
           <span class="text-muted">{{ 'customization_description' | cpI18n }} </span>
-          <a target="_blank" class="cpbtn cpbtn--link" [href]="bannerPkdbLink">
+          <a
+            target="_blank"
+            [href]="bannerPkdbLink"
+            class="cpbtn cpbtn--link">
             {{ 'learn_more' | cpI18n }}
           </a>
         </p>
@@ -34,14 +36,13 @@
       [uploading]="uploading"
       (error)="onError($event)"
       (resetClick)="onReset()"
-      (upload)="onUpload($event)"
-    >
+      (upload)="onUpload($event)">
     </cp-banner-upload>
   </cp-card>
+
   <cp-form-fixed-footer
     [submitButtonDisabled]="saveDisabled()"
     (submitClick)="onSave()"
-    (cancelClick)="onCancel()"
-  >
+    (cancelClick)="onCancel()">
   </cp-form-fixed-footer>
 </cp-one-column>
