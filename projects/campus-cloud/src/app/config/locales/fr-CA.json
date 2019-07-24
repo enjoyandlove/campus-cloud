@@ -3002,9 +3002,6 @@
   "t_personas_tile_modal_create_content": {
     "message": "Contenu"
   },
-  "t_personas_tile_modal_create_label_resources": {
-    "message": "Type de resource"
-  },
   "t_personas_tile_modal_create_label_type": {
     "message": "Type"
   },
@@ -3012,7 +3009,7 @@
     "message": "URL du lien"
   },
   "t_personas_tile_modal_create_resource_type": {
-    "message": "Type de ressource"
+    "message": "Type de contenu"
   },
   "t_personas_tile_moved_success": {
     "message": "Tuile enregistrée."
@@ -3177,6 +3174,9 @@
   "t_shared_add": {
     "message": "Ajouter"
   },
+  "t_shared_app": {
+    "message": "App"
+  },
   "t_shared_average_rating": {
     "message": "Note"
   },
@@ -3218,6 +3218,9 @@
   },
   "t_shared_cpimage_icon_help": {
     "message": "Doit être 128 x 128 au format PNG"
+  },
+  "t_shared_custom": {
+    "message": "Personnalisée"
   },
   "t_shared_default": {
     "message": "Défaut"

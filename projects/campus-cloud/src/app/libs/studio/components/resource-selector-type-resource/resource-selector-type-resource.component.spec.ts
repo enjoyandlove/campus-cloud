@@ -38,6 +38,15 @@ describe('ResourceSelectorTypeResourceComponent', () => {
     session = TestBed.get(CPSession);
 
     session.g.set('school', mockSchool);
+    component.items = [];
+    component.isEdit = false;
+    component.resources = [];
+    component.campusLink = null;
+    component.showErrors = false;
+    component.selectedItem = null;
+    component.filterByWebApp = false;
+    component.isServiceByCategory = null;
+    component.filterByLoginStatus = false;
     fixture.detectChanges();
   });
 
@@ -105,7 +114,7 @@ describe('ResourceSelectorTypeResourceComponent', () => {
       const getResourcesForTypeSpy: jasmine.Spy = spyOn(
         ContentUtilsProviders,
         'getResourcesForType'
-      );
+      ).and.callThrough();
 
       fixture.detectChanges();
       component.ngOnInit();
@@ -125,8 +134,6 @@ describe('ResourceSelectorTypeResourceComponent', () => {
     }));
 
     it('should set form to invalid when link params is empty when required', () => {
-      expect(component.form.valid).toBe(false);
-
       component.resourcesWithLinkParamsRequired.forEach((resource) => {
         component.form.patchValue({ link_url: resource });
         component.form.patchValue({ link_params: {} });
@@ -250,15 +257,15 @@ describe('ResourceSelectorTypeResourceComponent', () => {
   });
 
   describe('initResources', () => {
-    it('should call updateState when isEdit is true', () => {
-      spyOn(component, 'updateState');
+    it('should call updateStateWith when isEdit is true', () => {
+      spyOn(component, 'updateStateWith');
 
       component.isEdit = true;
       fixture.detectChanges();
 
       component.initResources();
 
-      expect(component.updateState).toHaveBeenCalled();
+      expect(component.updateStateWith).toHaveBeenCalled();
     });
   });
 });

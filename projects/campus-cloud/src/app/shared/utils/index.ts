@@ -3,6 +3,7 @@ export * from './csv';
 export * from './date';
 export * from './http';
 export * from './type';
+export * from './text';
 export * from './router';
 export * from './object';
 export * from './storage';

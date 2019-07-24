@@ -1,9 +1,9 @@
 <ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
   <ng-container *ngSwitchCase="false">
-    <div class="row margin-bottom">
-      <div class="col-6">
-        <div class="cp-card">
+    <main class="margin-bottom">
+      <cp-two-columns>
+        <cp-card layout-left-column>
           <p class="title">
             {{ 't_personas_create_tile_heading_left' | cpI18n }}
           </p>
@@ -13,10 +13,8 @@
             uploadButtonId="tile_guide_upload_button"
             (formChange)="onCampusGuideTileFormChange(campusGuideTileForm)">
           </cp-personas-tile-guide-form>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="cp-card">
+        </cp-card>
+        <cp-card layout-right-column>
           <p class="title">
             {{ 't_personas_create_tile_heading_right' | cpI18n }}
           </p>
@@ -79,11 +77,11 @@
               </cp-personas-resource-list-of-list>
             </cp-resource-selector-item>
           </cp-resource-selector>
-        </div>
-      </div>
-    </div>
+        </cp-card>
+      </cp-two-columns>
+    </main>
 
-    <div class="footer">
+    <footer class="footer">
       <div class="cp-wrapper cp-wrapper--outer">
         <div class="col-12">
           <div class="row">
@@ -107,6 +105,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </footer>
   </ng-container>
 </ng-container>

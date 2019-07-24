@@ -1,10 +1,13 @@
-import { FormGroup, Validators, FormBuilder, FormControl } from '@angular/forms';
 import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
+import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
 import { get as _get } from 'lodash';
 
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
+import { IItem } from '@projects/campus-cloud/src/app/shared/components';
 import { IExternalAppOpenFormDetails } from './external-app-open.interface';
 import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
+import { ResourceExternalAppOpenUtils } from './resource-external-app-open.utils.service';
 
 @Component({
   selector: 'cp-personas-resource-external-app-open',
@@ -19,63 +22,69 @@ export class PersonasResourceExternalAppOpenComponent implements OnInit {
   @Output()
   valueChanges: EventEmitter<IExternalAppOpenFormDetails | { link_url: null }> = new EventEmitter();
 
-  form: FormGroup;
+  selectedOption: IItem;
+  form: FormGroup = this.getForm();
 
-  constructor(private fb: FormBuilder) {}
+  options = this.utils.getShortcutOptions();
 
-  validateIOS(control: FormControl) {
-    const httpUrl = control.get('app_link').value.trim();
-    const storeUrl = control.get('fallback_http_url').value.trim();
+  constructor(private fb: FormBuilder, private utils: ResourceExternalAppOpenUtils) {}
 
-    return !httpUrl && !storeUrl ? { requiredField: true } : null;
+  onOptionSelected({ action }: IItem) {
+    const linkParams: AbstractControl = this.form.get('link_params');
+
+    if (!action || !ResourceExternalAppOpenUtils.thirdPartyShortcuts[action]) {
+      linkParams.reset();
+      return;
+    }
+
+    linkParams.patchValue(ResourceExternalAppOpenUtils.thirdPartyShortcuts[action]);
   }
 
   getForm(): FormGroup {
-    const params = this.isEdit ? this.campusLink.link_params : {};
-    const ios = _get(params, 'ios', false);
-    const android = _get(params, 'android', false);
-
-    const _linkParams = {
-      android: {
-        fallback_http_url: android ? params.android.fallback_http_url : '',
-        package_name: android ? params.android.package_name : ''
-      },
-      ios: {
-        fallback_http_url: ios ? params.ios.fallback_http_url : '',
-        app_link: ios ? params.ios.app_link : ''
-      }
-    };
-
-    const form = this.fb.group({
-      android: this.fb.group({
-        fallback_http_url: [_linkParams.android.fallback_http_url, Validators.required],
-        package_name: [_linkParams.android.package_name, Validators.required]
-      }),
-      ios: this.fb.group(
-        {
-          fallback_http_url: [_linkParams.ios.fallback_http_url],
-          app_link: [_linkParams.ios.app_link]
-        },
-        { validators: this.validateIOS }
-      )
+    return this.fb.group({
+      link_type: [CampusLink.linkType.appOpen],
+      link_url: [CampusLink.appOpen],
+      link_params: this.fb.group({
+        android: this.fb.group({
+          fallback_http_url: ['', CustomValidators.requiredNonEmpty],
+          package_name: ['', CustomValidators.requiredNonEmpty]
+        }),
+        ios: this.fb.group({
+          fallback_http_url: ['', CustomValidators.requiredNonEmpty],
+          app_link: ['', CustomValidators.requiredNonEmpty]
+        })
+      })
     });
+  }
 
-    return form;
+  getInitialFormValues() {
+    if (
+      this.isEdit &&
+      this.campusLink &&
+      this.campusLink.link_type === CampusLink.linkType.appOpen
+    ) {
+      const thirdPartyId =
+        ResourceExternalAppOpenUtils.thirdPartyTypeIdFromLinkParams(this.campusLink.link_params) ||
+        null;
+      this.selectedOption = this.options.find((option: IItem) => option.action === thirdPartyId);
+
+      const { link_type, link_url, link_params } = this.campusLink;
+      return { link_type, link_url, link_params };
+    }
+    this.selectedOption = this.options.find((option: IItem) => option.action === null);
+    return this.form.value;
   }
 
   ngOnInit() {
-    this.form = this.getForm();
     this.form.valueChanges.subscribe(() => {
       const tooBig = JSON.stringify(this.form.value).length > 1024;
-      const data =
-        this.form.invalid || tooBig
-          ? { link_url: null }
-          : {
-              link_type: 4,
-              link_url: CampusLink.appOpen,
-              link_params: this.form.value
-            };
-      this.valueChanges.emit(data);
+
+      this.valueChanges.emit({
+        ...this.form.value,
+        link_url: this.form.invalid || tooBig ? null : CampusLink.appOpen
+      });
     });
+
+    this.form.patchValue(this.getInitialFormValues());
   }
 }

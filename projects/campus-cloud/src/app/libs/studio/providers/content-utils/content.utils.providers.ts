@@ -316,6 +316,20 @@ export class ContentUtilsProviders {
     };
   }
 
+  static getResourceItemByLinkType(
+    items: IStudioContentResource[],
+    linkType: number
+  ): boolean | undefined {
+    return items.map((i) => i.link_type).includes(linkType);
+  }
+
+  static getResourceItemByLinkUrl(
+    items: IStudioContentResource[],
+    linkUrl: string
+  ): boolean | undefined {
+    return items.map((i) => i.meta.link_url).includes(linkUrl);
+  }
+
   static getResourcesForType(
     resourceType: string,
     filters: Function[] = []
@@ -337,7 +351,6 @@ export class ContentUtilsProviders {
     }
 
     return [
-      { label: '---', id: null, meta: null },
       ...sortBy(
         resources.map((r: IStudioContentResource) => {
           return {

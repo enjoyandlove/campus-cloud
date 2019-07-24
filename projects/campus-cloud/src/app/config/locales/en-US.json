@@ -3026,9 +3026,6 @@
   "t_personas_tile_modal_create_content": {
     "message": "Content"
   },
-  "t_personas_tile_modal_create_label_resources": {
-    "message": "Resource Type"
-  },
   "t_personas_tile_modal_create_label_type": {
     "message": "Type"
   },
@@ -3036,7 +3033,7 @@
     "message": "Link URL"
   },
   "t_personas_tile_modal_create_resource_type": {
-    "message": "Resource Type"
+    "message": "Content Type"
   },
   "t_personas_tile_moved_success": {
     "message": "Tile saved."
@@ -3216,6 +3213,9 @@
   "t_shared_add": {
     "message": "Add"
   },
+  "t_shared_app": {
+    "message": "App"
+  },
   "t_shared_average_rating": {
     "message": "Average Rating"
   },
@@ -3257,6 +3257,9 @@
   },
   "t_shared_cpimage_icon_help": {
     "message": "Must be 128 x 128 in PNG format"
+  },
+  "t_shared_custom": {
+    "message": "Custom"
   },
   "t_shared_default": {
     "message": "Default"
