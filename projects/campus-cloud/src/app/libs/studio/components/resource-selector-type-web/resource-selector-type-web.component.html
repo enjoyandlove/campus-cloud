@@ -2,6 +2,7 @@
 <cp-dropdown
   [items]="items"
   [selectedItem]="selectedItem"
+  cpTarget="web-resource-selector"
   (selected)="onItemSelected($event)"
   [isRequiredError]="showErrors && !selectedItem">
 </cp-dropdown>
@@ -12,11 +13,9 @@
       <label>{{ 't_personas_tile_modal_create_link_url' | cpI18n }}</label>
       <input
         type="text"
+        cpTarget="link_url"
         formControlName="link_url"
         [class.error]="showErrors && form.get('link_url').invalid"/>
-      <small class="text-muted" *ngIf="form.dirty && form.invalid">
-        {{ 't_shared_invalid_url' | cpI18n }}
-      </small>
     </div>
   </form>
   <p>

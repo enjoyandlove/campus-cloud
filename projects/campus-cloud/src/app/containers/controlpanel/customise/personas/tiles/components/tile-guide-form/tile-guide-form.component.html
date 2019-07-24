@@ -4,6 +4,7 @@
       <label>{{ 'name' | cpI18n }}</label>
       <input
         type="text"
+        cpTarget="name"
         class="form-control"
         formControlName="name"
         [class.error]="showErrors && form.get('name').invalid" />
@@ -19,12 +20,18 @@
         (changed)="onColorChange($event)"
         [defaultColor]="form.controls['color'].value"
       />
-      <input #hexInput class="hex" type="text" [value]="form.controls['color'].value" />
+      <input
+        #hexInput
+        class="hex"
+        type="text"
+        cpTarget="color"
+        [value]="form.controls['color'].value" />
     </div>
 
     <div class="col-6">
       <label>{{ 't_shared_image' | cpI18n }}</label>
       <cp-upload-button
+        cpTarget="img_url"
         [id]="uploadButtonId"
         [busy]="state.uploading"
         [buttonText]="uploadImageBtn"

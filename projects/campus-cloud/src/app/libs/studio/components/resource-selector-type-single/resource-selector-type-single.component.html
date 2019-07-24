@@ -3,6 +3,7 @@
   <cp-dropdown
     [items]="items"
     [selectedItem]="selectedType"
+    cpTarget="single-resource-selector"
     (selected)="onItemClicked($event)"
     [isRequiredError]="showErrors && form.get('link_url').invalid">
   </cp-dropdown>
@@ -11,6 +12,7 @@
 <div class="form-group">
   <cp-dropdown
     [reset]="resetHosts$"
+    cpTarget="store-selector"
     [selectedItem]="selectedStore"
     [items]="getStoresBySelection()"
     (selected)="onHostSelected($event)"

@@ -1,9 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { PersonasResourceExternalAppOpenComponent } from './../resource-external-app-open';
 import { ResourceSelectorTypeExternalComponent } from './resource-selector-type-external.component';
+import { ResourceExternalAppOpenModule } from './../resource-external-app-open/resource-external-app-open.module';
 
 describe('ResourceSelectorTypeExternalComponent', () => {
   let component: ResourceSelectorTypeExternalComponent;
@@ -11,11 +12,9 @@ describe('ResourceSelectorTypeExternalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, SharedModule],
-      declarations: [
-        ResourceSelectorTypeExternalComponent,
-        PersonasResourceExternalAppOpenComponent
-      ]
+      providers: [CPI18nService],
+      imports: [ReactiveFormsModule, SharedModule, ResourceExternalAppOpenModule],
+      declarations: [ResourceSelectorTypeExternalComponent]
     }).compileComponents();
   }));
 

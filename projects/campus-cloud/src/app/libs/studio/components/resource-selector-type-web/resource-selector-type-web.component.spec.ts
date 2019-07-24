@@ -29,6 +29,7 @@ describe('ResourceSelectorTypeWebComponent', () => {
   });
 
   it('should have a form', () => {
+    const result = component.buildForm();
     const expected = {
       link_url: '',
       link_type: null,
@@ -36,26 +37,19 @@ describe('ResourceSelectorTypeWebComponent', () => {
       open_in_browser: null
     };
 
-    expect(component.form.value).toEqual(expected);
+    expect(result.value).toEqual(expected);
   });
 
   describe('ngOnInit', () => {
-    let buildFormSpy: jasmine.Spy;
-
     beforeEach(() => {
-      buildFormSpy = spyOn(component, 'buildForm');
       component.ngOnInit();
     });
 
     it('should set resources', () => {
       expect(component.items).toBeDefined();
-      expect(component.items.length).toBe(4);
+      expect(component.items.length).toBe(3);
       expect(component.resources).toBeDefined();
       expect(component.resources.length).toBe(3);
-    });
-
-    it('should call buildForm', () => {
-      expect(buildFormSpy).toHaveBeenCalled();
     });
 
     it('should filter resources based on filterByWebApp', () => {
@@ -68,7 +62,7 @@ describe('ResourceSelectorTypeWebComponent', () => {
       resultResourcesIds = component.resources.map((m) => m.id);
       expectedResourcesIds = ['web_link', 'external_link', 'external_web_app'];
 
-      expect(component.items.length).toBe(4);
+      expect(component.items.length).toBe(3);
       expect(component.resources.length).toBe(3);
       expectedResourcesIds.forEach((resource) => {
         expect(resultResourcesIds.includes(resource)).toBe(true, `missing ${resource}`);
@@ -80,7 +74,7 @@ describe('ResourceSelectorTypeWebComponent', () => {
       resultResourcesIds = component.resources.map((m) => m.id);
       expectedResourcesIds = ['external_link'];
 
-      expect(component.items.length).toBe(2);
+      expect(component.items.length).toBe(1);
       expect(component.resources.length).toBe(1);
       expectedResourcesIds.forEach((resource) => {
         expect(resultResourcesIds.includes(resource)).toBe(true, `missing ${resource}`);
@@ -112,7 +106,7 @@ describe('ResourceSelectorTypeWebComponent', () => {
 
         component.form.patchValue(invalidForm);
 
-        expect(valueChangesSpy).toHaveBeenCalledWith({ link_url: '' });
+        expect(valueChangesSpy).toHaveBeenCalledWith({ ...component.form.value, link_url: '' });
 
         const validForm = {
           link_type: 0,
@@ -122,18 +116,17 @@ describe('ResourceSelectorTypeWebComponent', () => {
 
         component.form.patchValue(validForm);
 
-        expect(valueChangesSpy).toHaveBeenCalledWith({ link_url: '' });
+        expect(valueChangesSpy).toHaveBeenCalledWith({ ...component.form.value, link_url: '' });
 
         component.selectedItem = 'notNull';
         fixture.detectChanges();
-
-        // expect(valueChangesSpy).toHaveBeenCalledWith(component.form.value);
       });
     });
   });
 
   describe('updateState', () => {
     it('should set showForm to true', () => {
+      component.showForm = false;
       expect(component.showForm).toBe(false);
 
       const testLink = {
@@ -145,32 +138,32 @@ describe('ResourceSelectorTypeWebComponent', () => {
       component.campusLink = testLink;
       fixture.detectChanges();
 
-      component.updateState();
+      component.updateStateWith(component.getInitialFormValues());
 
       expect(component.showForm).toBe(true);
     });
 
     it('should patch form value with campusLink values', () => {
       const testLink = {
-        link_type: 0,
-        link_url: 'some',
+        link_type: 5,
+        link_url: '',
         open_in_browser: true
       } as ILink;
 
       component.campusLink = testLink;
       fixture.detectChanges();
 
-      component.updateState();
+      component.updateStateWith(component.getInitialFormValues());
 
       const { link_url, link_type, open_in_browser } = component.form.value;
 
       expect(link_url).toEqual(testLink.link_url);
       expect(link_type).toEqual(testLink.link_type);
-      expect(open_in_browser).toEqual(testLink.open_in_browser);
+      expect(open_in_browser).toEqual(0);
     });
 
     it('should populate correct selectedItem', () => {
-      let testLink = {
+      const testLink = {
         link_type: 0,
         link_url: 'some',
         open_in_browser: false
@@ -179,30 +172,7 @@ describe('ResourceSelectorTypeWebComponent', () => {
       component.campusLink = testLink;
       fixture.detectChanges();
 
-      component.updateState();
-      expect(component.selectedItem.id).toBe('web_link');
-
-      testLink = {
-        ...testLink,
-        open_in_browser: true
-      };
-
-      component.campusLink = testLink;
-      fixture.detectChanges();
-
-      component.updateState();
-      expect(component.selectedItem.id).toBe('external_link');
-
-      testLink = {
-        ...testLink,
-        link_type: 5,
-        open_in_browser: false
-      };
-
-      component.campusLink = testLink;
-      fixture.detectChanges();
-
-      component.updateState();
+      component.updateStateWith(component.getInitialFormValues());
       expect(component.selectedItem.id).toBe('external_web_app');
     });
   });

@@ -9,8 +9,8 @@ import { CPSession } from '@campus-cloud/session';
 import { IItem } from '@campus-cloud/shared/components';
 import { ContentUtilsProviders } from '../../providers';
 import { IStudioContentResource } from '../../providers';
-import { StoreService } from '@campus-cloud/shared/services';
 import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
+import { StoreService, CPI18nService } from '@campus-cloud/shared/services';
 import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { TilesService } from '@controlpanel/customise/personas/tiles/tiles.service';
 
@@ -37,19 +37,22 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
 
   @Output() valueChanges: EventEmitter<any> = new EventEmitter();
 
-  form: FormGroup;
   storesByType = {};
   selectedType = null;
   selectedStore = null;
   currentlyViewing = null;
+  form: FormGroup = this.buildForm();
 
   resources = [];
-  items = [placeHolder];
+  items = [
+    { id: null, label: this.cpI18n.translate('t_shared_loading'), meta: null }
+  ] as IStudioContentResource[];
   resetHosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private tileService: TilesService,
     private storeService: StoreService,
     private contentUtils: ContentUtilsProviders
@@ -60,7 +63,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
   }
 
   buildForm() {
-    this.form = this.fb.group({
+    return this.fb.group({
       link_type: [3],
       link_url: [null, Validators.required],
       link_params: [null, Validators.required]
@@ -90,16 +93,34 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
     }
   }
 
-  updateState() {
-    const contentId = linkUrlToIdMap[this.campusLink.link_url];
+  updateStateWith({ link_url, link_type, link_params }) {
+    const contentId = linkUrlToIdMap[link_url];
     this.selectedType = this.items.find((i: IStudioContentResource) => i.id === contentId);
     this.currentlyViewing = contentId;
 
     this.form.patchValue({
-      link_type: this.campusLink.link_type,
-      link_url: this.campusLink.link_url,
-      link_params: this.selectedStore ? this.campusLink.link_params : null
+      link_type: link_type,
+      link_url: link_url,
+      link_params: this.selectedStore ? link_params : null
     });
+  }
+
+  isCampusLinkInList() {
+    if (!this.campusLink || !this.items.length) {
+      return false;
+    }
+    return ContentUtilsProviders.getResourceItemByLinkUrl(this.items, this.campusLink.link_url);
+  }
+
+  getInitialFormValues() {
+    if (this.isEdit && this.isCampusLinkInList()) {
+      const { link_url, link_type, link_params } = this.campusLink;
+      return { link_url, link_type, link_params };
+    } else {
+      const link_type = this.form.get('link_type').value;
+      const { link_url, link_params } = this.items[0].meta;
+      return { link_url, link_type, link_params };
+    }
   }
 
   ngOnInit() {
@@ -121,9 +142,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
 
         this.items = this.contentUtils.resourcesToIItem(this.resources);
 
-        if (this.isEdit) {
-          this.updateState();
-        }
+        this.updateStateWith(this.getInitialFormValues());
       },
       () => {
         this.storesByType = {
@@ -133,10 +152,8 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
         };
       }
     );
-
-    this.buildForm();
     this.form.valueChanges.subscribe(() => {
-      const value = this.form.valid ? this.form.value : { link_url: null };
+      const value = this.form.valid ? this.form.value : { ...this.form.value, link_url: null };
       this.valueChanges.emit(value);
     });
   }
@@ -178,7 +195,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
     const headers = this.defaultHeaders;
     return this.storeService
       .getStores(headers, {
-        label: '---',
+        label: '',
         value: null,
         heading: true
       })

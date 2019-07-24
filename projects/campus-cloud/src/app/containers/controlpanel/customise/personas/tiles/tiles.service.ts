@@ -69,11 +69,9 @@ export class TilesService extends HTTPService {
     const url = `${common}/1;2000`;
 
     return super.get(url, search, true).pipe(
-      startWith([{ label: '---' }]),
       map((services: any[]) => {
         return [
-          { label: '---', action: null, heading: true },
-
+          { label: '', action: null, heading: true },
           ...services
             .filter((s: any) => s.id)
             .map((service: any) => {
@@ -83,7 +81,8 @@ export class TilesService extends HTTPService {
               };
             })
         ];
-      })
+      }),
+      startWith([{ label: '---' }])
     );
   }
 
@@ -91,10 +90,9 @@ export class TilesService extends HTTPService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDAR}/1;2000`;
 
     return super.get(url, headers, true).pipe(
-      startWith([{ label: '---' }]),
       map((calendars: any[]) => {
         return [
-          { label: '---', action: null, heading: true },
+          { label: '', action: null, heading: true },
           ...calendars
             .filter((c: any) => c.id)
             .map((calendar: any) => {
@@ -104,7 +102,8 @@ export class TilesService extends HTTPService {
               };
             })
         ];
-      })
+      }),
+      startWith([{ label: '---' }])
     );
   }
 

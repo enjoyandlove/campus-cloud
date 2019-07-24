@@ -3,7 +3,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'cp-resource-selector-button',
   template: `
-    <button [ngClass]="classes" (click)="clicked.emit()">
+    <button [cpTarget]="id" [ngClass]="classes" (click)="clicked.emit()">
       <img [src]="iconSrc" />
       <span><ng-content></ng-content></span>
     </button>
