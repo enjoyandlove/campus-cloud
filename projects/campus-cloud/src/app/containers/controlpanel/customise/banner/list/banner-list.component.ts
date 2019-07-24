@@ -18,7 +18,6 @@ import {
   FileUploadService
 } from '@campus-cloud/shared/services';
 
-const IMAGE_RATIO = 1.8;
 const IMAGE_SIZE_WIDTH = 664;
 
 @Component({
@@ -29,6 +28,7 @@ const IMAGE_SIZE_WIDTH = 664;
 export class BannerListComponent implements OnInit {
   isEdit;
   form: FormGroup;
+  imageRatio = 1.8;
   textLogo: string;
   uploading = false;
   bannerPkdbLink: string;
@@ -139,8 +139,8 @@ export class BannerListComponent implements OnInit {
       showZoomer: false,
       enableResize: false,
       enableOrientation: true,
-      viewport: { width: 400, height: 400 / IMAGE_RATIO },
-      boundary: IMAGE_SIZE_WIDTH / IMAGE_RATIO,
+      viewport: { width: 400, height: 400 / this.imageRatio },
+      boundary: IMAGE_SIZE_WIDTH / this.imageRatio,
       url: `${image}?disableCache=true`
     };
 
@@ -150,7 +150,7 @@ export class BannerListComponent implements OnInit {
   imageToBase64(): Promise<any> {
     return this.canvas.result({
       type: 'base64',
-      size: { width: IMAGE_SIZE_WIDTH, height: IMAGE_SIZE_WIDTH / IMAGE_RATIO },
+      size: { width: IMAGE_SIZE_WIDTH, height: IMAGE_SIZE_WIDTH / this.imageRatio },
       format: 'jpeg'
     });
   }
