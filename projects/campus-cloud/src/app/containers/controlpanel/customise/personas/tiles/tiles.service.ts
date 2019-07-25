@@ -3,12 +3,13 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { API } from '../../../../../config/api';
-import { HTTPService } from '../../../../../base/http.service';
+import { API } from '@campus-cloud/config/api';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { HTTPService } from '@campus-cloud/base/http.service';
 
 @Injectable()
 export class TilesService extends HTTPService {
-  constructor(http: HttpClient, router: Router) {
+  constructor(http: HttpClient, router: Router, private cpI18n: CPI18nService) {
     super(http, router);
 
     Object.setPrototypeOf(this, TilesService.prototype);
@@ -69,11 +70,9 @@ export class TilesService extends HTTPService {
     const url = `${common}/1;2000`;
 
     return super.get(url, search, true).pipe(
-      startWith([{ label: '---' }]),
       map((services: any[]) => {
         return [
-          { label: '---', action: null, heading: true },
-
+          { label: this.cpI18n.translate('t_shared_select_service'), action: null, heading: true },
           ...services
             .filter((s: any) => s.id)
             .map((service: any) => {
@@ -83,7 +82,8 @@ export class TilesService extends HTTPService {
               };
             })
         ];
-      })
+      }),
+      startWith([{ label: '---' }])
     );
   }
 
@@ -91,10 +91,9 @@ export class TilesService extends HTTPService {
     const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDAR}/1;2000`;
 
     return super.get(url, headers, true).pipe(
-      startWith([{ label: '---' }]),
       map((calendars: any[]) => {
         return [
-          { label: '---', action: null, heading: true },
+          { label: this.cpI18n.translate('t_shared_select_calendar'), action: null, heading: true },
           ...calendars
             .filter((c: any) => c.id)
             .map((calendar: any) => {
@@ -104,7 +103,8 @@ export class TilesService extends HTTPService {
               };
             })
         ];
-      })
+      }),
+      startWith([{ label: '---' }])
     );
   }
 

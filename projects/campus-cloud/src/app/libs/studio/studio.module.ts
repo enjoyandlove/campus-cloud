@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { ContentUtilsProviders, IntegrationDataService } from './providers';
+import { ResourceExternalAppOpenModule } from './components/resource-external-app-open/resource-external-app-open.module';
 
 import {
   ResourceSelectorComponent,
@@ -13,8 +14,7 @@ import {
   ResourceSelectorTypeSingleComponent,
   ResourceSelectorTypeResourceComponent,
   ResourceSelectorTypeExternalComponent,
-  ResourceTypeServiceByCategoryComponent,
-  PersonasResourceExternalAppOpenComponent
+  ResourceTypeServiceByCategoryComponent
 } from './components';
 
 @NgModule({
@@ -36,10 +36,9 @@ import {
     ResourceSelectorTypeSingleComponent,
     ResourceSelectorTypeResourceComponent,
     ResourceSelectorTypeExternalComponent,
-    ResourceTypeServiceByCategoryComponent,
-    PersonasResourceExternalAppOpenComponent
+    ResourceTypeServiceByCategoryComponent
   ],
-  imports: [CommonModule, ReactiveFormsModule, SharedModule],
+  imports: [CommonModule, ReactiveFormsModule, SharedModule, ResourceExternalAppOpenModule],
   providers: [ContentUtilsProviders, IntegrationDataService]
 })
 export class LibsStudioModule {}

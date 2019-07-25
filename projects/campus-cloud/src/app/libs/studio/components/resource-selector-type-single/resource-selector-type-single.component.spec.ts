@@ -13,8 +13,6 @@ import { TilesService } from '@controlpanel/customise/personas/tiles/tiles.servi
 import { MockTilesService, MockStoreService, getLinkUrlFromResourceList } from '../../tests';
 import { ResourceSelectorTypeSingleComponent } from './resource-selector-type-single.component';
 
-const invalidFormEmitValue = { link_url: null };
-
 describe('ResourceSelectorTypeSingleComponent', () => {
   let session: CPSession;
   let component: ResourceSelectorTypeSingleComponent;
@@ -49,6 +47,9 @@ describe('ResourceSelectorTypeSingleComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+
+    expect(component.form).toBeDefined();
+    expect(component.items.length).toBe(3);
   });
 
   it('should have correct default input values', () => {
@@ -58,92 +59,140 @@ describe('ResourceSelectorTypeSingleComponent', () => {
   });
 
   it('should create an empty form', () => {
-    component.buildForm();
-
-    fixture.detectChanges();
+    const result = component.buildForm().value;
 
     const expected = { link_url: null, link_params: null, link_type: 3 };
 
-    expect(component.form.value).toEqual(expected);
+    expect(result).toEqual(expected);
   });
 
-  describe('updateState', () => {
-    it('should update form values with campusLink details', () => {
-      const campusLink = {
+  describe('getInitialFormValues', () => {
+    it('should return first available resource type details when isEdit is false', () => {
+      const expected = {
         link_type: 3,
-        link_params: { id: 1 },
-        link_url: CampusLink.campusService
+        ...component.items[0].meta
+      };
+
+      const result = component.getInitialFormValues();
+      expect(expected).toEqual(result);
+    });
+
+    it('should return first available resource type details when isEdit is true but campusLink not in resource list', () => {
+      component.isEdit = true;
+      component.campusLink = {
+        link_type: 4,
+        link_params: null,
+        link_url: CampusLink.appOpen
+      } as ILink;
+      fixture.detectChanges();
+
+      const expected = {
+        link_type: 3,
+        ...component.items[0].meta
+      };
+
+      const result = component.getInitialFormValues();
+      expect(expected).toEqual(result);
+    });
+
+    it('should update form with campusLink values when isEdit is true and campusLink found in resource list', () => {
+      const expected = {
+        link_type: 3,
+        link_params: null,
+        link_url: CampusLink.subscribableCalendar
       } as ILink;
 
-      component.campusLink = campusLink;
+      component.isEdit = true;
+      component.campusLink = expected;
+
+      fixture.detectChanges();
+
+      const result = component.getInitialFormValues();
+      expect(result).toEqual(expected);
+    });
+  });
+
+  describe('updateStateWith', () => {
+    it('should update form values with first resource type details', () => {
+      component.isEdit = false;
       component.selectedStore = 'notNull';
 
-      fixture.detectChanges();
-      component.updateState();
-
-      expect(component.form.value).toEqual(campusLink);
-    });
-
-    it('should set form link_params control to null, when no selectedStore is found', () => {
-      const campusLink = {
+      const expected = {
         link_type: 3,
-        link_params: null,
-        link_url: CampusLink.campusService
+        link_params: component.items[0].meta.link_params,
+        link_url: component.items[0].meta.link_url
       } as ILink;
 
-      component.campusLink = campusLink;
-
       fixture.detectChanges();
-      component.updateState();
+      component.updateStateWith(component.getInitialFormValues());
 
-      expect(component.form.valid).toBe(false);
-      expect(component.form.value).toEqual(campusLink);
-    });
-
-    it('should define currentlyViewing', () => {
-      expect(component.currentlyViewing).toBeNull();
-
-      const campusLink = {
-        link_type: 3,
-        link_params: null,
-        link_url: CampusLink.campusService
-      } as ILink;
-
-      component.campusLink = campusLink;
-
-      fixture.detectChanges();
-      component.updateState();
-      fixture.detectChanges();
-      expect(component.currentlyViewing).toBeDefined();
+      expect(component.form.value).toEqual(expected);
     });
 
     it('should define selectedType', () => {
-      expect(component.selectedType).toBeNull();
-
-      const campusLink = {
-        link_type: 3,
-        link_params: null,
-        link_url: CampusLink.campusService
-      } as ILink;
-
-      component.campusLink = campusLink;
+      component.selectedType = null;
 
       fixture.detectChanges();
-      component.updateState();
+      component.updateStateWith(component.getInitialFormValues());
       expect(component.selectedType).toBeDefined();
     });
   });
 
-  describe('ngOnInit', () => {
-    it('should call buildForm', () => {
-      spyOn(component, 'buildForm');
+  describe('onItemClicked', () => {
+    const selectedItem = {
+      id: 'campus_service',
+      label: 'Campus Service',
+      meta: {
+        link_params: {},
+        link_url: 'oohlala://campus_service'
+      }
+    };
 
-      component.ngOnInit();
-
-      expect(component.form).toBeDefined();
-      expect(component.buildForm).toHaveBeenCalled();
+    it('should call resetHosts$', () => {
+      expect(component.resetHosts$.value).toBe(false);
+      component.onItemClicked(selectedItem);
+      expect(component.resetHosts$.value).toBe(true);
     });
 
+    it('should update subMenuOptions with selected item values', () => {
+      const expected = { action: 1, label: 'dummy' };
+      component.storesByType = {
+        [selectedItem.id]: [expected]
+      };
+      fixture.detectChanges();
+      component.onItemClicked(selectedItem);
+      fixture.detectChanges();
+      const result: any = component.subMenuOptions;
+      expect(result[0]).toEqual(expected);
+    });
+
+    it('should update selectedStore with selected item values', () => {
+      const expected = { action: 1, label: 'dummy' };
+      component.storesByType = {
+        [selectedItem.id]: [expected]
+      };
+      fixture.detectChanges();
+      component.onItemClicked(selectedItem);
+      fixture.detectChanges();
+      const result: any = component.selectedStore;
+      expect(result).toEqual(expected);
+    });
+
+    it('should patch the form with selected item values', () => {
+      const expected = { action: 1, label: 'dummy' };
+      component.storesByType = {
+        [selectedItem.id]: [expected]
+      };
+      fixture.detectChanges();
+      component.onItemClicked(selectedItem);
+      fixture.detectChanges();
+      const result = component.form.get('link_url').value;
+
+      expect(result).toBe(selectedItem.meta.link_url);
+    });
+  });
+
+  describe('ngOnInit', () => {
     it('should populate storesByType with all hosts available', () => {
       spyOn(component, 'loadStores');
       spyOn(component, 'loadServices');
@@ -171,7 +220,10 @@ describe('ResourceSelectorTypeSingleComponent', () => {
       it('should emit with { link_url: null }, when form is invalid', () => {
         component.form.patchValue({ link_params: null });
 
-        expect(valueChangesSpy).toHaveBeenCalledWith(invalidFormEmitValue);
+        expect(valueChangesSpy).toHaveBeenCalledWith({
+          ...component.form.value,
+          link_url: null
+        });
       });
 
       it('should emit form value, when form is valid', () => {
@@ -188,7 +240,7 @@ describe('ResourceSelectorTypeSingleComponent', () => {
       const getResourcesForTypeSpy: jasmine.Spy = spyOn(
         ContentUtilsProviders,
         'getResourcesForType'
-      );
+      ).and.callThrough();
 
       component.ngOnInit();
       const [name, validators] = getResourcesForTypeSpy.calls.mostRecent().args;
@@ -213,6 +265,7 @@ describe('ResourceSelectorTypeSingleComponent', () => {
 
       fixture.detectChanges();
       component.ngOnInit();
+
       resultResources = getLinkUrlFromResourceList(component.resources);
       expectedResources = [CampusLink.store, CampusLink.campusService];
 

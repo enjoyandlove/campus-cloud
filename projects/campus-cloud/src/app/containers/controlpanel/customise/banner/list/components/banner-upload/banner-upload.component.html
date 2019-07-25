@@ -4,8 +4,7 @@
       *ngIf="!isEdit"
       id="canvas_wrapper"
       class="canvas__wrapper canvas__wrapper--image"
-      [ngStyle]="{ 'background-image': 'url(' + form.controls['logo_url'].value + ')' }"
-    ></div>
+      [ngStyle]="{ 'background-image': 'url(' + form.controls['logo_url'].value + ')' }"></div>
     <div *ngIf="isEdit" id="canvas_wrapper" class="canvas__wrapper">
       <div class="canvas__bounds"></div>
     </div>
@@ -15,8 +14,7 @@
       class="upload-button"
       (reset)="resetClick.emit()"
       (error)="error.emit($event)"
-      (upload)="upload.emit($event)"
-    >
+      (upload)="upload.emit($event)">
     </cp-banner-upload-button>
 
     <cp-banner-control-buttons
@@ -24,8 +22,7 @@
       class="control-buttons"
       [loading]="uploading"
       (save)="crop.emit()"
-      (cancel)="resetClick.emit()"
-    >
+      (cancel)="resetClick.emit()">
     </cp-banner-control-buttons>
 
     <p class="tooltip" *ngIf="isEdit">{{ 'customization_instructions' | cpI18n }}</p>

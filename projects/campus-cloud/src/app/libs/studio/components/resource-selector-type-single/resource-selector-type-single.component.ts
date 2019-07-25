@@ -3,18 +3,17 @@ import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { of, BehaviorSubject, forkJoin } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { isEmpty } from 'lodash';
 
 import { CPSession } from '@campus-cloud/session';
 import { IItem } from '@campus-cloud/shared/components';
 import { ContentUtilsProviders } from '../../providers';
 import { IStudioContentResource } from '../../providers';
-import { StoreService } from '@campus-cloud/shared/services';
 import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
+import { StoreService, CPI18nService } from '@campus-cloud/shared/services';
 import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { TilesService } from '@controlpanel/customise/personas/tiles/tiles.service';
 
-const placeHolder: IStudioContentResource = { id: null, label: '---', meta: null };
+const placeHolder: IStudioContentResource = { id: null, label: '', meta: null };
 
 const linkUrlToIdMap = {
   [CampusLink.store]: 'store',
@@ -37,19 +36,22 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
 
   @Output() valueChanges: EventEmitter<any> = new EventEmitter();
 
-  form: FormGroup;
   storesByType = {};
   selectedType = null;
   selectedStore = null;
-  currentlyViewing = null;
+  subMenuOptions = [placeHolder];
+  form: FormGroup = this.buildForm();
 
   resources = [];
-  items = [placeHolder];
+  items = [
+    { id: null, label: this.cpI18n.translate('t_shared_loading'), meta: null }
+  ] as IStudioContentResource[];
   resetHosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
+    private cpI18n: CPI18nService,
     private tileService: TilesService,
     private storeService: StoreService,
     private contentUtils: ContentUtilsProviders
@@ -60,18 +62,11 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
   }
 
   buildForm() {
-    this.form = this.fb.group({
-      link_type: [3],
+    return this.fb.group({
+      link_type: [CampusLink.linkType.inAppLink],
       link_url: [null, Validators.required],
       link_params: [null, Validators.required]
     });
-  }
-
-  getStoresBySelection() {
-    if (!this.currentlyViewing || !this.storesByType || isEmpty(this.storesByType)) {
-      return [placeHolder];
-    }
-    return this.storesByType[this.currentlyViewing];
   }
 
   onHostSelected(selection) {
@@ -90,16 +85,34 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
     }
   }
 
-  updateState() {
-    const contentId = linkUrlToIdMap[this.campusLink.link_url];
+  updateStateWith({ link_url, link_type, link_params }) {
+    const contentId = linkUrlToIdMap[link_url];
     this.selectedType = this.items.find((i: IStudioContentResource) => i.id === contentId);
-    this.currentlyViewing = contentId;
+    this.subMenuOptions = this.storesByType[contentId];
 
     this.form.patchValue({
-      link_type: this.campusLink.link_type,
-      link_url: this.campusLink.link_url,
-      link_params: this.selectedStore ? this.campusLink.link_params : null
+      link_type: link_type,
+      link_url: link_url,
+      link_params: this.selectedStore ? link_params : null
     });
+  }
+
+  isCampusLinkInList() {
+    if (!this.campusLink || !this.items.length) {
+      return false;
+    }
+    return ContentUtilsProviders.getResourceItemByLinkUrl(this.items, this.campusLink.link_url);
+  }
+
+  getInitialFormValues() {
+    if (this.isEdit && this.isCampusLinkInList()) {
+      const { link_url, link_type, link_params } = this.campusLink;
+      return { link_url, link_type, link_params };
+    } else {
+      const link_type = this.form.get('link_type').value;
+      const { link_url, link_params } = this.items[0].meta;
+      return { link_url, link_type, link_params };
+    }
   }
 
   ngOnInit() {
@@ -121,9 +134,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
 
         this.items = this.contentUtils.resourcesToIItem(this.resources);
 
-        if (this.isEdit) {
-          this.updateState();
-        }
+        this.updateStateWith(this.getInitialFormValues());
       },
       () => {
         this.storesByType = {
@@ -133,19 +144,16 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
         };
       }
     );
-
-    this.buildForm();
     this.form.valueChanges.subscribe(() => {
-      const value = this.form.valid ? this.form.value : { link_url: null };
+      const value = this.form.valid ? this.form.value : { ...this.form.value, link_url: null };
       this.valueChanges.emit(value);
     });
   }
 
   onItemClicked(selection) {
     this.resetHosts$.next(true);
-    this.currentlyViewing = selection.id;
-
-    this.currentlyViewing = selection.id;
+    this.subMenuOptions = this.storesByType[selection.id];
+    this.selectedStore = this.subMenuOptions[0];
     const linkUrl = selection.id ? selection.meta.link_url : null;
 
     this.form.patchValue({
@@ -154,7 +162,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
   }
 
   handleError(err: HttpErrorResponse) {
-    const label = err.status === 403 ? '---' : 'Error';
+    const label = err.status === 403 ? '---' : this.cpI18n.translate('t_shared_error');
     return of([{ ...placeHolder, label }]);
   }
 
@@ -178,7 +186,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
     const headers = this.defaultHeaders;
     return this.storeService
       .getStores(headers, {
-        label: '---',
+        label: this.cpI18n.translate('t_shared_select_group_and_club'),
         value: null,
         heading: true
       })

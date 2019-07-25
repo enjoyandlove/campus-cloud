@@ -13,16 +13,14 @@
         class="wrapper"
         (mouseenter)="toggleHover(true)"
         (mouseleave)="toggleHover(false)"
-        [ngStyle]="{ height: base.tileHeight + 2 + 'px' }"
-      >
+        [ngStyle]="{ height: base.tileHeight + 2 + 'px' }">
         <div class="row h-100" *ngIf="!state.hover">
           <div class="col-12">
             <cp-personas-tile-content
               [name]="tile.name"
               [color]="tile.color"
               [image]="tile.img_url"
-              [visible]="utils.isTileVisible(tile)"
-            >
+              [visible]="utils.isTileVisible(tile)">
             </cp-personas-tile-content>
           </div>
         </div>
@@ -33,8 +31,7 @@
               (toggleVisibility)="onToggleTile()"
               [visible]="utils.isTileVisible(tile)"
               (deleteClick)="deleteClick.emit(tile)"
-              [defaultTile]="utils.isTileDefault(tile)"
-            >
+              [defaultTile]="utils.isTileDefault(tile)">
             </cp-personas-tile-hover>
           </div>
         </div>

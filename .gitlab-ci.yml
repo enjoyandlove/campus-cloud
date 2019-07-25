@@ -7,11 +7,11 @@ stages:
 Testing Web Staging:
   stage: test
   script:
-  - echo "Testing Web Staging..."
-  - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_test
-  - echo "Web Staging tested successfully"
+    - echo "Testing Web Staging..."
+    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_test
+    - echo "Web Staging tested successfully"
   only:
-  - staging
+    - staging
   coverage: '/Statements.*?(\d+(?:\.\d+)?)%/'
   artifacts:
     paths:
@@ -31,11 +31,11 @@ Building Web Staging:
 Deploying Web Staging:
   stage: deploy
   script:
-  - echo "Deploying Web Staging..."
-  - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_deploy
-  - echo "Web Staging deployed successfully"
+    - echo "Deploying Web Staging..."
+    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_staging_web_deploy
+    - echo "Web Staging deployed successfully"
   only:
-  - staging
+    - staging
   environment: Staging
 
 ## US Production
@@ -43,14 +43,14 @@ Deploying Web Staging:
 Building Web Production:
   stage: build
   script:
-  - echo "Building US Production..."
-  - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_production_web_build
-  - echo "Web US Production built successfully"
-  - echo "Building CAN Production..."
-  - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py can_production_web_build
-  - echo "Web CAN Production built successfully"
+    - echo "Building US Production..."
+    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_production_web_build
+    - echo "Web US Production built successfully"
+    - echo "Building CAN Production..."
+    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py can_production_web_build
+    - echo "Web CAN Production built successfully"
   only:
-  - master
+    - master
   environment: Production
 
 Deploying Web Production:

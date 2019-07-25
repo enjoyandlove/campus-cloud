@@ -2681,7 +2681,7 @@
     "message": "Guides & FAQ"
   },
   "t_help_desk_wahts_new": {
-    "message": "What's new"
+    "message": "What's New"
   },
   "t_integration_form_required_fields": {
     "message": "Make sure your feed contains the required fields."
@@ -3026,9 +3026,6 @@
   "t_personas_tile_modal_create_content": {
     "message": "Content"
   },
-  "t_personas_tile_modal_create_label_resources": {
-    "message": "Resource Type"
-  },
   "t_personas_tile_modal_create_label_type": {
     "message": "Type"
   },
@@ -3036,7 +3033,7 @@
     "message": "Link URL"
   },
   "t_personas_tile_modal_create_resource_type": {
-    "message": "Resource Type"
+    "message": "Content Type"
   },
   "t_personas_tile_moved_success": {
     "message": "Tile saved."
@@ -3216,6 +3213,9 @@
   "t_shared_add": {
     "message": "Add"
   },
+  "t_shared_app": {
+    "message": "App"
+  },
   "t_shared_average_rating": {
     "message": "Average Rating"
   },
@@ -3257,6 +3257,9 @@
   },
   "t_shared_cpimage_icon_help": {
     "message": "Must be 128 x 128 in PNG format"
+  },
+  "t_shared_custom": {
+    "message": "Custom"
   },
   "t_shared_default": {
     "message": "Default"
@@ -3392,6 +3395,15 @@
   },
   "t_shared_saved_update_success_message": {
     "message": "Success! "
+  },
+  "t_shared_select_calendar": {
+    "message": "Select Calendar"
+  },
+  "t_shared_select_group_and_club": {
+    "message": "Select Group & Club"
+  },
+  "t_shared_select_service": {
+    "message": "Select Service"
   },
   "t_shared_show": {
     "message": "Show"

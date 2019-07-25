@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { switchMap } from 'rxjs/operators';
+import { merge, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { ITile } from '../tile.interface';
@@ -16,10 +17,10 @@ import { ICampusGuide } from '../../sections/section.interface';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { SectionsService } from '../../sections/sections.service';
 import { PersonasUtilsService } from '../../personas.utils.service';
-import { baseActionClass, baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 import { PersonasAmplitudeService } from '../../personas.amplitude.service';
 import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
+import { baseActionClass, baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
 
 @Component({
   selector: 'cp-personas-tile-edit',
@@ -38,6 +39,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   guide: ICampusGuide;
   formHasErrors = false;
   filterByLogin = false;
+  destroy$ = new Subject();
   campusLinkForm: FormGroup;
   disableSubmitButton = false;
   campusGuideTileForm: FormGroup;
@@ -98,12 +100,8 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   }
 
   onTypeChange(selectedContentId) {
+    this.formHasErrors = false;
     this.selectedContent = selectedContentId;
-    this.campusLinkForm.patchValue({
-      link_type: 3,
-      link_url: null,
-      link_params: {}
-    });
 
     this.editedTileEventProperties = {
       ...this.editedTileEventProperties,
@@ -129,11 +127,11 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
 
   onSubmit() {
     this.formHasErrors = false;
+
     if (this.campusGuideTileForm.invalid || this.campusLinkForm.invalid) {
       this.formHasErrors = true;
       return;
     }
-
     this.disableSubmitButton = true;
 
     const stream$ = this.updateGuideTile();
@@ -185,6 +183,10 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     this.selectedContent = ContentUtilsProviders.getContentTypeByCampusLink(
       this.campusLinkForm.value
     );
+
+    merge(this.campusLinkForm.valueChanges, this.campusGuideTileForm.valueChanges)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => (this.formHasErrors = false));
   }
 
   buildHeader(personaName: string) {
@@ -230,6 +232,8 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   }
 
   ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
     this.guideService.guide = null;
     this.store.dispatch({ type: baseActions.SNACKBAR_HIDE });
   }

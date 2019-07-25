@@ -1,3 +1,5 @@
+import { HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 import {
   Input,
   OnInit,
@@ -9,8 +11,6 @@ import {
   ViewChildren,
   AfterViewInit
 } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
-import { Store } from '@ngrx/store';
 
 import { CPSession } from '@campus-cloud/session';
 import { TilesService } from '../../../tiles.service';
@@ -238,8 +238,15 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
       onUpdate: this.onDragged.bind(this)
     };
 
-    if (this.isEdit) {
+    if (this.isEdit && this.campusLink.link_url === this.meta.link_url) {
       this.fetchLinks();
+      const { link_params, link_url, link_type } = this.campusLink;
+      this.resourceAdded.emit({ link_params, link_url, link_type });
+    } else {
+      this.resourceAdded.emit({
+        ...this.meta,
+        link_url: null
+      });
     }
   }
 }

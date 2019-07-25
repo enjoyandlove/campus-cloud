@@ -67,4 +67,11 @@ export class CampusLink {
   public static readonly appOpen = `open_external_app`;
 
   public static readonly directory = `${inapp}int_web_directory`;
+
+  public static readonly linkType = {
+    appOpen: 4,
+    inAppLink: 3,
+    regularWebLink: 0,
+    externalWebApp: 5
+  };
 }

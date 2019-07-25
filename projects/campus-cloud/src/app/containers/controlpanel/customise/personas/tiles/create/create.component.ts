@@ -2,7 +2,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, takeUntil } from 'rxjs/operators';
+import { merge, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { ITile } from '../tile.interface';
@@ -35,6 +36,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   filterByWeb = false;
   formHasErrors = false;
   filterByLogin = false;
+  destroy$ = new Subject();
   campusLinkForm: FormGroup;
   disableSubmitButton = false;
   campusGuideTileForm: FormGroup;
@@ -114,6 +116,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
   onSubmit() {
     this.formHasErrors = false;
+
     if (this.campusGuideTileForm.invalid || this.campusLinkForm.invalid) {
       this.formHasErrors = true;
       return;
@@ -160,6 +163,10 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   buildForm() {
     this.campusLinkForm = this.utils.campusLinkForm(false, false);
     this.campusGuideTileForm = this.utils.campusGuideTileForm(this.personaId, this.guide);
+
+    merge(this.campusLinkForm.valueChanges, this.campusGuideTileForm.valueChanges)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => (this.formHasErrors = false));
   }
 
   buildHeader(personaName: string) {
@@ -192,14 +199,12 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
   onTypeChange(section: string) {
     this.section = section;
-    this.campusLinkForm.patchValue({
-      link_type: 3,
-      link_url: null,
-      link_params: {}
-    });
+    this.formHasErrors = false;
   }
 
   ngOnDestroy() {
+    this.destroy$.next();
+    this.destroy$.complete();
     this.guideService.guide = null;
     this.store.dispatch({ type: baseActions.SNACKBAR_HIDE });
   }

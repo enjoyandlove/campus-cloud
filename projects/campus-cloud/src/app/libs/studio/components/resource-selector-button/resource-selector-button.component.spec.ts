@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
+import { SharedModule } from '@projects/campus-cloud/src/app/shared/shared.module';
 import { ResourceSelectorButtonComponent } from './resource-selector-button.component';
 
 describe('ResourceSelectorButtonComponent', () => {
@@ -8,6 +9,7 @@ describe('ResourceSelectorButtonComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      imports: [SharedModule],
       declarations: [ResourceSelectorButtonComponent]
     }).compileComponents();
   }));

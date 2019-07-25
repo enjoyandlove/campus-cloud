@@ -41,6 +41,8 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
   ) {}
 
   ngOnInit() {
+    this.buildForm();
+
     this.integrationDataService
       .getIntegrationData()
       .pipe(takeUntil(this.destroy$))
@@ -49,7 +51,6 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
         () => this.initResources()
       );
 
-    this.buildForm();
     this.form.valueChanges.subscribe(() => {
       const value = this.form.valid ? this.form.value : { link_url: null };
       this.valueChanges.emit(value);
@@ -77,19 +78,44 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
 
     this.items = this.contentUtils.resourcesToIItem(this.resources);
 
-    if (this.isEdit) {
-      this.updateState();
+    this.updateStateWith(this.getInitialFormValues());
+  }
+
+  isCampusLinkInList() {
+    if (!this.campusLink || !this.items.length) {
+      return false;
+    }
+
+    return this.items.map((i) => i.meta.link_url).includes(this.campusLink.link_url);
+  }
+
+  getInitialFormValues() {
+    if (this.isEdit && this.isCampusLinkInList()) {
+      const { link_url, link_type, link_params } = this.campusLink;
+
+      return {
+        link_url,
+        link_type,
+        link_params
+      };
+    } else {
+      const link_type = this.form.get('link_type').value;
+      const { link_url, link_params } = this.items[0].meta;
+      return {
+        link_url,
+        link_type,
+        link_params
+      };
     }
   }
 
-  updateState() {
+  updateStateWith({ link_url, link_type, link_params }) {
     this.selectedItem = this.items
       .filter((item: IStudioContentResource) => item.meta)
-      .find((item: IStudioContentResource) => item.meta.link_url === this.campusLink.link_url);
-    const { link_url, link_params } = this.campusLink;
-    this.isServiceByCategory = link_url === CampusLink.campusServiceList;
+      .find((item: IStudioContentResource) => item.meta.link_url === link_url);
 
-    this.form.patchValue({ link_url, link_params });
+    this.isServiceByCategory = link_url === CampusLink.campusServiceList;
+    this.form.patchValue({ link_type, link_url, link_params });
   }
 
   buildForm() {
@@ -99,7 +125,7 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
           null,
           Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])
         ],
-        link_type: [3],
+        link_type: [CampusLink.linkType.inAppLink],
         link_params: [{}]
       },
       { validators: this.customLinkParamsValidator.bind(this) }

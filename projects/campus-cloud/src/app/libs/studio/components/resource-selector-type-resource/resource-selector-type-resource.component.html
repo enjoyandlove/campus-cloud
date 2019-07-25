@@ -1,6 +1,7 @@
 <label>{{ 't_personas_tile_modal_create_resource_type' | cpI18n }}</label>
 <cp-dropdown
   [items]="items"
+  cpTarget="resource-selector"
   [selectedItem]="selectedItem"
   (selected)="onSelected($event)"
   [isRequiredError]="showErrors && form.invalid">

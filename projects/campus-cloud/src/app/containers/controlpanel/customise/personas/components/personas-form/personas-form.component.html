@@ -14,11 +14,11 @@
     <div class="col-6 form-group">
       <label>{{ 't_personas_form_label_platform' | cpI18n }}</label>
       <cp-dropdown
+        cpTarget="platform"
         [disabled]="isEdit"
         [items]="platformMenu"
         [selectedItem]="selectedPlatform"
-        (selected)="onPlatformChange($event)"
-      >
+        (selected)="onPlatformChange($event)">
       </cp-dropdown>
     </div>
   </div>
@@ -28,11 +28,11 @@
       <div class="col-6 form-group">
         <label>{{ 't_personas_form_label_requires_credentials' | cpI18n }}</label>
         <cp-dropdown
+          cpTarget="login"
           [disabled]="isEdit"
           [items]="requiresCredentialsMenu"
           [selectedItem]="selectedRequiresCredentials"
-          (selected)="onRequireCredentialsChange($event)"
-        >
+          (selected)="onRequireCredentialsChange($event)">
         </cp-dropdown>
       </div>
     </div>
@@ -46,10 +46,10 @@
         <div class="col-4">
           <div class="float-right">
             <cp-switch
+              cpTarget="pretour"
               [id]="['personas_pretour']"
               (toggle)="togglePretour($event)"
-              [isChecked]="form.controls['pretour_enabled'].value"
-            >
+              [isChecked]="form.controls['pretour_enabled'].value">
             </cp-switch>
           </div>
         </div>

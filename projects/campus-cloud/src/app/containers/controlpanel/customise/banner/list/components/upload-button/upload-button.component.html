@@ -2,9 +2,8 @@
   <button
     type="button"
     data-toggle="dropdown"
-    [attr.disabled]="uploading ? 'disabled' : null"
     class="cpbtn cpbtn--cancel"
-  >
+    [attr.disabled]="uploading ? 'disabled' : null">
     <span class="pencil">
       <i class="material-icons">{{ uploading ? 'timelapse' : 'mode_edit' }}</i>
     </span>
@@ -19,8 +18,7 @@
         [id]="'logo_url'"
         [buttonText]="buttonText"
         (fileUpload)="onFileUpload($event)"
-        buttonClass="cpbtn cpbtn--link-dark"
-      >
+        buttonClass="cpbtn cpbtn--link-dark">
       </cp-upload-button>
     </li>
   </ul>
