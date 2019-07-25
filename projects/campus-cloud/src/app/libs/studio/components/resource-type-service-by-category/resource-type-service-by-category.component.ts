@@ -57,6 +57,8 @@ export class ResourceTypeServiceByCategoryComponent implements OnInit {
       selection
     };
 
+    this.multiSelectPlaceholder = selection.join(',');
+
     this.doEmit();
   }
 
