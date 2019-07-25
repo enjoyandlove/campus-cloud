@@ -48,16 +48,15 @@
     </nav>
     <div>
       <div class="float-right">
-        <div class="extras nav__help-desk">
+        <div class="extras" *ngIf="production">
           <button
             type="button"
-            data-toggle="dropdown"
-            class="cpbtn cpbtn--link--dark">
-           <img [src]="helpIcon" alt="help">
+            id="beamerButton"
+            class="cpbtn cpbtn--link--dark"
+            (click)="trackViewedNotification()"
+          >
+            <i class="material-icons">notifications</i>
           </button>
-          <div class="nav__help-desk--menu nav__help-desk--right dropdown-menu dropdown-menu-right">
-            <cp-help-desk></cp-help-desk>
-          </div>
         </div>
         <div class="nav__school noselect">
           <div class="row" data-toggle="dropdown">

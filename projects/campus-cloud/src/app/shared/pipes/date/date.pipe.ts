@@ -1,9 +1,9 @@
+import { CPSession } from './../../../session/index';
 import { Pipe, PipeTransform } from '@angular/core';
 
 import * as moment from 'moment-timezone';
 
-import { CPSession } from '@campus-cloud/session';
-import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPI18nService } from '../../services/index';
 
 const FORMAT_EN = {
   TIME: 'h:mm A',
