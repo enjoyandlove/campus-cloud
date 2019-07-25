@@ -12,7 +12,7 @@
 
   width: 245px;
   overflow-y: auto;
-  max-height: 292px;
+  max-height: 323px;
   overflow-x: hidden;
   border-radius: 4px;
   box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
@@ -32,7 +32,6 @@
 
     a {
       width: 100%;
-      width: 100%;
       color: inherit;
       display: block;
     }
@@ -48,7 +47,10 @@
   }
 
   &__school {
-    height: 55px;
+    a {
+      padding: 8px 16px !important;
+    }
+
     &__thumb {
       float: left;
       height: 36px;
