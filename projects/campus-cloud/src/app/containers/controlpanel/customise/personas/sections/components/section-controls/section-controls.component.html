@@ -1,6 +1,11 @@
 <div class="row controls">
   <div class="col-12">
-    <button type="button" [disabled]="disableUp" (click)="moveUp.emit()" class="cpbtn cpbtn--link">
+    <button
+      type="button"
+      [disabled]="disableUp"
+      (click)="moveUp.emit()"
+      class="cpbtn cpbtn--link"
+      cpTarget="section-move-up">
       <i class="material-icons">keyboard_arrow_up</i>
     </button>
 
@@ -9,7 +14,7 @@
       [disabled]="disableDown"
       class="cpbtn cpbtn--link"
       (click)="moveDown.emit()"
-    >
+      cpTarget="section-move-down">
       <i class="material-icons">keyboard_arrow_down</i>
     </button>
 
@@ -18,7 +23,7 @@
       [disabled]="!canDelete"
       class="cpbtn cpbtn--link"
       (click)="deleteClick.emit()"
-    >
+      cpTarget="section-delete">
       <i class="material-icons">close</i>
       <span>{{ 't_shared_delete' | cpI18n }}</span>
     </button>
