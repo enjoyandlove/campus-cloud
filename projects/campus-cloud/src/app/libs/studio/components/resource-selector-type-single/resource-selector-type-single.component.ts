@@ -13,7 +13,7 @@ import { StoreService, CPI18nService } from '@campus-cloud/shared/services';
 import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { TilesService } from '@controlpanel/customise/personas/tiles/tiles.service';
 
-const placeHolder: IStudioContentResource = { id: null, label: '---', meta: null };
+const placeHolder: IStudioContentResource = { id: null, label: '', meta: null };
 
 const linkUrlToIdMap = {
   [CampusLink.store]: 'store',
@@ -63,7 +63,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
 
   buildForm() {
     return this.fb.group({
-      link_type: [3],
+      link_type: [CampusLink.linkType.inAppLink],
       link_url: [null, Validators.required],
       link_params: [null, Validators.required]
     });
@@ -162,7 +162,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
   }
 
   handleError(err: HttpErrorResponse) {
-    const label = err.status === 403 ? '---' : 'Error';
+    const label = err.status === 403 ? '---' : this.cpI18n.translate('t_shared_error');
     return of([{ ...placeHolder, label }]);
   }
 
