@@ -3348,6 +3348,15 @@
   "t_shared_saved_update_success_message": {
     "message": "Succès !"
   },
+  "t_shared_select_calendar": {
+    "message": "Sélectionnez le calendrier"
+  },
+  "t_shared_select_group_and_club": {
+    "message": "Sélectionner Clubs & groupes"
+  },
+  "t_shared_select_service": {
+    "message": "Sélectionnez un service"
+  },
   "t_shared_show": {
     "message": "Montrer"
   },

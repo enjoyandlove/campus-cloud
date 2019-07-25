@@ -12,9 +12,9 @@
 <div class="form-group">
   <cp-dropdown
     [reset]="resetHosts$"
+    [items]="subMenuOptions"
     cpTarget="store-selector"
     [selectedItem]="selectedStore"
-    [items]="getStoresBySelection()"
     (selected)="onHostSelected($event)"
     [isRequiredError]="showErrors && form.invalid">
   </cp-dropdown>

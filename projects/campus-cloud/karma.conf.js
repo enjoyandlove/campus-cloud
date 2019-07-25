@@ -32,8 +32,8 @@ module.exports = function(config) {
         emitWarning: false,
         global: {
           statements: 69,
-          branches: 36,
-          functions: 47,
+          branches: 37,
+          functions: 48,
           lines: 70
         }
       }
