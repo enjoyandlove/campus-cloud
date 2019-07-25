@@ -129,27 +129,66 @@ describe('ResourceSelectorTypeSingleComponent', () => {
       expect(component.form.value).toEqual(expected);
     });
 
-    it('should define currentlyViewing', () => {
-      const campusLink = {
-        link_type: 3,
-        link_params: null,
-        link_url: CampusLink.campusService
-      } as ILink;
-      component.currentlyViewing = null;
-      component.campusLink = campusLink;
-
-      fixture.detectChanges();
-      component.updateStateWith(component.getInitialFormValues());
-      fixture.detectChanges();
-      expect(component.currentlyViewing).toBeDefined();
-    });
-
     it('should define selectedType', () => {
       component.selectedType = null;
 
       fixture.detectChanges();
       component.updateStateWith(component.getInitialFormValues());
       expect(component.selectedType).toBeDefined();
+    });
+  });
+
+  describe('onItemClicked', () => {
+    const selectedItem = {
+      id: 'campus_service',
+      label: 'Campus Service',
+      meta: {
+        link_params: {},
+        link_url: 'oohlala://campus_service'
+      }
+    };
+
+    it('should call resetHosts$', () => {
+      expect(component.resetHosts$.value).toBe(false);
+      component.onItemClicked(selectedItem);
+      expect(component.resetHosts$.value).toBe(true);
+    });
+
+    it('should update subMenuOptions with selected item values', () => {
+      const expected = { action: 1, label: 'dummy' };
+      component.storesByType = {
+        [selectedItem.id]: [expected]
+      };
+      fixture.detectChanges();
+      component.onItemClicked(selectedItem);
+      fixture.detectChanges();
+      const result: any = component.subMenuOptions;
+      expect(result[0]).toEqual(expected);
+    });
+
+    it('should update selectedStore with selected item values', () => {
+      const expected = { action: 1, label: 'dummy' };
+      component.storesByType = {
+        [selectedItem.id]: [expected]
+      };
+      fixture.detectChanges();
+      component.onItemClicked(selectedItem);
+      fixture.detectChanges();
+      const result: any = component.selectedStore;
+      expect(result).toEqual(expected);
+    });
+
+    it('should patch the form with selected item values', () => {
+      const expected = { action: 1, label: 'dummy' };
+      component.storesByType = {
+        [selectedItem.id]: [expected]
+      };
+      fixture.detectChanges();
+      component.onItemClicked(selectedItem);
+      fixture.detectChanges();
+      const result = component.form.get('link_url').value;
+
+      expect(result).toBe(selectedItem.meta.link_url);
     });
   });
 
