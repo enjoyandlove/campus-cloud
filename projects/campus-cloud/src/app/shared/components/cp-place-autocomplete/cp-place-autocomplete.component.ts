@@ -1,16 +1,17 @@
+import { debounceTime, distinctUntilChanged, switchMap, catchError } from 'rxjs/operators';
+import { BehaviorSubject, fromEvent, Observable, of } from 'rxjs';
 import {
-  AfterViewInit,
-  ChangeDetectorRef,
-  Component,
-  ElementRef,
-  EventEmitter,
   Input,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
+  Component,
+  ElementRef,
+  EventEmitter,
+  AfterViewInit,
+  ChangeDetectorRef
 } from '@angular/core';
-import { BehaviorSubject, fromEvent, Observable, of as observableOf } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+
 import { CPSession } from './../../../session';
 import { CPI18nService } from '../../services';
 import { CPLocationsService } from '../../services/locations.service';
@@ -64,13 +65,14 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
           if (!query) {
             this.placeChange.emit(null);
 
-            return observableOf(null);
+            return of(null);
           }
 
           this.setInput(query);
 
           return this.service.getAllSuggestions(query, lat, lng);
-        })
+        }),
+        catchError(() => of(null))
       )
       .subscribe((res) => this.setSuggestions(res));
   }
