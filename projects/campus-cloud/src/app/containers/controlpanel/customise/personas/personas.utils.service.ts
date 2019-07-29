@@ -9,6 +9,7 @@ import { CPDate } from '@campus-cloud/shared/utils';
 import { TileCategoryRank } from './tiles/tiles.status';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { TilesUtilsService } from './tiles/tiles.utils.service';
+import { CustomValidators } from '@campus-cloud/shared/validators';
 import { PersonasLoginRequired, PersonasType } from './personas.status';
 import { ResourcesUtilsService } from './tiles/resources/resources.utils.service';
 
@@ -117,8 +118,11 @@ export class PersonasUtilsService {
       link_params: this.fb.group({
         id: [null, Validators.required]
       }),
-      link_url: ['oohlala://campus_security_service', Validators.required],
-      name: [null, Validators.required],
+      link_url: [
+        'oohlala://campus_security_service',
+        Validators.compose([CustomValidators.requiredNonEmpty, Validators.maxLength(1024)])
+      ],
+      name: [null, CustomValidators.requiredNonEmpty],
       open_in_browser: [0],
       school_id: [this.session.g.get('school').id, Validators.required]
     });
@@ -141,7 +145,7 @@ export class PersonasUtilsService {
 
     return this.fb.group({
       school_id: [_persona.school_id, Validators.required],
-      name: [_persona.name, [Validators.required, Validators.maxLength(255)]],
+      name: [_persona.name, [CustomValidators.requiredNonEmpty, Validators.maxLength(255)]],
       platform: [_persona.platform, Validators.required],
       rank: [_persona.rank, Validators.required],
       login_requirement: [_persona.login_requirement],
@@ -167,7 +171,7 @@ export class PersonasUtilsService {
       school_persona_id: [null, Validators.required],
       tile_category_id: [0, Validators.required],
       visibility_status: [1, Validators.required],
-      name: [null, Validators.required],
+      name: [null, CustomValidators.requiredNonEmpty],
       rank: [TileCategoryRank.hidden, Validators.required]
     });
   }
