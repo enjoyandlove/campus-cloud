@@ -56,7 +56,7 @@ export class PersonasAmplitudeService {
       if (webLinkContentType) {
         return this.cpI18n.translate(webLinkContentType.label);
       } else {
-        CPLogger.log(`getWebLinkContentType missing ${linkData}`);
+        CPLogger.log(`getWebLinkContentType missing ${JSON.stringify(linkData)}`);
         return;
       }
     }
