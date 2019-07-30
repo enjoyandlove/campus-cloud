@@ -5,6 +5,7 @@
         class="content__wrapper d-flex h-100 align-items-center justify-content-center flex-column">
         <button
           type="button"
+          cpTarget="toggle-visibility"
           (click)="toggleVisibility.emit()"
           cpTarget="button-visibility-toggle">
           <i class="material-icons">{{ visible ? 'visibility_off' : 'visibility' }}</i>
@@ -13,6 +14,7 @@
 
         <button
           type="button"
+          cpTarget="edit"
           cpTarget="button-edit"
           (click)="editClick.emit()">
           <i class="material-icons">edit</i>
@@ -21,6 +23,7 @@
 
         <button
           type="button"
+          cpTarget="delete"
           *ngIf="!defaultTile"
           cpTarget="button-delete"
           (click)="deleteClick.emit()">
@@ -31,7 +34,8 @@
         <button
           disabled
           type="button"
-          *ngIf="defaultTile">
+          *ngIf="defaultTile"
+          cpTarget="tile-locked">
           <i class="material-icons">lock</i>
           <span>{{ 't_tile_button_default' | cpI18n }}</span>
         </button>
