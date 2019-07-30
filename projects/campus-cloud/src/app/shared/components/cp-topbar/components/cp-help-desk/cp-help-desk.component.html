@@ -1,0 +1,39 @@
+<ul class="help-desk no-scroll-bar">
+  <li class="help-desk__item">
+    <span class="emoji" role="img" aria-label="new">🌟</span>
+    <a
+      target="_blank"
+      class="whats_new"
+      cpTarget="whats_new"
+      href="https://www.notion.so/0946933abeab4f6ca906b73c1fc29383"
+      (click)="trackHelpDeskAction('What\'s New')">
+        {{ 't_help_desk_whats_new' | cpI18n }}
+    </a>
+  </li>
+  <li class="help-desk__item">
+    <span class="emoji" role="img" aria-label="question">❓</span>
+    <a
+      class="help"
+      cpTarget="help"
+      href="javascript:void(0);"
+      (click)="loadHelpDeskWidget()"
+      (click)="trackHelpDeskAction('Help')">
+        {{ 't_shared_help' | cpI18n }}
+    </a>
+  </li>
+  <li class="help-desk__item">
+    <span class="emoji" role="img" aria-label="guides">📚</span>
+    <a
+      class="faq"
+      target="_blank"
+      cpTarget="faq"
+      [href]="helpDeskUrl"
+      (click)="trackHelpDeskAction('Guides & FAQ')">
+        {{ 't_help_desk_faq' | cpI18n }}
+    </a>
+  </li>
+  <li class="help-desk__item no-hover help-desk__item--timestamp">
+    <span>{{ 't_shared_last_update' | cpI18n }}:</span>
+    <p>{{ lastBuildTime | lastUpdateDate }}</p>
+  </li>
+</ul>

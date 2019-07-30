@@ -264,7 +264,7 @@ export class BannerListComponent implements OnInit {
       school_name_logo_url: this.session.school.school_name_logo_url
     };
     this.form = this.fb.group({
-      [school.LOGO_URL]: [this.state.logo_url],
+      [school.LOGO_URL]: [this.state.logo_url, Validators.maxLength(128)],
       [school.SCHOOL_LOGO_URL]: [this.state.school_name_logo_url],
       [school.BRANDING_COLOR]: [
         this.state.branding_color,

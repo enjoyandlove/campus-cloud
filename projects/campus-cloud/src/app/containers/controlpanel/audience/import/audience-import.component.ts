@@ -3,10 +3,11 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
-import { isDev } from '../../../../config/env';
-import { CPSession } from '../../../../session';
+import { isDev } from '@campus-cloud/config/env';
+import { CPSession } from '@campus-cloud/session';
 import { AudienceService } from '../audience.service';
-import { FileUploadService, CPI18nService } from '../../../../shared/services';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
@@ -80,7 +81,7 @@ export class AudienceImportComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.fb.group({
-      name: [null, Validators.required],
+      name: [null, CustomValidators.requiredNonEmpty],
       user_emails: [[], Validators.required]
     });
 

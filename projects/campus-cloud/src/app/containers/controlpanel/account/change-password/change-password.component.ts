@@ -2,12 +2,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '../../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { AccountService } from '../account.service';
-import { baseActions, IAlert } from '../../../../store/base';
-import { amplitudeEvents } from '../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../shared/services/i18n.service';
-import { CPTrackingService, ErrorService } from '../../../../shared/services';
+import { baseActions, IAlert } from '@campus-cloud/store/base';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { CPI18nService, CPTrackingService, ErrorService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-change-password',
@@ -29,11 +29,21 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     private accountService: AccountService
   ) {
     this.form = this.fb.group({
-      current: [null, [Validators.required, Validators.minLength(6)]],
-      password: [null, [Validators.required, Validators.minLength(6)]],
+      current: [
+        null,
+        Validators.compose([CustomValidators.requiredNonEmpty, Validators.minLength(6)])
+      ],
+      password: [
+        null,
+        Validators.compose([CustomValidators.requiredNonEmpty, Validators.minLength(6)])
+      ],
       confirmation: [
         null,
-        [Validators.required, Validators.minLength(6), this.passwordsMatch.bind(this)]
+        Validators.compose([
+          CustomValidators.requiredNonEmpty,
+          Validators.minLength(6),
+          this.passwordsMatch.bind(this)
+        ])
       ]
     });
   }

@@ -94,12 +94,21 @@
 .nav__school {
   width: 200px;
   max-width: 200px;
+}
+
+.nav__school,
+.nav__help-desk {
   position: relative;
 
   &.show {
-    .nav__school--menu {
+    .nav__school--menu,
+    .nav__help-desk--menu {
       display: block;
     }
+  }
+
+  &--right {
+    width: 200px;
   }
 
   &--menu {
@@ -167,7 +176,7 @@
 }
 
 .extras {
-  margin-right: 25px;
+  margin-right: 30px;
 
   button {
     top: 9px;
@@ -177,8 +186,7 @@
     background: transparent;
 
     i {
-      font-size: 2em;
-      color: $color-grey;
+      font-size: 1.5em;
     }
   }
 }

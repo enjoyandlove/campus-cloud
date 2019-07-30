@@ -2680,7 +2680,7 @@
   "t_help_desk_faq": {
     "message": "Guides & FAQ"
   },
-  "t_help_desk_wahts_new": {
+  "t_help_desk_whats_new": {
     "message": "What's New"
   },
   "t_integration_form_required_fields": {
@@ -3349,7 +3349,7 @@
     "message": "Last Synced"
   },
   "t_shared_last_update": {
-    "message": "Last update"
+    "message": "Last Updated"
   },
   "t_shared_limited": {
     "message": "Limited"

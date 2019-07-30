@@ -139,7 +139,9 @@ export class FileUploadService {
 
     return this.http.post(url, formData, { headers: customHeaders ? customHeaders : headers }).pipe(
       catchError((err) => {
-        CPLogger.log(`Failed to upload ${media.name} ${media.size}`);
+        if (err.status === 403) {
+          CPLogger.log(`Failed to upload ${media.name} ${media.size}`);
+        }
         return throwError(err);
       })
     );

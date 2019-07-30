@@ -3,8 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 
 import { isProd } from '@campus-cloud/config/env';
 import { CPSession, ISchool, IUser } from '@campus-cloud/session';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
-import { CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
 import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
 import {
   canAccountLevelReadResource,
@@ -30,6 +30,7 @@ export class CPTopBarComponent implements OnInit {
 
   isManageActiveRoute;
   logo = `${environment.root}assets/svg/logo.svg`;
+  helpIcon = `${environment.root}assets/svg/help/help.svg`;
   defaultImage = `${environment.root}assets/default/user.png`;
 
   constructor(
@@ -85,18 +86,6 @@ export class CPTopBarComponent implements OnInit {
   trackMenu(menu_name) {
     const eventName = amplitudeEvents.CLICKED_MENU;
     const eventProperties = { menu_name };
-
-    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
-  }
-
-  trackViewedNotification() {
-    const eventName = amplitudeEvents.VIEWED_NOTIFICATION;
-
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth),
-      notification_type: amplitudeEvents.BEAMER
-    };
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
