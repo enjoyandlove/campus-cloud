@@ -31,12 +31,14 @@ import { CPLineChartUtilsService } from './components/cp-line-chart/cp-line-char
 import { CPRangePickerUtilsService } from './components/cp-range-picker/cp-range-picker.utils.service';
 
 // pipes
-import { CPDatePipe, CPFilterPipe, CPI18nPipe, CPFIlterByLength } from './pipes';
+import { CPDatePipe, CPFilterPipe, CPFIlterByLength } from './pipes';
 
 // components
 import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
 
 import { LatLngValidators } from '@campus-cloud/shared/validators';
+
+import { CPTopBarModule } from '@campus-cloud/shared/components/cp-topbar/cp-topbar.module';
 
 import {
   CPTabComponent,
@@ -50,7 +52,6 @@ import {
   CPImageComponent,
   CPAvatarComponent,
   CPButtonComponent,
-  CPTopBarComponent,
   CPSwitchComponent,
   CPWorkingComponent,
   CPSpinnerComponent,
@@ -72,7 +73,6 @@ import {
   CPPageHeaderComponent,
   CPPaginationComponent,
   CPTextEditorComponent,
-  SchoolSwitchComponent,
   CPDeleteModalComponent,
   CPRangePickerComponent,
   CPImageUploadComponent,
@@ -94,7 +94,6 @@ import {
 
 @NgModule({
   declarations: [
-    CPI18nPipe,
     CPDatePipe,
     CPFilterPipe,
     CPTabComponent,
@@ -110,7 +109,6 @@ import {
     CPAlertComponent,
     CPFIlterByLength,
     CPSwitchComponent,
-    CPTopBarComponent,
     CPAvatarComponent,
     CPTargetDirective,
     CPButtonComponent,
@@ -138,7 +136,6 @@ import {
     CPPaginationComponent,
     CPTextEditorComponent,
     CPHeaderLinkComponent,
-    SchoolSwitchComponent,
     CPUploadModalComponent,
     CPColorPickerDirective,
     CPDeleteModalComponent,
@@ -162,9 +159,17 @@ import {
 
   entryComponents: [CPLightboxComponent, CPImageCropperComponent],
 
-  imports: [FormsModule, CommonModule, RouterModule, OverlayModule, ReactiveFormsModule],
+  imports: [
+    FormsModule,
+    CommonModule,
+    RouterModule,
+    OverlayModule,
+    CPTopBarModule,
+    ReactiveFormsModule
+  ],
 
   providers: [
+    CPDatePipe,
     StoreService,
     CPMapsService,
     LocationsService,
@@ -179,8 +184,8 @@ import {
 
   exports: [
     CPDatePipe,
-    CPI18nPipe,
     CPFilterPipe,
+    CPTopBarModule,
     CPTabComponent,
     CPCardComponent,
     CPMapsComponent,
@@ -194,7 +199,6 @@ import {
     CPAlertComponent,
     CPModalComponent,
     CPSwitchComponent,
-    CPTopBarComponent,
     CPAvatarComponent,
     CPTargetDirective,
     CPButtonComponent,
@@ -222,7 +226,6 @@ import {
     CPDatePickerComponent,
     CPPaginationComponent,
     CPImageRatioDirective,
-    SchoolSwitchComponent,
     CPDeleteModalComponent,
     CPImageUploadComponent,
     CPUploadModalComponent,

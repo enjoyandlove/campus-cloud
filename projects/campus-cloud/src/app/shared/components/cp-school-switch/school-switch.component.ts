@@ -1,12 +1,10 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
-import { appStorage } from '../../utils/storage';
-import { amplitudeEvents } from '../../constants/analytics';
-import { CPSession, ISchool, IUser } from '../../../session';
-import { CP_PRIVILEGES_MAP } from '../../constants';
-import { CPTrackingService, RouteLevel } from '../../services';
-import { ZendeskService } from '../../services/zendesk.service';
+import { appStorage } from '@campus-cloud/shared/utils/storage';
+import { CPSession, ISchool, IUser } from '@campus-cloud/session';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
+import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
+import { ZendeskService, CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
 
 interface EventProperties {
   name?: string;
@@ -65,18 +63,6 @@ export class SchoolSwitchComponent implements OnInit {
         name
       };
     }
-
-    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
-  }
-
-  trackViewedNotification() {
-    const eventName = amplitudeEvents.VIEWED_NOTIFICATION;
-
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth),
-      notification_type: amplitudeEvents.HELP_DESK
-    };
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }

@@ -1,0 +1,53 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/dropdown';
+
+:host {
+  display: block;
+}
+
+.help-desk {
+  @include cpDropdownMenu();
+
+  overflow-y: auto;
+  max-height: 236px;
+  overflow-x: hidden;
+  border-radius: 4px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.3);
+
+  &__item {
+    display: block;
+    border-bottom: 1px solid $border-color;
+
+    .emoji {
+      float: left;
+      margin: 16px 8px 16px 16px;
+    }
+
+    .text-padding {
+      height: 100%;
+      padding: 16px;
+      color: $color-grey;
+      line-height: 17px;
+
+      span {
+        @include font-12px();
+      }
+
+      p {
+        margin-bottom: 0;
+      }
+    }
+
+    a {
+      width: 100%;
+      color: inherit;
+      display: block;
+    }
+
+    &:last-child {
+      border-bottom: none;
+      border-radius: 0 0 4px 4px;
+    }
+  }
+}
