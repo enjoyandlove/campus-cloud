@@ -18,13 +18,6 @@
         {{ 'profile' | cpI18n }}
       </a>
     </li>
-
-    <li class="switch__item" (click)="close.emit()">
-      <a [href]="helpDeskUrl" (click)="trackViewedNotification()" target="_blank">{{
-        'help_desk' | cpI18n
-      }}</a>
-    </li>
-
     <li class="switch__item" (click)="close.emit()" *ngIf="canManageAdmins">
       <a [routerLink]="['/settings/team']">{{ 'team_settings' | cpI18n }}</a>
     </li>

@@ -3,6 +3,10 @@ import momentDurationFormatSetup = require('moment-duration-format');
 
 momentDurationFormatSetup(moment);
 
+function localNow(date = new Date()) {
+  return moment(date);
+}
+
 function now(tz): moment.Moment {
   return moment.tz(moment(), tz);
 }
@@ -46,6 +50,7 @@ export const CPDate = {
   now,
   format,
   toEpoch,
+  localNow,
   getMonth,
   fromEpoch,
   fromEpochLocal,

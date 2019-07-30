@@ -2680,7 +2680,7 @@
   "t_help_desk_faq": {
     "message": "Guides & FAQ"
   },
-  "t_help_desk_wahts_new": {
+  "t_help_desk_whats_new": {
     "message": "What's New"
   },
   "t_integration_form_required_fields": {
@@ -3261,6 +3261,9 @@
   "t_shared_custom": {
     "message": "Custom"
   },
+  "t_shared_days_ago": {
+    "message": "days ago"
+  },
   "t_shared_default": {
     "message": "Default"
   },
@@ -3349,7 +3352,7 @@
     "message": "Last Synced"
   },
   "t_shared_last_update": {
-    "message": "Last update"
+    "message": "Last Updated"
   },
   "t_shared_limited": {
     "message": "Limited"
@@ -3374,6 +3377,9 @@
   },
   "t_shared_okay": {
     "message": "Okay"
+  },
+  "t_shared_one_day_ago": {
+    "message": "1 day ago"
   },
   "t_shared_open": {
     "message": "Open"
@@ -3425,6 +3431,9 @@
   },
   "t_shared_to": {
     "message": "To"
+  },
+  "t_shared_today": {
+    "message": "Today"
   },
   "t_shared_tuesday": {
     "message": "Tuesday"

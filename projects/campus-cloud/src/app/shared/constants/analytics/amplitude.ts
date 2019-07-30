@@ -353,6 +353,8 @@ export const amplitudeEvents = {
 
   STUDIO_DRAG_DROP_TILE: 'Studio - Drag & Drop Tile',
 
+  VIEWED_INFORMATION: 'Viewed Information & Updates',
+
   MANAGE_CHANGED_QR_CODE: 'Manage - Changed QR Code',
 
   MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
