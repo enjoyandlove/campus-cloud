@@ -3261,9 +3261,6 @@
   "t_shared_custom": {
     "message": "Custom"
   },
-  "t_shared_days_ago": {
-    "message": "days ago"
-  },
   "t_shared_default": {
     "message": "Default"
   },
@@ -3378,9 +3375,6 @@
   "t_shared_okay": {
     "message": "Okay"
   },
-  "t_shared_one_day_ago": {
-    "message": "1 day ago"
-  },
   "t_shared_open": {
     "message": "Open"
   },
@@ -3431,9 +3425,6 @@
   },
   "t_shared_to": {
     "message": "To"
-  },
-  "t_shared_today": {
-    "message": "Today"
   },
   "t_shared_tuesday": {
     "message": "Tuesday"

@@ -2677,6 +2677,12 @@
   "t_external_check_in_not_found_error": {
     "message": "Cet événement ne peut pas être trouvé"
   },
+  "t_help_desk_faq": {
+    "message": "Guides et FAQ"
+  },
+  "t_help_desk_whats_new": {
+    "message": "Quoi de neuf"
+  },
   "t_integration_form_required_fields": {
     "message": "Assurez-vous que votre flux contient les champs requis."
   },
@@ -3042,6 +3048,9 @@
   "t_persona_list_button_notify": {
     "message": "Notifier"
   },
+  "t_persona_list_column_heading_authentication": {
+    "message": "Authentication"
+  },
   "t_sandbox_already_invited": {
     "message": "Invitations déjà envoyées"
   },
@@ -3270,6 +3279,9 @@
   "t_shared_from": {
     "message": "Depuis"
   },
+  "t_shared_help": {
+    "message": "Aide"
+  },
   "t_shared_hide": {
     "message": "Cacher"
   },
@@ -3305,6 +3317,9 @@
   },
   "t_shared_last_synced": {
     "message": "Dernière synchronisation"
+  },
+  "t_shared_last_update": {
+    "message": "Dernière mise à jour"
   },
   "t_shared_limited": {
     "message": "Limité"
