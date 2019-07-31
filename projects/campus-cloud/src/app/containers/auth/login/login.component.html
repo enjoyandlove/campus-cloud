@@ -16,8 +16,7 @@
           id="username"
           name="username"
           class="form-control"
-          formControlName="username"
-        />
+          formControlName="username"/>
       </div>
       <div class="form-group">
         <label for="password">{{ 'password' | cpI18n }}</label>
@@ -34,8 +33,7 @@
           <cp-button
             [props]="buttonData"
             [listenForEnterKeyEvent]="[true]"
-            (buttonClick)="onSubmit(form.value)"
-          >
+            (buttonClick)="onSubmit(form.value)">
           </cp-button>
         </div>
       </div>

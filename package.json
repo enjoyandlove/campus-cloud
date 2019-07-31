@@ -18,6 +18,7 @@
     "build:prod-usa": "yarn run production-usa",
     "build:prod-can": "yarn run production-canada",
     "build:staging": "yarn run generate-build-file && node --max_old_space_size=8192 node_modules/.bin/ng build --c=staging && yarn run afterbuild",
+    "prebuild:staging": "yarn run lint",
     "test": "node_modules/@angular/cli/bin/ng test campus-cloud --watch=false --codeCoverage --sourceMap=false"
   },
   "author": "andres@oohlalamobile.com",
