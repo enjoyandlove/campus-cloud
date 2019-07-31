@@ -2250,6 +2250,24 @@
   "t_announcement_type": {
     "message": "Announcement Type"
   },
+  "t_api_management": {
+    "message": "API Management"
+  },
+  "t_api_management_create_new": {
+    "message": "Create New"
+  },
+  "t_api_management_create_new_api": {
+    "message": "Create a new app integration"
+  },
+  "t_api_management_how_to_use": {
+    "message": "How to use Ready API"
+  },
+  "t_api_management_ready_api_desc": {
+    "message": "Create and manage API tokens for your applications. An API token authorizes your application to get data from the ready platform programmatically. More information on how to use the Ready APIs can be found on our support site."
+  },
+  "t_api_management_ready_api_title": {
+    "message": "Ready API"
+  },
   "t_assess_all_orientations": {
     "message": "All Orientation Programs"
   },
@@ -3320,6 +3338,9 @@
   },
   "t_shared_image": {
     "message": "Image"
+  },
+  "t_shared_img_alt": {
+    "message": "resource avatar %s"
   },
   "t_shared_integration_create_error_duplicate_feed_url": {
     "message": "Duplicate Feed URL"

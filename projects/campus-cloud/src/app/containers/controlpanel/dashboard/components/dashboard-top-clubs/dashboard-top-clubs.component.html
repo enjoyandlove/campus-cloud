@@ -4,7 +4,7 @@
   <div class="tile" *ngSwitchCase="false">
     <div class="row">
       <div class="col-12">
-        <p class="tile--title">{{ 'dashboard_top_five_clubs_title' | cpI18n }}</p>
+        <h3 class="tile--title">{{ 'dashboard_top_five_clubs_title' | cpI18n }}</h3>
       </div>
     </div>
 
@@ -38,6 +38,7 @@
                     <img
                       class="avatar rounded"
                       [src]="item.logo_url === '' ? defaultImage : item.logo_url"
+                      [alt]="[item.logo_url === '' ? 'default-avatar' : 'club-avatar']"
                     />
                     <ng-container *ngIf="!isSuperAdmin">
                       <p [attr.title]="item.name" class="title text-truncate">

@@ -4,38 +4,24 @@
       <div class="row">
         <div class="col-12">
           <div class="header">
-            <p class="title" i18n>{{ 'admin_invite_heading' | cpI18n }}</p>
+            <h1 class="title">{{ 'admin_invite_heading' | cpI18n }}</h1>
           </div>
         </div>
       </div>
       <div class="row" *ngIf="isSubmitted">
         <div class="col-12">
-          <p i18n>{{ 'admin_password_sucess_redirect' | cpI18n }}</p>
+          <p>{{ 'admin_password_sucess_redirect' | cpI18n }}</p>
         </div>
       </div>
 
       <div class="row" *ngIf="!isSubmitted">
         <div class="col-12">
-          <!--<p i18n>Hi [Name]</p>
-          <p i18n>[Inviter Name] has invited you to manage
-            [Service Name] for the [School Name] Campus App
-          </p>-->
           <div class="row">
             <div class="col-6 offset-3">
               <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
-                <!--<div class="form-group">
-                  <label i18n>First Name</label>
-                  <input autofocus type="text">
-                </div>
-
                 <div class="form-group">
-                  <label i18n>Last Name</label>
-                  <input autofocus type="text">
-                </div>-->
-
-                <div class="form-group">
-                  <label i18n>{{ 'password' | cpI18n }}</label>
-                  <input type="password" formControlName="new_password" />
+                  <label for="password">{{ 'password' | cpI18n }}</label>
+                  <input id="password" type="password" formControlName="new_password" />
                 </div>
 
                 <div class="row">
@@ -43,9 +29,7 @@
                     <button
                       type="submit"
                       [disabled]="!form.valid"
-                      class="cpbtn cpbtn--primary"
-                      i18n
-                    >
+                      class="cpbtn cpbtn--primary">
                       {{ 'admin_create_account' | cpI18n }}
                     </button>
                   </div>
@@ -64,7 +48,7 @@
             <div class="col-4 offset-4">
               <div class="row">
                 <div class="col-12">
-                  <a [routerLink]="['/login']" i18n>{{ 'login' | cpI18n }}</a>
+                  <a [routerLink]="['/login']">{{ 'login' | cpI18n }}</a>
                 </div>
               </div>
             </div>

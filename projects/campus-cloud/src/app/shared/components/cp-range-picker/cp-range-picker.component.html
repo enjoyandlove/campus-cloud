@@ -1,6 +1,7 @@
 <div class="picker dropdown">
   <button
     type="button"
+    id="range-picker"
     aria-haspopup="true"
     aria-expanded="false"
     data-toggle="dropdown"
@@ -11,7 +12,7 @@
       {{ icon }}
     </i>
   </button>
-  <div aria-labelledby="dropdownMenuButton" class="dropdown-menu picker--content">
+  <div aria-labelledby="range-picker" class="dropdown-menu picker--content">
     <div class="row">
       <div class="col-12">
         <div class="picker--calendars" (click)="$event.stopPropagation()">

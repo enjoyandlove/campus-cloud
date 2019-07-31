@@ -6,15 +6,14 @@
           <a
             class="text-muted"
             [routerLink]="data.crumbs.url"
-            [queryParams]="route.snapshot.queryParams"
-          >
+            [queryParams]="route.snapshot.queryParams">
             <i class="material-icons">arrow_back</i>
             {{ data.crumbs.label | cpI18n }}
           </a>
         </div>
-        <p class="header__title text-truncate">
+        <h1 class="header__title text-truncate">
           {{ data.heading | cpI18n }}
-        </p>
+        </h1>
         <p class="header__sub-title" *ngIf="data.subheading">
           {{ data.subheading | cpI18n }}
         </p>
@@ -28,8 +27,7 @@
           [extraMenu]="extraMenu"
           [maxChildren]="maxChildren"
           [extraChildren]="extraChildren"
-          [readyFeatures]="data.children"
-        >
+          [readyFeatures]="data.children">
         </cp-header-link>
       </div>
     </div>

@@ -1,0 +1,30 @@
+.visually-hidden {
+  position: absolute !important;
+  height: 1px;
+  width: 1px;
+  overflow: hidden;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+  white-space: nowrap; /* added line */
+}
+
+a,
+li,
+button {
+  &:focus:not(:disabled) {
+    outline: 1px dotted #797878 !important;
+  }
+}
+
+.unstyled-button {
+  width: auto;
+  border: none;
+  font: inherit;
+  color: inherit;
+  overflow: visible;
+  line-height: normal;
+  background: transparent;
+  -webkit-appearance: none;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+}
