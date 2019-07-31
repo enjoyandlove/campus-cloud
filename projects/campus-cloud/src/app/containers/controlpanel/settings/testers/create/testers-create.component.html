@@ -21,6 +21,7 @@
           <div class="col-12">
             <label for="emails">{{ 't_sandbox_email_addresses' | cpI18n }}</label>
             <textarea
+              id="emails"
               cpTarget="emails"
               cdkTextareaAutosize
               class="emails-input"
@@ -28,8 +29,7 @@
               cdkAutosizeMaxRows="3"
               formControlName="emails"
               placeholder="{{ 't_sandbox_email_addresses_hint' | cpI18n }}"
-              (keydown.enter)="$event.preventDefault()"
-            >
+              (keydown.enter)="$event.preventDefault()">
             </textarea>
           </div>
         </div>
@@ -49,8 +49,7 @@
           cpTarget="submit"
           class="cpbtn cpbtn--primary"
           [disabled]="!form.valid"
-          (click)="doCreate()"
-        >
+          (click)="doCreate()">
           {{ 't_sandbox_invite' | cpI18n }}
         </button>
       </div>

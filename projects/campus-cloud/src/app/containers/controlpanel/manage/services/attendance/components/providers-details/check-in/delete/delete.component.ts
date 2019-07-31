@@ -7,7 +7,7 @@ import { ICheckIn } from '../../../../../../events/attendance/check-in/check-in.
 
 @Component({
   selector: 'cp-service-provider-delete-check-in',
-  templateUrl: 'delete.component.html',
+  templateUrl: './delete.component.html',
   providers: [{ provide: EventsService, useClass: ProvidersService }]
 })
 export class ServicesProvidersCheckInDeleteComponent {

@@ -19,6 +19,10 @@ export abstract class HTTPService {
   constructor(public http: HttpClient, public router: Router) {}
 
   waitAndRetry(err: Observable<any>, retries: number): Observable<any> {
+    if ('status' in err && (err as any).status !== 503) {
+      return throwError(err);
+    }
+
     return err.pipe(
       delay(1200),
       flatMap((e) => {

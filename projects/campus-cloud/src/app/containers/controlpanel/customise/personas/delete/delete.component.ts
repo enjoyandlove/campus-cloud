@@ -71,7 +71,7 @@ export class PersonasDeleteComponent implements OnInit {
   }
 
   fetchPersonas() {
-    let search = new HttpParams()
+    const search = new HttpParams()
       .set('platform', String(PersonasType.mobile))
       .set('school_id', this.session.g.get('school').id);
 

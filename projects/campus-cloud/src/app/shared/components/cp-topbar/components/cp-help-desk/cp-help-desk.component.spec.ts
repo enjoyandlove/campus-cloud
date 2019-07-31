@@ -50,6 +50,7 @@ describe('CPHelpDeskComponent', () => {
     whatsNewLink.click();
 
     expect(spy).toHaveBeenCalled();
+    // tslint:disable-next-line
     expect(spy).toHaveBeenCalledWith("What's New");
   });
 

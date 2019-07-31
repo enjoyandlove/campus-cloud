@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="col-8 wrapper__right-side">
-    <label class="no-margin dark">{{ heading }}</label>
+    <label [attr.for]="['upload_component ' + id]" class="no-margin dark">{{ heading }}</label>
     <a target="_blank" [attr.href]="zdArticle">
       <span class="text-muted">{{ description }}</span>
     </a>

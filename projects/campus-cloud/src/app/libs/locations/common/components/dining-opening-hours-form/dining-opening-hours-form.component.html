@@ -29,10 +29,10 @@
             <div formArrayName="items">
               <div class="row" [formGroupName]="itemIndex">
                 <div class="col-4 dining__item__horizontal">
-                  <label *ngIf="itemIndex === 0">
+                  <label for="name" *ngIf="itemIndex === 0">
                     {{ 't_shared_meal' | cpI18n }}
                   </label>
-                  <input type="text" cpTarget="name" maxlength="128" formControlName="name" />
+                  <input id="name" type="text" cpTarget="name" maxlength="128" formControlName="name" />
                 </div>
 
                 <div class="col-3 dining__item__horizontal">
