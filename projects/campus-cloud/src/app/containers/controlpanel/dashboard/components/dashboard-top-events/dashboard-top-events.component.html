@@ -2,8 +2,10 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <ng-container *ngSwitchCase="false">
-    <p>{{ 'dashboard_top_events' | cpI18n }}</p>
-    <cp-dashboard-top-resource [items]="items" [canNavigate]="isSuperAdmin">
+    <h3>{{ 'dashboard_top_events' | cpI18n }}</h3>
+    <cp-dashboard-top-resource
+      [items]="items"
+      [canNavigate]="isSuperAdmin">
     </cp-dashboard-top-resource>
   </ng-container>
 </ng-container>

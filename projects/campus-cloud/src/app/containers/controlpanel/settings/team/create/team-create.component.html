@@ -2,21 +2,21 @@
   <div class="row">
     <form [formGroup]="form" class="col-8 offset-2 margin-bottom">
       <div class="section cp-card form-group">
-        <p class="section__title">{{ 'admin_invite' | cpI18n }}</p>
+        <h2 class="section__title">{{ 'admin_invite' | cpI18n }}</h2>
         <div class="row">
           <div class="col-4">
-            <label>{{ 'first_name' | cpI18n }}</label>
-            <input type="text" class="form-control" formControlName="firstname" />
+            <label for="firstname">{{ 'first_name' | cpI18n }}</label>
+            <input id="firstname" type="text" class="form-control" formControlName="firstname" />
           </div>
 
           <div class="col-4">
-            <label>{{ 'last_name' | cpI18n }}</label>
-            <input type="text" class="form-control" formControlName="lastname" />
+            <label for="lastname">{{ 'last_name' | cpI18n }}</label>
+            <input id="lastname" type="text" class="form-control" formControlName="lastname" />
           </div>
 
           <div class="col-4">
-            <label>{{ 'email' | cpI18n }}</label>
-            <input type="text" class="form-control" formControlName="email" />
+            <label for="email">{{ 'email' | cpI18n }}</label>
+            <input id="email" type="text" class="form-control" formControlName="email" />
           </div>
         </div>
 
@@ -50,7 +50,7 @@
         <div class="section cp-card form-group" [class.isDisabled]="isAllAccessEnabled">
           <!-- Manage Team Members -->
           <div class="section__item">
-            <p class="section__title">{{ 'admin_permissions' | cpI18n }}</p>
+            <h2 class="section__title">{{ 'admin_permissions' | cpI18n }}</h2>
             <div class="row">
               <div class="col-8">
                 <p class="section-sub-title">{{ 'manage_team_members' | cpI18n }}</p>

@@ -1,14 +1,11 @@
-<div class="row">
-  <div class="col-12">
-    <label class="control control--checkbox" [class.labelRight]="labelRight">
-      <input
-        type="checkbox"
-        [checked]="isChecked"
-        [disabled]="isDisabled"
-        (change)="onChange($event)"
-      />
-      <div class="control__indicator"></div>
-      {{ label }}
-    </label>
-  </div>
-</div>
+<label for="cp-checkbox" class="control control--checkbox" [class.labelRight]="labelRight">
+  <input
+    type="checkbox"
+    id="cp-checkbox"
+    [checked]="isChecked"
+    [disabled]="isDisabled"
+    (change)="onChange($event)"
+  />
+  <div class="control__indicator"></div>
+  {{ label }}
+</label>

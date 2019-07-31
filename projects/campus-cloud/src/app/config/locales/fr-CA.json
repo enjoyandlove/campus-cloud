@@ -3291,6 +3291,9 @@
   "t_shared_image": {
     "message": "Image"
   },
+  "t_shared_img_alt": {
+    "message": "ressource avatar %s"
+  },
   "t_shared_integration_create_error_duplicate_feed_url": {
     "message": "Dupliquer le lien du flux"
   },

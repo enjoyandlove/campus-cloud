@@ -2,9 +2,9 @@
   <div class="page__nav">
     <div class="cp-wrapper cp-wrapper--outer">
       <cp-one-column [width]="layoutWidth" [aligned]="layoutAlign">
-        <p class="page__title">{{ 't_shared_web_checkin' | cpI18n }}</p>
+        <h1 class="page__title">{{ 't_shared_web_checkin' | cpI18n }}</h1>
         <div class="float-right">
-          <button (click)="handlePdf()" class="cpbtn cpbtn--primary" i18n>
+          <button (click)="handlePdf()" class="cpbtn cpbtn--primary">
             {{ 'checkin_download_qr_code' | cpI18n }}
           </button>
           <button

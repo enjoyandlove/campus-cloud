@@ -18,19 +18,21 @@ a.cpbtn--cancel:disabled {
   padding-bottom: 90px;
 }
 
+h2.section__title {
+  @include font-24px();
+  @include font-bold();
+
+  margin-bottom: 20px;
+}
+
 p {
   margin-bottom: 2px;
-
-  &.section__title {
-    @include font-24px();
-    @include font-bold();
-
-    margin-bottom: 20px;
-  }
 
   &.section-sub-title {
     @include font-16px();
     @include font-semi-bold();
+
+    margin-bottom: 2px;
   }
 
   &.section-description {
