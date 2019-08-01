@@ -1,7 +1,7 @@
-<label for="cp-checkbox" class="control control--checkbox" [class.labelRight]="labelRight">
+<label [attr.for]="id" class="control control--checkbox" [class.labelRight]="labelRight">
   <input
+    [attr.id]="id"
     type="checkbox"
-    id="cp-checkbox"
     [checked]="isChecked"
     [disabled]="isDisabled"
     (change)="onChange($event)"

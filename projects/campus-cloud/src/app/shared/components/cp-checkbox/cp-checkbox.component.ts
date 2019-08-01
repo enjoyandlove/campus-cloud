@@ -1,5 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 
+let nextUniqueId = 0;
+
 @Component({
   selector: 'cp-checkbox',
   templateUrl: './cp-checkbox.component.html',
@@ -13,6 +15,18 @@ export class CPCheckboxComponent {
   @Input() isDisabled: boolean;
 
   @Output() toggle: EventEmitter<boolean> = new EventEmitter();
+
+  @Input()
+  get id(): string {
+    return this._id;
+  }
+  set id(value: string) {
+    this._id = value || this._uid;
+  }
+
+  protected _id: string;
+
+  protected _uid = `cp-checkbox-${nextUniqueId++}`;
 
   constructor() {
     if (!this.isChecked) {
