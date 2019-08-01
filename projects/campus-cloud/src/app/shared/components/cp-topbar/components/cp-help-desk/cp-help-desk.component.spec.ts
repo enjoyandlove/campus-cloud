@@ -4,10 +4,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CPHelpDeskComponent } from '@campus-cloud/shared/components';
+import { CPI18nService, ZendeskService } from '@campus-cloud/shared/services';
 
 describe('CPHelpDeskComponent', () => {
   configureTestSuite();
@@ -16,7 +16,7 @@ describe('CPHelpDeskComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule, HttpClientModule, RouterTestingModule],
-        providers: [CPI18nService],
+        providers: [CPI18nService, ZendeskService],
         schemas: [NO_ERRORS_SCHEMA]
       });
       await TestBed.compileComponents();
