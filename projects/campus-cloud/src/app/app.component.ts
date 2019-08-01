@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
         mergeMap((route) => route.data)
       )
       .subscribe((event) => {
+        this.zendeskService.hide();
         this.setZendesk(event);
         const title = !event['title']
           ? `${pageTitle.CAMPUS_CLOUD}`
