@@ -195,6 +195,9 @@ export class BannerListComponent implements OnInit {
 
     const saveSchoolBrandingPromise = logoControl.dirty
       ? this.uploadBase64Image(logoControl.value).then((savedBase64Image: any) => {
+          if (savedBase64Image.image_url.length > 128) {
+            throw Error('Image too big');
+          }
           this.uploading = false;
           logoControl.setValue(savedBase64Image.image_url);
           return this.saveSchoolBranding();
@@ -212,7 +215,7 @@ export class BannerListComponent implements OnInit {
         this.form.reset(this.state);
         this.onReset();
       })
-      .catch((_) => {
+      .catch(() => {
         this.onError();
         this.uploading = false;
       });
@@ -264,7 +267,7 @@ export class BannerListComponent implements OnInit {
       school_name_logo_url: this.session.school.school_name_logo_url
     };
     this.form = this.fb.group({
-      [school.LOGO_URL]: [this.state.logo_url, Validators.maxLength(128)],
+      [school.LOGO_URL]: [this.state.logo_url],
       [school.SCHOOL_LOGO_URL]: [this.state.school_name_logo_url],
       [school.BRANDING_COLOR]: [
         this.state.branding_color,
