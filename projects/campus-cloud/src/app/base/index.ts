@@ -1,2 +1,2 @@
-export * from './http.service';
+export * from './services';
 export * from './base.component';

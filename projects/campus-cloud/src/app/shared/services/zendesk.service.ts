@@ -1,7 +1,7 @@
-import { CPI18nService } from './i18n.service';
 import { Injectable } from '@angular/core';
 
-import { isProd } from './../../config/env';
+import { CPI18nService } from './i18n.service';
+import { EnvService } from '@campus-cloud/config/env';
 
 declare var zEmbed: {
   // zEmbed can queue functions to be invoked when the asynchronous script has loaded.
@@ -45,13 +45,13 @@ export class ZendeskService {
     return `${root}/${path}`;
   }
 
-  constructor() {
+  constructor(private env: EnvService) {
     this.isLoaded = false;
     this.visibilityDelay = 5; // Milliseconds.
     this.visibilityQueue = [];
     this.visibilityTimer = null;
 
-    if (isProd) {
+    if (this.env.name === 'production') {
       zEmbed((): void => {
         this.isLoaded = true;
         this.flushVisibilityQueue();
@@ -76,7 +76,7 @@ export class ZendeskService {
   }
 
   public setHelpCenterSuggestions(options: any): Promise<void> {
-    if (isProd) {
+    if (this.env.name === 'production') {
       return this.promisify('setHelpCenterSuggestions', [options]);
     }
   }

@@ -2,10 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { ClubsService } from '../../../clubs.service';
-import { isClubAthletic, clubAthleticLabels } from '../../../clubs.athletics.labels';
-import { isDev } from '../../../../../../../config/env';
-import { CPI18nService, FileUploadService } from '../../../../../../../shared/services';
+import { EnvService } from '@campus-cloud/config/env';
+import { CPI18nService, FileUploadService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
+import { isClubAthletic, clubAthleticLabels } from '../../../clubs.athletics.labels';
 
 @Component({
   selector: 'cp-clubs-excel-modal',
@@ -22,13 +22,15 @@ export class ClubsExcelModalComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private env: EnvService,
     private service: ClubsService,
     private cpI18n: CPI18nService,
     private fileService: FileUploadService
   ) {}
 
   parser(file) {
-    const url = !isDev ? '/clubs/excel' : 'http://localhost:8000/clubs/excel';
+    const url =
+      this.env.name !== 'development' ? '/clubs/excel' : 'http://localhost:8000/clubs/excel';
 
     return this.fileService
       .uploadFile(file, url)
@@ -55,9 +57,10 @@ export class ClubsExcelModalComponent implements OnInit {
   ngOnInit() {
     this.fileName = 'mass_club_invite_sample.csv';
 
-    const templateUrl = isDev
-      ? `/assets/templates/${this.fileName}`
-      : `${environment.root}assets/templates/${this.fileName}`;
+    const templateUrl =
+      this.env.name === 'development'
+        ? `/assets/templates/${this.fileName}`
+        : `${environment.root}assets/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,

@@ -1,66 +1,60 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { API } from '../../../../config/api';
 import { baseActions } from '../../../../store/base';
-import { HTTPService } from '../../../../base/http.service';
+import { ApiService } from '@campus-cloud/base/services';
 
 @Injectable()
-export class ServicesService extends HTTPService {
-  constructor(http: HttpClient, router: Router, private store: Store<any>) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, ServicesService.prototype);
-  }
+export class ServicesService {
+  constructor(private api: ApiService, private store: Store<any>) {}
 
   getServices(startRange: number, endRange: number, search?: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getCategories() {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES_CATEGORY}/1;1000`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES_CATEGORY}/1;1000`;
 
-    return super.get(url);
+    return this.api.get(url);
   }
 
   getServiceById(serviceId: number, start?: number, end?: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES}/${serviceId}`;
 
     let dates;
     if (start && end) {
       dates = new HttpParams().append('start', start.toString()).append('end', end.toString());
     }
 
-    return super.get(url, dates);
+    return this.api.get(url, dates);
   }
 
   getServiceAttendanceSummary(serviceId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES}/${serviceId}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   deleteService(serviceId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES}/${serviceId}`;
 
-    return super.delete(url);
+    return this.api.delete(url);
   }
 
   createService(data: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES}/`;
 
-    return super.post(url, data);
+    return this.api.post(url, data);
   }
 
   updateService(data: any, serviceId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/${serviceId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES}/${serviceId}`;
 
-    return super.update(url, data);
+    return this.api.update(url, data);
   }
 
   setModalServices(services: any[]): void {

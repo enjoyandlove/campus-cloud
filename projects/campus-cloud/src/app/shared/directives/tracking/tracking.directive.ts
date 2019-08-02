@@ -1,6 +1,6 @@
 import { Directive, HostListener, Input } from '@angular/core';
 
-import { isProd } from './../../../config/env';
+import { EnvService } from '@campus-cloud/config/env';
 import { CPTrackingService } from './../../services/tracking.service';
 
 export const CP_TRACK_TO = {
@@ -24,7 +24,7 @@ export interface IEventData {
 export class CPTrackerDirective {
   @Input() eventData: IEventData;
 
-  constructor(public cpTracker: CPTrackingService) {}
+  constructor(public cpTracker: CPTrackingService, private env: EnvService) {}
 
   @HostListener('click')
   onclick() {
@@ -38,7 +38,7 @@ export class CPTrackerDirective {
   }
 
   emitGA() {
-    if (isProd) {
+    if (this.env.name === 'production') {
       this.cpTracker.gaEmitEvent(
         this.eventData.eventAction,
         this.eventData.eventCategory,

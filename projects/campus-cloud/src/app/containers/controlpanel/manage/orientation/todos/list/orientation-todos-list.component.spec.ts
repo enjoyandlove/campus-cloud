@@ -1,16 +1,14 @@
-import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
 import { TodosModule } from '../todos.module';
 import { TodosService } from '../todos.service';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 import { mockTodo, MockTodosService, MockActivatedRoute } from '../tests';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { OrientationTodosListComponent } from './orientation-todos-list.component';
 
 describe('OrientationTodosListComponent', () => {
@@ -19,11 +17,8 @@ describe('OrientationTodosListComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [TodosModule, RouterTestingModule, HttpClientModule],
+        imports: [CPTestModule, TodosModule, RouterTestingModule, HttpClientModule],
         providers: [
-          CPSession,
-          CPI18nService,
-          CPTrackingService,
           { provide: TodosService, useClass: MockTodosService },
           {
             provide: ActivatedRoute,

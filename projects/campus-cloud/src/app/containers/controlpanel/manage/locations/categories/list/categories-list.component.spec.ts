@@ -6,12 +6,9 @@ import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { CategoriesListComponent } from './categories-list.component';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { mockCategories } from '@campus-cloud/libs/locations/common/categories/tests';
 import { CategoryTypePipe } from '@campus-cloud/libs/locations/common/categories/pipes';
 import { CategoriesActionBoxComponent } from '@campus-cloud/libs/locations/common/categories/components';
@@ -22,8 +19,7 @@ describe('CategoriesListComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService],
+        imports: [CPTestModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
         declarations: [CategoriesListComponent, CategoryTypePipe, CategoriesActionBoxComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

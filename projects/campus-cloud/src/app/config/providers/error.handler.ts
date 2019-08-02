@@ -1,22 +1,26 @@
-import { ErrorHandler } from '@angular/core';
+import { ErrorHandler, Injectable } from '@angular/core';
 import { get as _get } from 'lodash';
 
+import { EnvService } from '@campus-cloud/config/env';
 import { CPLogger } from '@campus-cloud/shared/services';
 import { isSupported } from '@campus-cloud/shared/utils/browser';
 import * as buildJson from '@projects/campus-cloud/src/assets/build.json';
-import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { DEV_SERVER_URL, LOCAL_PROD_URL } from '@campus-cloud/shared/constants';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
+@Injectable()
 export class CPErrorHandler extends ErrorHandler {
-  constructor() {
+  constructor(private env: EnvService) {
     super();
-    this.init();
+    if (this.env.name !== 'development') {
+      this.init();
+    }
   }
 
   init() {
     const { commitId } = buildJson;
     CPLogger.init({
-      environment: environment.envName,
+      environment: `${this.env.name} (${this.env.region})`,
       release: `campus-cloud@${commitId}`,
       blacklistUrls: [DEV_SERVER_URL, LOCAL_PROD_URL],
       dsn: environment.keys.sentryDsn,
@@ -38,6 +42,10 @@ export class CPErrorHandler extends ErrorHandler {
   }
 
   handleError(err: any): void {
+    if (this.env.name === 'development') {
+      throw err;
+    }
+
     const chunkFailedMessage = /Loading chunk [\d]+ failed/;
 
     if (chunkFailedMessage.test(err.message)) {

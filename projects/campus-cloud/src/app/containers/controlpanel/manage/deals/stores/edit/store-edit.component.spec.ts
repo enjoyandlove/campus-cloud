@@ -5,22 +5,26 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 import { Actions } from '@ngrx/effects';
 
-import { CPSession } from '@campus-cloud/session';
 import { StoreModule } from '../store.module';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { StoreEditComponent } from './store-edit.component';
 import * as fromDeals from '@campus-cloud/store/manage/deals';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { StoreEditComponent } from './store-edit.component';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { StoreFormComponent } from '../components/store-form';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('DealsStoreEditComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, StoreModule, RouterTestingModule, NgrxStore.forRoot({})],
-        providers: [Store, Actions, CPSession, FormBuilder, CPI18nService]
+        imports: [
+          StoreModule,
+          CPTestModule,
+          HttpClientModule,
+          RouterTestingModule,
+          NgrxStore.forRoot({})
+        ],
+        providers: [Store, Actions, FormBuilder]
       });
       TestBed.overrideComponent(StoreFormComponent, {
         set: { template: '<p>Mock Store Form Component</p>' }

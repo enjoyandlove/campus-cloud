@@ -3,9 +3,9 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
-import { isDev } from '@campus-cloud/config/env';
 import { CPSession } from '@campus-cloud/session';
 import { AudienceService } from '../audience.service';
+import { EnvService } from '@campus-cloud/config/env';
 import { CustomValidators } from '@campus-cloud/shared/validators';
 import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
@@ -30,6 +30,7 @@ export class AudienceImportComponent implements OnInit {
 
   constructor(
     public fb: FormBuilder,
+    private env: EnvService,
     public session: CPSession,
     private cpI18n: CPI18nService,
     public service: AudienceService,
@@ -37,7 +38,10 @@ export class AudienceImportComponent implements OnInit {
   ) {}
 
   parser(file) {
-    const url = !isDev ? '/announcements/import' : 'http://localhost:8000/announcements/import';
+    const url =
+      this.env.name !== 'development'
+        ? '/announcements/import'
+        : 'http://localhost:8000/announcements/import';
 
     return this.fileService
       .uploadFile(file, url)
@@ -89,9 +93,10 @@ export class AudienceImportComponent implements OnInit {
 
     this.fileName = 'mass_user_upload.csv';
 
-    const templateUrl = isDev
-      ? `/assets/templates/${this.fileName}`
-      : `${environment.root}assets/templates/${this.fileName}`;
+    const templateUrl =
+      this.env.name === 'development'
+        ? `/assets/templates/${this.fileName}`
+        : `${environment.root}assets/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,

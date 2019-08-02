@@ -1,7 +1,7 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, AfterViewInit } from '@angular/core';
 
-import { isProd } from '@campus-cloud/config/env';
+import { EnvService } from '@campus-cloud/config/env';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService, CPAmplitudeService } from '@campus-cloud/shared/services';
 
@@ -11,10 +11,11 @@ import { CPTrackingService, CPAmplitudeService } from '@campus-cloud/shared/serv
   templateUrl: './controlpanel.component.html'
 })
 export class ControlPanelComponent implements AfterViewInit {
-  isProd = isProd;
+  isProd = this.env.name === 'production';
 
   constructor(
     private router: Router,
+    private env: EnvService,
     private route: ActivatedRoute,
     private cpTrackingService: CPTrackingService,
     private cpAmplitudeService: CPAmplitudeService

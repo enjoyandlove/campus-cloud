@@ -8,18 +8,19 @@ import { of as observableOf } from 'rxjs';
 import { EventsModule } from '../events.module';
 import { EventAttendance } from '../event.status';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@campus-cloud/session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { EventUtilService } from '../events.utils.service';
 import { EventsEditComponent } from './events-edit.component';
-import { mockSchool } from '../../../../../session/mock/school';
-import { baseReducers } from '../../../../../store/base/reducers';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { baseReducers } from '@campus-cloud/store/base/reducers';
 
 import {
   AdminService,
   CPI18nService,
   ErrorService,
   StoreService
-} from '../../../../../shared/services';
+} from '@campus-cloud/shared/services';
 
 class MockService {
   dummy;
@@ -73,8 +74,9 @@ describe('EventEditComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
+        CPTestModule,
         EventsModule,
+        HttpClientModule,
         RouterTestingModule,
         StoreModule.forRoot({
           HEADER: baseReducers.HEADER,

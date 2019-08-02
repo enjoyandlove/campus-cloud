@@ -5,16 +5,16 @@ import { FormBuilder } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
-import { CPDate } from '@campus-cloud/shared/utils';
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
 import { EventAttendance } from '../event.status';
+import { CPDate } from '@campus-cloud/shared/utils';
+import { CPTestModule } from '@campus-cloud/shared/tests';
+import { EventUtilService } from '../events.utils.service';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { baseReducers } from '@campus-cloud/store/base/reducers';
-import { EventUtilService } from '../events.utils.service';
 import { EventsCreateComponent } from './events-create.component';
-import { AdminService, CPI18nService, StoreService } from '@campus-cloud/shared/services';
+import { AdminService, StoreService } from '@campus-cloud/shared/services';
 
 class MockService {
   dummy;
@@ -34,8 +34,9 @@ describe('EventCreateComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        HttpClientModule,
+        CPTestModule,
         EventsModule,
+        HttpClientModule,
         RouterTestingModule,
         StoreModule.forRoot({
           HEADER: baseReducers.HEADER,
@@ -43,11 +44,9 @@ describe('EventCreateComponent', () => {
         })
       ],
       providers: [
-        CPSession,
         FormBuilder,
         AdminService,
         StoreService,
-        CPI18nService,
         EventUtilService,
         { provide: EventsService, useClass: MockService }
       ]

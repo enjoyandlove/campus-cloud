@@ -7,15 +7,13 @@ import { StoreModule } from '@ngrx/store';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@campus-cloud/session';
 import { RootStoreModule } from '@campus-cloud/store';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { MODAL_DATA } from '@campus-cloud/shared/services';
 import { mockMember } from '@campus-cloud/libs/members/common/tests';
-import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
-import { MODAL_DATA, CPI18nService } from '@campus-cloud/shared/services';
-import { MemerUpdateType } from '@campus-cloud/libs/members/common/model';
 import { OrientationMembersDeleteComponent } from './delete.component';
+import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
+import { MemerUpdateType } from '@campus-cloud/libs/members/common/model';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { LibsCommmonMembersModule } from '@campus-cloud/libs/members/common/common-members.module';
 import { LibsCommonMembersUtilsService } from '@campus-cloud/libs/members/common/providers/common.utils';
 
@@ -26,7 +24,7 @@ describe('OrientationMembersDeleteComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [
-          SharedModule,
+          CPTestModule,
           RootStoreModule,
           HttpClientModule,
           RouterTestingModule,
@@ -34,8 +32,6 @@ describe('OrientationMembersDeleteComponent', () => {
           StoreModule.forFeature('orientationMemberState', fromStore.reducers)
         ],
         providers: [
-          CPSession,
-          CPI18nService,
           LibsCommonMembersUtilsService,
           {
             provide: MODAL_DATA,

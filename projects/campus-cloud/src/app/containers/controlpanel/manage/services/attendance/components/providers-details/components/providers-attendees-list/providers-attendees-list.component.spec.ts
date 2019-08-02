@@ -4,14 +4,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
-import { RootStoreModule } from '@campus-cloud/store';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { mkSearch } from '../../../../tests/utils';
 import { mockProvider } from '../../../../tests/mock';
+import { RootStoreModule } from '@campus-cloud/store';
 import { ServicesModule } from '../../../../../services.module';
 import { ProvidersService } from '../../../../../providers.service';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { ServicesProvidersAttendeesListComponent } from './providers-attendees-list.component';
 
 class MockService {
@@ -26,10 +24,14 @@ describe('ServicesProvidersAttendeesListComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         declarations: [],
-        imports: [RouterTestingModule, ServicesModule, RootStoreModule, HttpClientModule],
+        imports: [
+          RouterTestingModule,
+          ServicesModule,
+          RootStoreModule,
+          HttpClientModule,
+          CPTestModule
+        ],
         providers: [
-          CPSession,
-          CPI18nService,
           {
             provide: ProvidersService,
             useClass: MockService

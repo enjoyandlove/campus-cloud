@@ -3,12 +3,10 @@ import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 
-import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { mockSchedule } from '@campus-cloud/libs/locations/common/tests';
 import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { LocationsDayLabelPipe } from '@campus-cloud/libs/locations/common/pipes';
 import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 import { LocationsOpeningHoursComponent } from './locations-opening-hours.component';
@@ -19,8 +17,7 @@ describe('LocationsOpeningHoursComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, HttpClientModule, RouterTestingModule],
-        providers: [CPSession],
+        imports: [CPTestModule, HttpClientModule, RouterTestingModule],
         declarations: [LocationsOpeningHoursComponent, LocationsDayLabelPipe],
         schemas: [NO_ERRORS_SCHEMA]
       });

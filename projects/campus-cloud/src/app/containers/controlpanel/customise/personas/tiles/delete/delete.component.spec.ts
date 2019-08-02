@@ -3,11 +3,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 
-import { mockTile } from './../tests/mocks';
-import { CPSession } from '@campus-cloud/session';
-import { TilesService } from './../tiles.service';
+import { mockTile } from '../tests/mocks';
+import { TilesService } from '../tiles.service';
 import { PersonasTilesModule } from '../tiles.module';
-import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { PersonasTileDeleteComponent } from './delete.component';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 
@@ -27,8 +26,8 @@ describe('PersonasTileDeleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule, PersonasTilesModule, RouterTestingModule],
-      providers: [CPSession, CPI18nService, { provide: TilesService, useClass: MockTilesService }]
+      imports: [SharedModule, PersonasTilesModule, RouterTestingModule, CPTestModule],
+      providers: [{ provide: TilesService, useClass: MockTilesService }]
     });
 
     fixture = TestBed.createComponent(PersonasTileDeleteComponent);

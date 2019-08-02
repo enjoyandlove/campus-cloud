@@ -4,12 +4,10 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockSchool, mockUser } from '@campus-cloud/session/mock';
 import { ListUpcomingComponent } from './list-upcoming.component';
 import { EventUtilService } from './../../../events.utils.service';
-import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { IntegrationSourceToIconPipe } from '@campus-cloud/libs/integrations/common/pipes/source-to-icon';
 
 const initialState = {
@@ -30,9 +28,9 @@ describe('ListUpcomingComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, RouterTestingModule],
+        imports: [CPTestModule, RouterTestingModule],
         declarations: [ListUpcomingComponent, IntegrationSourceToIconPipe],
-        providers: [CPI18nService, CPTrackingService, CPSession, EventUtilService]
+        providers: [EventUtilService]
       });
 
       await TestBed.compileComponents();

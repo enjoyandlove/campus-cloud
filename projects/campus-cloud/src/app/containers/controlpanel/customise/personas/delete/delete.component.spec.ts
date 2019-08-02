@@ -3,12 +3,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpErrorResponse } from '@angular/common/http';
 import { of, throwError } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
 import { PersonasModule } from './../personas.module';
 import { PersonasService } from './../personas.service';
+import { CPTestModule } from '@campus-cloud/shared/tests';
+import { MODAL_DATA } from '@campus-cloud/shared/services';
 import { PersonasDeleteComponent } from './delete.component';
 import { mockPersonas, MockPersonasService } from '../tests';
-import { CPI18nService, MODAL_DATA } from '@campus-cloud/shared/services';
 
 describe('PersonasDeleteComponent', () => {
   let comp: PersonasDeleteComponent;
@@ -16,10 +16,8 @@ describe('PersonasDeleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [PersonasModule, RouterTestingModule],
+      imports: [CPTestModule, PersonasModule, RouterTestingModule],
       providers: [
-        CPSession,
-        CPI18nService,
         {
           provide: PersonasService,
           useClass: MockPersonasService

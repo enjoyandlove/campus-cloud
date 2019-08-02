@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 
-import { API } from '../../../.././../../../config/api';
-import { STATUS } from '../../../.././../../../shared/constants';
-import { appStorage } from '../../../.././../../../shared/utils';
-import { FileUploadService, CPI18nService } from '../../../.././../../../shared/services';
+import { ApiService } from '@campus-cloud/base';
+import { STATUS } from '@campus-cloud/shared/constants';
+import { appStorage } from '@campus-cloud/shared/utils';
+import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-banner-upload-button',
@@ -20,7 +20,11 @@ export class BannerUploadButtonComponent implements OnInit {
   uploading = false;
   buttonText;
 
-  constructor(private fileUploadService: FileUploadService, public cpI18n: CPI18nService) {}
+  constructor(
+    private fileUploadService: FileUploadService,
+    public cpI18n: CPI18nService,
+    private api: ApiService
+  ) {}
 
   ngOnInit() {
     this.buttonText = this.cpI18n.translate('button_add_photo');
@@ -42,8 +46,8 @@ export class BannerUploadButtonComponent implements OnInit {
     }
 
     this.uploading = true;
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.IMAGE}/`;
+    const auth = `${this.api.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     const headers = new HttpHeaders({
       Authorization: auth

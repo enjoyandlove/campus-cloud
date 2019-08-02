@@ -1,36 +1,30 @@
+import { HttpParams } from '@angular/common/http';
 import { startWith, map } from 'rxjs/operators';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { API } from '@campus-cloud/config/api';
+import { ApiService } from '@campus-cloud/base/services';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { HTTPService } from '@campus-cloud/base/http.service';
 
 @Injectable()
-export class TilesService extends HTTPService {
-  constructor(http: HttpClient, router: Router, private cpI18n: CPI18nService) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, TilesService.prototype);
-  }
+export class TilesService {
+  constructor(private api: ApiService, private cpI18n: CPI18nService) {}
 
   getTileById(tileId, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${tileId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILES}/${tileId}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   updateTile(linkId, body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${linkId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILES}/${linkId}`;
 
-    return super.update(url, body);
+    return this.api.update(url, body);
   }
 
   getSchoolLinks(headers) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/1;2000`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LINKS}/1;2000`;
 
-    return super.get(url, headers, true).pipe(
+    return this.api.get(url, headers, true).pipe(
       startWith([{ label: '---', action: null }]),
       map((links: any[]) => {
         return links.map((link: any) => {
@@ -44,15 +38,15 @@ export class TilesService extends HTTPService {
   }
 
   uploadBase64Image(body: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.IMAGE}/`;
 
-    return super.post(url, body);
+    return this.api.post(url, body);
   }
 
   getServiceCategories(headers) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES_CATEGORY}/1;2000`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES_CATEGORY}/1;2000`;
 
-    return super.get(url, headers, true).pipe(
+    return this.api.get(url, headers, true).pipe(
       startWith([{ label: '---' }]),
       map((categories: any[]) => {
         return categories.map((category: any) => {
@@ -66,10 +60,10 @@ export class TilesService extends HTTPService {
   }
 
   getSchoolServices(search) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES}`;
     const url = `${common}/1;2000`;
 
-    return super.get(url, search, true).pipe(
+    return this.api.get(url, search, true).pipe(
       map((services: any[]) => {
         return [
           { label: this.cpI18n.translate('t_shared_select_service'), action: null, heading: true },
@@ -88,9 +82,9 @@ export class TilesService extends HTTPService {
   }
 
   getSchoolCalendars(headers) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDAR}/1;2000`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CALENDAR}/1;2000`;
 
-    return super.get(url, headers, true).pipe(
+    return this.api.get(url, headers, true).pipe(
       map((calendars: any[]) => {
         return [
           { label: this.cpI18n.translate('t_shared_select_calendar'), action: null, heading: true },
@@ -109,38 +103,38 @@ export class TilesService extends HTTPService {
   }
 
   deleteTile(tileId, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${tileId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILES}/${tileId}`;
 
-    return super.delete(url, search);
+    return this.api.delete(url, search);
   }
 
   createCampusTile(body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILES}/`;
 
-    return super.post(url, body, null, true);
+    return this.api.post(url, body, null, true);
   }
 
   createCampusLink(body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LINKS}/`;
 
-    return super.post(url, body, null, true);
+    return this.api.post(url, body, null, true);
   }
 
   updateCampusTile(tileId, body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${tileId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILES}/${tileId}`;
 
-    return super.update(url, body, null, true);
+    return this.api.update(url, body, null, true);
   }
 
   bulkUpdateTiles(search: HttpParams, body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILES}/`;
 
-    return super.update(url, body, search, true);
+    return this.api.update(url, body, search, true);
   }
 
   updateCampusLink(linkId, body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/${linkId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LINKS}/${linkId}`;
 
-    return super.update(url, body, null, true);
+    return this.api.update(url, body, null, true);
   }
 }

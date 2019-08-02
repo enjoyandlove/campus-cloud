@@ -4,11 +4,9 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { mockSchool, mockUser } from '@campus-cloud/session/mock';
 import { ListPastComponent } from './list-past.component';
-import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
+import { mockSchool, mockUser } from '@campus-cloud/session/mock';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { IntegrationSourceToIconPipe } from '@campus-cloud/libs/integrations/common/pipes/source-to-icon';
 
 const initialState = {
@@ -29,9 +27,8 @@ describe('ListPastComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, RouterTestingModule],
-        declarations: [ListPastComponent, IntegrationSourceToIconPipe],
-        providers: [CPI18nService, CPTrackingService, CPSession]
+        imports: [CPTestModule, RouterTestingModule],
+        declarations: [ListPastComponent, IntegrationSourceToIconPipe]
       });
 
       await TestBed.compileComponents();

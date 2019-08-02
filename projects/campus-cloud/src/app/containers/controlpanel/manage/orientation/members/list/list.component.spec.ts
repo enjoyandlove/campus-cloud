@@ -10,15 +10,15 @@ import { DebugElement } from '@angular/core';
 import { of } from 'rxjs';
 
 import * as fromStore from '../store';
-import { CPSession } from '@campus-cloud/session';
 import { MockActivatedRoute } from '../tests';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { CPSession } from '@campus-cloud/session';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { CustomSerializer } from '@campus-cloud/store/serializers';
+import { OrientationMembersListComponent } from './list.component';
 import { mockMember } from '@campus-cloud/libs/members/common/tests';
 import { RouterParamsUtils } from '@campus-cloud/shared/utils/router';
-import { CustomSerializer } from '@campus-cloud/store/serializers';
 import { RootStoreModule } from '@campus-cloud/store/root-store.module';
-import { OrientationMembersListComponent } from './list.component';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { LibsCommonMembersUtilsService } from '@campus-cloud/libs/members/common/providers';
 import { CPTrackingService, CPI18nService, ModalService } from '@campus-cloud/shared/services';
 import { LibsCommmonMembersModule } from '@campus-cloud/libs/members/common/common-members.module';
@@ -40,6 +40,7 @@ describe('OrientationMembersListComponent', () => {
       TestBed.configureTestingModule({
         declarations: [OrientationMembersListComponent],
         imports: [
+          CPTestModule,
           SharedModule,
           RootStoreModule,
           HttpClientModule,

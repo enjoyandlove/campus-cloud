@@ -7,12 +7,10 @@ import { of, throwError } from 'rxjs';
 
 import { mockPersonas } from '../../tests';
 import { TilesService } from '../tiles.service';
-import { CPSession } from '@campus-cloud/session';
 import { PersonasTilesModule } from '../tiles.module';
 import { PersonasService } from '../../personas.service';
-import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { PersonasTileCreateComponent } from './create.component';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { SectionsService } from '../../sections/sections.service';
 import { PersonasUtilsService } from '../../personas.utils.service';
 import { baseReducers, baseActions } from '@campus-cloud/store/base';
@@ -71,8 +69,8 @@ describe('PersonasTileCreateComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        CPTestModule,
         PersonasTilesModule,
-        SharedModule,
         RouterTestingModule,
         StoreModule.forRoot({
           HEADER: baseReducers.HEADER,
@@ -80,9 +78,7 @@ describe('PersonasTileCreateComponent', () => {
         })
       ],
       providers: [
-        CPI18nService,
         FormBuilder,
-        CPSession,
         SectionUtilsService,
         SectionUtilsService,
         PersonasUtilsService,

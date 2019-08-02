@@ -3,17 +3,17 @@ import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
 import { mockService } from '../tests/mock';
-import { RootStoreModule } from '@campus-cloud/store';
-import mockSession from '@campus-cloud/session/mock/session';
+import { CPSession } from '@campus-cloud/session';
 import { ServicesModule } from '../services.module';
 import { ServicesService } from '../services.service';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { RootStoreModule } from '@campus-cloud/store';
+import { AdminService } from '@campus-cloud/shared/services';
 import { ServicesUtilsService } from '../services.utils.service';
 import { ServicesInfoComponent } from './services-info.component';
-import { CPI18nService, AdminService } from '@campus-cloud/shared/services';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { mockUser, mockSchool } from '@projects/campus-cloud/src/app/session/mock';
 
 class MockService {
   dummy;
@@ -30,13 +30,14 @@ describe('ServicesInfoComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         declarations: [],
-        imports: [HttpClientModule, RouterTestingModule, ServicesModule, RootStoreModule],
+        imports: [
+          HttpClientModule,
+          RouterTestingModule,
+          ServicesModule,
+          RootStoreModule,
+          CPTestModule
+        ],
         providers: [
-          {
-            provide: CPSession,
-            useValue: mockSession
-          },
-          CPI18nService,
           AdminService,
           ServicesService,
           ServicesUtilsService,
@@ -52,12 +53,17 @@ describe('ServicesInfoComponent', () => {
       .catch(done.fail);
   });
 
+  let session: CPSession;
   let component: ServicesInfoComponent;
   let fixture: ComponentFixture<ServicesInfoComponent>;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ServicesInfoComponent);
     component = fixture.componentInstance;
+
+    session = TestBed.get(CPSession);
+    session.g.set('user', mockUser);
+    session.g.set('school', mockSchool);
   });
 
   it('should fetch admins by store id', async(() => {
@@ -65,7 +71,7 @@ describe('ServicesInfoComponent', () => {
     fixture.detectChanges();
     fixture.whenStable().then(() => {
       const search: HttpParams = new HttpParams()
-        .append('school_id', component.school.id.toString())
+        .append('school_id', mockSchool.id.toString())
         .append('store_id', component.storeId.toString())
         .append('privilege_type', CP_PRIVILEGES_MAP.services.toString());
       expect(component.adminService.getAdminByStoreId).toHaveBeenCalledWith(search);

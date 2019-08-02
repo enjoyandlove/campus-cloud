@@ -5,15 +5,14 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { of } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
-import { mockSchool } from '@campus-cloud/session/mock/school';
 import { mockEvent, MockEventService } from './../tests';
-import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
-import { CPI18nService, MODAL_DATA } from '@campus-cloud/shared/services';
-import { configureTestSuite } from '@projects/campus-cloud/src/app/shared/tests';
+import { MODAL_DATA } from '@campus-cloud/shared/services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EventsDeleteComponent } from './events-delete.component';
+import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
+import { configureTestSuite, CPTestModule } from '@projects/campus-cloud/src/app/shared/tests';
 import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
 
 describe('EventDeleteComponent', () => {
@@ -22,10 +21,8 @@ describe('EventDeleteComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [EventsModule, RouterTestingModule],
+        imports: [CPTestModule, EventsModule, RouterTestingModule],
         providers: [
-          CPSession,
-          CPI18nService,
           { provide: EventsService, useClass: MockEventService },
           { provide: OrientationEventsService, useClass: MockEventService },
           {

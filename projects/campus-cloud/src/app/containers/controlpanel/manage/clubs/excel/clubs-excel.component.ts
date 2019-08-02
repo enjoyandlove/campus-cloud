@@ -6,11 +6,11 @@ import { Store } from '@ngrx/store';
 
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '@campus-cloud/session';
-import { getClubsState } from '@campus-cloud/store';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
-import { baseActionClass } from '@campus-cloud/store/base';
+import { ApiService } from '@campus-cloud/base/services';
 import { baseActions } from '@campus-cloud/store/base/reducers';
 import { BaseComponent } from '@campus-cloud/base/base.component';
+import { getClubsState, baseActionClass } from '@campus-cloud/store';
 import { CPImageUploadComponent } from '@campus-cloud/shared/components';
 import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
 import { CPI18nService, FileUploadService } from '@campus-cloud/shared/services';
@@ -35,6 +35,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   constructor(
     private router: Router,
     private fb: FormBuilder,
+    private api: ApiService,
     private store: Store<any>,
     private session: CPSession,
     private cpI18n: CPI18nService,
@@ -107,7 +108,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   }
 
   onImageUpload(image, index) {
-    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
+    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService, this.api);
     const promise = imageUpload.onFileUpload(image, true);
 
     promise

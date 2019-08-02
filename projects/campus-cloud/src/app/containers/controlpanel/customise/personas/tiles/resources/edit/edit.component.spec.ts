@@ -1,17 +1,16 @@
 import { TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-
 import { of } from 'rxjs';
+
 import { mockResource } from '../__mock__';
 import { ResourceService } from '../resource.service';
-import { CPSession } from '../../../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { PersonasResourceModule } from '../resources.module';
 import { TilesUtilsService } from '../../tiles.utils.service';
 import { PersonaResourceEditComponent } from './edit.component';
 import { ResourcesUtilsService } from '../resources.utils.service';
-import { CPI18nService } from '../../../../../../../shared/services';
-import { SharedModule } from '../../../../../../../shared/shared.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { SectionUtilsService } from '../../../sections/section.utils.service';
 
 class MockResourceService {
@@ -32,10 +31,14 @@ describe('PersonaResourceEditComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule, RouterTestingModule, PersonasResourceModule, HttpClientModule],
+      imports: [
+        SharedModule,
+        RouterTestingModule,
+        PersonasResourceModule,
+        HttpClientModule,
+        CPTestModule
+      ],
       providers: [
-        CPSession,
-        CPI18nService,
         TilesUtilsService,
         SectionUtilsService,
         ResourcesUtilsService,

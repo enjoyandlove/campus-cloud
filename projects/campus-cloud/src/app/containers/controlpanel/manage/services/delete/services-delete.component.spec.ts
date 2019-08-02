@@ -3,13 +3,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { ServicesModule } from '../services.module';
 import { ServicesService } from '../services.service';
-import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
+import { MODAL_DATA } from '@campus-cloud/shared/services';
 import { MockServicesService, mockService } from '../tests';
-import { CPI18nService, MODAL_DATA } from '@campus-cloud/shared/services';
 import { ServicesDeleteComponent } from './services-delete.component';
+import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('ServicesDeleteComponent', () => {
   configureTestSuite();
@@ -17,9 +17,8 @@ describe('ServicesDeleteComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [ServicesModule, HttpClientModule, RouterTestingModule],
+        imports: [ServicesModule, HttpClientModule, RouterTestingModule, CPTestModule],
         providers: [
-          CPI18nService,
           {
             provide: MODAL_DATA,
             useValue: {

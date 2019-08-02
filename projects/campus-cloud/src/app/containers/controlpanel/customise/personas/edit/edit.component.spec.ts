@@ -4,12 +4,11 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 
 import { mockTile } from '../tiles/tests/mocks';
-import { CPSession } from '@campus-cloud/session';
 import { PersonasModule } from './../personas.module';
 import { baseActions } from '@campus-cloud/store/base';
 import { PersonasService } from './../personas.service';
 import { PersonasEditComponent } from './edit.component';
-import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { MockPersonasService, mockPersonas } from './../tests';
 import { PersonasUtilsService } from './../personas.utils.service';
 
@@ -19,11 +18,9 @@ describe('PersonasEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [PersonasModule, RouterTestingModule, StoreModule.forRoot({})],
+      imports: [PersonasModule, RouterTestingModule, StoreModule.forRoot({}), CPTestModule],
       providers: [
-        CPSession,
         FormBuilder,
-        CPI18nService,
         PersonasUtilsService,
         { provide: PersonasService, useClass: MockPersonasService }
       ]

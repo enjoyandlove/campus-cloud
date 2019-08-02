@@ -1,21 +1,15 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { of as observableOf, Observable } from 'rxjs';
+import { of, Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { API } from '@campus-cloud/config/api';
-import { HTTPService } from '@campus-cloud/base';
 import { IItem } from './items/item.interface';
+import { ApiService } from '@campus-cloud/base';
 
 @Injectable()
-export class CalendarsService extends HTTPService {
+export class CalendarsService {
   modalItems: IItem[] = [];
 
-  constructor(http: HttpClient, router: Router) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, CalendarsService.prototype);
-  }
+  constructor(private api: ApiService) {}
 
   setItems(items: string) {
     this.modalItems = JSON.parse(items);
@@ -24,70 +18,66 @@ export class CalendarsService extends HTTPService {
   getItems(): Observable<IItem[]> {
     const res = this.modalItems.length ? this.modalItems : [];
 
-    return observableOf(res);
+    return of(res);
   }
 
   getCalendars(startRage: number, endRage: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.CALENDARS
-    }/${startRage};${endRage}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CALENDARS}/${startRage};${endRage}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   deleteCalendar(calendarId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDARS}/${calendarId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CALENDARS}/${calendarId}`;
 
-    return super.delete(url, search);
+    return this.api.delete(url, search);
   }
 
   createCalendar(body: any, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDARS}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CALENDARS}/`;
 
-    return super.post(url, body, search);
+    return this.api.post(url, body, search);
   }
 
   editCalendar(calendarId: number, body: any, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDARS}/${calendarId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CALENDARS}/${calendarId}`;
 
-    return super.update(url, body, search);
+    return this.api.update(url, body, search);
   }
 
   delteItemById(itemId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDAR_ITEMS}/${itemId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CALENDAR_ITEMS}/${itemId}`;
 
-    return super.delete(url, search);
+    return this.api.delete(url, search);
   }
 
   getCalendarById(calendarId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDARS}/${calendarId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CALENDARS}/${calendarId}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getItemsByCalendarId(startRage: number, endRage: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.CALENDAR_ITEMS
-    }/${startRage};${endRage}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CALENDAR_ITEMS}/${startRage};${endRage}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getItemById(itemId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDAR_ITEMS}/${itemId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CALENDAR_ITEMS}/${itemId}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   createItem(body: any, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDAR_ITEMS}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CALENDAR_ITEMS}/`;
 
-    return super.post(url, body, search);
+    return this.api.post(url, body, search);
   }
 
   editItem(itemId: number, body: any, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CALENDAR_ITEMS}/${itemId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CALENDAR_ITEMS}/${itemId}`;
 
-    return super.update(url, body, search);
+    return this.api.update(url, body, search);
   }
 }

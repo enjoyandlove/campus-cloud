@@ -3,8 +3,8 @@ import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { throwError } from 'rxjs';
 
-import { API } from '@campus-cloud/config/api';
 import { CPSession } from '@campus-cloud/session';
+import { ApiService } from '@campus-cloud/base/services';
 import { appStorage } from '@campus-cloud/shared/utils/storage';
 import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { CPLogger } from '@campus-cloud/shared/services/logger/sentry.service';
@@ -22,7 +22,7 @@ export class FileUploadService {
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document' // .docx
   ];
 
-  imageUploadUrl = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
+  imageUploadUrl = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.IMAGE}/`;
 
   validImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
 
@@ -48,6 +48,7 @@ export class FileUploadService {
   }
 
   constructor(
+    private api: ApiService,
     private http: HttpClient,
     private session: CPSession,
     private cpI18n: CPI18nService
@@ -121,12 +122,12 @@ export class FileUploadService {
   }
 
   uploadImage(media: File) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.IMAGE}/`;
     return this.uploadFile(media, url);
   }
 
   uploadFile(media: File, url: string = this.imageUploadUrl, customHeaders?: HttpHeaders) {
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const auth = `${this.api.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     const headers = new HttpHeaders({
       Authorization: auth
