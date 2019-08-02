@@ -1,33 +1,27 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { API } from '../../../../config/api';
-import { HTTPService } from '../../../../base/http.service';
+import { ApiService } from '@campus-cloud/base/services';
 
 @Injectable()
-export class BannerService extends HTTPService {
-  constructor(http: HttpClient, router: Router) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, BannerService.prototype);
-  }
+export class BannerService {
+  constructor(private api: ApiService) {}
 
   getCoverImage(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.COVER_PHOTO}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.COVER_PHOTO}/`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   uploadBase64Image(body: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.IMAGE}/`;
 
-    return super.post(url, body);
+    return this.api.post(url, body);
   }
 
   updateSchoolImage(imageUrl: string, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.COVER_PHOTO}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.COVER_PHOTO}/`;
 
-    return super.update(url, { cover_photo_url: imageUrl }, search);
+    return this.api.update(url, { cover_photo_url: imageUrl }, search);
   }
 }

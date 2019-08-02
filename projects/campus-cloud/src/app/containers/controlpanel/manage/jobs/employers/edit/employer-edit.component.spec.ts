@@ -5,21 +5,25 @@ import { StoreModule, Store } from '@ngrx/store';
 import { FormBuilder } from '@angular/forms';
 import { Actions } from '@ngrx/effects';
 
-import { CPSession } from '@campus-cloud/session';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import * as fromJobs from '@campus-cloud/store/manage/jobs';
 import { EmployerModule } from '../employer.module';
+import * as fromJobs from '@campus-cloud/store/manage/jobs';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { EmployerEditComponent } from './employer-edit.component';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('EmployerEditComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, EmployerModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [Store, Actions, CPSession, FormBuilder, CPI18nService]
+        imports: [
+          CPTestModule,
+          EmployerModule,
+          HttpClientModule,
+          RouterTestingModule,
+          StoreModule.forRoot({})
+        ],
+        providers: [Store, Actions, FormBuilder]
       });
       await TestBed.compileComponents();
     })()

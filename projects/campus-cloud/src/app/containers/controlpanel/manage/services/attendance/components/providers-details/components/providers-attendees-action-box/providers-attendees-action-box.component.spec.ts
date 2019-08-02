@@ -3,12 +3,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NO_ERRORS_SCHEMA, Component } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
+import { ApiService } from '@campus-cloud/base';
 import { CPSession } from '@campus-cloud/session';
+import { mockDateRange } from '../../../../tests/mock';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import mockSession from '@campus-cloud/session/mock/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
-import mockSession from '@campus-cloud/session/mock/session';
-import { mockDateRange } from '../../../../tests/mock';
+import { EnvService, MockEnvService } from '@campus-cloud/config/env';
 import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import { ServicesProvidersAttendeesActionBoxComponent } from './providers-attendees-action-box.component';
 import {
@@ -31,9 +33,11 @@ describe('ServicesProviderActionBoxComponent', () => {
         ],
         imports: [HttpClientModule, RouterTestingModule],
         providers: [
+          ApiService,
           CPI18nService,
           EngagementService,
           EngagementUtilsService,
+          { provide: EnvService, useClass: MockEnvService },
           {
             provide: CPSession,
             useValue: mockSession

@@ -1,138 +1,132 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { API } from '../../../../config/api';
-import { HTTPService } from '../../../../base/http.service';
+import { ApiService } from '@campus-cloud/base/services';
 
 @Injectable()
-export class FeedsService extends HTTPService {
-  constructor(http: HttpClient, router: Router) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, FeedsService.prototype);
-  }
+export class FeedsService {
+  constructor(private api: ApiService) {}
 
   getCampusWallFeeds(startRange: number, endRange: number, search?: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getGroupWallFeeds(startRange: number, endRange: number, search?: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_THREAD}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_THREAD}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getChannelsBySchoolId(startRange: number, endRange: number, search?: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SOCIAL_POST_CATEGORY}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SOCIAL_POST_CATEGORY}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getSocialGroups(search?: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SOCIAL_GROUP}/1;5000`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SOCIAL_GROUP}/1;5000`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   upodateSocialGroup(groupId, data, search) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SOCIAL_GROUP}/${groupId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SOCIAL_GROUP}/${groupId}`;
 
-    return super.update(url, data, search);
+    return this.api.update(url, data, search);
   }
 
   postToCampusWall(data) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}/`;
 
-    return super.post(url, data, null, true);
+    return this.api.post(url, data, null, true);
   }
 
   postToGroupWall(data) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_THREAD}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_THREAD}/`;
 
-    return super.post(url, data, null, true);
+    return this.api.post(url, data, null, true);
   }
 
   replyToCampusThread(data) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_COMMENT}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_COMMENT}/`;
 
-    return super.post(url, data, null, true);
+    return this.api.post(url, data, null, true);
   }
 
   replyToGroupThread(data) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_COMMENT}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_COMMENT}/`;
 
-    return super.post(url, data, null, true);
+    return this.api.post(url, data, null, true);
   }
 
   deleteCampusWallMessageByThreadId(threadId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
 
-    return super.delete(url);
+    return this.api.delete(url);
   }
 
   deleteGroupWallMessageByThreadId(threadId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_THREAD}/${threadId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_THREAD}/${threadId}`;
 
-    return super.delete(url);
+    return this.api.delete(url);
   }
 
   deleteCampusWallCommentByThreadId(commentId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_COMMENT}/${commentId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_COMMENT}/${commentId}`;
 
-    return super.delete(url);
+    return this.api.delete(url);
   }
 
   deleteGroupWallCommentByThreadId(commentId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_COMMENT}/${commentId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_COMMENT}/${commentId}`;
 
-    return super.delete(url);
+    return this.api.delete(url);
   }
 
   approveCampusWallThread(threadId: number, data: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
 
-    return super.update(url, data);
+    return this.api.update(url, data);
   }
 
   approveGroupWallThread(threadId: number, data: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_THREAD}/${threadId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_THREAD}/${threadId}`;
 
-    return super.update(url, data);
+    return this.api.update(url, data);
   }
 
   approveCampusWallComment(threadId: number, data: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_COMMENT}/${threadId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_COMMENT}/${threadId}`;
 
-    return super.update(url, data);
+    return this.api.update(url, data);
   }
 
   approveGroupWallComment(threadId: number, data: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_COMMENT}/${threadId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_COMMENT}/${threadId}`;
 
-    return super.update(url, data);
+    return this.api.update(url, data);
   }
 
   getCampusWallCommentsByThreadId(search: HttpParams, endRage) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_COMMENT}/1;${endRage}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_COMMENT}/1;${endRage}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getGroupWallCommentsByThreadId(search: HttpParams, endRage) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GROUP_COMMENT}/1;${endRage}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_COMMENT}/1;${endRage}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   moveCampusWallThreadToChannel(threadId: number, data: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
 
-    return super.update(url, data);
+    return this.api.update(url, data);
   }
 }

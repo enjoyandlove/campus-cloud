@@ -4,7 +4,6 @@ import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { API } from '@campus-cloud/config/api';
 import { appStorage, CPObj, DefaultEncoder } from '@campus-cloud/shared/utils';
 
 /**
@@ -55,7 +54,7 @@ export abstract class HTTPService {
   }
 
   getHeaders() {
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const auth = `CCSess ${appStorage.get(appStorage.keys.SESSION)}`;
 
     return new HttpHeaders({
       'Content-Type': 'application/json',

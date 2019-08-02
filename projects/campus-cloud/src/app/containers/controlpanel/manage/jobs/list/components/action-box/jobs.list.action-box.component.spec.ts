@@ -3,11 +3,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 
 import { JobsModule } from '../../../jobs.module';
-import { CPSession } from '../../../../../../../session';
-import { RootStoreModule } from '../../../../../../../store';
+import { RootStoreModule } from '@campus-cloud/store';
 import { JobsUtilsService } from '../../../jobs.utils.service';
-import { CPI18nService } from '../../../../../../../shared/services';
-import { configureTestSuite } from '../../../../../../../shared/tests';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { JobsListActionBoxComponent } from './jobs.list.action-box.component';
 
 describe('JobsListActionBoxComponent', () => {
@@ -15,8 +13,8 @@ describe('JobsListActionBoxComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [JobsModule, HttpClientModule, RouterTestingModule, RootStoreModule],
-        providers: [CPSession, CPI18nService, JobsUtilsService]
+        imports: [CPTestModule, JobsModule, HttpClientModule, RouterTestingModule, RootStoreModule],
+        providers: [JobsUtilsService]
       });
     })()
       .then(done)

@@ -1,11 +1,11 @@
-import { SharedModule } from './../../../../../../../../shared/shared.module';
-import { CPTrackingService } from './../../../../../../../../shared/services/tracking.service';
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
+import { By } from '@angular/platform-browser';
 
+import { CPTestModule } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { StoreActionBoxComponent } from './store-action-box.component';
-import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 describe('DealsStoreActionBoxComponent', () => {
   let spy;
@@ -15,7 +15,7 @@ describe('DealsStoreActionBoxComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [StoreActionBoxComponent],
-      imports: [RouterTestingModule, SharedModule],
+      imports: [RouterTestingModule, SharedModule, CPTestModule],
       providers: [CPTrackingService, CPI18nService]
     })
       .compileComponents()

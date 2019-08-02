@@ -1,81 +1,70 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { API } from '../../../../../config/api';
-import { baseActions } from '../../../../../store/base';
+import { ApiService } from '@campus-cloud/base';
+import { baseActions } from '@campus-cloud/store/base';
 import { EventsService } from '../../events/events.service';
 
 @Injectable()
 export class OrientationEventsService extends EventsService {
-  constructor(http: HttpClient, router: Router, private stores: Store<any>) {
-    super(http, router, stores);
-
-    Object.setPrototypeOf(this, OrientationEventsService.prototype);
+  constructor(public api: ApiService, private stores: Store<any>) {
+    super(stores, api);
   }
 
   getEvents(startRage: number, endRage: number, search?: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ORIENTATION_EVENTS
-    }/${startRage};${endRage}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS}/${startRage};${endRage}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   createEvent(body: any, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS}/`;
 
-    return super.post(url, body, search);
+    return this.api.post(url, body, search);
   }
 
   updateEvent(body: any, eventId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS}/${eventId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS}/${eventId}`;
 
-    return super.update(url, body, search);
+    return this.api.update(url, body, search);
   }
 
   getEventById(id: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS}/${id}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS}/${id}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   deleteEventById(eventId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS}/${eventId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS}/${eventId}`;
 
-    return super.delete(url, search);
+    return this.api.delete(url, search);
   }
 
   getEventAttendanceByEventId(startRage: number, endRage: number, search?: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT
-    }`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT}`;
     const url = `${common}/${startRage};${endRage}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   addEventCheckIn(body: any, search?: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT}/`;
 
-    return super.post(url, body, search);
+    return this.api.post(url, body, search);
   }
 
   updateEventCheckIn(body: any, attendeeId: number, search?: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT
-    }/${attendeeId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT}/${attendeeId}`;
 
-    return super.update(url, body, search);
+    return this.api.update(url, body, search);
   }
 
   deleteEventCheckInById(attendeeId: number, search?: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT
-    }/${attendeeId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS_ASSESSMENT}/${attendeeId}`;
 
-    return super.delete(url, search);
+    return this.api.delete(url, search);
   }
 
   setModalEvents(events: any[]): void {

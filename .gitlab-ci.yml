@@ -43,12 +43,9 @@ Deploying Web Staging:
 Building Web Production:
   stage: build
   script:
-    - echo "Building US Production..."
-    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py us_production_web_build
-    - echo "Web US Production built successfully"
-    - echo "Building CAN Production..."
-    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py can_production_web_build
-    - echo "Web CAN Production built successfully"
+    - echo "Building CC Prod..."
+    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py production_web_build
+    - echo "CC Prod built successfully"
   only:
     - master
   environment: Production

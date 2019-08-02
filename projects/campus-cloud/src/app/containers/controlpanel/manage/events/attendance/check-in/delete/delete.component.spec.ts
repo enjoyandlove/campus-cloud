@@ -3,13 +3,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
 import { mockCheckIn } from '../../../tests';
-import { mockSchool } from '@campus-cloud/session/mock';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { EventsModule } from '../../../events.module';
 import { attendanceType } from '../../../event.status';
+import { mockSchool } from '@campus-cloud/session/mock';
 import { EventsService } from '../../../events.service';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { CheckInDeleteComponent } from './delete.component';
 
 class MockService {
@@ -40,8 +39,8 @@ describe('EventCheckInDeleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [EventsModule, RouterTestingModule],
-      providers: [CPSession, CPI18nService, { provide: EventsService, useClass: MockService }]
+      imports: [EventsModule, RouterTestingModule, CPTestModule],
+      providers: [{ provide: EventsService, useClass: MockService }]
     })
       .compileComponents()
       .then(() => {

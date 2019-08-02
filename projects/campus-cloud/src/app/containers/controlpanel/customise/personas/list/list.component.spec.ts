@@ -3,13 +3,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule } from '@ngrx/store';
 
 import { MockPersonasService } from './../tests';
-import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
 import { PersonasModule } from './../personas.module';
 import { PersonasService } from './../personas.service';
 import { PersonasListComponent } from './list.component';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { baseReducers } from '@campus-cloud/store/base/reducers';
-import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 describe('PersonasListComponent', () => {
   let storeSpy;
@@ -19,6 +18,7 @@ describe('PersonasListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        CPTestModule,
         RouterTestingModule,
         PersonasModule,
         StoreModule.forRoot({
@@ -26,12 +26,7 @@ describe('PersonasListComponent', () => {
           SNACKBAR: baseReducers.SNACKBAR
         })
       ],
-      providers: [
-        CPI18nService,
-        CPSession,
-        CPTrackingService,
-        { provide: PersonasService, useClass: MockPersonasService }
-      ]
+      providers: [{ provide: PersonasService, useClass: MockPersonasService }]
     });
 
     fixture = TestBed.createComponent(PersonasListComponent);

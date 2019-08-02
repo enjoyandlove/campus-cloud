@@ -4,13 +4,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { By } from '@angular/platform-browser';
 
-import { CPSession } from '@campus-cloud//session';
-import { configureTestSuite } from '@campus-cloud//shared/tests';
-import { CPI18nService, StoreService } from '@campus-cloud//shared/services';
-import { SharedModule } from '@campus-cloud//shared/shared.module';
+import { CPSession } from '@campus-cloud/session';
+import { StoreService } from '@campus-cloud/shared/services';
 import { mockSchool, mockUser } from '@campus-cloud/session/mock';
 import { ListActionBoxComponent } from './list-action-box.component';
-import { CPTrackingService } from '@campus-cloud//shared/services/tracking.service';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { CPTrackingService } from '@campus-cloud/shared/services/tracking.service';
 
 describe('ListActionBoxComponent', () => {
   configureTestSuite();
@@ -18,9 +17,9 @@ describe('ListActionBoxComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, RouterTestingModule, HttpClientModule],
+        imports: [CPTestModule, RouterTestingModule, HttpClientModule],
         declarations: [ListActionBoxComponent],
-        providers: [CPSession, CPI18nService, CPTrackingService, StoreService],
+        providers: [CPTrackingService, StoreService],
         schemas: [NO_ERRORS_SCHEMA]
       });
       await TestBed.compileComponents();

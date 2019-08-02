@@ -1,12 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { throwError as observableThrowError, of } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { sortBy } from 'lodash';
 
-import { API } from '@campus-cloud/config/api';
-import { HTTPService } from '@campus-cloud/base/http.service';
+import { ApiService } from '@campus-cloud/base/services';
 
 export interface IAdmin {
   id: number;
@@ -17,23 +15,19 @@ export interface IAdmin {
 }
 
 @Injectable()
-export class AdminService extends HTTPService {
-  constructor(http: HttpClient, router: Router) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, AdminService.prototype);
-  }
+export class AdminService {
+  constructor(private api: ApiService) {}
 
   getAdmins(startRage: number, endRage: number, search?: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${startRage};${endRage}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ADMIN}/${startRage};${endRage}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getAdminByStoreId(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/1;9000`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ADMIN}/1;9000`;
 
-    return super.get(url, search, true).pipe(
+    return this.api.get(url, search, true).pipe(
       map((admins: IAdmin[]) => {
         if (admins) {
           return sortBy(admins, (admin: IAdmin) => admin.firstname.toLowerCase());
@@ -44,26 +38,26 @@ export class AdminService extends HTTPService {
   }
 
   getAdminById(adminId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ADMIN}/${adminId}`;
 
-    return super.get(url);
+    return this.api.get(url);
   }
 
   deleteAdminById(adminId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ADMIN}/${adminId}`;
 
-    return super.delete(url, search, true).pipe(catchError((err) => observableThrowError(err)));
+    return this.api.delete(url, search, true).pipe(catchError((err) => observableThrowError(err)));
   }
 
   createAdmin(data: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ADMIN}/`;
 
-    return super.post(url, data);
+    return this.api.post(url, data);
   }
 
   updateAdmin(adminId: number, data: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ADMIN}/${adminId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ADMIN}/${adminId}`;
 
-    return super.update(url, data, null, true);
+    return this.api.update(url, data, null, true);
   }
 }

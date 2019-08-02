@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, HostListener } from '@angular/core';
 
-import { isProd } from '@campus-cloud/config/env';
+import { EnvService } from '@campus-cloud/config/env';
 import { CPTrackingService } from '@campus-cloud/shared/services/tracking.service';
 
 export interface ICPButtonProps {
@@ -24,7 +24,7 @@ export class CPButtonComponent implements OnInit {
 
   @Output() buttonClick: EventEmitter<Event> = new EventEmitter();
 
-  constructor(private track: CPTrackingService) {}
+  constructor(private track: CPTrackingService, private env: EnvService) {}
 
   @HostListener('document:keydown', ['$event'])
   onEnter(event) {
@@ -36,7 +36,7 @@ export class CPButtonComponent implements OnInit {
   trackGa() {
     const { eventCategory, eventAction } = this.props.trackingData;
 
-    if (isProd) {
+    if (this.env.name === 'production') {
       this.track.gaEmitEvent(eventCategory, eventAction);
     }
   }

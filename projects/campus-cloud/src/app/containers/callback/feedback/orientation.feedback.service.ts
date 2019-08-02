@@ -1,25 +1,24 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { API } from '../../../config/api';
+import { ApiService } from '@campus-cloud/base';
 import { FeedbackService } from './feedback.service';
 
 @Injectable()
 export class OrientationFeedbackService extends FeedbackService {
-  constructor(public _http: HttpClient, public _router: Router) {
-    super(_http, _router);
+  constructor(public api: ApiService) {
+    super(api);
   }
 
   getEventData(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EXTERNAL_USER_EVENT_FEEDBACK}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXTERNAL_USER_EVENT_FEEDBACK}/`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   doEventFeedback(data: any, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.EXTERNAL_USER_EVENT_FEEDBACK}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXTERNAL_USER_EVENT_FEEDBACK}/`;
 
-    return super.update(url, data, search);
+    return this.api.update(url, data, search);
   }
 }

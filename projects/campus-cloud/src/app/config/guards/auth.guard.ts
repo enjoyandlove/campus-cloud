@@ -3,17 +3,18 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 
+import { EnvService } from '../env';
 import { appStorage } from '@campus-cloud/shared/utils';
 import { CPSession, ISchool } from '@campus-cloud/session';
 import { CPLogger } from '@campus-cloud/shared/services/logger';
 import { base64 } from '@campus-cloud/shared/utils/encrypt/encrypt';
-import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { AdminService, SchoolService, StoreService } from '@campus-cloud/shared/services';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(
     public router: Router,
+    private env: EnvService,
     public session: CPSession,
     public storeService: StoreService,
     public adminService: AdminService,
@@ -29,7 +30,7 @@ export class AuthGuard implements CanActivate {
         map((users) => {
           this.session.g.set('user', users[0]);
 
-          if (environment.production) {
+          if (this.env.name !== 'development') {
             this.setUserContext();
           }
 

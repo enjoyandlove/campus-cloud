@@ -3,21 +3,18 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { StoreModule, Store } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 
-import { CPSession } from '@campus-cloud/session';
-import * as fromJobs from '@campus-cloud/store/manage/jobs';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { EmployerModule } from '../employer.module';
-import { CPTrackingService } from '@campus-cloud/shared/services';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import * as fromJobs from '@campus-cloud/store/manage/jobs';
 import { EmployerDeleteComponent } from './employer-delete.component';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('EmployerDeleteComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [EmployerModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [Store, Actions, CPSession, CPI18nService, CPTrackingService]
+        imports: [EmployerModule, RouterTestingModule, StoreModule.forRoot({}), CPTestModule],
+        providers: [Store, Actions]
       });
       await TestBed.compileComponents();
     })()

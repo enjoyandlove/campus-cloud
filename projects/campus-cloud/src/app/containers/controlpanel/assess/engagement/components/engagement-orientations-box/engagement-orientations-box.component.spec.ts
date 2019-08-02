@@ -3,13 +3,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs/index';
 import { of as observableOf } from 'rxjs';
 
-import { CPSession } from './../../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { EngagementModule } from '../../engagement.module';
 import { EngagementService } from '../../engagement.service';
 import { AssessUtilsService } from '../../../assess.utils.service';
-import { CPTrackingService } from '../../../../../../shared/services';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 import { EngagementUtilsService } from '../../engagement.utils.service';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
 import { EngagementOrientationsBoxComponent } from './engagement-orientations-box.component';
 
 class MockEngagementService {
@@ -79,10 +78,8 @@ describe('EngagementOrientationsBoxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [EngagementModule, RouterTestingModule],
+      imports: [EngagementModule, RouterTestingModule, CPTestModule],
       providers: [
-        CPSession,
-        CPI18nService,
         CPTrackingService,
         AssessUtilsService,
         EngagementUtilsService,

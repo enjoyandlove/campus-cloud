@@ -6,12 +6,11 @@ import { of as observableOf } from 'rxjs';
 
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
-import { CPSession } from '../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { DealsStoreService } from '../stores/store.service';
-import { CPI18nService } from '../../../../../shared/services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { DealsCreateComponent } from './deals-create.component';
-import { mockSchool } from '../../../../../session/mock/school';
-import { baseReducers } from '../../../../../store/base/reducers';
+import { baseReducers } from '@campus-cloud/store/base/reducers';
 
 class MockDealsService {
   dummy;
@@ -43,6 +42,7 @@ describe('DealsCreateComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         DealsModule,
+        CPTestModule,
         HttpClientModule,
         RouterTestingModule,
         StoreModule.forRoot({
@@ -51,8 +51,6 @@ describe('DealsCreateComponent', () => {
         })
       ],
       providers: [
-        CPSession,
-        CPI18nService,
         { provide: DealsStoreService, useClass: MockStoreService },
         { provide: DealsService, useClass: MockDealsService }
       ]

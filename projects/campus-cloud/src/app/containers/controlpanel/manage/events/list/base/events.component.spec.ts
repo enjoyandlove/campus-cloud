@@ -3,11 +3,10 @@ import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 import { Router } from '@angular/router';
 
-import { CPSession } from '@campus-cloud/session';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { EventsModule } from '../../events.module';
 import { EventsService } from '../../events.service';
 import { EventsComponent } from './events.component';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 
 class MockService {
@@ -33,10 +32,8 @@ describe('EventsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, EventsModule],
+      imports: [HttpClientModule, EventsModule, CPTestModule],
       providers: [
-        CPSession,
-        CPI18nService,
         { provide: Router, useClass: RouterMock },
         { provide: EventsService, useClass: MockService }
       ]

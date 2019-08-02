@@ -5,16 +5,14 @@ import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
 import { CPSession } from '@campus-cloud/session';
-import { RootStoreModule } from '@campus-cloud/store';
-import { mockSchool } from '@campus-cloud/session/mock';
-import { IDateRange } from '@campus-cloud/shared/components';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { MockServicesService } from '../tests/mock';
 import { ServicesService } from '../services.service';
-import mockSession from '@projects/campus-cloud/src/app/session/mock/session';
+import { RootStoreModule } from '@campus-cloud/store';
+import { IDateRange } from '@campus-cloud/shared/components';
 import { ServicesUtilsService } from '../services.utils.service';
+import { mockSchool, mockUser } from '@campus-cloud/session/mock';
 import { ProvidersUtilsService } from '../providers.utils.service';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { ServicesAttendanceComponent } from './services-attendance.component';
 
 const school = mockSchool;
@@ -32,16 +30,11 @@ describe('ServicesAttendanceComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         declarations: [ServicesAttendanceComponent, ServicesProvidersListStubComponent],
-        imports: [HttpClientModule, RouterTestingModule, RootStoreModule],
+        imports: [HttpClientModule, RouterTestingModule, RootStoreModule, CPTestModule],
         providers: [
           FormBuilder,
-          CPI18nService,
           ServicesUtilsService,
           ProvidersUtilsService,
-          {
-            provide: CPSession,
-            useValue: mockSession
-          },
           {
             provide: ServicesService,
             useClass: MockServicesService
@@ -55,12 +48,17 @@ describe('ServicesAttendanceComponent', () => {
       .catch(done.fail);
   });
 
+  let session: CPSession;
   let component: ServicesAttendanceComponent;
   let fixture: ComponentFixture<ServicesAttendanceComponent>;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ServicesAttendanceComponent);
     component = fixture.componentInstance;
+    session = TestBed.get(CPSession);
+
+    session.g.set('user', mockUser);
+    session.g.set('school', mockSchool);
 
     component.loading = false;
     fixture.detectChanges();

@@ -7,24 +7,23 @@ import { EffectsModule } from '@ngrx/effects';
 import { DebugElement } from '@angular/core';
 import { of } from 'rxjs';
 
+import { mockIntegration } from '../tests';
 import * as fromRoot from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
-import { mockIntegration } from '../tests';
 import { mockSchool } from '@campus-cloud/session/mock';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { CPNoContentComponent } from '@campus-cloud/shared/components';
 import { AnnouncementsIntegrationListComponent } from './list.component';
-import { IntegrationsActionBoxComponent } from '@campus-cloud/libs/integrations/common/components';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { AnnouncementIntegrationsModule } from '../announcements.integrations.module';
+import { IntegrationsActionBoxComponent } from '@campus-cloud/libs/integrations/common/components';
 
 describe('AnnouncementsIntegrationListComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        providers: [CPSession, CPI18nService],
         imports: [
+          CPTestModule,
           RouterTestingModule,
           HttpClientTestingModule,
           AnnouncementIntegrationsModule,

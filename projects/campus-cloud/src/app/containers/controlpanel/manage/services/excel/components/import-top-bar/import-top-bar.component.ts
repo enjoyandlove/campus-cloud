@@ -3,10 +3,10 @@ import { HttpHeaders } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { API } from '../../../../../../../config/api';
-import { appStorage } from '../../../../../../../shared/utils';
-import { ISnackbar, baseActions } from './../../../../../../../store/base';
-import { FileUploadService, CPI18nService } from '../../../../../../../shared/services';
+import { ApiService } from '@campus-cloud/base';
+import { appStorage } from '@campus-cloud/shared/utils';
+import { ISnackbar, baseActions } from '@campus-cloud/store/base';
+import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-services-import-top-bar',
@@ -29,6 +29,7 @@ export class ServicesImportTopBarComponent implements OnInit {
   loading = true;
 
   constructor(
+    private api: ApiService,
     private fileUploadService: FileUploadService,
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>
@@ -57,8 +58,8 @@ export class ServicesImportTopBarComponent implements OnInit {
       return;
     }
 
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.IMAGE}/`;
+    const auth = `${this.api.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     const headers = new HttpHeaders({
       Authorization: auth

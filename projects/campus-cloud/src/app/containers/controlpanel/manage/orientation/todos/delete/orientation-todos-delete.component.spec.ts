@@ -5,10 +5,9 @@ import { of as observableOf } from 'rxjs';
 
 import { TodosModule } from '../todos.module';
 import { TodosService } from '../todos.service';
-import { CPSession } from '../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { CPTrackingService } from '../../../../../../shared/services';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { CPTestModule } from '@campus-cloud/shared/tests';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 import { OrientationTodosDeleteComponent } from './orientation-todos-delete.component';
 
 class MockTodosService {
@@ -29,13 +28,8 @@ describe('OrientationTodosDeleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [TodosModule, RouterTestingModule],
-      providers: [
-        CPSession,
-        CPI18nService,
-        CPTrackingService,
-        { provide: TodosService, useClass: MockTodosService }
-      ]
+      imports: [TodosModule, RouterTestingModule, CPTestModule],
+      providers: [CPTrackingService, { provide: TodosService, useClass: MockTodosService }]
     })
       .compileComponents()
       .then(() => {

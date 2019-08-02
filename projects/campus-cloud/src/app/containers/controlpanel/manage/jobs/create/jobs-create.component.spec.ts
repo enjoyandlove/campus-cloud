@@ -6,9 +6,8 @@ import { of as observableOf } from 'rxjs';
 
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
-import { CPSession } from '../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { JobsCreateComponent } from './jobs-create.component';
-import { CPI18nService } from '../../../../../shared/services';
 import { mockSchool } from '../../../../../session/mock/school';
 import { EmployerService } from '../employers/employer.service';
 import { baseReducers } from '../../../../../store/base/reducers';
@@ -46,6 +45,7 @@ describe('JobsCreateComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         JobsModule,
+        CPTestModule,
         HttpClientModule,
         RouterTestingModule,
         StoreModule.forRoot({
@@ -54,8 +54,6 @@ describe('JobsCreateComponent', () => {
         })
       ],
       providers: [
-        CPSession,
-        CPI18nService,
         { provide: EmployerService, useClass: MockEmployerService },
         { provide: JobsService, useClass: MockJobsService }
       ]

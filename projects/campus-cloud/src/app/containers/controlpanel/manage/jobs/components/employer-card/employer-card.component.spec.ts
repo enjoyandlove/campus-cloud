@@ -4,20 +4,18 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 
 import { JobsModule } from '../../jobs.module';
-import { CPSession } from '../../../../../../session';
-import { RootStoreModule } from '../../../../../../store';
+import { RootStoreModule } from '@campus-cloud/store';
 import { JobsUtilsService } from '../../jobs.utils.service';
 import { EmployerCardComponent } from './employer-card.component';
-import { CPI18nService } from '../../../../../../shared/services';
-import { configureTestSuite } from '../../../../../../shared/tests';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('EmployerCardComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [JobsModule, HttpClientModule, RouterTestingModule, RootStoreModule],
-        providers: [CPSession, CPI18nService, JobsUtilsService]
+        imports: [CPTestModule, JobsModule, HttpClientModule, RouterTestingModule, RootStoreModule],
+        providers: [JobsUtilsService]
       });
 
       await TestBed.compileComponents();

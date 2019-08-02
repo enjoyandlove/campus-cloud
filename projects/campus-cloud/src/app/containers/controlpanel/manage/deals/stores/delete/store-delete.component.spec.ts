@@ -3,22 +3,19 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Store, StoreModule as NgrxStore } from '@ngrx/store';
 import { Actions } from '@ngrx/effects';
 
-import { CPSession } from '@campus-cloud/session';
 import { StoreModule } from '../store.module';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import * as fromDeals from '@campus-cloud/store/manage/deals';
-import { CPTrackingService } from '@campus-cloud/shared/services';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { StoreDeleteComponent } from './store-delete.component';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('DealsStoreDeleteComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [StoreModule, RouterTestingModule, NgrxStore.forRoot({})],
-        providers: [Store, Actions, CPSession, CPI18nService, CPTrackingService]
+        imports: [CPTestModule, StoreModule, RouterTestingModule, NgrxStore.forRoot({})],
+        providers: [Store, Actions]
       });
       await TestBed.compileComponents();
     })()

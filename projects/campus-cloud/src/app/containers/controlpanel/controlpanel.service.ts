@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { HTTPService } from '../../base/http.service';
+
+import { HTTPService } from '@campus-cloud/base/services';
 
 @Injectable()
 export class ControlPanelService extends HTTPService {

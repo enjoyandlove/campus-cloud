@@ -6,12 +6,11 @@ import { of as observableOf } from 'rxjs';
 
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { EventUtilService } from '../events.utils.service';
 import { EventsInfoComponent } from './events-info.component';
 import { mockSchool } from '../../../../../session/mock/school';
 import { baseReducers } from '../../../../../store/base/reducers';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 class MockService {
   dummy;
@@ -36,6 +35,7 @@ describe('EventInfoComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        CPTestModule,
         HttpClientModule,
         EventsModule,
         StoreModule.forRoot({
@@ -44,10 +44,7 @@ describe('EventInfoComponent', () => {
         })
       ],
       providers: [
-        CPSession,
-        CPI18nService,
         EventUtilService,
-        CPTrackingService,
         { provide: Router, useClass: RouterMock },
         { provide: EventsService, useClass: MockService },
         {

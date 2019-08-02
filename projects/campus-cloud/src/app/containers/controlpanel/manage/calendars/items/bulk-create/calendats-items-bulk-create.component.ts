@@ -6,16 +6,16 @@ import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { isDev } from '@campus-cloud/config/env';
+import { IItem } from './../item.interface';
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
+import { EnvService } from '@campus-cloud/config/env';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
-import { IItem } from './../item.interface';
 import { CPDate, CPObj } from '@campus-cloud/shared/utils';
+import { CalendarsService } from '../../calendars.services';
+import { IHeader, baseActions } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService } from '@campus-cloud/shared/services';
-import { IHeader, baseActions } from '@campus-cloud/store/base';
-import { CalendarsService } from '../../calendars.services';
 
 const i18n = new CPI18nPipe();
 
@@ -38,6 +38,7 @@ export class CalendarsItemsBulkCreateComponent extends BaseComponent implements 
   constructor(
     public router: Router,
     public fb: FormBuilder,
+    private env: EnvService,
     public session: CPSession,
     public store: Store<IHeader>,
     public route: ActivatedRoute,
@@ -49,7 +50,9 @@ export class CalendarsItemsBulkCreateComponent extends BaseComponent implements 
   }
 
   getItems() {
-    return isDev ? observableOf(require('./mock.json')) : this.service.getItems();
+    return this.env.name === 'development'
+      ? observableOf(require('./mock.json'))
+      : this.service.getItems();
   }
 
   onSubmit(items: { items: IItem[] }) {

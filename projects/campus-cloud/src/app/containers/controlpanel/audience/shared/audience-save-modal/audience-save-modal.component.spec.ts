@@ -1,11 +1,10 @@
-import { By } from '@angular/platform-browser';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
 
-import { SharedModule } from './../../../../../shared/shared.module';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { AudienceSaveModalComponent } from './audience-save-modal.component';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 describe('AudienceSaveModalComponent', () => {
   let comp: AudienceSaveModalComponent;
@@ -13,9 +12,9 @@ describe('AudienceSaveModalComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule, ReactiveFormsModule, RouterTestingModule],
+      imports: [CPTestModule, ReactiveFormsModule, RouterTestingModule],
       declarations: [AudienceSaveModalComponent],
-      providers: [CPI18nService, FormBuilder]
+      providers: [FormBuilder]
     });
     fixture = TestBed.createComponent(AudienceSaveModalComponent);
     comp = fixture.componentInstance;

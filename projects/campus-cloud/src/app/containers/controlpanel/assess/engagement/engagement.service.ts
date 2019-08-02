@@ -1,45 +1,39 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { API } from '../../../../config/api';
 import { PersonaPermission } from './engagement.status';
-import { HTTPService } from '../../../../base/http.service';
+import { ApiService } from '@campus-cloud/base/services';
 
 @Injectable()
-export class EngagementService extends HTTPService {
-  constructor(http: HttpClient, router: Router) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, EngagementService.prototype);
-  }
+export class EngagementService {
+  constructor(private api: ApiService) {}
 
   getServices(startRange = 1, endRange = 1000, search?: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search, true);
+    return this.api.get(url, search, true);
   }
 
   postAnnouncements(search: HttpParams, body: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ANNOUNCEMENT}/`;
 
-    return super.post(url, body, search);
+    return this.api.post(url, body, search);
   }
 
   getLists(startRange = 1, endRange = 1000, search?: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.USER_LIST}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search, true);
+    return this.api.get(url, search, true);
   }
 
   getPersona(startRange = 1, endRange = 1000, search?: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PERSONAS}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super
+    return this.api
       .get(url, search, true)
       .pipe(
         map((res: any) => res.filter((p) => p.login_requirement !== PersonaPermission.forbidden))
@@ -47,26 +41,26 @@ export class EngagementService extends HTTPService {
   }
 
   getChartData(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ENGAGEMENT}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ASSESS_ENGAGEMENT}/`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getEventsData(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_EVENT}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ASSESS_EVENT}/`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getServicesData(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_SERVICE}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ASSESS_SERVICE}/`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getOrientationData(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ORIENTATION_EVENT}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ASSESS_ORIENTATION_EVENT}/`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 }

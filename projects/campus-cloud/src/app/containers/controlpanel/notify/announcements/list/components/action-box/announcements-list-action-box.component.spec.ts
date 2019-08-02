@@ -3,11 +3,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockUser, mockSchool } from '@campus-cloud/session/mock';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
-import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { AnnouncementsListActionBoxComponent } from './announcements-list-action-box.component';
 
 describe('AnnouncementsListActionBoxComponent', () => {
@@ -15,9 +13,9 @@ describe('AnnouncementsListActionBoxComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, RouterTestingModule],
+        imports: [CPTestModule, RouterTestingModule],
         declarations: [AnnouncementsListActionBoxComponent],
-        providers: [CPSession, CPI18nService, CPTrackingService, Location]
+        providers: [Location]
       });
       await TestBed.compileComponents();
     })()

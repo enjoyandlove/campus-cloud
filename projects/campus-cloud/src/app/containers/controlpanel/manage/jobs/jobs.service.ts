@@ -1,27 +1,20 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
-import { API } from '../../../../config/api';
-import { HTTPService } from '../../../../base';
-import { CPSession } from '../../../../session';
-import { CPI18nService } from '../../../../shared/services';
+import { ApiService } from '@campus-cloud/base';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { EmployerService } from './employers/employer.service';
 
 @Injectable()
-export class JobsService extends HTTPService {
+export class JobsService {
   constructor(
-    router: Router,
-    http: HttpClient,
+    private api: ApiService,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public employerService: EmployerService
-  ) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, JobsService.prototype);
-  }
+  ) {}
 
   getEmployers() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
@@ -45,32 +38,32 @@ export class JobsService extends HTTPService {
   }
 
   getJobs(startRage: number, endRage: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.JOB}/${startRage};${endRage}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.JOB}/${startRage};${endRage}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   deleteJob(id: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.JOB}/${id}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.JOB}/${id}`;
 
-    return super.delete(url, search);
+    return this.api.delete(url, search);
   }
 
   createJob(body: any, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.JOB}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.JOB}/`;
 
-    return super.post(url, body, search);
+    return this.api.post(url, body, search);
   }
 
   editJob(id: number, body: any, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.JOB}/${id}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.JOB}/${id}`;
 
-    return super.update(url, body, search);
+    return this.api.update(url, body, search);
   }
 
   getJobById(id: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.JOB}/${id}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.JOB}/${id}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 }

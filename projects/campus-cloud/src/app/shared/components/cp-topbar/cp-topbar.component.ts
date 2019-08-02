@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { isProd } from '@campus-cloud/config/env';
+import { EnvService } from '@campus-cloud/config/env';
 import { CPSession, ISchool, IUser } from '@campus-cloud/session';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
@@ -23,20 +23,20 @@ export class CPTopBarComponent implements OnInit {
   canNotify = false;
   canManage = false;
   canAssess = false;
-  production = isProd;
   canAudience = false;
   canCustomise = false;
-  manageHomePage: string;
-
   isManageActiveRoute;
+  manageHomePage: string;
+  production = this.env.name === 'production';
   logo = `${environment.root}assets/svg/logo.svg`;
   helpIcon = `${environment.root}assets/svg/help/help.svg`;
   defaultImage = `${environment.root}assets/default/user.png`;
 
   constructor(
-    public el: ElementRef,
-    public session: CPSession,
     public router: Router,
+    public el: ElementRef,
+    private env: EnvService,
+    public session: CPSession,
     public cpTracking: CPTrackingService
   ) {}
 
