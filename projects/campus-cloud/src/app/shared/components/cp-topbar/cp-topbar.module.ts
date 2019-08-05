@@ -11,13 +11,16 @@ import {
   SchoolSwitchComponent
 } from '@campus-cloud/shared/components';
 
+import { CPFeatureToggleDirective } from '@campus-cloud/shared/directives';
+
 @NgModule({
   declarations: [
     CPI18nPipe,
     HelpDeskPipes,
     CPTopBarComponent,
     CPHelpDeskComponent,
-    SchoolSwitchComponent
+    SchoolSwitchComponent,
+    CPFeatureToggleDirective
   ],
 
   imports: [CommonModule, RouterModule],
@@ -27,7 +30,8 @@ import {
     HelpDeskPipes,
     CPTopBarComponent,
     CPHelpDeskComponent,
-    SchoolSwitchComponent
+    SchoolSwitchComponent,
+    CPFeatureToggleDirective
   ]
 })
 export class CPTopBarModule {}

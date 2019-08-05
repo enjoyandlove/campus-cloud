@@ -13,10 +13,15 @@
     <li (click)="close.emit()" class="switch__item" [class.isFirstItem]="schools.length === 1">
       <a
         [routerLink]="['/settings/team/' + session.g.get('user').id + '/edit']"
-        [queryParams]="{ profile: true }"
-      >
+        [queryParams]="{ profile: true }">
         {{ 'profile' | cpI18n }}
       </a>
+    </li>
+    <li
+      class="switch__item"
+      (click)="close.emit()"
+      *cpFeatureToggle="'API_MANAGEMENT'">
+      <a [routerLink]="['/api-management']">{{ 't_api_management' | cpI18n}}</a>
     </li>
     <li class="switch__item" (click)="close.emit()" *ngIf="canManageAdmins">
       <a [routerLink]="['/settings/team']">{{ 'team_settings' | cpI18n }}</a>

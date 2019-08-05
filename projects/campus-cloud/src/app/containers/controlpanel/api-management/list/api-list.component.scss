@@ -1,0 +1,42 @@
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.list {
+  padding: 16px 9px;
+  background-color: $color-white;
+  border-bottom: 1px solid $border-color;
+  box-shadow: 4px 4px 20px 0 rgba(204, 204, 204, .3);
+
+  &__key-id {
+    margin-left: 8px;
+    color: $color-secondary-text;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  &__timestamp {
+    color: $color-grey;
+  }
+
+  &__key-id-label {
+    @include font-16px();
+    @include font-semi-bold();
+  }
+
+  &__revoke {
+    margin-right: 24px;
+    color: $color-danger;
+  }
+
+  &__edit,
+  &__revoke {
+    @include font-semi-bold()
+  }
+
+  &__actions {
+    margin-top: 4px;
+  }
+}
+
+.margin-top {
+  margin-top: 12px;
+}

@@ -1,0 +1,59 @@
+<div class="row">
+  <div class="col-3">
+    <cp-api-how-to-use></cp-api-how-to-use>
+  </div>
+
+  <div class="col-9">
+    <cp-api-topbar></cp-api-topbar>
+
+    <div class="list row" *ngFor="let item of items; trackBy: trackByFn">
+     <div class="col-12">
+       <div class="row">
+         <div class="col-9">
+           <div class="row">
+             <div class="col-3 text-truncate no-right-padding">
+               <span class="list__key-id-label">{{ item.name }} hello and welcome man</span>
+             </div>
+             <div class="col-9 no-left-padding">
+               <span class="list__key-id">{{ item.key_id }}</span>
+             </div>
+           </div>
+         </div>
+         <div class="col-3 text-right list__timestamp">
+           {{ 't_shared_created' | cpI18n }}: {{ item.created | cpDatePipe: dateFormat}}
+         </div>
+       </div>
+
+       <div class="row margin-top">
+         <div class="col-9">
+           <cp-api-management-key
+             [key]="item.api_key">
+           </cp-api-management-key>
+         </div>
+
+         <div class="col-3 text-right list__actions">
+           <button
+             type="button"
+             class="list__revoke hover cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--ghost">
+               {{ 't_shared_revoke' | cpI18n }}
+           </button>
+
+           <button
+             type="button"
+             class="list__edit hover cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--ghost cpbtn--link-dark">
+               {{ 't_shared_edit' | cpI18n }}
+           </button>
+         </div>
+       </div>
+     </div>
+    </div>
+
+    <cp-pagination
+      [pageNext]="pageNext"
+      [pagePrev]="pagePrev"
+      [pageNumber]="pageNumber"
+      (next)="onPaginationNext()"
+      (previous)="onPaginationPrevious()">
+    </cp-pagination>
+  </div>
+</div>
