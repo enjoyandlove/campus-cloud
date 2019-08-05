@@ -3,13 +3,11 @@
     <div
       *ngIf="image"
       class="wrapper__image"
-      [ngStyle]="{ 'background-image': 'url(' + image + ')' }"
-    >
+      [ngStyle]="{ 'background-image': 'url(' + image + ')' }">
       <button
         type="button"
         (click)="removeImage()"
-        class="cpbtn cpbtn--link-dark wrapper__delete material-icons"
-      >
+        class="cpbtn cpbtn--link-dark wrapper__delete material-icons">
         close
       </button>
     </div>
@@ -19,7 +17,7 @@
     </div>
   </div>
   <div class="col-8 wrapper__right-side">
-    <label [attr.for]="['upload_component ' + id]" class="no-margin dark">{{ heading }}</label>
+    <label class="no-margin dark">{{ heading }}</label>
     <a target="_blank" [attr.href]="zdArticle">
       <span class="text-muted">{{ description }}</span>
     </a>
@@ -36,8 +34,7 @@
       [buttonText]="buttonText"
       class="wrapper__button"
       buttonClass="cpbtn cpbtn--secondary"
-      (fileUpload)="onFileUpload($event)"
-    >
+      (fileUpload)="onFileUpload($event)">
     </cp-upload-button>
   </div>
 </div>

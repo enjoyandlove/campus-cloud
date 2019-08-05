@@ -29,8 +29,7 @@
               (click)="doSort('title')"
               [label]="sortingLabels.name"
               [sortField]="state.sort_field"
-              [sortDirection]="state.sort_direction"
-            >
+              [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
             <cp-sorting-header
@@ -39,8 +38,7 @@
               (click)="doSort('end')"
               [sortField]="state.sort_field"
               [label]="sortingLabels.due_date"
-              [sortDirection]="state.sort_direction"
-            >
+              [sortDirection]="state.sort_direction">
             </cp-sorting-header>
             <span class="col-2"></span>
           </div>
@@ -54,8 +52,7 @@
               data-toggle="modal"
               data-target="#todoEdit"
               class="col-5 text-truncate hover"
-              (click)="launchEditModal = true; selectedTodo = todo"
-            >
+              (click)="launchEditModal = true; selectedTodo = todo">
               <strong>
                 {{ todo.title }}
               </strong>
@@ -66,14 +63,15 @@
               {{ todo.end | cpDatePipe: dateFormat }}
             </span>
             <span class="col-2 text-right">
-              <span
+              <button
+                type="button"
+                aria-label="close"
                 data-toggle="modal"
                 data-target="#todoDelete"
                 (click)="launchDeleteModal = true; selectedTodo = todo"
-                class="hover action-button delete-button text-center"
-              >
-                &times;
-              </span>
+                class="hover action-button delete-button text-center unstyled-button">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </span>
           </div>
         </li>

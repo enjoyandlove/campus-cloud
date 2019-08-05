@@ -7,8 +7,8 @@
   },
   "scripts": {
     "i18n": "phraseapp pull",
-    "lint": "node_modules/.bin/ng lint",
     "precommit": "pretty-quick --staged",
+    "lint": "node_modules/@angular/cli/bin/ng lint",
     "start": "node_modules/@angular/cli/bin/ng serve",
     "analyze": "webpack-bundle-analyzer dist/stats.json",
     "generate-build-file": "node scripts/campus-cloud/build.js",

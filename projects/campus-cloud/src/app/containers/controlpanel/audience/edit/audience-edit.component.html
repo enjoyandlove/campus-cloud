@@ -4,12 +4,13 @@
       <div class="col-12 text-center">
         <span><strong>{{ 'audience_edit_modal_label_name' | cpI18n }}</strong></span>
 
-        <span
+        <button
+          type="button"
           data-dismiss="modal"
           (click)="resetModal()"
-          class="float-right hover cpmodal__header__close">
+          class="float-right hover cpmodal__header__close unstyled-button">
           &times;
-        </span>
+        </button>
       </div>
     </div>
   </div>

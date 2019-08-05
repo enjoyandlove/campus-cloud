@@ -352,7 +352,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.isSendMessageModal = true;
     setTimeout(
       () => {
-        $('#sendMessageModal').modal();
+        $('#sendMessageModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -363,7 +363,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.isAddCheckInModal = true;
     setTimeout(
       () => {
-        $('#addCheckInModal').modal();
+        $('#addCheckInModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -375,7 +375,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.isEditCheckInModal = true;
     setTimeout(
       () => {
-        $('#editCheckInModal').modal();
+        $('#editCheckInModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -387,7 +387,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.isDeleteCheckInModal = true;
     setTimeout(
       () => {
-        $('#deleteCheckInModal').modal();
+        $('#deleteCheckInModal').modal({ keyboard: true, focus: true });
       },
 
       1

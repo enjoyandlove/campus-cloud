@@ -12,8 +12,7 @@
     <cp-no-content
       class="no-content"
       *ngIf="!state.employers.length"
-      [noContentText]="cpI18n.translate('employers_no_results_found')"
-    >
+      [noContentText]="cpI18n.translate('employers_no_results_found')">
     </cp-no-content>
 
     <div *ngIf="state.employers.length">
@@ -26,8 +25,7 @@
               (click)="doSort('name')"
               [label]="sortingLabels.name"
               [sortField]="state.sort_field"
-              [sortDirection]="state.sort_direction"
-            >
+              [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
             <span class="col-1 hover"></span>
@@ -42,8 +40,7 @@
               data-toggle="modal"
               data-target="#editModal"
               (click)="launchEditModal = true; selectedEmployer = employer"
-              class="col-11 text-truncate hover employer__thumbnail"
-            >
+              class="col-11 text-truncate hover employer__thumbnail">
               <img
                 *ngIf="employer.logo_url"
                 [src]="employer.logo_url"
@@ -55,14 +52,15 @@
               <br />
               {{ employer.description }}
             </span>
-            <span
+            <button
+              type="button"
+              aria-label="delete"
               (click)="deleteEmployer = employer; launchDeleteModal = true"
               data-toggle="modal"
               data-target="#deleteModal"
-              class="col-1 hover delete-employer text-center"
-            >
-              &times;
-            </span>
+              class="col-1 hover delete-employer text-center unstyled-button">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
         </li>
       </ul>
@@ -72,8 +70,7 @@
         [pagePrev]="pagePrev"
         [pageNumber]="pageNumber"
         (next)="onPaginationNext()"
-        (previous)="onPaginationPrevious()"
-      >
+        (previous)="onPaginationPrevious()">
       </cp-pagination>
     </div>
   </div>

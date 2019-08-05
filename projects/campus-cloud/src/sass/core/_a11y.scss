@@ -3,7 +3,6 @@
   height: 1px;
   width: 1px;
   overflow: hidden;
-  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px);
   white-space: nowrap; /* added line */
 }
@@ -17,6 +16,7 @@ button {
 }
 
 .unstyled-button {
+  padding: 0;
   width: auto;
   border: none;
   font: inherit;

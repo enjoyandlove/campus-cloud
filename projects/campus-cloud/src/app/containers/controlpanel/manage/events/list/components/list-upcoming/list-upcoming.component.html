@@ -78,14 +78,19 @@
       <span class="col-2 text-right actions">
         <img
           cpTooltip
+          aria-hidden="true"
           class="js_event_external"
           *ngIf="event.is_external"
           [attr.title]="isExternalToolTip"
           [src]="event.source | integrationSourceToIcon"
         />
-        <span (click)="onDelete(event)" class="hover text-truncate delete-event">
-          &times;
-        </span>
+        <button
+          type="button"
+          aria-label="delete"
+          (click)="onDelete(event)"
+          class="hover text-truncate delete-event unstyled-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </span>
     </div>
   </li>

@@ -123,7 +123,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     this.provider = provider;
     this.showEditProviderModal = true;
 
-    setTimeout(() => $('#editProvider').modal());
+    setTimeout(() => $('#editProvider').modal({ keyboard: true, focus: true }));
   }
 
   onEdited(editedProvider: IServiceProvider) {

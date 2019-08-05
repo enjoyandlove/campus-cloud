@@ -5,12 +5,13 @@
         <span>
           <strong>{{ 'save_audience_modal_title' | cpI18n }}</strong>
         </span>
-        <span
+        <button
+          type="button"
           data-dismiss="modal"
           (click)="resetModal()"
-          class="float-right hover cpmodal__header__close">
+          class="float-right hover cpmodal__header__close unstyled-button">
           &times;
-        </span>
+        </button>
       </div>
     </div>
   </div>

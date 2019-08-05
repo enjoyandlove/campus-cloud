@@ -41,9 +41,13 @@
           (syncClick)="syncClick.emit(integration.id)"
         >
         </cp-integrations-sync-now-button>
-        <span class="hover delete-integration" (click)="deleteClick.emit(integration)">
-          &times;
-        </span>
+        <button
+          type="button"
+          aria-label="delete"
+          class="hover delete-integration unstyled-button"
+          (click)="deleteClick.emit(integration)">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </span>
     </div>
   </li>

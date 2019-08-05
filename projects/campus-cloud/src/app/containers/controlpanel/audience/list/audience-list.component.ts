@@ -213,7 +213,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     this.audienceUsers = users ? users : null;
     setTimeout(
       () => {
-        $('#audienceCreate').modal();
+        $('#audienceCreate').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -224,7 +224,7 @@ export class AudienceListComponent extends BaseComponent implements OnInit {
     this.isAudienceImport = true;
     setTimeout(
       () => {
-        $('#audienceImport').modal();
+        $('#audienceImport').modal({ keyboard: true, focus: true });
       },
 
       1

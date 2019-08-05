@@ -2,13 +2,14 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span i18n
-          ><strong>{{ 'calendars_item_modal_title' | cpI18n }}</strong></span
-        >
+        <span><strong>{{ 'calendars_item_modal_title' | cpI18n }}</strong></span>
 
-        <span data-dismiss="modal" class="float-right hover cpmodal__header__close">
+        <button
+          type="button"
+          data-dismiss="modal"
+          class="float-right hover cpmodal__header__close unstyled-button">
           &times;
-        </span>
+        </button>
       </div>
     </div>
   </div>
@@ -16,7 +17,7 @@
   <div class="cpmodal__body">
     <div class="row">
       <div class="col-12">
-        <p class="text-center" i18n>
+        <p class="text-center">
           {{ 'calendars_item_delete_modal_body' | cpI18n: item.title }}
         </p>
       </div>
@@ -26,7 +27,7 @@
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-6 text-right">
-        <button type="button" class="cpbtn cpbtn--cancel" data-dismiss="modal" i18n>
+        <button type="button" class="cpbtn cpbtn--cancel" data-dismiss="modal">
           {{ 'cancel' | cpI18n }}
         </button>
 

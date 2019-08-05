@@ -118,7 +118,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
     this.isEdit = true;
     this.selectedMember = member;
-    setTimeout(() => $('#membersEdit').modal());
+    setTimeout(() => $('#membersEdit').modal({ keyboard: true, focus: true }));
   }
 
   trackEditEvent() {
@@ -151,7 +151,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
 
   onLaunchCreateModal() {
     this.isCreate = true;
-    setTimeout(() => $('#membersCreate').modal());
+    setTimeout(() => $('#membersCreate').modal({ keyboard: true, focus: true }));
   }
 
   trackDownloadedMembers() {
@@ -166,7 +166,7 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
     this.isDelete = true;
     this.selectedMember = member;
 
-    setTimeout(() => $('#membersDelete').modal());
+    setTimeout(() => $('#membersDelete').modal({ keyboard: true, focus: true }));
   }
 
   onEditTeaDown() {

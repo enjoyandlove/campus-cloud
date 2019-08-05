@@ -44,28 +44,28 @@
                             <cp-checkbox
                               class="checkbox float-left"
                               [isChecked]="isChecked[i].checked"
-                              (toggle)="onSingleCheck($event, i)"
-                            >
+                              (toggle)="onSingleCheck($event, i)">
                             </cp-checkbox>
                           </div>
                           <div class="col-6">
                             <div class="service__avatar">
-                              <span
-                                class="deleteButton hover"
+                              <button
+                                type="button"
+                                aria-label="remove image"
+                                class="deleteButton hover unstyled-button"
                                 (click)="onRemoveImage(i)"
-                                *ngIf="service.controls['logo_url'].value"
-                              >
-                                &times;
-                              </span>
+                                *ngIf="service.controls['logo_url'].value">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
                               <cp-upload-button
                                 [id]="'id' + i"
                                 theme="small"
                                 (fileUpload)="onImageUpload($event, i)"
                                 *ngIf="!service.controls['logo_url'].value"
-                                (click)="resetAllCheckboxes($event, i)"
-                              >
+                                (click)="resetAllCheckboxes($event, i)">
                               </cp-upload-button>
                               <img
+                                [alt]="'t_shared_img_alt' | cpI18n"
                                 class="rounded img-fit-cover"
                                 *ngIf="service.controls['logo_url'].value"
                                 [src]="service.controls['logo_url'].value"

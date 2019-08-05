@@ -1,8 +1,9 @@
-<span class="hover">
+<button type="button"
+        class="hover unstyled-button">
   {{ label }}
-  <span *ngIf="sortField === sortLabel">
+  <ng-container *ngIf="sortField === sortLabel">
     <i class="material-icons">
       {{ sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
     </i>
-  </span>
-</span>
+  </ng-container>
+</button>

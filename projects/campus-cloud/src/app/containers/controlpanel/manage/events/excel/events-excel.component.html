@@ -51,12 +51,14 @@
                           </div>
                           <div class="col-8">
                             <div class="event__thumbnail">
-                              <span
-                                class="deleteButton hover"
+                              <button
+                                type="button"
+                                aria-label="delete"
                                 (click)="onRemoveImage(i)"
+                                class="deleteButton hover unstyled-button"
                                 *ngIf="event.controls['poster_url'].value">
-                                &times;
-                              </span>
+                                <span aria-hidden="true">&times;</span>
+                              </button>
                               <cp-upload-button
                                 theme="small"
                                 [isRequired]="formError && event.controls['poster_url'].hasError('required')"

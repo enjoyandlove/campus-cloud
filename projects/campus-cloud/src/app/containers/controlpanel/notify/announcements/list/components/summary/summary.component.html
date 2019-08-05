@@ -1,5 +1,5 @@
 <div>
-  <div class="summary-line">
+  <div>
     <strong *ngIf="message.is_school_wide">
       {{ 'campus_wide' | cpI18n }}
     </strong>
@@ -13,6 +13,6 @@
       </cp-list-recipients>
     </strong>
   </div>
-  <div class="summary-line">{{ message.subject }}</div>
-  <div class="summary-line text-muted">{{ message.message }}</div>
+  <div>{{ message.subject }}</div>
+  <div class="text-muted">{{ message.message }}</div>
 </div>
