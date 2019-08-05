@@ -64,7 +64,7 @@ export class BaseCheckinComponent implements OnInit {
     if (this.isInternal) {
       setTimeout(
         () => {
-          $('#checkinInternalModal').modal();
+          $('#checkinInternalModal').modal({ keyboard: true, focus: true });
         },
 
         1

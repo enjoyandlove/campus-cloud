@@ -41,9 +41,13 @@
         }}
       </span>
       <span class="col-1 text-right">
-        <span class="hover delete-integration" (click)="deleteClick.emit(integration)">
-          &times;
-        </span>
+        <button
+          type="button"
+          aria-label="close"
+          class="hover delete-integration unstyled-button"
+          (click)="deleteClick.emit(integration)">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </span>
     </div>
   </li>

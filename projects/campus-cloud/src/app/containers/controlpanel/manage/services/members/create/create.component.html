@@ -8,14 +8,15 @@
           </strong>
         </span>
 
-        <span
+        <button
+          type="button"
+          aria-label="close"
           cpTarget="close"
           (click)="doReset()"
           data-dismiss="modal"
-          class="float-right hover cpmodal__header__close"
-        >
-          &times;
-        </span>
+          class="float-right hover cpmodal__header__close unstyled-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
   </div>
@@ -26,8 +27,7 @@
         <cp-member-form
           [form]="form"
           [memberTypes]="memberTypes"
-          [showPosition]="form.controls['member_type'].value === isExecutiveLeader"
-        >
+          [showPosition]="form.controls['member_type'].value === isExecutiveLeader">
         </cp-member-form>
       </div>
     </div>
@@ -41,8 +41,7 @@
           cpTarget="cancel"
           (click)="doReset()"
           class="cpbtn cpbtn--cancel"
-          data-dismiss="modal"
-        >
+          data-dismiss="modal">
           {{ 'cancel' | cpI18n }}
         </button>
 

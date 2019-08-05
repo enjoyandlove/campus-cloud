@@ -11,13 +11,14 @@
               error_outline
             </span>
             <span [innerHTML]="snack.body"></span>
-            <span
+            <button
+              type="button"
               (click)="doClose()"
               *ngIf="!snack.autoClose"
-              class="material-icons bar--wrapper--close float-right hover"
+              class="material-icons bar--wrapper--close float-right hover unstyled-button"
             >
               close
-            </span>
+            </button>
           </p>
         </div>
       </div>

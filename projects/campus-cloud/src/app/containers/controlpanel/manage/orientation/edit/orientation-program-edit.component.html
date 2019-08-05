@@ -2,17 +2,16 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span i18n
-          ><strong>{{ 'orientation_edit_program' | cpI18n }}</strong></span
-        >
+        <span><strong>{{ 'orientation_edit_program' | cpI18n }}</strong></span>
 
-        <span
+        <button
+          type="button"
+          aria-label="close"
           data-dismiss="modal"
           (click)="resetModal()"
-          class="float-right hover cpmodal__header__close"
-        >
-          &times;
-        </span>
+          class="float-right hover cpmodal__header__close unstyled-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
   </div>
@@ -29,8 +28,7 @@
           data-dismiss="modal"
           (click)="resetModal()"
           class="cpbtn cpbtn--cancel"
-          i18n
-        >
+         >
           {{ 'cancel' | cpI18n }}
         </button>
 

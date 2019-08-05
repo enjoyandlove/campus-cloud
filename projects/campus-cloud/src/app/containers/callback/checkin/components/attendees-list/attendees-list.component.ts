@@ -29,7 +29,7 @@ export class CheckinAttendeesListComponent {
 
     setTimeout(
       () => {
-        $('#checkOutModal').modal();
+        $('#checkOutModal').modal({ keyboard: true, focus: true });
       },
 
       1

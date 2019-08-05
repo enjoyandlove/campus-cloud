@@ -70,7 +70,7 @@ export class CalendarsItemsBulkCreateComponent extends BaseComponent implements 
 
       setTimeout(
         () => {
-          $('#calendarImportsConfirmation').modal();
+          $('#calendarImportsConfirmation').modal({ keyboard: true, focus: true });
         },
 
         1

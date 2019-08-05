@@ -59,7 +59,7 @@ export class CPImageCropperComponent implements AfterViewInit, OnInit {
         this.buttonData.disabled = false;
       });
     });
-    $('#imageCropper').modal();
+    $('#imageCropper').modal({ keyboard: true, focus: true });
   }
 
   imageToBase64(): Promise<any> {

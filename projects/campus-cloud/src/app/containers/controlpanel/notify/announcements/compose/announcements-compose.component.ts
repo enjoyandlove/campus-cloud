@@ -380,7 +380,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     } else {
       setTimeout(
         () => {
-          $('#announcementConfirmModal').modal();
+          $('#announcementConfirmModal').modal({ keyboard: true, focus: true });
         },
 
         1
@@ -559,7 +559,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     setTimeout(
       () => {
-        $('#audienceImport').modal();
+        $('#audienceImport').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -567,7 +567,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   onSaveAudienceClick() {
-    $('#audienceSaveModal').modal();
+    $('#audienceSaveModal').modal({ keyboard: true, focus: true });
   }
 
   validButton() {

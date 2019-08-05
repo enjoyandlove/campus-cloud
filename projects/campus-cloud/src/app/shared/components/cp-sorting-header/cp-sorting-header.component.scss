@@ -1,9 +1,12 @@
-span {
-  color: #757575;
+@import '~projects/campus-cloud/src/sass/core/colors';
+
+button {
+  display: flex;
+  align-items: center;
+  color: $color-secondary-text;
+
   i {
-    top: 1px;
-    font-size: 17px;
-    position: absolute;
-    padding-left: 6px;
+    font-size: 1rem;
+    margin-left: 0.2rem;
   }
 }

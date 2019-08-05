@@ -155,7 +155,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     this.isStudentComposeModal = true;
     setTimeout(
       () => {
-        $('#studentsComposeModal').modal();
+        $('#studentsComposeModal').modal({ keyboard: true, focus: true });
       },
 
       1

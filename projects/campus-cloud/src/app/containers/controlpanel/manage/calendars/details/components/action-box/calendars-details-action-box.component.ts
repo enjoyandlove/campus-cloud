@@ -20,7 +20,7 @@ export class CalendarsDetailsActionBoxComponent implements OnInit {
   }
 
   launchModal() {
-    $('#calendarsItemsImport').modal();
+    $('#calendarsItemsImport').modal({ keyboard: true, focus: true });
   }
 
   ngOnInit() {

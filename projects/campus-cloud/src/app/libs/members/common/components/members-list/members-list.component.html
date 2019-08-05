@@ -7,8 +7,7 @@
         sortLabel="username"
         [label]="['name' | cpI18n]"
         (click)="sort.emit('username')"
-        [sortDirection]="sortDirection"
-      >
+        [sortDirection]="sortDirection">
       </cp-sorting-header>
 
       <cp-sorting-header
@@ -17,8 +16,7 @@
         sortLabel="member_type"
         [sortDirection]="sortDirection"
         (click)="sort.emit('member_type')"
-        [label]="['clubs_label_member_type' | cpI18n]"
-      >
+        [label]="['clubs_label_member_type' | cpI18n]">
       </cp-sorting-header>
 
       <span class="col-4">{{ 'email' | cpI18n }}</span>
@@ -35,8 +33,7 @@
           <button
             (click)="onMemberClick(member)"
             class="cpbtn cpbtn--link-dark member__title"
-            [ngClass]="[canEdit ? '' : 'cpbtn--no-hover']"
-          >
+            [ngClass]="[canEdit ? '' : 'cpbtn--no-hover']">
             {{ member.firstname }} {{ member.lastname }}
           </button>
         </strong>
@@ -57,14 +54,14 @@
         {{ member.student_identifier }}
       </span>
 
-      <span
+      <button
+        type="button"
         *ngIf="canDelete"
         (click)="deleteClick.emit(member)"
         [class.offset-2]="!withStudentIdentifier"
-        class="col-1 float-right text-right delete-member hover"
-      >
-        &times;
-      </span>
+        class="col-1 float-right text-right delete-member hover unstyled-button">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
   </li>
 </ul>

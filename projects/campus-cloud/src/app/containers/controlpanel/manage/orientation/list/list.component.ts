@@ -91,7 +91,7 @@ export class OrientationListComponent extends BaseComponent implements OnInit {
 
     setTimeout(
       () => {
-        $('#programCreate').modal();
+        $('#programCreate').modal({ keyboard: true, focus: true });
       },
 
       1

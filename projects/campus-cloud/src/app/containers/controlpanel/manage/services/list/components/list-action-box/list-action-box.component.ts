@@ -52,7 +52,7 @@ export class ServicesListActionBoxComponent implements OnInit {
   }
 
   launchModal() {
-    $('#excelServicesModal').modal();
+    $('#excelServicesModal').modal({ keyboard: true, focus: true });
   }
 
   ngOnInit() {

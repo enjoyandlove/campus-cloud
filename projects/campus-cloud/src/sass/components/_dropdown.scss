@@ -14,7 +14,10 @@
   //     width: 0 !important;
   // }
 
-  li {
+  li,
+  .dropdown-item {
+    width: 100%;
+    padding: 16px;
     text-align: left;
     color: $color-secondary-text;
     transition: background 100ms ease-in;
@@ -32,7 +35,8 @@
       color: $color-text;
     }
 
-    &:hover:not(.no-hover) {
+    &:hover:not(.no-hover),
+    &:focus:not(.no-hover) {
       cursor: pointer;
       color: $color-white;
       background: $color-brand;

@@ -95,7 +95,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
     setTimeout(
       () => {
-        $('#createProvider').modal();
+        $('#createProvider').modal({ keyboard: true, focus: true });
       },
 
       1

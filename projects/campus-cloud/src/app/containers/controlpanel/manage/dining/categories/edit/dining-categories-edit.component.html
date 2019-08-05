@@ -7,13 +7,14 @@
             {{ 't_shared_category_edit_form_modal_title' | cpI18n }}
           </strong>
         </span>
-        <span
+        <button
+          type="button"
           cpTarget="close"
+          aria-label="close"
           (click)="resetModal()"
-          class="float-right hover cpmodal__header__close"
-        >
-          &times;
-        </span>
+          class="float-right hover cpmodal__header__close unstyled-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
   </div>

@@ -2,13 +2,15 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span
-          ><strong>{{ modalTitle }}</strong></span
-        >
+        <span><strong>{{ modalTitle }}</strong></span>
 
-        <span data-dismiss="modal" class="float-right hover cpmodal__header__close">
-          &times;
-        </span>
+        <button
+          type="button"
+          aria-label="close"
+          data-dismiss="modal"
+          class="float-right hover cpmodal__header__close unstyled-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
   </div>
@@ -26,8 +28,7 @@
           <div class="feed-form__body" formArrayName="walls">
             <div
               class="feed-form__item row"
-              *ngFor="let wall of form['controls'].walls['controls']; let i = index"
-            >
+              *ngFor="let wall of form['controls'].walls['controls']; let i = index">
               <div class="col-4 title">
                 <span>{{ wall.controls.name.value }}</span>
               </div>
@@ -35,16 +36,14 @@
                 <cp-dropdown
                   [items]="privileges"
                   (selected)="onCanPostChanged($event, i)"
-                  [selectedItem]="getPrivilegeObj(wall.controls.min_posting_member_type.value)"
-                >
+                  [selectedItem]="getPrivilegeObj(wall.controls.min_posting_member_type.value)">
                 </cp-dropdown>
               </div>
               <div class="col-4">
                 <cp-dropdown
                   [items]="privileges"
                   (selected)="onCanCommentChanged($event, i)"
-                  [selectedItem]="getPrivilegeObj(wall.controls.min_commenting_member_type.value)"
-                >
+                  [selectedItem]="getPrivilegeObj(wall.controls.min_commenting_member_type.value)">
                 </cp-dropdown>
               </div>
             </div>
@@ -57,7 +56,10 @@
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-6 text-right">
-        <button type="button" data-dismiss="modal" class="cpbtn cpbtn--primary" i18n>
+        <button
+          type="button"
+          data-dismiss="modal"
+          class="cpbtn cpbtn--primary">
           {{ 'done' | cpI18n }}
         </button>
       </div>

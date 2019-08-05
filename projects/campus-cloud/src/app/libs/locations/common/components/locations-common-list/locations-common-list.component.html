@@ -50,13 +50,15 @@
         </span>
 
         <span class="col-1 text-right">
-          <i
+          <button
+            type="button"
             cpTarget="delete"
-            (click)="deleteClick.emit(location)"
-            class="material-icons hover action-button"
-          >
-            close
-          </i>
+            class="unstyled-button"
+            (click)="deleteClick.emit(location)">
+            <i class="material-icons hover action-button">
+              close
+            </i>
+          </button>
         </span>
       </div>
     </li>

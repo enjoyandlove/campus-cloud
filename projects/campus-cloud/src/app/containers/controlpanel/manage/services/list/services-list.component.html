@@ -24,8 +24,7 @@
             (click)="doSort('name')"
             [label]="sortingLabels.name"
             [sortField]="state.sort_field"
-            [sortDirection]="state.sort_direction"
-          >
+            [sortDirection]="state.sort_direction">
           </cp-sorting-header>
 
           <span class="col-2">
@@ -49,8 +48,7 @@
                   <a
                     cpTracker
                     [eventData]="eventData"
-                    [routerLink]="[service.service_attendance ? service.id : service.id + '/info']"
-                  >
+                    [routerLink]="[service.service_attendance ? service.id : service.id + '/info']">
                     {{ service.name }}
                   </a>
                 </strong>
@@ -65,16 +63,16 @@
             <cp-stars
               *ngIf="service.service_attendance === attendanceEnabled"
               [maxRate]="service.rating_scale_maximum"
-              [avgRate]="service.avg_rating_percent"
-            >
+              [avgRate]="service.avg_rating_percent">
             </cp-stars>
           </span>
-          <span
+          <button
+            type="button"
+            aria-label="delete"
             (click)="onDelete(service)"
-            class="col-1 hover text-right text-truncate delete-service"
-          >
-            &times;
-          </span>
+            class="col-1 hover text-right text-truncate delete-service unstyled-button">
+          <span aria-hidden="true">&times;</span>
+          </button>
         </div>
       </li>
     </ul>

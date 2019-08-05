@@ -6,13 +6,15 @@
           ><strong>{{ 'admin_club_service_modal_title' | cpI18n: title }}</strong></span
         >
 
-        <span
+        <button
+          type="button"
+          aria-label="close"
           data-dismiss="modal"
           (click)="emitAndClose()"
-          class="float-right hover cpmodal__header__close"
+          class="float-right hover cpmodal__header__close unstyled-button"
         >
-          &times;
-        </span>
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
   </div>
@@ -130,12 +132,14 @@
                             </li>
                           </ul>
                         </span>
-                        <span
-                          class="col-1 hover text-right delete-button"
+                        <button
+                          type="button"
+                          aria-label="delete"
+                          class="col-1 hover text-right delete-button unstyled-button"
                           (click)="removeSelectedItem(item)"
                         >
-                          &times;
-                        </span>
+                          <span aria-hidden="true">&times;</span>
+                        </button>
                       </div>
                     </li>
                   </ul>

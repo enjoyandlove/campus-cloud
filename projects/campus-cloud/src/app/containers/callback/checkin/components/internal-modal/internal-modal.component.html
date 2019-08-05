@@ -2,16 +2,14 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span i18n
-          ><strong>{{ 'checkin_button_pdf_kit' | cpI18n }}</strong></span
-        >
-        <span
+        <span><strong>{{ 'checkin_button_pdf_kit' | cpI18n }}</strong></span>
+        <button
+          type="button"
           data-dismiss="modal"
           (click)="resetModal()"
-          class="float-right hover cpmodal__header__close"
-        >
+          class="float-right hover cpmodal__header__close unstyled-button">
           &times;
-        </span>
+      </button>
       </div>
     </div>
   </div>
@@ -49,8 +47,7 @@
           data-dismiss="modal"
           (click)="resetModal()"
           class="cpbtn cpbtn--cancel"
-          i18n
-        >
+         >
           {{ 'cancel' | cpI18n }}
         </button>
 
@@ -59,8 +56,7 @@
           (click)="onSubmit()"
           [disabled]="!form.valid"
           class="cpbtn cpbtn--primary"
-          i18n
-        >
+         >
           {{ 'save_changes' | cpI18n }}
         </button>
       </div>

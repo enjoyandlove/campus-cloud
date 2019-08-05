@@ -182,7 +182,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     this.isComposeModal = true;
     setTimeout(
       () => {
-        $('#composeModal').modal();
+        $('#composeModal').modal({ keyboard: true, focus: true });
       },
 
       1

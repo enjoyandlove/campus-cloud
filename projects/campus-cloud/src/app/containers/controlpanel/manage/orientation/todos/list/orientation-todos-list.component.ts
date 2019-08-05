@@ -94,7 +94,7 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
 
     setTimeout(
       () => {
-        $('#todoCreate').modal();
+        $('#todoCreate').modal({ keyboard: true, focus: true });
       },
 
       1

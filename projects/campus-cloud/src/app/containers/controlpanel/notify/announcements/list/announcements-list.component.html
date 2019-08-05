@@ -56,13 +56,19 @@
             <span class="col-1 text-right actions">
               <img
                 cpTooltip
+                alt=""
+                aria-hidden="true"
                 *ngIf="message.is_external"
                 [attr.title]="isExternalToolTip"
                 [src]="message.source | integrationSourceToIcon"
               />
-              <span class=" hover delete-message" (click)="onLauncDeleteModal(message)">
-                &times;
-              </span>
+              <button
+                type="button"
+                aria-label="close"
+                class="hover delete-message unstyled-button"
+                (click)="onLauncDeleteModal(message)">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </span>
           </div>
         </li>

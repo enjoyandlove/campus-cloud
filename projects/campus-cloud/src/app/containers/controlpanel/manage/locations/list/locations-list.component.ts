@@ -144,7 +144,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     this.showDeleteModal = true;
     this.deleteLocation = location;
 
-    setTimeout(() => $('#locationsDelete').modal());
+    setTimeout(() => $('#locationsDelete').modal({ keyboard: true, focus: true }));
   }
 
   loadCategories() {
