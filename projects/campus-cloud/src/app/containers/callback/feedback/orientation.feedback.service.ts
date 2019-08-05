@@ -1,12 +1,12 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { ApiService } from '@campus-cloud/base';
 import { FeedbackService } from './feedback.service';
+import { CallbackService } from './../callback.service';
 
 @Injectable()
 export class OrientationFeedbackService extends FeedbackService {
-  constructor(public api: ApiService) {
+  constructor(public api: CallbackService) {
     super(api);
   }
 

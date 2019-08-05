@@ -5,6 +5,7 @@ export const environment: IEnvironment = {
   production: true,
   flags: {},
   keys: {
+    readyApiKey: 'IUm65kXecFWch54mzJjpy63spWZX3AVp',
     sentryDsn: 'https://0b6c76a5691d4b7399394aa79753acef@sentry.io/207033'
   }
 };
