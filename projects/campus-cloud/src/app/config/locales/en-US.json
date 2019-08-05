@@ -2253,6 +2253,12 @@
   "t_api_management": {
     "message": "API Management"
   },
+  "t_api_management_api_key": {
+    "message": "API Key"
+  },
+  "t_api_management_copied_to_clipboard": {
+    "message": "Copied to clipboard"
+  },
   "t_api_management_create_new": {
     "message": "Create New"
   },
@@ -2267,6 +2273,9 @@
   },
   "t_api_management_ready_api_title": {
     "message": "Ready API"
+  },
+  "t_api_management_tooltip_click_to_copy": {
+    "message": "Click to copy"
   },
   "t_assess_all_orientations": {
     "message": "All Orientation Programs"
@@ -3276,6 +3285,9 @@
   "t_shared_cpimage_icon_help": {
     "message": "Must be 128 x 128 in PNG format"
   },
+  "t_shared_created": {
+    "message": "Created"
+  },
   "t_shared_custom": {
     "message": "Custom"
   },
@@ -3404,6 +3416,9 @@
   },
   "t_shared_preview": {
     "message": "Preview"
+  },
+  "t_shared_revoke": {
+    "message": "Revoke"
   },
   "t_shared_running": {
     "message": "Running"

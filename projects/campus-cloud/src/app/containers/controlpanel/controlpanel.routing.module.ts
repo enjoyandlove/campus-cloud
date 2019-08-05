@@ -36,6 +36,11 @@ const appRoutes: Routes = [
       },
 
       {
+        path: 'api-management',
+        loadChildren: './api-management/api-management.module#ApiManagementModule'
+      },
+
+      {
         path: 'settings',
         loadChildren: './settings/settings.module#SettingsModule'
       }

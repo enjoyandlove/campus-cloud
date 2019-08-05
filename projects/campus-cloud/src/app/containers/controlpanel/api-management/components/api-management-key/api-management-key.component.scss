@@ -1,0 +1,34 @@
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.item {
+  &__visibility-icon {
+    top: 4px;
+    right: 152px;
+    position: absolute;
+  }
+
+  &__key-input,
+  &__key-container {
+    border: none;
+    text-align: left;
+    cursor: pointer;
+    margin-left: 8px;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: $color-text;
+    display: inline-block;
+    background-color: $color-light-grey;
+    font-family: 'Courier New', Courier, monospace;
+  }
+
+  &__key-container {
+    width: 398px;
+  }
+
+  &__key-input {
+    width: 335px;
+    margin-left: 0;
+    padding-left: 0;
+  }
+}
