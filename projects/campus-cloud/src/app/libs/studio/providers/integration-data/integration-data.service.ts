@@ -15,6 +15,6 @@ export class IntegrationDataService {
 
     const params = new HttpParams().set('school_id', this.session.school.id.toString());
 
-    return this.api.get<IIntegrationData[]>(url, params, true);
+    return this.api.get<any>(url, params, true);
   }
 }

@@ -175,7 +175,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     search = this.addStudentFilter(search);
 
     this.summaryLoading = true;
-    this.service.getEventAttendanceSummary(this.eventId, search).subscribe((res) => {
+    this.service.getEventAttendanceSummary(this.eventId, search).subscribe((res: any) => {
       this.summaryLoading = false;
       this.event = { ...this.event, ...res };
     });
