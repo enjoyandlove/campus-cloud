@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
+import { ISnackbar } from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
 import { EnvService } from '@campus-cloud/config/env';
 import { EventsService } from '../../../events.service';
@@ -35,11 +37,12 @@ export class EventsExcelModalComponent extends EventsComponent implements OnInit
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: EventsService,
+    public store: Store<ISnackbar>,
     private utils: EventUtilService,
     public modalService: ModalService,
     private fileService: FileUploadService
   ) {
-    super(session, cpI18n, service, modalService);
+    super(session, cpI18n, service, modalService, store);
   }
 
   parser(file) {

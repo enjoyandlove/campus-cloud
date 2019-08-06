@@ -57,14 +57,14 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    private store: Store<IHeader>,
+    public store: Store<IHeader>,
     private route: ActivatedRoute,
     public utils: EventUtilService,
     public service: EventsService,
     public modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
-    super(session, cpI18n, service, modalService);
+    super(session, cpI18n, service, modalService, store);
     this.dateFormat = FORMAT.DATETIME;
     this.eventId = this.route.snapshot.params['eventId'];
   }

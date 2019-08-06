@@ -78,7 +78,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     private router: Router,
     private fb: FormBuilder,
     private api: ApiService,
-    private store: Store<any>,
+    public store: Store<any>,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: EventsService,
@@ -89,7 +89,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     private cpTracking: CPTrackingService,
     private fileUploadService: FileUploadService
   ) {
-    super(session, cpI18n, service, modalService);
+    super(session, cpI18n, service, modalService, store);
     this.school = this.session.g.get('school');
     super.isLoading().subscribe((res) => (this.loading = res));
   }

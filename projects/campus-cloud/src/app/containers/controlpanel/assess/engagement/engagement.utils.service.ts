@@ -1,18 +1,19 @@
 import { map, startWith, reduce } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
+import { Observable, concat, of } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Observable, concat } from 'rxjs';
 import * as moment from 'moment';
 
 import { CPSession } from '@campus-cloud/session';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { EngagementService } from './engagement.service';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { AudienceType } from '../../audience/audience.status';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils';
+import { AssessType, FilterType, PersonaType } from './engagement.status';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { DEFAULT, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import * as DATE_RANGE from '@campus-cloud/shared/components/cp-range-picker';
-import { AssessType, FilterType, PersonaType } from './engagement.status';
 
 export interface IStudentFilter {
   label: string;
@@ -270,9 +271,10 @@ export class EngagementUtilsService {
       const audienceSearch = schoolSearch;
       filter$ = concat(
         filter$,
-        this.engageService
-          .getLists(undefined, undefined, audienceSearch)
-          .pipe(map((res) => this.parsedAudiences(res)))
+        this.engageService.getLists(undefined, undefined, audienceSearch).pipe(
+          map((res) => this.parsedAudiences(res)),
+          catchError(() => of([]))
+        )
       );
     }
 
