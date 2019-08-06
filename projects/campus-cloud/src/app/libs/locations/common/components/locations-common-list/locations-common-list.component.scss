@@ -17,7 +17,8 @@
   }
 
   &__item {
-    span i.action-button {
+    button.action-button {
+      font-size: 2em;
       color: $color-secondary-text;
     }
   }

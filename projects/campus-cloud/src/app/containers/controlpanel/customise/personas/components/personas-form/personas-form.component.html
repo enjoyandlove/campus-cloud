@@ -1,24 +1,29 @@
 <form [formGroup]="form">
   <div class="row">
     <div class="col-12 form-group">
-      <label class="w-100">
+      <label class="w-100"
+             for="name">
         {{ 't_personas_form_label_persona_name' | cpI18n }}
-        <cp-char-counter class="float-right" [limit]="255" [charCount]="form.controls.name.value">
+        <cp-char-counter class="float-right"
+                         [limit]="255"
+                         [charCount]="form.controls.name.value">
         </cp-char-counter>
       </label>
-      <input type="text" class="form-control" formControlName="name" />
+      <input id="name"
+             type="text"
+             class="form-control"
+             formControlName="name" />
     </div>
   </div>
 
   <div class="row">
     <div class="col-6 form-group">
       <label>{{ 't_personas_form_label_platform' | cpI18n }}</label>
-      <cp-dropdown
-        cpTarget="platform"
-        [disabled]="isEdit"
-        [items]="platformMenu"
-        [selectedItem]="selectedPlatform"
-        (selected)="onPlatformChange($event)">
+      <cp-dropdown cpTarget="platform"
+                   [disabled]="isEdit"
+                   [items]="platformMenu"
+                   [selectedItem]="selectedPlatform"
+                   (selected)="onPlatformChange($event)">
       </cp-dropdown>
     </div>
   </div>
@@ -27,17 +32,17 @@
     <div class="row">
       <div class="col-6 form-group">
         <label>{{ 't_personas_form_label_requires_credentials' | cpI18n }}</label>
-        <cp-dropdown
-          cpTarget="login"
-          [disabled]="isEdit"
-          [items]="requiresCredentialsMenu"
-          [selectedItem]="selectedRequiresCredentials"
-          (selected)="onRequireCredentialsChange($event)">
+        <cp-dropdown cpTarget="login"
+                     [disabled]="isEdit"
+                     [items]="requiresCredentialsMenu"
+                     [selectedItem]="selectedRequiresCredentials"
+                     (selected)="onRequireCredentialsChange($event)">
         </cp-dropdown>
       </div>
     </div>
 
-    <ng-container *ngIf="form.controls['login_requirement'].value === loginRequired">
+    <ng-container
+                  *ngIf="form.controls['login_requirement'].value === loginRequired">
       <div class="row form-group">
         <div class="col-8">
           <label>{{ 't_personas_form_pretour' | cpI18n }}</label>
@@ -45,11 +50,10 @@
         </div>
         <div class="col-4">
           <div class="float-right">
-            <cp-switch
-              cpTarget="pretour"
-              [id]="['personas_pretour']"
-              (toggle)="togglePretour($event)"
-              [isChecked]="form.controls['pretour_enabled'].value">
+            <cp-switch cpTarget="pretour"
+                       [id]="['personas_pretour']"
+                       (toggle)="togglePretour($event)"
+                       [isChecked]="form.controls['pretour_enabled'].value">
             </cp-switch>
           </div>
         </div>
