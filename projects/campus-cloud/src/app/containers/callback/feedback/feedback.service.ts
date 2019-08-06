@@ -1,11 +1,11 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { CallbackService } from '../callback.service';
+import { ApiService } from '@campus-cloud/base/services';
 
 @Injectable()
 export class FeedbackService {
-  constructor(public api: CallbackService) {}
+  constructor(public api: ApiService) {}
 
   getServiceData(search: HttpParams, silent) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EXTERNAL_SERVICE_FEEDBACK}/`;
