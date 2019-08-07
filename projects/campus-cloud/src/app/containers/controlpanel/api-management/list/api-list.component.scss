@@ -2,7 +2,7 @@
 @import '~projects/campus-cloud/src/sass/core/typography';
 
 .list {
-  padding: 16px 9px;
+  padding: 16px 24px;
   background-color: $color-white;
   border-bottom: 1px solid $border-color;
   box-shadow: 4px 4px 20px 0 rgba(204, 204, 204, .3);
@@ -33,10 +33,12 @@
   }
 
   &__actions {
-    margin-top: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
-}
 
-.margin-top {
-  margin-top: 12px;
+  &__separator{
+    margin-top: 16px;
+  }
 }

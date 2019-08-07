@@ -2,6 +2,12 @@
 @import '~projects/campus-cloud/src/sass/core/typography';
 
 .item {
+  label {
+    @include font-normal();
+
+    display: inline-block;
+  }
+
   &__visibility-icon {
     top: 4px;
     right: 152px;
@@ -27,6 +33,7 @@
   }
 
   &__key-input {
+    height: 26px;
     width: 335px;
     margin-left: 0;
     padding-left: 0;
