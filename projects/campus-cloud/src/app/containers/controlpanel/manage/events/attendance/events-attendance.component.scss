@@ -5,8 +5,18 @@
 
 .cp-table {
   &__item {
-    span i.action-button {
-      color: $color-secondary-text;
+    button.action-button--delete {
+      font-size: 2em;
+    }
+    button.action-button {
+      &:not(:last-child) {
+        margin-right: 0.5rem;
+      }
+
+      i,
+      span {
+        color: $color-secondary-text;
+      }
     }
   }
 

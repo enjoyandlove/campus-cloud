@@ -1,6 +1,6 @@
 import { Input, Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { get as _get, isEmpty } from 'lodash';
+import { get as _get, isEmpty, isEqual } from 'lodash';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -110,9 +110,17 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
   }
 
   updateStateWith({ link_url, link_type, link_params }) {
+    /**
+     * find the item matching the linkUrl and linkParams
+     * Atheltics and Clubs both have the same link_url, but
+     * their linkParams are unique
+     */
     this.selectedItem = this.items
       .filter((item: IStudioContentResource) => item.meta)
-      .find((item: IStudioContentResource) => item.meta.link_url === link_url);
+      .find(
+        (item: IStudioContentResource) =>
+          item.meta.link_url === link_url && isEqual(item.meta.link_params, link_params)
+      );
 
     this.isServiceByCategory = link_url === CampusLink.campusServiceList;
     this.form.patchValue({ link_type, link_url, link_params });

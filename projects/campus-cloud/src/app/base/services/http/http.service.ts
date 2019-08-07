@@ -3,7 +3,7 @@ import { catchError, delay, flatMap, retryWhen } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
 
-import { DefaultEncoder } from '@campus-cloud/shared/utils';
+import { DefaultEncoder, CPObj } from '@campus-cloud/shared/utils';
 
 const defaultRetries = 1;
 
@@ -85,6 +85,8 @@ export abstract class HTTPService {
       params = this.clearNullParams(params);
     }
 
+    data = CPObj.cleanNullValues(data);
+
     const headers = this.getHeaders();
 
     return this.http.post(url, this.sanitizeEntries(data), { headers, params }).pipe(
@@ -97,6 +99,8 @@ export abstract class HTTPService {
     if (params) {
       params = this.clearNullParams(params);
     }
+
+    data = CPObj.cleanNullValues(data);
 
     const headers = this.getHeaders();
 
