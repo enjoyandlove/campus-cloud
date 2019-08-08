@@ -1,16 +1,19 @@
 <div class="cp-toast"
      [ngClass]="{'info': data.type === 'info'}"
      [@fadeAnimation]="{value: animationState, params:
-        { fadeIn: toastConfig.animation.fadeIn, fadeOut: toastConfig.animation.fadeOut }}"
+        { fadeIn: toastConfig.animation.fadeIn, fadeOut: toastConfig.animation.fadeOut, top: toastConfig.position.top + 60 }}"
      (@fadeAnimation.done)="onFadeFinished($event)">
-  {{ data.text }}
-  <div role="group"
-       class="cp-toast__actions">
-    <button type="button"
-            class="cp-toast__dismiss unstyled-button"
-            (click)="close()">Dismiss</button>
-    <button type="button"
-            class="cp-toast__cta unstyled-button"
-            (click)="close()">What's New</button>
-  </div>
+        {{ data.text }}
+        <div role="group"
+             class="cp-toast__actions">
+                <button type="button"
+                        class="cp-toast__dismiss unstyled-button"
+                        (click)="onDismissClicked()">Dismiss</button>
+                <a type="button"
+                   target="_blank"
+                   *ngIf="data.cta"
+                   [href]="data.cta?.url"
+                   class="cp-toast__cta unstyled-button"
+                   (click)="onCtaClicked()">{{data.cta?.text}}</a>
+        </div>
 </div>

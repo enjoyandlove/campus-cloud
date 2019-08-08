@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { AnimationEvent } from '@angular/animations';
 
 import { ToastRef } from './toast-ref';
@@ -11,10 +11,8 @@ import { toastAnimations, ToastAnimationState } from './toast-animation';
   styleUrls: ['./toast.component.scss'],
   animations: [toastAnimations.fadeToast]
 })
-export class ToastComponent implements OnInit, OnDestroy {
+export class ToastComponent implements OnInit {
   animationState: ToastAnimationState = 'default';
-
-  private intervalId;
 
   constructor(
     readonly data: ToastData,
@@ -22,12 +20,20 @@ export class ToastComponent implements OnInit, OnDestroy {
     @Inject(TOAST_CONFIG_TOKEN) public toastConfig: ToastConfig
   ) {}
 
-  ngOnInit() {
-    this.intervalId = setTimeout(() => (this.animationState = 'closing'), 4500);
+  ngOnInit() {}
+
+  onDismissClicked() {
+    this.animationState = 'closing';
+    if ('dismissClickHandler' in this.data) {
+      this.data.dismissClickHandler();
+    }
   }
 
-  ngOnDestroy() {
-    clearTimeout(this.intervalId);
+  onCtaClicked() {
+    this.animationState = 'closing';
+    if ('cta' in this.data && 'ctaClickHandler' in this.data.cta) {
+      this.data.cta.ctaClickHandler();
+    }
   }
 
   close() {

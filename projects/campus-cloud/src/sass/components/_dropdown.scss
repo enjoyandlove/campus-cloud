@@ -14,10 +14,13 @@
   //     width: 0 !important;
   // }
 
+  .dropdown-item {
+    padding: 16px;
+  }
+
   li,
   .dropdown-item {
     width: 100%;
-    padding: 16px;
     text-align: left;
     color: $color-secondary-text;
     transition: background 100ms ease-in;

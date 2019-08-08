@@ -13,6 +13,8 @@ import {
 
 import { CPI18nService } from '@campus-cloud/shared/services';
 
+let nextUniqueId = 0;
+
 @Component({
   selector: 'cp-searchbox',
   templateUrl: './cp-searchbox.component.html',
@@ -30,6 +32,18 @@ export class CPSearchBoxComponent implements AfterViewInit, OnDestroy {
   stream$: Observable<string>;
   destroy$ = new Subject();
   isSearch$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  @Input()
+  get id(): string {
+    return this._id;
+  }
+  set id(value: string) {
+    this._id = value || this._uid;
+  }
+
+  protected _id = `cp-searchbox-${nextUniqueId++}`;
+
+  protected _uid = `cp-searchbox-${nextUniqueId++}`;
 
   constructor(public cpI18n: CPI18nService) {}
 
