@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@campus-cloud/session';
 import { fillForm } from '@campus-cloud/shared/utils/tests';
 import { CPI18nService } from '@campus-cloud/shared/services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { mockSchool } from '@campus-cloud/session/mock/school';
+import { CategoriesCreateComponent } from './categories-create.component';
 import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 import { LocationsTimeLabelPipe } from '@campus-cloud/libs/locations/common/pipes';
-import { CategoriesCreateComponent } from './categories-create.component';
 import { emptyForm, filledForm } from '@campus-cloud/libs/locations/common/categories/tests';
 
 describe('CategoriesCreateComponent', () => {
@@ -21,8 +21,14 @@ describe('CategoriesCreateComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, LocationsTimeLabelPipe, LocationsUtilsService],
+        imports: [SharedModule],
+        providers: [
+          CPSession,
+          CPI18nService,
+          provideMockStore(),
+          LocationsTimeLabelPipe,
+          LocationsUtilsService
+        ],
         declarations: [CategoriesCreateComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

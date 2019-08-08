@@ -13,7 +13,12 @@ describe('EmployerDeleteComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [EmployerModule, RouterTestingModule, StoreModule.forRoot({}), CPTestModule],
+        imports: [
+          CPTestModule,
+          EmployerModule,
+          RouterTestingModule,
+          StoreModule.forRoot({}, { runtimeChecks: {} })
+        ],
         providers: [Store, Actions]
       });
       await TestBed.compileComponents();

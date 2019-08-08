@@ -1,17 +1,17 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { By } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 
 import { CPSession } from '@campus-cloud/session';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { mockSchool } from '@campus-cloud/session/mock/school';
-import { EventIntegration } from '@campus-cloud/libs/integrations/events/model';
 import { emptyForm, fillForm, MockActivatedRoute, resetForm } from '../tests';
+import { EventIntegration } from '@campus-cloud/libs/integrations/events/model';
 import { ItemsIntegrationsCreateComponent } from './integrations-create.component';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers/integrations.utils.service';
 
@@ -21,9 +21,10 @@ describe('ItemsIntegrationsCreateComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, StoreModule.forRoot({})],
+        imports: [SharedModule],
         providers: [
           CPSession,
+          provideMockStore(),
           CommonIntegrationUtilsService,
           { provide: ActivatedRoute, useClass: MockActivatedRoute }
         ],

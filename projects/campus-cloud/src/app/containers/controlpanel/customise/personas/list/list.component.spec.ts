@@ -1,6 +1,6 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { MockPersonasService } from './../tests';
 import { BaseComponent } from '@campus-cloud/base';
@@ -8,7 +8,6 @@ import { PersonasModule } from './../personas.module';
 import { PersonasService } from './../personas.service';
 import { PersonasListComponent } from './list.component';
 import { CPTestModule } from '@campus-cloud/shared/tests';
-import { baseReducers } from '@campus-cloud/store/base/reducers';
 
 describe('PersonasListComponent', () => {
   let storeSpy;
@@ -17,16 +16,8 @@ describe('PersonasListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CPTestModule,
-        RouterTestingModule,
-        PersonasModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
-      providers: [{ provide: PersonasService, useClass: MockPersonasService }]
+      imports: [CPTestModule, PersonasModule, RouterTestingModule],
+      providers: [provideMockStore(), { provide: PersonasService, useClass: MockPersonasService }]
     });
 
     fixture = TestBed.createComponent(PersonasListComponent);

@@ -1,15 +1,14 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
-import { StoreModule } from '@ngrx/store';
 
 import { mockFilter } from '../../tests/mock';
 import { CPSession } from '@campus-cloud/session';
 import { ServicesModule } from '../../../services.module';
 import { ProvidersService } from '../../../providers.service';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { baseReducers } from '@campus-cloud/store/base/reducers';
 import { mockUser } from '@projects/campus-cloud/src/app/session/mock';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { ProvidersUtilsService } from '../../../providers.utils.service';
@@ -60,16 +59,9 @@ describe('ProvidersListComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [
-          CPTestModule,
-          ServicesModule,
-          RouterTestingModule,
-          StoreModule.forRoot({
-            HEADER: baseReducers.HEADER,
-            SNACKBAR: baseReducers.SNACKBAR
-          })
-        ],
+        imports: [CPTestModule, ServicesModule, RouterTestingModule],
         providers: [
+          provideMockStore(),
           ServicesUtilsService,
           ProvidersUtilsService,
           { provide: ProvidersService, useClass: MockService }

@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { FormArray } from '@angular/forms';
-import { StoreModule } from '@ngrx/store';
 import { omit } from 'lodash';
 
 import * as fromStore from '../store';
@@ -19,7 +19,8 @@ describe('LocationsCreateComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [CPTestModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
+        imports: [CPTestModule, HttpClientModule, RouterTestingModule],
+        providers: [provideMockStore()],
         declarations: [LocationsCreateComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

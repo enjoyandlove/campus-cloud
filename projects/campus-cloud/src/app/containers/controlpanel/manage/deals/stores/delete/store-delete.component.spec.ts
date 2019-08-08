@@ -14,7 +14,12 @@ describe('DealsStoreDeleteComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [CPTestModule, StoreModule, RouterTestingModule, NgrxStore.forRoot({})],
+        imports: [
+          CPTestModule,
+          StoreModule,
+          RouterTestingModule,
+          NgrxStore.forRoot({}, { runtimeChecks: {} })
+        ],
         providers: [Store, Actions]
       });
       await TestBed.compileComponents();

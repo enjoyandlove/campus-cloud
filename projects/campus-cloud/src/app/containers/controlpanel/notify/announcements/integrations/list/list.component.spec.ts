@@ -28,7 +28,7 @@ describe('AnnouncementsIntegrationListComponent', () => {
           HttpClientTestingModule,
           AnnouncementIntegrationsModule,
           EffectsModule.forRoot([]),
-          StoreModule.forRoot(fromRoot.baseReducers)
+          StoreModule.forRoot(fromRoot.baseReducers, { runtimeChecks: {} })
         ]
       });
       await TestBed.compileComponents();

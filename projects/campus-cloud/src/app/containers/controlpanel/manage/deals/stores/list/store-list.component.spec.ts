@@ -1,14 +1,13 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { HttpParams } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
 import { DealsStoreService } from '../store.service';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { StoreListComponent } from './store-list.component';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { baseReducers } from '@campus-cloud/store/base/reducers';
 import { StoreModule as DealsStoreModule } from '../store.module';
 
 const mockStores = require('../mockStores.json');
@@ -31,16 +30,8 @@ describe('DealsStoreListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CPTestModule,
-        DealsStoreModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
-      providers: [{ provide: DealsStoreService, useClass: MockStoreService }]
+      imports: [CPTestModule, DealsStoreModule, RouterTestingModule],
+      providers: [provideMockStore(), { provide: DealsStoreService, useClass: MockStoreService }]
     })
       .compileComponents()
       .then(() => {

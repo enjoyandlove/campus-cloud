@@ -1,8 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { Store, StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
 import { baseActions } from '@campus-cloud/store/base';
 import { EngagementService } from './engagement.service';
@@ -11,7 +12,6 @@ import { mockUser } from '@campus-cloud/session/mock/user';
 import { EngagementComponent } from './engagement.component';
 import { AssessUtilsService } from '../assess.utils.service';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { baseReducers } from '@campus-cloud/store/base/reducers';
 import { CPAmplitudeService } from '@campus-cloud/shared/services';
 import { CPLineChartUtilsService } from '@campus-cloud/shared/components/cp-line-chart/cp-line-chart.utils.service';
 
@@ -63,15 +63,10 @@ describe('EngagementComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CPTestModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
+      imports: [CPTestModule],
       declarations: [EngagementComponent],
       providers: [
+        provideMockStore(),
         CPAmplitudeService,
         AssessUtilsService,
         CPLineChartUtilsService,

@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpErrorResponse } from '@angular/common/http';
+import { provideMockStore } from '@ngrx/store/testing';
 import { FormBuilder } from '@angular/forms';
-import { StoreModule } from '@ngrx/store';
 import { of, throwError } from 'rxjs';
 
 import { mockPersonas } from '../../tests';
 import { TilesService } from '../tiles.service';
 import { PersonasTilesModule } from '../tiles.module';
+import { baseActions } from '@campus-cloud/store/base';
 import { PersonasService } from '../../personas.service';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { PersonasTileCreateComponent } from './create.component';
 import { SectionsService } from '../../sections/sections.service';
 import { PersonasUtilsService } from '../../personas.utils.service';
-import { baseReducers, baseActions } from '@campus-cloud/store/base';
 import { SectionUtilsService } from '../../sections/section.utils.service';
 import { PersonasAmplitudeService } from '../../personas.amplitude.service';
 
@@ -68,17 +68,10 @@ describe('PersonasTileCreateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CPTestModule,
-        PersonasTilesModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
+      imports: [CPTestModule, PersonasTilesModule, RouterTestingModule],
       providers: [
         FormBuilder,
+        provideMockStore(),
         SectionUtilsService,
         SectionUtilsService,
         PersonasUtilsService,

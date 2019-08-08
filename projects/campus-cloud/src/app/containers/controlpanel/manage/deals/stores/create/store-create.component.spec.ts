@@ -21,7 +21,7 @@ describe('DealsStoreCreateComponent', () => {
           HttpClientModule,
           StoreModule,
           RouterTestingModule,
-          NgrxStore.forRoot({})
+          NgrxStore.forRoot({}, { runtimeChecks: {} })
         ],
         providers: [Store, Actions, FormBuilder]
       });

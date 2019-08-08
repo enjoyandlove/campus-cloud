@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { CPSession } from '@campus-cloud/session';
 import { mockSchool } from '@campus-cloud/session/mock';
@@ -24,6 +25,7 @@ describe('ResourceSelectorTypeResourceComponent', () => {
       providers: [
         CPSession,
         CPI18nService,
+        provideMockStore(),
         ContentUtilsProviders,
         { provide: IntegrationDataService, useClass: MockIntegrationDataService }
       ],

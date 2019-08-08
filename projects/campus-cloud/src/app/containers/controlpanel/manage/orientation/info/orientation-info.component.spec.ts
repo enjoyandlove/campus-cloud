@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
-import { StoreModule } from '@ngrx/store';
 
 import { CPSession } from '@campus-cloud/session';
-import { CPTrackingService } from '@campus-cloud/shared/services';
-import { mockSchool } from '@campus-cloud/session/mock/school';
 import { OrientationService } from '../orientation.services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 import { OrientationUtilsService } from '../orientation.utils.service';
 import { OrientationInfoComponent } from './orientation-info.component';
 import { OrientationDetailsModule } from '../details/orientation-details.module';
@@ -44,10 +44,11 @@ describe('OrientationInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [StoreModule.forRoot({}), RouterTestingModule, OrientationDetailsModule],
+      imports: [RouterTestingModule, OrientationDetailsModule],
       providers: [
         CPSession,
         CPTrackingService,
+        provideMockStore(),
         OrientationUtilsService,
         { provide: OrientationService, useClass: MockOrientationService },
         {
