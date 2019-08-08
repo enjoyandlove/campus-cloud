@@ -1,17 +1,16 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 import { of as observableOf } from 'rxjs';
 
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { JobsEditComponent } from './jobs-edit.component';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EmployerService } from '../employers/employer.service';
-import { baseReducers } from '../../../../../store/base/reducers';
 
 const mockJobs = require('../mockJobs.json');
 const mockEmployers = require('../employers/mockEmployer.json');
@@ -52,18 +51,11 @@ describe('JobsEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        JobsModule,
-        HttpClientModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
+      imports: [JobsModule, HttpClientModule, RouterTestingModule],
       providers: [
         CPSession,
         CPI18nService,
+        provideMockStore(),
         { provide: EmployerService, useClass: MockEmployerService },
         { provide: JobsService, useClass: MockJobsService }
       ]

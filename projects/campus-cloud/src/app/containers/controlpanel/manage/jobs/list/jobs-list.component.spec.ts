@@ -1,7 +1,7 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 import { of as observableOf } from 'rxjs';
 
 import { JobsModule } from '../jobs.module';
@@ -10,7 +10,6 @@ import { ManageHeaderService } from '../../utils';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { JobsListComponent } from './jobs-list.component';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { baseReducers } from '@campus-cloud/store/base/reducers';
 
 const mockJobs = require('../mockJobs.json');
 
@@ -32,17 +31,12 @@ describe('JobsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CPTestModule,
-        JobsModule,
-        HttpClientModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
-      providers: [ManageHeaderService, { provide: JobsService, useClass: MockJobsService }]
+      imports: [CPTestModule, JobsModule, HttpClientModule, RouterTestingModule],
+      providers: [
+        ManageHeaderService,
+        provideMockStore(),
+        { provide: JobsService, useClass: MockJobsService }
+      ]
     })
       .compileComponents()
       .then(() => {

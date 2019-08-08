@@ -4,16 +4,16 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 import { of } from 'rxjs';
 
-import * as fromRoot from '@campus-cloud/store';
 import * as fromFeature from '../store';
+import * as fromRoot from '@campus-cloud/store';
 
-import { CPSession } from '@campus-cloud/session';
 import { mockIntegration } from '../tests';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { CPNoContentComponent } from '@campus-cloud/shared/components';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { WallsIntegrationsListComponent } from './list.component';
+import { CPNoContentComponent } from '@campus-cloud/shared/components';
 import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common/common-integrations.module';
 import { LibsWallsIntegrationsModule } from '@campus-cloud/libs/integrations/walls/walls-integrations.module';
 
@@ -30,10 +30,13 @@ describe('WallsIntegrationsListComponent', () => {
         CommonIntegrationsModule,
         SharedModule,
         LibsWallsIntegrationsModule,
-        StoreModule.forRoot({
-          ...fromRoot.baseReducers,
-          wallsIntegrations: combineReducers(fromFeature.reducers)
-        })
+        StoreModule.forRoot(
+          {
+            ...fromRoot.baseReducers,
+            wallsIntegrations: combineReducers(fromFeature.reducers)
+          },
+          { runtimeChecks: {} }
+        )
       ],
       declarations: [WallsIntegrationsListComponent],
       schemas: [NO_ERRORS_SCHEMA]

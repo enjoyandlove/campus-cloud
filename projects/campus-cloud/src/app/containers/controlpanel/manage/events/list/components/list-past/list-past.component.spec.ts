@@ -1,5 +1,6 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
@@ -27,6 +28,7 @@ describe('ListPastComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
+        providers: [provideMockStore()],
         imports: [CPTestModule, RouterTestingModule],
         declarations: [ListPastComponent, IntegrationSourceToIconPipe]
       });

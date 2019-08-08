@@ -1,6 +1,6 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule, HttpParams } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 import { of as observableOf } from 'rxjs';
 import { Router } from '@angular/router';
 
@@ -33,8 +33,9 @@ describe('EventsListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule, EventsModule, CPTestModule, StoreModule.forRoot({})],
+      imports: [HttpClientModule, EventsModule, CPTestModule],
       providers: [
+        provideMockStore(),
         { provide: Router, useClass: RouterMock },
         { provide: EventsService, useClass: MockService }
       ]

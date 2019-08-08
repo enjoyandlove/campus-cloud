@@ -6,6 +6,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducerMap } from '../store';
 import { mockTesters } from '../tests';
 import * as actions from '../store/testers.actions';
+import { RootStoreModule } from '@campus-cloud/store';
 import { ModalService } from '@campus-cloud/shared/services';
 import { TestersListComponent } from './testers-list.component';
 import { CampusTestersService } from '../campus-testers.service';
@@ -24,9 +25,9 @@ describe('TestersListComponent', () => {
         imports: [
           CPTestModule,
           SharedModule,
+          RootStoreModule,
           HttpClientModule,
           RouterTestingModule,
-          StoreModule.forRoot({}),
           StoreModule.forFeature(SETTINGS_TESTERS, reducerMap)
         ],
         providers: [ModalService, CampusTestersService],

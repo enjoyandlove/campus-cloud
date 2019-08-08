@@ -1,13 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
+import { getAudienceState } from '@campus-cloud/store/base';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { AudienceCardComponent } from './audience-card.component';
-import { baseReducers } from './../../../../../store/base/reducers';
-import { SharedModule } from './../../../../../shared/shared.module';
-import { getAudienceState } from './../../../../../store/base/base.selectors';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 
 describe('AudienceCardComponent', () => {
   let storeSpy: jasmine.Spy;
@@ -15,9 +14,9 @@ describe('AudienceCardComponent', () => {
   let fixture: ComponentFixture<AudienceCardComponent>;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule, StoreModule.forRoot({ AUDIENCE: baseReducers.AUDIENCE })],
+      imports: [SharedModule],
       declarations: [AudienceCardComponent],
-      providers: [CPI18nService],
+      providers: [CPI18nService, provideMockStore()],
       schemas: [NO_ERRORS_SCHEMA]
     });
     fixture = TestBed.createComponent(AudienceCardComponent);

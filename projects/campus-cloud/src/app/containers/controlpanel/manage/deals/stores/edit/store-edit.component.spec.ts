@@ -22,7 +22,7 @@ describe('DealsStoreEditComponent', () => {
           CPTestModule,
           HttpClientModule,
           RouterTestingModule,
-          NgrxStore.forRoot({})
+          NgrxStore.forRoot({}, { runtimeChecks: {} })
         ],
         providers: [Store, Actions, FormBuilder]
       });

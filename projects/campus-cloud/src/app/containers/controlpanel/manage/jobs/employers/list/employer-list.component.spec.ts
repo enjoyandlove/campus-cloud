@@ -1,7 +1,7 @@
-import { RouterTestingModule } from '@angular/router/testing';
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { HttpParams } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
 import { IEmployer } from './../employer.interface';
@@ -9,7 +9,6 @@ import { EmployerModule } from '../employer.module';
 import { EmployerService } from '../employer.service';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { baseReducers } from '@campus-cloud/store/base/reducers';
 import { EmployerListComponent } from './employer-list.component';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 
@@ -41,16 +40,12 @@ describe('EmployersListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CPTestModule,
-        EmployerModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
-      providers: [CPTrackingService, { provide: EmployerService, useClass: MockEmployerService }]
+      imports: [CPTestModule, EmployerModule, RouterTestingModule],
+      providers: [
+        CPTrackingService,
+        provideMockStore(),
+        { provide: EmployerService, useClass: MockEmployerService }
+      ]
     })
       .compileComponents()
       .then(() => {

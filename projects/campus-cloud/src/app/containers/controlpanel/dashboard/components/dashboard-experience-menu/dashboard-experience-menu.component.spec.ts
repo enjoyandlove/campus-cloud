@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router, NavigationExtras } from '@angular/router';
+import { provideMockStore } from '@ngrx/store/testing';
 import { By } from '@angular/platform-browser';
 
 import { CPSession } from '@campus-cloud/session';
@@ -20,8 +21,9 @@ describe('DashboardExperienceMenuComponent', () => {
       TestBed.configureTestingModule({
         imports: [DashboardModule],
         providers: [
-          DashboardUtilsService,
           CPSession,
+          provideMockStore(),
+          DashboardUtilsService,
           { provide: DashboardService, useClass: MockDashboardService },
           { provide: Router, useClass: MockRouter }
         ]

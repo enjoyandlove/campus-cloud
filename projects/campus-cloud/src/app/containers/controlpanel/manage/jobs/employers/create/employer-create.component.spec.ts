@@ -21,7 +21,7 @@ describe('EmployerCreateComponent', () => {
           EmployerModule,
           HttpClientModule,
           RouterTestingModule,
-          StoreModule.forRoot({})
+          StoreModule.forRoot({}, { runtimeChecks: {} })
         ],
         providers: [Store, Actions, FormBuilder]
       });
