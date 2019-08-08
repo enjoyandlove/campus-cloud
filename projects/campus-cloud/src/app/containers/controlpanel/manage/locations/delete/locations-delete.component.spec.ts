@@ -1,13 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockLocations } from '@campus-cloud/libs/locations/common/tests';
 import { LocationsDeleteComponent } from './locations-delete.component';
 
@@ -17,8 +17,8 @@ describe('LocationsDeleteComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, StoreModule.forRoot({}), RouterModule.forRoot([])],
-        providers: [CPSession, CPI18nService],
+        imports: [SharedModule, RouterModule.forRoot([])],
+        providers: [CPSession, CPI18nService, provideMockStore()],
         declarations: [LocationsDeleteComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

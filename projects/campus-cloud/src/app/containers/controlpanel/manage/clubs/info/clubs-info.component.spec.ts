@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
+import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 
 import { ClubsService } from './../clubs.service';
@@ -73,14 +73,10 @@ describe('ClubsInfoComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [
-          CPTestModule,
-          ClubsDetailsModule,
-          RouterTestingModule.withRoutes([]),
-          StoreModule.forRoot({})
-        ],
+        imports: [CPTestModule, ClubsDetailsModule, RouterTestingModule.withRoutes([])],
         providers: [
           ClubsUtilsService,
+          provideMockStore(),
           {
             provide: ActivatedRoute,
             useValue: {
