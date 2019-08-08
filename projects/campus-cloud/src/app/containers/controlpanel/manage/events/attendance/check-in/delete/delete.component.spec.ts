@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 
@@ -40,7 +41,7 @@ describe('EventCheckInDeleteComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [EventsModule, RouterTestingModule, CPTestModule],
-      providers: [{ provide: EventsService, useClass: MockService }]
+      providers: [provideMockStore(), { provide: EventsService, useClass: MockService }]
     })
       .compileComponents()
       .then(() => {
