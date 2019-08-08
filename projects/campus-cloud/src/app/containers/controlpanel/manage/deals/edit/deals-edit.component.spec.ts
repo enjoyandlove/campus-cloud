@@ -1,17 +1,16 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 import { of as observableOf } from 'rxjs';
 
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { DealsEditComponent } from './deals-edit.component';
 import { DealsStoreService } from '../stores/store.service';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
-import { baseReducers } from '../../../../../store/base/reducers';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 
 class MockDealsService {
   dummy;
@@ -49,18 +48,11 @@ describe('DealsEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        DealsModule,
-        HttpClientModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
+      imports: [DealsModule, HttpClientModule, RouterTestingModule],
       providers: [
         CPSession,
         CPI18nService,
+        provideMockStore(),
         { provide: DealsStoreService, useClass: MockStoreService },
         { provide: DealsService, useClass: MockDealsService }
       ]

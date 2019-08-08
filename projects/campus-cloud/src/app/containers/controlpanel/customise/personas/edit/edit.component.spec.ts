@@ -1,7 +1,7 @@
 import { async, TestBed, ComponentFixture, fakeAsync, tick } from '@angular/core/testing';
 import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { mockTile } from '../tiles/tests/mocks';
 import { PersonasModule } from './../personas.module';
@@ -18,9 +18,10 @@ describe('PersonasEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [PersonasModule, RouterTestingModule, StoreModule.forRoot({}), CPTestModule],
+      imports: [PersonasModule, RouterTestingModule, CPTestModule],
       providers: [
         FormBuilder,
+        provideMockStore(),
         PersonasUtilsService,
         { provide: PersonasService, useClass: MockPersonasService }
       ]

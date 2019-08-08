@@ -1,23 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { By } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import * as fromRoot from '@campus-cloud/store';
 
 import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { MockActivatedRoute, mockIntegration } from '../tests';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { mockSchool } from '@campus-cloud/session/mock/school';
 import { CPNoContentComponent } from '@campus-cloud/shared/components';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
-import { MockActivatedRoute, mockIntegration } from '../tests';
 import { ItemsIntegrationsListComponent } from './integrations-list.component';
 import {
-  IntegrationStatusPipe,
-  IntegrationTypePipe
+  IntegrationTypePipe,
+  IntegrationStatusPipe
 } from '@campus-cloud/libs/integrations/common/pipes';
 
 describe('ItemsIntegrationsListComponent', () => {
@@ -26,10 +26,11 @@ describe('ItemsIntegrationsListComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, StoreModule.forRoot({})],
+        imports: [SharedModule],
         providers: [
           CPSession,
           CPI18nService,
+          provideMockStore(),
           { provide: ActivatedRoute, useClass: MockActivatedRoute }
         ],
         declarations: [ItemsIntegrationsListComponent, IntegrationStatusPipe, IntegrationTypePipe],

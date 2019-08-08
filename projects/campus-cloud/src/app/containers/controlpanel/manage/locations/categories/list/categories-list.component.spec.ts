@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import { mockSchool } from '@campus-cloud/session/mock/school';
@@ -19,8 +19,9 @@ describe('CategoriesListComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [CPTestModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        declarations: [CategoriesListComponent, CategoryTypePipe, CategoriesActionBoxComponent],
+        imports: [CPTestModule, HttpClientModule, RouterTestingModule],
+        providers: [provideMockStore()],
+        declarations: [CategoryTypePipe, CategoriesListComponent, CategoriesActionBoxComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
 

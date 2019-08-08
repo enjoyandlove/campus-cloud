@@ -1,9 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { of as observableOf } from 'rxjs';
-import { StoreModule } from '@ngrx/store';
 
-import { baseReducers } from '@campus-cloud/store/base';
 import { ServicesModule } from '../../../services.module';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { ProvidersService } from '../../../providers.service';
@@ -36,16 +35,12 @@ describe('ServicesProviderUpdateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CPTestModule,
-        ServicesModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
-      providers: [ServicesUtilsService, { provide: ProvidersService, useClass: MockService }]
+      imports: [CPTestModule, ServicesModule, RouterTestingModule],
+      providers: [
+        provideMockStore(),
+        ServicesUtilsService,
+        { provide: ProvidersService, useClass: MockService }
+      ]
     })
       .compileComponents()
       .then(() => {

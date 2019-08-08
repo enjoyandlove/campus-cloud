@@ -1,8 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
 import { EventsModule } from '../events.module';
@@ -10,7 +10,6 @@ import { EventsService } from '../events.service';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { EventUtilService } from '../events.utils.service';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { baseReducers } from '@campus-cloud/store/base/reducers';
 import { EventsAttendanceComponent } from './events-attendance.component';
 import { isClubAthletic } from '../../../settings/team/team.utils.service';
 
@@ -45,17 +44,10 @@ describe('EventAttendanceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        CPTestModule,
-        EventsModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
+      imports: [CPTestModule, EventsModule, RouterTestingModule],
       providers: [
         EventUtilService,
+        provideMockStore(),
         { provide: EventsService, useClass: MockService },
         {
           provide: ActivatedRoute,

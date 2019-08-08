@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 
 import { CPSession } from '@campus-cloud/session';
+import { mockIntegration, resetForm } from '../tests';
 import { mockSchool } from '@campus-cloud/session/mock';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { mockIntegration, resetForm } from '../tests';
-import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import { EventsIntegrationEditComponent } from './events-integration-edit.component';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 
 describe('EventsIntegrationEditComponent', () => {
   configureTestSuite();
@@ -19,8 +19,8 @@ describe('EventsIntegrationEditComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession, CommonIntegrationUtilsService],
+        imports: [SharedModule],
+        providers: [CPSession, provideMockStore(), CommonIntegrationUtilsService],
         declarations: [EventsIntegrationEditComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

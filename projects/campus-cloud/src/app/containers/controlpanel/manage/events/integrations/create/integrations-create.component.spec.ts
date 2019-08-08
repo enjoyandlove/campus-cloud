@@ -1,7 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
 
@@ -19,8 +19,8 @@ describe('EventsIntegrationsCreateComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession, CommonIntegrationUtilsService],
+        imports: [SharedModule],
+        providers: [CPSession, provideMockStore(), CommonIntegrationUtilsService],
         declarations: [EventsIntegrationsCreateComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

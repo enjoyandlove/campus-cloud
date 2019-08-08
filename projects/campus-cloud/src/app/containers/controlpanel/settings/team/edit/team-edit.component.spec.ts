@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
 
 import { TeamUtilsService } from '../team.utils.service';
 import { TeamEditComponent } from './team-edit.component';
@@ -18,8 +18,8 @@ describe('TeamEditComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [CPTestModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [TeamUtilsService, AdminService, ErrorService],
+        imports: [CPTestModule, HttpClientModule, RouterTestingModule],
+        providers: [provideMockStore(), TeamUtilsService, AdminService, ErrorService],
         declarations: [TeamEditComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

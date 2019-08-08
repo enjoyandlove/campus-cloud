@@ -1,21 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import * as fromRoot from '@campus-cloud/store';
 
-import { CPSession } from '@campus-cloud/session';
 import { mockIntegration } from '../tests';
+import { CPSession } from '@campus-cloud/session';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { mockSchool } from '@campus-cloud/session/mock/school';
 import { CPNoContentComponent } from '@campus-cloud/shared/components';
 import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { EventsIntegrationsListComponent } from './integrations-list.component';
-import { IntegrationTypePipe } from '@projects/campus-cloud/src/app/libs/integrations/common/pipes';
 import { IntegrationStatusPipe } from '@campus-cloud/libs/integrations/common/pipes/status.pipe';
+import { IntegrationTypePipe } from '@projects/campus-cloud/src/app/libs/integrations/common/pipes';
 
 describe('EventsIntegrationsListComponent', () => {
   configureTestSuite();
@@ -23,8 +23,8 @@ describe('EventsIntegrationsListComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService],
+        imports: [SharedModule],
+        providers: [CPSession, CPI18nService, provideMockStore()],
         declarations: [EventsIntegrationsListComponent, IntegrationStatusPipe, IntegrationTypePipe],
         schemas: [NO_ERRORS_SCHEMA]
       });

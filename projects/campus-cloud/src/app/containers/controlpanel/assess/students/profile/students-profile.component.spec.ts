@@ -1,25 +1,21 @@
-/*
- * Testing a simple Angular 2 component
- * More info: https://angular.io/docs/ts/latest/guide/testing.html#!#simple-component-test
- */
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { Store, StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
+import { Store } from '@ngrx/store';
 
-import { CPSession } from './../../../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { StudentsService } from './../students.service';
-import { mockUser } from './../../../../../session/mock/user';
+import { mockUser } from '@campus-cloud/session/mock/user';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { AssessUtilsService } from '../../assess.utils.service';
-import { baseReducers } from '../../../../../store/base/reducers';
-import { mockSchool } from './../../../../../session/mock/school';
-import { SharedModule } from './../../../../../shared/shared.module';
-import { MockCPSession } from './../../../../../session/mock/session';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { MockCPSession } from '@campus-cloud/session/mock/session';
+import { getSnackbarState, getHeaderState } from '@campus-cloud/store';
 import { StudentsProfileComponent } from './students-profile.component';
-import { getSnackbarState, getHeaderState } from '../../../../../store';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
 
 const mockStudentsService = {
   getStudentById() {
@@ -64,16 +60,10 @@ xdescribe('StudentsProfileComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [StudentsProfileComponent],
-      imports: [
-        SharedModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
+      imports: [SharedModule, RouterTestingModule],
       providers: [
         CPI18nService,
+        provideMockStore(),
         AssessUtilsService,
         { provide: CPSession, useClass: MockCPSession },
         { provide: StudentsService, useValue: mockStudentsService },
