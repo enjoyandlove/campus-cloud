@@ -1,7 +1,7 @@
-import { CPI18nService } from './i18n.service';
 import { Injectable } from '@angular/core';
 
-import { isProd } from './../../config/env';
+import { CPI18nService } from './i18n.service';
+import { EnvService } from '@campus-cloud/config/env';
 
 declare var zEmbed: {
   // zEmbed can queue functions to be invoked when the asynchronous script has loaded.
@@ -45,20 +45,22 @@ export class ZendeskService {
     return `${root}/${path}`;
   }
 
-  constructor() {
+  constructor(private env: EnvService) {
     this.isLoaded = false;
-    this.visibilityDelay = 500; // Milliseconds.
+    this.visibilityDelay = 5; // Milliseconds.
     this.visibilityQueue = [];
     this.visibilityTimer = null;
 
-    if (isProd) {
-      zEmbed(
-        (): void => {
-          this.isLoaded = true;
-          this.flushVisibilityQueue();
-        }
-      );
+    if (this.env.name === 'production') {
+      zEmbed((): void => {
+        this.isLoaded = true;
+        this.flushVisibilityQueue();
+      });
     }
+  }
+
+  public get loaded() {
+    return this.isLoaded;
   }
 
   public activate(options: any): Promise<void> {
@@ -74,7 +76,7 @@ export class ZendeskService {
   }
 
   public setHelpCenterSuggestions(options: any): Promise<void> {
-    if (isProd) {
+    if (this.env.name === 'production') {
       return this.promisify('setHelpCenterSuggestions', [options]);
     }
   }
@@ -112,48 +114,42 @@ export class ZendeskService {
   }
 
   private promisify(methodName: string, methodArgs: any[]): Promise<void> {
-    const promise = new Promise<void>(
-      (resolve: Function, reject: Function): void => {
-        zEmbed(
-          (): void => {
-            this.tryToApply(methodName, methodArgs, resolve, reject);
-          }
-        );
-      }
-    );
+    const promise = new Promise<void>((resolve: Function, reject: Function): void => {
+      zEmbed((): void => {
+        this.tryToApply(methodName, methodArgs, resolve, reject);
+      });
+    });
 
     return promise;
   }
 
   private promisifyVisibility(methodName: string): Promise<void> {
-    const promise = new Promise<void>(
-      (resolve: Function, reject: Function): void => {
-        this.visibilityQueue.push({
-          resolve: resolve,
-          reject: reject,
-          methodName: methodName
-        });
+    const promise = new Promise<void>((resolve: Function, reject: Function): void => {
+      this.visibilityQueue.push({
+        resolve: resolve,
+        reject: reject,
+        methodName: methodName
+      });
 
-        // If the zEmbed object hasn't loaded yet, there's nothing more to do -
-        // the pre-load state will act as automatic debouncing.
-        if (!this.isLoaded) {
-          return;
-        }
-
-        // If we've made it this far, it means the zEmbed object has fully
-        // loaded. As such, we need to explicitly debounce the show / hide method
-        // calls by delaying the flushing of our internal queue.
-        clearTimeout(this.visibilityTimer);
-
-        this.visibilityTimer = setTimeout(
-          (): void => {
-            this.flushVisibilityQueue();
-          },
-
-          this.visibilityDelay
-        );
+      // If the zEmbed object hasn't loaded yet, there's nothing more to do -
+      // the pre-load state will act as automatic debouncing.
+      if (!this.isLoaded) {
+        return;
       }
-    );
+
+      // If we've made it this far, it means the zEmbed object has fully
+      // loaded. As such, we need to explicitly debounce the show / hide method
+      // calls by delaying the flushing of our internal queue.
+      clearTimeout(this.visibilityTimer);
+
+      this.visibilityTimer = setTimeout(
+        (): void => {
+          this.flushVisibilityQueue();
+        },
+
+        this.visibilityDelay
+      );
+    });
 
     return promise;
   }

@@ -4,12 +4,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
-import { CPSession } from '../../../../../session';
 import { ServicesModule } from '../services.module';
 import { ServicesService } from '../services.service';
-import { baseReducers } from '../../../../../store/base';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
+import { baseReducers } from '@campus-cloud/store/base';
+import { CPTestModule } from '@campus-cloud/shared/tests';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { ServicesUtilsService } from '../services.utils.service';
 import { ServicesEditComponent } from './services-edit.component';
 import { RatingScale, ServiceAttendance } from '../services.status';
@@ -67,6 +66,7 @@ describe('ServicesUpdateComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        CPTestModule,
         ServicesModule,
         HttpClientModule,
         RouterTestingModule,
@@ -75,12 +75,7 @@ describe('ServicesUpdateComponent', () => {
           SNACKBAR: baseReducers.SNACKBAR
         })
       ],
-      providers: [
-        CPSession,
-        CPI18nService,
-        ServicesUtilsService,
-        { provide: ServicesService, useClass: MockService }
-      ]
+      providers: [ServicesUtilsService, { provide: ServicesService, useClass: MockService }]
     })
       .compileComponents()
       .then(() => {

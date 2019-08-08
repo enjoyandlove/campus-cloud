@@ -66,14 +66,16 @@
               {{ template.message }}
             </span>
 
-            <span
+            <button
+              type="button"
+              aria-label="delete"
               data-toggle="modal"
               data-target="#templatesDelete"
               (click)="onLauncDeleteModal(template)"
-              class="col-1 text-right delete-template hover"
+              class="col-1 text-right delete-template hover unstyled-button"
             >
-              &times;
-            </span>
+            <span aria-hidden="true">&times;</span>
+            </button>
           </div>
         </li>
       </ul>

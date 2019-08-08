@@ -280,7 +280,7 @@ export class TeamCreateComponent implements OnInit {
 
       setTimeout(
         () => {
-          $('#selectServicesModal').modal();
+          $('#selectServicesModal').modal({ keyboard: true, focus: true });
         },
 
         1
@@ -403,7 +403,7 @@ export class TeamCreateComponent implements OnInit {
       this.isClubsModal = true;
       setTimeout(
         () => {
-          $('#selectClubsModal').modal();
+          $('#selectClubsModal').modal({ keyboard: true, focus: true });
         },
 
         1
@@ -437,7 +437,7 @@ export class TeamCreateComponent implements OnInit {
       this.isAthleticsModal = true;
       setTimeout(
         () => {
-          $('#selectAthleticsModal').modal();
+          $('#selectAthleticsModal').modal({ keyboard: true, focus: true });
         },
 
         1

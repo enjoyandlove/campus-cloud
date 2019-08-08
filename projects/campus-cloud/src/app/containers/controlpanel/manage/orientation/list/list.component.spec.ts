@@ -4,16 +4,15 @@ import { HttpParams } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
 import { ManageHeaderService } from '../../utils';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { mockSchool } from '@campus-cloud/session/mock/school';
-import { baseReducers } from '@campus-cloud/store/base/reducers';
 import { OrientationModule } from '../orientation.module';
 import { OrientationListComponent } from './list.component';
 import { OrientationService } from '../orientation.services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { MockOrientationService, mockPrograms } from '../tests';
-import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { baseReducers } from '@campus-cloud/store/base/reducers';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('OrientationListComponent', () => {
   configureTestSuite();
@@ -22,6 +21,7 @@ describe('OrientationListComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [
+          CPTestModule,
           OrientationModule,
           RouterTestingModule,
           StoreModule.forRoot({
@@ -30,8 +30,6 @@ describe('OrientationListComponent', () => {
           })
         ],
         providers: [
-          CPSession,
-          CPI18nService,
           CPTrackingService,
           ManageHeaderService,
           { provide: OrientationService, useClass: MockOrientationService }

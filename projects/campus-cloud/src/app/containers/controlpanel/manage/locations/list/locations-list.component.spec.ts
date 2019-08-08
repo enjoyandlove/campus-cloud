@@ -6,12 +6,9 @@ import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import * as fromRoot from '@campus-cloud/store';
-import { CPSession } from '@campus-cloud/session';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { LocationsListComponent } from './locations-list.component';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { ManageHeaderService } from '@campus-cloud/containers/controlpanel/manage/utils';
 
 describe('LocationsListComponent', () => {
@@ -20,8 +17,8 @@ describe('LocationsListComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, ManageHeaderService],
+        imports: [CPTestModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
+        providers: [ManageHeaderService],
         declarations: [LocationsListComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

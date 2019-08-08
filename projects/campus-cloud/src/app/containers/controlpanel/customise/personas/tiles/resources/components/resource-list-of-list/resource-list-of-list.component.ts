@@ -81,7 +81,7 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
 
     setTimeout(
       () => {
-        $('#resourceCreateModal').modal();
+        $('#resourceCreateModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -100,7 +100,7 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
 
     setTimeout(
       () => {
-        $('#resourceEditModal').modal();
+        $('#resourceEditModal').modal({ keyboard: true, focus: true });
       },
 
       1

@@ -5,6 +5,13 @@
 @import '~projects/campus-cloud/src/sass/components/button';
 @import '~projects/campus-cloud/src/sass/components/dropdown';
 
+.dropdown-menu {
+  @include cpDropdownMenu();
+
+  top: 115%;
+  padding: 0;
+}
+
 .actions {
   label {
     @include font-normal();
@@ -31,19 +38,8 @@
     font-size: 23px;
   }
 
-  .dropdown-menu {
-    @include cpDropdownMenu();
-
-    top: 115%;
-    padding: 0;
-  }
-
   a {
     padding: 0;
-  }
-
-  li {
-    padding: 12px;
   }
 
   a,

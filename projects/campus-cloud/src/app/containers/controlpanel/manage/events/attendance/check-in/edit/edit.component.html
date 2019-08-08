@@ -2,13 +2,15 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span
-          ><strong>{{ 't_events_assessment_add_checkin_modal_title' | cpI18n }}</strong></span
-        >
+        <span><strong>{{ 't_events_assessment_add_checkin_modal_title' | cpI18n }}</strong></span>
 
-        <span data-dismiss="modal" class="float-right hover cpmodal__header__close">
-          &times;
-        </span>
+        <button
+          type="button"
+          aria-label="close"
+          data-dismiss="modal"
+          class="float-right hover cpmodal__header__close unstyled-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
   </div>
@@ -41,8 +43,7 @@
           type="button"
           (click)="resetModal()"
           class="cpbtn cpbtn--cancel"
-          data-dismiss="modal"
-        >
+          data-dismiss="modal">
           {{ 'cancel' | cpI18n }}
         </button>
 

@@ -80,7 +80,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.showCreateModal = true;
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
-    setTimeout(() => $('#categoriesCreate').modal());
+    setTimeout(() => $('#categoriesCreate').modal({ keyboard: true, focus: true }));
   }
 
   onLaunchEditModal(category: ICategory) {
@@ -96,14 +96,14 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     this.selectedCategory = category;
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
 
-    setTimeout(() => $('#categoriesEdit').modal());
+    setTimeout(() => $('#categoriesEdit').modal({ keyboard: true, focus: true }));
   }
 
   onLaunchDeleteModal(category: ICategory) {
     this.showDeleteModal = true;
     this.deletedCategory = category;
 
-    setTimeout(() => $('#categoryDelete').modal());
+    setTimeout(() => $('#categoryDelete').modal({ keyboard: true, focus: true }));
   }
 
   onCreateTeardown() {

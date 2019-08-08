@@ -9,13 +9,12 @@ import { of } from 'rxjs';
 import mockSection from './mock';
 import { mockPersonas } from '../../tests';
 import { TilesService } from '../tiles.service';
-import { CPSession } from '@campus-cloud/session';
 import { PersonasTilesModule } from '../tiles.module';
 import { STATUS } from '@campus-cloud/shared/constants';
 import { PersonasService } from '../../personas.service';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { TilesUtilsService } from '../tiles.utils.service';
 import { PersonasTileEditComponent } from './edit.component';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { SectionsService } from '../../sections/sections.service';
 import { PersonasUtilsService } from '../../personas.utils.service';
@@ -85,11 +84,9 @@ describe('PersonasTileEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [PersonasTilesModule, RouterTestingModule, StoreModule.forRoot({})],
+      imports: [PersonasTilesModule, RouterTestingModule, StoreModule.forRoot({}), CPTestModule],
       providers: [
-        CPSession,
         FormBuilder,
-        CPI18nService,
         TilesUtilsService,
         SectionUtilsService,
         SectionUtilsService,

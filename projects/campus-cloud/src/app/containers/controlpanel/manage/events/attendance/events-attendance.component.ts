@@ -5,31 +5,27 @@ import { BehaviorSubject } from 'rxjs/index';
 import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
-import { FORMAT } from '@campus-cloud/shared/pipes';
 import IEvent from '../event.interface';
-import { CPSession, IUser } from '@campus-cloud/session';
 import { EventsService } from '../events.service';
-import { IHeader, baseActions } from '@campus-cloud/store/base';
+import { FORMAT } from '@campus-cloud/shared/pipes';
+import { CPSession, IUser } from '@campus-cloud/session';
 import { ICheckIn } from './check-in/check-in.interface';
+import { IHeader, baseActions } from '@campus-cloud/store';
 import { EventUtilService } from './../events.utils.service';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
-import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { EventsComponent } from '../list/base/events.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
-import { CP_PRIVILEGES_MAP, SortDirection } from '@campus-cloud/shared/constants';
 import { EventsAmplitudeService } from '../events.amplitude.service';
 import { CheckInMethod, CheckInOutTime, CheckInOut } from '../event.status';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
+import { canSchoolReadResource, canSchoolWriteResource } from '@campus-cloud/shared/utils';
+import { CP_PRIVILEGES_MAP, amplitudeEvents, SortDirection } from '@campus-cloud/shared/constants';
 import {
-  CPI18nService,
-  CPTrackingService,
+  RouteLevel,
   ModalService,
-  RouteLevel
+  CPI18nService,
+  CPTrackingService
 } from '@campus-cloud/shared/services';
-import {
-  canSchoolReadResource,
-  canSchoolWriteResource
-} from '@campus-cloud/shared/utils/privileges/privileges';
 
 interface IState {
   sortField: string;
@@ -99,14 +95,14 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
-    private store: Store<IHeader>,
+    public store: Store<IHeader>,
     private route: ActivatedRoute,
     public service: EventsService,
     public utils: EventUtilService,
     public modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
-    super(session, cpI18n, service, modalService);
+    super(session, cpI18n, service, modalService, store);
     this.eventId = this.route.snapshot.params['eventId'];
     super.isLoading().subscribe((res) => (this.attendeesLoading = res));
   }
@@ -179,7 +175,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     search = this.addStudentFilter(search);
 
     this.summaryLoading = true;
-    this.service.getEventAttendanceSummary(this.eventId, search).subscribe((res) => {
+    this.service.getEventAttendanceSummary(this.eventId, search).subscribe((res: any) => {
       this.summaryLoading = false;
       this.event = { ...this.event, ...res };
     });
@@ -352,7 +348,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.isSendMessageModal = true;
     setTimeout(
       () => {
-        $('#sendMessageModal').modal();
+        $('#sendMessageModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -363,7 +359,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.isAddCheckInModal = true;
     setTimeout(
       () => {
-        $('#addCheckInModal').modal();
+        $('#addCheckInModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -375,7 +371,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.isEditCheckInModal = true;
     setTimeout(
       () => {
-        $('#editCheckInModal').modal();
+        $('#editCheckInModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -387,7 +383,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.isDeleteCheckInModal = true;
     setTimeout(
       () => {
-        $('#deleteCheckInModal').modal();
+        $('#deleteCheckInModal').modal({ keyboard: true, focus: true });
       },
 
       1

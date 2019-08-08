@@ -5,14 +5,13 @@ import { StoreModule, Store } from '@ngrx/store';
 import { DebugElement } from '@angular/core';
 
 import * as fromStore from '../store';
-import { CPSession } from '@campus-cloud/session';
 import { RootStoreModule } from '@campus-cloud/store';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { MODAL_DATA, IModal } from '@campus-cloud/shared/services';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { MemberType } from '@campus-cloud/libs/members/common/model';
-import { mockMember, filledForm } from '@campus-cloud/libs/members/common/tests';
-import { MODAL_DATA, CPI18nService, IModal } from '@campus-cloud/shared/services';
 import { OrientationMembersCreateComponent } from './create.component';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { mockMember, filledForm } from '@campus-cloud/libs/members/common/tests';
 import { getElementByCPTargetValue, fillForm } from '@campus-cloud/shared/utils/tests';
 import { LibsCommmonMembersModule } from '@campus-cloud/libs/members/common/common-members.module';
 import { LibsCommonMembersUtilsService } from '@campus-cloud/libs/members/common/providers/common.utils';
@@ -23,6 +22,7 @@ describe('OrientationMembersCreateComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [
+          CPTestModule,
           SharedModule,
           RootStoreModule,
           HttpClientModule,
@@ -31,8 +31,6 @@ describe('OrientationMembersCreateComponent', () => {
           StoreModule.forFeature('orientationMemberState', fromStore.reducers)
         ],
         providers: [
-          CPSession,
-          CPI18nService,
           LibsCommonMembersUtilsService,
           {
             provide: MODAL_DATA,

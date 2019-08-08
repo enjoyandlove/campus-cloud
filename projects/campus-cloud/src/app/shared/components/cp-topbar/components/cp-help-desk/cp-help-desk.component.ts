@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import * as buildJson from '@projects/campus-cloud/src/assets/build.json';
-import { CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
-import { ZendeskService } from '@campus-cloud/shared/services/zendesk.service';
+import { CPTrackingService, RouteLevel, ZendeskService } from '@campus-cloud/shared/services';
 
 declare var window;
 
@@ -16,7 +15,7 @@ export class CPHelpDeskComponent implements OnInit {
   helpDeskUrl = ZendeskService.zdRoot();
   lastBuildTime = buildJson.lastBuildTime;
 
-  constructor(private cpTracking: CPTrackingService) {}
+  constructor(private cpTracking: CPTrackingService, private zd: ZendeskService) {}
 
   trackHelpDeskAction(information_type) {
     const eventName = amplitudeEvents.VIEWED_INFORMATION;
@@ -31,8 +30,28 @@ export class CPHelpDeskComponent implements OnInit {
   }
 
   loadHelpDeskWidget() {
-    if (window.zE) {
-      window.zE.activate();
+    if (this.zd.loaded) {
+      const hostEl: any = document.querySelector('.nav__help-desk');
+      const { right, width } = hostEl.getBoundingClientRect();
+
+      window.zE('webWidget', 'updateSettings', {
+        webWidget: {
+          offset: {
+            vertical: '60px',
+            horizontal: `${window.innerWidth - right - width / 2}px`
+          }
+        }
+      });
+
+      window.onscroll = () => {
+        this.zd.hide();
+      };
+
+      window.onresize = () => {
+        this.zd.hide();
+      };
+
+      this.zd.activate({});
     }
   }
 

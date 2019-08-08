@@ -2,17 +2,15 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span
-          ><strong>{{ 't_external_check_in_check_out_modal_title' | cpI18n }}</strong></span
-        >
+        <span><strong>{{ 't_external_check_in_check_out_modal_title' | cpI18n }}</strong></span>
 
-        <span
+        <button
+          type="button"
           data-dismiss="modal"
           (click)="resetModal()"
-          class="float-right hover cpmodal__header__close"
-        >
+          class="float-right hover cpmodal__header__close unstyled-button">
           &times;
-        </span>
+      </button>
       </div>
     </div>
   </div>
@@ -27,8 +25,7 @@
           <cp-datepicker
             [options]="checkOutOptions"
             [error]="formErrors && form.controls['check_out_time_epoch'].hasError('required')"
-            (dateSet)="setCheckout($event)"
-          >
+            (dateSet)="setCheckout($event)">
           </cp-datepicker>
         </div>
       </div>
@@ -39,7 +36,7 @@
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-12">
-        <label class="error" *ngIf="formErrors">
+        <label role="alert" class="error" *ngIf="formErrors">
           <i class="material-icons">warning</i>
           {{
             errorMessage
@@ -53,8 +50,7 @@
           type="button"
           data-dismiss="modal"
           (click)="resetModal()"
-          class="cpbtn cpbtn--cancel"
-        >
+          class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 

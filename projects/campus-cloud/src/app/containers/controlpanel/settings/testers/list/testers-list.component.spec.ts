@@ -5,13 +5,12 @@ import { StoreModule } from '@ngrx/store';
 
 import { reducerMap } from '../store';
 import { mockTesters } from '../tests';
-import { CPSession } from '@campus-cloud/session';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import * as actions from '../store/testers.actions';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { CPI18nService, ModalService } from '@campus-cloud/shared/services';
+import { ModalService } from '@campus-cloud/shared/services';
 import { TestersListComponent } from './testers-list.component';
 import { CampusTestersService } from '../campus-testers.service';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { SETTINGS_TESTERS, SortDirection } from '@campus-cloud/shared/constants';
 import { TestUsersComponent } from './components/test-users/test-users.component';
 import { NoTestersComponent } from './components/no-testers/no-testers.component';
@@ -23,13 +22,14 @@ describe('TestersListComponent', () => {
     (async () => {
       await TestBed.configureTestingModule({
         imports: [
+          CPTestModule,
           SharedModule,
           HttpClientModule,
           RouterTestingModule,
           StoreModule.forRoot({}),
           StoreModule.forFeature(SETTINGS_TESTERS, reducerMap)
         ],
-        providers: [CPSession, CPI18nService, ModalService, CampusTestersService],
+        providers: [ModalService, CampusTestersService],
         declarations: [
           TestersListComponent,
           TestersActionBoxComponent,

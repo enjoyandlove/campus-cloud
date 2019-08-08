@@ -1,9 +1,7 @@
 <div class="row">
   <div class="col-12">
-    <cp-orientation-list-action-box
-      (search)="onSearch($event)"
-      (launchCreateModal)="onLaunchCreateModal()"
-    >
+    <cp-orientation-list-action-box (search)="onSearch($event)"
+                                    (launchCreateModal)="onLaunchCreateModal()">
     </cp-orientation-list-action-box>
   </div>
 </div>
@@ -12,11 +10,9 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <cp-no-content
-      class="no-content"
-      *ngIf="!state.orientationPrograms.length"
-      [noContentText]="cpI18n.translate('orientation_no_results_found')"
-    >
+    <cp-no-content class="no-content"
+                   *ngIf="!state.orientationPrograms.length"
+                   [noContentText]="cpI18n.translate('orientation_no_results_found')">
     </cp-no-content>
 
     <div *ngIf="state.orientationPrograms.length">
@@ -25,14 +21,12 @@
           <ul class="orientation cp-form">
             <li class="cp-form__header">
               <div class="row">
-                <cp-sorting-header
-                  class="col-5"
-                  sortLabel="name"
-                  [label]="label.name"
-                  (click)="doSort('name')"
-                  [sortField]="state.sort_field"
-                  [sortDirection]="state.sort_direction"
-                >
+                <cp-sorting-header class="col-5"
+                                   sortLabel="name"
+                                   [label]="label.name"
+                                   (click)="doSort('name')"
+                                   [sortField]="state.sort_field"
+                                   [sortDirection]="state.sort_direction">
                 </cp-sorting-header>
                 <span class="col-3">
                   {{ 'duration' | cpI18n }}
@@ -47,10 +41,13 @@
               </div>
             </li>
 
-            <li class="cp-form__item col-12" *ngFor="let program of state.orientationPrograms">
+            <li class="cp-form__item col-12"
+                *ngFor="let program of state.orientationPrograms">
               <div class="row">
-                <span class="col-5 text-truncate hover">
-                  <a cpTracker [eventData]="eventData" [routerLink]="[program.id + '/events']">
+                <span class="col-5 text-truncate">
+                  <a cpTracker
+                     [eventData]="eventData"
+                     [routerLink]="[program.id + '/events']">
                     <strong>
                       {{ program.name }}
                     </strong>
@@ -59,11 +56,9 @@
                   {{ program.description }}
                 </span>
                 <span class="col-3 text-truncate">
-                  <div
-                    *ngIf="
+                  <div *ngIf="
                       program.active_from !== noDuration && program.active_until !== noDuration
-                    "
-                  >
+                    ">
                     {{ program.active_from | cpDatePipe: dateFormat }} -
                     {{ program.active_until | cpDatePipe: dateFormat }}
                   </div>
@@ -75,16 +70,18 @@
                   {{ program.events_count }}
                 </span>
                 <span class="col-1 action">
-                  <button
-                    data-toggle="modal"
-                    data-target="#programDuplicate"
-                    class="cpbtn cpbtn--link-dark"
-                    (click)="onClickDuplicate(program)"
-                  >
-                    <i class="material-icons">control_point_duplicate</i>
+                  <button data-toggle="modal"
+                          aria-label="duplicate"
+                          data-target="#programDuplicate"
+                          class="cpbtn cpbtn--link-dark"
+                          (click)="onClickDuplicate(program)">
+                    <i class="material-icons"
+                       aria-hidden="true">control_point_duplicate</i>
                   </button>
-                  <button class="cpbtn cpbtn--link-dark" (click)="onClickDelete(program)">
-                    <i class="material-icons">close</i>
+                  <button aria-label="delete"
+                          class="cpbtn cpbtn--link-dark action__delete"
+                          (click)="onClickDelete(program)">
+                    <span aria-hidden="true">&times;</span>
                   </button>
                 </span>
               </div>
@@ -95,13 +92,11 @@
 
       <div class="row">
         <div class="col-12">
-          <cp-pagination
-            [pageNext]="pageNext"
-            [pagePrev]="pagePrev"
-            [pageNumber]="pageNumber"
-            (next)="onPaginationNext()"
-            (previous)="onPaginationPrevious()"
-          >
+          <cp-pagination [pageNext]="pageNext"
+                         [pagePrev]="pagePrev"
+                         [pageNumber]="pageNumber"
+                         (next)="onPaginationNext()"
+                         (previous)="onPaginationPrevious()">
           </cp-pagination>
         </div>
       </div>
@@ -109,15 +104,15 @@
   </div>
 </div>
 
-<cp-modal modalId="programCreate" *ngIf="launchCreateModal">
+<cp-modal modalId="programCreate"
+          *ngIf="launchCreateModal">
   <cp-orientation-program-create (resetCreateModal)="launchCreateModal = false">
   </cp-orientation-program-create>
 </cp-modal>
 
-<cp-modal modalId="programDuplicate" *ngIf="launchDuplicateModal">
-  <cp-orientation-duplicate-program
-    [orientationProgram]="selectedProgram"
-    (resetDuplicateModal)="launchDuplicateModal = false"
-  >
+<cp-modal modalId="programDuplicate"
+          *ngIf="launchDuplicateModal">
+  <cp-orientation-duplicate-program [orientationProgram]="selectedProgram"
+                                    (resetDuplicateModal)="launchDuplicateModal = false">
   </cp-orientation-duplicate-program>
 </cp-modal>

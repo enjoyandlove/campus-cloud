@@ -101,7 +101,7 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
     public fb: FormBuilder,
     public session: CPSession,
     public cpI18n: CPI18nService,
-    private store: Store<IHeader>,
+    public store: Store<IHeader>,
     private route: ActivatedRoute,
     public utils: EventUtilService,
     private adminService: AdminService,
@@ -111,7 +111,7 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
     public modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
-    super(session, cpI18n, service, modalService);
+    super(session, cpI18n, service, modalService, store);
     this.school = this.session.g.get('school');
     this.eventId = this.route.snapshot.params['eventId'];
 

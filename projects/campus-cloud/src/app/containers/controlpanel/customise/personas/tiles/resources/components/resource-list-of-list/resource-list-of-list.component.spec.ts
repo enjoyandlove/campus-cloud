@@ -4,13 +4,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 
 import { mockResource } from '../../__mock__';
-import { CPSession } from '@campus-cloud/session';
 import { TilesService } from '../../../tiles.service';
 import { ResourceService } from '../../resource.service';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { PersonasResourceModule } from '../../resources.module';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { baseReducers } from '@campus-cloud/store/base/reducers';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockPersonas } from '@controlpanel/customise/personas/tests';
 import { PersonasResourceListOfListComponent } from './resource-list-of-list.component';
 
@@ -23,7 +21,7 @@ describe('PersonasResourceListOfListComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
-        SharedModule,
+        CPTestModule,
         HttpClientModule,
         RouterTestingModule,
         PersonasResourceModule,
@@ -32,7 +30,7 @@ describe('PersonasResourceListOfListComponent', () => {
           SNACKBAR: baseReducers.SNACKBAR
         })
       ],
-      providers: [CPSession, CPI18nService, ResourceService, TilesService]
+      providers: [ResourceService, TilesService]
     });
     fixture = TestBed.createComponent(PersonasResourceListOfListComponent);
     comp = fixture.componentInstance;

@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { isDev } from '../../../../../../../config/env';
+import { EnvService } from '@campus-cloud/config/env';
 import { CalendarsService } from '../../../calendars.services';
-import { FileUploadService } from '../../../../../../../shared/services';
-import { CPI18nService } from '../../../../../../../shared/services/i18n.service';
+import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
@@ -19,6 +18,7 @@ export class CalendarsItemsImportModalComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private env: EnvService,
     public route: ActivatedRoute,
     private cpI18n: CPI18nService,
     private service: CalendarsService,
@@ -28,7 +28,10 @@ export class CalendarsItemsImportModalComponent implements OnInit {
   }
 
   parser(file) {
-    const url = !isDev ? '/calendars/items/import' : 'http://localhost:8000/calendars/items/import';
+    const url =
+      this.env.name !== 'development'
+        ? '/calendars/items/import'
+        : 'http://localhost:8000/calendars/items/import';
 
     return this.fileService
       .uploadFile(file, url)
@@ -54,9 +57,10 @@ export class CalendarsItemsImportModalComponent implements OnInit {
   ngOnInit() {
     this.fileName = 'mass_calendar_item_invite_sample.csv';
 
-    const templateUrl = isDev
-      ? `/assets/templates/${this.fileName}`
-      : `${environment.root}assets/templates/${this.fileName}`;
+    const templateUrl =
+      this.env.name === 'development'
+        ? `/assets/templates/${this.fileName}`
+        : `${environment.root}assets/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,

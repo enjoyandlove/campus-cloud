@@ -1,13 +1,11 @@
 import { ICampusGuide } from './section.interface';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { API } from '../../../../../config/api';
-import { HTTPService } from '../../../../../base/http.service';
+import { ApiService } from '@campus-cloud/base/services';
 
 @Injectable()
-export class SectionsService extends HTTPService {
+export class SectionsService {
   _guide;
 
   set guide(guide: ICampusGuide) {
@@ -18,23 +16,17 @@ export class SectionsService extends HTTPService {
     return this._guide;
   }
 
-  constructor(http: HttpClient, router: Router) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, SectionsService.prototype);
-  }
+  constructor(private api: ApiService) {}
 
   deleteSectionTileCategory(tileCategoryId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.GUIDE_TILE_CATEGORY
-    }/${tileCategoryId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILE_CATEGORY}/${tileCategoryId}`;
 
-    return super.delete(url, search, true);
+    return this.api.delete(url, search, true);
   }
 
   createSectionTileCategory(body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILE_CATEGORY}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILE_CATEGORY}/`;
 
-    return super.post(url, body, null, true);
+    return this.api.post(url, body, null, true);
   }
 }

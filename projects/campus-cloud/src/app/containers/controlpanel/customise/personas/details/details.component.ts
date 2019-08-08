@@ -246,7 +246,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
     setTimeout(
       () => {
-        $(`#${this.tileDeleteModalId}`).modal();
+        $(`#${this.tileDeleteModalId}`).modal({ keyboard: true, focus: true });
       },
 
       1
@@ -307,7 +307,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
     setTimeout(
       () => {
-        $(`#${this.sectionDeleteModalId}`).modal();
+        $(`#${this.sectionDeleteModalId}`).modal({ keyboard: true, focus: true });
       },
 
       1

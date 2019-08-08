@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-12">
-    <cp-jobs-list-action-box (search)="onSearch($event)" (listAction)="doFilter($event)">
+    <cp-jobs-list-action-box (search)="onSearch($event)"
+                             (listAction)="doFilter($event)">
     </cp-jobs-list-action-box>
   </div>
 </div>
@@ -9,45 +10,37 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <cp-no-content
-      class="no-content"
-      *ngIf="!state.jobs.length"
-      [noContentText]="cpI18n.translate('jobs_no_results_found')"
-    >
+    <cp-no-content class="no-content"
+                   *ngIf="!state.jobs.length"
+                   [noContentText]="cpI18n.translate('jobs_no_results_found')">
     </cp-no-content>
 
     <div *ngIf="state.jobs.length">
       <ul class="cp-form">
         <li class="cp-form__header col-12">
           <div class="row">
-            <cp-sorting-header
-              class="col-5"
-              sortLabel="title"
-              (click)="doSort('title')"
-              [label]="sortingLabels.name"
-              [sortField]="state.sort_field"
-              [sortDirection]="state.sort_direction"
-            >
+            <cp-sorting-header class="col-5"
+                               sortLabel="title"
+                               (click)="doSort('title')"
+                               [label]="sortingLabels.name"
+                               [sortField]="state.sort_field"
+                               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
-            <cp-sorting-header
-              class="col-2"
-              sortLabel="employer_name"
-              (click)="doSort('employer_name')"
-              [sortField]="state.sort_field"
-              [label]="sortingLabels.employer_name"
-              [sortDirection]="state.sort_direction"
-            >
+            <cp-sorting-header class="col-2"
+                               sortLabel="employer_name"
+                               (click)="doSort('employer_name')"
+                               [sortField]="state.sort_field"
+                               [label]="sortingLabels.employer_name"
+                               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
-            <cp-sorting-header
-              class="col-2"
-              sortLabel="posting_start"
-              (click)="doSort('posting_start')"
-              [sortField]="state.sort_field"
-              [label]="sortingLabels.posting_start"
-              [sortDirection]="state.sort_direction"
-            >
+            <cp-sorting-header class="col-2"
+                               sortLabel="posting_start"
+                               (click)="doSort('posting_start')"
+                               [sortField]="state.sort_field"
+                               [label]="sortingLabels.posting_start"
+                               [sortDirection]="state.sort_direction">
             </cp-sorting-header>
             <span class="col-2">
               {{ 'jobs_posting_end' | cpI18n }}
@@ -56,10 +49,13 @@
           </div>
         </li>
 
-        <li class="cp-form__item col-12" *ngFor="let job of state.jobs">
+        <li class="cp-form__item col-12"
+            *ngFor="let job of state.jobs">
           <div class="row">
             <span class="col-5 text-truncate">
-              <a cpTracker [eventData]="eventData" [routerLink]="[job.id + '/info']">
+              <a cpTracker
+                 [eventData]="eventData"
+                 [routerLink]="[job.id + '/info']">
                 <strong>
                   {{ job.title }}
                 </strong>
@@ -73,41 +69,41 @@
             <span class="col-2">
               {{ job.posting_start | cpDatePipe: dateFormat }}
             </span>
-            <span class="col-2" *ngIf="!utils.isOnGoing(job)">
+            <span class="col-2"
+                  *ngIf="!utils.isOnGoing(job)">
               {{ job.posting_end | cpDatePipe: dateFormat }}
             </span>
-            <span class="col-2" *ngIf="utils.isOnGoing(job)">
+            <span class="col-2"
+                  *ngIf="utils.isOnGoing(job)">
               {{ 't_jobs_ongoing' | cpI18n }}
             </span>
-            <span
-              (click)="deleteJob = job; launchDeleteModal = true"
-              data-toggle="modal"
-              data-target="#deleteJobModal"
-              class="col-1 hover text-truncate delete-job text-right"
-            >
-              &times;
+            <span class="col-1 text-right">
+              <button type="button"
+                      (click)="deleteJob = job; launchDeleteModal = true"
+                      data-toggle="modal"
+                      data-target="#deleteJobModal"
+                      class="delete-job unstyled-button">
+                <span aria-hidden="true">&times;</span>
+              </button>
             </span>
           </div>
         </li>
       </ul>
 
-      <cp-pagination
-        [pageNext]="pageNext"
-        [pagePrev]="pagePrev"
-        [pageNumber]="pageNumber"
-        (next)="onPaginationNext()"
-        (previous)="onPaginationPrevious()"
-      >
+      <cp-pagination [pageNext]="pageNext"
+                     [pagePrev]="pagePrev"
+                     [pageNumber]="pageNumber"
+                     (next)="onPaginationNext()"
+                     (previous)="onPaginationPrevious()">
       </cp-pagination>
     </div>
   </div>
 </div>
 
-<cp-modal modalId="deleteJobModal" *ngIf="launchDeleteModal">
-  <cp-jobs-delete
-    [job]="deleteJob"
-    (deleted)="onDeleted($event)"
-    (resetDeleteModal)="launchDeleteModal = false"
-  >
+<cp-modal modalId="deleteJobModal"
+          *ngIf="launchDeleteModal">
+  <cp-jobs-delete [job]="deleteJob"
+                  (deleted)="onDeleted($event)"
+                  (resetDeleteModal)="launchDeleteModal = false">
   </cp-jobs-delete>
 </cp-modal>

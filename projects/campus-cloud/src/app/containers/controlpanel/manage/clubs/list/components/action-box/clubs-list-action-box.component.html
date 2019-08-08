@@ -2,45 +2,48 @@
   <div class="row justify-content-between">
     <div class="col">
       <div class="row">
-        <cp-searchbox (query)="onUpdateState($event, 'query')" class="col-7"> </cp-searchbox>
+        <cp-searchbox (query)="onUpdateState($event, 'query')"
+                      class="col-7"> </cp-searchbox>
 
         <div class="col-5">
-          <cp-dropdown
-            [items]="clubFilter"
-            [selectedItem]="selectedItem"
-            (selected)="onUpdateState($event.action, 'type')"
-          >
+          <cp-dropdown [items]="clubFilter"
+                       [selectedItem]="selectedItem"
+                       (selected)="onUpdateState($event.action, 'type')">
           </cp-dropdown>
         </div>
       </div>
     </div>
     <div class="col">
       <div class="row">
-        <div class="col-12 text-right" *ngIf="canCreate">
-          <a
-            cpTracker
-            [routerLink]="['create']"
-            [eventData]="eventData"
-            class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding"
-          >
+        <div class="col-12 text-right"
+             *ngIf="canCreate">
+          <a cpTracker
+             [routerLink]="['create']"
+             [eventData]="eventData"
+             class="cpbtn cpbtn--primary cpbtn--square-right no-right-padding">
             {{ labels.create_button | cpI18n }}
           </a>
-          <div
-            class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown"
-          >
-            <i class="material-icons" data-toggle="dropdown">expand_more</i>
-            <ul class="dropdown-menu dropdown-menu-right text-left">
-              <li data-toggle="modal" data-target="#excelClubssModal" i18n>
-                {{ 'import_from_csv' | cpI18n }}
-              </li>
-            </ul>
+          <button class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown"
+                  type="button"
+                  id="club-list"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false">
+            <i class="material-icons">expand_more</i>
+          </button>
+          <div class="dropdown-menu dropdown-menu-right"
+               aria-labelledby="club-list">
+
+            <button type="button"
+                    data-toggle="modal"
+                    data-target="#excelClubssModal"
+                    class="dropdown-item unstyled-button">{{ 'import_from_csv' | cpI18n }}</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
-<cp-modal modalId="excelClubssModal">
-  <cp-clubs-excel-modal [isAthletic]="isAthletic"> </cp-clubs-excel-modal>
-</cp-modal>
+  <cp-modal modalId="excelClubssModal">
+    <cp-clubs-excel-modal [isAthletic]="isAthletic"> </cp-clubs-excel-modal>
+  </cp-modal>

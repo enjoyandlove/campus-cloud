@@ -7,9 +7,13 @@
             {{ 't_sandbox_invite_testers' | cpI18n }}
           </strong>
         </span>
-        <span class="float-right hover cpmodal__header__close" (click)="doCancel()">
-          &times;
-        </span>
+        <button
+          type="button"
+          aria-label="cancel"
+          class="float-right hover cpmodal__header__close unstyled-button"
+          (click)="doCancel()">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
   </div>
@@ -21,6 +25,7 @@
           <div class="col-12">
             <label for="emails">{{ 't_sandbox_email_addresses' | cpI18n }}</label>
             <textarea
+              id="emails"
               cpTarget="emails"
               cdkTextareaAutosize
               class="emails-input"
@@ -28,8 +33,7 @@
               cdkAutosizeMaxRows="3"
               formControlName="emails"
               placeholder="{{ 't_sandbox_email_addresses_hint' | cpI18n }}"
-              (keydown.enter)="$event.preventDefault()"
-            >
+              (keydown.enter)="$event.preventDefault()">
             </textarea>
           </div>
         </div>
@@ -49,8 +53,7 @@
           cpTarget="submit"
           class="cpbtn cpbtn--primary"
           [disabled]="!form.valid"
-          (click)="doCreate()"
-        >
+          (click)="doCreate()">
           {{ 't_sandbox_invite' | cpI18n }}
         </button>
       </div>

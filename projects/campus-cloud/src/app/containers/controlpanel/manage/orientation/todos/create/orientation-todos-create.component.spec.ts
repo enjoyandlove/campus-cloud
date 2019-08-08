@@ -1,14 +1,14 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute } from '@angular/router';
+import { FormBuilder } from '@angular/forms';
 import { of as observableOf } from 'rxjs';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { OrientationTodosCreateComponent } from './orientation-todos-create.component';
-import { CPSession } from '../../../../../../session';
-import { mockSchool } from '../../../../../../session/mock/school';
+
 import { TodosModule } from '../todos.module';
 import { TodosService } from '../todos.service';
+import { CPTestModule } from '@campus-cloud/shared/tests';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { OrientationTodosCreateComponent } from './orientation-todos-create.component';
 
 class MockTodosService {
   dummy;
@@ -27,11 +27,9 @@ describe('OrientationTodosCreateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [TodosModule, RouterTestingModule],
+      imports: [TodosModule, RouterTestingModule, CPTestModule],
       providers: [
-        CPSession,
         FormBuilder,
-        CPI18nService,
         { provide: TodosService, useClass: MockTodosService },
         {
           provide: ActivatedRoute,

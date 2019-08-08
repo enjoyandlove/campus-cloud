@@ -5,19 +5,19 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { API } from '@campus-cloud/config/api';
-import { appStorage } from '@campus-cloud/shared/utils';
+import { ApiService } from '@campus-cloud/base';
 import { validThread } from '../../../validators';
-import { CPSession, ISchool } from '@campus-cloud/session';
 import { FeedsService } from '../../../feeds.service';
+import { appStorage } from '@campus-cloud/shared/utils';
+import { CPSession, ISchool } from '@campus-cloud/session';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import {
-  CPTrackingService,
-  FileUploadService,
   StoreService,
-  CPI18nService
+  CPI18nService,
+  CPTrackingService,
+  FileUploadService
 } from '@campus-cloud/shared/services';
 
 @Component({
@@ -60,6 +60,7 @@ export class FeedInputBoxComponent implements OnInit {
   };
 
   constructor(
+    private api: ApiService,
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
@@ -239,8 +240,8 @@ export class FeedInputBoxComponent implements OnInit {
       return;
     }
 
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.IMAGE}/`;
+    const auth = `${this.api.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     const headers = new HttpHeaders({
       Authorization: auth

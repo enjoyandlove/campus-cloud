@@ -1,6 +1,8 @@
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <cp-events-info [isService]="isService" [serviceId]="serviceId" *ngSwitchCase="false">
+  <cp-events-info [isService]="isService"
+                  [serviceId]="serviceId"
+                  *ngSwitchCase="false">
   </cp-events-info>
 </div>

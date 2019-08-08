@@ -161,7 +161,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.isAddCheckInModal = true;
     setTimeout(
       () => {
-        $('#addCheckInModal').modal();
+        $('#addCheckInModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -173,7 +173,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.isEditCheckInModal = true;
     setTimeout(
       () => {
-        $('#editCheckInModal').modal();
+        $('#editCheckInModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -185,7 +185,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
     this.isDeleteCheckInModal = true;
     setTimeout(
       () => {
-        $('#deleteCheckInModal').modal();
+        $('#deleteCheckInModal').modal({ keyboard: true, focus: true });
       },
 
       1

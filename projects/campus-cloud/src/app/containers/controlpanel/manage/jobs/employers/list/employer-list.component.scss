@@ -9,7 +9,7 @@
   padding: 0;
   list-style: none;
   &__header {
-    span.hover {
+    button.hover {
       position: relative;
 
       > span i {
@@ -22,6 +22,8 @@
   }
 
   &__thumbnail {
+    max-width: 100%;
+
     img {
       float: left;
       width: 30px;

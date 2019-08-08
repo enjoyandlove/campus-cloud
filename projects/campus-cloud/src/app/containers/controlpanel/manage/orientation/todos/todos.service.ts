@@ -1,41 +1,33 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { API } from '../../../../../config/api';
-import { HTTPService } from '../../../../../base';
+import { ApiService } from '@campus-cloud/base';
 
 @Injectable()
-export class TodosService extends HTTPService {
-  constructor(http: HttpClient, router: Router) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, TodosService.prototype);
-  }
+export class TodosService {
+  constructor(private api: ApiService) {}
 
   getTodos(startRage: number, endRage: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.ORIENTATION_TODOS
-    }/${startRage};${endRage}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_TODOS}/${startRage};${endRage}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   createTodo(body, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_TODOS}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_TODOS}/`;
 
-    return super.post(url, body, search);
+    return this.api.post(url, body, search);
   }
 
   deleteTodo(id, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_TODOS}/${id}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_TODOS}/${id}`;
 
-    return super.delete(url, search);
+    return this.api.delete(url, search);
   }
 
   editTodo(id, body, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ORIENTATION_TODOS}/${id}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_TODOS}/${id}`;
 
-    return super.update(url, body, search);
+    return this.api.update(url, body, search);
   }
 }

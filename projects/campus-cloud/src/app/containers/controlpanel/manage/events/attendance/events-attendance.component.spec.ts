@@ -7,11 +7,10 @@ import { of as observableOf } from 'rxjs';
 
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { EventUtilService } from '../events.utils.service';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
-import { baseReducers } from '../../../../../store/base/reducers';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { baseReducers } from '@campus-cloud/store/base/reducers';
 import { EventsAttendanceComponent } from './events-attendance.component';
 import { isClubAthletic } from '../../../settings/team/team.utils.service';
 
@@ -47,6 +46,7 @@ describe('EventAttendanceComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        CPTestModule,
         EventsModule,
         RouterTestingModule,
         StoreModule.forRoot({
@@ -55,8 +55,6 @@ describe('EventAttendanceComponent', () => {
         })
       ],
       providers: [
-        CPSession,
-        CPI18nService,
         EventUtilService,
         { provide: EventsService, useClass: MockService },
         {

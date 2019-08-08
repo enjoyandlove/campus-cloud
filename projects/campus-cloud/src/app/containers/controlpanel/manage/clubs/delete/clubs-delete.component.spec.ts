@@ -4,11 +4,11 @@ import { By } from '@angular/platform-browser';
 
 import { MockClubService } from '../tests';
 import { ClubsService } from './../clubs.service';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { MODAL_DATA } from '@campus-cloud/shared/services';
+import { ClubsDeleteComponent } from './clubs-delete.component';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
-import { ClubsDeleteComponent } from './clubs-delete.component';
-import { MODAL_DATA, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { isClubAthletic } from '@controlpanel/manage/clubs/clubs.athletics.labels';
 
 describe('ClubsDeleteComponent', () => {
@@ -16,11 +16,9 @@ describe('ClubsDeleteComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, RouterTestingModule],
+        imports: [CPTestModule, SharedModule, RouterTestingModule],
         declarations: [ClubsDeleteComponent],
         providers: [
-          CPI18nService,
-          CPTrackingService,
           { provide: ClubsService, useClass: MockClubService },
           {
             provide: MODAL_DATA,

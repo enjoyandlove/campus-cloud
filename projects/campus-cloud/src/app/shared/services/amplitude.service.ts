@@ -3,9 +3,9 @@ import * as amplitude from 'amplitude-js';
 import { get as _get } from 'lodash';
 
 import { CPSession } from '../../session';
+import { EnvService } from '@campus-cloud/config/env';
 import { amplitudeEvents } from '../constants/analytics';
 import { CP_PRIVILEGES_MAP } from '../constants/privileges';
-import { isCanada, isProd, isUsa } from '../../config/env';
 
 @Injectable()
 export class CPAmplitudeService {
@@ -13,15 +13,16 @@ export class CPAmplitudeService {
   school;
   isInternal;
 
-  constructor(public session: CPSession) {}
+  constructor(public session: CPSession, private env: EnvService) {}
 
   loadAmplitude() {
     this.user = this.session.g.get('user');
     this.school = this.session.g.get('school');
     this.isInternal = this.session.isInternal;
-    const api_key = isProd
-      ? '24c823bab76344e912538ef6a942f517'
-      : '434caff2f839c60ab12edd1119ec7641';
+    const api_key =
+      this.env.name === 'production'
+        ? '24c823bab76344e912538ef6a942f517'
+        : '434caff2f839c60ab12edd1119ec7641';
 
     amplitude.init(api_key, this.getSchoolUserID(this.user), {}, () => {
       this.setIdentity();
@@ -64,9 +65,9 @@ export class CPAmplitudeService {
       return;
     }
 
-    if (isCanada) {
+    if (this.env.region === 'canada') {
       return `CAN${user.id}`;
-    } else if (isUsa) {
+    } else if (this.env.region === 'usa') {
       return `US${user.id}`;
     } else {
       // default for dev

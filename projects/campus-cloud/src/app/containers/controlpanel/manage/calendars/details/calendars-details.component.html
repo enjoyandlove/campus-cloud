@@ -57,15 +57,15 @@
               {{ item.start | cpDatePipe: dateFormat }}
             </span>
             <span class="col-2 text-right">
-              <span
+              <button
+                type="button"
                 data-toggle="modal"
                 (click)="selectedItem = item"
                 (click)="launchDeleteModal = true"
                 data-target="#deleteCalendarItemModal"
-                class="hover action-button delete-button text-center"
-              >
+                class="hover action-button delete-button text-center unstyled-button">
                 &times;
-              </span>
+              </button>
             </span>
           </div>
         </li>

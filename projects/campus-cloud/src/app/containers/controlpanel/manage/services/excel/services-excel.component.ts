@@ -4,14 +4,15 @@ import { map, startWith } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { isDev } from '@campus-cloud/config/env';
 import { CPSession } from '@campus-cloud/session';
 import { ServicesService } from '../services.service';
+import { EnvService } from '@campus-cloud/config/env';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { ApiService } from '@campus-cloud/base/services';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { CPImageUploadComponent } from '@campus-cloud/shared/components';
 import { CPI18nService, FileUploadService } from '@campus-cloud/shared/services';
-import { baseActionClass, baseActions, getServicesModalState } from '@campus-cloud/store/base';
+import { baseActions, getServicesModalState, baseActionClass } from '@campus-cloud/store/base';
 
 const i18n = new CPI18nPipe();
 
@@ -37,6 +38,8 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   constructor(
     private router: Router,
     private fb: FormBuilder,
+    private api: ApiService,
+    private env: EnvService,
     private store: Store<any>,
     private session: CPSession,
     private cpI18n: CPI18nService,
@@ -47,7 +50,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     super.isLoading().subscribe((res) => (this.loading = res));
 
     this.store.select(getServicesModalState).subscribe((res) => {
-      this.services = !isDev ? res : require('./mock.json');
+      this.services = this.env.name !== 'development' ? res : require('./mock.json');
       this.buildForm();
       this.buildHeader();
     });
@@ -239,7 +242,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   onImageUpload(image: string, index: number) {
-    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
+    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService, this.api);
     const promise = imageUpload.onFileUpload(image, true);
 
     promise

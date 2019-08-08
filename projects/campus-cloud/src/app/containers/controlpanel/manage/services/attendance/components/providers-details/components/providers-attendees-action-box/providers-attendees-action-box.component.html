@@ -6,54 +6,50 @@
           <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
         </div>
         <div class="col-3">
-          <cp-dropdown
-            class="topbar--dropdown"
-            [items]="studentFilter$ | async"
-            (selected)="onStudentFilter($event)"
-          >
+          <cp-dropdown class="topbar--dropdown"
+                       [items]="studentFilter$ | async"
+                       (selected)="onStudentFilter($event)">
           </cp-dropdown>
         </div>
         <div class="col-3">
-          <cp-range-picker
-            [class]="'cancel'"
-            [icon]="'date_range'"
-            [dateRanges]="dateRanges"
-            [iconPositionLeft]="true"
-            (rangeChange)="onDateChange($event)"
-          >
+          <cp-range-picker [class]="'cancel'"
+                           [icon]="'date_range'"
+                           [dateRanges]="dateRanges"
+                           [iconPositionLeft]="true"
+                           (rangeChange)="onDateChange($event)">
           </cp-range-picker>
         </div>
         <div class="col-3 text-right">
-          <button
-            (click)="onAddCheckIn()"
-            class="cpbtn cpbtn--primary no-right-padding cpbtn--square-right"
-          >
+          <button (click)="onAddCheckIn()"
+                  class="cpbtn cpbtn--primary no-right-padding cpbtn--square-right">
             {{ 't_events_assessment_add_check_in' | cpI18n }}
           </button>
           <div
-            class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown"
-          >
-            <i class="material-icons" data-toggle="dropdown">expand_more</i>
-            <ul class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
+               class="cpbtn cpbtn--square-left cpbtn--no-padding cpbtn--primary no-left-padding hover action-dropdown">
+            <i class="material-icons"
+               data-toggle="dropdown">expand_more</i>
+            <ul
+                class="dropdown-menu dropdown-menu-right text-left action-dropdown-list">
               <li>
-                <a
-                  cpTracker
-                  target="_blank"
-                  [eventData]="eventData"
-                  [routerLink]="[
+                <a cpTracker
+                   target="_blank"
+                   [eventData]="eventData"
+                   [routerLink]="[
                     '/cb/checkin/s/' +
                       provider.encrypted_campus_service_id +
                       '/' +
                       provider.encrypted_id
-                  ]"
-                >
+                  ]">
                   {{ 't_services_assessment_web_checkin_page' | cpI18n }}
                 </a>
               </li>
-              <li (click)="onEnableDisableQR()" class="list-as-anchor">
+              <li (click)="onEnableDisableQR()"
+                  class="list-as-anchor">
                 {{ qrLabel }}
               </li>
-              <li *ngIf="hasAttendees" class="list-as-anchor" (click)="onDownload()">
+              <li *ngIf="hasAttendees"
+                  class="list-as-anchor"
+                  (click)="onDownload()">
                 {{ 'services_button_download_attendance_data' | cpI18n }}
               </li>
             </ul>

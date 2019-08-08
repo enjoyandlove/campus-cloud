@@ -4,15 +4,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { mockSection } from '../sections/__mock__';
 import { PersonasModule } from '../personas.module';
-import { RootStoreModule } from '../../../../../store';
+import { RootStoreModule } from '@campus-cloud/store';
 import { ICampusGuide } from '../sections/section.interface';
-import mockSession from '../../../../../session/mock/session';
-import { CPI18nService } from '../../../../../shared/services';
 import { PersonasDetailsComponent } from './details.component';
-import { configureTestSuite } from '../../../../../shared/tests';
+import { mockSchool, mockUser } from '@campus-cloud/session/mock';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('PersonasDetailsComponent', () => {
   configureTestSuite();
@@ -20,13 +19,12 @@ describe('PersonasDetailsComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         declarations: [],
-        imports: [HttpClientModule, RouterTestingModule, PersonasModule, RootStoreModule],
-        providers: [
-          CPI18nService,
-          {
-            provide: CPSession,
-            useValue: mockSession
-          }
+        imports: [
+          CPTestModule,
+          HttpClientModule,
+          RouterTestingModule,
+          PersonasModule,
+          RootStoreModule
         ],
         schemas: [NO_ERRORS_SCHEMA]
       });
@@ -36,12 +34,17 @@ describe('PersonasDetailsComponent', () => {
       .catch(done.fail);
   });
 
+  let session: CPSession;
   let fixture: ComponentFixture<PersonasDetailsComponent>;
   let component: PersonasDetailsComponent;
 
   beforeEach(async(() => {
     fixture = TestBed.createComponent(PersonasDetailsComponent);
     component = fixture.componentInstance;
+
+    session = TestBed.get(CPSession);
+    session.g.set('user', mockUser);
+    session.g.set('school', mockSchool);
 
     component.state = {
       ...component.state,

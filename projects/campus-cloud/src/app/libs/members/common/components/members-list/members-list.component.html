@@ -1,47 +1,49 @@
 <ul class="members cp-form">
   <li class="cp-form__header col-12">
     <div class="row">
-      <cp-sorting-header
-        class="col-3"
-        [sortField]="sortBy"
-        sortLabel="username"
-        [label]="['name' | cpI18n]"
-        (click)="sort.emit('username')"
-        [sortDirection]="sortDirection"
-      >
+      <cp-sorting-header class="col-3"
+                         [sortField]="sortBy"
+                         sortLabel="username"
+                         [label]="['name' | cpI18n]"
+                         (click)="sort.emit('username')"
+                         [sortDirection]="sortDirection">
       </cp-sorting-header>
 
-      <cp-sorting-header
-        class="col-2"
-        [sortField]="sortBy"
-        sortLabel="member_type"
-        [sortDirection]="sortDirection"
-        (click)="sort.emit('member_type')"
-        [label]="['clubs_label_member_type' | cpI18n]"
-      >
+      <cp-sorting-header class="col-2"
+                         [sortField]="sortBy"
+                         sortLabel="member_type"
+                         [sortDirection]="sortDirection"
+                         (click)="sort.emit('member_type')"
+                         [label]="['clubs_label_member_type' | cpI18n]">
       </cp-sorting-header>
 
       <span class="col-4">{{ 'email' | cpI18n }}</span>
-      <span class="col-2" *ngIf="withStudentIdentifier">{{ 'student_id' | cpI18n }} </span>
-      <span [class]="withStudentIdentifier ? 'col-1' : 'col-1 offset-2'"> </span>
+      <span class="col-2"
+            *ngIf="withStudentIdentifier">{{ 'student_id' | cpI18n }} </span>
+      <span [class]="withStudentIdentifier ? 'col-1' : 'col-1 offset-2'">
+      </span>
     </div>
   </li>
 
-  <li class="cp-form__item col-12" *ngFor="let member of members">
+  <li class="cp-form__item col-12"
+      *ngFor="let member of members">
     <div class="row">
       <span class="col-3 text-truncate members__thumbnail">
-        <img [src]="member.avatar_url" cp-image rounded small fitCover />
+        <img [src]="member.avatar_url"
+             cp-image
+             rounded
+             small
+             fitCover />
         <strong>
-          <button
-            (click)="onMemberClick(member)"
-            class="cpbtn cpbtn--link-dark member__title"
-            [ngClass]="[canEdit ? '' : 'cpbtn--no-hover']"
-          >
+          <button (click)="onMemberClick(member)"
+                  class="cpbtn cpbtn--link-dark member__title"
+                  [ngClass]="[canEdit ? '' : 'cpbtn--no-hover']">
             {{ member.firstname }} {{ member.lastname }}
           </button>
         </strong>
         <br />
-        <span class="text-muted" *ngIf="member.member_type === executiveLeaderType">
+        <span class="text-muted"
+              *ngIf="member.member_type === executiveLeaderType">
           {{ member.member_position }}
         </span>
       </span>
@@ -53,17 +55,19 @@
         {{ member.email }}
       </span>
 
-      <span class="col-2 text-truncate" *ngIf="withStudentIdentifier">
+      <span class="col-2 text-truncate"
+            *ngIf="withStudentIdentifier">
         {{ member.student_identifier }}
       </span>
 
-      <span
-        *ngIf="canDelete"
-        (click)="deleteClick.emit(member)"
-        [class.offset-2]="!withStudentIdentifier"
-        class="col-1 float-right text-right delete-member hover"
-      >
-        &times;
+      <span class="col-1 text-right">
+        <button type="button"
+                *ngIf="canDelete"
+                (click)="deleteClick.emit(member)"
+                [class.offset-2]="!withStudentIdentifier"
+                class="delete-member unstyled-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </span>
     </div>
   </li>

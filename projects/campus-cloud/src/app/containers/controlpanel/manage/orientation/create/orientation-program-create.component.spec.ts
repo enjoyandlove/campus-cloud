@@ -2,13 +2,13 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of as observableOf } from 'rxjs';
-import { CPSession } from './../../../../../session';
-import { OrientationProgramCreateComponent } from './orientation-program-create.component';
-import { mockSchool } from '../../../../../session/mock/school';
-import { CPI18nService } from '../../../../../shared/services/i18n.service';
+
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { OrientationModule } from '../orientation.module';
-import { OrientationService } from '../orientation.services';
 import { ProgramMembership } from '../orientation.status';
+import { OrientationService } from '../orientation.services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { OrientationProgramCreateComponent } from './orientation-program-create.component';
 
 class MockOrientationService {
   dummy;
@@ -42,11 +42,9 @@ describe('OrientationProgramCreateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [OrientationModule],
+      imports: [CPTestModule, OrientationModule],
       providers: [
-        CPSession,
         FormBuilder,
-        CPI18nService,
         { provide: Router, useClass: RouterMock },
         { provide: OrientationService, useClass: MockOrientationService }
       ]

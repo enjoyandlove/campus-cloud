@@ -5,10 +5,10 @@ import { of as observableOf } from 'rxjs';
 
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
-import { CPSession } from '../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { DealsDeleteComponent } from './deals-delete.component';
-import { mockSchool } from '../../../../../session/mock/school';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 
 class MockDealsService {
   dummy;
@@ -28,13 +28,8 @@ describe('DealsDeleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [DealsModule, RouterTestingModule],
-      providers: [
-        CPSession,
-        CPI18nService,
-        CPTrackingService,
-        { provide: DealsService, useClass: MockDealsService }
-      ]
+      imports: [DealsModule, RouterTestingModule, CPTestModule],
+      providers: [CPTrackingService, { provide: DealsService, useClass: MockDealsService }]
     })
       .compileComponents()
       .then(() => {

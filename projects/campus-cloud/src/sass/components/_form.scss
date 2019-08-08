@@ -41,7 +41,7 @@
 
   li,
   &__header {
-    padding: 17px 24px;
+    padding: 14px 21px;
     border-bottom: 1px solid $border-color;
 
     &:first-child {
@@ -52,7 +52,10 @@
     }
 
     > .row {
-      line-height: 1;
+      // line-height: 1;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
     }
   }
 }

@@ -6,17 +6,11 @@ import { of } from 'rxjs';
 
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
-import { RootStoreModule } from '../../../../../store';
+import { RootStoreModule } from '@campus-cloud/store';
 import { EventUtilService } from '../events.utils.service';
 import { EventsExcelComponent } from './events-excel.component';
-import { configureTestSuite } from '../../../../../shared/tests';
-import {
-  CPI18nService,
-  AdminService,
-  StoreService,
-  FileUploadService
-} from '../../../../../shared/services';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { AdminService, StoreService, FileUploadService } from '@campus-cloud/shared/services';
 
 class MockService {
   dummy;
@@ -48,16 +42,15 @@ describe('EventsExcelComponent', () => {
       TestBed.configureTestingModule({
         imports: [
           FormsModule,
+          CPTestModule,
           EventsModule,
           RootStoreModule,
           HttpClientModule,
           RouterTestingModule
         ],
         providers: [
-          CPSession,
           AdminService,
           StoreService,
-          CPI18nService,
           EventUtilService,
           FileUploadService,
           {

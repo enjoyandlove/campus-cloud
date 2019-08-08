@@ -5,19 +5,16 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 
-import { CPSession } from '@campus-cloud/session';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { BannerModule } from '../../../banner.module';
 import { BannerUploadComponent } from './banner-upload.component';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('BannerUploadComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        providers: [CPSession, CPI18nService],
-        imports: [BannerModule, HttpClientTestingModule, RouterTestingModule]
+        imports: [CPTestModule, BannerModule, HttpClientTestingModule, RouterTestingModule]
       });
       await TestBed.compileComponents();
     })()

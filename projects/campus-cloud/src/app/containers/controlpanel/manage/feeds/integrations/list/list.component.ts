@@ -119,21 +119,21 @@ export class WallsIntegrationsListComponent extends BaseComponent implements OnI
   onLaunchCreateModal() {
     this.showCreateModal = true;
 
-    setTimeout(() => $('#integrationCreate').modal());
+    setTimeout(() => $('#integrationCreate').modal({ keyboard: true, focus: true }));
   }
 
   onLaunchEditModal(integration: IWallsIntegration) {
     this.showEditModal = true;
     this.selectedIntegration = integration;
 
-    setTimeout(() => $('#integrationEdit').modal());
+    setTimeout(() => $('#integrationEdit').modal({ keyboard: true, focus: true }));
   }
 
   onLaunchDeleteModal(integration: IWallsIntegration) {
     this.showDeleteModal = true;
     this.selectedIntegration = integration;
 
-    setTimeout(() => $('#integrationDelete').modal());
+    setTimeout(() => $('#integrationDelete').modal({ keyboard: true, focus: true }));
   }
 
   onDeleteClick(integration: IWallsIntegration) {

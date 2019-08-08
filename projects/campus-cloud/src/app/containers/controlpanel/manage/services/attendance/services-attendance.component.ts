@@ -75,9 +75,11 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
     search = this.providerUtils.addSearchParams(search, this.state);
 
-    this.serviceService.getServiceAttendanceSummary(this.serviceId, search).subscribe((res) => {
-      this.service = { ...this.service, ...res };
-    });
+    this.serviceService
+      .getServiceAttendanceSummary(this.serviceId, search)
+      .subscribe((res: any) => {
+        this.service = { ...this.service, ...res };
+      });
   }
 
   redirectOnDisabledAttendance() {
@@ -95,7 +97,7 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
 
     setTimeout(
       () => {
-        $('#createProvider').modal();
+        $('#createProvider').modal({ keyboard: true, focus: true });
       },
 
       1

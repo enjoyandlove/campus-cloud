@@ -2,13 +2,15 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span i18n
-          ><strong>{{ 'confirm' | cpI18n }}</strong></span
-        >
+        <span><strong>{{ 'confirm' | cpI18n }}</strong></span>
 
-        <span (click)="doTeardown()" class="float-right hover cpmodal__header__close">
-          &times;
-        </span>
+        <button
+          type="button"
+          aria-label="close"
+          (click)="doTeardown()"
+          class="float-right hover cpmodal__header__close unstyled-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
   </div>
@@ -16,7 +18,7 @@
   <div class="cpmodal__body">
     <div class="row">
       <div class="col-12 text-center">
-        <p class="title" i18n>
+        <p class="title">
           {{ title }}
         </p>
         <p class="text-muted">
@@ -30,11 +32,11 @@
   <div class="cpmodal__footer">
     <div class="row">
       <div class="col-6 offset-6 text-right">
-        <button type="button" class="cpbtn cpbtn--cancel" (click)="doTeardown()" i18n>
+        <button type="button" class="cpbtn cpbtn--cancel" (click)="doTeardown()">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button type="button" (click)="onCofirm()" class="cpbtn cpbtn--primary" i18n>
+        <button type="button" (click)="onCofirm()" class="cpbtn cpbtn--primary">
           {{ 'yes_i_am_sure' | cpI18n }}
         </button>
       </div>

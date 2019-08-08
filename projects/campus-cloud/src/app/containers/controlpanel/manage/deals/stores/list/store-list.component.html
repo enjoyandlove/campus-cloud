@@ -12,8 +12,7 @@
     <cp-no-content
       class="no-content"
       *ngIf="!state.stores.length"
-      [noContentText]="cpI18n.translate('stores_no_results_found')"
-    >
+      [noContentText]="cpI18n.translate('stores_no_results_found')">
     </cp-no-content>
 
     <div *ngIf="state.stores.length">
@@ -26,8 +25,7 @@
               (click)="doSort('name')"
               [label]="sortingLabels.name"
               [sortField]="state.sort_field"
-              [sortDirection]="state.sort_direction"
-            >
+              [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
             <span class="col-1 hover"></span>
@@ -37,14 +35,13 @@
         <li class="cp-form__item col-12" *ngFor="let store of state.stores">
           <div class="row">
             <span class="col-11 text-truncate cp-form__thumbnail">
-              <img [src]="store.logo_url" class="rounded img-fit-cover" />
+              <img [alt]="'t_shared_img_alt' | cpI18n" [src]="store.logo_url" class="rounded img-fit-cover" />
               <span
                 cpTracker
                 [eventData]="eventData"
                 data-toggle="modal"
                 data-target="#editModal"
-                (click)="launchEditModal = true; selectedStore = store"
-              >
+                (click)="launchEditModal = true; selectedStore = store">
                 <strong class="hover">
                   {{ store.name }}
                 </strong>
@@ -52,14 +49,14 @@
               </span>
               {{ store.description }}
             </span>
-            <span
+            <button
+              type="button"
               (click)="deleteStore = store; launchDeleteModal = true"
               data-toggle="modal"
               data-target="#deleteModal"
-              class="col-1 hover text-truncate delete-store text-center"
-            >
-              &times;
-            </span>
+              class="col-1 hover text-truncate delete-store text-center unstyled-button">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
         </li>
       </ul>
@@ -69,8 +66,7 @@
         [pagePrev]="pagePrev"
         [pageNumber]="pageNumber"
         (next)="onPaginationNext()"
-        (previous)="onPaginationPrevious()"
-      >
+        (previous)="onPaginationPrevious()">
       </cp-pagination>
     </div>
   </div>

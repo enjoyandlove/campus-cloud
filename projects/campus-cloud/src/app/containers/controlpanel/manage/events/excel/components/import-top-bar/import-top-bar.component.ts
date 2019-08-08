@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
+import { ApiService } from '@campus-cloud/base/services';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
 import { CPImageUploadComponent } from '@campus-cloud/shared/components';
 import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
@@ -29,13 +30,14 @@ export class EventsImportTopBarComponent implements OnInit {
   imageError;
 
   constructor(
+    private api: ApiService,
     public store: Store<ISnackbar>,
     private fileUploadService: FileUploadService,
     public cpI18n: CPI18nService
   ) {}
 
   onFileUpload(file) {
-    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
+    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService, this.api);
     const promise = imageUpload.onFileUpload(file, true);
 
     promise

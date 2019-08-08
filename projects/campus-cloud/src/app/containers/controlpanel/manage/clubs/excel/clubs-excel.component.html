@@ -23,26 +23,24 @@
 
               <li
                 class="cp-form__item row"
-                *ngFor="let club of form.controls.clubs.controls; let i = index"
-              >
+                *ngFor="let club of form.controls.clubs.controls; let i = index">
                 <div [formGroupName]="i" class="col-12">
                   <div class="row">
                     <span class="col-4 text-truncate clubs__thumbnail">
                       <div class="avatar float-left">
-                        <span
-                          class="deleteButton hover"
+                        <button
+                          type="button"
                           (click)="onRemoveImage(i)"
                           *ngIf="club.controls['logo_url'].value"
-                        >
+                          class="deleteButton hover unstyled-button">
                           &times;
-                        </span>
+                        </button>
                         <cp-upload-button
                           theme="small"
                           [id]="['upload_club_' + i]"
                           [isRequired]="formError && club.controls.logo_url.hasError('required')"
                           (fileUpload)="onImageUpload($event, i)"
-                          *ngIf="!club.controls['logo_url'].value"
-                        >
+                          *ngIf="!club.controls['logo_url'].value">
                         </cp-upload-button>
                         <img
                           class="rounded img-fit-cover"

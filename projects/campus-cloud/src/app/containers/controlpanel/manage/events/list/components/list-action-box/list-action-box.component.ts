@@ -178,7 +178,7 @@ export class ListActionBoxComponent implements OnInit {
   }
 
   launchModal() {
-    $('#excelEventsModal').modal();
+    $('#excelEventsModal').modal({ keyboard: true, focus: true });
   }
 
   ngOnInit() {

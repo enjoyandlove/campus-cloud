@@ -121,11 +121,18 @@ export class ChangePasswordComponent implements OnInit, OnDestroy {
     this.accountService
       .resetPassword(body, this.session.g.get('user').id)
       .toPromise()
-      .then((_) => {
-        this.form.reset();
-        this.isCompleted = true;
-        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.CHANGE_PASSWORD);
-      });
+      .then(
+        () => {
+          this.form.reset();
+          this.isCompleted = true;
+          this.cpTracking.amplitudeEmitEvent(amplitudeEvents.CHANGE_PASSWORD);
+        },
+        () => {
+          this.errorService.handleError({
+            reason: this.cpI18n.translate('something_went_wrong')
+          });
+        }
+      );
   }
 
   passwordsMatch() {

@@ -4,18 +4,17 @@ import { HttpParams } from '@angular/common/http';
 import { of as observableOf } from 'rxjs';
 import { StoreModule } from '@ngrx/store';
 
-import { CPSession } from '@campus-cloud/session';
 import { mockFilter } from '../../tests/mock';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import mockSession from '@campus-cloud/session/mock/session';
-import { baseReducers } from '@campus-cloud/store/base/reducers';
+import { CPSession } from '@campus-cloud/session';
 import { ServicesModule } from '../../../services.module';
 import { ProvidersService } from '../../../providers.service';
-import { CPTrackingService } from '@campus-cloud/shared/services/tracking.service';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { baseReducers } from '@campus-cloud/store/base/reducers';
+import { mockUser } from '@projects/campus-cloud/src/app/session/mock';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { ProvidersUtilsService } from '../../../providers.utils.service';
 import { ServicesProvidersListComponent } from './providers-list.component';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 class MockService {
   dummy;
@@ -62,6 +61,7 @@ describe('ProvidersListComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [
+          CPTestModule,
           ServicesModule,
           RouterTestingModule,
           StoreModule.forRoot({
@@ -70,11 +70,8 @@ describe('ProvidersListComponent', () => {
           })
         ],
         providers: [
-          CPI18nService,
-          CPTrackingService,
           ServicesUtilsService,
           ProvidersUtilsService,
-          { provide: CPSession, useValue: mockSession },
           { provide: ProvidersService, useClass: MockService }
         ]
       });
@@ -85,12 +82,17 @@ describe('ProvidersListComponent', () => {
 
   let spy;
   let assessSpy;
+  let session: CPSession;
   let component: ServicesProvidersListComponent;
   let fixture: ComponentFixture<ServicesProvidersListComponent>;
 
   beforeEach(async(() => {
     fixture = TestBed.createComponent(ServicesProvidersListComponent);
     component = fixture.componentInstance;
+
+    session = TestBed.get(CPSession);
+    session.g.set('user', mockUser);
+    session.g.set('school', mockSchool);
 
     component.service = {
       ...component.service,

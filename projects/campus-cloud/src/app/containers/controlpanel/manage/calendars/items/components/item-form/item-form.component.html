@@ -4,10 +4,11 @@
       <div class="cp-card">
         <div class="row item-details">
           <div class="col-12">
-            <p class="title" i18n>{{ 'calendars_item_details' | cpI18n }}</p>
+            <p class="title">{{ 'calendars_item_details' | cpI18n }}</p>
             <div class="form-group margin-top">
-              <label i18n>{{ 'calendars_item_name_label' | cpI18n }}</label>
+              <label for="title">{{ 'calendars_item_name_label' | cpI18n }}</label>
               <input
+                id="title"
                 type="text"
                 class="form-control"
                 formControlName="title"
@@ -17,21 +18,17 @@
 
             <div class="row form-group">
               <div class="col-6">
-                <label i18n>{{ 'start_date' | cpI18n }}</label>
+                <label>{{ 'start_date' | cpI18n }}</label>
                 <cp-datepicker
                   [options]="startdatePickerOpts"
-                  [error]="formError && form.controls['start'].hasError('required')"
-                  (dateSet)="setStart($event)"
-                >
+                  [error]="formError && form.controls['start'].hasError('required')">
                 </cp-datepicker>
               </div>
               <div class="col-6">
-                <label i18n>{{ 'end_date' | cpI18n }}</label>
+                <label>{{ 'end_date' | cpI18n }}</label>
                 <cp-datepicker
                   [options]="enddatePickerOpts"
-                  [error]="formError && form.controls['end'].hasError('required')"
-                  (dateSet)="setEnd($event)"
-                >
+                  [error]="formError && form.controls['end'].hasError('required')">
                 </cp-datepicker>
               </div>
             </div>
@@ -41,15 +38,13 @@
                 <cp-checkbox
                   class="checkbox"
                   (toggle)="onAllDayToggle($event)"
-                  [label]="cpI18n.translate('all_day')"
-                  [isChecked]="form.controls['is_all_day'].value"
-                >
+                  [label]="cpI18n.translate('all_day')">
                 </cp-checkbox>
               </div>
             </div>
 
             <div class="form-group">
-              <label i18n>{{ 'calendars_item_description_label' | cpI18n }}</label>
+              <label>{{ 'calendars_item_description_label' | cpI18n }}</label>
               <textarea formControlName="description"> </textarea>
             </div>
 
@@ -58,9 +53,7 @@
                 <cp-checkbox
                   class="checkbox"
                   [isChecked]="showLocationDetails"
-                  (toggle)="onLocationToggle($event)"
-                  [label]="cpI18n.translate('t_shared_label_location_toggle')"
-                >
+                  (toggle)="onLocationToggle($event)">
                 </cp-checkbox>
               </div>
             </div>
@@ -68,15 +61,13 @@
             <div *ngIf="showLocationDetails">
               <div class="row">
                 <div class="col-12">
-                  <label i18n>{{ 'location' | cpI18n }}</label>
+                  <label>{{ 'location' | cpI18n }}</label>
                   <div class="row form-group">
                     <div class="col-12">
                       <cp-place-autocomplete
                         [newAddress]="newAddress"
                         (backToDefault)="onResetMap()"
-                        (placeChange)="onPlaceChange($event)"
-                        [defaultValue]="form.controls.location.value"
-                      >
+                        (placeChange)="onPlaceChange($event)">
                       </cp-place-autocomplete>
                     </div>
                   </div>
@@ -88,9 +79,7 @@
                   <div class="maps">
                     <cp-maps
                       [center]="mapCenter"
-                      [drawMarker]="drawMarker"
-                      (mapSelection)="onMapSelection($event)"
-                    >
+                      [drawMarker]="drawMarker">
                     </cp-maps>
                   </div>
                 </div>
@@ -107,7 +96,7 @@
           <div class="row">
             <div class="col-12">
               <div class="text-right">
-                <label class="error" *ngIf="formError" i18n>
+                <label class="error" *ngIf="formError">
                   <span>&#x26A0;</span>
                   {{
                     isDateError
@@ -117,9 +106,7 @@
                 </label>
                 <a
                   [routerLink]="['/manage/calendars/' + calendarId]"
-                  class="cpbtn cpbtn--cancel"
-                  i18n
-                >
+                  class="cpbtn cpbtn--cancel">
                   {{ 'cancel' | cpI18n }}
                 </a>
                 <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>

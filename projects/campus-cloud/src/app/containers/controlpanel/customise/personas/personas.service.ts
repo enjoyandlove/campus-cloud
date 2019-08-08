@@ -1,42 +1,36 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, startWith, catchError } from 'rxjs/operators';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { sortBy } from 'lodash';
 
-import { API } from '@campus-cloud/config/api';
-import { HTTPService } from '@campus-cloud/base/http.service';
-import { ICampusGuide } from './sections/section.interface';
 import { ITile } from './tiles/tile.interface';
+import { ApiService } from '@campus-cloud/base/services';
+import { ICampusGuide } from './sections/section.interface';
 
 @Injectable()
-export class PersonasService extends HTTPService {
-  constructor(http: HttpClient, router: Router) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, PersonasService.prototype);
-  }
+export class PersonasService {
+  constructor(private api: ApiService) {}
 
   getCampusLinks(search: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LINKS}`;
     const url = `${common}/1;3000`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getPersonas(startRange: number, endRange: number, search: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PERSONAS}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search, true);
+    return this.api.get(url, search, true);
   }
 
   getServices(search: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES}`;
     const url = `${common}/1;3000`;
 
-    return super.get(url, search, true).pipe(
+    return this.api.get(url, search, true).pipe(
       map((services: any[]) => {
         return [
           { label: '---', value: null },
@@ -57,66 +51,64 @@ export class PersonasService extends HTTPService {
   }
 
   createCampusLink(body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LINKS}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LINKS}/`;
 
-    return super.post(url, body);
+    return this.api.post(url, body);
   }
 
   createGuideTile(body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILES}/`;
 
-    return super.post(url, body);
+    return this.api.post(url, body);
   }
 
   updateSectionTileCategory(tileCategoryId: number, body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.GUIDE_TILE_CATEGORY
-    }/${tileCategoryId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILE_CATEGORY}/${tileCategoryId}`;
 
-    return super.update(url, body, null, true);
+    return this.api.update(url, body, null, true);
   }
 
   createPersona(body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PERSONAS}/`;
 
-    return super.post(url, body);
+    return this.api.post(url, body);
   }
 
   getPersonaById(personaId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/${personaId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PERSONAS}/${personaId}`;
 
-    return super.get(url, search, true);
+    return this.api.get(url, search, true);
   }
 
   deletePersonaById(personaId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/${personaId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PERSONAS}/${personaId}`;
 
-    return super.delete(url, search, true);
+    return this.api.delete(url, search, true);
   }
 
   deleteTileById(tileId, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/${tileId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILES}/${tileId}`;
 
-    return super.delete(url, search, true);
+    return this.api.delete(url, search, true);
   }
 
   updatePersona(personaId: number, search: HttpParams, body) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/${personaId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PERSONAS}/${personaId}`;
 
-    return super.update(url, body, search, true);
+    return this.api.update(url, body, search, true);
   }
 
   getTilesByPersona(search: HttpParams): Observable<ITile[]> {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILES}/1;90000`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILES}/1;90000`;
 
-    return super.get(url, search).pipe(map((res: ITile[]) => sortBy(res, (t: any) => t.rank)));
+    return this.api.get(url, search).pipe(map((res: ITile[]) => sortBy(res, (t: any) => t.rank)));
   }
 
   getTilesCategories(search: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.GUIDE_TILE_CATEGORY}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILE_CATEGORY}`;
     const url = `${common}/1;90000`;
 
-    return super.get(url, search).pipe(
+    return this.api.get(url, search).pipe(
       map((categories: ICampusGuide[]) => {
         categories = categories.filter((c) => c.id !== 0);
 

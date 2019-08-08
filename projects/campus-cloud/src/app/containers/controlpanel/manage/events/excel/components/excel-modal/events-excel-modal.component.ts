@@ -1,12 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
-import { isDev } from '@campus-cloud/config/env';
+import { ISnackbar } from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
+import { EnvService } from '@campus-cloud/config/env';
 import { EventsService } from '../../../events.service';
-import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { EventUtilService } from '../../../events.utils.service';
 import { EventsComponent } from '../../../list/base/events.component';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { FileUploadService, CPI18nService, ModalService } from '@campus-cloud/shared/services';
 
 @Component({
@@ -31,18 +33,21 @@ export class EventsExcelModalComponent extends EventsComponent implements OnInit
 
   constructor(
     private router: Router,
+    private env: EnvService,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: EventsService,
+    public store: Store<ISnackbar>,
     private utils: EventUtilService,
     public modalService: ModalService,
     private fileService: FileUploadService
   ) {
-    super(session, cpI18n, service, modalService);
+    super(session, cpI18n, service, modalService, store);
   }
 
   parser(file) {
-    const url = !isDev ? '/events/excel' : 'http://localhost:8000/events/excel';
+    const url =
+      this.env.name !== 'development' ? '/events/excel' : 'http://localhost:8000/events/excel';
 
     return this.fileService
       .uploadFile(file, url)
@@ -70,9 +75,10 @@ export class EventsExcelModalComponent extends EventsComponent implements OnInit
   ngOnInit() {
     this.fileName = 'mass_event_invite_sample.csv';
 
-    const templateUrl = isDev
-      ? `/assets/templates/${this.fileName}`
-      : `${environment.root}assets/templates/${this.fileName}`;
+    const templateUrl =
+      this.env.name === 'development'
+        ? `/assets/templates/${this.fileName}`
+        : `${environment.root}assets/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,

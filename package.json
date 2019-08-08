@@ -6,23 +6,20 @@
     "node": ">=12.4.0"
   },
   "scripts": {
-    "start": "ng serve",
     "i18n": "phraseapp pull",
     "precommit": "pretty-quick --staged",
-    "lint": "node_modules/.bin/ng lint",
+    "lint": "node_modules/@angular/cli/bin/ng lint",
+    "start": "node_modules/@angular/cli/bin/ng serve",
     "analyze": "webpack-bundle-analyzer dist/stats.json",
-    "afterbuild": "rimraf dist && mv _dist dist && gzipper ./dist",
     "generate-build-file": "node scripts/campus-cloud/build.js",
-    "production-usa": "yarn run generate-build-file && node --max_old_space_size=8192 node_modules/.bin/ng build --c=production_usa && yarn run afterbuild",
-    "production-canada": "yarn run generate-build-file && node --max_old_space_size=8192 node_modules/.bin/ng build --c=production_canada && yarn run afterbuild",
-    "build:prod-usa": "yarn run production-usa",
-    "build:prod-can": "yarn run production-canada",
-    "build:staging": "yarn run generate-build-file && node --max_old_space_size=8192 node_modules/.bin/ng build --c=staging && yarn run afterbuild",
-    "test": "node_modules/@angular/cli/bin/ng test campus-cloud --watch=false --codeCoverage --sourceMap=false"
+    "postbuild": "rimraf dist && mv _dist dist && gzipper ./dist",
+    "test": "node_modules/@angular/cli/bin/ng test campus-cloud --watch=false --codeCoverage --sourceMap=false",
+    "build": "yarn run generate-build-file && node --max_old_space_size=8192 node_modules/.bin/ng build --c=production"
   },
   "author": "andres@oohlalamobile.com",
   "license": "ISC",
   "dependencies": {
+    "@angular/animations": "8.2.0",
     "@angular/cdk": "8.0.1",
     "@angular/common": "~8.0.1",
     "@angular/compiler": "~8.0.1",

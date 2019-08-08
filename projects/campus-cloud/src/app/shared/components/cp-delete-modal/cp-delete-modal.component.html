@@ -2,13 +2,11 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span
-          ><strong class="js_title">{{ modalTitle }}</strong></span
-        >
+        <span><strong class="js_title">{{ modalTitle }}</strong></span>
 
-        <span (click)="resetModal()" class="float-right hover cpmodal__header__close">
+        <button (click)="resetModal()" class="float-right hover cpmodal__header__close unstyled-button">
           &times;
-        </span>
+        </button>
       </div>
     </div>
   </div>
@@ -34,13 +32,11 @@
           <div
             [cpTarget]="['chechbox_' + index]"
             class="row cpmodal__body__warning__item"
-            *ngFor="let warning of _warnings; index as index"
-          >
+            *ngFor="let warning of _warnings; index as index">
             <cp-checkbox
               class="col-12"
               [label]="warning.label"
-              (toggle)="onWarningToogle($event, index)"
-            >
+              (toggle)="onWarningToogle($event, index)">
             </cp-checkbox>
           </div>
         </ng-container>
@@ -55,8 +51,7 @@
           type="button"
           cpTarget="cancel"
           (click)="resetModal()"
-          class="cpbtn cpbtn--cancel js_cancel_button"
-        >
+          class="cpbtn cpbtn--cancel js_cancel_button">
           {{ 'cancel' | cpI18n }}
         </button>
 
@@ -65,8 +60,7 @@
           cpTarget="delete"
           (click)="onDeleteClick()"
           [disabled]="disableSubmit"
-          class="cpbtn cpbtn--danger js_delete_button"
-        >
+          class="cpbtn cpbtn--danger js_delete_button">
           {{ 'delete' | cpI18n }}
         </button>
       </div>

@@ -2,13 +2,14 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span
-          ><strong>{{ 'lists_delete_modal_title' | cpI18n }}</strong></span
-        >
+        <span><strong>{{ 'lists_delete_modal_title' | cpI18n }}</strong></span>
 
-        <span data-dismiss="modal" class="float-right hover cpmodal__header__close">
+        <button
+          type="button"
+          data-dismiss="modal"
+          class="float-right hover cpmodal__header__close unstyled-button">
           &times;
-        </span>
+        </button>
       </div>
     </div>
   </div>
@@ -55,9 +56,7 @@
             type="button"
             data-dismiss="modal"
             (click)="resetModal()"
-            class="cpbtn cpbtn--primary"
-            i18n
-          >
+            class="cpbtn cpbtn--primary">
             {{ 'ok' | cpI18n }}
           </button>
         </div>

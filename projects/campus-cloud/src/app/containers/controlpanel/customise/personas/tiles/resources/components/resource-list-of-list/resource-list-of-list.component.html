@@ -18,13 +18,12 @@
         <div
           class="list__items"
           [sortablejs]="state.resources"
-          [sortablejsOptions]="sortableOptions"
-        >
+          [sortablejsOptions]="sortableOptions">
           <div class="row list__item" *ngFor="let resource of state.resources">
             <div class="col-11 text-truncate" (click)="onEditModal(resource)">
               <i class="material-icons">drag_handle</i>
               <span class="image">
-                <img [src]="resource.img_url" class="img-fluid rounded" />
+                <img [alt]="'t_shared_img_alt' | cpI18n" [src]="resource.img_url" class="img-fluid rounded" />
               </span>
               <span class="name" [attr.title]="resource.name" [class.disabled]="resource.disabled">
                 {{ resource.name }}
@@ -32,13 +31,13 @@
                   #tooltip
                   class="material-icons"
                   *ngIf="resource.disabled"
-                  [attr.title]="cpI18n.translate('t_personas_tile_locked_tooltip')"
-                  >lock</i
-                >
+                  [attr.title]="cpI18n.translate('t_personas_tile_locked_tooltip')">lock</i>
               </span>
             </div>
             <div class="col-1" (click)="onDelete(resource)">
-              <span class="close-button hover float-right">&times;</span>
+              <button type="button" class="close-button hover float-right unstyled-button">
+                &times;
+              </button>
             </div>
           </div>
         </div>

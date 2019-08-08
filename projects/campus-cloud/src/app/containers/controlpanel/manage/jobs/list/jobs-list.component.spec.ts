@@ -7,12 +7,10 @@ import { of as observableOf } from 'rxjs';
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
 import { ManageHeaderService } from '../../utils';
-import { CPSession } from '../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { JobsListComponent } from './jobs-list.component';
-import { mockSchool } from '../../../../../session/mock/school';
-import { baseReducers } from '../../../../../store/base/reducers';
-import { CPTrackingService } from '../../../../../shared/services';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { baseReducers } from '@campus-cloud/store/base/reducers';
 
 const mockJobs = require('../mockJobs.json');
 
@@ -35,6 +33,7 @@ describe('JobsListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        CPTestModule,
         JobsModule,
         HttpClientModule,
         RouterTestingModule,
@@ -43,13 +42,7 @@ describe('JobsListComponent', () => {
           SNACKBAR: baseReducers.SNACKBAR
         })
       ],
-      providers: [
-        CPSession,
-        CPI18nService,
-        CPTrackingService,
-        ManageHeaderService,
-        { provide: JobsService, useClass: MockJobsService }
-      ]
+      providers: [ManageHeaderService, { provide: JobsService, useClass: MockJobsService }]
     })
       .compileComponents()
       .then(() => {

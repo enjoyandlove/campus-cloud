@@ -13,7 +13,6 @@ type Flag = IFeatureFlag | IWildCard;
 export interface IEnvironment {
   flags: Flag;
   root: string;
-  envName: string;
   production: boolean;
   keys?: {
     [key: string]: string;

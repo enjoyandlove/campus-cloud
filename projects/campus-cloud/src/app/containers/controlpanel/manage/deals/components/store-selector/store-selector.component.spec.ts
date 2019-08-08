@@ -6,11 +6,9 @@ import { of } from 'rxjs';
 
 import { DealsModule } from '../../deals.module';
 import { DealsService } from '../../deals.service';
-import { CPSession } from '../../../../../../session';
-import { RootStoreModule } from '../../../../../../store';
+import { RootStoreModule } from '@campus-cloud/store';
 import { StoreSelectorComponent } from './store-selector.component';
-import { configureTestSuite } from '../../../../../../shared/tests';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 class MockDealsService {
   dummy;
@@ -26,8 +24,14 @@ describe('StoreSelectorComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, RouterTestingModule, DealsModule, RootStoreModule],
-        providers: [CPSession, CPI18nService, { provide: DealsService, useClass: MockDealsService }]
+        imports: [
+          HttpClientModule,
+          RouterTestingModule,
+          DealsModule,
+          RootStoreModule,
+          CPTestModule
+        ],
+        providers: [{ provide: DealsService, useClass: MockDealsService }]
       });
       await TestBed.compileComponents();
     })()

@@ -1,11 +1,14 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Component, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
+import { EventType } from '../../event.status';
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
-import { EventType } from '../../event.status';
 import { EventsService } from '../../events.service';
+import { IHeader, ISnackbar } from '@campus-cloud/store';
+import { baseActionClass } from '@campus-cloud/store/base';
 import { CPI18nService, ModalService } from '@campus-cloud/shared/services';
 import { EventsDeleteComponent } from '@controlpanel/manage/events/delete';
 
@@ -64,7 +67,8 @@ export class EventsComponent extends BaseComponent {
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: EventsService,
-    public modalService: ModalService
+    public modalService: ModalService,
+    public store: Store<IHeader | ISnackbar>
   ) {
     super();
     this.school = this.session.g.get('school');
@@ -72,9 +76,23 @@ export class EventsComponent extends BaseComponent {
   }
 
   public fetch(stream$) {
-    super.fetchData(stream$).then((res) => {
-      this.eventState = Object.assign({}, this.eventState, { events: res.data });
-    });
+    super.fetchData(stream$).then(
+      (res) => {
+        this.eventState = {
+          ...this.eventState,
+          events: res.data
+        };
+      },
+      () => this.handleError()
+    );
+  }
+
+  handleError() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body: this.cpI18n.translate('something_went_wrong')
+      })
+    );
   }
 
   onSortList(sort) {

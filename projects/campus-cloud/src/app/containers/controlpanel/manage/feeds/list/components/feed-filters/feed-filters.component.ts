@@ -86,7 +86,7 @@ export class FeedFiltersComponent implements OnInit {
           action: 1
         }
       ]),
-      map((groupWalls) => {
+      map((groupWalls: any) => {
         const _walls = [
           {
             label: this.cpI18n.translate('campus_wall'),

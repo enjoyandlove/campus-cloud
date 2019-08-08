@@ -7,11 +7,10 @@ import { SharedModule } from '../../shared/shared.module';
 
 import { ControlPanelComponent } from './controlpanel.component';
 import { ControlPanelRoutingModule } from './controlpanel.routing.module';
-import { ControlPanelService } from './controlpanel.service';
 
 @NgModule({
   declarations: [ControlPanelComponent],
   imports: [RouterModule, ControlPanelRoutingModule, CommonModule, SharedModule],
-  providers: [ControlPanelService, AdminService, StoreService, SchoolService]
+  providers: [AdminService, StoreService, SchoolService]
 })
 export class ControlPanelModule {}

@@ -137,7 +137,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
     this.showDeleteModal = true;
     this.deleteDining = dining;
 
-    setTimeout(() => $('#diningDelete').modal());
+    setTimeout(() => $('#diningDelete').modal({ keyboard: true, focus: true }));
   }
 
   loadDining() {

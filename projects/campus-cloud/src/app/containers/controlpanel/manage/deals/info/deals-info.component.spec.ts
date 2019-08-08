@@ -7,13 +7,12 @@ import { of as observableOf } from 'rxjs';
 
 import { DealsModule } from '../deals.module';
 import { DealsService } from '../deals.service';
-import { CPSession } from '../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { DealsInfoComponent } from './deals-info.component';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
-import { baseReducers } from '../../../../../store/base/reducers';
-import { CPMapsComponent } from '../../../../../shared/components/cp-maps';
-import { CPMapsService } from '../../../../../shared/services/maps.service';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { CPMapsService } from '@campus-cloud/shared/services';
+import { baseReducers } from '@campus-cloud/store/base/reducers';
+import { CPMapsComponent } from '@campus-cloud/shared/components';
 
 const mockDeals = require('../mockDeals.json');
 
@@ -43,6 +42,7 @@ describe('DealsInfoComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         DealsModule,
+        CPTestModule,
         HttpClientModule,
         RouterTestingModule,
         StoreModule.forRoot({
@@ -51,8 +51,6 @@ describe('DealsInfoComponent', () => {
         })
       ],
       providers: [
-        CPSession,
-        CPI18nService,
         { provide: CPMapsService, useClass: MockMapService },
         { provide: DealsService, useClass: MockDealsService }
       ]

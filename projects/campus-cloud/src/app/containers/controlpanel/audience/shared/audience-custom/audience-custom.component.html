@@ -1,18 +1,23 @@
 <div class="row">
   <div class="col-12">
     <label>{{ 'audience_label_users' | cpI18n }}</label>
-    <cp-audience-users-typeahead [withChips]="withChips" (users)="users.emit($event)">
+    <cp-audience-users-typeahead [withChips]="withChips"
+                                 (users)="users.emit($event)">
     </cp-audience-users-typeahead>
   </div>
 </div>
 
 <div class="row content">
-  <div class="col-6" *ngIf="importButton">
-    <button type="button" (click)="importClick.emit()" class="cpbtn cpbtn--link cpbtn--no-padding">
+  <div class="col-6"
+       *ngIf="importButton">
+    <button type="button"
+            (click)="importClick.emit()"
+            class="cpbtn cpbtn--link cpbtn--no-padding">
       {{ 'audience_import_csv' | cpI18n }}
     </button>
   </div>
-  <div class="col-6 text-right" [class.offset-6]="!importButton">
+  <div class="col-6 text-right"
+       [class.offset-6]="!importButton">
     <cp-audience-counter [message]="message"></cp-audience-counter>
   </div>
 </div>

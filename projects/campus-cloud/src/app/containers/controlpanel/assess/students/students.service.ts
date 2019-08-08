@@ -1,55 +1,49 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { map } from 'rxjs/operators';
 
-import { API } from '../../../../config/api';
-import { HTTPService } from '@campus-cloud/base/http.service';
+import { ApiService } from '@campus-cloud/base/services';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { PersonaPermission } from './../engagement/engagement.status';
 import { IPersona } from './../../customise/personas/persona.interface';
 
 @Injectable()
-export class StudentsService extends HTTPService {
-  constructor(http: HttpClient, router: Router) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, StudentsService.prototype);
-  }
+export class StudentsService {
+  constructor(private api: ApiService) {}
 
   getLists(search: HttpParams, startRange: number, endRange: number) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.USER_LIST}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.USER_LIST}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   postAnnouncements(search: HttpParams, body: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ANNOUNCEMENT}/`;
 
-    return super.post(url, body, search);
+    return this.api.post(url, body, search);
   }
 
   getStudentById(search: HttpParams, studentId: number) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STUDENT_PROFILE}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.STUDENT_PROFILE}`;
 
     const url = `${common}/${studentId}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getEngagements(search: HttpParams, studentId: number, startRange: number, endRange: number) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STUDENT_ENGAGEMENT}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.STUDENT_ENGAGEMENT}`;
 
     const url = `${common}/${studentId}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getExperiences(search: HttpParams, startRange: number, endRange: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/${startRange};${endRange}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PERSONAS}/${startRange};${endRange}`;
 
-    return super.get(url, search).pipe(
+    return this.api.get(url, search).pipe(
       map((res: any) => res.filter((p) => p.login_requirement !== PersonaPermission.forbidden)),
       map((personas: IPersona[]) =>
         personas.map((p) => {
@@ -63,10 +57,10 @@ export class StudentsService extends HTTPService {
   }
 
   getStudentsByList(search: HttpParams, startRange: number, endRange: number) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STUDENT_PROFILE}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.STUDENT_PROFILE}`;
 
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 }

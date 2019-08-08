@@ -5,12 +5,11 @@ import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
 import { DealsStoreService } from '../store.service';
-import { CPSession } from '../../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { StoreListComponent } from './store-list.component';
+import { mockSchool } from '@campus-cloud/session/mock/school';
+import { baseReducers } from '@campus-cloud/store/base/reducers';
 import { StoreModule as DealsStoreModule } from '../store.module';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { baseReducers } from '../../../../../../store/base/reducers';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 const mockStores = require('../mockStores.json');
 
@@ -33,6 +32,7 @@ describe('DealsStoreListComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
+        CPTestModule,
         DealsStoreModule,
         RouterTestingModule,
         StoreModule.forRoot({
@@ -40,11 +40,7 @@ describe('DealsStoreListComponent', () => {
           SNACKBAR: baseReducers.SNACKBAR
         })
       ],
-      providers: [
-        CPSession,
-        CPI18nService,
-        { provide: DealsStoreService, useClass: MockStoreService }
-      ]
+      providers: [{ provide: DealsStoreService, useClass: MockStoreService }]
     })
       .compileComponents()
       .then(() => {

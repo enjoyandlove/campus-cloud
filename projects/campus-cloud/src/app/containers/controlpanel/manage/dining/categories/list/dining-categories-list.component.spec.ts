@@ -6,14 +6,11 @@ import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockSchool } from '@campus-cloud/session/mock/school';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { DiningCategoriesListComponent } from './dining-categories-list.component';
 import { mockCategories } from '@campus-cloud/libs/locations/common/categories/tests';
 import { CategoryTypePipe } from '@campus-cloud/libs/locations/common/categories/pipes';
-import { DiningCategoriesListComponent } from './dining-categories-list.component';
 import { CategoriesActionBoxComponent } from '@campus-cloud/libs/locations/common/categories/components';
 
 describe('DiningCategoriesListComponent', () => {
@@ -22,8 +19,7 @@ describe('DiningCategoriesListComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService],
+        imports: [CPTestModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
         declarations: [
           DiningCategoriesListComponent,
           CategoryTypePipe,

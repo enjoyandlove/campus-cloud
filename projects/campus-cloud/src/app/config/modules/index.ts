@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,6 +23,7 @@ export const APP_MODULES = [
   ReactiveFormsModule,
   ControlPanelModule,
   TopLevelRoutesModule,
+  BrowserAnimationsModule,
   AuthModule,
   StoreDevtoolsModule.instrument({
     maxAge: 25,

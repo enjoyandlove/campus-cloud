@@ -98,7 +98,7 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
     public modalService: ModalService,
     public cpTracking: CPTrackingService
   ) {
-    super(session, cpI18n, service, modalService);
+    super(session, cpI18n, service, modalService, storeHeader);
   }
 
   buildHeader() {
