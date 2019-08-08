@@ -1,24 +1,20 @@
 <ul class="events cp-form">
   <li class="cp-form__header">
     <div class="row">
-      <cp-sorting-header
-        class="col-4"
-        [label]="sortingLabels.name"
-        sortLabel="title"
-        (click)="doSort('title')"
-        [sortField]="state.sort_field"
-        [sortDirection]="state.sort_direction"
-      >
+      <cp-sorting-header class="col-4"
+                         [label]="sortingLabels.name"
+                         sortLabel="title"
+                         (click)="doSort('title')"
+                         [sortField]="state.sort_field"
+                         [sortDirection]="state.sort_direction">
       </cp-sorting-header>
 
-      <cp-sorting-header
-        class="col-2"
-        [label]="sortingLabels.end_date"
-        sortLabel="end"
-        (click)="doSort('end')"
-        [sortField]="state.sort_field"
-        [sortDirection]="state.sort_direction"
-      >
+      <cp-sorting-header class="col-2"
+                         [label]="sortingLabels.end_date"
+                         sortLabel="end"
+                         (click)="doSort('end')"
+                         [sortField]="state.sort_field"
+                         [sortDirection]="state.sort_direction">
       </cp-sorting-header>
 
       <span class="col-2">{{ 't_shared_checkins' | cpI18n }}</span>
@@ -27,32 +23,28 @@
     </div>
   </li>
 
-  <li class="cp-form__item" *ngFor="let event of events">
+  <li class="cp-form__item"
+      *ngFor="let event of events; index as index">
     <div class="row">
       <span class="col-4 text-truncate events__thumbnail">
-        <img
-          class="rounded img-fit-cover"
-          [src]="event.poster_thumb_url ? event.poster_thumb_url : event.store_logo_url"
-        />
+        <img class="rounded img-fit-cover"
+             [alt]="'t_shared_img_alt' | cpI18n: index + 1"
+             [src]="event.poster_thumb_url ? event.poster_thumb_url : event.store_logo_url" />
         <strong>
-          <a
-            cpTracker
-            [eventData]="eventData"
-            class="event__title"
-            [routerLink]="[event.id]"
-            queryParamsHandling="merge"
-            *ngIf="event.event_attendance === 1"
-          >
+          <a cpTracker
+             [eventData]="eventData"
+             class="event__title"
+             [routerLink]="[event.id]"
+             queryParamsHandling="merge"
+             *ngIf="event.event_attendance === 1">
             {{ event.title }}
           </a>
-          <a
-            cpTracker
-            [eventData]="eventData"
-            class="event__title"
-            queryParamsHandling="merge"
-            [routerLink]="[event.id + '/info']"
-            *ngIf="event.event_attendance === 0"
-          >
+          <a cpTracker
+             [eventData]="eventData"
+             class="event__title"
+             queryParamsHandling="merge"
+             [routerLink]="[event.id + '/info']"
+             *ngIf="event.event_attendance === 0">
             {{ event.title }}
           </a>
         </strong>
@@ -68,19 +60,19 @@
 
       <span class="col-3 text-truncate">
         <span *ngIf="event.rating_scale_maximum > -1">
-          <cp-stars [maxRate]="event.rating_scale_maximum" [avgRate]="event.avg_rating_percent">
+          <cp-stars [maxRate]="event.rating_scale_maximum"
+                    [avgRate]="event.avg_rating_percent">
           </cp-stars>
         </span>
       </span>
 
       <span class="col-1 text-right actions">
-        <img
-          cpTooltip
-          class="js_event_external"
-          *ngIf="event.is_external"
-          [attr.title]="isExternalToolTip"
-          [src]="event.source | integrationSourceToIcon"
-        />
+        <img cpTooltip
+             aria-hidden="true"
+             class="js_event_external"
+             *ngIf="event.is_external"
+             [attr.title]="isExternalToolTip"
+             [src]="event.source | integrationSourceToIcon" />
       </span>
     </div>
   </li>

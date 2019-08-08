@@ -18,11 +18,12 @@ export class ToastService {
     @Inject(TOAST_CONFIG_TOKEN) private toastConfig: ToastConfig
   ) {}
 
-  show(data: ToastData) {
+  show(data: ToastData): ToastRef {
     const positionStrategy = this.getPositionStrategy();
     const overlayRef = this.overlay.create({ positionStrategy });
 
     const toastRef = new ToastRef(overlayRef);
+    toastRef.data = data;
     this.lastToast = toastRef;
 
     const injector = this.getInjector(data, toastRef, this.parentInjector);
@@ -37,8 +38,8 @@ export class ToastService {
     return this.overlay
       .position()
       .global()
-      .top(this.getPosition())
-      .right(this.toastConfig.position.right + 'px');
+      .centerHorizontally()
+      .top(this.getPosition());
   }
 
   getPosition() {

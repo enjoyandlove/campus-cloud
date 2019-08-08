@@ -4,72 +4,63 @@
   <ng-container *ngSwitchCase="true">
     <div class="row">
       <div class="col-12">
-        <cp-services-import-top-bar
-          [categories]="categories"
-          [isChecked]="isParentCheckBoxChecked"
-          [uploadImageButtonClass]="uploadImageButtonClass"
-          [categoryDropDownStatus]="categoryDropDownStatus"
-          (checkAll)="onCheckAll($event)"
-          (imageChange)="onImageBulkChange($event)"
-          (categoryChange)="onCategoryBulkChange($event)"
-        >
+        <cp-services-import-top-bar [categories]="categories"
+                                    [isChecked]="isParentCheckBoxChecked"
+                                    [uploadImageButtonClass]="uploadImageButtonClass"
+                                    [categoryDropDownStatus]="categoryDropDownStatus"
+                                    (checkAll)="onCheckAll($event)"
+                                    (imageChange)="onImageBulkChange($event)"
+                                    (categoryChange)="onCategoryBulkChange($event)">
         </cp-services-import-top-bar>
       </div>
     </div>
 
     <div class="row margin-bottom">
       <div class="col-12">
-        <form [formGroup]="form" class="form">
+        <form [formGroup]="form"
+              class="form">
           <div formArrayName="services">
             <div class="row">
               <div class="col-12">
-                <cp-no-content
-                  noContentText="No Services to Add..."
-                  *ngIf="!form.controls.services.controls.length"
-                >
+                <cp-no-content noContentText="No Services to Add..."
+                               *ngIf="!form.controls.services.controls.length">
                 </cp-no-content>
               </div>
             </div>
-            <div
-              class="row form__wrapper"
-              *ngFor="let service of form.controls.services.controls; let i = index"
-            >
-              <div [formGroupName]="i" class="col-12">
+            <div class="row form__wrapper"
+                 *ngFor="let service of form.controls.services.controls; let i = index">
+              <div [formGroupName]="i"
+                   class="col-12">
                 <div class="row form__item">
                   <div class="col-4 text-truncate">
                     <div class="row margin-top">
                       <div class="col-3">
                         <div class="row">
                           <div class="col-1">
-                            <cp-checkbox
-                              class="checkbox float-left"
-                              [isChecked]="isChecked[i].checked"
-                              (toggle)="onSingleCheck($event, i)">
+                            <cp-checkbox class="checkbox float-left"
+                                         [isChecked]="isChecked[i].checked"
+                                         (toggle)="onSingleCheck($event, i)">
                             </cp-checkbox>
                           </div>
                           <div class="col-6">
                             <div class="service__avatar">
-                              <button
-                                type="button"
-                                aria-label="remove image"
-                                class="deleteButton hover unstyled-button"
-                                (click)="onRemoveImage(i)"
-                                *ngIf="service.controls['logo_url'].value">
+                              <button type="button"
+                                      aria-label="remove image"
+                                      class="deleteButton hover unstyled-button"
+                                      (click)="onRemoveImage(i)"
+                                      *ngIf="service.controls['logo_url'].value">
                                 <span aria-hidden="true">&times;</span>
                               </button>
-                              <cp-upload-button
-                                [id]="'id' + i"
-                                theme="small"
-                                (fileUpload)="onImageUpload($event, i)"
-                                *ngIf="!service.controls['logo_url'].value"
-                                (click)="resetAllCheckboxes($event, i)">
+                              <cp-upload-button [id]="'id' + i"
+                                                theme="small"
+                                                (fileUpload)="onImageUpload($event, i)"
+                                                *ngIf="!service.controls['logo_url'].value"
+                                                (click)="resetAllCheckboxes($event, i)">
                               </cp-upload-button>
-                              <img
-                                [alt]="'t_shared_img_alt' | cpI18n"
-                                class="rounded img-fit-cover"
-                                *ngIf="service.controls['logo_url'].value"
-                                [src]="service.controls['logo_url'].value"
-                              />
+                              <img [alt]="'t_shared_img_alt' | cpI18n: i"
+                                   class="rounded img-fit-cover"
+                                   *ngIf="service.controls['logo_url'].value"
+                                   [src]="service.controls['logo_url'].value" />
                             </div>
                           </div>
                         </div>
@@ -88,11 +79,9 @@
                   </div>
                   <div class="col-3">
                     <label>{{ 'category' | cpI18n }}</label>
-                    <cp-dropdown
-                      [items]="categories"
-                      [selectedItem]="selectedCategory[i]"
-                      (selected)="onSingleCategorySelected($event, i)"
-                    >
+                    <cp-dropdown [items]="categories"
+                                 [selectedItem]="selectedCategory[i]"
+                                 (selected)="onSingleCategorySelected($event, i)">
                     </cp-dropdown>
                   </div>
                 </div>
@@ -108,10 +97,12 @@
         <div class="row">
           <div class="col-12">
             <div class="float-right">
-              <a [routerLink]="['/manage/services']" class="cpbtn cpbtn--cancel">
+              <a [routerLink]="['/manage/services']"
+                 class="cpbtn cpbtn--cancel">
                 {{ 'cancel' | cpI18n }}
               </a>
-              <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>
+              <cp-button [props]="buttonData"
+                         (buttonClick)="onSubmit()"> </cp-button>
             </div>
           </div>
         </div>
