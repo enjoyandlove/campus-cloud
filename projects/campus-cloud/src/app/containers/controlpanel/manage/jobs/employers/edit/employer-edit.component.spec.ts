@@ -9,7 +9,7 @@ import { EmployerModule } from '../employer.module';
 import * as fromJobs from '@campus-cloud/store/manage/jobs';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EmployerEditComponent } from './employer-edit.component';
-import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { configureTestSuite, CPTestModule, MOCK_IMAGE } from '@campus-cloud/shared/tests';
 
 describe('EmployerEditComponent', () => {
   configureTestSuite();
@@ -46,7 +46,7 @@ describe('EmployerEditComponent', () => {
       name: 'Hello World!',
       description: 'This is description',
       email: 'test@test.com',
-      logo_url: 'dummy.jpeg'
+      logo_url: MOCK_IMAGE
     };
     fixture.detectChanges();
   }));

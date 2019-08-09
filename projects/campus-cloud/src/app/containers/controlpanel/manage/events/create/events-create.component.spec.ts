@@ -53,6 +53,7 @@ describe('EventCreateComponent', () => {
         fixture.detectChanges();
 
         spyOn(component, 'buildHeader');
+        spyOn(component.router, 'navigate');
         spy = spyOn(component.service, 'createEvent').and.returnValue(observableOf({}));
       });
   }));

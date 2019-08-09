@@ -1,24 +1,16 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
-
-import { OrientationEventsComponent } from '../../../../manage/orientation/events/orientation-events.component';
-
-import { OrientationEventsModule } from '../../../../manage/orientation/events/orientation-events.module';
 
 import { DashboardModule } from '../../../dashboard.module';
-import { AuthGuard } from '../../../../../../config/guards';
+import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { DashboardTopResourceTitleComponent } from './dashboard-top-resource-title.component';
 
-class MockAuthGuard {
-  canActivate() {}
-}
-
 describe('DashboardTopResourceTitleComponent', () => {
-  let router: Router;
-  let location: Location;
+  configureTestSuite();
+
+  let spy;
   let comp: DashboardTopResourceTitleComponent;
   let fixture: ComponentFixture<DashboardTopResourceTitleComponent>;
 
@@ -32,30 +24,26 @@ describe('DashboardTopResourceTitleComponent', () => {
     resourceUrl: `/manage/orientation/52/events`
   };
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        DashboardModule,
-        OrientationEventsModule,
-        RouterTestingModule.withRoutes([
-          {
-            path: 'manage/orientation/:orientationId/events',
-            component: OrientationEventsComponent
-          }
-        ])
-      ],
-      providers: [{ provide: AuthGuard, useClass: MockAuthGuard }]
-    })
-      .compileComponents()
-      .then(() => {
-        router = TestBed.get(Router);
-        location = TestBed.get(Location);
-        fixture = TestBed.createComponent(DashboardTopResourceTitleComponent);
-        comp = fixture.componentInstance;
-        comp.canNavigate = true;
-        comp.item = mockItem;
-        router.initialNavigation();
+  beforeAll((done) => {
+    (async () => {
+      TestBed.configureTestingModule({
+        imports: [DashboardModule, RouterTestingModule],
+        schemas: [NO_ERRORS_SCHEMA]
       });
+      await TestBed.compileComponents();
+    })()
+      .then(done)
+      .catch(done.fail);
+  });
+
+  beforeEach(async(() => {
+    fixture = TestBed.createComponent(DashboardTopResourceTitleComponent);
+    comp = fixture.componentInstance;
+
+    comp.canNavigate = true;
+    comp.item = mockItem;
+
+    spy = spyOn(comp.router, 'navigate');
   }));
 
   it('should not navigate', () => {
@@ -65,7 +53,7 @@ describe('DashboardTopResourceTitleComponent', () => {
     const link = fixture.debugElement.query(By.css('p.title')).nativeElement;
     link.click();
 
-    expect(location.path()).toEqual('/');
+    expect(spy).not.toHaveBeenCalled();
     expect(link.textContent.trim()).toBe(mockItem.name);
   });
 
@@ -76,7 +64,8 @@ describe('DashboardTopResourceTitleComponent', () => {
     link.click();
 
     tick();
+    expect(spy).toHaveBeenCalled();
     expect(link.textContent.trim()).toBe(mockItem.name);
-    expect(location.path()).toEqual(mockItem.resourceUrl);
+    expect(spy).toHaveBeenCalledWith([mockItem.resourceUrl]);
   }));
 });
