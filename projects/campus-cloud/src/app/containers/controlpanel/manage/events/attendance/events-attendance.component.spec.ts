@@ -9,6 +9,7 @@ import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { EventUtilService } from '../events.utils.service';
+import { mockEvent } from '@controlpanel/manage/events/tests';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EventsAttendanceComponent } from './events-attendance.component';
 import { isClubAthletic } from '../../../settings/team/team.utils.service';
@@ -84,7 +85,7 @@ describe('EventAttendanceComponent', () => {
 
         spyOn(component, 'buildHeader');
         spyOn(component, 'trackQrCode');
-        spy = spyOn(component.service, 'getEventById').and.returnValue(observableOf({}));
+        spy = spyOn(component.service, 'getEventById').and.returnValue(observableOf(mockEvent));
         spyAttendee = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
           observableOf({})
         );

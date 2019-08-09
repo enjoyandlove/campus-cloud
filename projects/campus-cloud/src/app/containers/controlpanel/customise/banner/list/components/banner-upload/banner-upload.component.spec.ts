@@ -7,7 +7,7 @@ import { FormBuilder } from '@angular/forms';
 
 import { BannerModule } from '../../../banner.module';
 import { BannerUploadComponent } from './banner-upload.component';
-import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { configureTestSuite, CPTestModule, MOCK_IMAGE } from '@campus-cloud/shared/tests';
 
 describe('BannerUploadComponent', () => {
   configureTestSuite();
@@ -32,9 +32,9 @@ describe('BannerUploadComponent', () => {
     de = fixture.debugElement;
 
     component.form = new FormBuilder().group({
-      logo_url: 'logo_url',
+      logo_url: MOCK_IMAGE,
       branding_color: '0076FF',
-      school_name_logo_url: 'school_logo_url'
+      school_name_logo_url: MOCK_IMAGE
     });
 
     fixture.detectChanges();

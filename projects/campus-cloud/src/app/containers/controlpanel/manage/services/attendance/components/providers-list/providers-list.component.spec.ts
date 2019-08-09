@@ -99,7 +99,7 @@ describe('ProvidersListComponent', () => {
     spyOn(component.hasProviders, 'emit');
 
     assessSpy = spyOn(component.providersService, 'getProviderAssessments').and.returnValue(
-      observableOf({})
+      observableOf([])
     );
 
     spy = spyOn(component.providersService, 'getProviders').and.returnValue(

@@ -3,6 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { mockTile } from './tests/mocks';
 import { CPSession } from '@campus-cloud/session';
 import { mockSection } from './../sections/__mock__';
+import { MOCK_IMAGE } from '@campus-cloud/shared/tests';
 import { TilesUtilsService } from './tiles.utils.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { mockSchool } from '@campus-cloud/session/mock/school';
@@ -172,7 +173,7 @@ describe('TilesUtilsService', () => {
       school_persona_id: 1,
       name: 'Mock Tile',
       rank: 1,
-      img_url: 'img_url',
+      img_url: MOCK_IMAGE,
       color: mockSchool.branding_color,
       extra_info: {},
       visibility_status: 1,
