@@ -5,8 +5,7 @@
     <button
       type="button"
       (click)="isOpen = !isOpen"
-      [class]="'menu__header cpbtn cpbtn--' + props?.class"
-    >
+      [class]="'menu__header cpbtn cpbtn--' + props?.class">
       {{ 'events_import_bulk_update' | cpI18n }}
       <span class="icon"><i class="material-icons">keyboard_arrow_down</i></span>
     </button>
@@ -24,12 +23,11 @@
           <div class="row">
             <div class="col-12">
               <div class="menu__item">
-                <label i18n>{{ 't_events_attendance_type' | cpI18n }}</label>
+                <label>{{ 't_events_attendance_type' | cpI18n }}</label>
                 <cp-dropdown
                   [items]="checkInOptions"
                   [selectedItem]="checkInOptions[i]"
-                  (selected)="updateCheckInOption($event)"
-                >
+                  (selected)="updateCheckInOption($event)">
                 </cp-dropdown>
               </div>
             </div>
@@ -38,12 +36,11 @@
             <div class="menu__item">
               <div class="row">
                 <div class="col-6">
-                  <label i18n>{{ 'events_attendance_feedback' | cpI18n }}</label>
+                  <label>{{ 'events_attendance_feedback' | cpI18n }}</label>
                   <cp-dropdown
                     [items]="eventAttendanceFeedback"
                     [selectedItem]="state.event_feedback"
-                    (selected)="updateAttendanceFeedback($event)"
-                  >
+                    (selected)="updateAttendanceFeedback($event)">
                   </cp-dropdown>
                 </div>
               </div>
@@ -52,7 +49,7 @@
             <div class="menu__item">
               <div class="row">
                 <div class="col-6">
-                  <label i18n>{{ 'events_event_manager' | cpI18n }}</label>
+                  <label>{{ 'events_event_manager' | cpI18n }}</label>
                   <cp-dropdown [items]="managers$ | async" (selected)="updateEventManager($event)">
                   </cp-dropdown>
                 </div>
@@ -60,8 +57,8 @@
             </div>
 
             <div class="menu__item">
-              <label i18n>{{ 'events_attendance_manager_full' | cpI18n }}</label>
-              <input type="email" (keyup)="updateAttendanceManager($event.target.value)" />
+              <label for="attendance_manager">{{ 'events_attendance_manager_full' | cpI18n }}</label>
+              <input id="attendance_manager" type="email" (keyup)="updateAttendanceManager($event.target.value)" />
             </div>
           </div>
         </div>
@@ -69,10 +66,10 @@
       <div class="row menu__content--footer">
         <div class="col-12">
           <div class="float-right">
-            <button type="button" (click)="isOpen = false" class="cpbtn cpbtn--cancel" i18n>
+            <button type="button" (click)="isOpen = false" class="cpbtn cpbtn--cancel">
               {{ 'cancel' | cpI18n }}
             </button>
-            <button type="button" (click)="doSubmit()" class="cpbtn cpbtn--primary" i18n>
+            <button type="button" (click)="doSubmit()" class="cpbtn cpbtn--primary">
               {{ 'apply' | cpI18n }}
             </button>
           </div>

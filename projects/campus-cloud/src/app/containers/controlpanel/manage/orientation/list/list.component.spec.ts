@@ -1,19 +1,17 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { HttpParams } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
 import { ManageHeaderService } from '../../utils';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { mockSchool } from '@campus-cloud/session/mock/school';
-import { baseReducers } from '@campus-cloud/store/base/reducers';
 import { OrientationModule } from '../orientation.module';
 import { OrientationListComponent } from './list.component';
 import { OrientationService } from '../orientation.services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { MockOrientationService, mockPrograms } from '../tests';
-import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('OrientationListComponent', () => {
   configureTestSuite();
@@ -21,18 +19,10 @@ describe('OrientationListComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [
-          OrientationModule,
-          RouterTestingModule,
-          StoreModule.forRoot({
-            HEADER: baseReducers.HEADER,
-            SNACKBAR: baseReducers.SNACKBAR
-          })
-        ],
+        imports: [CPTestModule, OrientationModule, RouterTestingModule],
         providers: [
-          CPSession,
-          CPI18nService,
           CPTrackingService,
+          provideMockStore(),
           ManageHeaderService,
           { provide: OrientationService, useClass: MockOrientationService }
         ]

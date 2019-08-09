@@ -4,10 +4,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
 
 import { DealsModule } from '../../deals.module';
-import { CPSession } from '../../../../../../session';
-import { RootStoreModule } from '../../../../../../store';
+import { RootStoreModule } from '@campus-cloud/store';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { StoreCardComponent } from './store-card.component';
-import { CPI18nService } from '../../../../../../shared/services';
 
 describe('StoreCardComponent', () => {
   let component: StoreCardComponent;
@@ -15,8 +14,7 @@ describe('StoreCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [DealsModule, HttpClientModule, RouterTestingModule, RootStoreModule],
-      providers: [CPSession, CPI18nService]
+      imports: [CPTestModule, DealsModule, HttpClientModule, RouterTestingModule, RootStoreModule]
     })
       .compileComponents()
       .then(() => {

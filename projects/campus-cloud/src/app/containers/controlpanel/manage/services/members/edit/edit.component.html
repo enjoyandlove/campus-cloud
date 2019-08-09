@@ -8,14 +8,16 @@
           </strong>
         </span>
 
-        <span
+        <button
+          type="button"
+          aria-label="close"
           cpTarget="close"
           data-dismiss="modal"
           (click)="doTearDown()"
-          class="float-right hover cpmodal__header__close"
+          class="float-right hover cpmodal__header__close unstyled-button"
         >
-          &times;
-        </span>
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
   </div>

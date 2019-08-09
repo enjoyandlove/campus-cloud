@@ -5,8 +5,8 @@ import { map, switchMap } from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 
 import { IService } from '../service.interface';
+import { CPSession } from '@campus-cloud/session';
 import { ServicesService } from '../services.service';
-import { CPSession, ISchool } from '@campus-cloud/session';
 import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { ServicesUtilsService } from '../services.utils.service';
 import { BaseComponent } from '@campus-cloud/base/base.component';
@@ -25,7 +25,6 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   service;
   storeId;
   loading = true;
-  school: ISchool;
   admins: IAdmin[];
   serviceId: number;
   draggable = false;
@@ -42,7 +41,6 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
     private serviceService: ServicesService
   ) {
     super();
-    this.school = this.session.g.get('school');
     super.isLoading().subscribe((res) => (this.loading = res));
     this.serviceId = this.route.snapshot.params['serviceId'];
   }
@@ -54,9 +52,9 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
       switchMap((serviceResponse: IService) => {
         this.service = serviceResponse;
         this.storeId = this.service.store_id;
-
+        const { id } = this.session.school;
         const search: HttpParams = new HttpParams()
-          .append('school_id', this.school.id.toString())
+          .append('school_id', id.toString())
           .append('store_id', this.storeId.toString())
           .append('privilege_type', CP_PRIVILEGES_MAP.services.toString());
 

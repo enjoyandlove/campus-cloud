@@ -1,15 +1,14 @@
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { async, TestBed, ComponentFixture } from '@angular/core/testing';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 
 import { MockPersonasService } from './../tests';
-import { CPSession } from '@campus-cloud/session';
 import { PersonasModule } from './../personas.module';
 import { PersonasService } from './../personas.service';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { PersonasCreateComponent } from './create.component';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { PersonasUtilsService } from './../personas.utils.service';
 
 describe('PersonasCreateComponent', () => {
@@ -18,11 +17,10 @@ describe('PersonasCreateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [PersonasModule, RouterTestingModule, StoreModule.forRoot({})],
+      imports: [PersonasModule, RouterTestingModule, CPTestModule],
       providers: [
-        CPSession,
         FormBuilder,
-        CPI18nService,
+        provideMockStore(),
         PersonasUtilsService,
         { provide: PersonasService, useClass: MockPersonasService }
       ]

@@ -1,13 +1,19 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { HTTPService } from '../../base/http.service';
+import { map } from 'rxjs/operators';
+
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Injectable()
-export class ControlPanelService extends HTTPService {
-  constructor(http: HttpClient, router: Router) {
-    super(http, router);
+export class ControlPanelService {
+  constructor(private http: HttpClient) {}
 
-    Object.setPrototypeOf(this, ControlPanelService.prototype);
+  getBeamerPosts() {
+    const headers = new HttpHeaders().set('Beamer-Api-Key', environment.keys.beamnerApiKey);
+    const params = new HttpParams().set('published', 'true').set('maxResults', '1');
+
+    return this.http
+      .get('https://api.getbeamer.com/v0/posts', { headers, params })
+      .pipe(map((res) => res[0]));
   }
 }

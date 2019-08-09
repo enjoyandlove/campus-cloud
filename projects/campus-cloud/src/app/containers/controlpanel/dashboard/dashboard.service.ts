@@ -1,30 +1,24 @@
 import { Subject, combineLatest, Observable, of } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, startWith, catchError } from 'rxjs/operators';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { sortBy } from 'lodash';
 
-import { API } from '@campus-cloud/config/api';
-import { HTTPService } from '@campus-cloud/base';
+import { ApiService } from '@campus-cloud/base';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { IPersona } from '../customise/personas/persona.interface';
 
 @Injectable()
-export class DashboardService extends HTTPService {
+export class DashboardService {
   eventAssessment = new Subject();
   serviceAssessment = new Subject();
 
-  constructor(http: HttpClient, router: Router, public cpI18n: CPI18nService) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, DashboardService.prototype);
-  }
+  constructor(private api: ApiService, public cpI18n: CPI18nService) {}
 
   getDownloads(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBORD_USER_ACQUISITION}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.DASHBORD_USER_ACQUISITION}/`;
 
-    return super.get(url, search, true).pipe(
+    return this.api.get(url, search, true).pipe(
       map((data: any) => {
         return {
           series: [data.downloads.series, data.registrations.series],
@@ -44,9 +38,9 @@ export class DashboardService extends HTTPService {
     search: HttpParams
   ): Observable<Array<{ label: string; action: number; heading?: boolean }>> {
     const defaultValue = { label: '---', action: null, heading: true };
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.PERSONAS}/1;1000`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PERSONAS}/1;1000`;
 
-    return super.get(url, search, true).pipe(
+    return this.api.get(url, search, true).pipe(
       startWith([defaultValue]),
       map((data: IPersona[]) => {
         const parsePersona = (persona: IPersona) => {
@@ -69,9 +63,9 @@ export class DashboardService extends HTTPService {
   }
 
   getSocialActivity(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_SOCIAL_ACTIVITY}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.DASHBOARD_SOCIAL_ACTIVITY}/`;
 
-    return super.get(url, search).pipe(
+    return this.api.get(url, search).pipe(
       map((data: any) => {
         const res = {
           series: [],
@@ -92,9 +86,9 @@ export class DashboardService extends HTTPService {
   }
 
   getCampusTile(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_CAMPUS_TILE}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.DASHBOARD_CAMPUS_TILE}/`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getAssessment() {
@@ -105,27 +99,27 @@ export class DashboardService extends HTTPService {
   }
 
   getIntegrations(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_INTEGRATION_STATUS}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.DASHBOARD_INTEGRATION_STATUS}/`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getTopClubs(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_TOP_CLUBS}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.DASHBOARD_TOP_CLUBS}/`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getGeneralInformation(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.DASHBOARD_GENERAL_INFORMATION}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.DASHBOARD_GENERAL_INFORMATION}/`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getTopEvents(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_EVENT}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ASSESS_EVENT}/`;
 
-    return super.get(url, search, true).pipe(
+    return this.api.get(url, search, true).pipe(
       map((res: any) => {
         const eventAssessment = {
           event_checkins: res.total_attendees,
@@ -142,9 +136,9 @@ export class DashboardService extends HTTPService {
   }
 
   getTopServices(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_SERVICE}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ASSESS_SERVICE}/`;
 
-    return super.get(url, search, true).pipe(
+    return this.api.get(url, search, true).pipe(
       map((res: any) => {
         const serviceAssessment = {
           service_checkins: res.total_attendees,
@@ -161,8 +155,8 @@ export class DashboardService extends HTTPService {
   }
 
   getTopOrientation(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ASSESS_ORIENTATION_EVENT}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ASSESS_ORIENTATION_EVENT}/`;
 
-    return super.get(url, search, true).pipe(catchError(() => of([])));
+    return this.api.get(url, search, true).pipe(catchError(() => of([])));
   }
 }

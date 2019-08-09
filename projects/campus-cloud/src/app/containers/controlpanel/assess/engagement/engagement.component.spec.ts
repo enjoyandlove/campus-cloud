@@ -1,23 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { Store, StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 
-import { CPSession } from '@campus-cloud/session';
 import { baseActions } from '@campus-cloud/store/base';
 import { EngagementService } from './engagement.service';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { mockUser } from '@campus-cloud/session/mock/user';
 import { EngagementComponent } from './engagement.component';
 import { AssessUtilsService } from '../assess.utils.service';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { baseReducers } from '@campus-cloud/store/base/reducers';
+import { CPAmplitudeService } from '@campus-cloud/shared/services';
 import { CPLineChartUtilsService } from '@campus-cloud/shared/components/cp-line-chart/cp-line-chart.utils.service';
-import {
-  CPI18nService,
-  CPTrackingService,
-  CPAmplitudeService
-} from '@campus-cloud/shared/services';
 
 const mockFilterState = {
   engagement: {
@@ -53,14 +49,6 @@ class MockEngagementService {
   }
 }
 
-class MockSession {
-  g = new Map();
-
-  get tz() {
-    return 'America/Toronto';
-  }
-}
-
 class MockRouter {
   navigate(url: string) {
     return url;
@@ -70,28 +58,19 @@ class MockRouter {
 describe('EngagementComponent', () => {
   let storeSpy;
   let store: Store<any>;
-  // let session: CPSession;
   let component: EngagementComponent;
   let fixture: ComponentFixture<EngagementComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        // EngagementModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
+      imports: [CPTestModule],
       declarations: [EngagementComponent],
       providers: [
-        CPI18nService,
+        provideMockStore(),
         CPAmplitudeService,
-        CPTrackingService,
         AssessUtilsService,
         CPLineChartUtilsService,
         { provide: Router, useClass: MockRouter },
-        { provide: CPSession, useClass: MockSession },
         { provide: EngagementService, useClass: MockEngagementService }
       ],
       schemas: [NO_ERRORS_SCHEMA]

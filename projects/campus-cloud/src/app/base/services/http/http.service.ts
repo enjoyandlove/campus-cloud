@@ -2,23 +2,24 @@ import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular
 import { catchError, delay, flatMap, retryWhen } from 'rxjs/operators';
 import { Observable, of, throwError } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { API } from '@campus-cloud/config/api';
-import { appStorage, CPObj, DefaultEncoder } from '@campus-cloud/shared/utils';
+import { DefaultEncoder, CPObj } from '@campus-cloud/shared/utils';
 
-/**
- * Base HTTP Service
- * extends this class and override
- * getHeaders() if you need a new header
- */
 const defaultRetries = 1;
 
 @Injectable()
 export abstract class HTTPService {
-  constructor(public http: HttpClient, public router: Router) {}
+  constructor(public http: HttpClient) {}
+
+  abstract getHeaders(): HttpHeaders;
+
+  abstract errorHandler(err: HttpErrorResponse): Observable<boolean> | Promise<boolean>;
 
   waitAndRetry(err: Observable<any>, retries: number): Observable<any> {
+    if ('status' in err && (err as any).status !== 503) {
+      return throwError(err);
+    }
+
     return err.pipe(
       delay(1200),
       flatMap((e) => {
@@ -50,29 +51,19 @@ export abstract class HTTPService {
     );
   }
 
-  getHeaders() {
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
-
-    return new HttpHeaders({
-      'Content-Type': 'application/json',
-      Authorization: auth
-    });
-  }
-
-  clearNullValues(params: HttpParams): HttpParams {
+  clearNullParams(params: HttpParams): HttpParams {
     let cleanParams = new HttpParams({ encoder: new DefaultEncoder() });
-    params.keys().forEach((key) => {
-      if (params.get(key) !== null && params.get(key) !== undefined) {
-        cleanParams = cleanParams.set(key, params.get(key));
-      }
-    });
+    params
+      .keys()
+      .filter((key) => params.get(key) !== null && params.get(key) !== undefined)
+      .forEach((validKey) => (cleanParams = cleanParams.set(validKey, params.get(validKey))));
 
     return cleanParams;
   }
 
   get<T>(url: string, params?: HttpParams, silent = false, retries = defaultRetries) {
     if (params) {
-      params = this.clearNullValues(params);
+      params = this.clearNullParams(params);
     }
 
     const headers = this.getHeaders();
@@ -84,14 +75,14 @@ export abstract class HTTPService {
           return throwError(err);
         }
 
-        return this.catchError(err);
+        return this.errorHandler(err);
       })
     );
   }
 
   post(url: string, data: any, params?: HttpParams, silent = false, retries = defaultRetries) {
     if (params) {
-      params = this.clearNullValues(params);
+      params = this.clearNullParams(params);
     }
 
     data = CPObj.cleanNullValues(data);
@@ -100,21 +91,22 @@ export abstract class HTTPService {
 
     return this.http.post(url, this.sanitizeEntries(data), { headers, params }).pipe(
       retryWhen((err) => this.waitAndRetry(err, retries)),
-      catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.catchError(err)))
+      catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.errorHandler(err)))
     );
   }
 
   update(url: string, data: any, params?: HttpParams, silent = false, retries = defaultRetries) {
     if (params) {
-      params = this.clearNullValues(params);
+      params = this.clearNullParams(params);
     }
 
     data = CPObj.cleanNullValues(data);
+
     const headers = this.getHeaders();
 
     return this.http.put(url, this.sanitizeEntries(data), { headers, params }).pipe(
       retryWhen((err) => this.waitAndRetry(err, retries)),
-      catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.catchError(err)))
+      catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.errorHandler(err)))
     );
   }
 
@@ -126,32 +118,14 @@ export abstract class HTTPService {
     retries = defaultRetries
   ) {
     if (params) {
-      params = this.clearNullValues(params);
+      params = this.clearNullParams(params);
     }
 
     const headers = this.getHeaders();
 
     return this.http.delete(url, { headers, params, ...extraOptions }).pipe(
       retryWhen((err) => this.waitAndRetry(err, retries)),
-      catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.catchError(err)))
+      catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.errorHandler(err)))
     );
-  }
-
-  catchError(err: HttpErrorResponse) {
-    switch (err.status) {
-      case 401:
-        this.router.navigate(['/logout']);
-        return;
-
-      case 404:
-      case 403:
-      case 500:
-      case 503:
-        this.router.navigate(['/dashboard']);
-        return;
-
-      default:
-        return throwError(err);
-    }
   }
 }

@@ -26,8 +26,7 @@
               (click)="doSort('title')"
               [label]="sortingLabels.name"
               [sortField]="state.sort_field"
-              [sortDirection]="state.sort_direction"
-            >
+              [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
             <cp-sorting-header
@@ -36,8 +35,7 @@
               (click)="doSort('start')"
               [label]="sortingLabels.start"
               [sortField]="state.sort_field"
-              [sortDirection]="state.sort_direction"
-            >
+              [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
             <cp-sorting-header
@@ -46,8 +44,7 @@
               (click)="doSort('expiration')"
               [label]="sortingLabels.expiration"
               [sortField]="state.sort_field"
-              [sortDirection]="state.sort_direction"
-            >
+              [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
             <cp-sorting-header
@@ -56,8 +53,7 @@
               (click)="doSort('store_name')"
               [sortField]="state.sort_field"
               [label]="sortingLabels.store_name"
-              [sortDirection]="state.sort_direction"
-            >
+              [sortDirection]="state.sort_direction">
             </cp-sorting-header>
             <span class="col-1 hover"></span>
           </div>
@@ -88,14 +84,14 @@
             <span class="col-3">
               {{ deal.store_name }}
             </span>
-            <span
+            <button
+              type="button"
               (click)="deleteDeal = deal; launchDeleteModal = true"
               data-toggle="modal"
               data-target="#deleteModal"
-              class="col-1 hover text-truncate delete-deal text-right"
-            >
+              class="col-1 hover text-truncate delete-deal text-right unstyled-button">
               &times;
-            </span>
+            </button>
           </div>
         </li>
       </ul>

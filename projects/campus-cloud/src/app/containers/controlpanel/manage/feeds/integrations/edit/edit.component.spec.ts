@@ -1,7 +1,7 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { StoreModule } from '@ngrx/store';
 import { omit } from 'lodash';
 
 import * as fromStore from '../store';
@@ -13,8 +13,8 @@ import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { WallsIntegrationsEditComponent } from './edit.component';
 import { WallsIntegrationsService } from '../walls-integrations.service';
-import { FeedIntegration } from '@campus-cloud/libs/integrations/common/model/integration.model';
 import { fillForm, resetForm, MockWallsIntegrationsService, mockIntegration } from '../tests';
+import { FeedIntegration } from '@campus-cloud/libs/integrations/common/model/integration.model';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers/integrations.utils.service';
 
 describe('WallsIntegrationsEditComponent', () => {
@@ -23,11 +23,12 @@ describe('WallsIntegrationsEditComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, StoreModule.forRoot({})],
+        imports: [SharedModule],
         providers: [
           CPSession,
-          CommonIntegrationUtilsService,
           CPI18nService,
+          provideMockStore(),
+          CommonIntegrationUtilsService,
           {
             provide: WallsIntegrationsService,
             useClass: MockWallsIntegrationsService

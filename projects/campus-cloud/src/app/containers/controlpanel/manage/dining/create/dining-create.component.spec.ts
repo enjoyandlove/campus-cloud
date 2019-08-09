@@ -1,17 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@campus-cloud/session';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { fillForm } from '@campus-cloud/shared/utils/tests/form';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { DiningCreateComponent } from './dining-create.component';
+import { fillForm } from '@campus-cloud/shared/utils/tests/form';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import {
   emptyForm,
   filledForm,
@@ -25,8 +22,8 @@ describe('DiningCreateComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService],
+        imports: [CPTestModule, HttpClientModule, RouterTestingModule],
+        providers: [provideMockStore()],
         declarations: [DiningCreateComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

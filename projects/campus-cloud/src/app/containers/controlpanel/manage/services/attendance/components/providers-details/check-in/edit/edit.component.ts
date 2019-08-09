@@ -7,7 +7,7 @@ import { ICheckIn } from '../../../../../../events/attendance/check-in/check-in.
 
 @Component({
   selector: 'cp-service-provider-edit-check-in',
-  templateUrl: 'edit.component.html',
+  templateUrl: './edit.component.html',
   providers: [{ provide: EventsService, useClass: ProvidersService }]
 })
 export class ServicesProvidersCheckInEditComponent {

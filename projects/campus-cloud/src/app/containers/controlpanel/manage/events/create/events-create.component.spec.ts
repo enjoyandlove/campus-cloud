@@ -1,20 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { provideMockStore } from '@ngrx/store/testing';
 import { FormBuilder } from '@angular/forms';
-import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
-import { CPDate } from '@campus-cloud/shared/utils';
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
 import { EventAttendance } from '../event.status';
-import { mockSchool } from '@campus-cloud/session/mock/school';
-import { baseReducers } from '@campus-cloud/store/base/reducers';
+import { CPDate } from '@campus-cloud/shared/utils';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { EventUtilService } from '../events.utils.service';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EventsCreateComponent } from './events-create.component';
-import { AdminService, CPI18nService, StoreService } from '@campus-cloud/shared/services';
+import { AdminService, StoreService } from '@campus-cloud/shared/services';
 
 class MockService {
   dummy;
@@ -33,22 +32,13 @@ describe('EventCreateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        EventsModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
+      imports: [CPTestModule, EventsModule, HttpClientModule, RouterTestingModule],
       providers: [
-        CPSession,
         FormBuilder,
         AdminService,
         StoreService,
-        CPI18nService,
         EventUtilService,
+        provideMockStore(),
         { provide: EventsService, useClass: MockService }
       ]
     })
@@ -63,6 +53,7 @@ describe('EventCreateComponent', () => {
         fixture.detectChanges();
 
         spyOn(component, 'buildHeader');
+        spyOn(component.router, 'navigate');
         spy = spyOn(component.service, 'createEvent').and.returnValue(observableOf({}));
       });
   }));

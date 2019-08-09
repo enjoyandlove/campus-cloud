@@ -1,4 +1,5 @@
 import { ITile } from '../../tile.interface';
+import { MOCK_IMAGE } from '@campus-cloud/shared/tests';
 import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { mockSchool } from '@projects/campus-cloud/src/app/session/mock';
 
@@ -17,7 +18,7 @@ export const mockTile: ITile = {
   rank: 1,
   featured_rank: -1,
   color: mockSchool.branding_color,
-  img_url: 'img_url',
+  img_url: MOCK_IMAGE,
   type: 8,
   extra_info: {},
   visibility_status: 1,

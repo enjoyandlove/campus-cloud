@@ -1,47 +1,41 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { API } from '../../../../config/api';
-import { HTTPService } from '../../../../base/http.service';
+import { ApiService } from '@campus-cloud/base/services';
 
 @Injectable()
-export class TemplatesService extends HTTPService {
-  constructor(http: HttpClient, router: Router) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, TemplatesService.prototype);
-  }
+export class TemplatesService {
+  constructor(private api: ApiService) {}
 
   postTemplate(search: HttpParams, body: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.ANNOUNCEMENT}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ANNOUNCEMENT}/`;
 
-    return super.post(url, body, search);
+    return this.api.post(url, body, search);
   }
 
   createTemplate(search: HttpParams, body: any) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.TEMPLATE}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.TEMPLATE}/`;
 
-    return super.post(url, body, search);
+    return this.api.post(url, body, search);
   }
 
   getTemplateById(search: HttpParams, templateId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.TEMPLATE}/${templateId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.TEMPLATE}/${templateId}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   deleteTemplate(search: HttpParams, templateId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.TEMPLATE}/${templateId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.TEMPLATE}/${templateId}`;
 
-    return super.delete(url, search);
+    return this.api.delete(url, search);
   }
 
   getTemplates(startRange: number, endRange: number, search: HttpParams) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.TEMPLATE}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.TEMPLATE}`;
 
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 }

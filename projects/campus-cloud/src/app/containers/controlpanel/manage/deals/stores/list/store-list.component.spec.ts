@@ -1,16 +1,14 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { HttpParams } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
 import { DealsStoreService } from '../store.service';
-import { CPSession } from '../../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { StoreListComponent } from './store-list.component';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { StoreModule as DealsStoreModule } from '../store.module';
-import { mockSchool } from '../../../../../../session/mock/school';
-import { baseReducers } from '../../../../../../store/base/reducers';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
 
 const mockStores = require('../mockStores.json');
 
@@ -32,19 +30,8 @@ describe('DealsStoreListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        DealsStoreModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
-      providers: [
-        CPSession,
-        CPI18nService,
-        { provide: DealsStoreService, useClass: MockStoreService }
-      ]
+      imports: [CPTestModule, DealsStoreModule, RouterTestingModule],
+      providers: [provideMockStore(), { provide: DealsStoreService, useClass: MockStoreService }]
     })
       .compileComponents()
       .then(() => {

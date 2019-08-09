@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import { ApiService } from '@campus-cloud/base';
 import { EventsService } from '../events.service';
 import { CPDate } from '@campus-cloud/shared/utils';
 import { baseActions } from '@campus-cloud/store/base';
@@ -76,7 +77,8 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private store: Store<any>,
+    private api: ApiService,
+    public store: Store<any>,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public service: EventsService,
@@ -87,7 +89,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     private cpTracking: CPTrackingService,
     private fileUploadService: FileUploadService
   ) {
-    super(session, cpI18n, service, modalService);
+    super(session, cpI18n, service, modalService, store);
     this.school = this.session.g.get('school');
     super.isLoading().subscribe((res) => (this.loading = res));
   }
@@ -371,7 +373,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
   }
 
   onImageUpload(image: string, index: number) {
-    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService);
+    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService, this.api);
     const promise = imageUpload.onFileUpload(image, true);
 
     promise

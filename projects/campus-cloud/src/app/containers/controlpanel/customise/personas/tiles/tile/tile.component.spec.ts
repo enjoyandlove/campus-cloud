@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 import { of } from 'rxjs';
 
 import { mockTile } from './../tests/mocks';
@@ -31,11 +31,12 @@ describe('PersonasTileComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule, PersonasTilesModule, RouterTestingModule, StoreModule.forRoot({})],
+      imports: [SharedModule, PersonasTilesModule, RouterTestingModule],
       providers: [
         CPSession,
         CPI18nService,
         TilesUtilsService,
+        provideMockStore(),
         { provide: TilesService, useClass: MockTilesService }
       ]
     });

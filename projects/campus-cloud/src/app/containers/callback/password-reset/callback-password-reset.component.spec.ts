@@ -1,12 +1,11 @@
 import { TestBed, async, fakeAsync, ComponentFixture } from '@angular/core/testing';
 import { Router, ActivatedRoute } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 import { of as observableOf } from 'rxjs';
 
 import { AuthService } from '../../auth/auth.service';
-import { CPI18nService } from '../../../shared/services';
 import { FormsModule, FormBuilder } from '@angular/forms';
-import { ErrorService } from '../../../shared/services/error.service';
+import { ErrorService, CPI18nService } from '@campus-cloud/shared/services';
 import { CallbackPasswordResetComponent } from './callback-password-reset.component';
 
 class RouterMock {
@@ -37,12 +36,13 @@ describe('Password Reset', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [FormsModule, StoreModule.forRoot({})],
+      imports: [FormsModule],
       declarations: [CallbackPasswordResetComponent],
       providers: [
         FormBuilder,
-        CPI18nService,
         ErrorService,
+        CPI18nService,
+        provideMockStore(),
         { provide: ActivatedRoute, useClass: MockActivatedRoute },
         { provide: AuthService, useClass: MockAuthService },
         { provide: Router, useClass: RouterMock }

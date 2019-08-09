@@ -4,12 +4,10 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockSchool, mockUser } from '@campus-cloud/session/mock';
 import { ListUpcomingComponent } from './list-upcoming.component';
 import { EventUtilService } from './../../../events.utils.service';
-import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
+import { configureTestSuite, CPTestModule, MOCK_IMAGE } from '@campus-cloud/shared/tests';
 import { IntegrationSourceToIconPipe } from '@campus-cloud/libs/integrations/common/pipes/source-to-icon';
 
 const initialState = {
@@ -30,9 +28,9 @@ describe('ListUpcomingComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, RouterTestingModule],
+        imports: [CPTestModule, RouterTestingModule],
         declarations: [ListUpcomingComponent, IntegrationSourceToIconPipe],
-        providers: [CPI18nService, CPTrackingService, CPSession, EventUtilService]
+        providers: [EventUtilService]
       });
 
       await TestBed.compileComponents();
@@ -66,7 +64,10 @@ describe('ListUpcomingComponent', () => {
   });
 
   it('should render events in the page', () => {
-    component.events = [{}, {}];
+    component.events = [
+      { id: 1, is_external: true, poster_thumb_url: MOCK_IMAGE },
+      { id: 2, is_external: false, poster_thumb_url: MOCK_IMAGE }
+    ];
     fixture.detectChanges();
 
     const listElements = de.queryAll(By.css('.cp-form__item'));
@@ -74,7 +75,10 @@ describe('ListUpcomingComponent', () => {
   });
 
   it('should display icon if event is integrated', () => {
-    component.events = [{ id: 1, is_external: true }, { id: 2, is_external: false }];
+    component.events = [
+      { id: 1, is_external: true, poster_thumb_url: MOCK_IMAGE },
+      { id: 2, is_external: false, poster_thumb_url: MOCK_IMAGE }
+    ];
     fixture.detectChanges();
 
     const listElements = de.queryAll(By.css('.cp-form__item'));

@@ -3,13 +3,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
 import { of } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { mockSchool } from '@campus-cloud/session/mock/school';
 import { OrientationModule } from '../orientation.module';
 import { OrientationService } from '../orientation.services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { MockOrientationService, mockPrograms } from '../tests';
-import { CPI18nService, CPTrackingService, MODAL_DATA } from '@campus-cloud/shared/services';
+import { CPTrackingService, MODAL_DATA } from '@campus-cloud/shared/services';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { OrientationProgramDeleteComponent } from './orientation-program-delete.component';
 
 describe('OrientationProgramDeleteComponent', () => {
@@ -18,10 +17,8 @@ describe('OrientationProgramDeleteComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [OrientationModule, RouterTestingModule],
+        imports: [CPTestModule, OrientationModule, RouterTestingModule],
         providers: [
-          CPSession,
-          CPI18nService,
           CPTrackingService,
           {
             provide: MODAL_DATA,

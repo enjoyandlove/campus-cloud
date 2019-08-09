@@ -1,20 +1,17 @@
 import { ComponentFixture, TestBed, async } from '@angular/core/testing';
-import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
+import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 
 import { ClubsService } from './../clubs.service';
-import { CPSession } from './../../../../../session';
 import { ClubsInfoComponent } from './clubs-info.component';
 import { ClubsUtilsService } from './../clubs.utils.service';
 import { ClubsDetailsModule } from './../details/details.module';
-import { CPTrackingService, AdminService } from '../../../../../shared/services';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
-import { CP_PRIVILEGES_MAP } from './../../../../../shared/constants/privileges';
-import { FileUploadService } from './../../../../../shared/services/file-upload.service';
-import { configureTestSuite } from '@projects/campus-cloud/src/app/shared/tests';
+import { AdminService, FileUploadService } from '@campus-cloud/shared/services';
+import { configureTestSuite, CPTestModule } from '@projects/campus-cloud/src/app/shared/tests';
 
 const mockClub = {
   name: 'mock name',
@@ -76,12 +73,10 @@ describe('ClubsInfoComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [ClubsDetailsModule, RouterTestingModule.withRoutes([]), StoreModule.forRoot({})],
+        imports: [CPTestModule, ClubsDetailsModule, RouterTestingModule.withRoutes([])],
         providers: [
-          CPSession,
-          CPI18nService,
           ClubsUtilsService,
-          CPTrackingService,
+          provideMockStore(),
           {
             provide: ActivatedRoute,
             useValue: {

@@ -1,4 +1,4 @@
-export const API_ENDPOINTS = {
+export const ENDPOINTS = {
   JOB: 'job',
 
   USER: 'user',

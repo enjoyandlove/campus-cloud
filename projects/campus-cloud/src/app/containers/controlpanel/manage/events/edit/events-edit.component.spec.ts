@@ -1,25 +1,25 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { provideMockStore } from '@ngrx/store/testing';
 import { FormBuilder } from '@angular/forms';
-import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
 import { EventsModule } from '../events.module';
 import { EventAttendance } from '../event.status';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@campus-cloud/session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { EventUtilService } from '../events.utils.service';
 import { EventsEditComponent } from './events-edit.component';
-import { mockSchool } from '../../../../../session/mock/school';
-import { baseReducers } from '../../../../../store/base/reducers';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 
 import {
+  StoreService,
   AdminService,
-  CPI18nService,
   ErrorService,
-  StoreService
-} from '../../../../../shared/services';
+  CPI18nService
+} from '@campus-cloud/shared/services';
 
 class MockService {
   dummy;
@@ -72,15 +72,7 @@ describe('EventEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        EventsModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
+      imports: [CPTestModule, EventsModule, HttpClientModule, RouterTestingModule],
       providers: [
         CPSession,
         FormBuilder,
@@ -89,6 +81,7 @@ describe('EventEditComponent', () => {
         StoreService,
         CPI18nService,
         EventUtilService,
+        provideMockStore(),
         { provide: EventsService, useClass: MockService }
       ]
     })

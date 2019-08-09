@@ -1,11 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 
-import { CPSession } from '../../../../../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { ServicesModule } from '../../../services.module';
-import { baseReducers } from '../../../../../../../store/base';
-import { CPI18nService } from '../../../../../../../shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { EventUtilService } from '../../../../events/events.utils.service';
 import { ServicesProvidersFormComponent } from './providers-form.component';
@@ -16,15 +15,14 @@ describe('ServicesProviderFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        ServicesModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
-      providers: [CPSession, CPI18nService, EventUtilService, ServicesUtilsService]
+      imports: [ServicesModule, RouterTestingModule],
+      providers: [
+        CPSession,
+        CPI18nService,
+        EventUtilService,
+        provideMockStore(),
+        ServicesUtilsService
+      ]
     })
       .compileComponents()
       .then(() => {

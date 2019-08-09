@@ -31,7 +31,10 @@
                 <p class="ranking">{{ index + 1 }}</p>
               </div>
               <div class="col-5 no-left-padding text-truncate">
-                <img class="avatar rounded" [src]="item.image === '' ? defaultImage : item.image" />
+                <img
+                  class="avatar rounded"
+                  [src]="item.image === '' ? defaultImage : item.image"
+                  [alt]="[item.image === '' ? 'default-avatar' : 'resource-avatar-' + index]"/>
                 <cp-dashboard-top-resource-title [item]="item" [canNavigate]="canNavigate">
                 </cp-dashboard-top-resource-title>
               </div>

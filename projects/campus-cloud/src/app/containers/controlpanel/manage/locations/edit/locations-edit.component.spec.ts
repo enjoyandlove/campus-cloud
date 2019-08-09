@@ -1,19 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
 import { omit } from 'lodash';
 import { of } from 'rxjs';
 
 import * as fromStore from '../store';
-import { CPSession } from '@campus-cloud/session';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { fillForm } from '@campus-cloud/shared/utils/tests/form';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { LocationsEditComponent } from './locations-edit.component';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { mockLocations, filledForm } from '@campus-cloud/libs/locations/common/tests';
 
 describe('LocationsEditComponent', () => {
@@ -22,8 +19,8 @@ describe('LocationsEditComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService],
+        imports: [CPTestModule, HttpClientModule, RouterTestingModule],
+        providers: [provideMockStore()],
         declarations: [LocationsEditComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

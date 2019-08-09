@@ -3,66 +3,66 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 
+import { ApiService } from '@campus-cloud/base';
+import { AuthService } from '../auth/auth.service';
+import { CallbackService } from './callback.service';
 import { AdminInviteComponent } from './admin-invite';
 import { CallbackComponent } from './callback.component';
+import { CheckinService } from './checkin/checkin.service';
+import { FeedbackService } from './feedback/feedback.service';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CallbackRoutingModule } from './callback.routing.module';
 import { CallbackPasswordResetComponent } from './password-reset';
-
-import { AuthService } from '../auth/auth.service';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { CallbackService } from './callback.service';
-import { CheckinService } from './checkin/checkin.service';
 import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
-import { FeedbackService } from './feedback/feedback.service';
 import { CheckinUtilsService } from './checkin/checkin.utils.service';
 
 import {
   BaseFeedbackComponent,
-  FeedbackConfirmationComponent,
-  FeedbackEventComponent,
   FeedbackFormComponent,
-  FeedbackServiceComponent,
+  FeedbackEventComponent,
   FeedbackStarsComponent,
+  FeedbackServiceComponent,
+  FeedbackConfirmationComponent,
   FeedbackOrientationEventComponent
 } from './feedback';
 
 import {
   BaseCheckinComponent,
-  CheckinAttendeesListComponent,
-  CheckinEventHeaderComponent,
+  CheckOutModalComponent,
   CheckinEventsComponent,
-  CheckinInstructionsComponent,
-  CheckinInternalModalComponent,
-  CheckinRegisterComponent,
   CheckinServiceComponent,
+  CheckinRegisterComponent,
+  CheckinEventHeaderComponent,
+  CheckinInstructionsComponent,
+  CheckinAttendeesListComponent,
+  CheckinInternalModalComponent,
   CheckinServiceHeaderComponent,
-  CheckinOrientationEventsComponent,
-  CheckOutModalComponent
+  CheckinOrientationEventsComponent
 } from './checkin';
 
 @NgModule({
   declarations: [
     CallbackComponent,
-    CallbackPasswordResetComponent,
-    CheckinServiceComponent,
     BaseCheckinComponent,
-    CheckinServiceHeaderComponent,
-    CheckinRegisterComponent,
-    CheckinAttendeesListComponent,
-    CheckinInstructionsComponent,
-    CheckinEventsComponent,
-    CheckinEventHeaderComponent,
-    BaseFeedbackComponent,
-    FeedbackEventComponent,
-    FeedbackServiceComponent,
-    FeedbackFormComponent,
-    FeedbackStarsComponent,
-    FeedbackConfirmationComponent,
     AdminInviteComponent,
+    BaseFeedbackComponent,
+    FeedbackFormComponent,
+    CheckOutModalComponent,
+    CheckinEventsComponent,
+    FeedbackEventComponent,
+    FeedbackStarsComponent,
+    CheckinServiceComponent,
+    CheckinRegisterComponent,
+    FeedbackServiceComponent,
+    CheckinEventHeaderComponent,
+    CheckinInstructionsComponent,
+    CheckinServiceHeaderComponent,
+    CheckinAttendeesListComponent,
+    FeedbackConfirmationComponent,
     CheckinInternalModalComponent,
+    CallbackPasswordResetComponent,
     CheckinOrientationEventsComponent,
-    FeedbackOrientationEventComponent,
-    CheckOutModalComponent
+    FeedbackOrientationEventComponent
   ],
 
   imports: [
@@ -74,6 +74,12 @@ import {
     CallbackRoutingModule
   ],
 
-  providers: [AuthService, CheckinService, FeedbackService, CallbackService, CheckinUtilsService]
+  providers: [
+    AuthService,
+    CheckinService,
+    FeedbackService,
+    CheckinUtilsService,
+    { provide: ApiService, useClass: CallbackService }
+  ]
 })
 export class CallbackModule {}

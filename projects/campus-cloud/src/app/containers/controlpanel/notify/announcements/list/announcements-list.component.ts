@@ -77,7 +77,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
 
     setTimeout(
       () => {
-        $('#deleteAnnouncementModal').modal();
+        $('#deleteAnnouncementModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -109,7 +109,7 @@ export class AnnouncementsListComponent extends BaseComponent implements OnInit 
     this.viewMoreRecipients = recipients;
     setTimeout(
       () => {
-        $('#viewMoreModal').modal();
+        $('#viewMoreModal').modal({ keyboard: true, focus: true });
       },
 
       1

@@ -131,10 +131,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     // if last section was deleted, add a temporary section
     const temporaryGuide = [this.sectionUtils.temporaryGuide(9e4)];
     const guides = filteredGuides.length ? filteredGuides : temporaryGuide;
-
     this.state = {
       ...this.state,
-      guides
+      guides,
+      working: false
     };
   }
 
@@ -246,7 +246,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
     setTimeout(
       () => {
-        $(`#${this.tileDeleteModalId}`).modal();
+        $(`#${this.tileDeleteModalId}`).modal({ keyboard: true, focus: true });
       },
 
       1
@@ -307,7 +307,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
 
     setTimeout(
       () => {
-        $(`#${this.sectionDeleteModalId}`).modal();
+        $(`#${this.sectionDeleteModalId}`).modal({ keyboard: true, focus: true });
       },
 
       1
@@ -468,10 +468,14 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   }
 
   deleteEmptySection(sectionId: number) {
+    this.state = { ...this.state, working: true };
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
-    this.sectionService
-      .deleteSectionTileCategory(sectionId, search)
-      .subscribe(() => this.onRemoveSection(sectionId), (_err) => {}); // ignore errors due to legacy issues
+    this.sectionService.deleteSectionTileCategory(sectionId, search).subscribe(
+      () => this.onRemoveSection(sectionId),
+      (_err) => {
+        this.state = { ...this.state, working: false };
+      }
+    ); // ignore errors due to legacy issues
   }
 
   onDeletedSection(section: ICampusGuide) {

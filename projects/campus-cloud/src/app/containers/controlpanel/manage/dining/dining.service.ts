@@ -1,47 +1,39 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { API } from '@campus-cloud/config/api';
-import { HTTPService } from '@campus-cloud/base';
+import { ApiService } from '@campus-cloud/base';
 
 @Injectable()
-export class DiningService extends HTTPService {
-  constructor(http: HttpClient, router: Router) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, DiningService.prototype);
-  }
+export class DiningService {
+  constructor(private api: ApiService) {}
 
   getDining(startRange: number, endRange: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.LOCATIONS
-    }/${startRange};${endRange}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LOCATIONS}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getDiningById(diningId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/${diningId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LOCATIONS}/${diningId}`;
 
-    return super.get(url, search, true);
+    return this.api.get(url, search, true);
   }
 
   createDining(body, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LOCATIONS}/`;
 
-    return super.post(url, body, search, true);
+    return this.api.post(url, body, search, true);
   }
 
   updateDining(body, diningId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/${diningId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LOCATIONS}/${diningId}`;
 
-    return super.update(url, body, search, true);
+    return this.api.update(url, body, search, true);
   }
 
   deleteDiningById(diningId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.LOCATIONS}/${diningId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LOCATIONS}/${diningId}`;
 
-    return super.delete(url, search);
+    return this.api.delete(url, search);
   }
 }

@@ -1,14 +1,13 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { mockSchool, mockUser } from '@campus-cloud/session/mock';
 import { ListPastComponent } from './list-past.component';
-import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
+import { mockSchool, mockUser } from '@campus-cloud/session/mock';
+import { configureTestSuite, CPTestModule, MOCK_IMAGE } from '@campus-cloud/shared/tests';
 import { IntegrationSourceToIconPipe } from '@campus-cloud/libs/integrations/common/pipes/source-to-icon';
 
 const initialState = {
@@ -29,9 +28,9 @@ describe('ListPastComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, RouterTestingModule],
-        declarations: [ListPastComponent, IntegrationSourceToIconPipe],
-        providers: [CPI18nService, CPTrackingService, CPSession]
+        providers: [provideMockStore()],
+        imports: [CPTestModule, RouterTestingModule],
+        declarations: [ListPastComponent, IntegrationSourceToIconPipe]
       });
 
       await TestBed.compileComponents();
@@ -65,7 +64,10 @@ describe('ListPastComponent', () => {
   });
 
   it('should render events in the page', () => {
-    component.events = [{}, {}];
+    component.events = [
+      { id: 1, is_external: true, poster_thumb_url: MOCK_IMAGE },
+      { id: 2, is_external: false, poster_thumb_url: MOCK_IMAGE }
+    ];
     fixture.detectChanges();
 
     const listElements = de.queryAll(By.css('.cp-form__item'));
@@ -73,7 +75,10 @@ describe('ListPastComponent', () => {
   });
 
   it('should display icon if event is integrated', () => {
-    component.events = [{ id: 1, is_external: true }, { id: 2, is_external: false }];
+    component.events = [
+      { id: 1, is_external: true, poster_thumb_url: MOCK_IMAGE },
+      { id: 2, is_external: false, poster_thumb_url: MOCK_IMAGE }
+    ];
     fixture.detectChanges();
 
     const listElements = de.queryAll(By.css('.cp-form__item'));

@@ -1,15 +1,13 @@
 import { combineLatest, of as observableOf, Observable } from 'rxjs';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { map, startWith } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 
-import { API } from '@campus-cloud/config/api';
 import { CPI18nService } from './i18n.service';
 import { CP_PRIVILEGES_MAP } from '../constants';
 import { CPSession } from '@campus-cloud/session';
 import { amplitudeEvents } from '../constants/analytics';
-import { HTTPService } from '@campus-cloud/base/http.service';
+import { ApiService } from '@campus-cloud/base/services';
 import { ClubStatus } from '@controlpanel/manage/clubs/club.status';
 import { isClubAthletic } from '@controlpanel/manage/clubs/clubs.athletics.labels';
 import { canAccountLevelReadResource, canSchoolReadResource } from '../utils/privileges';
@@ -24,17 +22,13 @@ export interface IStore {
 }
 
 @Injectable()
-export class StoreService extends HTTPService {
-  constructor(http: HttpClient, router: Router, public session: CPSession) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, StoreService.prototype);
-  }
+export class StoreService {
+  constructor(private api: ApiService, public session: CPSession) {}
 
   private getServices(search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SERVICES}/1;1000`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES}/1;1000`;
 
-    return super.get(url, search).pipe(
+    return this.api.get(url, search).pipe(
       startWith([
         {
           label: cpI18n.translate('services'),
@@ -71,13 +65,13 @@ export class StoreService extends HTTPService {
 
   private getAthletics(search: HttpParams) {
     const ACTIVE_CLUBS = ClubStatus.active.toString();
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/1;1000`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CLUBS}/1;1000`;
 
     search = search
       .append('category_id', isClubAthletic.athletic.toString())
       .append('status', ACTIVE_CLUBS);
 
-    return super.get(url, search).pipe(
+    return this.api.get(url, search).pipe(
       startWith([
         {
           label: cpI18n.translate('athletics'),
@@ -114,11 +108,11 @@ export class StoreService extends HTTPService {
 
   private getClubs(search: HttpParams) {
     const ACTIVE_CLUBS = ClubStatus.active.toString();
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/1;1000`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CLUBS}/1;1000`;
 
     search = search.append('status', ACTIVE_CLUBS);
 
-    return super.get(url, search).pipe(
+    return this.api.get(url, search).pipe(
       startWith([
         {
           label: cpI18n.translate('clubs'),
@@ -212,8 +206,8 @@ export class StoreService extends HTTPService {
   }
 
   getStoreById(storeId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.STORE}/${storeId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.STORE}/${storeId}`;
 
-    return super.get(url);
+    return this.api.get(url);
   }
 }

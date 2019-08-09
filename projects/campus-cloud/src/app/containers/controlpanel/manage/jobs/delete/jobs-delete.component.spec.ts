@@ -5,10 +5,9 @@ import { of as observableOf } from 'rxjs';
 
 import { JobsModule } from '../jobs.module';
 import { JobsService } from '../jobs.service';
-import { CPSession } from '../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { JobsDeleteComponent } from './jobs-delete.component';
 import { mockSchool } from '../../../../../session/mock/school';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
 
 const mockJobs = require('../mockJobs.json');
 
@@ -30,13 +29,8 @@ describe('JobsDeleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [JobsModule, RouterTestingModule],
-      providers: [
-        CPSession,
-        CPI18nService,
-        CPTrackingService,
-        { provide: JobsService, useClass: MockJobsService }
-      ]
+      imports: [CPTestModule, JobsModule, RouterTestingModule],
+      providers: [{ provide: JobsService, useClass: MockJobsService }]
     })
       .compileComponents()
       .then(() => {

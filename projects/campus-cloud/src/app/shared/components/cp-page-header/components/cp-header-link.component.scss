@@ -45,10 +45,9 @@
   }
 
   padding: 0;
-  line-height: 1.2;
-  margin-top: 31px;
   margin-bottom: 0;
   list-style: none;
+  margin-top: 2.15rem;
 
   li {
     margin-right: 40px;
@@ -98,6 +97,7 @@
 
       a {
         width: 100%;
+        border: none;
         display: block;
         color: $color-grey;
 

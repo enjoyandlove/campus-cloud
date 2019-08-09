@@ -5,7 +5,7 @@ import { of as observableOf } from 'rxjs';
 
 import { CheckinService } from '../../checkin.service';
 import { CallbackModule } from '../../../callback.module';
-import { CPI18nService } from '../../../../../shared/services';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { CheckOutModalComponent } from './check-out-modal.component';
 
 class MockService {
@@ -35,8 +35,8 @@ describe('CheckOutModalComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CallbackModule, HttpClientModule, RouterTestingModule],
-      providers: [CPI18nService, { provide: CheckinService, useClass: MockService }]
+      imports: [CPTestModule, CallbackModule, HttpClientModule, RouterTestingModule],
+      providers: [{ provide: CheckinService, useClass: MockService }]
     })
       .compileComponents()
       .then(() => {

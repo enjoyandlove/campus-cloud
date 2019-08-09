@@ -3,9 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 
 import { DealsModule } from '../../../deals.module';
-import { CPSession } from '../../../../../../../session';
-import { RootStoreModule } from '../../../../../../../store';
-import { CPI18nService } from '../../../../../../../shared/services';
+import { RootStoreModule } from '@campus-cloud/store';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { DealsListActionBoxComponent } from './deals-list-action-box.component';
 
 describe('DealsListActionBoxComponent', () => {
@@ -14,8 +13,7 @@ describe('DealsListActionBoxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [DealsModule, HttpClientModule, RouterTestingModule, RootStoreModule],
-      providers: [CPSession, CPI18nService]
+      imports: [CPTestModule, DealsModule, HttpClientModule, RouterTestingModule, RootStoreModule]
     })
       .compileComponents()
       .then(() => {

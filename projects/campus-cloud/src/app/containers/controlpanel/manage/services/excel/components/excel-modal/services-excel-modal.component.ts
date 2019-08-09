@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { isDev } from '../../../../../../../config/env';
+import { EnvService } from '@campus-cloud/config/env';
 import { ServicesService } from '../../../services.service';
-import { FileUploadService, CPI18nService } from '../../../../../../../shared/services';
+import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 @Component({
@@ -17,13 +17,15 @@ export class ServicesExcelModalComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private env: EnvService,
     private cpI18n: CPI18nService,
     private service: ServicesService,
     private fileService: FileUploadService
   ) {}
 
   parser(file) {
-    const url = !isDev ? '/services/excel' : 'http://localhost:8000/services/excel';
+    const url =
+      this.env.name !== 'development' ? '/services/excel' : 'http://localhost:8000/services/excel';
 
     return this.fileService
       .uploadFile(file, url)
@@ -49,9 +51,10 @@ export class ServicesExcelModalComponent implements OnInit {
   ngOnInit() {
     this.fileName = 'mass_service_invite_sample.csv';
 
-    const templateUrl = isDev
-      ? `/assets/templates/${this.fileName}`
-      : `${environment.root}assets/templates/${this.fileName}`;
+    const templateUrl =
+      this.env.name === 'development'
+        ? `/assets/templates/${this.fileName}`
+        : `${environment.root}assets/templates/${this.fileName}`;
 
     this.options = {
       templateUrl,

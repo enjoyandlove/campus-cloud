@@ -6,16 +6,15 @@
         cpTarget="categories"
         [items]="categories$ | async"
         [selectedItem]="selectedCategory"
-        (selected)="onSelectedCategory($event)"
-        [isRequiredError]="formErrors && requiredControls.category.invalid"
-      >
+        (selected)="onSelectedCategory($event)"[isRequiredError]="formErrors && requiredControls.category.invalid">
       </cp-dropdown>
     </div>
   </div>
 
   <div class="form-group">
-    <label>{{ 'name' | cpI18n }}</label>
+    <label for="name">{{ 'name' | cpI18n }}</label>
     <input
+      id="name"
       type="text"
       cpTarget="name"
       class="form-control"
@@ -26,8 +25,8 @@
 
   <div class="row form-group">
     <div class="col-6">
-      <label>{{ 'locations_label_acronym' | cpI18n }}</label>
-      <input type="text" cpTarget="short_name" class="form-control" formControlName="short_name" />
+      <label for="short_name">{{ 'locations_label_acronym' | cpI18n }}</label>
+      <input id="short_name" type="text" cpTarget="short_name" class="form-control" formControlName="short_name" />
     </div>
   </div>
 
@@ -38,9 +37,7 @@
         class="col-12"
         cpTarget="image_url"
         [maxFileSize]="maxFileSize"
-        (uploaded)="onUploadedImage($event)"
-        [defaultImage]="locationForm.controls['image_url'].value"
-      >
+        (uploaded)="onUploadedImage($event)"[defaultImage]="locationForm.controls['image_url'].value">
       </cp-image-upload>
     </div>
   </div>
@@ -55,9 +52,7 @@
             cpTarget="address"
             [newAddress]="newAddress"
             (backToDefault)="onResetMap()"
-            (placeChange)="onPlaceChange($event)"
-            [defaultValue]="locationForm.get('address').value"
-          >
+            (placeChange)="onPlaceChange($event)"[defaultValue]="locationForm.get('address').value">
           </cp-place-autocomplete>
         </div>
       </div>
@@ -68,9 +63,10 @@
     <div class="col-9">
       <div class="row">
         <div class="col-6">
-          <label>{{ 't_latitude' | cpI18n }}</label>
+          <label for="latitude">{{ 't_latitude' | cpI18n }}</label>
           <input
             type="text"
+            id="latitude"
             cpTarget="latitude"
             class="form-control"
             formControlName="latitude"
@@ -78,9 +74,10 @@
           />
         </div>
         <div class="col-6">
-          <label>{{ 't_longitude' | cpI18n }}</label>
+          <label for="longitude">{{ 't_longitude' | cpI18n }}</label>
           <input
             type="text"
+            id="longitude"
             cpTarget="longitude"
             class="form-control"
             formControlName="longitude"
@@ -92,9 +89,7 @@
         class="row"
         *ngIf="
           (requiredControls.latitude.dirty && requiredControls.latitude.invalid) ||
-          (requiredControls.longitude.dirty && requiredControls.longitude.invalid)
-        "
-      >
+          (requiredControls.longitude.dirty && requiredControls.longitude.invalid)">
         <div class="col-12">
           <label class="error">{{ 't_shared_invalid_cords' | cpI18n }}</label>
         </div>
@@ -107,9 +102,7 @@
           <button
             type="button"
             cpTarget="map_update"
-            (click)="onUpdateMap()"
-            class="cpbtn cpbtn--primary margin-top"
-          >
+            (click)="onUpdateMap()"class="cpbtn cpbtn--primary margin-top">
             {{ 't_shared_update_map' | cpI18n }}
           </button>
         </div>
@@ -124,26 +117,27 @@
   </div>
 
   <div class="form-group">
-    <label>{{ 'description' | cpI18n }}</label>
-    <textarea cpTarget="description" formControlName="description"> </textarea>
+    <label for="description">{{ 'description' | cpI18n }}</label>
+    <textarea id="description" cpTarget="description" formControlName="description"> </textarea>
   </div>
 
   <div class="row form-group">
     <div class="col-6">
-      <label>{{ 'phone' | cpI18n }}</label>
-      <input type="text" cpTarget="phone" class="form-control" formControlName="phone" />
+      <label for="phone">{{ 'phone' | cpI18n }}</label>
+      <input id="phone" type="text" cpTarget="phone" class="form-control" formControlName="phone" />
     </div>
 
     <div class="col-6">
-      <label>{{ 'email' | cpI18n }}</label>
-      <input type="text" cpTarget="email" class="form-control" formControlName="email" />
+      <label for="email">{{ 'email' | cpI18n }}</label>
+      <input id="email" type="text" cpTarget="email" class="form-control" formControlName="email" />
     </div>
   </div>
 
   <div class="row form-group" formArrayName="links">
     <div class="col-6" [formGroupName]="0">
-      <label>{{ 't_locations_link_label' | cpI18n }}</label>
+      <label for="label">{{ 't_locations_link_label' | cpI18n }}</label>
       <input
+        id="label"
         type="text"
         cpTarget="label"
         class="form-control"
@@ -154,8 +148,9 @@
     </div>
 
     <div class="col-6" [formGroupName]="0">
-      <label>{{ 't_locations_link' | cpI18n }}</label>
+      <label for="url">{{ 't_locations_link' | cpI18n }}</label>
       <input
+        id="url"
         type="text"
         cpTarget="url"
         class="form-control"
@@ -167,7 +162,7 @@
   </div>
 
   <div class="form-group" *ngIf="locationForm.get('notes')">
-    <label>{{ 't_dining_dietary_notes' | cpI18n }}</label>
-    <textarea cpTarget="notes" formControlName="notes"> </textarea>
+    <label for="notes">{{ 't_dining_dietary_notes' | cpI18n }}</label>
+    <textarea id="notes" cpTarget="notes" formControlName="notes"> </textarea>
   </div>
 </form>

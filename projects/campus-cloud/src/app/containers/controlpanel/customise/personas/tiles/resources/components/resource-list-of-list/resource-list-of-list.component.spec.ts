@@ -1,16 +1,13 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 
 import { mockResource } from '../../__mock__';
-import { CPSession } from '@campus-cloud/session';
 import { TilesService } from '../../../tiles.service';
 import { ResourceService } from '../../resource.service';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { PersonasResourceModule } from '../../resources.module';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { baseReducers } from '@campus-cloud/store/base/reducers';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockPersonas } from '@controlpanel/customise/personas/tests';
 import { PersonasResourceListOfListComponent } from './resource-list-of-list.component';
 
@@ -22,17 +19,8 @@ describe('PersonasResourceListOfListComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        SharedModule,
-        HttpClientModule,
-        RouterTestingModule,
-        PersonasResourceModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
-      providers: [CPSession, CPI18nService, ResourceService, TilesService]
+      imports: [CPTestModule, HttpClientModule, RouterTestingModule, PersonasResourceModule],
+      providers: [provideMockStore(), ResourceService, TilesService]
     });
     fixture = TestBed.createComponent(PersonasResourceListOfListComponent);
     comp = fixture.componentInstance;

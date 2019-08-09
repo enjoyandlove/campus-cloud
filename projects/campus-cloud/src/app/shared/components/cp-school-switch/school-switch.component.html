@@ -1,68 +1,94 @@
 <ul class="switch no-scroll-bar">
-  <li class="switch__item no-hover" *ngIf="schools.length > 1">
-    <a href="#" class="switch__item" *ngIf="isSchoolPanel" (click)="onGoToSchools($event)">
+  <li class="switch__item no-hover"
+      *ngIf="schools.length > 1">
+    <a href="#"
+       class="switch__item dropdown-item"
+       *ngIf="isSchoolPanel"
+       (click)="onGoToSchools($event)">
       <i class="material-icons float-left">chevron_left</i><span>Back</span>
     </a>
-    <a href="#" *ngIf="!isSchoolPanel" (click)="onGoToSchools($event)">
+    <a href="#"
+       *ngIf="!isSchoolPanel"
+       class="dropdown-item"
+       (click)="onGoToSchools($event)">
       <span>{{ 'change_school' | cpI18n }}</span>
       <i class="material-icons float-right">chevron_right</i>
     </a>
   </li>
 
-  <div class="switch__left" *ngIf="!isSchoolPanel">
-    <li (click)="close.emit()" class="switch__item" [class.isFirstItem]="schools.length === 1">
-      <a
-        [routerLink]="['/settings/team/' + session.g.get('user').id + '/edit']"
-        [queryParams]="{ profile: true }"
-      >
+  <div class="switch__left"
+       *ngIf="!isSchoolPanel">
+    <li (click)="close.emit()"
+        class="switch__item"
+        [class.isFirstItem]="schools.length === 1">
+      <a class="dropdown-item"
+         [routerLink]="['/settings/team/' + session.g.get('user').id + '/edit']"
+         [queryParams]="{ profile: true }">
         {{ 'profile' | cpI18n }}
       </a>
     </li>
-    <li class="switch__item" (click)="close.emit()" *ngIf="canManageAdmins">
-      <a [routerLink]="['/settings/team']">{{ 'team_settings' | cpI18n }}</a>
+    <li class="switch__item dropdown-item"
+        (click)="close.emit()"
+        *cpFeatureToggle="'API_MANAGEMENT'">
+      <a [routerLink]="['/api-management']">{{ 't_api_management' | cpI18n}}</a>
     </li>
-    <li class="switch__item" (click)="close.emit()" *ngIf="canManageTestUsers">
-      <a [routerLink]="['/settings/testers']">{{ 't_sandbox_test_environment_users' | cpI18n }}</a>
+    <li class="switch__item"
+        (click)="close.emit()"
+        *ngIf="canManageAdmins">
+      <a class="dropdown-item"
+         [routerLink]="['/settings/team']">{{ 'team_settings' | cpI18n }}</a>
     </li>
-    <li class="switch__item" (click)="close.emit()">
-      <a [routerLink]="['/account/change-password']">{{ 'change_password' | cpI18n }}</a>
+    <li class="switch__item"
+        (click)="close.emit()"
+        *ngIf="canManageTestUsers">
+      <a class="dropdown-item"
+         [routerLink]="['/settings/testers']">{{ 't_sandbox_test_environment_users' | cpI18n }}</a>
     </li>
-    <li class="switch__item" (click)="close.emit()">
-      <a (click)="trackEvent(amplitudeEvents.logged_out)" [routerLink]="['/logout']">{{
+    <li class="switch__item"
+        (click)="close.emit()">
+      <a class="dropdown-item"
+         [routerLink]="['/account/change-password']">{{ 'change_password' | cpI18n }}</a>
+    </li>
+    <li class="switch__item"
+        (click)="close.emit()">
+      <a class="dropdown-item"
+         (click)="trackEvent(amplitudeEvents.logged_out)"
+         [routerLink]="['/logout']">{{
         'logout' | cpI18n
       }}</a>
     </li>
   </div>
 
-  <div class="switch__right" *ngIf="isSchoolPanel">
-    <li *ngFor="let school of schools" class="switch__item switch__school switch__school--current">
-      <a
-        href="#"
-        (click)="onSwitchSchool($event, school)"
-        (click)="trackEvent(amplitudeEvents.changed_school, school)"
-      >
+  <div class="switch__right"
+       *ngIf="isSchoolPanel">
+    <li *ngFor="let school of schools"
+        class="switch__item switch__school switch__school--current">
+      <a href="#"
+         class="dropdown-item"
+         (click)="onSwitchSchool($event, school)"
+         (click)="trackEvent(amplitudeEvents.changed_school, school)">
         <div class="row">
           <div class="col-10">
-            <div
-              *ngIf="school.app_logo_url !== ''"
-              class="switch__school__thumb"
-              [ngStyle]="{ 'background-image': 'url(' + school.app_logo_url + ')' }"
-            ></div>
-            <div
-              *ngIf="school.app_logo_url === ''"
-              class="switch__school__thumb"
-              [ngStyle]="{ 'background-image': 'url(' + defaultImage + ')' }"
-            ></div>
+            <div *ngIf="school.app_logo_url !== ''"
+                 class="switch__school__thumb"
+                 [ngStyle]="{ 'background-image': 'url(' + school.app_logo_url + ')' }">
+            </div>
+            <div *ngIf="school.app_logo_url === ''"
+                 class="switch__school__thumb"
+                 [ngStyle]="{ 'background-image': 'url(' + defaultImage + ')' }">
+            </div>
             <div class="switch__school__name">
               <div class="text-truncate">{{ school.name }}</div>
-              <div *ngIf="school.is_sandbox" class="switch__school__label">
+              <div *ngIf="school.is_sandbox"
+                   class="switch__school__label">
                 {{ 't_sandbox_test_environment' | cpI18n }}
               </div>
             </div>
           </div>
           <div class="col-2">
             <div class="switch__school__default">
-              <span class="float-right" *ngIf="selectedSchool.id === school.id">
+              <span class="float-right"
+                    *ngIf="selectedSchool.id === school.id">
                 <i class="material-icons">check</i>
               </span>
             </div>

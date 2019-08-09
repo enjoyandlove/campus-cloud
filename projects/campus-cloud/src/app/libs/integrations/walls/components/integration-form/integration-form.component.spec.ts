@@ -3,16 +3,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DebugElement } from '@angular/core';
 
-import { CPSession } from '@campus-cloud//session';
-import { CPI18nService } from '@campus-cloud//shared/services';
-import { CPDropdownComponent } from '@campus-cloud//shared/components';
-import { configureTestSuite } from '@campus-cloud//shared/tests';
-import { SharedModule } from '@campus-cloud/shared//shared.module';
-import { getElementByCPTargetValue } from '@campus-cloud//shared/utils/tests';
+import { CPDropdownComponent } from '@campus-cloud/shared/components';
+import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
 import { WallsIntegrationFormComponent } from './integration-form.component';
 import { WallsIntegrationModel } from '../../model/walls.integrations.model';
-import { CommonIntegrationUtilsService } from '@campus-cloud//libs/integrations/common/providers';
-import { IntegrationRequiredFieldsComponent } from '@campus-cloud//libs/integrations/common/components';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
+import { IntegrationRequiredFieldsComponent } from '@campus-cloud/libs/integrations/common/components';
 
 describe('WallsIntegrationFormComponent', () => {
   configureTestSuite();
@@ -20,8 +17,7 @@ describe('WallsIntegrationFormComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        providers: [CPI18nService, CPSession],
-        imports: [SharedModule, ReactiveFormsModule, HttpClientModule],
+        imports: [CPTestModule, ReactiveFormsModule, HttpClientModule],
         declarations: [WallsIntegrationFormComponent, IntegrationRequiredFieldsComponent]
       });
 

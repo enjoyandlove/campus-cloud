@@ -2,17 +2,16 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span i18n
-          ><strong>{{ 'feeds_approve_post_modal_title' | cpI18n }}</strong></span
-        >
+        <span><strong>{{ 'feeds_approve_post_modal_title' | cpI18n }}</strong></span>
 
-        <span
+        <button
+          type="button"
+          aria-label="close"
           data-dismiss="modal"
           (click)="teardown.emit()"
-          class="float-right hover cpmodal__header__close"
-        >
-          &times;
-        </span>
+          class="float-right hover cpmodal__header__close unstyled-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
   </div>
@@ -20,7 +19,7 @@
   <div class="cpmodal__body">
     <div class="row">
       <div class="col-12">
-        <p class="text-center" i18n>
+        <p class="text-center">
           {{ 'feeds_approve_post_modal_body' | cpI18n }}
         </p>
       </div>
@@ -32,11 +31,10 @@
       <div class="col-6 offset-6 text-right">
         <button
           type="button"
-          class="cpbtn cpbtn--cancel"
+          aria-label="close"
           data-dismiss="modal"
-          i18n
-          (click)="teardown.emit()"
-        >
+          class="cpbtn cpbtn--cancel"
+          (click)="teardown.emit()">
           {{ 'cancel' | cpI18n }}
         </button>
 

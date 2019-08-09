@@ -2,14 +2,12 @@
   <ul class="locations cp-form">
     <li class="cp-form__header col-12">
       <div class="row">
-        <cp-sorting-header
-          class="col-7"
-          sortLabel="name"
-          [sortField]="sortBy"
-          (click)="doSort.emit('name')"
-          [sortDirection]="sortDirection"
-          [label]="sortingLabels.locations"
-        >
+        <cp-sorting-header class="col-7"
+                           sortLabel="name"
+                           [sortField]="sortBy"
+                           (click)="doSort.emit('name')"
+                           [sortDirection]="sortDirection"
+                           [label]="sortingLabels.locations">
         </cp-sorting-header>
 
         <span class="col-2">{{ 'locations_label_acronym' | cpI18n }}</span>
@@ -18,21 +16,18 @@
       </div>
     </li>
 
-    <li class="cp-form__item col-12" *ngFor="let location of data$ | async">
+    <li class="cp-form__item col-12"
+        *ngFor="let location of data$ | async">
       <div class="row">
         <span class="col-7 text-truncate">
-          <img
-            class="rounded img-fit-cover float-left avatar"
-            [src]="location.image_url ? location.image_url : defaultImage"
-          />
+          <img class="rounded img-fit-cover float-left avatar"
+               [src]="location.image_url ? location.image_url : defaultImage" />
           <strong>
-            <a
-              cpTracker
-              cpTarget="view_info"
-              class="cp-form__title"
-              [eventData]="eventData"
-              [routerLink]="[location.id + '/info']"
-            >
+            <a cpTracker
+               cpTarget="view_info"
+               class="cp-form__title"
+               [eventData]="eventData"
+               [routerLink]="[location.id + '/info']">
               {{ location.name }}
             </a>
           </strong>
@@ -41,22 +36,23 @@
           {{ location.address }}
         </span>
 
-        <span cpTarget="acronym" class="col-2 text-truncate margin-top">
+        <span cpTarget="acronym"
+              class="col-2 text-truncate margin-top">
           {{ location.short_name }}
         </span>
 
-        <span cpTarget="category_name" class="col-2 text-truncate margin-top">
+        <span cpTarget="category_name"
+              class="col-2 text-truncate margin-top">
           {{ location.category_name }}
         </span>
 
         <span class="col-1 text-right">
-          <i
-            cpTarget="delete"
-            (click)="deleteClick.emit(location)"
-            class="material-icons hover action-button"
-          >
-            close
-          </i>
+          <button type="button"
+                  cpTarget="delete"
+                  class="unstyled-button action-button"
+                  (click)="deleteClick.emit(location)">
+            &times;
+          </button>
         </span>
       </div>
     </li>

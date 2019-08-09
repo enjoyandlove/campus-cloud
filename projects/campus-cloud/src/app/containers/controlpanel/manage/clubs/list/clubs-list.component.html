@@ -1,6 +1,8 @@
 <div class="row">
   <div class="col-12">
-    <cp-clubs-list-action-box [isAthletic]="isAthletic" (filter)="doFilter($event)">
+    <cp-clubs-list-action-box
+      [isAthletic]="isAthletic"
+      (filter)="doFilter($event)">
     </cp-clubs-list-action-box>
   </div>
 </div>
@@ -19,8 +21,7 @@
               (click)="doSort('name')"
               [label]="sortingLabels.name"
               [sortField]="state.sort_field"
-              [sortDirection]="state.sort_direction"
-            >
+              [sortDirection]="state.sort_direction">
             </cp-sorting-header>
 
             <span class="col-2">
@@ -39,8 +40,8 @@
             <span class="col-5 text-truncate clubs__thumbnail">
               <img
                 class="rounded img-fit-cover"
-                [src]="club.logo_url ? club.logo_url : defaultImage"
-              />
+                [alt]="'t_shared_img_alt' | cpI18n:club.id"
+                [src]="club.logo_url ? club.logo_url : defaultImage"/>
 
               <strong>
                 <a
@@ -48,8 +49,7 @@
                   class="cp-form__title"
                   [eventData]="eventData"
                   queryParamsHandling="merge"
-                  [routerLink]="[club.id + '/info']"
-                >
+                  [routerLink]="[club.id + '/info']">
                   {{ club.name }}
                 </a>
               </strong>
@@ -75,11 +75,13 @@
               {{ club.total_item_count }}
             </span>
 
-            <span
-              (click)="onDelete(club)"
-              class="col-1 hover text-right text-truncate delete-club float-right"
-            >
-              &times;
+            <span class="col-1">
+              <button
+                type="button"
+                (click)="onDelete(club)"
+                class="hover text-right text-truncate delete-club float-right unstyled-button">
+                &times;
+              </button>
             </span>
           </div>
         </li>
@@ -92,8 +94,7 @@
             [pagePrev]="pagePrev"
             [pageNumber]="pageNumber"
             (next)="onPaginationNext()"
-            (previous)="onPaginationPrevious()"
-          >
+            (previous)="onPaginationPrevious()">
           </cp-pagination>
         </div>
       </div>
@@ -102,8 +103,7 @@
     <cp-no-content
       class="no-content"
       *ngIf="!state.clubs.length"
-      [noContentText]="cpI18n.translate('clubs_no_results')"
-    >
+      [noContentText]="cpI18n.translate('clubs_no_results')">
     </cp-no-content>
   </div>
 </div>

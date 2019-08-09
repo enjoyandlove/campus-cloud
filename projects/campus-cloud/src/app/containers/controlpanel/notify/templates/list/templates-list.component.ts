@@ -122,7 +122,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
     setTimeout(
       () => {
-        $('#deleteTemplateModal').modal();
+        $('#deleteTemplateModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -136,7 +136,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.viewMoreRecipients = recipients;
     setTimeout(
       () => {
-        $('#viewMoreModal').modal();
+        $('#viewMoreModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -164,7 +164,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
     this.isTemplateCreateModal = true;
     setTimeout(
       () => {
-        $('#templateCreateModal').modal();
+        $('#templateCreateModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -193,7 +193,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
 
     setTimeout(
       () => {
-        $('#templateComposeModal').modal();
+        $('#templateComposeModal').modal({ keyboard: true, focus: true });
       },
 
       1
@@ -212,7 +212,7 @@ export class TemplatesListComponent extends BaseComponent implements OnInit {
         this.templateData = template;
         setTimeout(
           () => {
-            $('#templateComposeModal').modal();
+            $('#templateComposeModal').modal({ keyboard: true, focus: true });
           },
 
           1

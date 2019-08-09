@@ -22,3 +22,10 @@
   padding: 0;
   list-style: none;
 }
+
+button.download-file {
+  display: flex;
+  i {
+    margin-right: 0.5rem;
+  }
+}

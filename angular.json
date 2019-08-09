@@ -23,7 +23,11 @@
             "showCircularDependencies": true,
             "polyfills": "projects/campus-cloud/src/polyfills.ts",
             "tsConfig": "projects/campus-cloud/tsconfig.app.json",
-            "assets": ["projects/campus-cloud/src/favicon.ico", "projects/campus-cloud/src/assets"],
+            "assets": [
+              "projects/campus-cloud/src/favicon.ico",
+              "projects/campus-cloud/src/assets",
+              "projects/campus-cloud/src/env.js"
+            ],
             "styles": [
               "node_modules/@angular/cdk/overlay-prebuilt.css",
               "node_modules/pickr-widget/dist/pickr.min.css",
@@ -44,11 +48,11 @@
             ]
           },
           "configurations": {
-            "production_usa": {
+            "production": {
               "fileReplacements": [
                 {
                   "replace": "projects/campus-cloud/src/environments/environment.ts",
-                  "with": "projects/campus-cloud/src/environments/environment.prod.usa.ts"
+                  "with": "projects/campus-cloud/src/environments/environment.prod.ts"
                 },
                 {
                   "replace": "projects/campus-cloud/src/index.html",
@@ -60,67 +64,6 @@
               "optimization": false,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": true,
-              "buildOptimizer": false,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
-            },
-            "production_canada": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/campus-cloud/src/environments/environment.ts",
-                  "with": "projects/campus-cloud/src/environments/environment.prod.canada.ts"
-                },
-                {
-                  "replace": "projects/campus-cloud/src/index.html",
-                  "with": "projects/campus-cloud/src/index.prod.html"
-                }
-              ],
-              "verbose": true,
-              "progress": false,
-              "deployUrl": "/dist/",
-              "optimization": false,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "extractLicenses": true,
-              "vendorChunk": true,
-              "buildOptimizer": false,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                }
-              ]
-            },
-            "staging": {
-              "fileReplacements": [
-                {
-                  "replace": "projects/campus-cloud/src/environments/environment.ts",
-                  "with": "projects/campus-cloud/src/environments/environment.staging.ts"
-                },
-                {
-                  "replace": "projects/campus-cloud/src/index.html",
-                  "with": "projects/campus-cloud/src/index.prod.html"
-                }
-              ],
-              "statsJson": true,
-              "deployUrl": "/dist/",
-              "optimization": false,
-              "outputHashing": "all",
-              "sourceMap": true,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
@@ -147,11 +90,8 @@
             "staging": {
               "browserTarget": "campus-cloud:build:staging"
             },
-            "production_usa": {
-              "browserTarget": "campus-cloud:build:production_usa"
-            },
-            "production_canada": {
-              "browserTarget": "campus-cloud:build:production_canada"
+            "production": {
+              "browserTarget": "campus-cloud:build:production"
             }
           }
         },
@@ -171,7 +111,11 @@
               "node_modules/flatpickr/dist/flatpickr.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
             ],
-            "assets": ["projects/campus-cloud/src/favicon.ico", "projects/campus-cloud/src/assets"]
+            "assets": [
+              "projects/campus-cloud/src/favicon.ico",
+              "projects/campus-cloud/src/assets",
+              "projects/campus-cloud/src/env.js"
+            ]
           }
         },
         "lint": {

@@ -1,16 +1,14 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
 
-import { CPSession } from '@campus-cloud/session';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { TeamUtilsService } from '../team.utils.service';
 import { TeamEditComponent } from './team-edit.component';
-import { AdminService, CPI18nService, ErrorService } from '@campus-cloud/shared/services';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { AdminService, ErrorService } from '@campus-cloud/shared/services';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 const privilegeSet = { r: true, w: true };
 
@@ -20,8 +18,8 @@ describe('TeamEditComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, HttpClientModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [CPSession, CPI18nService, TeamUtilsService, AdminService, ErrorService],
+        imports: [CPTestModule, HttpClientModule, RouterTestingModule],
+        providers: [provideMockStore(), TeamUtilsService, AdminService, ErrorService],
         declarations: [TeamEditComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

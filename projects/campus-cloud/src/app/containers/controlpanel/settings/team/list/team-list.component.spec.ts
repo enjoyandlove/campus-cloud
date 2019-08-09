@@ -1,6 +1,6 @@
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 import { of, throwError } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
@@ -20,10 +20,11 @@ describe('TeamListComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule, StoreModule.forRoot({})],
+        imports: [SharedModule],
         providers: [
           CPSession,
           CPI18nService,
+          provideMockStore(),
           { provide: AdminService, useClass: MockAdminService },
           { provide: CPTrackingService, useClass: MockTrackingService }
         ],

@@ -46,7 +46,7 @@ export class OrientationInfoComponent extends BaseComponent implements OnInit {
     this.launchEditModal = true;
     setTimeout(
       () => {
-        $('#programEdit').modal();
+        $('#programEdit').modal({ keyboard: true, focus: true });
       },
 
       1

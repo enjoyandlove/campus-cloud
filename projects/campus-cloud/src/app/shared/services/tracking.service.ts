@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import * as amplitude from 'amplitude-js';
 
 import { get as _get } from 'lodash';
-import { isProd, isStaging } from './../../config/env';
+import { EnvService } from '@campus-cloud/config/env';
 
 /**
  * i.e url = /manage/events/123/info
@@ -27,7 +27,7 @@ declare var window: any;
 
 @Injectable()
 export class CPTrackingService {
-  constructor(public router: Router) {}
+  constructor(public router: Router, private env: EnvService) {}
 
   getEventProperties() {
     return {
@@ -49,7 +49,7 @@ export class CPTrackingService {
   }
 
   hotJarRecordPage() {
-    if (!isProd) {
+    if (this.env.name !== 'production') {
       return;
     }
 
@@ -69,7 +69,7 @@ export class CPTrackingService {
   }
 
   amplitudeEmitEvent(eventName: string, eventProperties?: {}) {
-    if (!isProd && !isStaging) {
+    if (this.env.name === 'development') {
       return;
     }
 
@@ -81,7 +81,7 @@ export class CPTrackingService {
   }
 
   gaTrackPage(pageName) {
-    if (!isProd) {
+    if (this.env.name === 'development') {
       return;
     }
 
@@ -95,7 +95,7 @@ export class CPTrackingService {
     eventLabel: string = null,
     eventValue: number = null
   ) {
-    if (!isProd) {
+    if (this.env.name !== 'production') {
       return;
     }
 

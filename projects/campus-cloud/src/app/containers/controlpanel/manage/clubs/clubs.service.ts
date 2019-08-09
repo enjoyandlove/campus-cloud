@@ -1,49 +1,43 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
-import { API } from '@campus-cloud/config/api';
 import { baseActions } from '@campus-cloud/store/base';
-import { HTTPService } from '@campus-cloud/base/http.service';
+import { ApiService } from '@campus-cloud/base/services';
 
 @Injectable()
-export class ClubsService extends HTTPService {
-  constructor(http: HttpClient, router: Router, private store: Store<any>) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, ClubsService.prototype);
-  }
+export class ClubsService {
+  constructor(private api: ApiService, private store: Store<any>) {}
 
   getClubs(search: HttpParams, startRange: number, endRange: number) {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CLUBS}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   getClubById(serviceId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/${serviceId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CLUBS}/${serviceId}`;
 
-    return super.get(url, search);
+    return this.api.get(url, search);
   }
 
   deleteClubById(serviceId: number) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/${serviceId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CLUBS}/${serviceId}`;
 
-    return super.delete(url, null, true);
+    return this.api.delete(url, null, true);
   }
 
   createClub(body, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CLUBS}/`;
 
-    return super.post(url, body, search);
+    return this.api.post(url, body, search);
   }
 
   updateClub(body, clubId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.CLUBS}/${clubId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CLUBS}/${clubId}`;
 
-    return super.update(url, body, search, true);
+    return this.api.update(url, body, search, true);
   }
 
   setModalClubs(clubs: any[]): void {

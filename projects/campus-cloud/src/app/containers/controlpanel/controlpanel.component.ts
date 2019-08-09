@@ -1,7 +1,10 @@
+import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, AfterViewInit } from '@angular/core';
 
-import { isProd } from '@campus-cloud/config/env';
+import { EnvService } from '@campus-cloud/config/env';
+import { appStorage, base64 } from '../../shared/utils';
+import { ControlPanelService } from './controlpanel.service';
+import { ToastService } from './../../ready/toast/toast.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService, CPAmplitudeService } from '@campus-cloud/shared/services';
 
@@ -10,12 +13,15 @@ import { CPTrackingService, CPAmplitudeService } from '@campus-cloud/shared/serv
   styleUrls: ['./controlpanel.component.scss'],
   templateUrl: './controlpanel.component.html'
 })
-export class ControlPanelComponent implements AfterViewInit {
-  isProd = isProd;
+export class ControlPanelComponent implements AfterViewInit, OnInit {
+  isProd = this.env.name === 'production';
 
   constructor(
     private router: Router,
+    private env: EnvService,
     private route: ActivatedRoute,
+    private toastService: ToastService,
+    private service: ControlPanelService,
     private cpTrackingService: CPTrackingService,
     private cpAmplitudeService: CPAmplitudeService
   ) {}
@@ -25,6 +31,57 @@ export class ControlPanelComponent implements AfterViewInit {
 
     if (isLogin) {
       this.cpTrackingService.amplitudeEmitEvent(amplitudeEvents.LOGGED_IN);
+    }
+  }
+
+  trackBannerClick(interaction_type: string) {
+    this.cpTrackingService.amplitudeEmitEvent(amplitudeEvents.VIEWED_BANNER, {
+      interaction_type
+    });
+  }
+  onToastDissmised(id: number) {
+    this.setBannerCookie(id);
+    this.trackBannerClick('Dismissed');
+  }
+
+  onToastLearnMoreClicked(id: number) {
+    this.setBannerCookie(id);
+    this.trackBannerClick('Interacted');
+  }
+
+  setBannerCookie(id: number) {
+    appStorage.set(base64.encode(appStorage.keys.CHANGE_LOG), id.toString());
+  }
+
+  showToast({ linkText, linkUrl, title, id }) {
+    this.toastService.show({
+      type: 'info',
+      text: title,
+      cta: {
+        text: linkText,
+        url: linkUrl,
+        ctaClickHandler: this.onToastLearnMoreClicked.bind(this, id)
+      },
+      dismissClickHandler: this.onToastDissmised.bind(this, id)
+    });
+  }
+
+  loadWhatsNew() {
+    this.service.getBeamerPosts().subscribe(({ id, translations }: any) => {
+      const { linkText, linkUrl, title } = translations[0];
+      const previousChangeLogKey = appStorage.get(base64.encode(appStorage.keys.CHANGE_LOG));
+
+      if (!previousChangeLogKey || previousChangeLogKey !== id.toString()) {
+        this.showToast({ linkText, linkUrl, title, id });
+      }
+    });
+  }
+
+  ngOnInit() {
+    if (this.isProd) {
+      setTimeout(() => {
+        this.loadWhatsNew();
+      }, 1000);
     }
   }
 

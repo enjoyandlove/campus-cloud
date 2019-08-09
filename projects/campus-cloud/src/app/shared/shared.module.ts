@@ -13,7 +13,7 @@ import {
   CPLightboxDirective,
   CPImageRatioDirective,
   CPColorPickerDirective,
-  CPFeatureToggleDirective
+  CPCopyClipboardDirective
 } from './directives';
 
 // services
@@ -146,7 +146,7 @@ import {
     CPUploadButtonComponent,
     CPSortingHeaderComponent,
     CPCheckDropdownComponent,
-    CPFeatureToggleDirective,
+    CPCopyClipboardDirective,
     CPResourceBannerComponent,
     CPFormFixedFooterComponent,
     CPSmallDatePickerComponent,
@@ -236,7 +236,7 @@ import {
     CPImageCropperComponent,
     CPCheckDropdownComponent,
     CPSortingHeaderComponent,
-    CPFeatureToggleDirective,
+    CPCopyClipboardDirective,
     CPResourceBannerComponent,
     CPFormFixedFooterComponent,
     CPSmallDatePickerComponent,

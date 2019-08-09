@@ -6,8 +6,7 @@
         class="btn btn-sm"
         (click)="onIconClick(category.value)"
         *ngFor="let category of categoryIcons"
-        [class.active]="category.value === form.get('img_url').value"
-      >
+        [class.active]="category.value === form.get('img_url').value">
         <img class="hover" [src]="category.icon" />
       </button>
     </div>
@@ -18,23 +17,22 @@
         class="btn btn-sm"
         (click)="onColorClick(color.code)"
         *ngFor="let color of categoryIconColors"
-        [class.active]="color.code === form.get('color').value"
-      >
+        [class.active]="color.code === form.get('color').value">
         <span [ngStyle]="{ background: '#' + color.code }"></span>
       </button>
       <label
         class="error"
-        *ngIf="formError && (requiredControls.icon.invalid || requiredControls.color.invalid)"
-      >
+        *ngIf="formError && (requiredControls.icon.invalid || requiredControls.color.invalid)">
         {{ 't_categories_icon_color_required' | cpI18n }}
       </label>
     </div>
 
     <div class="form-group">
-      <label>
+      <label for="name">
         {{ 't_shared_category_name' | cpI18n }}
       </label>
       <input
+        id="name"
         type="text"
         cpTarget="name"
         class="form-control"
@@ -50,8 +48,7 @@
         cpTarget="category_type"
         [selectedItem]="selectedCategory"
         (selected)="onCategoryTypeSelect($event)"
-        [isRequiredError]="formError && requiredControls.type.invalid"
-      >
+        [isRequiredError]="formError && requiredControls.type.invalid">
       </cp-dropdown>
     </div>
   </div>

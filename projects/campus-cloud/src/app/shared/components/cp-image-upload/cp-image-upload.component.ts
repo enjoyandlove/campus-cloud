@@ -1,10 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { HttpHeaders } from '@angular/common/http';
 
-import { API } from '@campus-cloud/config/api';
 import { appStorage } from '@campus-cloud/shared/utils';
-import { FileUploadService } from '@campus-cloud/shared/services';
-import { CPI18nService, ZendeskService } from '../../services';
+import { ApiService } from '@campus-cloud/base/services';
+import { FileUploadService, CPI18nService, ZendeskService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-image-upload',
@@ -30,7 +29,11 @@ export class CPImageUploadComponent implements OnInit {
   isLoading;
   zdArticle;
 
-  constructor(public cpI18n: CPI18nService, private fileUploadService: FileUploadService) {}
+  constructor(
+    public cpI18n: CPI18nService,
+    private fileUploadService: FileUploadService,
+    private api: ApiService
+  ) {}
 
   async onFileUpload(file, asPromise?: boolean) {
     this.error = null;
@@ -63,8 +66,8 @@ export class CPImageUploadComponent implements OnInit {
 
     this.isLoading = true;
 
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.IMAGE}/`;
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.IMAGE}/`;
+    const auth = `${this.api.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
 
     const headers = new HttpHeaders({
       Authorization: auth

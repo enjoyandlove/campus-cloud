@@ -2,21 +2,21 @@
   <div class="row">
     <form [formGroup]="form" class="col-8 offset-2 margin-bottom">
       <div class="section cp-card form-group">
-        <p class="section__title">{{ 'admin_invite' | cpI18n }}</p>
+        <h2 class="section__title">{{ 'admin_invite' | cpI18n }}</h2>
         <div class="row">
           <div class="col-4">
-            <label>{{ 'first_name' | cpI18n }}</label>
-            <input type="text" class="form-control" formControlName="firstname" />
+            <label for="firstname">{{ 'first_name' | cpI18n }}</label>
+            <input id="firstname" type="text" class="form-control" formControlName="firstname" />
           </div>
 
           <div class="col-4">
-            <label>{{ 'last_name' | cpI18n }}</label>
-            <input type="text" class="form-control" formControlName="lastname" />
+            <label for="lastname">{{ 'last_name' | cpI18n }}</label>
+            <input id="lastname" type="text" class="form-control" formControlName="lastname" />
           </div>
 
           <div class="col-4">
-            <label>{{ 'email' | cpI18n }}</label>
-            <input type="text" class="form-control" formControlName="email" />
+            <label for="email">{{ 'email' | cpI18n }}</label>
+            <input id="email" type="text" class="form-control" formControlName="email" />
           </div>
         </div>
 
@@ -34,8 +34,7 @@
                   <div class="float-right">
                     <cp-switch
                       (toggle)="toggleAllAccess($event)"
-                      (toggle)="isAllAccessEnabled = !isAllAccessEnabled"
-                    >
+                      (toggle)="isAllAccessEnabled = !isAllAccessEnabled">
                     </cp-switch>
                   </div>
                 </div>
@@ -50,7 +49,7 @@
         <div class="section cp-card form-group" [class.isDisabled]="isAllAccessEnabled">
           <!-- Manage Team Members -->
           <div class="section__item">
-            <p class="section__title">{{ 'admin_permissions' | cpI18n }}</p>
+            <h2 class="section__title">{{ 'admin_permissions' | cpI18n }}</h2>
             <div class="row">
               <div class="col-8">
                 <p class="section-sub-title">{{ 'manage_team_members' | cpI18n }}</p>
@@ -80,8 +79,7 @@
                   <cp-dropdown
                     [items]="servicesMenu"
                     [selectedItem]="servicesCount"
-                    (selected)="onServicesSelected($event)"
-                  >
+                    (selected)="onServicesSelected($event)">
                   </cp-dropdown>
                 </div>
               </div>
@@ -103,8 +101,7 @@
                   <cp-dropdown
                     [items]="clubsMenu"
                     [selectedItem]="clubsCount"
-                    (selected)="onClubsSelected($event)"
-                  >
+                    (selected)="onClubsSelected($event)">
                   </cp-dropdown>
                 </div>
               </div>
@@ -126,8 +123,7 @@
                   <cp-dropdown
                     [items]="athleticsMenu"
                     [selectedItem]="athleticsCount"
-                    (selected)="onAthleticsSelected($event)"
-                  >
+                    (selected)="onAthleticsSelected($event)">
                   </cp-dropdown>
                 </div>
               </div>
@@ -189,10 +185,8 @@
                   class="cpcheckbox"
                   [label]="cpI18n.translate('feeds')"
                   (toggle)="
-                    checkControl($event, CP_PRIVILEGES_MAP.moderation, formData.content.feeds)
-                  "
-                  [isDisabled]="!formData.content.feeds.active"
-                >
+                    checkControl($event, CP_PRIVILEGES_MAP.moderation, formData.content.feeds)"
+                  [isDisabled]="!formData.content.feeds.active">
                 </cp-checkbox>
               </div>
 
@@ -201,10 +195,8 @@
                   class="cpcheckbox"
                   [label]="cpI18n.translate('calendar')"
                   (toggle)="
-                    checkControl($event, CP_PRIVILEGES_MAP.calendar, formData.content.calendars)
-                  "
-                  [isDisabled]="!formData.content.calendars.active"
-                >
+                    checkControl($event, CP_PRIVILEGES_MAP.calendar, formData.content.calendars)"
+                  [isDisabled]="!formData.content.calendars.active">
                 </cp-checkbox>
               </div>
 
@@ -212,22 +204,12 @@
                 <cp-checkbox
                   class="cpcheckbox"
                   [label]="cpI18n.translate('dining')"
-                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.dining, formData.content.dining)"
-                  [isDisabled]="!formData.content.dining.active"
-                >
+                  (toggle)="
+                      checkControl($event, CP_PRIVILEGES_MAP.dining, formData.content.dining)
+                    "
+                  [isDisabled]="!formData.content.dining.active">
                 </cp-checkbox>
               </div>
-
-              <!-- <div
-              class="col-4"
-              [class.isDisabled]="!formData.content.links.active">
-              <cp-checkbox
-                class="cpcheckbox"
-                [label]="cpI18n.translate('links')"
-                (toggle)="checkControl($event, CP_PRIVILEGES_MAP.links, formData.content.links)"
-                [isDisabled]="!formData.content.links.active">
-              </cp-checkbox>
-            </div> -->
             </div>
 
             <div class="row options-row">
@@ -236,10 +218,8 @@
                   class="cpcheckbox"
                   [label]="cpI18n.translate('maps')"
                   (toggle)="
-                    checkControl($event, CP_PRIVILEGES_MAP.campus_maps, formData.content.maps)
-                  "
-                  [isDisabled]="!formData.content.maps.active"
-                >
+                    checkControl($event, CP_PRIVILEGES_MAP.campus_maps, formData.content.maps)"
+                  [isDisabled]="!formData.content.maps.active">
                 </cp-checkbox>
               </div>
 
@@ -255,10 +235,8 @@
                       $event,
                       CP_PRIVILEGES_MAP.app_customization,
                       formData.content.appCustomizaton
-                    )
-                  "
-                  [isDisabled]="!formData.content.appCustomizaton.active"
-                >
+                    )"
+                  [isDisabled]="!formData.content.appCustomizaton.active">
                 </cp-checkbox>
                 <button
                   cpTooltip
@@ -266,9 +244,8 @@
                   [attr.title]="'t_admin_invite_studio_limited_tooltip' | cpI18n"
                   *ngIf="
                     utils.hasStudio(schoolPrivileges) &&
-                    !utils.hasFullStudioPrivilege(schoolPrivileges)
-                  "
-                >
+                !utils.hasFullStudioPrivilege(schoolPrivileges)
+                  ">
                   {{ 't_shared_limited' | cpI18n }}
                 </button>
               </div>
@@ -282,10 +259,8 @@
                       $event,
                       CP_PRIVILEGES_MAP.orientation,
                       formData.content.orientation
-                    )
-                  "
-                  [isDisabled]="!formData.content.orientation.active"
-                >
+                    )"
+                  [isDisabled]="!formData.content.orientation.active">
                 </cp-checkbox>
               </div>
             </div>
@@ -296,8 +271,7 @@
                   class="cpcheckbox"
                   [label]="cpI18n.translate('jobs')"
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.jobs, formData.content.jobs)"
-                  [isDisabled]="!formData.content.jobs.active"
-                >
+                  [isDisabled]="!formData.content.jobs.active">
                 </cp-checkbox>
               </div>
 
@@ -306,8 +280,7 @@
                   class="cpcheckbox"
                   [label]="cpI18n.translate('deals')"
                   (toggle)="checkControl($event, CP_PRIVILEGES_MAP.deals, formData.content.deals)"
-                  [isDisabled]="!formData.content.deals.active"
-                >
+                  [isDisabled]="!formData.content.deals.active">
                 </cp-checkbox>
               </div>
             </div>
@@ -324,8 +297,7 @@
                     cpTooltip
                     class="material-icons"
                     *ngIf="!hasStorePrivileges()"
-                    [attr.title]="'t_admin_invite_notify_permission_tooltip' | cpI18n"
-                  >
+                    [attr.title]="'t_admin_invite_notify_permission_tooltip' | cpI18n">
                     lock
                   </i>
                 </p>
@@ -353,8 +325,7 @@
                             CP_PRIVILEGES_MAP.campus_announcements,
                             formData.notify.campus
                           )
-                        "
-                      >
+                        ">
                       </cp-checkbox>
                     </div>
                     <div class="col-5" [class.isDisabled]="!formData.notify.emergency.active">
@@ -372,8 +343,7 @@
                             CP_PRIVILEGES_MAP.emergency_announcement,
                             formData.notify.emergency
                           )
-                        "
-                      >
+                        ">
                       </cp-checkbox>
                     </div>
                   </div>
@@ -404,9 +374,8 @@
                   [isDisabled]="!formData.assess.engagement.active"
                   [isChecked]="schoolPrivileges && schoolPrivileges[CP_PRIVILEGES_MAP.assessment]"
                   (toggle)="
-                    checkControl($event, CP_PRIVILEGES_MAP.assessment, formData.assess.engagement)
-                  "
-                >
+                      checkControl($event, CP_PRIVILEGES_MAP.assessment, formData.assess.engagement)
+                    ">
                 </cp-checkbox>
               </div>
             </div>

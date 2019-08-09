@@ -5,21 +5,21 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap, map } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { API } from '@campus-cloud/config/api';
-import { CPSession } from '@campus-cloud/session';
 import { ClubStatus } from '../club.status';
 import { ClubsService } from '../clubs.service';
+import { CPSession } from '@campus-cloud/session';
+import { ApiService } from '@campus-cloud/base/services';
+import { ClubsUtilsService } from '../clubs.utils.service';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { baseActions, ISnackbar } from '@campus-cloud/store/base';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { appStorage } from '@campus-cloud/shared/utils/storage/storage';
-import { ClubsUtilsService } from '../clubs.utils.service';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
 import {
-  CPI18nService,
-  FileUploadService,
+  IAdmin,
   AdminService,
-  IAdmin
+  CPI18nService,
+  FileUploadService
 } from '@campus-cloud/shared/services';
 
 @Component({
@@ -46,6 +46,7 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   admins$: Observable<IAdmin[]>;
 
   constructor(
+    private api: ApiService,
     public session: CPSession,
     public route: ActivatedRoute,
     public cpI18n: CPI18nService,
@@ -124,9 +125,9 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
   onFileAdded(file) {
     const validate = this.fileService.validFile(file);
     const search = new HttpParams().append('school_id', this.schoolId.toString());
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.FILE_UPLOAD}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.FILE_UPLOAD}/`;
 
-    const auth = `${API.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
+    const auth = `${this.api.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
     const headers = new HttpHeaders({
       Authorization: auth
     });

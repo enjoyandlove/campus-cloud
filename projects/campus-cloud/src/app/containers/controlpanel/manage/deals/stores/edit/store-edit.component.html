@@ -2,17 +2,16 @@
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
-        <span
-          ><strong>{{ 'stores_edit_modal_title' | cpI18n }}</strong></span
-        >
+        <span><strong>{{ 'stores_edit_modal_title' | cpI18n }}</strong></span>
 
-        <span
+        <button
+          type="button"
+          aria-label="Close"
           data-dismiss="modal"
           (click)="resetModal()"
-          class="float-right hover cpmodal__header__close"
-        >
-          &times;
-        </span>
+          class="float-right hover cpmodal__header__close unstyled-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
   </div>
@@ -32,8 +31,7 @@
           type="button"
           data-dismiss="modal"
           (click)="resetModal()"
-          class="cpbtn cpbtn--cancel"
-        >
+          class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 

@@ -356,7 +356,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       },
       (err) => {
         if (err.status === 403) {
-          $('#teamUnauthorziedModal').modal();
+          $('#teamUnauthorziedModal').modal({ keyboard: true, focus: true });
 
           return;
         }
@@ -467,7 +467,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       this.isServiceModal = true;
       setTimeout(
         () => {
-          $('#selectServicesModal').modal();
+          $('#selectServicesModal').modal({ keyboard: true, focus: true });
         },
 
         1
@@ -585,7 +585,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       this.isClubsModal = true;
       setTimeout(
         () => {
-          $('#selectClubsModal').modal();
+          $('#selectClubsModal').modal({ keyboard: true, focus: true });
         },
 
         1
@@ -619,7 +619,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       this.isAthleticsModal = true;
       setTimeout(
         () => {
-          $('#selectAthleticsModal').modal();
+          $('#selectAthleticsModal').modal({ keyboard: true, focus: true });
         },
 
         1

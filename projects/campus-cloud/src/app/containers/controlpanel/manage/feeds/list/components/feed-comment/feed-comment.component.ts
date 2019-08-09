@@ -31,7 +31,7 @@ export class FeedCommentComponent implements OnInit {
         this.isApproveModal = true;
         setTimeout(
           () => {
-            $('#approveCommentModal').modal();
+            $('#approveCommentModal').modal({ keyboard: true, focus: true });
           },
 
           1
@@ -41,7 +41,7 @@ export class FeedCommentComponent implements OnInit {
         this.isDeleteModal = true;
         setTimeout(
           () => {
-            $('#deleteFeedCommentModal').modal();
+            $('#deleteFeedCommentModal').modal({ keyboard: true, focus: true });
           },
 
           1

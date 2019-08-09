@@ -69,7 +69,7 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
 
     setTimeout(
       () => {
-        $('#createModal').modal();
+        $('#createModal').modal({ keyboard: true, focus: true });
       },
 
       1

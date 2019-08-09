@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-12">
-    <cp-services-list-action-box (listAction)="doFilter($event)"> </cp-services-list-action-box>
+    <cp-services-list-action-box (listAction)="doFilter($event)">
+    </cp-services-list-action-box>
   </div>
 </div>
 
@@ -8,24 +9,21 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <cp-no-content
-      class="add-card-margin"
-      *ngIf="!state.services.length"
-      [noContentText]="cpI18n.translate('services_no_service_found')"
-    >
+    <cp-no-content class="add-card-margin"
+                   *ngIf="!state.services.length"
+                   [noContentText]="cpI18n.translate('services_no_service_found')">
     </cp-no-content>
 
-    <ul class="services cp-form" *ngIf="state.services.length">
+    <ul class="services cp-form"
+        *ngIf="state.services.length">
       <li class="cp-form__header col-12">
         <div class="row">
-          <cp-sorting-header
-            class="col-4"
-            sortLabel="name"
-            (click)="doSort('name')"
-            [label]="sortingLabels.name"
-            [sortField]="state.sort_field"
-            [sortDirection]="state.sort_direction"
-          >
+          <cp-sorting-header class="col-4"
+                             sortLabel="name"
+                             (click)="doSort('name')"
+                             [label]="sortingLabels.name"
+                             [sortField]="state.sort_field"
+                             [sortDirection]="state.sort_direction">
           </cp-sorting-header>
 
           <span class="col-2">
@@ -37,20 +35,20 @@
         </div>
       </li>
 
-      <li class="cp-form__item col-12" *ngFor="let service of state.services">
+      <li class="cp-form__item col-12"
+          *ngFor="let service of state.services">
         <div class="row">
           <span class="col-4 text-truncate">
             <div class="row">
               <div class="col-2 services__thumbnail">
-                <img class="rounded img-fit-cover" [src]="service.logo_url" />
+                <img class="rounded img-fit-cover"
+                     [src]="service.logo_url" />
               </div>
               <div class="col-9 text-truncate no-left-padding">
                 <strong>
-                  <a
-                    cpTracker
-                    [eventData]="eventData"
-                    [routerLink]="[service.service_attendance ? service.id : service.id + '/info']"
-                  >
+                  <a cpTracker
+                     [eventData]="eventData"
+                     [routerLink]="[service.service_attendance ? service.id : service.id + '/info']">
                     {{ service.name }}
                   </a>
                 </strong>
@@ -62,32 +60,31 @@
           <span class="col-2">{{ service.total_visits }}</span>
           <span class="col-2">{{ service.num_ratings }}</span>
           <span class="col-3">
-            <cp-stars
-              *ngIf="service.service_attendance === attendanceEnabled"
-              [maxRate]="service.rating_scale_maximum"
-              [avgRate]="service.avg_rating_percent"
-            >
+            <cp-stars *ngIf="service.service_attendance === attendanceEnabled"
+                      [maxRate]="service.rating_scale_maximum"
+                      [avgRate]="service.avg_rating_percent">
             </cp-stars>
           </span>
-          <span
-            (click)="onDelete(service)"
-            class="col-1 hover text-right text-truncate delete-service"
-          >
-            &times;
+          <span class="col-1 text-right">
+            <button type="button"
+                    aria-label="delete"
+                    (click)="onDelete(service)"
+                    class="delete-service unstyled-button">
+              <span aria-hidden="true">&times;</span>
+            </button>
           </span>
         </div>
       </li>
     </ul>
 
-    <div class="row" *ngIf="state.services.length">
+    <div class="row"
+         *ngIf="state.services.length">
       <div class="col-12">
-        <cp-pagination
-          [pageNext]="pageNext"
-          [pagePrev]="pagePrev"
-          [pageNumber]="pageNumber"
-          (next)="onPaginationNext()"
-          (previous)="onPaginationPrevious()"
-        >
+        <cp-pagination [pageNext]="pageNext"
+                       [pagePrev]="pagePrev"
+                       [pageNumber]="pageNumber"
+                       (next)="onPaginationNext()"
+                       (previous)="onPaginationPrevious()">
         </cp-pagination>
       </div>
     </div>

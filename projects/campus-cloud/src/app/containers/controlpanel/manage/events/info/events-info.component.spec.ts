@@ -1,17 +1,15 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
+import { provideMockStore } from '@ngrx/store/testing';
 import { of as observableOf } from 'rxjs';
 
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { EventUtilService } from '../events.utils.service';
 import { EventsInfoComponent } from './events-info.component';
-import { mockSchool } from '../../../../../session/mock/school';
-import { baseReducers } from '../../../../../store/base/reducers';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 
 class MockService {
   dummy;
@@ -35,19 +33,10 @@ describe('EventInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        HttpClientModule,
-        EventsModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
+      imports: [CPTestModule, EventsModule, HttpClientModule],
       providers: [
-        CPSession,
-        CPI18nService,
         EventUtilService,
-        CPTrackingService,
+        provideMockStore(),
         { provide: Router, useClass: RouterMock },
         { provide: EventsService, useClass: MockService },
         {

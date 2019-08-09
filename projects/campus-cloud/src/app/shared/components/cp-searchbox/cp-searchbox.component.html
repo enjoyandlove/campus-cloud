@@ -1,18 +1,19 @@
-<div class="search" [class.isFixed]="fixed">
+<div class="search"
+     [class.isFixed]="fixed">
   <i class="material-icons">search</i>
-  <input
-    #q
-    type="text"
-    autocomplete="off"
-    id="search-disable-lastpass"
-    [placeholder]="placeholder ? placeholder : cpI18n.translate('search') + '...'"
-  />
+  <label class="visually-hidden"
+         [for]="id">Search</label>
+  <input #q
+         [id]="id"
+         type="text"
+         autocomplete="off"
+         [placeholder]="placeholder ? placeholder : cpI18n.translate('search') + '...'" />
   <ng-container *ngIf="isSearch$ | async">
-    <button
-      (click)="onClear()"
-      title="Clear Search...."
-      class="material-icons cpbtn cpbtn--cancel cpbtn--link-dark cpbtn--no-border search__close"
-    >
+    <button (click)="onClear()"
+            aria-hidden="true"
+            aria-label="delete"
+            title="Clear Search...."
+            class="material-icons cpbtn cpbtn--cancel cpbtn--link-dark cpbtn--no-border search__close">
       close
     </button>
   </ng-container>

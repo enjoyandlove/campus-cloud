@@ -1,18 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule, Store } from '@ngrx/store';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import * as fromStore from '../store';
-import { CPSession } from '@campus-cloud/session';
 import { filledForm } from '../tests/mock';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { CPSession } from '@campus-cloud/session';
+import { RootStoreModule } from '@campus-cloud/store';
 import mockSession from '@campus-cloud/session/mock/session';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { AnnouncementsIntegrationFormComponent } from '../components';
-import { ModalService, MODAL_DATA, CPI18nService } from '@campus-cloud/shared/services';
 import { AnnouncementsIntegrationCreateComponent } from './create.component';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { ModalService, MODAL_DATA, CPI18nService } from '@campus-cloud/shared/services';
 
 describe('AnnouncementsIntegrationCreateComponent', () => {
   configureTestSuite();
@@ -20,9 +23,12 @@ describe('AnnouncementsIntegrationCreateComponent', () => {
     (async () => {
       await TestBed.configureTestingModule({
         imports: [
+          CPTestModule,
           SharedModule,
+          RootStoreModule,
+          HttpClientModule,
           ReactiveFormsModule,
-          StoreModule.forRoot({}),
+          RouterTestingModule,
           StoreModule.forFeature('announcementIntegrations', fromStore.reducers)
         ],
         schemas: [NO_ERRORS_SCHEMA],

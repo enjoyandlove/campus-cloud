@@ -3,13 +3,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs/index';
 
-import { CPSession } from '@campus-cloud/session';
 import { mockAttendees } from '../../../tests';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { mockUser } from '@campus-cloud/session/mock/user';
-import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EventsModule } from '../../../events.module';
 import { CheckInMethod } from '../../../event.status';
+import { CPTestModule } from '@campus-cloud/shared/tests';
+import { mockUser } from '@campus-cloud/session/mock/user';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EventUtilService } from '../../../events.utils.service';
 import { EventsAttendanceActionBoxComponent } from './events-attendance-action-box.component';
 
@@ -19,8 +18,8 @@ describe('EventsAttendanceActionBoxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [EventsModule, HttpClientModule, RouterTestingModule],
-      providers: [CPSession, CPI18nService, EventUtilService]
+      imports: [EventsModule, HttpClientModule, RouterTestingModule, CPTestModule],
+      providers: [EventUtilService]
     })
       .compileComponents()
       .then(() => {

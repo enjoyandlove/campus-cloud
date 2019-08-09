@@ -116,14 +116,14 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
   onLaunchCreateModal() {
     this.showCreateModal = true;
 
-    setTimeout(() => $('#integrationCreate').modal());
+    setTimeout(() => $('#integrationCreate').modal({ keyboard: true, focus: true }));
   }
 
   onLaunchDeleteModal(integration: IEventIntegration) {
     this.showDeleteModal = true;
     this.selectedIntegration = integration;
 
-    setTimeout(() => $('#integrationDelete').modal());
+    setTimeout(() => $('#integrationDelete').modal({ keyboard: true, focus: true }));
   }
 
   onDeleteClick(integration: IEventIntegration) {

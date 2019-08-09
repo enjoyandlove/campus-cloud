@@ -2,9 +2,9 @@ import { TestBed, async, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
 
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { EmployerModule } from '../../../employer.module';
 import { EmployerActionBoxComponent } from './employer-action-box.component';
-import { CPI18nService } from '../../../../../../../../shared/services/i18n.service';
 
 describe('EmployerActionBoxComponent', () => {
   let spy;
@@ -13,8 +13,7 @@ describe('EmployerActionBoxComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [EmployerModule, RouterTestingModule],
-      providers: [CPI18nService]
+      imports: [CPTestModule, EmployerModule, RouterTestingModule]
     })
       .compileComponents()
       .then(() => {

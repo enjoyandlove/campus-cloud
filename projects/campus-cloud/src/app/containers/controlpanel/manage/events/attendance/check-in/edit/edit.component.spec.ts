@@ -3,14 +3,13 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormBuilder } from '@angular/forms';
 import { of as observableOf } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
 import { mockCheckIn } from '../../../tests';
-import { mockSchool } from '@campus-cloud/session/mock';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { EventsModule } from '../../../events.module';
 import { attendanceType } from '../../../event.status';
 import { EventsService } from '../../../events.service';
 import { CheckInEditComponent } from './edit.component';
+import { mockSchool } from '@campus-cloud/session/mock';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { CheckInUtilsService } from '../check-in.utils.service';
 import { EventUtilService } from '../../../events.utils.service';
 
@@ -42,11 +41,9 @@ describe('EventCheckInEditComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [EventsModule, RouterTestingModule],
+      imports: [EventsModule, RouterTestingModule, CPTestModule],
       providers: [
-        CPSession,
         FormBuilder,
-        CPI18nService,
         EventUtilService,
         CheckInUtilsService,
         { provide: EventsService, useClass: MockService }

@@ -35,7 +35,7 @@ export class CPLightboxComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    $(`#${this.lightboxId}`).modal();
+    $(`#${this.lightboxId}`).modal({ keyboard: true, focus: true });
   }
 
   ngOnInit() {}

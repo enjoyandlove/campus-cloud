@@ -41,7 +41,7 @@ export class FeedItemComponent implements OnInit {
         this.isApproveModal = true;
         setTimeout(
           () => {
-            $('#approveFeedModal').modal();
+            $('#approveFeedModal').modal({ keyboard: true, focus: true });
           },
 
           1
@@ -51,7 +51,7 @@ export class FeedItemComponent implements OnInit {
         this.isMoveModal = true;
         setTimeout(
           () => {
-            $('#moveFeedModal').modal();
+            $('#moveFeedModal').modal({ keyboard: true, focus: true });
           },
 
           1
@@ -61,7 +61,7 @@ export class FeedItemComponent implements OnInit {
         this.isDeleteModal = true;
         setTimeout(
           () => {
-            $('#deleteFeedModal').modal();
+            $('#deleteFeedModal').modal({ keyboard: true, focus: true });
           },
 
           1

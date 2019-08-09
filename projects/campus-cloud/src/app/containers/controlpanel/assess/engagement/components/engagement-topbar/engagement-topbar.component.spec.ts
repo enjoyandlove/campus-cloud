@@ -4,11 +4,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
-import { CPI18nService } from '@campus-cloud/shared/services';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { mockUser } from '@campus-cloud/session/mock/user';
-import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EngagementService } from '../../engagement.service';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EngagementUtilsService } from './../../engagement.utils.service';
 import { EngagementTopBarComponent } from './engagement-topbar.component';
 
@@ -28,10 +27,6 @@ class MockActivatedRoute {
   };
 }
 
-class MockSession {
-  g = new Map();
-}
-
 describe('EngagementTopBarComponent', () => {
   // let session: CPSession;
   let comp: EngagementTopBarComponent;
@@ -40,12 +35,10 @@ describe('EngagementTopBarComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [EngagementTopBarComponent],
-      imports: [HttpClientModule, RouterTestingModule],
+      imports: [CPTestModule, HttpClientModule, RouterTestingModule],
       providers: [
-        CPI18nService,
         EngagementService,
         EngagementUtilsService,
-        { provide: CPSession, useClass: MockSession },
         { provide: ActivatedRoute, useClass: MockActivatedRoute }
       ]
     }).overrideComponent(EngagementTopBarComponent, {

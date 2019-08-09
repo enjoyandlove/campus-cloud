@@ -5,17 +5,15 @@ import { Component, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
 import { RootStoreModule } from '@campus-cloud/store';
-import { mockSchool } from '@campus-cloud/session/mock';
-import { IDateRange } from '@campus-cloud/shared/components';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import mockSession from '@campus-cloud/session/mock/session';
 import { MockProvidersService } from '../../tests/mock';
 import { MockServicesService } from '../../../tests/mock';
 import { ServicesService } from '../../../services.service';
+import { IDateRange } from '@campus-cloud/shared/components';
 import { ProvidersService } from '../../../providers.service';
+import { mockSchool, mockUser } from '@campus-cloud/session/mock';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { ProvidersUtilsService } from '../../../providers.utils.service';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { ServicesProviderDetailsComponent } from './providers-details.component';
 
 const school = mockSchool;
@@ -36,15 +34,10 @@ describe('ServicesProviderDetailsComponent', () => {
           ServicesProviderDetailsComponent,
           ServicesProvidersAttendeesListStubComponent
         ],
-        imports: [HttpClientModule, RouterTestingModule, RootStoreModule],
+        imports: [CPTestModule, HttpClientModule, RouterTestingModule, RootStoreModule],
         providers: [
-          CPI18nService,
           ServicesUtilsService,
           ProvidersUtilsService,
-          {
-            provide: CPSession,
-            useValue: mockSession
-          },
           {
             provide: ServicesService,
             useClass: MockServicesService
@@ -62,12 +55,17 @@ describe('ServicesProviderDetailsComponent', () => {
       .catch(done.fail);
   });
 
+  let session: CPSession;
   let component: ServicesProviderDetailsComponent;
   let fixture: ComponentFixture<ServicesProviderDetailsComponent>;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(ServicesProviderDetailsComponent);
     component = fixture.componentInstance;
+    session = TestBed.get(CPSession);
+
+    session.g.set('user', mockUser);
+    session.g.set('school', mockSchool);
 
     component.loading = false;
     fixture.detectChanges();

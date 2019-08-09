@@ -1,0 +1,37 @@
+:host {
+  width: 100%;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.cp-toast {
+  height: 60px;
+  width: 556px;
+  display: flex;
+  padding: 20px;
+  line-height: 19px;
+  position: relative;
+  border-radius: 4px;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.11);
+
+  &.info {
+    color: #fff;
+    border: 1px solid #2096f3;
+    background: rgba(32, 150, 243, 0.8);
+  }
+
+  &__dismiss {
+    margin-right: 2rem;
+    text-decoration: underline;
+  }
+
+  &__cta {
+    color: #2096f3;
+    padding: 8px 13.5px;
+    border-radius: 4px;
+    background-color: #ffffff;
+    border: 1px solid #2096f3;
+  }
+}

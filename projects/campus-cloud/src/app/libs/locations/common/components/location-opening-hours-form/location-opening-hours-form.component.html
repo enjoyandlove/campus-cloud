@@ -14,8 +14,7 @@
                 [cpTarget]="'open_' + i"
                 [label]="'t_shared_open' | cpI18n"
                 [isChecked]="schedule.controls.is_checked.value"
-                (toggle)="onDayCheck($event, i)"
-              >
+                (toggle)="onDayCheck($event, i)">
               </cp-checkbox>
             </div>
           </div>
@@ -23,8 +22,7 @@
 
         <div
           class="col-7"
-          *ngFor="let item of schedule.get('items')['controls']; let itemIndex = index"
-        >
+          *ngFor="let item of schedule.get('items')['controls']; let itemIndex = index">
           <div formArrayName="items">
             <div class="row" [formGroupName]="itemIndex">
               <div class="col-6 horizontal">
@@ -32,8 +30,7 @@
                   [items]="locationTiming"
                   [cpTarget]="'start_time_' + i"
                   [selectedItem]="getSelectedTime(item.controls.start_time.value)"
-                  (selected)="onTimeSelected($event, 'start_time', i)"
-                >
+                  (selected)="onTimeSelected($event, 'start_time', i)">
                 </cp-dropdown>
               </div>
 
@@ -43,8 +40,7 @@
                   [items]="locationTiming"
                   [cpTarget]="'end_time_' + i"
                   [selectedItem]="getSelectedTime(item.controls.end_time.value)"
-                  (selected)="onTimeSelected($event, 'end_time', i)"
-                >
+                  (selected)="onTimeSelected($event, 'end_time', i)">
                 </cp-dropdown>
               </div>
             </div>

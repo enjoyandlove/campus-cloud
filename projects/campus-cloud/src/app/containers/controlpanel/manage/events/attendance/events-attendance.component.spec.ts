@@ -1,17 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
-import { CPSession } from '../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { EventUtilService } from '../events.utils.service';
-import { CPI18nService } from '../../../../../shared/services';
-import { mockSchool } from '../../../../../session/mock/school';
-import { baseReducers } from '../../../../../store/base/reducers';
+import { mockEvent } from '@controlpanel/manage/events/tests';
+import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EventsAttendanceComponent } from './events-attendance.component';
 import { isClubAthletic } from '../../../settings/team/team.utils.service';
 
@@ -46,18 +45,10 @@ describe('EventAttendanceComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [
-        EventsModule,
-        RouterTestingModule,
-        StoreModule.forRoot({
-          HEADER: baseReducers.HEADER,
-          SNACKBAR: baseReducers.SNACKBAR
-        })
-      ],
+      imports: [CPTestModule, EventsModule, RouterTestingModule],
       providers: [
-        CPSession,
-        CPI18nService,
         EventUtilService,
+        provideMockStore(),
         { provide: EventsService, useClass: MockService },
         {
           provide: ActivatedRoute,
@@ -94,7 +85,7 @@ describe('EventAttendanceComponent', () => {
 
         spyOn(component, 'buildHeader');
         spyOn(component, 'trackQrCode');
-        spy = spyOn(component.service, 'getEventById').and.returnValue(observableOf({}));
+        spy = spyOn(component.service, 'getEventById').and.returnValue(observableOf(mockEvent));
         spyAttendee = spyOn(component.service, 'getEventAttendanceByEventId').and.returnValue(
           observableOf({})
         );

@@ -22,8 +22,9 @@
       border-bottom: 2px solid $color-brand;
     }
 
-    span {
+    button {
       @include font-16px();
+
       color: $color-grey;
     }
   }

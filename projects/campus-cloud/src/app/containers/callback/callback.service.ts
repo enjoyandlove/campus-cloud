@@ -1,17 +1,18 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { API } from './../../config/api/index';
-import { HTTPService } from '../../base/http.service';
+
+import { EnvService } from '@campus-cloud/config/env';
+import { ApiService } from '@campus-cloud/base/services';
 
 @Injectable()
-export class CallbackService extends HTTPService {
-  constructor(public http: HttpClient, public router: Router) {
-    super(http, router);
+export class CallbackService extends ApiService {
+  constructor(http: HttpClient, router: Router, env: EnvService) {
+    super(http, router, env);
   }
 
   getHeaders() {
-    const auth = `${API.AUTH_HEADER.TOKEN} ${API.KEY}`;
+    const auth = `CCToke ${this.KEY}`;
 
     return new HttpHeaders({
       'Content-Type': 'application/json',

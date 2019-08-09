@@ -5,21 +5,25 @@ import { StoreModule, Store } from '@ngrx/store';
 import { FormBuilder } from '@angular/forms';
 import { Actions } from '@ngrx/effects';
 
-import { CPSession } from '@campus-cloud/session';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import * as fromJobs from '@campus-cloud/store/manage/jobs';
 import { EmployerModule } from '../employer.module';
+import * as fromJobs from '@campus-cloud/store/manage/jobs';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { EmployerEditComponent } from './employer-edit.component';
+import { configureTestSuite, CPTestModule, MOCK_IMAGE } from '@campus-cloud/shared/tests';
 
 describe('EmployerEditComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [HttpClientModule, EmployerModule, RouterTestingModule, StoreModule.forRoot({})],
-        providers: [Store, Actions, CPSession, FormBuilder, CPI18nService]
+        imports: [
+          CPTestModule,
+          EmployerModule,
+          HttpClientModule,
+          RouterTestingModule,
+          StoreModule.forRoot({}, { runtimeChecks: {} })
+        ],
+        providers: [Store, Actions, FormBuilder]
       });
       await TestBed.compileComponents();
     })()
@@ -42,7 +46,7 @@ describe('EmployerEditComponent', () => {
       name: 'Hello World!',
       description: 'This is description',
       email: 'test@test.com',
-      logo_url: 'dummy.jpeg'
+      logo_url: MOCK_IMAGE
     };
     fixture.detectChanges();
   }));

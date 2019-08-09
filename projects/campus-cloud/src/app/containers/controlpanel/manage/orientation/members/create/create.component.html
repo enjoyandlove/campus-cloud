@@ -8,9 +8,14 @@
           </strong>
         </span>
 
-        <span cpTarget="close" (click)="onClose()" class="float-right hover cpmodal__header__close">
-          &times;
-        </span>
+        <button
+          type="button"
+          cpTarget="close"
+          aria-label="close"
+          (click)="onClose()"
+          class="float-right hover cpmodal__header__close unstyled-button">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
     </div>
   </div>

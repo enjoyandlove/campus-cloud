@@ -96,7 +96,7 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
 
     setTimeout(
       () => {
-        $('#calendarsCreate').modal();
+        $('#calendarsCreate').modal({ keyboard: true, focus: true });
       },
 
       1

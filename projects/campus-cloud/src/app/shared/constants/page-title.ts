@@ -27,6 +27,8 @@ export const pageTitle = {
 
   CREATE_ACCOUNT: 'Create Account',
 
+  API_MANAGEMENT: 'API Management',
+
   MANAGE_DINING: 'Manage | Dining',
 
   MANAGE_EVENTS: 'Manage | Events',

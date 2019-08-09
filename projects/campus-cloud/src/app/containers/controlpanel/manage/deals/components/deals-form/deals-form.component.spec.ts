@@ -3,17 +3,16 @@ import { TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 
 import { DealsModule } from '../../deals.module';
-import { CPSession } from '../../../../../../session';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { DealsFormComponent } from './deals-form.component';
-import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
 
 describe('DealsFormComponent', () => {
   let component: DealsFormComponent;
   const mockDate = 1234567890;
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [DealsModule, RouterTestingModule],
-      providers: [CPSession, CPI18nService, CPTrackingService, DealsFormComponent]
+      imports: [CPTestModule, DealsModule, RouterTestingModule],
+      providers: [DealsFormComponent]
     });
     component = TestBed.get(DealsFormComponent);
     component.form = new FormBuilder().group({

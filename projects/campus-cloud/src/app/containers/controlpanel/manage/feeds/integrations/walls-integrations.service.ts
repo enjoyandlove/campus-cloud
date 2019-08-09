@@ -1,44 +1,36 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { map, startWith } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
-import { API } from '@campus-cloud//config/api';
-import { HTTPService } from '@campus-cloud//base/http.service';
-import { IItem } from '@campus-cloud//shared/components';
-import { CPDropdownComponent } from '@campus-cloud//shared/components';
-import { CPI18nService } from '@campus-cloud//shared/services/i18n.service';
+import { IItem } from '@campus-cloud/shared/components';
+import { ApiService } from '@campus-cloud/base/services';
+import { CPDropdownComponent } from '@campus-cloud/shared/components';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { ISocialPostCategory } from '../model/feeds.interfaces';
 import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
 
 @Injectable()
-export class WallsIntegrationsService extends HTTPService {
-  constructor(http: HttpClient, router: Router, private cpI18n: CPI18nService) {
-    super(http, router);
-
-    Object.setPrototypeOf(this, WallsIntegrationsService.prototype);
-  }
+export class WallsIntegrationsService {
+  constructor(private api: ApiService, private cpI18n: CPI18nService) {}
 
   getIntegrations(startRage: number, endRage: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.WALLS_INTEGRATIONS
-    }/${startRage};${endRage}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.WALLS_INTEGRATIONS}/${startRage};${endRage}`;
 
-    return super.get(url, search, true);
+    return this.api.get(url, search, true);
   }
 
   createIntegration(body: IWallsIntegration, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.WALLS_INTEGRATIONS}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.WALLS_INTEGRATIONS}/`;
 
-    return super.post(url, body, search, true);
+    return this.api.post(url, body, search, true);
   }
 
   getSocialPostCategories(search: HttpParams): Observable<IItem[]> {
-    const common = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SOCIAL_POST_CATEGORY}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SOCIAL_POST_CATEGORY}`;
     const url = `${common}/1;10000`;
 
-    return <Observable<IItem[]>>super.get(url, search).pipe(
+    return <Observable<IItem[]>>this.api.get(url, search).pipe(
       map(this.filterPostableCategories),
       map(this.socialPostCategoryToCPItem),
       map(this.addExtraItems.bind(this)),
@@ -47,33 +39,27 @@ export class WallsIntegrationsService extends HTTPService {
   }
 
   createSocialPostCategory(body: any, search: HttpParams): Observable<ISocialPostCategory> {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${API.ENDPOINTS.SOCIAL_POST_CATEGORY}/`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SOCIAL_POST_CATEGORY}/`;
 
-    return <Observable<ISocialPostCategory>>super.post(url, body, search, true);
+    return <Observable<ISocialPostCategory>>this.api.post(url, body, search, true);
   }
 
   editIntegration(integrationId: number, body, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.WALLS_INTEGRATIONS
-    }/${integrationId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.WALLS_INTEGRATIONS}/${integrationId}`;
 
-    return super.update(url, body, search, true);
+    return this.api.update(url, body, search, true);
   }
 
   deleteIntegration(integrationId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.WALLS_INTEGRATIONS
-    }/${integrationId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.WALLS_INTEGRATIONS}/${integrationId}`;
 
-    return super.delete(url, search, true);
+    return this.api.delete(url, search, true);
   }
 
   syncNow(integrationId: number, search: HttpParams) {
-    const url = `${API.BASE_URL}/${API.VERSION.V1}/${
-      API.ENDPOINTS.WALLS_INTEGRATIONS
-    }/${integrationId}`;
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.WALLS_INTEGRATIONS}/${integrationId}`;
 
-    return super.update(url, {}, search, true, 0);
+    return this.api.update(url, {}, search, true, 0);
   }
 
   private filterPostableCategories(categories: ISocialPostCategory[]): ISocialPostCategory[] {

@@ -1,6 +1,7 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 
-import { CPSession } from '../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { CPLineChartComponent } from './cp-line-chart.component';
 import { CPLineChartUtilsService } from './cp-line-chart.utils.service';
 
@@ -18,7 +19,7 @@ describe('CPLineChartComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CPLineChartComponent],
-      providers: [CPSession, CPLineChartUtilsService]
+      providers: [CPSession, provideMockStore(), CPLineChartUtilsService]
     })
       .overrideComponent(CPLineChartComponent, {
         set: {

@@ -3,12 +3,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { NO_ERRORS_SCHEMA, Component } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 
+import { mockDateRange } from '../../tests/mock';
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
-import { mockDateRange } from '../../tests/mock';
+import { ApiService } from '@campus-cloud/base/services';
+import mockSession from '@campus-cloud/session/mock/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
-import mockSession from '@campus-cloud/session/mock/session';
+import { EnvService, MockEnvService } from '@campus-cloud/config/env';
 import { ServicesProviderActionBoxComponent } from './providers-action-box.component';
 import { EngagementService } from '@controlpanel/assess/engagement/engagement.service';
 import {
@@ -23,17 +25,23 @@ describe('ServicesProviderActionBoxComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
+      /**
+       * do not import CPTestModule, this will
+       * result in an error trying to resolve `cp-range-picker`
+       */
       await TestBed.configureTestingModule({
         declarations: [ServicesProviderActionBoxComponent, CPRangePickerStubComponent, CPI18nPipe],
         imports: [HttpClientModule, RouterTestingModule],
         providers: [
+          ApiService,
           CPI18nService,
           EngagementService,
           EngagementUtilsService,
           {
             provide: CPSession,
             useValue: mockSession
-          }
+          },
+          { provide: EnvService, useClass: MockEnvService }
         ],
         schemas: [NO_ERRORS_SCHEMA]
       }).compileComponents();
