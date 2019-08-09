@@ -2,11 +2,11 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { CheckinService } from './checkin.service';
-import { CallbackService } from './../callback.service';
+import { ApiService } from '@campus-cloud/base/services';
 
 @Injectable()
 export class OrientationCheckinService extends CheckinService {
-  constructor(public api: CallbackService) {
+  constructor(public api: ApiService) {
     super(api);
   }
 
