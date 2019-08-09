@@ -34,7 +34,22 @@ export class ControlPanelComponent implements AfterViewInit, OnInit {
     }
   }
 
+  trackBannerClick(interaction_type: string) {
+    this.cpTrackingService.amplitudeEmitEvent(amplitudeEvents.VIEWED_BANNER, {
+      interaction_type
+    });
+  }
   onToastDissmised(id: number) {
+    this.setBannerCookie(id);
+    this.trackBannerClick('Dismissed');
+  }
+
+  onToastLearnMoreClicked(id: number) {
+    this.setBannerCookie(id);
+    this.trackBannerClick('Interacted');
+  }
+
+  setBannerCookie(id: number) {
     appStorage.set(base64.encode(appStorage.keys.CHANGE_LOG), id.toString());
   }
 
@@ -45,7 +60,7 @@ export class ControlPanelComponent implements AfterViewInit, OnInit {
       cta: {
         text: linkText,
         url: linkUrl,
-        ctaClickHandler: this.onToastDissmised.bind(this, id)
+        ctaClickHandler: this.onToastLearnMoreClicked.bind(this, id)
       },
       dismissClickHandler: this.onToastDissmised.bind(this, id)
     });
