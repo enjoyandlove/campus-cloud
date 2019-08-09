@@ -8,7 +8,10 @@
   box-shadow: 4px 4px 20px 0 rgba(204, 204, 204, .3);
 
   &__key-id {
+    @include font-normal();
+
     margin-left: 8px;
+    margin-bottom: 0;
     color: $color-secondary-text;
     font-family: 'Courier New', Courier, monospace;
   }
@@ -17,9 +20,18 @@
     color: $color-grey;
   }
 
+  &__title {
+    display: flex;
+    align-items: baseline;
+    justify-content: left;
+  }
+
   &__key-id-label {
     @include font-16px();
     @include font-semi-bold();
+
+    max-width: 390px;
+    margin-bottom: 0;
   }
 
   &__revoke {

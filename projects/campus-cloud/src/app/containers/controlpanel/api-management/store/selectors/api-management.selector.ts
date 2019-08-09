@@ -1,20 +1,21 @@
 import { createSelector } from '@ngrx/store';
 
+import { IAPIManagementState } from '../../model';
 import { getFeatureState } from './feature.selector';
 import { getRouterState } from '@campus-cloud/store';
-import { IAPIManagementState } from '../../api-management.interface';
+import { apiAccessTokenAdaptor } from '../reducers/api-management.reducer';
 
 export const getAPIState = createSelector(
   getFeatureState,
   (state: any) => state.apiManagement
 );
 
-export const getAPIs = createSelector(
+export const getTokens = createSelector(
   getAPIState,
-  (state: IAPIManagementState) => state.data
+  apiAccessTokenAdaptor.getSelectors().selectAll
 );
 
-export const getAPILoading = createSelector(
+export const getTokenLoading = createSelector(
   getAPIState,
   (state: IAPIManagementState) => state.loading
 );

@@ -25,6 +25,7 @@ export class CPDeleteModalComponent implements OnInit {
 
   @Input() modalBody: string;
   @Input() modalTitle: string;
+  @Input() submitLabel = 'delete';
 
   @Output() cancelClick: EventEmitter<null> = new EventEmitter();
   @Output() deleteClick: EventEmitter<null> = new EventEmitter();

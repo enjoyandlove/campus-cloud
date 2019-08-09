@@ -19,5 +19,6 @@ export const mockSchool = {
   is_config_validated: true,
   logo_url: '',
   is_verified: true,
-  email: ''
+  email: '',
+  is_sandbox: false
 };
