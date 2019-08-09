@@ -2250,6 +2250,9 @@
   "t_announcement_type": {
     "message": "Type d'annonce"
   },
+  "t_api_management_generate_key": {
+    "message": "Generate Key & Save"
+  },
   "t_assess_all_orientations": {
     "message": "Tous les programmes d'orientation"
   },

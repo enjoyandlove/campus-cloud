@@ -1,0 +1,48 @@
+@import '~projects/campus-cloud/src/sass/components/button';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/form';
+
+.form,
+.footer {
+  background-color: $color-white;
+  border-bottom: 1px solid $border-color;
+  box-shadow: 4px 4px 20px 0 rgba(204, 204, 204, .3);
+}
+
+.form {
+  padding: 24px;
+
+  &__app-name {
+    margin-bottom: 24px;
+  }
+
+  input::placeholder {
+    @include font-14px();
+  }
+}
+
+.footer {
+  padding: 16px 24px;
+
+  &_warning_text {
+    padding-left: 8px;
+  }
+
+  .cpbtn {
+    @include font-semi-bold();
+  }
+
+  span {
+    color: $color-secondary-text;
+  }
+
+  a {
+    padding: 6px 24px;
+    margin-right: 8px;
+  }
+
+  i {
+    margin: 10px 0 10px 0;
+    color: $color-warning;
+  }
+}
