@@ -1,29 +1,46 @@
+import { ApiType, AccessType } from '../model/api-management.interface';
+
+export const defaultForm = {
+  name: null,
+  user_info: null,
+  client_id: null,
+  is_sandbox: null,
+  push_notification: null,
+  token_permission_data: null
+};
+
+export const filledForm = {
+  client_id: 123,
+  user_info: true,
+  is_sandbox: true,
+  push_notification: true,
+  name: 'Printer network',
+  token_permission_data: { [ApiType.user]: AccessType.write }
+};
+
 export const mockAPIData = [
   {
-    id: 1,
-    user_info: false,
-    created: 1564588800,
     name: 'Printer network',
-    push_notification: true,
-    key_id: 'hj263749hgd76651hjd768wk',
-    api_key: 'live_qB23EwdDrFtdfG4G5Re0LlsaqWe34R5f'
+    date_created: 1564588800,
+    date_last_modified: 1564588800,
+    id: 'hj263749hgd76651hjd768wk',
+    token: 'live_qB23EwdDrFtdfG4G5Re0LlsaqWe34R5f',
+    token_permission_data: { [ApiType.user]: AccessType.write }
   },
   {
-    id: 2,
-    user_info: false,
-    created: 1564588800,
     name: 'Computer room',
-    push_notification: true,
-    key_id: 'hj263749hgd76651hjd768wk',
-    api_key: 'live_qB23EwdDrFtdfG4G5Re0LlsaqWe34R5g'
+    date_created: 1564588800,
+    date_last_modified: 1564588800,
+    id: 'hj263749hgd76651hjd768wl',
+    token: 'live_qB23EwdDrFtdfG4G5Re0LlsaqWe34R5g',
+    token_permission_data: { [ApiType.user]: AccessType.write }
   },
   {
-    id: 3,
-    user_info: false,
-    created: 1564588800,
     name: 'Library',
-    push_notification: true,
-    key_id: 'hj263749hgd76651hjd768wk',
-    api_key: 'test_qB23EwdDrFtdfG4G5Re0LlsaqWe34R5h'
+    date_created: 1564588800,
+    date_last_modified: 1564588800,
+    id: 'hj263749hgd76651hjd768wm',
+    token: 'test_qB23EwdDrFtdfG4G5Re0LlsaqWe34R5h',
+    token_permission_data: { [ApiType.user]: AccessType.write }
   }
 ];

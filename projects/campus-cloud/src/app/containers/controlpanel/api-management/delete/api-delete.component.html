@@ -1,0 +1,7 @@
+<cp-delete-modal
+  (deleteClick)="onDelete()"
+  (cancelClick)="resetModal()"
+  [submitLabel]="'t_shared_revoke'"
+  [modalTitle]="['t_api_management_revoke_modal_title' | cpI18n]"
+  [modalBody]="['t_api_management_revoke_modal_body' | cpI18n: modal.data.name]">
+</cp-delete-modal>
