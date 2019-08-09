@@ -4,6 +4,7 @@
     type="checkbox"
     [checked]="isChecked"
     [disabled]="isDisabled"
+    [class.error]="hasError"
     (change)="onChange($event)"
   />
   <div class="control__indicator"></div>

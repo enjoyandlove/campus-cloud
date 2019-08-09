@@ -60,11 +60,11 @@
         {{ member.student_identifier }}
       </span>
 
-      <span class="col-1 text-right">
+      <span class="col-1 text-right"
+            [class.offset-2]="!withStudentIdentifier">
         <button type="button"
                 *ngIf="canDelete"
                 (click)="deleteClick.emit(member)"
-                [class.offset-2]="!withStudentIdentifier"
                 class="delete-member unstyled-button">
           <span aria-hidden="true">&times;</span>
         </button>
