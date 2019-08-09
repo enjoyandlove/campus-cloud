@@ -1,6 +1,13 @@
+Main concerns
+Performance (Initial Page Load, Time to Interactive, Time to navigate between pages, slow API request)
+Tests (Check coverage report for features with low coverage and write better tests)
+Refactor Code (Not all features in the app are coded correclty, we all know some feature that has a funny code, lets fix those)
+
+- Serch for all scss `@import` statements and refactor them into seprate components
+
 - Remove bootstrap and jQuery
 
-  > This will also get rid off jQuery, Popper.js, making the oferall bundle size much smaller, i think we will continue using the Bootstrap grid system and maybe the typography for now, but everything else we should be able to create ourselves. I already started a project using the angular CDK to do all of these components
+  > This will also get rid off jQuery, Popper.js, making the overall bundle size much smaller, i think we will continue using the Bootstrap grid system and maybe the typography for now, but everything else we should be able to create ourselves. I already started a project using the angular CDK to do all of these components
 
   - [] Create custom modal
   - [] Create custom tooltip
@@ -14,14 +21,6 @@
 - Refactor `cp-button`
 
   > cp-button should work like the [material](https://github.com/angular/material2/blob/master/src/lib/button/button.ts) one, its selector should be a button an we just pass down the button type (primary, secondary...) and the text should not be passed as Input, all buttons in the app or anchor tags should use this component
-
-- Fix test Warnigns (either missing inputs, or failing to call fixture.detectChanges, when updating values, a few routing minor routing warnings):
-
-  - [ ] ProvidersListComponent
-  - [ ] EventCreateComponent
-  - [ ] EventAttendanceComponent
-  - [ ] ClubsMembersComponent
-  - [ ] DashboardTopResourceTitleComponent
 
 - Fix module imports to not interfere with routes based on import order
   This applies to any module that has routes imported. Sometimes we need to import a module to reference its components/services and we also import the routes. If we import this additional module before the routing module, the new module's routes take precedence:
