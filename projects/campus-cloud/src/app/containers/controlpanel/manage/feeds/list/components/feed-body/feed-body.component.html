@@ -1,16 +1,17 @@
 <div class="feed">
-  <div class="row feed__image-wrapper" *ngIf="feed.image_list.length">
-    <div
-      cpTracker
-      class="col-3"
-      *ngFor="let image of feed.image_list; let i = index"
-      [cpLightbox]="lightbox"
-      [host]="cpHost"
-      [eventData]="viewImageEventData"
-      [images]="mapImages(feed.image_list)"
-      [selectedImageIndex]="i"
-    >
-      <img [attr.data-src]="image.url" class="img-fluid feed__image" />
+  <div class="row feed__image-wrapper"
+       *ngIf="feed.image_list.length">
+    <div cpTracker
+         class="col-3"
+         *ngFor="let image of feed.image_list; let i = index"
+         [cpLightbox]="lightbox"
+         [host]="cpHost"
+         [eventData]="viewImageEventData"
+         [images]="mapImages(feed.image_list)"
+         [selectedImageIndex]="i">
+      <img [attr.data-src]="image.url"
+           class="img-fluid feed__image"
+           [alt]="'t_shared_img_alt' | cpI18n: i + 1" />
     </div>
   </div>
   <div class="row feed__message">
@@ -24,30 +25,30 @@
         <i class="material-icons">thumb_up</i>
         {{ feed.likes }}
       </span>
-      <span
-        *ngIf="!replyView"
-        class="cpbtn cpbtn--link"
-        (click)="isCommentsOpen = !isCommentsOpen"
-        (click)="toggleReplies.emit(isCommentsOpen)"
-        (click)="trackEvent(isCommentsOpen)"
-      >
+      <span *ngIf="!replyView"
+            class="cpbtn cpbtn--link"
+            (click)="isCommentsOpen = !isCommentsOpen"
+            (click)="toggleReplies.emit(isCommentsOpen)"
+            (click)="trackEvent(isCommentsOpen)">
         <i class="material-icons">mode_comment</i>
         {{ 'reply_verb' | cpI18n }}
       </span>
-      <span class="flag" *ngIf="feed.dislikes > 0 && feed.flag !== 2">
+      <span class="flag"
+            *ngIf="feed.dislikes > 0 && feed.flag !== 2">
         <i class="material-icons">flag</i>
         {{ feed.dislikes }}
       </span>
     </div>
-    <div *ngIf="feed.comment_count > 0 && !isRemovedPosts" class="col-6 float-right text-right">
-      <button
-        class="cpbtn cpbtn--link-dark"
-        (click)="isCommentsOpen = !isCommentsOpen"
-        (click)="viewComments.emit(isCommentsOpen)"
-        (click)="trackEvent(isCommentsOpen)"
-      >
-        <i class="material-icons" *ngIf="!isCommentsOpen">chevron_right</i>
-        <i class="material-icons" *ngIf="isCommentsOpen">expand_more</i>
+    <div *ngIf="feed.comment_count > 0 && !isRemovedPosts"
+         class="col-6 float-right text-right">
+      <button class="cpbtn cpbtn--link-dark"
+              (click)="isCommentsOpen = !isCommentsOpen"
+              (click)="viewComments.emit(isCommentsOpen)"
+              (click)="trackEvent(isCommentsOpen)">
+        <i class="material-icons"
+           *ngIf="!isCommentsOpen">chevron_right</i>
+        <i class="material-icons"
+           *ngIf="isCommentsOpen">expand_more</i>
         {{ isCommentsOpen ? cpI18n.translate('hide') : cpI18n.translate('show') }}
         {{ feed.comment_count }}
         {{ feed.comment_count > 1 ? cpI18n.translate('comments') : cpI18n.translate('comment') }}

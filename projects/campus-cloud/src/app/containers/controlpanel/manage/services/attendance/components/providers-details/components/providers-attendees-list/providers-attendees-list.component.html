@@ -2,10 +2,12 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <cp-no-content *ngIf="!assessments.length" noContentText="No attendees found...">
+    <cp-no-content *ngIf="!assessments.length"
+                   noContentText="No attendees found...">
     </cp-no-content>
 
-    <div class="row" *ngIf="assessments.length">
+    <div class="row"
+         *ngIf="assessments.length">
       <div class="col-12">
         <div class="cp-table">
           <div class="cp-table__header">
@@ -16,33 +18,28 @@
                 </span>
               </div>
               <div [class]="provider.has_checkout ? 'col-2' : 'col-3'">
-                <cp-sorting-header
-                  sortLabel="check_in_time_epoch"
-                  (click)="doSort('check_in_time_epoch')"
-                  [sortField]="state.sort_field"
-                  [sortDirection]="state.sort_direction"
-                  [label]="sortingLabels.checkin_time"
-                >
+                <cp-sorting-header sortLabel="check_in_time_epoch"
+                                   (click)="doSort('check_in_time_epoch')"
+                                   [sortField]="state.sort_field"
+                                   [sortDirection]="state.sort_direction"
+                                   [label]="sortingLabels.checkin_time">
                 </cp-sorting-header>
               </div>
-              <div class="col-2" *ngIf="provider.has_checkout">
-                <cp-sorting-header
-                  sortLabel="check_out_time_epoch"
-                  (click)="doSort('check_out_time_epoch')"
-                  [sortField]="state.sort_field"
-                  [sortDirection]="state.sort_direction"
-                  [label]="sortingLabels.checkout_time"
-                >
+              <div class="col-2"
+                   *ngIf="provider.has_checkout">
+                <cp-sorting-header sortLabel="check_out_time_epoch"
+                                   (click)="doSort('check_out_time_epoch')"
+                                   [sortField]="state.sort_field"
+                                   [sortDirection]="state.sort_direction"
+                                   [label]="sortingLabels.checkout_time">
                 </cp-sorting-header>
               </div>
               <div [class]="provider.has_checkout ? 'col-1' : 'col-2'">
-                <cp-sorting-header
-                  sortLabel="check_in_method"
-                  (click)="doSort('check_in_method')"
-                  [label]="sortingLabels.checkin_method"
-                  [sortField]="state.sort_field"
-                  [sortDirection]="state.sort_direction"
-                >
+                <cp-sorting-header sortLabel="check_in_method"
+                                   (click)="doSort('check_in_method')"
+                                   [label]="sortingLabels.checkin_method"
+                                   [sortField]="state.sort_field"
+                                   [sortDirection]="state.sort_direction">
                 </cp-sorting-header>
               </div>
               <div class="col-3">
@@ -52,15 +49,16 @@
             </div>
           </div>
 
-          <div class="cp-table__item" *ngFor="let assessment of assessments">
+          <div class="cp-table__item"
+               *ngFor="let assessment of assessments; index as i">
             <div class="row">
               <div class="col-3">
-                <img
-                  class="rounded img-fit-cover float-left avatar"
-                  [src]="assessment.avatar_thumb_url ? assessment.avatar_thumb_url : defaultImage"
-                />
+                <img [alt]="'t_shared_img_alt' | cpI18n: i + 1"
+                     class="rounded img-fit-cover float-left avatar"
+                     [src]="assessment.avatar_thumb_url ? assessment.avatar_thumb_url : defaultImage" />
                 <div class="meta text-truncate">
-                  <strong>{{ assessment.firstname }} {{ assessment.lastname }}</strong>
+                  <strong>{{ assessment.firstname }}
+                    {{ assessment.lastname }}</strong>
                   <br />
                   <small class="text-muted">{{ assessment.email }}</small>
                 </div>
@@ -68,13 +66,12 @@
               <div [class]="provider.has_checkout ? 'col-2' : 'col-3'">
                 <span>{{ assessment.check_in_time_epoch | cpDatePipe: dateFormat }}</span>
               </div>
-              <div class="col-2" *ngIf="provider.has_checkout">
-                <span
-                  *ngIf="
+              <div class="col-2"
+                   *ngIf="provider.has_checkout">
+                <span *ngIf="
                     assessment.check_out_time_epoch &&
                     assessment.check_out_time_epoch !== emptyCheckOutTime
-                  "
-                >
+                  ">
                   {{ assessment.check_out_time_epoch | cpDatePipe: dateFormat }}
                 </span>
               </div>
@@ -88,24 +85,20 @@
                 </span>
               </div>
               <div class="col-3">
-                <cp-stars [maxRate]="5" [avgRate]="assessment.feedback_rating"> </cp-stars>
+                <cp-stars [maxRate]="5"
+                          [avgRate]="assessment.feedback_rating"> </cp-stars>
               </div>
               <div class="col-1 text-center">
                 <span *ngIf="assessment.check_in_method === webCheckInMethod">
-                  <i
-                    (click)="onEditCheckIn(assessment)"
-                    class="material-icons hover margin-right action-button"
-                    >edit</i
-                  >
-                  <i
-                    (click)="onDeleteCheckIn(assessment)"
-                    class="material-icons hover action-button"
-                    >close</i
-                  >
+                  <i (click)="onEditCheckIn(assessment)"
+                     class="material-icons hover margin-right action-button">edit</i>
+                  <i (click)="onDeleteCheckIn(assessment)"
+                     class="material-icons hover action-button">close</i>
                 </span>
               </div>
             </div>
-            <div class="row cp-table__feedback" *ngIf="assessment.feedback_text.trim()">
+            <div class="row cp-table__feedback"
+                 *ngIf="assessment.feedback_text.trim()">
               <small class="text-wrap">{{ assessment.feedback_text }}</small>
             </div>
           </div>
@@ -114,44 +107,41 @@
     </div>
     <div class="row text-center">
       <div class="col-12">
-        <cp-pagination
-          [pageNext]="pageNext"
-          [pagePrev]="pagePrev"
-          [pageNumber]="pageNumber"
-          (next)="onPaginationNext()"
-          (previous)="onPaginationPrevious()"
-        >
+        <cp-pagination [pageNext]="pageNext"
+                       [pagePrev]="pagePrev"
+                       [pageNumber]="pageNumber"
+                       (next)="onPaginationNext()"
+                       (previous)="onPaginationPrevious()">
         </cp-pagination>
       </div>
     </div>
   </div>
 </div>
 
-<cp-modal [centered]="true" modalId="addCheckInModal" *ngIf="isAddCheckInModal">
-  <cp-service-provider-create-check-in
-    [data]="provider"
-    (created)="onCreated($event)"
-    (teardown)="isAddCheckInModal = false"
-  >
+<cp-modal [centered]="true"
+          modalId="addCheckInModal"
+          *ngIf="isAddCheckInModal">
+  <cp-service-provider-create-check-in [data]="provider"
+                                       (created)="onCreated($event)"
+                                       (teardown)="isAddCheckInModal = false">
   </cp-service-provider-create-check-in>
 </cp-modal>
 
-<cp-modal [centered]="true" modalId="editCheckInModal" *ngIf="isEditCheckInModal">
-  <cp-service-provider-edit-check-in
-    [data]="provider"
-    [checkIn]="checkInData"
-    (edited)="onEdited($event)"
-    (teardown)="isEditCheckInModal = false"
-  >
+<cp-modal [centered]="true"
+          modalId="editCheckInModal"
+          *ngIf="isEditCheckInModal">
+  <cp-service-provider-edit-check-in [data]="provider"
+                                     [checkIn]="checkInData"
+                                     (edited)="onEdited($event)"
+                                     (teardown)="isEditCheckInModal = false">
   </cp-service-provider-edit-check-in>
 </cp-modal>
 
-<cp-modal modalId="deleteCheckInModal" *ngIf="isDeleteCheckInModal">
-  <cp-service-provider-delete-check-in
-    [data]="provider"
-    [checkIn]="checkInData"
-    (deleted)="onDeleted($event)"
-    (teardown)="isDeleteCheckInModal = false"
-  >
+<cp-modal modalId="deleteCheckInModal"
+          *ngIf="isDeleteCheckInModal">
+  <cp-service-provider-delete-check-in [data]="provider"
+                                       [checkIn]="checkInData"
+                                       (deleted)="onDeleted($event)"
+                                       (teardown)="isDeleteCheckInModal = false">
   </cp-service-provider-delete-check-in>
 </cp-modal>
