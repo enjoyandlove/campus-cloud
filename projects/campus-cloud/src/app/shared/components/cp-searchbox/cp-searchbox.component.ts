@@ -56,6 +56,18 @@ export class CPSearchBoxComponent implements AfterViewInit, OnDestroy {
         takeUntil(this.destroy$),
         map((event: any) => event.target.value),
         filter((query: string) => query.trim().length > 0),
+        filter((query: string) => {
+          /**
+           * the API will return an error when `search_str` starts with
+           * any of the following characters
+           */
+
+          const invalidChars = ['%', '_', '"', '\\', ';', '`'];
+          const startsWithInvalidChar = invalidChars.some((invalidChar) =>
+            query.startsWith(invalidChar)
+          );
+          return !startsWithInvalidChar;
+        }),
         map((query: string) => {
           this.searching.emit(true);
 
