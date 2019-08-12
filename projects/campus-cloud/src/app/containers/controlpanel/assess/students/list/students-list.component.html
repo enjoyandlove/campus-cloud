@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-12">
-    <cp-students-top-bar (filter)="onFilter($event)" [listIdFromUrl]="listIdFromUrl">
+    <cp-students-top-bar (filter)="onFilter($event)"
+                         [listIdFromUrl]="listIdFromUrl">
     </cp-students-top-bar>
   </div>
 </div>
@@ -9,14 +10,17 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <cp-no-content class="no-content" *ngIf="!students.length" noContentText="No students found...">
+    <cp-no-content class="no-content"
+                   *ngIf="!students.length"
+                   noContentText="No students found...">
     </cp-no-content>
 
     <div *ngIf="students.length">
       <ul class="students cp-form">
         <li class="cp-form__header col-12">
           <div class="row">
-            <span class="col-3 hover" (click)="doSort('firstname')">
+            <span class="col-3 hover"
+                  (click)="doSort('firstname')">
               {{ 'name' | cpI18n }}
               <span *ngIf="state.sort_field === 'firstname'">
                 <i class="material-icons">
@@ -24,34 +28,34 @@
                 </i>
               </span>
             </span>
-            <span class="col-3">{{ 'assess_engagements_last_seven_days' | cpI18n }}</span>
+            <span
+                  class="col-3">{{ 'assess_engagements_last_seven_days' | cpI18n }}</span>
             <span class="col-3">{{ 'assess_last_engagement' | cpI18n }}</span>
             <span class="col-3"></span>
           </div>
         </li>
 
-        <li class="cp-form__item col-12" *ngFor="let student of students">
+        <li class="cp-form__item col-12"
+            *ngFor="let student of students; index as index">
           <div class="row">
             <span class="col-3 text-truncate students__thumbnail">
               <div class="row">
                 <div class="col-3 no-right-padding">
-                  <img
-                    [src]="
+                  <img [alt]="'t_shared_img_alt' | cpI18n: index + 1"
+                       [src]="
                       student.avatar <= avatarCustomCodeThreshold
                         ? defaultImage
                         : student.avatar_url
                     "
-                    class="rounded img-fit-cover"
-                  />
+                       class="rounded img-fit-cover" />
                 </div>
                 <div class="col-9 no-left-padding">
-                  <a
-                    cpTracker
-                    [eventData]="eventData"
-                    queryParamsHandling="merge"
-                    [routerLink]="[student.id]"
-                  >
-                    <strong>{{ student.firstname }} {{ student.lastname }}</strong>
+                  <a cpTracker
+                     [eventData]="eventData"
+                     queryParamsHandling="merge"
+                     [routerLink]="[student.id]">
+                    <strong>{{ student.firstname }}
+                      {{ student.lastname }}</strong>
                   </a>
                 </div>
               </div>
@@ -73,12 +77,10 @@
             </span>
 
             <span class="col-2 text-right offset-1">
-              <button
-                type="button"
-                class="cpbtn cpbtn--link"
-                i18n
-                (click)="messageStudent(student)"
-              >
+              <button type="button"
+                      class="cpbtn cpbtn--link"
+                      i18n
+                      (click)="messageStudent(student)">
                 {{ 'assess_message_student' | cpI18n }}
               </button>
             </span>
@@ -86,23 +88,20 @@
         </li>
       </ul>
 
-      <cp-pagination
-        [pageNext]="pageNext"
-        [pagePrev]="pagePrev"
-        [pageNumber]="pageNumber"
-        (next)="onPaginationNext()"
-        (previous)="onPaginationPrevious()"
-      >
+      <cp-pagination [pageNext]="pageNext"
+                     [pagePrev]="pagePrev"
+                     [pageNumber]="pageNumber"
+                     (next)="onPaginationNext()"
+                     (previous)="onPaginationPrevious()">
       </cp-pagination>
     </div>
   </div>
 </ng-container>
 
-<cp-modal *ngIf="isStudentComposeModal" modalId="studentsComposeModal">
-  <cp-students-compose
-    [props]="messageData"
-    (success)="onFlashMessage($event)"
-    (teardown)="onComposeTeardown()"
-  >
+<cp-modal *ngIf="isStudentComposeModal"
+          modalId="studentsComposeModal">
+  <cp-students-compose [props]="messageData"
+                       (success)="onFlashMessage($event)"
+                       (teardown)="onComposeTeardown()">
   </cp-students-compose>
 </cp-modal>

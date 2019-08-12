@@ -4,13 +4,12 @@
       <h4>{{ 't_dashboard_welcome' | cpI18n }}</h4>
       <p>{{ 't_dashboard_welcome_subheader' | cpI18n }}</p>
       <div>
-        <img [src]="onboardingImg" />
+        <img [src]="onboardingImg"
+             alt="welcome to campus cloud" />
       </div>
-      <a
-        class="cpbtn cpbtn--primary"
-        cpTarget="create_experience"
-        [routerLink]="['/studio/experiences/create']"
-      >
+      <a class="cpbtn cpbtn--primary"
+         cpTarget="create_experience"
+         [routerLink]="['/studio/experiences/create']">
         {{ 't_dashboard_build_experience' | cpI18n }}
       </a>
     </div>

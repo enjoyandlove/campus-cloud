@@ -55,12 +55,13 @@
         </li>
 
         <li class="cp-form__item col-12"
-            *ngFor="let deal of state.deals">
+            *ngFor="let deal of state.deals; index as index">
           <div class="row">
             <span class="col-4 text-truncate cp-form__thumbnail">
               <img *ngIf="deal.image_url"
                    [src]="deal.image_url"
-                   class="rounded img-fit-cover" />
+                   class="rounded img-fit-cover"
+                   [alt]="'t_shared_img_alt' | cpI18n: index + 1" />
               <a cpTracker
                  [eventData]="eventData"
                  [routerLink]="[deal.id + '/info']">
