@@ -125,7 +125,6 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
       ContentUtilsProviders.contentTypes.list,
       filters
     );
-    console.log('==>', this.resources);
     this.items = this.contentUtils.resourcesToIItem(this.resources);
 
     this.updateStateWith(this.getInitialFormValues());
@@ -135,11 +134,7 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
     if (!this.campusLink || !this.items.length) {
       return false;
     }
-    console.log(
-      this.items.map((i) => i.meta.link_url).includes(this.campusLink.link_url),
-      this.campusLink,
-      this.items
-    );
+
     return this.items.map((i) => i.meta.link_url).includes(this.campusLink.link_url);
   }
 
