@@ -8,6 +8,7 @@ import { IIntegrationData } from '../../models';
 import { CPSession } from '@campus-cloud/session';
 import { ContentUtilsProviders } from '../../providers';
 import { CustomValidators } from '@campus-cloud/shared/validators';
+import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { ExtraDataType } from './../../models/integration-data.interface';
 import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { IntegrationDataService, IStudioContentResource } from './../../providers';
