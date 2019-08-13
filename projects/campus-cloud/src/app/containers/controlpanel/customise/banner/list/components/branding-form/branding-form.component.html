@@ -3,33 +3,33 @@
     <p>
       <strong>{{ 't_shared_color' | cpI18n }}</strong>
     </p>
-    <div
-      class="color-display"
-      [ngStyle]="{ 'background-color': '#' + form.controls['branding_color'].value }"
-    ></div>
+    <div class="color-display"
+         [ngStyle]="{ 'background-color': '#' + form.controls['branding_color'].value }">
+    </div>
     <div class="color-input">
       <span>#</span>
-      <input
-        type="text"
-        maxlength="6"
-        cpTarget="branding_color"
-        [value]="form.controls['branding_color'].value"
-        [ngClass]="{ error: form.controls['branding_color'].errors }"
-        (input)="changeColor.emit($event.target.value)"
-      />
+      <input type="text"
+             maxlength="6"
+             cpTarget="branding_color"
+             (keyup)="inputChange.next($event.target.value)"
+             [value]="form.controls['branding_color'].value"
+             [ngClass]="{ error: form.controls['branding_color'].errors }"
+             (input)="changeColor.emit($event.target.value)" />
     </div>
   </div>
   <div class="col-8">
     <p>
       <strong>{{ 't_shared_preview' | cpI18n }}</strong>
     </p>
-    <div
-      class="logo-preview"
-      [ngStyle]="{ 'background-color': '#' + form.controls['branding_color'].value }"
-    >
-      <ng-container [ngSwitch]="form.controls['school_name_logo_url'].value?.length > 0">
-        <img *ngSwitchCase="true" [src]="form.controls['school_name_logo_url'].value" />
-        <div *ngSwitchCase="false" class="text-logo">
+    <div class="logo-preview"
+         [class.animate]="animateBg$ | async"
+         [ngStyle]="{ 'background-color': '#' + form.controls['branding_color'].value }">
+      <ng-container
+                    [ngSwitch]="form.controls['school_name_logo_url'].value?.length > 0">
+        <img *ngSwitchCase="true"
+             [src]="form.controls['school_name_logo_url'].value" />
+        <div *ngSwitchCase="false"
+             class="text-logo">
           {{ textLogo }}
         </div>
       </ng-container>
@@ -42,25 +42,23 @@
       <strong>{{ 't_shared_image' | cpI18n }}</strong>
     </p>
     <p>
-      <span class="text-muted">({{ 't_studio_branding_image_req' | cpI18n }}) </span>
-      <a target="_blank" class="cpbtn cpbtn--link" [href]="pkdbLink"
-        >{{ 'learn_more' | cpI18n }}
+      <span class="text-muted">({{ 't_studio_branding_image_req' | cpI18n }})
+      </span>
+      <a target="_blank"
+         class="cpbtn cpbtn--link"
+         [href]="pkdbLink">{{ 'learn_more' | cpI18n }}
       </a>
     </p>
-    <cp-upload-button
-      cpTarget="upload_school_logo"
-      buttonClass="cpbtn cpbtn--link semi-bold"
-      [id]="'school_name_logo_url'"
-      [buttonText]="'t_studio_branding_upload_logo' | cpI18n"
-      (fileUpload)="uploadLogo.emit($event)"
-    >
+    <cp-upload-button cpTarget="upload_school_logo"
+                      buttonClass="cpbtn cpbtn--link semi-bold"
+                      [id]="'school_name_logo_url'"
+                      [buttonText]="'t_studio_branding_upload_logo' | cpI18n"
+                      (fileUpload)="uploadLogo.emit($event)">
     </cp-upload-button>
-    <button
-      cpTarget="remove_school_logo"
-      class="cpbtn cpbtn--link remove-logo"
-      [disabled]="!form.controls['school_name_logo_url'].value"
-      (click)="removeLogo.emit()"
-    >
+    <button cpTarget="remove_school_logo"
+            class="cpbtn cpbtn--link remove-logo"
+            [disabled]="!form.controls['school_name_logo_url'].value"
+            (click)="removeLogo.emit()">
       {{ 't_studio_branding_remove_logo' | cpI18n }}
     </button>
   </div>

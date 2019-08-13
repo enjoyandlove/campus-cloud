@@ -4,78 +4,77 @@
   <div *ngSwitchCase="true">
     <div class="row">
       <div class="col-12">
-        <cp-import-top-bar
-          [storeId]="storeId"
-          [clubId]="clubId"
-          [isClub]="isClub"
-          [serviceId]="serviceId"
-          [isService]="isService"
-          [isChecked]="isChecked"
-          [isOrientation]="isOrientation"
-          (bulkChange)="onBulkChange($event)"
-          (checkAll)="onCheckAll($event)"
-          (hostChange)="onHostBulkChange($event)"
-          (imageChange)="onImageBulkChange($event)"
-          [props]="uploadButtonData">
+        <cp-import-top-bar [storeId]="storeId"
+                           [clubId]="clubId"
+                           [isClub]="isClub"
+                           [serviceId]="serviceId"
+                           [isService]="isService"
+                           [isChecked]="isChecked"
+                           [isOrientation]="isOrientation"
+                           (bulkChange)="onBulkChange($event)"
+                           (checkAll)="onCheckAll($event)"
+                           (hostChange)="onHostBulkChange($event)"
+                           (imageChange)="onImageBulkChange($event)"
+                           [props]="uploadButtonData">
         </cp-import-top-bar>
       </div>
     </div>
 
     <div class="row margin-bottom">
       <div class="col-12">
-        <form [formGroup]="form" class="form">
+        <form [formGroup]="form"
+              class="form">
           <div formArrayName="events">
-            <div class="row" *ngIf="!form.controls.events.controls.length">
+            <div class="row"
+                 *ngIf="!form.controls.events.controls.length">
               <div class="col-12">
-                <cp-no-content
-                  class="no-content"
-                  noContentText="No Events to Add..."
-                ></cp-no-content>
+                <cp-no-content class="no-content"
+                               noContentText="No Events to Add...">
+                </cp-no-content>
               </div>
             </div>
-            <div
-              class="row excel-form"
-              *ngFor="let event of form.controls.events.controls; let i = index">
-              <div [formGroupName]="i" class="col-12">
+            <div class="row excel-form"
+                 *ngFor="let event of form.controls.events.controls; let i = index">
+              <div [formGroupName]="i"
+                   class="col-12">
                 <div class="row form__item">
-                  <div [class]="isEvent ? 'col-5 text-truncate' : 'col-3 text-truncate'">
+                  <div
+                       [class]="isEvent ? 'col-5 text-truncate' : 'col-3 text-truncate'">
                     <div class="row margin-top">
                       <div [class]="isEvent ? 'col-3' : 'col-4'">
                         <div class="row">
                           <div class="col-2">
-                            <cp-checkbox
-                              class="checkbox float-left"
-                              [isChecked]="isSingleChecked[i].checked"
-                              (toggle)="onSingleCheck($event, i)">
+                            <cp-checkbox class="checkbox float-left"
+                                         [isChecked]="isSingleChecked[i].checked"
+                                         (toggle)="onSingleCheck($event, i)">
                             </cp-checkbox>
                           </div>
                           <div class="col-8">
                             <div class="event__thumbnail">
-                              <button
-                                type="button"
-                                aria-label="delete"
-                                (click)="onRemoveImage(i)"
-                                class="deleteButton hover unstyled-button"
-                                *ngIf="event.controls['poster_url'].value">
+                              <button type="button"
+                                      aria-label="delete"
+                                      (click)="onRemoveImage(i)"
+                                      class="deleteButton hover unstyled-button"
+                                      *ngIf="event.controls['poster_url'].value">
                                 <span aria-hidden="true">&times;</span>
                               </button>
-                              <cp-upload-button
-                                theme="small"
-                                [isRequired]="formError && event.controls['poster_url'].hasError('required')"
-                                (fileUpload)="onImageUpload($event, i)"
-                                *ngIf="!event.controls['poster_url'].value"
-                                (click)="resetAllCheckboxes($event, i)">
+                              <cp-upload-button theme="small"
+                                                [isRequired]="formError && event.controls['poster_url'].hasError('required')"
+                                                (fileUpload)="onImageUpload($event, i)"
+                                                *ngIf="!event.controls['poster_url'].value"
+                                                (click)="resetAllCheckboxes($event, i)">
                               </cp-upload-button>
-                              <img
-                                class="rounded img-fit-cover"
-                                *ngIf="event.controls['poster_url'].value"
-                                [src]="event.controls['poster_url'].value"/>
+                              <img class="rounded img-fit-cover"
+                                   [alt]="'t_shared_img_alt' | cpI18n: i + 1"
+                                   *ngIf="event.controls['poster_url'].value"
+                                   [src]="event.controls['poster_url'].value" />
                             </div>
                           </div>
                         </div>
                       </div>
 
-                      <div [class]="isEvent? 'col-9 text-truncate no-left-padding': 'col-8 text-truncate'">
+                      <div
+                           [class]="isEvent? 'col-9 text-truncate no-left-padding': 'col-8 text-truncate'">
                         <span class="event__title">
                           <strong>{{ event.controls.title.value }}</strong>
                         </span>
@@ -86,49 +85,46 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-2" *ngIf="!storeId && !clubId && !isOrientation">
+                  <div class="col-2"
+                       *ngIf="!storeId && !clubId && !isOrientation">
                     <label>{{ 'host' | cpI18n }}</label>
-                    <cp-dropdown
-                      [selectedItem]="selectedHost[i]"
-                      [items]="stores"
-                      (selected)="onSingleHostSelected($event, i)"
-                      [isRequiredError]="formError && event.controls.store_id.hasError('required')">
+                    <cp-dropdown [selectedItem]="selectedHost[i]"
+                                 [items]="stores"
+                                 (selected)="onSingleHostSelected($event, i)"
+                                 [isRequiredError]="formError && event.controls.store_id.hasError('required')">
                     </cp-dropdown>
                   </div>
                   <div class="col-2 no-left-padding">
                     <label>{{ 't_events_attendance_type' | cpI18n }}</label>
-                    <cp-dropdown
-                      [items]="checkInOptions"
-                      [selectedItem]="selectedCheckInOption[i]"
-                      (selected)="updateCheckInOption($event.action, i)">
+                    <cp-dropdown [items]="checkInOptions"
+                                 [selectedItem]="selectedCheckInOption[i]"
+                                 (selected)="updateCheckInOption($event.action, i)">
                     </cp-dropdown>
                   </div>
-                  <div class="col-5" *ngIf="event.controls.event_attendance.value">
+                  <div class="col-5"
+                       *ngIf="event.controls.event_attendance.value">
                     <div class="row">
                       <div class="col-4">
                         <label>{{ 'student_feedback' | cpI18n }}</label>
-                        <cp-dropdown
-                          [selectedItem]="attendanceFeedback[i]"
-                          [items]="eventAttendanceFeedback"
-                          (selected)="updateAttendanceFeedback($event, i)"
-                          [isRequiredError]="formError && event.controls.event_feedback.hasError('required')">
+                        <cp-dropdown [selectedItem]="attendanceFeedback[i]"
+                                     [items]="eventAttendanceFeedback"
+                                     (selected)="updateAttendanceFeedback($event, i)"
+                                     [isRequiredError]="formError && event.controls.event_feedback.hasError('required')">
                         </cp-dropdown>
                       </div>
                       <div class="col-4">
                         <label>{{ 'events_event_manager' | cpI18n }}</label>
-                        <cp-dropdown
-                          [selectedItem]="eventManager[i]"
-                          [items]="event.controls['managers'].value"
-                          (selected)="updateEventManager($event, i)"
-                          [isRequiredError]="formError && event.controls.event_manager_id.hasError('required')">
+                        <cp-dropdown [selectedItem]="eventManager[i]"
+                                     [items]="event.controls['managers'].value"
+                                     (selected)="updateEventManager($event, i)"
+                                     [isRequiredError]="formError && event.controls.event_manager_id.hasError('required')">
                         </cp-dropdown>
                       </div>
                       <div class="col-4">
                         <label>{{ 'events_attendance_manager' | cpI18n }}</label>
-                        <input
-                          type="email"
-                          class="form-control"
-                          formControlName="attendance_manager_email"/>
+                        <input type="email"
+                               class="form-control"
+                               formControlName="attendance_manager_email" />
                       </div>
                     </div>
                   </div>
@@ -145,10 +141,12 @@
         <div class="row">
           <div class="col-12">
             <div class="float-right">
-              <a [routerLink]="[urlPrefix]" class="cpbtn cpbtn--cancel">
+              <a [routerLink]="[urlPrefix]"
+                 class="cpbtn cpbtn--cancel">
                 {{ 'cancel' | cpI18n }}
               </a>
-              <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>
+              <cp-button [props]="buttonData"
+                         (buttonClick)="onSubmit()"> </cp-button>
             </div>
           </div>
         </div>

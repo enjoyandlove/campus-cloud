@@ -59,11 +59,13 @@ describe('ResourceTypeServiceByCategoryComponent', () => {
       const resourceTypeLinkUrls = [
         CampusLink.dining,
         CampusLink.jobList,
+        CampusLink.follett,
         CampusLink.eventList,
         CampusLink.storeList,
         CampusLink.storeList,
         CampusLink.directory,
         CampusLink.timetable,
+        CampusLink.enrollment,
         CampusLink.courseSearch,
         CampusLink.dealStoreList,
         CampusLink.campusPoiList,
@@ -73,7 +75,7 @@ describe('ResourceTypeServiceByCategoryComponent', () => {
         CampusLink.userOrientationCalendarList
       ];
 
-      expect(contentTypes.length).toBe(14);
+      expect(contentTypes.length).toBe(16);
 
       resultLinksUrls.forEach((linkUrl) => {
         expect(resourceTypeLinkUrls.includes(linkUrl)).toBe(true, `${linkUrl} missing`);
