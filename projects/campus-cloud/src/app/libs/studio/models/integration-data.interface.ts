@@ -21,5 +21,7 @@ export interface IClientInt {
 }
 
 export enum ExtraDataType {
-  DIRECTORY = 2
+  ENROLLMENT = 1,
+  DIRECTORY = 2,
+  FOLLETT = 3
 }

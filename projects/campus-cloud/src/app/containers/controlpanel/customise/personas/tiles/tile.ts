@@ -68,6 +68,10 @@ export class CampusLink {
 
   public static readonly directory = `${inapp}int_web_directory`;
 
+  public static readonly follett = `${inapp}int_follett_bookstore`;
+
+  public static readonly enrollment = `${inapp}int_native_enrollment`;
+
   public static readonly linkType = {
     appOpen: 4,
     inAppLink: 3,

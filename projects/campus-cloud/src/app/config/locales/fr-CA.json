@@ -2855,6 +2855,9 @@
   "t_personas_form_label_requires_credentials": {
     "message": "Nécessite des identifiants"
   },
+  "t_personas_form_list_login_forbidden": {
+    "message": "Interdit"
+  },
   "t_personas_form_personalized_page": {
     "message": "Page d'accueil personnalisée"
   },
@@ -2938,6 +2941,9 @@
   },
   "t_personas_tile_create_resource_type_directory": {
     "message": "Directoire"
+  },
+  "t_personas_tile_create_resource_type_enrollment": {
+    "message": "Inscription"
   },
   "t_personas_tile_create_resource_type_event_list": {
     "message": "Événements"
