@@ -2259,6 +2259,9 @@
   "t_api_management_access_token_delete": {
     "message": "API access token successfully deleted"
   },
+  "t_api_management_access_token_edited": {
+    "message": "API access token successfully edited"
+  },
   "t_api_management_api_endpoints": {
     "message": "API Endpoints"
   },
@@ -3016,6 +3019,9 @@
   },
   "t_personas_tile_create_resource_type_directory": {
     "message": "Directory"
+  },
+  "t_personas_tile_create_resource_type_enrollment": {
+    "message": "Enrollment"
   },
   "t_personas_tile_create_resource_type_event_list": {
     "message": "Events"
