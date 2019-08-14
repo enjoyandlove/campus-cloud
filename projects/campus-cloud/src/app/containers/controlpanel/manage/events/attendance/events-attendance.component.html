@@ -102,10 +102,11 @@
             </div>
 
             <div class="cp-table__item"
-                 *ngFor="let attendee of attendees">
+                 *ngFor="let attendee of attendees; index as i">
               <div class="row">
                 <div class="col-3 text-truncate">
                   <img class="rounded float-left avatar"
+                       [alt]="'t_shared_img_alt' | cpI18n: i + 1"
                        [src]="attendee.avatar_thumb_url ? attendee.avatar_thumb_url : defaultImage" />
                   <strong>
                     {{ attendee.firstname }}

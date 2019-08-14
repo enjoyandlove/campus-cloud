@@ -17,11 +17,12 @@
     </li>
 
     <li class="cp-form__item col-12"
-        *ngFor="let location of data$ | async">
+        *ngFor="let location of data$ | async; index as i">
       <div class="row">
         <span class="col-7 text-truncate">
           <img class="rounded img-fit-cover float-left avatar"
-               [src]="location.image_url ? location.image_url : defaultImage" />
+               [src]="location.image_url ? location.image_url : defaultImage"
+               [alt]="'t_shared_img_alt' | cpI18n: i + 1" />
           <strong>
             <a cpTracker
                cpTarget="view_info"
