@@ -97,6 +97,8 @@ export const ENDPOINTS = {
 
   DASHBOARD_TOP_CLUBS: 'analytics/club_data',
 
+  PUBLIC_ACCESS_TOKEN: 'public_access_token',
+
   GUIDE_TILE_CATEGORY: 'guide_tile_category',
 
   SOCIAL_POST_CATEGORY: 'social_post_category',

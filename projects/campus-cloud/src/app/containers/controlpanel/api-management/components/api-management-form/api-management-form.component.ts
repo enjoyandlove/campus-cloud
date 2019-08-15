@@ -27,14 +27,14 @@ export class ApiManagementFormComponent implements OnInit {
   constructor(public session: CPSession, private cpI18n: CPI18nService) {}
 
   onTogglePermission(value, type) {
-    const tokenPermissionData = this.form.get('token_permission_data').value;
+    const tokenPermissionData = this.form.get('permission_data').value;
     const permissions = ApiManagementUtilsService.getTokenPermission(
       value,
       type,
       tokenPermissionData
     );
     this.form
-      .get('token_permission_data')
+      .get('permission_data')
       .setValue(ApiManagementUtilsService.getPermissionData(permissions));
   }
 
