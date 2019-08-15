@@ -2,13 +2,13 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Dictionary, EntityState } from '@ngrx/entity';
 
 export enum AccessType {
-  read = 0,
-  write = 1
+  read = 'r',
+  write = 'w'
 }
 
 export enum ApiType {
-  user = 1,
-  notification = 2
+  user = 'user',
+  notification = 'notification'
 }
 
 export interface IPublicApiAccessToken {
@@ -17,8 +17,8 @@ export interface IPublicApiAccessToken {
   token: string;
   client_id?: number;
   date_created?: number;
+  permission_data?: object;
   date_last_modified?: number;
-  token_permission_data?: object;
 }
 
 export interface IAPIManagementState extends EntityState<IPublicApiAccessToken> {

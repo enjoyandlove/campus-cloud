@@ -1,36 +1,27 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
 
-import { mockAPIData } from './tests';
+import { ApiService } from '@campus-cloud/base';
 
 @Injectable()
 export class ApiManagementService {
-  dummy;
+  constructor(private api: ApiService) {}
 
-  constructor() {}
+  getTokens(startRange: number, endRange: number, search: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PUBLIC_ACCESS_TOKEN}/${startRange};${endRange}`;
 
-  getTokens(startRange: number, endRange: number, search?: HttpParams) {
-    this.dummy = [startRange, endRange, search];
-
-    return of(mockAPIData);
+    return this.api.get(url, search, true);
   }
 
   postToken(body) {
-    this.dummy = [body];
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PUBLIC_ACCESS_TOKEN}/`;
 
-    return of({
-      name: 'Computer room',
-      date_created: 1564588800,
-      date_last_modified: 1564588800,
-      id: 'hj263749hgd76651hjd768wk',
-      token: 'live_qB23EwdDrFtdfG4G5Re0LlsaqWe34R5g'
-    });
+    return this.api.post(url, body, null, true);
   }
 
-  deleteToken(tokenId: string) {
-    this.dummy = [tokenId];
+  deleteToken(tokenId: string, params: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PUBLIC_ACCESS_TOKEN}/${tokenId}`;
 
-    return of([]);
+    return this.api.delete(url, params, true);
   }
 }

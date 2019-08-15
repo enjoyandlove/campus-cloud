@@ -1,12 +1,14 @@
 import { catchError, map, tap, mergeMap } from 'rxjs/operators';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import * as fromActions from '../actions';
 import { ISnackbar } from '@campus-cloud/store';
+import { CPSession } from '@campus-cloud/session';
 import { IPublicApiAccessToken } from '../../model';
 import { Paginated } from '@campus-cloud/shared/utils';
 import { baseActionClass } from '@campus-cloud/store/base';
@@ -19,6 +21,7 @@ export class ApiManagementEffect extends Paginated {
   constructor(
     private router: Router,
     private action$: Actions,
+    private session: CPSession,
     private cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private store: Store<ISnackbar>,
@@ -34,7 +37,7 @@ export class ApiManagementEffect extends Paginated {
         const queryParams = this.route.snapshot.queryParams;
         this.page = queryParams[commonParams.page];
 
-        return this.service.getTokens(this.startRage, this.endRange).pipe(
+        return this.service.getTokens(this.startRage, this.endRange, this.getParams()).pipe(
           map((data: IPublicApiAccessToken[]) =>
             fromActions.loadSuccess(this.paginateResults(data))
           ),
@@ -70,7 +73,7 @@ export class ApiManagementEffect extends Paginated {
     return this.action$.pipe(
       ofType(fromActions.deleteRequest),
       mergeMap((action) => {
-        return this.service.deleteToken(action.payload.token).pipe(
+        return this.service.deleteToken(action.payload.id, this.getParams()).pipe(
           map(() => {
             this.handleSuccess('t_api_management_access_token_delete');
             return fromActions.deleteSuccess({ deletedId: action.payload.id });
@@ -98,5 +101,11 @@ export class ApiManagementEffect extends Paginated {
         body: this.cpI18n.translate(key)
       })
     );
+  }
+
+  private getParams() {
+    const { client_id, is_sandbox } = this.session.g.get('school');
+
+    return new HttpParams().set('client_id', client_id).set('is_sandbox', is_sandbox);
   }
 }

@@ -22,7 +22,7 @@
             formControlName="push_notification"
             (toggle)="onTogglePermission($event, apiType.notification)"
             [label]="'t_api_management_push_notification' | cpI18n"
-            [hasError]="formErrors && form.get('token_permission_data').invalid">
+            [hasError]="formErrors && form.get('permission_data').invalid">
           </cp-checkbox>
           <cp-checkbox
             class="checkbox"
@@ -30,7 +30,7 @@
             formControlName="user_info"
             (toggle)="onTogglePermission($event, apiType.user)"
             [label]="'t_api_management_user_information' | cpI18n"
-            [hasError]="formErrors && form.get('token_permission_data').invalid">
+            [hasError]="formErrors && form.get('permission_data').invalid">
           </cp-checkbox>
         </div>
       </div>

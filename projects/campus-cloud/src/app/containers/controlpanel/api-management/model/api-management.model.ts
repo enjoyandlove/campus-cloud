@@ -10,9 +10,7 @@ export class PublicApiAccessTokenModel {
 
     const _api = {
       name: api ? api.name : null,
-      token_permission_data: api
-        ? ApiManagementUtilsService.getPermissionData(api.token_permission_data)
-        : null
+      permission_data: api ? ApiManagementUtilsService.getPermissionData(api.permission_data) : null
     };
 
     return fb.group({
@@ -20,7 +18,7 @@ export class PublicApiAccessTokenModel {
       push_notification: [null],
       client_id: [null, Validators.required],
       is_sandbox: [null, Validators.required],
-      token_permission_data: [_api.token_permission_data, Validators.required],
+      permission_data: [_api.permission_data, Validators.required],
       name: [
         _api.name,
         Validators.compose([
