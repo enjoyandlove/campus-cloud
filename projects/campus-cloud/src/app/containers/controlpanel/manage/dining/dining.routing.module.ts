@@ -34,7 +34,8 @@ const appRoutes: Routes = [
   {
     path: 'categories',
     data: { zendesk: 'categories' },
-    loadChildren: './categories/dining-categories.module#DiningCategoriesModule'
+    loadChildren: () =>
+      import('./categories/dining-categories.module').then((m) => m.DiningCategoriesModule)
   }
 ];
 @NgModule({

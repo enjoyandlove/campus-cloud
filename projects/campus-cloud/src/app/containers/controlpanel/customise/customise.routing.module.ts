@@ -14,7 +14,7 @@ const appRoutes: Routes = [
       {
         path: 'experiences',
         canActivate: [PrivilegesGuard],
-        loadChildren: './personas/personas.module#PersonasModule',
+        loadChildren: () => import('./personas/personas.module').then((m) => m.PersonasModule),
         data: {
           zendesk: 'experiences',
           title: pageTitle.STUDIO_EXPERIENCE,
@@ -24,7 +24,7 @@ const appRoutes: Routes = [
       {
         path: 'branding',
         canActivate: [PrivilegesGuard],
-        loadChildren: './banner/banner.module#BannerModule',
+        loadChildren: () => import('./banner/banner.module').then((m) => m.BannerModule),
         data: {
           zendesk: 'experiences',
           title: pageTitle.STUDION_BRANDING,
