@@ -3,7 +3,9 @@ import { TooltipOption } from 'bootstrap';
 
 // https://getbootstrap.com/docs/4.1/components/tooltips/#options
 const defaultOptions: TooltipOption = {
-  placement: 'bottom'
+  placement: 'bottom',
+  sanitize: false,
+  sanitizeFn: (content) => content
 };
 
 @Directive({

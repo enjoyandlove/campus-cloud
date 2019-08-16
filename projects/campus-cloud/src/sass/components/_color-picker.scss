@@ -2,25 +2,27 @@
   display: inline-block;
 
   .pcr-button {
+    top: -13px;
     border-radius: 4px !important;
     border: 1px solid $border-color;
-  }
-  .pcr-app {
-    @include font_family();
-
-    z-index: 9;
-    max-width: 220px;
-
-    .pcr-save {
-      @include font-14px();
-
-      border-radius: 4px;
-      letter-spacing: none;
-      background: $color-brand;
-    }
   }
 
   .pcr-app .pcr-output .pcr-type {
     display: none;
+  }
+}
+
+.pcr-app[data-theme='classic'] {
+  @include font_family();
+
+  z-index: 9;
+  max-width: 220px;
+
+  .pcr-interaction input.pcr-save {
+    @include font-14px();
+
+    border-radius: 4px;
+    letter-spacing: none;
+    background: $color-brand;
   }
 }

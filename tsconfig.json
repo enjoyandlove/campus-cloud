@@ -1,23 +1,24 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
-    "target": "ES5",
-    "module": "commonjs",
-    "resolveJsonModule": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
     "sourceMap": true,
+    "declaration": false,
+    "emitDecoratorMetadata": true,
+    "downlevelIteration": true,
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "target": "es2015",
+    "moduleResolution": "node",
     "importHelpers": true,
-    "noEmitHelpers": false,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "lib": ["es2018", "dom"],
-    "skipLibCheck": true,
     "typeRoots": ["node_modules/@types"],
     "paths": {
       "@projects/*": ["projects/*"],
       "@campus-cloud/*": ["projects/campus-cloud/src/app/*"],
-      "@controlpanel/*": ["projects/campus-cloud/src/app/containers/controlpanel/*"]
+      "@controlpanel/*": ["projects/campus-cloud/src/app/containers/controlpanel/*"],
+      "ready-ui": ["dist/ready-ui"],
+      "ready-ui/*": ["dist/ready-ui/*"]
     }
   },
   "compileOnSave": false,
