@@ -18,10 +18,9 @@ export class CPErrorHandler extends ErrorHandler {
   }
 
   init() {
-    const { commitId } = buildJson;
     CPLogger.init({
       environment: `${this.env.name} (${this.env.region})`,
-      release: `campus-cloud@${commitId}`,
+      release: `campus-cloud@${buildJson.commitId}`,
       blacklistUrls: [DEV_SERVER_URL, LOCAL_PROD_URL],
       dsn: environment.keys.sentryDsn,
       beforeSend(event) {
