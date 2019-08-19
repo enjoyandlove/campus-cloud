@@ -1,5 +1,5 @@
 import { Directive, OnInit, ElementRef, Input, Output, EventEmitter } from '@angular/core';
-import * as Picker from 'pickr-widget';
+import Pickr from '@simonwep/pickr';
 
 @Directive({
   selector: '[cpColorPicker]'
@@ -10,7 +10,7 @@ export class CPColorPickerDirective implements OnInit {
 
   @Output() changed: EventEmitter<string> = new EventEmitter();
 
-  picker: Picker;
+  picker: Pickr;
 
   constructor(public el: ElementRef) {}
 
@@ -30,7 +30,8 @@ export class CPColorPickerDirective implements OnInit {
 
   initPicker() {
     const _self = this;
-    this.picker = new Picker({
+    this.picker = Pickr.create({
+      theme: 'classic',
       el: this.el.nativeElement,
 
       defaultRepresentation: 'HEX',
@@ -52,7 +53,7 @@ export class CPColorPickerDirective implements OnInit {
 
       onSave(hsva) {
         if (_self.picker) {
-          _self.changed.emit(hsva.toHEX().toString());
+          _self.changed.emit(hsva.toHEXA().join(''));
         }
       }
     });

@@ -1,25 +1,23 @@
 <cp-card>
   <div class="row">
     <div class="col-12">
-      <cp-resource-banner [resourceBanner]="resourceBanner"></cp-resource-banner>
+      <cp-resource-banner [resourceBanner]="resourceBanner">
+      </cp-resource-banner>
       <div class="row buttons">
         <div class="col-6">
-          <button
-            type="button"
-            cpTarget="edit"
-            class="cpbtn cpbtn--primary"
-            (click)="editClick.emit()"
-          >
+          <button type="button"
+                  cpTarget="edit"
+                  class="cpbtn cpbtn--primary"
+                  (click)="editClick.emit()">
             {{ 'edit' | cpI18n }}
           </button>
         </div>
         <div class="col-6 text-right">
-          <span
-            class="icon"
-            cpTarget="icon"
-            [ngStyle]="{ background: '#' + location.category_color }"
-          >
-            <img [src]="location.category_img_url" />
+          <span class="icon"
+                cpTarget="icon"
+                [ngStyle]="{ background: '#' + location.category_color }">
+            <img [src]="location.category_img_url"
+                 alt="Location Banner" />
           </span>
         </div>
       </div>

@@ -146,3 +146,5 @@ venv/
 
 # Rope project settings
 .ropeproject
+
+projects/campus-cloud/src/assets/build.json

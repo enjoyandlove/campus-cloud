@@ -1,18 +1,27 @@
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { of } from 'rxjs';
 
-import { mockAPIData } from './tests';
+import { ApiService } from '@campus-cloud/base';
 
 @Injectable()
 export class ApiManagementService {
-  dummy;
+  constructor(private api: ApiService) {}
 
-  constructor() {}
+  getTokens(startRange: number, endRange: number, search: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PUBLIC_ACCESS_TOKEN}/${startRange};${endRange}`;
 
-  getTokens(startRange: number, endRange: number, search?: HttpParams) {
-    this.dummy = [startRange, endRange, search];
+    return this.api.get(url, search, true);
+  }
 
-    return of(mockAPIData);
+  postToken(body) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PUBLIC_ACCESS_TOKEN}/`;
+
+    return this.api.post(url, body, null, true);
+  }
+
+  deleteToken(tokenId: string, params: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PUBLIC_ACCESS_TOKEN}/${tokenId}`;
+
+    return this.api.delete(url, params, true);
   }
 }

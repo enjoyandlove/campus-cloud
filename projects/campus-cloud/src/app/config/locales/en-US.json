@@ -2253,6 +2253,18 @@
   "t_api_management": {
     "message": "API Management"
   },
+  "t_api_management_access_token_created": {
+    "message": "API access token successfully created"
+  },
+  "t_api_management_access_token_delete": {
+    "message": "API access token successfully deleted"
+  },
+  "t_api_management_access_token_edited": {
+    "message": "API access token successfully edited"
+  },
+  "t_api_management_api_endpoints": {
+    "message": "API Endpoints"
+  },
   "t_api_management_api_key": {
     "message": "API Key"
   },
@@ -2265,8 +2277,17 @@
   "t_api_management_create_new_api": {
     "message": "Create a new app integration"
   },
+  "t_api_management_generate_key": {
+    "message": "Generate Key & Save"
+  },
   "t_api_management_how_to_use": {
-    "message": "How to use Ready API"
+    "message": "How to use the Ready API"
+  },
+  "t_api_management_name_input_placeholder": {
+    "message": "Choose a name for this new app"
+  },
+  "t_api_management_push_notification": {
+    "message": "Push Notification"
   },
   "t_api_management_ready_api_desc": {
     "message": "Create and manage API tokens for your applications. An API token authorizes your application to get data from the ready platform programmatically. More information on how to use the Ready APIs can be found on our support site."
@@ -2274,8 +2295,26 @@
   "t_api_management_ready_api_title": {
     "message": "Ready API"
   },
+  "t_api_management_revoke_modal_body": {
+    "message": "Are you sure you want to revoke all access to the %s API key?"
+  },
+  "t_api_management_revoke_modal_title": {
+    "message": "Revoke API Key"
+  },
+  "t_api_management_sanbox_school_tooltip_text": {
+    "message": "You can switch to your Staging in the Change School menu."
+  },
   "t_api_management_tooltip_click_to_copy": {
     "message": "Click to copy"
+  },
+  "t_api_management_user_information": {
+    "message": "User Information"
+  },
+  "t_api_management_warning_text_1": {
+    "message": "You are on Production Environment."
+  },
+  "t_api_management_warning_text_2": {
+    "message": "We suggest testing app integrations in the Test Environment first."
   },
   "t_assess_all_orientations": {
     "message": "All Orientation Programs"
@@ -2980,6 +3019,9 @@
   },
   "t_personas_tile_create_resource_type_directory": {
     "message": "Directory"
+  },
+  "t_personas_tile_create_resource_type_enrollment": {
+    "message": "Enrollment"
   },
   "t_personas_tile_create_resource_type_event_list": {
     "message": "Events"

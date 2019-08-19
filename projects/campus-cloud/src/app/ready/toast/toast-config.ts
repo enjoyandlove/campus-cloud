@@ -3,6 +3,12 @@ import { InjectionToken, TemplateRef } from '@angular/core';
 export class ToastData {
   type: ToastType;
   text?: string;
+  cta?: {
+    text: string;
+    url: string;
+    ctaClickHandler?: () => void;
+  };
+  dismissClickHandler?: () => void;
   template?: TemplateRef<any>;
   templateContext?: {};
 }
@@ -12,7 +18,6 @@ export type ToastType = 'warning' | 'info' | 'success';
 export interface ToastConfig {
   position?: {
     top: number;
-    right: number;
   };
   animation?: {
     fadeOut: number;
@@ -22,12 +27,11 @@ export interface ToastConfig {
 
 export const defaultToastConfig: ToastConfig = {
   position: {
-    top: 20,
-    right: 20
+    top: 100
   },
   animation: {
-    fadeOut: 700,
-    fadeIn: 300
+    fadeOut: 300,
+    fadeIn: 200
   }
 };
 

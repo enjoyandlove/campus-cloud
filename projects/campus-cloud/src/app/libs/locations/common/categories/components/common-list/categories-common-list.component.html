@@ -17,7 +17,7 @@
   </li>
 
   <li class="cp-form__item col-12"
-      *ngFor="let category of categories$ | async">
+      *ngFor="let category of categories$ | async; index as i">
     <div class="row">
       <span cpTarget="name"
             class="col-3 text-truncate"
@@ -35,7 +35,8 @@
               [ngStyle]="{ background: '#' + category.color }">
           <img cpTarget="image"
                *ngIf="category.img_url"
-               [src]="category.img_url" />
+               [src]="category.img_url"
+               [alt]="'t_shared_img_alt' | cpI18n: i + 1" />
         </span>
       </span>
       <span class="col-2"

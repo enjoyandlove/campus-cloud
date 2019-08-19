@@ -187,6 +187,8 @@ export const amplitudeEvents = {
 
   RESENT_INVITE: 'Resent Invite',
 
+  VIEWED_BANNER: 'Viewed Banner',
+
   NO_ASSESSMENT: 'No Assessment',
 
   RESOURCE_LIST: 'Resource List',

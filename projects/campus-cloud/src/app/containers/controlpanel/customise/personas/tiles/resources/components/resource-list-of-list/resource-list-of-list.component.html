@@ -3,10 +3,9 @@
   <div class="col-12">
     <div class="row list__header">
       <div class="col-12">
-        <button
-          (click)="onCreateModal()"
-          class="cpbtn cpbtn--cancel"
-          [class.cpbtn--cancel--error]="showErrors && state.resources.length === 0">
+        <button (click)="onCreateModal()"
+                class="cpbtn cpbtn--cancel"
+                [class.cpbtn--cancel--error]="showErrors && state.resources.length === 0">
           {{ 't_personas_resource_add_resource' | cpI18n }}
         </button>
       </div>
@@ -15,27 +14,33 @@
     <ng-container [ngSwitch]="state.loading">
       <cp-spinner *ngSwitchCase="true"></cp-spinner>
       <ng-container *ngSwitchCase="false">
-        <div
-          class="list__items"
-          [sortablejs]="state.resources"
-          [sortablejsOptions]="sortableOptions">
-          <div class="row list__item" *ngFor="let resource of state.resources">
-            <div class="col-11 text-truncate" (click)="onEditModal(resource)">
+        <div class="list__items"
+             [sortablejs]="state.resources"
+             [sortablejsOptions]="sortableOptions">
+          <div class="row list__item"
+               *ngFor="let resource of state.resources; index as index">
+            <div class="col-11 text-truncate"
+                 (click)="onEditModal(resource)">
               <i class="material-icons">drag_handle</i>
               <span class="image">
-                <img [alt]="'t_shared_img_alt' | cpI18n" [src]="resource.img_url" class="img-fluid rounded" />
+                <img [alt]="'t_shared_img_alt' | cpI18n: index + 1"
+                     [src]="resource.img_url"
+                     class="img-fluid rounded" />
               </span>
-              <span class="name" [attr.title]="resource.name" [class.disabled]="resource.disabled">
+              <span class="name"
+                    [attr.title]="resource.name"
+                    [class.disabled]="resource.disabled">
                 {{ resource.name }}
-                <i
-                  #tooltip
-                  class="material-icons"
-                  *ngIf="resource.disabled"
-                  [attr.title]="cpI18n.translate('t_personas_tile_locked_tooltip')">lock</i>
+                <i #tooltip
+                   class="material-icons"
+                   *ngIf="resource.disabled"
+                   [attr.title]="cpI18n.translate('t_personas_tile_locked_tooltip')">lock</i>
               </span>
             </div>
-            <div class="col-1" (click)="onDelete(resource)">
-              <button type="button" class="close-button hover float-right unstyled-button">
+            <div class="col-1"
+                 (click)="onDelete(resource)">
+              <button type="button"
+                      class="close-button hover float-right unstyled-button">
                 &times;
               </button>
             </div>
@@ -46,24 +51,23 @@
   </div>
 </div>
 
-<cp-modal *ngIf="state.showEditModal" modalId="resourceEditModal" (modalClose)="onModalClose()">
-  <cp-personas-resource-edit
-    [persona]="persona"
-    [resource]="state.editingResource"
-    (error)="onError($event)"
-    (teardown)="onTearDown()"
-    (success)="onEditedResource($event)">
+<cp-modal *ngIf="state.showEditModal"
+          modalId="resourceEditModal"
+          (modalClose)="onModalClose()">
+  <cp-personas-resource-edit [persona]="persona"
+                             [resource]="state.editingResource"
+                             (error)="onError($event)"
+                             (teardown)="onTearDown()"
+                             (success)="onEditedResource($event)">
   </cp-personas-resource-edit>
 </cp-modal>
 
-<cp-modal
-  *ngIf="state.showCreateModal"
-  modalId="resourceCreateModal"
-  (modalClose)="onModalClose()">
-  <cp-personas-resource-create
-    [persona]="persona"
-    (error)="onError($event)"
-    (teardown)="onTearDown()"
-    (success)="onCreatedResource($event)">
+<cp-modal *ngIf="state.showCreateModal"
+          modalId="resourceCreateModal"
+          (modalClose)="onModalClose()">
+  <cp-personas-resource-create [persona]="persona"
+                               (error)="onError($event)"
+                               (teardown)="onTearDown()"
+                               (success)="onCreatedResource($event)">
   </cp-personas-resource-create>
 </cp-modal>

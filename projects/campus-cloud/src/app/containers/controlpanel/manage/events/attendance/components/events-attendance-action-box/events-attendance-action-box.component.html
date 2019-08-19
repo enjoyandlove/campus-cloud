@@ -37,14 +37,17 @@
         </a>
         <button (click)="onEnableDisableQR()"
                 class="dropdown-item">{{ qrLabel }}</button>
-        <button class="dropdown-item"
-                [cpTooltip]="tooltipOptions"
-                (click)="sendAttendeesMessage()"
-                [disabled]="disableMessageAttendees"
-                [attr.title]="messageAttendeesTooltipText"
-                [class.disabled]="disableMessageAttendees">
-          {{ 't_events_assessment_message_attendees' | cpI18n }}
-        </button>
+        <div class="dropdown-item"
+             [class.no-hover]="disableMessageAttendees">
+          <button class="unstyled-button"
+                  [cpTooltip]="tooltipOptions"
+                  (click)="sendAttendeesMessage()"
+                  [disabled]="disableMessageAttendees"
+                  [attr.title]="messageAttendeesTooltipText"
+                  [class.disabled]="disableMessageAttendees">
+            {{ 't_events_assessment_message_attendees' | cpI18n }}
+          </button>
+        </div>
       </div>
     </div>
   </div>

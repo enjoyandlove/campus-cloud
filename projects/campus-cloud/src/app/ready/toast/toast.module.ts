@@ -17,7 +17,7 @@ export class ToastModule {
       providers: [
         {
           provide: TOAST_CONFIG_TOKEN,
-          useValue: { ...defaultToastConfig, ...config }
+          useValue: config
         }
       ]
     };

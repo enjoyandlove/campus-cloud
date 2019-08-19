@@ -27,13 +27,15 @@ const appRoutes: Routes = [
       {
         path: 'events',
         data: { title: pageTitle.MANAGE_ATHLETICS },
-        loadChildren: '../events/athletics-events.module#AthleticsEventsModule'
+        loadChildren: () =>
+          import('../events/athletics-events.module').then((m) => m.AthleticsEventsModule)
       },
 
       {
         path: 'members',
         data: { title: pageTitle.MANAGE_ATHLETICS },
-        loadChildren: '../members/athletics-members.module#AthleticsMembersModule'
+        loadChildren: () =>
+          import('../members/athletics-members.module').then((m) => m.AthleticsMembersModule)
       }
     ]
   }

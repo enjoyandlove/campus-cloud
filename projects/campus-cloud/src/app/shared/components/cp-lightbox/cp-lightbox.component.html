@@ -1,15 +1,24 @@
-<cp-modal [modalId]="lightboxId" [centered]="true" [type]="modalWide" (modalClose)="onModalClose()">
+<cp-modal [modalId]="lightboxId"
+          [centered]="true"
+          [type]="modalWide"
+          (modalClose)="onModalClose()">
   <div class="widget">
     <div class="widget__body">
-      <img [src]="images[index]" />
+      <img [src]="images[index]"
+           [alt]="'t_shared_img_alt' | cpI18n: index + 1" />
       <div class="widget__body__controls">
-        <button class="flip prev" *ngIf="images.length > 1" (click)="flip(-1)">
+        <button class="flip prev"
+                *ngIf="images.length > 1"
+                (click)="flip(-1)">
           <i class="material-icons">arrow_back_ios</i>
         </button>
-        <button class="lb-close" (click)="onClose()">
+        <button class="lb-close"
+                (click)="onClose()">
           <i class="material-icons">close</i>
         </button>
-        <button class="flip next" *ngIf="images.length > 1" (click)="flip(1)">
+        <button class="flip next"
+                *ngIf="images.length > 1"
+                (click)="flip(1)">
           <i class="material-icons">arrow_forward_ios</i>
         </button>
       </div>

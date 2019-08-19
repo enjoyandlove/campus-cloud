@@ -3,18 +3,19 @@
     <div class="cp-card card">
       <div class="row">
         <div class="col-3 student__profile">
-          <img [src]="avatarUrl" class="rounded img-fit-cover" />
+          <img alt="student avatar"
+               [src]="avatarUrl"
+               class="rounded img-fit-cover" />
         </div>
         <div class="col-8 student__details">
-          <p class="student__name">{{ student.firstname }} {{ student.lastname }}</p>
+          <p class="student__name">{{ student.firstname }}
+            {{ student.lastname }}</p>
           <p class="student__email text-muted">{{ student.email }}</p>
 
-          <button
-            type="buton"
-            (click)="message.emit()"
-            class="cpbtn cpbtn--primary student__message"
-            i18n
-          >
+          <button type="buton"
+                  (click)="message.emit()"
+                  class="cpbtn cpbtn--primary student__message"
+                  i18n>
             {{ 'message_action' | cpI18n }}
           </button>
         </div>
