@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { omit } from 'lodash';
 
 import { AccessType } from './model/api-management.interface';
 
 @Injectable()
 export class ApiManagementUtilsService {
+  navigateAwaySelection$: Subject<boolean> = new Subject<boolean>();
+
   static getAPIKeyPrefix(key: string) {
     const prefix = key.split('_');
 
@@ -22,8 +26,6 @@ export class ApiManagementUtilsService {
       };
     }
 
-    delete tokenPermissionData[type];
-
-    return tokenPermissionData;
+    return omit(tokenPermissionData, [type]);
   }
 }

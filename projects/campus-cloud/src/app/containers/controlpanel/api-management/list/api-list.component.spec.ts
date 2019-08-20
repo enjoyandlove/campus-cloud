@@ -7,12 +7,14 @@ import { of } from 'rxjs';
 
 import { reducers } from '../store';
 import { RootStoreModule } from '@campus-cloud/store';
+import { RouterParamsUtils } from '@campus-cloud/shared/utils';
 import { mockAPIData } from '@controlpanel/api-management/tests';
 import { CustomSerializer } from '@campus-cloud/store/serializers';
-import { RouterParamsUtils } from '@campus-cloud/shared/utils/router';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { ApiManagementFormComponent } from '@controlpanel/api-management/components';
 import { ApiListComponent } from '@controlpanel/api-management/list/api-list.component';
 import { CPPaginationComponent, CPSpinnerComponent } from '@campus-cloud/shared/components';
+import { ApiManagementUtilsService } from '@controlpanel/api-management/api-management.utils.service';
 
 describe('ApiListComponent', () => {
   configureTestSuite();
@@ -20,9 +22,10 @@ describe('ApiListComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        declarations: [ApiListComponent],
+        declarations: [ApiListComponent, ApiManagementFormComponent],
         providers: [
           RouterParamsUtils,
+          ApiManagementUtilsService,
           { provide: RouterStateSerializer, useClass: CustomSerializer }
         ],
         imports: [

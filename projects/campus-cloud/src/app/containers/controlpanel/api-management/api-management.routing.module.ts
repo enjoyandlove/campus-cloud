@@ -6,6 +6,7 @@ import { ApiCreateComponent } from './create';
 import { pageTitle } from '@campus-cloud/shared/constants';
 import { PrivilegesGuard } from '@campus-cloud/config/guards';
 import { ApiManagementComponent } from './api-management.component';
+import { RouteNavigationGuard } from '@controlpanel/api-management/guards';
 
 const appRoutes: Routes = [
   {
@@ -14,8 +15,9 @@ const appRoutes: Routes = [
     children: [
       {
         path: '',
-        canActivate: [PrivilegesGuard],
         component: ApiListComponent,
+        canActivate: [PrivilegesGuard],
+        canDeactivate: [RouteNavigationGuard],
         data: { zendesk: 'API Management', title: pageTitle.API_MANAGEMENT }
       },
       {
@@ -29,6 +31,7 @@ const appRoutes: Routes = [
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [RouteNavigationGuard]
 })
 export class ApiManagementRoutingModule {}

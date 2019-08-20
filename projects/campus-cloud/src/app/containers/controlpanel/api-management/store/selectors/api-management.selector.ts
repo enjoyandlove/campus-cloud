@@ -20,14 +20,31 @@ export const getTokenLoading = createSelector(
   (state: IAPIManagementState) => state.loading
 );
 
+export const getTokenById = createSelector(
+  getAPIState,
+  (state: IAPIManagementState) => state.entity
+);
+
+export const getTokenByIdLoading = createSelector(
+  getAPIState,
+  (state: IAPIManagementState) => state.entityLoading
+);
+
+export const getTokenLoaded = createSelector(
+  getAPIState,
+  (state: IAPIManagementState) => state.loaded
+);
+
 export const getPagination = createSelector(
   getAPIState,
   getRouterState,
   (state: IAPIManagementState, routerState) => {
+    const pageNum = Number(routerState.queryParams.page);
+
     return {
       next: state.next,
       previous: state.previous,
-      page: Number(routerState.queryParams.page)
+      page: pageNum ? pageNum : 1
     };
   }
 );

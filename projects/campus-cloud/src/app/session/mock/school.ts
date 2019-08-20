@@ -20,5 +20,6 @@ export const mockSchool = {
   logo_url: '',
   is_verified: true,
   email: '',
-  is_sandbox: false
+  is_sandbox: false,
+  client_id: 123
 };

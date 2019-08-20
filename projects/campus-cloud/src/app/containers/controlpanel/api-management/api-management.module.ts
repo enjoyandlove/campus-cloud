@@ -14,6 +14,7 @@ import {
   ApiManagementKeyComponent,
   ApiManagementFormComponent,
   ApiManagementTopbarComponent,
+  DiscardChangesModalComponent,
   ApiManagementHowToUseComponent
 } from './components';
 
@@ -22,20 +23,23 @@ import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { ApiManagementComponent } from './api-management.component';
 import { ApiManagementUtilsService } from './api-management.utils.service';
 import { ApiManagementRoutingModule } from './api-management.routing.module';
+import { ApiListItemComponent } from './components/api-management-list-item';
 
 @NgModule({
   declarations: [
     ApiListComponent,
     ApiCreateComponent,
     ApiDeleteComponent,
+    ApiListItemComponent,
     ApiManagementComponent,
     ApiManagementKeyComponent,
     ApiManagementFormComponent,
     ApiManagementTopbarComponent,
+    DiscardChangesModalComponent,
     ApiManagementHowToUseComponent
   ],
 
-  entryComponents: [ApiDeleteComponent],
+  entryComponents: [ApiDeleteComponent, DiscardChangesModalComponent],
 
   imports: [
     CommonModule,

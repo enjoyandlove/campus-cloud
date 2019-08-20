@@ -19,26 +19,55 @@
   input::placeholder {
     @include font-14px();
   }
+
+
+  &__id {
+    margin: 8px 0;
+  }
+
+  &__key {
+    margin: 8px 0 16px;
+  }
+
+  &__key-label {
+    @include font-normal();
+
+    display: inline-block;
+  }
+
+  &__id div input {
+    height: 32px;
+    width: 290px;
+    border: none;
+    text-align: left;
+    margin-left: 16px;
+    border-radius: 4px;
+    display: inline-block;
+    color: $color-secondary-text;
+    background-color: $color-light-grey;
+    font-family: 'Courier New', Courier, monospace;
+  }
 }
 
 .footer {
   padding: 16px 24px;
+
+  &__action_button {
+    margin-top: 4px;
+  }
 
   &_warning_text {
     padding-left: 8px;
   }
 
   .cpbtn {
-    @include font-semi-bold();
+    &--cancel {
+      margin-right: 8px;
+    }
   }
 
   span {
     color: $color-secondary-text;
-  }
-
-  a {
-    padding: 6px 24px;
-    margin-right: 8px;
   }
 
   i {

@@ -10,7 +10,7 @@
 
   &__visibility-icon {
     top: 4px;
-    right: 195px;
+    right: 188px;
     position: absolute;
   }
 
@@ -37,5 +37,6 @@
     width: 290px;
     margin-left: 0;
     padding-left: 0;
+    pointer-events: none;
   }
 }
