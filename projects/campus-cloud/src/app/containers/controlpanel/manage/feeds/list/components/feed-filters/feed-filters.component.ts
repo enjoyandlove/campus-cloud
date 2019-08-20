@@ -240,7 +240,11 @@ export class FeedFiltersComponent implements OnInit {
 
       const getGroup = this.feedsService.getSocialGroups(search).toPromise();
 
-      getGroup.then((groups) => {
+      getGroup.then((groups: any) => {
+        if (groups.length === 0) {
+          return;
+        }
+
         const group = groups[0];
         this.state = Object.assign({}, this.state, {
           wall_type: group.id,

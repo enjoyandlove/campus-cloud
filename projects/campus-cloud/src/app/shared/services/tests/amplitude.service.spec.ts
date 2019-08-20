@@ -77,10 +77,6 @@ describe('AmplitudeEventTrackingService', () => {
     service.school = mockSchool;
   }));
 
-  it('should init', () => {
-    expect(service).toBeTruthy();
-  });
-
   it('should get user notify permissions', () => {
     service.user = { school_level_privileges: {}, account_level_privileges: {} };
 

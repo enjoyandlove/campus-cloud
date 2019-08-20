@@ -30,10 +30,6 @@ describe('WallsIntegrationsDeleteComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should call onDelete on cp-modal deleteClick event', () => {
     spyOn(component, 'onDelete');
 

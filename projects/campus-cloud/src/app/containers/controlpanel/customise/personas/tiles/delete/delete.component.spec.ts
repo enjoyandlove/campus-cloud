@@ -39,10 +39,6 @@ describe('PersonasTileDeleteComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(comp).toBeTruthy();
-  });
-
   it('onDelete', fakeAsync(() => {
     spyOn(comp.error, 'emit');
     spyOn(comp.deleted, 'emit');

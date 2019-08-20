@@ -48,10 +48,6 @@ describe('DiningCreateComponent', () => {
     component.diningForm.get('longitude').clearAsyncValidators();
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should create an empty form', () => {
     const result = component.diningForm.value;
 

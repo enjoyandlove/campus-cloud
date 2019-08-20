@@ -1,7 +1,8 @@
-import { CommonModule } from '@angular/common';
-import { NgModule } from '@angular/core';
+import { LazyLoadImagesModule } from 'ngx-lazy-load-images';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NgModule } from '@angular/core';
 
 import { FeedsListComponent } from './list';
 import { FeedsService } from './feeds.service';
@@ -9,7 +10,7 @@ import { FeedsUtilsService } from './feeds.utils.service';
 import { FeedsRoutingModule } from './feeds.routing.module';
 import { FeedsComponent } from './list/base/feeds.component';
 import { SharedModule } from '../../../../shared/shared.module';
-import { LazyLoadImagesModule } from 'ngx-lazy-load-images';
+import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
 
 import {
   FeedApproveCommentModalComponent,
@@ -54,7 +55,8 @@ import {
     FeedsRoutingModule,
     RouterModule,
     ReactiveFormsModule,
-    LazyLoadImagesModule
+    LazyLoadImagesModule,
+    ImageModule.forRoot()
   ],
 
   providers: [FeedsService, FeedsUtilsService],

@@ -37,10 +37,6 @@ describe('TestUsersComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should be empty', () => {
     component.users = [];
     fixture.detectChanges();

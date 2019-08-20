@@ -1,6 +1,4 @@
-import { validUrlRequiredProtocol } from '../forms';
-
 export function protocolCheck(linkUrl: string) {
-  const hasProtocol = validUrlRequiredProtocol.test(linkUrl);
+  const hasProtocol = linkUrl.startsWith('http://') || linkUrl.startsWith('https://');
   return hasProtocol ? linkUrl : `https://${linkUrl}`;
 }

@@ -40,10 +40,6 @@ describe('DiningDeleteComponent', () => {
     component.session.g.set('school', mockSchool);
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should dispatch DeleteDining action', () => {
     const dispatchSpy = spyOn(component.store, 'dispatch');
 

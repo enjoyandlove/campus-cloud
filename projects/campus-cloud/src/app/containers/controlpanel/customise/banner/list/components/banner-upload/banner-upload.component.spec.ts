@@ -40,10 +40,6 @@ describe('BannerUploadComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should emit upload button events', () => {
     component.isEdit = false;
     fixture.detectChanges();

@@ -6,7 +6,6 @@ import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { ApiService } from '@campus-cloud/base';
 import { EventsService } from '../events.service';
 import { CPDate } from '@campus-cloud/shared/utils';
 import { baseActions } from '@campus-cloud/store/base';
@@ -16,14 +15,13 @@ import { CPSession, ISchool } from '@campus-cloud/session';
 import { EventUtilService } from '../events.utils.service';
 import { EventsComponent } from '../list/base/events.component';
 import { amplitudeEvents, STATUS } from '@campus-cloud/shared/constants';
-import { CPImageUploadComponent } from '@campus-cloud/shared/components';
 import { SnackbarError } from '@campus-cloud/store/base/reducers/snackbar.reducer';
 import {
   AdminService,
   StoreService,
   ModalService,
+  ImageService,
   CPI18nService,
-  FileUploadService,
   CPTrackingService
 } from '@campus-cloud/shared/services';
 
@@ -34,8 +32,6 @@ import {
   attendanceType,
   EventAttendance
 } from '../event.status';
-
-const i18n = new CPI18nPipe();
 
 @Component({
   selector: 'cp-events-excel',
@@ -77,17 +73,17 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private api: ApiService,
     public store: Store<any>,
     public session: CPSession,
+    private i18nPipe: CPI18nPipe,
     public cpI18n: CPI18nService,
     public service: EventsService,
     private utils: EventUtilService,
     public modalService: ModalService,
     private adminService: AdminService,
+    private imageService: ImageService,
     private storeService: StoreService,
-    private cpTracking: CPTrackingService,
-    private fileUploadService: FileUploadService
+    private cpTracking: CPTrackingService
   ) {
     super(session, cpI18n, service, modalService, store);
     this.school = this.session.g.get('school');
@@ -107,7 +103,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
   }
 
   private buildHeader() {
-    const subheading = i18n.transform('events_import_csv_sub_heading', this.events.length);
+    const subheading = this.i18nPipe.transform('events_import_csv_sub_heading', this.events.length);
     this.store.dispatch({
       type: baseActions.HEADER_UPDATE,
       payload: {
@@ -372,9 +368,8 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     control.controls['poster_url'].setValue(null);
   }
 
-  onImageUpload(image: string, index: number) {
-    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService, this.api);
-    const promise = imageUpload.onFileUpload(image, true);
+  onImageUpload(image: File, index: number) {
+    const promise = this.imageService.upload(image).toPromise();
 
     promise
       .then((res: any) => {
@@ -390,7 +385,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
             class: 'danger',
             autoClose: true,
             sticky: true,
-            body: err ? err : this.cpI18n.translate('something_went_wrong')
+            body: err ? err.message : this.cpI18n.translate('something_went_wrong')
           }
         });
       });

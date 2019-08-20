@@ -24,10 +24,6 @@ describe('AudienceCardComponent', () => {
     storeSpy = spyOn(comp.store, 'select');
   });
 
-  it('should init', () => {
-    expect(comp).toBeTruthy();
-  });
-
   it('should listen for audience changes', () => {
     storeSpy.and.returnValue(
       of({ audience_id: 1, new_audience_active: false, saved_audience_active: true })

@@ -964,7 +964,7 @@
     "message": "Branding"
   },
   "customization_description": {
-    "message": "(JPEG or PNG format, 5 MB or smaller. You can scroll with your mouse to zoom in or out.)"
+    "message": "(JPEG or PNG format, 5 MB or smaller, recommended dimensions 1440 x 800. You can scroll with your mouse to zoom in or out.)"
   },
   "customization_image_upload_error": {
     "message": "Something went wrong while uploading your image"
@@ -2277,11 +2277,20 @@
   "t_api_management_create_new_api": {
     "message": "Create a new app integration"
   },
+  "t_api_management_discard_modal_body": {
+    "message": "You have unsaved changes. Do you wish to go back to prevent losing your data?"
+  },
+  "t_api_management_discard_modal_title": {
+    "message": "Unsaved Changes"
+  },
   "t_api_management_generate_key": {
     "message": "Generate Key & Save"
   },
   "t_api_management_how_to_use": {
     "message": "How to use the Ready API"
+  },
+  "t_api_management_key_id_label": {
+    "message": "Key ID"
   },
   "t_api_management_name_input_placeholder": {
     "message": "Choose a name for this new app"
@@ -3360,6 +3369,9 @@
   "t_shared_delete_resource_warning_wall_posts": {
     "message": "All wall posts and comments will be deleted"
   },
+  "t_shared_discard_changes": {
+    "message": "Discard Changes"
+  },
   "t_shared_edit": {
     "message": "Edit"
   },
@@ -3380,6 +3392,9 @@
   },
   "t_shared_from": {
     "message": "From"
+  },
+  "t_shared_go_back": {
+    "message": "Go Back"
   },
   "t_shared_help": {
     "message": "Help"

@@ -53,10 +53,6 @@ describe('DiningEditComponent', () => {
     component.diningForm.get('longitude').clearAsyncValidators();
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should populate form with values', () => {
     let expected = omit(mockDining[0], [
       'id',

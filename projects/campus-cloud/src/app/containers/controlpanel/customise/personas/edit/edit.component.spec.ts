@@ -36,10 +36,6 @@ describe('PersonasEditComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(comp).toBeTruthy();
-  });
-
   it('fetch', fakeAsync(() => {
     spyOn(comp, 'getCampusSecurity').and.returnValue(Promise.resolve(mockTile));
     const buildForm = spyOn(comp, 'buildForm');

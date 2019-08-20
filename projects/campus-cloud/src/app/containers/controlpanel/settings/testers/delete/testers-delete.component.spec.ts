@@ -45,10 +45,6 @@ describe('TestersDeleteComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should delete', () => {
     component.doDelete();
     expect(actionSpy).toHaveBeenCalledTimes(1);

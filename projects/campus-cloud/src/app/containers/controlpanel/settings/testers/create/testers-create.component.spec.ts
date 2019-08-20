@@ -48,10 +48,6 @@ describe('TestersCreateComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
-  it('should create', () => {
     const email = mockTesters[0].email;
     component.form.get('emails').setValue(email);
     component.doCreate();

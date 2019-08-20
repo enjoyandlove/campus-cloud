@@ -9,6 +9,7 @@ import { EmployerModule } from '../employer.module';
 import * as fromJobs from '@campus-cloud/store/manage/jobs';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EmployerEditComponent } from './employer-edit.component';
+import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 import { configureTestSuite, CPTestModule, MOCK_IMAGE } from '@campus-cloud/shared/tests';
 
 describe('EmployerEditComponent', () => {
@@ -23,7 +24,7 @@ describe('EmployerEditComponent', () => {
           RouterTestingModule,
           StoreModule.forRoot({}, { runtimeChecks: {} })
         ],
-        providers: [Store, Actions, FormBuilder]
+        providers: [Store, Actions, FormBuilder, ImageService, ImageValidatorService]
       });
       await TestBed.compileComponents();
     })()

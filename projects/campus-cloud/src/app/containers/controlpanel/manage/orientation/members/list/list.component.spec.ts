@@ -87,10 +87,6 @@ describe('OrientationMembersListComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should set initial filters state', () => {
     const expected = {
       sort_field: 'member_type',

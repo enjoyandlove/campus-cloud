@@ -30,7 +30,7 @@
             ],
             "styles": [
               "node_modules/@angular/cdk/overlay-prebuilt.css",
-              "node_modules/pickr-widget/dist/pickr.min.css",
+              "node_modules/@simonwep/pickr/dist/themes/classic.min.css",
               "node_modules/bootstrap/scss/bootstrap.scss",
               "node_modules/quill/dist/quill.core.css",
               "node_modules/quill/dist/quill.snow.css",
@@ -53,24 +53,27 @@
                 {
                   "replace": "projects/campus-cloud/src/environments/environment.ts",
                   "with": "projects/campus-cloud/src/environments/environment.prod.ts"
-                },
-                {
-                  "replace": "projects/campus-cloud/src/index.html",
-                  "with": "projects/campus-cloud/src/index.prod.html"
                 }
               ],
+              "index": "projects/campus-cloud/src/index.prod.html",
               "statsJson": false,
               "deployUrl": "/dist/",
-              "optimization": false,
+              "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
-              "namedChunks": false,
+              "namedChunks": true,
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": true,
               "buildOptimizer": false,
               "budgets": [
+                {
+                  "type": "bundle",
+                  "name": "main",
+                  "maximumWarning": "350kb",
+                  "maximumError": "500kb"
+                },
                 {
                   "type": "initial",
                   "maximumWarning": "2mb",
@@ -124,6 +127,39 @@
             "tsConfig": [
               "projects/campus-cloud/tsconfig.app.json",
               "projects/campus-cloud/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
+    },
+    "ready-ui": {
+      "projectType": "library",
+      "root": "projects/ready-ui",
+      "sourceRoot": "projects/ready-ui/src",
+      "prefix": "ready-ui",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ready-ui/tsconfig.lib.json",
+            "project": "projects/ready-ui/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ready-ui/src/test.ts",
+            "tsConfig": "projects/ready-ui/tsconfig.spec.json",
+            "karmaConfig": "projects/ready-ui/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ready-ui/tsconfig.lib.json",
+              "projects/ready-ui/tsconfig.spec.json"
             ],
             "exclude": ["**/node_modules/**"]
           }

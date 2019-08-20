@@ -964,7 +964,7 @@
     "message": "Marque"
   },
   "customization_description": {
-    "message": "(Les images haute résolution fonctionnent le mieux. Format JPEG ou PNG, 5 Mo ou moins. Vous pouvez faire défiler avec votre souris pour zoomer ou dézoomer l'image.)"
+    "message": "(Les images haute résolution fonctionnent le mieux, dimensions recommandées 1440 x 800. Format JPEG ou PNG, 5 Mo ou moins. Vous pouvez faire défiler avec votre souris pour zoomer ou dézoomer l'image.)"
   },
   "customization_image_upload_error": {
     "message": "Quelque chose a échoué durant le téléversement de votre image"

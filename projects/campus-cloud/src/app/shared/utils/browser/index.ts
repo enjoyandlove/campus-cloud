@@ -1,5 +1,5 @@
+import * as browserslist from 'browserslist';
 import * as Bowser from 'bowser';
-import browserslist = require('browserslist');
 
 export function getSupportedBrowser() {
   return browserslist('last 2 years, not dead, not IE 9-11');

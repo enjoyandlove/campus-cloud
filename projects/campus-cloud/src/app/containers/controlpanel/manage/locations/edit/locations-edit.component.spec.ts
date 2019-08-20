@@ -47,10 +47,6 @@ describe('LocationsEditComponent', () => {
     component.locationForm.get('longitude').clearAsyncValidators();
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should populate form with values', () => {
     const expected = omit(mockLocations[0], [
       'notes',

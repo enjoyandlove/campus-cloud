@@ -1,4 +1,4 @@
-import { InjectionToken, TemplateRef } from '@angular/core';
+import { TemplateRef } from '@angular/core';
 
 export class ToastData {
   type: ToastType;
@@ -13,8 +13,6 @@ export class ToastData {
   templateContext?: {};
 }
 
-export type ToastType = 'warning' | 'info' | 'success';
-
 export interface ToastConfig {
   position?: {
     top: number;
@@ -25,14 +23,6 @@ export interface ToastConfig {
   };
 }
 
-export const defaultToastConfig: ToastConfig = {
-  position: {
-    top: 100
-  },
-  animation: {
-    fadeOut: 300,
-    fadeIn: 200
-  }
-};
+export type ToastAnimationState = 'default' | 'closing';
 
-export const TOAST_CONFIG_TOKEN = new InjectionToken('toast-config');
+export type ToastType = 'warning' | 'info' | 'success';

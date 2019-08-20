@@ -14,8 +14,7 @@
           class="item__key-container hover cpbtn cpbtn--no-border"
           [attr.title]="'t_api_management_tooltip_click_to_copy' | cpI18n">
     <span *ngIf="!isTextVisible">{{ keyPrefix }}</span>
-    <input disabled
-           [id]="key"
+    <input [id]="key"
            [value]="key"
            class="item__key-input"
            [type]="isTextVisible ? 'text' : 'password'">
