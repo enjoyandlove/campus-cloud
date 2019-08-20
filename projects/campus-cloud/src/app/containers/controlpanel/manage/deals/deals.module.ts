@@ -14,6 +14,7 @@ import { DealsInfoComponent } from './info';
 import { DealsDeleteComponent } from './delete';
 import { DealsCreateComponent } from './create';
 import { DealsListActionBoxComponent } from './list/components/action-box';
+import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
 
 import {
   DealsCardComponent,
@@ -39,6 +40,7 @@ import {
     CommonModule,
     SharedModule,
     RouterModule,
+    ImageModule.forRoot(),
     DealsRoutingModule,
     ReactiveFormsModule,
     StoreModule
