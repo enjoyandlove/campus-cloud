@@ -1,3 +1,4 @@
+import { ToastModule } from '@ready-education/ready-ui';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
