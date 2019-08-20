@@ -15,6 +15,7 @@ import { JobsEditComponent } from './edit';
 import { JobsDeleteComponent } from './delete';
 import { JobsCreateComponent } from './create';
 import { JobsListActionBoxComponent } from './list/components/action-box';
+import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 
 import {
   JobsFormComponent,
@@ -44,6 +45,6 @@ import {
     ReactiveFormsModule,
     EmployerModule
   ],
-  providers: [JobsService, JobsUtilsService]
+  providers: [JobsService, JobsUtilsService, ImageService, ImageValidatorService]
 })
 export class JobsModule {}
