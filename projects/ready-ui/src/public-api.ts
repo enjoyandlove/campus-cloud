@@ -6,3 +6,11 @@
 
 export * from './lib/button/button.component';
 export * from './lib/button/button.module';
+
+export * from './lib/menu/components/menu-item/menu-item.component';
+export * from './lib/menu/directives/menu-toggle-for.directive';
+export * from './lib/menu/components/menu/menu.component';
+export * from './lib/menu/menu.module';
+
+export * from './lib/button-group/button-group.component';
+export * from './lib/button-group/button-group.module';
