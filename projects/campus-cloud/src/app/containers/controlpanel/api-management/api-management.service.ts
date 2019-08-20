@@ -13,10 +13,22 @@ export class ApiManagementService {
     return this.api.get(url, search, true);
   }
 
+  getTokenById(tokenId: string) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PUBLIC_ACCESS_TOKEN}/${tokenId}`;
+
+    return this.api.get(url, null, true);
+  }
+
   postToken(body) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PUBLIC_ACCESS_TOKEN}/`;
 
     return this.api.post(url, body, null, true);
+  }
+
+  editToken(tokenId: string, body) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PUBLIC_ACCESS_TOKEN}/${tokenId}`;
+
+    return this.api.update(url, body, null, true);
   }
 
   deleteToken(tokenId: string, params: HttpParams) {

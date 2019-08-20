@@ -1,18 +1,19 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
+import { take, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
-import { mockAPIData } from '../tests';
 import * as fromActions from '../store/actions';
-import { FORMAT } from '@campus-cloud/shared/pipes';
 import { ModalService } from '@campus-cloud/shared/services';
 import { commonParams } from '@campus-cloud/shared/constants';
 import { IPaginationParam } from '@campus-cloud/shared/types';
 import { IPublicApiAccessToken, IAPIManagementState } from '../model';
 import { RouterParamsUtils } from '@campus-cloud/shared/utils/router';
-import { ApiDeleteComponent } from '@controlpanel/api-management/delete';
+import { RouteNavigationGuard } from '@controlpanel/api-management/guards';
+import { DiscardChangesModalComponent } from '@controlpanel/api-management/components';
+import { ApiManagementUtilsService } from '@controlpanel/api-management/api-management.utils.service';
 
 @Component({
   selector: 'cp-api-list',
@@ -20,10 +21,10 @@ import { ApiDeleteComponent } from '@controlpanel/api-management/delete';
   styleUrls: ['./api-list.component.scss'],
   providers: [RouterParamsUtils, ModalService]
 })
-export class ApiListComponent implements OnInit {
-  modal: OverlayRef;
-  items = mockAPIData;
-  dateFormat = FORMAT.SHORT;
+export class ApiListComponent implements OnInit, RouteNavigationGuard {
+  isEdit = false;
+  formDirty = false;
+  discardModal: OverlayRef;
   loading$: Observable<boolean>;
   pagination$: Observable<IPaginationParam>;
   items$: Observable<IPublicApiAccessToken[]>;
@@ -31,6 +32,7 @@ export class ApiListComponent implements OnInit {
   constructor(
     private modalService: ModalService,
     private routerUtils: RouterParamsUtils,
+    private utils: ApiManagementUtilsService,
     private store: Store<IAPIManagementState>
   ) {}
 
@@ -48,34 +50,56 @@ export class ApiListComponent implements OnInit {
     this.store.dispatch(fromActions.loadRequest());
   }
 
-  trackByFn(_, item) {
-    return item.id;
+  loadAccessTokens() {
+    this.store
+      .select(fromStore.getTokenLoaded)
+      .pipe(
+        tap((loaded: boolean) => {
+          if (!loaded) {
+            this.fetch();
+          }
+        }, take(1))
+      )
+      .subscribe();
+
+    this.items$ = this.store.select(fromStore.getTokens);
   }
 
-  revokeAccessToken(accessToken: IPublicApiAccessToken) {
-    this.modal = this.modalService.open(
-      ApiDeleteComponent,
+  showDiscardModal() {
+    this.discardModal = this.modalService.open(
+      DiscardChangesModalComponent,
       {},
-      {
-        data: accessToken,
-        onClose: this.resetModal.bind(this)
-      }
+      { onClose: this.resetDiscardModal.bind(this) }
     );
+
+    return this.utils.navigateAwaySelection$;
   }
 
-  resetModal() {
-    this.modalService.close(this.modal);
-    this.modal = null;
+  resetDiscardModal() {
+    this.modalService.close(this.discardModal);
+    this.discardModal = null;
+  }
+
+  formStatus(value) {
+    this.formDirty = value;
+  }
+
+  canDeactivate(): boolean | Observable<boolean> {
+    if (this.formDirty) {
+      return this.showDiscardModal();
+    }
+
+    return true;
   }
 
   ngOnInit() {
     this.routerUtils.appendParamToRoute({
       [commonParams.page]: 1
     });
-    this.items$ = this.store.select(fromStore.getTokens);
+
     this.loading$ = this.store.select(fromStore.getTokenLoading);
     this.pagination$ = this.store.select(fromStore.getPagination);
 
-    this.fetch();
+    this.loadAccessTokens();
   }
 }

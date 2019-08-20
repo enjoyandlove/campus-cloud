@@ -50,6 +50,23 @@ export class ApiManagementEffect extends Paginated {
     );
   });
 
+  loadRequestByIdEffect$ = createEffect(() => {
+    return this.action$.pipe(
+      ofType(fromActions.loadRequestById),
+      mergeMap((action) => {
+        const { tokenId } = action;
+
+        return this.service.getTokenById(tokenId).pipe(
+          map((data: IPublicApiAccessToken) => fromActions.loadRequestByIdSuccess({ data })),
+          catchError((error) => {
+            this.handleError();
+            return of(fromActions.loadRequestByIdFailure(error));
+          })
+        );
+      })
+    );
+  });
+
   postRequestEffect$ = createEffect(() => {
     return this.action$.pipe(
       ofType(fromActions.postRequest),
@@ -63,6 +80,26 @@ export class ApiManagementEffect extends Paginated {
           catchError((error) => {
             this.handleError();
             return of(fromActions.postFailure(error));
+          })
+        );
+      })
+    );
+  });
+
+  editRequestEffect$ = createEffect(() => {
+    return this.action$.pipe(
+      ofType(fromActions.editRequest),
+      mergeMap((action) => {
+        const { tokenId, body } = action.payload;
+
+        return this.service.editToken(tokenId, body).pipe(
+          map((data: IPublicApiAccessToken) => {
+            this.handleSuccess('t_api_management_access_token_edited');
+            return fromActions.editSuccess({ data });
+          }),
+          catchError((error) => {
+            this.handleError();
+            return of(fromActions.editFailure(error));
           })
         );
       })
