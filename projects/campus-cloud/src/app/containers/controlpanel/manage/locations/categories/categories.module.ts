@@ -10,10 +10,11 @@ import { CategoriesDeleteComponent } from './delete';
 import { CategoriesCreateComponent } from './create';
 
 import { effects, reducers } from './store';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CategoriesService } from './categories.service';
-import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CategoriesRoutingModule } from './categories.routing.module';
+import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 import { CommonCategoriesModule } from '@campus-cloud/libs/locations/common/categories/common-categories.module';
 
 @NgModule({
@@ -28,6 +29,7 @@ import { CommonCategoriesModule } from '@campus-cloud/libs/locations/common/cate
     SharedModule,
     CommonModule,
     ReactiveFormsModule,
+    ImageModule.forRoot(),
     CommonCategoriesModule,
     CategoriesRoutingModule,
     EffectsModule.forFeature(effects),
