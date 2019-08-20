@@ -17,12 +17,20 @@ export class ImageService {
     private validator: ImageValidatorService
   ) {}
 
+  getHeaders() {
+    return new HttpHeaders({
+      Authorization: this.api.AUTH_TOKEN
+    });
+  }
+
   uploadBase64(base64ImageData: string) {
     const body = {
       base64_image: base64ImageData
     };
 
-    return this.http.post(this.apiImageUrl, body);
+    const headers = this.getHeaders();
+
+    return this.http.post(this.apiImageUrl, body, { headers });
   }
 
   upload(file: File, url = this.apiImageUrl) {
@@ -39,9 +47,7 @@ export class ImageService {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
 
-    const headers = new HttpHeaders({
-      Authorization: this.api.AUTH_TOKEN
-    });
+    const headers = this.getHeaders();
 
     return this.http.post(url, formData, { headers }).pipe(
       catchError((err) => {
