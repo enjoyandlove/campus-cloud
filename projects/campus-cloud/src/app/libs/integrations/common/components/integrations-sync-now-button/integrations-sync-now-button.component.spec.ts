@@ -46,10 +46,6 @@ describe('IntegrationsSyncNowButtonComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should be disable if sync now is false', () => {
     let syncNowBtn: HTMLButtonElement;
     const canSyncSpy = spyOn(component, 'canSync');

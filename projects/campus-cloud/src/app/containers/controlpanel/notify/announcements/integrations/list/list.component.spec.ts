@@ -56,10 +56,6 @@ describe('AnnouncementsIntegrationListComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should trigger onLaunchCreateModal on launchCreateModal', () => {
     const onLaunchCreateModal = spyOn(component, 'onLaunchCreateModal');
     const actionBox: IntegrationsActionBoxComponent = de.query(

@@ -58,10 +58,6 @@ describe('PersonasResourceExternalAppOpenComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should create an empty form ', () => {
     expect(component.getForm().value).toEqual(emptyForm);
   });

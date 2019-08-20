@@ -40,10 +40,6 @@ describe('IntegrationsListComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should display integrations in list', () => {
     let listItems: DebugElement[];
     const listItem = '.cp-form__item';

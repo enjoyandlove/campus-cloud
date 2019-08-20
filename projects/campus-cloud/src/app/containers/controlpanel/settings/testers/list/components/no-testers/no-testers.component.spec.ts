@@ -33,10 +33,6 @@ describe('NoTestersComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should emit create', () => {
     const spy = spyOn(component.create, 'emit');
     const inviteBtn = debugEl.query(By.css('.cpbtn--primary'));

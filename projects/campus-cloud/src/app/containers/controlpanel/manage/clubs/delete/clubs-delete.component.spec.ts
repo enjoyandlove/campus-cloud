@@ -51,10 +51,6 @@ describe('ClubsDeleteComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should call onDelete on cp-delete-modal deleteClick', () => {
     spyOn(component, 'onDelete');
     deleteModal.deleteClick.emit();

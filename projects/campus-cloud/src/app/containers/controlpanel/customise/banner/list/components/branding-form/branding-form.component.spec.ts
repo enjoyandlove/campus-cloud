@@ -41,10 +41,6 @@ describe('BrandingFormComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should change color', () => {
     const spy = spyOn(component.changeColor, 'emit');
     const colorInput = de.query(By.css('[data-target="branding_color"]')).nativeElement;

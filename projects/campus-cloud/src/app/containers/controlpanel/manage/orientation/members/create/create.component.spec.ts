@@ -64,10 +64,6 @@ describe('OrientationMembersCreateComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should call close modal onClose', () => {
     spyOn(modal, 'onClose');
 

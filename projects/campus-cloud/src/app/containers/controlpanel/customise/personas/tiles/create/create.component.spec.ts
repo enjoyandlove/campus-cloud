@@ -91,10 +91,6 @@ describe('PersonasTileCreateComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(comp).toBeTruthy();
-  });
-
   it('should redirect if no guide has been set', () => {
     spyOnProperty(comp.guideService, 'guide', 'get').and.returnValue(null);
     spyOn(comp.router, 'navigate').and.returnValue(Promise.resolve(true));
