@@ -51,10 +51,6 @@ describe('ApiListComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   describe('cp-spinner', () => {
     it('should show on loading$ true', () => {
       component.loading$ = of(true);

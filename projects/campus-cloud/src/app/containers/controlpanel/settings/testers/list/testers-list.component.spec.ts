@@ -59,7 +59,6 @@ describe('TestersListComponent', () => {
   }));
 
   it('should create and fetch w/ dispatch', () => {
-    expect(component).toBeTruthy();
     expect(spyFetch).toHaveBeenCalled();
     expect(spyDispatch).toHaveBeenCalledWith(new actions.LoadTesters());
   });

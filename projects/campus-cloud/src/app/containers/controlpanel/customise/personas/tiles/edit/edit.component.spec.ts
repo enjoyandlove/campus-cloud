@@ -114,10 +114,6 @@ describe('PersonasTileEditComponent', () => {
       });
   }));
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should redirect if no guide is set', () => {
     const routerSpy = spyOn(component.router, 'navigate');
     spyOn(component, 'fetch');

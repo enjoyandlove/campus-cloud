@@ -33,10 +33,6 @@ describe('CPDeleteModalComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should call resetModal on x button click', () => {
     const cancelEmit = spyOn(component.cancelClick, 'emit');
 

@@ -51,10 +51,6 @@ describe('EventsIntegrationsListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should trigger success snackbar on action completed', () => {
     const someKey = 'some action';
     spyOn(component.store, 'select').and.returnValue(of(someKey));

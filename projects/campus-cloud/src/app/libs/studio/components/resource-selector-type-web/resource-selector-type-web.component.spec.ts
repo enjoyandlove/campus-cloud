@@ -24,10 +24,6 @@ describe('ResourceSelectorTypeWebComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should have a form', () => {
     const result = component.buildForm();
     const expected = {

@@ -43,10 +43,6 @@ describe('WallsIntegrationFormComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should create/remove channel_name control', () => {
     const channelControl = () => component.form.get('channel_name');
 

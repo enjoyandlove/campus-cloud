@@ -43,10 +43,6 @@ describe('LocationOpeningHoursFormComponent', () => {
     component.ngOnInit();
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should get selected time', () => {
     const selectedTime = component.getSelectedTime(mockTime.value);
 

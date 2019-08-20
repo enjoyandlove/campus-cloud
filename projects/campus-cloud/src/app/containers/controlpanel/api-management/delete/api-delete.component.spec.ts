@@ -59,10 +59,6 @@ describe('ApiDeleteComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should call modal.onClose on cancelClick', () => {
     spyOn(component.modal, 'onClose');
 

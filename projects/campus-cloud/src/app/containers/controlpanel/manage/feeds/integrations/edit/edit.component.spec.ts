@@ -76,10 +76,6 @@ describe('WallsIntegrationsEditComponent', () => {
     formResetSpy = spyOn(component.form, 'reset');
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should emit teardown event on reset', () => {
     component.resetModal();
     expect(tearDownSpy).toHaveBeenCalled();

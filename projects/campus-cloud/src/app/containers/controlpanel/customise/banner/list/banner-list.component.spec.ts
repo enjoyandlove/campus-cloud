@@ -44,10 +44,6 @@ describe('BannerListComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should have correct aspect ratio', () => {
     expect(component.imageRatio).toBe(1.8);
   });

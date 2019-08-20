@@ -66,10 +66,6 @@ describe('DiningCategoriesCreateComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should call resetModal on close button click', () => {
     spyOn(component, 'resetModal');
 

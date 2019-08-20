@@ -49,10 +49,6 @@ describe('EventIntegrationsListComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should render items on list', () => {
     const list = de.queryAll(By.css('.cp-form__item'));
 
