@@ -11,11 +11,12 @@ import { LocationsListComponent } from './list';
 import { LocationsEditComponent } from './edit';
 import { LocationsDeleteComponent } from './delete';
 import { LocationsCreateComponent } from './create';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { LocationsService } from './locations.service';
-import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CategoriesModule } from './categories/categories.module';
 import { LocationsRoutingModule } from './locations.routing.module';
+import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
+import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
 import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 import { LocationsTimeLabelPipe } from '@campus-cloud/libs/locations/common/pipes';
 import { CommonLocationsModule } from '@campus-cloud/libs/locations/common/common-locations.module';
@@ -37,6 +38,7 @@ import { CommonLocationsModule } from '@campus-cloud/libs/locations/common/commo
     CategoriesModule,
     ReactiveFormsModule,
     CommonLocationsModule,
+    ImageModule.forRoot(),
     LocationsRoutingModule,
     EffectsModule.forFeature(effects),
     StoreModule.forFeature('locations', reducers)

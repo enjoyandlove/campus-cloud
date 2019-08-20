@@ -12,6 +12,7 @@ import { StoreActionBoxComponent } from './list/components/action-box';
 import { DealsStoreService } from './store.service';
 import { StoreRoutingModule } from './store.routing.module';
 import { SharedModule } from '../../../../../shared/shared.module';
+import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,13 @@ import { SharedModule } from '../../../../../shared/shared.module';
     StoreCreateComponent,
     StoreActionBoxComponent
   ],
-  imports: [SharedModule, CommonModule, ReactiveFormsModule, StoreRoutingModule],
+  imports: [
+    SharedModule,
+    CommonModule,
+    ReactiveFormsModule,
+    StoreRoutingModule,
+    ImageModule.forRoot()
+  ],
   exports: [StoreFormComponent],
   providers: [DealsStoreService]
 })
