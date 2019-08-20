@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastService } from 'ready-ui';
+import { ToastService } from '@ready-education/ready-ui';
 
 import { EnvService } from '@campus-cloud/config/env';
 import { appStorage, base64 } from '../../shared/utils';
