@@ -240,22 +240,4 @@ describe('TilesUtilsService', () => {
     expect(service.getLastRank(noTilesGuide)).toBe(1);
     expect(service.getLastRank(guide)).toBe(guide.tiles.length + 1);
   });
-
-  it('should validate tile image', () => {
-    const fourHundredKb = 4e5;
-
-    const invalidExtension: any = createFile();
-    const invalidSize: any = createFile('image/jpeg', fourHundredKb);
-    const correctFile: any = createFile('image/jpeg');
-
-    service
-      .validateTileImage(invalidExtension)
-      .catch((err) => expect(err).toBe(service.cpI18n.translate('error_invalid_extension')));
-
-    service
-      .validateTileImage(invalidSize)
-      .catch((err) => expect(err).toBe(service.cpI18n.translate('error_file_is_too_big')));
-
-    service.validateTileImage(correctFile).then((res) => expect(res).toBeNull());
-  });
 });

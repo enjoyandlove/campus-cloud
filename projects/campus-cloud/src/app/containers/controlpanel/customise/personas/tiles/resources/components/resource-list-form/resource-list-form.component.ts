@@ -2,15 +2,21 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { IPersona } from '../../../../persona.interface';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { TilesUtilsService } from '../../../tiles.utils.service';
 import { PersonasUtilsService } from '../../../../personas.utils.service';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
+import { TileImageValidatorService } from './tiles.image.validator.service';
+import { CPI18nService, ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-personas-resource-list-form',
   templateUrl: './resource-list-form.component.html',
-  styleUrls: ['./resource-list-form.component.scss']
+  styleUrls: ['./resource-list-form.component.scss'],
+  providers: [
+    ImageService,
+    TileImageValidatorService,
+    { provide: ImageValidatorService, useExisting: TileImageValidatorService }
+  ]
 })
 export class PersonasResourceListFormComponent implements OnInit {
   @Input() form: FormGroup;
@@ -31,15 +37,6 @@ export class PersonasResourceListFormComponent implements OnInit {
 
   onUploadedImage(image) {
     this.form.controls['img_url'].setValue(image);
-  }
-
-  validateTileImage(file) {
-    return new Promise((resolve, reject) => {
-      this.tileUtils
-        .validateTileImage(file)
-        .then(() => resolve({ valid: true, errors: [] }))
-        .catch((err) => reject({ valid: false, errors: [err] }));
-    });
   }
 
   onTypeChange(selectedContentId) {

@@ -17,9 +17,9 @@ import { fromEvent } from 'rxjs';
 
 import { TilesService } from './../../tiles.service';
 import { TilesUtilsService } from './../../tiles.utils.service';
-import { baseActions, ISnackbar } from '@campus-cloud/store/base';
+import { ISnackbar, baseActionClass } from '@campus-cloud/store/base';
 import { CPImageCropperComponent } from '@campus-cloud/shared/components';
-import { CPI18nService, FileUploadService } from '@campus-cloud/shared/services';
+import { CPI18nService, ImageService } from '@campus-cloud/shared/services';
 import { CPHostDirective, CPColorPickerDirective } from '@campus-cloud/shared/directives';
 
 @Component({
@@ -51,7 +51,7 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
     public utils: TilesUtilsService,
-    public fileService: FileUploadService,
+    public imageService: ImageService,
     public changeDetectorRef: ChangeDetectorRef,
     public componentFactoryResolver: ComponentFactoryResolver
   ) {}
@@ -61,7 +61,15 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
     this.form.controls['color'].setValue(colorStr);
   }
 
-  errorHandler() {}
+  errorHandler(err?: string) {
+    const body = err ? err : this.cpI18n.translate('something_went_wrong');
+
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body
+      })
+    );
+  }
 
   onCropResult(base64_image, componentRef) {
     componentRef.destroy();
@@ -74,17 +82,17 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
     );
   }
 
-  uploadImage(image) {
+  uploadImage(image: File) {
     this.state = { ...this.state, uploading: true };
-    this.fileService.uploadFile(image).subscribe(
-      ({ image_url }: any) => {
+    this.imageService.upload(image).subscribe(
+      ({ image_url }: { image_url: string }) => {
         this.imageChanged.emit(true);
         this.state = { ...this.state, uploading: false };
         this.loadImageCropperComponent(image_url);
       },
-      () => {
-        this.errorHandler();
+      (err) => {
         this.state = { ...this.state, uploading: false };
+        this.errorHandler(err.message);
       }
     );
   }
@@ -104,23 +112,6 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
 
     comp.cancel.subscribe(() => componentRef.destroy());
     comp.result.subscribe((imageData) => this.onCropResult(imageData, componentRef));
-  }
-
-  onFileChanged(file) {
-    const validateTileImage = this.utils.validateTileImage(file, 5e6);
-
-    validateTileImage
-      .then(() => this.uploadImage(file))
-      .catch((body) => {
-        this.store.dispatch({
-          type: baseActions.SNACKBAR_SHOW,
-          payload: {
-            autoClose: true,
-            class: 'warning',
-            body
-          }
-        });
-      });
   }
 
   addSubscribers() {

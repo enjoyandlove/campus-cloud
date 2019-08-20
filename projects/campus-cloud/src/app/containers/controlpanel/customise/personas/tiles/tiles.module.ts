@@ -17,6 +17,7 @@ import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 import { PersonasResourceModule } from './resources/resources.module';
 import { SectionUtilsService } from '../sections/section.utils.service';
 import { LibsStudioModule } from '@campus-cloud/libs/studio/studio.module';
+import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
 import {
   PersonasTileBaseComponent,
   PersonasTileHoverComponent,
@@ -43,7 +44,8 @@ import {
     RouterModule,
     LibsStudioModule,
     ReactiveFormsModule,
-    PersonasResourceModule
+    PersonasResourceModule,
+    ImageModule.forRoot()
   ],
   exports: [
     PersonasTileComponent,

@@ -8,6 +8,7 @@ import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
 import { WallsIntegrationFormComponent } from './integration-form.component';
 import { WallsIntegrationModel } from '../../model/walls.integrations.model';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import { IntegrationRequiredFieldsComponent } from '@campus-cloud/libs/integrations/common/components';
 
@@ -17,6 +18,7 @@ describe('WallsIntegrationFormComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
+        providers: [ImageService, ImageValidatorService],
         imports: [CPTestModule, ReactiveFormsModule, HttpClientModule],
         declarations: [WallsIntegrationFormComponent, IntegrationRequiredFieldsComponent]
       });

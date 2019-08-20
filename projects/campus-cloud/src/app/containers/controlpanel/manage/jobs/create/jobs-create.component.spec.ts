@@ -10,6 +10,7 @@ import { CPTestModule } from '@campus-cloud/shared/tests';
 import { JobsCreateComponent } from './jobs-create.component';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EmployerService } from '../employers/employer.service';
+import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 
 const mockJobs = require('../mockJobs.json');
 const mockEmployers = require('../employers/mockEmployer.json');
@@ -45,6 +46,8 @@ describe('JobsCreateComponent', () => {
       imports: [JobsModule, CPTestModule, HttpClientModule, RouterTestingModule],
       providers: [
         provideMockStore(),
+        ImageService,
+        ImageValidatorService,
         { provide: EmployerService, useClass: MockEmployerService },
         { provide: JobsService, useClass: MockJobsService }
       ]

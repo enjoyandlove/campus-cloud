@@ -1,4 +1,5 @@
 export * from './modal';
+export * from './image';
 export * from './logger';
 export * from './maps.service';
 export * from './i18n.service';
