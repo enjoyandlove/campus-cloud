@@ -20,7 +20,6 @@ export class LocationFormComponent implements OnInit {
   @Output() changeCategory: EventEmitter<null> = new EventEmitter();
 
   school: ISchool;
-  maxFileSize = '5e6'; // 5MB
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
 
