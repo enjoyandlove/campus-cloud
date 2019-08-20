@@ -11,10 +11,12 @@ import {
 import { ResourceService } from './resource.service';
 import { PersonaResourceEditComponent } from './edit';
 import { TilesUtilsService } from '../tiles.utils.service';
-import { LibsStudioModule } from '@campus-cloud/libs/studio/studio.module';
 import { ResourcesUtilsService } from './resources.utils.service';
 import { SharedModule } from '../../../../../../shared/shared.module';
+import { LibsStudioModule } from '@campus-cloud/libs/studio/studio.module';
 import { PersonaResourceCreateComponent } from './create/create.component';
+import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
+import { TileImageValidatorService } from './components/resource-list-form/tiles.image.validator.service';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,14 @@ import { PersonaResourceCreateComponent } from './create/create.component';
     PersonasResourceListFormComponent,
     PersonasResourceListOfListComponent
   ],
-  imports: [CommonModule, LibsStudioModule, SharedModule, ReactiveFormsModule, SortablejsModule],
+  imports: [
+    CommonModule,
+    LibsStudioModule,
+    SharedModule,
+    ReactiveFormsModule,
+    SortablejsModule,
+    ImageModule.forRoot(TileImageValidatorService)
+  ],
   providers: [TilesUtilsService, ResourceService, ResourcesUtilsService],
   exports: [
     PersonaResourceEditComponent,

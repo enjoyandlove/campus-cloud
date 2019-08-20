@@ -42,10 +42,6 @@ describe('LocationsListComponent', () => {
     fetchSpy = spyOn(component, 'fetchFilteredLocations');
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should search string', () => {
     component.onSearch('hello world');
 

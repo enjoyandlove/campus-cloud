@@ -1,7 +1,6 @@
 import { Input, OnInit, Component, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
 
-const Chartist = require('chartist');
-require('chartist-plugin-tooltips');
+const Chartist = (window as any).Chartist;
 
 @Component({
   selector: 'cp-line-chart',

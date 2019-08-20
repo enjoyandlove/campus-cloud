@@ -20,5 +20,3 @@ export const toastAnimations: {
     )
   ])
 };
-
-export type ToastAnimationState = 'default' | 'closing';

@@ -16,8 +16,11 @@ export class ApiManagementFormComponent implements OnInit {
   buttonData;
   form: FormGroup;
 
+  @Input() isEdit: boolean;
   @Input() formData: IPublicApiAccessToken;
 
+  @Output() cancelEdit: EventEmitter<null> = new EventEmitter();
+  @Output() valueChanges: EventEmitter<FormGroup> = new EventEmitter();
   @Output() submitted: EventEmitter<IPublicApiAccessToken> = new EventEmitter();
 
   apiType = ApiType;
@@ -27,14 +30,14 @@ export class ApiManagementFormComponent implements OnInit {
   constructor(public session: CPSession, private cpI18n: CPI18nService) {}
 
   onTogglePermission(value, type) {
-    const tokenPermissionData = this.form.get('token_permission_data').value;
+    const tokenPermissionData = this.form.get('permission_data').value;
     const permissions = ApiManagementUtilsService.getTokenPermission(
       value,
       type,
       tokenPermissionData
     );
     this.form
-      .get('token_permission_data')
+      .get('permission_data')
       .setValue(ApiManagementUtilsService.getPermissionData(permissions));
   }
 
@@ -64,11 +67,25 @@ export class ApiManagementFormComponent implements OnInit {
     this.form.get('client_id').setValue(client_id);
     this.form.get('is_sandbox').setValue(is_sandbox);
 
+    const tokenPermission = this.form.get('permission_data').value;
+
+    const hasUser = tokenPermission ? Boolean(tokenPermission[ApiType.user]) : false;
+    const hasNotification = tokenPermission
+      ? Boolean(tokenPermission[ApiType.notification])
+      : false;
+
+    this.form.get('user_info').setValue(hasUser);
+    this.form.get('push_notification').setValue(hasNotification);
+
     this.isSandbox = is_sandbox;
 
+    const buttonText = this.isEdit ? 'save' : 't_api_management_generate_key';
+
     this.buttonData = {
-      text: this.cpI18n.translate('t_api_management_generate_key'),
+      text: this.cpI18n.translate(buttonText),
       class: 'primary'
     };
+
+    this.form.valueChanges.subscribe(() => this.valueChanges.emit(this.form));
   }
 }

@@ -14,35 +14,48 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'dashboard',
-        loadChildren: './dashboard/dashboard.module#DashboardModule'
+        loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
 
-      { path: 'manage', loadChildren: './manage/manage.module#ManageModule' },
+      {
+        path: 'manage',
+        loadChildren: () => import('./manage/manage.module').then((m) => m.ManageModule)
+      },
 
-      { path: 'notify', loadChildren: './notify/notify.module#NotifyModule' },
+      {
+        path: 'notify',
+        loadChildren: () => import('./notify/notify.module').then((m) => m.NotifyModule)
+      },
 
-      { path: 'assess', loadChildren: './assess/assess.module#AssessModule' },
+      {
+        path: 'assess',
+        loadChildren: () => import('./assess/assess.module').then((m) => m.AssessModule)
+      },
 
-      { path: 'audience', loadChildren: './audience/audience.module#AudienceModule' },
+      {
+        path: 'audience',
+        loadChildren: () => import('./audience/audience.module').then((m) => m.AudienceModule)
+      },
 
       {
         path: 'studio',
-        loadChildren: './customise/customise.module#CustomiseModule'
+        loadChildren: () => import('./customise/customise.module').then((m) => m.CustomiseModule)
       },
 
       {
         path: 'account',
-        loadChildren: './account/account.module#AccountModule'
+        loadChildren: () => import('./account/account.module').then((m) => m.AccountModule)
       },
 
       {
         path: 'api-management',
-        loadChildren: './api-management/api-management.module#ApiManagementModule'
+        loadChildren: () =>
+          import('./api-management/api-management.module').then((m) => m.ApiManagementModule)
       },
 
       {
         path: 'settings',
-        loadChildren: './settings/settings.module#SettingsModule'
+        loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule)
       }
     ]
   }

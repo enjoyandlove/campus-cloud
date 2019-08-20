@@ -55,10 +55,6 @@ describe('CPPageHeaderComponent', () => {
     fixture.detectChanges(); // trigger initial data binding
   });
 
-  it('should init', () => {
-    expect(comp).toBeTruthy();
-  });
-
   it('should have extra children', () => {
     comp.data = _data;
     comp.maxChildren = 1;

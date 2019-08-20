@@ -26,16 +26,18 @@ export class ApiService extends HTTPService {
     SESSION: 'CCSess'
   };
 
+  get token() {
+    return `CCSess ${appStorage.get(appStorage.keys.SESSION)}`;
+  }
+
   constructor(http: HttpClient, private router: Router, private env: EnvService) {
     super(http);
   }
 
   getHeaders() {
-    const auth = `CCSess ${appStorage.get(appStorage.keys.SESSION)}`;
-
     return new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: auth
+      Authorization: `CCSess ${appStorage.get(appStorage.keys.SESSION)}`
     });
   }
 

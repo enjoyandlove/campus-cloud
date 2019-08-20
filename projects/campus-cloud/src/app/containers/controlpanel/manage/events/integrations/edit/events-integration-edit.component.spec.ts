@@ -61,10 +61,6 @@ describe('EventsIntegrationEditComponent', () => {
     formResetSpy = spyOn(component.form, 'reset');
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should emit teardown event on reset', () => {
     component.resetModal();
     expect(tearDownSpy).toHaveBeenCalled();

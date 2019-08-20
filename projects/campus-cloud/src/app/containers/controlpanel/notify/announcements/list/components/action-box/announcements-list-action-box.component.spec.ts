@@ -40,10 +40,6 @@ describe('AnnouncementsListActionBoxComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should have integration link button', () => {
     const intButton = getElementByCPTargetValue(de, 'integrations');
     expect(intButton).not.toBeNull();

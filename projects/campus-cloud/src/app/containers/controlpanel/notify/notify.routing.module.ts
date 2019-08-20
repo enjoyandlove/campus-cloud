@@ -15,7 +15,8 @@ const appRoutes: Routes = [
       {
         path: 'announcements',
         canActivate: [PrivilegesGuard],
-        loadChildren: './announcements/announcements.module#AnnouncementsModule',
+        loadChildren: () =>
+          import('./announcements/announcements.module').then((m) => m.AnnouncementsModule),
         data: {
           zendesk: 'announcements',
           title: pageTitle.NOTIFY_ANNOUNCEMENT,
@@ -26,7 +27,7 @@ const appRoutes: Routes = [
       {
         path: 'templates',
         canActivate: [PrivilegesGuard],
-        loadChildren: './templates/templates.module#TemplatesModule',
+        loadChildren: () => import('./templates/templates.module').then((m) => m.TemplatesModule),
         data: {
           zendesk: 'templates',
           title: pageTitle.NOTIFY_ANNOUNCEMENT,

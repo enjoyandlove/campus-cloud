@@ -11,6 +11,7 @@ import { JobsEditComponent } from './jobs-edit.component';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EmployerService } from '../employers/employer.service';
+import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 
 const mockJobs = require('../mockJobs.json');
 const mockEmployers = require('../employers/mockEmployer.json');
@@ -56,6 +57,8 @@ describe('JobsEditComponent', () => {
         CPSession,
         CPI18nService,
         provideMockStore(),
+        ImageService,
+        ImageValidatorService,
         { provide: EmployerService, useClass: MockEmployerService },
         { provide: JobsService, useClass: MockJobsService }
       ]

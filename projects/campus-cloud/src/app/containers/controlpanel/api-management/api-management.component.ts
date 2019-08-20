@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import * as apiHeader from './api-management.header.json';
 import { IHeader, baseActions, getHeaderState } from '@campus-cloud/store';
+
+const apiHeader = require('./api-management.header.json');
 
 @Component({
   selector: 'cp-api-management',

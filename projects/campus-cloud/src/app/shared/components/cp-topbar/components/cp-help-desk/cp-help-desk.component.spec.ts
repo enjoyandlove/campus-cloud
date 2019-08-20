@@ -39,10 +39,6 @@ describe('CPHelpDeskComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should click whats new link', () => {
     const whatsNewLink = de.query(By.css('.whats_new')).nativeElement;
 

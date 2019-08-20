@@ -85,7 +85,9 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   }
 
   onDoFilter(filterState) {
-    this.filterState = Object.assign({}, this.filterState, ...filterState);
+    this.filterState = this.filterState
+      ? Object.assign({}, this.filterState, ...filterState)
+      : { ...filterState };
 
     this.updateUrl();
 

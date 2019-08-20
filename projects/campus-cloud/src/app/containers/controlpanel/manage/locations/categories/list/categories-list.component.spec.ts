@@ -48,10 +48,6 @@ describe('CategoriesListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should search string', () => {
     const query = 'hello world';
     spyOn(component, 'onSearch');

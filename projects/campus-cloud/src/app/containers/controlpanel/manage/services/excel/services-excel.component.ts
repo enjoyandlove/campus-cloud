@@ -8,13 +8,9 @@ import { CPSession } from '@campus-cloud/session';
 import { ServicesService } from '../services.service';
 import { EnvService } from '@campus-cloud/config/env';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
-import { ApiService } from '@campus-cloud/base/services';
 import { BaseComponent } from '@campus-cloud/base/base.component';
-import { CPImageUploadComponent } from '@campus-cloud/shared/components';
-import { CPI18nService, FileUploadService } from '@campus-cloud/shared/services';
+import { CPI18nService, ImageService } from '@campus-cloud/shared/services';
 import { baseActions, getServicesModalState, baseActionClass } from '@campus-cloud/store/base';
-
-const i18n = new CPI18nPipe();
 
 @Component({
   selector: 'cp-services-excel',
@@ -38,13 +34,13 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private api: ApiService,
     private env: EnvService,
     private store: Store<any>,
     private session: CPSession,
+    private i18nPipe: CPI18nPipe,
     private cpI18n: CPI18nService,
-    private servicesService: ServicesService,
-    private fileUploadService: FileUploadService
+    private imageService: ImageService,
+    private servicesService: ServicesService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -57,7 +53,10 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   buildHeader() {
-    const subheading = i18n.transform('services_import_items_to_import', this.services.length);
+    const subheading = this.i18nPipe.transform(
+      'services_import_items_to_import',
+      this.services.length
+    );
 
     this.store.dispatch({
       type: baseActions.HEADER_UPDATE,
@@ -144,22 +143,6 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     });
   }
 
-  // onBulkDelete() {
-  //   let _isChecked = [];
-
-  //   this.isChecked.reverse().forEach(item => {
-  //     if (item.checked) {
-  //       this.isChecked.slice(item.index, 1);
-  //       this.removeControl(item.index);
-  //       return;
-  //     }
-  //     item = Object.assign({}, item, { index: _isChecked.length });
-  //     _isChecked.push(item);
-  //   });
-
-  //   this.isChecked = [..._isChecked];
-  // }
-
   onBulkChange(actions) {
     const control = <FormArray>this.form.controls['services'];
 
@@ -241,9 +224,8 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     );
   }
 
-  onImageUpload(image: string, index: number) {
-    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService, this.api);
-    const promise = imageUpload.onFileUpload(image, true);
+  onImageUpload(image: File, index: number) {
+    const promise = this.imageService.upload(image).toPromise();
 
     promise
       .then((res: any) => {
@@ -252,7 +234,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
         control.controls['logo_url'].setValue(res.image_url);
       })
       .catch((err) => {
-        this.handleError(err);
+        this.handleError(err.message);
       });
   }
 

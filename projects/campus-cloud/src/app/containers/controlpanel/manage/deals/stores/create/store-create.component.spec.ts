@@ -10,6 +10,7 @@ import * as fromDeals from '@campus-cloud/store/manage/deals';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { StoreCreateComponent } from './store-create.component';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 
 describe('DealsStoreCreateComponent', () => {
   configureTestSuite();
@@ -23,7 +24,7 @@ describe('DealsStoreCreateComponent', () => {
           RouterTestingModule,
           NgrxStore.forRoot({}, { runtimeChecks: {} })
         ],
-        providers: [Store, Actions, FormBuilder]
+        providers: [Store, Actions, FormBuilder, ImageService, ImageValidatorService]
       });
       await TestBed.compileComponents();
     })()

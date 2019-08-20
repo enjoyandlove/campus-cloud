@@ -6,7 +6,7 @@ export const defaultForm = {
   client_id: null,
   is_sandbox: null,
   push_notification: null,
-  token_permission_data: null
+  permission_data: null
 };
 
 export const filledForm = {
@@ -15,7 +15,7 @@ export const filledForm = {
   is_sandbox: true,
   push_notification: true,
   name: 'Printer network',
-  token_permission_data: { [ApiType.user]: AccessType.write }
+  permission_data: { [ApiType.user]: AccessType.write }
 };
 
 export const mockAPIData = [
@@ -25,7 +25,7 @@ export const mockAPIData = [
     date_last_modified: 1564588800,
     id: 'hj263749hgd76651hjd768wk',
     token: 'live_qB23EwdDrFtdfG4G5Re0LlsaqWe34R5f',
-    token_permission_data: { [ApiType.user]: AccessType.write }
+    permission_data: { [ApiType.user]: AccessType.write }
   },
   {
     name: 'Computer room',
@@ -33,7 +33,7 @@ export const mockAPIData = [
     date_last_modified: 1564588800,
     id: 'hj263749hgd76651hjd768wl',
     token: 'live_qB23EwdDrFtdfG4G5Re0LlsaqWe34R5g',
-    token_permission_data: { [ApiType.user]: AccessType.write }
+    permission_data: { [ApiType.user]: AccessType.write }
   },
   {
     name: 'Library',
@@ -41,6 +41,6 @@ export const mockAPIData = [
     date_last_modified: 1564588800,
     id: 'hj263749hgd76651hjd768wm',
     token: 'test_qB23EwdDrFtdfG4G5Re0LlsaqWe34R5h',
-    token_permission_data: { [ApiType.user]: AccessType.write }
+    permission_data: { [ApiType.user]: AccessType.write }
   }
 ];

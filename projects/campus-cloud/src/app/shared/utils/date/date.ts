@@ -1,7 +1,6 @@
 import * as moment from 'moment-timezone';
-import momentDurationFormatSetup = require('moment-duration-format');
-
-momentDurationFormatSetup(moment);
+const momentDurationFormat = require('moment-duration-format');
+momentDurationFormat(moment);
 
 function localNow(date = new Date()) {
   return moment(date);

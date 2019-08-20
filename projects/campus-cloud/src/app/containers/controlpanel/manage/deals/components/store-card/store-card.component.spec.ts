@@ -7,6 +7,7 @@ import { DealsModule } from '../../deals.module';
 import { RootStoreModule } from '@campus-cloud/store';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { StoreCardComponent } from './store-card.component';
+import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 
 describe('StoreCardComponent', () => {
   let component: StoreCardComponent;
@@ -14,6 +15,7 @@ describe('StoreCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [ImageService, ImageValidatorService],
       imports: [CPTestModule, DealsModule, HttpClientModule, RouterTestingModule, RootStoreModule]
     })
       .compileComponents()

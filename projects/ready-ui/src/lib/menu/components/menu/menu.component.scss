@@ -1,0 +1,14 @@
+@import '../menu.scss';
+
+.ready-ui-menu {
+  outline: 0;
+  overflow: auto;
+  min-width: 112px;
+  max-width: 280px;
+  border-radius: 4px;
+  padding-top: 0.5rem;
+  background: white;
+  padding-bottom: 0.5rem;
+  height: calc(#{$item-height} * 5) px;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
+}

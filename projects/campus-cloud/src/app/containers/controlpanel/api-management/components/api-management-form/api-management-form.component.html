@@ -13,6 +13,20 @@
           [placeholder]="'t_api_management_name_input_placeholder' | cpI18n"/>
       </div>
 
+      <ng-container *ngIf="isEdit">
+        <div class="row form__id">
+          <div class="col-12 no-right-padding no-left-padding">
+            <label for="key-id" class="form__key-label">{{ 't_api_management_key_id_label' | cpI18n}}</label>
+            <input id="key-id" class="form__key-id" type="text" disabled [value]="formData.id">
+          </div>
+        </div>
+        <div class="row form__key">
+          <div class="col-12 no-right-padding no-left-padding">
+            <cp-api-management-key [key]="formData.token"></cp-api-management-key>
+          </div>
+        </div>
+      </ng-container>
+
       <div class="row">
         <div class="col-5">
           <label>{{ 't_api_management_api_endpoints' | cpI18n }}</label>
@@ -22,7 +36,7 @@
             formControlName="push_notification"
             (toggle)="onTogglePermission($event, apiType.notification)"
             [label]="'t_api_management_push_notification' | cpI18n"
-            [hasError]="formErrors && form.get('token_permission_data').invalid">
+            [hasError]="formErrors && form.get('permission_data').invalid">
           </cp-checkbox>
           <cp-checkbox
             class="checkbox"
@@ -30,7 +44,7 @@
             formControlName="user_info"
             (toggle)="onTogglePermission($event, apiType.user)"
             [label]="'t_api_management_user_information' | cpI18n"
-            [hasError]="formErrors && form.get('token_permission_data').invalid">
+            [hasError]="formErrors && form.get('permission_data').invalid">
           </cp-checkbox>
         </div>
       </div>
@@ -54,8 +68,16 @@
         </div>
       </div>
     </div>
-    <div class="col-5 text-right no-left-padding no-right-padding">
+    <div class="col-5 footer__action_button text-right no-left-padding no-right-padding">
+      <button
+        *ngIf="isEdit"
+        (click)="cancelEdit.emit()"
+        class="cpbtn cpbtn--cancel">
+        {{ 'cancel' | cpI18n }}
+      </button>
+
       <a
+        *ngIf="!isEdit"
         [routerLink]="['/api-management']"
         class="cpbtn cpbtn--cancel">
         {{ 'cancel' | cpI18n }}

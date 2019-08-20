@@ -164,20 +164,6 @@ export class TilesUtilsService {
     });
   }
 
-  async validateTileImage(file: File, maxImageSize = threeHundrendKb): Promise<string> {
-    let error;
-    const validExtension = (media) => ['image/jpeg', 'image/jpg', 'image/png'].includes(media.type);
-    const validSize = FileUploadService.validFileSize(file, maxImageSize);
-
-    if (!validSize || !validExtension(file)) {
-      error = !validSize
-        ? this.cpI18n.translate('error_file_is_too_big')
-        : this.cpI18n.translate('error_invalid_extension');
-    }
-
-    return error ? Promise.reject(error) : Promise.resolve(null);
-  }
-
   linkParamsValidator(control: FormGroup): ValidationErrors | null {
     const linkParams = control.get('link_params').value;
     const linkUrl = control.get('link_url').value;
