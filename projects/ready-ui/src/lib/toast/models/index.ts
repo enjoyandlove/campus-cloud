@@ -1,6 +1,6 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 
-import { ToastData } from './toast-config';
+import { ToastData } from '../config/types';
 
 export class ToastRef {
   data: ToastData;

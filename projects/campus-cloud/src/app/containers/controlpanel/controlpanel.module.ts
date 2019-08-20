@@ -1,9 +1,9 @@
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ToastModule } from 'ready-ui';
 
 import { SharedModule } from '../../shared/shared.module';
-import { ToastModule } from '../../ready/toast/toast.module';
 import { ControlPanelService } from './controlpanel.service';
 import { ControlPanelComponent } from './controlpanel.component';
 import { ControlPanelRoutingModule } from './controlpanel.routing.module';

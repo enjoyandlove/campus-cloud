@@ -1,7 +1,9 @@
 import { HttpParams } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 import { ApiService } from '@campus-cloud/base/services';
+import { of } from 'rxjs';
 
 @Injectable()
 export class FeedsService {
@@ -31,7 +33,7 @@ export class FeedsService {
   getSocialGroups(search?: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SOCIAL_GROUP}/1;5000`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search, true).pipe(catchError(() => of([])));
   }
 
   upodateSocialGroup(groupId, data, search) {

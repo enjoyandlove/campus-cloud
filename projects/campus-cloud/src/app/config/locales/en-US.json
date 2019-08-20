@@ -964,7 +964,7 @@
     "message": "Branding"
   },
   "customization_description": {
-    "message": "(JPEG or PNG format, 5 MB or smaller, recommended dimensions 1440 x 800. You can scroll with your mouse to zoom in or out.) Recommended dimensions 1440 x 800"
+    "message": "(JPEG or PNG format, 5 MB or smaller, recommended dimensions 1440 x 800. You can scroll with your mouse to zoom in or out.)"
   },
   "customization_image_upload_error": {
     "message": "Something went wrong while uploading your image"

@@ -19,7 +19,7 @@ export class ImageService {
 
   getHeaders() {
     return new HttpHeaders({
-      Authorization: this.api.AUTH_TOKEN
+      Authorization: this.api.token
     });
   }
 

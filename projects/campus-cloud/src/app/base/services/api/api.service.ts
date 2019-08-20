@@ -26,7 +26,9 @@ export class ApiService extends HTTPService {
     SESSION: 'CCSess'
   };
 
-  readonly AUTH_TOKEN = `CCSess ${appStorage.get(appStorage.keys.SESSION)}`;
+  get token() {
+    return `CCSess ${appStorage.get(appStorage.keys.SESSION)}`;
+  }
 
   constructor(http: HttpClient, private router: Router, private env: EnvService) {
     super(http);
