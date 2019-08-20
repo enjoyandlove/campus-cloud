@@ -10,6 +10,7 @@ import { CPTestModule } from '@campus-cloud/shared/tests';
 import { DealsStoreService } from '../stores/store.service';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { DealsCreateComponent } from './deals-create.component';
+import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 
 class MockDealsService {
   dummy;
@@ -41,7 +42,9 @@ describe('DealsCreateComponent', () => {
     TestBed.configureTestingModule({
       imports: [DealsModule, CPTestModule, HttpClientModule, RouterTestingModule],
       providers: [
+        ImageService,
         provideMockStore(),
+        ImageValidatorService,
         { provide: DealsStoreService, useClass: MockStoreService },
         { provide: DealsService, useClass: MockDealsService }
       ]

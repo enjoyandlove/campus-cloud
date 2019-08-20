@@ -1,23 +1,21 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HttpHeaders, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
 import { map, startWith } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { ApiService } from '@campus-cloud/base';
 import { validThread } from '../../../validators';
 import { FeedsService } from '../../../feeds.service';
-import { appStorage } from '@campus-cloud/shared/utils';
 import { CPSession, ISchool } from '@campus-cloud/session';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import {
+  ImageService,
   StoreService,
   CPI18nService,
-  CPTrackingService,
-  FileUploadService
+  CPTrackingService
 } from '@campus-cloud/shared/services';
 
 @Component({
@@ -60,16 +58,15 @@ export class FeedInputBoxComponent implements OnInit {
   };
 
   constructor(
-    private api: ApiService,
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
     public utils: FeedsUtilsService,
+    private imageService: ImageService,
     private feedsService: FeedsService,
     private storeService: StoreService,
-    public cpTracking: CPTrackingService,
-    private fileUploadService: FileUploadService
+    public cpTracking: CPTrackingService
   ) {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
@@ -232,29 +229,14 @@ export class FeedInputBoxComponent implements OnInit {
 
   onFileUpload(file) {
     this.imageError = null;
-    const validate = this.fileUploadService.validImage(file);
-
-    if (!validate.valid) {
-      this.imageError = validate.errors[0];
-
-      return;
-    }
-
-    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.IMAGE}/`;
-    const auth = `${this.api.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
-
-    const headers = new HttpHeaders({
-      Authorization: auth
-    });
-
-    this.fileUploadService.uploadFile(file, url, headers).subscribe(
-      (res: any) => {
-        this.image$.next(res.image_url);
-        this.form.controls['message_image_url_list'].setValue([res.image_url]);
+    this.imageService.upload(file).subscribe(
+      ({ image_url }: any) => {
+        this.image$.next(image_url);
+        this.form.controls['message_image_url_list'].setValue([image_url]);
         this.trackUploadImageEvent();
       },
-      () => {
-        this.imageError = this.cpI18n.translate('something_went_wrong');
+      (err) => {
+        this.imageError = err.message || this.cpI18n.translate('something_went_wrong');
       }
     );
   }

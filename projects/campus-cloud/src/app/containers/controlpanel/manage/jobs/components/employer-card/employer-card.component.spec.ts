@@ -8,6 +8,7 @@ import { RootStoreModule } from '@campus-cloud/store';
 import { JobsUtilsService } from '../../jobs.utils.service';
 import { EmployerCardComponent } from './employer-card.component';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 
 describe('EmployerCardComponent', () => {
   configureTestSuite();
@@ -15,7 +16,7 @@ describe('EmployerCardComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [CPTestModule, JobsModule, HttpClientModule, RouterTestingModule, RootStoreModule],
-        providers: [JobsUtilsService]
+        providers: [JobsUtilsService, ImageService, ImageValidatorService]
       });
 
       await TestBed.compileComponents();

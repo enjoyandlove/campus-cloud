@@ -1,10 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
-import { ApiService } from '@campus-cloud/base/services';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
-import { CPImageUploadComponent } from '@campus-cloud/shared/components';
-import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
+import { ImageService, CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-import-top-bar',
@@ -30,29 +28,27 @@ export class EventsImportTopBarComponent implements OnInit {
   imageError;
 
   constructor(
-    private api: ApiService,
     public store: Store<ISnackbar>,
-    private fileUploadService: FileUploadService,
+    private imageService: ImageService,
     public cpI18n: CPI18nService
   ) {}
 
   onFileUpload(file) {
-    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService, this.api);
-    const promise = imageUpload.onFileUpload(file, true);
+    const promise = this.imageService.upload(file).toPromise();
 
     promise
-      .then((res: any) => this.imageChange.emit(res.image_url))
-      .catch((err) =>
+      .then(({ image_url }: any) => this.imageChange.emit(image_url))
+      .catch((err) => {
         this.store.dispatch({
           type: baseActions.SNACKBAR_SHOW,
           payload: {
             class: 'danger',
             autoClose: true,
             sticky: true,
-            body: err ? err : this.cpI18n.translate('something_went_wrong')
+            body: err ? err.message : this.cpI18n.translate('something_went_wrong')
           }
-        })
-      );
+        });
+      });
   }
 
   ngOnInit() {

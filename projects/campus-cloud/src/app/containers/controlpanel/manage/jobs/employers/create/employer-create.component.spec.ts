@@ -10,6 +10,7 @@ import * as fromJobs from '@campus-cloud/store/manage/jobs';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EmployerCreateComponent } from './employer-create.component';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 
 describe('EmployerCreateComponent', () => {
   configureTestSuite();
@@ -23,7 +24,7 @@ describe('EmployerCreateComponent', () => {
           RouterTestingModule,
           StoreModule.forRoot({}, { runtimeChecks: {} })
         ],
-        providers: [Store, Actions, FormBuilder]
+        providers: [Store, Actions, FormBuilder, ImageService, ImageValidatorService]
       });
       await TestBed.compileComponents();
     })()

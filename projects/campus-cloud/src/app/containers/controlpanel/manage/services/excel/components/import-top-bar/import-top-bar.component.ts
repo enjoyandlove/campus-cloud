@@ -1,12 +1,9 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { HttpHeaders } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { ApiService } from '@campus-cloud/base';
-import { appStorage } from '@campus-cloud/shared/utils';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
-import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
+import { ImageService, CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-services-import-top-bar',
@@ -29,10 +26,9 @@ export class ServicesImportTopBarComponent implements OnInit {
   loading = true;
 
   constructor(
-    private api: ApiService,
-    private fileUploadService: FileUploadService,
     public cpI18n: CPI18nService,
-    public store: Store<ISnackbar>
+    public store: Store<ISnackbar>,
+    private imageService: ImageService
   ) {}
 
   errorHandler(body = this.cpI18n.translate('something_went_wrong')) {
@@ -48,26 +44,12 @@ export class ServicesImportTopBarComponent implements OnInit {
 
   onFileUpload(file) {
     this.imageError = null;
-    const validate = this.fileUploadService.validImage(file);
-
-    if (!validate.valid) {
-      this.imageError = validate.errors[0];
-
-      this.errorHandler(validate.errors[0]);
-
-      return;
-    }
-
-    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.IMAGE}/`;
-    const auth = `${this.api.AUTH_HEADER.SESSION} ${appStorage.get(appStorage.keys.SESSION)}`;
-
-    const headers = new HttpHeaders({
-      Authorization: auth
-    });
-
-    this.fileUploadService
-      .uploadFile(file, url, headers)
-      .subscribe((res: any) => this.imageChange.emit(res.image_url), (_) => this.errorHandler());
+    this.imageService
+      .upload(file)
+      .subscribe(
+        ({ image_url }: any) => this.imageChange.emit(image_url),
+        () => this.errorHandler()
+      );
   }
 
   ngOnInit() {}

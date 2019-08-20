@@ -7,7 +7,7 @@
   margin-bottom: 20px;
   background-color: $color-white;
   border-bottom: 1px solid $border-color;
-  box-shadow: 4px 4px 20px 0 rgba(204, 204, 204, .3);
+  box-shadow: 4px 4px 20px 0 rgba(204, 204, 204, 0.3);
 
   button {
     @include font-semi-bold();
