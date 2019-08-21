@@ -29,7 +29,6 @@ export class CPColorPickerDirective implements OnInit {
   }
 
   initPicker() {
-    const _self = this;
     this.picker = Pickr.create({
       theme: 'classic',
       el: this.el.nativeElement,
@@ -49,13 +48,11 @@ export class CPColorPickerDirective implements OnInit {
           save: true,
           input: false
         }
-      },
-
-      onSave(hsva) {
-        if (_self.picker) {
-          _self.changed.emit(hsva.toHEXA().join(''));
-        }
       }
+    });
+
+    this.picker.on('save', (hsva) => {
+      this.changed.emit(hsva.toHEXA().join(''));
     });
   }
 
