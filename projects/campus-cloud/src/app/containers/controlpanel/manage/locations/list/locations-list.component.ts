@@ -8,13 +8,12 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
-import { ManageHeaderService } from '../../utils';
 import { IItem } from '@campus-cloud/shared/components';
-import * as fromCategoryStore from '../categories/store';
-import { baseActionClass } from '@campus-cloud/store/base';
+import { ManageHeaderService } from '../../utils';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ILocation } from '@campus-cloud/libs/locations/common/model';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import * as fromCategoryStore from '../categories/store';
 import { LocationType } from '@campus-cloud/libs/locations/common/utils';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
@@ -200,7 +199,10 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
             class: 'danger'
           };
 
-          this.store.dispatch(new baseActionClass.SnackbarError(payload));
+          this.store.dispatch({
+            type: fromRoot.baseActions.SNACKBAR_SHOW,
+            payload
+          });
         })
       )
       .subscribe();
