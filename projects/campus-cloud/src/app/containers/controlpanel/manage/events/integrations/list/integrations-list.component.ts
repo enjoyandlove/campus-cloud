@@ -9,11 +9,10 @@ import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
 import { BaseComponent } from '@campus-cloud/base';
 import { CPSession } from '@campus-cloud/session';
-import { baseActionClass } from '@campus-cloud/store/base';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { FORMAT } from '@campus-cloud/shared/pipes/date/date.pipe';
-import { IntegrationsUitlsService } from './../integrations.utils.service';
+import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model';
+import { IntegrationsUitlsService } from './../integrations.utils.service';
 
 @Component({
   selector: 'cp-events-integrations',
@@ -147,7 +146,10 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
             class: 'danger'
           };
 
-          this.store.dispatch(new baseActionClass.SnackbarError(payload));
+          this.store.dispatch({
+            type: fromRoot.baseActions.SNACKBAR_SHOW,
+            payload
+          });
         })
       )
       .subscribe();
@@ -166,7 +168,10 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
             autoClose: true,
             class: 'success'
           };
-          this.store.dispatch(new baseActionClass.SnackbarSuccess(payload));
+          this.store.dispatch({
+            type: fromRoot.baseActions.SNACKBAR_SHOW,
+            payload
+          });
         })
       )
       .subscribe();

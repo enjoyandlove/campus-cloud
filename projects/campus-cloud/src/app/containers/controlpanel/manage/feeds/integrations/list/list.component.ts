@@ -11,7 +11,6 @@ import * as fromRoot from '@campus-cloud/store';
 
 import { BaseComponent } from '@campus-cloud/base';
 import { IItem } from '@campus-cloud/shared/components';
-import { baseActionClass } from '@campus-cloud/store/base';
 import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { Mixin, Destroyable } from '@projects/campus-cloud/src/app/shared/mixins';
 import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
@@ -161,8 +160,10 @@ export class WallsIntegrationsListComponent extends BaseComponent implements OnI
             autoClose: true,
             class: 'success'
           };
-
-          this.store.dispatch(new baseActionClass.SnackbarSuccess(payload));
+          this.store.dispatch({
+            type: fromRoot.baseActions.SNACKBAR_SHOW,
+            payload
+          });
         })
       )
       .subscribe();
@@ -182,7 +183,10 @@ export class WallsIntegrationsListComponent extends BaseComponent implements OnI
             class: 'danger'
           };
 
-          this.store.dispatch(new baseActionClass.SnackbarError(payload));
+          this.store.dispatch({
+            type: fromRoot.baseActions.SNACKBAR_SHOW,
+            payload
+          });
         })
       )
       .subscribe();
