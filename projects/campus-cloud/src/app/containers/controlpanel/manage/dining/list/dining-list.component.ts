@@ -8,8 +8,9 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
-import { IItem } from '@campus-cloud/shared/components';
 import { ManageHeaderService } from '../../utils';
+import { IItem } from '@campus-cloud/shared/components';
+import { baseActionClass } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { IDining } from '@campus-cloud/libs/locations/common/model';
 import { BaseComponent } from '@campus-cloud/base/base.component';
@@ -182,10 +183,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
             class: 'danger'
           };
 
-          this.store.dispatch({
-            type: fromRoot.baseActions.SNACKBAR_SHOW,
-            payload
-          });
+          this.store.dispatch(new baseActionClass.SnackbarError(payload));
         })
       )
       .subscribe();
