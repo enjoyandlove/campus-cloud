@@ -2,11 +2,12 @@ import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from '@ready-education/ready-ui';
 
+import { CPSession } from '@campus-cloud/session';
 import { EnvService } from '@campus-cloud/config/env';
 import { appStorage, base64 } from '../../shared/utils';
 import { ControlPanelService } from './controlpanel.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { CPTrackingService, CPAmplitudeService } from '@campus-cloud/shared/services';
+import { CPTrackingService, CPAmplitudeService, AdminService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-controlpanel',
@@ -19,7 +20,9 @@ export class ControlPanelComponent implements AfterViewInit, OnInit {
   constructor(
     private router: Router,
     private env: EnvService,
+    private session: CPSession,
     private route: ActivatedRoute,
+    private adminService: AdminService,
     private toastService: ToastService,
     private service: ControlPanelService,
     private cpTrackingService: CPTrackingService,
@@ -30,8 +33,26 @@ export class ControlPanelComponent implements AfterViewInit, OnInit {
     const isLogin = 'login' in this.route.snapshot.queryParams;
 
     if (isLogin) {
-      this.cpTrackingService.amplitudeEmitEvent(amplitudeEvents.LOGGED_IN);
+      const isOnboarding = this.session.g.get('user').flags.is_onboarding;
+      const user_type = isOnboarding ? amplitudeEvents.EXISTING : amplitudeEvents.NEW;
+      this.cpTrackingService.amplitudeEmitEvent(amplitudeEvents.LOGGED_IN, { user_type });
+
+      if (!isOnboarding) {
+        this.updateAdminStatus();
+      }
     }
+  }
+
+  updateAdminStatus() {
+    const body = {
+      flags: {
+        is_onboarding: true
+      }
+    };
+
+    this.adminService.updateAdmin(this.session.g.get('user').id, body).subscribe((response) => {
+      this.session.g.set('user', response);
+    });
   }
 
   trackBannerClick(interaction_type: string) {
