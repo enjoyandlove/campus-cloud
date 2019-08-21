@@ -9,10 +9,15 @@ import { TEAM_ACCESS } from '../utils';
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
 import { MODAL_TYPE } from '@campus-cloud/shared/components';
-import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { baseActions, IHeader } from '@campus-cloud/store/base';
-import { AdminService, ErrorService, CPI18nService } from '@campus-cloud/shared/services';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { accountsToStoreMap, canAccountLevelReadResource } from '@campus-cloud/shared/utils';
+import {
+  AdminService,
+  ErrorService,
+  CPI18nService,
+  CPTrackingService
+} from '@campus-cloud/shared/services';
 
 import {
   clubMenu,
@@ -80,7 +85,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public utils: TeamUtilsService,
     private adminService: AdminService,
-    private errorService: ErrorService
+    private errorService: ErrorService,
+    private cpTracking: CPTrackingService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -352,6 +358,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
 
     this.adminService.updateAdmin(this.adminId, _data).subscribe(
       () => {
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPDATED_TEAM_MEMBER);
         this.router.navigate([this.currentUserCanManage ? '/settings/team' : '/dashboard']);
       },
       (err) => {
