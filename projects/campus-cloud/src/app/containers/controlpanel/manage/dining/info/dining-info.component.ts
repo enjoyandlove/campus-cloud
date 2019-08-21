@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
+import { baseActionClass } from '@campus-cloud/store/base';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { IResourceBanner } from '@campus-cloud/shared/components';
@@ -101,10 +102,7 @@ export class DiningInfoComponent implements OnInit, OnDestroy, Destroyable {
             class: 'danger'
           };
 
-          this.store.dispatch({
-            type: fromRoot.baseActions.SNACKBAR_SHOW,
-            payload
-          });
+          this.store.dispatch(new baseActionClass.SnackbarError(payload));
 
           this.store.dispatch(new fromStore.ResetError());
           this.router.navigate([`/manage/dining`]);
