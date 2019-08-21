@@ -13,6 +13,7 @@ import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { getEventsModalState } from '@campus-cloud/store';
 import { CPSession, ISchool } from '@campus-cloud/session';
 import { EventUtilService } from '../events.utils.service';
+import { baseActionClass } from '@campus-cloud/store/base';
 import { EventsComponent } from '../list/base/events.component';
 import { amplitudeEvents, STATUS } from '@campus-cloud/shared/constants';
 import { SnackbarError } from '@campus-cloud/store/base/reducers/snackbar.reducer';
@@ -379,15 +380,11 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
         control.controls['poster_thumb_url'].setValue(res.image_url);
       })
       .catch((err) => {
-        this.store.dispatch({
-          type: baseActions.SNACKBAR_SHOW,
-          payload: {
-            class: 'danger',
-            autoClose: true,
-            sticky: true,
+        this.store.dispatch(
+          new baseActionClass.SnackbarError({
             body: err ? err.message : this.cpI18n.translate('something_went_wrong')
-          }
-        });
+          })
+        );
       });
   }
 
