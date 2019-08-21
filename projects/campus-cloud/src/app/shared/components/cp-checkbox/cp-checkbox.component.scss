@@ -29,6 +29,10 @@
     opacity: 0;
     z-index: -1;
     position: absolute;
+
+    &:focus + .control__indicator {
+      outline: 1px dotted #797878 !important;
+    }
   }
 
   &__indicator {

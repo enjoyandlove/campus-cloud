@@ -21,6 +21,9 @@ let nextUniqueId = 0;
   ]
 })
 export class CPCheckboxComponent {
+  protected _id: string;
+  protected _uid = `cp-checkbox-${nextUniqueId++}`;
+
   @Input() label: string;
   @Input() hasError: boolean;
   @Input() labelRight = true;
@@ -39,10 +42,6 @@ export class CPCheckboxComponent {
   set id(value: string) {
     this._id = value || this._uid;
   }
-
-  protected _id: string;
-
-  protected _uid = `cp-checkbox-${nextUniqueId++}`;
 
   constructor() {
     if (!this.isChecked) {
