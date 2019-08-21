@@ -1,10 +1,10 @@
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastService } from '@ready-education/ready-ui';
 
 import { EnvService } from '@campus-cloud/config/env';
 import { appStorage, base64 } from '../../shared/utils';
 import { ControlPanelService } from './controlpanel.service';
-import { ToastService } from './../../ready/toast/toast.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService, CPAmplitudeService } from '@campus-cloud/shared/services';
 

@@ -8,8 +8,8 @@ import { BannerService } from './../banner.service';
 import { BannerListComponent } from './banner-list.component';
 import { mockSchool } from '@projects/campus-cloud/src/app/session/mock';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
-import { SchoolService, FileUploadService } from '@campus-cloud/shared/services';
-import { MockBannerService, MockSchoolService, MockFileUploadService } from '../tests';
+import { MockBannerService, MockSchoolService } from '../tests';
+import { SchoolService, ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 
 describe('BannerListComponent', () => {
   configureTestSuite();
@@ -20,9 +20,10 @@ describe('BannerListComponent', () => {
         imports: [CPTestModule, BannerModule, RouterTestingModule],
         providers: [
           provideMockStore(),
+          ImageService,
+          ImageValidatorService,
           { provide: BannerService, useClass: MockBannerService },
-          { provide: SchoolService, useClass: MockSchoolService },
-          { provide: FileUploadService, useClass: MockFileUploadService }
+          { provide: SchoolService, useClass: MockSchoolService }
         ]
       });
       await TestBed.compileComponents();
@@ -43,10 +44,6 @@ describe('BannerListComponent', () => {
     session.g.set('school', mockSchool);
     fixture.detectChanges();
   }));
-
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
 
   it('should have correct aspect ratio', () => {
     expect(component.imageRatio).toBe(1.8);

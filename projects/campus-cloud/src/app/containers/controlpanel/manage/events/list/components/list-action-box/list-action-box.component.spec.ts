@@ -46,10 +46,6 @@ describe('ListActionBoxComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should init', () => {
-    expect(true).toBe(true);
-  });
-
   it('should show integration button based on showIntegration', () => {
     component.canCreateEvent = true;
     component.showIntegration = true;

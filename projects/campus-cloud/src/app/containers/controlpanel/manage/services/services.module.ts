@@ -12,6 +12,7 @@ import { ServicesCreateComponent } from './create';
 import { ServicesService } from './services.service';
 import { ProvidersService } from './providers.service';
 import { ServicesResolver } from './services.resolver';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { AssessModule } from '../../assess/assess.module';
 import { ServicesAttendanceComponent } from './attendance';
 import { SharedModule } from '../../../../shared/shared.module';
@@ -26,6 +27,7 @@ import { ServicesMembersModule } from './members/services-members.module';
 import { ModalService, AdminService } from '@campus-cloud/shared/services';
 import { EngagementModule } from '../../assess/engagement/engagement.module';
 import { CheckInModule } from '../events/attendance/check-in/check-in.module';
+import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
 import { ServicesExcelModalComponent, ServicesImportTopBarComponent } from './excel/components';
 
 import {
@@ -81,6 +83,7 @@ import {
   ],
 
   imports: [
+    ImageModule.forRoot(),
     ServicesRoutingModule,
     CommonModule,
     SharedModule,
@@ -96,6 +99,7 @@ import {
   ],
 
   providers: [
+    CPI18nPipe,
     AdminService,
     ModalService,
     ServicesService,

@@ -1,12 +1,14 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Optional } from '@angular/core';
 import { AnimationEvent } from '@angular/animations';
 
-import { ToastRef } from './toast-ref';
-import { ToastData, TOAST_CONFIG_TOKEN, ToastConfig } from './toast-config';
-import { toastAnimations, ToastAnimationState } from './toast-animation';
+import { ToastRef } from '../models';
+import { defaultToastConfig } from '../config';
+import { TOAST_CONFIG_TOKEN } from '../config/tokens';
+import { toastAnimations } from '../config/animations';
+import { ToastData, ToastAnimationState, ToastConfig } from '../config/types';
 
 @Component({
-  selector: 'cp-toast',
+  selector: 'ready-ui-toast',
   templateUrl: './toast.component.html',
   styleUrls: ['./toast.component.scss'],
   animations: [toastAnimations.fadeToast]
@@ -17,8 +19,17 @@ export class ToastComponent implements OnInit {
   constructor(
     readonly data: ToastData,
     readonly ref: ToastRef,
-    @Inject(TOAST_CONFIG_TOKEN) public toastConfig: ToastConfig
+    @Optional() @Inject(TOAST_CONFIG_TOKEN) public _toastConfig: ToastConfig
   ) {}
+
+  get toastConfig() {
+    return this._toastConfig
+      ? {
+          ...(this._toastConfig || {}),
+          ...defaultToastConfig
+        }
+      : defaultToastConfig;
+  }
 
   ngOnInit() {}
 

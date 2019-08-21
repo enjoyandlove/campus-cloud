@@ -54,10 +54,6 @@ describe('JobsListComponent', () => {
       });
   }));
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('onSearch', () => {
     component.onSearch('hello world');
     expect(component.state.search_str).toEqual('hello world');

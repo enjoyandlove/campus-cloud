@@ -457,7 +457,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   onServicesModalSelected(services) {
     this.doServicesCleanUp();
 
-    this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...services);
+    this.accountPrivileges = Object.assign({}, this.accountPrivileges, { ...services });
 
     this.updateServiceDropdownLabel();
   }
@@ -550,7 +550,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   onClubsModalSelected(clubs) {
     this.doClubsCleanUp();
 
-    this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...clubs);
+    this.accountPrivileges = Object.assign({}, this.accountPrivileges, { ...clubs });
 
     this.updateClubDropdownLabel();
   }
@@ -575,7 +575,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   onAthleticsModalSelected(athletics) {
     this.doAthleticsCleanUp();
 
-    this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...athletics);
+    this.accountPrivileges = Object.assign({}, this.accountPrivileges, { ...athletics });
 
     this.updateAthleticDropdownLabel();
   }

@@ -47,10 +47,6 @@ describe('LocationsCreateComponent', () => {
     component.locationForm.get('longitude').clearAsyncValidators();
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should create an empty form', () => {
     const result = component.locationForm.value;
 

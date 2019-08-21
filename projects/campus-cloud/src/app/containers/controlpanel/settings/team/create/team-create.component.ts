@@ -269,7 +269,7 @@ export class TeamCreateComponent implements OnInit {
   onServicesModalSelected(services) {
     this.doServicesCleanUp();
 
-    this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...services);
+    this.accountPrivileges = Object.assign({}, this.accountPrivileges, { ...services });
 
     this.updateServicesDropdownLabel();
   }
@@ -332,7 +332,7 @@ export class TeamCreateComponent implements OnInit {
   onClubsModalSelected(clubs) {
     this.doClubsCleanUp();
 
-    this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...clubs);
+    this.accountPrivileges = Object.assign({}, this.accountPrivileges, { ...clubs });
 
     this.updateClubsDropdownLabel();
   }
@@ -357,7 +357,7 @@ export class TeamCreateComponent implements OnInit {
   onAthleticsModalSelected(athletics) {
     this.doAthleticsCleanUp();
 
-    this.accountPrivileges = Object.assign({}, this.accountPrivileges, ...athletics);
+    this.accountPrivileges = Object.assign({}, this.accountPrivileges, { ...athletics });
 
     this.updateAthleticsDropdownLabel();
   }

@@ -15,6 +15,21 @@ export const loadSuccess = createAction(
   props<{ data: IPublicApiAccessToken[]; next: boolean; previous: boolean }>()
 );
 
+export const loadRequestById = createAction(
+  '[API Management] get Token by id',
+  props<{ tokenId: string }>()
+);
+
+export const loadRequestByIdSuccess = createAction(
+  '[API Management] get Token by id success',
+  props<{ data: IPublicApiAccessToken }>()
+);
+
+export const loadRequestByIdFailure = createAction(
+  '[API Management] get Token by id failure',
+  props<{ error: HttpErrorResponse }>()
+);
+
 export const postRequest = createAction(
   '[API Management] post Token',
   props<{ payload: IPublicApiAccessToken }>()
@@ -27,6 +42,21 @@ export const postFailure = createAction(
 
 export const postSuccess = createAction(
   '[API Management] post Token success',
+  props<{ data: IPublicApiAccessToken }>()
+);
+
+export const editRequest = createAction(
+  '[API Management] edit Token',
+  props<{ payload: { tokenId: string; body: IPublicApiAccessToken } }>()
+);
+
+export const editFailure = createAction(
+  '[API Management] edit Token fail',
+  props<{ error: HttpErrorResponse }>()
+);
+
+export const editSuccess = createAction(
+  '[API Management] edit Token success',
   props<{ data: IPublicApiAccessToken }>()
 );
 

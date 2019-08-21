@@ -10,8 +10,11 @@ export const defaultApiAccessToken: IAPIManagementState = {
   error: null,
   next: false,
   entities: {},
+  entity: null,
+  loaded: false,
   loading: false,
-  previous: false
+  previous: false,
+  entityLoading: false
 };
 
 export const apiAccessTokenAdaptor: EntityAdapter<IPublicApiAccessToken> = createEntityAdapter<
@@ -33,10 +36,16 @@ const featureReducer = createReducer(
       loading: true
     })
   ),
+  on(featureAction.loadRequestById, featureAction.editRequest, (state) => ({
+    ...state,
+    entityLoading: true
+  })),
   on(
     featureAction.loadFailure,
     featureAction.postFailure,
+    featureAction.editFailure,
     featureAction.deleteFailure,
+    featureAction.loadRequestByIdFailure,
     (state, { error }) => ({
       ...state,
       error,
@@ -48,7 +57,15 @@ const featureReducer = createReducer(
       ...state,
       next,
       previous,
+      loaded: true,
       loading: false
+    })
+  ),
+  on(featureAction.loadRequestByIdSuccess, (state, { data }) =>
+    apiAccessTokenAdaptor.upsertOne(data, {
+      ...state,
+      entity: data,
+      entityLoading: false
     })
   ),
   on(featureAction.postSuccess, (state, { data }) =>
@@ -57,12 +74,21 @@ const featureReducer = createReducer(
       loading: false
     })
   ),
-  on(featureAction.deleteSuccess, (state, { deletedId }) => {
-    return apiAccessTokenAdaptor.removeOne(deletedId, {
+  on(featureAction.editSuccess, (state, { data }) =>
+    apiAccessTokenAdaptor.updateOne(
+      { id: data.id, changes: data },
+      {
+        ...state,
+        entityLoading: false
+      }
+    )
+  ),
+  on(featureAction.deleteSuccess, (state, { deletedId }) =>
+    apiAccessTokenAdaptor.removeOne(deletedId, {
       ...state,
       loading: false
-    });
-  })
+    })
+  )
 );
 
 export function reducer(state: IAPIManagementState | undefined, action: Action) {

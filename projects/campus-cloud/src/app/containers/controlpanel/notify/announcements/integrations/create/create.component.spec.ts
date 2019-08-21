@@ -66,10 +66,6 @@ describe('AnnouncementsIntegrationCreateComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should submit and dispatch create action', () => {
     const spy = spyOn(component, 'doSubmit').and.callThrough();
     const store = TestBed.get(Store);

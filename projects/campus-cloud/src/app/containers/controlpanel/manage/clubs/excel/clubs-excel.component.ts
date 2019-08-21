@@ -7,15 +7,11 @@ import { Store } from '@ngrx/store';
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
-import { ApiService } from '@campus-cloud/base/services';
 import { baseActions } from '@campus-cloud/store/base/reducers';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { getClubsState, baseActionClass } from '@campus-cloud/store';
-import { CPImageUploadComponent } from '@campus-cloud/shared/components';
+import { CPI18nService, ImageService } from '@campus-cloud/shared/services';
 import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
-import { CPI18nService, FileUploadService } from '@campus-cloud/shared/services';
-
-const i18n = new CPI18nPipe();
 
 @Component({
   selector: 'cp-clubs-excel',
@@ -35,12 +31,12 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private api: ApiService,
     private store: Store<any>,
     private session: CPSession,
+    private i18nPipe: CPI18nPipe,
     private cpI18n: CPI18nService,
     private clubService: ClubsService,
-    private fileUploadService: FileUploadService
+    private imageService: ImageService
   ) {
     super();
     this.store.select(getClubsState).subscribe((res) => {
@@ -55,7 +51,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   }
 
   private buildHeader() {
-    const subheading = i18n.transform(this.labels.import_items, this.clubs.length);
+    const subheading = this.i18nPipe.transform(this.labels.import_items, this.clubs.length);
     this.store.dispatch({
       type: baseActions.HEADER_UPDATE,
       payload: {
@@ -108,8 +104,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   }
 
   onImageUpload(image, index) {
-    const imageUpload = new CPImageUploadComponent(this.cpI18n, this.fileUploadService, this.api);
-    const promise = imageUpload.onFileUpload(image, true);
+    const promise = this.imageService.upload(image).toPromise();
 
     promise
       .then((res: any) => {
@@ -118,7 +113,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
         control.controls['logo_url'].setValue(res.image_url);
       })
       .catch((err) => {
-        this.handleError(err);
+        this.handleError(err.message);
       });
   }
 

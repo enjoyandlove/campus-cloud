@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
+let nextUniqueId = 0;
+
 @Component({
   selector: 'cp-upload-button',
   templateUrl: './cp-upload-button.component.html',
@@ -12,9 +14,20 @@ export class CPUploadButtonComponent implements OnInit {
   @Input() isRequired: boolean;
   @Input() buttonText: string;
   @Input() buttonClass: string;
-  @Input() id = 'upload_button';
 
   @Output() fileUpload: EventEmitter<File> = new EventEmitter();
+
+  @Input()
+  get id(): string {
+    return this._id;
+  }
+  set id(value: string) {
+    this._id = value || this._uid;
+  }
+
+  protected _id = `cp-upload-button-${nextUniqueId++}`;
+
+  protected _uid = `cp-upload-button-${nextUniqueId++}`;
 
   constructor() {}
 

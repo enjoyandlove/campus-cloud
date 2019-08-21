@@ -1,11 +1,11 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { By } from '@angular/platform-browser';
+import { DebugElement } from '@angular/core';
 
 import { CPCopyClipboardDirective } from '@campus-cloud/shared/directives';
 import { ApiManagementKeyComponent } from './api-management-key.component';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
-import { DebugElement } from '@angular/core';
 
 describe('ApiManagementKeyComponent', () => {
   configureTestSuite();
@@ -81,10 +81,6 @@ describe('ApiManagementKeyComponent', () => {
   describe('input element', () => {
     beforeEach(() => {
       inputEl = de.query(By.css('input.item__key-input')).nativeElement;
-    });
-
-    it('should be disabled', () => {
-      expect(inputEl.disabled).toBe(true);
     });
 
     it('should set type attribute to text when isTextVisible is true', () => {

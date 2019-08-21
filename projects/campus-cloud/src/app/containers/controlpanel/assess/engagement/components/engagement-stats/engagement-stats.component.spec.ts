@@ -29,8 +29,4 @@ describe('EngagementStatsComponent', () => {
     fixture = TestBed.createComponent(EngagementStatsComponent);
     component = fixture.componentInstance;
   });
-
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
 });

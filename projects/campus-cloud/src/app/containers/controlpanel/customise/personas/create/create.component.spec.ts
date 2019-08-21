@@ -34,10 +34,6 @@ describe('PersonasCreateComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(comp).toBeTruthy();
-  });
-
   it('ngOnInit', () => {
     spyOn(comp, 'buildForm');
     spyOn(comp, 'buildHeader');

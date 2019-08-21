@@ -38,10 +38,6 @@ describe('LocationsDeleteComponent', () => {
     component.location = mockLocations[0];
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should dispatch DeleteLocation action', () => {
     const dispatchSpy = spyOn(component.store, 'dispatch');
 

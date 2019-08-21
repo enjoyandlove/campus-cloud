@@ -43,10 +43,6 @@ describe('ApiManagementFormComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should show warnings if user is in prod', () => {
     component.isSandbox = false;
 

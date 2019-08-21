@@ -5,25 +5,31 @@ import { Store } from '@ngrx/store';
 
 import { CPSession } from '@campus-cloud/session';
 import { baseActionClass } from '@campus-cloud/store';
-import { BannerService } from '../banner.service';
+import { LogoValidatorService } from './logo.validator.service';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import * as school from '@campus-cloud/session/school.interface';
 import { baseActions, ISnackbar } from '@campus-cloud/store/base';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import {
+  ImageService,
   CPI18nService,
   SchoolService,
   ZendeskService,
   CPCroppieService,
   CPTrackingService,
-  FileUploadService
+  ImageValidatorService
 } from '@campus-cloud/shared/services';
 
-const IMAGE_SIZE_WIDTH = 664;
+const IMAGE_SIZE_WIDTH = 1440;
 
 @Component({
   selector: 'cp-banner-list',
   templateUrl: './banner-list.component.html',
-  styleUrls: ['./banner-list.component.scss']
+  styleUrls: ['./banner-list.component.scss'],
+  providers: [
+    ImageService,
+    LogoValidatorService,
+    { provide: ImageValidatorService, useExisting: LogoValidatorService }
+  ]
 })
 export class BannerListComponent implements OnInit {
   isEdit;
@@ -47,38 +53,24 @@ export class BannerListComponent implements OnInit {
     private fb: FormBuilder,
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private service: BannerService,
     private store: Store<ISnackbar>,
+    private imageService: ImageService,
     private schoolService: SchoolService,
-    private cpTracking: CPTrackingService,
-    private fileUploadService: FileUploadService
+    private cpTracking: CPTrackingService
   ) {}
 
-  onUploadLogo(file) {
+  onUploadLogo(file: File) {
     if (!file) {
       return;
     }
 
-    const validate = this.fileUploadService.validImage(file);
-    if (!validate.valid) {
-      this.onError(
-        validate.errors.length
-          ? validate.errors[0]
-          : this.cpI18n.translate('t_studio_branding_image_req')
-      );
-      return;
-    }
-
-    const validFormat = this.fileUploadService.validateImage(file, ['image/png']);
-    if (!validFormat) {
-      this.onError(this.cpI18n.translate('t_studio_branding_image_req'));
-      return;
-    }
-
-    this.fileUploadService.uploadImage(file).subscribe((res: any) => {
-      this.form.controls[school.SCHOOL_LOGO_URL].setValue(res.image_url);
-      this.form.controls[school.SCHOOL_LOGO_URL].markAsDirty();
-    });
+    this.imageService.upload(file).subscribe(
+      ({ image_url }: any) => {
+        this.form.controls[school.SCHOOL_LOGO_URL].setValue(image_url);
+        this.form.controls[school.SCHOOL_LOGO_URL].markAsDirty();
+      },
+      (err: Error) => this.onError(err.message)
+    );
   }
 
   onRemoveLogo() {
@@ -157,11 +149,7 @@ export class BannerListComponent implements OnInit {
 
   uploadBase64Image(base64ImageData: string) {
     this.uploading = true;
-    const body = {
-      base64_image: base64ImageData
-    };
-
-    return this.service.uploadBase64Image(body).toPromise();
+    return this.imageService.uploadBase64(base64ImageData).toPromise();
   }
 
   onCrop() {

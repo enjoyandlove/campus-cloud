@@ -59,10 +59,6 @@ describe('ListPastComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should render events in the page', () => {
     component.events = [
       { id: 1, is_external: true, poster_thumb_url: MOCK_IMAGE },

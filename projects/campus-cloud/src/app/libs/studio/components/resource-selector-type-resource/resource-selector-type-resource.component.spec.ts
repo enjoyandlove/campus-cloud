@@ -52,10 +52,6 @@ describe('ResourceSelectorTypeResourceComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should have correct outputs', () => {
     expect(component.valueChanges).toBeDefined();
   });

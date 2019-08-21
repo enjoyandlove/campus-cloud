@@ -49,10 +49,6 @@ describe('AnnouncementsIntegrationDeleteComponent', () => {
     fixture.detectChanges();
   }));
 
-  it('should init', () => {
-    expect(component).toBeTruthy();
-  });
-
   it('should call onDeleteClick on cp-delete-modal deleteClick event', () => {
     spyOn(component, 'onDeleteClick');
 

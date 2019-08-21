@@ -23,9 +23,12 @@ export interface IPublicApiAccessToken {
 
 export interface IAPIManagementState extends EntityState<IPublicApiAccessToken> {
   loading: boolean;
+  loaded: boolean;
   next: boolean;
   previous: boolean;
   ids: Array<number>;
+  entityLoading: boolean;
   error: HttpErrorResponse;
+  entity: IPublicApiAccessToken;
   entities: Dictionary<IPublicApiAccessToken>;
 }
