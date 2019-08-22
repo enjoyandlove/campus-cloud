@@ -86,7 +86,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
 
   onDoFilter(filterState) {
     this.filterState = this.filterState
-      ? Object.assign({}, this.filterState, ...filterState)
+      ? { ...this.filterState, ...filterState }
       : { ...filterState };
 
     this.updateUrl();
@@ -128,10 +128,11 @@ export class EngagementComponent extends BaseComponent implements OnInit {
           ends: this.filterState.range.payload.range.end
         };
 
-        this.range = Object.assign({}, this.range, {
+        this.range = {
+          ...this.range,
           start: res.data.labels[0],
           end: res.data.labels[res.data.labels.length - 1]
-        });
+        };
 
         if (res.data.series.length >= twoYears) {
           this.divider = DivideBy.yearly;
