@@ -1,10 +1,9 @@
 <div class="switch">
-  <input
-    [id]="id"
-    type="checkbox"
-    (change)="onChange()"
-    class="cmn-toggle cmn-toggle-round"
-    [class.isChecked]="isChecked"
-  />
+  <input [id]="id"
+         type="checkbox"
+         (change)="onChange()"
+         [attr.aria-checked]="isChecked"
+         class="cmn-toggle cmn-toggle-round"
+         [class.isChecked]="isChecked" />
   <label [for]="id"></label>
 </div>

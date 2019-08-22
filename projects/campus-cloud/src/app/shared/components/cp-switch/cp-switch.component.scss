@@ -1,9 +1,18 @@
 @import '~projects/campus-cloud/src/sass/core/colors';
 
+.switch {
+  &:focus {
+    border: 1px solid red;
+  }
+
+  input:focus {
+    border: 1px solid blue;
+  }
+}
+
 .cmn-toggle {
   position: absolute;
   margin-left: -9999px;
-  visibility: hidden;
 }
 .cmn-toggle + label {
   display: block;
@@ -11,6 +20,10 @@
   cursor: pointer;
   outline: none;
   user-select: none;
+}
+
+input.cmn-toggle-round:focus + label {
+  outline: 1px dotted #797878 !important;
 }
 
 input.cmn-toggle-round + label {

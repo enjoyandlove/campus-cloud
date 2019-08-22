@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 
+import { baseActionClass } from '@campus-cloud/store/base';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
 import { ImageService, CPI18nService } from '@campus-cloud/shared/services';
 
@@ -39,15 +40,11 @@ export class EventsImportTopBarComponent implements OnInit {
     promise
       .then(({ image_url }: any) => this.imageChange.emit(image_url))
       .catch((err) => {
-        this.store.dispatch({
-          type: baseActions.SNACKBAR_SHOW,
-          payload: {
-            class: 'danger',
-            autoClose: true,
-            sticky: true,
+        this.store.dispatch(
+          new baseActionClass.SnackbarError({
             body: err ? err.message : this.cpI18n.translate('something_went_wrong')
-          }
-        });
+          })
+        );
       });
   }
 
