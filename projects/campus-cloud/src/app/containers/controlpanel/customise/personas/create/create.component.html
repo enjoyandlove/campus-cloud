@@ -1,10 +1,13 @@
-<form [formGroup]="form" class="margin-bottom">
+<form [formGroup]="form"
+      class="margin-bottom">
   <cp-one-column [width]="layoutWidth">
     <cp-card>
       <div class="row form-group">
         <div class="col-12">
           <p class="title">{{ 't_personas_create_form_title' | cpI18n }}</p>
-          <cp-personas-form #createForm [form]="form" (valueChanges)="onFormValueChanges($event)">
+          <cp-personas-form #createForm
+                            [form]="form"
+                            (valueChanges)="onFormValueChanges($event)">
           </cp-personas-form>
         </div>
       </div>
@@ -12,7 +15,8 @@
       <ng-container *ngIf="showHomeExperience">
         <div class="row form-group">
           <div class="col-12">
-            <p class="title">{{ 't_personas_form_title_home_customization' | cpI18n }}</p>
+            <p class="title">
+              {{ 't_personas_form_title_home_customization' | cpI18n }}</p>
           </div>
         </div>
       </ng-container>
@@ -20,25 +24,26 @@
       <div class="row">
         <div class="col-6">
           <label>{{ 't_personas_create_label_campus_security' | cpI18n }}</label>
-          <cp-dropdown [items]="services$ | async" (selected)="onSecurityServiceChanged($event)">
+          <cp-dropdown [items]="services$ | async"
+                       (selected)="onSecurityServiceChanged($event)">
           </cp-dropdown>
         </div>
       </div>
-      <br/>
+      <br />
       <ng-container *ngIf="showHomeExperience">
-        <div class="row" *ngFor="let home of homeExperience; trackBy: trackByFn">
+        <div class="row"
+             *ngFor="let home of homeExperience; trackBy: trackByFn">
           <div class="col-10">
             <label class="heading">{{ home.heading | cpI18n }}</label>
             <p>{{ home.subHeading | cpI18n }}</p>
           </div>
           <div class="col-2">
-          <span class="float-right switchbar">
-            <cp-switch
-              [id]="home.id"
-              [formControlName]="home.name"
-              (toggle)="togglePersona($event, home.name)">
-            </cp-switch>
-          </span>
+            <span class="float-right switchbar">
+              <cp-switch [id]="home.id"
+                         [formControlName]="home.name"
+                         (toggle)="togglePersona($event, home.name)">
+              </cp-switch>
+            </span>
           </div>
         </div>
       </ng-container>
@@ -51,10 +56,12 @@
       <div class="row">
         <div class="col-12">
           <div class="text-right">
-            <a [routerLink]="['/studio/experiences']" class="cpbtn cpbtn--cancel">
+            <a [routerLink]="['/studio/experiences']"
+               class="cpbtn cpbtn--cancel">
               {{ 't_persona_create_cancel_button' | cpI18n }}
             </a>
-            <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>
+            <cp-button [props]="buttonData"
+                       (buttonClick)="onSubmit()"> </cp-button>
           </div>
         </div>
       </div>

@@ -7,13 +7,12 @@
             {{ 't_shared_integration_edit_form_modal_title' | cpI18n }}
           </strong>
         </span>
-        <button
-          type="button"
-          aria-label="close"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          cpTarget="reset_modal"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                aria-label="close"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                cpTarget="reset_modal"
+                class="float-right hover cpmodal__header__close unstyled-button">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -21,33 +20,29 @@
   </div>
 
   <div class="cpmodal__body">
-    <cp-walls-integration-form
-      [form]="form"
-      [types]="typesDropdown"
-      [selectedType]="selectedType"
-      [channels]="channels$ | async"
-      [selectedChannel]="selectedChannel"
-    >
+    <cp-walls-integration-form [form]="form"
+                               [types]="typesDropdown"
+                               [selectedType]="selectedType"
+                               [channels]="channels$ | async"
+                               [selectedChannel]="selectedChannel">
     </cp-walls-integration-form>
   </div>
 
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-6 text-right">
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="cpbtn cpbtn--cancel">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button
-          type="button"
-          (click)="doSubmit()"
-          cpTarget="submit_button"
-          [disabled]="!form.valid"
-          class="cpbtn cpbtn--primary js_submit_button">
+        <button type="button"
+                (click)="doSubmit()"
+                cpTarget="submit_button"
+                [disabled]="!form.valid"
+                class="cpbtn cpbtn--primary js_submit_button">
           {{ 'save' | cpI18n }}
         </button>
       </div>

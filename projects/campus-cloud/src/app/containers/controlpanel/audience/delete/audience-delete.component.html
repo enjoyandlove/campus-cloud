@@ -4,10 +4,9 @@
       <div class="col-12 text-center">
         <span><strong>{{ 'lists_delete_modal_title' | cpI18n }}</strong></span>
 
-        <button
-          type="button"
-          data-dismiss="modal"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                data-dismiss="modal"
+                class="float-right hover cpmodal__header__close unstyled-button">
           &times;
         </button>
       </div>
@@ -28,11 +27,14 @@
     <div class="cpmodal__footer">
       <div class="row">
         <div class="col-6 offset-6 text-right">
-          <button type="button" class="cpbtn cpbtn--cancel" data-dismiss="modal">
+          <button type="button"
+                  class="cpbtn cpbtn--cancel"
+                  data-dismiss="modal">
             {{ 'cancel' | cpI18n }}
           </button>
 
-          <cp-button [props]="buttonData" (buttonClick)="onDelete()"> </cp-button>
+          <cp-button [props]="buttonData"
+                     (buttonClick)="onDelete()"> </cp-button>
         </div>
       </div>
     </div>
@@ -52,11 +54,10 @@
     <div class="cpmodal__footer">
       <div class="row justify-content-end">
         <div class="col-6 text-right">
-          <button
-            type="button"
-            data-dismiss="modal"
-            (click)="resetModal()"
-            class="cpbtn cpbtn--primary">
+          <button type="button"
+                  data-dismiss="modal"
+                  (click)="resetModal()"
+                  class="cpbtn cpbtn--primary">
             {{ 'ok' | cpI18n }}
           </button>
         </div>

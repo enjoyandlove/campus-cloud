@@ -7,10 +7,13 @@
         <div class="cp-card deals__header">
           <div class="row">
             <div class="col-12">
-              <cp-resource-banner [resourceBanner]="resourceBanner"> </cp-resource-banner>
+              <cp-resource-banner [resourceBanner]="resourceBanner">
+              </cp-resource-banner>
               <div class="row deals__buttons">
                 <div class="col-12">
-                  <a [routerLink]="['../edit']" class="cpbtn cpbtn--primary" i18n>
+                  <a [routerLink]="['../edit']"
+                     class="cpbtn cpbtn--primary"
+                     i18n>
                     {{ 'edit' | cpI18n }}
                   </a>
                 </div>
@@ -21,32 +24,38 @@
 
         <div class="row">
           <div class="col-12">
-            <div class="cp-card deals__details" *ngIf="showLocationDetails || hasMetaData">
+            <div class="cp-card deals__details"
+                 *ngIf="showLocationDetails || hasMetaData">
               <div class="row">
                 <div class="col-12">
-                  <div class="row" *ngIf="deal.start">
+                  <div class="row"
+                       *ngIf="deal.start">
                     <div class="col-2">
                       <p>
                         <strong>{{ 'starts' | cpI18n }}</strong>
                       </p>
                     </div>
                     <div class="col-10">
-                      <p class="start">{{ deal.start | cpDatePipe: dateFormat }}</p>
+                      <p class="start">{{ deal.start | cpDatePipe: dateFormat }}
+                      </p>
                     </div>
                   </div>
 
-                  <div class="row" *ngIf="deal.expiration !== forever">
+                  <div class="row"
+                       *ngIf="deal.expiration !== forever">
                     <div class="col-2">
                       <p>
                         <strong>{{ 'ends' | cpI18n }}</strong>
                       </p>
                     </div>
                     <div class="col-10">
-                      <p class="expiration">{{ deal.expiration | cpDatePipe: dateFormat }}</p>
+                      <p class="expiration">
+                        {{ deal.expiration | cpDatePipe: dateFormat }}</p>
                     </div>
                   </div>
 
-                  <div class="row" *ngIf="deal.store_address">
+                  <div class="row"
+                       *ngIf="deal.store_address">
                     <div class="col-2">
                       <p>
                         <strong>{{ 'location' | cpI18n }}</strong>
@@ -59,9 +68,12 @@
                 </div>
               </div>
 
-              <div class="row" *ngIf="showLocationDetails">
+              <div class="row"
+                   *ngIf="showLocationDetails">
                 <div class="col-12 deals__map">
-                  <cp-maps [doubleClick]="false" [center]="mapCenter" [draggable]="draggable">
+                  <cp-maps [doubleClick]="false"
+                           [center]="mapCenter"
+                           [draggable]="draggable">
                   </cp-maps>
                 </div>
               </div>
@@ -69,13 +81,15 @@
           </div>
         </div>
 
-        <div class="row" *ngIf="deal.description">
+        <div class="row"
+             *ngIf="deal.description">
           <div class="col-12">
             <div class="cp-card">
               <p>
                 <strong>{{ 'description' | cpI18n }}</strong>
               </p>
-              <p class="no-margin-bottom render_line_breaks description">{{ deal.description }}</p>
+              <p class="no-margin-bottom render_line_breaks description">
+                {{ deal.description }}</p>
             </div>
           </div>
         </div>

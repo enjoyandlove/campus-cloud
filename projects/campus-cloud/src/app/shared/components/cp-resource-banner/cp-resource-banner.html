@@ -1,13 +1,13 @@
 <div class="resource_banner">
-  <div
-    class="resource_banner__background"
-    [ngStyle]="{ 'background' : 'linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(' + resourceBanner.image + ')' }"
-  ></div>
+  <div class="resource_banner__background"
+       [ngStyle]="{ 'background' : 'linear-gradient(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.15)), url(' + resourceBanner.image + ')' }">
+  </div>
   <div class="resource_banner__meta">
     <p class="resource_banner__title">
       {{ resourceBanner.heading }}
     </p>
-    <p *ngIf="resourceBanner.subheading" class="resource_banner__subheading">
+    <p *ngIf="resourceBanner.subheading"
+       class="resource_banner__subheading">
       {{ resourceBanner.subheading }}
     </p>
   </div>

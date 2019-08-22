@@ -5,14 +5,16 @@
   <div class="row margin-top">
     <div class="col-12">
       <cp-tabs (tabClick)="onTabClick($event)">
-        <cp-tab id="existing" [title]="existingStoreTitle">
+        <cp-tab id="existing"
+                [title]="existingStoreTitle">
           <div class="col-5 no-left-padding">
             <div class="form-group">
               <cp-store-selector [form]="form"> </cp-store-selector>
             </div>
           </div>
         </cp-tab>
-        <cp-tab id="new" [title]="newStoreTitle">
+        <cp-tab id="new"
+                [title]="newStoreTitle">
           <cp-store-form [storeForm]="storeForm"> </cp-store-form>
         </cp-tab>
       </cp-tabs>

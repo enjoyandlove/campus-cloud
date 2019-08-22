@@ -1,15 +1,14 @@
 <ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div class="row margin-bottom justify-content-center" *ngSwitchCase="false">
+  <div class="row margin-bottom justify-content-center"
+       *ngSwitchCase="false">
     <div class="col-6">
-      <cp-item-form
-        #editForm
-        [form]="form"
-        [calendarId]="calendarId"
-        (submitted)="onEdit($event)"
-        (amplitudeLocationStatus)="onChangeLocation($event)"
-      >
+      <cp-item-form #editForm
+                    [form]="form"
+                    [calendarId]="calendarId"
+                    (submitted)="onEdit($event)"
+                    (amplitudeLocationStatus)="onChangeLocation($event)">
       </cp-item-form>
     </div>
   </div>

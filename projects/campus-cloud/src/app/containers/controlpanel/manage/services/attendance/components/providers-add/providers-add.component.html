@@ -5,12 +5,11 @@
         <span>
           <strong>{{ 'services_provider_label_add_service_provider' | cpI18n }}</strong>
         </span>
-        <button
-          type="button"
-          aria-label="close"
-          (click)="resetModal()"
-          data-dismiss="modal"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                aria-label="close"
+                (click)="resetModal()"
+                data-dismiss="modal"
+                class="float-right hover cpmodal__header__close unstyled-button">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -20,14 +19,17 @@
   <div class="cpmodal__body">
     <div class="row">
       <div class="col-12">
-        <cp-providers-form #createForm [form]="form" [formErrors]="formErrors"> </cp-providers-form>
+        <cp-providers-form #createForm
+                           [form]="form"
+                           [formErrors]="formErrors"> </cp-providers-form>
       </div>
     </div>
   </div>
 
   <div class="cpmodal__footer">
     <div class="col-12">
-      <label class="error" *ngIf="formErrors">
+      <label class="error"
+             *ngIf="formErrors">
         <i class="material-icons">
           warning
         </i>
@@ -36,15 +38,15 @@
     </div>
     <div class="row justify-content-end">
       <div class="col-12 text-right">
-        <button
-          type="button"
-          (click)="resetModal()"
-          class="cpbtn cpbtn--cancel"
-          data-dismiss="modal">
+        <button type="button"
+                (click)="resetModal()"
+                class="cpbtn cpbtn--cancel"
+                data-dismiss="modal">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>
+        <cp-button [props]="buttonData"
+                   (buttonClick)="onSubmit()"> </cp-button>
       </div>
     </div>
   </div>

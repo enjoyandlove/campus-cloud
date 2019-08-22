@@ -9,26 +9,25 @@
         <form [formGroup]="form">
           <div class="form-group">
             <label>{{ 'audience_name' | cpI18n }}</label>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="name" />
+            <input type="text"
+                   class="form-control"
+                   formControlName="name" />
           </div>
         </form>
       </div>
     </div>
 
-    <cp-upload-modal-body
-      [reset]="reset$"
-      [props]="options"
-      [instruction]="'csv_modal_instruction_audience'"
-      (ready)="onParsedSuccess()"
-    >
+    <cp-upload-modal-body [reset]="reset$"
+                          [props]="options"
+                          [instruction]="'csv_modal_instruction_audience'"
+                          (ready)="onParsedSuccess()">
     </cp-upload-modal-body>
   </div>
 
   <div class="cpmodal__footer">
-    <cp-upload-modal-footer [valid]="ready$" (navigate)="doSubmit()" (reset)="doReset()">
+    <cp-upload-modal-footer [valid]="ready$"
+                            (navigate)="doSubmit()"
+                            (reset)="doReset()">
     </cp-upload-modal-footer>
   </div>
 </div>

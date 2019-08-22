@@ -1,22 +1,26 @@
 <div [ngSwitch]="loading">
   <cp-working *ngSwitchCase="true"></cp-working>
 
-  <div class="menu" *ngSwitchCase="false">
-    <button
-      type="button"
-      (click)="isOpen = !isOpen"
-      [class]="'menu__header cpbtn cpbtn--' + props?.class">
+  <div class="menu"
+       *ngSwitchCase="false">
+    <button type="button"
+            (click)="isOpen = !isOpen"
+            [class]="'menu__header cpbtn cpbtn--' + props?.class">
       {{ 'events_import_bulk_update' | cpI18n }}
-      <span class="icon"><i class="material-icons">keyboard_arrow_down</i></span>
+      <span class="icon"><i
+           class="material-icons">keyboard_arrow_down</i></span>
     </button>
 
-    <div class="menu__content" [class.open]="isOpen && props?.class!=='disabled'">
+    <div class="menu__content"
+         [class.open]="isOpen && props?.class!=='disabled'">
       <div class="row">
         <div class="col-12">
-          <div class="row" *ngIf="!storeId && !isClub && !isService && !isOrientation">
+          <div class="row"
+               *ngIf="!storeId && !isClub && !isService && !isOrientation">
             <div class="col-12">
               <div class="menu__item">
-                <cp-dropdown [items]="stores" (selected)="onHostSelected($event)"> </cp-dropdown>
+                <cp-dropdown [items]="stores"
+                             (selected)="onHostSelected($event)"> </cp-dropdown>
               </div>
             </div>
           </div>
@@ -24,10 +28,9 @@
             <div class="col-12">
               <div class="menu__item">
                 <label>{{ 't_events_attendance_type' | cpI18n }}</label>
-                <cp-dropdown
-                  [items]="checkInOptions"
-                  [selectedItem]="checkInOptions[i]"
-                  (selected)="updateCheckInOption($event)">
+                <cp-dropdown [items]="checkInOptions"
+                             [selectedItem]="checkInOptions[i]"
+                             (selected)="updateCheckInOption($event)">
                 </cp-dropdown>
               </div>
             </div>
@@ -37,10 +40,9 @@
               <div class="row">
                 <div class="col-6">
                   <label>{{ 'events_attendance_feedback' | cpI18n }}</label>
-                  <cp-dropdown
-                    [items]="eventAttendanceFeedback"
-                    [selectedItem]="state.event_feedback"
-                    (selected)="updateAttendanceFeedback($event)">
+                  <cp-dropdown [items]="eventAttendanceFeedback"
+                               [selectedItem]="state.event_feedback"
+                               (selected)="updateAttendanceFeedback($event)">
                   </cp-dropdown>
                 </div>
               </div>
@@ -50,15 +52,19 @@
               <div class="row">
                 <div class="col-6">
                   <label>{{ 'events_event_manager' | cpI18n }}</label>
-                  <cp-dropdown [items]="managers$ | async" (selected)="updateEventManager($event)">
+                  <cp-dropdown [items]="managers$ | async"
+                               (selected)="updateEventManager($event)">
                   </cp-dropdown>
                 </div>
               </div>
             </div>
 
             <div class="menu__item">
-              <label for="attendance_manager">{{ 'events_attendance_manager_full' | cpI18n }}</label>
-              <input id="attendance_manager" type="email" (keyup)="updateAttendanceManager($event.target.value)" />
+              <label
+                     for="attendance_manager">{{ 'events_attendance_manager_full' | cpI18n }}</label>
+              <input id="attendance_manager"
+                     type="email"
+                     (keyup)="updateAttendanceManager($event.target.value)" />
             </div>
           </div>
         </div>
@@ -66,10 +72,14 @@
       <div class="row menu__content--footer">
         <div class="col-12">
           <div class="float-right">
-            <button type="button" (click)="isOpen = false" class="cpbtn cpbtn--cancel">
+            <button type="button"
+                    (click)="isOpen = false"
+                    class="cpbtn cpbtn--cancel">
               {{ 'cancel' | cpI18n }}
             </button>
-            <button type="button" (click)="doSubmit()" class="cpbtn cpbtn--primary">
+            <button type="button"
+                    (click)="doSubmit()"
+                    class="cpbtn cpbtn--primary">
               {{ 'apply' | cpI18n }}
             </button>
           </div>

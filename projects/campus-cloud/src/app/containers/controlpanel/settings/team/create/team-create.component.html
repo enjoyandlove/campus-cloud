@@ -1,40 +1,51 @@
 <div class="cp-wrapper">
   <div class="row">
-    <form [formGroup]="form" class="col-8 offset-2 margin-bottom">
+    <form [formGroup]="form"
+          class="col-8 offset-2 margin-bottom">
       <div class="section cp-card form-group">
         <h2 class="section__title">{{ 'admin_invite' | cpI18n }}</h2>
         <div class="row">
           <div class="col-4">
             <label for="firstname">{{ 'first_name' | cpI18n }}</label>
-            <input id="firstname" type="text" class="form-control" formControlName="firstname" />
+            <input id="firstname"
+                   type="text"
+                   class="form-control"
+                   formControlName="firstname" />
           </div>
 
           <div class="col-4">
             <label for="lastname">{{ 'last_name' | cpI18n }}</label>
-            <input id="lastname" type="text" class="form-control" formControlName="lastname" />
+            <input id="lastname"
+                   type="text"
+                   class="form-control"
+                   formControlName="lastname" />
           </div>
 
           <div class="col-4">
             <label for="email">{{ 'email' | cpI18n }}</label>
-            <input id="email" type="text" class="form-control" formControlName="email" />
+            <input id="email"
+                   type="text"
+                   class="form-control"
+                   formControlName="email" />
           </div>
         </div>
 
         <div class="row">
           <div class="col-12">
-            <div class="all-access" [class.isEnabled]="isAllAccessEnabled">
+            <div class="all-access"
+                 [class.isEnabled]="isAllAccessEnabled">
               <div class="row">
                 <div class="col-8">
-                  <p class="section-sub-title">{{ 'admin_all_access' | cpI18n }}</p>
+                  <p class="section-sub-title">{{ 'admin_all_access' | cpI18n }}
+                  </p>
                   <p class="section-description">
                     {{ 'admin_all_acceess_help' | cpI18n }}
                   </p>
                 </div>
                 <div class="col-4">
                   <div class="float-right">
-                    <cp-switch
-                      (toggle)="toggleAllAccess($event)"
-                      (toggle)="isAllAccessEnabled = !isAllAccessEnabled">
+                    <cp-switch (toggle)="toggleAllAccess($event)"
+                               (toggle)="isAllAccessEnabled = !isAllAccessEnabled">
                     </cp-switch>
                   </div>
                 </div>
@@ -46,19 +57,22 @@
 
       <!-- Permissions -->
       <fieldset [disabled]="isAllAccessEnabled">
-        <div class="section cp-card form-group" [class.isDisabled]="isAllAccessEnabled">
+        <div class="section cp-card form-group"
+             [class.isDisabled]="isAllAccessEnabled">
           <!-- Manage Team Members -->
           <div class="section__item">
             <h2 class="section__title">{{ 'admin_permissions' | cpI18n }}</h2>
             <div class="row">
               <div class="col-8">
-                <p class="section-sub-title">{{ 'manage_team_members' | cpI18n }}</p>
+                <p class="section-sub-title">
+                  {{ 'manage_team_members' | cpI18n }}</p>
                 <p class="section-description">
                   {{ 'admin_grant_permissions' | cpI18n }}
                 </p>
               </div>
               <div class="col-4">
-                <cp-dropdown [items]="manageAdmins" (selected)="onManageAdminSelected($event)">
+                <cp-dropdown [items]="manageAdmins"
+                             (selected)="onManageAdminSelected($event)">
                 </cp-dropdown>
               </div>
             </div>
@@ -70,16 +84,16 @@
             <div class="section__item">
               <div class="row">
                 <div class="col-8">
-                  <p class="section-sub-title">{{ 'admin_service_owner' | cpI18n }}</p>
+                  <p class="section-sub-title">
+                    {{ 'admin_service_owner' | cpI18n }}</p>
                   <p class="section-description">
                     {{ 'admin_service_owner_help' | cpI18n }}
                   </p>
                 </div>
                 <div class="col-4">
-                  <cp-dropdown
-                    [items]="servicesMenu"
-                    [selectedItem]="servicesCount"
-                    (selected)="onServicesSelected($event)">
+                  <cp-dropdown [items]="servicesMenu"
+                               [selectedItem]="servicesCount"
+                               (selected)="onServicesSelected($event)">
                   </cp-dropdown>
                 </div>
               </div>
@@ -92,16 +106,16 @@
             <div class="section__item">
               <div class="row">
                 <div class="col-8">
-                  <p class="section-sub-title">{{ 'admin_club_owner' | cpI18n }}</p>
+                  <p class="section-sub-title">{{ 'admin_club_owner' | cpI18n }}
+                  </p>
                   <p class="section-description">
                     {{ 'admin_club_owner_help' | cpI18n }}
                   </p>
                 </div>
                 <div class="col-4">
-                  <cp-dropdown
-                    [items]="clubsMenu"
-                    [selectedItem]="clubsCount"
-                    (selected)="onClubsSelected($event)">
+                  <cp-dropdown [items]="clubsMenu"
+                               [selectedItem]="clubsCount"
+                               (selected)="onClubsSelected($event)">
                   </cp-dropdown>
                 </div>
               </div>
@@ -114,16 +128,16 @@
             <div class="section__item">
               <div class="row">
                 <div class="col-8">
-                  <p class="section-sub-title">{{ 'admin_athletics_owner' | cpI18n }}</p>
+                  <p class="section-sub-title">
+                    {{ 'admin_athletics_owner' | cpI18n }}</p>
                   <p class="section-description">
                     {{ 'admin_athletics_owner_help' | cpI18n }}
                   </p>
                 </div>
                 <div class="col-4">
-                  <cp-dropdown
-                    [items]="athleticsMenu"
-                    [selectedItem]="athleticsCount"
-                    (selected)="onAthleticsSelected($event)">
+                  <cp-dropdown [items]="athleticsMenu"
+                               [selectedItem]="athleticsCount"
+                               (selected)="onAthleticsSelected($event)">
                   </cp-dropdown>
                 </div>
               </div>
@@ -136,13 +150,15 @@
             <div class="section__item">
               <div class="row">
                 <div class="col-8">
-                  <p class="section-sub-title">{{ 'admin_audience_title' | cpI18n }}</p>
+                  <p class="section-sub-title">
+                    {{ 'admin_audience_title' | cpI18n }}</p>
                   <p class="section-description">
                     {{ 'admin_audience_help' | cpI18n }}
                   </p>
                 </div>
                 <div class="col-4">
-                  <cp-dropdown [items]="audienceMenu" (selected)="onAudienceSelected($event)">
+                  <cp-dropdown [items]="audienceMenu"
+                               (selected)="onAudienceSelected($event)">
                   </cp-dropdown>
                 </div>
               </div>
@@ -155,13 +171,15 @@
             <div class="section__item">
               <div class="row">
                 <div class="col-8">
-                  <p class="section-sub-title">{{ 'admin_events_title' | cpI18n }}</p>
+                  <p class="section-sub-title">
+                    {{ 'admin_events_title' | cpI18n }}</p>
                   <p class="section-description">
                     {{ 'admin_events_help' | cpI18n }}
                   </p>
                 </div>
                 <div class="col-4">
-                  <cp-dropdown [items]="eventsMenu" (selected)="onEventsSelected($event)">
+                  <cp-dropdown [items]="eventsMenu"
+                               (selected)="onEventsSelected($event)">
                   </cp-dropdown>
                 </div>
               </div>
@@ -173,76 +191,73 @@
           <div class="section__item section--content">
             <div class="row">
               <div class="col-12">
-                <p class="section-sub-title">{{ 'admin_app_content' | cpI18n }}</p>
+                <p class="section-sub-title">{{ 'admin_app_content' | cpI18n }}
+                </p>
                 <p class="section-description">
                   {{ 'admin_app_content_help' | cpI18n }}
                 </p>
               </div>
             </div>
             <div class="row options-row">
-              <div class="col-4" [class.isDisabled]="!formData.content.feeds.active">
-                <cp-checkbox
-                  class="cpcheckbox"
-                  [label]="cpI18n.translate('feeds')"
-                  (toggle)="
+              <div class="col-4"
+                   [class.isDisabled]="!formData.content.feeds.active">
+                <cp-checkbox class="cpcheckbox"
+                             [label]="cpI18n.translate('feeds')"
+                             (toggle)="
                     checkControl($event, CP_PRIVILEGES_MAP.moderation, formData.content.feeds)"
-                  [isDisabled]="!formData.content.feeds.active">
+                             [isDisabled]="!formData.content.feeds.active">
                 </cp-checkbox>
               </div>
 
-              <div class="col-4" [class.isDisabled]="!formData.content.calendars.active">
-                <cp-checkbox
-                  class="cpcheckbox"
-                  [label]="cpI18n.translate('calendar')"
-                  (toggle)="
+              <div class="col-4"
+                   [class.isDisabled]="!formData.content.calendars.active">
+                <cp-checkbox class="cpcheckbox"
+                             [label]="cpI18n.translate('calendar')"
+                             (toggle)="
                     checkControl($event, CP_PRIVILEGES_MAP.calendar, formData.content.calendars)"
-                  [isDisabled]="!formData.content.calendars.active">
+                             [isDisabled]="!formData.content.calendars.active">
                 </cp-checkbox>
               </div>
 
-              <div class="col-4" [class.isDisabled]="!formData.content.dining.active">
-                <cp-checkbox
-                  class="cpcheckbox"
-                  [label]="cpI18n.translate('dining')"
-                  (toggle)="
+              <div class="col-4"
+                   [class.isDisabled]="!formData.content.dining.active">
+                <cp-checkbox class="cpcheckbox"
+                             [label]="cpI18n.translate('dining')"
+                             (toggle)="
                       checkControl($event, CP_PRIVILEGES_MAP.dining, formData.content.dining)
                     "
-                  [isDisabled]="!formData.content.dining.active">
+                             [isDisabled]="!formData.content.dining.active">
                 </cp-checkbox>
               </div>
             </div>
 
             <div class="row options-row">
-              <div class="col-4" [class.isDisabled]="!formData.content.maps.active">
-                <cp-checkbox
-                  class="cpcheckbox"
-                  [label]="cpI18n.translate('maps')"
-                  (toggle)="
+              <div class="col-4"
+                   [class.isDisabled]="!formData.content.maps.active">
+                <cp-checkbox class="cpcheckbox"
+                             [label]="cpI18n.translate('maps')"
+                             (toggle)="
                     checkControl($event, CP_PRIVILEGES_MAP.campus_maps, formData.content.maps)"
-                  [isDisabled]="!formData.content.maps.active">
+                             [isDisabled]="!formData.content.maps.active">
                 </cp-checkbox>
               </div>
 
-              <div
-                class="col-4 admin_studio_tooltip"
-                [class.isDisabled]="!formData.content.appCustomizaton.active"
-              >
-                <cp-checkbox
-                  class="cpcheckbox"
-                  [label]="cpI18n.translate('customise')"
-                  (toggle)="
+              <div class="col-4 admin_studio_tooltip"
+                   [class.isDisabled]="!formData.content.appCustomizaton.active">
+                <cp-checkbox class="cpcheckbox"
+                             [label]="cpI18n.translate('customise')"
+                             (toggle)="
                     checkControl(
                       $event,
                       CP_PRIVILEGES_MAP.app_customization,
                       formData.content.appCustomizaton
                     )"
-                  [isDisabled]="!formData.content.appCustomizaton.active">
+                             [isDisabled]="!formData.content.appCustomizaton.active">
                 </cp-checkbox>
-                <button
-                  cpTooltip
-                  class="cpbtn cpbtn--link danger"
-                  [attr.title]="'t_admin_invite_studio_limited_tooltip' | cpI18n"
-                  *ngIf="
+                <button cpTooltip
+                        class="cpbtn cpbtn--link danger"
+                        [attr.title]="'t_admin_invite_studio_limited_tooltip' | cpI18n"
+                        *ngIf="
                     utils.hasStudio(schoolPrivileges) &&
                 !utils.hasFullStudioPrivilege(schoolPrivileges)
                   ">
@@ -250,37 +265,37 @@
                 </button>
               </div>
 
-              <div class="col-4" [class.isDisabled]="!formData.content.orientation.active">
-                <cp-checkbox
-                  class="cpcheckbox"
-                  [label]="cpI18n.translate('orientation')"
-                  (toggle)="
+              <div class="col-4"
+                   [class.isDisabled]="!formData.content.orientation.active">
+                <cp-checkbox class="cpcheckbox"
+                             [label]="cpI18n.translate('orientation')"
+                             (toggle)="
                     checkControl(
                       $event,
                       CP_PRIVILEGES_MAP.orientation,
                       formData.content.orientation
                     )"
-                  [isDisabled]="!formData.content.orientation.active">
+                             [isDisabled]="!formData.content.orientation.active">
                 </cp-checkbox>
               </div>
             </div>
 
             <div class="row options-row">
-              <div class="col-4" [class.isDisabled]="!formData.content.jobs.active">
-                <cp-checkbox
-                  class="cpcheckbox"
-                  [label]="cpI18n.translate('jobs')"
-                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.jobs, formData.content.jobs)"
-                  [isDisabled]="!formData.content.jobs.active">
+              <div class="col-4"
+                   [class.isDisabled]="!formData.content.jobs.active">
+                <cp-checkbox class="cpcheckbox"
+                             [label]="cpI18n.translate('jobs')"
+                             (toggle)="checkControl($event, CP_PRIVILEGES_MAP.jobs, formData.content.jobs)"
+                             [isDisabled]="!formData.content.jobs.active">
                 </cp-checkbox>
               </div>
 
-              <div class="col-4" [class.isDisabled]="!formData.content.deals.active">
-                <cp-checkbox
-                  class="cpcheckbox"
-                  [label]="cpI18n.translate('deals')"
-                  (toggle)="checkControl($event, CP_PRIVILEGES_MAP.deals, formData.content.deals)"
-                  [isDisabled]="!formData.content.deals.active">
+              <div class="col-4"
+                   [class.isDisabled]="!formData.content.deals.active">
+                <cp-checkbox class="cpcheckbox"
+                             [label]="cpI18n.translate('deals')"
+                             (toggle)="checkControl($event, CP_PRIVILEGES_MAP.deals, formData.content.deals)"
+                             [isDisabled]="!formData.content.deals.active">
                 </cp-checkbox>
               </div>
             </div>
@@ -293,11 +308,10 @@
               <div class="col-12">
                 <p class="section-sub-title">
                   {{ 'notify' | cpI18n }}
-                  <i
-                    cpTooltip
-                    class="material-icons"
-                    *ngIf="!hasStorePrivileges()"
-                    [attr.title]="'t_admin_invite_notify_permission_tooltip' | cpI18n">
+                  <i cpTooltip
+                     class="material-icons"
+                     *ngIf="!hasStorePrivileges()"
+                     [attr.title]="'t_admin_invite_notify_permission_tooltip' | cpI18n">
                     lock
                   </i>
                 </p>
@@ -307,19 +321,20 @@
               </div>
             </div>
             <fieldset [disabled]="!hasStorePrivileges()">
-              <div class="section row" [class.isDisabled]="!hasStorePrivileges()">
+              <div class="section row"
+                   [class.isDisabled]="!hasStorePrivileges()">
                 <div class="col-12">
                   <div class="row options-row">
-                    <div class="col-5" [class.isDisabled]="!formData.notify.campus.active">
-                      <cp-checkbox
-                        class="cpcheckbox isDisabled"
-                        [isDisabled]="!formData.notify.campus.active"
-                        [label]="'admin_campus_announcements' | cpI18n"
-                        [isChecked]="
+                    <div class="col-5"
+                         [class.isDisabled]="!formData.notify.campus.active">
+                      <cp-checkbox class="cpcheckbox isDisabled"
+                                   [isDisabled]="!formData.notify.campus.active"
+                                   [label]="'admin_campus_announcements' | cpI18n"
+                                   [isChecked]="
                           schoolPrivileges &&
                           schoolPrivileges[CP_PRIVILEGES_MAP.campus_announcements]
                         "
-                        (toggle)="
+                                   (toggle)="
                           checkControl(
                             $event,
                             CP_PRIVILEGES_MAP.campus_announcements,
@@ -328,16 +343,16 @@
                         ">
                       </cp-checkbox>
                     </div>
-                    <div class="col-5" [class.isDisabled]="!formData.notify.emergency.active">
-                      <cp-checkbox
-                        class="cpcheckbox"
-                        [isDisabled]="!formData.notify.emergency.active"
-                        [label]="'admin_emergency_announcements' | cpI18n"
-                        [isChecked]="
+                    <div class="col-5"
+                         [class.isDisabled]="!formData.notify.emergency.active">
+                      <cp-checkbox class="cpcheckbox"
+                                   [isDisabled]="!formData.notify.emergency.active"
+                                   [label]="'admin_emergency_announcements' | cpI18n"
+                                   [isChecked]="
                           schoolPrivileges &&
                           schoolPrivileges[CP_PRIVILEGES_MAP.emergency_announcement]
                         "
-                        (toggle)="
+                                   (toggle)="
                           checkControl(
                             $event,
                             CP_PRIVILEGES_MAP.emergency_announcement,
@@ -364,16 +379,13 @@
               </div>
             </div>
             <div class="row">
-              <div
-                class="col-5 options-row"
-                [class.isDisabled]="!formData.assess.engagement.active"
-              >
-                <cp-checkbox
-                  class="cpcheckbox"
-                  [label]="cpI18n.translate('admin_engagement_dashboard')"
-                  [isDisabled]="!formData.assess.engagement.active"
-                  [isChecked]="schoolPrivileges && schoolPrivileges[CP_PRIVILEGES_MAP.assessment]"
-                  (toggle)="
+              <div class="col-5 options-row"
+                   [class.isDisabled]="!formData.assess.engagement.active">
+                <cp-checkbox class="cpcheckbox"
+                             [label]="cpI18n.translate('admin_engagement_dashboard')"
+                             [isDisabled]="!formData.assess.engagement.active"
+                             [isChecked]="schoolPrivileges && schoolPrivileges[CP_PRIVILEGES_MAP.assessment]"
+                             (toggle)="
                       checkControl($event, CP_PRIVILEGES_MAP.assessment, formData.assess.engagement)
                     ">
                 </cp-checkbox>
@@ -390,13 +402,16 @@
           <div class="row">
             <div class="col-12">
               <div class="float-right">
-                <label class="error" *ngIf="isFormError">{{ formError }}</label>
+                <label class="error"
+                       *ngIf="isFormError">{{ formError }}</label>
 
-                <a [routerLink]="['/settings/team']" class="cpbtn cpbtn--cancel">
+                <a [routerLink]="['/settings/team']"
+                   class="cpbtn cpbtn--cancel">
                   {{ 'cancel' | cpI18n }}
                 </a>
 
-                <cp-button [props]="buttonData" (buttonClick)="onSubmit(form.value)"> </cp-button>
+                <cp-button [props]="buttonData"
+                           (buttonClick)="onSubmit(form.value)"> </cp-button>
               </div>
             </div>
           </div>
@@ -406,30 +421,30 @@
   </div>
 </div>
 
-<cp-modal [type]="MODAL_TYPE" *ngIf="isServiceModal" modalId="selectServicesModal">
-  <cp-select-services-modal
-    [reset]="resetServiceModal$"
-    (cancel)="updateServicesDropdownLabel()"
-    (selected)="onServicesModalSelected($event)"
-  >
+<cp-modal [type]="MODAL_TYPE"
+          *ngIf="isServiceModal"
+          modalId="selectServicesModal">
+  <cp-select-services-modal [reset]="resetServiceModal$"
+                            (cancel)="updateServicesDropdownLabel()"
+                            (selected)="onServicesModalSelected($event)">
   </cp-select-services-modal>
 </cp-modal>
 
-<cp-modal [type]="MODAL_TYPE" *ngIf="isClubsModal" modalId="selectClubsModal">
-  <cp-select-clubs-modal
-    [reset]="resetClubsModal$"
-    (cancel)="updateClubsDropdownLabel()"
-    (selected)="onClubsModalSelected($event)"
-  >
+<cp-modal [type]="MODAL_TYPE"
+          *ngIf="isClubsModal"
+          modalId="selectClubsModal">
+  <cp-select-clubs-modal [reset]="resetClubsModal$"
+                         (cancel)="updateClubsDropdownLabel()"
+                         (selected)="onClubsModalSelected($event)">
   </cp-select-clubs-modal>
 </cp-modal>
 
-<cp-modal [type]="MODAL_TYPE" *ngIf="isAthleticsModal" modalId="selectAthleticsModal">
-  <cp-select-athletics-modal
-    [reset]="resetAthleticsModal$"
-    (cancel)="updateAthleticsDropdownLabel()"
-    (selected)="onAthleticsModalSelected($event)"
-    [selectedAthletics]="accountPrivileges"
-  >
+<cp-modal [type]="MODAL_TYPE"
+          *ngIf="isAthleticsModal"
+          modalId="selectAthleticsModal">
+  <cp-select-athletics-modal [reset]="resetAthleticsModal$"
+                             (cancel)="updateAthleticsDropdownLabel()"
+                             (selected)="onAthleticsModalSelected($event)"
+                             [selectedAthletics]="accountPrivileges">
   </cp-select-athletics-modal>
 </cp-modal>

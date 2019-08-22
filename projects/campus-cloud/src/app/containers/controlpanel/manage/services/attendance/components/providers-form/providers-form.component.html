@@ -2,41 +2,33 @@
   <div class="row form-group">
     <div class="col-6">
       <label>{{ 'name' | cpI18n }}</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="provider_name"
-        [class.error]="formErrors && form.controls['provider_name'].hasError('required')"
-      />
+      <input type="text"
+             class="form-control"
+             formControlName="provider_name"
+             [class.error]="formErrors && form.controls['provider_name'].hasError('required')" />
     </div>
     <div class="col-6">
       <label>{{ 'email' | cpI18n }}</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="email"
-        [class.error]="formErrors && form.controls['email'].hasError('required')"
-      />
+      <input type="text"
+             class="form-control"
+             formControlName="email"
+             [class.error]="formErrors && form.controls['email'].hasError('required')" />
     </div>
   </div>
 
   <div class="row form-group">
     <div class="col-6">
       <label>{{ 't_services_attendance_type' | cpI18n }}</label>
-      <cp-dropdown
-        [items]="attendanceTypes"
-        [selectedItem]="selectedAttendanceType"
-        (selected)="onSelectedAttendanceType($event.action)"
-      >
+      <cp-dropdown [items]="attendanceTypes"
+                   [selectedItem]="selectedAttendanceType"
+                   (selected)="onSelectedAttendanceType($event.action)">
       </cp-dropdown>
     </div>
     <div class="col-6">
       <label>{{ 't_services_service_qr_enabled' | cpI18n }}</label>
-      <cp-dropdown
-        [items]="serviceQRCodes"
-        [selectedItem]="selectedQrCode"
-        (selected)="onSelectedQRCode($event.action)"
-      >
+      <cp-dropdown [items]="serviceQRCodes"
+                   [selectedItem]="selectedQrCode"
+                   (selected)="onSelectedQRCode($event.action)">
       </cp-dropdown>
     </div>
   </div>
@@ -44,22 +36,19 @@
   <div class="row form-group">
     <div class="col-6">
       <label>{{ 'feedback' | cpI18n }}</label>
-      <cp-dropdown
-        [items]="attendanceFeedback"
-        [selectedItem]="selectedAttendanceFeedback"
-        (selected)="onSelectedFeedback($event.action)"
-      >
+      <cp-dropdown [items]="attendanceFeedback"
+                   [selectedItem]="selectedAttendanceFeedback"
+                   (selected)="onSelectedFeedback($event.action)">
       </cp-dropdown>
     </div>
 
-    <div class="col-12 margin-top" *ngIf="form.controls['has_feedback'].value">
+    <div class="col-12 margin-top"
+         *ngIf="form.controls['has_feedback'].value">
       <label>{{ 'services_provider_label_default_question' | cpI18n }}</label>
-      <input
-        type="text"
-        class="form-control"
-        formControlName="custom_basic_feedback_label"
-        [class.error]="formErrors && form.errors?.feedbackLabelRequired"
-      />
+      <input type="text"
+             class="form-control"
+             formControlName="custom_basic_feedback_label"
+             [class.error]="formErrors && form.errors?.feedbackLabelRequired" />
     </div>
   </div>
 </form>

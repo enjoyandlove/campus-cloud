@@ -4,11 +4,10 @@
       <strong>{{ 'csv_modal_title' | cpI18n }}</strong>
     </span>
 
-    <button
-      type="button"
-      data-dismiss="modal"
-      (click)="reset.emit()"
-      class="float-right hover cpmodal__header__close unstyled-button">
+    <button type="button"
+            data-dismiss="modal"
+            (click)="reset.emit()"
+            class="float-right hover cpmodal__header__close unstyled-button">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>

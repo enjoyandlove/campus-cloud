@@ -2,37 +2,34 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <cp-providers-action-box
-      [noProviders]="noProviders"
-      (search)="onSearch($event)"
-      (download)="onDownload()"
-      (filterByDates)="onDateFilter($event)"
-      (updateStudentFilter)="onStudentFilter($event)"
-      (launchAddProviderModal)="onLaunchProviderAdd()"
-    >
+    <cp-providers-action-box [noProviders]="noProviders"
+                             (search)="onSearch($event)"
+                             (download)="onDownload()"
+                             (filterByDates)="onDateFilter($event)"
+                             (updateStudentFilter)="onStudentFilter($event)"
+                             (launchAddProviderModal)="onLaunchProviderAdd()">
     </cp-providers-action-box>
 
-    <cp-providers-stats *ngIf="!state.searchText" [service]="service"> </cp-providers-stats>
+    <cp-providers-stats *ngIf="!state.searchText"
+                        [service]="service"> </cp-providers-stats>
 
     <div class="row">
       <div class="col-12">
-        <cp-providers-list
-          #providersList
-          [service]="service"
-          [filterState]="state"
-          (hasProviders)="onProvidersResult($event)"
-        >
+        <cp-providers-list #providersList
+                           [service]="service"
+                           [filterState]="state"
+                           (hasProviders)="onProvidersResult($event)">
         </cp-providers-list>
       </div>
     </div>
   </div>
 </div>
 
-<cp-modal *ngIf="isProviderAdd" modalId="createProvider" (modalClose)="isProviderAdd = false">
-  <cp-providers-add
-    [service]="service"
-    (created)="onProviderAdded()"
-    (teardown)="isProviderAdd = false"
-  >
+<cp-modal *ngIf="isProviderAdd"
+          modalId="createProvider"
+          (modalClose)="isProviderAdd = false">
+  <cp-providers-add [service]="service"
+                    (created)="onProviderAdded()"
+                    (teardown)="isProviderAdd = false">
   </cp-providers-add>
 </cp-modal>

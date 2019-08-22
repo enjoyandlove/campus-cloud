@@ -6,13 +6,11 @@
           <cp-searchbox (query)="query.emit($event)"></cp-searchbox>
         </div>
         <div class="col-3 float-right">
-          <button
-            cpTracker
-            type="button"
-            (click)="create.emit()"
-            [eventData]="eventData"
-            class="cpbtn cpbtn--primary float-right"
-          >
+          <button cpTracker
+                  type="button"
+                  (click)="create.emit()"
+                  [eventData]="eventData"
+                  class="cpbtn cpbtn--primary float-right">
             {{ 'templates_button_new' | cpI18n }}
           </button>
         </div>
