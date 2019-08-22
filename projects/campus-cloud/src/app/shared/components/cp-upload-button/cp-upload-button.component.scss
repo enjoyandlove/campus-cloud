@@ -93,6 +93,10 @@
     overflow: hidden;
     position: absolute;
 
+    &:focus + label {
+      outline: 1px dotted #797878 !important;
+    }
+
     ~ label {
       @include font-normal();
 
