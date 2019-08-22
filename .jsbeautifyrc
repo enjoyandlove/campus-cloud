@@ -1,0 +1,11 @@
+{
+  "tab_size": 2,
+  "indent_size": 2,
+  "space_around_combinator": true,
+  "selector_separator_newline": true,
+  "indent_with_tabs": false,
+  "wrap_line_length": 80,
+  "indent_inner_html": true,
+  "indent_handlebars": true,
+  "wrap_attributes": "force-aligned"
+}
