@@ -33,7 +33,7 @@ export class SnackbarError implements Action {
 export function reducer(state = initialState, action): ISnackbar {
   switch (action.type) {
     case SNACKBAR_SHOW:
-      return Object.assign({}, state, ...action.payload);
+      return { ...state, ...action.payload };
     case SNACKBAR_HIDE:
       return initialState;
     case SNACKBAR_SUCCESS:

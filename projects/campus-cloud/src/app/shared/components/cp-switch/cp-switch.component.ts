@@ -9,6 +9,7 @@ import {
 
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
+let nextUniqueId = 0;
 @Component({
   selector: 'cp-switch',
   templateUrl: './cp-switch.component.html',
@@ -19,12 +20,23 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class CPSwitchComponent implements ControlValueAccessor {
-  @Input() id: string;
+  protected _id: string;
+  protected _uid = `cp-switch-${nextUniqueId++}`;
+
   @Input() isChecked: boolean;
+
   @Output() toggle: EventEmitter<boolean> = new EventEmitter();
 
   onChanged: any = () => {};
   onTouched: any = () => {};
+
+  @Input()
+  get id(): string {
+    return this._id;
+  }
+  set id(value: string) {
+    this._id = value || this._uid;
+  }
 
   constructor() {}
 
