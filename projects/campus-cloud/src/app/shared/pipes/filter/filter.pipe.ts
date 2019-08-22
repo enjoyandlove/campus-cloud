@@ -23,7 +23,7 @@ export class CPFilterPipe implements PipeTransform {
       }
     } else {
       data.forEach((item) => {
-        const str: String = item[filterBy].toString().toLowerCase();
+        const str: String = item[filterBy] ? item[filterBy].toString().toLowerCase() : '';
 
         if (str.includes(query.toLowerCase())) {
           filterResults.push(item);
