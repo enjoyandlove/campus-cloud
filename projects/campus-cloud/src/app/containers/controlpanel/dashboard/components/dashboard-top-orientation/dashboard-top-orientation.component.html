@@ -3,9 +3,8 @@
 
   <ng-container *ngSwitchCase="false">
     <h3>{{ 't_dashboard_top_orientation' | cpI18n }}</h3>
-    <cp-dashboard-top-resource
-      [items]="items"
-      [canNavigate]="canViewOrientation">
+    <cp-dashboard-top-resource [items]="items"
+                               [canNavigate]="canViewOrientation">
     </cp-dashboard-top-resource>
   </ng-container>
 </ng-container>

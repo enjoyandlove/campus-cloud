@@ -4,11 +4,10 @@
       <div class="col-12 text-center">
         <span><strong>{{ 'calendars_add_modal_title' | cpI18n }}</strong></span>
 
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="float-right hover cpmodal__header__close unstyled-button">
           &times;
         </button>
       </div>
@@ -16,26 +15,24 @@
   </div>
 
   <div class="cpmodal__body">
-    <cp-calendar-form #createForm [form]="form"></cp-calendar-form>
+    <cp-calendar-form #createForm
+                      [form]="form"></cp-calendar-form>
   </div>
 
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-6 text-right">
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="cpbtn cpbtn--cancel">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button
-          type="button"
-          (click)="onSubmit()"
-          class="cpbtn cpbtn--primary"
-
-          [disabled]="!form.valid">
+        <button type="button"
+                (click)="onSubmit()"
+                class="cpbtn cpbtn--primary"
+                [disabled]="!form.valid">
           {{ 'save' | cpI18n }}
         </button>
       </div>

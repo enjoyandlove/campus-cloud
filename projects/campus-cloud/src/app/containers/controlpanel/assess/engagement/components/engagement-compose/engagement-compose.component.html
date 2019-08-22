@@ -4,11 +4,10 @@
       <div class="col-12 text-center">
         <span><strong>{{ 'assess_new_message' | cpI18n }}</strong></span>
 
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="float-right hover cpmodal__header__close unstyled-button">
           &times;
         </button>
       </div>
@@ -21,17 +20,20 @@
         <div class="col-6">
           <div class="form-group">
             <label for="recipient">{{ 'recipient' | cpI18n }}</label>
-            <input id="recipient" disabled type="text" class="form-control" [placeholder]="props.name" />
+            <input id="recipient"
+                   disabled
+                   type="text"
+                   class="form-control"
+                   [placeholder]="props.name" />
           </div>
         </div>
         <div class="col-6">
           <div class="form-group">
             <label>{{ 'from' | cpI18n }}</label>
-            <cp-dropdown
-              [reset]="resetStores$"
-              [items]="stores$ | async"
-              (selected)="onSelectedHost($event)"
-              [selectedItem]="session.defaultHost">
+            <cp-dropdown [reset]="resetStores$"
+                         [items]="stores$ | async"
+                         (selected)="onSelectedHost($event)"
+                         [selectedItem]="session.defaultHost">
             </cp-dropdown>
           </div>
         </div>
@@ -42,13 +44,16 @@
           <div class="form-group">
             <label for="subject">
               {{ 'subject' | cpI18n }}
-              <cp-char-counter
-                class="float-right"
-                [limit]="128"
-                [charCount]="form.controls.subject.value">
+              <cp-char-counter class="float-right"
+                               [limit]="128"
+                               [charCount]="form.controls.subject.value">
               </cp-char-counter>
             </label>
-            <input id="subject" type="text" name="subject" class="form-control" formControlName="subject" />
+            <input id="subject"
+                   type="text"
+                   name="subject"
+                   class="form-control"
+                   formControlName="subject" />
           </div>
         </div>
       </div>
@@ -58,20 +63,23 @@
           <div class="form-group">
             <label for="message">
               {{ 'message_noun' | cpI18n }}
-              <cp-char-counter
-                class="float-right"
-                [limit]="400"
-                [charCount]="form.controls.message.value">
+              <cp-char-counter class="float-right"
+                               [limit]="400"
+                               [charCount]="form.controls.message.value">
               </cp-char-counter>
             </label>
-            <textarea id="message" class="form-control" formControlName="message"> </textarea>
+            <textarea id="message"
+                      class="form-control"
+                      formControlName="message"> </textarea>
           </div>
         </div>
       </div>
 
-      <div class="row" *ngIf="isError">
+      <div class="row"
+           *ngIf="isError">
         <div class="col-12 text-center">
-          <label role="alert" class="error">{{ errorMessage }}</label>
+          <label role="alert"
+                 class="error">{{ errorMessage }}</label>
         </div>
       </div>
     </form>
@@ -80,20 +88,18 @@
   <div class="cpmodal__footer">
     <div class="row">
       <div class="col-6 offset-6 text-right">
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="cpbtn cpbtn--cancel">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button
-          type="button"
-          (click)="doSubmit()"
-          [disabled]="!form.valid"
-          class="cpbtn cpbtn--primary"
-          i18n>
+        <button type="button"
+                (click)="doSubmit()"
+                [disabled]="!form.valid"
+                class="cpbtn cpbtn--primary"
+                i18n>
           {{ 'send' | cpI18n }}
         </button>
       </div>

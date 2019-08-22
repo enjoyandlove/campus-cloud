@@ -1,9 +1,7 @@
-<cp-delete-modal
-  (deleteClick)="onDelete()"
-  (cancelClick)="resetModal()"
-  [modalTitle]="['clubs_member_delete_modal_title' | cpI18n]"
-  [modalBody]="[
+<cp-delete-modal (deleteClick)="onDelete()"
+                 (cancelClick)="resetModal()"
+                 [modalTitle]="['clubs_member_delete_modal_title' | cpI18n]"
+                 [modalBody]="[
     'clubs_member_delete_modal_body' | cpI18n: member.firstname + ' ' + member.lastname
-  ]"
->
+  ]">
 </cp-delete-modal>

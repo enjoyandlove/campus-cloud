@@ -3,14 +3,16 @@
   <div class="row margin-top">
     <div class="col-12">
       <cp-tabs (tabClick)="onTabClick($event)">
-        <cp-tab id="existing" [title]="existingEmployerTitle">
+        <cp-tab id="existing"
+                [title]="existingEmployerTitle">
           <div class="col-5 no-left-padding">
             <div class="form-group">
               <cp-employer-selector [form]="form"> </cp-employer-selector>
             </div>
           </div>
         </cp-tab>
-        <cp-tab id="new" [title]="newEmployerTitle">
+        <cp-tab id="new"
+                [title]="newEmployerTitle">
           <cp-employer-form [employerForm]="employerForm"> </cp-employer-form>
         </cp-tab>
       </cp-tabs>

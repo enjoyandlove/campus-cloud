@@ -8,28 +8,32 @@
           </div>
         </div>
       </div>
-      <div class="row" *ngIf="isSubmitted">
+      <div class="row"
+           *ngIf="isSubmitted">
         <div class="col-12">
           <p>{{ 'admin_password_sucess_redirect' | cpI18n }}</p>
         </div>
       </div>
 
-      <div class="row" *ngIf="!isSubmitted">
+      <div class="row"
+           *ngIf="!isSubmitted">
         <div class="col-12">
           <div class="row">
             <div class="col-6 offset-3">
-              <form [formGroup]="form" (ngSubmit)="onSubmit(form.value)">
+              <form [formGroup]="form"
+                    (ngSubmit)="onSubmit(form.value)">
                 <div class="form-group">
                   <label for="password">{{ 'password' | cpI18n }}</label>
-                  <input id="password" type="password" formControlName="new_password" />
+                  <input id="password"
+                         type="password"
+                         formControlName="new_password" />
                 </div>
 
                 <div class="row">
                   <div class="col-12">
-                    <button
-                      type="submit"
-                      [disabled]="!form.valid"
-                      class="cpbtn cpbtn--primary">
+                    <button type="submit"
+                            [disabled]="!form.valid"
+                            class="cpbtn cpbtn--primary">
                       {{ 'admin_create_account' | cpI18n }}
                     </button>
                   </div>

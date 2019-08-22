@@ -1,20 +1,21 @@
 <div class="recipients">
   <div class="row">
-    <div
-      [class]="
+    <div [class]="
         recipients_more.length
           ? 'recipients__names col-6 no-right-padding text-truncate'
           : 'recipients__names col-12 text-truncate'
-      "
-    >
+      ">
       <span *ngFor="let name of recipients; let last = last">
         {{ name }}
         <span *ngIf="!last">, </span>
         <span *ngIf="recipients_more.length && last">...</span>
       </span>
     </div>
-    <div class="recipients__more col-6" *ngIf="recipients_more.length">
-      <button class="cpbtn cpbtn--link" [cpTooltip]="tooltipOptions" [attr.title]="tooltipContent">
+    <div class="recipients__more col-6"
+         *ngIf="recipients_more.length">
+      <button class="cpbtn cpbtn--link"
+              [cpTooltip]="tooltipOptions"
+              [attr.title]="tooltipContent">
         {{ 'tooltip_more_text' | cpI18n: recipients_more.length }}
       </button>
     </div>

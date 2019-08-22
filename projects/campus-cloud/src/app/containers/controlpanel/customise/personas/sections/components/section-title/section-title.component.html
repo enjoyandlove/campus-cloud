@@ -1,9 +1,13 @@
 <div class="row">
   <div class="col-12 text-truncate">
     <div class="input__wrapper">
-      <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <input #inputEl type="text" formControlName="name" />
-        <cp-working class="input__spinner" *ngIf="state.saving"></cp-working>
+      <form [formGroup]="form"
+            (ngSubmit)="onSubmit()">
+        <input #inputEl
+               type="text"
+               formControlName="name" />
+        <cp-working class="input__spinner"
+                    *ngIf="state.saving"></cp-working>
       </form>
     </div>
   </div>

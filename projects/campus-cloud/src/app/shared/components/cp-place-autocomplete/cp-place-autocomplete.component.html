@@ -1,30 +1,27 @@
-<input
-  #hostEl
-  id="input"
-  type="text"
-  autocomplete="off"
-  [value]="state.input"
-  [placeholder]="placeHolder ? placeHolder : cpI18n.translate('search')"
-/>
+<input #hostEl
+       id="input"
+       type="text"
+       autocomplete="off"
+       [value]="state.input"
+       [placeholder]="placeHolder ? placeHolder : cpI18n.translate('search')" />
 
-<button
-  type="button"
-  (click)="reset()"
-  *ngIf="state.input && state.input.length > 0"
-  class="material-icons cpbtn cpbtn--cancel cpbtn--link-dark cpbtn--no-border search__close"
->
+<button type="button"
+        (click)="reset()"
+        *ngIf="state.input && state.input.length > 0"
+        class="material-icons cpbtn cpbtn--cancel cpbtn--link-dark cpbtn--no-border search__close">
   close
 </button>
 
-<ul class="cp-dropdown__list" [hidden]="!state.suggestions.length">
-  <li
-    (click)="handleClick(suggestion)"
-    *ngFor="let suggestion of state.suggestions"
-    [class.no-hover]="suggestion.heading"
-    class="list-as-anchor cp-dropdown__list__item"
-  >
-    <span *ngIf="suggestion.heading" class="isLabel">{{ suggestion.label }}</span>
-    <span class="suggestion_small" *ngIf="!suggestion.heading">
+<ul class="cp-dropdown__list"
+    [hidden]="!state.suggestions.length">
+  <li (click)="handleClick(suggestion)"
+      *ngFor="let suggestion of state.suggestions"
+      [class.no-hover]="suggestion.heading"
+      class="list-as-anchor cp-dropdown__list__item">
+    <span *ngIf="suggestion.heading"
+          class="isLabel">{{ suggestion.label }}</span>
+    <span class="suggestion_small"
+          *ngIf="!suggestion.heading">
       <span class="suggestion_dark">{{ suggestion.label_dark }} </span>
       <span class="suggestion_medium">{{ suggestion.label_medium }}</span>
     </span>

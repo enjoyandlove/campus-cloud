@@ -7,12 +7,11 @@
           <p class="title">
             {{ 't_personas_create_tile_heading_left' | cpI18n }}
           </p>
-          <cp-personas-tile-guide-form
-            [form]="campusGuideTileForm"
-            [showErrors]="formHasErrors"
-            (imageChanged)="onChangedImage($event)"
-            [uploadButtonId]="'tile_guide_upload_button'"
-            (formChange)="onCampusGuideTileFormChange(campusGuideTileForm)">
+          <cp-personas-tile-guide-form [form]="campusGuideTileForm"
+                                       [showErrors]="formHasErrors"
+                                       (imageChanged)="onChangedImage($event)"
+                                       [uploadButtonId]="'tile_guide_upload_button'"
+                                       (formChange)="onCampusGuideTileFormChange(campusGuideTileForm)">
           </cp-personas-tile-guide-form>
         </div>
       </div>
@@ -24,76 +23,65 @@
           <div *ngIf="!editable">
             {{ 't_personas_edit_tile_locked' | cpI18n }}
           </div>
-          <cp-resource-selector
-            *ngIf="editable"
-            [filterByWebApp]="filterByWeb"
-            [filterByLoginStatus]="filterByLogin"
-            (itemClicked)="onTypeChange($event)">
-            <cp-resource-selector-item
-              [resourceId]="contentTypes.single"
-              [active]="selectedContent === contentTypes.single"
-              [title]="'t_personas_resource_single_item' | cpI18n">
-              <cp-resource-selector-type-single
-                [isEdit]="[true]"
-                [showErrors]="formHasErrors"
-                [filterByWebApp]="filterByWeb"
-                [campusLink]="campusLinkForm.value"
-                [filterByLoginStatus]="filterByLogin"
-                *ngIf="selectedContent === contentTypes.single"
-                (valueChanges)="onCampusLinkFormChange($event)">
+          <cp-resource-selector *ngIf="editable"
+                                [filterByWebApp]="filterByWeb"
+                                [filterByLoginStatus]="filterByLogin"
+                                (itemClicked)="onTypeChange($event)">
+            <cp-resource-selector-item [resourceId]="contentTypes.single"
+                                       [active]="selectedContent === contentTypes.single"
+                                       [title]="'t_personas_resource_single_item' | cpI18n">
+              <cp-resource-selector-type-single [isEdit]="[true]"
+                                                [showErrors]="formHasErrors"
+                                                [filterByWebApp]="filterByWeb"
+                                                [campusLink]="campusLinkForm.value"
+                                                [filterByLoginStatus]="filterByLogin"
+                                                *ngIf="selectedContent === contentTypes.single"
+                                                (valueChanges)="onCampusLinkFormChange($event)">
               </cp-resource-selector-type-single>
             </cp-resource-selector-item>
-            <cp-resource-selector-item
-              [resourceId]="contentTypes.list"
-              [active]="selectedContent === contentTypes.list"
-              [title]="'t_personas_resource_resource' | cpI18n">
-              <cp-resource-selector-type-resource
-                [isEdit]="[true]"
-                [showErrors]="formHasErrors"
-                [filterByWebApp]="filterByWeb"
-                [campusLink]="campusLinkForm.value"
-                *ngIf="selectedContent === contentTypes.list"
-                [filterByLoginStatus]="filterByLogin"
-                (valueChanges)="onCampusLinkFormChange($event)">
+            <cp-resource-selector-item [resourceId]="contentTypes.list"
+                                       [active]="selectedContent === contentTypes.list"
+                                       [title]="'t_personas_resource_resource' | cpI18n">
+              <cp-resource-selector-type-resource [isEdit]="[true]"
+                                                  [showErrors]="formHasErrors"
+                                                  [filterByWebApp]="filterByWeb"
+                                                  [campusLink]="campusLinkForm.value"
+                                                  *ngIf="selectedContent === contentTypes.list"
+                                                  [filterByLoginStatus]="filterByLogin"
+                                                  (valueChanges)="onCampusLinkFormChange($event)">
               </cp-resource-selector-type-resource>
             </cp-resource-selector-item>
-            <cp-resource-selector-item
-              [resourceId]="contentTypes.web"
-              [active]="selectedContent === contentTypes.web"
-              [title]="'t_personas_resource_web_link' | cpI18n">
-              <cp-resource-selector-type-web
-                [isEdit]="[true]"
-                [showErrors]="formHasErrors"
-                [filterByWebApp]="filterByWeb"
-                [campusLink]="campusLinkForm.value"
-                [filterByLoginStatus]="filterByLogin"
-                *ngIf="selectedContent === contentTypes.web"
-                (valueChanges)="onCampusLinkFormChange($event)">
+            <cp-resource-selector-item [resourceId]="contentTypes.web"
+                                       [active]="selectedContent === contentTypes.web"
+                                       [title]="'t_personas_resource_web_link' | cpI18n">
+              <cp-resource-selector-type-web [isEdit]="[true]"
+                                             [showErrors]="formHasErrors"
+                                             [filterByWebApp]="filterByWeb"
+                                             [campusLink]="campusLinkForm.value"
+                                             [filterByLoginStatus]="filterByLogin"
+                                             *ngIf="selectedContent === contentTypes.web"
+                                             (valueChanges)="onCampusLinkFormChange($event)">
               </cp-resource-selector-type-web>
             </cp-resource-selector-item>
-            <cp-resource-selector-item
-              [resourceId]="contentTypes.thirdParty"
-              [active]="selectedContent === contentTypes.thirdParty"
-              [title]="'t_personas_resource_third_party_app' | cpI18n">
-              <cp-resource-selector-type-external
-                [isEdit]="[true]"
-                [showErrors]="formHasErrors"
-                [campusLink]="campusLinkForm.value"
-                *ngIf="selectedContent === contentTypes.thirdParty"
-                (valueChanges)="onCampusLinkFormChange($event)">
+            <cp-resource-selector-item [resourceId]="contentTypes.thirdParty"
+                                       [active]="selectedContent === contentTypes.thirdParty"
+                                       [title]="'t_personas_resource_third_party_app' | cpI18n">
+              <cp-resource-selector-type-external [isEdit]="[true]"
+                                                  [showErrors]="formHasErrors"
+                                                  [campusLink]="campusLinkForm.value"
+                                                  *ngIf="selectedContent === contentTypes.thirdParty"
+                                                  (valueChanges)="onCampusLinkFormChange($event)">
               </cp-resource-selector-type-external>
             </cp-resource-selector-item>
-            <cp-resource-selector-item
-              [resourceId]="contentTypes.resourceList"
-              [active]="selectedContent === contentTypes.resourceList"
-              [title]="'t_personas_tile_create_type_resource_resource_list' | cpI18n">
-              <cp-personas-resource-list-of-list
-                [isEdit]="[true]"
-                [persona]="persona"
-                [showErrors]="formHasErrors"
-                [campusLink]="campusLinkForm.value"
-                *ngIf="selectedContent === contentTypes.resourceList"
-                (resourceAdded)="onCampusLinkFormChange($event)">
+            <cp-resource-selector-item [resourceId]="contentTypes.resourceList"
+                                       [active]="selectedContent === contentTypes.resourceList"
+                                       [title]="'t_personas_tile_create_type_resource_resource_list' | cpI18n">
+              <cp-personas-resource-list-of-list [isEdit]="[true]"
+                                                 [persona]="persona"
+                                                 [showErrors]="formHasErrors"
+                                                 [campusLink]="campusLinkForm.value"
+                                                 *ngIf="selectedContent === contentTypes.resourceList"
+                                                 (resourceAdded)="onCampusLinkFormChange($event)">
               </cp-personas-resource-list-of-list>
             </cp-resource-selector-item>
           </cp-resource-selector>
@@ -107,16 +95,16 @@
           <div class="row">
             <div class="col-12">
               <div class="text-right">
-                <a [routerLink]="['../../../']" class="cpbtn cpbtn--cancel">
+                <a [routerLink]="['../../../']"
+                   class="cpbtn cpbtn--cancel">
                   {{ 'cancel' | cpI18n }}
                 </a>
-                <button
-                  type="submit"
-                  (click)="onSubmit()"
-                  class="cpbtn cpbtn--primary"
-                  [disabled]="disableSubmitButton">
-                    {{'save' | cpI18n}}
-                  </button>
+                <button type="submit"
+                        (click)="onSubmit()"
+                        class="cpbtn cpbtn--primary"
+                        [disabled]="disableSubmitButton">
+                  {{'save' | cpI18n}}
+                </button>
               </div>
             </div>
           </div>

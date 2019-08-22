@@ -4,12 +4,10 @@
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
     <div class="col-2 no-left-padding">
-      <cp-dropdown
-        [disabled]="!canAudience"
-        [selectedItem]="selectedItem"
-        [items]="dropdownItems$ | async"
-        (selected)="onListSelected($event)"
-      >
+      <cp-dropdown [disabled]="!canAudience"
+                   [selectedItem]="selectedItem"
+                   [items]="dropdownItems$ | async"
+                   (selected)="onListSelected($event)">
       </cp-dropdown>
     </div>
   </div>

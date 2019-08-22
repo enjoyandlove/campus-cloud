@@ -1,13 +1,15 @@
-<ng-container *ngFor="let item of (items$ | async); trackBy: trackByFn; let i = index">
-  <div class="list row" *ngIf="i !== widgetIndex">
+<ng-container
+              *ngFor="let item of (items$ | async); trackBy: trackByFn; let i = index">
+  <div class="list row"
+       *ngIf="i !== widgetIndex">
     <div class="col-12">
       <div class="row">
         <div class="col-9 no-left-padding no-right-padding list__title">
-          <span
-            class="list__key-as-label text-truncate">{{ item.name }}</span>
+          <span class="list__key-as-label text-truncate">{{ item.name }}</span>
           <span class="list__key-id-as-label">{{ item.id }}</span>
         </div>
-        <div class="col-3 no-left-padding no-right-padding text-right list__timestamp">
+        <div
+             class="col-3 no-left-padding no-right-padding text-right list__timestamp">
           {{ 't_shared_created' | cpI18n }}:
           {{ item.date_created | cpDatePipe: dateFormat}}
         </div>
@@ -19,7 +21,8 @@
           </cp-api-management-key>
         </div>
 
-        <div class="col-3 no-left-padding no-right-padding text-right list__actions">
+        <div
+             class="col-3 no-left-padding no-right-padding text-right list__actions">
           <button type="button"
                   [cpTarget]="'delete_' + i"
                   (click)="revokeAccessToken(item)"
@@ -46,12 +49,11 @@
       <ng-container *ngSwitchCase="false">
         <div class="row edit">
           <div class="col-12 no-right-padding no-left-padding">
-            <cp-api-form
-              [isEdit]="isEdit"
-              [formData]="item$ | async"
-              (cancelEdit)="hideEditWidget()"
-              (valueChanges)="onValueChanges($event)"
-              (submitted)="onFormSubmitted(item.id, $event)">
+            <cp-api-form [isEdit]="isEdit"
+                         [formData]="item$ | async"
+                         (cancelEdit)="hideEditWidget()"
+                         (valueChanges)="onValueChanges($event)"
+                         (submitted)="onFormSubmitted(item.id, $event)">
             </cp-api-form>
           </div>
         </div>

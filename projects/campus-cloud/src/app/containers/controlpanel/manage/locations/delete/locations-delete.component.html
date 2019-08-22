@@ -8,11 +8,10 @@
           </strong>
         </span>
 
-        <button
-          type="button"
-          aria-label="close"
-          data-dismiss="modal"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                aria-label="close"
+                data-dismiss="modal"
+                class="float-right hover cpmodal__header__close unstyled-button">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -32,11 +31,17 @@
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-6 text-right">
-        <button type="button" cpTarget="cancel" class="cpbtn cpbtn--cancel" data-dismiss="modal">
+        <button type="button"
+                cpTarget="cancel"
+                class="cpbtn cpbtn--cancel"
+                data-dismiss="modal">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button type="button" cpTarget="delete" (click)="onDelete()" class="cpbtn cpbtn--danger">
+        <button type="button"
+                cpTarget="delete"
+                (click)="onDelete()"
+                class="cpbtn cpbtn--danger">
           {{ 'delete' | cpI18n }}
         </button>
       </div>

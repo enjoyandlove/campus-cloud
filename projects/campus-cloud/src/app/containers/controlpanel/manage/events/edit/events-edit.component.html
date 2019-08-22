@@ -1,8 +1,10 @@
-<div class="margin-bottom" [ngSwitch]="isFormReady">
+<div class="margin-bottom"
+     [ngSwitch]="isFormReady">
   <cp-spinner *ngSwitchCase="false"></cp-spinner>
 
   <ng-container *ngSwitchCase="true">
-    <form [formGroup]="form" *ngSwitchCase="true">
+    <form [formGroup]="form"
+          *ngSwitchCase="true">
       <div class="row">
         <div class="col">
           <div class="cp-card">
@@ -10,10 +12,9 @@
               <div class="col-12">
                 <p class="title">{{ 'events_event_banner' | cpI18n }}</p>
                 <div class="margin-top">
-                  <cp-image-upload
-                    (uploaded)="onUploadedImage($event)"
-                    [defaultImage]="form.controls['poster_url'].value"
-                    [required]="
+                  <cp-image-upload (uploaded)="onUploadedImage($event)"
+                                   [defaultImage]="form.controls['poster_url'].value"
+                                   [required]="
                       formMissingFields && form.controls['poster_url'].hasError('required')">
                   </cp-image-upload>
                 </div>
@@ -25,23 +26,21 @@
                 <p class="title">{{ 'events_event_details' | cpI18n }}</p>
                 <div class="form-group margin-top">
                   <label id="title">{{ 'events_event_name' | cpI18n }}</label>
-                  <input
-                    for="title"
-                    type="text"
-                    class="form-control"
-                    formControlName="title"
-                    [class.error]="formMissingFields && form.controls['title'].hasError('required')"
-                  />
+                  <input for="title"
+                         type="text"
+                         class="form-control"
+                         formControlName="title"
+                         [class.error]="formMissingFields && form.controls['title'].hasError('required')" />
                 </div>
 
-                <div class="row form-group" *ngIf="!isClub && !isService && !isOrientation">
+                <div class="row form-group"
+                     *ngIf="!isClub && !isService && !isOrientation">
                   <div class="col-12">
                     <label>{{ 'select_host' | cpI18n }}</label>
-                    <cp-dropdown
-                      [items]="stores"
-                      [selectedItem]="originalHost"
-                      (selected)="onSelectedHost($event)"
-                      [isRequiredError]="
+                    <cp-dropdown [items]="stores"
+                                 [selectedItem]="originalHost"
+                                 (selected)="onSelectedHost($event)"
+                                 [isRequiredError]="
                         formMissingFields && form.controls['store_id'].hasError('required')">
                     </cp-dropdown>
                   </div>
@@ -50,45 +49,44 @@
                 <div class="row form-group">
                   <div class="col-6">
                     <label>{{ 'start_date' | cpI18n }}</label>
-                    <cp-datepicker
-                      [options]="startdatePickerOpts"
-                      [error]="formMissingFields && form.controls['start'].hasError('required')"
-                      (dateSet)="setStart($event)">
+                    <cp-datepicker [options]="startdatePickerOpts"
+                                   [error]="formMissingFields && form.controls['start'].hasError('required')"
+                                   (dateSet)="setStart($event)">
                     </cp-datepicker>
                   </div>
                   <div class="col-6">
                     <label>{{ 'end_date' | cpI18n }}</label>
-                    <cp-datepicker
-                      [options]="enddatePickerOpts"
-                      [error]="formMissingFields && form.controls['end'].hasError('required')"
-                      (dateSet)="setEnd($event)">
+                    <cp-datepicker [options]="enddatePickerOpts"
+                                   [error]="formMissingFields && form.controls['end'].hasError('required')"
+                                   (dateSet)="setEnd($event)">
                     </cp-datepicker>
                   </div>
                 </div>
 
-                <div class="row form-group" *ngIf="isOrientation">
+                <div class="row form-group"
+                     *ngIf="isOrientation">
                   <div class="col-12">
-                    <cp-checkbox
-                      class="checkbox"
-                      (toggle)="onAllDayToggle($event)"
-                      [label]="cpI18n.translate('all_day')"
-                      [isChecked]="form.controls['is_all_day'].value">
+                    <cp-checkbox class="checkbox"
+                                 (toggle)="onAllDayToggle($event)"
+                                 [label]="cpI18n.translate('all_day')"
+                                 [isChecked]="form.controls['is_all_day'].value">
                     </cp-checkbox>
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="description">{{ 'events_event_description' | cpI18n }}</label>
-                  <textarea id="description" formControlName="description"></textarea>
+                  <label
+                         for="description">{{ 'events_event_description' | cpI18n }}</label>
+                  <textarea id="description"
+                            formControlName="description"></textarea>
                 </div>
 
                 <div class="row form-group">
                   <div class="col-12">
-                    <cp-checkbox
-                      class="checkbox"
-                      [isChecked]="showLocationDetails"
-                      (toggle)="onLocationToggle($event)"
-                      [label]="cpI18n.translate('t_shared_label_location_toggle')">
+                    <cp-checkbox class="checkbox"
+                                 [isChecked]="showLocationDetails"
+                                 (toggle)="onLocationToggle($event)"
+                                 [label]="cpI18n.translate('t_shared_label_location_toggle')">
                     </cp-checkbox>
                   </div>
                 </div>
@@ -99,23 +97,28 @@
                       <label>{{ 'location' | cpI18n }}</label>
                       <div class="row form-group">
                         <div class="col-12">
-                          <cp-place-autocomplete
-                            [newAddress]="newAddress"
-                            (backToDefault)="onResetMap()"
-                            (placeChange)="onPlaceChange($event)"
-                            [defaultValue]="form.controls.address.value">
+                          <cp-place-autocomplete [newAddress]="newAddress"
+                                                 (backToDefault)="onResetMap()"
+                                                 (placeChange)="onPlaceChange($event)"
+                                                 [defaultValue]="form.controls.address.value">
                           </cp-place-autocomplete>
                         </div>
                       </div>
                       <div class="row form-group">
                         <div class="col-6">
                           <label id="location">{{ 'building' | cpI18n }}</label>
-                          <input for="location" type="text" class="form-control" formControlName="location" />
+                          <input for="location"
+                                 type="text"
+                                 class="form-control"
+                                 formControlName="location" />
                         </div>
 
                         <div class="col-6">
                           <label for="room_data">{{ 'room' | cpI18n }}</label>
-                          <input id="room_data" type="text" class="form-control" formControlName="room_data" />
+                          <input id="room_data"
+                                 type="text"
+                                 class="form-control"
+                                 formControlName="room_data" />
                         </div>
                       </div>
                     </div>
@@ -124,10 +127,9 @@
                   <div class="row">
                     <div class="col-12">
                       <div class="maps">
-                        <cp-maps
-                          [center]="mapCenter"
-                          [drawMarker]="drawMarker"
-                          (mapSelection)="onMapSelection($event)">
+                        <cp-maps [center]="mapCenter"
+                                 [drawMarker]="drawMarker"
+                                 (mapSelection)="onMapSelection($event)">
                         </cp-maps>
                       </div>
                     </div>
@@ -144,31 +146,29 @@
               <div class="col-12">
                 <p class="title">{{ 'assessment' | cpI18n }}</p>
                 <span class="float-right">
-                  <cp-switch
-                    (toggle)="toggleEventAttendance($event)"
-                    [isChecked]="form.controls.event_attendance.value === attendanceEnabled">
+                  <cp-switch (toggle)="toggleEventAttendance($event)"
+                             [isChecked]="form.controls.event_attendance.value === attendanceEnabled">
                   </cp-switch>
                 </span>
               </div>
             </div>
 
-            <div *ngIf="form.controls.event_attendance.value === attendanceEnabled">
+            <div
+                 *ngIf="form.controls.event_attendance.value === attendanceEnabled">
               <div class="row margin-top">
                 <div class="col-6">
                   <div class="form-group attendance-type-tooltip">
                     <label class="with-tooltip">
                       {{ 't_events_attendance_type' | cpI18n }}
-                      <i
-                        cpTooltip
-                        class="material-icons"
-                        [attr.title]="'t_events_event_attendance_type_tooltip' | cpI18n">
+                      <i cpTooltip
+                         class="material-icons"
+                         [attr.title]="'t_events_event_attendance_type_tooltip' | cpI18n">
                         info_outline
                       </i>
                     </label>
-                    <cp-dropdown
-                      [items]="attendanceTypes"
-                      [selectedItem]="selectedAttendanceType"
-                      (selected)="onSelectedAttendanceType($event)">
+                    <cp-dropdown [items]="attendanceTypes"
+                                 [selectedItem]="selectedAttendanceType"
+                                 (selected)="onSelectedAttendanceType($event)">
                     </cp-dropdown>
                   </div>
                 </div>
@@ -176,17 +176,15 @@
                   <div class="form-group event-qr-enable-tooltip">
                     <label class="with-tooltip">
                       {{ 't_events_event_qr_enabled' | cpI18n }}
-                      <i
-                        cpTooltip
-                        class="material-icons"
-                        [attr.title]="'t_events_event_qr_code_tooltip' | cpI18n">
+                      <i cpTooltip
+                         class="material-icons"
+                         [attr.title]="'t_events_event_qr_code_tooltip' | cpI18n">
                         info_outline
                       </i>
                     </label>
-                    <cp-dropdown
-                      [items]="eventQRCodes"
-                      [selectedItem]="selectedQRCode"
-                      (selected)="onSelectedQRCode($event.action)">
+                    <cp-dropdown [items]="eventQRCodes"
+                                 [selectedItem]="selectedQRCode"
+                                 (selected)="onSelectedQRCode($event.action)">
                     </cp-dropdown>
                   </div>
                 </div>
@@ -196,18 +194,16 @@
                   <div class="form-group event-manager-tooltip">
                     <label class="with-tooltip">
                       {{ 'events_event_manager' | cpI18n }}
-                      <i
-                        cpTooltip
-                        class="material-icons"
-                        [attr.title]="'events_event_manager_tooltip' | cpI18n">
+                      <i cpTooltip
+                         class="material-icons"
+                         [attr.title]="'events_event_manager_tooltip' | cpI18n">
                         info_outline
                       </i>
                     </label>
-                    <cp-dropdown
-                      [items]="managers"
-                      [selectedItem]="selectedManager"
-                      (selected)="onSelectedManager($event)"
-                      [isRequiredError]="formMissingFields && form.errors?.eventManagerRequired">
+                    <cp-dropdown [items]="managers"
+                                 [selectedItem]="selectedManager"
+                                 (selected)="onSelectedManager($event)"
+                                 [isRequiredError]="formMissingFields && form.errors?.eventManagerRequired">
                     </cp-dropdown>
                   </div>
                 </div>
@@ -215,18 +211,15 @@
                   <div class="form-group attendance-manager-tooltip">
                     <label class="with-tooltip">
                       {{ 'events_attendance_manager_full' | cpI18n }}
-                      <i
-                        cpTooltip
-                        class="material-icons"
-                        [attr.title]="'events_attendance_manager_tooltip' | cpI18n">
+                      <i cpTooltip
+                         class="material-icons"
+                         [attr.title]="'events_attendance_manager_tooltip' | cpI18n">
                         info_outline
                       </i>
                     </label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      formControlName="attendance_manager_email"
-                    />
+                    <input type="text"
+                           class="form-control"
+                           formControlName="attendance_manager_email" />
                   </div>
                 </div>
               </div>
@@ -235,35 +228,29 @@
                 <div class="col-6">
                   <label class="with-tooltip">
                     {{ 'student_feedback' | cpI18n }}
-                    <i
-                      cpTooltip
-                      class="material-icons"
-                      [attr.title]="'events_event_feedback_tooltip' | cpI18n">
+                    <i cpTooltip
+                       class="material-icons"
+                       [attr.title]="'events_event_feedback_tooltip' | cpI18n">
                       info_outline
                     </i>
                   </label>
-                  <cp-dropdown
-                    [items]="attendanceFeedback"
-                    [selectedItem]="originalAttnFeedback"
-                    (selected)="onEventFeedbackChange($event)"
-                    [isRequiredError]="
+                  <cp-dropdown [items]="attendanceFeedback"
+                               [selectedItem]="originalAttnFeedback"
+                               (selected)="onEventFeedbackChange($event)"
+                               [isRequiredError]="
                       formMissingFields && form.controls['event_feedback'].hasError('required')">
                   </cp-dropdown>
                 </div>
               </div>
 
-              <div
-                class="row form-group"
-                *ngIf="form.controls['event_feedback'].value === eventFeedbackEnabled"
-              >
+              <div class="row form-group"
+                   *ngIf="form.controls['event_feedback'].value === eventFeedbackEnabled">
                 <div class="col-12">
                   <label>{{ 'events_default_question' | cpI18n }}</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    formControlName="custom_basic_feedback_label"
-                    [class.error]="formMissingFields && form.errors?.feedbackLabelRequired"
-                  />
+                  <input type="text"
+                         class="form-control"
+                         formControlName="custom_basic_feedback_label"
+                         [class.error]="formMissingFields && form.errors?.feedbackLabelRequired" />
                 </div>
               </div>
             </div>
@@ -276,7 +263,8 @@
               <div class="row">
                 <div class="col-12">
                   <div class="text-right">
-                    <label class="error" *ngIf="formMissingFields">
+                    <label class="error"
+                           *ngIf="formMissingFields">
                       <span>&#x26A0;</span>
                       {{
                         isDateError
@@ -284,13 +272,17 @@
                           : cpI18n.translate('error_fill_out_marked_fields')
                       }}
                     </label>
-                    <label class="error" *ngIf="serverError">
-                      <span>&#x26A0;</span> {{ cpI18n.translate('something_went_wrong') }}
+                    <label class="error"
+                           *ngIf="serverError">
+                      <span>&#x26A0;</span>
+                      {{ cpI18n.translate('something_went_wrong') }}
                     </label>
-                    <a [routerLink]="['../info']" class="cpbtn cpbtn--cancel">
+                    <a [routerLink]="['../info']"
+                       class="cpbtn cpbtn--cancel">
                       {{ 'cancel' | cpI18n }}
                     </a>
-                    <cp-button [props]="buttonData" (buttonClick)="onSubmit(form.value)">
+                    <cp-button [props]="buttonData"
+                               (buttonClick)="onSubmit(form.value)">
                     </cp-button>
                   </div>
                 </div>

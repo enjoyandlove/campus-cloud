@@ -6,11 +6,10 @@
           <strong>{{ 't_persona_delete_modal_title' | cpI18n }}</strong>
         </span>
 
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="float-right hover cpmodal__header__close unstyled-button">
           &times;
         </button>
       </div>
@@ -18,23 +17,20 @@
   </div>
 
   <ng-container [ngSwitch]="loading">
-    <cp-working
-      class="working"
-      *ngSwitchCase="true">
+    <cp-working class="working"
+                *ngSwitchCase="true">
     </cp-working>
 
     <ng-container *ngSwitchCase="false">
-      <cp-persona-cant-delete
-        (okClick)="resetModal()"
-        *ngIf="personas?.length < 1">
+      <cp-persona-cant-delete (okClick)="resetModal()"
+                              *ngIf="personas?.length < 1">
       </cp-persona-cant-delete>
 
-      <cp-persona-delete
-        [persona]="modal.data"
-        [personas]="personas"
-        (cancelClick)="resetModal()"
-        (deleteClick)="onDelete($event)"
-        *ngIf="personas?.length > 0">
+      <cp-persona-delete [persona]="modal.data"
+                         [personas]="personas"
+                         (cancelClick)="resetModal()"
+                         (deleteClick)="onDelete($event)"
+                         *ngIf="personas?.length > 0">
       </cp-persona-delete>
     </ng-container>
   </ng-container>
