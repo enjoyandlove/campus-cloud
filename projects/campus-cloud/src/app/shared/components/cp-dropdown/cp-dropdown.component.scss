@@ -53,12 +53,12 @@
     &__item {
       padding: 10px;
       text-align: left;
+      white-space: inherit;
       color: $color-secondary-text;
       transition: background 100ms ease-in;
 
       span.isLabel {
         @include font-semi-bold();
-
         color: $color-text;
       }
 
