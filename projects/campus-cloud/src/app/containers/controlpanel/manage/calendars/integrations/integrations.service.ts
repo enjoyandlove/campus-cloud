@@ -16,7 +16,7 @@ export class ItemsIntegrationsService {
   createIntegration(body, search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EVENT_INTEGRATIONS}/`;
 
-    return this.api.post(url, body, search, true);
+    return this.api.post(url, body, search);
   }
 
   editIntegration(integrationId: number, body, search: HttpParams) {

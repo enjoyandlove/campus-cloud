@@ -1,24 +1,28 @@
 <ul class="switch no-scroll-bar">
   <li class="switch__item no-hover"
       *ngIf="schools.length > 1">
-    <a href="#"
-       class="switch__item dropdown-item"
-       *ngIf="isSchoolPanel"
-       (click)="onGoToSchools($event)">
-      <i class="material-icons float-left">chevron_left</i><span>Back</span>
-    </a>
-    <a href="#"
-       *ngIf="!isSchoolPanel"
-       class="dropdown-item"
-       (click)="onGoToSchools($event)">
+    <button *ngIf="isSchoolPanel"
+            (click)="onGoToSchools($event)"
+            (keyup.arrowleft)="onGoToSchools($event)"
+            class="switch__item unstyled-button dropdown-item">
+      <i class="material-icons float-left"
+         aria-hidden="true">chevron_left</i>
+      <span>{{ 'back' | cpI18n }}</span>
+    </button>
+    <button *ngIf="!isSchoolPanel"
+            (click)="onGoToSchools($event)"
+            (keyup.arrowright)="onGoToSchools($event)"
+            class="unstyled-button dropdown-item">
       <span>{{ 'change_school' | cpI18n }}</span>
-      <i class="material-icons float-right">chevron_right</i>
-    </a>
+      <i class="material-icons float-right"
+         aria-hidden="true">chevron_right</i>
+    </button>
   </li>
 
   <div class="switch__left"
        *ngIf="!isSchoolPanel">
     <li (click)="close.emit()"
+        tabindex="-1"
         class="switch__item"
         [class.isFirstItem]="schools.length === 1">
       <a class="dropdown-item"
@@ -27,29 +31,35 @@
         {{ 'profile' | cpI18n }}
       </a>
     </li>
-    <li class="switch__item dropdown-item"
+    <li class="switch__item"
         (click)="close.emit()"
+        tabindex="-1"
         *cpFeatureToggle="'API_MANAGEMENT'">
-      <a [routerLink]="['/api-management']">{{ 't_api_management' | cpI18n}}</a>
+      <a [routerLink]="['/api-management']"
+         class="dropdown-item">{{ 't_api_management' | cpI18n}}</a>
     </li>
     <li class="switch__item"
+        tabindex="-1"
         (click)="close.emit()"
         *ngIf="canManageAdmins">
       <a class="dropdown-item"
          [routerLink]="['/settings/team']">{{ 'team_settings' | cpI18n }}</a>
     </li>
     <li class="switch__item"
+        tabindex="-1"
         (click)="close.emit()"
         *ngIf="canManageTestUsers">
       <a class="dropdown-item"
          [routerLink]="['/settings/testers']">{{ 't_sandbox_test_environment_users' | cpI18n }}</a>
     </li>
     <li class="switch__item"
+        tabindex="-1"
         (click)="close.emit()">
       <a class="dropdown-item"
          [routerLink]="['/account/change-password']">{{ 'change_password' | cpI18n }}</a>
     </li>
     <li class="switch__item"
+        tabindex="-1"
         (click)="close.emit()">
       <a class="dropdown-item"
          (click)="trackEvent(amplitudeEvents.logged_out)"
@@ -62,6 +72,7 @@
   <div class="switch__right"
        *ngIf="isSchoolPanel">
     <li *ngFor="let school of schools"
+        tabindex="-1"
         class="switch__item switch__school switch__school--current">
       <a href="#"
          class="dropdown-item"
