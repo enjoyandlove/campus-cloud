@@ -1,4 +1,3 @@
-import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
 import { IDining } from '@campus-cloud/libs/locations/common/model';
@@ -35,12 +34,12 @@ export enum diningActions {
 
 export class GetDining implements Action {
   readonly type = diningActions.GET_DINING;
-  constructor(public payload: { startRange: number; endRange: number; params: HttpParams }) {}
+  constructor(public payload: { startRange: number; endRange: number; state }) {}
 }
 
 export class GetDiningFail implements Action {
   readonly type = diningActions.GET_DINING_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class GetDiningSuccess implements Action {
@@ -50,12 +49,12 @@ export class GetDiningSuccess implements Action {
 
 export class GetFilteredDining implements Action {
   readonly type = diningActions.GET_FILTERED_DINING;
-  constructor(public payload: { startRange: number; endRange: number; params: HttpParams }) {}
+  constructor(public payload: { startRange: number; endRange: number; state }) {}
 }
 
 export class GetFilteredDiningFail implements Action {
   readonly type = diningActions.GET_FILTERED_DINING_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class GetFilteredDiningSuccess implements Action {
@@ -70,7 +69,7 @@ export class GetDiningById implements Action {
 
 export class GetDiningByIdFail implements Action {
   readonly type = diningActions.GET_DINING_BY_ID_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class GetDiningByIdSuccess implements Action {
@@ -80,12 +79,12 @@ export class GetDiningByIdSuccess implements Action {
 
 export class PostDining implements Action {
   readonly type = diningActions.POST_DINING;
-  constructor(public payload: { body: IDining; params: HttpParams }) {}
+  constructor(public payload: { body: IDining }) {}
 }
 
 export class PostDiningFail implements Action {
   readonly type = diningActions.POST_DINING_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class PostDiningSuccess implements Action {
@@ -100,7 +99,6 @@ export class EditDining implements Action {
       body: IDining;
       diningId: number;
       categoryId: number;
-      params: HttpParams;
       updatedCategory: string;
     }
   ) {}
@@ -108,7 +106,7 @@ export class EditDining implements Action {
 
 export class EditDiningFail implements Action {
   readonly type = diningActions.EDIT_DINING_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class EditDiningSuccess implements Action {
@@ -123,7 +121,7 @@ export class DeleteDining implements Action {
 
 export class DeleteDiningFail implements Action {
   readonly type = diningActions.DELETE_DINING_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class DeleteDiningSuccess implements Action {

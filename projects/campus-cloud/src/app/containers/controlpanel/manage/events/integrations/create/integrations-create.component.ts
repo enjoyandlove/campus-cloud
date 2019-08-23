@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { takeUntil, map, tap } from 'rxjs/operators';
-import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -10,7 +9,6 @@ import { CPSession } from '@campus-cloud/session';
 import { IItem } from '@campus-cloud/shared/components';
 import { IStore, ZendeskService } from '@campus-cloud/shared/services';
 import { EventIntegration } from '@campus-cloud/libs/integrations/events/model';
-import { IntegrationsUitlsService } from './../integrations.utils.service';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 
 @Component({
@@ -31,12 +29,6 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
 
   constructor(public session: CPSession, public store: Store<fromStore.IEventIntegrationState>) {}
 
-  get defaultParams(): HttpParams {
-    const school_id = this.session.g.get('school').id;
-
-    return IntegrationsUitlsService.commonParams(school_id);
-  }
-
   resetModal() {
     this.form.reset();
     this.teardown.emit();
@@ -48,11 +40,9 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
     }
 
     const body = this.form.value;
-    const params = this.defaultParams;
 
     const payload = {
       body,
-      params,
       hostType: this.hostType
     };
 
@@ -75,9 +65,7 @@ export class EventsIntegrationsCreateComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
       tap((stores: IStore[]) => {
         if (!stores.length) {
-          const params = this.defaultParams;
-
-          this.store.dispatch(new fromStore.GetHosts({ params }));
+          this.store.dispatch(new fromStore.GetHosts());
         }
       }),
       map((res) => (res.length ? res : [{ label: '---', action: null }]))

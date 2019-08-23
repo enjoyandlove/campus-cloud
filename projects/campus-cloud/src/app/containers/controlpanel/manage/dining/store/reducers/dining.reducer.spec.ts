@@ -1,12 +1,9 @@
-import { HttpParams, HttpErrorResponse } from '@angular/common/http';
-
 import * as fromActions from '../actions';
-import { mockSchool } from '@campus-cloud/session/mock';
 import * as fromReducer from './dining.reducer';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { mockLocations as mockDining } from '@campus-cloud/libs/locations/common/tests';
 
-const httpErrorResponse = new HttpErrorResponse({ error: true });
+const httpErrorResponse = 'fake error message';
 
 const pagination = {
   startRange: 1,
@@ -15,13 +12,11 @@ const pagination = {
 
 const { initialState } = fromReducer;
 
-const params = new HttpParams().set('school_id', mockSchool.id.toString());
-
 describe('Dining Reducer', () => {
   it('should GET dining', () => {
     const payload = {
       ...pagination,
-      params
+      state: null
     };
     const action = new fromActions.GetDining(payload);
     const result = fromReducer.reducer(initialState, action);
@@ -51,8 +46,7 @@ describe('Dining Reducer', () => {
   it('should POST dining', () => {
     const body = mockDining[0];
     const payload = {
-      body,
-      params
+      body
     };
 
     const action = new fromActions.PostDining(payload);
@@ -86,7 +80,6 @@ describe('Dining Reducer', () => {
     const body = mockDining[0];
     const payload = {
       body,
-      params,
       diningId: mockDining[0].id,
       updatedCategory: amplitudeEvents.NO,
       categoryId: mockDining[0].category_id
@@ -132,7 +125,6 @@ describe('Dining Reducer', () => {
 
   it('should DELETE dining success', () => {
     const payload = {
-      params,
       deletedId: mockDining[0].id,
       categoryId: mockDining[0].category_id
     };

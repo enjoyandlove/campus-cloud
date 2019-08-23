@@ -1,4 +1,3 @@
-import { HttpParams } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
 import { IStore } from '@campus-cloud/shared/services/store.service';
@@ -38,7 +37,7 @@ export enum IntegrationActions {
 export class GetIntegrations implements Action {
   readonly type = IntegrationActions.GET_INTEGRATIONS;
 
-  constructor(public payload: { startRange: number; endRange: number; params: HttpParams }) {}
+  constructor(public payload: { startRange: number; endRange: number }) {}
 }
 
 export class GetIntegrationsSuccess implements Action {
@@ -56,7 +55,7 @@ export class GetIntegrationsFail implements Action {
 export class PostIntegration implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION;
 
-  constructor(public payload: { body: IEventIntegration; params: HttpParams; hostType: string }) {}
+  constructor(public payload: { body: IEventIntegration; hostType: string }) {}
 }
 
 export class PostIntegrationSuccess implements Action {
@@ -74,7 +73,7 @@ export class PostIntegrationFail implements Action {
 export class DeleteIntegration implements Action {
   readonly type = IntegrationActions.DELETE_INTEGRATION;
 
-  constructor(public payload: { integration: IEventIntegration; params: HttpParams }) {}
+  constructor(public payload: { integration: IEventIntegration }) {}
 }
 
 export class DeleteIntegrationSuccess implements Action {
@@ -92,9 +91,7 @@ export class DeleteIntegrationFail implements Action {
 export class EditIntegration implements Action {
   readonly type = IntegrationActions.EDIT_INTEGRATION;
 
-  constructor(
-    public payload: { integrationId: number; body: IEventIntegration; params: HttpParams }
-  ) {}
+  constructor(public payload: { integrationId: number; body: IEventIntegration }) {}
 }
 
 export class EditIntegrationSuccess implements Action {
@@ -111,8 +108,6 @@ export class EditIntegrationFail implements Action {
 
 export class GetHosts implements Action {
   readonly type = IntegrationActions.GET_HOSTS;
-
-  constructor(public payload: { params: HttpParams }) {}
 }
 
 export class GetHostsSuccess implements Action {
@@ -154,15 +149,13 @@ export class Destroy implements Action {
 export class CreateAndSync implements Action {
   readonly type = IntegrationActions.CREATE_AND_SYNC;
 
-  constructor(public payload: { body: IEventIntegration; params: HttpParams; hostType: string }) {}
+  constructor(public payload: { body: IEventIntegration; hostType: string }) {}
 }
 
 export class UpdateAndSync implements Action {
   readonly type = IntegrationActions.UPDATE_AND_SYNC;
 
-  constructor(
-    public payload: { integrationId: number; body: IEventIntegration; params: HttpParams }
-  ) {}
+  constructor(public payload: { integrationId: number; body: IEventIntegration }) {}
 }
 
 export type Actions =

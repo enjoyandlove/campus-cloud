@@ -1,6 +1,5 @@
 import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
 import { filter, map, takeUntil, tap } from 'rxjs/operators';
-import { HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -8,19 +7,15 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
-import { IItem } from '@campus-cloud/shared/components';
 import { baseActions } from '@campus-cloud/store/base';
+import { IItem } from '@campus-cloud/shared/components';
+import * as fromCategoryStore from '../categories/store';
 import { CPSession, ISchool } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { LatLngValidators } from '@campus-cloud/shared/validators';
-import * as fromCategoryStore from '../categories/store';
-import { LocationType } from '@campus-cloud/libs/locations/common/utils';
 import { LocationModel } from '@campus-cloud/libs/locations/common/model';
+import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
 import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
-import {
-  ICategory,
-  LocationCategoryLocale
-} from '@campus-cloud/libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-locations-create',
@@ -67,12 +62,8 @@ export class LocationsCreateComponent implements OnInit, OnDestroy, AfterViewIni
       this.openingHours
     );
 
-    const school_id = this.session.g.get('school').id;
-    const params = new HttpParams().append('school_id', school_id);
-
     const payload = {
-      body,
-      params
+      body
     };
 
     this.store.dispatch(new fromStore.PostLocation(payload));
@@ -148,16 +139,7 @@ export class LocationsCreateComponent implements OnInit, OnDestroy, AfterViewIni
       takeUntil(this.destroy$),
       tap((categories: ICategory[]) => {
         if (!categories.length) {
-          const locale = CPI18nService.getLocale().startsWith('fr')
-            ? LocationCategoryLocale.fr
-            : LocationCategoryLocale.eng;
-
-          const params = new HttpParams()
-            .set('locale', locale)
-            .set('location_type', LocationType.location)
-            .set('school_id', this.session.g.get('school').id);
-
-          this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
+          this.store.dispatch(new fromCategoryStore.GetCategories());
         }
       }),
       map((res) => LocationsUtilsService.setCategoriesDropDown(res, categoryLabel))

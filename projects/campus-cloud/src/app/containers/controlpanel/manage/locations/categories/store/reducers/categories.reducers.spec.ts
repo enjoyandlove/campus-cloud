@@ -1,27 +1,18 @@
-import { HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 
 import * as fromActions from '../actions';
 import { mockSchool } from '@campus-cloud/session/mock';
 import * as fromReducer from './categories.reducers';
 import { mockCategories } from '@campus-cloud/libs/locations/common/categories/tests';
 
-const httpErrorResponse = new HttpErrorResponse({ error: true });
-
-const pagination = {
-  startRange: 1,
-  endRange: 2
-};
+const httpErrorResponse = 'fake error message';
 
 const params = new HttpParams().set('school_id', mockSchool.id.toString());
 
 describe('Categories Reducer', () => {
   it('should GET categories', () => {
     const { initialState } = fromReducer;
-    const payload = {
-      ...pagination,
-      params
-    };
-    const action = new fromActions.GetCategories(payload);
+    const action = new fromActions.GetCategories();
     const result = fromReducer.reducer(initialState, action);
     const { loading } = result;
 

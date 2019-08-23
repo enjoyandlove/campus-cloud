@@ -1,4 +1,3 @@
-import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
 import { ILocation } from '@campus-cloud/libs/locations/common/model';
@@ -35,12 +34,12 @@ export enum locationActions {
 
 export class GetLocations implements Action {
   readonly type = locationActions.GET_LOCATIONS;
-  constructor(public payload: { startRange: number; endRange: number; params: HttpParams }) {}
+  constructor(public payload: { startRange: number; endRange: number; state }) {}
 }
 
 export class GetLocationsFail implements Action {
   readonly type = locationActions.GET_LOCATIONS_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class GetLocationsSuccess implements Action {
@@ -50,12 +49,12 @@ export class GetLocationsSuccess implements Action {
 
 export class GetFilteredLocations implements Action {
   readonly type = locationActions.GET_FILTERED_LOCATIONS;
-  constructor(public payload: { startRange: number; endRange: number; params: HttpParams }) {}
+  constructor(public payload: { startRange: number; endRange: number; state }) {}
 }
 
 export class GetFilteredLocationsFail implements Action {
   readonly type = locationActions.GET_FILTERED_LOCATIONS_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class GetFilteredLocationsSuccess implements Action {
@@ -65,12 +64,12 @@ export class GetFilteredLocationsSuccess implements Action {
 
 export class GetLocationById implements Action {
   readonly type = locationActions.GET_LOCATION_BY_ID;
-  constructor(public payload: { locationId: number; params: HttpParams }) {}
+  constructor(public payload: { locationId: number }) {}
 }
 
 export class GetLocationByIdFail implements Action {
   readonly type = locationActions.GET_LOCATION_BY_ID_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class GetLocationByIdSuccess implements Action {
@@ -80,12 +79,12 @@ export class GetLocationByIdSuccess implements Action {
 
 export class PostLocation implements Action {
   readonly type = locationActions.POST_LOCATION;
-  constructor(public payload: { body: any; params: HttpParams }) {}
+  constructor(public payload: { body: ILocation }) {}
 }
 
 export class PostLocationFail implements Action {
   readonly type = locationActions.POST_LOCATION_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class PostLocationSuccess implements Action {
@@ -100,7 +99,6 @@ export class EditLocation implements Action {
       body: ILocation;
       locationId: number;
       categoryId: number;
-      params: HttpParams;
       updatedCategory: string;
     }
   ) {}
@@ -108,7 +106,7 @@ export class EditLocation implements Action {
 
 export class EditLocationFail implements Action {
   readonly type = locationActions.EDIT_LOCATION_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class EditLocationSuccess implements Action {
@@ -123,7 +121,7 @@ export class DeleteLocation implements Action {
 
 export class DeleteLocationFail implements Action {
   readonly type = locationActions.DELETE_LOCATION_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class DeleteLocationSuccess implements Action {

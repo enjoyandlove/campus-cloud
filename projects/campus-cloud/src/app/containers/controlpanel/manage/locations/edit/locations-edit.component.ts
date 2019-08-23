@@ -1,7 +1,6 @@
 import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
 import { filter, map, takeUntil, tap } from 'rxjs/operators';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { Subject, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -9,20 +8,16 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
 import { BaseComponent } from '@campus-cloud/base';
-import { IItem } from '@campus-cloud/shared/components';
 import { baseActions } from '@campus-cloud/store/base';
-import { CPI18nService } from '@campus-cloud/shared/services';
+import { IItem } from '@campus-cloud/shared/components';
+import * as fromCategoryStore from '../categories/store';
 import { CPSession, ISchool } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { LatLngValidators } from '@campus-cloud/shared/validators';
-import * as fromCategoryStore from '../categories/store';
-import { LocationType } from '@campus-cloud/libs/locations/common/utils';
+import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
 import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 import { LocationModel, ILocation } from '@campus-cloud/libs/locations/common/model';
-import {
-  ICategory,
-  LocationCategoryLocale
-} from '@campus-cloud/libs/locations/common/categories/model';
 
 @Component({
   selector: 'cp-locations-edit',
@@ -79,12 +74,9 @@ export class LocationsEditComponent extends BaseComponent
     );
 
     const locationId = this.locationId;
-    const school_id = this.session.g.get('school').id;
-    const params = new HttpParams().append('school_id', school_id);
 
     const payload = {
       body,
-      params,
       locationId,
       categoryId: this.categoryId,
       updatedCategory: this.updatedCategory
@@ -179,16 +171,7 @@ export class LocationsEditComponent extends BaseComponent
       takeUntil(this.destroy$),
       tap((categories: ICategory[]) => {
         if (!categories.length) {
-          const locale = CPI18nService.getLocale().startsWith('fr')
-            ? LocationCategoryLocale.fr
-            : LocationCategoryLocale.eng;
-
-          const params = new HttpParams()
-            .set('locale', locale)
-            .set('location_type', LocationType.location)
-            .set('school_id', this.session.g.get('school').id);
-
-          this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
+          this.store.dispatch(new fromCategoryStore.GetCategories());
         }
       }),
       map((categories) => LocationsUtilsService.setCategoriesDropDown(categories, categoryLabel)),

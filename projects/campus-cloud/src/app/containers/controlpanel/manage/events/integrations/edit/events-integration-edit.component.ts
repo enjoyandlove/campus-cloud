@@ -1,15 +1,12 @@
 import { Component, OnInit, Output, EventEmitter, Input, OnDestroy } from '@angular/core';
 import { tap, map, takeUntil } from 'rxjs/internal/operators';
-import { HttpParams } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@campus-cloud/session';
 import { IItem } from '@campus-cloud/shared/components';
 import { IStore, ZendeskService } from '@campus-cloud/shared/services';
-import { IntegrationsUitlsService } from './../integrations.utils.service';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import { IEventIntegration, EventIntegration } from '@campus-cloud/libs/integrations/events/model';
 
@@ -31,13 +28,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
   stores$: Observable<IStore[] | IItem[]>;
   eventIntegrationPkdbUrl = `${ZendeskService.getUrl('articles/360021952274')}`;
 
-  constructor(public session: CPSession, public store: Store<fromStore.IEventIntegrationState>) {}
-
-  get defaultParams(): HttpParams {
-    const school_id = this.session.g.get('school').id;
-
-    return IntegrationsUitlsService.commonParams(school_id);
-  }
+  constructor(public store: Store<fromStore.IEventIntegrationState>) {}
 
   resetModal() {
     this.form.reset();
@@ -50,11 +41,9 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
     }
 
     const body = this.form.getRawValue();
-    const params = this.defaultParams;
 
     const payload = {
       body,
-      params,
       integrationId: this.eventIntegration.id
     };
 
@@ -68,9 +57,7 @@ export class EventsIntegrationEditComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$),
       tap((stores: IStore[]) => {
         if (!stores.length) {
-          const params = this.defaultParams;
-
-          this.store.dispatch(new fromStore.GetHosts({ params }));
+          this.store.dispatch(new fromStore.GetHosts());
         } else {
           setTimeout(() => {
             const selectedHostLookup = (s) => s.value === this.eventIntegration.feed_obj_id;

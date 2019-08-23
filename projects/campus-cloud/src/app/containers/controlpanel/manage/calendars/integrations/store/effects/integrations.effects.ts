@@ -4,15 +4,16 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
+import * as fromActions from '../actions';
 import { CPDate } from '@campus-cloud/shared/utils';
 import { CPSession } from '@campus-cloud/session';
-import * as fromActions from '../actions';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { ItemsIntegrationsService } from './../../integrations.service';
 import { EventIntegration } from '@projects/campus-cloud/src/app/libs/integrations/events/model';
 import { StoreService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model/event-integration.interface';
+import { ItemsIntegrationsUitlsService } from '@controlpanel/manage/calendars/integrations/items-integrations.utils.service';
 
 @Injectable()
 export class IntegrationsEffects {
@@ -38,11 +39,13 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.GET_INTEGRATIONS),
     mergeMap((action: fromActions.GetIntegrations) => {
-      const { startRange, endRange, params } = action.payload;
-      return this.service.getIntegrations(startRange, endRange, params).pipe(
-        map((data: IEventIntegration[]) => new fromActions.GetIntegrationsSuccess(data)),
-        catchError(() => of(new fromActions.GetIntegrationsFail(this.somethingWentWrong)))
-      );
+      const { startRange, endRange, calendarId } = action.payload;
+      return this.service
+        .getIntegrations(startRange, endRange, this.defaultParams(calendarId))
+        .pipe(
+          map((data: IEventIntegration[]) => new fromActions.GetIntegrationsSuccess(data)),
+          catchError(() => of(new fromActions.GetIntegrationsFail(this.somethingWentWrong)))
+        );
     })
   );
 
@@ -52,8 +55,8 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.DELETE_INTEGRATION),
     mergeMap((action: fromActions.DeleteIntegration) => {
-      const { integrationId, params } = action.payload;
-      return this.service.deleteIntegration(integrationId, params).pipe(
+      const { integrationId, calendarId } = action.payload;
+      return this.service.deleteIntegration(integrationId, this.defaultParams(calendarId)).pipe(
         map(() => {
           this.cpTracking.amplitudeEmitEvent(
             amplitudeEvents.MANAGE_DELETED_FEED_INTEGRATION,
@@ -72,8 +75,8 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.EDIT_INTEGRATION),
     mergeMap((action: fromActions.EditIntegration) => {
-      const { integrationId, body, params } = action.payload;
-      return this.service.editIntegration(integrationId, body, params).pipe(
+      const { integrationId, body, calendarId } = action.payload;
+      return this.service.editIntegration(integrationId, body, this.defaultParams(calendarId)).pipe(
         map((edited: IEventIntegration) => new fromActions.EditIntegrationSuccess(edited)),
         catchError((error) =>
           of(new fromActions.EditIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
@@ -104,8 +107,8 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.POST_INTEGRATION),
     map((action: fromActions.PostIntegration) => action.payload),
-    mergeMap(({ body, calendarId, params }) => {
-      return this.service.createIntegration(body, params).pipe(
+    mergeMap(({ body, calendarId }) => {
+      return this.service.createIntegration(body, this.defaultParams(calendarId)).pipe(
         map((integration: IEventIntegration) => {
           this.cpTracking.amplitudeEmitEvent(
             amplitudeEvents.MANAGE_ADDED_FEED_INTEGRATION,
@@ -203,6 +206,12 @@ export class IntegrationsEffects {
       host_type: amplitudeEvents.INSTITUTION,
       sub_menu_name: amplitudeEvents.CALENDAR
     };
+  }
+
+  private defaultParams(calendarId): HttpParams {
+    const school_id = this.session.g.get('school').id;
+
+    return ItemsIntegrationsUitlsService.commonParams(school_id, calendarId.toString());
   }
 
   constructor(

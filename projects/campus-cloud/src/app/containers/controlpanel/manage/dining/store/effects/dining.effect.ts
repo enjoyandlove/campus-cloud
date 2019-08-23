@@ -6,17 +6,18 @@ import { Router } from '@angular/router';
 import { of, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
+import * as fromActions from '../actions';
 import { ISnackbar } from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
-import * as fromActions from '../actions';
-import { baseActionClass } from '@campus-cloud/store/base';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { DiningService } from '../../dining.service';
-import { IDining } from '@campus-cloud/libs/locations/common/model';
+import { baseActionClass } from '@campus-cloud/store/base';
+import { parseErrorResponse } from '@campus-cloud/shared/utils';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import * as fromDiningCategoryStore from '../../categories/store';
+import { IDining } from '@campus-cloud/libs/locations/common/model';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
-import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
+import { LocationsUtilsService, LocationType } from '@campus-cloud/libs/locations/common/utils';
 
 @Injectable()
 export class DiningEffect {
@@ -37,11 +38,12 @@ export class DiningEffect {
   > = this.actions$.pipe(
     ofType(fromActions.diningActions.GET_DINING),
     mergeMap((action: fromActions.GetDining) => {
-      const { startRange, endRange, params } = action.payload;
+      const { startRange, endRange, state } = action.payload;
+      const params = this.defaultParams(state);
 
       return this.service.getDining(startRange, endRange, params).pipe(
         map((data: IDining[]) => new fromActions.GetDiningSuccess(data)),
-        catchError((error) => of(new fromActions.GetDiningFail(error)))
+        catchError((error) => of(new fromActions.GetDiningFail(parseErrorResponse(error))))
       );
     })
   );
@@ -52,11 +54,12 @@ export class DiningEffect {
   > = this.actions$.pipe(
     ofType(fromActions.diningActions.GET_FILTERED_DINING),
     mergeMap((action: fromActions.GetFilteredDining) => {
-      const { startRange, endRange, params } = action.payload;
+      const { startRange, endRange, state } = action.payload;
+      const params = this.defaultParams(state);
 
       return this.service.getDining(startRange, endRange, params).pipe(
         map((data: IDining[]) => new fromActions.GetFilteredDiningSuccess(data)),
-        catchError((error) => of(new fromActions.GetFilteredDiningFail(error)))
+        catchError((error) => of(new fromActions.GetFilteredDiningFail(parseErrorResponse(error))))
       );
     })
   );
@@ -72,7 +75,7 @@ export class DiningEffect {
 
       return this.service.getDiningById(diningId, search).pipe(
         map((data: IDining) => new fromActions.GetDiningByIdSuccess(data)),
-        catchError((error) => of(new fromActions.GetDiningByIdFail(error)))
+        catchError((error) => of(new fromActions.GetDiningByIdFail(parseErrorResponse(error))))
       );
     })
   );
@@ -83,7 +86,8 @@ export class DiningEffect {
   > = this.actions$.pipe(
     ofType(fromActions.diningActions.POST_DINING),
     mergeMap((action: fromActions.PostDining) => {
-      const { body, params } = action.payload;
+      const { body } = action.payload;
+      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
 
       return this.service.createDining(body, params).pipe(
         map((data: IDining) => {
@@ -101,7 +105,7 @@ export class DiningEffect {
         catchError((error) => {
           this.handleError();
 
-          return of(new fromActions.PostDiningFail(error));
+          return of(new fromActions.PostDiningFail(parseErrorResponse(error)));
         })
       );
     })
@@ -136,7 +140,8 @@ export class DiningEffect {
   > = this.actions$.pipe(
     ofType(fromActions.diningActions.EDIT_DINING),
     mergeMap((action: fromActions.EditDining) => {
-      const { updatedCategory, diningId, categoryId, body, params } = action.payload;
+      const { updatedCategory, diningId, categoryId, body } = action.payload;
+      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
 
       return this.service.updateDining(body, diningId, params).pipe(
         map((data: IDining) => {
@@ -155,7 +160,7 @@ export class DiningEffect {
         catchError((error) => {
           this.handleError();
 
-          return of(new fromActions.EditDiningFail(error));
+          return of(new fromActions.EditDiningFail(parseErrorResponse(error)));
         })
       );
     })
@@ -214,7 +219,7 @@ export class DiningEffect {
 
           return new fromActions.DeleteDiningSuccess({ deletedId: diningId, categoryId });
         }),
-        catchError((error) => of(new fromActions.DeleteDiningFail(error)))
+        catchError((error) => of(new fromActions.DeleteDiningFail(parseErrorResponse(error))))
       );
     })
   );
@@ -248,5 +253,15 @@ export class DiningEffect {
         body: this.cpI18n.translate('something_went_wrong')
       })
     );
+  }
+
+  private defaultParams(state): HttpParams {
+    return new HttpParams()
+      .set('search_str', state.search_str)
+      .set('sort_field', state.sort_field)
+      .set('category_id', state.category_id)
+      .set('location_type', LocationType.dining)
+      .set('sort_direction', state.sort_direction)
+      .set('school_id', this.session.g.get('school').id);
   }
 }
