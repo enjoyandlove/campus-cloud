@@ -1,7 +1,6 @@
-import { HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 import * as fromActions from '../actions';
-import { mockSchool } from '@campus-cloud/session/mock';
 import { mockIntegration } from '../../tests/mocks';
 import * as fromReducer from './integrations.reducers';
 
@@ -11,8 +10,6 @@ const pagination = {
 };
 
 const httpErrorResponse = new HttpErrorResponse({ error: 'Mock Error' });
-
-const params = new HttpParams().set('school_id', mockSchool.id.toString());
 
 function addEventToState(state, event) {
   return {
@@ -27,7 +24,7 @@ describe('Calendar Items Integrations Reducer', () => {
       const { initialState } = fromReducer;
       const payload = {
         ...pagination,
-        params
+        calendarId: mockIntegration.feed_obj_id
       };
       const action = new fromActions.GetIntegrations(payload);
       const result = fromReducer.reducer(initialState, action);
@@ -149,7 +146,6 @@ describe('Calendar Items Integrations Reducer', () => {
       const body = mockIntegration;
       const payload = {
         body,
-        params,
         calendarId: mockIntegration.feed_obj_id
       };
 
@@ -192,8 +188,8 @@ describe('Calendar Items Integrations Reducer', () => {
     it('should set completedAction flag to null', () => {
       const { initialState } = fromReducer;
       const payload = {
-        params,
-        integrationId: mockIntegration.id
+        integrationId: mockIntegration.id,
+        calendarId: mockIntegration.feed_obj_id
       };
 
       const action = new fromActions.DeleteIntegration(payload);
@@ -241,9 +237,9 @@ describe('Calendar Items Integrations Reducer', () => {
       initialState = addEventToState(initialState, mockIntegration);
 
       const payload = {
-        params,
         body: mockIntegration,
-        integrationId: mockIntegration.id
+        integrationId: mockIntegration.id,
+        calendarId: mockIntegration.feed_obj_id
       };
 
       const action = new fromActions.EditIntegration(payload);

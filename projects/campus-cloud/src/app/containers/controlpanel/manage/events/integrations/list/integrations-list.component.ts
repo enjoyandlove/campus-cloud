@@ -1,18 +1,15 @@
 import { tap, takeUntil, filter, map, take } from 'rxjs/operators';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
 import { BaseComponent } from '@campus-cloud/base';
-import { CPSession } from '@campus-cloud/session';
 import { FORMAT } from '@campus-cloud/shared/pipes/date/date.pipe';
 import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model';
-import { IntegrationsUitlsService } from './../integrations.utils.service';
 
 @Component({
   selector: 'cp-events-integrations',
@@ -31,17 +28,10 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
   stores$: Observable<Array<{ label: string; value: number }>>;
 
   constructor(
-    public session: CPSession,
     public cpI18n: CPI18nService,
     public store: Store<fromStore.IEventIntegrationState | fromRoot.IHeader | fromRoot.ISnackbar>
   ) {
     super();
-  }
-
-  get defaultParams(): HttpParams {
-    const school_id = this.session.g.get('school').id;
-
-    return IntegrationsUitlsService.commonParams(school_id);
   }
 
   onPaginationNext() {
@@ -102,7 +92,6 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
   fetch() {
     const payload = {
       endRange: this.endRange,
-      params: this.defaultParams,
       startRange: this.startRange
     };
     this.store.dispatch(new fromStore.GetIntegrations(payload));
@@ -122,10 +111,7 @@ export class EventsIntegrationsListComponent extends BaseComponent implements On
   }
 
   onDeleteClick(integration: IEventIntegration) {
-    const params = this.defaultParams;
-
     const payload = {
-      params,
       integration
     };
 

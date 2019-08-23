@@ -1,9 +1,7 @@
 import { takeUntil, filter, tap, map, take } from 'rxjs/operators';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { CPSession } from '@campus-cloud/session';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
@@ -11,9 +9,9 @@ import * as fromRoot from '@campus-cloud/store';
 
 import { BaseComponent } from '@campus-cloud/base';
 import { IItem } from '@campus-cloud/shared/components';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
-import { Mixin, Destroyable } from '@projects/campus-cloud/src/app/shared/mixins';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { IWallsIntegration } from '@campus-cloud/libs/integrations/walls/model';
+import { Mixin, Destroyable } from '@projects/campus-cloud/src/app/shared/mixins';
 
 @Component({
   selector: 'cp-walls-integrations-list',
@@ -35,16 +33,10 @@ export class WallsIntegrationsListComponent extends BaseComponent implements OnI
   emitDestroy() {}
 
   constructor(
-    private session: CPSession,
     private cpI18n: CPI18nService,
     public store: Store<fromStore.IWallsIntegrationState>
   ) {
     super();
-  }
-
-  get defaultParams(): HttpParams {
-    const school_id = this.session.g.get('school').id;
-    return new HttpParams().set('school_id', school_id);
   }
 
   onPaginationNext() {
@@ -110,7 +102,6 @@ export class WallsIntegrationsListComponent extends BaseComponent implements OnI
   fetch() {
     const payload = {
       endRange: this.endRange,
-      params: this.defaultParams,
       startRange: this.startRange
     };
     this.store.dispatch(new fromStore.GetIntegrations(payload));
@@ -137,10 +128,7 @@ export class WallsIntegrationsListComponent extends BaseComponent implements OnI
   }
 
   onDeleteClick(integration: IWallsIntegration) {
-    const params = this.defaultParams;
-
     const payload = {
-      params,
       integration
     };
 
@@ -199,9 +187,7 @@ export class WallsIntegrationsListComponent extends BaseComponent implements OnI
         takeUntil(this.destroy$),
         tap((socialPostCategories) => {
           if (!socialPostCategories.length) {
-            this.store.dispatch(
-              new fromStore.GetSocialPostCategories({ params: this.defaultParams })
-            );
+            this.store.dispatch(new fromStore.GetSocialPostCategories());
           }
         })
       )

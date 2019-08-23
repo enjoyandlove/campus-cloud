@@ -10,11 +10,12 @@ import * as fromActions from '../actions';
 import { CPSession } from '@campus-cloud/session';
 import { LocationsService } from '../../locations.service';
 import * as fromCategoryStore from '../../categories/store';
+import { parseErrorResponse } from '@campus-cloud/shared/utils';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { ILocation } from '@campus-cloud/libs/locations/common/model';
 import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
-import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
+import { LocationsUtilsService, LocationType } from '@campus-cloud/libs/locations/common/utils';
 
 @Injectable()
 export class LocationsEffect {
@@ -34,11 +35,12 @@ export class LocationsEffect {
   > = this.actions$.pipe(
     ofType(fromActions.locationActions.GET_LOCATIONS),
     mergeMap((action: fromActions.GetLocations) => {
-      const { startRange, endRange, params } = action.payload;
+      const { startRange, endRange, state } = action.payload;
+      const params = this.defaultParams(state);
 
       return this.service.getLocations(startRange, endRange, params).pipe(
         map((data: ILocation[]) => new fromActions.GetLocationsSuccess(data)),
-        catchError((error) => of(new fromActions.GetLocationsFail(error)))
+        catchError((error) => of(new fromActions.GetLocationsFail(parseErrorResponse(error))))
       );
     })
   );
@@ -49,11 +51,14 @@ export class LocationsEffect {
   > = this.actions$.pipe(
     ofType(fromActions.locationActions.GET_FILTERED_LOCATIONS),
     mergeMap((action: fromActions.GetFilteredLocations) => {
-      const { startRange, endRange, params } = action.payload;
+      const { startRange, endRange, state } = action.payload;
+      const params = this.defaultParams(state);
 
       return this.service.getLocations(startRange, endRange, params).pipe(
         map((data: ILocation[]) => new fromActions.GetFilteredLocationsSuccess(data)),
-        catchError((error) => of(new fromActions.GetFilteredLocationsFail(error)))
+        catchError((error) =>
+          of(new fromActions.GetFilteredLocationsFail(parseErrorResponse(error)))
+        )
       );
     })
   );
@@ -64,11 +69,12 @@ export class LocationsEffect {
   > = this.actions$.pipe(
     ofType(fromActions.locationActions.GET_LOCATION_BY_ID),
     mergeMap((action: fromActions.GetLocationById) => {
-      const { locationId, params } = action.payload;
+      const { locationId } = action.payload;
+      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
 
       return this.service.getLocationById(locationId, params).pipe(
         map((data: ILocation) => new fromActions.GetLocationByIdSuccess(data)),
-        catchError((error) => of(new fromActions.GetLocationByIdFail(error)))
+        catchError((error) => of(new fromActions.GetLocationByIdFail(parseErrorResponse(error))))
       );
     })
   );
@@ -79,7 +85,8 @@ export class LocationsEffect {
   > = this.actions$.pipe(
     ofType(fromActions.locationActions.POST_LOCATION),
     mergeMap((action: fromActions.PostLocation) => {
-      const { body, params } = action.payload;
+      const { body } = action.payload;
+      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
 
       return this.service.createLocation(body, params).pipe(
         map((data: ILocation) => {
@@ -93,7 +100,7 @@ export class LocationsEffect {
           return new fromActions.PostLocationSuccess(data);
         }),
         tap((data) => this.router.navigate([`/manage/locations/${data.payload.id}/info`])),
-        catchError((error) => of(new fromActions.PostLocationFail(error)))
+        catchError((error) => of(new fromActions.PostLocationFail(parseErrorResponse(error))))
       );
     })
   );
@@ -125,7 +132,8 @@ export class LocationsEffect {
   > = this.actions$.pipe(
     ofType(fromActions.locationActions.EDIT_LOCATION),
     mergeMap((action: fromActions.EditLocation) => {
-      const { updatedCategory, locationId, categoryId, body, params } = action.payload;
+      const { updatedCategory, locationId, categoryId, body } = action.payload;
+      const params = new HttpParams().set('school_id', this.session.g.get('school').id);
 
       return this.service.updateLocation(body, locationId, params).pipe(
         map((data: ILocation) => {
@@ -140,7 +148,7 @@ export class LocationsEffect {
           return new fromActions.EditLocationSuccess({ data: data, categoryId });
         }),
         tap(() => this.router.navigate([`/manage/locations/${locationId}/info`])),
-        catchError((error) => of(new fromActions.EditLocationFail(error)))
+        catchError((error) => of(new fromActions.EditLocationFail(parseErrorResponse(error))))
       );
     })
   );
@@ -201,7 +209,7 @@ export class LocationsEffect {
 
           return new fromActions.DeleteLocationSuccess({ deletedId: locationId, categoryId });
         }),
-        catchError((error) => of(new fromActions.DeleteLocationFail(error)))
+        catchError((error) => of(new fromActions.DeleteLocationFail(parseErrorResponse(error))))
       );
     })
   );
@@ -226,4 +234,14 @@ export class LocationsEffect {
     filter((c: ICategory[]) => !!c.length),
     mergeMap((c) => of(new fromCategoryStore.GetCategoriesSuccess(c)))
   );
+
+  private defaultParams(state): HttpParams {
+    return new HttpParams()
+      .append('search_str', state.search_str)
+      .append('sort_field', state.sort_field)
+      .append('category_id', state.category_id)
+      .append('location_type', LocationType.location)
+      .append('sort_direction', state.sort_direction)
+      .append('school_id', this.session.g.get('school').id);
+  }
 }

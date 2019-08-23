@@ -1,5 +1,4 @@
 import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -61,11 +60,8 @@ export class DiningCreateComponent implements OnInit, OnDestroy, AfterViewInit {
       this.openingHours
     );
 
-    const params = new HttpParams().append('school_id', this.school.id.toString());
-
     const payload = {
-      body,
-      params
+      body
     };
 
     this.store.dispatch(new fromStore.PostDining(payload));

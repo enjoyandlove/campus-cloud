@@ -8,7 +8,6 @@ import * as fromRoot from '@campus-cloud/store';
 
 import { mockIntegration } from '../tests';
 import { CPSession } from '@campus-cloud/session';
-import { mockSchool } from '@campus-cloud/session/mock/school';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CPNoContentComponent } from '@campus-cloud/shared/components';
@@ -24,7 +23,7 @@ describe('EventsIntegrationsListComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule],
-        providers: [CPSession, CPI18nService, provideMockStore()],
+        providers: [CPI18nService, provideMockStore()],
         declarations: [EventsIntegrationsListComponent, IntegrationStatusPipe, IntegrationTypePipe],
         schemas: [NO_ERRORS_SCHEMA]
       });
@@ -42,9 +41,6 @@ describe('EventsIntegrationsListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EventsIntegrationsListComponent);
     component = fixture.componentInstance;
-
-    session = TestBed.get(CPSession);
-    session.g.set('school', mockSchool);
 
     dispatchSpy = spyOn(component.store, 'dispatch');
 

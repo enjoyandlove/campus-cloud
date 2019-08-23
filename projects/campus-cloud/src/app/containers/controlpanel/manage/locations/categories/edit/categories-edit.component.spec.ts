@@ -48,7 +48,6 @@ describe('CategoriesEditComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CategoriesEditComponent);
     component = fixture.componentInstance;
-    component.session.g.set('school', mockSchool);
     component.category = mockCategories[0];
 
     const closeButtonDebugEl = fixture.debugElement.query(By.css('.cpmodal__header__close'));
