@@ -7,6 +7,13 @@
   overflow: visible;
   background: $color-black;
 
+  .cp-wrapper {
+    display: flex;
+    padding-top: 12px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
   .avatar {
     width: 40px;
     height: 40px;
@@ -17,11 +24,6 @@
       width: 40px;
       height: 40px;
     }
-  }
-
-  .nav__links,
-  .nav__school {
-    padding-top: 20px;
   }
 
   ul {
@@ -91,9 +93,21 @@
   }
 }
 
+.right-side {
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
 .nav__school {
   width: 200px;
   max-width: 200px;
+
+  button[data-toggle='dropdown'] {
+    width: 100%;
+    display: block;
+    text-align: left;
+  }
 }
 
 .nav__school,
@@ -122,6 +136,7 @@
   &:hover,
   &--active {
     cursor: pointer;
+
     .nav__school__user,
     .nav__school__name,
     .nav__school__arrow i {
@@ -179,10 +194,8 @@
   margin-right: 30px;
 
   button {
-    top: 9px;
     padding: 0;
     line-height: 1;
-    position: relative;
     background: transparent;
 
     i {
