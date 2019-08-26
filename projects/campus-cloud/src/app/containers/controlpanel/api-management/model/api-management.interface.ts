@@ -11,6 +11,11 @@ export enum ApiType {
   notification = 'notification'
 }
 
+export const apiPrefix = {
+  live: 'live',
+  test: 'test'
+};
+
 export interface IPublicApiAccessToken {
   id?: string;
   name: string;
