@@ -2,16 +2,17 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { omit } from 'lodash';
 
-import { AccessType } from './model/api-management.interface';
+import { AccessType, apiPrefix } from './model/api-management.interface';
 
 @Injectable()
 export class ApiManagementUtilsService {
   navigateAwaySelection$: Subject<boolean> = new Subject<boolean>();
 
   static getAPIKeyPrefix(key: string) {
-    const prefix = key.split('_');
+    const splitPrefix = key.split('_');
+    const prefix = apiPrefix[splitPrefix[0]];
 
-    return `${prefix[0]}_`;
+    return prefix ? `${prefix}_` : null;
   }
 
   static getPermissionData(object) {
