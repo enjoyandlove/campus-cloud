@@ -2,6 +2,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { take } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { ClubsService } from '../clubs.service';
@@ -39,9 +40,12 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
     private imageService: ImageService
   ) {
     super();
-    this.store.select(getClubsState).subscribe((res) => {
-      this.clubs = res;
-    });
+    this.store
+      .select(getClubsState)
+      .pipe(take(1))
+      .subscribe((res) => {
+        this.clubs = res;
+      });
   }
 
   onRemoveImage(index) {
