@@ -1,10 +1,12 @@
 <ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div class="tile" *ngSwitchCase="false">
+  <div class="tile"
+       *ngSwitchCase="false">
     <div class="row">
       <div class="col-12">
-        <h3 class="tile--title">{{ 'dashboard_general_information' | cpI18n }}</h3>
+        <h3 class="tile--title">{{ 'dashboard_general_information' | cpI18n }}
+        </h3>
       </div>
     </div>
 
@@ -14,7 +16,8 @@
           <div class="col-8 tile--stat">
             <p>{{ 'dashboard_event_views' | cpI18n }}</p>
           </div>
-          <div class="col-4 text-right tile--amount">{{ data.event_views | cpStatsFormatter }}</div>
+          <div class="col-4 text-right tile--amount">
+            {{ data.event_views | cpStatsFormatter }}</div>
         </div>
       </div>
       <div class="col-6">
@@ -35,7 +38,8 @@
           <div class="col-8 tile--stat">
             <p>{{ 'dashboard_club_views' | cpI18n }}</p>
           </div>
-          <div class="col-4 text-right tile--amount">{{ data.club_views | cpStatsFormatter }}</div>
+          <div class="col-4 text-right tile--amount">
+            {{ data.club_views | cpStatsFormatter }}</div>
         </div>
       </div>
       <div class="col-6">

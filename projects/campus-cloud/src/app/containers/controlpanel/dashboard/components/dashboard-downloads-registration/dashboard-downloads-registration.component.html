@@ -7,13 +7,16 @@
       </div>
     </div>
 
-    <cp-line-chart [series]="series" [labels]="labels" [chartOptions]="chartOptions">
+    <cp-line-chart [series]="series"
+                   [labels]="labels"
+                   [chartOptions]="chartOptions">
     </cp-line-chart>
 
     <div class="row">
       <div class="col-12">
         <div class="legend">
-          <span class="legend--downloads"> {{ downloads }} {{ 'downloads' | cpI18n }} </span>
+          <span class="legend--downloads"> {{ downloads }}
+            {{ 'downloads' | cpI18n }} </span>
           <span class="legend--registrations">
             {{ registrations }} {{ 'registrations' | cpI18n }}
           </span>

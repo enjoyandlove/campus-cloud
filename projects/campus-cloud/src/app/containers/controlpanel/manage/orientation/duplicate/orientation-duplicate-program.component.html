@@ -4,12 +4,11 @@
       <div class="col-12 text-center">
         <span><strong>{{ 'orientation_duplicate_program' | cpI18n }}</strong></span>
 
-        <button
-          type="button"
-          aria-label="close"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                aria-label="close"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="float-right hover cpmodal__header__close unstyled-button">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -17,28 +16,25 @@
   </div>
 
   <div class="cpmodal__body">
-    <cp-calendar-form
-      #duplicateForm
-      [form]="form"
-      [isOrientation]="isOrientation"
-      [orientationProgram]="orientationProgram"
-    >
+    <cp-calendar-form #duplicateForm
+                      [form]="form"
+                      [isOrientation]="isOrientation"
+                      [orientationProgram]="orientationProgram">
     </cp-calendar-form>
   </div>
 
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-6 text-right">
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="cpbtn cpbtn--cancel"
-         >
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <cp-button (buttonClick)="onSubmit()" [props]="buttonData"> </cp-button>
+        <cp-button (buttonClick)="onSubmit()"
+                   [props]="buttonData"> </cp-button>
       </div>
     </div>
   </div>

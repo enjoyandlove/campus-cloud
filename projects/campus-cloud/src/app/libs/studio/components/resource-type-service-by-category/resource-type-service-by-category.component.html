@@ -1,19 +1,17 @@
 <div class="row">
   <div class="col-4">
-    <cp-dropdown
-      [items]="options"
-      [selectedItem]="selectedFilter"
-      (selected)="onSelected($event)"
-      cpTarget="service-by-category-filter">
+    <cp-dropdown [items]="options"
+                 [selectedItem]="selectedFilter"
+                 (selected)="onSelected($event)"
+                 cpTarget="service-by-category-filter">
     </cp-dropdown>
   </div>
   <div class="col-8">
-    <cp-dropdown-multiselect
-      #multiSelect
-      [items]="items$ | async"
-      (selection)="onMultiSelect($event)"
-      [showErrors]="showErrors && state.selection.length === 0"
-      [placeholder]="[multiSelectPlaceholder ? multiSelectPlaceholder : '...']">
+    <cp-dropdown-multiselect #multiSelect
+                             [items]="items$ | async"
+                             (selection)="onMultiSelect($event)"
+                             [showErrors]="showErrors && state.selection.length === 0"
+                             [placeholder]="[multiSelectPlaceholder ? multiSelectPlaceholder : '...']">
     </cp-dropdown-multiselect>
   </div>
 </div>

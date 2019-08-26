@@ -1,8 +1,6 @@
-<button
-  type="button"
-  (click)="onClick($event)"
-  [disabled]="props.disabled"
-  [class]="['cpbtn cpbtn--' + props.class]"
->
+<button type="button"
+        (click)="onClick($event)"
+        [disabled]="props.disabled"
+        [class]="['cpbtn cpbtn--' + props.class]">
   {{ props.text }}
 </button>

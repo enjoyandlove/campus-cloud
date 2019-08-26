@@ -7,9 +7,7 @@ import { of } from 'rxjs';
 
 import * as fromRoot from '@campus-cloud/store';
 
-import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { mockSchool } from '@campus-cloud/session/mock/school';
 import { MockActivatedRoute, mockIntegration } from '../tests';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
@@ -28,7 +26,6 @@ describe('ItemsIntegrationsListComponent', () => {
       TestBed.configureTestingModule({
         imports: [SharedModule],
         providers: [
-          CPSession,
           CPI18nService,
           provideMockStore(),
           { provide: ActivatedRoute, useClass: MockActivatedRoute }
@@ -42,7 +39,7 @@ describe('ItemsIntegrationsListComponent', () => {
       .then(done)
       .catch(done.fail)
   );
-  let session: CPSession;
+
   let dispatchSpy: jasmine.Spy;
   let fixture: ComponentFixture<ItemsIntegrationsListComponent>;
   let component: ItemsIntegrationsListComponent;
@@ -50,9 +47,6 @@ describe('ItemsIntegrationsListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ItemsIntegrationsListComponent);
     component = fixture.componentInstance;
-
-    session = TestBed.get(CPSession);
-    session.g.set('school', mockSchool);
 
     dispatchSpy = spyOn(component.store, 'dispatch');
 

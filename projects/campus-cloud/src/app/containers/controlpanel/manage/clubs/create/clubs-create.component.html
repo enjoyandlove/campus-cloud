@@ -7,11 +7,9 @@
             <div class="col-12">
               <p class="title">{{ labels.create_edit_banner | cpI18n }}</p>
               <div class="row">
-                <cp-image-upload
-                  class="col-12"
-                  (uploaded)="onUploadedImage($event)"
-                  [required]="formError && form.controls['logo_url'].hasError('required')"
-                >
+                <cp-image-upload class="col-12"
+                                 (uploaded)="onUploadedImage($event)"
+                                 [required]="formError && form.controls['logo_url'].hasError('required')">
                 </cp-image-upload>
               </div>
             </div>
@@ -27,12 +25,10 @@
             <div class="row">
               <div class="col-12">
                 <label>{{ labels.create_edit_name | cpI18n }}</label>
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="name"
-                  [class.error]="formError && form.controls['name'].hasError('required')"
-                />
+                <input type="text"
+                       class="form-control"
+                       formControlName="name"
+                       [class.error]="formError && form.controls['name'].hasError('required')" />
               </div>
             </div>
           </div>
@@ -40,7 +36,8 @@
           <div class="row form-group">
             <div class="col-12">
               <label>{{ labels.create_edit_description | cpI18n }}</label>
-              <textarea class="form-control" formControlName="description"> </textarea>
+              <textarea class="form-control"
+                        formControlName="description"> </textarea>
             </div>
           </div>
 
@@ -49,11 +46,9 @@
               <label>{{ labels.create_edit_status | cpI18n }}</label>
               <div class="row">
                 <div class="col-12">
-                  <cp-check-dropdown
-                    [items]="statusTypes"
-                    buttonClass="cpbtn cpbtn--cancel"
-                    (selected)="onSelectedStatus($event)"
-                  >
+                  <cp-check-dropdown [items]="statusTypes"
+                                     buttonClass="cpbtn cpbtn--cancel"
+                                     (selected)="onSelectedStatus($event)">
                   </cp-check-dropdown>
                 </div>
               </div>
@@ -62,11 +57,9 @@
               <label>{{ labels.create_edit_membership | cpI18n }}</label>
               <div class="row">
                 <div class="col-12">
-                  <cp-check-dropdown
-                    [items]="membershipTypes"
-                    buttonClass="cpbtn cpbtn--cancel"
-                    (selected)="onSelectedMembership($event)"
-                  >
+                  <cp-check-dropdown [items]="membershipTypes"
+                                     buttonClass="cpbtn cpbtn--cancel"
+                                     (selected)="onSelectedMembership($event)">
                   </cp-check-dropdown>
                 </div>
               </div>
@@ -75,11 +68,9 @@
 
           <div class="row form-group">
             <div class="col-12">
-              <cp-checkbox
-                class="checkbox"
-                (toggle)="onLocationToggle($event)"
-                [label]="cpI18n.translate('t_shared_label_location_toggle')"
-              >
+              <cp-checkbox class="checkbox"
+                           (toggle)="onLocationToggle($event)"
+                           [label]="cpI18n.translate('t_shared_label_location_toggle')">
               </cp-checkbox>
             </div>
           </div>
@@ -90,23 +81,25 @@
                 <label>{{ 'location' | cpI18n }}</label>
                 <div class="row form-group">
                   <div class="col-12">
-                    <cp-place-autocomplete
-                      [newAddress]="newAddress"
-                      (backToDefault)="onResetMap()"
-                      (placeChange)="onPlaceChange($event)"
-                      [defaultValue]="form.controls.address.value"
-                    >
+                    <cp-place-autocomplete [newAddress]="newAddress"
+                                           (backToDefault)="onResetMap()"
+                                           (placeChange)="onPlaceChange($event)"
+                                           [defaultValue]="form.controls.address.value">
                     </cp-place-autocomplete>
                   </div>
                 </div>
                 <div class="row form-group">
                   <div class="col-6">
                     <label>{{ 'building' | cpI18n }}</label>
-                    <input type="text" class="form-control" formControlName="location" />
+                    <input type="text"
+                           class="form-control"
+                           formControlName="location" />
                   </div>
                   <div class="col-6">
                     <label>{{ 'room' | cpI18n }}</label>
-                    <input type="text" class="form-control" formControlName="room_info" />
+                    <input type="text"
+                           class="form-control"
+                           formControlName="room_info" />
                   </div>
                 </div>
               </div>
@@ -114,11 +107,9 @@
 
             <div class="row form-group">
               <div class="col-12 maps">
-                <cp-maps
-                  [center]="mapCenter"
-                  [drawMarker]="drawMarker"
-                  (mapSelection)="onMapSelection($event)"
-                >
+                <cp-maps [center]="mapCenter"
+                         [drawMarker]="drawMarker"
+                         (mapSelection)="onMapSelection($event)">
                 </cp-maps>
               </div>
             </div>
@@ -135,19 +126,25 @@
               <div class="row form--group">
                 <div class="col-6">
                   <label>{{ 'website' | cpI18n }}</label>
-                  <input type="text" class="form-control" formControlName="website" />
+                  <input type="text"
+                         class="form-control"
+                         formControlName="website" />
                 </div>
 
                 <div class="col-6">
                   <label>{{ 'phone_number' | cpI18n }}</label>
-                  <input type="text" class="form-control" formControlName="phone" />
+                  <input type="text"
+                         class="form-control"
+                         formControlName="phone" />
                 </div>
               </div>
 
               <div class="row">
                 <div class="col-12">
                   <label>{{ 'email' | cpI18n }}</label>
-                  <input type="text" class="form-control" formControlName="email" />
+                  <input type="text"
+                         class="form-control"
+                         formControlName="email" />
                 </div>
               </div>
             </div>
@@ -161,13 +158,17 @@
             <div class="row">
               <div class="col-12">
                 <div class="text-right">
-                  <label class="error" *ngIf="formError">
-                    <span>&#x26A0;</span> {{ 'error_fill_out_marked_fields' | cpI18n }}
+                  <label class="error"
+                         *ngIf="formError">
+                    <span>&#x26A0;</span>
+                    {{ 'error_fill_out_marked_fields' | cpI18n }}
                   </label>
-                  <a [routerLink]="['../']" class="cpbtn cpbtn--cancel">
+                  <a [routerLink]="['../']"
+                     class="cpbtn cpbtn--cancel">
                     {{ 'cancel' | cpI18n }}
                   </a>
-                  <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>
+                  <cp-button [props]="buttonData"
+                             (buttonClick)="onSubmit()"> </cp-button>
                 </div>
               </div>
             </div>

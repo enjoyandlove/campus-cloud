@@ -4,10 +4,11 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
 import * as fromActions from '../actions';
+import { CPSession } from '@campus-cloud/session';
 import { IItem } from '@campus-cloud/shared/components';
 import { CPDate } from '@campus-cloud/shared/utils/date/date';
+import { parseErrorResponse } from '@campus-cloud/shared/utils';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { WallsIntegrationsService } from '../../walls-integrations.service';
@@ -33,10 +34,14 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.GET_INTEGRATIONS),
     mergeMap((action: fromActions.GetIntegrations) => {
-      const { startRange, endRange, params } = action.payload;
-      return this.service.getIntegrations(startRange, endRange, params).pipe(
+      const { startRange, endRange } = action.payload;
+      return this.service.getIntegrations(startRange, endRange, this.defaultParams()).pipe(
         map((data: IWallsIntegration[]) => new fromActions.GetIntegrationsSuccess(data)),
-        catchError((error) => of(new fromActions.GetIntegrationsFail(error)))
+        catchError((error) => {
+          return of(
+            new fromActions.GetIntegrationsFail({ error: parseErrorResponse(error.error) })
+          );
+        })
       );
     })
   );
@@ -49,8 +54,8 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.DELETE_INTEGRATION),
     mergeMap((action: fromActions.DeleteIntegration) => {
-      const { integration, params } = action.payload;
-      return this.service.deleteIntegration(integration.id, params).pipe(
+      const { integration } = action.payload;
+      return this.service.deleteIntegration(integration.id, this.defaultParams()).pipe(
         mergeMap(() => {
           this.cpTracking.amplitudeEmitEvent(
             amplitudeEvents.MANAGE_DELETED_FEED_INTEGRATION,
@@ -61,7 +66,9 @@ export class IntegrationsEffects {
             new fromActions.DeleteIntegrationSuccess({ deletedId: integration.id })
           ];
         }),
-        catchError((error) => of(new fromActions.DeleteIntegrationFail(error)))
+        catchError((error) =>
+          of(new fromActions.DeleteIntegrationFail({ error: parseErrorResponse(error.error) }))
+        )
       );
     })
   );
@@ -72,8 +79,8 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.POST_INTEGRATION),
     mergeMap((action: fromActions.PostIntegration) => {
-      const { body, params, channelType } = action.payload;
-      return this.service.createIntegration(body, params).pipe(
+      const { body, channelType } = action.payload;
+      return this.service.createIntegration(body, this.defaultParams()).pipe(
         map((data: IWallsIntegration) => {
           const eventProperties = {
             channel_type: channelType,
@@ -113,10 +120,12 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.EDIT_INTEGRATION),
     mergeMap((action: fromActions.EditIntegration) => {
-      const { integrationId, body, params } = action.payload;
-      return this.service.editIntegration(integrationId, body, params).pipe(
+      const { integrationId, body } = action.payload;
+      return this.service.editIntegration(integrationId, body, this.defaultParams()).pipe(
         map((edited: IWallsIntegration) => new fromActions.EditIntegrationSuccess(edited)),
-        catchError((error) => of(new fromActions.EditIntegrationFail(error)))
+        catchError((error) =>
+          of(new fromActions.EditIntegrationFail({ error: parseErrorResponse(error.error) }))
+        )
       );
     })
   );
@@ -126,11 +135,14 @@ export class IntegrationsEffects {
     fromActions.GetSocialPostCategoriesSuccess | fromActions.GetSocialPostCategoriesFail
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.GET_SOCIAL_POST_CATEGORIES),
-    mergeMap((action: fromActions.PostIntegration) => {
-      const { params } = action.payload;
-      return this.service.getSocialPostCategories(params).pipe(
+    mergeMap(() => {
+      return this.service.getSocialPostCategories(this.defaultParams()).pipe(
         map((data: IItem[]) => new fromActions.GetSocialPostCategoriesSuccess(data)),
-        catchError((error) => of(new fromActions.GetSocialPostCategoriesFail(error)))
+        catchError((error) =>
+          of(
+            new fromActions.GetSocialPostCategoriesFail({ error: parseErrorResponse(error.error) })
+          )
+        )
       );
     })
   );
@@ -194,5 +206,10 @@ export class IntegrationsEffects {
       sub_menu_name: amplitudeEvents.WALL,
       feed_type: CommonIntegrationUtilsService.getSelectedType(integration.feed_type).label
     };
+  }
+
+  private defaultParams(): HttpParams {
+    const school_id = this.session.g.get('school').id;
+    return new HttpParams().set('school_id', school_id);
   }
 }

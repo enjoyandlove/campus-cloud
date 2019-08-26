@@ -6,10 +6,9 @@
           <strong>{{ 't_events_assessment_add_checkin_modal_title' | cpI18n }}</strong>
         </span>
 
-        <button
-          aria-label="Close"
-          data-dismiss="modal"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button aria-label="Close"
+                data-dismiss="modal"
+                class="float-right hover cpmodal__header__close unstyled-button">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -19,10 +18,9 @@
   <div class="cpmodal__body">
     <div class="row">
       <div class="col-12">
-        <cp-check-in-form
-          [form]="form"
-          [data]="data"
-          [formErrors]="formErrors">
+        <cp-check-in-form [form]="form"
+                          [data]="data"
+                          [formErrors]="formErrors">
         </cp-check-in-form>
       </div>
     </div>
@@ -31,7 +29,8 @@
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-12">
-        <label class="error" *ngIf="formErrors">
+        <label class="error"
+               *ngIf="formErrors">
           <i class="material-icons">
             warning
           </i>
@@ -43,15 +42,15 @@
         </label>
       </div>
       <div class="col-12 text-right">
-        <button
-          type="button"
-          (click)="resetModal()"
-          class="cpbtn cpbtn--cancel"
-          data-dismiss="modal">
+        <button type="button"
+                (click)="resetModal()"
+                class="cpbtn cpbtn--cancel"
+                data-dismiss="modal">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>
+        <cp-button [props]="buttonData"
+                   (buttonClick)="onSubmit()"> </cp-button>
       </div>
     </div>
   </div>

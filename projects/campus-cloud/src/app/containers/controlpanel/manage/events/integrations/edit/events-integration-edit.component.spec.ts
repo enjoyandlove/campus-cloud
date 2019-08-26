@@ -7,7 +7,6 @@ import * as fromStore from '../store';
 
 import { CPSession } from '@campus-cloud/session';
 import { mockIntegration, resetForm } from '../tests';
-import { mockSchool } from '@campus-cloud/session/mock';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { EventsIntegrationEditComponent } from './events-integration-edit.component';
@@ -20,7 +19,7 @@ describe('EventsIntegrationEditComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [SharedModule],
-        providers: [CPSession, provideMockStore(), CommonIntegrationUtilsService],
+        providers: [provideMockStore(), CommonIntegrationUtilsService],
         declarations: [EventsIntegrationEditComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });
@@ -42,9 +41,6 @@ describe('EventsIntegrationEditComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(EventsIntegrationEditComponent);
     component = fixture.componentInstance;
-
-    session = TestBed.get(CPSession);
-    session.g.set('school', mockSchool);
 
     component.eventIntegration = mockIntegration;
 

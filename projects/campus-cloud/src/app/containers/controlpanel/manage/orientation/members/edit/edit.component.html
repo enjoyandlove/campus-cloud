@@ -8,12 +8,11 @@
           </strong>
         </span>
 
-        <button
-          type="button"
-          aria-label="close"
-          cpTarget="close"
-          (click)="onClose()"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                aria-label="close"
+                cpTarget="close"
+                (click)="onClose()"
+                class="float-right hover cpmodal__header__close unstyled-button">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -23,12 +22,10 @@
   <div class="cpmodal__body">
     <div class="row">
       <div class="col-12">
-        <cp-member-form
-          [form]="form"
-          [memberTypes]="memberTypes"
-          [selectedType]="selectedType"
-          [showPosition]="form.controls['member_type'].value === isExecutiveLeader"
-        >
+        <cp-member-form [form]="form"
+                        [memberTypes]="memberTypes"
+                        [selectedType]="selectedType"
+                        [showPosition]="form.controls['member_type'].value === isExecutiveLeader">
         </cp-member-form>
       </div>
     </div>
@@ -37,17 +34,18 @@
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-6 text-right">
-        <button type="button" cpTarget="cancel" (click)="onClose()" class="cpbtn cpbtn--cancel">
+        <button type="button"
+                cpTarget="cancel"
+                (click)="onClose()"
+                class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button
-          type="button"
-          cpTarget="submit"
-          (click)="onSave()"
-          [disabled]="form.invalid"
-          class="cpbtn cpbtn--primary"
-        >
+        <button type="button"
+                cpTarget="submit"
+                (click)="onSave()"
+                [disabled]="form.invalid"
+                class="cpbtn cpbtn--primary">
           {{ 'save' | cpI18n }}
         </button>
       </div>

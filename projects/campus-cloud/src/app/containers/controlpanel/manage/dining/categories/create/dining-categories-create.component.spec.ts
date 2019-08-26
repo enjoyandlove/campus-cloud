@@ -4,11 +4,9 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import * as fromStore from '../store';
-import { CPSession } from '@campus-cloud/session';
 import { MODAL_DATA } from '@campus-cloud/shared/services';
 import { fillForm } from '@campus-cloud/shared/utils/tests';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { mockSchool } from '@campus-cloud/session/mock/school';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
@@ -29,7 +27,6 @@ describe('DiningCategoriesCreateComponent', () => {
       TestBed.configureTestingModule({
         imports: [SharedModule],
         providers: [
-          CPSession,
           CPI18nService,
           provideMockStore(),
           LocationsUtilsService,
@@ -54,7 +51,6 @@ describe('DiningCategoriesCreateComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(DiningCategoriesCreateComponent);
     component = fixture.componentInstance;
-    component.session.g.set('school', mockSchool);
 
     const closeButtonDebugEl = fixture.debugElement.query(By.css('.cpmodal__header__close'));
 

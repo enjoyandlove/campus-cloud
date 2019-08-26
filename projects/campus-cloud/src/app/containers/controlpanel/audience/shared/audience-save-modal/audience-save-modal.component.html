@@ -5,11 +5,10 @@
         <span>
           <strong>{{ 'save_audience_modal_title' | cpI18n }}</strong>
         </span>
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="float-right hover cpmodal__header__close unstyled-button">
           &times;
         </button>
       </div>
@@ -21,7 +20,9 @@
       <div class="row form-group">
         <div class="col-12">
           <label>{{ 'audience_modal_label_audience_name' | cpI18n }}</label>
-          <input type="text" class="form-control" formControlName="name" />
+          <input type="text"
+                 class="form-control"
+                 formControlName="name" />
         </div>
       </div>
     </form>
@@ -30,16 +31,14 @@
   <div class="cpmodal__footer">
     <div class="row">
       <div class="col-12 float-right text-right">
-        <button
-          type="button"
-          (click)="resetModal()"
-          class="cpbtn cpbtn--cancel">
+        <button type="button"
+                (click)="resetModal()"
+                class="cpbtn cpbtn--cancel">
           {{ 't_shared_cancel' | cpI18n }}
         </button>
 
-        <cp-button
-          [props]="buttonData"
-          (buttonClick)="doSubmit()">
+        <cp-button [props]="buttonData"
+                   (buttonClick)="doSubmit()">
         </cp-button>
       </div>
     </div>

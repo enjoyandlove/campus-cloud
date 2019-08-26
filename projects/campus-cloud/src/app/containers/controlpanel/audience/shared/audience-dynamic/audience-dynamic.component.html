@@ -9,7 +9,9 @@
     <ng-container *ngIf="!filtersData.length">
       <p class="text-muted text-center">
         {{ 't_audience_dynamic_integration_disabled' | cpI18n }}
-        <a target="_blank" class="cpbtn cpbtn--link" [href]="zdDynamicArticle">
+        <a target="_blank"
+           class="cpbtn cpbtn--link"
+           [href]="zdDynamicArticle">
           {{ 'learn_more' | cpI18n }}
         </a>
       </p>
@@ -17,34 +19,34 @@
 
     <ng-container *ngIf="filtersData.length">
       <form [formGroup]="form">
-        <div
-          class="group-item"
-          formArrayName="filters"
-          *ngFor="let item of form.get('filters').controls; let i = index">
+        <div class="group-item"
+             formArrayName="filters"
+             *ngFor="let item of form.get('filters').controls; let i = index">
           <div [formGroupName]="i">
             <div class="row">
               <div class="col-11">
                 <fieldset [disabled]="counting">
                   <div class="row">
                     <div class="col-6">
-                      <cp-dropdown
-                        [selectedItem]="selectedItem[i]"
-                        (selected)="onFilterSelected($event, i)"
-                        [items]="filtersData | cpAudienceFilterPipe: usedFiltersAsArray()">
+                      <cp-dropdown [selectedItem]="selectedItem[i]"
+                                   (selected)="onFilterSelected($event, i)"
+                                   [items]="filtersData | cpAudienceFilterPipe: usedFiltersAsArray()">
                       </cp-dropdown>
                     </div>
                     <div class="col-6">
-                      <cp-dropdown-multiselect
-                        (selection)="onChoices($event, i)"
-                        [items]="selectedFilterOptions[i]"
-                        [placeholder]="filterDropdownPlaceholer">
+                      <cp-dropdown-multiselect (selection)="onChoices($event, i)"
+                                               [items]="selectedFilterOptions[i]"
+                                               [placeholder]="filterDropdownPlaceholer">
                       </cp-dropdown-multiselect>
                     </div>
                   </div>
                 </fieldset>
               </div>
-              <div *ngIf="state.filterCount > 1" class="col-1 delete-button hover">
-                <button type="button" class="unstyled-button" (click)="removeFilterGroup(i)">&times;</button>
+              <div *ngIf="state.filterCount > 1"
+                   class="col-1 delete-button hover">
+                <button type="button"
+                        class="unstyled-button"
+                        (click)="removeFilterGroup(i)">&times;</button>
               </div>
             </div>
           </div>
@@ -54,16 +56,16 @@
       <div class="footer">
         <div class="row">
           <div class="col-6">
-            <button
-              type="button"
-              (click)="addFilterGroup()"
-              class="cpbtn cpbtn--link"
-              [disabled]="state.filterCount === maxFilterCount">
+            <button type="button"
+                    (click)="addFilterGroup()"
+                    class="cpbtn cpbtn--link"
+                    [disabled]="state.filterCount === maxFilterCount">
               {{ 'audience_add_filter_button' | cpI18n }}
             </button>
           </div>
           <div class="col-6">
-            <cp-audience-counter [message]="message" [loading]="counting"> </cp-audience-counter>
+            <cp-audience-counter [message]="message"
+                                 [loading]="counting"> </cp-audience-counter>
           </div>
         </div>
       </div>

@@ -4,7 +4,8 @@
       <div class="col-12 text-center">
         <span><strong class="js_title">{{ modalTitle }}</strong></span>
 
-        <button (click)="resetModal()" class="float-right hover cpmodal__header__close unstyled-button">
+        <button (click)="resetModal()"
+                class="float-right hover cpmodal__header__close unstyled-button">
           &times;
         </button>
       </div>
@@ -29,14 +30,12 @@
               </p>
             </div>
           </div>
-          <div
-            [cpTarget]="['chechbox_' + index]"
-            class="row cpmodal__body__warning__item"
-            *ngFor="let warning of _warnings; index as index">
-            <cp-checkbox
-              class="col-12"
-              [label]="warning.label"
-              (toggle)="onWarningToogle($event, index)">
+          <div [cpTarget]="['chechbox_' + index]"
+               class="row cpmodal__body__warning__item"
+               *ngFor="let warning of _warnings; index as index">
+            <cp-checkbox class="col-12"
+                         [label]="warning.label"
+                         (toggle)="onWarningToogle($event, index)">
             </cp-checkbox>
           </div>
         </ng-container>
@@ -47,20 +46,18 @@
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-6 text-right">
-        <button
-          type="button"
-          cpTarget="cancel"
-          (click)="resetModal()"
-          class="cpbtn cpbtn--cancel js_cancel_button">
+        <button type="button"
+                cpTarget="cancel"
+                (click)="resetModal()"
+                class="cpbtn cpbtn--cancel js_cancel_button">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button
-          type="button"
-          cpTarget="delete"
-          (click)="onDeleteClick()"
-          [disabled]="disableSubmit"
-          class="cpbtn cpbtn--danger js_delete_button">
+        <button type="button"
+                cpTarget="delete"
+                (click)="onDeleteClick()"
+                [disabled]="disableSubmit"
+                class="cpbtn cpbtn--danger js_delete_button">
           {{ submitLabel | cpI18n }}
         </button>
       </div>

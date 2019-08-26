@@ -3,10 +3,14 @@
     <div class="col-12">
       <label>
         {{ 'name' | cpI18n }}
-        <cp-char-counter class="float-right" [limit]="225" [charCount]="form.controls.title.value">
+        <cp-char-counter class="float-right"
+                         [limit]="225"
+                         [charCount]="form.controls.title.value">
         </cp-char-counter>
       </label>
-      <input type="text" class="form-control" formControlName="title" />
+      <input type="text"
+             class="form-control"
+             formControlName="title" />
     </div>
   </div>
   <div class="row item-details">
@@ -14,7 +18,8 @@
       <label>
         {{ 'due_date' | cpI18n }}
       </label>
-      <cp-datepicker [options]="dueDate" (dateSet)="setEnd($event)"> </cp-datepicker>
+      <cp-datepicker [options]="dueDate"
+                     (dateSet)="setEnd($event)"> </cp-datepicker>
     </div>
   </div>
   <br />
@@ -22,14 +27,13 @@
     <div class="col-12">
       <label>
         {{ 'description' | cpI18n }}
-        <cp-char-counter
-          class="float-right"
-          [limit]="512"
-          [charCount]="form.controls.description.value"
-        >
+        <cp-char-counter class="float-right"
+                         [limit]="512"
+                         [charCount]="form.controls.description.value">
         </cp-char-counter>
       </label>
-      <textarea class="form-control" formControlName="description"> </textarea>
+      <textarea class="form-control"
+                formControlName="description"> </textarea>
     </div>
   </div>
 </form>

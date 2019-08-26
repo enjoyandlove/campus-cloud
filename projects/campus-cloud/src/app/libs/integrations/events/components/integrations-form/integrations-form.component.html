@@ -3,16 +3,15 @@
     <div class="row">
       <div class="col-6">
         <label for="type">{{ 't_shared_type' | cpI18n }}</label>
-        <cp-dropdown
-          cpTarget="type"
-          [items]="typesDropdown"
-          [selectedItem]="selectedType"
-          (selected)="onTypeSelected($event)"
-        >
+        <cp-dropdown cpTarget="type"
+                     [items]="typesDropdown"
+                     [selectedItem]="selectedType"
+                     (selected)="onTypeSelected($event)">
         </cp-dropdown>
       </div>
       <div class="col-6 no-left-padding">
-        <cp-integration-required-fields [linkUrl]="pkdbUrl"> </cp-integration-required-fields>
+        <cp-integration-required-fields [linkUrl]="pkdbUrl">
+        </cp-integration-required-fields>
       </div>
     </div>
   </div>
@@ -21,21 +20,22 @@
     <div class="row">
       <div class="col-12">
         <label for="url">{{ 't_shared_url' | cpI18n }}</label>
-        <input type="text" cpTarget="url" formControlName="feed_url" />
+        <input type="text"
+               cpTarget="url"
+               formControlName="feed_url" />
       </div>
     </div>
   </div>
 
-  <div *ngIf="showHosts" class="form-group">
+  <div *ngIf="showHosts"
+       class="form-group">
     <div class="row">
       <div class="col-12">
         <label for="store_id">{{ 'select_host' | cpI18n }}</label>
-        <cp-dropdown
-          cpTarget="store_id"
-          [items]="stores$ | async"
-          [selectedItem]="selectedHost"
-          (selected)="onHostSelected($event)"
-        >
+        <cp-dropdown cpTarget="store_id"
+                     [items]="stores$ | async"
+                     [selectedItem]="selectedHost"
+                     (selected)="onHostSelected($event)">
         </cp-dropdown>
       </div>
     </div>

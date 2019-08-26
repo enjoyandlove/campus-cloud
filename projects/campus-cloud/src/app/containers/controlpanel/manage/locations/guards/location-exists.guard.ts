@@ -1,6 +1,5 @@
 import { tap, take, filter, switchMap, catchError } from 'rxjs/operators';
 import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
-import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { get as _get } from 'lodash';
@@ -27,10 +26,8 @@ export class LocationExistsGuard implements CanActivate {
         const schedule = _get(location, 'schedule', []);
 
         if (!schedule.length) {
-          const search = new HttpParams().append('school_id', this.session.g.get('school').id);
           const payload = {
-            locationId,
-            params: search
+            locationId
           };
           this.store.dispatch(new fromStore.GetLocationById(payload));
         }

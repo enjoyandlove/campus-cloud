@@ -6,10 +6,12 @@
       <cp-card>
         <div class="row">
           <div class="col-12">
-            <cp-resource-banner [resourceBanner]="resourceBanner"> </cp-resource-banner>
+            <cp-resource-banner [resourceBanner]="resourceBanner">
+            </cp-resource-banner>
             <div class="row event__buttons">
               <div class="col-12">
-                <a [routerLink]="['../edit']" class="cpbtn cpbtn--primary">
+                <a [routerLink]="['../edit']"
+                   class="cpbtn cpbtn--primary">
                   {{ 'edit' | cpI18n }}
                 </a>
               </div>
@@ -23,7 +25,8 @@
           <cp-card *ngIf="showLocationDetails || hasMetaData">
             <div class="row">
               <div class="col-12">
-                <div class="row" *ngIf="service.contactphone">
+                <div class="row"
+                     *ngIf="service.contactphone">
                   <div class="col-2">
                     <p>
                       <strong>{{ 'phone' | cpI18n }}</strong>
@@ -33,7 +36,8 @@
                     <p>{{ service.contactphone }}</p>
                   </div>
                 </div>
-                <div class="row" *ngIf="service.email">
+                <div class="row"
+                     *ngIf="service.email">
                   <div class="col-2">
                     <p>
                       <strong>{{ 'email' | cpI18n }}</strong>
@@ -43,7 +47,8 @@
                     <p>{{ service.email }}</p>
                   </div>
                 </div>
-                <div class="row" *ngIf="service.website">
+                <div class="row"
+                     *ngIf="service.website">
                   <div class="col-2">
                     <p>
                       <strong>{{ 'website' | cpI18n }}</strong>
@@ -69,7 +74,8 @@
                     </p>
                   </div>
                 </div>
-                <div class="row" *ngIf="service.address">
+                <div class="row"
+                     *ngIf="service.address">
                   <div class="col-2">
                     <p>
                       <strong>{{ 'location' | cpI18n }}</strong>
@@ -82,22 +88,26 @@
               </div>
             </div>
 
-            <div class="row" *ngIf="showLocationDetails">
+            <div class="row"
+                 *ngIf="showLocationDetails">
               <div class="col-12 services__map">
-                <cp-maps [center]="mapCenter" [draggable]="draggable"> </cp-maps>
+                <cp-maps [center]="mapCenter"
+                         [draggable]="draggable"> </cp-maps>
               </div>
             </div>
           </cp-card>
         </div>
       </div>
 
-      <div class="row" *ngIf="service.description">
+      <div class="row"
+           *ngIf="service.description">
         <div class="col-12">
           <cp-card>
             <p>
               <strong>{{ 'description' | cpI18n }}</strong>
             </p>
-            <p class="no-margin-bottom render_line_breaks">{{ service.description }}</p>
+            <p class="no-margin-bottom render_line_breaks">
+              {{ service.description }}</p>
           </cp-card>
         </div>
       </div>
@@ -109,8 +119,10 @@
               <strong>{{ 'services_admin' | cpI18n }}</strong>
             </p>
             <p *ngIf="!admins.length">{{ 'no_admins_found' | cpI18n }}...</p>
-            <ul class="service__admins__list" *ngIf="admins.length">
-              <li *ngFor="let admin of admins" class="service__admins__admin">
+            <ul class="service__admins__list"
+                *ngIf="admins.length">
+              <li *ngFor="let admin of admins"
+                  class="service__admins__admin">
                 {{ admin.firstname }} {{ admin.lastname }}
                 <br />
                 <span class="text-muted">{{ admin.email }}</span>

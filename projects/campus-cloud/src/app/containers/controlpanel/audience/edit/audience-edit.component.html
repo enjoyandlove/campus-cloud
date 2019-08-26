@@ -4,11 +4,10 @@
       <div class="col-12 text-center">
         <span><strong>{{ 'audience_edit_modal_label_name' | cpI18n }}</strong></span>
 
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="float-right hover cpmodal__header__close unstyled-button">
           &times;
         </button>
       </div>
@@ -24,20 +23,22 @@
             <form [formGroup]="form">
               <div class="form-group">
                 <label for="name">{{ 'lists_label_list_name' | cpI18n }}</label>
-                <input id="name" type="text" class="form-control" formControlName="name" />
+                <input id="name"
+                       type="text"
+                       class="form-control"
+                       formControlName="name" />
               </div>
             </form>
           </div>
         </div>
-        <cp-audience-new-body
-          [audience]="audience"
-          [importButton]="false"
-          (count)="onUserCount($event)"
-          [withChips]="audience.users"
-          [disableTypeSelection]="true"
-          [defaultView]="defaultAudienceView"
-          (filters)="onFiltersSelected($event)"
-          (users)="onAudienceSelected($event)">
+        <cp-audience-new-body [audience]="audience"
+                              [importButton]="false"
+                              (count)="onUserCount($event)"
+                              [withChips]="audience.users"
+                              [disableTypeSelection]="true"
+                              [defaultView]="defaultAudienceView"
+                              (filters)="onFiltersSelected($event)"
+                              (users)="onAudienceSelected($event)">
         </cp-audience-new-body>
       </ng-container>
     </ng-container>
@@ -46,18 +47,20 @@
   <div class="cpmodal__footer">
     <div class="row">
       <div class="col-12 text-right">
-        <label role="error" class="error" *ngIf="isError">
+        <label role="error"
+               class="error"
+               *ngIf="isError">
           {{ errorMessage }}
         </label>
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="cpbtn cpbtn--cancel">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <cp-button [props]="buttonData" (buttonClick)="doSubmit()"> </cp-button>
+        <cp-button [props]="buttonData"
+                   (buttonClick)="doSubmit()"> </cp-button>
       </div>
     </div>
   </div>

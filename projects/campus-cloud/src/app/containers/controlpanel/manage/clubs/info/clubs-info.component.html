@@ -6,10 +6,9 @@
         <cp-card class="club">
           <div class="row">
             <div class="col-3">
-              <div
-                class="club__avatar"
-                [ngStyle]="{ 'background-image': 'url(' + club.logo_url + ')' }"
-              ></div>
+              <div class="club__avatar"
+                   [ngStyle]="{ 'background-image': 'url(' + club.logo_url + ')' }">
+              </div>
             </div>
             <div class="col-9">
               <div class="row">
@@ -18,7 +17,9 @@
                   <p class="club__status">{{ clubStatus[club.status] }}</p>
                 </div>
                 <div class="col-4 text-right">
-                  <a routerLink="../edit" queryParamsHandling="merge" class="cpbtn cpbtn--primary">
+                  <a routerLink="../edit"
+                     queryParamsHandling="merge"
+                     class="cpbtn cpbtn--primary">
                     {{ labels.edit_button | cpI18n }}
                   </a>
                 </div>
@@ -34,38 +35,44 @@
       </div>
     </div>
 
-    <div class="row justify-content-center" *ngIf="hasMetaData">
+    <div class="row justify-content-center"
+         *ngIf="hasMetaData">
       <div class="col-8">
         <cp-card class="meta">
           <ng-container [ngSwitch]="uploading">
             <cp-spinner *ngSwitchCase="true"></cp-spinner>
             <ng-container *ngSwitchCase="false">
-              <div class="row meta__item" *ngIf="club.constitution_url">
-                <div class="col-3 meta__type" i18n>
+              <div class="row meta__item"
+                   *ngIf="club.constitution_url">
+                <div class="col-3 meta__type"
+                     i18n>
                   {{ 'clubs_label_constitution' | cpI18n }}
                 </div>
                 <div class="col-9">
                   <span>
-                    <a [attr.href]="club.constitution_url" download class="cpbtn cpbtn--link" i18n>
+                    <a [attr.href]="club.constitution_url"
+                       download
+                       class="cpbtn cpbtn--link"
+                       i18n>
                       {{ 'download' | cpI18n }}
                     </a>
                   </span>
                   <ng-container *ngIf="!limitedAdmin">
                     <span> / </span>
                     <span>
-                      <cp-upload-button
-                        [buttonText]="buttonText"
-                        buttonClass="cpbtn cpbtn--link"
-                        (fileUpload)="onFileAdded($event)"
-                      >
+                      <cp-upload-button [buttonText]="buttonText"
+                                        buttonClass="cpbtn cpbtn--link"
+                                        (fileUpload)="onFileAdded($event)">
                       </cp-upload-button>
                     </span>
                   </ng-container>
                 </div>
               </div>
 
-              <div class="row meta__item" *ngIf="club.advisor_firstname">
-                <div class="col-3 meta__type" i18n>
+              <div class="row meta__item"
+                   *ngIf="club.advisor_firstname">
+                <div class="col-3 meta__type"
+                     i18n>
                   {{ 'clubs_label_advisor' | cpI18n }}
                 </div>
                 <div class="col-9">
@@ -73,55 +80,67 @@
                     {{ club.advisor_firstname }}
                     {{ club.advisor_lastname }}
                     <ng-container *ngIf="club.advisor_email">
-                      (<a [href]="['mailto:' + club.advisor_email]">{{ club.advisor_email }}</a
-                      >)
+                      (<a
+                         [href]="['mailto:' + club.advisor_email]">{{ club.advisor_email }}</a>)
                     </ng-container>
                   </span>
                 </div>
               </div>
 
-              <div class="row meta__item" *ngIf="club.phone">
-                <div class="col-3 meta__type" i18n>
+              <div class="row meta__item"
+                   *ngIf="club.phone">
+                <div class="col-3 meta__type"
+                     i18n>
                   {{ 'phone_number' | cpI18n }}
                 </div>
                 <div class="col-9">
                   <span>{{ club.phone }}</span>
                 </div>
               </div>
-              <div class="row meta__item" *ngIf="club.email">
-                <div class="col-3 meta__type" i18n>
+              <div class="row meta__item"
+                   *ngIf="club.email">
+                <div class="col-3 meta__type"
+                     i18n>
                   {{ 'email' | cpI18n }}
                 </div>
                 <div class="col-9">
                   <span>{{ club.email }}</span>
                 </div>
               </div>
-              <div class="row meta__item" *ngIf="club.website">
-                <div class="col-3 meta__type" i18n>
+              <div class="row meta__item"
+                   *ngIf="club.website">
+                <div class="col-3 meta__type"
+                     i18n>
                   {{ 'website' | cpI18n }}
                 </div>
                 <div class="col-9">
                   <span>{{ club.website }}</span>
                 </div>
               </div>
-              <div class="row meta__item" *ngIf="club.address">
-                <div class="col-3 meta__type" i18n>
+              <div class="row meta__item"
+                   *ngIf="club.address">
+                <div class="col-3 meta__type"
+                     i18n>
                   {{ 'location' | cpI18n }}
                 </div>
                 <div class="col-9">
                   <span>{{ club.address }}</span>
                 </div>
               </div>
-              <div class="row meta__item" *ngIf="club.location">
-                <div class="col-3 meta__type" i18n>
+              <div class="row meta__item"
+                   *ngIf="club.location">
+                <div class="col-3 meta__type"
+                     i18n>
                   {{ 'building' | cpI18n }}
                 </div>
                 <div class="col-9">
                   <span>{{ club.location }}</span>
                 </div>
               </div>
-              <div class="row meta__item" *ngIf="club.room_info">
-                <div class="col-3 meta__type" i18n>
+              <div class="row meta__item"
+                   *ngIf="club.room_info">
+                <div class="col-3 meta__type"
+                     i18n>
                   {{ 'room' | cpI18n }}
                 </div>
                 <div class="col-9">
@@ -134,19 +153,24 @@
       </div>
     </div>
 
-    <div class="row justify-content-center" *ngIf="showLocationDetails">
+    <div class="row justify-content-center"
+         *ngIf="showLocationDetails">
       <div class="col-8">
         <cp-card class="map">
-          <cp-maps [center]="mapCenter" class="map__container" [draggable]="draggable"> </cp-maps>
+          <cp-maps [center]="mapCenter"
+                   class="map__container"
+                   [draggable]="draggable"> </cp-maps>
         </cp-card>
       </div>
     </div>
 
-    <div class="row club-notes" *ngIf="club.notes?.length && !limitedAdmin">
+    <div class="row club-notes"
+         *ngIf="club.notes?.length && !limitedAdmin">
       <div class="col-8 offset-2">
         <cp-card>
           <p class="club-notes__title">{{ 'club_info_notes' | cpI18n }}</p>
-          <div class="club-notes__item" *ngFor="let note of club.notes | cpNoteToText">
+          <div class="club-notes__item"
+               *ngFor="let note of club.notes | cpNoteToText">
             <strong class="club-notes__question">{{ note.question }}</strong>
             <ng-container *ngFor="let answer of note.answers">
               <p class="club-notes__answer">{{ answer }}</p>
@@ -163,8 +187,10 @@
           <p>
             <strong>{{ 't_clubs_admin' | cpI18n }}</strong>
           </p>
-          <ul *ngIf="admins.length" class="club__admins__list">
-            <li *ngFor="let admin of admins" class="club__admins__admin">
+          <ul *ngIf="admins.length"
+              class="club__admins__list">
+            <li *ngFor="let admin of admins"
+                class="club__admins__admin">
               {{ admin.firstname }} {{ admin.lastname }}
               <br />
               <span class="text-muted">

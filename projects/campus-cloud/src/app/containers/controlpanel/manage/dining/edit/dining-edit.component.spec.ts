@@ -8,7 +8,6 @@ import { of } from 'rxjs';
 
 import * as fromStore from '../store';
 import { DiningEditComponent } from './dining-edit.component';
-import { mockSchool } from '@campus-cloud/session/mock/school';
 import { fillForm } from '@campus-cloud/shared/utils/tests/form';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
@@ -44,7 +43,6 @@ describe('DiningEditComponent', () => {
     fixture = TestBed.createComponent(DiningEditComponent);
     component = fixture.componentInstance;
     component.openingHours = true;
-    component.session.g.set('school', mockSchool);
     spyOn(component.store, 'select').and.returnValue(of(mockDining[0]));
 
     fixture.detectChanges();

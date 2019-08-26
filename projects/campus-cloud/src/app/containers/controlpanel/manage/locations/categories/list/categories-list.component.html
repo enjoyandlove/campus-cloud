@@ -1,9 +1,7 @@
 <div class="row">
   <div class="col-12">
-    <cp-categories-action-box
-      (search)="onSearch($event)"
-      (launchCreateModal)="onLaunchCreateModal()"
-    >
+    <cp-categories-action-box (search)="onSearch($event)"
+                              (launchCreateModal)="onLaunchCreateModal()">
     </cp-categories-action-box>
   </div>
 </div>
@@ -12,36 +10,39 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <cp-no-content
-      class="no-content"
-      *ngIf="!(categories$ | async)?.length"
-      [noContentText]="cpI18n.translate('t_shared_no_categories_found')"
-    >
+    <cp-no-content class="no-content"
+                   *ngIf="!(categories$ | async)?.length"
+                   [noContentText]="cpI18n.translate('t_shared_no_categories_found')">
     </cp-no-content>
 
-    <cp-categories-common-list
-      *ngIf="(categories$ | async)?.length"
-      [categories$]="categories$"
-      [sortBy]="state.sort_field"
-      [sortDirection]="state.sort_direction"
-      (doSort)="doSort($event)"
-      (editClick)="onLaunchEditModal($event)"
-      (deleteClick)="onLaunchDeleteModal($event)"
-    >
+    <cp-categories-common-list *ngIf="(categories$ | async)?.length"
+                               [categories$]="categories$"
+                               [sortBy]="state.sort_field"
+                               [sortDirection]="state.sort_direction"
+                               (doSort)="doSort($event)"
+                               (editClick)="onLaunchEditModal($event)"
+                               (deleteClick)="onLaunchDeleteModal($event)">
     </cp-categories-common-list>
   </div>
 </div>
 
-<cp-modal *ngIf="showCreateModal" modalId="categoriesCreate" (modalClose)="onCreateTeardown()">
+<cp-modal *ngIf="showCreateModal"
+          modalId="categoriesCreate"
+          (modalClose)="onCreateTeardown()">
   <cp-categories-create (teardown)="onCreateTeardown()"> </cp-categories-create>
 </cp-modal>
 
-<cp-modal *ngIf="showEditModal" modalId="categoriesEdit" (modalClose)="onEditTeardown()">
-  <cp-categories-edit [category]="selectedCategory" (teardown)="onEditTeardown()">
+<cp-modal *ngIf="showEditModal"
+          modalId="categoriesEdit"
+          (modalClose)="onEditTeardown()">
+  <cp-categories-edit [category]="selectedCategory"
+                      (teardown)="onEditTeardown()">
   </cp-categories-edit>
 </cp-modal>
 
-<cp-modal *ngIf="showDeleteModal" modalId="categoryDelete">
-  <cp-categories-delete [category]="deletedCategory" (teardown)="onDeleteTeardown()">
+<cp-modal *ngIf="showDeleteModal"
+          modalId="categoryDelete">
+  <cp-categories-delete [category]="deletedCategory"
+                        (teardown)="onDeleteTeardown()">
   </cp-categories-delete>
 </cp-modal>

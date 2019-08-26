@@ -1,12 +1,12 @@
-<label [attr.for]="id" class="control control--checkbox" [class.labelRight]="labelRight">
-  <input
-    [attr.id]="id"
-    type="checkbox"
-    [checked]="isChecked"
-    [disabled]="isDisabled"
-    [class.error]="hasError"
-    (change)="onChange($event)"
-  />
+<label [attr.for]="id"
+       class="control control--checkbox"
+       [class.labelRight]="labelRight">
+  <input [attr.id]="id"
+         type="checkbox"
+         [checked]="isChecked"
+         [disabled]="isDisabled"
+         [class.error]="hasError"
+         (change)="onChange($event)" />
   <div class="control__indicator"></div>
   {{ label }}
 </label>

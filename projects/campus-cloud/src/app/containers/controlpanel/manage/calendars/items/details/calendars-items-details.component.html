@@ -16,7 +16,8 @@
                   <p>{{ item.start | cpDatePipe: dateFormat }}</p>
                 </div>
                 <div class="col-3">
-                  <a [routerLink]="['edit']" class="cpbtn cpbtn--primary float-right">
+                  <a [routerLink]="['edit']"
+                     class="cpbtn cpbtn--primary float-right">
                     {{ 'calendars_items_edit_btn' | cpI18n }}
                   </a>
                 </div>
@@ -31,11 +32,13 @@
               </p>
             </div>
             <div class="col-9 meta__info">
-              <p class="text-truncate">{{ item.end | cpDatePipe: dateFormat }}</p>
+              <p class="text-truncate">{{ item.end | cpDatePipe: dateFormat }}
+              </p>
             </div>
           </div>
 
-          <div class="row address" *ngIf="item.location !== ''">
+          <div class="row address"
+               *ngIf="item.location !== ''">
             <div class="col-3 meta__label">
               <p>
                 <strong>{{ 'location' | cpI18n }}</strong>
@@ -49,15 +52,19 @@
       </div>
     </div>
 
-    <div class="row justify-content-center" *ngIf="showLocationDetails">
+    <div class="row justify-content-center"
+         *ngIf="showLocationDetails">
       <div class="col-8">
         <div class="cp-card map">
-          <cp-maps [center]="mapCenter" [draggable]="draggable" class="map__container"> </cp-maps>
+          <cp-maps [center]="mapCenter"
+                   [draggable]="draggable"
+                   class="map__container"> </cp-maps>
         </div>
       </div>
     </div>
 
-    <div class="row justify-content-center" *ngIf="item.description !== ''">
+    <div class="row justify-content-center"
+         *ngIf="item.description !== ''">
       <div class="col-8">
         <div class="cp-card">
           <p>

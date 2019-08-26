@@ -1,27 +1,30 @@
 <div class="row wrapper">
   <div class="col-4 wrapper__left-side">
-    <div
-      *ngIf="image"
-      class="wrapper__image"
-      [ngStyle]="{ 'background-image': 'url(' + image + ')' }">
-      <button
-        type="button"
-        (click)="removeImage()"
-        class="cpbtn cpbtn--link-dark wrapper__delete material-icons">
+    <div *ngIf="image"
+         class="wrapper__image"
+         [ngStyle]="{ 'background-image': 'url(' + image + ')' }">
+      <button type="button"
+              (click)="removeImage()"
+              class="cpbtn cpbtn--link-dark wrapper__delete material-icons">
         close
       </button>
     </div>
 
-    <div *ngIf="!image" [class.required]="required" class="wrapper__image wrapper__image--no-image">
-      <cp-spinner theme="small" *ngIf="isLoading"></cp-spinner>
+    <div *ngIf="!image"
+         [class.required]="required"
+         class="wrapper__image wrapper__image--no-image">
+      <cp-spinner theme="small"
+                  *ngIf="isLoading"></cp-spinner>
     </div>
   </div>
   <div class="col-8 wrapper__right-side">
     <label class="no-margin dark">{{ heading }}</label>
-    <a target="_blank" [attr.href]="zdArticle">
+    <a target="_blank"
+       [attr.href]="zdArticle">
       <span class="text-muted">{{ description }}</span>
     </a>
-    <div class="row" *ngIf="error">
+    <div class="row"
+         *ngIf="error">
       <div class="col-12">
         <label class="error">
           {{ error }}
@@ -29,12 +32,11 @@
       </div>
     </div>
 
-    <cp-upload-button
-      [id]="['upload_component ' + id]"
-      [buttonText]="buttonText"
-      class="wrapper__button"
-      buttonClass="cpbtn cpbtn--secondary"
-      (fileUpload)="onFileUpload($event)">
+    <cp-upload-button [id]="['upload_component ' + id]"
+                      [buttonText]="buttonText"
+                      class="wrapper__button"
+                      buttonClass="cpbtn cpbtn--secondary"
+                      (fileUpload)="onFileUpload($event)">
     </cp-upload-button>
   </div>
 </div>

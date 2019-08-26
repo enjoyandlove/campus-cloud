@@ -4,13 +4,12 @@
       <div class="col-12 text-center">
         <span><strong>{{ 't_external_check_in_check_out_modal_title' | cpI18n }}</strong></span>
 
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="float-right hover cpmodal__header__close unstyled-button">
           &times;
-      </button>
+        </button>
       </div>
     </div>
   </div>
@@ -22,10 +21,9 @@
           <label>
             {{ 't_external_check_in_check_out_time' | cpI18n }}
           </label>
-          <cp-datepicker
-            [options]="checkOutOptions"
-            [error]="formErrors && form.controls['check_out_time_epoch'].hasError('required')"
-            (dateSet)="setCheckout($event)">
+          <cp-datepicker [options]="checkOutOptions"
+                         [error]="formErrors && form.controls['check_out_time_epoch'].hasError('required')"
+                         (dateSet)="setCheckout($event)">
           </cp-datepicker>
         </div>
       </div>
@@ -36,7 +34,9 @@
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-12">
-        <label role="alert" class="error" *ngIf="formErrors">
+        <label role="alert"
+               class="error"
+               *ngIf="formErrors">
           <i class="material-icons">warning</i>
           {{
             errorMessage
@@ -46,15 +46,15 @@
         </label>
       </div>
       <div class="col-12 text-right">
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="cpbtn cpbtn--cancel">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <cp-button (buttonClick)="onSubmit()" [props]="buttonData"> </cp-button>
+        <cp-button (buttonClick)="onSubmit()"
+                   [props]="buttonData"> </cp-button>
       </div>
     </div>
   </div>

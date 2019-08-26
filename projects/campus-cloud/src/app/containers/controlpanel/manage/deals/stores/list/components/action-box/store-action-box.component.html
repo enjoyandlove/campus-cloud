@@ -5,12 +5,10 @@
     </div>
 
     <div class="col-7 text-right">
-      <button
-        cpTracker
-        (click)="onLaunchCreateModal()"
-        class="cpbtn cpbtn--primary"
-        [eventData]="eventData"
-      >
+      <button cpTracker
+              (click)="onLaunchCreateModal()"
+              class="cpbtn cpbtn--primary"
+              [eventData]="eventData">
         {{ 'stores_create_store' | cpI18n }}
       </button>
     </div>
