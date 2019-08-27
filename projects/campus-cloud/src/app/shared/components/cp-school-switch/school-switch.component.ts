@@ -23,6 +23,7 @@ export class SchoolSwitchComponent implements OnInit {
 
   helpDeskUrl;
   isSchoolPanel;
+  canManageApis;
   canManageAdmins;
   amplitudeEvents;
   canManageTestUsers;
@@ -92,6 +93,8 @@ export class SchoolSwitchComponent implements OnInit {
     if (clientPrivileges) {
       this.canManageTestUsers =
         clientPrivileges[CP_PRIVILEGES_MAP.test_users] && this.selectedSchool.is_sandbox;
+
+      this.canManageApis = clientPrivileges[CP_PRIVILEGES_MAP.api_management];
     }
 
     this.amplitudeEvents = {
