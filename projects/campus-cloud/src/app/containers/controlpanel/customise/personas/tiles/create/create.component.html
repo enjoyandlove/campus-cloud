@@ -1,7 +1,7 @@
 <ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
   <ng-container *ngSwitchCase="false">
-    <main class="margin-bottom">
+    <div class="margin-bottom">
       <cp-two-columns>
         <cp-card layout-left-column>
           <p class="title">
@@ -67,7 +67,7 @@
           </cp-resource-selector>
         </cp-card>
       </cp-two-columns>
-    </main>
+    </div>
 
     <footer class="footer">
       <div class="cp-wrapper cp-wrapper--outer">
