@@ -2,30 +2,24 @@
   <div class="col-2">
     <div class="row">
       <div class="col-2">
-        <cp-checkbox
-          [isChecked]="isChecked"
-          class="checkbox float-left"
-          (toggle)="checkAll.emit($event)"
-        >
+        <cp-checkbox [isChecked]="isChecked"
+                     class="checkbox float-left"
+                     (toggle)="checkAll.emit($event)">
         </cp-checkbox>
       </div>
       <div class="col-6">
-        <cp-upload-button
-          [buttonClass]="['cpbtn cpbtn--' + uploadImageButtonClass]"
-          [buttonText]="cpI18n.translate('upload_picture')"
-          (fileUpload)="onFileUpload($event)"
-        >
+        <cp-upload-button [buttonClass]="['cpbtn cpbtn--' + uploadImageButtonClass]"
+                          [buttonText]="'upload_picture' | cpI18n"
+                          (fileUpload)="onFileUpload($event)">
         </cp-upload-button>
       </div>
     </div>
   </div>
 
   <div class="col-2 no-left-padding">
-    <cp-dropdown
-      [items]="categories"
-      [disabled]="categoryDropDownStatus"
-      (selected)="categoryChange.emit($event)"
-    >
+    <cp-dropdown [items]="categories"
+                 [disabled]="categoryDropDownStatus"
+                 (selected)="categoryChange.emit($event)">
     </cp-dropdown>
   </div>
   <!--<div class="col-2">

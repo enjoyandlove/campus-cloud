@@ -2,36 +2,30 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <ng-container *ngSwitchCase="false">
-    <cp-providers-attendees-action-box
-      [provider]="provider"
-      [updateQrCode]="updateQrCode"
-      [hasAttendees]="providerAttendees.hasAttendees"
-      (download)="onDownload()"
-      (search)="onSearch($event)"
-      (addCheckIn)="onAddCheckIn()"
-      (toggleQr)="onToggleQr($event)"
-      (filterByDates)="onDateFilter($event)"
-      (updateStudentFilter)="onStudentFilter($event)"
-    >
+    <cp-providers-attendees-action-box [provider]="provider"
+                                       [updateQrCode]="updateQrCode"
+                                       [hasAttendees]="providerAttendees.hasAttendees"
+                                       (download)="onDownload()"
+                                       (search)="onSearch($event)"
+                                       (addCheckIn)="onAddCheckIn()"
+                                       (toggleQr)="onToggleQr($event)"
+                                       (filterByDates)="onDateFilter($event)"
+                                       (updateStudentFilter)="onStudentFilter($event)">
     </cp-providers-attendees-action-box>
 
-    <cp-providers-attendees-stats
-      *ngIf="!state.searchText"
-      [provider]="provider"
-      [eventRating]="eventRating"
-    >
+    <cp-providers-attendees-stats *ngIf="!state.searchText"
+                                  [provider]="provider"
+                                  [eventRating]="eventRating">
     </cp-providers-attendees-stats>
 
     <div class="row">
       <div class="col-12">
-        <cp-providers-attendees-list
-          #providerAttendees
-          [service]="service"
-          [provider]="provider"
-          [filterState]="state"
-          [serviceId]="serviceId"
-          [providerId]="providerId"
-        >
+        <cp-providers-attendees-list #providerAttendees
+                                     [service]="service"
+                                     [provider]="provider"
+                                     [filterState]="state"
+                                     [serviceId]="serviceId"
+                                     [providerId]="providerId">
         </cp-providers-attendees-list>
       </div>
     </div>

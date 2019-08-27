@@ -8,10 +8,11 @@ import { Store } from '@ngrx/store';
 
 import * as fromRoot from '@campus-cloud//store';
 import { CPSession } from '@campus-cloud//session';
-import { baseActionClass } from '@campus-cloud//store/base';
 import { ISocialGroup } from '../../../../feeds/model';
+import { baseActionClass } from '@campus-cloud//store/base';
 import { CPI18nService } from '@campus-cloud/shared//services';
 import * as fromActions from '../actions/social-groups.actions';
+import { parseErrorResponse } from '@campus-cloud/shared/utils';
 import { LibsCommonMembersService } from '@campus-cloud//libs/members/common/providers';
 
 @Injectable()
@@ -34,10 +35,10 @@ export class OrientationSocialGroupEffects {
         catchError((err) => {
           this.store.dispatch(
             new baseActionClass.SnackbarError({
-              body: this.cpI18n.translate('something_ent_wrong')
+              body: this.cpI18n.translate('something_went_wrong')
             })
           );
-          return of(new fromActions.GetSocialGroupsFail(err));
+          return of(new fromActions.GetSocialGroupsFail({ error: parseErrorResponse(err.error) }));
         })
       );
     })

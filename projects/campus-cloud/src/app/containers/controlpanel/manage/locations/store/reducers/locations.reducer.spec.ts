@@ -1,26 +1,21 @@
-import { HttpParams, HttpErrorResponse } from '@angular/common/http';
-
 import * as fromActions from '../actions';
-import { mockSchool } from '@campus-cloud/session/mock';
 import * as fromReducer from './locations.reducer';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { mockLocations } from '@campus-cloud/libs/locations/common/tests';
 
-const httpErrorResponse = new HttpErrorResponse({ error: true });
+const httpErrorResponse = 'fake error message';
 
 const pagination = {
   startRange: 1,
   endRange: 2
 };
 
-const params = new HttpParams().set('school_id', mockSchool.id.toString());
-
 describe('Locations Reducer', () => {
   it('should GET location', () => {
     const { initialState } = fromReducer;
     const payload = {
       ...pagination,
-      params
+      state: null
     };
     const action = new fromActions.GetLocations(payload);
     const result = fromReducer.reducer(initialState, action);
@@ -56,8 +51,7 @@ describe('Locations Reducer', () => {
     const { initialState } = fromReducer;
     const body = mockLocations[0];
     const payload = {
-      body,
-      params
+      body
     };
 
     const action = new fromActions.PostLocation(payload);
@@ -95,7 +89,6 @@ describe('Locations Reducer', () => {
     const body = mockLocations[0];
     const payload = {
       body,
-      params,
       locationId: mockLocations[0].id,
       updatedCategory: amplitudeEvents.NO,
       categoryId: mockLocations[0].category_id
@@ -148,7 +141,6 @@ describe('Locations Reducer', () => {
     const { initialState } = fromReducer;
 
     const payload = {
-      params,
       deletedId: mockLocations[0].id,
       categoryId: mockLocations[0].category_id
     };

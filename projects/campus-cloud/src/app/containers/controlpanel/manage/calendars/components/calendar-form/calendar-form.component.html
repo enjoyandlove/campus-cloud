@@ -3,10 +3,14 @@
     <div class="col-12">
       <label>
         {{ 'calendars_label_name' | cpI18n }}
-        <cp-char-counter class="float-right" [limit]="225" [charCount]="form.controls.name.value">
+        <cp-char-counter class="float-right"
+                         [limit]="225"
+                         [charCount]="form.controls.name.value">
         </cp-char-counter>
       </label>
-      <input type="text" class="form-control" formControlName="name" />
+      <input type="text"
+             class="form-control"
+             formControlName="name" />
     </div>
   </div>
   <br />
@@ -14,29 +18,27 @@
     <div class="col-12">
       <label>
         {{ 'calendars_label_description' | cpI18n }}
-        <cp-char-counter
-          class="float-right"
-          [limit]="512"
-          [charCount]="form.controls.description.value"
-        >
+        <cp-char-counter class="float-right"
+                         [limit]="512"
+                         [charCount]="form.controls.description.value">
         </cp-char-counter>
       </label>
-      <textarea class="form-control" formControlName="description"> </textarea>
+      <textarea class="form-control"
+                formControlName="description"> </textarea>
     </div>
   </div>
   <br />
-  <div class="row" *ngIf="isOrientation">
+  <div class="row"
+       *ngIf="isOrientation">
     <div class="col-10">
       <label>{{ 'orientation_enable_membership' | cpI18n }}</label>
       <p>{{ 'orientation_enable_membership_description' | cpI18n }}</p>
     </div>
     <div class="col-2">
       <span class="float-right">
-        <cp-switch
-          [id]="orientationProgram?.id"
-          [isChecked]="isChecked"
-          (toggle)="toggleMembership($event)"
-        >
+        <cp-switch [id]="orientationProgram?.id"
+                   [isChecked]="isChecked"
+                   (toggle)="toggleMembership($event)">
         </cp-switch>
       </span>
     </div>

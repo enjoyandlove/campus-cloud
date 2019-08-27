@@ -1,6 +1,5 @@
 import { filter, takeUntil, map, tap, take } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -16,7 +15,7 @@ import { BaseComponent } from '@campus-cloud/base/base.component';
 import * as fromCategoryStore from '../categories/store';
 import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
-import { LocationsUtilsService, LocationType } from '@campus-cloud/libs/locations/common/utils';
+import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 
 interface IState {
   search_str: string;
@@ -58,21 +57,11 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
     super();
   }
 
-  get defaultParams(): HttpParams {
-    return new HttpParams()
-      .set('search_str', this.state.search_str)
-      .set('sort_field', this.state.sort_field)
-      .set('location_type', LocationType.dining)
-      .set('category_id', this.state.category_id)
-      .set('sort_direction', this.state.sort_direction)
-      .set('school_id', this.session.g.get('school').id);
-  }
-
   fetch() {
     const payload = {
       startRange: this.startRange,
       endRange: this.endRange,
-      params: this.defaultParams
+      state: this.state
     };
 
     this.store.dispatch(new fromStore.GetDining(payload));
@@ -82,7 +71,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
     const payload = {
       startRange: this.startRange,
       endRange: this.endRange,
-      params: this.defaultParams
+      state: this.state
     };
 
     this.store.dispatch(new fromStore.GetFilteredDining(payload));

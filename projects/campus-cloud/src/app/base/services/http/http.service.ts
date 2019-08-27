@@ -16,14 +16,9 @@ export abstract class HTTPService {
   abstract errorHandler(err: HttpErrorResponse): Observable<boolean> | Promise<boolean>;
 
   waitAndRetry(err: Observable<any>, retries: number): Observable<any> {
-    if ('status' in err && (err as any).status !== 503) {
-      return throwError(err);
-    }
-
     return err.pipe(
-      delay(1200),
       flatMap((e) => {
-        if (retries > 0) {
+        if (retries > 0 && e.status === 503) {
           retries -= 1;
 
           return of(e).pipe(delay(1200));
@@ -70,13 +65,7 @@ export abstract class HTTPService {
 
     return this.http.get<T>(url, { headers, params }).pipe(
       retryWhen((err) => this.waitAndRetry(err, retries)),
-      catchError((err) => {
-        if (silent && err.status !== 401) {
-          return throwError(err);
-        }
-
-        return this.errorHandler(err);
-      })
+      catchError((err) => (silent && err.status !== 401 ? throwError(err) : this.errorHandler(err)))
     );
   }
 

@@ -1,17 +1,19 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
 import { CPSession } from '@campus-cloud/session';
 import { EventsService } from '../events.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { baseActionClass, IHeader } from '@campus-cloud/store/base';
 import { EventsAmplitudeService } from '../events.amplitude.service';
-import {
-  CPI18nService,
-  CPTrackingService,
-  IModal,
-  MODAL_DATA
-} from '@campus-cloud/shared/services';
 import { OrientationEventsService } from '../../orientation/events/orientation.events.service';
+import {
+  IModal,
+  MODAL_DATA,
+  CPI18nService,
+  CPTrackingService
+} from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-events-delete',
@@ -26,6 +28,7 @@ export class EventsDeleteComponent implements OnInit {
     @Inject(MODAL_DATA) public modal: IModal,
     public session: CPSession,
     private cpI18n: CPI18nService,
+    private store: Store<IHeader>,
     public eventService: EventsService,
     public cpTrackingService: CPTrackingService,
     public orientationService: OrientationEventsService
@@ -47,11 +50,25 @@ export class EventsDeleteComponent implements OnInit {
         .append('calendar_id', this.modal.data.orientation_id.toString());
     }
 
-    this.service.deleteEventById(eventId, search).subscribe(() => {
-      this.onClose();
-      this.trackDeletedEvent();
-      this.modal.onAction(eventId);
-    });
+    this.service.deleteEventById(eventId, search).subscribe(
+      () => {
+        this.onClose();
+        this.trackDeletedEvent();
+        this.modal.onAction(eventId);
+      },
+      () => {
+        this.onClose();
+        this.handleError();
+      }
+    );
+  }
+
+  handleError() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body: this.cpI18n.translate('something_went_wrong')
+      })
+    );
   }
 
   trackDeletedEvent() {

@@ -1,6 +1,6 @@
-import { RouterStateSerializer, StoreRouterConnectingModule } from '@ngrx/router-store';
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { RouterStateSerializer } from '@ngrx/router-store';
 import { By } from '@angular/platform-browser';
 import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
@@ -31,7 +31,7 @@ describe('ApiListComponent', () => {
         imports: [
           CPTestModule,
           RootStoreModule,
-          StoreRouterConnectingModule.forRoot(),
+          StoreModule.forRoot({}, { runtimeChecks: {} }),
           StoreModule.forFeature('apiManagement', reducers)
         ],
         schemas: [NO_ERRORS_SCHEMA]

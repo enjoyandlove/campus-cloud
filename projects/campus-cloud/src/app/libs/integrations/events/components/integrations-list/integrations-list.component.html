@@ -9,17 +9,13 @@
     </div>
   </li>
 
-  <li
-    [cpTarget]="['feed_' + i]"
-    class="cp-form__item col-12"
-    *ngFor="let integration of integrations$ | async; let i = index"
-  >
+  <li [cpTarget]="['feed_' + i]"
+      class="cp-form__item col-12"
+      *ngFor="let integration of integrations$ | async; let i = index">
     <div class="row">
-      <span
-        class="col-4 text-truncate"
-        [cpTarget]="['feed_title_' + i]"
-        [attr.title]="integration.feed_url"
-      >
+      <span class="col-4 text-truncate"
+            [cpTarget]="['feed_title_' + i]"
+            [attr.title]="integration.feed_url">
         {{ integration.feed_url }}
       </span>
       <span class="col-2">
@@ -36,16 +32,13 @@
         }}
       </span>
       <span class="col-2 justify-content-between d-flex align-items-start">
-        <cp-integrations-sync-now-button
-          [integration]="integration"
-          (syncClick)="syncClick.emit(integration.id)"
-        >
+        <cp-integrations-sync-now-button [integration]="integration"
+                                         (syncClick)="syncClick.emit(integration.id)">
         </cp-integrations-sync-now-button>
-        <button
-          type="button"
-          aria-label="delete"
-          class="hover delete-integration unstyled-button"
-          (click)="deleteClick.emit(integration)">
+        <button type="button"
+                aria-label="delete"
+                class="hover delete-integration unstyled-button"
+                (click)="deleteClick.emit(integration)">
           <span aria-hidden="true">&times;</span>
         </button>
       </span>

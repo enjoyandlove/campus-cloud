@@ -6,8 +6,6 @@ import { By } from '@angular/platform-browser';
 
 import * as fromStore from '../store';
 
-import { CPSession } from '@campus-cloud/session';
-import { mockSchool } from '@campus-cloud/session/mock';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { mockIntegration, MockActivatedRoute, resetForm } from '../tests';
@@ -22,7 +20,6 @@ describe('ItemsIntegrationEditComponent', () => {
       TestBed.configureTestingModule({
         imports: [SharedModule],
         providers: [
-          CPSession,
           provideMockStore(),
           CommonIntegrationUtilsService,
           { provide: ActivatedRoute, useClass: MockActivatedRoute }
@@ -37,7 +34,6 @@ describe('ItemsIntegrationEditComponent', () => {
       .catch(done.fail)
   );
 
-  let session: CPSession;
   let tearDownSpy: jasmine.Spy;
   let formResetSpy: jasmine.Spy;
   let closeButton: HTMLSpanElement;
@@ -48,9 +44,6 @@ describe('ItemsIntegrationEditComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ItemsIntegrationEditComponent);
     component = fixture.componentInstance;
-
-    session = TestBed.get(CPSession);
-    session.g.set('school', mockSchool);
 
     component.eventIntegration = mockIntegration;
 

@@ -7,6 +7,7 @@ import { of } from 'rxjs';
 
 import { EventsModule } from '../events.module';
 import { EventsService } from '../events.service';
+import { provideMockStore } from '@ngrx/store/testing';
 import { mockEvent, MockEventService } from './../tests';
 import { MODAL_DATA } from '@campus-cloud/shared/services';
 import { mockSchool } from '@campus-cloud/session/mock/school';
@@ -23,6 +24,7 @@ describe('EventDeleteComponent', () => {
       TestBed.configureTestingModule({
         imports: [CPTestModule, EventsModule, RouterTestingModule],
         providers: [
+          provideMockStore(),
           { provide: EventsService, useClass: MockEventService },
           { provide: OrientationEventsService, useClass: MockEventService },
           {

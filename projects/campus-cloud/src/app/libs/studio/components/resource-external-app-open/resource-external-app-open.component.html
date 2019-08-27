@@ -1,62 +1,72 @@
-<div class="form-group" role="group" aria-labelledby="options">
+<div class="form-group"
+     role="group"
+     aria-labelledby="options">
   <label for="options">{{'t_shared_app' | cpI18n }}</label>
-  <cp-dropdown
-    id="options"
-    [items]="options"
-    [selectedItem]="selectedOption"
-    (selected)="onOptionSelected($event)">
+  <cp-dropdown id="options"
+               [items]="options"
+               [selectedItem]="selectedOption"
+               (selected)="onOptionSelected($event)">
   </cp-dropdown>
 </div>
 
 <form [formGroup]="form">
-  <ng-container formGroupName="link_params"]>
+  <ng-container formGroupName="link_params"
+                ]>
     <ng-container formGroupName="ios">
-      <div class="form-group" role="group" aria-labelledby="ios_app_link">
-        <label for="ios_app_link">{{ 't_studio_resource_external_app_open_label_ios_universal' | cpI18n }}</label>
-        <input
-          type="text"
-          id="ios_app_link"
-          class="form-control"
-          name="ios_app_link"
-          cpTarget="ios_app_link"
-          formControlName="app_link"
-          [class.error]="showErrors && form.get('link_params').get('ios').get('app_link').hasError('required')"/>
+      <div class="form-group"
+           role="group"
+           aria-labelledby="ios_app_link">
+        <label
+               for="ios_app_link">{{ 't_studio_resource_external_app_open_label_ios_universal' | cpI18n }}</label>
+        <input type="text"
+               id="ios_app_link"
+               class="form-control"
+               name="ios_app_link"
+               cpTarget="ios_app_link"
+               formControlName="app_link"
+               [class.error]="showErrors && form.get('link_params').get('ios').get('app_link').hasError('required')" />
       </div>
-      <div class="form-group" role="group" aria-labelledby="ios_fallback_http_url">
-        <label for="ios_fallback_http_url">{{ 't_studio_resource_external_app_open_label_ios_fallback' | cpI18n }}</label>
-        <input
-          type="text"
-          class="form-control"
-          id="ios_fallback_http_url"
-          name="ios_fallback_http_url"
-          formControlName="fallback_http_url"
-          cpTarget="ios_fallback_http_url"
-          [class.error]="showErrors && form.get('link_params').get('ios').get('fallback_http_url').hasError('required')"/>
+      <div class="form-group"
+           role="group"
+           aria-labelledby="ios_fallback_http_url">
+        <label
+               for="ios_fallback_http_url">{{ 't_studio_resource_external_app_open_label_ios_fallback' | cpI18n }}</label>
+        <input type="text"
+               class="form-control"
+               id="ios_fallback_http_url"
+               name="ios_fallback_http_url"
+               formControlName="fallback_http_url"
+               cpTarget="ios_fallback_http_url"
+               [class.error]="showErrors && form.get('link_params').get('ios').get('fallback_http_url').hasError('required')" />
       </div>
     </ng-container>
 
     <ng-container formGroupName="android">
-      <div class="form-group" role="group" aria-labelledby="android_package_name">
-        <label for="android_package_name">{{ 't_studio_resource_external_app_open_label_android_package_name' | cpI18n }}</label>
-        <input
-          type="text"
-          class="form-control"
-          id="android_package_name"
-          name="android_package_name"
-          formControlName="package_name"
-          cpTarget="android_package_name"
-          [class.error]=" showErrors && form.get('link_params').get('android').get('package_name').hasError('required')"/>
+      <div class="form-group"
+           role="group"
+           aria-labelledby="android_package_name">
+        <label
+               for="android_package_name">{{ 't_studio_resource_external_app_open_label_android_package_name' | cpI18n }}</label>
+        <input type="text"
+               class="form-control"
+               id="android_package_name"
+               name="android_package_name"
+               formControlName="package_name"
+               cpTarget="android_package_name"
+               [class.error]=" showErrors && form.get('link_params').get('android').get('package_name').hasError('required')" />
       </div>
-      <div class="form-group" role="group" aria-labelledby="android_fallback_http_url">
-        <label for="android_fallback_http_url">{{ 't_studio_resource_external_app_open_label_android_fallback' | cpI18n }}</label>
-        <input
-          type="text"
-          class="form-control"
-          id="android_fallback_http_url"
-          name="android_fallback_http_url"
-          cpTarget="android_fallback_http_url"
-          formControlName="fallback_http_url"
-          [class.error]=" showErrors && form.get('link_params').get('android').get('fallback_http_url').hasError('required')"/>
+      <div class="form-group"
+           role="group"
+           aria-labelledby="android_fallback_http_url">
+        <label
+               for="android_fallback_http_url">{{ 't_studio_resource_external_app_open_label_android_fallback' | cpI18n }}</label>
+        <input type="text"
+               class="form-control"
+               id="android_fallback_http_url"
+               name="android_fallback_http_url"
+               cpTarget="android_fallback_http_url"
+               formControlName="fallback_http_url"
+               [class.error]=" showErrors && form.get('link_params').get('android').get('fallback_http_url').hasError('required')" />
       </div>
     </ng-container>
   </ng-container>

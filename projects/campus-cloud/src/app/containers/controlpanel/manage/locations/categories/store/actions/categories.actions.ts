@@ -1,4 +1,3 @@
-import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
 import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
@@ -31,8 +30,6 @@ export enum CategoriesActions {
 
 export class GetCategories implements Action {
   readonly type = CategoriesActions.GET_CATEGORIES;
-
-  constructor(public payload: { params: HttpParams }) {}
 }
 
 export class GetCategoriesSuccess implements Action {
@@ -44,13 +41,13 @@ export class GetCategoriesSuccess implements Action {
 export class GetCategoriesFail implements Action {
   readonly type = CategoriesActions.GET_CATEGORIES_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class GetFilteredCategories implements Action {
   readonly type = CategoriesActions.GET_FILTERED_CATEGORIES;
 
-  constructor(public payload: { params: HttpParams }) {}
+  constructor(public payload: { state }) {}
 }
 
 export class GetFilteredCategoriesSuccess implements Action {
@@ -62,17 +59,17 @@ export class GetFilteredCategoriesSuccess implements Action {
 export class GetFilteredCategoriesFail implements Action {
   readonly type = CategoriesActions.GET_FILTERED_CATEGORIES_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class PostCategory implements Action {
   readonly type = CategoriesActions.POST_CATEGORY;
-  constructor(public payload: { body: any; params: HttpParams }) {}
+  constructor(public payload: { body: ICategory }) {}
 }
 
 export class PostCategoryFail implements Action {
   readonly type = CategoriesActions.POST_CATEGORY_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class PostCategorySuccess implements Action {
@@ -82,12 +79,12 @@ export class PostCategorySuccess implements Action {
 
 export class EditCategory implements Action {
   readonly type = CategoriesActions.EDIT_CATEGORY;
-  constructor(public payload: { categoryId: number; body: ICategory; params: HttpParams }) {}
+  constructor(public payload: { categoryId: number; body: ICategory }) {}
 }
 
 export class EditCategoryFail implements Action {
   readonly type = CategoriesActions.EDIT_CATEGORY_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class EditCategorySuccess implements Action {
@@ -98,7 +95,7 @@ export class EditCategorySuccess implements Action {
 export class DeleteCategories implements Action {
   readonly type = CategoriesActions.DELETE_CATEGORIES;
 
-  constructor(public payload: { body: ICategory; params: HttpParams }) {}
+  constructor(public payload: { body: ICategory }) {}
 }
 
 export class DeleteCategoriesSuccess implements Action {

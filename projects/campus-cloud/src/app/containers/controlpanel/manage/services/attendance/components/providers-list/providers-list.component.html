@@ -2,10 +2,8 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <cp-no-content
-      *ngIf="!state.providers.length"
-      [noContentText]="hasRecords ? noProviderMessage : noProviderAddProviderMessage"
-    >
+    <cp-no-content *ngIf="!state.providers.length"
+                   [noContentText]="hasRecords ? noProviderMessage : noProviderAddProviderMessage">
     </cp-no-content>
 
     <ng-container *ngIf="state.providers.length">
@@ -15,13 +13,11 @@
             <div class="cp-table__header">
               <div class="row">
                 <div class="col-4">
-                  <cp-sorting-header
-                    sortLabel="provider_name"
-                    (click)="doSort('provider_name')"
-                    [sortField]="state.sort_field"
-                    [label]="sortingLabels.provider_name"
-                    [sortDirection]="state.sort_direction"
-                  >
+                  <cp-sorting-header sortLabel="provider_name"
+                                     (click)="doSort('provider_name')"
+                                     [sortField]="state.sort_field"
+                                     [label]="sortingLabels.provider_name"
+                                     [sortDirection]="state.sort_direction">
                   </cp-sorting-header>
                 </div>
                 <div class="col-1">
@@ -30,13 +26,11 @@
                   </span>
                 </div>
                 <div class="col-1">
-                  <cp-sorting-header
-                    sortLabel="num_ratings"
-                    (click)="doSort('num_ratings')"
-                    [sortField]="state.sort_field"
-                    [label]="sortingLabels.rating"
-                    [sortDirection]="state.sort_direction"
-                  >
+                  <cp-sorting-header sortLabel="num_ratings"
+                                     (click)="doSort('num_ratings')"
+                                     [sortField]="state.sort_field"
+                                     [label]="sortingLabels.rating"
+                                     [sortDirection]="state.sort_direction">
                   </cp-sorting-header>
                 </div>
                 <div class="col-3">
@@ -49,10 +43,13 @@
               </div>
             </div>
 
-            <div class="cp-table__item" *ngFor="let provider of state.providers">
+            <div class="cp-table__item"
+                 *ngFor="let provider of state.providers">
               <div class="row">
                 <div class="col-4 text-truncate">
-                  <a cpTracker [eventData]="eventData" [routerLink]="['provider/' + provider.id]">
+                  <a cpTracker
+                     [eventData]="eventData"
+                     [routerLink]="['provider/' + provider.id]">
                     <span>
                       <strong>{{ provider.provider_name }}</strong>
                       <br />
@@ -67,43 +64,33 @@
                   <span>{{ provider.has_feedback ? provider.num_ratings : '---' }}</span>
                 </div>
                 <div class="col-3">
-                  <cp-stars
-                    [maxRate]="5"
-                    [size]="listStarSize"
-                    *ngIf="provider.has_feedback"
-                    [avgRate]="provider.avg_rating_percent"
-                  >
+                  <cp-stars [maxRate]="5"
+                            [size]="listStarSize"
+                            *ngIf="provider.has_feedback"
+                            [avgRate]="provider.avg_rating_percent">
                   </cp-stars>
                 </div>
                 <div class="col-2">
-                  <a
-                    target="_blank"
-                    (click)="trackCheckinEvent(provider.encrypted_campus_service_id)"
-                    [routerLink]="[
+                  <a target="_blank"
+                     (click)="trackCheckinEvent(provider.encrypted_campus_service_id)"
+                     [routerLink]="[
                       '/cb/checkin/s/' +
                         provider.encrypted_campus_service_id +
                         '/' +
                         provider.encrypted_id
                     ]"
-                    class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary"
-                  >
+                     class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary">
                     {{ 't_shared_web_checkin' | cpI18n }}
                   </a>
                 </div>
                 <div class="col-1">
                   <span>
-                    <i
-                      (click)="showEditModal(provider)"
-                      class="material-icons hover margin-right action-button"
-                      >edit</i
-                    >
-                    <i
-                      data-toggle="modal"
-                      data-target="#deleteProvider"
-                      class="material-icons hover action-button"
-                      (click)="deleteProvider = provider"
-                      >close</i
-                    >
+                    <i (click)="showEditModal(provider)"
+                       class="material-icons hover margin-right action-button">edit</i>
+                    <i data-toggle="modal"
+                       data-target="#deleteProvider"
+                       class="material-icons hover action-button"
+                       (click)="deleteProvider = provider">close</i>
                   </span>
                 </div>
               </div>
@@ -114,38 +101,30 @@
 
       <div class="row">
         <div class="col-12">
-          <cp-pagination
-            [pageNext]="pageNext"
-            [pagePrev]="pagePrev"
-            [pageNumber]="pageNumber"
-            (next)="onPaginationNext()"
-            (previous)="onPaginationPrevious()"
-          >
+          <cp-pagination [pageNext]="pageNext"
+                         [pagePrev]="pagePrev"
+                         [pageNumber]="pageNumber"
+                         (next)="onPaginationNext()"
+                         (previous)="onPaginationPrevious()">
           </cp-pagination>
         </div>
       </div>
     </ng-container>
 
     <cp-modal modalId="deleteProvider">
-      <cp-providers-delete
-        [serviceId]="service.id"
-        [provider]="deleteProvider"
-        (deleted)="onDeleted($event)"
-      >
+      <cp-providers-delete [serviceId]="service.id"
+                           [provider]="deleteProvider"
+                           (deleted)="onDeleted($event)">
       </cp-providers-delete>
     </cp-modal>
 
-    <cp-modal
-      *ngIf="showEditProviderModal"
-      modalId="editProvider"
-      (modalClose)="showEditProviderModal = false"
-    >
-      <cp-providers-edit
-        [service]="service"
-        [provider]="provider"
-        (edited)="onEdited($event)"
-        (teardown)="showEditProviderModal = false"
-      >
+    <cp-modal *ngIf="showEditProviderModal"
+              modalId="editProvider"
+              (modalClose)="showEditProviderModal = false">
+      <cp-providers-edit [service]="service"
+                         [provider]="provider"
+                         (edited)="onEdited($event)"
+                         (teardown)="showEditProviderModal = false">
       </cp-providers-edit>
     </cp-modal>
   </div>

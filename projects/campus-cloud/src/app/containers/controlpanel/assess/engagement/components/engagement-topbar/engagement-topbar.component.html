@@ -5,16 +5,15 @@
         <div class="topbar--filter col-4">
           <div class="row">
             <div class="col-9 no-right-padding">
-              <cp-dropdown
-                [items]="engagementFilter"
-                class="topbar--dropdown"
-                (selected)="onScopeChange($event)"
-                [selectedItem]="state.engagement"
-              >
+              <cp-dropdown [items]="engagementFilter"
+                           class="topbar--dropdown"
+                           (selected)="onScopeChange($event)"
+                           [selectedItem]="state.engagement">
               </cp-dropdown>
             </div>
             <div class="col-3 text-center">
-              <span class="topbar--copy" i18n>{{ 'for' | cpI18n }}</span>
+              <span class="topbar--copy"
+                    i18n>{{ 'for' | cpI18n }}</span>
             </div>
           </div>
         </div>
@@ -22,30 +21,27 @@
         <div class="topbar--filter col-4 no-left-padding">
           <div class="row">
             <div class="col-9 no-right-padding">
-              <cp-dropdown
-                [items]="studentFilter"
-                class="topbar--dropdown"
-                [selectedItem]="state.for"
-                (selected)="onStudentChange($event)"
-                [disabled]="studentFilter.length === 1"
-              >
+              <cp-dropdown [items]="studentFilter"
+                           class="topbar--dropdown"
+                           [selectedItem]="state.for"
+                           (selected)="onStudentChange($event)"
+                           [disabled]="studentFilter.length === 1">
               </cp-dropdown>
             </div>
             <div class="col-3 text-center">
-              <span class="topbar--copy" i18n>{{ 'in' | cpI18n }}</span>
+              <span class="topbar--copy"
+                    i18n>{{ 'in' | cpI18n }}</span>
             </div>
           </div>
         </div>
         <div class="topbar--filter col-4 no-left-padding">
           <div class="row">
             <div class="col-9">
-              <cp-range-picker
-                [icon]="icon"
-                [class]="datePickerClass"
-                [dateRanges]="dateRanges"
-                [label]="state.range.label"
-                (rangeChange)="onDateRangeChange($event)"
-              >
+              <cp-range-picker [icon]="icon"
+                               [class]="datePickerClass"
+                               [dateRanges]="dateRanges"
+                               [label]="state.range.label"
+                               (rangeChange)="onDateRangeChange($event)">
               </cp-range-picker>
             </div>
           </div>
@@ -54,7 +50,9 @@
     </div>
 
     <div class="col-3">
-      <button (click)="download.emit()" class="cpbtn cpbtn--primary float-right" i18n>
+      <button (click)="download.emit()"
+              class="cpbtn cpbtn--primary float-right"
+              i18n>
         {{ 'assess_button_download_engagement_data' | cpI18n }}
       </button>
     </div>

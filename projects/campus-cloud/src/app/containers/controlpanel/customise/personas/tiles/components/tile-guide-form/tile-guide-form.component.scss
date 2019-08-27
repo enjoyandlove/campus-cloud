@@ -7,8 +7,12 @@
 }
 
 input.hex {
-  top: -8px;
+  top: 6px;
   left: 10px;
   max-width: 100px;
   position: relative;
+}
+
+cp-upload-button {
+  margin-top: 10px;
 }

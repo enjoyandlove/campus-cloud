@@ -8,11 +8,10 @@
           }}</strong>
         </span>
 
-        <button
-          type="button"
-          aria-label="close"
-          data-dismiss="modal"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                aria-label="close"
+                data-dismiss="modal"
+                class="float-right hover cpmodal__header__close unstyled-button">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -35,17 +34,21 @@
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-12 text-right">
-        <label class="error" *ngIf="errors">
+        <label class="error"
+               *ngIf="errors">
           <i class="material-icons">
             warning
           </i>
           {{ errorMessage }}
         </label>
-        <button type="button" class="cpbtn cpbtn--cancel" data-dismiss="modal">
+        <button type="button"
+                class="cpbtn cpbtn--cancel"
+                data-dismiss="modal">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <cp-button [props]="buttonData" (buttonClick)="onDelete()"> </cp-button>
+        <cp-button [props]="buttonData"
+                   (buttonClick)="onDelete()"> </cp-button>
       </div>
     </div>
   </div>

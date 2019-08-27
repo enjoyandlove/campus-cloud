@@ -13,12 +13,10 @@
   </div>
   <div class="col-4 text-center">
     <div class="cp-card cp-card--half-padding rating-box">
-      <cp-stars
-        [size]="starSize"
-        class="rating-box__star"
-        [avgRate]="provider.avg_rating_percent"
-        [maxRate]="MAX_RATE"
-      >
+      <cp-stars [size]="starSize"
+                class="rating-box__star"
+                [avgRate]="provider.avg_rating_percent"
+                [maxRate]="MAX_RATE">
       </cp-stars>
       <p>
         {{ 't_shared_average_rating' | cpI18n }}

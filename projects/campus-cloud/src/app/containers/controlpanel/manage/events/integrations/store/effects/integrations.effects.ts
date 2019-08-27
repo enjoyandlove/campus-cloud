@@ -10,9 +10,10 @@ import { CPDate } from '@campus-cloud/shared/utils/date';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { IntegrationsService } from './../../integrations.service';
 import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model';
-import { EventIntegration } from '@projects/campus-cloud/src/app/libs/integrations/events/model';
 import { StoreService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { EventIntegration } from '@projects/campus-cloud/src/app/libs/integrations/events/model';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
+import { IntegrationsUitlsService } from '@controlpanel/manage/events/integrations/integrations.utils.service';
 
 @Injectable()
 export class IntegrationsEffects {
@@ -24,8 +25,7 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.GET_HOSTS),
     mergeMap((action: fromActions.GetHosts) => {
-      const { params } = action.payload;
-      return this.storeService.getStores(params).pipe(
+      return this.storeService.getStores(this.defaultParams()).pipe(
         map((data: any[]) => new fromActions.GetHostsSuccess(data)),
         catchError(() => of(new fromActions.GetHostsFail(this.somethingWentWrong)))
       );
@@ -38,8 +38,8 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.GET_INTEGRATIONS),
     mergeMap((action: fromActions.GetIntegrations) => {
-      const { startRange, endRange, params } = action.payload;
-      return this.service.getIntegrations(startRange, endRange, params).pipe(
+      const { startRange, endRange } = action.payload;
+      return this.service.getIntegrations(startRange, endRange, this.defaultParams()).pipe(
         map((data: IEventIntegration[]) => new fromActions.GetIntegrationsSuccess(data)),
         catchError(() => of(new fromActions.GetIntegrationsFail(this.somethingWentWrong)))
       );
@@ -52,8 +52,8 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.POST_INTEGRATION),
     map((action: fromActions.PostIntegration) => action.payload),
-    mergeMap(({ body, params, hostType }) => {
-      return this.service.createIntegration(body, params).pipe(
+    mergeMap(({ body, hostType }) => {
+      return this.service.createIntegration(body, this.defaultParams()).pipe(
         map((integration: IEventIntegration) => {
           const eventProperties = {
             host_type: hostType,
@@ -170,8 +170,8 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.DELETE_INTEGRATION),
     mergeMap((action: fromActions.DeleteIntegration) => {
-      const { integration, params } = action.payload;
-      return this.service.deleteIntegration(integration.id, params).pipe(
+      const { integration } = action.payload;
+      return this.service.deleteIntegration(integration.id, this.defaultParams()).pipe(
         map(() => {
           this.cpTracking.amplitudeEmitEvent(
             amplitudeEvents.MANAGE_DELETED_FEED_INTEGRATION,
@@ -191,8 +191,8 @@ export class IntegrationsEffects {
   > = this.actions$.pipe(
     ofType(fromActions.IntegrationActions.EDIT_INTEGRATION),
     mergeMap((action: fromActions.EditIntegration) => {
-      const { integrationId, body, params } = action.payload;
-      return this.service.editIntegration(integrationId, body, params).pipe(
+      const { integrationId, body } = action.payload;
+      return this.service.editIntegration(integrationId, body, this.defaultParams()).pipe(
         map((edited: IEventIntegration) => new fromActions.EditIntegrationSuccess(edited)),
         catchError(({ error }: HttpErrorResponse) =>
           of(new fromActions.EditIntegrationFail(this.commonUtils.handleCreateUpdateError(error)))
@@ -207,6 +207,12 @@ export class IntegrationsEffects {
       sub_menu_name: amplitudeEvents.EVENT,
       feed_type: CommonIntegrationUtilsService.getSelectedType(integration.feed_type).label
     };
+  }
+
+  private defaultParams(): HttpParams {
+    const school_id = this.session.g.get('school').id;
+
+    return IntegrationsUitlsService.commonParams(school_id);
   }
 
   constructor(

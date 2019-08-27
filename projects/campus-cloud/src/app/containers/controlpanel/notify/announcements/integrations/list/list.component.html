@@ -6,27 +6,21 @@
 
   <ng-container *ngSwitchCase="false">
     <ng-container [ngSwitch]="(integrations$ | async)?.length === 0">
-      <cp-no-content
-        class="no-content"
-        *ngSwitchCase="true"
-        [noContentText]="['t_shared_no_integrations_found' | cpI18n]"
-      >
+      <cp-no-content class="no-content"
+                     *ngSwitchCase="true"
+                     [noContentText]="['t_shared_no_integrations_found' | cpI18n]">
       </cp-no-content>
       <ng-container *ngSwitchCase="false">
-        <cp-integrations-list
-          [senders]="senders$ | async"
-          [integrations$]="integrations$"
-          (deleteClick)="onLaunchDeleteModal($event)"
-        >
+        <cp-integrations-list [senders]="senders$ | async"
+                              [integrations$]="integrations$"
+                              (deleteClick)="onLaunchDeleteModal($event)">
         </cp-integrations-list>
 
-        <cp-pagination
-          [pageNext]="pageNext"
-          [pagePrev]="pagePrev"
-          [pageNumber]="pageNumber"
-          (next)="onPaginationNext()"
-          (previous)="onPaginationPrevious()"
-        >
+        <cp-pagination [pageNext]="pageNext"
+                       [pagePrev]="pagePrev"
+                       [pageNumber]="pageNumber"
+                       (next)="onPaginationNext()"
+                       (previous)="onPaginationPrevious()">
         </cp-pagination>
       </ng-container>
     </ng-container>

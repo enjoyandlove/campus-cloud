@@ -1,17 +1,17 @@
 <div class="page">
   <div class="page__nav">
     <div class="cp-wrapper cp-wrapper--outer">
-      <cp-one-column [width]="layoutWidth" [aligned]="layoutAlign">
+      <cp-one-column [width]="layoutWidth"
+                     [aligned]="layoutAlign">
         <h1 class="page__title">{{ 't_shared_web_checkin' | cpI18n }}</h1>
         <div class="float-right">
-          <button (click)="handlePdf()" class="cpbtn cpbtn--primary">
+          <button (click)="handlePdf()"
+                  class="cpbtn cpbtn--primary">
             {{ 'checkin_download_qr_code' | cpI18n }}
           </button>
-          <button
-            data-toggle="modal"
-            class="cpbtn cpbtn--primary"
-            data-target="#checkinInstruction"
-          >
+          <button data-toggle="modal"
+                  class="cpbtn cpbtn--primary"
+                  data-target="#checkinInstruction">
             {{ 'instructions' | cpI18n }}
           </button>
         </div>
@@ -20,40 +20,39 @@
   </div>
 
   <div class="cp-wrapper cp-wrapper--outer">
-    <cp-one-column [width]="layoutWidth" [aligned]="layoutAlign">
-      <cp-service-header [service]="data" *ngIf="isService" class="card-margin">
+    <cp-one-column [width]="layoutWidth"
+                   [aligned]="layoutAlign">
+      <cp-service-header [service]="data"
+                         *ngIf="isService"
+                         class="card-margin">
       </cp-service-header>
 
-      <cp-event-header [event]="data" *ngIf="isEvent" class="card-margin"> </cp-event-header>
+      <cp-event-header [event]="data"
+                       *ngIf="isEvent"
+                       class="card-margin"> </cp-event-header>
 
-      <cp-checkin-register
-        [data]="data"
-        [isService]="isService"
-        class="card-margin"
-        (send)="send.emit($event)"
-      >
+      <cp-checkin-register [data]="data"
+                           [isService]="isService"
+                           class="card-margin"
+                           (send)="send.emit($event)">
       </cp-checkin-register>
 
-      <cp-attendees-list
-        [data]="data"
-        class="card-margin"
-        [timeZone]="timeZone"
-        (checkout)="checkout.emit($event)"
-        *ngIf="data.attendees.length"
-      >
+      <cp-attendees-list [data]="data"
+                         class="card-margin"
+                         [timeZone]="timeZone"
+                         (checkout)="checkout.emit($event)"
+                         *ngIf="data.attendees.length">
       </cp-attendees-list>
     </cp-one-column>
   </div>
 </div>
 
 <cp-modal modalId="checkinInternalModal">
-  <cp-checkin-internal-modal
-    [data]="data"
-    [isEvent]="isEvent"
-    [isService]="isService"
-    (teardown)="onInternalModalTeardown()"
-    (updated)="onInternaleModalUpdate($event)"
-  >
+  <cp-checkin-internal-modal [data]="data"
+                             [isEvent]="isEvent"
+                             [isService]="isService"
+                             (teardown)="onInternalModalTeardown()"
+                             (updated)="onInternaleModalUpdate($event)">
   </cp-checkin-internal-modal>
 </cp-modal>
 

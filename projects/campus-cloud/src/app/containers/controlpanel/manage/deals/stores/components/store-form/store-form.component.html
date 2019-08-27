@@ -1,25 +1,23 @@
 <form [formGroup]="storeForm">
   <div class="form-group store">
     <div class="form-group">
-      <cp-image-upload
-        id="stores"
-        (uploaded)="onUploadedImage($event)"
-        [defaultImage]="storeForm.controls['logo_url'].value"
-      >
+      <cp-image-upload id="stores"
+                       (uploaded)="onUploadedImage($event)"
+                       [defaultImage]="storeForm.controls['logo_url'].value">
       </cp-image-upload>
     </div>
 
     <div class="form-group">
       <label>
         {{ 'store_name' | cpI18n }}
-        <cp-char-counter
-          class="float-right"
-          [limit]="120"
-          [charCount]="storeForm.controls.name.value"
-        >
+        <cp-char-counter class="float-right"
+                         [limit]="120"
+                         [charCount]="storeForm.controls.name.value">
         </cp-char-counter>
       </label>
-      <input type="text" class="form-control" formControlName="name" />
+      <input type="text"
+             class="form-control"
+             formControlName="name" />
     </div>
 
     <div class="form-group">
@@ -29,17 +27,17 @@
 
     <div class="form-group">
       <label>{{ 'website' | cpI18n }}</label>
-      <input type="text" class="form-control" formControlName="website" />
+      <input type="text"
+             class="form-control"
+             formControlName="website" />
     </div>
 
     <div class="row form-group">
       <div class="col-12">
-        <cp-checkbox
-          class="checkbox"
-          [isChecked]="showLocationDetails"
-          (toggle)="onLocationToggle($event)"
-          [label]="cpI18n.translate('t_shared_label_location_toggle')"
-        >
+        <cp-checkbox class="checkbox"
+                     [isChecked]="showLocationDetails"
+                     (toggle)="onLocationToggle($event)"
+                     [label]="cpI18n.translate('t_shared_label_location_toggle')">
         </cp-checkbox>
       </div>
     </div>
@@ -49,12 +47,10 @@
         <label>{{ 'location' | cpI18n }}</label>
         <div class="row form-group">
           <div class="col-12">
-            <cp-place-autocomplete
-              [newAddress]="newAddress"
-              (backToDefault)="onResetMap()"
-              (placeChange)="onPlaceChange($event)"
-              [defaultValue]="storeForm.controls['address'].value"
-            >
+            <cp-place-autocomplete [newAddress]="newAddress"
+                                   (backToDefault)="onResetMap()"
+                                   (placeChange)="onPlaceChange($event)"
+                                   [defaultValue]="storeForm.controls['address'].value">
             </cp-place-autocomplete>
           </div>
         </div>
@@ -62,11 +58,9 @@
 
       <div class="form-group">
         <div class="maps">
-          <cp-maps
-            [center]="mapCenter"
-            [drawMarker]="drawMarker"
-            (mapSelection)="onMapSelection($event)"
-          >
+          <cp-maps [center]="mapCenter"
+                   [drawMarker]="drawMarker"
+                   (mapSelection)="onMapSelection($event)">
           </cp-maps>
         </div>
       </div>

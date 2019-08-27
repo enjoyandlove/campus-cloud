@@ -10,7 +10,6 @@ import * as fromRoot from '@campus-cloud/store';
 import { mockIntegration } from '../tests';
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { mockSchool } from '@campus-cloud/session/mock/school';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { WallsIntegrationsListComponent } from './list.component';
 import { CPNoContentComponent } from '@campus-cloud/shared/components';
@@ -18,7 +17,6 @@ import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common
 import { LibsWallsIntegrationsModule } from '@campus-cloud/libs/integrations/walls/walls-integrations.module';
 
 describe('WallsIntegrationsListComponent', () => {
-  let session: CPSession;
   let dispatchSpy: jasmine.Spy;
   let component: WallsIntegrationsListComponent;
   let fixture: ComponentFixture<WallsIntegrationsListComponent>;
@@ -46,9 +44,6 @@ describe('WallsIntegrationsListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(WallsIntegrationsListComponent);
     component = fixture.componentInstance;
-
-    session = TestBed.get(CPSession);
-    session.g.set('school', mockSchool);
 
     dispatchSpy = spyOn(component.store, 'dispatch');
 

@@ -1,6 +1,5 @@
 import { filter, takeUntil, map, tap, take } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -8,19 +7,15 @@ import { Store } from '@ngrx/store';
 import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
-import { IItem } from '@campus-cloud/shared/components';
 import { ManageHeaderService } from '../../utils';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { ILocation } from '@campus-cloud/libs/locations/common/model';
-import { BaseComponent } from '@campus-cloud/base/base.component';
+import { IItem } from '@campus-cloud/shared/components';
 import * as fromCategoryStore from '../categories/store';
-import { LocationType } from '@campus-cloud/libs/locations/common/utils';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { ILocation } from '@campus-cloud/libs/locations/common/model';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
 import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
-import {
-  ICategory,
-  LocationCategoryLocale
-} from '@campus-cloud/libs/locations/common/categories/model';
 
 interface IState {
   search_str: string;
@@ -62,21 +57,11 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
     super();
   }
 
-  get defaultParams(): HttpParams {
-    return new HttpParams()
-      .append('search_str', this.state.search_str)
-      .append('sort_field', this.state.sort_field)
-      .append('category_id', this.state.category_id)
-      .append('location_type', LocationType.location)
-      .append('sort_direction', this.state.sort_direction)
-      .append('school_id', this.session.g.get('school').id);
-  }
-
   fetch() {
     const payload = {
+      state: this.state,
       startRange: this.startRange,
-      endRange: this.endRange,
-      params: this.defaultParams
+      endRange: this.endRange
     };
 
     this.store.dispatch(new fromStore.GetLocations(payload));
@@ -86,9 +71,9 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
 
   fetchFilteredLocations() {
     const payload = {
+      state: this.state,
       startRange: this.startRange,
-      endRange: this.endRange,
-      params: this.defaultParams
+      endRange: this.endRange
     };
 
     this.store.dispatch(new fromStore.GetFilteredLocations(payload));
@@ -153,16 +138,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
       takeUntil(this.destroy$),
       tap((categories: ICategory[]) => {
         if (!categories.length) {
-          const locale = CPI18nService.getLocale().startsWith('fr')
-            ? LocationCategoryLocale.fr
-            : LocationCategoryLocale.eng;
-
-          const params = new HttpParams()
-            .set('locale', locale)
-            .set('location_type', LocationType.location)
-            .set('school_id', this.session.g.get('school').id);
-
-          this.store.dispatch(new fromCategoryStore.GetCategories({ params }));
+          this.store.dispatch(new fromCategoryStore.GetCategories());
         }
       }),
       map((res) => LocationsUtilsService.setCategoriesDropDown(res, categoryLabel))

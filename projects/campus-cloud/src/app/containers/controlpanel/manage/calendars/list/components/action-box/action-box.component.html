@@ -4,12 +4,10 @@
       <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
     </div>
     <div class="col-5">
-      <button
-        cpTracker
-        (click)="onLaunchCreateModal()"
-        [eventData]="eventData"
-        class="cpbtn cpbtn--primary float-right"
-      >
+      <button cpTracker
+              (click)="onLaunchCreateModal()"
+              [eventData]="eventData"
+              class="cpbtn cpbtn--primary float-right">
         {{ 'calendars_button_new' | cpI18n }}
       </button>
     </div>

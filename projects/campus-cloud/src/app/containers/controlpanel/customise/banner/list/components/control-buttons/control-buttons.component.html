@@ -1,7 +1,10 @@
 <div class="controls">
-  <button type="button" (click)="cancel.emit()" class="cpbtn cpbtn--cancel">
+  <button type="button"
+          (click)="cancel.emit()"
+          class="cpbtn cpbtn--cancel">
     {{ 'cancel' | cpI18n }}
   </button>
 
-  <cp-button [props]="buttonData" (buttonClick)="save.emit()"> </cp-button>
+  <cp-button [props]="buttonData"
+             (buttonClick)="save.emit()"> </cp-button>
 </div>

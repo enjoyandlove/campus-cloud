@@ -1,19 +1,16 @@
 import { tap, takeUntil, filter, map, take } from 'rxjs/operators';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
-import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
 import { FORMAT } from '@campus-cloud/shared/pipes/date/date.pipe';
 import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model';
-import { ItemsIntegrationsUitlsService } from '../items-integrations.utils.service';
 
 @Component({
   selector: 'cp-items-integrations',
@@ -33,18 +30,11 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
   stores$: Observable<Array<{ label: string; value: number }>>;
 
   constructor(
-    public session: CPSession,
     public cpI18n: CPI18nService,
     private route: ActivatedRoute,
     public store: Store<fromStore.IEventIntegrationState | fromRoot.IHeader | fromRoot.ISnackbar>
   ) {
     super();
-  }
-
-  get defaultParams(): HttpParams {
-    const school_id = this.session.g.get('school').id;
-
-    return ItemsIntegrationsUitlsService.commonParams(school_id, this.calendarId.toString());
   }
 
   onPaginationNext() {
@@ -108,7 +98,7 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
     const payload = {
       startRange: this.startRange,
       endRange: this.endRange,
-      params: this.defaultParams
+      calendarId: this.calendarId
     };
     this.store.dispatch(new fromStore.GetIntegrations(payload));
   }
@@ -127,10 +117,8 @@ export class ItemsIntegrationsListComponent extends BaseComponent implements OnI
   }
 
   onDeleteClick(integration: IEventIntegration) {
-    const params = this.defaultParams;
-
     const payload = {
-      params,
+      calendarId: this.calendarId,
       integrationId: integration.id
     };
 

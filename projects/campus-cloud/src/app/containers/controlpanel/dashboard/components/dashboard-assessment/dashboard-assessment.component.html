@@ -1,7 +1,8 @@
 <ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div class="tile" *ngSwitchCase="false">
+  <div class="tile"
+       *ngSwitchCase="false">
     <div class="row">
       <div class="col-12">
         <h3 class="tile--title">{{ 'dashboard_assessment_title' | cpI18n }}</h3>
@@ -19,7 +20,8 @@
       <div class="col-9 tile--stat">
         <p>{{ 'dashboard_assessment_service_checkins' | cpI18n }}</p>
       </div>
-      <div class="col-3 text-right tile--amount">{{ data.service_checkins }}</div>
+      <div class="col-3 text-right tile--amount">{{ data.service_checkins }}
+      </div>
     </div>
 
     <div class="row">

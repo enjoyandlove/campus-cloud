@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { takeUntil, tap, take } from 'rxjs/operators';
-import { HttpParams } from '@angular/common/http';
 import { Subject, Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -8,12 +7,8 @@ import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { LocationType } from '@campus-cloud/libs/locations/common/utils';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
-import {
-  ICategory,
-  LocationCategoryLocale
-} from '@campus-cloud/libs/locations/common/categories/model';
+import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
 
 interface IState {
   search_str: string;
@@ -123,28 +118,14 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     $('#categoryDelete').modal('hide');
   }
 
-  get defaultParams(): HttpParams {
-    const locale = CPI18nService.getLocale().startsWith('fr')
-      ? LocationCategoryLocale.fr
-      : LocationCategoryLocale.eng;
-
-    return new HttpParams()
-      .set('locale', locale)
-      .set('location_type', LocationType.location)
-      .set('school_id', this.session.g.get('school').id)
-      .set('search_str', this.state.search_str)
-      .set('sort_field', this.state.sort_field)
-      .set('sort_direction', this.state.sort_direction);
-  }
-
   fetch() {
-    this.store.dispatch(new fromStore.GetCategories({ params: this.defaultParams }));
+    this.store.dispatch(new fromStore.GetCategories());
 
     this.categories$ = this.store.select(fromStore.getCategories);
   }
 
   fetchFilteredCategories() {
-    this.store.dispatch(new fromStore.GetFilteredCategories({ params: this.defaultParams }));
+    this.store.dispatch(new fromStore.GetFilteredCategories({ state: this.state }));
 
     this.categories$ = this.store.select(fromStore.getFilteredCategories);
   }

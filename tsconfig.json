@@ -13,6 +13,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "typeRoots": ["node_modules/@types"],
+    "lib": ["es2018", "dom"],
     "paths": {
       "@projects/*": ["projects/*"],
       "@campus-cloud/*": ["projects/campus-cloud/src/app/*"],

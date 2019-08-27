@@ -6,22 +6,18 @@
           <cp-searchbox (query)="onSearch($event)"></cp-searchbox>
         </div>
         <div class="col text-right">
-          <button
-            type="button"
-            (click)="download.emit()"
-            *ngIf="showDownloadButton"
-            class="cpbtn cpbtn--cancel"
-            cpTarget="download_assessment"
-          >
+          <button type="button"
+                  (click)="download.emit()"
+                  *ngIf="showDownloadButton"
+                  class="cpbtn cpbtn--cancel"
+                  cpTarget="download_assessment">
             {{ 'download' | cpI18n }}
           </button>
-          <button
-            type="button"
-            (click)="create.emit()"
-            *ngIf="showCreateButton"
-            class="cpbtn cpbtn--primary"
-            cpTarget="create_member_btn"
-          >
+          <button type="button"
+                  (click)="create.emit()"
+                  *ngIf="showCreateButton"
+                  class="cpbtn cpbtn--primary"
+                  cpTarget="create_member_btn">
             {{ 'clubs_member_button_create' | cpI18n }}
           </button>
         </div>
