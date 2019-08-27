@@ -30,7 +30,8 @@ export class ControlPanelComponent implements AfterViewInit, OnInit {
   ) {}
 
   get currentRoutePath(): string {
-    return `${this.router.url.split('#')[0]}/`;
+    // remove previous fragments and query params
+    return `${this.router.url.split('#')[0].split('?')[0]}/`;
   }
 
   trackLoggedInEvent() {
