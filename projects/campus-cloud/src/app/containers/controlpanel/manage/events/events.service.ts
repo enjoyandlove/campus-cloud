@@ -14,7 +14,7 @@ export class EventsService {
   getEvents(startRage: number, endRage: number, search?: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EVENT}/${startRage};${endRage}`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search, true);
   }
 
   getUploadImageUrl() {
@@ -24,7 +24,7 @@ export class EventsService {
   getEventById(id: number, {}) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EVENT}/${id}`;
 
-    return this.api.get(url);
+    return this.api.get(url, null, true);
   }
 
   getEventsByHostId(hostId: string) {
@@ -72,13 +72,13 @@ export class EventsService {
   updateEvent(body: any, eventId: number, {}) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EVENT}/${eventId}`;
 
-    return this.api.update(url, body);
+    return this.api.update(url, body, null, true);
   }
 
   deleteEventById(eventId: number, {}) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EVENT}/${eventId}`;
 
-    return this.api.delete(url);
+    return this.api.delete(url, null, true);
   }
 
   addCheckIn(body: any, search?: HttpParams) {

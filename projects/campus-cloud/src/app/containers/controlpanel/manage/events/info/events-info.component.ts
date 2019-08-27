@@ -4,23 +4,23 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { FORMAT } from '@campus-cloud/shared/pipes';
 import IEvent from '../event.interface';
 import { CPSession } from '@campus-cloud/session';
 import { EventsService } from '../events.service';
 import { EventAttendance } from '../event.status';
+import { FORMAT } from '@campus-cloud/shared/pipes';
+import { EventUtilService } from './../events.utils.service';
+import { EventsComponent } from '../list/base/events.component';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { IResourceBanner } from '@campus-cloud/shared/components';
-import { IHeader, baseActions } from '@campus-cloud/store/base';
-import { EventUtilService } from './../events.utils.service';
-import { environment } from '@projects/campus-cloud/src/environments/environment';
-import { EventsComponent } from '../list/base/events.component';
 import { EventsAmplitudeService } from '../events.amplitude.service';
+import { IHeader, baseActions, baseActionClass } from '@campus-cloud/store/base';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 import {
-  CPI18nService,
-  CPTrackingService,
   RouteLevel,
-  ModalService
+  ModalService,
+  CPI18nService,
+  CPTrackingService
 } from '@campus-cloud/shared/services';
 
 @Component({
@@ -79,31 +79,42 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
         .append('calendar_id', this.orientationId.toString());
     }
 
-    super.fetchData(this.service.getEventById(this.eventId, search)).then((event) => {
-      this.event = event.data;
+    super.fetchData(this.service.getEventById(this.eventId, search)).then(
+      (event) => {
+        this.event = event.data;
 
-      this.isPastEvent = this.utils.isPastEvent(this.event);
+        this.isPastEvent = this.utils.isPastEvent(this.event);
 
-      this.urlPrefix = this.utils.buildUrlPrefix(this.getEventType());
+        this.urlPrefix = this.utils.buildUrlPrefix(this.getEventType());
 
-      this.banner =
-        this.event.poster_url === '' ? this.event.store_logo_url : this.event.poster_url;
+        this.banner =
+          this.event.poster_url === '' ? this.event.store_logo_url : this.event.poster_url;
 
-      this.buildHeader(this.event);
+        this.buildHeader(this.event);
 
-      this.showLocationDetails = event.data.latitude !== 0 && event.data.longitude !== 0;
+        this.showLocationDetails = event.data.latitude !== 0 && event.data.longitude !== 0;
 
-      this.mapCenter = new BehaviorSubject({
-        lat: event.data.latitude,
-        lng: event.data.longitude
-      });
+        this.mapCenter = new BehaviorSubject({
+          lat: event.data.latitude,
+          lng: event.data.longitude
+        });
 
-      this.resourceBanner = {
-        image: this.banner,
-        heading: this.event.title,
-        subheading: this.event.store_name
-      };
-    });
+        this.resourceBanner = {
+          image: this.banner,
+          heading: this.event.title,
+          subheading: this.event.store_name
+        };
+      },
+      () => this.handleError()
+    );
+  }
+
+  handleError() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body: this.cpI18n.translate('something_went_wrong')
+      })
+    );
   }
 
   public buildHeader(event) {
