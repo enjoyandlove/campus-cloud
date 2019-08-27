@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { ISnackbar, baseActions } from '@campus-cloud/store/base';
+import { ISnackbar, baseActionClass } from '@campus-cloud/store/base';
 import { ImageService, CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
@@ -21,10 +21,6 @@ export class ServicesImportTopBarComponent implements OnInit {
   @Output() deleteServices: EventEmitter<any> = new EventEmitter();
   @Output() categoryChange: EventEmitter<number> = new EventEmitter();
 
-  stores;
-  imageError;
-  loading = true;
-
   constructor(
     public cpI18n: CPI18nService,
     public store: Store<ISnackbar>,
@@ -32,24 +28,19 @@ export class ServicesImportTopBarComponent implements OnInit {
   ) {}
 
   errorHandler(body = this.cpI18n.translate('something_went_wrong')) {
-    this.store.dispatch({
-      type: baseActions.SNACKBAR_SHOW,
-      payload: {
-        body,
-        sticky: true,
-        class: 'danger'
-      }
-    });
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body: body
+      })
+    );
   }
 
   onFileUpload(file) {
-    this.imageError = null;
-    this.imageService
-      .upload(file)
-      .subscribe(
-        ({ image_url }: any) => this.imageChange.emit(image_url),
-        () => this.errorHandler()
-      );
+    const promise = this.imageService.upload(file).toPromise();
+
+    promise
+      .then(({ image_url }: any) => this.imageChange.emit(image_url))
+      .catch((err) => this.errorHandler(err.message));
   }
 
   ngOnInit() {}
