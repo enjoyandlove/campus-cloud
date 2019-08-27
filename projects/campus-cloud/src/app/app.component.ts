@@ -1,10 +1,11 @@
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit, Inject } from '@angular/core';
 import { filter, map, mergeMap } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
-import { Component, OnInit } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 import { pageTitle } from '@campus-cloud/shared/constants';
-import { ZendeskService } from '@campus-cloud/shared/services';
+import { ZendeskService, CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-app',
@@ -15,7 +16,8 @@ export class AppComponent implements OnInit {
     private router: Router,
     private titleService: Title,
     private zendeskService: ZendeskService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    @Inject(DOCUMENT) private document: any
   ) {}
 
   setZendesk(routeObj) {
@@ -41,11 +43,11 @@ export class AppComponent implements OnInit {
         mergeMap((route) => route.data)
       )
       .subscribe((event) => {
-        (document.activeElement as any).blur();
+        (this.document.activeElement as any).blur();
         if (this.router.url.endsWith('#main')) {
-          const main = document.getElementById('main');
+          const main = this.document.getElementById('main');
           if (main) {
-            document.getElementById('main').focus();
+            main.focus();
           }
         }
 
@@ -59,7 +61,12 @@ export class AppComponent implements OnInit {
       });
   }
 
+  setDocumentLanguage() {
+    this.document.documentElement.lang = CPI18nService.getLocale();
+  }
+
   ngOnInit() {
     this.setPageTitle();
+    this.setDocumentLanguage();
   }
 }
