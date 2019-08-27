@@ -2937,7 +2937,7 @@
     "message": "Catalogue des cours"
   },
   "t_personas_tile_create_resource_type_deal_store_list": {
-    "message": "Emplois"
+    "message": "Rabais"
   },
   "t_personas_tile_create_resource_type_directory": {
     "message": "Directoire"
@@ -3434,6 +3434,9 @@
   },
   "t_shared_yes": {
     "message": "Oui"
+  },
+  "t_skip_to_content": {
+    "message": "Passer au contenu principal"
   },
   "t_students_profile_students": {
     "message": "Élèves"

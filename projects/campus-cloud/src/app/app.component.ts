@@ -42,6 +42,12 @@ export class AppComponent implements OnInit {
       )
       .subscribe((event) => {
         (document.activeElement as any).blur();
+        if (this.router.url.endsWith('#main')) {
+          const main = document.getElementById('main');
+          if (main) {
+            document.getElementById('main').focus();
+          }
+        }
 
         this.zendeskService.hide();
         this.setZendesk(event);
