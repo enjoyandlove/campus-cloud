@@ -1,10 +1,12 @@
 <ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div class="tile" *ngSwitchCase="false">
+  <div class="tile"
+       *ngSwitchCase="false">
     <div class="row">
       <div class="col-12">
-        <h3 class="tile--title">{{ 'dashboard_top_five_clubs_title' | cpI18n }}</h3>
+        <h3 class="tile--title">{{ 'dashboard_top_five_clubs_title' | cpI18n }}
+        </h3>
       </div>
     </div>
 
@@ -27,30 +29,29 @@
               <p>{{ 'members' | cpI18n }}</p>
             </div>
           </div>
-          <div class="row" *ngFor="let item of items; index as index; last as last">
+          <div class="row"
+               *ngFor="let item of items; index as index; last as last">
             <div class="col-12">
-              <div class="dashboard-table--item" [class.isLast]="last">
+              <div class="dashboard-table--item"
+                   [class.isLast]="last">
                 <div class="row">
                   <div class="col-1 no-right-padding">
                     <p class="ranking">{{ index + 1 }}</p>
                   </div>
                   <div class="col-9 no-left-padding text-truncate">
-                    <img
-                      class="avatar rounded"
-                      [src]="item.logo_url === '' ? defaultImage : item.logo_url"
-                      [alt]="[item.logo_url === '' ? 'default-avatar' : 'club-avatar']"
-                    />
+                    <img class="avatar rounded"
+                         [src]="item.logo_url === '' ? defaultImage : item.logo_url"
+                         [alt]="[item.logo_url === '' ? 'default-avatar' : 'club-avatar']" />
                     <ng-container *ngIf="!isSuperAdmin">
-                      <p [attr.title]="item.name" class="title text-truncate">
+                      <p [attr.title]="item.name"
+                         class="title text-truncate">
                         {{ item.name }}
                       </p>
                     </ng-container>
                     <ng-container *ngIf="isSuperAdmin">
-                      <p
-                        [attr.title]="item.name"
-                        class="title text-truncate hover"
-                        (click)="router.navigate(['/manage/clubs/' + item.id + '/info'])"
-                      >
+                      <p [attr.title]="item.name"
+                         class="title text-truncate hover"
+                         (click)="router.navigate(['/manage/clubs/' + item.id + '/info'])">
                         {{ item.name }}
                       </p>
                     </ng-container>

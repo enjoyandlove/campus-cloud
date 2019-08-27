@@ -7,11 +7,10 @@
             {{ 't_sandbox_invite_testers' | cpI18n }}
           </strong>
         </span>
-        <button
-          type="button"
-          aria-label="cancel"
-          class="float-right hover cpmodal__header__close unstyled-button"
-          (click)="doCancel()">
+        <button type="button"
+                aria-label="cancel"
+                class="float-right hover cpmodal__header__close unstyled-button"
+                (click)="doCancel()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -23,17 +22,17 @@
       <div class="formGroup">
         <div class="row">
           <div class="col-12">
-            <label for="emails">{{ 't_sandbox_email_addresses' | cpI18n }}</label>
-            <textarea
-              id="emails"
-              cpTarget="emails"
-              cdkTextareaAutosize
-              class="emails-input"
-              cdkAutosizeMinRows="1"
-              cdkAutosizeMaxRows="3"
-              formControlName="emails"
-              placeholder="{{ 't_sandbox_email_addresses_hint' | cpI18n }}"
-              (keydown.enter)="$event.preventDefault()">
+            <label
+                   for="emails">{{ 't_sandbox_email_addresses' | cpI18n }}</label>
+            <textarea id="emails"
+                      cpTarget="emails"
+                      cdkTextareaAutosize
+                      class="emails-input"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="3"
+                      formControlName="emails"
+                      placeholder="{{ 't_sandbox_email_addresses_hint' | cpI18n }}"
+                      (keydown.enter)="$event.preventDefault()">
             </textarea>
           </div>
         </div>
@@ -44,16 +43,18 @@
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-6 text-right">
-        <button type="button" data-dismiss="modal" class="cpbtn cpbtn--cancel" (click)="doCancel()">
+        <button type="button"
+                data-dismiss="modal"
+                class="cpbtn cpbtn--cancel"
+                (click)="doCancel()">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button
-          type="button"
-          cpTarget="submit"
-          class="cpbtn cpbtn--primary"
-          [disabled]="!form.valid"
-          (click)="doCreate()">
+        <button type="button"
+                cpTarget="submit"
+                class="cpbtn cpbtn--primary"
+                [disabled]="!form.valid"
+                (click)="doCreate()">
           {{ 't_sandbox_invite' | cpI18n }}
         </button>
       </div>

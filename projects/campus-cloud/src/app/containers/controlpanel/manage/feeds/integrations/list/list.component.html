@@ -9,49 +9,48 @@
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
-    <cp-no-content
-      class="no-content"
-      *ngIf="!(integrations$ | async)?.length"
-      [noContentText]="cpI18n.translate('t_shared_no_integrations_found')"
-    >
+    <cp-no-content class="no-content"
+                   *ngIf="!(integrations$ | async)?.length"
+                   [noContentText]="cpI18n.translate('t_shared_no_integrations_found')">
     </cp-no-content>
 
     <div *ngIf="(integrations$ | async)?.length">
-      <cp-walls-integration-list
-        [channels]="channels"
-        [integrations$]="integrations$"
-        (syncClick)="onSyncNow($event)"
-        (editClick)="onLaunchEditModal($event)"
-        (deleteClick)="onLaunchDeleteModal($event)"
-      >
+      <cp-walls-integration-list [channels]="channels"
+                                 [integrations$]="integrations$"
+                                 (syncClick)="onSyncNow($event)"
+                                 (editClick)="onLaunchEditModal($event)"
+                                 (deleteClick)="onLaunchDeleteModal($event)">
       </cp-walls-integration-list>
 
-      <cp-pagination
-        [pageNext]="pageNext"
-        [pagePrev]="pagePrev"
-        [pageNumber]="pageNumber"
-        (next)="onPaginationNext()"
-        (previous)="onPaginationPrevious()"
-      >
+      <cp-pagination [pageNext]="pageNext"
+                     [pagePrev]="pagePrev"
+                     [pageNumber]="pageNumber"
+                     (next)="onPaginationNext()"
+                     (previous)="onPaginationPrevious()">
       </cp-pagination>
     </div>
   </div>
 </div>
 
-<cp-modal *ngIf="showDeleteModal" modalId="integrationDelete">
-  <cp-walls-integrations-delete
-    (teardown)="onDeleteTeardown()"
-    [integration]="selectedIntegration"
-    (deleteClick)="onDeleteClick($event)"
-  >
+<cp-modal *ngIf="showDeleteModal"
+          modalId="integrationDelete">
+  <cp-walls-integrations-delete (teardown)="onDeleteTeardown()"
+                                [integration]="selectedIntegration"
+                                (deleteClick)="onDeleteClick($event)">
   </cp-walls-integrations-delete>
 </cp-modal>
 
-<cp-modal *ngIf="showCreateModal" modalId="integrationCreate" (modalClose)="onCreateTeardown()">
-  <cp-walls-integrations-create (teardown)="onCreateTeardown()"> </cp-walls-integrations-create>
+<cp-modal *ngIf="showCreateModal"
+          modalId="integrationCreate"
+          (modalClose)="onCreateTeardown()">
+  <cp-walls-integrations-create (teardown)="onCreateTeardown()">
+  </cp-walls-integrations-create>
 </cp-modal>
 
-<cp-modal *ngIf="showEditModal" modalId="integrationEdit" (modalClose)="onEditTeardown()">
-  <cp-walls-integrations-edit (teardown)="onEditTeardown()" [integration]="selectedIntegration">
+<cp-modal *ngIf="showEditModal"
+          modalId="integrationEdit"
+          (modalClose)="onEditTeardown()">
+  <cp-walls-integrations-edit (teardown)="onEditTeardown()"
+                              [integration]="selectedIntegration">
   </cp-walls-integrations-edit>
 </cp-modal>

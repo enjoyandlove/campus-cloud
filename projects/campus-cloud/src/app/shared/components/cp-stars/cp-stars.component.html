@@ -1,5 +1,7 @@
 <div [class]="['stars ' + size]">
-  <i class="material-icons" *ngFor="let star of stars" [class.filled]="star.filled">
+  <i class="material-icons"
+     *ngFor="let star of stars"
+     [class.filled]="star.filled">
     {{ star.state }}
   </i>
 </div>

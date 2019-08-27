@@ -1,17 +1,15 @@
 <div class="cppagination">
   <div class="row">
     <div class="col-12 text-center">
-      <button
-        (click)="onPrevious()"
-        [disabled]="!pagePrev"
-        class="noselect unstyled-button">
+      <button (click)="onPrevious()"
+              [disabled]="!pagePrev"
+              class="noselect unstyled-button">
         <i class="material-icons">keyboard_arrow_left</i>
       </button>
       <span class="cppagination__page noselect">{{ pageNumber }}</span>
-      <button
-        (click)="onNext()"
-        [disabled]="!pageNext"
-        class="noselect unstyled-button">
+      <button (click)="onNext()"
+              [disabled]="!pageNext"
+              class="noselect unstyled-button">
         <i class="material-icons">keyboard_arrow_right</i>
       </button>
     </div>

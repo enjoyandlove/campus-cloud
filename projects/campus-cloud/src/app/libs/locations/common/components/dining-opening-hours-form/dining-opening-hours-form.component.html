@@ -1,68 +1,71 @@
 <form [formGroup]="diningForm">
-  <div formArrayName="schedule" class="dining">
-    <div *ngFor="let schedule of diningForm.get('schedule')['controls']; let i = index">
-      <div class="row" [formGroupName]="i">
+  <div formArrayName="schedule"
+       class="dining">
+    <div
+         *ngFor="let schedule of diningForm.get('schedule')['controls']; let i = index">
+      <div class="row"
+           [formGroupName]="i">
         <div class="col-12">
           <div class="row">
             <div class="col-9 dining__day">
-              <p class="heading">{{ schedule.controls.day.value | locationsDayLabel | cpI18n }}</p>
+              <p class="heading">
+                {{ schedule.controls.day.value | locationsDayLabel | cpI18n }}
+              </p>
             </div>
             <div class="col-3 dining__day">
-              <cp-checkbox
-                [labelRight]="false"
-                [cpTarget]="'open_' + i"
-                class="checkbox margin-left"
-                [label]="'t_shared_open' | cpI18n"
-                [isChecked]="schedule.controls.is_checked.value"
-                (toggle)="onDayCheck($event, i)"
-              >
+              <cp-checkbox [labelRight]="false"
+                           [cpTarget]="'open_' + i"
+                           class="checkbox margin-left"
+                           [label]="'t_shared_open' | cpI18n"
+                           [isChecked]="schedule.controls.is_checked.value"
+                           (toggle)="onDayCheck($event, i)">
               </cp-checkbox>
             </div>
           </div>
         </div>
 
-        <div class="col-12" *ngIf="schedule.controls.is_checked.value">
-          <div
-            class="dining__item"
-            *ngFor="let item of schedule.get('items')['controls']; let itemIndex = index"
-          >
+        <div class="col-12"
+             *ngIf="schedule.controls.is_checked.value">
+          <div class="dining__item"
+               *ngFor="let item of schedule.get('items')['controls']; let itemIndex = index">
             <div formArrayName="items">
-              <div class="row" [formGroupName]="itemIndex">
+              <div class="row"
+                   [formGroupName]="itemIndex">
                 <div class="col-4 dining__item__horizontal">
-                  <label for="name" *ngIf="itemIndex === 0">
+                  <label for="name"
+                         *ngIf="itemIndex === 0">
                     {{ 't_shared_meal' | cpI18n }}
                   </label>
-                  <input id="name" type="text" cpTarget="name" maxlength="128" formControlName="name" />
+                  <input id="name"
+                         type="text"
+                         cpTarget="name"
+                         maxlength="128"
+                         formControlName="name" />
                 </div>
 
                 <div class="col-3 dining__item__horizontal">
-                  <cp-dropdown
-                    [items]="diningTiming"
-                    [cpTarget]="'start_time_' + i"
-                    [selectedItem]="getSelectedTime(item.controls.start_time.value)"
-                    (selected)="onTimeSelected($event, 'start_time', i, itemIndex)"
-                  >
+                  <cp-dropdown [items]="diningTiming"
+                               [cpTarget]="'start_time_' + i"
+                               [selectedItem]="getSelectedTime(item.controls.start_time.value)"
+                               (selected)="onTimeSelected($event, 'start_time', i, itemIndex)">
                   </cp-dropdown>
                 </div>
 
                 <div class="col-4 dining__item__horizontal">
-                  <label class="margin-right">{{ 't_shared_to' | cpI18n }}</label>
-                  <cp-dropdown
-                    [items]="diningTiming"
-                    [cpTarget]="'end_time_' + i"
-                    [selectedItem]="getSelectedTime(item.controls.end_time.value)"
-                    (selected)="onTimeSelected($event, 'end_time', i, itemIndex)"
-                  >
+                  <label
+                         class="margin-right">{{ 't_shared_to' | cpI18n }}</label>
+                  <cp-dropdown [items]="diningTiming"
+                               [cpTarget]="'end_time_' + i"
+                               [selectedItem]="getSelectedTime(item.controls.end_time.value)"
+                               (selected)="onTimeSelected($event, 'end_time', i, itemIndex)">
                   </cp-dropdown>
                 </div>
 
                 <div class="col-1 no-left-padding">
-                  <i
-                    cpTarget="delete"
-                    class="material-icons hover margin-top"
-                    (click)="removeItem(schedule, itemIndex)"
-                    *ngIf="schedule.get('items')['controls'].length > 1"
-                  >
+                  <i cpTarget="delete"
+                     class="material-icons hover margin-top"
+                     (click)="removeItem(schedule, itemIndex)"
+                     *ngIf="schedule.get('items')['controls'].length > 1">
                     close
                   </i>
                 </div>
@@ -71,12 +74,10 @@
           </div>
 
           <div class="rows">
-            <button
-              *ngIf="schedule.get('items')['controls'].length < 3"
-              [cpTarget]="'add_meal_' + i"
-              (click)="addItem(schedule, i)"
-              class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary"
-            >
+            <button *ngIf="schedule.get('items')['controls'].length < 3"
+                    [cpTarget]="'add_meal_' + i"
+                    (click)="addItem(schedule, i)"
+                    class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
               {{ 't_dining_form_add_meal' | cpI18n }}
             </button>
           </div>

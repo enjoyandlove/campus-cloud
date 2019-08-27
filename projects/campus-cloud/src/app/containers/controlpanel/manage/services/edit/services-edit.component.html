@@ -11,11 +11,10 @@
                 <div class="col-12">
                   <p class="title">{{ 'services_label_banner' | cpI18n }}</p>
                   <div class="margin-top row">
-                    <cp-image-upload
-                      class="col-12"
-                      (uploaded)="onUploadedImage($event)"
-                      [defaultImage]="form.controls['logo_url'].value"
-                      [required]="formError && form.controls['logo_url'].hasError('required')">
+                    <cp-image-upload class="col-12"
+                                     (uploaded)="onUploadedImage($event)"
+                                     [defaultImage]="form.controls['logo_url'].value"
+                                     [required]="formError && form.controls['logo_url'].hasError('required')">
                     </cp-image-upload>
                   </div>
                 </div>
@@ -25,29 +24,29 @@
                 <div class="col-12">
                   <p class="title">{{ 'services_label_details' | cpI18n }}</p>
                   <div class="form-group margin-top">
-                    <label for="name">{{ 'services_label_name' | cpI18n }}</label>
-                    <input
-                      id="name"
-                      type="text"
-                      class="form-control"
-                      formControlName="name"
-                      [class.error]="formError && form.controls['name'].hasError('required')"
-                    />
+                    <label
+                           for="name">{{ 'services_label_name' | cpI18n }}</label>
+                    <input id="name"
+                           type="text"
+                           class="form-control"
+                           formControlName="name"
+                           [class.error]="formError && form.controls['name'].hasError('required')" />
                   </div>
 
                   <div class="row form-group">
                     <div class="col-6">
                       <label class="with-tooltip">
                         {{ 'select_category' | cpI18n }}
-                        <i cpTooltip class="material-icons" [attr.title]="categoryTooltip">
+                        <i cpTooltip
+                           class="material-icons"
+                           [attr.title]="categoryTooltip">
                           info_outline
                         </i>
                       </label>
-                      <cp-dropdown
-                        [items]="categories"
-                        [selectedItem]="selectedCategory"
-                        (selected)="onCategoryUpdate($event)"
-                        [isRequiredError]="
+                      <cp-dropdown [items]="categories"
+                                   [selectedItem]="selectedCategory"
+                                   (selected)="onCategoryUpdate($event)"
+                                   [isRequiredError]="
                           formError && form.controls['category'].hasError('required')
                         ">
                       </cp-dropdown>
@@ -56,57 +55,63 @@
 
                   <div class="row form-group">
                     <div class="col-6">
-                      <label for="contactphone">{{ 'phone_number' | cpI18n }}</label>
-                      <input id="contactphone" type="text" class="form-control" formControlName="contactphone" />
+                      <label
+                             for="contactphone">{{ 'phone_number' | cpI18n }}</label>
+                      <input id="contactphone"
+                             type="text"
+                             class="form-control"
+                             formControlName="contactphone" />
                     </div>
                   </div>
 
                   <div class="row form-group">
                     <div class="col-6">
                       <label for="email">{{ 'email' | cpI18n }}</label>
-                      <input id="email" type="email" class="form-control" formControlName="email" />
+                      <input id="email"
+                             type="email"
+                             class="form-control"
+                             formControlName="email" />
                     </div>
                   </div>
 
                   <div class="row form-group">
                     <div class="col-6">
-                      <cp-form-label [limit]="120" [controlValue]="form.controls['website'].value">
+                      <cp-form-label [limit]="120"
+                                     [controlValue]="form.controls['website'].value">
                         <label for="website">{{ 'website' | cpI18n }}</label>
                       </cp-form-label>
-                      <input
-                        id="website"
-                        type="text"
-                        class="form-control"
-                        formControlName="website"
-                        [class.error]="formError && form.controls['website'].invalid"
-                      />
+                      <input id="website"
+                             type="text"
+                             class="form-control"
+                             formControlName="website"
+                             [class.error]="formError && form.controls['website'].invalid" />
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="description">{{ 'services_label_description' | cpI18n }}</label>
-                    <textarea id="description" formControlName="description"></textarea>
+                    <label
+                           for="description">{{ 'services_label_description' | cpI18n }}</label>
+                    <textarea id="description"
+                              formControlName="description"></textarea>
                   </div>
 
                   <div class="row from-group">
                     <div class="col-6">
                       <label>{{ 't_services_label_membership_wall' | cpI18n }}</label>
-                      <cp-check-dropdown
-                        [items]="membershipTypes"
-                        [selectedItem]="defaultMembership"
-                        buttonClass="cpbtn cpbtn--cancel"
-                        (selected)="onSelectedMembership($event)">
+                      <cp-check-dropdown [items]="membershipTypes"
+                                         [selectedItem]="defaultMembership"
+                                         buttonClass="cpbtn cpbtn--cancel"
+                                         (selected)="onSelectedMembership($event)">
                       </cp-check-dropdown>
                     </div>
                   </div>
 
                   <div class="row form-group">
                     <div class="col-12">
-                      <cp-checkbox
-                        class="checkbox"
-                        [isChecked]="showLocationDetails"
-                        (toggle)="onLocationToggle($event)"
-                        [label]="cpI18n.translate('t_shared_label_location_toggle')">
+                      <cp-checkbox class="checkbox"
+                                   [isChecked]="showLocationDetails"
+                                   (toggle)="onLocationToggle($event)"
+                                   [label]="cpI18n.translate('t_shared_label_location_toggle')">
                       </cp-checkbox>
                     </div>
                   </div>
@@ -117,24 +122,31 @@
                         <label>{{ 'location' | cpI18n }}</label>
                         <div class="row form-group">
                           <div class="col-12">
-                            <cp-place-autocomplete
-                              [newAddress]="newAddress"
-                              (backToDefault)="onResetMap()"
-                              (placeChange)="onPlaceChange($event)"
-                              [defaultValue]="form.controls.address.value">
+                            <cp-place-autocomplete [newAddress]="newAddress"
+                                                   (backToDefault)="onResetMap()"
+                                                   (placeChange)="onPlaceChange($event)"
+                                                   [defaultValue]="form.controls.address.value">
                             </cp-place-autocomplete>
                           </div>
                         </div>
                         <div class="row form-group">
                           <div class="col-6">
-                            <label for="location">{{ 'building' | cpI18n }}</label>
-                            <input id="location" type="text" class="form-control" formControlName="location" />
+                            <label
+                                   for="location">{{ 'building' | cpI18n }}</label>
+                            <input id="location"
+                                   type="text"
+                                   class="form-control"
+                                   formControlName="location" />
                           </div>
 
                           <div class="col-6">
                             <div class="form-group">
-                              <label for="room_data">{{ 'room' | cpI18n }}</label>
-                              <input id="room_data" type="text" class="form-control" formControlName="room_data" />
+                              <label
+                                     for="room_data">{{ 'room' | cpI18n }}</label>
+                              <input id="room_data"
+                                     type="text"
+                                     class="form-control"
+                                     formControlName="room_data" />
                             </div>
                           </div>
                         </div>
@@ -144,10 +156,9 @@
                     <div class="row form-group">
                       <div class="col-12">
                         <div class="maps">
-                          <cp-maps
-                            [center]="mapCenter"
-                            [drawMarker]="drawMarker"
-                            (mapSelection)="onMapSelection($event)">
+                          <cp-maps [center]="mapCenter"
+                                   [drawMarker]="drawMarker"
+                                   (mapSelection)="onMapSelection($event)">
                           </cp-maps>
                         </div>
                       </div>
@@ -162,14 +173,14 @@
             <div class="cp-card">
               <div class="row">
                 <div class="col-8">
-                  <p class="title">{{ 'services_label_service_assessment' | cpI18n }}</p>
+                  <p class="title">
+                    {{ 'services_label_service_assessment' | cpI18n }}</p>
                 </div>
                 <div class="col-4 float-right">
                   <span class="float-right">
-                    <cp-switch
-                      [id]="attendance"
-                      (toggle)="onToggleAttendance($event)"
-                      [isChecked]="form.controls.service_attendance.value">
+                    <cp-switch [id]="attendance"
+                               (toggle)="onToggleAttendance($event)"
+                               [isChecked]="form.controls.service_attendance.value">
                     </cp-switch>
                   </span>
                 </div>
@@ -186,17 +197,18 @@
           <div class="row">
             <div class="col-12">
               <div class="text-right">
-                <label class="error" *ngIf="formError">
+                <label class="error"
+                       *ngIf="formError">
                   <span>&#x26A0;</span>
                   {{ errorMessage ? errorMessage : ('error_fill_out_marked_fields' | cpI18n) }}
                 </label>
-                <a
-                  [routerLink]="['/manage/services/' + serviceId + '/info']"
-                  class="cpbtn cpbtn--cancel">
+                <a [routerLink]="['/manage/services/' + serviceId + '/info']"
+                   class="cpbtn cpbtn--cancel">
                   {{ 'cancel' | cpI18n }}
                 </a>
 
-                <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>
+                <cp-button [props]="buttonData"
+                           (buttonClick)="onSubmit()"> </cp-button>
               </div>
             </div>
           </div>

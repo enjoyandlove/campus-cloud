@@ -21,6 +21,10 @@
     display: block;
     border-bottom: 1px solid $border-color;
 
+    button.dropdown-item {
+      color: initial;
+    }
+
     &--no-hover:hover {
       color: initial;
       background: $color-white;

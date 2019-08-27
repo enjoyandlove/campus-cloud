@@ -1,13 +1,9 @@
-import { HttpParams, HttpErrorResponse } from '@angular/common/http';
-
 import * as fromActions from '../actions';
-import { mockSchool } from '@campus-cloud/session/mock';
 import * as fromReducer from './dining-categories.reducers';
 import { mockCategories } from '@campus-cloud/libs/locations/common/categories/tests';
 
 const { initialState } = fromReducer;
-const httpErrorResponse = new HttpErrorResponse({ error: true });
-const params = new HttpParams().set('school_id', mockSchool.id.toString());
+const httpErrorResponse = 'fake error message';
 
 describe('Dining Categories Reducer', () => {
   it('should set loading flag on getCategories', () => {
@@ -40,8 +36,7 @@ describe('Dining Categories Reducer', () => {
   it('should set error, loading flags on POST category', () => {
     const body = mockCategories[0];
     const payload = {
-      body,
-      params
+      body
     };
 
     const action = new fromActions.PostCategory(payload);
@@ -78,7 +73,6 @@ describe('Dining Categories Reducer', () => {
     const body = mockCategories[0];
     const payload = {
       body,
-      params,
       categoryId: mockCategories[0].id
     };
 
@@ -117,7 +111,6 @@ describe('Dining Categories Reducer', () => {
 
   it('should set error flag false on DELETE category success', () => {
     const payload = {
-      params,
       deletedId: mockCategories[0].id
     };
 

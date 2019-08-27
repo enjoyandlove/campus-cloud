@@ -1,20 +1,20 @@
-<div class="margin-bottom" [ngSwitch]="loading$ | async">
+<div class="margin-bottom"
+     [ngSwitch]="loading$ | async">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <form [formGroup]="locationForm" *ngSwitchCase="false">
+  <form [formGroup]="locationForm"
+        *ngSwitchCase="false">
     <cp-two-columns>
       <div layout-left-column>
         <cp-card>
           <div class="row">
             <div class="col-12">
               <p class="title">{{ 't_locations_location_details' | cpI18n }}</p>
-              <cp-location-form
-                [formErrors]="formErrors"
-                [categories$]="categories$"
-                [locationForm]="locationForm"
-                [selectedCategory]="selectedCategory"
-                (changeCategory)="onChangeCategory()"
-              >
+              <cp-location-form [formErrors]="formErrors"
+                                [categories$]="categories$"
+                                [locationForm]="locationForm"
+                                [selectedCategory]="selectedCategory"
+                                (changeCategory)="onChangeCategory()">
               </cp-location-form>
             </div>
           </div>
@@ -27,20 +27,17 @@
             <div class="col-12">
               <p class="title">{{ 't_locations_opening_hours' | cpI18n }}</p>
               <span class="float-right">
-                <cp-switch
-                  cpTarget="switch"
-                  [isChecked]="openingHours"
-                  (toggle)="openingHours = !openingHours"
-                >
+                <cp-switch cpTarget="switch"
+                           [isChecked]="openingHours"
+                           (toggle)="openingHours = !openingHours">
                 </cp-switch>
               </span>
             </div>
 
-            <div *ngIf="openingHours" class="col-12 margin-top">
-              <cp-location-opening-hours-form
-                [formErrors]="formErrors"
-                [locationForm]="locationForm"
-              >
+            <div *ngIf="openingHours"
+                 class="col-12 margin-top">
+              <cp-location-opening-hours-form [formErrors]="formErrors"
+                                              [locationForm]="locationForm">
               </cp-location-opening-hours-form>
             </div>
           </div>
@@ -49,12 +46,10 @@
     </cp-two-columns>
 
     <div class="footer">
-      <cp-form-fixed-footer
-        (submitClick)="doSubmit()"
-        (cancelClick)="onCancel()"
-        [submitButtonText]="'update'"
-        [submitButtonDisabled]="buttonDisabled"
-      >
+      <cp-form-fixed-footer (submitClick)="doSubmit()"
+                            (cancelClick)="onCancel()"
+                            [submitButtonText]="'update'"
+                            [submitButtonDisabled]="buttonDisabled">
       </cp-form-fixed-footer>
     </div>
   </form>

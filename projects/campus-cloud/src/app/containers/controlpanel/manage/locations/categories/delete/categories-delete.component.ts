@@ -1,10 +1,8 @@
 import { Input, EventEmitter, Output } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-import { CPSession } from '@campus-cloud/session';
 import { ICategory } from '@campus-cloud/libs/locations/common/categories/model';
 
 @Component({
@@ -19,15 +17,12 @@ export class CategoriesDeleteComponent implements OnInit {
 
   buttonData;
 
-  constructor(public session: CPSession, public store: Store<fromStore.ICategoriesState>) {}
+  constructor(public store: Store<fromStore.ICategoriesState>) {}
 
   onDelete() {
     const body = this.category;
-    const school_id = this.session.g.get('school').id;
-    const params = new HttpParams().set('school_id', school_id);
 
     const payload = {
-      params,
       body
     };
 

@@ -2,11 +2,11 @@
   <div class="cp-wrapper cp-wrapper--outer">
     <div class="row">
       <div class="col-12">
-        <div class="header__breadcrumb" *ngIf="data.crumbs.url">
-          <a
-            class="text-muted"
-            [routerLink]="data.crumbs.url"
-            [queryParams]="route.snapshot.queryParams">
+        <div class="header__breadcrumb"
+             *ngIf="data.crumbs.url">
+          <a class="text-muted"
+             [routerLink]="data.crumbs.url"
+             [queryParams]="route.snapshot.queryParams">
             <i class="material-icons">arrow_back</i>
             {{ data.crumbs.label | cpI18n }}
           </a>
@@ -14,20 +14,21 @@
         <h1 class="header__title text-truncate">
           {{ data.heading | cpI18n }}
         </h1>
-        <p class="header__sub-title" *ngIf="data.subheading">
+        <p class="header__sub-title"
+           *ngIf="data.subheading">
           {{ data.subheading | cpI18n }}
         </p>
         <em *ngIf="data.em">{{ data.em | cpI18n }}</em>
       </div>
     </div>
 
-    <div class="row" *ngIf="data.children">
+    <div class="row"
+         *ngIf="data.children">
       <div class="col-12">
-        <cp-header-link
-          [extraMenu]="extraMenu"
-          [maxChildren]="maxChildren"
-          [extraChildren]="extraChildren"
-          [readyFeatures]="data.children">
+        <cp-header-link [extraMenu]="extraMenu"
+                        [maxChildren]="maxChildren"
+                        [extraChildren]="extraChildren"
+                        [readyFeatures]="data.children">
         </cp-header-link>
       </div>
     </div>

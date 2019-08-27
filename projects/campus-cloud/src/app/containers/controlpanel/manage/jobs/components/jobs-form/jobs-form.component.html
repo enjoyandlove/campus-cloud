@@ -8,18 +8,14 @@
             <label>
               {{ 'jobs_job_title' | cpI18n }}
             </label>
-            <cp-char-counter
-              class="float-right"
-              [limit]="120"
-              [charCount]="form.controls.title.value"
-            >
+            <cp-char-counter class="float-right"
+                             [limit]="120"
+                             [charCount]="form.controls.title.value">
             </cp-char-counter>
-            <input
-              type="text"
-              class="form-control"
-              formControlName="title"
-              [class.error]="formError && form.controls['title'].hasError('required')"
-            />
+            <input type="text"
+                   class="form-control"
+                   formControlName="title"
+                   [class.error]="formError && form.controls['title'].hasError('required')" />
           </div>
 
           <div class="form-group">
@@ -34,31 +30,26 @@
 
           <div class="form-group">
             <label>{{ 't_jobs_ongoing' | cpI18n }}</label>
-            <cp-switch
-              class="float-right"
-              (toggle)="toggleOngoing()"
-              [isChecked]="form.controls.ongoing.value"
-            >
+            <cp-switch class="float-right"
+                       (toggle)="toggleOngoing()"
+                       [isChecked]="form.controls.ongoing.value">
             </cp-switch>
           </div>
 
           <div class="row form-group">
             <div class="col-6">
               <label>{{ 'jobs_posting_start_date' | cpI18n }}</label>
-              <cp-datepicker
-                [options]="postingStartDatePickerOptions"
-                [error]="formError && form.controls['posting_start'].hasError('required')"
-                (dateSet)="setPostingStart($event)"
-              >
+              <cp-datepicker [options]="postingStartDatePickerOptions"
+                             [error]="formError && form.controls['posting_start'].hasError('required')"
+                             (dateSet)="setPostingStart($event)">
               </cp-datepicker>
             </div>
-            <div class="col-6" *ngIf="!form.controls.ongoing.value">
+            <div class="col-6"
+                 *ngIf="!form.controls.ongoing.value">
               <label>{{ 'jobs_posting_end_date' | cpI18n }}</label>
-              <cp-datepicker
-                [options]="postingEndDatePickerOptions"
-                [error]="formError && form.controls['posting_end'].hasError('required')"
-                (dateSet)="setPostingEnd($event)"
-              >
+              <cp-datepicker [options]="postingEndDatePickerOptions"
+                             [error]="formError && form.controls['posting_end'].hasError('required')"
+                             (dateSet)="setPostingEnd($event)">
               </cp-datepicker>
             </div>
           </div>
@@ -66,22 +57,18 @@
           <div class="row form-group">
             <div class="col-6">
               <label>{{ 'jobs_job_start_date' | cpI18n }}</label>
-              <cp-datepicker
-                [clearable]="true"
-                [options]="contractStartDatePickerOptions"
-                (dateSet)="setContractStart($event)"
-                (dateClear)="clearContractStart()"
-              >
+              <cp-datepicker [clearable]="true"
+                             [options]="contractStartDatePickerOptions"
+                             (dateSet)="setContractStart($event)"
+                             (dateClear)="clearContractStart()">
               </cp-datepicker>
             </div>
             <div class="col-6">
               <label>{{ 'jobs_application_deadline' | cpI18n }}</label>
-              <cp-datepicker
-                [clearable]="true"
-                [options]="applicationDeadlineDatePickerOptions"
-                (dateSet)="setApplicationDeadline($event)"
-                (dateClear)="clearApplicationDeadline()"
-              >
+              <cp-datepicker [clearable]="true"
+                             [options]="applicationDeadlineDatePickerOptions"
+                             (dateSet)="setApplicationDeadline($event)"
+                             (dateClear)="clearApplicationDeadline()">
               </cp-datepicker>
             </div>
           </div>
@@ -91,7 +78,9 @@
               <label>{{ 'location' | cpI18n }}</label>
               <div class="row form-group">
                 <div class="col-12">
-                  <input type="text" class="form-control" formControlName="location" />
+                  <input type="text"
+                         class="form-control"
+                         formControlName="location" />
                 </div>
               </div>
             </div>
@@ -101,13 +90,12 @@
             <div class="col-12">
               <label>{{ 'jobs_desired_year_of_study' | cpI18n }}</label>
               <div class="row form-group">
-                <div class="col-4 jobs-study" *ngFor="let item of desiredStudy">
-                  <cp-checkbox
-                    class="checkbox"
-                    [label]="item.label"
-                    (toggle)="onJobTypeDesiredStudyToggle(item.name, $event)"
-                    [isChecked]="form.controls[item.name].value"
-                  >
+                <div class="col-4 jobs-study"
+                     *ngFor="let item of desiredStudy">
+                  <cp-checkbox class="checkbox"
+                               [label]="item.label"
+                               (toggle)="onJobTypeDesiredStudyToggle(item.name, $event)"
+                               [isChecked]="form.controls[item.name].value">
                   </cp-checkbox>
                 </div>
               </div>
@@ -116,13 +104,12 @@
             <div class="col-12">
               <label>{{ 'jobs_job_type' | cpI18n }}</label>
               <div class="row form-group">
-                <div class="col-4 jobs-study" *ngFor="let job of jobsType">
-                  <cp-checkbox
-                    class="checkbox"
-                    [label]="job.label"
-                    (toggle)="onJobTypeDesiredStudyToggle(job.name, $event)"
-                    [isChecked]="form.controls[job.name].value"
-                  >
+                <div class="col-4 jobs-study"
+                     *ngFor="let job of jobsType">
+                  <cp-checkbox class="checkbox"
+                               [label]="job.label"
+                               (toggle)="onJobTypeDesiredStudyToggle(job.name, $event)"
+                               [isChecked]="form.controls[job.name].value">
                   </cp-checkbox>
                 </div>
               </div>

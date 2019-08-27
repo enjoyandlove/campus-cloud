@@ -1,77 +1,75 @@
 <div class="wrapper">
-  <div class="cp-wrapper cp-wrapper--outer d-flex justify-content-between">
+  <div class="cp-wrapper cp-wrapper--outer">
     <nav>
-      <div
-        class="avatar"
-        (click)="trackMenu(amplitudeEvents.menu_home)">
+      <div class="avatar"
+           (click)="trackMenu(amplitudeEvents.menu_home)">
         <a [routerLink]="['/dashboard']">
-          <img [src]="logo" alt="Control Panel" class="rounded img-fit-cover" />
+          <img [src]="logo"
+               alt="Control Panel"
+               class="rounded img-fit-cover" />
         </a>
       </div>
       <ul class="nav__links">
-        <li
-          *ngIf="manageHomePage"
-          (click)="trackMenu(amplitudeEvents.menu_manage)"
-          [class.active]="isManageActiveRoute"
-        >
-          <a [routerLink]="['/manage/' + manageHomePage]">{{ 'manage' | cpI18n }}</a>
+        <li *ngIf="manageHomePage"
+            (click)="trackMenu(amplitudeEvents.menu_manage)"
+            [class.active]="isManageActiveRoute">
+          <a
+             [routerLink]="['/manage/' + manageHomePage]">{{ 'manage' | cpI18n }}</a>
         </li>
-        <li
-          *ngIf="canNotify"
-          routerLinkActive="active"
-          (click)="trackMenu(amplitudeEvents.menu_notify)"
-        >
+        <li *ngIf="canNotify"
+            routerLinkActive="active"
+            (click)="trackMenu(amplitudeEvents.menu_notify)">
           <a [routerLink]="['/notify']">{{ 'notify' | cpI18n }}</a>
         </li>
-        <li
-          *ngIf="canAssess"
-          routerLinkActive="active"
-          (click)="trackMenu(amplitudeEvents.menu_assess)"
-        >
+        <li *ngIf="canAssess"
+            routerLinkActive="active"
+            (click)="trackMenu(amplitudeEvents.menu_assess)">
           <a [routerLink]="['/assess']">{{ 'assess' | cpI18n }}</a>
         </li>
-        <li
-          *ngIf="canCustomise"
-          routerLinkActive="active"
-          (click)="trackMenu(amplitudeEvents.menu_studio)"
-        >
+        <li *ngIf="canCustomise"
+            routerLinkActive="active"
+            (click)="trackMenu(amplitudeEvents.menu_studio)">
           <a [routerLink]="['/studio']">{{ 't_studio' | cpI18n }}</a>
         </li>
-        <li
-          *ngIf="canAudience"
-          routerLinkActive="active"
-          (click)="trackMenu(amplitudeEvents.menu_audience)"
-        >
+        <li *ngIf="canAudience"
+            routerLinkActive="active"
+            (click)="trackMenu(amplitudeEvents.menu_audience)">
           <a [routerLink]="['/audience']">{{ 'audience' | cpI18n }}</a>
         </li>
       </ul>
     </nav>
-    <div>
-      <div class="float-right">
-        <div class="extras nav__help-desk">
-          <button
-            type="button"
-            data-toggle="dropdown"
-            class="cpbtn cpbtn--link--dark">
-           <img [src]="helpIcon" alt="help">
-          </button>
-          <div class="nav__help-desk--menu nav__help-desk--right dropdown-menu dropdown-menu-right">
-            <cp-help-desk></cp-help-desk>
-          </div>
+    <div class="right-side">
+      <div class="extras nav__help-desk">
+        <button type="button"
+                data-toggle="dropdown"
+                class="cpbtn cpbtn--link--dark">
+          <img [src]="helpIcon"
+               alt="help">
+        </button>
+        <div
+             class="nav__help-desk--menu nav__help-desk--right dropdown-menu dropdown-menu-right">
+          <cp-help-desk></cp-help-desk>
         </div>
-        <div class="nav__school noselect">
-          <div class="row" data-toggle="dropdown">
-            <div class="col-10 no-left-padding no-right-padding">
-              <div
-                *ngIf="school.app_logo_url !== ''"
-                class="nav__school__thumb float-left rounded"
-                [ngStyle]="{ 'background-image': 'url(' + school.app_logo_url + ')' }"
-              ></div>
-              <div
-                *ngIf="school.app_logo_url === ''"
-                class="nav__school__thumb float-left rounded"
-                [ngStyle]="{ 'background-image': 'url( ' + defaultImage + ')' }"
-              ></div>
+      </div>
+      <div class="dropdown nav__school noselect">
+        <button class="unstyled-button"
+                type="button"
+                id="school-switch"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false">
+          <div class="row">
+            <div class="col-10 no-left-padding no-right-padding"
+                 role="group"
+                 aria-label="user profile button">
+              <div *ngIf="school.app_logo_url !== ''"
+                   class="nav__school__thumb float-left rounded"
+                   [ngStyle]="{ 'background-image': 'url(' + school.app_logo_url + ')' }">
+              </div>
+              <div *ngIf="school.app_logo_url === ''"
+                   class="nav__school__thumb float-left rounded"
+                   [ngStyle]="{ 'background-image': 'url( ' + defaultImage + ')' }">
+              </div>
               <div class="nav__school__user text-truncate">
                 <span>{{ user.firstname }}</span>
               </div>
@@ -83,9 +81,10 @@
               <i class="material-icons float-right">expand_more</i>
             </div>
           </div>
-          <div class="nav__school--menu dropdown-menu">
-            <cp-school-switch></cp-school-switch>
-          </div>
+        </button>
+        <div class="nav__school--menu dropdown-menu"
+             aria-labelledby="school-switch">
+          <cp-school-switch></cp-school-switch>
         </div>
       </div>
     </div>

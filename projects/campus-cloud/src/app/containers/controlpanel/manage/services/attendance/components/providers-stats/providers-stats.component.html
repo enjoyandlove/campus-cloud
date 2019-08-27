@@ -45,16 +45,16 @@
   </div>
   <div class="col-4 text-center">
     <div class="cp-card cp-card--half-padding">
-      <p class="header__digit" *ngIf="service.service_attendance !== attendanceEnabled">
+      <p class="header__digit"
+         *ngIf="service.service_attendance !== attendanceEnabled">
         0
       </p>
 
-      <p class="header__digit" *ngIf="service.service_attendance === attendanceEnabled">
-        <cp-stars
-          [size]="detailStarSize"
-          [avgRate]="service.avg_rating_percent"
-          [maxRate]="service.rating_scale_maximum"
-        >
+      <p class="header__digit"
+         *ngIf="service.service_attendance === attendanceEnabled">
+        <cp-stars [size]="detailStarSize"
+                  [avgRate]="service.avg_rating_percent"
+                  [maxRate]="service.rating_scale_maximum">
         </cp-stars>
       </p>
       <p>

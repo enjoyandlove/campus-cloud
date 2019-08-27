@@ -6,12 +6,12 @@
       </p>
     </div>
 
-    <div class="col-6 offset-3 title text-center" *ngIf="!canDelete">
+    <div class="col-6 offset-3 title text-center"
+         *ngIf="!canDelete">
       <label>{{ 't_persona_delete_move_users_title' | cpI18n }}</label>
-        <cp-dropdown
-          [items]="personas"
-          (selected)="onSelectPersona($event)">
-        </cp-dropdown>
+      <cp-dropdown [items]="personas"
+                   (selected)="onSelectPersona($event)">
+      </cp-dropdown>
     </div>
   </div>
 </div>
@@ -19,17 +19,15 @@
 <div class="cpmodal__footer">
   <div class="row">
     <div class="col-6 offset-6 text-right">
-      <button
-        type="button"
-        data-dismiss="modal"
-        (click)="cancelClick.emit()"
-        class="cpbtn cpbtn--cancel">
+      <button type="button"
+              data-dismiss="modal"
+              (click)="cancelClick.emit()"
+              class="cpbtn cpbtn--cancel">
         {{ 'cancel' | cpI18n }}
       </button>
 
-      <cp-button
-        [props]="buttonData"
-        (buttonClick)="deleteClick.emit(substitutePersonaId)">
+      <cp-button [props]="buttonData"
+                 (buttonClick)="deleteClick.emit(substitutePersonaId)">
       </cp-button>
     </div>
   </div>

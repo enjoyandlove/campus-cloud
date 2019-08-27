@@ -6,11 +6,9 @@
           <div class="row">
             <div class="col-12">
               <p class="title">{{ 't_dining_dining_details' | cpI18n }}</p>
-              <cp-location-form
-                [formErrors]="formErrors"
-                [categories$]="categories$"
-                [locationForm]="diningForm"
-              >
+              <cp-location-form [formErrors]="formErrors"
+                                [categories$]="categories$"
+                                [locationForm]="diningForm">
               </cp-location-form>
             </div>
           </div>
@@ -23,18 +21,18 @@
             <div class="col-12">
               <p class="title">{{ 't_dining_hours' | cpI18n }}</p>
               <span class="float-right">
-                <cp-switch
-                  cpTarget="switch"
-                  [id]="openingHours"
-                  [isChecked]="openingHours"
-                  (toggle)="openingHours = !openingHours"
-                >
+                <cp-switch cpTarget="switch"
+                           [id]="openingHours"
+                           [isChecked]="openingHours"
+                           (toggle)="openingHours = !openingHours">
                 </cp-switch>
               </span>
             </div>
 
-            <div *ngIf="openingHours" class="col-12 margin-top">
-              <cp-dining-opening-hours-form [formErrors]="formErrors" [diningForm]="diningForm">
+            <div *ngIf="openingHours"
+                 class="col-12 margin-top">
+              <cp-dining-opening-hours-form [formErrors]="formErrors"
+                                            [diningForm]="diningForm">
               </cp-dining-opening-hours-form>
             </div>
           </div>
@@ -43,11 +41,9 @@
     </cp-two-columns>
 
     <div class="footer">
-      <cp-form-fixed-footer
-        (submitClick)="doSubmit()"
-        (cancelClick)="onCancel()"
-        [submitButtonDisabled]="buttonDisabled"
-      >
+      <cp-form-fixed-footer (submitClick)="doSubmit()"
+                            (cancelClick)="onCancel()"
+                            [submitButtonDisabled]="buttonDisabled">
       </cp-form-fixed-footer>
     </div>
   </form>

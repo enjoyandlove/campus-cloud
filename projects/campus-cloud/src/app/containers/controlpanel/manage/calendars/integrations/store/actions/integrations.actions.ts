@@ -38,7 +38,7 @@ export enum IntegrationActions {
 export class GetIntegrations implements Action {
   readonly type = IntegrationActions.GET_INTEGRATIONS;
 
-  constructor(public payload: { startRange: number; endRange: number; params: HttpParams }) {}
+  constructor(public payload: { startRange: number; endRange: number; calendarId: number }) {}
 }
 
 export class GetIntegrationsSuccess implements Action {
@@ -56,9 +56,7 @@ export class GetIntegrationsFail implements Action {
 export class PostIntegration implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION;
 
-  constructor(
-    public payload: { body: IEventIntegration; calendarId: number; params: HttpParams }
-  ) {}
+  constructor(public payload: { body: IEventIntegration; calendarId: number }) {}
 }
 
 export class PostIntegrationSuccess implements Action {
@@ -76,7 +74,7 @@ export class PostIntegrationFail implements Action {
 export class DeleteIntegration implements Action {
   readonly type = IntegrationActions.DELETE_INTEGRATION;
 
-  constructor(public payload: { integrationId: number; params: HttpParams }) {}
+  constructor(public payload: { integrationId: number; calendarId: number }) {}
 }
 
 export class DeleteIntegrationSuccess implements Action {
@@ -95,7 +93,7 @@ export class EditIntegration implements Action {
   readonly type = IntegrationActions.EDIT_INTEGRATION;
 
   constructor(
-    public payload: { integrationId: number; body: IEventIntegration; params: HttpParams }
+    public payload: { integrationId: number; body: IEventIntegration; calendarId: number }
   ) {}
 }
 
@@ -161,16 +159,14 @@ export class Destroy implements Action {
 export class CreateAndSync implements Action {
   readonly type = IntegrationActions.CREATE_AND_SYNC;
 
-  constructor(
-    public payload: { body: IEventIntegration; calendarId: number; params: HttpParams }
-  ) {}
+  constructor(public payload: { body: IEventIntegration; calendarId: number }) {}
 }
 
 export class UpdateAndSync implements Action {
   readonly type = IntegrationActions.UPDATE_AND_SYNC;
 
   constructor(
-    public payload: { integrationId: number; body: IEventIntegration; params: HttpParams }
+    public payload: { integrationId: number; body: IEventIntegration; calendarId: number }
   ) {}
 }
 

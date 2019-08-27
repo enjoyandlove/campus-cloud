@@ -1,21 +1,19 @@
 <div class="form-group">
   <label>{{ 't_personas_tile_modal_create_resource_type' | cpI18n }}</label>
-  <cp-dropdown
-    [items]="items"
-    [selectedItem]="selectedType"
-    cpTarget="single-resource-selector"
-    (selected)="onItemClicked($event)"
-    [isRequiredError]="showErrors && form.get('link_url').invalid">
+  <cp-dropdown [items]="items"
+               [selectedItem]="selectedType"
+               cpTarget="single-resource-selector"
+               (selected)="onItemClicked($event)"
+               [isRequiredError]="showErrors && form.get('link_url').invalid">
   </cp-dropdown>
 </div>
 
 <div class="form-group">
-  <cp-dropdown
-    [reset]="resetHosts$"
-    [items]="subMenuOptions"
-    cpTarget="store-selector"
-    [selectedItem]="selectedStore"
-    (selected)="onHostSelected($event)"
-    [isRequiredError]="showErrors && form.invalid">
+  <cp-dropdown [reset]="resetHosts$"
+               [items]="subMenuOptions"
+               cpTarget="store-selector"
+               [selectedItem]="selectedStore"
+               (selected)="onHostSelected($event)"
+               [isRequiredError]="showErrors && form.invalid">
   </cp-dropdown>
 </div>

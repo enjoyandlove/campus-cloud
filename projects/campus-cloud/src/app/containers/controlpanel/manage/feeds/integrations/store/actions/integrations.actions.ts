@@ -1,4 +1,4 @@
-import { HttpParams, HttpErrorResponse } from '@angular/common/http';
+import { HttpParams } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
 import { ISocialPostCategory } from '../../../model';
@@ -44,7 +44,7 @@ export enum IntegrationActions {
 export class GetIntegrations implements Action {
   readonly type = IntegrationActions.GET_INTEGRATIONS;
 
-  constructor(public payload: { startRange: number; endRange: number; params: HttpParams }) {}
+  constructor(public payload: { startRange: number; endRange: number }) {}
 }
 
 export class GetIntegrationsSuccess implements Action {
@@ -56,13 +56,13 @@ export class GetIntegrationsSuccess implements Action {
 export class GetIntegrationsFail implements Action {
   readonly type = IntegrationActions.GET_INTEGRATIONS_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class DeleteIntegration implements Action {
   readonly type = IntegrationActions.DELETE_INTEGRATION;
 
-  constructor(public payload: { integration: IWallsIntegration; params: HttpParams }) {}
+  constructor(public payload: { integration: IWallsIntegration }) {}
 }
 
 export class DeleteIntegrationSuccess implements Action {
@@ -74,15 +74,13 @@ export class DeleteIntegrationSuccess implements Action {
 export class DeleteIntegrationFail implements Action {
   readonly type = IntegrationActions.DELETE_INTEGRATION_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class PostIntegration implements Action {
   readonly type = IntegrationActions.POST_INTEGRATION;
 
-  constructor(
-    public payload: { body: IWallsIntegration; params: HttpParams; channelType: string }
-  ) {}
+  constructor(public payload: { body: IWallsIntegration; channelType: string }) {}
 }
 
 export class PostIntegrationSuccess implements Action {
@@ -100,9 +98,7 @@ export class PostIntegrationFail implements Action {
 export class EditIntegration implements Action {
   readonly type = IntegrationActions.EDIT_INTEGRATION;
 
-  constructor(
-    public payload: { integrationId: number; body: IWallsIntegration; params: HttpParams }
-  ) {}
+  constructor(public payload: { integrationId: number; body: IWallsIntegration }) {}
 }
 
 export class EditIntegrationSuccess implements Action {
@@ -114,13 +110,11 @@ export class EditIntegrationSuccess implements Action {
 export class EditIntegrationFail implements Action {
   readonly type = IntegrationActions.EDIT_INTEGRATION_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class GetSocialPostCategories implements Action {
   readonly type = IntegrationActions.GET_SOCIAL_POST_CATEGORIES;
-
-  constructor(public payload: { params: HttpParams }) {}
 }
 
 export class GetSocialPostCategoriesSuccess implements Action {
@@ -132,7 +126,7 @@ export class GetSocialPostCategoriesSuccess implements Action {
 export class GetSocialPostCategoriesFail implements Action {
   readonly type = IntegrationActions.GET_SOCIAL_POST_CATEGORIES_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class PostSocialPostCategories implements Action {
@@ -161,7 +155,7 @@ export class PostSocialPostCategoriesSuccess implements Action {
 export class PostSocialPostCategoriesFail implements Action {
   readonly type = IntegrationActions.POST_SOCIAL_POST_CATEGORIES_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: { error: string }) {}
 }
 
 export class ResetSocialPostCategories implements Action {

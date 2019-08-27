@@ -11,6 +11,7 @@ import * as fromDining from '../../../store';
 import { ISnackbar } from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
 import { baseActionClass } from '@campus-cloud/store/base';
+import { parseErrorResponse } from '@campus-cloud/shared/utils';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { IDining } from '@campus-cloud/libs/locations/common/model';
 import { LocationType } from '@campus-cloud/libs/locations/common/utils';
@@ -48,7 +49,7 @@ export class DiningCategoriesEffects {
         catchError((error) => {
           this.handleError();
 
-          return of(new fromActions.GetCategoriesFail(error));
+          return of(new fromActions.GetCategoriesFail(parseErrorResponse(error)));
         })
       );
     })
@@ -60,7 +61,8 @@ export class DiningCategoriesEffects {
   > = this.actions$.pipe(
     ofType(fromActions.CategoriesActions.POST_CATEGORY),
     mergeMap((action: fromActions.PostCategory) => {
-      const { body, params } = action.payload;
+      const { body } = action.payload;
+      const params = this.defaultParams();
 
       return this.service.createCategory(body, params).pipe(
         map((data: ICategory) => {
@@ -79,7 +81,7 @@ export class DiningCategoriesEffects {
         catchError((error) => {
           this.handleError();
 
-          return of(new fromActions.PostCategoryFail(error));
+          return of(new fromActions.PostCategoryFail(parseErrorResponse(error)));
         })
       );
     })
@@ -99,7 +101,7 @@ export class DiningCategoriesEffects {
         catchError((error) => {
           this.handleError();
 
-          return of(new fromActions.GetFilteredCategoriesFail(error));
+          return of(new fromActions.GetFilteredCategoriesFail(parseErrorResponse(error)));
         })
       );
     })
@@ -229,5 +231,13 @@ export class DiningCategoriesEffects {
         body: this.cpI18n.translate(key)
       })
     );
+  }
+
+  private defaultParams(): HttpParams {
+    const locale = CPI18nService.getLocale().startsWith('fr')
+      ? LocationCategoryLocale.fr
+      : LocationCategoryLocale.eng;
+
+    return new HttpParams().set('locale', locale).set('school_id', this.session.g.get('school').id);
   }
 }

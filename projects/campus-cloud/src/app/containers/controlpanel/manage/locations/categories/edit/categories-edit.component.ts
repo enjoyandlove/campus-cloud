@@ -1,19 +1,16 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
 import * as fromStore from '../store';
-import { CPSession } from '@campus-cloud/session';
 import { IItem } from '@campus-cloud/shared/components';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { LocationsUtilsService } from '@campus-cloud/libs/locations/common/utils';
 import {
   ICategory,
   categoryTypes,
-  CategoryModel,
-  LocationCategoryLocale
+  CategoryModel
 } from '@campus-cloud/libs/locations/common/categories/model';
 
 @Component({
@@ -35,7 +32,6 @@ export class CategoriesEditComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject();
 
   constructor(
-    public session: CPSession,
     public cpI18n: CPI18nService,
     private locationUtils: LocationsUtilsService,
     public store: Store<fromStore.ICategoriesState>
@@ -44,14 +40,6 @@ export class CategoriesEditComponent implements OnInit, OnDestroy {
   resetModal() {
     this.form.reset();
     this.teardown.emit();
-  }
-
-  get defaultParams(): HttpParams {
-    const locale = CPI18nService.getLocale().startsWith('fr')
-      ? LocationCategoryLocale.fr
-      : LocationCategoryLocale.eng;
-
-    return new HttpParams().set('locale', locale).set('school_id', this.session.g.get('school').id);
   }
 
   doSubmit() {
@@ -64,11 +52,9 @@ export class CategoriesEditComponent implements OnInit, OnDestroy {
     }
 
     const body = this.form.value;
-    const params = this.defaultParams;
 
     const payload = {
       body,
-      params,
       categoryId: this.category.id
     };
 

@@ -4,12 +4,11 @@
       <div class="col-12 text-center">
         <span><strong>{{ 'feeds_move_post' | cpI18n }}</strong></span>
 
-        <button
-          type="button"
-          aria-label="close"
-          data-dismiss="modal"
-          (click)="teardown.emit()"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                aria-label="close"
+                data-dismiss="modal"
+                (click)="teardown.emit()"
+                class="float-right hover cpmodal__header__close unstyled-button">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -29,10 +28,9 @@
     </div>
     <div class="row justify-content-center">
       <div class="col-4">
-        <cp-dropdown
-          class="dropdown"
-          [items]="channels$ | async"
-          (selected)="onSelectedChannel($event)">
+        <cp-dropdown class="dropdown"
+                     [items]="channels$ | async"
+                     (selected)="onSelectedChannel($event)">
         </cp-dropdown>
       </div>
     </div>
@@ -41,16 +39,16 @@
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-6 text-right">
-        <button
-          type="button"
-          aria-label="close"
-          data-dismiss="modal"
-          class="cpbtn cpbtn--cancel"
-          (click)="teardown.emit()">
+        <button type="button"
+                aria-label="close"
+                data-dismiss="modal"
+                class="cpbtn cpbtn--cancel"
+                (click)="teardown.emit()">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <cp-button [props]="buttonData" (buttonClick)="onSubmit()"> </cp-button>
+        <cp-button [props]="buttonData"
+                   (buttonClick)="onSubmit()"> </cp-button>
       </div>
     </div>
   </div>

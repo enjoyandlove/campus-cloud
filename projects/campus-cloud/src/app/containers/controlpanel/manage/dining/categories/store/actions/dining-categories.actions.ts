@@ -1,4 +1,3 @@
-import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
 import {
@@ -44,7 +43,7 @@ export class GetCategoriesSuccess implements Action {
 export class GetCategoriesFail implements Action {
   readonly type = CategoriesActions.GET_CATEGORIES_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class GetFilteredCategories implements Action {
@@ -60,16 +59,16 @@ export class GetFilteredCategoriesSuccess implements Action {
 export class GetFilteredCategoriesFail implements Action {
   readonly type = CategoriesActions.GET_FILTERED_CATEGORIES_FAIL;
 
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 export class PostCategory implements Action {
   readonly type = CategoriesActions.POST_CATEGORY;
-  constructor(public payload: { body: any; params: HttpParams }) {}
+  constructor(public payload: { body: ICategory }) {}
 }
 
 export class PostCategoryFail implements Action {
   readonly type = CategoriesActions.POST_CATEGORY_FAIL;
-  constructor(public payload: HttpErrorResponse) {}
+  constructor(public payload: string) {}
 }
 
 export class PostCategorySuccess implements Action {

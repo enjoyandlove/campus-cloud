@@ -8,11 +8,10 @@
           </strong>
         </span>
 
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="float-right hover cpmodal__header__close unstyled-button">
           &times;
         </button>
       </div>
@@ -20,27 +19,24 @@
   </div>
 
   <div class="cpmodal__body">
-    <cp-personas-resource-list-form
-      [persona]="persona"
-      [form]="campusLinkForm"
-      [showErrors]="showErrors">
+    <cp-personas-resource-list-form [persona]="persona"
+                                    [form]="campusLinkForm"
+                                    [showErrors]="showErrors">
     </cp-personas-resource-list-form>
   </div>
 
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-6 text-right">
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="cpbtn cpbtn--cancel">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
-        <button
-          type="submit"
-          (click)="onSubmit()"
-          class="cpbtn cpbtn--primary">
+        <button type="submit"
+                (click)="onSubmit()"
+                class="cpbtn cpbtn--primary">
           {{ 'save' | cpI18n }}
         </button>
       </div>

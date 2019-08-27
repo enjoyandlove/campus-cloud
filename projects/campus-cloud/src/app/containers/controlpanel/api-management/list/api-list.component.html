@@ -12,17 +12,15 @@
 
       <ng-container *ngSwitchCase="false">
         <ng-container *ngIf="(items$ | async).length">
-          <cp-api-list-item
-            [items$]="items$"
-            (formStatus)="formStatus($event)">
+          <cp-api-list-item [items$]="items$"
+                            (formStatus)="formStatus($event)">
           </cp-api-list-item>
 
-          <cp-pagination
-            (next)="onPaginationNext($event)"
-            [pageNext]="(pagination$ | async)?.next"
-            [pagePrev]="(pagination$ | async)?.previous"
-            (previous)="onPaginationPrevious($event)"
-            [pageNumber]="(pagination$ | async)?.page">
+          <cp-pagination (next)="onPaginationNext($event)"
+                         [pageNext]="(pagination$ | async)?.next"
+                         [pagePrev]="(pagination$ | async)?.previous"
+                         (previous)="onPaginationPrevious($event)"
+                         [pageNumber]="(pagination$ | async)?.page">
           </cp-pagination>
         </ng-container>
       </ng-container>

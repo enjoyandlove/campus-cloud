@@ -1,6 +1,5 @@
 import { OnInit, Component, OnDestroy, AfterViewInit } from '@angular/core';
 import { filter, map, takeUntil, tap } from 'rxjs/operators';
-import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,7 +7,6 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import * as fromRoot from '@campus-cloud/store';
-import { CPSession } from '@campus-cloud/session';
 import { IItem } from '@campus-cloud/shared/components';
 import { baseActions } from '@campus-cloud/store/base';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
@@ -44,7 +42,6 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
 
   constructor(
     public router: Router,
-    public session: CPSession,
     public cpI18n: CPI18nService,
     public latLng: LatLngValidators,
     public store: Store<fromStore.IDiningState | fromRoot.IHeader>
@@ -69,12 +66,8 @@ export class DiningEditComponent implements OnInit, OnDestroy, Destroyable, Afte
       this.openingHours
     );
 
-    const schoolId = this.session.g.get('school').id;
-    const params = new HttpParams().append('school_id', schoolId);
-
     const payload = {
       body,
-      params,
       diningId: this.diningId,
       categoryId: this.categoryId,
       updatedCategory: this.updatedCategory

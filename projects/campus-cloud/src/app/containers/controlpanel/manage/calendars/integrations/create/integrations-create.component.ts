@@ -1,5 +1,4 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -10,7 +9,6 @@ import { IItem } from '@campus-cloud/shared/components';
 import { ZendeskService } from '@campus-cloud/shared/services';
 import { EventIntegration } from '@campus-cloud/libs/integrations/events/model';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
-import { ItemsIntegrationsUitlsService } from '../items-integrations.utils.service';
 
 @Component({
   selector: 'cp-items-integrations-create',
@@ -31,12 +29,6 @@ export class ItemsIntegrationsCreateComponent implements OnInit {
     public store: Store<fromStore.IEventIntegrationState>
   ) {}
 
-  get defaultParams(): HttpParams {
-    const school_id = this.session.g.get('school').id;
-
-    return ItemsIntegrationsUitlsService.commonParams(school_id, this.calendarId.toString());
-  }
-
   resetModal() {
     this.form.reset();
     this.teardown.emit();
@@ -48,11 +40,9 @@ export class ItemsIntegrationsCreateComponent implements OnInit {
     }
 
     const body = this.form.value;
-    const params = this.defaultParams;
 
     const payload = {
       body,
-      params,
       calendarId: this.route.snapshot.params['calendarId']
     };
 

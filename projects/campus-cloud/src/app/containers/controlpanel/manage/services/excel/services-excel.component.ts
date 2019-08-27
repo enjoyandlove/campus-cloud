@@ -1,6 +1,6 @@
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { map, startWith } from 'rxjs/operators';
+import { map, startWith, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 
@@ -45,11 +45,14 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
 
-    this.store.select(getServicesModalState).subscribe((res) => {
-      this.services = this.env.name !== 'development' ? res : require('./mock.json');
-      this.buildForm();
-      this.buildHeader();
-    });
+    this.store
+      .select(getServicesModalState)
+      .pipe(take(1))
+      .subscribe((res) => {
+        this.services = this.env.name !== 'development' ? res : require('./mock.json');
+        this.buildForm();
+        this.buildHeader();
+      });
   }
 
   buildHeader() {

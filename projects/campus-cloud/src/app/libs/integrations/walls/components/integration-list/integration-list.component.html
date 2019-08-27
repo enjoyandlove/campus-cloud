@@ -10,17 +10,13 @@
     </div>
   </li>
 
-  <li
-    class="cp-form__item col-12"
-    [cpTarget]="'item_' + integration.id"
-    *ngFor="let integration of integrations$ | async"
-  >
+  <li class="cp-form__item col-12"
+      [cpTarget]="'item_' + integration.id"
+      *ngFor="let integration of integrations$ | async">
     <div class="row">
-      <span
-        class="col-3 hover text-truncate"
-        [attr.title]="integration.feed_url"
-        (click)="editClick.emit(integration)"
-      >
+      <span class="col-3 hover text-truncate"
+            [attr.title]="integration.feed_url"
+            (click)="editClick.emit(integration)">
         {{ integration.feed_url }}
       </span>
       <span class="col-2">
@@ -39,17 +35,15 @@
             : null
         }}
       </span>
-      <span class="col-1 justify-content-end d-flex align-items-start no-left-padding">
-        <cp-integrations-sync-now-button
-          [integration]="integration"
-          (syncClick)="syncClick.emit(integration.id)"
-        >
+      <span
+            class="col-1 justify-content-end d-flex align-items-start no-left-padding">
+        <cp-integrations-sync-now-button [integration]="integration"
+                                         (syncClick)="syncClick.emit(integration.id)">
         </cp-integrations-sync-now-button>
-        <button
-          type="button"
-          aria-label="delete"
-          class="hover delete-integration unstyled-button"
-          (click)="deleteClick.emit(integration)">
+        <button type="button"
+                aria-label="delete"
+                class="hover delete-integration unstyled-button"
+                (click)="deleteClick.emit(integration)">
           <span aria-hidden="true">&times;</span>
         </button>
       </span>

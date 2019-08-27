@@ -7,11 +7,10 @@
             {{ 't_shared_integration_create_form_modal_title' | cpI18n }}
           </strong>
         </span>
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="float-right hover cpmodal__header__close unstyled-button">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="float-right hover cpmodal__header__close unstyled-button">
           &times;
         </button>
       </div>
@@ -19,31 +18,27 @@
   </div>
 
   <div class="cpmodal__body">
-    <cp-events-integrations-form
-      [form]="form"
-      [showHosts]="false"
-      [typesDropdown]="typesDropdown"
-      [pkdbUrl]="calendarItemIntegrationPkdbUrl"
-    >
+    <cp-events-integrations-form [form]="form"
+                                 [showHosts]="false"
+                                 [typesDropdown]="typesDropdown"
+                                 [pkdbUrl]="calendarItemIntegrationPkdbUrl">
     </cp-events-integrations-form>
   </div>
 
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-6 text-right">
-        <button
-          type="button"
-          data-dismiss="modal"
-          (click)="resetModal()"
-          class="cpbtn cpbtn--cancel">
+        <button type="button"
+                data-dismiss="modal"
+                (click)="resetModal()"
+                class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button
-          type="button"
-          (click)="doSubmit()"
-          [disabled]="!form.valid"
-          class="cpbtn cpbtn--primary js_submit_button">
+        <button type="button"
+                (click)="doSubmit()"
+                [disabled]="!form.valid"
+                class="cpbtn cpbtn--primary js_submit_button">
           {{ 'save' | cpI18n }}
         </button>
       </div>

@@ -31,12 +31,10 @@
 
       <ng-container *ngIf="location.links[0]?.url">
         <p>
-          <a
-            cpTarget="url"
-            target="_blank"
-            [href]="location.links[0].url"
-            class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary text-truncate"
-          >
+          <a cpTarget="url"
+             target="_blank"
+             [href]="location.links[0].url"
+             class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary text-truncate">
             {{ location.links[0].url }}
           </a>
         </p>

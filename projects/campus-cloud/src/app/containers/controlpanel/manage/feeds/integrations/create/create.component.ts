@@ -5,13 +5,14 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import * as fromStore from '../store';
-import { IItem } from '@campus-cloud/shared/components';
-import { CPSession } from '@projects/campus-cloud/src/app/session';
 import { ISocialPostCategory } from '../../model';
+import { IItem } from '@campus-cloud/shared/components';
+import { parseErrorResponse } from '@campus-cloud/shared/utils';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { WallsIntegrationModel } from '@campus-cloud/libs/integrations/walls/model';
+import { CPSession } from '@projects/campus-cloud/src/app/session';
 import { WallsIntegrationsService } from './../walls-integrations.service';
 import { SocialPostCategoryModel } from './../../model/social-post-category.model';
+import { WallsIntegrationModel } from '@campus-cloud/libs/integrations/walls/model';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import { WallsIntegrationFormComponent } from '@campus-cloud/libs/integrations/walls/components';
 import { FeedIntegration } from '@campus-cloud/libs/integrations/common/model/integration.model';
@@ -72,7 +73,9 @@ export class WallsIntegrationsCreateComponent implements OnInit {
           .createSocialPostCategory(socialPostCategoryForm.value, params)
           .toPromise();
       } catch (error) {
-        this.store.dispatch(new fromStore.PostSocialPostCategoriesFail(error));
+        this.store.dispatch(
+          new fromStore.PostSocialPostCategoriesFail(parseErrorResponse(error.error))
+        );
         this.resetModal();
         return;
       }
@@ -87,7 +90,6 @@ export class WallsIntegrationsCreateComponent implements OnInit {
 
     const payload = {
       body,
-      params,
       channelType: this.channelType
     };
 

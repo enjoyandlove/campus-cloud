@@ -14,17 +14,15 @@
   <div class="cpmodal__footer">
     <div class="row justify-content-end">
       <div class="col-12 text-right">
-        <button
-          type="button"
-          class="cpbtn cpbtn--danger"
-          (click)="onDiscardChanges(true)">
+        <button type="button"
+                class="cpbtn cpbtn--danger"
+                (click)="onDiscardChanges(true)">
           {{ 't_shared_discard_changes' | cpI18n }}
         </button>
 
-        <button
-          type="button"
-          class="cpbtn cpbtn--cancel"
-          (click)="onDiscardChanges(false)">
+        <button type="button"
+                class="cpbtn cpbtn--cancel"
+                (click)="onDiscardChanges(false)">
           {{'t_shared_go_back' | cpI18n }}
         </button>
       </div>

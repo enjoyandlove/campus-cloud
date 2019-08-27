@@ -3,9 +3,8 @@
 
   <ng-container *ngSwitchCase="false">
     <h3>{{ 'dashboard_top_events' | cpI18n }}</h3>
-    <cp-dashboard-top-resource
-      [items]="items"
-      [canNavigate]="isSuperAdmin">
+    <cp-dashboard-top-resource [items]="items"
+                               [canNavigate]="isSuperAdmin">
     </cp-dashboard-top-resource>
   </ng-container>
 </ng-container>

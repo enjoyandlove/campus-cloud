@@ -1,15 +1,13 @@
 <ng-container *ngIf="theme === 'small'">
   <div class="input small">
-    <input
-      type="file"
-      name="file"
-      [attr.id]="id"
-      class="inputfile"
-      (change)="onChange($event)" />
-    <label
-      [for]="id"
-      class="small"
-      [class.isRequired]="isRequired">
+    <input type="file"
+           name="file"
+           [attr.id]="id"
+           class="inputfile"
+           (change)="onChange($event)" />
+    <label [for]="id"
+           class="small"
+           [class.isRequired]="isRequired">
       <i class="material-icons">add_a_photo</i>
     </label>
   </div>
@@ -17,18 +15,17 @@
 
 <ng-container *ngIf="!theme">
   <div [class]="['input ' + buttonClass]">
-    <input
-      type="file"
-      name="file"
-      [attr.id]="id"
-      class="inputfile"
-      (change)="onChange($event)" />
-    <label
-      [for]="id"
-      [class]="[props?.class]"
-      [class.isRequired]="isRequired">
+    <input type="file"
+           name="file"
+           [attr.id]="id"
+           class="inputfile"
+           (change)="onChange($event)" />
+    <label [for]="id"
+           [class]="[props?.class]"
+           [class.isRequired]="isRequired">
       {{ buttonText ? buttonText : ('t_choose_a_file' | cpI18n) }}
-      <cp-working *ngIf="busy" class="busy"></cp-working>
+      <cp-working *ngIf="busy"
+                  class="busy"></cp-working>
     </label>
   </div>
 </ng-container>

@@ -1,11 +1,9 @@
 <ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
-  <cp-events
-    *ngSwitchCase="false"
-    [isClub]="isClub"
-    [clubId]="clubId"
-    [athleticId]="athleticId"
-    [isAthletic]="isAthletic"
-  >
+  <cp-events *ngSwitchCase="false"
+             [isClub]="isClub"
+             [clubId]="clubId"
+             [athleticId]="athleticId"
+             [isAthletic]="isAthletic">
   </cp-events>
 </ng-container>
