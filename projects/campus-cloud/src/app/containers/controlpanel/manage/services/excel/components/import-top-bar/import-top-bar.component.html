@@ -9,7 +9,7 @@
       </div>
       <div class="col-6">
         <cp-upload-button [buttonClass]="['cpbtn cpbtn--' + uploadImageButtonClass]"
-                          [buttonText]="cpI18n.translate('upload_picture')"
+                          [buttonText]="'upload_picture' | cpI18n"
                           (fileUpload)="onFileUpload($event)">
         </cp-upload-button>
       </div>
