@@ -15,31 +15,31 @@ export class OrientationEventsService extends EventsService {
   getEvents(startRage: number, endRage: number, search?: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS}/${startRage};${endRage}`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search, true);
   }
 
   createEvent(body: any, search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS}/`;
 
-    return this.api.post(url, body, search);
+    return this.api.post(url, body, search, true);
   }
 
   updateEvent(body: any, eventId: number, search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS}/${eventId}`;
 
-    return this.api.update(url, body, search);
+    return this.api.update(url, body, search, true);
   }
 
   getEventById(id: number, search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS}/${id}`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search, true);
   }
 
   deleteEventById(eventId: number, search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ORIENTATION_EVENTS}/${eventId}`;
 
-    return this.api.delete(url, search);
+    return this.api.delete(url, search, true);
   }
 
   getEventAttendanceByEventId(startRage: number, endRage: number, search?: HttpParams) {
