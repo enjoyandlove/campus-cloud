@@ -127,5 +127,9 @@ export class ServicesAttendanceComponent extends BaseComponent implements OnInit
     this.providersList.downloadProvidersCSV();
   }
 
+  onUpdateStats() {
+    this.fetch();
+  }
+
   ngOnInit() {}
 }
