@@ -35,20 +35,22 @@
 
     <ul class="dropdown-menu dropdown-menu-right header__more-children">
       <li *ngFor="let page of extraChildren">
-        <ng-container *cpFeatureToggle="page.flag">
-          <a *ngIf="page.amplitude"
-             (click)="extraMenu = page"
-             [routerLink]="[page.url]"
-             class="dropdown-item"
-             (click)="trackSubMenu(page.amplitude, page.isSubMenuItem)">
-            {{ page.label | cpI18n }}
-          </a>
-          <a *ngIf="!page.amplitude"
-             class="dropdown-item"
-             (click)="extraMenu = page"
-             [routerLink]="[page.url]">
-            {{ page.label | cpI18n }}
-          </a>
+        <ng-container *ngIf="page.url !== router.url">
+          <ng-container *cpFeatureToggle="page.flag">
+            <a *ngIf="page.amplitude"
+               (click)="extraMenu = page"
+               [routerLink]="[page.url]"
+               class="dropdown-item"
+               (click)="trackSubMenu(page.amplitude, page.isSubMenuItem)">
+              {{ page.label | cpI18n }}
+            </a>
+            <a *ngIf="!page.amplitude"
+               class="dropdown-item"
+               (click)="extraMenu = page"
+               [routerLink]="[page.url]">
+              {{ page.label | cpI18n }}
+            </a>
+          </ng-container>
         </ng-container>
       </li>
     </ul>
