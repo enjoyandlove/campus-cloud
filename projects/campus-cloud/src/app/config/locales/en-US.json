@@ -3549,6 +3549,9 @@
   "t_shared_yes": {
     "message": "Yes"
   },
+  "t_skip_to_content": {
+    "message": "Skip to main content"
+  },
   "t_students_profile_students": {
     "message": "Students"
   },

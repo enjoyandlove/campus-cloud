@@ -29,6 +29,11 @@ export class ControlPanelComponent implements AfterViewInit, OnInit {
     private cpAmplitudeService: CPAmplitudeService
   ) {}
 
+  get currentRoutePath(): string {
+    // remove previous fragments and query params
+    return `${this.router.url.split('#')[0].split('?')[0]}/`;
+  }
+
   trackLoggedInEvent() {
     const isLogin = 'login' in this.route.snapshot.queryParams;
 

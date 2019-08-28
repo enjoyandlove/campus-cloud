@@ -4,6 +4,31 @@
   display: block;
   padding-bottom: 30px;
 }
+
 .content {
   min-width: 1300px;
+}
+
+.skip-main {
+  top: auto;
+  width: 1px;
+  height: 1px;
+  z-index: -999;
+  overflow: hidden;
+  position: absolute;
+
+  &:focus,
+  &:active {
+    left: 0;
+    width: 100%;
+    height: auto;
+    z-index: 999;
+    overflow: auto;
+    text-align: center;
+    padding: 12px 10px;
+    color: $color-brand;
+    text-decoration: underline;
+    outline: 1px dotted #797878;
+    background-color: rgba(255, 255, 255, 0.9);
+  }
 }
