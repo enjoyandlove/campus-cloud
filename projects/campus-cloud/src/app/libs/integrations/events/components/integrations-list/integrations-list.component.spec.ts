@@ -54,33 +54,4 @@ describe('EventIntegrationsListComponent', () => {
 
     expect(list.length).toBe(1);
   });
-
-  it('should display tooltip when canSync is false', () => {
-    let integration: IEventIntegration;
-    let syncNowBtnWrapper: HTMLSpanElement;
-
-    integration = {
-      ...mockIntegration,
-      sync_status: EventIntegration.status.running
-    };
-
-    component.integrations$ = of([integration]);
-    fixture.detectChanges();
-
-    syncNowBtnWrapper = getElementByCPTargetValue(de, 'sync_btn_wrapper').nativeElement;
-
-    expect(syncNowBtnWrapper.getAttribute('data-original-title')).not.toBeNull();
-
-    integration = {
-      ...mockIntegration,
-      sync_status: EventIntegration.status.pending
-    };
-
-    component.integrations$ = of([integration]);
-    fixture.detectChanges();
-
-    syncNowBtnWrapper = getElementByCPTargetValue(de, 'sync_btn_wrapper').nativeElement;
-
-    expect(syncNowBtnWrapper.getAttribute('data-original-title')).toBeNull();
-  });
 });
