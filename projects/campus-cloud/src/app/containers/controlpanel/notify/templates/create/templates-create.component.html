@@ -54,11 +54,15 @@
                  *ngIf="!state.isCampusWide">
               <label class="with-tooltip">
                 {{ 'recipient' | cpI18n }}
-                <i class="material-icons hover"
-                   [cpTooltip]="toolTipOptions"
-                   [attr.title]="toolTipContent">
-                  info_outline
-                </i>
+                <button type="button"
+                        class="unstyled-button"
+                        [cpTooltip]="toolTipOptions"
+                        [attr.title]="toolTipContent">
+                  <i class="material-icons hover">
+                    info_outline
+                  </i>
+                </button>
+
               </label>
               <div class="row">
                 <div class="col-12">

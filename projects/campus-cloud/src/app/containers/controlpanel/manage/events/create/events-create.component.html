@@ -150,11 +150,14 @@
                 <div class="form-group attendance-type-tooltip">
                   <label class="with-tooltip">
                     {{ 't_events_attendance_type' | cpI18n }}
-                    <i cpTooltip
-                       class="material-icons"
-                       [attr.title]="'t_events_event_attendance_type_tooltip' | cpI18n">
-                      info_outline
-                    </i>
+                    <button cpTooltip
+                            type="button"
+                            class="unstyled-button"
+                            [attr.title]="'t_events_event_attendance_type_tooltip' | cpI18n">
+                      <i class="material-icons">
+                        info_outline
+                      </i>
+                    </button>
                   </label>
                   <cp-dropdown [items]="attendanceTypes"
                                (selected)="onSelectedAttendanceType($event)">
@@ -165,11 +168,16 @@
                 <div class="form-group event-qr-enable-tooltip">
                   <label class="with-tooltip">
                     {{ 't_events_event_qr_enabled' | cpI18n }}
-                    <i cpTooltip
-                       class="material-icons"
-                       [attr.title]="'t_events_event_qr_code_tooltip' | cpI18n">
-                      info_outline
-                    </i>
+
+                    <button cpTooltip
+                            type="button"
+                            class="unstyled-button"
+                            [attr.title]="'t_events_event_qr_code_tooltip' | cpI18n">
+                      <i class="material-icons">
+                        info_outline
+                      </i>
+                    </button>
+
                   </label>
                   <cp-dropdown [items]="eventQRCodes"
                                (selected)="onSelectedQRCode($event.action)">
@@ -182,11 +190,16 @@
                 <div class="form-group event-manager-tooltip">
                   <label class="with-tooltip">
                     {{ 'events_event_manager' | cpI18n }}
-                    <i cpTooltip
-                       class="material-icons"
-                       [attr.title]="'events_event_manager_tooltip' | cpI18n">
-                      info_outline
-                    </i>
+
+                    <button cpTooltip
+                            type="button"
+                            class="unstyled-button"
+                            [attr.title]="'events_event_manager_tooltip' | cpI18n">
+                      <i class="material-icons">
+                        info_outline
+                      </i>
+                    </button>
+
                   </label>
                   <cp-dropdown [items]="managers"
                                (selected)="onSelectedManager($event)"
@@ -199,11 +212,16 @@
                   <label for="attendance_manager_email"
                          class="with-tooltip">
                     {{ 'events_attendance_manager_full' | cpI18n }}
-                    <i cpTooltip
-                       class="material-icons"
-                       [attr.title]="'events_attendance_manager_tooltip' | cpI18n">
-                      info_outline
-                    </i>
+
+                    <button cpTooltip
+                            type="button"
+                            class="unstyled-button"
+                            [attr.title]="'events_attendance_manager_tooltip' | cpI18n">
+                      <i class="material-icons">
+                        info_outline
+                      </i>
+                    </button>
+
                   </label>
                   <input type="text"
                          class="form-control"
@@ -217,11 +235,16 @@
               <div class="col-6">
                 <label class="with-tooltip">
                   {{ 'student_feedback' | cpI18n }}
-                  <i cpTooltip
-                     class="material-icons"
-                     [attr.title]="'events_event_feedback_tooltip' | cpI18n">
-                    info_outline
-                  </i>
+
+                  <button cpTooltip
+                          type="button"
+                          class="unstyled-button"
+                          [attr.title]="'events_event_feedback_tooltip' | cpI18n">
+                    <i class="material-icons">
+                      info_outline
+                    </i>
+                  </button>
+
                 </label>
                 <cp-dropdown [items]="attendanceFeedback"
                              (selected)="onEventFeedbackChange($event)"
