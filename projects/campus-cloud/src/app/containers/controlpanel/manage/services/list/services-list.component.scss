@@ -32,6 +32,12 @@
     padding: 15px 0;
   }
 
+  &__title {
+    a {
+      display: inline;
+    }
+  }
+
   &__thumbnail {
     img {
       float: left;
