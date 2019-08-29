@@ -65,25 +65,6 @@ describe('IntegrationsSyncNowButtonComponent', () => {
     expect(syncNowBtn.disabled).toBe(false);
   });
 
-  it('should be disable if sync now is false', () => {
-    let syncNowBtn: HTMLButtonElement;
-    const canSyncSpy = spyOn(component, 'canSync');
-
-    canSyncSpy.and.returnValue(false);
-    fixture.detectChanges();
-
-    syncNowBtn = getElementByCPTargetValue(de, 'sync_btn').nativeElement;
-
-    expect(syncNowBtn.disabled).toBe(true);
-
-    syncNowBtn = getElementByCPTargetValue(de, 'sync_btn').nativeElement;
-
-    canSyncSpy.and.returnValue(true);
-    fixture.detectChanges();
-
-    expect(syncNowBtn.disabled).toBe(false);
-  });
-
   it('should return true if sync_status is running ', () => {
     let result: boolean;
     let feed: IEventIntegration;

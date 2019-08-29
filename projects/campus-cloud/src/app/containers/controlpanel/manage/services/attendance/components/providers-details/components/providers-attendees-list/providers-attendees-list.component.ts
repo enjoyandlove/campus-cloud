@@ -301,7 +301,6 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   }
 
   ngOnInit() {
-    this.fetch();
     this.setCheckInEventProperties();
 
     this.sortingLabels = {

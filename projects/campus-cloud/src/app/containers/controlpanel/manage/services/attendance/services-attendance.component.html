@@ -18,6 +18,7 @@
         <cp-providers-list #providersList
                            [service]="service"
                            [filterState]="state"
+                           (updateStats)="onUpdateStats()"
                            (hasProviders)="onProvidersResult($event)">
         </cp-providers-list>
       </div>
