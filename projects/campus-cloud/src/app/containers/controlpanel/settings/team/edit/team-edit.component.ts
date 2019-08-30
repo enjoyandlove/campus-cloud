@@ -1,8 +1,8 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { get as _get, pick } from 'lodash';
 import { BehaviorSubject } from 'rxjs';
-import { get as _get } from 'lodash';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
@@ -138,7 +138,12 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
         this.editingUser.school_level_privileges[this.schoolId]
       );
 
-      this.accountPrivileges = Object.assign({}, this.editingUser.account_level_privileges);
+      // pick only current school account privileges
+      this.accountPrivileges = pick(
+        this.editingUser.account_level_privileges,
+        this.editingUser.account_mapping[this.schoolId]
+      );
+
       if (!this.schoolPrivileges[CP_PRIVILEGES_MAP.services]) {
         this.updateServicesDropdownLabel();
       }
