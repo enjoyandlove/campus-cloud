@@ -11,18 +11,26 @@
         </div>
         <div class="col-3 text-center no-left-padding">
           <button type="button"
+                  (click)="picker.open()"
+                  (focus)="picker.open()"
                   [class.isOpen]="isCalendar"
+                  aria-label="Filter by date range"
                   [class.isSelected]="isFilteredByDate"
-                  (click)="onToggleCalendar($event)"
                   class="cpbtn cpbtn--cancel cpbtn--no-padding calendar">
-            <i class="material-icons hover">date_range</i>
+            <i class="material-icons hover"
+               aria-hidden="true">date_range</i>
           </button>
-          <cp-small-datepicker [hidden]="!isCalendar"
-                               (reset)="onDateReset()"
-                               (rangeChange)="isCalendar = false"
-                               (rangeChange)="onDateRange($event)"
-                               [options]="dateFilterOpts">
-          </cp-small-datepicker>
+          <div class="date-picker-wrapper">
+            <input type="text"
+                   static
+                   cpDatePicker
+                   mode='range'
+                   #picker="datePicker"
+                   (dateChange)="isCalendar = false"
+                   (dateChange)="onDateRange($event)"
+                   [maxDate]="dateFilterOpts.maxDate"
+                   [minDate]="dateFilterOpts.minDate" />
+          </div>
         </div>
       </div>
     </div>

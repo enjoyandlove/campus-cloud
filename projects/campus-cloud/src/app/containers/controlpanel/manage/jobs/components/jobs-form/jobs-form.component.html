@@ -57,18 +57,18 @@
           <div class="row form-group">
             <div class="col-6">
               <label>{{ 'jobs_job_start_date' | cpI18n }}</label>
-              <cp-datepicker [clearable]="true"
-                             [options]="contractStartDatePickerOptions"
+              <cp-datepicker [options]="contractStartDatePickerOptions"
                              (dateSet)="setContractStart($event)"
-                             (dateClear)="clearContractStart()">
+                             (dateClear)="clearContractStart()"
+                             [clearable]="!!form.get('contract_start').value && form.get('application_deadline').value !== -1">
               </cp-datepicker>
             </div>
             <div class="col-6">
               <label>{{ 'jobs_application_deadline' | cpI18n }}</label>
-              <cp-datepicker [clearable]="true"
-                             [options]="applicationDeadlineDatePickerOptions"
+              <cp-datepicker [options]="applicationDeadlineDatePickerOptions"
                              (dateSet)="setApplicationDeadline($event)"
-                             (dateClear)="clearApplicationDeadline()">
+                             (dateClear)="clearApplicationDeadline()"
+                             [clearable]="!!form.get('application_deadline').value && form.get('application_deadline').value !== -1">
               </cp-datepicker>
             </div>
           </div>

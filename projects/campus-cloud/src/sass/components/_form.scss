@@ -13,6 +13,12 @@
     background: $color-white;
     border: 1px solid $color-med-grey;
     transition: border 300ms ease-in-out;
+
+    &:focus,
+    &:hover {
+      box-shadow: none;
+      border: 1px solid $color-text;
+    }
   }
 }
 
@@ -47,6 +53,7 @@
     &:first-child {
       border-radius: 4px 4px 0 0;
     }
+
     &:last-child {
       border-bottom: 0;
     }
@@ -135,12 +142,15 @@ textarea {
     &::-webkit-input-placeholder {
       color: $color-danger;
     }
+
     &::-moz-placeholder {
       color: $color-danger;
     }
+
     &:-ms-input-placeholder {
       color: $color-danger;
     }
+
     &:-moz-placeholder {
       color: $color-danger;
     }
@@ -157,14 +167,17 @@ textarea {
     font-size: 0.9em;
     color: $color-med-grey;
   }
+
   &::-moz-placeholder {
     font-size: 0.9em;
     color: $color-med-grey;
   }
+
   &:-ms-input-placeholder {
     font-size: 0.9em;
     color: $color-med-grey;
   }
+
   &:-moz-placeholder {
     font-size: 0.9em;
     color: $color-med-grey;
