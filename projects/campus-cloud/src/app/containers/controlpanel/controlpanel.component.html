@@ -1,13 +1,19 @@
-<main class="content">
+<div class="content">
+  <a fragment="main"
+     class="skip-main"
+     [routerLink]="[currentRoutePath]">{{ 't_skip_to_content' | cpI18n }}</a>
   <cp-topbar></cp-topbar>
 
   <cp-snackbar></cp-snackbar>
 
-  <router-outlet></router-outlet>
+  <main id="main"
+        tabindex="-1">
+    <router-outlet></router-outlet>
+  </main>
 
   <cp-alert></cp-alert>
 
   <ng-container *ngIf="isProd">
     <cp-trackers></cp-trackers>
   </ng-container>
-</main>
+</div>

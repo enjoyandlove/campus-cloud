@@ -95,7 +95,12 @@ export class ClubsInfoComponent extends BaseComponent implements OnInit {
     const adminSearch = new HttpParams()
       .append('school_id', this.schoolId.toString())
       .append('store_id', this.clubId.toString())
-      .append('privilege_type', CP_PRIVILEGES_MAP.clubs.toString());
+      .append(
+        'privilege_type',
+        this.isAthletic === isClubAthletic.club
+          ? CP_PRIVILEGES_MAP.clubs.toString()
+          : CP_PRIVILEGES_MAP.athletics.toString()
+      );
     this.admins$ = this.adminService
       .getAdminByStoreId(adminSearch)
       .pipe(map((admins: IAdmin[]) => admins.filter((admin) => !admin.is_school_level)));

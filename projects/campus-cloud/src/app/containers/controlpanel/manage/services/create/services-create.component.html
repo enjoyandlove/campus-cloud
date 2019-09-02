@@ -31,11 +31,13 @@
                 <div class="col-6">
                   <label class="with-tooltip">
                     {{ 'select_category' | cpI18n }}
-                    <i cpTooltip
-                       class="material-icons"
-                       [attr.title]="categoryTooltip">
-                      info_outline
-                    </i>
+                    <button cpTooltiptype="button"
+                            class="unstyled-button"
+                            [attr.title]="categoryTooltip">
+                      <i class="material-icons">
+                        info_outline
+                      </i>
+                    </button>
                   </label>
                   <cp-dropdown [items]="categories$ | async"
                                (selected)="onCategoryUpdate($event)"
