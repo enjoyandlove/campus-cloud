@@ -26,10 +26,6 @@ export class IntegrationsSyncNowButtonComponent {
   }
 
   canSync(feed: IEventIntegration | IWallsIntegration) {
-    console.log(
-      FeedIntegration.isNotRunning(feed) &&
-        FeedIntegration.isLastSyncAfterThreshold(feed, this.session.tz)
-    );
     return (
       FeedIntegration.isNotRunning(feed) &&
       FeedIntegration.isLastSyncAfterThreshold(feed, this.session.tz)
