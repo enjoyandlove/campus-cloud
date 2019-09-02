@@ -45,7 +45,7 @@ export class CPErrorHandler extends ErrorHandler {
       throw err;
     }
 
-    const chunkFailedMessage = /Loading chunk [\d]+ failed/;
+    const chunkFailedMessage = /Loading chunk/;
 
     if (chunkFailedMessage.test(err.message)) {
       location.reload();
