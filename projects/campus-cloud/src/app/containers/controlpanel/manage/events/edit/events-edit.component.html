@@ -49,14 +49,16 @@
                 <div class="row form-group">
                   <div class="col-6">
                     <label>{{ 'start_date' | cpI18n }}</label>
-                    <cp-datepicker [options]="startdatePickerOpts"
+                    <cp-datepicker cpTarget="start_date"
+                                   [options]="startdatePickerOpts"
                                    [error]="formMissingFields && form.controls['start'].hasError('required')"
                                    (dateSet)="setStart($event)">
                     </cp-datepicker>
                   </div>
                   <div class="col-6">
                     <label>{{ 'end_date' | cpI18n }}</label>
-                    <cp-datepicker [options]="enddatePickerOpts"
+                    <cp-datepicker cpTarget="end_date"
+                                   [options]="enddatePickerOpts"
                                    [error]="formMissingFields && form.controls['end'].hasError('required')"
                                    (dateSet)="setEnd($event)">
                     </cp-datepicker>
