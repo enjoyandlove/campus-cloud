@@ -99,14 +99,6 @@ export class ListActionBoxComponent implements OnInit {
     this.isCalendar = !this.isCalendar;
   }
 
-  onDateReset() {
-    this.isCalendar = false;
-
-    this.resetDateRange();
-
-    this.listAction.emit(this.state);
-  }
-
   private resetDateRange() {
     const now = CPDate.now(this.session.tz).unix();
     this.isFilteredByDate = false;

@@ -1,10 +1,9 @@
+import { CPTestModule } from '@projects/campus-cloud/src/app/shared/tests';
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
-import 'flatpickr';
 
 import { CPI18nPipe } from '../../pipes';
 import { CPRangePickerComponent } from '../';
 import { CPSession } from './../../../session';
-import { CPDate } from './../../utils/date/date';
 import { CPDatePipe } from './../../pipes/date/date.pipe';
 import { CPRangePickerUtilsService } from './cp-range-picker.utils.service';
 
@@ -14,23 +13,8 @@ class MockCPSession extends CPSession {
   }
 }
 
-const mockSession = new MockCPSession();
-
-const pickerOptions = {
-  inline: true,
-  mode: 'range',
-  altInput: true,
-  maxDate: CPDate.now('America/Toronto')
-    .subtract(1, 'days')
-    .startOf('day')
-    .format(),
-  enableTime: false,
-  altFormat: 'F j, Y'
-};
-
-declare var $: any;
-
 describe('CPRangePickerComponent', () => {
+  let session: CPSession;
   let comp: CPRangePickerComponent;
   let fixture: ComponentFixture<CPRangePickerComponent>;
 
@@ -42,8 +26,12 @@ describe('CPRangePickerComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CPRangePickerComponent, CPI18nPipe],
-      providers: [CPRangePickerUtilsService, { provide: CPSession, useClass: MockCPSession }]
+      imports: [CPTestModule],
+      providers: [
+        CPRangePickerUtilsService,
+        CPDatePipe,
+        { provide: CPSession, useClass: MockCPSession }
+      ]
     });
   }));
 
@@ -51,16 +39,13 @@ describe('CPRangePickerComponent', () => {
     fixture = TestBed.createComponent(CPRangePickerComponent);
     comp = fixture.componentInstance;
 
-    comp.picker = $(comp.calendarEl.nativeElement).flatpickr(pickerOptions);
-    comp.datePipe = new CPDatePipe(mockSession);
-    comp.session = TestBed.get(CPSession);
+    session = TestBed.get(CPSession);
     comp.label = null;
     comp.class = 'secondary';
     comp.icon = 'keyboard_arrow_down';
 
     spyOn(comp.rangeChange, 'emit');
-    spyOn(comp.picker, 'clear');
-    spyOn(comp.session, 'tz').and.returnValue('America/Toronto');
+    spyOn(session, 'tz').and.returnValue('America/Toronto');
   });
 
   it('setLabel', () => {
@@ -81,12 +66,6 @@ describe('CPRangePickerComponent', () => {
     expect(comp.rangeChange.emit).toHaveBeenCalledWith(expected);
   });
 
-  it('resetCalendar', () => {
-    comp.resetCalendar();
-
-    expect(comp.picker.clear).toHaveBeenCalled();
-  });
-
   it('onDateChanged', () => {
     const moment = require('moment');
     const date1 = moment('2017-12-04');
@@ -100,23 +79,5 @@ describe('CPRangePickerComponent', () => {
     expect(comp.setLabel).toHaveBeenCalledWith(expected);
 
     expect(comp.triggerChange).toHaveBeenCalled();
-  });
-
-  it('should call clearDates', () => {
-    const noDate = {
-      start: null,
-      end: null,
-      label: null
-    };
-
-    spyOn(comp, 'setLabel');
-    spyOn(comp, 'triggerChange');
-    spyOn(comp, 'resetCalendar');
-
-    comp.clearDates();
-
-    expect(comp.setLabel).toHaveBeenCalledWith(noDate);
-    expect(comp.triggerChange).toHaveBeenCalledWith(noDate);
-    expect(comp.resetCalendar).toHaveBeenCalled();
   });
 });
