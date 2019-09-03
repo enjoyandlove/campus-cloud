@@ -31,7 +31,10 @@ export class ManageHeaderService {
       if (child.privilege === CP_PRIVILEGES_MAP.events) {
         return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events) ? child : null;
       } else if (child.privilege === CP_PRIVILEGES_MAP.moderation) {
-        return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation) ? child : null;
+        return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation) &&
+          this.session.school.wall_unlocked
+          ? child
+          : null;
       } else if (child.privilege === CP_PRIVILEGES_MAP.clubs) {
         const schoolLevel = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
         const accountLevel = canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs);
