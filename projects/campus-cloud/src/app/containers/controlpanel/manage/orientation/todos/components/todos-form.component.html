@@ -18,7 +18,8 @@
       <label>
         {{ 'due_date' | cpI18n }}
       </label>
-      <cp-datepicker [options]="dueDate"
+      <cp-datepicker cpTarget="due_date"
+                     [options]="dueDate"
                      (dateSet)="setEnd($event)"> </cp-datepicker>
     </div>
   </div>
