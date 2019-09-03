@@ -2,6 +2,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { A11yModule } from '@angular/cdk/a11y';
 import { NgModule } from '@angular/core';
 
 // directives
@@ -160,6 +161,7 @@ import {
   entryComponents: [CPLightboxComponent, CPImageCropperComponent],
 
   imports: [
+    A11yModule,
     FormsModule,
     CommonModule,
     RouterModule,

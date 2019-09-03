@@ -1,17 +1,22 @@
+@mixin focused-styled {
+  outline: 1px dotted #797878 !important;
+}
+
 .visually-hidden {
   position: absolute !important;
   height: 1px;
   width: 1px;
   overflow: hidden;
   clip: rect(1px, 1px, 1px, 1px);
-  white-space: nowrap; /* added line */
+  white-space: nowrap;
+  /* added line */
 }
 
 a,
 li,
 button {
   &:focus:not(:disabled) {
-    outline: 1px dotted #797878 !important;
+    @include focused-styled;
   }
 }
 
