@@ -6,7 +6,7 @@
   z-index: 9;
   top: 235px;
   width: 100%;
-  position: absolute;
+  align-items: center;
 
   &.sticky {
     top: 20px;
@@ -14,29 +14,23 @@
   }
 
   &--wrapper {
+    display: flex;
     padding: 9px 10px;
     border-radius: 4px;
+    align-items: center;
+    justify-content: space-between;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.24);
 
+    &__message {
+      display: flex;
+    }
+
     &--icon {
-      top: 4px;
       font-size: 1.4em;
       margin-right: 2px;
-      position: relative;
+      color: $color-white;
     }
 
-    &--close {
-      top: 2px;
-      font-size: 1.4em;
-      position: relative;
-    }
-
-    p {
-      font-size: 1.1em;
-      letter-spacing: 0.1px;
-    }
-
-    p,
     span {
       @include font-normal();
 

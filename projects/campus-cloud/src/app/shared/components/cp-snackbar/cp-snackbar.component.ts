@@ -10,13 +10,14 @@ import { baseActions, ISnackbar, getSnackbarState } from './../../../store/base'
 })
 export class CPSnackBarComponent implements OnDestroy, OnInit {
   snack;
+  timeOut;
 
   constructor(private store: Store<ISnackbar>) {
     this.store.select(getSnackbarState).subscribe((res: any) => {
       this.snack = res;
 
       if (this.snack.autoClose) {
-        setTimeout(
+        this.timeOut = setTimeout(
           () => {
             this.doClose();
           },
@@ -32,6 +33,10 @@ export class CPSnackBarComponent implements OnDestroy, OnInit {
   }
 
   ngOnDestroy() {
+    if (this.timeOut) {
+      clearTimeout(this.timeOut);
+    }
+
     this.doClose();
   }
 
