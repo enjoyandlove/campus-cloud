@@ -262,7 +262,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
     const managers$ = this.getManagersByHostId(storeOrClubId);
     const groups = events.controls;
 
-    managers$.pipe(startWith([{ label: '---' }])).subscribe(
+    managers$.subscribe(
       (managers) => {
         groups.forEach((group: FormGroup) => {
           group.controls['managers'].setValue(managers);

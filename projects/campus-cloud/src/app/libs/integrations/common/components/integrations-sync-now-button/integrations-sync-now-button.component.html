@@ -1,6 +1,8 @@
-<span cpTarget="sync_btn_wrapper"
+<span tabindex="0"
+      cpTarget="sync_btn_wrapper"
       [attr.title]="tootlTipTitle"
-      [cpTooltip]="!canSync(integration)">
+      [cpTooltip]="!canSync(integration)"
+      [class.disabled]="!canSync(integration)">
   <button cpTarget="sync_btn"
           class="cpbtn cpbtn--link"
           (click)="syncClick.emit()"

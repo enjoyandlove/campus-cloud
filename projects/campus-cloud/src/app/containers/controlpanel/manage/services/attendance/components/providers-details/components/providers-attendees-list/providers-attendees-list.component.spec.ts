@@ -1,16 +1,21 @@
 import { TestBed, async, ComponentFixture } from '@angular/core/testing';
-import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { of } from 'rxjs';
 
-import { mkSearch } from '../../../../tests/utils';
+import { CPSession } from '@campus-cloud/session';
 import { mockProvider } from '../../../../tests/mock';
 import { RootStoreModule } from '@campus-cloud/store';
+import { mockSchool } from '@campus-cloud/session/mock';
 import { ServicesModule } from '../../../../../services.module';
 import { ProvidersService } from '../../../../../providers.service';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { ServicesProvidersAttendeesListComponent } from './providers-attendees-list.component';
+import {
+  mockFilterState,
+  serviceProviderAttendeesListSearch
+} from '@controlpanel/manage/services/attendance/tests/utils';
 
 class MockService {
   getProviderAssessments() {
@@ -53,34 +58,26 @@ describe('ServicesProvidersAttendeesListComponent', () => {
     component = fixture.componentInstance;
 
     component.provider = mockProvider;
+
+    const session = TestBed.get(CPSession);
+    session.g.set('school', mockSchool);
   }));
 
   it('should get assessment with dates', () => {
-    fixture.detectChanges();
-    fixture.whenStable().then(() => {
-      spyOn(component.providersService, 'getProviderAssessments').and.callThrough();
-      component.state.start = '1';
-      component.state.end = '2';
-      component.fetchAllRecords();
-      const search = mkSearch('1', component.provider)
-        .append('end', component.state.end)
-        .append('start', component.state.start);
-      expect(component.providersService.getProviderAssessments).toHaveBeenCalledWith(
-        1,
-        101,
-        search
-      );
-    });
+    component.filterState = mockFilterState;
+    const spy = spyOn(component.providersService, 'getProviderAssessments').and.returnValue(of({}));
+    let search = serviceProviderAttendeesListSearch('1', component.provider, component.state);
+    search = component.providerUtils.addSearchParams(search, component.filterState);
+
+    component.fetchAllRecords();
+
+    expect(spy).toHaveBeenCalledTimes(1);
+    expect(spy).toHaveBeenCalledWith(component.startRange, component.endRange, search);
   });
 
   it('should get all for download', () => {
     const spy = spyOn(component.providersService, 'getProviderAssessments').and.returnValue(of({}));
-    let search = new HttpParams()
-      .set('service_id', component.provider.campus_service_id.toString())
-      .set('service_provider_id', component.provider.id.toString())
-      .set('sort_field', component.state.sort_field)
-      .set('sort_direction', component.state.sort_direction)
-      .set('all', '1');
+    let search = serviceProviderAttendeesListSearch('1', component.provider, component.state);
     search = component.providerUtils.addSearchParams(search, component.filterState);
 
     component.fetchAllRecords();

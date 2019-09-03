@@ -30,7 +30,7 @@ export class ServicesService {
       dates = new HttpParams().append('start', start.toString()).append('end', end.toString());
     }
 
-    return this.api.get(url, dates);
+    return this.api.get(url, dates, true);
   }
 
   getServiceAttendanceSummary(serviceId: number, search: HttpParams) {
