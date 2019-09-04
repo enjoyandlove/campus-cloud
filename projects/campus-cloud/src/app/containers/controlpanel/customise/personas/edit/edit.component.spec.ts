@@ -120,27 +120,4 @@ describe('PersonasEditComponent', () => {
 
     expect(comp.submitButtonData.disabled).toBeFalsy();
   });
-
-  xit('onSubmit', () => {
-    fixture.detectChanges();
-
-    const persona = mockPersonas[0];
-
-    const fb = new FormBuilder();
-
-    const expectedForm = fb.group({
-      school_id: [157, Validators.required],
-      name: [persona.localized_name_map.en, [Validators.required, Validators.maxLength(255)]],
-      platform: [persona.platform, Validators.required],
-      rank: [persona.rank, Validators.required],
-      login_requirement: [persona.login_requirement],
-      pretour_enabled: [persona.pretour_enabled],
-      cre_enabled: [persona.cre_enabled],
-      clone_tiles: [true]
-    });
-
-    comp.editForm.form = expectedForm;
-
-    comp.onSubmit();
-  });
 });
