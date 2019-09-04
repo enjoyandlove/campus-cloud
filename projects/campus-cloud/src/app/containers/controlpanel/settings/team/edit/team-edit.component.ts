@@ -77,14 +77,14 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   resetAthleticsModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor(
-    private router: Router,
+    public router: Router,
     private fb: FormBuilder,
     private session: CPSession,
     private route: ActivatedRoute,
     private store: Store<IHeader>,
     public cpI18n: CPI18nService,
     public utils: TeamUtilsService,
-    private adminService: AdminService,
+    public adminService: AdminService,
     private errorService: ErrorService,
     private cpTracking: CPTrackingService
   ) {
@@ -92,8 +92,6 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     super.isLoading().subscribe((res) => (this.loading = res));
     this.adminId = this.route.snapshot.params['adminId'];
     this.isProfileView = this.route.snapshot.queryParams['profile'];
-
-    this.fetch();
   }
 
   updateServicesDropdownLabel() {
@@ -760,6 +758,8 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     const session = this.session.g;
     this.user = this.session.g.get('user');
     this.schoolId = this.session.g.get('school').id;
+
+    this.fetch();
 
     this.buttonData = {
       class: 'primary',
