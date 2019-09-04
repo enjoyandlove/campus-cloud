@@ -188,7 +188,8 @@ export class ServicesCreateComponent implements OnInit {
         this.trackEvent(service, service.id);
         this.router.navigate(['/manage/services/' + service.id + url]);
       },
-      (_) => {
+      () => {
+        this.formError = true;
         this.enableSaveButton();
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
       }
