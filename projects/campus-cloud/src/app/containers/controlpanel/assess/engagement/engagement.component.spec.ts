@@ -133,9 +133,4 @@ describe('EngagementComponent', () => {
     expect(component.isComposeModal).toBeFalsy();
     expect(component.messageData).toBeNull();
   });
-
-  xit('buildSearchHeaders', () => {
-    component.onDoFilter(mockFilterState);
-    fixture.detectChanges();
-  });
 });

@@ -72,18 +72,6 @@ describe('EventsExcelComponent', () => {
     component = fixture.componentInstance;
   });
 
-  xit('should create event onSubmit', () => {
-    const fb = new FormBuilder();
-
-    spyOn(component.service, 'createEvent').and.callThrough();
-    component.form = fb.group({
-      events: fb.array([])
-    });
-    component.onSubmit();
-
-    expect(component.service.createEvent).toHaveBeenCalled();
-  });
-
   it('should build event without assessment manager', () => {
     const event: any = component.buildEvent(mockEvent);
 

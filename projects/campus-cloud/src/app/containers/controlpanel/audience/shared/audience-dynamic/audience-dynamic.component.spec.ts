@@ -75,30 +75,4 @@ describe('AudienceDynamicComponent', () => {
     expect(comp.preloadFilters).toHaveBeenCalledTimes(1);
     expect(comp.addFilterGroup).not.toHaveBeenCalled();
   }));
-
-  xit('preloadFilters', () => {
-    // comp.selectedItem = [];
-
-    comp.filtersData = [
-      {
-        count: 0,
-        type: 1,
-        id: 351,
-        filters: [{ attr_id: 40, choices_text: ['TRUE', 'FALSE'], choices: [49, 50] }],
-        name: '## A new Dynamic List'
-      }
-    ];
-    comp.audience = {
-      count: 0,
-      users: [],
-      filters: [{ attr_id: 40, choices_text: ['TRUE', 'FALSE'], choices: [49, 50] }],
-      type: 1,
-      id: 351,
-      name: '## A new Dynamic List'
-    };
-
-    fixture.detectChanges();
-
-    comp.preloadFilters();
-  });
 });
