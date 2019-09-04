@@ -164,7 +164,8 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
         this.trackEvent(this.form.value);
         this.router.navigate(['/manage/services/' + this.serviceId + route]);
       },
-      (_) => {
+      () => {
+        this.formError = true;
         this.enableSaveButton();
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
       }
