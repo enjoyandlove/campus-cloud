@@ -1,11 +1,14 @@
+import { FocusTrapFactory, FocusTrap } from '@angular/cdk/a11y';
+import { DOCUMENT } from '@angular/common';
 import {
-  Component,
   Input,
   OnInit,
-  EventEmitter,
+  Output,
+  Inject,
+  Component,
   ViewChild,
   ElementRef,
-  Output
+  EventEmitter
 } from '@angular/core';
 
 export const MODAL_TYPE = {
@@ -28,8 +31,10 @@ export class CPModalComponent implements OnInit {
   @ViewChild('cpModal', { static: true }) cpModal: ElementRef;
 
   class;
+  focustrap: FocusTrap;
+  previouslyActiveElement: HTMLElement | null;
 
-  constructor() {}
+  constructor(@Inject(DOCUMENT) private document, private focusTrapFactory: FocusTrapFactory) {}
 
   ngOnInit() {
     const type = this.type ? this.type : null;
@@ -39,6 +44,16 @@ export class CPModalComponent implements OnInit {
     classes = [...classes, type, centered];
 
     this.class = classes.join(' ').trim();
-    $(this.cpModal.nativeElement).on('hidden.bs.modal', () => this.modalClose.emit());
+    $(this.cpModal.nativeElement).on('shown.bs.modal', () => {
+      this.previouslyActiveElement = this.document.activeElement;
+      this.focustrap = this.focusTrapFactory.create(this.cpModal.nativeElement);
+      this.focustrap.focusInitialElement();
+    });
+    $(this.cpModal.nativeElement).on('hidden.bs.modal', () => {
+      this.modalClose.emit();
+
+      this.focustrap.destroy();
+      this.previouslyActiveElement.focus();
+    });
   }
 }

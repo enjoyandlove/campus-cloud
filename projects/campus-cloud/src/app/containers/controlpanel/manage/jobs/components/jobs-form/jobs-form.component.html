@@ -39,7 +39,8 @@
           <div class="row form-group">
             <div class="col-6">
               <label>{{ 'jobs_posting_start_date' | cpI18n }}</label>
-              <cp-datepicker [options]="postingStartDatePickerOptions"
+              <cp-datepicker cpTarget="posting_start"
+                             [options]="postingStartDatePickerOptions"
                              [error]="formError && form.controls['posting_start'].hasError('required')"
                              (dateSet)="setPostingStart($event)">
               </cp-datepicker>
@@ -47,7 +48,8 @@
             <div class="col-6"
                  *ngIf="!form.controls.ongoing.value">
               <label>{{ 'jobs_posting_end_date' | cpI18n }}</label>
-              <cp-datepicker [options]="postingEndDatePickerOptions"
+              <cp-datepicker cpTarget="posting_end"
+                             [options]="postingEndDatePickerOptions"
                              [error]="formError && form.controls['posting_end'].hasError('required')"
                              (dateSet)="setPostingEnd($event)">
               </cp-datepicker>
@@ -57,14 +59,16 @@
           <div class="row form-group">
             <div class="col-6">
               <label>{{ 'jobs_job_start_date' | cpI18n }}</label>
-              <cp-datepicker [options]="contractStartDatePickerOptions"
+              <cp-datepicker cpTarget="contract_start"
+                             [options]="contractStartDatePickerOptions"
                              (dateSet)="setContractStart($event)"
                              [clearable]="!!form.get('contract_start').value && form.get('application_deadline').value !== -1">
               </cp-datepicker>
             </div>
             <div class="col-6">
               <label>{{ 'jobs_application_deadline' | cpI18n }}</label>
-              <cp-datepicker [options]="applicationDeadlineDatePickerOptions"
+              <cp-datepicker cpTarget="application_deadline"
+                             [options]="applicationDeadlineDatePickerOptions"
                              (dateSet)="setApplicationDeadline($event)"
                              [clearable]="!!form.get('application_deadline').value && form.get('application_deadline').value !== -1">
               </cp-datepicker>

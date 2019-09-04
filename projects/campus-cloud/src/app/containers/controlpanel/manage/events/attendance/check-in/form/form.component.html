@@ -28,7 +28,8 @@
   <div class="row form-group item-details">
     <div class="col-6">
       <label>{{ 't_events_attendance_add_edit_check_in_check_in_time' | cpI18n }}</label>
-      <cp-datepicker [options]="checkInDatePickerOptions"
+      <cp-datepicker cpTarget="check_in_time"
+                     [options]="checkInDatePickerOptions"
                      [error]="formErrors && form.controls['check_in_time'].hasError('required')"
                      (dateSet)="setCheckin($event)">
       </cp-datepicker>
@@ -36,7 +37,8 @@
     <div class="col-6"
          *ngIf="data.has_checkout">
       <label>{{ 't_events_attendance_add_edit_check_in_check_out_time' | cpI18n }}</label>
-      <cp-datepicker [options]="checkOutDatePickerOptions"
+      <cp-datepicker cpTarget="check_out_time_epoch"
+                     [options]="checkOutDatePickerOptions"
                      [error]="formErrors && form.controls['check_out_time_epoch'].hasError('required')"
                      (dateSet)="setCheckout($event)">
       </cp-datepicker>
