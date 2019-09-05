@@ -44,7 +44,9 @@ export class ModalService {
   }
 
   close(modal: OverlayRef): void {
-    modal.dispose();
+    if (modal) {
+      modal.dispose();
+    }
   }
 
   private getInjector(props: IModal): PortalInjector {
