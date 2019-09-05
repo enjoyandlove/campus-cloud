@@ -105,9 +105,8 @@ export class EngagementComposeComponent implements OnInit {
 
     this.hostType = this.session.defaultHost ? this.session.defaultHost.hostType : null;
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
-
     this.form = this.fb.group({
-      user_ids: [this.props.userIds],
+      user_ids: [this.props.userIds.filter((userId) => typeof userId === 'number')],
       is_school_wide: false,
       store_id: [defaultHost, Validators.required],
       subject: [null, [Validators.required, Validators.maxLength(128)]],
