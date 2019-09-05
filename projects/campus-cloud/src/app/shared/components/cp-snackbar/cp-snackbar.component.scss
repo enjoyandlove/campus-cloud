@@ -4,8 +4,9 @@
 .bar {
   left: 0;
   z-index: 9;
-  top: 235px;
+  top: 105px;
   width: 100%;
+  position: absolute;
   align-items: center;
 
   &.sticky {
