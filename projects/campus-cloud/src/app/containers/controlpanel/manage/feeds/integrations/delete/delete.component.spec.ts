@@ -2,8 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 
 import { mockIntegration } from '../tests';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
-import { SharedModule } from '@projects/campus-cloud/src/app/shared/shared.module';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { WallsIntegrationsDeleteComponent } from './delete.component';
 import { CPDeleteModalComponent } from '@campus-cloud/shared/components/cp-delete-modal';
 
@@ -14,8 +13,7 @@ describe('WallsIntegrationsDeleteComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [SharedModule],
-      providers: [CPI18nService],
+      imports: [CPTestModule],
       declarations: [WallsIntegrationsDeleteComponent]
     }).compileComponents();
   }));
