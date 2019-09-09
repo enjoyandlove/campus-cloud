@@ -9,6 +9,7 @@
     "i18n": "phraseapp pull",
     "precommit": "pretty-quick --staged",
     "storybook": "start-storybook -p 6006",
+    "build-libs": "node scripts/ready-ui/build.js",
     "lint": "node_modules/@angular/cli/bin/ng lint",
     "start": "node_modules/@angular/cli/bin/ng serve",
     "analyze": "webpack-bundle-analyzer dist/stats.json",
