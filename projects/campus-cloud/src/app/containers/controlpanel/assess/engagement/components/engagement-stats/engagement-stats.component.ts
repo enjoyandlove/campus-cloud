@@ -37,6 +37,10 @@ export class EngagementStatsComponent implements OnInit {
 
   constructor(public cpI18n: CPI18nService) {}
 
+  getIds(idsOrEmailList: Array<string | number>) {
+    return idsOrEmailList.filter((i) => typeof i === 'number');
+  }
+
   onCompose(listName, userIds) {
     const { starts, ends } = this.props;
     const label = listName;

@@ -1,5 +1,5 @@
-<ng-container [ngSwitch]="loading">
-  <div class="cp-card orientation orientation--no-data"
+<cp-card [ngSwitch]="loading">
+  <div class="orientation orientation--no-data"
        *ngSwitchCase="true">
     <div class="row">
       <div class="col-12">
@@ -14,12 +14,11 @@
 
   <ng-container *ngSwitchCase="false">
     <ng-container [ngSwitch]="isDisable">
-      <div class="cp-card orientation orientation--no-data"
+      <div class="orientation orientation--no-data"
            *ngSwitchCase="true">
         <div class="row">
           <div class="col-12">
             <p class="orientation--heading">{{ 'orientation' | cpI18n }}</p>
-
             <div class="orientation--no-data-wrapper text-center">
               <p class="heading">{{ 't_assess_no_orientation_data' | cpI18n }}
               </p>
@@ -30,7 +29,7 @@
         </div>
       </div>
 
-      <div class="cp-card orientation"
+      <div class="orientation"
            *ngSwitchCase="false">
         <cp-engagement-resource-stats [stats]="stats"
                                       [labels]="labels"
@@ -43,4 +42,4 @@
       </div>
     </ng-container>
   </ng-container>
-</ng-container>
+</cp-card>
