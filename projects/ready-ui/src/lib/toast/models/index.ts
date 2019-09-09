@@ -1,7 +1,9 @@
 import { OverlayRef } from '@angular/cdk/overlay';
+import { Injectable } from '@angular/core';
 
 import { ToastData } from '../config/types';
 
+@Injectable()
 export class ToastRef {
   data: ToastData;
 
