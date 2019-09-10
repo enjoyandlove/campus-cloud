@@ -15,9 +15,13 @@
       },
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "outputPath": "_dist",
+            "customWebpackConfig": {
+              "path": "./webpack.config.js",
+              "mergeStrategies": { "externals": "replace" }
+            },
             "index": "projects/campus-cloud/src/index.html",
             "main": "projects/campus-cloud/src/main.ts",
             "showCircularDependencies": true,
@@ -71,7 +75,7 @@
                   "type": "bundle",
                   "name": "main",
                   "maximumWarning": "350kb",
-                  "maximumError": "500kb"
+                  "maximumError": "800kb"
                 },
                 {
                   "type": "initial",
