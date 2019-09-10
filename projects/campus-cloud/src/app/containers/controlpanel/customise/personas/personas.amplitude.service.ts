@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { TilesUtilsService } from './tiles/tiles.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPI18nService, CPLogger } from '@campus-cloud/shared/services';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 import { credentialType, PersonasType } from '@controlpanel/customise/personas/personas.status';
 
@@ -56,6 +56,7 @@ export class PersonasAmplitudeService {
       if (webLinkContentType) {
         return this.cpI18n.translate(webLinkContentType.label);
       } else {
+        CPLogger.log(`getWebLinkContentType missing ${linkData}`);
         return amplitudeEvents.NO_CONTENT;
       }
     }
