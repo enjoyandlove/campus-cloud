@@ -3,6 +3,7 @@ import { IEnvironment } from './environment.interface';
 export const environment: IEnvironment = {
   root: '/dist/',
   production: true,
+  version: process.env.APP_VERSION,
   flags: {
     API_MANAGEMENT: {
       whitelist: []
