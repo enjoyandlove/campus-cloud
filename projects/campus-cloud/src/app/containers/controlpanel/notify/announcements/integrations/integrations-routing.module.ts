@@ -9,7 +9,7 @@ const routes: Routes = [
     path: '',
     canActivate: [PrivilegesGuard],
     component: AnnouncementsIntegrationListComponent,
-    data: { zendesk: 'annoucements integration' }
+    data: { zendesk: 'annoucements integration', amplitude: 'IGNORE' }
   }
 ];
 

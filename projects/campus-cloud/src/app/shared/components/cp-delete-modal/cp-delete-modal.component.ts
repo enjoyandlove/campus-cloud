@@ -30,7 +30,7 @@ export class CPDeleteModalComponent implements OnInit {
   @Output() cancelClick: EventEmitter<null> = new EventEmitter();
   @Output() deleteClick: EventEmitter<null> = new EventEmitter();
 
-  disableSubmit: boolean;
+  buttonData;
   _warnings: IWarning[] = [];
 
   constructor(public cpI18n: CPI18nService) {}
@@ -46,7 +46,10 @@ export class CPDeleteModalComponent implements OnInit {
   recheckDisableStatus(): void {
     const uncheckedWarnings = this._warnings.filter((w) => !w.checked);
 
-    this.disableSubmit = uncheckedWarnings.length > 0;
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: uncheckedWarnings.length > 0
+    };
   }
 
   onWarningToogle(checked: boolean, index: number): void {
@@ -56,6 +59,10 @@ export class CPDeleteModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.disableSubmit = this._warnings.length > 0;
+    this.buttonData = {
+      class: 'danger',
+      disabled: this._warnings.length > 0,
+      text: this.cpI18n.translate(this.submitLabel)
+    };
   }
 }

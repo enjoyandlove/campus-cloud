@@ -44,9 +44,15 @@ h3.title {
     padding-left: 20px;
 
     &:before {
-      @include badge();
-
-      background: $color-warning;
+      top: 3px;
+      left: -1px;
+      width: 16px;
+      height: 8px;
+      font-size: 10px;
+      content: '- - -';
+      border-radius: 50%;
+      position: absolute;
+      color: $color-warning;
     }
   }
 }

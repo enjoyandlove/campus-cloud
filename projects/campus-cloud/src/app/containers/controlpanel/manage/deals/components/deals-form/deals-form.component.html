@@ -48,14 +48,16 @@
             <div class="row form-group">
               <div class="col-6">
                 <label>{{ 't_deals_form_posting_start_date' | cpI18n }}</label>
-                <cp-datepicker [options]="postingStartDatePickerOptions"
+                <cp-datepicker cpTarget="posting_start_date"
+                               [options]="postingStartDatePickerOptions"
                                (dateSet)="setPostingStart($event)">
                 </cp-datepicker>
               </div>
               <div class="col-6"
                    *ngIf="!form.controls.ongoing.value">
                 <label>{{ 't_deals_form_posting_end_date' | cpI18n }}</label>
-                <cp-datepicker [options]="postingEndDatePickerOptions"
+                <cp-datepicker cpTarget="posting_end_date"
+                               [options]="postingEndDatePickerOptions"
                                (dateSet)="setPostingEnd($event)">
                 </cp-datepicker>
               </div>

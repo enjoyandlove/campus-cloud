@@ -3,11 +3,10 @@ import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { mockIntegration } from '../tests';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
-import { ModalService, MODAL_DATA, CPI18nService } from '@campus-cloud/shared/services';
+import { ModalService, MODAL_DATA } from '@campus-cloud/shared/services';
 import { AnnouncementsIntegrationDeleteComponent } from './delete.component';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('AnnouncementsIntegrationDeleteComponent', () => {
   configureTestSuite();
@@ -18,7 +17,6 @@ describe('AnnouncementsIntegrationDeleteComponent', () => {
         declarations: [AnnouncementsIntegrationDeleteComponent],
         providers: [
           ModalService,
-          CPI18nService,
           {
             provide: MODAL_DATA,
             useValue: {
@@ -27,7 +25,7 @@ describe('AnnouncementsIntegrationDeleteComponent', () => {
             }
           }
         ],
-        imports: [SharedModule]
+        imports: [CPTestModule]
       });
       await TestBed.compileComponents();
     })()

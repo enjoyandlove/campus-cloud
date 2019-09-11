@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
+import { provideMockStore } from '@ngrx/store/testing';
 import { By } from '@angular/platform-browser';
 
 import { ServicesModule } from '../services.module';
@@ -19,6 +20,7 @@ describe('ServicesDeleteComponent', () => {
       TestBed.configureTestingModule({
         imports: [ServicesModule, HttpClientModule, RouterTestingModule, CPTestModule],
         providers: [
+          provideMockStore(),
           {
             provide: MODAL_DATA,
             useValue: {

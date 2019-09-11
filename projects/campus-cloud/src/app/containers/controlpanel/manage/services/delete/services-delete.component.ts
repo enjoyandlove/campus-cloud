@@ -1,13 +1,16 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { Store } from '@ngrx/store';
 
 import { IService } from '../service.interface';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { ISnackbar } from '@campus-cloud/store';
 import { ServicesService } from '../services.service';
+import { baseActionClass } from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import {
-  CPTrackingService,
-  CPI18nService,
+  IModal,
   MODAL_DATA,
-  IModal
+  CPI18nService,
+  CPTrackingService
 } from '@campus-cloud/shared/services';
 
 @Component({
@@ -28,6 +31,7 @@ export class ServicesDeleteComponent implements OnInit {
   constructor(
     @Inject(MODAL_DATA) private modal: IModal,
     private cpI18n: CPI18nService,
+    private store: Store<ISnackbar>,
     private cpTracking: CPTrackingService,
     public servicesService: ServicesService
   ) {}
@@ -37,10 +41,24 @@ export class ServicesDeleteComponent implements OnInit {
   }
 
   onDelete() {
-    this.servicesService.deleteService(this.service.id).subscribe((_) => {
-      this.trackEvent();
-      this.modal.onClose(this.service.id);
-    });
+    this.servicesService.deleteService(this.service.id).subscribe(
+      () => {
+        this.trackEvent();
+        this.modal.onClose(this.service.id);
+      },
+      () => {
+        this.onClose();
+        this.handleError();
+      }
+    );
+  }
+
+  handleError() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body: this.cpI18n.translate('something_went_wrong')
+      })
+    );
   }
 
   trackEvent() {

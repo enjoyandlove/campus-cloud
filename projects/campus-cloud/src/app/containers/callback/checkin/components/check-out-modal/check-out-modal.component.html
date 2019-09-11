@@ -21,7 +21,8 @@
           <label>
             {{ 't_external_check_in_check_out_time' | cpI18n }}
           </label>
-          <cp-datepicker [options]="checkOutOptions"
+          <cp-datepicker cpTarget="check_out_time_epoch"
+                         [options]="checkOutOptions"
                          [error]="formErrors && form.controls['check_out_time_epoch'].hasError('required')"
                          (dateSet)="setCheckout($event)">
           </cp-datepicker>

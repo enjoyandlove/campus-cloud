@@ -5,8 +5,19 @@
 @import '~projects/campus-cloud/src/sass/components/button';
 @import '~projects/campus-cloud/src/sass/components/dropdown';
 
+.date-picker-wrapper {
+  width: 0;
+  height: 0;
+  padding: 0;
+  left: 5px;
+  top: -25px;
+  visibility: hidden;
+  position: relative;
+}
+
 .integrations {
   margin-right: 10px;
+
   i {
     font-size: 20px;
     vertical-align: -5px;

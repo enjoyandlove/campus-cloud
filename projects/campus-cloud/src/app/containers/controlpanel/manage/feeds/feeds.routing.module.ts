@@ -10,11 +10,11 @@ const appRoutes: Routes = [
     path: '',
     canActivate: [PrivilegesGuard],
     component: FeedsListComponent,
-    data: { zendesk: 'walls', title: pageTitle.MANAGE_WALL }
+    data: { zendesk: 'walls', title: pageTitle.MANAGE_WALL, amplitude: 'IGNORE' }
   },
   {
     path: 'integrations',
-    data: { zendesk: 'walls', title: pageTitle.MANAGE_WALL },
+    data: { zendesk: 'walls', title: pageTitle.MANAGE_WALL, amplitude: 'Integrations' },
     loadChildren: () =>
       import('./integrations/walls-integrations.module').then((m) => m.WallsIntegrationsModule)
   }

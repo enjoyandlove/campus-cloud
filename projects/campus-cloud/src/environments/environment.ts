@@ -6,6 +6,7 @@ import { IEnvironment } from './environment.interface';
 export const environment: IEnvironment = {
   root: '/',
   production: false,
+  version: 'Development',
   flags: {
     '*': true
   },

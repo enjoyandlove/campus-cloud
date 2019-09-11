@@ -7,7 +7,7 @@ const appRoutes: Routes = [
   {
     path: '',
     component: OrientationTodosListComponent,
-    data: { zendesk: 'Orientation Todos' }
+    data: { zendesk: 'Orientation Todos', amplitude: 'IGNORE' }
   }
 ];
 

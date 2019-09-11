@@ -1,15 +1,18 @@
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
+import { ISnackbar } from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
-import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { ServicesDeleteComponent } from '../delete';
 import { ServicesService } from '../services.service';
 import { ServiceAttendance } from '../services.status';
-import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ManageHeaderService } from './../../utils/header';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { baseActionClass } from '@campus-cloud/store/base';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import { CPI18nService, CPTrackingService, ModalService } from '@campus-cloud/shared/services';
 
 interface IState {
@@ -44,6 +47,7 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
   constructor(
     private session: CPSession,
     public cpI18n: CPI18nService,
+    private store: Store<ISnackbar>,
     private service: ServicesService,
     private modalService: ModalService,
     private cpTracking: CPTrackingService,
@@ -76,9 +80,20 @@ export class ServicesListComponent extends BaseComponent implements OnInit {
 
     const stream$ = this.service.getServices(this.startRange, this.endRange, search);
 
-    super.fetchData(stream$).then((res) => {
-      this.state = Object.assign({}, this.state, { services: res.data });
-    });
+    super.fetchData(stream$).then(
+      (res) => {
+        this.state = Object.assign({}, this.state, { services: res.data });
+      },
+      () => this.handleError()
+    );
+  }
+
+  handleError() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body: this.cpI18n.translate('something_went_wrong')
+      })
+    );
   }
 
   onPaginationNext() {

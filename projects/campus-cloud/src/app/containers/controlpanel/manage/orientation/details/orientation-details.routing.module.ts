@@ -14,31 +14,31 @@ const appRoutes: Routes = [
       {
         path: 'info',
         component: OrientationInfoComponent,
-        data: { title: pageTitle.MANAGE_ORIENTATION }
+        data: { title: pageTitle.MANAGE_ORIENTATION, amplitude: 'Info' }
       },
 
       {
         path: 'todos',
-        data: { title: pageTitle.MANAGE_ORIENTATION },
+        data: { title: pageTitle.MANAGE_ORIENTATION, amplitude: 'Todos' },
         loadChildren: () => import('../todos/todos.module').then((m) => m.TodosModule)
       },
 
       {
         path: 'feeds',
-        data: { title: pageTitle.MANAGE_ORIENTATION },
+        data: { title: pageTitle.MANAGE_ORIENTATION, amplitude: 'Walls' },
         component: OrientationWallComponent
       },
 
       {
         path: 'events',
-        data: { title: pageTitle.MANAGE_ORIENTATION },
+        data: { title: pageTitle.MANAGE_ORIENTATION, amplitude: 'Events' },
         loadChildren: () =>
           import('../events/orientation-events.module').then((m) => m.OrientationEventsModule)
       },
 
       {
         path: 'members',
-        data: { title: pageTitle.MANAGE_ORIENTATION },
+        data: { title: pageTitle.MANAGE_ORIENTATION, amplitude: 'Members' },
         loadChildren: () =>
           import('../members/orientation-members.module').then((m) => m.OrientationMembersModule)
       }

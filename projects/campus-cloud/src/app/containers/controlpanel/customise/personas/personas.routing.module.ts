@@ -10,33 +10,33 @@ import { PersonasTileEditComponent } from './tiles/edit/edit.component';
 const appRoutes: Routes = [
   {
     path: '',
-    data: { zendesk: 'experiences' },
-    component: PersonasListComponent
+    component: PersonasListComponent,
+    data: { zendesk: 'experiences', amplitude: 'IGNORE' }
   },
   {
     path: 'create',
-    data: { zendesk: 'experiences' },
-    component: PersonasCreateComponent
+    component: PersonasCreateComponent,
+    data: { zendesk: 'experiences', amplitude: 'IGNORE' }
   },
   {
     path: ':personaId',
-    data: { zendesk: 'experiences' },
-    component: PersonasDetailsComponent
+    component: PersonasDetailsComponent,
+    data: { zendesk: 'experiences', amplitude: 'IGNORE' }
   },
   {
     path: ':personaId/edit',
-    data: { zendesk: 'experiences' },
-    component: PersonasEditComponent
+    component: PersonasEditComponent,
+    data: { zendesk: 'experiences', amplitude: 'IGNORE' }
   },
   {
     path: ':personaId/tiles',
-    data: { zendesk: 'experiences' },
-    component: PersonasTileCreateComponent
+    component: PersonasTileCreateComponent,
+    data: { zendesk: 'experiences', amplitude: 'IGNORE' }
   },
   {
     path: ':personaId/tiles/:tileId/edit',
-    data: { zendesk: 'experiences' },
-    component: PersonasTileEditComponent
+    component: PersonasTileEditComponent,
+    data: { zendesk: 'experiences', amplitude: 'IGNORE' }
   }
 ];
 @NgModule({
