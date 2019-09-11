@@ -23,6 +23,12 @@ export enum userType {
   existing = 'Existing'
 }
 
+export const menuNames = {
+  0: 'menu_name',
+  1: 'sub_menu_name',
+  2: 'page_name'
+};
+
 declare var window: any;
 
 @Injectable()
@@ -46,6 +52,27 @@ export class CPTrackingService {
 
   capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  getAmplitudeMenuProperties() {
+    const params = [];
+    let properties = {};
+    let route = this.router.routerState.snapshot.root;
+    do {
+      if ('amplitude' in route.data && route.data.amplitude !== 'IGNORE') {
+        params.push(route.data);
+      }
+      route = route.firstChild;
+    } while (route);
+
+    params.map((p, index) => {
+      properties = {
+        ...properties,
+        [menuNames[index]]: p.amplitude
+      };
+    });
+
+    return properties;
   }
 
   hotJarRecordPage() {

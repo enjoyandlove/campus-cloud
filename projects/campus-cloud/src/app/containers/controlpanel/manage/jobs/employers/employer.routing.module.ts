@@ -8,7 +8,7 @@ const appRoutes: Routes = [
   {
     path: '',
     component: EmployerListComponent,
-    data: { zendesk: 'employer', title: pageTitle.MANAGE_JOBS }
+    data: { zendesk: 'employer', title: pageTitle.MANAGE_JOBS, amplitude: 'IGNORE' }
   }
 ];
 

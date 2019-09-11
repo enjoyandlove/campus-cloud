@@ -12,10 +12,11 @@ const appRoutes: Routes = [
     path: '',
     canActivate: [AuthGuard],
     component: DashboardComponent,
-    data: { zendesk: 'dashboard', title: pageTitle.DASHBOARD },
+    data: { zendesk: 'dashboard', title: pageTitle.DASHBOARD, amplitude: 'IGNORE' },
     children: [
       {
         path: '',
+        data: { amplitude: 'IGNORE' },
         component: DashboardBaseComponent
       },
       {
@@ -23,7 +24,7 @@ const appRoutes: Routes = [
         canLoad: [PrivilegesGuard],
         canActivate: [PrivilegesGuard],
         component: DashboardOnboardingComponent,
-        data: { privilege: CP_PRIVILEGES_MAP.app_customization }
+        data: { privilege: CP_PRIVILEGES_MAP.app_customization, amplitude: 'Onboarding' }
       }
     ]
   }

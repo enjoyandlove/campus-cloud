@@ -11,6 +11,7 @@ import { RouteNavigationGuard } from '@controlpanel/api-management/guards';
 const appRoutes: Routes = [
   {
     path: '',
+    data: { amplitude: 'IGNORE' },
     component: ApiManagementComponent,
     children: [
       {

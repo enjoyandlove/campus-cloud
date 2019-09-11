@@ -14,47 +14,56 @@ const appRoutes: Routes = [
     children: [
       {
         path: 'dashboard',
+        data: { amplitude: 'Dashboard' },
         loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule)
       },
 
       {
         path: 'manage',
+        data: { amplitude: 'Manage' },
         loadChildren: () => import('./manage/manage.module').then((m) => m.ManageModule)
       },
 
       {
         path: 'notify',
+        data: { amplitude: 'Notify' },
         loadChildren: () => import('./notify/notify.module').then((m) => m.NotifyModule)
       },
 
       {
         path: 'assess',
+        data: { amplitude: 'Assess' },
         loadChildren: () => import('./assess/assess.module').then((m) => m.AssessModule)
       },
 
       {
         path: 'audience',
+        data: { amplitude: 'Audience' },
         loadChildren: () => import('./audience/audience.module').then((m) => m.AudienceModule)
       },
 
       {
         path: 'studio',
+        data: { amplitude: 'Studio' },
         loadChildren: () => import('./customise/customise.module').then((m) => m.CustomiseModule)
       },
 
       {
         path: 'account',
+        data: { amplitude: 'Change Password' },
         loadChildren: () => import('./account/account.module').then((m) => m.AccountModule)
       },
 
       {
         path: 'api-management',
+        data: { amplitude: 'Api Management' },
         loadChildren: () =>
           import('./api-management/api-management.module').then((m) => m.ApiManagementModule)
       },
 
       {
         path: 'settings',
+        data: { amplitude: 'Team Settings' },
         loadChildren: () => import('./settings/settings.module').then((m) => m.SettingsModule)
       }
     ]
