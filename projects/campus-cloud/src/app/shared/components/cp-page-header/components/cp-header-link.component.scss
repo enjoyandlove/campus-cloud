@@ -27,7 +27,7 @@
     &:hover {
       a,
       i {
-        text-shadow: 0.55px 0 0 currentColor;
+        text-shadow: 0.45px 0 0 currentColor;
       }
     }
 
@@ -41,7 +41,7 @@
 
       &:hover {
         color: $color-white;
-        text-shadow: 0.55px 0 0 currentColor;
+        text-shadow: 0.45px 0 0 currentColor;
       }
     }
   }
@@ -63,7 +63,7 @@
       transition: text-shadow 50ms ease-in-out;
 
       &:hover {
-        text-shadow: 0.55px 0 0 currentColor;
+        text-shadow: 0.45px 0 0 currentColor;
       }
     }
 
