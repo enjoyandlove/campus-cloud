@@ -62,6 +62,16 @@
       transition: color 300ms ease-in-out;
     }
 
+    &:not(.active) {
+      a,
+      span {
+        &:hover {
+          cursor: pointer;
+          text-shadow: 0.45px 0 0 currentColor;
+        }
+      }
+    }
+
     a,
     span {
       @include font-16px();
@@ -72,23 +82,11 @@
       color: $color-white;
       padding-bottom: 8px;
       border-bottom: 3px solid transparent;
-
-      &:hover {
-        cursor: pointer;
-        text-shadow: 0 0 4px white;
-        text-shadow: 0.55px 0 0 currentColor;
-      }
     }
 
     &.active {
       a {
         border-bottom: 3px solid $color-brand;
-      }
-
-      a,
-      span {
-        color: $color-white;
-        text-shadow: 0.55px 0 0 currentColor;
       }
     }
   }
