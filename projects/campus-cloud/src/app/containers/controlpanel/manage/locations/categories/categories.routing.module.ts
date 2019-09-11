@@ -8,7 +8,7 @@ const appRoutes: Routes = [
   {
     path: 'categories',
     component: CategoriesListComponent,
-    data: { zendesk: 'categories', title: pageTitle.MANAGE_LOCATIONS }
+    data: { zendesk: 'categories', title: pageTitle.MANAGE_LOCATIONS, amplitude: 'Categories' }
   }
 ];
 

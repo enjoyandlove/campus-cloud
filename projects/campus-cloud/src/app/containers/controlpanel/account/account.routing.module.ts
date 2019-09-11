@@ -9,7 +9,7 @@ const appRoutes: Routes = [
 
   {
     path: 'change-password',
-    data: { zendesk: 'password', title: pageTitle.CHANGE_PASSWORD },
+    data: { zendesk: 'password', title: pageTitle.CHANGE_PASSWORD, amplitude: 'IGNORE' },
     component: ChangePasswordComponent
   }
 ];

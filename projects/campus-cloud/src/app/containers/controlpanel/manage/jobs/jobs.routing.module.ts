@@ -11,26 +11,26 @@ const appRoutes: Routes = [
   {
     path: '',
     component: JobsListComponent,
-    data: { zendesk: 'Jobs', title: pageTitle.MANAGE_JOBS }
+    data: { zendesk: 'Jobs', title: pageTitle.MANAGE_JOBS, amplitude: 'IGNORE' }
   },
   {
     path: 'create',
     component: JobsCreateComponent,
-    data: { zendesk: 'Jobs', title: pageTitle.MANAGE_JOBS }
+    data: { zendesk: 'Jobs', title: pageTitle.MANAGE_JOBS, amplitude: 'IGNORE' }
   },
   {
     path: ':jobId/edit',
     component: JobsEditComponent,
-    data: { zendesk: 'Jobs', title: pageTitle.MANAGE_JOBS }
+    data: { zendesk: 'Jobs', title: pageTitle.MANAGE_JOBS, amplitude: 'IGNORE' }
   },
   {
     path: ':jobId/info',
     component: JobsInfoComponent,
-    data: { zendesk: 'Jobs', title: pageTitle.MANAGE_JOBS }
+    data: { zendesk: 'Jobs', title: pageTitle.MANAGE_JOBS, amplitude: 'Info' }
   },
   {
     path: 'employers',
-    data: { zendesk: 'employers' },
+    data: { zendesk: 'employers', amplitude: 'Employers' },
     loadChildren: () => import('./employers/employer.module').then((m) => m.EmployerModule)
   }
 ];

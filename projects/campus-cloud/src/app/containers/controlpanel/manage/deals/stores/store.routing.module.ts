@@ -8,7 +8,7 @@ const appRoutes: Routes = [
   {
     path: '',
     component: StoreListComponent,
-    data: { zendesk: 'store', title: pageTitle.MANAGE_DEALS }
+    data: { zendesk: 'store', title: pageTitle.MANAGE_DEALS, amplitude: 'IGNORE' }
   }
 ];
 

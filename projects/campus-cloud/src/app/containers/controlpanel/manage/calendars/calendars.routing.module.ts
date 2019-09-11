@@ -15,38 +15,39 @@ const appRoutes: Routes = [
   {
     path: '',
     component: CalendarsListComponent,
-    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS }
+    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS, amplitude: 'IGNORE' }
   },
   {
     path: ':calendarId',
     component: CalendarsDetailComponent,
-    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS }
+    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS, amplitude: 'Calendar Events' }
   },
   // TODO Split to its own module
   {
     path: ':calendarId/items/create',
     component: CalendarsItemCreateComponent,
-    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS }
+    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS, amplitude: 'Calendar Events' }
   },
   {
     path: ':calendarId/integrations',
+    data: { amplitude: 'Integrations' },
     loadChildren: () =>
       import('./integrations/items-integrations.module').then((m) => m.ItemsIntegrationsModule)
   },
   {
     path: ':calendarId/items/import',
     component: CalendarsItemsBulkCreateComponent,
-    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS }
+    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS, amplitude: 'Calendar Events' }
   },
   {
     path: ':calendarId/items/:itemId',
     component: CalendarsItemsDetailsComponent,
-    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS }
+    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS, amplitude: 'Calendar Events' }
   },
   {
     path: ':calendarId/items/:itemId/edit',
     component: CalendarsItemsEditComponent,
-    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS }
+    data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS, amplitude: 'Calendar Events' }
   }
 ];
 @NgModule({

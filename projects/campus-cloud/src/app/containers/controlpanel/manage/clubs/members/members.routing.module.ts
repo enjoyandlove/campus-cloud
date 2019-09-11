@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ClubsMembersComponent } from './list';
 
 const appRoutes: Routes = [
-  { path: '', component: ClubsMembersComponent, data: { zendesk: 'clubs' } }
+  { path: '', component: ClubsMembersComponent, data: { zendesk: 'clubs', amplitude: 'IGNORE' } }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],

@@ -7,14 +7,14 @@ import { StudentsProfileComponent } from './profile';
 const studentsRoutes: Routes = [
   {
     path: '',
-    data: { zendesk: 'Students List' },
-    component: StudentsListComponent
+    component: StudentsListComponent,
+    data: { zendesk: 'Students List', amplitude: 'IGNORE' }
   },
 
   {
     path: ':studentId',
-    data: { zendesk: 'Student Profile' },
-    component: StudentsProfileComponent
+    component: StudentsProfileComponent,
+    data: { zendesk: 'Student Profile', amplitude: 'Student Profile' }
   }
 ];
 @NgModule({

@@ -25,40 +25,40 @@ const appRoutes: Routes = [
 
   {
     path: 'integrations',
-    data: { title: pageTitle.MANAGE_EVENTS },
+    data: { title: pageTitle.MANAGE_EVENTS, amplitude: 'Integrations' },
     loadChildren: () =>
       import('./integrations/integrations.module').then((m) => m.EventIntegrationsModule)
   },
 
   {
     path: '',
-    data: { zendesk: 'events', title: pageTitle.MANAGE_EVENTS },
+    data: { zendesk: 'events', amplitude: 'IGNORE', title: pageTitle.MANAGE_EVENTS },
     component: EventsListComponent
   },
   {
     path: 'create',
-    data: { zendesk: 'events', title: pageTitle.MANAGE_EVENTS },
+    data: { zendesk: 'events', amplitude: 'IGNORE', title: pageTitle.MANAGE_EVENTS },
     component: EventsCreateComponent
   },
   {
     path: ':eventId',
-    data: { zendesk: 'events', title: pageTitle.MANAGE_EVENTS },
+    data: { zendesk: 'events', amplitude: 'Assessment', title: pageTitle.MANAGE_EVENTS },
     component: EventsAttendanceComponent
   },
   {
     path: ':eventId/edit',
-    data: { zendesk: 'events', title: pageTitle.MANAGE_EVENTS },
+    data: { zendesk: 'events', amplitude: 'IGNORE', title: pageTitle.MANAGE_EVENTS },
     component: EventsEditComponent
   },
   {
     path: ':eventId/info',
-    data: { zendesk: 'events', title: pageTitle.MANAGE_EVENTS },
+    data: { zendesk: 'events', amplitude: 'Info', title: pageTitle.MANAGE_EVENTS },
     component: EventsInfoComponent
   },
 
   {
     path: 'import/excel',
-    data: { zendesk: 'events', title: pageTitle.MANAGE_EVENTS },
+    data: { zendesk: 'events', title: pageTitle.MANAGE_EVENTS, amplitude: 'Import' },
     component: EventsExcelComponent
   }
 ];
