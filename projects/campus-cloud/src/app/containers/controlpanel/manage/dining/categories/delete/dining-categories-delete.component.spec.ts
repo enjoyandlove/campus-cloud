@@ -1,14 +1,12 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import * as fromStore from '../store';
-import { CPSession } from '@campus-cloud/session';
-import { provideMockStore } from '@ngrx/store/testing';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { MODAL_DATA } from '@campus-cloud/shared/services';
 import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
-import { CPI18nService, MODAL_DATA } from '@campus-cloud/shared/services';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { mockCategories } from '@campus-cloud/libs/locations/common/categories/tests';
 import { DiningCategoriesDeleteComponent } from './dining-categories-delete.component';
 
@@ -18,11 +16,9 @@ describe('DiningCategoriesDeleteComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [SharedModule],
+        imports: [CPTestModule],
         declarations: [DiningCategoriesDeleteComponent],
         providers: [
-          CPSession,
-          CPI18nService,
           provideMockStore(),
           {
             provide: MODAL_DATA,

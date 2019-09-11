@@ -1,4 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { Overlay } from '@angular/cdk/overlay';
 
 import { MenuComponent } from './menu.component';
 
@@ -8,6 +9,7 @@ describe('MenuComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
+      providers: [Overlay],
       declarations: [MenuComponent]
     }).compileComponents();
   }));

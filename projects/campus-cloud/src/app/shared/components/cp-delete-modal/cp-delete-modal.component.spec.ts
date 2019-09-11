@@ -2,11 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { CPDeleteModalComponent } from './cp-delete-modal.component';
-import { CPCheckboxComponent } from './../cp-checkbox/cp-checkbox.component';
+import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { CPButtonComponent, CPCheckboxComponent } from '@campus-cloud/shared/components';
 
 describe('CPDeleteModalComponent', () => {
   configureTestSuite();
@@ -14,8 +13,7 @@ describe('CPDeleteModalComponent', () => {
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        providers: [CPI18nService],
-        imports: [SharedModule]
+        imports: [CPTestModule]
       });
 
       await TestBed.compileComponents();
@@ -24,19 +22,20 @@ describe('CPDeleteModalComponent', () => {
       .catch(done.fail)
   );
 
+  let de: DebugElement;
   let component: CPDeleteModalComponent;
   let fixture: ComponentFixture<CPDeleteModalComponent>;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CPDeleteModalComponent);
     component = fixture.componentInstance;
+    de = fixture.debugElement;
+
     fixture.detectChanges();
   });
 
   it('should call resetModal on x button click', () => {
     const cancelEmit = spyOn(component.cancelClick, 'emit');
-
-    const de = fixture.debugElement;
     const closeButton: HTMLElement = de.query(By.css('.cpmodal__header__close')).nativeElement;
     closeButton.click();
 
@@ -45,9 +44,8 @@ describe('CPDeleteModalComponent', () => {
 
   it('should call resetModal on cancel button click', () => {
     const resetModalSpy = spyOn(component, 'resetModal');
+    const closeButton = getElementByCPTargetValue(de, 'cancel').nativeElement;
 
-    const de = fixture.debugElement;
-    const closeButton: HTMLElement = de.query(By.css('.js_cancel_button')).nativeElement;
     closeButton.click();
 
     expect(resetModalSpy).toHaveBeenCalled();
@@ -69,9 +67,9 @@ describe('CPDeleteModalComponent', () => {
 
   it('should call onDeleteClick on delete button click', () => {
     const deleteEmit = spyOn(component.deleteClick, 'emit');
-    const de = fixture.debugElement;
-    const closeButton: HTMLElement = de.query(By.css('.js_delete_button')).nativeElement;
-    closeButton.click();
+    const closeButton = de.query(By.directive(CPButtonComponent)).componentInstance;
+
+    closeButton.buttonClick.emit();
 
     expect(deleteEmit).toHaveBeenCalled();
   });
@@ -82,7 +80,6 @@ describe('CPDeleteModalComponent', () => {
 
     fixture.detectChanges();
 
-    const de = fixture.debugElement;
     const bodyPTag: HTMLParagraphElement = de.query(By.css('.js_body')).nativeElement;
 
     expect(bodyPTag.innerHTML).toContain(modalBody);
@@ -94,14 +91,13 @@ describe('CPDeleteModalComponent', () => {
 
     fixture.detectChanges();
 
-    const de = fixture.debugElement;
     const bodyPTag: HTMLElement = de.query(By.css('.js_title')).nativeElement;
 
     expect(bodyPTag.innerHTML).toContain(modalTitle);
   });
 
   it('should set disableSubmit to false if no warning inputs are passed', () => {
-    expect(component.disableSubmit).toBe(false);
+    expect(component.buttonData.disabled).toBe(false);
   });
 
   describe('with warning input', () => {
@@ -112,7 +108,7 @@ describe('CPDeleteModalComponent', () => {
     });
 
     it('should set disableSubmit to true if warning inputs are passed', () => {
-      expect(component.disableSubmit).toBe(true);
+      expect(component.buttonData.disabled).toBe(true);
     });
 
     it('should render warnings on the template', () => {
@@ -125,7 +121,7 @@ describe('CPDeleteModalComponent', () => {
         By.css('.cpmodal__body__warning__item')
       );
 
-      expect(component.disableSubmit).toBe(true);
+      expect(component.buttonData.disabled).toBe(true);
 
       warningItems.forEach((i) => {
         const checkbox: CPCheckboxComponent = i.query(By.directive(CPCheckboxComponent))
@@ -134,7 +130,7 @@ describe('CPDeleteModalComponent', () => {
         fixture.detectChanges();
       });
 
-      expect(component.disableSubmit).toBe(false);
+      expect(component.buttonData.disabled).toBe(false);
     });
   });
 });

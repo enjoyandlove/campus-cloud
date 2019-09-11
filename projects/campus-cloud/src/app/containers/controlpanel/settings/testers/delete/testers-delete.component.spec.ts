@@ -1,18 +1,16 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { configureTestSuite } from '@campus-cloud/shared/tests';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { TestersDeleteComponent } from './testers-delete.component';
-import { CPI18nService, ModalService, MODAL_DATA } from '@campus-cloud/shared/services';
+import { ModalService, MODAL_DATA } from '@campus-cloud/shared/services';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('TestersDeleteComponent', () => {
   configureTestSuite();
   beforeAll((done) => {
     (async () => {
       await TestBed.configureTestingModule({
-        imports: [SharedModule],
+        imports: [CPTestModule],
         providers: [
-          CPI18nService,
           ModalService,
           {
             provide: MODAL_DATA,
