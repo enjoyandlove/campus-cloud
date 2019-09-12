@@ -25,6 +25,8 @@ export const amplitudeEvents = {
 
   LIST: 'List',
 
+  BOTH: 'Both',
+
   STORE: 'Store',
 
   SHOWN: 'Shown',
@@ -243,6 +245,8 @@ export const amplitudeEvents = {
 
   CLICKED_MENU: 'Clicked Menu Item',
 
+  USER_INFORMATION: 'User Information',
+
   SERVICE_PROVIDER: 'Service Provider',
 
   EVENT_ASSESSMENT: 'Event Assessment',
@@ -260,6 +264,8 @@ export const amplitudeEvents = {
   LOCATION_CATEGORY: 'Location Category',
 
   CLICKED_PAGE_ITEM: 'Clicked Page Item',
+
+  PUSH_NOTIFICATION: 'Push Notification',
 
   ORIENTATION_EVENT: 'Orientation Event',
 
@@ -425,6 +431,8 @@ export const amplitudeEvents = {
 
   MANAGE_ADDED_WEB_CHECK_OUT: 'Manage - Added Web Check-Out',
 
+  API_MANAGEMENT_VIEWED_PAGE: 'API Management - Viewed Page',
+
   MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
 
   MANAGE_DOWNLOAD_MEMBER_DATA: 'Manage - Downloaded Member Data',
@@ -436,6 +444,12 @@ export const amplitudeEvents = {
   MANAGE_ADDED_FEED_INTEGRATION: 'Manage - Added Feed Integration',
 
   MANAGE_DELETED_CALENDAR_EVENT: 'Manage - Deleted Calendar Event',
+
+  API_MANAGEMENT_EDITED_API_KEY: 'API Management - Edited API Key',
+
+  API_MANAGEMENT_REVOKED_API_KEY: 'API Management - Revoked API Key',
+
+  API_MANAGEMENT_CREATED_API_KEY: 'API Management - Created API Key',
 
   MANAGE_VIEWED_SERVICE_PROVIDER: 'Manage - Viewed Service Provider',
 

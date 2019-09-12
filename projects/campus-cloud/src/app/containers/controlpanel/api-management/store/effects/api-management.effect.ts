@@ -12,9 +12,10 @@ import { CPSession } from '@campus-cloud/session';
 import { IPublicApiAccessToken } from '../../model';
 import { Paginated } from '@campus-cloud/shared/utils';
 import { baseActionClass } from '@campus-cloud/store/base';
-import { CPI18nService } from '@campus-cloud/shared/services';
-import { commonParams } from '@campus-cloud/shared/constants';
 import { ApiManagementService } from '../../api-management.service';
+import { amplitudeEvents, commonParams } from '@campus-cloud/shared/constants';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { ApiManagementAmplitudeService } from '../../api-management-amplitude.service';
 
 @Injectable()
 export class ApiManagementEffect extends Paginated {
@@ -25,6 +26,7 @@ export class ApiManagementEffect extends Paginated {
     private cpI18n: CPI18nService,
     private route: ActivatedRoute,
     private store: Store<ISnackbar>,
+    private cpTracking: CPTrackingService,
     private service: ApiManagementService
   ) {
     super();
@@ -73,7 +75,11 @@ export class ApiManagementEffect extends Paginated {
       mergeMap((action) => {
         return this.service.postToken(action.payload).pipe(
           map((data: IPublicApiAccessToken) => fromActions.postSuccess({ data })),
-          tap(() => {
+          tap((data) => {
+            const eventName = amplitudeEvents.API_MANAGEMENT_CREATED_API_KEY;
+            const properties = ApiManagementAmplitudeService.getEventProperties(data.data);
+            this.cpTracking.amplitudeEmitEvent(eventName, properties);
+
             this.handleSuccess('t_api_management_access_token_created');
             this.router.navigate(['/api-management']);
           }),
@@ -90,10 +96,19 @@ export class ApiManagementEffect extends Paginated {
     return this.action$.pipe(
       ofType(fromActions.editRequest),
       mergeMap((action) => {
-        const { tokenId, body } = action.payload;
+        const { tokenId, body, permissionStatus } = action.payload;
 
         return this.service.editToken(tokenId, body).pipe(
           map((data: IPublicApiAccessToken) => {
+            const changed_api_type = permissionStatus ? amplitudeEvents.YES : amplitudeEvents.NO;
+            const eventProperties = {
+              ...ApiManagementAmplitudeService.getEventProperties(data),
+              changed_api_type
+            };
+            this.cpTracking.amplitudeEmitEvent(
+              amplitudeEvents.API_MANAGEMENT_EDITED_API_KEY,
+              eventProperties
+            );
             this.handleSuccess('t_api_management_access_token_edited');
             return fromActions.editSuccess({ data });
           }),
@@ -112,6 +127,10 @@ export class ApiManagementEffect extends Paginated {
       mergeMap((action) => {
         return this.service.deleteToken(action.payload.id, this.getParams()).pipe(
           map(() => {
+            const eventProperties = { api_key_id: action.payload.id };
+            const eventName = amplitudeEvents.API_MANAGEMENT_REVOKED_API_KEY;
+            this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+
             this.handleSuccess('t_api_management_access_token_delete');
             return fromActions.deleteSuccess({ deletedId: action.payload.id });
           }),

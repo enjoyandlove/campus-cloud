@@ -47,7 +47,7 @@ export const postSuccess = createAction(
 
 export const editRequest = createAction(
   '[API Management] edit Token',
-  props<{ payload: { tokenId: string; body: IPublicApiAccessToken } }>()
+  props<{ payload: { tokenId: string; permissionStatus: boolean; body: IPublicApiAccessToken } }>()
 );
 
 export const editFailure = createAction(
