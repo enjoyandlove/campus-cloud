@@ -95,6 +95,7 @@ describe('API Management Reducer', () => {
     it('should show loading true', () => {
       const payload = {
         body: mockAPIData[0],
+        permissionStatus: false,
         tokenId: mockAPIData[0].id
       };
 
