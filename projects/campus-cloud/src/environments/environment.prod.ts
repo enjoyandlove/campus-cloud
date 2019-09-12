@@ -4,14 +4,10 @@ export const environment: IEnvironment = {
   root: '/dist/',
   production: true,
   version: process.env.APP_VERSION,
-  flags: {
-    API_MANAGEMENT: {
-      whitelist: []
-    }
-  },
+  flags: {},
   keys: {
     readyApiKey: 'IUm65kXecFWch54mzJjpy63spWZX3AVp',
-    beamnerApiKey: 'b_Fi9BaLL/1kzue1MjGOiATUB5Kk8vkDKeO7nSqKSlFxo=',
+    beamerApiKey: 'b_Fi9BaLL/1kzue1MjGOiATUB5Kk8vkDKeO7nSqKSlFxo=',
     sentryDsn: 'https://0b6c76a5691d4b7399394aa79753acef@sentry.io/207033'
   }
 };
