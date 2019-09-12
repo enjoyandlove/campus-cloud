@@ -60,6 +60,10 @@ export class SchoolSwitchComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
 
+  trackViewedApiManagement() {
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.API_MANAGEMENT_VIEWED_PAGE);
+  }
+
   ngOnInit() {
     this.helpDeskUrl = ZendeskService.zdRoot();
 

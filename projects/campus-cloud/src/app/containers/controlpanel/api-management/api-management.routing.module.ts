@@ -3,10 +3,10 @@ import { NgModule } from '@angular/core';
 
 import { ApiListComponent } from './list';
 import { ApiCreateComponent } from './create';
-import { pageTitle } from '@campus-cloud/shared/constants';
 import { PrivilegesGuard } from '@campus-cloud/config/guards';
 import { ApiManagementComponent } from './api-management.component';
 import { RouteNavigationGuard } from '@controlpanel/api-management/guards';
+import { CP_PRIVILEGES_MAP, pageTitle } from '@campus-cloud/shared/constants';
 
 const appRoutes: Routes = [
   {
@@ -19,13 +19,21 @@ const appRoutes: Routes = [
         component: ApiListComponent,
         canActivate: [PrivilegesGuard],
         canDeactivate: [RouteNavigationGuard],
-        data: { zendesk: 'API Management', title: pageTitle.API_MANAGEMENT }
+        data: {
+          zendesk: 'API Management',
+          title: pageTitle.API_MANAGEMENT,
+          privilege: CP_PRIVILEGES_MAP.api_management
+        }
       },
       {
         path: 'create',
         canActivate: [PrivilegesGuard],
         component: ApiCreateComponent,
-        data: { zendesk: 'API Management', title: pageTitle.API_MANAGEMENT }
+        data: {
+          zendesk: 'API Management',
+          title: pageTitle.API_MANAGEMENT,
+          privilege: CP_PRIVILEGES_MAP.api_management
+        }
       }
     ]
   }
