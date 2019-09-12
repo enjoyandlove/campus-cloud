@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
     canActivate: [PrivilegesGuard],
     component: ItemsIntegrationsListComponent,
-    data: { zendesk: 'events integration', title: pageTitle.MANAGE_CALENDARS }
+    data: { zendesk: 'events integration', title: pageTitle.MANAGE_CALENDARS, amplitude: 'IGNORE' }
   }
 ];
 

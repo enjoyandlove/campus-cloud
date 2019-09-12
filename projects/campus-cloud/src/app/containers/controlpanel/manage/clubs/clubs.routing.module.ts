@@ -11,29 +11,30 @@ const appRoutes: Routes = [
   {
     path: '',
     component: ClubsListComponent,
-    data: { zendesk: 'clubs', title: pageTitle.MANAGE_CLUBS }
+    data: { zendesk: 'clubs', title: pageTitle.MANAGE_CLUBS, amplitude: 'IGNORE' }
   },
 
   {
     path: 'create',
     component: ClubsCreateComponent,
-    data: { zendesk: 'clubs', title: pageTitle.MANAGE_CLUBS }
+    data: { zendesk: 'clubs', title: pageTitle.MANAGE_CLUBS, amplitude: 'IGNORE' }
   },
 
   {
     path: ':clubId/edit',
     component: ClubsEditComponent,
-    data: { zendesk: 'clubs', title: pageTitle.MANAGE_CLUBS }
+    data: { zendesk: 'clubs', title: pageTitle.MANAGE_CLUBS, amplitude: 'IGNORE' }
   },
 
   {
     path: 'import/excel',
     component: ClubsExcelComponent,
-    data: { zendesk: 'clubs', title: pageTitle.MANAGE_CLUBS }
+    data: { zendesk: 'clubs', title: pageTitle.MANAGE_CLUBS, amplitude: 'Import' }
   },
 
   {
     path: ':clubId',
+    data: { amplitude: 'IGNORE' },
     loadChildren: () => import('./details/details.module').then((m) => m.ClubsDetailsModule)
   }
 ];

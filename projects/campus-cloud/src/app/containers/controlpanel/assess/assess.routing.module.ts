@@ -11,6 +11,7 @@ const appRoutes: Routes = [
   {
     path: '',
     component: AssessComponent,
+    data: { amplitude: 'IGNORE' },
     children: [
       {
         path: 'dashboard',
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
           import('./engagement/engagement.module').then((m) => m.EngagementModule),
         data: {
           zendesk: 'assessment',
+          amplitude: 'Engagement',
           title: pageTitle.ASSESS_ENGAGEMENT,
           privilege: CP_PRIVILEGES_MAP.assessment
         }
@@ -31,6 +33,7 @@ const appRoutes: Routes = [
           import('./students/students.module').then((m) => m.EngagementStudentsModule),
         data: {
           zendesk: 'notify',
+          amplitude: 'Students',
           title: pageTitle.ASSESS_STUDENT,
           privilege: CP_PRIVILEGES_MAP.assessment
         }

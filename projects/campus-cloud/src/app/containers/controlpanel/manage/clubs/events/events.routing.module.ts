@@ -21,33 +21,33 @@ const appRoutes: Routes = [
   {
     path: '',
     component: ClubsEventsComponent,
-    data: { zendesk: 'clubs' }
+    data: { zendesk: 'clubs', amplitude: 'IGNORE' }
   },
   {
     path: 'create',
     component: ClubsEventsCreateComponent,
-    data: { zendesk: 'clubs' }
+    data: { zendesk: 'clubs', amplitude: 'IGNORE' }
   },
   {
     path: ':eventId',
     component: ClubsEventsAttendanceComponent,
-    data: { zendesk: 'clubs' }
+    data: { zendesk: 'clubs', amplitude: 'IGNORE' }
   },
   {
     path: ':eventId/edit',
     component: ClubsEventEditComponent,
-    data: { zendesk: 'clubs' }
+    data: { zendesk: 'clubs', amplitude: 'IGNORE' }
   },
   {
     path: ':eventId/info',
     component: ClubsEventInfoComponent,
-    data: { zendesk: 'clubs' }
+    data: { zendesk: 'clubs', amplitude: 'IGNORE' }
   },
 
   {
     path: 'import/excel',
     component: ClubsEventsExcelComponent,
-    data: { zendesk: 'clubs' }
+    data: { zendesk: 'clubs', amplitude: 'IGNORE' }
   }
 ];
 @NgModule({

@@ -11,26 +11,26 @@ const appRoutes: Routes = [
   {
     path: '',
     component: DealsListComponent,
-    data: { zendesk: 'Deals', title: pageTitle.MANAGE_DEALS }
+    data: { zendesk: 'Deals', title: pageTitle.MANAGE_DEALS, amplitude: 'IGNORE' }
   },
   {
     path: 'create',
     component: DealsCreateComponent,
-    data: { zendesk: 'Deals', title: pageTitle.MANAGE_DEALS }
+    data: { zendesk: 'Deals', title: pageTitle.MANAGE_DEALS, amplitude: 'IGNORE' }
   },
   {
     path: ':dealId/edit',
     component: DealsEditComponent,
-    data: { zendesk: 'Deals', title: pageTitle.MANAGE_DEALS }
+    data: { zendesk: 'Deals', title: pageTitle.MANAGE_DEALS, amplitude: 'IGNORE' }
   },
   {
     path: ':dealId/info',
     component: DealsInfoComponent,
-    data: { zendesk: 'Deals', title: pageTitle.MANAGE_DEALS }
+    data: { zendesk: 'Deals', title: pageTitle.MANAGE_DEALS, amplitude: 'Info' }
   },
   {
     path: 'stores',
-    data: { zendesk: 'stores' },
+    data: { zendesk: 'stores', amplitude: 'Stores' },
     loadChildren: () => import('./stores/store.module').then((m) => m.StoreModule)
   }
 ];

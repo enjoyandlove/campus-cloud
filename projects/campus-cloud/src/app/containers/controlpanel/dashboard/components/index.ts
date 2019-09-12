@@ -3,7 +3,6 @@ export * from './dashboard-assessment';
 export * from './dashboard-top-events';
 export * from './dashboard-campus-tile';
 export * from './dashboard-top-resource';
-export * from './dashboard-integrations';
 export * from './dashboard-top-services';
 export * from './dashboard-social-activity';
 export * from './dashboard-top-orientation';

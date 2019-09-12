@@ -9,6 +9,7 @@ const appRoutes: Routes = [
   { path: '', redirectTo: 'branding', pathMatch: 'full' },
   {
     path: '',
+    data: { amplitude: 'IGNORE' },
     component: CustomiseComponent,
     children: [
       {
@@ -17,6 +18,7 @@ const appRoutes: Routes = [
         loadChildren: () => import('./personas/personas.module').then((m) => m.PersonasModule),
         data: {
           zendesk: 'experiences',
+          amplitude: 'App Experiences',
           title: pageTitle.STUDIO_EXPERIENCE,
           privilege: CP_PRIVILEGES_MAP.app_customization
         }
@@ -27,6 +29,7 @@ const appRoutes: Routes = [
         loadChildren: () => import('./banner/banner.module').then((m) => m.BannerModule),
         data: {
           zendesk: 'experiences',
+          amplitude: 'Branding',
           title: pageTitle.STUDION_BRANDING,
           privilege: CP_PRIVILEGES_MAP.app_customization
         }

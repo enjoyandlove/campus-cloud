@@ -8,13 +8,13 @@ const appRoutes: Routes = [
   {
     path: '',
     component: OrientationListComponent,
-    data: { zendesk: 'Orientation', title: pageTitle.MANAGE_ORIENTATION }
+    data: { zendesk: 'Orientation', title: pageTitle.MANAGE_ORIENTATION, amplitude: 'IGNORE' }
   },
   {
     path: ':orientationId',
     loadChildren: () =>
       import('./details/orientation-details.module').then((m) => m.OrientationDetailsModule),
-    data: { zendesk: 'Orientation' }
+    data: { zendesk: 'Orientation', amplitude: 'IGNORE' }
   }
 ];
 

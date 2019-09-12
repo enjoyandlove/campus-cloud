@@ -12,24 +12,24 @@ const appRoutes: Routes = [
   {
     path: '',
     component: LocationsListComponent,
-    data: { zendesk: 'locations', title: pageTitle.MANAGE_LOCATIONS }
+    data: { zendesk: 'locations', title: pageTitle.MANAGE_LOCATIONS, amplitude: 'IGNORE' }
   },
   {
     path: 'create',
     component: LocationsCreateComponent,
-    data: { zendesk: 'locations', title: pageTitle.MANAGE_LOCATIONS }
+    data: { zendesk: 'locations', title: pageTitle.MANAGE_LOCATIONS, amplitude: 'IGNORE' }
   },
   {
     path: ':locationId/edit',
     canActivate: [LocationExistsGuard],
     component: LocationsEditComponent,
-    data: { zendesk: 'locations', title: pageTitle.MANAGE_LOCATIONS }
+    data: { zendesk: 'locations', title: pageTitle.MANAGE_LOCATIONS, amplitude: 'IGNORE' }
   },
   {
     path: ':locationId/info',
     canActivate: [LocationExistsGuard],
     component: LocationsInfoComponent,
-    data: { zendesk: 'locations', title: pageTitle.MANAGE_LOCATIONS }
+    data: { zendesk: 'locations', title: pageTitle.MANAGE_LOCATIONS, amplitude: 'Info' }
   },
   {
     path: 'categories',

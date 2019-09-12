@@ -12,7 +12,7 @@
   border-radius: 2px;
   position: absolute;
   text-transform: uppercase;
-  transition: color 300ms ease-in-out;
+  transition: text-shadow 50ms ease-in-out;
 }
 
 .header {
@@ -27,19 +27,21 @@
     &:hover {
       a,
       i {
-        color: $color-white;
+        text-shadow: 0.45px 0 0 currentColor;
       }
     }
+
     i {
       top: 5px;
       line-height: 0;
       font-size: 22px;
       position: relative;
-      color: $color-grey;
-      transition: color 300ms ease-in-out;
+      color: $color-white;
+      transition: text-shadow 50ms ease-in-out;
 
       &:hover {
         color: $color-white;
+        text-shadow: 0.45px 0 0 currentColor;
       }
     }
   }
@@ -57,11 +59,11 @@
     a {
       @include font-16px();
 
-      transition: color 300ms ease-in-out;
       border-bottom: 3px solid transparent;
+      transition: text-shadow 50ms ease-in-out;
 
       &:hover {
-        color: $color-white;
+        text-shadow: 0.45px 0 0 currentColor;
       }
     }
 
@@ -78,7 +80,7 @@
 
     a {
       padding: 0;
-      color: $color-grey;
+      color: $color-white;
       padding-bottom: 8px;
       display: inline-block;
     }

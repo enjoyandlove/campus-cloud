@@ -10,7 +10,7 @@ const routes: Routes = [
     path: '',
     canActivate: [PrivilegesGuard],
     component: EventsIntegrationsListComponent,
-    data: { zendesk: 'events integration' }
+    data: { zendesk: 'events integration', amplitude: 'IGNORE' }
   }
 ];
 
