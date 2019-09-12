@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 
 import { ApiService } from '@campus-cloud/base/services';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { PersonaPermission } from './../engagement/engagement.status';
 import { IPersona } from './../../customise/personas/persona.interface';
+import { PersonasUtilsService } from '@controlpanel/customise/personas/personas.utils.service';
 
 @Injectable()
 export class StudentsService {
@@ -49,7 +49,7 @@ export class StudentsService {
         personas.map((p) => {
           return {
             id: p.id,
-            label: CPI18nService.getLocalizedLabel(p.localized_name_map)
+            label: PersonasUtilsService.getLocalizedLabel(p.localized_name_map)
           };
         })
       )
