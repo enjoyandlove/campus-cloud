@@ -2394,6 +2394,9 @@
   "t_customise_personas": {
     "message": "Expériences d'application"
   },
+  "t_dashboard_app_usage": {
+    "message": "App Usage"
+  },
   "t_dashboard_build_experience": {
     "message": "Créer expérience d'application"
   },
@@ -2405,6 +2408,12 @@
   },
   "t_dashboard_top_orientation": {
     "message": "Palmarès des orientations"
+  },
+  "t_dashboard_total_app_opens": {
+    "message": "Total App Opens"
+  },
+  "t_dashboard_unique_active_users": {
+    "message": "Unique Active Users"
   },
   "t_dashboard_welcome": {
     "message": "Bienvenue sur Campus Cloud"
@@ -3059,6 +3068,9 @@
   },
   "t_persona_list_column_heading_authentication": {
     "message": "Authentication"
+  },
+  "t_persona_tile_saved_successfully": {
+    "message": "La tuile a été enregistrée avec succès"
   },
   "t_sandbox_already_invited": {
     "message": "Invitations déjà envoyées"

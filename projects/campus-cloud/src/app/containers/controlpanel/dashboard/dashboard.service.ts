@@ -62,6 +62,12 @@ export class DashboardService {
     );
   }
 
+  getUserAcquisition(search: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.USER_ACQUISITION}/`;
+
+    return this.api.get(url, search, true);
+  }
+
   getSocialActivity(search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.DASHBOARD_SOCIAL_ACTIVITY}/`;
 

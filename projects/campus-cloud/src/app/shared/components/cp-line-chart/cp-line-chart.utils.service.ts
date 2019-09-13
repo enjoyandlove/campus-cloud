@@ -43,10 +43,10 @@ export const aggregate = (data: Number[], serie: Number[]): Promise<Number[]> =>
   });
 };
 
-export const groupByWeek = (dates: any[], serie: Number[]) => {
+export const groupByWeek = (dates: any[], series: Number[]) => {
   const datesByWeek = dates.map((d) => moment(d).week());
 
-  return aggregate(datesByWeek, serie);
+  return aggregate(datesByWeek, series);
 };
 
 export const groupByMonth = (dates: any[], series: Number[]) => {
