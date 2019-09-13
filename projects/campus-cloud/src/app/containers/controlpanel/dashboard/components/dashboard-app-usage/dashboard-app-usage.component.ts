@@ -1,6 +1,5 @@
 /* tslint:disable:no-host-metadata-property */
 import { Input, OnInit, Component, ViewEncapsulation } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
 import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '@campus-cloud/session';
@@ -70,13 +69,33 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
       .catch(this.errorHandler.bind(this));
   }
 
-  parseSeries(series: number[], labels: string[]) {
-    return series.map((value, idx) => {
-      return {
-        value,
-        meta: labels[idx]
-      };
-    });
+  builTooltip(label: string, value: number) {
+    let dateText;
+    let appOpenValue = 0;
+    let activeUserValue = 0;
+    const appOpens = this.cpI18n.translate('t_dashboard_total_app_opens');
+    const activeUsers = this.cpI18n.translate('t_dashboard_unique_active_users');
+
+    const appOpensChart = label.indexOf(appOpens) > -1;
+
+    if (appOpensChart) {
+      dateText = label.replace(appOpens, '').trim();
+
+      appOpenValue = value;
+      activeUserValue = this.uniqueActiveUsers[0].find((o) => o.meta.endsWith(dateText)).value;
+    } else {
+      dateText = label.replace(activeUsers, '').trim();
+
+      activeUserValue = value;
+      appOpenValue = this.appOpenSeries[0].find((o) => o.meta.endsWith(dateText)).value;
+    }
+    return `
+    <div class="app-usage-tooltip-element">
+      <span class="bold block">${dateText}</span>
+      <span class="block">${appOpens}: <span class="bold">${appOpenValue}</span></span>
+      <span class="block">${activeUsers}: <span class="bold">${activeUserValue}</span></span>
+    </div>
+    `;
   }
 
   groupSeries({ data }) {
@@ -167,7 +186,7 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
     );
   }
 
-  errorHandler(err: HttpErrorResponse) {
+  errorHandler() {
     this.loading = false;
   }
 
