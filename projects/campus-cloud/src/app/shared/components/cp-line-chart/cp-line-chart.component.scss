@@ -868,7 +868,7 @@
   left: 0;
 }
 
-.chartist-tooltip.cp-dsh-downloads {
+.chartist-tooltip.cpTooltip {
   border-radius: 4px;
   position: absolute;
   display: inline-block;
@@ -887,7 +887,7 @@
   transition: opacity 0.2s linear;
 }
 
-.chartist-tooltip.cp-dsh-downloads:before {
+.chartist-tooltip.cpTooltip:before {
   content: '';
   position: absolute;
   top: 100%;
@@ -899,7 +899,7 @@
   border-top-color: #212121;
 }
 
-.chartist-tooltip.cp-dsh-downloads.tooltip-show {
+.chartist-tooltip.cpTooltip.tooltip-show {
   opacity: 1;
 }
 
@@ -913,7 +913,7 @@
   height: 310px;
 }
 
-.chartist-tooltip.cp-dsh-downloads {
+.chartist-tooltip.cpTooltip {
   text-align: center;
   display: inline-block;
 

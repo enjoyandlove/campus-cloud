@@ -1,22 +1,38 @@
 @import '~projects/campus-cloud/src/sass/core/colors';
 @import '~projects/campus-cloud/src/sass/core/typography';
 
+.app-usage-tooltip-element {
+  span {
+    text-align: left;
+
+    &.block {
+      display: block;
+    }
+
+    &.bold {
+      @include font-bold();
+    }
+  }
+}
+
 .cp-dashboard-app-usage {
   .app-usage-chart {
     .chart {
       height: 237px;
     }
 
-    &:first-child {
+    &.active-users {
       .cp-line,
       .cp-dsh-point {
         stroke: $color-brand;
       }
     }
 
-    .cp-line,
-    .cp-dsh-point {
-      stroke: $color-warning;
+    &.unique-opens {
+      .cp-line,
+      .cp-dsh-point {
+        stroke: $color-warning;
+      }
     }
   }
 

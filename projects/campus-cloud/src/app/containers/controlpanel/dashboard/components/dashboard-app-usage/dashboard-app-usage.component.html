@@ -3,21 +3,25 @@
   <ng-container *ngSwitchCase="false">
     <h3 class="title">{{ 't_dashboard_app_usage' | cpI18n }}</h3>
     <div class="app-usage-charts">
-      <div class="app-usage-chart">
+      <div class="app-usage-chart active-users">
 
         <cp-line-chart [labels]="labels"
                        [series]="uniqueActiveUsers"
-                       [chartOptions]="chartOptions">
+                       [chartOptions]="chartOptions"
+                       tooltipClass="uniqueActiveUser"
+                       [customTooltip]="builTooltip.bind(this)">
         </cp-line-chart>
         <span class="label">
           <span class="pill pill--primary"></span>
           {{ 't_dashboard_unique_active_users' | cpI18n }}
         </span>
       </div>
-      <div class="app-usage-chart">
+      <div class="app-usage-chart unique-opens">
         <cp-line-chart [labels]="labels"
+                       tooltipClass="appOpens"
                        [series]="appOpenSeries"
-                       [chartOptions]="chartOptions">
+                       [chartOptions]="chartOptions"
+                       [customTooltip]="builTooltip.bind(this)">
         </cp-line-chart>
         <span class="label">
           <span class="pill pill--secondary"></span>
