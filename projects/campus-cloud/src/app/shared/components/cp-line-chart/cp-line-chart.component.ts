@@ -88,7 +88,6 @@ export class CPLineChartComponent implements OnInit {
         ...this.chartOptions.axisX
       }
     };
-
     const chart = new Chartist.Line(this.chart.nativeElement, data, newOptions);
 
     chart.on(

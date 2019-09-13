@@ -103,6 +103,8 @@ export const ENDPOINTS = {
 
   SOCIAL_POST_CATEGORY: 'social_post_category',
 
+  USER_ACQUISITION: 'analytics/user_acquisition',
+
   DASHBOARD_CAMPUS_TILE: 'analytics/campus_guide',
 
   EXTERNAL_EVENT_CHECKIN: 'external_event_checkin',
