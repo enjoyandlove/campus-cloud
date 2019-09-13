@@ -12,24 +12,24 @@ const appRoutes: Routes = [
   {
     path: '',
     component: DiningListComponent,
-    data: { zendesk: 'dining', title: pageTitle.MANAGE_DINING }
+    data: { zendesk: 'dining', title: pageTitle.MANAGE_DINING, amplitude: 'IGNORE' }
   },
   {
     path: ':diningId/info',
     canActivate: [DiningExistGuard],
     component: DiningInfoComponent,
-    data: { zendesk: 'dining', title: pageTitle.MANAGE_DINING }
+    data: { zendesk: 'dining', title: pageTitle.MANAGE_DINING, amplitude: 'Info' }
   },
   {
     path: 'create',
     component: DiningCreateComponent,
-    data: { zendesk: 'dining', title: pageTitle.MANAGE_DINING }
+    data: { zendesk: 'dining', title: pageTitle.MANAGE_DINING, amplitude: 'IGNORE' }
   },
   {
     path: ':diningId/edit',
     canActivate: [DiningExistGuard],
     component: DiningEditComponent,
-    data: { zendesk: 'dining', title: pageTitle.MANAGE_DINING }
+    data: { zendesk: 'dining', title: pageTitle.MANAGE_DINING, amplitude: 'IGNORE' }
   },
   {
     path: 'categories',

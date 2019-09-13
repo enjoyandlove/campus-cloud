@@ -9,6 +9,7 @@ import { CP_PRIVILEGES_MAP, pageTitle } from '@campus-cloud/shared/constants';
 const appRoutes: Routes = [
   {
     path: '',
+    data: { amplitude: 'IGNORE' },
     component: AudienceComponent,
     children: [
       {

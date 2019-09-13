@@ -2,6 +2,7 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { A11yModule } from '@angular/cdk/a11y';
 import { NgModule } from '@angular/core';
 
 // directives
@@ -11,6 +12,7 @@ import {
   CPTrackerDirective,
   CPToolTipDirective,
   CPLightboxDirective,
+  CPDatePickerDirective,
   CPImageRatioDirective,
   CPColorPickerDirective,
   CPCopyClipboardDirective
@@ -83,7 +85,6 @@ import {
   CPCheckDropdownComponent,
   CPSortingHeaderComponent,
   CPResourceBannerComponent,
-  CPSmallDatePickerComponent,
   CPFormFixedFooterComponent,
   CPUploadModalBodyComponent,
   CPPlaceAutoCompleteComponent,
@@ -135,6 +136,7 @@ import {
     CPImageRatioDirective,
     CPPaginationComponent,
     CPTextEditorComponent,
+    CPDatePickerDirective,
     CPHeaderLinkComponent,
     CPUploadModalComponent,
     CPColorPickerDirective,
@@ -149,7 +151,6 @@ import {
     CPCopyClipboardDirective,
     CPResourceBannerComponent,
     CPFormFixedFooterComponent,
-    CPSmallDatePickerComponent,
     CPUploadModalBodyComponent,
     CPUploadModalFooterComponent,
     CPUploadModalHeaderComponent,
@@ -160,6 +161,7 @@ import {
   entryComponents: [CPLightboxComponent, CPImageCropperComponent],
 
   imports: [
+    A11yModule,
     FormsModule,
     CommonModule,
     RouterModule,
@@ -221,6 +223,7 @@ import {
     CPSearchBoxComponent,
     CPLineChartComponent,
     CPHeaderLinkComponent,
+    CPDatePickerDirective,
     CPTextEditorComponent,
     CPPageHeaderComponent,
     CPDatePickerComponent,
@@ -239,7 +242,6 @@ import {
     CPCopyClipboardDirective,
     CPResourceBannerComponent,
     CPFormFixedFooterComponent,
-    CPSmallDatePickerComponent,
     CPUploadModalBodyComponent,
     CPPlaceAutoCompleteComponent,
     CPUploadModalHeaderComponent,

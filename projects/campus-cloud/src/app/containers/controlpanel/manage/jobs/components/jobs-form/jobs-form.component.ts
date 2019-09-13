@@ -73,19 +73,15 @@ export class JobsFormComponent implements OnInit {
   }
 
   setContractStart(date) {
-    this.form.controls['contract_start'].setValue(CPDate.toEpoch(date, this.session.tz));
+    this.form.controls['contract_start'].setValue(
+      date ? CPDate.toEpoch(date, this.session.tz) : JobDate.forever
+    );
   }
 
   setApplicationDeadline(date) {
-    this.form.controls['application_deadline'].setValue(CPDate.toEpoch(date, this.session.tz));
-  }
-
-  clearContractStart() {
-    this.form.controls['contract_start'].setValue(JobDate.forever);
-  }
-
-  clearApplicationDeadline() {
-    this.form.controls['application_deadline'].setValue(JobDate.forever);
+    this.form.controls['application_deadline'].setValue(
+      date ? CPDate.toEpoch(date, this.session.tz) : JobDate.forever
+    );
   }
 
   ngOnInit() {

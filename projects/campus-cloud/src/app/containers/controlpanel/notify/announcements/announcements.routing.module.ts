@@ -8,15 +8,16 @@ const appRoutes: Routes = [
   {
     path: '',
     component: AnnouncementsListComponent,
-    data: { zendesk: 'notify' }
+    data: { zendesk: 'notify', amplitude: 'IGNORE' }
   },
   {
     path: 'compose',
     component: AnnouncementsComposeComponent,
-    data: { zendesk: 'notify' }
+    data: { zendesk: 'notify', amplitude: 'Compose' }
   },
   {
     path: 'integrations',
+    data: { amplitude: 'Integrations' },
     loadChildren: () =>
       import('./integrations/announcements.integrations.module').then(
         (m) => m.AnnouncementIntegrationsModule

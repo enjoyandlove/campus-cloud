@@ -3,15 +3,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { appStorage } from '@campus-cloud/shared/utils/storage';
 import { CPSession, ISchool, IUser } from '@campus-cloud/session';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
+import { ZendeskService, CPTrackingService } from '@campus-cloud/shared/services';
 import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
-import { ZendeskService, CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
-
-interface EventProperties {
-  name?: string;
-  page_name: string;
-  menu_name: string;
-  sub_menu_name: string;
-}
 
 @Component({
   selector: 'cp-school-switch',
@@ -51,9 +44,8 @@ export class SchoolSwitchComponent implements OnInit {
   }
 
   trackEvent(eventName, school = null) {
-    let eventProperties: EventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
+    let eventProperties = {
+      ...this.cpTracking.getAmplitudeMenuProperties()
     };
 
     if (school) {
@@ -66,6 +58,10 @@ export class SchoolSwitchComponent implements OnInit {
     }
 
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+  }
+
+  trackViewedApiManagement() {
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.API_MANAGEMENT_VIEWED_PAGE);
   }
 
   ngOnInit() {

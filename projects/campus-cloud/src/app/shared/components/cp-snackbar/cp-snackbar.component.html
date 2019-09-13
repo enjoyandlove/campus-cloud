@@ -1,27 +1,27 @@
 <div class="bar"
-     [class.sticky]="snack.sticky"
-     *ngIf="snack.body">
+     role="alert"
+     cdkTrapFocus
+     *ngIf="snack.body"
+     cdkTrapFocusAutoCapture
+     [class.sticky]="snack.sticky">
   <div class="cp-wrapper cp-wrapper--outer">
     <div class="row">
       <div class="col-8 offset-2">
         <div [class]="['bar--wrapper ' + snack.class]">
-          <p>
-            <span *ngIf="snack.class === 'success'"
-                  class="material-icons bar--wrapper--icon">
-              check
-            </span>
-            <span *ngIf="snack.class === 'danger'"
-                  class="material-icons bar--wrapper--icon">
-              error_outline
-            </span>
+          <div class="bar--wrapper__message">
+            <i class="material-icons bar--wrapper--icon">
+              {{snack.class === 'success' ? 'check' : 'error_outline' }}
+            </i>
             <span [innerHTML]="snack.body"></span>
-            <button type="button"
-                    (click)="doClose()"
-                    *ngIf="!snack.autoClose"
-                    class="material-icons bar--wrapper--close float-right hover unstyled-button">
+          </div>
+          <button type="button"
+                  (click)="doClose()"
+                  *ngIf="!snack.autoClose"
+                  class="bar--wrapper--close float-right hover unstyled-button">
+            <i class="material-icons bar--wrapper--icon">
               close
-            </button>
-          </p>
+            </i>
+          </button>
         </div>
       </div>
     </div>

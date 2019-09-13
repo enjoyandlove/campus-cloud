@@ -1,5 +1,5 @@
-<ng-container [ngSwitch]="loading">
-  <div class="cp-card services services--no-data"
+<cp-card [ngSwitch]="loading">
+  <div class="services services--no-data"
        *ngSwitchCase="true">
     <div class="row">
       <div class="col-12">
@@ -14,7 +14,7 @@
 
   <ng-container *ngSwitchCase="false">
     <ng-container [ngSwitch]="isDisable">
-      <div class="cp-card services services--no-data"
+      <div class="services services--no-data"
            *ngSwitchCase="true">
         <div class="row">
           <div class="col-12">
@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <div class="cp-card services"
+      <div class="services"
            *ngSwitchCase="false">
         <cp-engagement-resource-stats [stats]="stats"
                                       [labels]="labels"
@@ -42,4 +42,4 @@
       </div>
     </ng-container>
   </ng-container>
-</ng-container>
+</cp-card>

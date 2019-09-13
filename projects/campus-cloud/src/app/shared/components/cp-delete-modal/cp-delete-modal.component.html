@@ -1,4 +1,6 @@
-<div class="cpmodal">
+<div class="cpmodal"
+     cdkTrapFocus
+     cdkTrapFocusAutoCapture>
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
@@ -49,17 +51,13 @@
         <button type="button"
                 cpTarget="cancel"
                 (click)="resetModal()"
-                class="cpbtn cpbtn--cancel js_cancel_button">
+                class="cpbtn cpbtn--cancel">
           {{ 'cancel' | cpI18n }}
         </button>
 
-        <button type="button"
-                cpTarget="delete"
-                (click)="onDeleteClick()"
-                [disabled]="disableSubmit"
-                class="cpbtn cpbtn--danger js_delete_button">
-          {{ submitLabel | cpI18n }}
-        </button>
+        <cp-button [props]="buttonData"
+                   cpTarget="delete"
+                   (buttonClick)="onDeleteClick()"> </cp-button>
       </div>
     </div>
   </div>

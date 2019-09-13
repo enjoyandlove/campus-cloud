@@ -24,7 +24,7 @@
 
         <button type="button"
                 class="cpbtn cpbtn--primary"
-                [disabled]="!props.repeat_engagements.length"
+                [disabled]="!getIds(props.repeat_engagements).length"
                 (click)="onCompose('Repeat Engagement', props.repeat_engagements)">
           {{ 'message_action' | cpI18n }}
         </button>
@@ -57,7 +57,7 @@
 
         <button type="button"
                 class="cpbtn cpbtn--primary"
-                [disabled]="!props.one_engagements.length"
+                [disabled]="!getIds(props.one_engagements).length"
                 (click)="onCompose('One Engagement', props.one_engagements)">
           {{ 'message_action' | cpI18n }}
         </button>
@@ -88,7 +88,7 @@
 
         <button type="button"
                 class="cpbtn cpbtn--primary"
-                [disabled]="!props.zero_engagements.length"
+                [disabled]="!getIds(props.zero_engagements).length"
                 (click)="onCompose('No Engagement', props.zero_engagements)">
           {{ 'message_action' | cpI18n }}
         </button>

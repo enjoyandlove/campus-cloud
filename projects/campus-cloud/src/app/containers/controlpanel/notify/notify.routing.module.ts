@@ -10,6 +10,7 @@ const appRoutes: Routes = [
 
   {
     path: '',
+    data: { amplitude: 'IGNORE' },
     component: NotifyComponent,
     children: [
       {
@@ -19,6 +20,7 @@ const appRoutes: Routes = [
           import('./announcements/announcements.module').then((m) => m.AnnouncementsModule),
         data: {
           zendesk: 'announcements',
+          amplitude: 'Announcements',
           title: pageTitle.NOTIFY_ANNOUNCEMENT,
           privilege: CP_PRIVILEGES_MAP.campus_announcements
         }
@@ -30,6 +32,7 @@ const appRoutes: Routes = [
         loadChildren: () => import('./templates/templates.module').then((m) => m.TemplatesModule),
         data: {
           zendesk: 'templates',
+          amplitude: 'Templates',
           title: pageTitle.NOTIFY_ANNOUNCEMENT,
           privilege: CP_PRIVILEGES_MAP.campus_announcements
         }

@@ -1,6 +1,8 @@
 import { ComponentPortal, ComponentType, PortalInjector } from '@angular/cdk/portal';
-import { Injectable, Injector, InjectionToken } from '@angular/core';
-
+import { Injectable, Inject, Injector, InjectionToken } from '@angular/core';
+import { filter, take } from 'rxjs/operators';
+import { DOCUMENT } from '@angular/common';
+import { merge, fromEvent } from 'rxjs';
 import {
   Overlay,
   OverlayRef,
@@ -19,7 +21,11 @@ export const MODAL_DATA = new InjectionToken<IModal>('MODAL_DATA');
 
 @Injectable()
 export class ModalService {
-  constructor(private overlay: Overlay, private injector: Injector) {}
+  constructor(
+    @Inject(DOCUMENT) private document,
+    private overlay: Overlay,
+    private injector: Injector
+  ) {}
 
   open<T>(component: ComponentType<T>, modalConfig: OverlayConfig = {}, props?: IModal) {
     const config = { ...this.defaultConfig, ...modalConfig };
@@ -27,13 +33,20 @@ export class ModalService {
     const componentPortal = new ComponentPortal<T>(component, null, this.getInjector(props));
 
     overlayRef.attach(componentPortal);
-    overlayRef.backdropClick().subscribe(() => this.close(overlayRef));
+    const escapeKey$ = fromEvent(this.document, 'keyup').pipe(
+      filter((e: any) => e.key === 'Escape')
+    );
+    merge(overlayRef.backdropClick(), escapeKey$)
+      .pipe(take(1))
+      .subscribe(() => this.close(overlayRef));
 
     return overlayRef;
   }
 
   close(modal: OverlayRef): void {
-    modal.dispose();
+    if (modal) {
+      modal.dispose();
+    }
   }
 
   private getInjector(props: IModal): PortalInjector {

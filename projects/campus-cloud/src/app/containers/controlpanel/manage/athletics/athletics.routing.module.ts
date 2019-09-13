@@ -10,30 +10,31 @@ import { AthleticsCreateComponent } from './create';
 const appRoutes: Routes = [
   {
     path: '',
-    data: { zendesk: 'athletics', title: pageTitle.MANAGE_ATHLETICS },
+    data: { zendesk: 'athletics', title: pageTitle.MANAGE_ATHLETICS, amplitude: 'IGNORE' },
     component: AthleticsListComponent
   },
 
   {
     path: 'create',
-    data: { zendesk: 'athletics', title: pageTitle.MANAGE_ATHLETICS },
+    data: { zendesk: 'athletics', title: pageTitle.MANAGE_ATHLETICS, amplitude: 'IGNORE' },
     component: AthleticsCreateComponent
   },
 
   {
     path: ':clubId/edit',
-    data: { zendesk: 'athletics', title: pageTitle.MANAGE_ATHLETICS },
+    data: { zendesk: 'athletics', title: pageTitle.MANAGE_ATHLETICS, amplitude: 'IGNORE' },
     component: AthleticsEditComponent
   },
 
   {
     path: 'import/excel',
-    data: { zendesk: 'athletics', title: pageTitle.MANAGE_ATHLETICS },
+    data: { zendesk: 'athletics', title: pageTitle.MANAGE_ATHLETICS, amplitude: 'IGNORE' },
     component: AthleticsExcelComponent
   },
 
   {
     path: ':clubId',
+    data: { amplitude: 'IGNORE' },
     loadChildren: () =>
       import('./details/athletics-details.module').then((m) => m.AthleticsDetailsModule)
   }

@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 
-import { CPSession } from '../../../session';
-import { Formats } from '../../../shared/utils/csv';
-import { CPDate } from '../../../shared/utils/date';
-import { CPI18nService } from '../../../shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { CheckInOutTime } from '../manage/events/event.status';
-import { createSpreadSheet } from '../../../shared/utils/csv/parser';
-import { amplitudeEvents } from '../../../shared/constants/analytics';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { Formats, CPDate, createSpreadSheet } from '@campus-cloud/shared/utils';
 
 const EventType = {
   event: 'event',

@@ -17,17 +17,21 @@ import {
 const appRoutes: Routes = [
   { path: 'import', redirectTo: '', pathMatch: 'full' },
 
-  { path: '', component: AthleticsEventsComponent },
+  { path: '', component: AthleticsEventsComponent, data: { amplitude: 'IGNORE' } },
 
-  { path: 'create', component: AthleticsEventsCreateComponent },
+  { path: 'create', component: AthleticsEventsCreateComponent, data: { amplitude: 'IGNORE' } },
 
-  { path: ':eventId', component: AthleticsEventsAtthendanceComponent },
+  {
+    path: ':eventId',
+    data: { amplitude: 'IGNORE' },
+    component: AthleticsEventsAtthendanceComponent
+  },
 
-  { path: ':eventId/edit', component: AthleticsEventsEditComponent },
+  { path: ':eventId/edit', component: AthleticsEventsEditComponent, data: { amplitude: 'IGNORE' } },
 
-  { path: ':eventId/info', component: AthleticsEventsInfoComponent },
+  { path: ':eventId/info', component: AthleticsEventsInfoComponent, data: { amplitude: 'IGNORE' } },
 
-  { path: 'import/excel', component: AthleticsEventsExcelComponent }
+  { path: 'import/excel', component: AthleticsEventsExcelComponent, data: { amplitude: 'IGNORE' } }
 ];
 @NgModule({
   imports: [RouterModule.forChild(appRoutes)],
