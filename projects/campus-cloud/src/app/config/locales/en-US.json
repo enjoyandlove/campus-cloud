@@ -273,7 +273,7 @@
     "message": "App Customization"
   },
   "app_name": {
-    "message": "App Name"
+    "message": "Integration Name"
   },
   "archive": {
     "message": "Delete"
@@ -2275,7 +2275,7 @@
     "message": "Create New"
   },
   "t_api_management_create_new_api": {
-    "message": "Create a new app integration"
+    "message": "Create a New API Integration"
   },
   "t_api_management_discard_modal_body": {
     "message": "You have unsaved changes. Do you wish to go back to prevent losing your data?"
@@ -2293,7 +2293,7 @@
     "message": "Key ID"
   },
   "t_api_management_name_input_placeholder": {
-    "message": "Choose a name for this new app"
+    "message": "Enter a name for this integration"
   },
   "t_api_management_push_notification": {
     "message": "Push Notification"
@@ -2323,7 +2323,7 @@
     "message": "You are on Production Environment."
   },
   "t_api_management_warning_text_2": {
-    "message": "We suggest testing app integrations in the Test Environment first."
+    "message": "We suggest testing API integrations in the Test Environment first."
   },
   "t_assess_all_orientations": {
     "message": "All Orientation Programs"
@@ -2466,6 +2466,9 @@
   "t_customise_personas": {
     "message": "App Experiences"
   },
+  "t_dashboard_app_usage": {
+    "message": "App Usage"
+  },
   "t_dashboard_build_experience": {
     "message": "Build App Experience"
   },
@@ -2477,6 +2480,12 @@
   },
   "t_dashboard_top_orientation": {
     "message": "Top Orientation Programs"
+  },
+  "t_dashboard_total_app_opens": {
+    "message": "Total App Opens"
+  },
+  "t_dashboard_unique_active_users": {
+    "message": "Unique Active Users"
   },
   "t_dashboard_welcome": {
     "message": "Welcome to Campus Cloud"
