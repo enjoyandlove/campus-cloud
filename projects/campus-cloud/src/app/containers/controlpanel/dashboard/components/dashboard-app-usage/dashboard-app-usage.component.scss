@@ -1,0 +1,75 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.app-usage-tooltip-element {
+  span {
+    text-align: left;
+
+    &.block {
+      display: block;
+    }
+
+    &.bold {
+      @include font-bold();
+    }
+  }
+}
+
+.cp-dashboard-app-usage {
+  .app-usage-chart {
+    .chart {
+      height: 237px;
+    }
+
+    &.active-users {
+      .cp-line,
+      .cp-dsh-point {
+        stroke: $color-brand;
+      }
+    }
+
+    &.unique-opens {
+      .cp-line,
+      .cp-dsh-point {
+        stroke: $color-warning;
+      }
+    }
+  }
+
+  .title {
+    @include font-24px();
+    @include font-bold();
+
+    margin-bottom: 30px;
+  }
+
+  .app-usage-charts {
+    display: grid;
+    grid-column-gap: 30px;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .label {
+    @include font-semi-bold();
+
+    display: block;
+    margin-left: 10px;
+
+    .pill {
+      top: -1px;
+      width: 8px;
+      height: 8px;
+      position: relative;
+      border-radius: 50%;
+      display: inline-block;
+
+      &--primary {
+        background-color: $color-brand;
+      }
+
+      &--secondary {
+        background-color: $color-warning;
+      }
+    }
+  }
+}

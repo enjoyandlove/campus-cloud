@@ -35,7 +35,7 @@
       <li class="switch__item"
           (click)="close.emit()"
           tabindex="-1"
-          *cpFeatureToggle="'API_MANAGEMENT'">
+          (click)="trackViewedApiManagement()">
         <a [routerLink]="['/api-management']"
            class="dropdown-item">{{ 't_api_management' | cpI18n}}</a>
       </li>

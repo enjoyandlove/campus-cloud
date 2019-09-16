@@ -23,6 +23,10 @@ export class PersonasUtilsService {
     return loginRequirement === PersonasLoginRequired.forbidden;
   }
 
+  static getLocalizedLabel(label) {
+    return CPI18nService.getLocale().startsWith('fr') ? label.fr : label.en;
+  }
+
   static getHomeExperience() {
     return [
       {
@@ -50,7 +54,7 @@ export class PersonasUtilsService {
     return personas.map((persona: IPersona) => {
       return {
         action: persona.id,
-        label: CPI18nService.getLocalizedLabel(persona.localized_name_map)
+        label: this.getLocalizedLabel(persona.localized_name_map)
       };
     });
   }

@@ -32,14 +32,15 @@
                        class="card-margin"> </cp-event-header>
 
       <cp-checkin-register [data]="data"
-                           [isService]="isService"
                            class="card-margin"
+                           [isService]="isService"
+                           [timeZone]="data.tz_zoneinfo_str"
                            (send)="send.emit($event)">
       </cp-checkin-register>
 
       <cp-attendees-list [data]="data"
                          class="card-margin"
-                         [timeZone]="timeZone"
+                         [timeZone]="data.tz_zoneinfo_str"
                          (checkout)="checkout.emit($event)"
                          *ngIf="data.attendees.length">
       </cp-attendees-list>

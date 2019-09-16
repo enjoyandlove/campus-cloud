@@ -10,7 +10,7 @@ export class ControlPanelService {
   constructor(private http: HttpClient) {}
 
   getBeamerPosts() {
-    const headers = new HttpHeaders().set('Beamer-Api-Key', environment.keys.beamnerApiKey);
+    const headers = new HttpHeaders().set('Beamer-Api-Key', environment.keys.beamerApiKey);
     const params = new HttpParams().set('published', 'true').set('maxResults', '1');
 
     return this.http.get('https://api.getbeamer.com/v0/posts', { headers, params }).pipe(
