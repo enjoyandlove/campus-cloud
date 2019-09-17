@@ -28,7 +28,6 @@ export * from './cp-no-content';
 export * from './cp-datepicker';
 export * from './cp-pagination';
 export * from './cp-page-header';
-export * from './cp-text-editor';
 export * from './cp-delete-modal';
 export * from './cp-range-picker';
 export * from './cp-char-counter';
