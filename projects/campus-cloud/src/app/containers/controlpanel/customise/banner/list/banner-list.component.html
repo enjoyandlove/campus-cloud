@@ -30,8 +30,9 @@
     </div>
     <cp-banner-upload [form]="form"
                       [isEdit]="isEdit"
-                      (crop)="onCrop()"
+                      (crop)="onCrop($event)"
                       [uploading]="uploading"
+                      [imageUrl]="bannerImage"
                       (error)="onError($event)"
                       (resetClick)="onReset()"
                       (upload)="onUpload($event)">

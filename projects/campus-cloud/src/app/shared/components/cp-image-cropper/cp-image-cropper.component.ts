@@ -1,16 +1,15 @@
 import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  EventEmitter,
   Input,
   OnInit,
   Output,
-  ViewChild
+  ViewChild,
+  Component,
+  EventEmitter,
+  AfterViewInit
 } from '@angular/core';
-import { CPCroppieService } from './../../services/croppie.service';
 import { CPI18nService } from './../../services/i18n.service';
 import { MODAL_TYPE } from './../cp-modal/cp-modal.component';
+import { CPImageCropperDirective } from '../../directives/cp-image-cropper';
 
 @Component({
   selector: 'cp-image-cropper',
@@ -20,31 +19,21 @@ import { MODAL_TYPE } from './../cp-modal/cp-modal.component';
 export class CPImageCropperComponent implements AfterViewInit, OnInit {
   @Input() imageUrl: String;
 
-  @ViewChild('canvas', { static: true }) canvas: ElementRef;
+  @ViewChild(CPImageCropperDirective, { static: true }) croppie: CPImageCropperDirective;
 
   @Output() cancel: EventEmitter<null> = new EventEmitter();
   @Output() result: EventEmitter<string> = new EventEmitter();
   @Output() error: EventEmitter<string | null> = new EventEmitter();
 
   buttonData;
-  croppie: CPCroppieService;
+  croppedImageLoaded = false;
   modalWide = MODAL_TYPE.WIDE;
+  viewport = { width: 540, height: 300 };
+  boundary = { width: 770, height: 300 };
 
   constructor(public cpI18n: CPI18nService) {}
 
   initCanvas(): Promise<void> {
-    const hostEl = this.canvas.nativeElement;
-
-    const canvasOptions = {
-      showZoomer: false,
-      enableResize: false,
-      enableOrientation: true,
-      viewport: { width: 540, height: 300 },
-      boundary: { width: 770, height: 300 }
-    };
-
-    this.croppie = new CPCroppieService(hostEl, canvasOptions);
-
     return this.croppie.bind({ url: `${this.imageUrl}?disableCache=true` });
   }
 
@@ -56,6 +45,7 @@ export class CPImageCropperComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     $('#imageCropper').on('show.bs.modal', () => {
       this.initCanvas().then(() => {
+        this.croppedImageLoaded = true;
         this.buttonData.disabled = false;
       });
     });

@@ -1,28 +1,31 @@
 <div class="row canvas">
   <div class="col-12">
     <div *ngIf="!isEdit"
-         id="canvas_wrapper"
          class="canvas__wrapper canvas__wrapper--image"
          [ngStyle]="{ 'background-image': 'url(' + form.controls['logo_url'].value + ')' }">
     </div>
-    <div *ngIf="isEdit"
-         id="canvas_wrapper"
-         class="canvas__wrapper">
-      <div class="canvas__bounds"></div>
+    <div class="canvas__container"
+         [class.ready]="croppieLoaded">
+      <div *ngIf="isEdit"
+           cpImageCropper
+           [boundary]="boundary"
+           [viewport]="viewport"
+           class="canvas__wrapper">
+      </div>
     </div>
 
     <cp-banner-upload-button *ngIf="!isEdit"
                              class="upload-button"
-                             (reset)="resetClick.emit()"
+                             (reset)="onResetClick()"
                              (error)="error.emit($event)"
                              (upload)="upload.emit($event)">
     </cp-banner-upload-button>
 
-    <cp-banner-control-buttons *ngIf="isEdit"
+    <cp-banner-control-buttons *ngIf="isEdit && croppieLoaded"
                                class="control-buttons"
                                [loading]="uploading"
-                               (save)="crop.emit()"
-                               (cancel)="resetClick.emit()">
+                               (save)="onSave()"
+                               (cancel)="onResetClick()">
     </cp-banner-control-buttons>
 
     <p class="tooltip"
