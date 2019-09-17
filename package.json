@@ -83,7 +83,7 @@
     "@types/bootstrap": "4.3.0",
     "@types/browserslist": "4.4.0",
     "@types/core-js": "^2.5.1",
-    "@types/croppie": "^2.5.4",
+    "@types/croppie": "2.5.4",
     "@types/file-saver": "^2.0.1",
     "@types/flatpickr": "3.1.2",
     "@types/google.analytics": "0.0.40",

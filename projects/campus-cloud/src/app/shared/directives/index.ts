@@ -7,4 +7,5 @@ export * from './color-picker';
 export * from './feature-toggle';
 export * from './cp-image-ratio';
 export * from './cp-date-picker';
+export * from './cp-image-cropper';
 export * from './cp-copy-clipboard';
