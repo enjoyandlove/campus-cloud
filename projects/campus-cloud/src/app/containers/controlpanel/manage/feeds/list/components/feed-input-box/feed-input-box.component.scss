@@ -2,6 +2,32 @@
 @import '~projects/campus-cloud/src/sass/components/card';
 @import '~projects/campus-cloud/src/sass/components/button';
 
+.editor {
+  &__image--wrapper {
+    margin-top: 10px;
+    position: relative;
+  }
+
+  &__images {
+    button {
+      top: -2px;
+      left: 6px;
+      color: white;
+      font-size: 1.5em;
+      position: absolute;
+    }
+
+    img {
+      height: 80px;
+      object-fit: cover;
+
+      &:not(:last-child) {
+        margin-right: 14px;
+      }
+    }
+  }
+}
+
 label.error {
   padding: 0;
   margin-right: 10px;
@@ -35,6 +61,7 @@ p.maxLength {
     height: 45px;
     position: absolute;
   }
+
   &__input {
     height: auto;
     border: none;
