@@ -1,7 +1,7 @@
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
-import { map, startWith, take } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
+import { map, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -229,7 +229,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
             }
           } else if (key === 'event_feedback') {
             this.attendanceFeedback[item.index] = actions[key];
-            ctrl.controls[key].setValue(actions[key].event);
+            ctrl.controls[key].setValue(actions[key].action);
           } else if (key === 'has_checkout') {
             this.selectedCheckInOption[item.index] = actions[key];
             ctrl.controls[key].setValue(actions[key].action);
