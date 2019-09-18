@@ -4,6 +4,8 @@ import { IStore } from '@campus-cloud/shared/services';
 import { IAnnouncementsIntegration } from '../../model';
 
 export enum IntegrationActions {
+  DESTROY = '[manage.notify.announcements] destroy',
+
   GET_INTEGRATIONS = '[manage.notify.announcements] get integrations',
   GET_INTEGRATIONS_SUCCESS = '[manage.notify.announcements] get integrations success',
   GET_INTEGRATIONS_FAIL = '[manage.notify.announcements] get integrations fail',
@@ -74,7 +76,12 @@ export class CreateIntegrationFail implements Action {
   readonly type = IntegrationActions.CREATE_INTEGRATION_FAIL;
 }
 
+export class Destroy implements Action {
+  readonly type = IntegrationActions.DESTROY;
+}
+
 export type Actions =
+  | Destroy
   | GetIntegrations
   | GetIntegrationsSuccess
   | GetIntegrationsFail
