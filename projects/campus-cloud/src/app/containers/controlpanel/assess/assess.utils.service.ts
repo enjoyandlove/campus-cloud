@@ -74,7 +74,8 @@ export class AssessUtilsService {
 
     const type = {
       event: this.cpI18n.translate('event'),
-      service: this.cpI18n.translate('service')
+      service: this.cpI18n.translate('service'),
+      user_event: this.cpI18n.translate('orientation')
     };
 
     stream.toPromise().then((data: any) => {
@@ -124,14 +125,14 @@ export class AssessUtilsService {
 
           [this.cpI18n.translate('assess_response_date')]:
             item.feedback_time_epoch === 0
-              ? 'No Feedback Provided'
+              ? 'N/A'
               : CPDate.fromEpoch(item.feedback_time_epoch, this.session.tz).format(
                   Formats.dateTimeFormat
                 ),
 
           [this.cpI18n.translate('ratings')]:
             item.user_rating_percent === -1
-              ? 'No Rating Provided'
+              ? this.cpI18n.translate('t_shared_no_rating_provided')
               : ((item.user_rating_percent / 100) * 5).toFixed(1),
           [this.cpI18n.translate('response')]: item.user_feedback_text
         };
