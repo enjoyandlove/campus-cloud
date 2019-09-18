@@ -1599,9 +1599,10 @@
   version "2.5.1"
   resolved "https://registry.yarnpkg.com/@types/core-js/-/core-js-2.5.1.tgz#1dfdd0baee6d324063bc7b722e998e3d6f1a9e44"
 
-"@types/croppie@^2.5.4":
+"@types/croppie@2.5.4":
   version "2.5.4"
   resolved "https://registry.yarnpkg.com/@types/croppie/-/croppie-2.5.4.tgz#2ec5e0be28c8a22d6648fd4c22abe920269ae7ca"
+  integrity sha512-RLvmobcCzJAn15AZpfphzbDxAwbtEcs97XTxx1CCHFCrJJoYB0tMoUGDEVJ6MBjYbVLY+1EZWOvzUcmetMPAMQ==
 
 "@types/estree@0.0.39":
   version "0.0.39"

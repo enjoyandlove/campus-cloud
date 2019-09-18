@@ -44,8 +44,4 @@ describe('BannerListComponent', () => {
     session.g.set('school', mockSchool);
     fixture.detectChanges();
   }));
-
-  it('should have correct aspect ratio', () => {
-    expect(component.imageRatio).toBe(1.8);
-  });
 });
