@@ -3471,6 +3471,9 @@
   "t_shared_no_integrations_found": {
     "message": "No integration found"
   },
+  "t_shared_no_rating_provided": {
+    "message": "No Rating Provided"
+  },
   "t_shared_okay": {
     "message": "Okay"
   },
