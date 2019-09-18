@@ -27,6 +27,7 @@ export class DashboardBaseComponent extends BaseComponent implements OnInit {
   canViewClub = false;
   canCustomize = false;
   dateRanges: IDateRange[];
+  appUsageFlag = 'APP_USAGE';
   datePickerClass = 'primary dropdown-toggle';
 
   state = {
