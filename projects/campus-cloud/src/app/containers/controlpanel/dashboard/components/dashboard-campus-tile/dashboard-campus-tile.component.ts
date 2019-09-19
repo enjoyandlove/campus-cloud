@@ -1,25 +1,32 @@
-import { DashboardUtilsService } from '../../dashboard.utils.service';
-import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { DashboardService } from '../../dashboard.service';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { DashboardUtilsService } from '../../dashboard.utils.service';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-dashboard-campus-tile',
   templateUrl: './dashboard-campus-tile.component.html',
   styleUrls: ['./dashboard-campus-tile.component.scss']
 })
-export class DashboardCampusTileComponent extends BaseComponent implements OnInit {
+export class DashboardCampusTileComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() experiences;
 
   loading;
   items = [];
   selectedPersona;
   defaultImage = `${environment.root}assets/default/user.png`;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     private session: CPSession,
@@ -28,9 +35,12 @@ export class DashboardCampusTileComponent extends BaseComponent implements OnIni
     public utils: DashboardUtilsService
   ) {
     super();
-    super.isLoading().subscribe((loading) => {
-      this.loading = loading;
-    });
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loading) => {
+        this.loading = loading;
+      });
   }
 
   fetch(start, end, experience_id) {
@@ -53,7 +63,7 @@ export class DashboardCampusTileComponent extends BaseComponent implements OnIni
     // instead of passing @Input(s) we update the queryParams
     // and call the fetch event whenever any of those values change
 
-    this.route.queryParams.subscribe((params) => {
+    this.route.queryParams.pipe(takeUntil(this.destroy$)).subscribe((params) => {
       const validParams = this.utils.validParams(params);
 
       if (!validParams) {
@@ -70,5 +80,9 @@ export class DashboardCampusTileComponent extends BaseComponent implements OnIni
 
   ngOnInit() {
     this.listenForQueryParamChanges();
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

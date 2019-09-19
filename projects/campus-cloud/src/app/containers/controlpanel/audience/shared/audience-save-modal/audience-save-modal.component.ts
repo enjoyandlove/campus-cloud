@@ -1,19 +1,26 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-audience-save-modal',
   templateUrl: './audience-save-modal.component.html',
   styleUrls: ['./audience-save-modal.component.scss']
 })
-export class AudienceSaveModalComponent implements OnInit {
+export class AudienceSaveModalComponent implements OnInit, OnDestroy {
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() submitEvent: EventEmitter<{ name: string }> = new EventEmitter();
 
   buttonData;
   form: FormGroup;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(public fb: FormBuilder, public cpI18n: CPI18nService) {}
 
@@ -38,8 +45,12 @@ export class AudienceSaveModalComponent implements OnInit {
       name: [null, Validators.required]
     });
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

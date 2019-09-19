@@ -1,17 +1,21 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { DashboardService } from './../../dashboard.service';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { DashboardUtilsService } from '../../dashboard.utils.service';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-dashboard-top-services',
   templateUrl: './dashboard-top-services.component.html',
   styleUrls: ['./dashboard-top-services.component.scss']
 })
-export class DashboardTopServicesComponent extends BaseComponent implements OnInit {
+export class DashboardTopServicesComponent extends BaseComponent implements OnInit, OnDestroy {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
@@ -25,16 +29,22 @@ export class DashboardTopServicesComponent extends BaseComponent implements OnIn
     this.fetch();
   }
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     private session: CPSession,
     private service: DashboardService,
     private utils: DashboardUtilsService
   ) {
     super();
-    super.isLoading().subscribe((loading) => {
-      this.loading = loading;
-      this.ready.emit(!this.loading);
-    });
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loading) => {
+        this.loading = loading;
+        this.ready.emit(!this.loading);
+      });
   }
 
   fetch() {
@@ -56,5 +66,9 @@ export class DashboardTopServicesComponent extends BaseComponent implements OnIn
     this.isSuperAdmin = this.utils.isSuperAdmin(this.session);
 
     this.fetch();
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

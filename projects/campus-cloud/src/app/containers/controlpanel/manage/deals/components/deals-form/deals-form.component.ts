@@ -1,23 +1,28 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { IDeal } from '../../deals.interface';
 import { DateStatus } from '../../deals.service';
+import { CPSession } from '@campus-cloud/session';
+import { CPDate } from '@campus-cloud/shared/utils';
 import { IStore } from '../../stores/store.interface';
-import { CPSession } from '../../../../../../session';
-import { CPDate } from '../../../../../../shared/utils';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   enableTime: true
 };
+
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-deals-form',
   templateUrl: './deals-form.component.html',
   styleUrls: ['./deals-form.component.scss']
 })
-export class DealsFormComponent implements OnInit {
+export class DealsFormComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
   @Input() storeForm: FormGroup;
 
@@ -32,6 +37,9 @@ export class DealsFormComponent implements OnInit {
   postingStartDatePickerOptions;
   postingEndDatePickerOptions;
   expiration: number;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public session: CPSession,
@@ -77,7 +85,7 @@ export class DealsFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.formData.emit({
         deal: this.form.value,
         dealFormValid: this.form.valid,
@@ -103,5 +111,9 @@ export class DealsFormComponent implements OnInit {
         ? CPDate.fromEpochLocal(posting_end, _self.session.tz).format()
         : null
     };
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

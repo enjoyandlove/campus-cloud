@@ -1,20 +1,24 @@
-import { Input, Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Input, Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { protocolCheck } from '@campus-cloud/shared/utils';
 import { ZendeskService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { CustomValidators } from '@campus-cloud/shared/validators';
 import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { ContentUtilsProviders, IStudioContentResource } from '../../providers';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-resource-selector-type-web',
   templateUrl: './resource-selector-type-web.component.html',
   styleUrls: ['./resource-selector-type-web.component.scss'],
   providers: [ContentUtilsProviders]
 })
-export class ResourceSelectorTypeWebComponent implements OnInit {
+export class ResourceSelectorTypeWebComponent implements OnInit, OnDestroy {
   @Input() isEdit = false;
   @Input() campusLink: ILink;
   @Input() showErrors = false;
@@ -28,6 +32,9 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
   selectedItem = null;
   items: IStudioContentResource[];
   form: FormGroup = this.buildForm();
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(private contentUtils: ContentUtilsProviders, private fb: FormBuilder) {}
 
@@ -118,7 +125,7 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
 
     this.items = this.contentUtils.resourcesToIItem(this.resources);
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       const value =
         this.form.valid && this.selectedItem
           ? { ...this.form.value, link_url: protocolCheck(this.form.get('link_url').value) }
@@ -139,5 +146,9 @@ export class ResourceSelectorTypeWebComponent implements OnInit {
       link_type: selection.link_type,
       open_in_browser: openInBrowser
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

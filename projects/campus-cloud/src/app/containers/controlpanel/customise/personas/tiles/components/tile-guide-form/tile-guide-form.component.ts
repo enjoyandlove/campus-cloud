@@ -8,26 +8,29 @@ import {
   EventEmitter,
   AfterViewInit,
   ChangeDetectorRef,
-  ComponentFactoryResolver
+  ComponentFactoryResolver,
+  OnDestroy
 } from '@angular/core';
-import { map, filter } from 'rxjs/operators';
+import { map, filter, takeUntil } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
+import { fromEvent, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { fromEvent } from 'rxjs';
 
 import { TilesService } from './../../tiles.service';
 import { TilesUtilsService } from './../../tiles.utils.service';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ISnackbar, baseActionClass } from '@campus-cloud/store/base';
 import { CPImageCropperComponent } from '@campus-cloud/shared/components';
 import { CPI18nService, ImageService } from '@campus-cloud/shared/services';
 import { CPHostDirective, CPColorPickerDirective } from '@campus-cloud/shared/directives';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-personas-tile-guide-form',
   templateUrl: './tile-guide-form.component.html',
   styleUrls: ['./tile-guide-form.component.scss']
 })
-export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
+export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit, OnDestroy {
   @Input() form: FormGroup;
   @Input() showErrors = false;
   @Input() uploadButtonId: number;
@@ -45,6 +48,9 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
   state = {
     uploading: false
   };
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public service: TilesService,
@@ -110,14 +116,17 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
 
     comp.imageUrl = imageUrl;
 
-    comp.cancel.subscribe(() => componentRef.destroy());
-    comp.result.subscribe((imageData) => this.onCropResult(imageData, componentRef));
+    comp.cancel.pipe(takeUntil(this.destroy$)).subscribe(() => componentRef.destroy());
+    comp.result
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((imageData) => this.onCropResult(imageData, componentRef));
   }
 
   addSubscribers() {
     const hexInput$ = fromEvent(this.hexInput.nativeElement, 'keyup');
     hexInput$
       .pipe(
+        takeUntil(this.destroy$),
         map((event: any) => event.target.value),
         map((hexString: string) => {
           hexString = hexString.startsWith('#') ? hexString : `#${hexString}`;
@@ -139,8 +148,12 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
     this.uploadImageBtn = this.cpI18n.translate('button_add_photo');
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.formChange.emit(this.form);
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }
