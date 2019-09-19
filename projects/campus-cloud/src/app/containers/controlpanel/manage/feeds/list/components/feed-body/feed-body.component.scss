@@ -2,65 +2,77 @@
 @import '~projects/campus-cloud/src/sass/components/card';
 @import '~projects/campus-cloud/src/sass/components/button';
 
-.avatar {
-  width: 100%;
-  height: 144px;
-  margin-right: 8px;
-  display: inline-block;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-
-.feed {
-  margin-top: 14px;
-  position: relative;
-
-  button i {
-    font-size: 16px;
-    vertical-align: -4px;
+.cp-feed-body {
+  .avatar {
+    width: 100%;
+    height: 144px;
+    margin-right: 8px;
+    display: inline-block;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
   }
 
-  &__image-wrapper {
-    margin-bottom: 15px;
+  .feed {
+    margin-top: 14px;
+    position: relative;
 
-    img {
-      height: 140px;
-      width: 100%;
-      object-fit: cover;
-    }
-  }
-
-  &__footer {
-    &--absolute {
-      left: 0;
-      bottom: 0;
-      width: 100%;
-      position: absolute;
-      padding-right: 20px;
+    button i {
+      font-size: 16px;
+      vertical-align: -4px;
     }
 
-    span {
-      font-size: 12px;
-      margin-right: 25px;
+    &__image-wrapper {
+      margin-bottom: 15px;
 
-      &:not(.cpbtn--link) {
-        color: $color-secondary-text;
+      img {
+        height: 140px;
+        width: 100%;
+        object-fit: cover;
+      }
+    }
+
+    &__message {
+      margin-bottom: 1rem;
+    }
+
+    &__content {
+      a {
+        color: $color-brand;
+      }
+    }
+
+    &__footer {
+      &--absolute {
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        position: absolute;
+        padding-right: 20px;
       }
 
-      i {
-        font-size: 15px;
-        margin-right: 3px;
-        vertical-align: -3px;
-        display: inline-block;
-      }
+      span {
+        font-size: 12px;
+        margin-right: 25px;
 
-      &.flag {
-        color: $color-danger;
-      }
+        &:not(.cpbtn--link) {
+          color: $color-secondary-text;
+        }
 
-      &:last-child {
-        margin-right: 0;
+        i {
+          font-size: 15px;
+          margin-right: 3px;
+          vertical-align: -3px;
+          display: inline-block;
+        }
+
+        &.flag {
+          color: $color-danger;
+        }
+
+        &:last-child {
+          margin-right: 0;
+        }
       }
     }
   }

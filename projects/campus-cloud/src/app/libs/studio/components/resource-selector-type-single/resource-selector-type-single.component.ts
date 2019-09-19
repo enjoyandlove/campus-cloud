@@ -1,13 +1,14 @@
-import { Input, Output, EventEmitter, Component, OnInit } from '@angular/core';
+import { Input, Output, EventEmitter, Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { of, BehaviorSubject, forkJoin } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
+import { of, BehaviorSubject, forkJoin, Subject } from 'rxjs';
+import { map, catchError, takeUntil } from 'rxjs/operators';
 
 import { CPSession } from '@campus-cloud/session';
 import { IItem } from '@campus-cloud/shared/components';
 import { ContentUtilsProviders } from '../../providers';
 import { IStudioContentResource } from '../../providers';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { StoreService, CPI18nService } from '@campus-cloud/shared/services';
 import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
@@ -21,13 +22,14 @@ const linkUrlToIdMap = {
   [CampusLink.subscribableCalendar]: 'subscribable_calendar'
 };
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-resource-selector-type-single',
   templateUrl: './resource-selector-type-single.component.html',
   styleUrls: ['./resource-selector-type-single.component.scss'],
   providers: [ContentUtilsProviders, TilesService]
 })
-export class ResourceSelectorTypeSingleComponent implements OnInit {
+export class ResourceSelectorTypeSingleComponent implements OnInit, OnDestroy {
   @Input() isEdit = false;
   @Input() campusLink: ILink;
   @Input() showErrors = false;
@@ -47,6 +49,9 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
     { id: null, label: this.cpI18n.translate('t_shared_loading'), meta: null }
   ] as IStudioContentResource[];
   resetHosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     private fb: FormBuilder,
@@ -144,7 +149,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
         };
       }
     );
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       const value = this.form.valid ? this.form.value : { ...this.form.value, link_url: null };
       this.valueChanges.emit(value);
     });
@@ -238,5 +243,9 @@ export class ResourceSelectorTypeSingleComponent implements OnInit {
 
       return _item;
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

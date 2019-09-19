@@ -1,14 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
-import { CPI18nService } from '../../../../../../shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-employer-card',
   templateUrl: './employer-card.component.html',
   styleUrls: ['./employer-card.component.scss']
 })
-export class EmployerCardComponent implements OnInit {
+export class EmployerCardComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
   @Input() employerForm: FormGroup;
 
@@ -23,6 +27,9 @@ export class EmployerCardComponent implements OnInit {
 
   newEmployerTitle;
   existingEmployerTitle;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(public cpI18n: CPI18nService) {}
 
@@ -63,7 +70,7 @@ export class EmployerCardComponent implements OnInit {
     this.newEmployerTitle = this.cpI18n.translate('jobs_new_employer');
     this.existingEmployerTitle = this.cpI18n.translate('jobs_existing_employer');
 
-    this.employerForm.valueChanges.subscribe(() => {
+    this.employerForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.formData.emit({
         job: this.form.value,
         jobFormValid: this.form.valid,
@@ -71,5 +78,9 @@ export class EmployerCardComponent implements OnInit {
         employerFormValid: this.employerForm.valid
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

@@ -1,16 +1,28 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+/* tslint:disable:no-host-metadata-property */
+import {
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  Component,
+  EventEmitter,
+  ViewEncapsulation
+} from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { CPHostDirective } from '../../../../../../../shared/directives';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
-import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
+import { CP_TRACK_TO, CPHostDirective } from '@campus-cloud/shared/directives';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-feed-body',
   templateUrl: './feed-body.component.html',
-  styleUrls: ['./feed-body.component.scss']
+  styleUrls: ['./feed-body.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    class: 'cp-feed-body'
+  }
 })
 export class FeedBodyComponent implements OnInit {
   @Input() feed: any;

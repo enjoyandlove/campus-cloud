@@ -2,9 +2,12 @@ import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { TooltipOption } from 'bootstrap';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
 import { TemplatesService } from './../templates.service';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { CustomValidators } from '@campus-cloud/shared/validators';
 import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
@@ -17,6 +20,7 @@ import {
   ZendeskService
 } from '@campus-cloud/shared/services';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-templates-create',
   templateUrl: './templates-create.component.html',
@@ -27,6 +31,9 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   form: FormGroup;
   toolTipContent: string;
   toolTipOptions: TooltipOption;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public el: ElementRef,
@@ -170,6 +177,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
   ngOnDestroy() {
     super.ngOnDestroy();
+    this.emitDestroy();
   }
 
   ngOnInit() {
@@ -230,7 +238,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
       priority: [this.types[0].action, Validators.required]
     });
 
-    this.form.valueChanges.subscribe((_) => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       let isValid = true;
 
       isValid = this.form.valid;

@@ -85,7 +85,7 @@ export class StoreEditComponent implements OnInit, OnDestroy {
       text: this.cpI18n.translate('save')
     });
 
-    this.storeForm.valueChanges.subscribe(() => {
+    this.storeForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.storeForm.valid };
     });
 
