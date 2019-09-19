@@ -1,29 +1,34 @@
-import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
-import { BaseComponent } from '../../../../../base';
-import { CPSession } from './../../../../../session';
+import { BaseComponent } from '@campus-cloud/base';
+import { CPSession } from '@campus-cloud/session';
 import { DashboardService } from './../../dashboard.service';
-import { CPI18nService } from '../../../../../shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import {
   DivideBy,
   addGroup,
-  groupByQuarter,
-  groupByMonth,
   groupByWeek,
+  groupByMonth,
+  groupByQuarter,
   CPLineChartUtilsService
-} from '../../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
+} from '@campus-cloud/shared/components/cp-line-chart/cp-line-chart.utils.service';
 
 const year = 365;
 const threeMonths = 90;
 const twoYears = year * 2;
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-dashboard-downloads-registration',
   templateUrl: './dashboard-downloads-registration.component.html',
   styleUrls: ['./dashboard-downloads-registration.component.scss']
 })
-export class DashboardDownloadsRegistrationComponent extends BaseComponent implements OnInit {
+export class DashboardDownloadsRegistrationComponent extends BaseComponent
+  implements OnInit, OnDestroy {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
@@ -46,6 +51,9 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
     this.fetch();
   }
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     private session: CPSession,
     private cpi18n: CPI18nService,
@@ -53,10 +61,13 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
     private utils: CPLineChartUtilsService
   ) {
     super();
-    super.isLoading().subscribe((loading) => {
-      this.loading = loading;
-      this.ready.emit(!this.loading);
-    });
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loading) => {
+        this.loading = loading;
+        this.ready.emit(!this.loading);
+      });
   }
 
   fetch() {
@@ -126,4 +137,8 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent imple
   }
 
   ngOnInit() {}
+
+  ngOnDestroy() {
+    this.emitDestroy();
+  }
 }

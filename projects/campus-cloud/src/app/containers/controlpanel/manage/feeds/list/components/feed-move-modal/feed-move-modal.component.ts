@@ -1,22 +1,25 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map, takeUntil, startWith } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { map, startWith } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
+import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../../../feeds.service';
-import { CPSession } from '../../../../../../../session';
 import { FeedsUtilsService } from '../../../feeds.utils.service';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 declare var $: any;
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-feed-move-modal',
   templateUrl: './feed-move-modal.component.html',
   styleUrls: ['./feed-move-modal.component.scss']
 })
-export class FeedMoveComponent implements OnInit {
+export class FeedMoveComponent implements OnInit, OnDestroy {
   @Input() feed: any;
   @Output() moved: EventEmitter<number> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
@@ -34,6 +37,9 @@ export class FeedMoveComponent implements OnInit {
     upload_image: null,
     campus_wall_category: null
   };
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     private fb: FormBuilder,
@@ -114,10 +120,14 @@ export class FeedMoveComponent implements OnInit {
       disabled: true
     };
 
-    this.form.valueChanges.subscribe((_) => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = Object.assign({}, this.buttonData, {
         disabled: !this.form.valid
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

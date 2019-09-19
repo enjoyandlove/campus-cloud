@@ -1,13 +1,16 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { FeedsService } from '../../../feeds.service';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services/index';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 declare var $: any;
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-feed-delete-comment-modal',
   templateUrl: './feed-delete-comment-modal.component.html',
@@ -33,6 +36,9 @@ export class FeedDeleteCommentModalComponent implements OnInit {
     upload_image: null,
     campus_wall_category: null
   };
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     private cpI18n: CPI18nService,
@@ -81,8 +87,12 @@ export class FeedDeleteCommentModalComponent implements OnInit {
       text: this.cpI18n.translate('delete')
     };
 
-    this.isCampusWallView.subscribe((res: any) => {
+    this.isCampusWallView.pipe(takeUntil(this.deleted)).subscribe((res: any) => {
       this._isCampusWallView = res.type === 1;
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

@@ -1,12 +1,15 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
 import { baseActions, IHeader } from '@campus-cloud/store';
 import { AnnouncementsService } from '../announcements.service';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { CustomValidators } from '@campus-cloud/shared/validators';
 import { AudienceType } from '@controlpanel/audience/audience.status';
 import { AudienceUtilsService } from '@controlpanel/audience/audience.utils.service';
@@ -38,6 +41,7 @@ const state: IState = {
 
 const THROTTLED_STATUS = 1;
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-announcements-compose',
   templateUrl: './announcements-compose.component.html',
@@ -77,6 +81,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   };
 
   types;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public router: Router,
@@ -577,6 +584,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.emitDestroy();
     this.store.dispatch({ type: baseActions.AUDIENCE_RESET_IMPORT_AUDIENCE });
   }
 
@@ -631,7 +639,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       priority: [this.types[0].action, Validators.required]
     });
 
-    this.form.valueChanges.subscribe((_) => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.validButton();
     });
   }

@@ -1,29 +1,30 @@
 import {
+  Input,
+  OnInit,
+  Output,
   Component,
+  OnDestroy,
   ElementRef,
   EventEmitter,
-  HostListener,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output
+  HostListener
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
 import { TooltipOption } from 'bootstrap';
-import { BehaviorSubject } from 'rxjs';
-import { map } from 'rxjs/operators';
 
 import { CPSession } from '@campus-cloud/session';
-import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { CustomValidators } from '@campus-cloud/shared/validators';
+import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@campus-cloud/shared/constants';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 import {
-  CPI18nService,
   StoreService,
-  CPTrackingService,
-  ZendeskService
+  CPI18nService,
+  ZendeskService,
+  CPTrackingService
 } from '@campus-cloud/shared/services';
 
 interface IState {
@@ -44,6 +45,7 @@ const state: IState = {
 
 const THROTTLED_STATUS = 1;
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-templates-compose',
   templateUrl: './templates-compose.component.html',
@@ -94,6 +96,9 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     announcement_id: null,
     announcement_type: amplitudeEvents.REGULAR
   };
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public el: ElementRef,
@@ -435,6 +440,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.resetModal();
+    this.emitDestroy();
   }
 
   updateStateFromInputData() {
@@ -574,7 +580,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
       priority: [this.types[0].action, Validators.required]
     });
 
-    this.form.valueChanges.subscribe((_) => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       let isValid = true;
 
       isValid = this.form.valid;

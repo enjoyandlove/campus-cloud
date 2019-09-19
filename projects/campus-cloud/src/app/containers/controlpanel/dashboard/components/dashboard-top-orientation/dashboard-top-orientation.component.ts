@@ -1,19 +1,23 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { DashboardService } from './../../dashboard.service';
-import { CP_PRIVILEGES_MAP } from '../../../../../shared/constants';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { DashboardUtilsService } from '../../dashboard.utils.service';
-import { canSchoolReadResource } from '../../../../../shared/utils/privileges';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-dashboard-top-orientation',
   templateUrl: './dashboard-top-orientation.component.html',
   styleUrls: ['./dashboard-top-orientation.component.scss']
 })
-export class DashboardTopOrientationComponent extends BaseComponent implements OnInit {
+export class DashboardTopOrientationComponent extends BaseComponent implements OnInit, OnDestroy {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
@@ -27,16 +31,22 @@ export class DashboardTopOrientationComponent extends BaseComponent implements O
     this.fetch();
   }
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     public session: CPSession,
     public service: DashboardService,
     public utils: DashboardUtilsService
   ) {
     super();
-    super.isLoading().subscribe((loading) => {
-      this.loading = loading;
-      this.ready.emit(!this.loading);
-    });
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loading) => {
+        this.loading = loading;
+        this.ready.emit(!this.loading);
+      });
   }
 
   fetch() {
@@ -58,5 +68,9 @@ export class DashboardTopOrientationComponent extends BaseComponent implements O
     this.canViewOrientation = canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.orientation);
 
     this.fetch();
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

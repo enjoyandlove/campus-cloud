@@ -1,29 +1,34 @@
 import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
   Input,
   OnInit,
   Output,
-  ViewChild
+  Component,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  EventEmitter,
+  HostListener
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
-import { CPSession } from './../../../../../session';
-import { baseActions } from '../../../../../store/base';
+import { CPSession } from '@campus-cloud/session';
+import { baseActions } from '@campus-cloud/store/base';
 import { OrientationService } from '../orientation.services';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { OrientationUtilsService } from '../orientation.utils.service';
-import { CPI18nService } from '../../../../../shared/services/i18n.service';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-orientation-program-edit',
   templateUrl: './orientation-program-edit.component.html',
   styleUrls: ['./orientation-program-edit.component.scss']
 })
-export class OrientationProgramEditComponent implements OnInit {
+export class OrientationProgramEditComponent implements OnInit, OnDestroy {
   @ViewChild('editForm', { static: true }) editForm;
 
   @Input() orientationProgram;
@@ -39,6 +44,9 @@ export class OrientationProgramEditComponent implements OnInit {
   buttonData;
   form: FormGroup;
   isOrientation = true;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public el: ElementRef,
@@ -92,8 +100,12 @@ export class OrientationProgramEditComponent implements OnInit {
       text: this.cpI18n.translate('save')
     });
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

@@ -1,9 +1,9 @@
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { map, take, takeUntil } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { map, take } from 'rxjs/operators';
+import { Observable, of, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { EventsService } from '../events.service';
@@ -15,6 +15,7 @@ import { CPSession, ISchool } from '@campus-cloud/session';
 import { EventUtilService } from '../events.utils.service';
 import { baseActionClass } from '@campus-cloud/store/base';
 import { EventsComponent } from '../list/base/events.component';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { amplitudeEvents, STATUS } from '@campus-cloud/shared/constants';
 import { SnackbarError } from '@campus-cloud/store/base/reducers/snackbar.reducer';
 import {
@@ -34,12 +35,13 @@ import {
   EventAttendance
 } from '../event.status';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-events-excel',
   templateUrl: './events-excel.component.html',
   styleUrls: ['./events-excel.component.scss']
 })
-export class EventsExcelComponent extends EventsComponent implements OnInit {
+export class EventsExcelComponent extends EventsComponent implements OnInit, OnDestroy {
   @Input() storeId: number;
   @Input() clubId: number;
   @Input() isClub: boolean;
@@ -71,6 +73,9 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
   eventAttendanceFeedback;
   selectedCheckInOption = [];
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -88,7 +93,10 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
   ) {
     super(session, cpI18n, service, modalService, store);
     this.school = this.session.g.get('school');
-    super.isLoading().subscribe((res) => (this.loading = res));
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => (this.loading = res));
   }
 
   public fetch() {
@@ -135,7 +143,7 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
       this.updateManagersByStoreOrClubId(null);
     }
 
-    this.form.valueChanges.subscribe((_) => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((_) => {
       this.buttonData = Object.assign({}, this.buttonData, {
         disabled: !this.form.valid
       });
@@ -548,5 +556,9 @@ export class EventsExcelComponent extends EventsComponent implements OnInit {
         this.buildForm();
         this.buildHeader();
       });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

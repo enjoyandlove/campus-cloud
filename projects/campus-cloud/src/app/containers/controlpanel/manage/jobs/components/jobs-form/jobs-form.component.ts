@@ -1,21 +1,26 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 import { JobDate } from './../../jobs.status';
-import { CPSession } from '../../../../../../session';
-import { CPI18nService } from '../../../../../../shared/services';
-import { CPDate } from '../../../../../../shared/utils';
+import { CPSession } from '@campus-cloud/session';
+import { CPDate } from '@campus-cloud/shared/utils';
 import { JobsUtilsService } from '../../jobs.utils.service';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
 const COMMON_DATE_PICKER_OPTIONS = {
   enableTime: false
 };
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-jobs-form',
   templateUrl: './jobs-form.component.html',
   styleUrls: ['./jobs-form.component.scss']
 })
-export class JobsFormComponent implements OnInit {
+export class JobsFormComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
   @Input() newEmployer = false;
   @Input() employerForm: FormGroup;
@@ -38,6 +43,9 @@ export class JobsFormComponent implements OnInit {
   postingEndDatePickerOptions;
   contractStartDatePickerOptions;
   applicationDeadlineDatePickerOptions;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public fb: FormBuilder,
@@ -88,7 +96,7 @@ export class JobsFormComponent implements OnInit {
     this.jobsType = this.utils.getJobsType(true);
     this.desiredStudy = this.utils.getDesiredStudy(true);
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.formData.emit({
         job: this.form.value,
         jobFormValid: this.form.valid,
@@ -135,5 +143,9 @@ export class JobsFormComponent implements OnInit {
         );
       }
     };
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

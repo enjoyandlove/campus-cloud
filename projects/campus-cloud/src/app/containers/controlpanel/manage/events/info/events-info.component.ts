@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import IEvent from '../event.interface';
@@ -12,6 +13,7 @@ import { FORMAT } from '@campus-cloud/shared/pipes';
 import { EventUtilService } from './../events.utils.service';
 import { EventsComponent } from '../list/base/events.component';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { IResourceBanner } from '@campus-cloud/shared/components';
 import { EventsAmplitudeService } from '../events.amplitude.service';
 import { IHeader, baseActions, baseActionClass } from '@campus-cloud/store/base';
@@ -23,12 +25,13 @@ import {
   CPTrackingService
 } from '@campus-cloud/shared/services';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-events-info',
   templateUrl: './events-info.component.html',
   styleUrls: ['./events-info.component.scss']
 })
-export class EventsInfoComponent extends EventsComponent implements OnInit {
+export class EventsInfoComponent extends EventsComponent implements OnInit, OnDestroy {
   @Input() isClub: boolean;
   @Input() clubId: number;
   @Input() athleticId: number;
@@ -54,6 +57,9 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
 
   defaultImage = `${environment.root}assets/assets/default/image.png`;
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     public session: CPSession,
     public cpI18n: CPI18nService,
@@ -70,7 +76,10 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
   }
 
   public fetch() {
-    super.isLoading().subscribe((res) => (this.loading = res));
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => (this.loading = res));
 
     let search = new HttpParams();
     if (this.orientationId) {
@@ -150,5 +159,9 @@ export class EventsInfoComponent extends EventsComponent implements OnInit {
     this.eventCheckinRoute = this.utils.getEventCheckInLink(this.isOrientation);
 
     this.fetch();
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

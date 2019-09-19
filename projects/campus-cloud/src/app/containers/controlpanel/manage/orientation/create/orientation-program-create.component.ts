@@ -1,26 +1,32 @@
 import { HttpParams } from '@angular/common/http';
 import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
   OnInit,
   Output,
-  ViewChild
+  Component,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  EventEmitter,
+  HostListener
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { CPSession } from './../../../../../session';
-import { CPI18nService } from '../../../../../shared/services/i18n.service';
-import { OrientationService } from '../orientation.services';
-import { ProgramMembership } from '../orientation.status';
+import { Subject } from 'rxjs';
 
+import { CPSession } from '@campus-cloud/session';
+import { ProgramMembership } from '../orientation.status';
+import { OrientationService } from '../orientation.services';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-orientation-program-create',
   templateUrl: './orientation-program-create.component.html',
   styleUrls: ['./orientation-program-create.component.scss']
 })
-export class OrientationProgramCreateComponent implements OnInit {
+export class OrientationProgramCreateComponent implements OnInit, OnDestroy {
   @ViewChild('createForm', { static: true }) createForm;
 
   @Output() resetCreateModal: EventEmitter<null> = new EventEmitter();
@@ -28,6 +34,9 @@ export class OrientationProgramCreateComponent implements OnInit {
   buttonData;
   form: FormGroup;
   isOrientation = true;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public el: ElementRef,
@@ -76,8 +85,12 @@ export class OrientationProgramCreateComponent implements OnInit {
       text: this.cpI18n.translate('save')
     });
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }
