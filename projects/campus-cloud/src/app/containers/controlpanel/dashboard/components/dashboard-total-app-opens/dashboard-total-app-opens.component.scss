@@ -1,0 +1,26 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+.title {
+  @include font-24px();
+  @include font-bold();
+
+  margin-bottom: 30px;
+}
+
+.label {
+  @include font-semi-bold();
+
+  display: block;
+  margin-left: 10px;
+
+  .pill {
+    top: -1px;
+    width: 8px;
+    height: 8px;
+    position: relative;
+    border-radius: 50%;
+    display: inline-block;
+    background-color: $color-warning;
+  }
+}
