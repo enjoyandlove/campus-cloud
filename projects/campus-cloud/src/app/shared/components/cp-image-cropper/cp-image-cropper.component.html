@@ -3,8 +3,12 @@
           modalId="imageCropper">
   <div class="widget">
     <div class="widget__wrapper">
-      <div class="widget__body">
-        <div #canvas></div>
+      <div class="widget__body"
+           [class.visible]="croppedImageLoaded">
+        <div cpImageCropper
+             class="boundary"
+             [boundary]="boundary"
+             [viewport]="viewport"></div>
       </div>
       <div class="widget__footer">
         <button type="button"

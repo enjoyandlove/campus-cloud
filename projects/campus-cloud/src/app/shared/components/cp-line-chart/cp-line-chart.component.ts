@@ -1,4 +1,13 @@
-import { Input, OnInit, Component, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  ViewChild,
+  ElementRef,
+  EventEmitter,
+  ViewEncapsulation
+} from '@angular/core';
 
 const Chartist = (window as any).Chartist;
 
@@ -11,9 +20,13 @@ const Chartist = (window as any).Chartist;
 export class CPLineChartComponent implements OnInit {
   @ViewChild('chart', { static: true }) chart: ElementRef;
 
+  @Output() chartReady: EventEmitter<null> = new EventEmitter();
+
   @Input() series;
   @Input() labels;
   @Input() chartOptions;
+  @Input() customTooltip: Function;
+  @Input() tooltipClass = 'cp-dsh-downloads';
 
   highestNoInArray = 0;
   isChartDataReady = false;
@@ -47,13 +60,15 @@ export class CPLineChartComponent implements OnInit {
 
       plugins: [
         Chartist.plugins.tooltip({
-          class: 'cp-dsh-downloads',
+          class: `cpTooltip ${this.tooltipClass}`,
 
           appendToBody: true,
 
           anchorToPoint: true,
 
-          pointClass: 'cp-dsh-point'
+          pointClass: 'cp-dsh-point',
+
+          tooltipFnc: this.customTooltip ? this.customTooltip : undefined
         })
       ],
 
@@ -88,13 +103,13 @@ export class CPLineChartComponent implements OnInit {
         ...this.chartOptions.axisX
       }
     };
-
     const chart = new Chartist.Line(this.chart.nativeElement, data, newOptions);
 
     chart.on(
       'created',
       function() {
         this.isChartDataReady = true;
+        this.chartReady.emit();
       }.bind(this)
     );
   }

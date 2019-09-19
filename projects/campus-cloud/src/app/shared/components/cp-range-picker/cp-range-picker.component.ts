@@ -23,6 +23,7 @@ export class CPRangePickerComponent {
   @Input() dateRanges;
   @Input() icon: string;
   @Input() class: string;
+  @Input() minDate: Date;
   @Input() clearable = false;
   @Input() maxDate = CPDate.now(this.session.tz)
     .subtract(1, 'days')

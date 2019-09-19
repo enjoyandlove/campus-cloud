@@ -21,6 +21,16 @@
       </div>
     </div>
 
+    <div class="row tile"
+         *cpFeatureToggle="appUsageFlag">
+      <div class="col-12">
+        <cp-card>
+          <cp-dashboard-app-usage [dates]="currentDate">
+          </cp-dashboard-app-usage>
+        </cp-card>
+      </div>
+    </div>
+
     <div class="card-columns">
       <cp-card>
         <cp-dashboard-general-information> </cp-dashboard-general-information>

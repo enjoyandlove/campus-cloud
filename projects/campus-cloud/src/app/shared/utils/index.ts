@@ -8,4 +8,5 @@ export * from './router';
 export * from './object';
 export * from './storage';
 export * from './encrypt';
+export * from './numbers';
 export * from './privileges';

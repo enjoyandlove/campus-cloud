@@ -1,3 +1,4 @@
+export * from './dashboard-app-usage';
 export * from './dashboard-top-clubs';
 export * from './dashboard-assessment';
 export * from './dashboard-top-events';

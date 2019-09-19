@@ -8,6 +8,7 @@ import { CheckinMethod } from '../constants';
 import { CPSession } from '@campus-cloud/session';
 import { baseActions } from '@campus-cloud/store/base';
 import { EngagementService } from './engagement.service';
+import { kFormatter } from '@campus-cloud/shared/utils';
 import { AssessUtilsService } from '../assess.utils.service';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { BaseComponent } from '@campus-cloud/base/base.component';
@@ -162,7 +163,13 @@ export class EngagementComponent extends BaseComponent implements OnInit {
         return Promise.resolve([res.data.series]);
       })
       .then((series: any) => {
-        this.chartOptions = this.chartUtils.chartOptions(this.divider, series);
+        this.chartOptions = {
+          ...this.chartUtils.chartOptions(this.divider, series),
+          axisY: {
+            onlyInteger: true,
+            labelInterpolationFnc: kFormatter
+          }
+        };
         this.labels = this.chartUtils.buildLabels(this.divider, this.range, series);
         this.series = this.chartUtils.buildSeries(
           this.divider,

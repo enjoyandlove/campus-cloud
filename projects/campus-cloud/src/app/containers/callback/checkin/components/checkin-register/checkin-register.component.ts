@@ -59,7 +59,6 @@ export class CheckinRegisterComponent implements OnInit {
 
   setCheckin(date) {
     if (date) {
-      const epoch = CPDate.toEpoch(date, this.timeZone);
       this.registrationForm.controls['check_in_time_epoch'].setValue(
         CPDate.toEpoch(date, this.timeZone)
       );

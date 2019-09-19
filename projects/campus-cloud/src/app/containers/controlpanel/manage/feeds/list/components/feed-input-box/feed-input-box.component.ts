@@ -1,5 +1,5 @@
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 import { map, startWith } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { CPSession, ISchool } from '@campus-cloud/session';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
+import { TextEditorDirective } from '@projects/campus-cloud/src/app/shared/directives';
 import {
   ImageService,
   StoreService,
@@ -24,6 +25,8 @@ import {
   styleUrls: ['./feed-input-box.component.scss']
 })
 export class FeedInputBoxComponent implements OnInit {
+  @ViewChild(TextEditorDirective, { static: true }) private editor: TextEditorDirective;
+
   @Input() groupId: number;
   @Input() threadId: number;
   @Input() postType: number;
@@ -195,18 +198,15 @@ export class FeedInputBoxComponent implements OnInit {
       this.form.controls['group_id'].setValue(null);
       this.form.controls['post_type'].setValue(null);
     }
+    this.editor.clear();
     this.reset$.next(true);
     this.resetTextEditor$.next(true);
-    this.form.controls['message'].setValue(null);
+    this.form.controls['message'].setValue('');
     this.form.controls['message_image_url_list'].setValue([]);
   }
 
-  onContentChange({ body, withImage }) {
-    this.form.controls['message'].setValue(body);
-
-    if (!withImage) {
-      this.form.controls['message_image_url_list'].setValue([]);
-    }
+  onDeleteImage() {
+    this.form.get('message_image_url_list').setValue([]);
   }
 
   onSelectedHost(host): void {
@@ -303,7 +303,7 @@ export class FeedInputBoxComponent implements OnInit {
         school_id: [this.session.g.get('school').id],
         store_id: [defaultHost, Validators.required],
         post_type: [this.replyView ? this.postType : null, Validators.required],
-        message: [null, [Validators.maxLength(500)]],
+        message: ['', [Validators.maxLength(500)]],
         message_image_url_list: [[]]
       },
       { validators: validThread }

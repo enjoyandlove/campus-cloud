@@ -1,6 +1,6 @@
-import { combineLatest, of as observableOf, Observable } from 'rxjs';
+import { combineLatest, of as observableOf, Observable, of } from 'rxjs';
+import { map, startWith, catchError } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { map, startWith } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 
 import { CPI18nService } from './i18n.service';
@@ -28,14 +28,16 @@ export class StoreService {
   private getServices(search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SERVICES}/1;1000`;
 
+    const placeHolder = [
+      {
+        label: cpI18n.translate('services'),
+        value: null,
+        heading: true
+      }
+    ];
+
     return this.api.get(url, search).pipe(
-      startWith([
-        {
-          label: cpI18n.translate('services'),
-          value: null,
-          heading: true
-        }
-      ]),
+      startWith(placeHolder),
       map((res: any[]) => {
         const services = [
           {
@@ -59,7 +61,8 @@ export class StoreService {
         }
 
         return services.length === 1 ? [] : services;
-      })
+      }),
+      catchError(() => of(placeHolder))
     );
   }
 
@@ -71,14 +74,16 @@ export class StoreService {
       .append('category_id', isClubAthletic.athletic.toString())
       .append('status', ACTIVE_CLUBS);
 
+    const placeHolder = [
+      {
+        label: cpI18n.translate('athletics'),
+        value: null,
+        heading: true
+      }
+    ];
+
     return this.api.get(url, search).pipe(
-      startWith([
-        {
-          label: cpI18n.translate('athletics'),
-          value: null,
-          heading: true
-        }
-      ]),
+      startWith(placeHolder),
       map((res: any[]) => {
         const athletics = [
           {
@@ -102,7 +107,8 @@ export class StoreService {
         }
 
         return athletics.length === 1 ? [] : athletics;
-      })
+      }),
+      catchError(() => of(placeHolder))
     );
   }
 
@@ -112,14 +118,16 @@ export class StoreService {
 
     search = search.append('status', ACTIVE_CLUBS);
 
+    const placeHolder = [
+      {
+        label: cpI18n.translate('clubs'),
+        value: null,
+        heading: true
+      }
+    ];
+
     return this.api.get(url, search).pipe(
-      startWith([
-        {
-          label: cpI18n.translate('clubs'),
-          value: null,
-          heading: true
-        }
-      ]),
+      startWith(placeHolder),
       map((res: any[]) => {
         const clubs = [
           {
@@ -143,7 +151,8 @@ export class StoreService {
         }
 
         return clubs.length === 1 ? [] : clubs;
-      })
+      }),
+      catchError(() => of(placeHolder))
     );
   }
 
