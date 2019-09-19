@@ -20,10 +20,24 @@
         </div>
         <div class="row form-group">
           <div class="col-12">
-            <cp-text-editor [image$]="image$"
-                            [reset$]="resetTextEditor$"
-                            (contentChange)="onContentChange($event)">
-            </cp-text-editor>
+            <div class="editor">
+              <div class="editor__wrapper">
+                <div class="editor__element"
+                     cpTextEditor
+                     formControlName="message"
+                     [placeholder]="'feeds_input_placeholder' | cpI18n"></div>
+                <div class="editor__images">
+                  <div class="editor__image--wrapper"
+                       *ngFor="let imageSrc of form.get('message_image_url_list').value">
+                    <button type="button"
+                            class="unstyled-button"
+                            (click)="onDeleteImage()">&times;</button>
+                    <img [attr.src]="imageSrc"
+                         alt="">
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="row justify-content-end">

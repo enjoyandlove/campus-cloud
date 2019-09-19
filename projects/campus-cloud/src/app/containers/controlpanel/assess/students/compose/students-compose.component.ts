@@ -134,6 +134,7 @@ export class StudentsComposeComponent implements OnInit {
     if (selectedStore) {
       this.selectedStore = selectedStore;
       this.sendAsName = selectedStore.label;
+      this.hostType = this.selectedStore.hostType;
     }
 
     return selectedStore;

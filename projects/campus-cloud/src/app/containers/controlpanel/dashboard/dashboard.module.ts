@@ -11,6 +11,7 @@ import { EngagementModule } from '../assess/engagement/engagement.module';
 import { DashboardOnboardingComponent } from './onboarding/onboarding.component';
 import {
   DashboardTopClubsComponent,
+  DashboardAppUsageComponent,
   DashboardTopEventsComponent,
   DashboardAssessmentComponent,
   DashboardCampusTileComponent,
@@ -30,6 +31,7 @@ import {
     DashboardComponent,
     DashboardBaseComponent,
     DashboardTopClubsComponent,
+    DashboardAppUsageComponent,
     DashboardTopEventsComponent,
     DashboardAssessmentComponent,
     DashboardCampusTileComponent,

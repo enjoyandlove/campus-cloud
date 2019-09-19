@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { async, ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
@@ -40,6 +40,10 @@ describe('BannerUploadComponent', () => {
     fixture.detectChanges();
   }));
 
+  it('should have correct aspect ratio', () => {
+    expect(component.imageRatio).toBe(1.8);
+  });
+
   it('should emit upload button events', () => {
     component.isEdit = false;
     fixture.detectChanges();
@@ -59,8 +63,9 @@ describe('BannerUploadComponent', () => {
     expect(resetSpy).toHaveBeenCalledTimes(1);
   });
 
-  it('should emit control events', () => {
+  it('should emit control events', fakeAsync(() => {
     component.isEdit = true;
+    component.croppieLoaded = true;
     fixture.detectChanges();
 
     const cropSpy = spyOn(component.crop, 'emit');
@@ -68,9 +73,10 @@ describe('BannerUploadComponent', () => {
     const controlBtns = de.query(By.css('.control-buttons')).nativeElement;
 
     controlBtns.dispatchEvent(new Event('save'));
+    tick();
     expect(cropSpy).toHaveBeenCalledTimes(1);
 
     controlBtns.dispatchEvent(new Event('cancel'));
     expect(resetSpy).toHaveBeenCalledTimes(1);
-  });
+  }));
 });

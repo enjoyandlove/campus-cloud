@@ -14,12 +14,9 @@ import {
   CPI18nService,
   SchoolService,
   ZendeskService,
-  CPCroppieService,
   CPTrackingService,
   ImageValidatorService
 } from '@campus-cloud/shared/services';
-
-const IMAGE_SIZE_WIDTH = 1440;
 
 @Component({
   selector: 'cp-banner-list',
@@ -34,11 +31,10 @@ const IMAGE_SIZE_WIDTH = 1440;
 export class BannerListComponent implements OnInit {
   isEdit;
   form: FormGroup;
-  imageRatio = 1.8;
   textLogo: string;
   uploading = false;
+  bannerImage: string;
   bannerPkdbLink: string;
-  canvas: CPCroppieService;
   brandingPkdbLink: string;
   state: school.ISchoolBranding;
   layoutWidth = LayoutWidth.third;
@@ -99,14 +95,7 @@ export class BannerListComponent implements OnInit {
 
   onUpload(image) {
     this.isEdit = true;
-
-    setTimeout(
-      () => {
-        this.canvasInit(image);
-      },
-
-      5
-    );
+    this.bannerImage = image;
   }
 
   onSuccess(message = this.cpI18n.translate('customization_image_upload_success')) {
@@ -125,46 +114,20 @@ export class BannerListComponent implements OnInit {
     );
   }
 
-  canvasInit(image) {
-    const hostEl = document.getElementById('canvas_wrapper');
-    const canvasOptions = {
-      showZoomer: false,
-      enableResize: false,
-      enableOrientation: true,
-      viewport: { width: 400, height: 400 / this.imageRatio },
-      boundary: IMAGE_SIZE_WIDTH / this.imageRatio,
-      url: `${image}?disableCache=true`
-    };
-
-    this.canvas = new CPCroppieService(hostEl, canvasOptions);
-  }
-
-  imageToBase64(): Promise<any> {
-    return this.canvas.result({
-      type: 'base64',
-      size: { width: IMAGE_SIZE_WIDTH, height: IMAGE_SIZE_WIDTH / this.imageRatio },
-      format: 'jpeg'
-    });
-  }
-
   uploadBase64Image(base64ImageData: string) {
     this.uploading = true;
     return this.imageService.uploadBase64(base64ImageData).toPromise();
   }
 
-  onCrop() {
-    this.imageToBase64()
-      .then((base64ImageData) => {
-        this.form.controls[school.LOGO_URL].setValue(base64ImageData);
-        this.form.controls[school.LOGO_URL].markAsDirty();
-        this.onReset();
+  onCrop(base64ImageData: string) {
+    this.form.controls[school.LOGO_URL].setValue(base64ImageData);
+    this.form.controls[school.LOGO_URL].markAsDirty();
+    this.onReset();
 
-        this.eventProperties = {
-          ...this.eventProperties,
-          banner: amplitudeEvents.CHANGED
-        };
-      })
-      .catch(() => this.onError());
+    this.eventProperties = {
+      ...this.eventProperties,
+      banner: amplitudeEvents.CHANGED
+    };
   }
 
   saveDisabled() {

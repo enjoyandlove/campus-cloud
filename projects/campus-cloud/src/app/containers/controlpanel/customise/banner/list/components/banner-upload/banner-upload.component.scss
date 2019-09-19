@@ -2,6 +2,14 @@
   margin-top: 25px;
   position: relative;
 
+  &__container {
+    visibility: hidden;
+
+    &.ready {
+      visibility: visible;
+    }
+  }
+
   &__wrapper {
     width: 100%;
     height: 368.88px;

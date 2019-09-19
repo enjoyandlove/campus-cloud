@@ -34,6 +34,8 @@ interface IState {
   };
 }
 
+const now = new Date();
+
 @Component({
   selector: 'cp-engagement-topbar',
   templateUrl: './engagement-topbar.component.html',
@@ -50,6 +52,7 @@ export class EngagementTopBarComponent implements OnInit {
   engagementFilter;
   datePickerClass = 'cancel';
   icon = 'keyboard_arrow_down';
+  fiveYears = now.setFullYear(now.getFullYear() - 5);
 
   constructor(
     public session: CPSession,
