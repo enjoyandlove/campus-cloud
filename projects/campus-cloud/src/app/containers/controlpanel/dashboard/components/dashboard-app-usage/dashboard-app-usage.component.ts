@@ -3,6 +3,7 @@ import { Input, OnInit, Component, ViewEncapsulation } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '@campus-cloud/session';
+import { kFormatter } from '@campus-cloud/shared/utils';
 import { DashboardService } from './../../dashboard.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { BaseComponent } from '@campus-cloud/base/base.component';
@@ -139,21 +140,13 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
     return Promise.resolve([app_opens.series, app_opens_unique.series]);
   }
 
-  kFormatter(num: number) {
-    return Math.abs(num) > 999
-      ? Math.sign(num) * <any>(Math.abs(num) / 1000).toFixed(1) + 'k'
-      : Math.sign(num) * Math.abs(num);
-  }
-
   handleSuccess(series) {
     const options = {
       ...this.chartOptions,
       ...this.utils.chartOptions(this.divider, series),
       axisY: {
         onlyInteger: true,
-        labelInterpolationFnc: function formatYAxisLabel(value: number) {
-          return this.kFormatter(value);
-        }.bind(this)
+        labelInterpolationFnc: kFormatter
       },
       axisX: {
         labelInterpolationFnc: function limitXAxisLabelsLength(value, index) {

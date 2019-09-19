@@ -1,5 +1,5 @@
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
@@ -19,7 +19,8 @@ import { AnnouncementsIntegrationCreateComponent } from '../create';
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
-export class AnnouncementsIntegrationListComponent extends BaseComponent implements OnInit {
+export class AnnouncementsIntegrationListComponent extends BaseComponent
+  implements OnInit, OnDestroy {
   activeModal: OverlayRef;
   loading$: Observable<boolean>;
   senders$: Observable<IStore[]>;
@@ -111,5 +112,9 @@ export class AnnouncementsIntegrationListComponent extends BaseComponent impleme
 
     this.updateHeader();
     this.fetch();
+  }
+
+  ngOnDestroy() {
+    this.store.dispatch(new fromStore.Destroy());
   }
 }
