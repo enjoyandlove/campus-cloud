@@ -32,11 +32,11 @@
       }
     }
 
-    &__message {
-      margin-bottom: 1rem;
-    }
-
     &__content {
+      p {
+        word-break: break-word;
+      }
+
       a {
         color: $color-brand;
       }
