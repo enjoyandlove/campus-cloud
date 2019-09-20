@@ -1,13 +1,17 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { IPersona } from '../../../../persona.interface';
 import { TilesUtilsService } from '../../../tiles.utils.service';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { PersonasUtilsService } from '../../../../personas.utils.service';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 import { TileImageValidatorService } from './tiles.image.validator.service';
 import { CPI18nService, ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-personas-resource-list-form',
   templateUrl: './resource-list-form.component.html',
@@ -18,7 +22,7 @@ import { CPI18nService, ImageService, ImageValidatorService } from '@campus-clou
     { provide: ImageValidatorService, useExisting: TileImageValidatorService }
   ]
 })
-export class PersonasResourceListFormComponent implements OnInit {
+export class PersonasResourceListFormComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
   @Input() isEdit: boolean;
   @Input() persona: IPersona;
@@ -32,6 +36,9 @@ export class PersonasResourceListFormComponent implements OnInit {
   filterByLogin = false;
   contentTypes = ContentUtilsProviders.contentTypes;
   selectedContent = ContentUtilsProviders.contentTypes.single;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(public cpI18n: CPI18nService, public tileUtils: TilesUtilsService) {}
 
@@ -64,10 +71,16 @@ export class PersonasResourceListFormComponent implements OnInit {
     this.filterByWeb = PersonasUtilsService.isWeb(this.persona.platform);
     this.filterByLogin = PersonasUtilsService.isLoginForbidden(this.persona.login_requirement);
     this.tileImageRequirements = this.cpI18n.translate('t_personas_tile_image_requirements');
-    this.form.valueChanges.subscribe((_) => this.valueChanges.emit(this.form));
+    this.form.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.valueChanges.emit(this.form));
     this.defaultImg = this.form.get('img_url').value;
     if (this.isEdit) {
       this.updateState();
     }
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

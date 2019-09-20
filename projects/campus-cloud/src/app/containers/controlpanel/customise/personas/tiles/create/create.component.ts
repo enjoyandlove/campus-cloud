@@ -67,7 +67,10 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
   ) {
     super();
     this.personaId = this.route.snapshot.params['personaId'];
-    super.isLoading().subscribe((loading) => (this.loading = loading));
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loading) => (this.loading = loading));
   }
 
   createGuideLink(newCategoryId = null) {

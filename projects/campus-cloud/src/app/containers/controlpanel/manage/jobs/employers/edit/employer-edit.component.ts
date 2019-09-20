@@ -80,7 +80,7 @@ export class EmployerEditComponent implements OnInit, OnDestroy {
       text: this.cpI18n.translate('save')
     });
 
-    this.employerForm.valueChanges.subscribe(() => {
+    this.employerForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.employerForm.valid };
     });
 

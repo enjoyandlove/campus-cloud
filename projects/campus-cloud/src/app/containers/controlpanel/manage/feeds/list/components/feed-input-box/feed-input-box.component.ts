@@ -1,13 +1,22 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Output,
+  Component,
+  OnDestroy,
+  ViewChild,
+  EventEmitter
+} from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { map, startWith, takeUntil } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { map, startWith } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { validThread } from '../../../validators';
 import { FeedsService } from '../../../feeds.service';
 import { CPSession, ISchool } from '@campus-cloud/session';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
@@ -19,12 +28,13 @@ import {
   CPTrackingService
 } from '@campus-cloud/shared/services';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-feed-input-box',
   templateUrl: './feed-input-box.component.html',
   styleUrls: ['./feed-input-box.component.scss']
 })
-export class FeedInputBoxComponent implements OnInit {
+export class FeedInputBoxComponent implements OnInit, OnDestroy {
   @ViewChild(TextEditorDirective, { static: true }) private editor: TextEditorDirective;
 
   @Input() groupId: number;
@@ -59,6 +69,9 @@ export class FeedInputBoxComponent implements OnInit {
     upload_image: null,
     campus_wall_category: null
   };
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     private fb: FormBuilder,
@@ -309,11 +322,11 @@ export class FeedInputBoxComponent implements OnInit {
       { validators: validThread }
     );
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
 
-    this.isCampusWallView.subscribe((res) => {
+    this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res) => {
       // Not Campus Wall
       if (res.type !== 1) {
         this.campusGroupId = res.type;
@@ -333,5 +346,9 @@ export class FeedInputBoxComponent implements OnInit {
       this._isCampusWallView = false;
       this.setDefaultHostWallCategory(this._isCampusWallView);
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

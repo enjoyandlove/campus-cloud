@@ -1,9 +1,9 @@
 import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { map, switchMap, finalize } from 'rxjs/operators';
+import { map, switchMap, finalize, takeUntil } from 'rxjs/operators';
 import { ActivatedRoute, Router } from '@angular/router';
 import { flatten, get as _get } from 'lodash';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { IPersona } from './../persona.interface';
@@ -16,6 +16,7 @@ import { ICampusGuide } from './../sections/section.interface';
 import { CampusGuideType } from './../sections/section.status';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { SectionsService } from './../sections/sections.service';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { CategoryDeleteErrors } from '../sections/section.status';
 import { TilesUtilsService } from './../tiles/tiles.utils.service';
 import { PersonasUtilsService } from './../personas.utils.service';
@@ -34,6 +35,7 @@ interface IState {
   showSectionDeleteModal: boolean;
 }
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-personas-details',
   templateUrl: './details.component.html',
@@ -56,6 +58,9 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     showSectionDeleteModal: false
   };
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     public zone: NgZone,
     public router: Router,
@@ -73,7 +78,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     public personaAmplitude: PersonasAmplitudeService
   ) {
     super();
-    super.isLoading().subscribe((loading) => (this.loading = loading));
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loading) => (this.loading = loading));
     this.personaId = this.route.snapshot.params['personaId'];
   }
 
@@ -99,6 +107,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     this.service
       .updateSectionTileCategory(guideId, body)
       .pipe(
+        takeUntil(this.destroy$),
         finalize(() => {
           this.setGuideDisabledStatus(false);
           this.setLoadingStatus(false);
@@ -721,6 +730,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
   }
 
   ngOnDestroy() {
+    this.emitDestroy();
     this.store.dispatch({ type: baseActions.SNACKBAR_HIDE });
   }
 

@@ -1,19 +1,22 @@
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { take, takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { take } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
 import { ClubsService } from '../clubs.service';
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { baseActions } from '@campus-cloud/store/base/reducers';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { getClubsState, baseActionClass } from '@campus-cloud/store';
 import { CPI18nService, ImageService } from '@campus-cloud/shared/services';
 import { isClubAthletic, clubAthleticLabels } from '../clubs.athletics.labels';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-clubs-excel',
   templateUrl: './clubs-excel.component.html',
@@ -28,6 +31,9 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   buttonData;
   form: FormGroup;
   isFormReady = false;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     private router: Router,
@@ -103,6 +109,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   }
 
   ngOnDestroy() {
+    this.emitDestroy();
     this.store.dispatch({ type: baseActions.CLUBS_MODAL_RESET });
     this.store.dispatch({ type: baseActions.HEADER_DEFAULT });
   }
@@ -158,7 +165,7 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
       disabled: true
     };
 
-    this.form.valueChanges.subscribe((_) => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = Object.assign({}, this.buttonData, {
         disabled: !this.form.valid
       });

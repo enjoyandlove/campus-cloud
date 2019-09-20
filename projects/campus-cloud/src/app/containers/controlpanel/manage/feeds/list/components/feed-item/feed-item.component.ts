@@ -1,18 +1,21 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
+import { CPDate } from '@campus-cloud/shared/utils';
 import { GroupType } from '../../../feeds.utils.service';
-import { CPDate } from '../../../../../../../shared/utils';
-import { FORMAT } from '../../../../../../../shared/pipes/date';
+import { FORMAT } from '@campus-cloud/shared/pipes/date';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
 declare var $: any;
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-feed-item',
   templateUrl: './feed-item.component.html',
   styleUrls: ['./feed-item.component.scss']
 })
-export class FeedItemComponent implements OnInit {
+export class FeedItemComponent implements OnInit, OnDestroy {
   @Input() feed: any;
   @Input() groupId: number;
   @Input() groupType: GroupType;
@@ -32,6 +35,9 @@ export class FeedItemComponent implements OnInit {
   FORMAT = FORMAT.SHORT;
   isCommentsOpen: boolean;
   requiresApproval$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor() {}
 
@@ -90,8 +96,16 @@ export class FeedItemComponent implements OnInit {
   ngOnInit() {
     this.requiresApproval$.next(this.feed.dislikes > 0 && this.feed.flag !== 2);
 
-    this.isCampusWallView.subscribe((res) => (this._isCampusWallView = res.type));
+    this.isCampusWallView
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => (this._isCampusWallView = res.type));
 
-    this.isFilteredByRemovedPosts.subscribe((res) => (this.isRemovedPosts = res));
+    this.isFilteredByRemovedPosts
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => (this.isRemovedPosts = res));
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

@@ -1,26 +1,32 @@
-import { HttpParams } from '@angular/common/http';
 import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
   Input,
   OnInit,
   Output,
-  ViewChild
+  Component,
+  ViewChild,
+  OnDestroy,
+  ElementRef,
+  EventEmitter,
+  HostListener
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CPSession } from './../../../../../../session';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+import { HttpParams } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 import { ITodo } from '../todos.interface';
 import { TodosService } from '../todos.service';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-orientation-todos-edit',
   templateUrl: './orientation-todos-edit.component.html',
   styleUrls: ['./orientation-todos-edit.component.scss']
 })
-export class OrientationTodosEditComponent implements OnInit {
+export class OrientationTodosEditComponent implements OnInit, OnDestroy {
   @ViewChild('editForm', { static: true }) editForm;
 
   @Input() todo: ITodo;
@@ -30,6 +36,9 @@ export class OrientationTodosEditComponent implements OnInit {
 
   buttonData;
   form: FormGroup;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public el: ElementRef,
@@ -76,8 +85,12 @@ export class OrientationTodosEditComponent implements OnInit {
       text: this.cpI18n.translate('save')
     });
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

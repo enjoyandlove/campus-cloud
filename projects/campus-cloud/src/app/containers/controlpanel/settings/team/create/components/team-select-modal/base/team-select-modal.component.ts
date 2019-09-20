@@ -3,16 +3,19 @@ import {
   Input,
   Output,
   Component,
+  OnDestroy,
   ElementRef,
   EventEmitter,
   HostListener
 } from '@angular/core';
 
 import { get as _get } from 'lodash';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { permissions, permissionType, permissionIcon } from '../permissions';
 import {
@@ -35,12 +38,13 @@ const state: IState = {
   selected: []
 };
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-team-select-modal',
   templateUrl: './team-select-modal.component.html',
   styleUrls: ['./team-select-modal.component.scss']
 })
-export class BaseTeamSelectModalComponent extends BaseComponent implements OnInit {
+export class BaseTeamSelectModalComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() privileges: any;
   @Input() title: string;
   @Input() defaultState: any;
@@ -55,6 +59,9 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   query = null;
   state: IState = state;
   permissionType = permissionType;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(public el: ElementRef, public session: CPSession) {
     super();
@@ -181,13 +188,13 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
   }
 
   ngOnInit() {
-    this.reset.subscribe((reset) => {
+    this.reset.pipe(takeUntil(this.destroy$)).subscribe((reset) => {
       if (reset) {
         this.doReset();
       }
     });
 
-    this.data.subscribe((res) => {
+    this.data.pipe(takeUntil(this.destroy$)).subscribe((res) => {
       this.loading = !('data' in res);
 
       if (res.data) {
@@ -208,5 +215,9 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
         }
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

@@ -1,12 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, of as observableOf } from 'rxjs';
-import { flatMap, map, startWith } from 'rxjs/operators';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { flatMap, map, startWith, takeUntil } from 'rxjs/operators';
+import { BehaviorSubject, of as observableOf, Subject } from 'rxjs';
 import { HttpParams } from '@angular/common/http';
 
-import { CPSession, ISchool } from '@campus-cloud/session';
 import { EventAttendance } from '../../../event.status';
-import { BaseComponent } from '@campus-cloud/base/base.component';
+import { CPSession, ISchool } from '@campus-cloud/session';
 import { EventUtilService } from '../../../events.utils.service';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import { AdminService, CPI18nService, StoreService, IAdmin } from '@campus-cloud/shared/services';
 
 interface IState {
@@ -18,12 +19,14 @@ interface IState {
   attendance_manager_email: string;
 }
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-import-action-dropdown',
   templateUrl: './import-action-dropdown.component.html',
   styleUrls: ['./import-action-dropdown.component.scss']
 })
-export class EventsImportActionDropdownComponent extends BaseComponent implements OnInit {
+export class EventsImportActionDropdownComponent extends BaseComponent
+  implements OnInit, OnDestroy {
   @Input() props: any;
   @Input() storeId: number;
   @Input() clubId: number;
@@ -46,6 +49,9 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   eventAttendanceFeedback;
   selectedHost$: BehaviorSubject<number> = new BehaviorSubject(null);
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
@@ -55,7 +61,10 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
   ) {
     super();
     this.school = this.session.g.get('school');
-    super.isLoading().subscribe((res) => (this.loading = res));
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => (this.loading = res));
   }
 
   private fetch() {
@@ -222,5 +231,9 @@ export class EventsImportActionDropdownComponent extends BaseComponent implement
       event_attendance: EventAttendance.disabled,
       event_feedback: this.eventAttendanceFeedback[1]
     };
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

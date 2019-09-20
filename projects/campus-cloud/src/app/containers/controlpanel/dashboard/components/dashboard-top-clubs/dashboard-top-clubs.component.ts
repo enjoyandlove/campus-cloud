@@ -1,19 +1,23 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { DashboardService } from '../../dashboard.service';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { DashboardUtilsService } from '../../dashboard.utils.service';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-dashboard-top-clubs',
   templateUrl: './dashboard-top-clubs.component.html',
   styleUrls: ['./dashboard-top-clubs.component.scss']
 })
-export class DashboardTopClubsComponent extends BaseComponent implements OnInit {
+export class DashboardTopClubsComponent extends BaseComponent implements OnInit, OnDestroy {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
@@ -28,6 +32,9 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
     this.fetch();
   }
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     public router: Router,
     private session: CPSession,
@@ -35,10 +42,13 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
     private helper: DashboardUtilsService
   ) {
     super();
-    super.isLoading().subscribe((loading) => {
-      this.loading = loading;
-      this.ready.emit(!this.loading);
-    });
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loading) => {
+        this.loading = loading;
+        this.ready.emit(!this.loading);
+      });
   }
 
   fetch() {
@@ -54,5 +64,9 @@ export class DashboardTopClubsComponent extends BaseComponent implements OnInit 
 
   ngOnInit() {
     this.isSuperAdmin = this.helper.isSuperAdmin(this.session);
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

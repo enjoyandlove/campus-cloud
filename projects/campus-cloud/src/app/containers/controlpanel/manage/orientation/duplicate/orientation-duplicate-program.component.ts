@@ -1,26 +1,32 @@
-import { HttpParams } from '@angular/common/http';
 import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
   Input,
   OnInit,
   Output,
-  ViewChild
+  Component,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  EventEmitter,
+  HostListener
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { CPSession } from './../../../../../session/index';
-import { CPI18nService } from '../../../../../shared/services/i18n.service';
-import { OrientationService } from '../orientation.services';
+import { Subject } from 'rxjs';
 
+import { CPSession } from '@campus-cloud/session';
+import { OrientationService } from '../orientation.services';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-orientation-duplicate-program',
   templateUrl: './orientation-duplicate-program.component.html',
   styleUrls: ['./orientation-duplicate-program.component.scss']
 })
-export class OrientationDuplicateProgramComponent implements OnInit {
+export class OrientationDuplicateProgramComponent implements OnInit, OnDestroy {
   @ViewChild('duplicateForm', { static: true }) duplicateForm;
 
   @Input() orientationProgram;
@@ -30,6 +36,9 @@ export class OrientationDuplicateProgramComponent implements OnInit {
   buttonData;
   form: FormGroup;
   isOrientation = true;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public el: ElementRef,
@@ -77,8 +86,12 @@ export class OrientationDuplicateProgramComponent implements OnInit {
       text: this.cpI18n.translate('save')
     });
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

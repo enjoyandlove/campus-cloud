@@ -1,19 +1,21 @@
 import {
-  AfterViewInit,
+  Input,
+  OnInit,
+  Output,
+  OnDestroy,
   Component,
+  ViewChild,
   ElementRef,
   EventEmitter,
   HostListener,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output,
-  ViewChild
+  AfterViewInit
 } from '@angular/core';
 import { get as _get } from 'lodash';
-import { fromEvent, Observable, of as observableOf } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { CPI18nService } from '../../services';
+import { fromEvent, Observable, of as observableOf, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, takeUntil } from 'rxjs/operators';
+
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
 interface IState {
   isLists: boolean;
@@ -32,6 +34,7 @@ interface IProps {
   defaultValues: Array<{ label: string; id: number }>;
 }
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-typeahead',
   templateUrl: './cp-typeahead.component.html',
@@ -61,6 +64,9 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
     canSearch: true
   };
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(public cpI18n: CPI18nService) {}
 
   @HostListener('document:click', ['$event'])
@@ -81,6 +87,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
 
     keyup$
       .pipe(
+        takeUntil(this.destroy$),
         map((res: any) => {
           return res.target.value;
         }),
@@ -159,6 +166,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnDestroy() {
     this.teardown();
+    this.emitDestroy();
   }
 
   onSwitchChange(selection) {
@@ -230,7 +238,7 @@ export class CPTypeAheadComponent implements OnInit, AfterViewInit, OnDestroy {
       });
     }
 
-    this.props.reset.subscribe((reset) => {
+    this.props.reset.pipe(takeUntil(this.destroy$)).subscribe((reset) => {
       if (reset) {
         this.teardown();
       }

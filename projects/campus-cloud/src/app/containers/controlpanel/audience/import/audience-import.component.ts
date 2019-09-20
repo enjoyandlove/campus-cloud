@@ -1,21 +1,24 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { CPSession } from '@campus-cloud/session';
 import { AudienceService } from '../audience.service';
 import { EnvService } from '@campus-cloud/config/env';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { CustomValidators } from '@campus-cloud/shared/validators';
 import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-audience-import',
   templateUrl: './audience-import.component.html',
   styleUrls: ['./audience-import.component.scss']
 })
-export class AudienceImportComponent implements OnInit {
+export class AudienceImportComponent implements OnInit, OnDestroy {
   @Output() error: EventEmitter<null> = new EventEmitter();
   @Output() success: EventEmitter<number> = new EventEmitter();
   @Output() launchCreateModal: EventEmitter<any> = new EventEmitter();
@@ -27,6 +30,9 @@ export class AudienceImportComponent implements OnInit {
   options;
   fileName;
   form: FormGroup;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public fb: FormBuilder,
@@ -89,7 +95,9 @@ export class AudienceImportComponent implements OnInit {
       user_emails: [[], Validators.required]
     });
 
-    this.form.valueChanges.subscribe(() => this.ready$.next(this.form.valid));
+    this.form.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.ready$.next(this.form.valid));
 
     this.fileName = 'mass_user_upload.csv';
 
@@ -103,5 +111,9 @@ export class AudienceImportComponent implements OnInit {
       validExtensions: ['csv'],
       parser: this.parser.bind(this)
     };
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

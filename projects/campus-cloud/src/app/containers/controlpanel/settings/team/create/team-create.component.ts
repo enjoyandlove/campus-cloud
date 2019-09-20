@@ -1,7 +1,8 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
@@ -9,6 +10,7 @@ import { CPSession } from '@campus-cloud/session';
 import { UserType } from '@campus-cloud/shared/utils';
 import { MODAL_TYPE } from '@campus-cloud/shared/components';
 import { baseActions, IHeader } from '@campus-cloud/store/base';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import {
   ErrorService,
@@ -35,12 +37,13 @@ import {
 
 declare var $: any;
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-team-create',
   templateUrl: './team-create.component.html',
   styleUrls: ['./team-create.component.scss']
 })
-export class TeamCreateComponent implements OnInit {
+export class TeamCreateComponent implements OnInit, OnDestroy {
   user;
   formData;
   schoolId;
@@ -75,6 +78,9 @@ export class TeamCreateComponent implements OnInit {
   resetServiceModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetAthleticsModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     public router: Router,
     public fb: FormBuilder,
@@ -101,7 +107,7 @@ export class TeamCreateComponent implements OnInit {
       email: [null, Validators.required]
     });
 
-    this.form.valueChanges.subscribe((_) => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = Object.assign({}, this.buttonData, {
         disabled: !this.form.valid
       });
@@ -624,6 +630,10 @@ export class TeamCreateComponent implements OnInit {
     );
     this.audienceMenu = this.utils.audienceDropdown(schoolPrivileges[CP_PRIVILEGES_MAP.audience]);
     this.manageAdmins = this.utils.manageAdminDropdown(manageAdminPrivilege);
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }
 

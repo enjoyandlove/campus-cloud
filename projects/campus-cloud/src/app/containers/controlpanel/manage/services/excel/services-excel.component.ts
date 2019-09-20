@@ -1,17 +1,20 @@
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { map, startWith, take, takeUntil } from 'rxjs/operators';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { map, startWith, take } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
 import { ServicesService } from '../services.service';
 import { EnvService } from '@campus-cloud/config/env';
 import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { CPI18nService, ImageService } from '@campus-cloud/shared/services';
 import { baseActions, getServicesModalState, baseActionClass } from '@campus-cloud/store/base';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-services-excel',
   templateUrl: './services-excel.component.html',
@@ -31,6 +34,9 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   categoryDropDownStatus = true;
   uploadImageButtonClass = 'disabled';
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     private router: Router,
     private fb: FormBuilder,
@@ -43,7 +49,10 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
     private servicesService: ServicesService
   ) {
     super();
-    super.isLoading().subscribe((res) => (this.loading = res));
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => (this.loading = res));
 
     this.store
       .select(getServicesModalState)
@@ -85,7 +94,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
       this.buildGroup();
     });
 
-    this.form.valueChanges.subscribe((_) => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = Object.assign({}, this.buttonData, {
         disabled: !this.form.valid
       });
@@ -263,6 +272,7 @@ export class ServicesExcelComponent extends BaseComponent implements OnInit, OnD
   }
 
   ngOnDestroy() {
+    this.emitDestroy();
     this.store.dispatch({ type: baseActions.HEADER_DEFAULT });
     this.store.dispatch({ type: baseActions.SERVICES_MODAL_RESET });
   }

@@ -1,18 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
 import { FeedsService } from '../../../feeds.service';
-
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
 declare var $: any;
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-feed-approve-comment-modal',
   templateUrl: './feed-approve-comment-modal.component.html',
   styleUrls: ['./feed-approve-comment-modal.component.scss']
 })
-export class FeedApproveCommentModalComponent implements OnInit {
+export class FeedApproveCommentModalComponent implements OnInit, OnDestroy {
   @Input() feed: any;
   @Input() isCampusWallView: Observable<number>;
   @Output() teardown: EventEmitter<null> = new EventEmitter();
@@ -20,6 +22,9 @@ export class FeedApproveCommentModalComponent implements OnInit {
 
   buttonData;
   _isCampusWallView;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(private cpI18n: CPI18nService, private feedsService: FeedsService) {}
 
@@ -48,8 +53,12 @@ export class FeedApproveCommentModalComponent implements OnInit {
       class: 'primary',
       text: this.cpI18n.translate('approve')
     };
-    this.isCampusWallView.subscribe((res: any) => {
-      this._isCampusWallView = res.type === 1 ? true : false;
+    this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
+      this._isCampusWallView = res.type === 1;
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

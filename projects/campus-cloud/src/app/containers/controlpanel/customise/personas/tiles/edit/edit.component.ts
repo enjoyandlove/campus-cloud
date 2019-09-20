@@ -74,7 +74,10 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     super();
     this.tileId = this.route.snapshot.params['tileId'];
     this.personaId = this.route.snapshot.params['personaId'];
-    super.isLoading().subscribe((loading) => (this.loading = loading));
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loading) => (this.loading = loading));
   }
 
   updateGuideTile(tileCategoryId = this.guide.id) {

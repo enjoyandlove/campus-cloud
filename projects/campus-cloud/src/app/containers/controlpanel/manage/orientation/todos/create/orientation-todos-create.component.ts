@@ -1,26 +1,32 @@
-import { HttpParams } from '@angular/common/http';
 import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
   OnInit,
   Output,
-  ViewChild
+  Component,
+  OnDestroy,
+  ViewChild,
+  ElementRef,
+  EventEmitter,
+  HostListener
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
-import { CPSession } from './../../../../../../session';
-import { CPI18nService } from '../../../../../../shared/services/i18n.service';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 import { ITodo } from '../todos.interface';
 import { TodosService } from '../todos.service';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-orientation-todo-create',
   templateUrl: './orientation-todos-create.component.html',
   styleUrls: ['./orientation-todos-create.component.scss']
 })
-export class OrientationTodosCreateComponent implements OnInit {
+export class OrientationTodosCreateComponent implements OnInit, OnDestroy {
   @ViewChild('createForm', { static: true }) createForm;
 
   @Output() created: EventEmitter<ITodo> = new EventEmitter();
@@ -29,6 +35,9 @@ export class OrientationTodosCreateComponent implements OnInit {
   buttonData;
   form: FormGroup;
   orientationId: number;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public el: ElementRef,
@@ -78,8 +87,12 @@ export class OrientationTodosCreateComponent implements OnInit {
       text: this.cpI18n.translate('save')
     });
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }
