@@ -1,8 +1,9 @@
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { get as _get, pick } from 'lodash';
-import { BehaviorSubject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { TEAM_ACCESS } from '../utils';
@@ -10,6 +11,7 @@ import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
 import { MODAL_TYPE } from '@campus-cloud/shared/components';
 import { baseActions, IHeader } from '@campus-cloud/store/base';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { accountsToStoreMap, canAccountLevelReadResource } from '@campus-cloud/shared/utils';
 import {
@@ -31,12 +33,13 @@ import {
 
 declare var $: any;
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-team-edit',
   templateUrl: './team-edit.component.html',
   styleUrls: ['./team-edit.component.scss']
 })
-export class TeamEditComponent extends BaseComponent implements OnInit {
+export class TeamEditComponent extends BaseComponent implements OnInit, OnDestroy {
   user;
   adminId;
   loading;
@@ -76,6 +79,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
   resetServiceModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetAthleticsModal$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     public router: Router,
     private fb: FormBuilder,
@@ -89,7 +95,10 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
     private cpTracking: CPTrackingService
   ) {
     super();
-    super.isLoading().subscribe((res) => (this.loading = res));
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => (this.loading = res));
     this.adminId = this.route.snapshot.params['adminId'];
     this.isProfileView = this.route.snapshot.queryParams['profile'];
   }
@@ -286,7 +295,7 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       email: [profile.email, Validators.required]
     });
 
-    this.form.valueChanges.subscribe((_) => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = Object.assign({}, this.buttonData, {
         disabled: !this.form.valid
       });
@@ -816,5 +825,9 @@ export class TeamEditComponent extends BaseComponent implements OnInit {
       servicesPrivilegeSchool,
       servicesPrivilegeAccount
     );
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

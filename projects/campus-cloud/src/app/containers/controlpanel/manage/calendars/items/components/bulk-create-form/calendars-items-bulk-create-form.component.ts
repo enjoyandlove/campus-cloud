@@ -1,19 +1,25 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormArray } from '@angular/forms';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { FormGroup, FormArray } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
-import { CPSession } from '../../../../../../../session';
+import { CPSession } from '@campus-cloud/session';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-calendars-items-bulk-create-form',
   templateUrl: './calendars-items-bulk-create-form.component.html',
   styleUrls: ['./calendars-items-bulk-create-form.component.scss']
 })
-export class CalendarsItemsBulkCreateFormComponent implements OnInit {
+export class CalendarsItemsBulkCreateFormComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
 
   buttonData;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(public session: CPSession) {}
 
@@ -72,8 +78,12 @@ export class CalendarsItemsBulkCreateFormComponent implements OnInit {
       class: 'primary'
     };
 
-    this.form.valueChanges.subscribe((_) => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((_) => {
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

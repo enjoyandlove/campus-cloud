@@ -1,16 +1,20 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { IDeal } from '../../deals.interface';
 import { IStore } from '../../stores/store.interface';
-import { CPI18nService } from '../../../../../../shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-store-card',
   templateUrl: './store-card.component.html',
   styleUrls: ['./store-card.component.scss']
 })
-export class StoreCardComponent implements OnInit {
+export class StoreCardComponent implements OnInit, OnDestroy {
   @Input() form: FormGroup;
   @Input() storeForm: FormGroup;
 
@@ -25,6 +29,9 @@ export class StoreCardComponent implements OnInit {
 
   newStoreTitle;
   existingStoreTitle;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(public cpI18n: CPI18nService) {}
 
@@ -65,7 +72,7 @@ export class StoreCardComponent implements OnInit {
     this.newStoreTitle = this.cpI18n.translate('t_deals_form_tab_new_store');
     this.existingStoreTitle = this.cpI18n.translate('t_deals_form_tab_existing_store');
 
-    this.storeForm.valueChanges.subscribe(() => {
+    this.storeForm.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.formData.emit({
         deal: this.form.value,
         dealFormValid: this.form.valid,
@@ -73,5 +80,9 @@ export class StoreCardComponent implements OnInit {
         storeFormValid: this.storeForm.valid
       });
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

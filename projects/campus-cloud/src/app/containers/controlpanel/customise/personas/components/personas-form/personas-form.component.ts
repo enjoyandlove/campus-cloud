@@ -1,15 +1,19 @@
-import { PersonasType, PersonasLoginRequired } from './../../personas.status';
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { PersonasUtilsService } from '../../personas.utils.service';
+import { PersonasType, PersonasLoginRequired } from './../../personas.status';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-personas-form',
   templateUrl: './personas-form.component.html',
   styleUrls: ['./personas-form.component.scss']
 })
-export class PersonasFormComponent implements OnInit {
+export class PersonasFormComponent implements OnInit, OnDestroy {
   @Input() isEdit = false;
   @Input() form: FormGroup;
 
@@ -21,6 +25,9 @@ export class PersonasFormComponent implements OnInit {
   mobileType = PersonasType.mobile;
   selectedRequiresCredentials = null;
   loginRequired = PersonasLoginRequired.required;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(public utils: PersonasUtilsService) {}
 
@@ -65,6 +72,12 @@ export class PersonasFormComponent implements OnInit {
       this.setDefaultRequiresCredentials();
     }
 
-    this.form.valueChanges.subscribe((_) => this.valueChanges.emit(this.form));
+    this.form.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.valueChanges.emit(this.form));
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

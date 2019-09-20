@@ -35,7 +35,7 @@ import { CPLineChartUtilsService } from './components/cp-line-chart/cp-line-char
 import { CPRangePickerUtilsService } from './components/cp-range-picker/cp-range-picker.utils.service';
 
 // pipes
-import { CPDatePipe, CPFilterPipe, CPFIlterByLength } from './pipes';
+import { CPUrlify, CPDatePipe, CPFilterPipe, CPFIlterByLength } from './pipes';
 
 // components
 import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
@@ -96,6 +96,7 @@ import {
 
 @NgModule({
   declarations: [
+    CPUrlify,
     CPDatePipe,
     CPFilterPipe,
     CPTabComponent,
@@ -187,6 +188,7 @@ import {
   ],
 
   exports: [
+    CPUrlify,
     CPDatePipe,
     CPFilterPipe,
     CPTopBarModule,

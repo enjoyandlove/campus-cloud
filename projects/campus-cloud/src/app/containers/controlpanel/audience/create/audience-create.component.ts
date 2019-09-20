@@ -1,22 +1,26 @@
 import {
+  Input,
+  OnInit,
+  Output,
   Component,
+  OnDestroy,
   ElementRef,
   EventEmitter,
-  HostListener,
-  Input,
-  OnDestroy,
-  OnInit,
-  Output
+  HostListener
 } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
-import { CPSession } from '../../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { AudienceService } from '../audience.service';
 import { STATUS } from '../../../../shared/constants';
-import { CPI18nService } from './../../../../shared/services/i18n.service';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-audience-create',
   templateUrl: './audience-create.component.html',
@@ -32,6 +36,9 @@ export class AudienceCreateComponent implements OnInit, OnDestroy {
   errorMessage;
   userCount = 0;
   form: FormGroup;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     private el: ElementRef,
@@ -117,6 +124,7 @@ export class AudienceCreateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.resetModal();
+    this.emitDestroy();
   }
 
   ngOnInit() {
@@ -124,7 +132,7 @@ export class AudienceCreateComponent implements OnInit, OnDestroy {
       name: [null, Validators.required]
     });
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.validate() };
     });
 

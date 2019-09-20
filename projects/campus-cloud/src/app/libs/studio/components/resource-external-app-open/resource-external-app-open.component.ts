@@ -1,7 +1,9 @@
-import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
+import { Input, OnInit, Output, Component, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, AbstractControl } from '@angular/forms';
-import { get as _get } from 'lodash';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { CustomValidators } from '@campus-cloud/shared/validators';
 import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { IItem } from '@projects/campus-cloud/src/app/shared/components';
@@ -9,12 +11,13 @@ import { IExternalAppOpenFormDetails } from './external-app-open.interface';
 import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { ResourceExternalAppOpenUtils } from './resource-external-app-open.utils.service';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-personas-resource-external-app-open',
   templateUrl: './resource-external-app-open.component.html',
   styleUrls: ['./resource-external-app-open.component.scss']
 })
-export class PersonasResourceExternalAppOpenComponent implements OnInit {
+export class PersonasResourceExternalAppOpenComponent implements OnInit, OnDestroy {
   @Input() isEdit = false;
   @Input() campusLink: ILink;
   @Input() showErrors = false;
@@ -26,6 +29,9 @@ export class PersonasResourceExternalAppOpenComponent implements OnInit {
   form: FormGroup = this.getForm();
 
   options = this.utils.getShortcutOptions();
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(private fb: FormBuilder, private utils: ResourceExternalAppOpenUtils) {}
 
@@ -76,7 +82,7 @@ export class PersonasResourceExternalAppOpenComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       const tooBig = JSON.stringify(this.form.value).length > 1024;
 
       this.valueChanges.emit({
@@ -86,5 +92,9 @@ export class PersonasResourceExternalAppOpenComponent implements OnInit {
     });
 
     this.form.patchValue(this.getInitialFormValues());
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

@@ -15,8 +15,8 @@
     </div>
   </div>
   <div class="row feed__message">
-    <div class="col-12">
-      <p>{{ feed.message }}</p>
+    <div class="col-12 feed__content">
+      <p [innerHTML]="feed.message | cpUrlify"></p>
     </div>
   </div>
   <div class="row feed__footer">

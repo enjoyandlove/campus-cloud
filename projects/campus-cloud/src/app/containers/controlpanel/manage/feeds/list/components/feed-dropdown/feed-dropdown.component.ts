@@ -1,14 +1,17 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import { startWith } from 'rxjs/operators';
-import { CPI18nService } from '../../../../../../../shared/services/index';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { startWith, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-feed-dropdown',
   templateUrl: './feed-dropdown.component.html',
   styleUrls: ['./feed-dropdown.component.scss']
 })
-export class FeedDropdownComponent implements OnInit {
+export class FeedDropdownComponent implements OnInit, OnDestroy {
   @Input() isComment: boolean;
   @Input() requiresApproval: Observable<boolean>;
   @Input() isCampusWallView: Observable<number>;
@@ -17,6 +20,9 @@ export class FeedDropdownComponent implements OnInit {
   options;
   _isCampusWallView;
   _requiresApproval;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(public cpI18n: CPI18nService) {}
 
@@ -29,11 +35,11 @@ export class FeedDropdownComponent implements OnInit {
       return this.requiresApproval.pipe(startWith(false));
     }
 
-    this.isCampusWallView.subscribe((res: any) => {
+    this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       this._isCampusWallView = res.type === 1;
     });
 
-    this.requiresApproval.subscribe((requiresApproval) => {
+    this.requiresApproval.pipe(takeUntil(this.destroy$)).subscribe((requiresApproval) => {
       this._requiresApproval = requiresApproval;
 
       if (!requiresApproval && this.options) {
@@ -72,5 +78,9 @@ export class FeedDropdownComponent implements OnInit {
     }
 
     this.options = this.isComment ? items.filter((item) => !item.isPostOnly) : items;
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

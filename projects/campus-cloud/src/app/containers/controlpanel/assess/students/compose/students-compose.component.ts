@@ -5,29 +5,31 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  HostListener
+  HostListener,
+  OnDestroy
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-import { tap } from 'rxjs/internal/operators';
-import { BehaviorSubject } from 'rxjs';
+import { takeUntil, tap } from 'rxjs/operators';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
-import { StoreService } from '@campus-cloud/shared/services';
-import { CustomValidators } from '@campus-cloud/shared/validators';
 import { StudentsService } from './../students.service';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { StoreService, CPI18nService } from '@campus-cloud/shared/services';
 
 const THROTTLED_STATUS = 1;
 
 declare var $;
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-students-compose',
   templateUrl: './students-compose.component.html',
   styleUrls: ['./students-compose.component.scss']
 })
-export class StudentsComposeComponent implements OnInit {
+export class StudentsComposeComponent implements OnInit, OnDestroy {
   @Input() fromDisabled = false;
   @Input() props: { name: string; userIds: Array<number>; storeId: number };
 
@@ -43,6 +45,9 @@ export class StudentsComposeComponent implements OnInit {
   selectedStore;
   form: FormGroup;
   resetStores$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     private el: ElementRef,
@@ -171,8 +176,12 @@ export class StudentsComposeComponent implements OnInit {
       text: this.cpI18n.translate('send')
     };
 
-    this.form.valueChanges.subscribe(() => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

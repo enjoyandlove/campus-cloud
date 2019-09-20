@@ -127,7 +127,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       address: [service.address],
       description: [service.description],
       email: [service.email],
-      website: [service.website, Validators.maxLength(120)],
+      website: [service.website, Validators.maxLength(1024)],
       contactphone: [service.contactphone],
       secondary_name: [service.secondary_name],
       city: [service.city],

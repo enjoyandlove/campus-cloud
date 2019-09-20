@@ -1,34 +1,38 @@
 import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  HostListener,
   Input,
   OnInit,
-  Output
+  Output,
+  Component,
+  OnDestroy,
+  ElementRef,
+  EventEmitter,
+  HostListener
 } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { isEqual } from 'lodash';
+import { Subject } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
 import { ISnackbar } from '@campus-cloud/store/base';
 import { AudienceType } from './../audience.status';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { CPTrackingService } from '@campus-cloud/shared/services';
 import { AudienceService } from '../audience.service';
-import { parseErrorResponse } from '@campus-cloud/shared/utils/http';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { AudienceUtilsService } from '../audience.utils.service';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { parseErrorResponse } from '@campus-cloud/shared/utils/http';
+import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-audience-edit',
   templateUrl: './audience-edit.component.html',
   styleUrls: ['./audience-edit.component.scss']
 })
-export class AuidenceEditComponent extends BaseComponent implements OnInit {
+export class AuidenceEditComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() audienceId: number;
 
   @Output() edited: EventEmitter<any> = new EventEmitter();
@@ -44,6 +48,9 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
   eventProperties;
   defaultAudienceView;
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     private el: ElementRef,
     private fb: FormBuilder,
@@ -55,7 +62,10 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
     private audienceUtils: AudienceUtilsService
   ) {
     super();
-    super.isLoading().subscribe((loading) => (this.loading = loading));
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loading) => (this.loading = loading));
   }
 
   @HostListener('document:click', ['$event'])
@@ -181,7 +191,7 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
         name: [this.audience.name, Validators.required]
       });
 
-      this.form.valueChanges.subscribe(() => {
+      this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
         this.buttonData = { ...this.buttonData, disabled: !this.validate() };
       });
 
@@ -210,5 +220,9 @@ export class AuidenceEditComponent extends BaseComponent implements OnInit {
       disabled: false,
       text: this.cpI18n.translate('update')
     };
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

@@ -1,4 +1,3 @@
-/* tslint:disable:no-host-metadata-property */
 import { Input, OnInit, Component, ViewEncapsulation } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
@@ -19,10 +18,7 @@ import {
   selector: 'cp-dashboard-app-usage',
   templateUrl: './dashboard-app-usage.component.html',
   styleUrls: ['./dashboard-app-usage.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  host: {
-    class: 'cp-dashboard-app-usage'
-  }
+  encapsulation: ViewEncapsulation.None
 })
 export class DashboardAppUsageComponent extends BaseComponent implements OnInit {
   _dates;
@@ -34,14 +30,15 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
     this.fetch();
   }
 
-  range;
-  labels;
   appOpenSeries;
   uniqueActiveUsers;
+  appOpenChartOptions;
+  appOpenLabels: string[];
   divider = DivideBy.daily;
-  chartOptions = {
-    height: '237px'
-  };
+  uniqueAppOpenChartOptions;
+  uniqueUsersLabels: string[];
+  range: { start: string; end: string };
+  thirtyDayRange: { start: string; end: string };
 
   constructor(
     private session: CPSession,
@@ -70,39 +67,17 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
       .catch(this.errorHandler.bind(this));
   }
 
-  builTooltip(label: string, value: number) {
-    let dateText;
-    let appOpenValue = 0;
-    let activeUserValue = 0;
-    const appOpens = this.cpI18n.translate('t_dashboard_total_app_opens');
-    const activeUsers = this.cpI18n.translate('t_dashboard_unique_active_users');
-
-    const appOpensChart = label.indexOf(appOpens) > -1;
-
-    if (appOpensChart) {
-      dateText = label.replace(appOpens, '').trim();
-
-      appOpenValue = value;
-      activeUserValue = this.uniqueActiveUsers[0].find((o) => o.meta.endsWith(dateText)).value;
-    } else {
-      dateText = label.replace(activeUsers, '').trim();
-
-      activeUserValue = value;
-      appOpenValue = this.appOpenSeries[0].find((o) => o.meta.endsWith(dateText)).value;
-    }
-    return `
-    <div class="app-usage-tooltip-element">
-      <span class="bold block">${dateText}</span>
-      <span class="block">${appOpens}: <span class="bold">${appOpenValue}</span></span>
-      <span class="block">${activeUsers}: <span class="bold">${activeUserValue}</span></span>
-    </div>
-    `;
-  }
-
   groupSeries({ data }) {
+    const labels = data.app_opens.labels;
+
+    this.thirtyDayRange = {
+      start: labels[labels.length - 31],
+      end: labels[labels.length - 1]
+    };
+
     this.range = {
-      start: data.app_opens.labels[0],
-      end: data.app_opens.labels[data.app_opens.labels.length - 1]
+      start: labels[0],
+      end: labels[labels.length - 1]
     };
     const year = 365;
     const threeMonths = 90;
@@ -115,7 +90,7 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
 
       return Promise.all([
         groupByQuarter(app_opens.labels, app_opens.series),
-        groupByQuarter(app_opens.labels, app_opens_unique.series)
+        app_opens_unique.series
       ]);
     }
 
@@ -124,7 +99,7 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
 
       return Promise.all([
         groupByMonth(app_opens.labels, app_opens.series),
-        groupByMonth(app_opens.labels, app_opens_unique.series)
+        app_opens_unique.series
       ]);
     }
 
@@ -133,17 +108,18 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
 
       return Promise.all([
         groupByWeek(app_opens.labels, app_opens.series),
-        groupByWeek(app_opens.labels, app_opens_unique.series)
+        app_opens_unique.series
       ]);
     }
 
     return Promise.resolve([app_opens.series, app_opens_unique.series]);
   }
 
-  handleSuccess(series) {
-    const options = {
-      ...this.chartOptions,
+  getChartOptions(series, sourceSeries) {
+    return {
+      height: '237px',
       ...this.utils.chartOptions(this.divider, series),
+      high: Math.max(...sourceSeries) + 5 - ((Math.max(...sourceSeries) + 5) % 5),
       axisY: {
         onlyInteger: true,
         labelInterpolationFnc: kFormatter
@@ -162,9 +138,20 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
         }
       }
     };
-    this.chartOptions = options;
+  }
 
-    this.labels = this.utils.buildLabels(this.divider, this.range, series);
+  handleSuccess(series) {
+    const last30AppUnique =
+      this.divider !== DivideBy.daily ? series[1].slice(series[1].length - 31) : series[1];
+
+    this.appOpenChartOptions = this.getChartOptions(series, series[0]);
+    this.uniqueAppOpenChartOptions = this.getChartOptions(series, last30AppUnique);
+
+    this.appOpenLabels = this.utils.buildLabels(this.divider, this.range, series);
+    this.uniqueUsersLabels = this.utils.buildLabels(DivideBy.daily, this.thirtyDayRange, [
+      last30AppUnique
+    ]);
+
     this.appOpenSeries = this.utils.buildSeries(
       this.divider,
       this.range,
@@ -172,10 +159,10 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
       [series[0]]
     );
     this.uniqueActiveUsers = this.utils.buildSeries(
-      this.divider,
-      this.range,
+      DivideBy.daily,
+      this.thirtyDayRange,
       [this.cpI18n.translate('t_dashboard_unique_active_users')],
-      [series[1]]
+      [last30AppUnique]
     );
   }
 

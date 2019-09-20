@@ -1,7 +1,10 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { AbstractControl, FormGroup } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { IItem, ICPButtonProps } from '@campus-cloud/shared/components';
 import { MemberModel, IMember, MemberType } from '@campus-cloud/libs/members/common/model';
 import {
@@ -9,12 +12,13 @@ import {
   LibsCommonMembersUtilsService
 } from '@campus-cloud/libs/members/common/providers';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-members-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
-export class ClubsMembersCreateComponent implements OnInit {
+export class ClubsMembersCreateComponent implements OnInit, OnDestroy {
   @Input() groupId: number;
 
   @Output() added: EventEmitter<IMember> = new EventEmitter();
@@ -23,6 +27,9 @@ export class ClubsMembersCreateComponent implements OnInit {
   memberTypes: IItem[];
   buttonData: ICPButtonProps;
   isExecutiveLeader = MemberType.executive_leader;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     private cpI18n: CPI18nService,
@@ -80,11 +87,15 @@ export class ClubsMembersCreateComponent implements OnInit {
     this.form.get('group_id').setValue(this.groupId);
     this.form.get('member_type').setValue(this.memberTypes[0].action);
 
-    this.form.valueChanges.subscribe((_) => {
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = {
         ...this.buttonData,
         disabled: !this.form.valid
       };
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

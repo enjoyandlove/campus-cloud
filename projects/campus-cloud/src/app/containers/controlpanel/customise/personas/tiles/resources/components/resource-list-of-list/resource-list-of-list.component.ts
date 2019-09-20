@@ -1,5 +1,7 @@
 import { HttpParams } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
+import { Subject } from 'rxjs';
 import {
   Input,
   OnInit,
@@ -9,7 +11,8 @@ import {
   ElementRef,
   EventEmitter,
   ViewChildren,
-  AfterViewInit
+  AfterViewInit,
+  OnDestroy
 } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
@@ -18,6 +21,7 @@ import { ResourceService } from './../../resource.service';
 import { IPersona } from './../../../../persona.interface';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { parseErrorResponse } from '@campus-cloud/shared/utils';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { baseActions, ISnackbar } from '@campus-cloud/store/base';
 import { ResourcesUtilsService } from '../../resources.utils.service';
 import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
@@ -30,12 +34,13 @@ interface IState {
   editingResource: ILink;
 }
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-personas-resource-list-of-list',
   templateUrl: './resource-list-of-list.component.html',
   styleUrls: ['./resource-list-of-list.component.scss']
 })
-export class PersonasResourceListOfListComponent implements OnInit, AfterViewInit {
+export class PersonasResourceListOfListComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() isEdit = false;
   @Input() campusLink: ILink;
   @Input() persona: IPersona;
@@ -63,6 +68,9 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
     showCreateModal: false,
     editingResource: null
   };
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public session: CPSession,
@@ -227,7 +235,7 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
   }
 
   ngAfterViewInit() {
-    this.tooltips.changes.subscribe((t: QueryList<ElementRef>) => {
+    this.tooltips.changes.pipe(takeUntil(this.destroy$)).subscribe((t: QueryList<ElementRef>) => {
       t.forEach((r: ElementRef) => $(r.nativeElement).tooltip());
     });
   }
@@ -248,5 +256,9 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
         link_url: null
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

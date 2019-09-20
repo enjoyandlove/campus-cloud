@@ -1,18 +1,22 @@
-import { OnInit, Component, Input, Output, EventEmitter } from '@angular/core';
+import { OnInit, Component, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ApiManagementUtilsService } from '../../api-management.utils.service';
 import { PublicApiAccessTokenModel, IPublicApiAccessToken } from '../../model';
 import { ApiType } from '@controlpanel/api-management/model/api-management.interface';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-api-form',
   templateUrl: './api-management-form.component.html',
   styleUrls: ['./api-management-form.component.scss']
 })
-export class ApiManagementFormComponent implements OnInit {
+export class ApiManagementFormComponent implements OnInit, OnDestroy {
   buttonData;
   form: FormGroup;
 
@@ -26,6 +30,9 @@ export class ApiManagementFormComponent implements OnInit {
   apiType = ApiType;
   formErrors = false;
   isSandbox: boolean;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(public session: CPSession, private cpI18n: CPI18nService) {}
 
@@ -86,6 +93,12 @@ export class ApiManagementFormComponent implements OnInit {
       class: 'primary'
     };
 
-    this.form.valueChanges.subscribe(() => this.valueChanges.emit(this.form));
+    this.form.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.valueChanges.emit(this.form));
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

@@ -1,16 +1,20 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
 
-import { BaseComponent } from '../../../../../base';
-import { CPSession } from './../../../../../session';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
 import { DashboardService } from './../../dashboard.service';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-dashboard-social-activity',
   templateUrl: './dashboard-social-activity.component.html',
   styleUrls: ['./dashboard-social-activity.component.scss']
 })
-export class DashboardSocialActivyComponent extends BaseComponent implements OnInit {
+export class DashboardSocialActivyComponent extends BaseComponent implements OnInit, OnDestroy {
   @Output() ready: EventEmitter<boolean> = new EventEmitter();
 
   _dates;
@@ -23,12 +27,18 @@ export class DashboardSocialActivyComponent extends BaseComponent implements OnI
     this.fetch();
   }
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(private session: CPSession, private service: DashboardService) {
     super();
-    super.isLoading().subscribe((loading) => {
-      this.loading = loading;
-      this.ready.emit(!this.loading);
-    });
+    super
+      .isLoading()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((loading) => {
+        this.loading = loading;
+        this.ready.emit(!this.loading);
+      });
   }
 
   calculatePercentage(data) {
@@ -62,4 +72,8 @@ export class DashboardSocialActivyComponent extends BaseComponent implements OnI
   }
 
   ngOnInit() {}
+
+  ngOnDestroy() {
+    this.emitDestroy();
+  }
 }
