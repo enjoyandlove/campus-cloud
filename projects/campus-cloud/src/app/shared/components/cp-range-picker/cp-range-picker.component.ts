@@ -12,6 +12,8 @@ export interface IDateRange {
   label: string;
 }
 
+const now = new Date();
+
 @Component({
   selector: 'cp-range-picker',
   templateUrl: './cp-range-picker.component.html',
@@ -23,8 +25,8 @@ export class CPRangePickerComponent {
   @Input() dateRanges;
   @Input() icon: string;
   @Input() class: string;
-  @Input() minDate: Date;
   @Input() clearable = false;
+  @Input() minDate = now.setFullYear(now.getFullYear() - 5);
   @Input() maxDate = CPDate.now(this.session.tz)
     .subtract(1, 'days')
     .startOf('day')
