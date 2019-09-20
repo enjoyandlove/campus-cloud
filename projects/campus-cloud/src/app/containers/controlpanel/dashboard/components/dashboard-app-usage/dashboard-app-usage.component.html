@@ -1,33 +1,20 @@
 <ng-container [ngSwitch]="loading">
-  <cp-spinner *ngSwitchCase="true"></cp-spinner>
   <ng-container *ngSwitchCase="false">
-    <h3 class="title">{{ 't_dashboard_app_usage' | cpI18n }}</h3>
-    <div class="app-usage-charts">
-      <div class="app-usage-chart active-users">
-
-        <cp-line-chart [labels]="labels"
-                       [series]="uniqueActiveUsers"
-                       [chartOptions]="chartOptions"
-                       tooltipClass="uniqueActiveUser"
-                       [customTooltip]="builTooltip.bind(this)">
-        </cp-line-chart>
-        <span class="label">
-          <span class="pill pill--primary"></span>
-          {{ 't_dashboard_unique_active_users' | cpI18n }}
-        </span>
-      </div>
-      <div class="app-usage-chart unique-opens">
-        <cp-line-chart [labels]="labels"
-                       tooltipClass="appOpens"
-                       [series]="appOpenSeries"
-                       [chartOptions]="chartOptions"
-                       [customTooltip]="builTooltip.bind(this)">
-        </cp-line-chart>
-        <span class="label">
-          <span class="pill pill--secondary"></span>
-          {{ 't_dashboard_total_app_opens' | cpI18n }}
-        </span>
-      </div>
+    <div class="cp-dashboard-app-usage">
+      <cp-card>
+        <cp-dashboard-unique-active-users class="active-users"
+                                          [labels]="uniqueUsersLabels"
+                                          [series]="uniqueActiveUsers"
+                                          [chartOptions]="uniqueAppOpenChartOptions">
+        </cp-dashboard-unique-active-users>
+      </cp-card>
+      <cp-card>
+        <cp-dashboard-total-app-opens class="unique-opens"
+                                      [labels]="appOpenLabels"
+                                      [series]="appOpenSeries"
+                                      [chartOptions]="appOpenChartOptions">
+        </cp-dashboard-total-app-opens>
+      </cp-card>
     </div>
   </ng-container>
 </ng-container>

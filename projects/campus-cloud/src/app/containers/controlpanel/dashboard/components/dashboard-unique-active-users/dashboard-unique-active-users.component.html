@@ -1,0 +1,12 @@
+<h3 class="title">{{ 't_dashboard_unique_active_users' | cpI18n }}
+  ({{ 'dashboard_last_30_days' | cpI18n }})</h3>
+<cp-line-chart [labels]="labels"
+               [series]="series"
+               [chartOptions]="chartOptions">
+</cp-line-chart>
+
+
+<span class="label">
+  <span class="pill"></span>
+  {{ 't_dashboard_unique_active_users' | cpI18n }}
+</span>

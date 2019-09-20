@@ -282,7 +282,7 @@ export class ServicesCreateComponent implements OnInit {
       rating_scale_maximum: [null],
       logo_url: [null, Validators.required],
       category: [null, Validators.required],
-      website: [null, Validators.maxLength(120)],
+      website: [null, Validators.maxLength(1024)],
       default_basic_feedback_label: [this.cpI18n.translate('services_default_feedback_question')],
       name: [null, Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])]
     });

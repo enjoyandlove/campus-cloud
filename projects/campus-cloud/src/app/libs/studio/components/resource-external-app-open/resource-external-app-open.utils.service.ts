@@ -84,7 +84,7 @@ export class ResourceExternalAppOpenUtils {
       android: {
         fallback_http_url:
           'https://play.google.com/store/apps/details?id=com.microsoft.office.outlook',
-        package_name: 'com.microsoft.office.outlook&hl=en_US'
+        package_name: 'com.microsoft.office.outlook'
       },
       ios: {
         fallback_http_url: 'https://itunes.apple.com/us/app/microsoft-outlook/id951937596?mt%3D8',
@@ -105,7 +105,7 @@ export class ResourceExternalAppOpenUtils {
     [ThirdPartyIds.powerSchool]: {
       android: {
         fallback_http_url: 'https://play.google.com/store/apps/details?id=com.powerschool.portal',
-        package_name: 'com.powerschool.portal&hl=en'
+        package_name: 'com.powerschool.portal'
       },
       ios: {
         fallback_http_url: 'https://itunes.apple.com/us/app/powerschool-mobile/id973741088?mt=8',
@@ -135,7 +135,7 @@ export class ResourceExternalAppOpenUtils {
     [ThirdPartyIds.guideEab]: {
       android: {
         fallback_http_url: 'https://play.google.com/store/apps/details?id=com.eab.se&hl=en',
-        package_name: 'com.eab.se&hl=en_US'
+        package_name: 'com.eab.se'
       },
       ios: {
         fallback_http_url: 'https://itunes.apple.com/us/app/navigate-student/id950433229?mt=8',

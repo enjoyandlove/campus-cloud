@@ -18,10 +18,12 @@ import {
   DashboardTopResourceComponent,
   DashboardTopServicesComponent,
   DashboardSocialActivyComponent,
+  DashboardTotalAppOpensComponent,
   DashboardExperienceMenuComponent,
   DashboardTopOrientationComponent,
   DashboardTopResourceTitleComponent,
   DashboardSocialActivyChartComponent,
+  DashboardUniqueActiveUsersComponent,
   DashboardGeneralInformationComponent,
   DashboardDownloadsRegistrationComponent
 } from './components';
@@ -39,9 +41,11 @@ import {
     DashboardTopResourceComponent,
     DashboardTopServicesComponent,
     DashboardSocialActivyComponent,
+    DashboardTotalAppOpensComponent,
     DashboardExperienceMenuComponent,
     DashboardTopOrientationComponent,
     DashboardTopResourceTitleComponent,
+    DashboardUniqueActiveUsersComponent,
     DashboardSocialActivyChartComponent,
     DashboardGeneralInformationComponent,
     DashboardDownloadsRegistrationComponent
