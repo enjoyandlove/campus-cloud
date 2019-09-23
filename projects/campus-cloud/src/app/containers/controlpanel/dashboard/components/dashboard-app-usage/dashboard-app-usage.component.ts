@@ -70,15 +70,18 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
   groupSeries({ data }) {
     const labels = data.app_opens.labels;
 
-    this.thirtyDayRange = {
-      start: labels[labels.length - 31],
-      end: labels[labels.length - 1]
-    };
-
     this.range = {
       start: labels[0],
       end: labels[labels.length - 1]
     };
+
+    this.thirtyDayRange =
+      data.app_opens_unique.series.length >= 31
+        ? {
+            start: labels[labels.length - 31],
+            end: labels[labels.length - 1]
+          }
+        : this.range;
 
     const year = 365;
     const threeMonths = 90;
@@ -123,7 +126,7 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
       high: Math.max(...sourceSeries) + 5 - ((Math.max(...sourceSeries) + 5) % 5),
       axisY: {
         onlyInteger: true,
-        labelInterpolationFnc: kFormatter
+        labelInterpolationFnc: (value: number) => kFormatter(value, 0)
       },
       axisX: {
         labelInterpolationFnc: function limitXAxisLabelsLength(value, index) {
