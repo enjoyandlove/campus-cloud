@@ -70,15 +70,19 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
   groupSeries({ data }) {
     const labels = data.app_opens.labels;
 
-    this.thirtyDayRange = {
-      start: labels[labels.length - 31],
-      end: labels[labels.length - 1]
-    };
-
     this.range = {
       start: labels[0],
       end: labels[labels.length - 1]
     };
+
+    this.thirtyDayRange =
+      data.app_opens_unique.series.length >= 31
+        ? {
+            start: labels[labels.length - 31],
+            end: labels[labels.length - 1]
+          }
+        : this.range;
+
     const year = 365;
     const threeMonths = 90;
     const twoYears = year * 2;
@@ -122,17 +126,17 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
       high: Math.max(...sourceSeries) + 5 - ((Math.max(...sourceSeries) + 5) % 5),
       axisY: {
         onlyInteger: true,
-        labelInterpolationFnc: kFormatter
+        labelInterpolationFnc: (value: number) => kFormatter(value, 0)
       },
       axisX: {
         labelInterpolationFnc: function limitXAxisLabelsLength(value, index) {
           // ignore last label
-          if (index === series[0].length - 1) {
+          if (index === sourceSeries.length - 1) {
             return null;
           }
 
-          if (series[0].length > 6) {
-            value = index % Math.floor(series[0].length / 3) === 0 ? value : null;
+          if (sourceSeries.length > 6) {
+            value = index % Math.floor(sourceSeries.length / 3) === 0 ? value : null;
           }
           return value;
         }
@@ -141,16 +145,18 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
   }
 
   handleSuccess(series) {
-    const last30AppUnique =
-      this.divider !== DivideBy.daily ? series[1].slice(series[1].length - 31) : series[1];
+    const moreThanThirtyDays = series[1].length > 31;
+    const last30AppUnique = moreThanThirtyDays ? series[1].slice(series[1].length - 31) : series[1];
 
     this.appOpenChartOptions = this.getChartOptions(series, series[0]);
     this.uniqueAppOpenChartOptions = this.getChartOptions(series, last30AppUnique);
 
     this.appOpenLabels = this.utils.buildLabels(this.divider, this.range, series);
-    this.uniqueUsersLabels = this.utils.buildLabels(DivideBy.daily, this.thirtyDayRange, [
-      last30AppUnique
-    ]);
+    this.uniqueUsersLabels = this.utils.buildLabels(
+      DivideBy.daily,
+      moreThanThirtyDays ? this.thirtyDayRange : this.range,
+      [last30AppUnique]
+    );
 
     this.appOpenSeries = this.utils.buildSeries(
       this.divider,
@@ -160,7 +166,7 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
     );
     this.uniqueActiveUsers = this.utils.buildSeries(
       DivideBy.daily,
-      this.thirtyDayRange,
+      moreThanThirtyDays ? this.thirtyDayRange : this.range,
       [this.cpI18n.translate('t_dashboard_unique_active_users')],
       [last30AppUnique]
     );
