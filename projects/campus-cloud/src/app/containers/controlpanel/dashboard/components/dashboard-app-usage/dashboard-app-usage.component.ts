@@ -131,12 +131,12 @@ export class DashboardAppUsageComponent extends BaseComponent implements OnInit 
       axisX: {
         labelInterpolationFnc: function limitXAxisLabelsLength(value, index) {
           // ignore last label
-          if (index === series[0].length - 1) {
+          if (index === sourceSeries.length - 1) {
             return null;
           }
 
-          if (series[0].length > 6) {
-            value = index % Math.floor(series[0].length / 3) === 0 ? value : null;
+          if (sourceSeries.length > 6) {
+            value = index % Math.floor(sourceSeries.length / 3) === 0 ? value : null;
           }
           return value;
         }
