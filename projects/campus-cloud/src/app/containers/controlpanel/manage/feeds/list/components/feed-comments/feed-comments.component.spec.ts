@@ -9,7 +9,7 @@ import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { FeedCommentsComponent } from '@controlpanel/manage/feeds/list/components';
 
-fdescribe('FeedCommentsComponent', () => {
+describe('FeedCommentsComponent', () => {
   configureTestSuite();
 
   beforeAll((done) =>
