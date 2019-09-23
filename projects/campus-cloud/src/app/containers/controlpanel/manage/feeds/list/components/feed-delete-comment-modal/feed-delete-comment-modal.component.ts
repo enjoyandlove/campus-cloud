@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -16,11 +16,11 @@ declare var $: any;
   templateUrl: './feed-delete-comment-modal.component.html',
   styleUrls: ['./feed-delete-comment-modal.component.scss']
 })
-export class FeedDeleteCommentModalComponent implements OnInit {
+export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
   @Input() feed: any;
   @Input() groupType: GroupType;
   @Input() wallCategory: string;
-  @Input() isCampusWallView: Observable<number>;
+  @Input() isCampusWallView: Observable<{}>;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
@@ -43,7 +43,7 @@ export class FeedDeleteCommentModalComponent implements OnInit {
   constructor(
     private cpI18n: CPI18nService,
     private utils: FeedsUtilsService,
-    private feedsService: FeedsService,
+    public feedsService: FeedsService,
     private cpTracking: CPTrackingService
   ) {}
 
@@ -87,7 +87,7 @@ export class FeedDeleteCommentModalComponent implements OnInit {
       text: this.cpI18n.translate('delete')
     };
 
-    this.isCampusWallView.pipe(takeUntil(this.deleted)).subscribe((res: any) => {
+    this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       this._isCampusWallView = res.type === 1;
     });
   }

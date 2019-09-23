@@ -30,7 +30,6 @@ export function reducer(state = initialState, action: Actions): IAnnouncementsIn
     case IntegrationActions.GET_INTEGRATIONS:
     case IntegrationActions.DELETE_INTEGRATIONS:
     case IntegrationActions.CREATE_INTEGRATION: {
-      console.log('GET_INTEGRATIONS', state);
       return {
         ...state,
         error: false,
