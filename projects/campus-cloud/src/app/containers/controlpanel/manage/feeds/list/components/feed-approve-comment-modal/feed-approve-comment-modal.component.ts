@@ -16,7 +16,7 @@ declare var $: any;
 })
 export class FeedApproveCommentModalComponent implements OnInit, OnDestroy {
   @Input() feed: any;
-  @Input() isCampusWallView: Observable<number>;
+  @Input() isCampusWallView: Observable<{}>;
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() approved: EventEmitter<number> = new EventEmitter();
 
@@ -26,7 +26,7 @@ export class FeedApproveCommentModalComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
-  constructor(private cpI18n: CPI18nService, private feedsService: FeedsService) {}
+  constructor(private cpI18n: CPI18nService, public feedsService: FeedsService) {}
 
   onSubmit() {
     const data = { flag: 2 };

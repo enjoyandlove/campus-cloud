@@ -5,16 +5,20 @@ import {
   Output,
   ViewChild,
   Component,
+  OnDestroy,
   EventEmitter,
   ViewEncapsulation
 } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import { CP_TRACK_TO, CPHostDirective } from '@campus-cloud/shared/directives';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-feed-body',
   templateUrl: './feed-body.component.html',
@@ -24,14 +28,14 @@ import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services'
     class: 'cp-feed-body'
   }
 })
-export class FeedBodyComponent implements OnInit {
+export class FeedBodyComponent implements OnInit, OnDestroy {
   @Input() feed: any;
   @Input() replyView: number;
   @Input() isComment: boolean;
   @Input() wallCategory: string;
   @Input() groupType: GroupType;
   @Input() isRemovedPosts: boolean;
-  @Input() isCampusWallView: Observable<number>;
+  @Input() isCampusWallView: Observable<{}>;
 
   @Output() viewComments: EventEmitter<boolean> = new EventEmitter();
   @Output() toggleReplies: EventEmitter<boolean> = new EventEmitter();
@@ -50,6 +54,9 @@ export class FeedBodyComponent implements OnInit {
 
   _isCampusWallView;
   viewImageEventData;
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public cpI18n: CPI18nService,
@@ -112,8 +119,12 @@ export class FeedBodyComponent implements OnInit {
   ngOnInit() {
     this.trackViewLightBoxEvent();
 
-    this.isCampusWallView.subscribe((res: any) => {
+    this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       this._isCampusWallView = res.type === 1;
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }
