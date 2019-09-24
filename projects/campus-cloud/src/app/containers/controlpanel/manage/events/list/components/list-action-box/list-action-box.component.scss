@@ -67,8 +67,9 @@
   position: relative;
 
   i {
+    @include font-24px();
+
     padding: 4px;
-    font-size: 23px;
   }
 
   .dropdown-menu {
