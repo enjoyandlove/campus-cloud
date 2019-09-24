@@ -2251,7 +2251,7 @@
     "message": "Type d'annonce"
   },
   "t_api_management_generate_key": {
-    "message": "Generate Key & Save"
+    "message": "Générer clé et sauvegarder"
   },
   "t_assess_all_orientations": {
     "message": "Tous les programmes d'orientation"
@@ -2395,7 +2395,7 @@
     "message": "Expériences d'application"
   },
   "t_dashboard_app_usage": {
-    "message": "App Usage"
+    "message": "Utilisation de l'appli"
   },
   "t_dashboard_build_experience": {
     "message": "Créer expérience d'application"
@@ -2410,10 +2410,10 @@
     "message": "Palmarès des orientations"
   },
   "t_dashboard_total_app_opens": {
-    "message": "Total App Opens"
+    "message": "Total d'ouvertures de l'application"
   },
   "t_dashboard_unique_active_users": {
-    "message": "Unique Active Users"
+    "message": "Utilisateurs actifs uniques"
   },
   "t_dashboard_welcome": {
     "message": "Bienvenue sur Campus Cloud"
@@ -2880,7 +2880,7 @@
     "message": "Fournit un aperçu de l'application avant l'enregistrement"
   },
   "t_personas_form_sub_heading_upcoming_deadlines": {
-    "message": "Upcoming assignments and tests"
+    "message": "Devoirs et examens à venir"
   },
   "t_personas_list_dropdown_all_experiences": {
     "message": "Tout"

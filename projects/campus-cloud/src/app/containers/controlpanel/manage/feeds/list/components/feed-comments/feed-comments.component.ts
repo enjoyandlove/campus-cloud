@@ -1,11 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
+import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../../../feeds.service';
-import { CPSession } from '../../../../../../../session';
 import { GroupType } from '../../../feeds.utils.service';
-import { BaseComponent } from '../../../../../../../base/base.component';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 
 interface IState {
   comments: Array<any>;
@@ -15,17 +17,18 @@ const state: IState = {
   comments: []
 };
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-feed-comments',
   templateUrl: './feed-comments.component.html',
   styleUrls: ['./feed-comments.component.scss']
 })
-export class FeedCommentsComponent extends BaseComponent implements OnInit {
+export class FeedCommentsComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() feed;
   @Input() groupId: number;
   @Input() postType: number;
   @Input() groupType: GroupType;
-  @Input() isCampusWallView: Observable<number>;
+  @Input() isCampusWallView: Observable<{}>;
   @Output() deleted: EventEmitter<null> = new EventEmitter();
   @Output() replied: EventEmitter<null> = new EventEmitter();
 
@@ -36,7 +39,10 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
   campusGroupId: number;
   state: IState = state;
 
-  constructor(private session: CPSession, private feedsService: FeedsService) {
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
+  constructor(private session: CPSession, public feedsService: FeedsService) {
     super();
     this.endRange = 10000;
     this.maxPerPage = 10000;
@@ -100,10 +106,14 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit {
     this.endRange = this.feed.comment_count + 1;
     this.maxPerPage = this.feed.comment_count + 1;
 
-    this.isCampusWallView.subscribe((res: any) => {
+    this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       this.campusGroupId = res.type;
       this._isCampusWallView = res.type === 1;
     });
     this.fetch();
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }
