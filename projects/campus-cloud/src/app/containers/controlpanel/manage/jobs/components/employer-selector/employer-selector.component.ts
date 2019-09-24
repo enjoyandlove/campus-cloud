@@ -1,11 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { startWith, map } from 'rxjs/operators';
+import { startWith, map, tap } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import { BaseComponent } from '@campus-cloud/base';
 import * as fromJobs from '@campus-cloud/store/manage';
-import { JobsService } from '../../jobs.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
@@ -19,11 +18,7 @@ export class EmployerSelectorComponent extends BaseComponent implements OnInit {
   employers$;
   selectedEmployer;
 
-  constructor(
-    public cpI18n: CPI18nService,
-    public jobsService: JobsService,
-    private store: Store<fromJobs.IJobsState>
-  ) {
+  constructor(public cpI18n: CPI18nService, private store: Store<fromJobs.IJobsState>) {
     super();
   }
 
@@ -31,28 +26,27 @@ export class EmployerSelectorComponent extends BaseComponent implements OnInit {
     this.form.controls['store_id'].setValue(store_id);
   }
 
-  getSelectedEmployer() {
-    const store_id = this.form.controls['store_id'].value;
-    if (store_id) {
-      super.fetchData(this.employers$).then((employers) => {
-        this.selectedEmployer = employers.data.filter(
-          (employee) => employee.action === store_id
-        )[0];
-      });
-    }
+  getEmployers() {
+    const dropdownLabel = this.cpI18n.translate('jobs_select_employer');
+    this.employers$ = this.store.select(fromJobs.getJobsEmployers).pipe(
+      startWith([{ label: dropdownLabel, action: null }]),
+      map((employers) => [{ label: dropdownLabel, action: null }, ...employers]),
+      tap((employers) => {
+        const store_id = this.form.controls['store_id'].value;
+        if (store_id) {
+          this.selectedEmployer = employers.find((employer) => employer.action === store_id);
+        }
+      })
+    );
   }
 
   ngOnInit() {
-    const dropdownLabel = this.cpI18n.translate('jobs_select_employer');
-    this.employers$ = this.store.select(fromJobs.getJobsEmployers).pipe(
-      startWith([{ label: dropdownLabel }]),
-      map((employers) => [{ label: dropdownLabel, action: null }, ...employers])
-    );
+    this.getEmployers();
+
     this.store.select(fromJobs.getJobsEmployersLoaded).subscribe((loaded: boolean) => {
       if (!loaded) {
         this.store.dispatch(new fromJobs.LoadEmployers());
       }
     });
-    this.getSelectedEmployer();
   }
 }
