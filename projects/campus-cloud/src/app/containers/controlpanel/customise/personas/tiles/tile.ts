@@ -72,6 +72,8 @@ export class CampusLink {
 
   public static readonly enrollment = `${inapp}int_native_enrollment`;
 
+  public static readonly integration = `${inapp}integration`;
+
   public static readonly linkType = {
     appOpen: 4,
     inAppLink: 3,

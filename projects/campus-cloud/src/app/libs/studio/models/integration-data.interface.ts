@@ -1,4 +1,5 @@
 export interface IIntegrationData {
+  client_int: [];
   extra_data: IExtraData[];
 }
 

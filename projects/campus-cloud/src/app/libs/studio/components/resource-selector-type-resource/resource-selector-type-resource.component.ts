@@ -87,7 +87,23 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
   }
 
   initResources(integrationData = null) {
+    let legacyIntegrations = integrationData
+      ? integrationData.filter(({ client_int }) => client_int.length)
+      : [];
     const schoolIntegrationData = this.getSchoolIntegrationConfigByIntegrationData(integrationData);
+
+    if (legacyIntegrations) {
+      legacyIntegrations = legacyIntegrations.map(({ id, integration_name }) => {
+        return {
+          id,
+          meta: {
+            link_params: { id },
+            link_url: CampusLink.integration
+          },
+          label: `[NOTRANSLATE]${integration_name}[NOTRANSLATE]`
+        };
+      });
+    }
 
     const filters = [
       this.filterByWebApp ? ContentUtilsProviders.isWebAppContent : null,
@@ -125,6 +141,10 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
       ContentUtilsProviders.contentTypes.list,
       filters
     );
+
+    if (!this.filterByLoginStatus && !this.filterByWebApp && legacyIntegrations) {
+      this.resources = [...this.resources, ...legacyIntegrations];
+    }
     this.items = this.contentUtils.resourcesToIItem(this.resources);
 
     this.updateStateWith(this.getInitialFormValues());

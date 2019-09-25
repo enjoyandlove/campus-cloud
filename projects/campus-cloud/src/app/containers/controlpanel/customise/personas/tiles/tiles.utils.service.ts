@@ -5,11 +5,11 @@ import { Injectable } from '@angular/core';
 import { CampusLink } from './tile';
 import { ITile } from './tile.interface';
 import { CPSession } from '@campus-cloud/session';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { ICampusGuide } from './../sections/section.interface';
 import { hexColorString } from '@campus-cloud/shared/utils/forms';
 import { CustomValidators } from '@campus-cloud/shared/validators';
 import { SectionUtilsService } from './../sections/section.utils.service';
-import { FileUploadService, CPI18nService } from '@campus-cloud/shared/services';
 import { CampusLinkType, TileCategoryRank, TileFeatureRank, TileVisibility } from './tiles.status';
 
 const threeHundrendKb = 3e5;
@@ -54,6 +54,10 @@ export class TilesUtilsService {
   ];
 
   defaultTileCategoryIds = [2, 3, 4, 5, 7, 8, 9, 10, 11, 12, 13];
+
+  static isIntegrationLink(linkUrl: string) {
+    return linkUrl === CampusLink.integration;
+  }
 
   constructor(
     public fb: FormBuilder,
