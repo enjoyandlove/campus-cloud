@@ -12,6 +12,8 @@ import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { ExtraDataType } from './../../models/integration-data.interface';
 import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { IntegrationDataService, IStudioContentResource } from './../../providers';
+import { TilesUtilsService } from '@controlpanel/customise/personas/tiles/tiles.utils.service';
+import { CustomiseRoutingModule } from '@projects/campus-cloud/src/app/containers/controlpanel/customise/customise.routing.module';
 
 @Component({
   selector: 'cp-resource-selector-type-resource',
@@ -151,11 +153,20 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
   }
 
   isCampusLinkInList() {
+    let linkParamsMatch = true;
     if (!this.campusLink || !this.items.length) {
       return false;
     }
 
-    return this.items.map((i) => i.meta.link_url).includes(this.campusLink.link_url);
+    if (TilesUtilsService.isIntegrationLink(this.campusLink.link_url)) {
+      linkParamsMatch = this.items
+        .map((i) => _get(i, ['meta', 'link_params', 'id'], null))
+        .includes(this.campusLink.link_params.id);
+    }
+
+    return (
+      this.items.map((i) => i.meta.link_url).includes(this.campusLink.link_url) && linkParamsMatch
+    );
   }
 
   getInitialFormValues() {
