@@ -14,6 +14,8 @@ import { CalendarAmplitudeService } from '../calendar.amplitude.service';
 })
 export class CalendarsDeleteComponent implements OnInit {
   @Input() calendar;
+
+  @Output() teardown: EventEmitter<void> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
   buttonData;
@@ -24,6 +26,10 @@ export class CalendarsDeleteComponent implements OnInit {
     public cpTracking: CPTrackingService,
     public calendarService: CalendarsService
   ) {}
+
+  onClose() {
+    this.teardown.emit();
+  }
 
   onDelete() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
