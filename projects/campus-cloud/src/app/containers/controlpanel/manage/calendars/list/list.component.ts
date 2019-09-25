@@ -66,6 +66,11 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
+  onDeleteTeardown() {
+    this.launchDeleteModal = false;
+    $('#calendarDelete').modal('hide');
+  }
+
   private fetch() {
     const search = new HttpParams()
       .append('search_str', this.state.search_str)

@@ -99,7 +99,7 @@
           *ngIf="launchDeleteModal">
   <cp-calendars-delete [calendar]="selectedCalendar"
                        (deleted)="onDeleted($event)"
-                       (resetDeleteModal)="launchDeleteModal = false">
+                       (teardown)="onDeleteTeardown()">
   </cp-calendars-delete>
 </cp-modal>
 

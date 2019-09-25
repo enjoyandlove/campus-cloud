@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 import { ProgramMembership } from '../../../orientation/orientation.status';
@@ -12,12 +12,6 @@ export class CalendarsFormComponent implements OnInit {
   @Input() form: FormGroup;
   @Input() isOrientation = false;
   @Input() orientationProgram;
-
-  @Output()
-  submitted: EventEmitter<{
-    name: string;
-    description: string;
-  }> = new EventEmitter();
 
   isChecked = true;
 
