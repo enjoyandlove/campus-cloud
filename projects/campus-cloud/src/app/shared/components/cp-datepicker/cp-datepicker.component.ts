@@ -23,7 +23,6 @@ export class CPDatePickerComponent {
   }
 
   onDateChange(date: string | null) {
-    console.log('date', date);
     this.dateSet.emit(date);
   }
 }
