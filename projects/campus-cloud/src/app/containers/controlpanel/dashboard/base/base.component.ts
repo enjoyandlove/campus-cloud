@@ -1,14 +1,15 @@
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { of } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
+import { DashboardService } from '../dashboard.service';
+import { PersonaType } from '../../audience/audience.status';
 import { IDateRange } from '@campus-cloud/shared/components';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
-import { DashboardService } from '../dashboard.service';
-import { PersonaType } from '../../audience/audience.status';
 import { DashboardUtilsService } from '../dashboard.utils.service';
 import {
   canSchoolReadResource,
@@ -56,7 +57,9 @@ export class DashboardBaseComponent extends BaseComponent implements OnInit {
   }
 
   initState() {
-    if (!this.state.experiences[1] && this.canCustomize) {
+    const { has_guide_customization } = this.session.g.get('schoolConfig');
+
+    if (!this.state.experiences[1] && this.canCustomize && has_guide_customization) {
       this.router.navigate(['/dashboard/onboarding']);
     } else {
       const defaultDate = this.helper.last30Days();
@@ -105,6 +108,12 @@ export class DashboardBaseComponent extends BaseComponent implements OnInit {
   }
 
   fetchPersonas() {
+    const { has_guide_customization } = this.session.g.get('schoolConfig');
+
+    if (!has_guide_customization) {
+      return super.fetchData(of([]));
+    }
+
     const search = new HttpParams()
       .set('school_id', this.session.g.get('school').id)
       .set('platform', PersonaType.app.toString());
