@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-import { CPDate } from '@campus-cloud/shared/utils';
 import IAttendee from '../attendee.interface';
 import ICheckIn from '../../checkin.interface';
+import { CPDate } from '@campus-cloud/shared/utils';
 import { CPI18nService } from '@campus-cloud/shared/services';
+import { emailAddress } from '@campus-cloud/shared/utils/forms';
 import { CheckInMethod } from '@campus-cloud/containers/controlpanel/manage/events/event.status';
 
 const COMMON_DATE_PICKER_OPTIONS = {
@@ -26,7 +27,6 @@ export class CheckinRegisterComponent implements OnInit {
   @Output() send: EventEmitter<IAttendee> = new EventEmitter();
 
   buttonData;
-  placeholder;
   datePickerOptions;
   verificationMethods;
   disabledQRCode = false;
@@ -36,12 +36,12 @@ export class CheckinRegisterComponent implements OnInit {
   constructor(private fb: FormBuilder, private cpI18n: CPI18nService) {}
 
   onSubmit(data) {
-    if (!data.check_in_time_epoch) {
-      data.check_in_time_epoch = Math.round(CPDate.now(this.timeZone).unix());
-    }
-
-    this.selectedDate.clearDate();
-    this.registrationForm.reset();
+    this.datePickerOptions = {
+      defaultDate: Date.now()
+    };
+    this.registrationForm.reset({
+      check_in_time_epoch: Math.round(CPDate.now(this.timeZone).unix())
+    });
     this.send.emit(data);
   }
 
@@ -71,14 +71,15 @@ export class CheckinRegisterComponent implements OnInit {
       : this.data['attend_verification_methods'];
 
     this.registrationForm = this.fb.group({
-      check_in_time_epoch: [null],
-      email: [null, Validators.required],
+      check_in_time_epoch: [Math.round(CPDate.now(this.timeZone).unix())],
+      email: [null, Validators.compose([Validators.required, Validators.pattern(emailAddress)])],
       firstname: [null, Validators.required],
       lastname: [null, Validators.required]
     });
 
     this.datePickerOptions = {
-      ...COMMON_DATE_PICKER_OPTIONS
+      ...COMMON_DATE_PICKER_OPTIONS,
+      defaultDate: Date.now()
     };
 
     this.buttonData = {
@@ -97,6 +98,5 @@ export class CheckinRegisterComponent implements OnInit {
     });
 
     this.disabledQRCode = !this.verificationMethods.includes(CheckInMethod.app);
-    this.placeholder = this.cpI18n.translate('t_check_in_date_placeholder_text');
   }
 }
