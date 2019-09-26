@@ -19,7 +19,7 @@ declare var $: any;
 export class FeedApproveModalComponent implements OnInit, OnDestroy {
   @Input() feed: any;
   @Input() groupType: GroupType;
-  @Input() isCampusWallView: Observable<number>;
+  @Input() isCampusWallView: Observable<{}>;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() approved: EventEmitter<number> = new EventEmitter();
@@ -43,7 +43,7 @@ export class FeedApproveModalComponent implements OnInit, OnDestroy {
   constructor(
     private cpI18n: CPI18nService,
     private utils: FeedsUtilsService,
-    private feedsService: FeedsService,
+    public feedsService: FeedsService,
     private cpTracking: CPTrackingService
   ) {}
 

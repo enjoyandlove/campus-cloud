@@ -46,7 +46,7 @@ export class FeedMoveComponent implements OnInit, OnDestroy {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private utils: FeedsUtilsService,
-    private feedsService: FeedsService,
+    public feedsService: FeedsService,
     private cpTracking: CPTrackingService
   ) {
     this.form = this.fb.group({

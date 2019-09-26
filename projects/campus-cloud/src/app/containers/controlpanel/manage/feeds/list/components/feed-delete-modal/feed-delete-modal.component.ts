@@ -1,22 +1,25 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 import { FeedsService } from '../../../feeds.service';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../../../shared/services/index';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 declare var $: any;
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-feed-delete-modal',
   templateUrl: './feed-delete-modal.component.html',
   styleUrls: ['./feed-delete-modal.component.scss']
 })
-export class FeedDeleteModalComponent implements OnInit {
+export class FeedDeleteModalComponent implements OnInit, OnDestroy {
   @Input() feed: any;
   @Input() groupType: GroupType;
-  @Input() isCampusWallView: Observable<number>;
+  @Input() isCampusWallView: Observable<{}>;
   @Output() teardown: EventEmitter<null> = new EventEmitter();
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
@@ -32,6 +35,9 @@ export class FeedDeleteModalComponent implements OnInit {
     upload_image: null,
     campus_wall_category: null
   };
+
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
 
   constructor(
     public cpI18n: CPI18nService,
@@ -81,8 +87,12 @@ export class FeedDeleteModalComponent implements OnInit {
       text: this.cpI18n.translate('delete')
     };
 
-    this.isCampusWallView.subscribe((res: any) => {
+    this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       this._isCampusWallView = res.type === 1;
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

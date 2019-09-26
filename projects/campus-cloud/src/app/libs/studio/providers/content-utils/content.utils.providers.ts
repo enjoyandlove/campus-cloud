@@ -60,7 +60,12 @@ export class ContentUtilsProviders {
 
   static getContentTypeByCampusLink(campusLink) {
     let resource;
+    const { link_url } = campusLink;
     const resources = ContentUtilsProviders.resourceTypes();
+
+    if (TilesUtilsService.isIntegrationLink(link_url)) {
+      return ContentUtilsProviders.contentTypes.list;
+    }
 
     /**
      * loop through keys filter by the ones with linkUrl values
@@ -80,7 +85,6 @@ export class ContentUtilsProviders {
       /**
        * if not found above its either Web or Custom list, since those get filter out
        */
-      const { link_url } = campusLink;
       return link_url === CampusLink.campusLinkList
         ? ContentUtilsProviders.contentTypes.resourceList
         : ContentUtilsProviders.contentTypes.web;
