@@ -2391,6 +2391,9 @@
   "t_clubs_admin": {
     "message": "Administrateur"
   },
+  "t_copy_of": {
+    "message": "Copie de"
+  },
   "t_customise_personas": {
     "message": "Expériences d'application"
   },
