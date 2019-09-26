@@ -662,11 +662,14 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
       canSchoolReadResource(session, CP_PRIVILEGES_MAP.athletics) ||
       canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.athletics);
 
+    this.canReadServices =
+      canSchoolReadResource(session, CP_PRIVILEGES_MAP.services) ||
+      canAccountLevelReadResource(session, CP_PRIVILEGES_MAP.services);
+
     this.canReadEvents = schoolPrivileges[CP_PRIVILEGES_MAP.events] || false;
 
     this.canReadAudience = schoolPrivileges[CP_PRIVILEGES_MAP.audience] || false;
 
-    this.canReadServices = schoolPrivileges[CP_PRIVILEGES_MAP.services] || false;
     this.formData = TEAM_ACCESS.getMenu(this.user.school_level_privileges[this.schoolId]);
 
     const clubsPrivilegeSchool = schoolPrivileges[CP_PRIVILEGES_MAP.clubs];
