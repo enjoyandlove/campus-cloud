@@ -74,7 +74,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
   constructor(
     private session: CPSession,
     public cpI18n: CPI18nService,
-    private utils: TeamUtilsService
+    public utils: TeamUtilsService
   ) {}
 
   servicesDefaultPermission() {
