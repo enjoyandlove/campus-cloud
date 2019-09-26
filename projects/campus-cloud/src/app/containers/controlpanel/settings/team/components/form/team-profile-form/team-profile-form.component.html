@@ -1,0 +1,61 @@
+<cp-card>
+  <form [formGroup]="form">
+    <div class="section">
+      <h2 class="section__title">{{ isEdit ? ('admin_edit_profile' | cpI18n) : ('admin_invite' | cpI18n) }}</h2>
+      <div class="row">
+        <div class="col-4">
+          <label for="first_name">{{ 'first_name' | cpI18n }}</label>
+          <input type="text"
+                 id="first_name"
+                 class="form-control"
+                 formControlName="firstname"
+                 [attr.disabled]="!isCurrentUser && isEdit ? '' : null"/>
+        </div>
+
+        <div class="col-4">
+          <label for="last_name">{{ 'last_name' | cpI18n }}</label>
+          <input type="text"
+                 id="last_name"
+                 class="form-control"
+                 formControlName="lastname"
+                 [attr.disabled]="!isCurrentUser && isEdit ? '' : null"/>
+        </div>
+
+        <div class="col-4">
+          <label for="email">{{ 'email' | cpI18n }}</label>
+          <input id="email"
+                 type="email"
+                 class="form-control"
+                 [attr.disabled]="isEdit"
+                 formControlName="email"/>
+        </div>
+      </div>
+
+      <div class="row"
+           *ngIf="!isCurrentUser">
+        <div class="col-12">
+          <div class="all-access"
+               [class.isEnabled]="isAllAccessEnabled">
+            <div class="row">
+              <div class="col-8">
+                <p class="section-sub-title">
+                  {{ 'admin_all_access' | cpI18n }}</p>
+                <p class="section-description">
+                  {{ 'admin_all_acceess_help' | cpI18n }}
+                </p>
+              </div>
+              <div class="col-4">
+                <div class="float-right">
+                  <cp-switch [isChecked]="isAllAccessEnabled"
+                             (toggle)="onToggleAllAccess($event)"
+                             (toggle)="isAllAccessEnabled = !isAllAccessEnabled">
+                  </cp-switch>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</cp-card>

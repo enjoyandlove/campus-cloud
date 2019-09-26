@@ -1,0 +1,42 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/form';
+
+.section {
+  transition: opacity 200ms ease-in-out;
+
+  h2.section__title {
+    @include font-24px();
+    @include font-bold();
+
+    margin-bottom: 20px;
+  }
+}
+
+.all-access {
+  margin-top: 25px;
+  padding: 12px 20px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  background: $color-text-alt;
+  border: 1px solid $border-color;
+  transition: all 200ms ease-in-out;
+
+  &.isEnabled {
+    border: 1px solid $color-success;
+    background-color: rgba(40, 202, 66, 0.06);
+  }
+
+  p {
+    margin-bottom: 2px;
+
+    &.section-sub-title {
+      @include font-16px();
+      @include font-semi-bold();
+    }
+
+    &.section-description {
+      color: $color-med-grey;
+    }
+  }
+}
