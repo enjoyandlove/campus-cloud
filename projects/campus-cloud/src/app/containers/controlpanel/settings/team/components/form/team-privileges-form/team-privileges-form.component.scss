@@ -1,0 +1,99 @@
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/form';
+
+.cpcheckbox {
+  vertical-align: 2px;
+  display: inline-block;
+}
+
+.isDisabled span {
+  color: $color-secondary-text;
+}
+
+.cpbtn--cancel:disabled,
+a.cpbtn--cancel:disabled {
+  color: $color-text !important;
+}
+
+.margin-top {
+  margin-top: 1rem;
+}
+
+.material-icons {
+  @include font-14px();
+
+  top: 2px;
+  position: relative;
+}
+
+.options-row {
+  margin-top: 18px;
+
+  span {
+    top: 9px;
+    position: relative;
+  }
+}
+
+.section {
+  transition: opacity 200ms ease-in-out;
+
+  &__item {
+    margin-bottom: 45px;
+
+    &:last-child {
+      margin-bottom: 0;
+      padding-bottom: 24px;
+    }
+  }
+
+  &.isDisabled {
+    opacity: 0.5;
+  }
+}
+
+p {
+  margin-bottom: 2px;
+
+  &.section__title {
+    @include font-24px();
+    @include font-bold();
+
+    margin-bottom: 20px;
+  }
+
+  &.section-sub-title {
+    @include font-16px();
+    @include font-semi-bold();
+  }
+
+  &.section-description {
+    color: $color-med-grey;
+  }
+}
+
+.admin_studio_tooltip {
+  > :first-child {
+    margin-right: 10px;
+  }
+
+  > * {
+    width: auto;
+    vertical-align: 1px;
+    display: inline-block;
+  }
+}
+
+.footer {
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  position: fixed;
+  padding: 15px 0;
+  background: $color-white;
+  border-top: 1px solid $border-color;
+
+  a {
+    margin-right: 5px;
+  }
+}
