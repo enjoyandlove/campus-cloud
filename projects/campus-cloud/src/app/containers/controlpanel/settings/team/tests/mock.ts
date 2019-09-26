@@ -17,6 +17,12 @@ export const mockTeam = {
   account_activated: false
 };
 
+export const defaultForm = {
+  email: null,
+  lastname: null,
+  firstname: null
+};
+
 export const filledForm = {
   lastname: 'world',
   firstname: 'hello',

@@ -17,28 +17,32 @@ import { ServicesService } from '../../manage/services/services.service';
 import {
   TeamFilterPipe,
   TeamSelectedPipe,
+  TeamProfileFormComponent,
+  TeamPrivilegesFormComponent,
   BaseTeamSelectModalComponent,
   SelectTeamClubsModalComponent,
   TeamSelectModalPermissionPipe,
   SelectTeamServicesModalComponent,
   SelectTeamAthleticsModalComponent
-} from './create/components';
+} from './components';
 
 import { TeamRoutingModule } from './team.routing.module';
 
 @NgModule({
   declarations: [
-    TeamListComponent,
-    TeamCreateComponent,
-    BaseTeamSelectModalComponent,
-    TeamSelectedPipe,
     TeamFilterPipe,
-    TeamSelectModalPermissionPipe,
-    SelectTeamServicesModalComponent,
-    SelectTeamClubsModalComponent,
-    TeamDeleteComponent,
+    TeamSelectedPipe,
+    TeamListComponent,
     TeamEditComponent,
+    TeamCreateComponent,
+    TeamDeleteComponent,
+    TeamProfileFormComponent,
     TeamUnauthorizedComponent,
+    TeamPrivilegesFormComponent,
+    BaseTeamSelectModalComponent,
+    TeamSelectModalPermissionPipe,
+    SelectTeamClubsModalComponent,
+    SelectTeamServicesModalComponent,
     SelectTeamAthleticsModalComponent
   ],
 
