@@ -55,6 +55,8 @@ export const ENDPOINTS = {
 
   GROUP_COMMENT: 'group_comment',
 
+  SCHOOL_CONFIG: 'school_config',
+
   CAMPUS_THREAD: 'campus_thread',
 
   CALENDARS: 'academic_calendar',

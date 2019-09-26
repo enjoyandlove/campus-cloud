@@ -18,6 +18,22 @@ export const mockCalendar = {
   ...filledForm
 };
 
+export class MockActivatedRoute {
+  snapshot = {
+    params: {
+      calendarId: mockCalendar.id
+    }
+  };
+}
+
 export class MockCalendarsService {
   createCalendar() {}
+
+  getCalendarById() {
+    return of(mockCalendar);
+  }
+
+  getItemsByCalendarId() {
+    return of([]);
+  }
 }

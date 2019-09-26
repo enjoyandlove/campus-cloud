@@ -46,9 +46,6 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
-    this.calendarId = this.route.snapshot.params['calendarId'];
-
-    this.fetch();
   }
 
   onPaginationNext() {
@@ -111,7 +108,7 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
     }
   }
 
-  private fetch() {
+  fetch() {
     const itemSearch = new HttpParams()
       .set('search_str', this.state.search_str)
       .set('sort_field', this.state.sort_field)
@@ -142,6 +139,10 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.calendarId = this.route.snapshot.params['calendarId'];
+
+    this.fetch();
+
     const eventProperties = {
       ...this.cpTracking.getEventProperties(),
       page_name: amplitudeEvents.CALENDAR_EVENTS
