@@ -2299,7 +2299,7 @@
     "message": "Push Notification"
   },
   "t_api_management_ready_api_desc": {
-    "message": "Create and manage API tokens for your applications. An API token authorizes your application to get data from the ready platform programmatically. More information on how to use the Ready APIs can be found on our support site."
+    "message": "Create and manage API tokens for your applications. An API token authorizes your application to get data from the Ready platform programmatically. More information on how to use the Ready APIs can be found on our support site."
   },
   "t_api_management_ready_api_title": {
     "message": "Ready API"
@@ -2462,6 +2462,9 @@
   },
   "t_clubs_admin": {
     "message": "Admin"
+  },
+  "t_copy_of": {
+    "message": "Copy of"
   },
   "t_customise_personas": {
     "message": "App Experiences"

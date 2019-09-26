@@ -73,11 +73,15 @@ export class OrientationDuplicateProgramComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const { name, description, has_membership } = this.orientationProgram;
     this.form = this.fb.group({
       clone_calendar_id: [this.orientationProgram.id],
-      name: [null, [Validators.required, Validators.maxLength(225)]],
-      description: [null, Validators.maxLength(512)],
-      has_membership: [this.orientationProgram.has_membership]
+      name: [
+        `${this.cpI18n.translate('t_copy_of')} ${name}`,
+        [Validators.required, Validators.maxLength(225)]
+      ],
+      description: [description, Validators.maxLength(512)],
+      has_membership: [has_membership]
     });
 
     this.buttonData = Object.assign({}, this.buttonData, {
