@@ -88,6 +88,16 @@ export class AuthGuard implements CanActivate {
     return this.storeService.getStores(search).toPromise();
   }
 
+  getSchoolConfig(): Promise<any> {
+    const search = new HttpParams().set('school_id', this.session.school.id.toString());
+
+    return this.schoolService
+      .getSchoolConfig(search)
+      .toPromise()
+      .then((config) => this.session.g.set('schoolConfig', config))
+      .catch();
+  }
+
   setDefaultHost(stores): Promise<null> {
     let defaultHost = null;
 
@@ -137,6 +147,7 @@ export class AuthGuard implements CanActivate {
       if (!this.session.g.size) {
         try {
           await this.preLoadSchool(activatedRoute);
+          await this.getSchoolConfig();
           await this.preLoadUser();
           const stores = await this.fetchStores();
           await this.setDefaultHost(stores);

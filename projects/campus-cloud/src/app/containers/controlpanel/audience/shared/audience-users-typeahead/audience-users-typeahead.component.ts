@@ -45,20 +45,16 @@ export class AudienceUsersTypeaheadComponent implements OnInit {
       .getUsers(search)
       .pipe(
         map((users) => {
-          const _users = [];
-
-          users.forEach((user) => {
-            _users.push({
-              label: `${user.firstname} ${user.lastname}`,
-              id: user.id
-            });
-          });
-
-          if (!_users.length) {
-            _users.push({ label: this.cpI18n.translate('no_results') });
+          if (!users) {
+            return [{ label: this.cpI18n.translate('no_results') }];
           }
 
-          return _users;
+          return users.map(({ id, firstname, lastname, email }) => {
+            return {
+              id,
+              label: `${firstname} ${lastname} (${email})`
+            };
+          });
         })
       )
       .subscribe((suggestions) => {
