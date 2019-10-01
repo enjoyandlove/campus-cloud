@@ -4,9 +4,15 @@ import { FormGroup, ValidationErrors } from '@angular/forms';
 import IEvent from './event.interface';
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { CPDate, Formats, createSpreadSheet } from '@campus-cloud/shared/utils';
 import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { qrCode, EventType, attendanceType, CheckInOutTime, EventAttendance } from './event.status';
+
+import {
+  CPDate,
+  Formats,
+  createSpreadSheet,
+  canSchoolWriteResource
+} from '@campus-cloud/shared/utils';
 
 export interface IEventType {
   event_id?: number;
@@ -68,7 +74,13 @@ export class EventUtilService {
   }
 
   getSubNavChildren(event, urlPrefix) {
-    const attendanceEnabled = event.event_attendance === EventAttendance.enabled;
+    const canViewAttendance = canSchoolWriteResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.event_attendance
+    );
+
+    const attendanceEnabled =
+      event.event_attendance === EventAttendance.enabled && canViewAttendance;
 
     const children = [
       {

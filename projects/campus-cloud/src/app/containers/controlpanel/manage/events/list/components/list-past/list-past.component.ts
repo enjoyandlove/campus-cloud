@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
+import { CPSession } from '@campus-cloud/session';
 import { FORMAT } from '@campus-cloud/shared/pipes';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { CPI18nService, CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
@@ -31,9 +34,14 @@ export class ListPastComponent implements OnInit {
   sortingLabels;
   sort: ISort = sort;
   dateFormat = FORMAT.SHORT;
+  canViewAttendance = false;
   isExternalToolTip = this.cpI18n.translate('t_events_list_external_source_tooltip');
 
-  constructor(private cpI18n: CPI18nService, private cpTracking: CPTrackingService) {}
+  constructor(
+    private session: CPSession,
+    private cpI18n: CPI18nService,
+    private cpTracking: CPTrackingService
+  ) {}
 
   setEventProperties() {
     return {
@@ -62,5 +70,10 @@ export class ListPastComponent implements OnInit {
       name: this.cpI18n.translate('name'),
       end_date: this.cpI18n.translate('end_date')
     };
+
+    this.canViewAttendance = canSchoolWriteResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.event_attendance
+    );
   }
 }
