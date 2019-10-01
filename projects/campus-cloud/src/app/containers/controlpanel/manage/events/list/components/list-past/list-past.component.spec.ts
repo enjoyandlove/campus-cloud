@@ -1,12 +1,11 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { provideMockStore } from '@ngrx/store/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
+import { mockSchool } from '@campus-cloud/session/mock';
 import { ListPastComponent } from './list-past.component';
-import { mockSchool, mockUser } from '@campus-cloud/session/mock';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { configureTestSuite, CPTestModule, MOCK_IMAGE } from '@campus-cloud/shared/tests';
 import { IntegrationSourceToIconPipe } from '@campus-cloud/libs/integrations/common/pipes/source-to-icon';
 
@@ -22,14 +21,19 @@ const initialState = {
   events: []
 };
 
+const mockUser = {
+  school_level_privileges: {
+    157: { [CP_PRIVILEGES_MAP.event_attendance]: { r: false, w: false } }
+  }
+};
+
 describe('ListPastComponent', () => {
   configureTestSuite();
 
   beforeAll((done) =>
     (async () => {
       TestBed.configureTestingModule({
-        providers: [provideMockStore()],
-        imports: [CPTestModule, RouterTestingModule],
+        imports: [CPTestModule],
         declarations: [ListPastComponent, IntegrationSourceToIconPipe]
       });
 
@@ -57,6 +61,10 @@ describe('ListPastComponent', () => {
     component.state = initialState;
 
     fixture.detectChanges();
+  });
+
+  it('should not view event assessment if no event attendance privileges', () => {
+    expect(component.canViewAttendance).toBe(false);
   });
 
   it('should render events in the page', () => {
