@@ -1,15 +1,16 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
+import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
 import { mockSchool } from '@campus-cloud/session/mock';
-import { CalendarsModule } from './../../calendars.module';
-import { CalendarsService } from './../../calendars.services';
-import { CalendarsDetailComponent } from '../calendars-details.component';
+import { CalendarsModule } from '../calendars.module';
+import { CalendarsService } from '../calendars.services';
+import { CalendarsDetailComponent } from './calendars-details.component';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
-import { MockCalendarsService, mockCalendar, MockActivatedRoute } from './../../tests/mocks';
+import { MockCalendarsService, mockCalendar, MockActivatedRoute } from '../tests/mocks';
 
 describe('CalendarsDetailComponent', () => {
   configureTestSuite();
@@ -105,6 +106,49 @@ describe('CalendarsDetailComponent', () => {
       component.onSearch('');
 
       expect(component.fetch).toHaveBeenCalled();
+    });
+  });
+
+  describe('fetch', () => {
+    let spyGetCalendarById: jasmine.Spy;
+    let spyGetItemsByCalendarId: jasmine.Spy;
+    beforeEach(() => {
+      component.calendar = null;
+      spyGetCalendarById = spyOn(component.service, 'getCalendarById').and.callThrough();
+      spyGetItemsByCalendarId = spyOn(component.service, 'getItemsByCalendarId').and.callThrough();
+
+      component.state = {
+        items: [],
+        search_str: 'search_str',
+        sort_field: 'sort_field',
+        sort_direction: 'sort_direction'
+      };
+
+      fixture.detectChanges();
+      component.fetch();
+    });
+
+    it('should pass right params for item search', () => {
+      const [, , params] = <[number, number, HttpParams]>(
+        spyGetItemsByCalendarId.calls.mostRecent().args
+      );
+
+      expect(params.get('search_str')).toBe(component.state.search_str);
+      expect(params.get('sort_field')).toBe(component.state.sort_field);
+      expect(params.get('sort_direction')).toBe(component.state.sort_direction);
+      expect(params.get('school_id').toString()).toBe(mockSchool.id.toString());
+      expect(params.get('academic_calendar_id').toString()).toBe(mockCalendar.id.toString());
+    });
+
+    it('should pass right params for calendarSearch search', () => {
+      const [calendarId, params] = <[number, HttpParams]>spyGetCalendarById.calls.mostRecent().args;
+
+      expect(calendarId).toBe(mockCalendar.id);
+      expect(params.get('school_id').toString()).toBe(mockSchool.id.toString());
+    });
+
+    it('should set calendar to value returned by the api', () => {
+      expect(component.calendar).toBe(mockCalendar);
     });
   });
 

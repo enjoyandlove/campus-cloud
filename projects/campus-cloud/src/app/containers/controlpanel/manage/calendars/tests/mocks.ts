@@ -34,6 +34,6 @@ export class MockCalendarsService {
   }
 
   getItemsByCalendarId() {
-    return of([]);
+    return of(mockCalendar);
   }
 }

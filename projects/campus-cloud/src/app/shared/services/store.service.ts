@@ -4,6 +4,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { CPI18nService } from './i18n.service';
+import { ICampusStore } from '../models/store';
 import { CP_PRIVILEGES_MAP } from '../constants';
 import { CPSession } from '@campus-cloud/session';
 import { amplitudeEvents } from '../constants/analytics';
@@ -214,9 +215,9 @@ export class StoreService {
     );
   }
 
-  getStoreById(storeId: number) {
+  getStoreById(storeId: number, params: HttpParams): Observable<ICampusStore> {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.STORE}/${storeId}`;
 
-    return this.api.get(url);
+    return <Observable<ICampusStore>>this.api.get(url, params, true);
   }
 }

@@ -8,7 +8,13 @@ import { appStorage } from '@campus-cloud/shared/utils';
 import { CPSession, ISchool } from '@campus-cloud/session';
 import { CPLogger } from '@campus-cloud/shared/services/logger';
 import { base64 } from '@campus-cloud/shared/utils/encrypt/encrypt';
-import { AdminService, SchoolService, StoreService } from '@campus-cloud/shared/services';
+import { ICampusStore, StoreCategoryType } from '@campus-cloud/shared/models';
+import {
+  AdminService,
+  StoreService,
+  SchoolService,
+  CPAmplitudeService
+} from '@campus-cloud/shared/services';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -82,12 +88,6 @@ export class AuthGuard implements CanActivate {
       .toPromise();
   }
 
-  fetchStores(): Promise<any> {
-    const search = new HttpParams().set('school_id', this.session.school.id.toString());
-
-    return this.storeService.getStores(search).toPromise();
-  }
-
   getSchoolConfig(): Promise<any> {
     const search = new HttpParams().set('school_id', this.session.school.id.toString());
 
@@ -98,21 +98,35 @@ export class AuthGuard implements CanActivate {
       .catch();
   }
 
-  setDefaultHost(stores): Promise<null> {
-    let defaultHost = null;
+  setDefaultHost(): Promise<any> {
+    /**
+     * try calling `store` using the schools' main_union_store_id
+     * if it fails it means the user does not have access to it and
+     * we should not populate the defaultHost in CPSession
+     */
+    const storeId = this.session.school.main_union_store_id;
+    const search = new HttpParams()
+      .set('school_id', this.session.school.id.toString())
+      .set(
+        'category_ids',
+        `${StoreCategoryType.athletics}, ${StoreCategoryType.club}, ${StoreCategoryType.services}`
+      );
 
-    return new Promise((resolve) => {
-      const schoolDefaultHost = this.session.school.main_union_store_id;
-
-      stores.map((store) => {
-        if (store.value === schoolDefaultHost) {
-          defaultHost = store;
-        }
-      });
-
-      this.session.defaultHost = defaultHost;
-      resolve();
-    });
+    return new Promise((resolve) =>
+      this.storeService
+        .getStoreById(storeId, search)
+        .toPromise()
+        .then(({ name, id, category_id }: ICampusStore) => {
+          this.session.defaultHost = {
+            label: name,
+            value: id,
+            heading: false,
+            hostType: CPAmplitudeService.storeCategoryIdToAmplitudeName(category_id)
+          };
+          resolve();
+        })
+        .catch(() => resolve())
+    );
   }
 
   setUserContext() {
@@ -149,8 +163,7 @@ export class AuthGuard implements CanActivate {
           await this.preLoadSchool(activatedRoute);
           await this.getSchoolConfig();
           await this.preLoadUser();
-          const stores = await this.fetchStores();
-          await this.setDefaultHost(stores);
+          await this.setDefaultHost();
         } catch {
           return false;
         }
