@@ -175,7 +175,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     search = this.addStudentFilter(search);
 
     this.summaryLoading = true;
-    this.service.getEventAttendanceSummary(this.eventId, search).subscribe((res: any) => {
+    this.service.getEventById(this.eventId, search).subscribe((res: any) => {
       this.summaryLoading = false;
       this.event = { ...this.event, ...res };
     });
@@ -190,18 +190,18 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
       .set('search_text', this.state.searchText)
       .set('sort_direction', this.state.sortDirection);
 
-    if (this.orientationId) {
-      search = search
-        .set('school_id', this.session.g.get('school').id)
-        .set('calendar_id', this.orientationId.toString());
-    }
-
     search = this.addStudentFilter(search);
 
     return search;
   }
 
   addStudentFilter(search: HttpParams) {
+    if (this.orientationId) {
+      search = search
+        .set('school_id', this.session.g.get('school').id)
+        .set('calendar_id', this.orientationId.toString());
+    }
+
     if (search && this.state.studentFilter) {
       if (this.state.studentFilter.listId) {
         search = search.set('user_list_id', this.state.studentFilter.listId.toString());

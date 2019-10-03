@@ -1,5 +1,5 @@
 import { BehaviorSubject, fromEvent, Observable, Subject } from 'rxjs';
-import { debounceTime, map, filter, takeUntil } from 'rxjs/operators';
+import { debounceTime, map, filter, takeUntil, distinctUntilChanged } from 'rxjs/operators';
 import {
   Output,
   Input,
@@ -55,6 +55,7 @@ export class CPSearchBoxComponent implements AfterViewInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         map((event: any) => event.target.value),
+        distinctUntilChanged(),
         filter((query: string) => query.trim().length > 0),
         map((query: string) => {
           const invalidChars = ['%', '_', '"', '\\', ';', '`'];

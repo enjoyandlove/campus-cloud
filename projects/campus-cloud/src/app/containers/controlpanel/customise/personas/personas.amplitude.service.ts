@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { TilesUtilsService } from './tiles/tiles.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPI18nService, CPLogger } from '@campus-cloud/shared/services';
+import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
 import { credentialType, PersonasType } from '@controlpanel/customise/personas/personas.status';
 
@@ -47,6 +48,8 @@ export class PersonasAmplitudeService {
   getContentType(linkData, resourceType) {
     if (linkData.link_url === '' || linkData.link_url === null) {
       return amplitudeEvents.NO_CONTENT;
+    } else if (linkData.link_url === CampusLink.integration) {
+      return amplitudeEvents.INTEGRATION;
     } else if (resourceType === ContentUtilsProviders.contentTypes.thirdParty) {
       return amplitudeEvents.THIRD_PARTY_APP;
     } else if (resourceType === ContentUtilsProviders.contentTypes.resourceList) {

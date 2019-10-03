@@ -32,7 +32,7 @@ export class ManageHeaderService {
         return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events) ? child : null;
       } else if (child.privilege === CP_PRIVILEGES_MAP.moderation) {
         return canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation) &&
-          this.session.school.wall_unlocked
+          this.session.g.get('schoolConfig').campus_wall_enabled
           ? child
           : null;
       } else if (child.privilege === CP_PRIVILEGES_MAP.clubs) {

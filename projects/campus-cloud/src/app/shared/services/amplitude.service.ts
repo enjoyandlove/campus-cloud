@@ -3,6 +3,7 @@ import * as amplitude from 'amplitude-js';
 import { get as _get } from 'lodash';
 
 import { CPSession } from '../../session';
+import { StoreCategoryType } from '../models/store';
 import { EnvService } from '@campus-cloud/config/env';
 import { amplitudeEvents } from '../constants/analytics';
 import { CP_PRIVILEGES_MAP } from '../constants/privileges';
@@ -12,6 +13,16 @@ export class CPAmplitudeService {
   user;
   school;
   isInternal;
+
+  static storeCategoryIdToAmplitudeName(storeCategoryId: number) {
+    const storeCategoriesMap = {
+      [StoreCategoryType.athletics]: amplitudeEvents.ATHLETICS,
+      [StoreCategoryType.services]: amplitudeEvents.SERVICE,
+      [StoreCategoryType.club]: amplitudeEvents.CLUB
+    };
+
+    return storeCategoriesMap[storeCategoryId] || null;
+  }
 
   constructor(public session: CPSession, private env: EnvService) {}
 

@@ -147,6 +147,8 @@ export const amplitudeEvents = {
 
   TEST_SCHOOL: 'Test School',
 
+  INTEGRATION: 'Integration',
+
   CUSTOM_LIST: 'Custom List',
 
   SINGLE_ITEM: 'Single Item',
