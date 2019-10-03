@@ -16,10 +16,24 @@ const EventType = {
 export class AssessUtilsService {
   constructor(public cpI18n: CPI18nService, public session: CPSession) {}
 
+  getInterval(label: string) {
+    const intervals = [
+      amplitudeEvents.LAST_YEAR,
+      amplitudeEvents.LAST_30_DAYS,
+      amplitudeEvents.LAST_90_DAYS
+    ];
+
+    if (intervals.includes(label)) {
+      return label;
+    }
+
+    return amplitudeEvents.CUSTOM;
+  }
+
   getEventProperties(filterState) {
     return {
-      interval: filterState.range.label,
       cohort_type: this.getCohortType(filterState.for),
+      interval: this.getInterval(filterState.range.label),
       engagement_source: this.getEngagementType(filterState.engagement)
     };
   }

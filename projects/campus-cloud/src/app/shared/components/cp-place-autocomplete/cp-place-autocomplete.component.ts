@@ -8,13 +8,13 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   AfterViewInit,
   ChangeDetectorRef
 } from '@angular/core';
 
-import { CPSession } from './../../../session';
-import { CPI18nService } from '../../services';
-import { CPLocationsService } from '../../services/locations.service';
+import { CPSession } from '@campus-cloud/session';
+import { CPI18nService, CPLocationsService } from '@campus-cloud/shared/services';
 
 interface IState {
   input: string;
@@ -48,6 +48,13 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
     private ref: ChangeDetectorRef,
     public service: CPLocationsService
   ) {}
+
+  @HostListener('document:click')
+  onClick() {
+    if (this.state.suggestions.length) {
+      this.hideSuggestions();
+    }
+  }
 
   ngAfterViewInit() {
     const input = this.hostEl.nativeElement;
@@ -155,6 +162,12 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
 
   resetSuggestions(): void {
     this.state = Object.assign({}, this.state, { suggestions: [] });
+  }
+
+  hideSuggestions() {
+    this.resetSuggestions();
+
+    this.setInput(this.defaultValue);
   }
 
   ngOnInit() {

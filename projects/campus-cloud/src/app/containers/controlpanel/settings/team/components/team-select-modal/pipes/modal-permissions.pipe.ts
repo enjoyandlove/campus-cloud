@@ -3,10 +3,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 import {
   canSchoolWriteResource,
   canStoreReadAndWriteResource
-} from './../../../../../../../../shared/utils/privileges/privileges';
-import { CPSession } from './../../../../../../../../session';
+} from '@campus-cloud/shared/utils/privileges';
+import { CPSession } from '@campus-cloud/session';
 import { IPermission, permissionType } from './../permissions';
-import { CP_PRIVILEGES_MAP } from '../../../../../../../../shared/constants';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 
 @Pipe({ name: 'cpFilterByStorePrivileges' })
 export class TeamSelectModalPermissionPipe implements PipeTransform {
