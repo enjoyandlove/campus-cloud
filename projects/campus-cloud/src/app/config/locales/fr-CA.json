@@ -2250,6 +2250,9 @@
   "t_announcement_type": {
     "message": "Type d'annonce"
   },
+  "t_api_management": {
+    "message": "Gestion API"
+  },
   "t_api_management_generate_key": {
     "message": "Générer clé et sauvegarder"
   },
