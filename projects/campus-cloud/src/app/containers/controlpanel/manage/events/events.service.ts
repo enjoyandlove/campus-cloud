@@ -21,10 +21,10 @@ export class EventsService {
     return `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.IMAGE}/`;
   }
 
-  getEventById(id: number, {}) {
+  getEventById(id: number, search?) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EVENT}/${id}`;
 
-    return this.api.get(url, null, true);
+    return this.api.get(url, search, true);
   }
 
   getEventsByHostId(hostId: string) {
@@ -47,13 +47,6 @@ export class EventsService {
         return err;
       })
     );
-  }
-
-  getEventAttendanceSummary(eventId: number, search?: HttpParams) {
-    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.EVENT}`;
-    const url = `${common}/${eventId}`;
-
-    return this.api.get(url, search);
   }
 
   setModalEvents(events: any[]): void {
