@@ -53,14 +53,6 @@ describe('PersonasTileComponent', () => {
     expect(comp.state).toEqual(initialState);
   });
 
-  it('toggleHover', () => {
-    comp.toggleHover(true);
-    expect(comp.state.hover).toBeTruthy();
-
-    comp.toggleHover(false);
-    expect(comp.state.hover).toBeFalsy();
-  });
-
   it('errorHandler', () => {
     spyOn(comp.store, 'dispatch');
     comp.errorHandler();
