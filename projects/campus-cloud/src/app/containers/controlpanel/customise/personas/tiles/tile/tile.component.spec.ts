@@ -23,7 +23,7 @@ class MockTilesService {
   }
 }
 
-const initialState = { working: false, hover: false };
+const initialState = { working: false };
 
 describe('PersonasTileComponent', () => {
   let comp: PersonasTileComponent;
