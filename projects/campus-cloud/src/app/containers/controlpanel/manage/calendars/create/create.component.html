@@ -23,6 +23,7 @@
     <div class="row justify-content-end">
       <div class="col-6 text-right">
         <button type="button"
+                cpTarget="cancel"
                 data-dismiss="modal"
                 (click)="resetModal()"
                 class="cpbtn cpbtn--cancel">
@@ -30,6 +31,7 @@
         </button>
 
         <button type="button"
+                cpTarget="submit"
                 (click)="onSubmit()"
                 class="cpbtn cpbtn--primary"
                 [disabled]="!form.valid">

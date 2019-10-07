@@ -49,6 +49,7 @@ export const mockExtraData: IExtraData = {
 
 export const mockIntegrationData: IIntegrationData[] = [
   {
+    client_int: [],
     extra_data: [mockExtraData]
   }
 ];

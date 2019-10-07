@@ -1,3 +1,4 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 
@@ -12,6 +13,12 @@ export class SchoolService {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SCHOOL}/${startRange};${endRange}`;
 
     return this.api.get(url).pipe(map((res) => res));
+  }
+
+  getSchoolConfig(params: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SCHOOL_CONFIG}/`;
+
+    return this.api.get(url, params).pipe(map((res) => res));
   }
 
   updateSchoolBranding(schoolId: number, school: ISchoolBranding) {

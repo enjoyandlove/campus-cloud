@@ -15,7 +15,7 @@ Testing Web Staging:
   coverage: '/Statements.*?(\d+(?:\.\d+)?)%/'
   artifacts:
     paths:
-      - projects/coverage/campus-cloud/
+      - campus-cloud/
   environment: Staging
 
 Building Web Staging:

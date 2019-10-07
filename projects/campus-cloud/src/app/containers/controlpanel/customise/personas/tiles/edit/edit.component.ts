@@ -183,6 +183,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     );
 
     this.editable = !this.utils.isCampaignTile(this.tile) && !this.utils.isDeprecated(this.tile);
+
     this.selectedContent = ContentUtilsProviders.getContentTypeByCampusLink(
       this.campusLinkForm.value
     );

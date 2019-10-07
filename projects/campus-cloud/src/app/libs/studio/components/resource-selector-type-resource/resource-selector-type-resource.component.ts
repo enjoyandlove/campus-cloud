@@ -12,6 +12,8 @@ import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { ExtraDataType } from './../../models/integration-data.interface';
 import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { IntegrationDataService, IStudioContentResource } from './../../providers';
+import { TilesUtilsService } from '@controlpanel/customise/personas/tiles/tiles.utils.service';
+import { CustomiseRoutingModule } from '@projects/campus-cloud/src/app/containers/controlpanel/customise/customise.routing.module';
 
 @Component({
   selector: 'cp-resource-selector-type-resource',
@@ -87,7 +89,23 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
   }
 
   initResources(integrationData = null) {
+    let legacyIntegrations = integrationData
+      ? integrationData.filter(({ client_int }) => client_int.length)
+      : [];
     const schoolIntegrationData = this.getSchoolIntegrationConfigByIntegrationData(integrationData);
+
+    if (legacyIntegrations) {
+      legacyIntegrations = legacyIntegrations.map(({ id, integration_name }) => {
+        return {
+          id,
+          meta: {
+            link_params: { id },
+            link_url: CampusLink.integration
+          },
+          label: `[NOTRANSLATE]${integration_name}[NOTRANSLATE]`
+        };
+      });
+    }
 
     const filters = [
       this.filterByWebApp ? ContentUtilsProviders.isWebAppContent : null,
@@ -125,17 +143,30 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
       ContentUtilsProviders.contentTypes.list,
       filters
     );
+
+    if (!this.filterByLoginStatus && !this.filterByWebApp && legacyIntegrations) {
+      this.resources = [...this.resources, ...legacyIntegrations];
+    }
     this.items = this.contentUtils.resourcesToIItem(this.resources);
 
     this.updateStateWith(this.getInitialFormValues());
   }
 
   isCampusLinkInList() {
+    let linkParamsMatch = true;
     if (!this.campusLink || !this.items.length) {
       return false;
     }
 
-    return this.items.map((i) => i.meta.link_url).includes(this.campusLink.link_url);
+    if (TilesUtilsService.isIntegrationLink(this.campusLink.link_url)) {
+      linkParamsMatch = this.items
+        .map((i) => _get(i, ['meta', 'link_params', 'id'], null))
+        .includes(this.campusLink.link_params.id);
+    }
+
+    return (
+      this.items.map((i) => i.meta.link_url).includes(this.campusLink.link_url) && linkParamsMatch
+    );
   }
 
   getInitialFormValues() {

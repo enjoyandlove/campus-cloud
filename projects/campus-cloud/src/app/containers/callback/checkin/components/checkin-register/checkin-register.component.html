@@ -56,7 +56,6 @@
             <label>{{ 't_external_checkin_time' | cpI18n }}</label>
             <cp-datepicker cpTarget="checkin_time"
                            #selectedDate
-                           [placeholder]="placeholder"
                            [options]="datePickerOptions"
                            (dateSet)="setCheckin($event)">
             </cp-datepicker>

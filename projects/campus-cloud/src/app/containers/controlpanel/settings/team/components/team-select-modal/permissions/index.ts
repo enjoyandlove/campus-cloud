@@ -1,4 +1,4 @@
-import { CPI18nService } from '../../../../../../../../shared/services';
+import { CPI18nService } from '@campus-cloud/shared/services';
 
 const cpI18n = new CPI18nService();
 

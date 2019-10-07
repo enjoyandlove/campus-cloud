@@ -1,15 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+import { Observable, Subject } from 'rxjs';
 
+import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../../../feeds.service';
-import { CPSession } from '../../../../../../../session';
-import { CPTrackingService } from '../../../../../../../shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 const TYPE_STRINGS = {
   [GroupType.orientation]: {
@@ -29,12 +29,13 @@ const TYPE_STRINGS = {
   }
 };
 
+@Mixin([Destroyable])
 @Component({
   selector: 'cp-feed-settings-modal',
   templateUrl: './feed-settings-modal.component.html',
   styleUrls: ['./feed-settings-modal.component.scss']
 })
-export class FeedSettingsComponent implements OnInit {
+export class FeedSettingsComponent implements OnInit, OnDestroy {
   @Input() groupId: number;
   @Input() groupType: GroupType;
   @Input() isCampusWallView: Observable<any>;
@@ -53,12 +54,15 @@ export class FeedSettingsComponent implements OnInit {
     wall_source: null
   };
 
+  destroy$ = new Subject<null>();
+  emitDestroy() {}
+
   constructor(
     private fb: FormBuilder,
     private session: CPSession,
-    private cpI18n: CPI18nService,
+    public cpI18n: CPI18nService,
     private utils: FeedsUtilsService,
-    private feedsService: FeedsService,
+    public feedsService: FeedsService,
     private cpTracking: CPTrackingService
   ) {
     this.feedsService.getSocialGroups();
@@ -199,8 +203,12 @@ export class FeedSettingsComponent implements OnInit {
       }
     ];
 
-    this.isCampusWallView.subscribe((res: any) => {
+    this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       this._isCampusWallView = res.type === 1;
     });
+  }
+
+  ngOnDestroy() {
+    this.emitDestroy();
   }
 }

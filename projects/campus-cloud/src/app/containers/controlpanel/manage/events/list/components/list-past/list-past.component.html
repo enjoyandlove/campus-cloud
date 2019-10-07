@@ -36,7 +36,7 @@
              class="event__title"
              [routerLink]="[event.id]"
              queryParamsHandling="merge"
-             *ngIf="event.event_attendance === 1">
+             *ngIf="event.event_attendance === 1 && canViewAttendance">
             {{ event.title }}
           </a>
           <a cpTracker
@@ -44,7 +44,7 @@
              class="event__title"
              queryParamsHandling="merge"
              [routerLink]="[event.id + '/info']"
-             *ngIf="event.event_attendance === 0">
+             *ngIf="event.event_attendance === 0 || !canViewAttendance">
             {{ event.title }}
           </a>
         </strong>
