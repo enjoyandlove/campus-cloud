@@ -2954,12 +2954,6 @@
   "t_personas_form_personalized_page_help": {
     "message": "This experience will provide a personalized home page for logged in users"
   },
-  "t_personas_form_pretour": {
-    "message": "Pretour"
-  },
-  "t_personas_form_pretour_help": {
-    "message": "Provide an overview of the app before registration"
-  },
   "t_personas_form_sub_heading_my_courses": {
     "message": "All current courses (suggested for online courses)"
   },

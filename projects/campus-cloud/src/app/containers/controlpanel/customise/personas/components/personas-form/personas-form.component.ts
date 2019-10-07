@@ -24,16 +24,11 @@ export class PersonasFormComponent implements OnInit, OnDestroy {
   requiresCredentialsMenu;
   mobileType = PersonasType.mobile;
   selectedRequiresCredentials = null;
-  loginRequired = PersonasLoginRequired.required;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
   constructor(public utils: PersonasUtilsService) {}
-
-  togglePretour(value) {
-    this.form.get('pretour_enabled').setValue(value);
-  }
 
   onPlatformChange({ id }) {
     const loginRequirement =
