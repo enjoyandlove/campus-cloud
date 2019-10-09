@@ -23,7 +23,19 @@
 
     <div class="row tile">
       <div class="col-12">
-        <cp-dashboard-app-usage [dates]="currentDate"></cp-dashboard-app-usage>
+        <cp-card>
+          <cp-dashboard-unique-active-users [dates]="currentDate">
+          </cp-dashboard-unique-active-users>
+        </cp-card>
+      </div>
+    </div>
+
+    <div class="row tile">
+      <div class="col-12">
+        <cp-card>
+          <cp-dashboard-total-app-opens [dates]="currentDate">
+          </cp-dashboard-total-app-opens>
+        </cp-card>
       </div>
     </div>
 
