@@ -1,6 +1,7 @@
 /*tslint:disable:no-host-metadata-property */
 import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { startWith } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
@@ -46,7 +47,7 @@ export class DashboardTotalAppOpensComponent extends BaseComponent {
     private utils: CPLineChartUtilsService
   ) {
     super();
-    this.loading$ = super.isLoading();
+    this.loading$ = super.isLoading().pipe(startWith(true));
   }
 
   errorHandler() {
