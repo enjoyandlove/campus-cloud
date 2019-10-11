@@ -1,0 +1,17 @@
+.wrapper {
+  &__default {
+    display: block;
+  }
+
+  &__on_hover {
+    display: none;
+  }
+
+  &:hover .wrapper__default {
+    display: none;
+  }
+
+  &:hover .wrapper__on_hover {
+    display: block;
+  }
+}
