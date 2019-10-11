@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
 
+from controlpanel.utils.encoding import is_ascii
 from controlpanel.utils.csv_parser import CSVParser
 
 DECODE_ERROR = 'Unable to parse data in file'
@@ -106,6 +107,10 @@ def import_lists(request):
 
     try:
         parsed_data = parser.all_fields_required('email', data_len=10000)
+        user_emails = [k["email"] for k in parsed_data]
+        for idx, user_email in enumerate(user_emails):
+            if not is_ascii(user_email) or len(user_email.split()) > 1:
+                raise KeyError("Invalid email on line {}".format(idx + 1))
     except KeyError as e:
         return JsonResponse({"error": e.args[0]},
                                 safe=False, status=400)

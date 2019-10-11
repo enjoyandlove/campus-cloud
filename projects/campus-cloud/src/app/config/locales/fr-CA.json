@@ -2879,12 +2879,6 @@
   "t_personas_form_personalized_page_help": {
     "message": "Cette expérience fournira une page d'accueil personnalisée pour les utilisateurs connectés"
   },
-  "t_personas_form_pretour": {
-    "message": "Aperçu"
-  },
-  "t_personas_form_pretour_help": {
-    "message": "Fournit un aperçu de l'application avant l'enregistrement"
-  },
   "t_personas_form_sub_heading_upcoming_deadlines": {
     "message": "Devoirs et examens à venir"
   },

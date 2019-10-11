@@ -11,6 +11,7 @@ import {
   CPDate,
   Formats,
   createSpreadSheet,
+  canStoreReadResource,
   canSchoolWriteResource
 } from '@campus-cloud/shared/utils';
 
@@ -74,10 +75,9 @@ export class EventUtilService {
   }
 
   getSubNavChildren(event, urlPrefix) {
-    const canViewAttendance = canSchoolWriteResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.event_attendance
-    );
+    const canViewAttendance =
+      canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.event_attendance) ||
+      canStoreReadResource(this.session.g, event.store_id, CP_PRIVILEGES_MAP.event_attendance);
 
     const attendanceEnabled =
       event.event_attendance === EventAttendance.enabled && canViewAttendance;

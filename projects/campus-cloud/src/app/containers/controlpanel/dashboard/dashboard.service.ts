@@ -24,12 +24,6 @@ export class DashboardService {
           series: [data.downloads.series, data.registrations.series],
           labels: data.downloads.labels
         };
-      }),
-      catchError(() => {
-        return of({
-          series: [],
-          labels: []
-        });
       })
     );
   }
@@ -64,7 +58,6 @@ export class DashboardService {
 
   getUserAcquisition(search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.USER_ACQUISITION}/`;
-
     return this.api.get(url, search, true);
   }
 

@@ -33,8 +33,7 @@ export class PersonasTileComponent implements AfterViewInit, OnInit {
   @Output() deleteClick: EventEmitter<ITile> = new EventEmitter();
 
   state = {
-    working: false,
-    hover: false
+    working: false
   };
 
   constructor(
@@ -45,13 +44,6 @@ export class PersonasTileComponent implements AfterViewInit, OnInit {
     public utils: TilesUtilsService,
     public changeDetectorRef: ChangeDetectorRef
   ) {}
-
-  toggleHover(hover) {
-    this.state = {
-      ...this.state,
-      hover
-    };
-  }
 
   errorHandler() {
     this.state = {

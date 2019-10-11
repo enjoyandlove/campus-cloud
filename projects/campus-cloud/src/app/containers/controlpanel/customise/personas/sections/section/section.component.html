@@ -46,7 +46,7 @@
                           [class.sorting]="state.sorting"
                           (edited)="onEditedTile($event)"
                           [ngClass]="['col-' + tileWidth]"
-                          [cpTarget]="['tile-' + tile.id]"
+                          [cpTarget]="['tile-' + tile.name]"
                           [class.mb-4]="i % tileWidth === 0"
                           (deleteClick)="deleteTileClick.emit($event)"
                           *ngFor="let tile of guide.tiles; let i = index">
