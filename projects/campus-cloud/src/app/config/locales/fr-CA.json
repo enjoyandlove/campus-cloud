@@ -964,7 +964,7 @@
     "message": "Marque"
   },
   "customization_description": {
-    "message": "(Les images haute résolution fonctionnent le mieux, dimensions recommandées 1440 x 800. Format JPEG ou PNG, 5 Mo ou moins. Vous pouvez faire défiler avec votre souris pour zoomer ou dézoomer l'image.)"
+    "message": "(Les images haute résolution fonctionnent le mieux, dimensions minimum 1440 x 800. Format JPEG ou PNG, 5 Mo ou moins. Vous pouvez faire défiler avec votre souris pour zoomer ou dézoomer l'image.)"
   },
   "customization_image_upload_error": {
     "message": "Quelque chose a échoué durant le téléversement de votre image"
@@ -2256,6 +2256,9 @@
   "t_api_management_generate_key": {
     "message": "Générer clé et sauvegarder"
   },
+  "t_api_management_push_notification": {
+    "message": "Push Notification"
+  },
   "t_assess_all_orientations": {
     "message": "Tous les programmes d'orientation"
   },
@@ -2426,6 +2429,18 @@
   },
   "t_dashboard_welcome_subheader": {
     "message": "Vous pouvez mesurer l'engagement avec votre application et le contenu après avoir lancé votre expérience d'application"
+  },
+  "t_data_export": {
+    "message": "Export de données"
+  },
+  "t_data_export_csv_posts_comments_count": {
+    "message": "# of Comments"
+  },
+  "t_data_export_csv_posts_wall_post_images": {
+    "message": "Wall Post Image"
+  },
+  "t_data_export_csv_walls_date_created": {
+    "message": "Date"
   },
   "t_datepicker_clear": {
     "message": "Réinitialiser"
@@ -3207,6 +3222,9 @@
   "t_shared_app": {
     "message": "App"
   },
+  "t_shared_audience": {
+    "message": "Audience"
+  },
   "t_shared_average_rating": {
     "message": "Note"
   },
@@ -3287,6 +3305,9 @@
   },
   "t_shared_error": {
     "message": "Erreur"
+  },
+  "t_shared_experience": {
+    "message": "Experience"
   },
   "t_shared_failed": {
     "message": "Échoué"
@@ -3455,6 +3476,9 @@
   },
   "t_studio": {
     "message": "Studio"
+  },
+  "t_studio_banner_error_wrong_dimensions": {
+    "message": "Dimensions non conformes. Veuillez vous assurer que l'image répond aux exigences spécifiées."
   },
   "t_studio_branding_header": {
     "message": "Couleur et image de marque"
