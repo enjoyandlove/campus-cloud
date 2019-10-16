@@ -2506,7 +2506,7 @@
     "message": "Date Posted"
   },
   "t_data_export_csv_posts_flags_count": {
-    "message": "# of flags"
+    "message": "# of Flags"
   },
   "t_data_export_csv_posts_likes_count": {
     "message": "# of Likes"

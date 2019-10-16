@@ -13,6 +13,12 @@
       "label": "students",
       "amplitude": "Students",
       "url": "/assess/students"
+    },
+    {
+      "label": "t_data_export",
+      "amplitude": "Data Export",
+      "url": "/assess/export",
+      "clearParams": true
     }
   ]
 }

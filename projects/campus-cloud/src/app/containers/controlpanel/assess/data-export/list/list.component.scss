@@ -1,0 +1,44 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/components/table';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+cp-data-export-top-bar {
+  display: block;
+  margin-bottom: $default_margin;
+}
+
+.working {
+  text-align: center;
+
+  h2 {
+    @include font-16px();
+
+    margin-top: -70px;
+    margin-bottom: 0.1rem;
+  }
+}
+
+ul {
+  padding-left: 0;
+  list-style: none;
+
+  h2,
+  h3 {
+    @include font-14px();
+
+    margin-bottom: 0;
+    font-weight: inherit;
+  }
+
+  h3 {
+    color: $color-text;
+  }
+
+  li {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}

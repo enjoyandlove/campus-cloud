@@ -7,6 +7,8 @@ export const pageTitle = {
 
   AUDIENCES: 'Audiences',
 
+  DATA_EXPORT: 'Data Export',
+
   CAMPUS_CLOUD: 'Campus Cloud',
 
   WEB_CHECK_IN: 'Web Check-In',
