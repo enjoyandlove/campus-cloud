@@ -2436,11 +2436,44 @@
   "t_data_export_csv_posts_comments_count": {
     "message": "# of Comments"
   },
+  "t_data_export_csv_posts_date_posted": {
+    "message": "Date de publication"
+  },
+  "t_data_export_csv_posts_flags_count": {
+    "message": "# de signalements"
+  },
+  "t_data_export_csv_posts_post_id": {
+    "message": "ID publication"
+  },
+  "t_data_export_csv_posts_student_id": {
+    "message": "ID étudiant"
+  },
+  "t_data_export_csv_posts_wall_post": {
+    "message": "Publication du mur"
+  },
   "t_data_export_csv_posts_wall_post_images": {
     "message": "Wall Post Image"
   },
   "t_data_export_csv_walls_date_created": {
     "message": "Date"
+  },
+  "t_data_export_data_source": {
+    "message": "Source de données"
+  },
+  "t_data_export_no_data_found": {
+    "message": "Aucune source de données trouvée..."
+  },
+  "t_data_export_waiting_message": {
+    "message": "Le téléchargement devrait débuter sous peu"
+  },
+  "t_data_export_waiting_title": {
+    "message": "Génération du fichier CSV"
+  },
+  "t_data_export_wall_comments": {
+    "message": "Commentaires du mur"
+  },
+  "t_data_export_wall_posts": {
+    "message": "Publications du mur"
   },
   "t_datepicker_clear": {
     "message": "Réinitialiser"
@@ -3308,6 +3341,9 @@
   },
   "t_shared_experience": {
     "message": "Experience"
+  },
+  "t_shared_export": {
+    "message": "Exporter"
   },
   "t_shared_failed": {
     "message": "Échoué"

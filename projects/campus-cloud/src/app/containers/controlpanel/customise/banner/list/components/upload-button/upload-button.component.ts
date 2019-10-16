@@ -40,9 +40,9 @@ export class BannerUploadButtonComponent implements OnInit {
             this.uploading = false;
             this.upload.emit(image_url);
           },
-          (err: Error) => {
+          () => {
             this.uploading = false;
-            this.error.emit(err.message);
+            this.error.emit(this.cpI18n.translate('t_studio_banner_error_wrong_dimensions'));
           }
         );
       })
