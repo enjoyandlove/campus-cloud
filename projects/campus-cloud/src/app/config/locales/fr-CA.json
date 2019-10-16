@@ -297,7 +297,7 @@
     "message": "Évaluer services"
   },
   "assess_all_students": {
-    "message": "Évaluer étudiants"
+    "message": "Évaluer Étudiants"
   },
   "assess_average_rating": {
     "message": "Note"
@@ -402,7 +402,7 @@
     "message": "Dernière année"
   },
   "assess_message_student": {
-    "message": "Contacter étudiant"
+    "message": "Contacter Étudiant"
   },
   "assess_new_message": {
     "message": "Nouveau message"
@@ -426,13 +426,13 @@
     "message": "Pour voir les données des services, utilisez le filtre d'implication"
   },
   "assess_number_of_checkins": {
-    "message": "# de présences"
+    "message": "# de Présences"
   },
   "assess_number_of_event_checkins": {
-    "message": "# de présences aux événements"
+    "message": "# de Présences aux Événements"
   },
   "assess_number_of_responses": {
-    "message": "# de réponses"
+    "message": "# de Réponses"
   },
   "assess_one_engagement": {
     "message": "Une implication"
@@ -456,7 +456,7 @@
     "message": "Services évalués"
   },
   "assess_service_checkins": {
-    "message": "# de présence aux services"
+    "message": "# de Présence aux Services"
   },
   "assess_service_rating_average": {
     "message": "Note du service"
@@ -474,7 +474,7 @@
     "message": "ID Étudiant"
   },
   "assess_student_name": {
-    "message": "Nom de l'étudiant"
+    "message": "Nom de l'Étudiant"
   },
   "assess_top_events": {
     "message": "Palmarès des événements"
@@ -2157,14 +2157,14 @@
     "message": "Étudiants"
   },
   "student_engagements": {
-    "message": "Implication des étudiants",
+    "message": "Implication des Étudiants",
     "description": "Graph title\r\nhttps://ccstaging.oohlalamobile.com/#/assess/dashboard?engagement=all&for=all_students&range=last_week"
   },
   "student_feedback": {
     "message": "Retour"
   },
   "student_id": {
-    "message": "ID étudiant"
+    "message": "ID Étudiant"
   },
   "subject": {
     "message": "Sujet"
@@ -2431,34 +2431,52 @@
     "message": "Vous pouvez mesurer l'engagement avec votre application et le contenu après avoir lancé votre expérience d'application"
   },
   "t_data_export": {
-    "message": "Export de données"
+    "message": "Export De Données"
   },
   "t_data_export_csv_posts_comments_count": {
-    "message": "# of Comments"
+    "message": "# de Commentaires"
   },
   "t_data_export_csv_posts_date_posted": {
-    "message": "Date de publication"
+    "message": "Date De Publication"
   },
   "t_data_export_csv_posts_flags_count": {
-    "message": "# de signalements"
+    "message": "# de Signalements"
+  },
+  "t_data_export_csv_posts_likes_count": {
+    "message": "# de Likes"
   },
   "t_data_export_csv_posts_post_id": {
-    "message": "ID publication"
+    "message": "ID Publication"
+  },
+  "t_data_export_csv_posts_student_email": {
+    "message": "Courriel Étudiant"
   },
   "t_data_export_csv_posts_student_id": {
-    "message": "ID étudiant"
+    "message": "ID Étudiant"
+  },
+  "t_data_export_csv_posts_student_or_host_name": {
+    "message": "Nom de l'Étudiant / Nom de l'Hôte"
+  },
+  "t_data_export_csv_posts_wall_comment_images": {
+    "message": "Images de commentaires du mur"
   },
   "t_data_export_csv_posts_wall_post": {
-    "message": "Publication du mur"
+    "message": "Publication Du Mur"
   },
   "t_data_export_csv_posts_wall_post_images": {
-    "message": "Wall Post Image"
+    "message": "Image de publication du mur"
   },
   "t_data_export_csv_walls_date_created": {
     "message": "Date"
   },
+  "t_data_export_csv_wall_comment_comment": {
+    "message": "Commentaire Du Mur"
+  },
+  "t_data_export_csv_wall_comment_images": {
+    "message": "Images de commentaires du mur"
+  },
   "t_data_export_data_source": {
-    "message": "Source de données"
+    "message": "Source De Données"
   },
   "t_data_export_no_data_found": {
     "message": "Aucune source de données trouvée..."
@@ -2470,10 +2488,10 @@
     "message": "Génération du fichier CSV"
   },
   "t_data_export_wall_comments": {
-    "message": "Commentaires du mur"
+    "message": "Commentaires Du Mur"
   },
   "t_data_export_wall_posts": {
-    "message": "Publications du mur"
+    "message": "Publications Du Mur"
   },
   "t_datepicker_clear": {
     "message": "Réinitialiser"

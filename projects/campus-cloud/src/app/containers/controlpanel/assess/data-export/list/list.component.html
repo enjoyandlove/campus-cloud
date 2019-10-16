@@ -1,0 +1,31 @@
+<cp-data-export-top-bar (search)="onSearch($event)"></cp-data-export-top-bar>
+
+<ng-container [ngSwitch]="busy$ | async">
+  <ng-container *ngSwitchCase="true">
+    <div class="working">
+      <cp-spinner></cp-spinner>
+      <h2>{{ 't_data_export_waiting_title' | cpI18n }}</h2>
+      <p>{{ 't_data_export_waiting_message' | cpI18n }}</p>
+    </div>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="false">
+    <cp-no-content class="no-content"
+                   *ngIf="!reports.length"
+                   [noContentText]="'t_data_export_no_data_found' | cpI18n">
+    </cp-no-content>
+    <ul class="cp-table"
+        *ngIf="reports.length">
+      <li class="cp-table__header">
+        <h2>{{ 't_data_export_data_source' | cpI18n }}</h2>
+      </li>
+      <li class="cp-table__item"
+          *ngFor="let report of reports; trackBy: trackByFn">
+        <h3>{{report.name | cpI18n}}</h3>
+        <button type="button"
+                (click)="downloadReportByType.next(report)"
+                class="cpbtn cpbtn--link">{{ 't_shared_export' | cpI18n }}</button>
+      </li>
+    </ul>
+  </ng-container>
+</ng-container>
