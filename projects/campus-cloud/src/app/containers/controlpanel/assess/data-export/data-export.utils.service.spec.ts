@@ -74,10 +74,9 @@ describe('DataExportUtilsService', () => {
         mockDataExportWallComment.author_name,
         mockDataExportWallComment.author_email,
         mockDataExportWallComment.student_id,
-        CPDate.fromEpoch(
-          new Date(mockDataExportWallComment.created_at).getTime() / 1000,
-          session.tz
-        ).format('DD/MM/YYYY hh:mm:ssA'),
+        CPDate.fromEpoch(mockDataExportWallComment.created_at, session.tz).format(
+          'DD/MM/YYYY hh:mm:ssA'
+        ),
         mockDataExportWallComment.content,
         mockDataExportWallComment.attachments.join(''),
         mockDataExportWallComment.likes,
@@ -131,10 +130,9 @@ describe('DataExportUtilsService', () => {
         mockDataExportWallPost.author_name,
         mockDataExportWallPost.author_email,
         mockDataExportWallPost.student_id,
-        CPDate.fromEpoch(
-          new Date(mockDataExportWallPost.created_at).getTime() / 1000,
-          session.tz
-        ).format('DD/MM/YYYY hh:mm:ssA'),
+        CPDate.fromEpoch(mockDataExportWallPost.created_at, session.tz).format(
+          'DD/MM/YYYY hh:mm:ssA'
+        ),
         mockDataExportWallPost.content,
         mockDataExportWallPost.attachments.join(''),
         mockDataExportWallPost.likes,
