@@ -43,7 +43,10 @@ export class CPTopBarComponent implements OnInit {
   getManageHomePage() {
     if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.events)) {
       return 'events';
-    } else if (canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation)) {
+    } else if (
+      canSchoolReadResource(this.session.g, CP_PRIVILEGES_MAP.moderation) &&
+      this.session.g.get('schoolConfig').campus_wall_enabled
+    ) {
       return 'feeds';
     } else if (
       canAccountLevelReadResource(this.session.g, CP_PRIVILEGES_MAP.clubs) ||
