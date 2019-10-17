@@ -62,10 +62,9 @@ export class DataExportUtilsService {
         [columns.author_name]: author_name,
         [columns.author_email]: author_email,
         [columns.student_id]: student_id,
-        [columns.created_at]: CPDate.fromEpoch(
-          new Date(created_at).getTime() / 1000,
-          this.session.tz
-        ).format('DD/MM/YYYY hh:mm:ssA'),
+        [columns.created_at]: CPDate.fromEpoch(created_at, this.session.tz).format(
+          'DD/MM/YYYY hh:mm:ssA'
+        ),
         [columns.content]: content,
         [columns.attachments]: attachments.join(', '),
         [columns.likes]: likes,
@@ -112,10 +111,9 @@ export class DataExportUtilsService {
         [columns.author_name]: author_name,
         [columns.author_email]: author_email,
         [columns.student_id]: student_id,
-        [columns.created_at]: CPDate.fromEpoch(
-          new Date(created_at).getTime() / 1000,
-          this.session.tz
-        ).format('DD/MM/YYYY hh:mm:ssA'),
+        [columns.created_at]: CPDate.fromEpoch(created_at, this.session.tz).format(
+          'DD/MM/YYYY hh:mm:ssA'
+        ),
         [columns.content]: content,
         [columns.attachments]: attachments.join(', '),
         [columns.likes]: likes,
