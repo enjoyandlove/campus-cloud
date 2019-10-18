@@ -37,6 +37,18 @@ const appRoutes: Routes = [
           title: pageTitle.ASSESS_STUDENT,
           privilege: CP_PRIVILEGES_MAP.assessment
         }
+      },
+      {
+        path: 'export',
+        canActivate: [PrivilegesGuard],
+        loadChildren: () =>
+          import('./data-export/data-export.module').then((m) => m.DataExportModule),
+        data: {
+          zendesk: 'Data Export',
+          amplitude: 'Data Export',
+          title: pageTitle.DATA_EXPORT,
+          privilege: CP_PRIVILEGES_MAP.assessment
+        }
       }
     ]
   }

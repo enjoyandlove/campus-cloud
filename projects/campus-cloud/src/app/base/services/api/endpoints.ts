@@ -113,6 +113,8 @@ export const ENDPOINTS = {
 
   WALLS_INTEGRATIONS: 'external_feed/campus_thread',
 
+  EXPORT_DATA_WALL_POST: 'export/campus_thread_data',
+
   EXTERNAL_EVENT_FEEDBACK: 'external_event_feedback',
 
   ASSESS_ORIENTATION_EVENT: 'assess_orientation_event',
@@ -124,6 +126,8 @@ export const ENDPOINTS = {
   ANNOUNCEMENT_INTEGRATION: 'external_feed/announcement',
 
   DASHBOARD_SOCIAL_ACTIVITY: 'analytics/social_activity',
+
+  EXPORT_DATA_WALL_COMMENT: 'export/campus_comment_data',
 
   DASHBORD_USER_ACQUISITION: 'analytics/user_acquisition',
 
