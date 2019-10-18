@@ -37,7 +37,7 @@
     "message": "Manage other kinds of app content"
   },
   "admin_assess_help": {
-    "message": "View the Assessment Dashboard"
+    "message": "View the Success Dashboard"
   },
   "admin_athletics_owner": {
     "message": "Athletics Club Owner"
@@ -99,7 +99,7 @@
     "message": "Enabled"
   },
   "admin_engagement_dashboard": {
-    "message": "Assessment Dashboard"
+    "message": "Dashboard & Data"
   },
   "admin_events_help": {
     "message": "View events; view event assessment"
@@ -282,7 +282,7 @@
     "message": "Are you Sure?"
   },
   "assess": {
-    "message": "Assess"
+    "message": "Success"
   },
   "assessment": {
     "message": "Assessment"
