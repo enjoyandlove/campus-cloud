@@ -52,7 +52,10 @@ export class DataExportListComponent implements OnInit {
     }
 
     this.reports = this.reports.filter((r: IDataExport) =>
-      r.name.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+      this.cpI18n
+        .translate(r.name)
+        .toLocaleLowerCase()
+        .includes(query.toLocaleLowerCase())
     );
   }
 
