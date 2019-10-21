@@ -1042,9 +1042,6 @@
   "dashboard_no_data_found": {
     "message": "Aucun résultat trouvé"
   },
-  "dashboard_service_clicks": {
-    "message": "Clics du service"
-  },
   "dashboard_service_feedback": {
     "message": "Retours sur le service"
   },
