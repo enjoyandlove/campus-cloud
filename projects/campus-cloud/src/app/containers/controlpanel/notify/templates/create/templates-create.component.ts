@@ -188,8 +188,6 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
     };
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 
-    this.sendAsName = this.session.defaultHost ? this.session.defaultHost.label : undefined;
-
     this.toolTipOptions = {
       html: true,
       trigger: 'click'
