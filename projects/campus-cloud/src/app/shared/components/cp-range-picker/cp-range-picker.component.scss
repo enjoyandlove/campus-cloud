@@ -27,8 +27,11 @@
       justify-content: space-around;
     }
 
-    .button {
+    button {
       @include font-semi-bold();
+
+      width: 100px;
+      white-space: normal;
     }
   }
 }

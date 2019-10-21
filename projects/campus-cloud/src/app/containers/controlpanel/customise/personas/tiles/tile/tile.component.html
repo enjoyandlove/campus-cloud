@@ -12,12 +12,9 @@
 
     <ng-container *ngSwitchCase="false">
       <div class="wrapper"
-           (mouseenter)="toggleHover(true)"
-           (mouseleave)="toggleHover(false)"
            [ngStyle]="{ height: base.tileHeight + 2 + 'px' }">
-        <div class="row h-100"
-             *ngIf="!state.hover">
-          <div class="col-12">
+        <div class="wrapper__default row h-100">
+          <div class="col-12 h-100">
             <cp-personas-tile-content [name]="tile.name"
                                       [color]="tile.color"
                                       [image]="tile.img_url"
@@ -25,9 +22,8 @@
             </cp-personas-tile-content>
           </div>
         </div>
-        <div class="row h-100"
-             *ngIf="state.hover">
-          <div class="col-12">
+        <div class="wrapper__on_hover row h-100">
+          <div class="col-12 h-100">
             <cp-personas-tile-hover (editClick)="edit.emit()"
                                     (toggleVisibility)="onToggleTile()"
                                     [visible]="utils.isTileVisible(tile)"

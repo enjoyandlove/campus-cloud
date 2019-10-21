@@ -37,7 +37,7 @@
     "message": "Manage other kinds of app content"
   },
   "admin_assess_help": {
-    "message": "View the Assessment Dashboard"
+    "message": "View the Success Dashboard"
   },
   "admin_athletics_owner": {
     "message": "Athletics Club Owner"
@@ -99,7 +99,7 @@
     "message": "Enabled"
   },
   "admin_engagement_dashboard": {
-    "message": "Assessment Dashboard"
+    "message": "Dashboard & Data"
   },
   "admin_events_help": {
     "message": "View events; view event assessment"
@@ -282,7 +282,7 @@
     "message": "Are you Sure?"
   },
   "assess": {
-    "message": "Assess"
+    "message": "Success"
   },
   "assessment": {
     "message": "Assessment"
@@ -964,7 +964,7 @@
     "message": "Branding"
   },
   "customization_description": {
-    "message": "(JPEG or PNG format, 5 MB or smaller, recommended dimensions 1440 x 800. You can scroll with your mouse to zoom in or out.)"
+    "message": "(Higher resolution images work best, minimum dimensions 1440 x 800. JPEG or PNG format, 5 MB or smaller.  You can scroll with your mouse to zoom in or out.)"
   },
   "customization_image_upload_error": {
     "message": "Something went wrong while uploading your image"
@@ -2496,6 +2496,69 @@
   "t_dashboard_welcome_subheader": {
     "message": "You can measure your app and content engagement after launching your app experience"
   },
+  "t_data_export": {
+    "message": "Data Export"
+  },
+  "t_data_export_csv_posts_comments_count": {
+    "message": "# of Comments"
+  },
+  "t_data_export_csv_posts_date_posted": {
+    "message": "Date Posted"
+  },
+  "t_data_export_csv_posts_flags_count": {
+    "message": "# of Flags"
+  },
+  "t_data_export_csv_posts_likes_count": {
+    "message": "# of Likes"
+  },
+  "t_data_export_csv_posts_post_id": {
+    "message": "Post ID"
+  },
+  "t_data_export_csv_posts_student_email": {
+    "message": "Student Email"
+  },
+  "t_data_export_csv_posts_student_id": {
+    "message": "Student ID"
+  },
+  "t_data_export_csv_posts_student_or_host_name": {
+    "message": "Student Name / Host Name"
+  },
+  "t_data_export_csv_posts_wall_comment_images": {
+    "message": "Wall Comment Images"
+  },
+  "t_data_export_csv_posts_wall_post": {
+    "message": "Wall Post"
+  },
+  "t_data_export_csv_posts_wall_post_images": {
+    "message": "Wall Post Image"
+  },
+  "t_data_export_csv_walls_date_created": {
+    "message": "Date"
+  },
+  "t_data_export_csv_wall_comment_comment": {
+    "message": "Wall Comment"
+  },
+  "t_data_export_csv_wall_comment_images": {
+    "message": "Wall Comment Images"
+  },
+  "t_data_export_data_source": {
+    "message": "Data Source"
+  },
+  "t_data_export_no_data_found": {
+    "message": "No Data Sources found..."
+  },
+  "t_data_export_waiting_message": {
+    "message": "Your download should be starting soon"
+  },
+  "t_data_export_waiting_title": {
+    "message": "Generating CSV file"
+  },
+  "t_data_export_wall_comments": {
+    "message": "Wall Comments"
+  },
+  "t_data_export_wall_posts": {
+    "message": "Wall Posts"
+  },
   "t_datepicker_clear": {
     "message": "Clear"
   },
@@ -2954,12 +3017,6 @@
   "t_personas_form_personalized_page_help": {
     "message": "This experience will provide a personalized home page for logged in users"
   },
-  "t_personas_form_pretour": {
-    "message": "Pretour"
-  },
-  "t_personas_form_pretour_help": {
-    "message": "Provide an overview of the app before registration"
-  },
   "t_personas_form_sub_heading_my_courses": {
     "message": "All current courses (suggested for online courses)"
   },
@@ -3303,14 +3360,23 @@
   "t_shared_add": {
     "message": "Add"
   },
+  "t_shared_announcement": {
+    "message": "Announcement"
+  },
   "t_shared_app": {
     "message": "App"
+  },
+  "t_shared_audience": {
+    "message": "Audience"
   },
   "t_shared_average_rating": {
     "message": "Average Rating"
   },
   "t_shared_btn_add_integration": {
     "message": "Add Integration"
+  },
+  "t_shared_campus": {
+    "message": "Campus"
   },
   "t_shared_cancel": {
     "message": "Cancel"
@@ -3335,6 +3401,9 @@
   },
   "t_shared_closed": {
     "message": "Closed"
+  },
+  "t_shared_closed_account": {
+    "message": "Closed Account"
   },
   "t_shared_color": {
     "message": "Color"
@@ -3392,6 +3461,12 @@
   },
   "t_shared_error": {
     "message": "Error"
+  },
+  "t_shared_experience": {
+    "message": "Experience"
+  },
+  "t_shared_export": {
+    "message": "Export"
   },
   "t_shared_failed": {
     "message": "Failed"
@@ -3572,6 +3647,9 @@
   },
   "t_studio": {
     "message": "Studio"
+  },
+  "t_studio_banner_error_wrong_dimensions": {
+    "message": "Wrong dimensions. Make sure the image meets the provided requirements."
   },
   "t_studio_branding_header": {
     "message": "Branding Color and Logo"

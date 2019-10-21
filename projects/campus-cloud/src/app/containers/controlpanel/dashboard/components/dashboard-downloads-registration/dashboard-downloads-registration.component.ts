@@ -33,8 +33,8 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent
 
   _dates;
   loading;
-  series;
-  labels;
+  series = [];
+  labels = [];
   chartOptions;
   downloads = 0;
   registrations = 0;
@@ -126,6 +126,10 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent
         this.chartOptions = this.utils.chartOptions(this.divider, series);
         this.labels = this.utils.buildLabels(this.divider, this.range, series);
         this.series = this.utils.buildSeries(this.divider, this.range, this.getTooltips(), series);
+      })
+      .catch(() => {
+        this.loading = false;
+        this.chartOptions = this.utils.chartOptions(this.divider, [[], []]);
       });
   }
 

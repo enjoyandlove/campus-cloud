@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 
 import { CCImage } from '@campus-cloud/shared/models';
 import { CC_TILE_IMAGE_RATIO } from '@campus-cloud/shared/constants';
-import { ImageService, ImageValidatorService } from '@campus-cloud/shared/services';
+import { ImageService, ImageValidatorService, CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-banner-upload-button',
@@ -17,7 +17,7 @@ export class BannerUploadButtonComponent implements OnInit {
 
   uploading = false;
 
-  constructor(private imageService: ImageService) {}
+  constructor(private imageService: ImageService, private cpI18n: CPI18nService) {}
 
   ngOnInit() {}
 
@@ -33,16 +33,16 @@ export class BannerUploadButtonComponent implements OnInit {
     CCImage.getImageDimensions(file)
       .then(({ height, width }) => {
         if (width < 1440 || height < width / CC_TILE_IMAGE_RATIO) {
-          throw new Error('Wrong Dimensions');
+          throw new Error(this.cpI18n.translate('t_studio_banner_error_wrong_dimensions'));
         }
         this.imageService.upload(file).subscribe(
           ({ image_url }: any) => {
             this.uploading = false;
             this.upload.emit(image_url);
           },
-          (err: Error) => {
+          () => {
             this.uploading = false;
-            this.error.emit(err.message);
+            this.error.emit(this.cpI18n.translate('t_studio_banner_error_wrong_dimensions'));
           }
         );
       })

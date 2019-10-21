@@ -23,7 +23,7 @@ class MockTilesService {
   }
 }
 
-const initialState = { working: false, hover: false };
+const initialState = { working: false };
 
 describe('PersonasTileComponent', () => {
   let comp: PersonasTileComponent;
@@ -51,14 +51,6 @@ describe('PersonasTileComponent', () => {
   it('should init', () => {
     expect(comp).toBeTruthy();
     expect(comp.state).toEqual(initialState);
-  });
-
-  it('toggleHover', () => {
-    comp.toggleHover(true);
-    expect(comp.state.hover).toBeTruthy();
-
-    comp.toggleHover(false);
-    expect(comp.state.hover).toBeFalsy();
   });
 
   it('errorHandler', () => {

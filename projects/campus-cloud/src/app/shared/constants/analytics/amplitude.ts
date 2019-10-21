@@ -333,6 +333,8 @@ export const amplitudeEvents = {
 
   MANAGE_UPDATED_EVENT: 'Manage - Updated Event',
 
+  EXPORT_DATA_SUCCESS: 'Success - Exported Data',
+
   MANAGE_CREATED_EVENT: 'Manage - Created Event',
 
   ASSESS_DOWNLOAD_DATA: 'Assess Downloaded Data',
