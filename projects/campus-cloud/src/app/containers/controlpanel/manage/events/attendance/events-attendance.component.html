@@ -108,12 +108,13 @@
                   <img class="rounded float-left avatar"
                        [alt]="'t_shared_img_alt' | cpI18n: i + 1"
                        [src]="attendee.avatar_thumb_url ? attendee.avatar_thumb_url : defaultImage" />
-                  <strong>
+                  <strong *ngIf="attendee.attendee_type !== deletedAttendee">
                     {{ attendee.firstname }}
                     {{ attendee.lastname }}
                   </strong>
+                  <strong *ngIf="attendee.attendee_type === deletedAttendee">{{ 't_shared_closed_account' | cpI18n }}</strong>
                   <br />
-                  <small class="text-muted">{{ attendee.email }}</small>
+                  <small class="text-muted">{{ attendee.attendee_type !== deletedAttendee ? attendee.email : '-' }}</small>
                 </div>
                 <div [class]="event.has_checkout ? 'col-2' : 'col-3'">
                   <span> {{ attendee.check_in_time | cpDatePipe: dateFormat }}
@@ -145,7 +146,7 @@
                           class="action-button unstyled-button"
                           [class.disabled]="!canMessage"
                           (click)="messageAttendee(attendee)"
-                          *ngIf="attendee.check_in_method === appCheckIn">
+                          *ngIf="attendee.check_in_method === appCheckIn && attendee.attendee_type !== deletedAttendee">
                     <i cpTooltip
                        aria-hidden="true"
                        aria-label="message"
@@ -154,7 +155,7 @@
                       chat_bubble
                     </i>
                   </button>
-                  <span *ngIf="attendee.check_in_method === webCheckIn">
+                  <span *ngIf="attendee.check_in_method === webCheckIn && attendee.attendee_type !== deletedAttendee">
                     <button type="button"
                             class="action-button unstyled-button"
                             (click)="onEditCheckIn(attendee)">

@@ -1,3 +1,9 @@
+export enum AttendeeType {
+  'active' = 1,
+  'external' = 0,
+  'deleted' = -1
+}
+
 export enum EventAttendance {
   'enabled' = 1,
   'disabled' = 0
