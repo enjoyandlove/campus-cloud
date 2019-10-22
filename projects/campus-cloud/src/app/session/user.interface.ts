@@ -11,6 +11,7 @@ export interface IUser {
   position: string;
   profile_pic_url: string;
   account_mapping: any;
+  attendee_type: number;
   school_level_privileges: any;
   client_level_privileges: any;
 }

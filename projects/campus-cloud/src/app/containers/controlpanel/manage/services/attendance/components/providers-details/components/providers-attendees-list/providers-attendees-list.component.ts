@@ -5,6 +5,7 @@ import { get as _get } from 'lodash';
 import { FORMAT } from '@campus-cloud/shared/pipes/date';
 import { DEFAULT } from '@campus-cloud/shared/constants';
 import { BaseComponent } from '@campus-cloud/base/base.component';
+import { AttendeeType } from '@controlpanel/manage/events/event.status';
 import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
@@ -76,6 +77,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   isDeleteCheckInModal = false;
   dateFormat = FORMAT.DATETIME_SHORT;
   webCheckInMethod = CheckInMethod.web;
+  deletedAttendee = AttendeeType.deleted;
   emptyCheckOutTime = CheckInOutTime.empty;
   defaultImage = `${environment.root}assets/default/user.png`;
 
