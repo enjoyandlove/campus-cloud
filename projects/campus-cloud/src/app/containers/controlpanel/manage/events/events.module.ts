@@ -18,7 +18,6 @@ import { ModalService } from '@campus-cloud/shared/services';
 import { EventsRoutingModule } from './events.routing.module';
 import { EventsComponent } from './list/base/events.component';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
-import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 import { CheckInModule } from './attendance/check-in/check-in.module';
 import { EventsAttendanceActionBoxComponent } from './attendance/components';
 import { EngagementModule } from '../../assess/engagement/engagement.module';
@@ -26,8 +25,6 @@ import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
 import { EngagementStudentsModule } from '../../assess/students/students.module';
 import { OrientationEventsService } from '../orientation/events/orientation.events.service';
 import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common/common-integrations.module';
-
-import { EventsFormComponent, EventsAssessmentFormComponent } from './components';
 
 import {
   ListPastComponent,
@@ -48,7 +45,6 @@ import {
     EventsComponent,
     ListPastComponent,
     EventsListComponent,
-    EventsFormComponent,
     EventsInfoComponent,
     EventsEditComponent,
     EventsExcelComponent,
@@ -59,7 +55,6 @@ import {
     EventsAttendanceComponent,
     EventsExcelModalComponent,
     EventsImportTopBarComponent,
-    EventsAssessmentFormComponent,
     EventsAttendanceActionBoxComponent,
     EventsImportActionDropdownComponent
   ],
@@ -69,7 +64,6 @@ import {
     CommonModule,
     SharedModule,
     CheckInModule,
-    LayoutsModule,
     ImageModule.forRoot(),
     EventsRoutingModule,
     ReactiveFormsModule,
