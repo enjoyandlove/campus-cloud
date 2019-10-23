@@ -50,7 +50,6 @@ const THROTTLED_STATUS = 1;
 export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   stores$;
   isError;
-  sendAsName;
   buttonData;
   errorMessage;
   selectedType;
@@ -273,7 +272,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   onSelectedStore(store) {
-    this.sendAsName = store.label;
     this.form.controls['store_id'].setValue(store.value);
     this.amplitudeEventProperties = {
       ...this.amplitudeEventProperties,
@@ -416,7 +414,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       store_id: this.form.value.store_id,
       is_school_wide: this.form.value.is_school_wide,
       subject: `${prefix} ${this.form.value.subject}`,
-      message: `${this.form.value.message} \n ${this.sendAsName}`,
+      message: `${this.form.value.message}`,
       priority: this.form.value.priority
     };
 
@@ -606,8 +604,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       host_type
     };
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
-
-    this.sendAsName = this.session.defaultHost ? this.session.defaultHost.label : undefined;
 
     let canDoEmergency;
 

@@ -1,5 +1,5 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { ButtonModule } from '@ready-education/ready-ui';
+import { ButtonModule } from './button.module';
 
 storiesOf('Button', module)
   .addDecorator(

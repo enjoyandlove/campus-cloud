@@ -2,22 +2,27 @@ import { FormBuilder, FormGroup, ValidationErrors, Validators } from '@angular/f
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '@campus-cloud/session';
+import IServiceProvider from './providers.interface';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { baseActions, IHeader } from '@campus-cloud/store/base';
+import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
 import { HasData, Assessment, serviceFeedback, ServiceAttendance } from './services.status';
 
 import {
+  AttendeeType,
+  CheckInMethod,
+  CheckInOutTime,
+  attendanceType
+} from '../events/event.status';
+
+import {
+  CPDate,
+  Formats,
+  createSpreadSheet,
   canSchoolReadResource,
   canStoreReadAndWriteResource
-} from '../../../../shared/utils/privileges';
-
-import { CPSession } from '../../../../session';
-import IServiceProvider from './providers.interface';
-import { Formats } from '../../../../shared/utils/csv';
-import { CPDate } from '../../../../shared/utils/date/date';
-import { CPI18nService } from '../../../../shared/services';
-import { baseActions, IHeader } from '../../../../store/base';
-import { createSpreadSheet } from '../../../../shared/utils/csv/parser';
-import { CP_PRIVILEGES_MAP, amplitudeEvents } from '../../../../shared/constants';
-import { attendanceType, CheckInMethod, CheckInOutTime } from '../events/event.status';
+} from '@campus-cloud/shared/utils';
 
 @Injectable()
 export class ServicesUtilsService {
@@ -138,16 +143,23 @@ export class ServicesUtilsService {
         item.service_provider_has_checkout &&
         item.check_out_time_epoch !== CheckInOutTime.empty;
 
+      const isDeletedAttendee = item.attendee_type === AttendeeType.deleted;
+      const email = !isDeletedAttendee ? item.email : '-';
+      const lastname = !isDeletedAttendee ? item.lastname : '-';
+      const firstname = !isDeletedAttendee
+        ? item.firstname
+        : this.cpI18n.translate('t_shared_closed_account');
+
       return {
         [this.cpI18n.translate(
           't_service_provider_csv_column_provider_name'
         )]: item.service_provider_name,
 
-        [this.cpI18n.translate('t_service_provider_csv_column_first_name')]: item.firstname,
+        [this.cpI18n.translate('t_service_provider_csv_column_first_name')]: firstname,
 
-        [this.cpI18n.translate('t_service_provider_csv_column_last_name')]: item.lastname,
+        [this.cpI18n.translate('t_service_provider_csv_column_last_name')]: lastname,
 
-        [this.cpI18n.translate('email')]: item.email,
+        [this.cpI18n.translate('email')]: email,
 
         [this.cpI18n.translate('services_label_checked_in_method')]: check_in_method[
           item.check_in_method

@@ -17,3 +17,8 @@ export * from './lib/button-group/button-group.module';
 
 export * from './lib/toast/services/toast.service';
 export * from './lib/toast/toast.module';
+
+export * from './lib/charts/components/line/line.component';
+export * from './lib/charts/components/bar/bar.component';
+export * from './lib/charts/providers/chart.service';
+export * from './lib/charts/charts.module';

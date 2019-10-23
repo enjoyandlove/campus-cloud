@@ -5,7 +5,14 @@ import IEvent from './event.interface';
 import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
-import { qrCode, EventType, attendanceType, CheckInOutTime, EventAttendance } from './event.status';
+import {
+  qrCode,
+  EventType,
+  AttendeeType,
+  attendanceType,
+  CheckInOutTime,
+  EventAttendance
+} from './event.status';
 
 import {
   CPDate,
@@ -208,12 +215,19 @@ export class EventUtilService {
           item.check_out_time_epoch &&
           item.check_out_time_epoch !== CheckInOutTime.empty;
 
+        const isDeletedAttendee = item.attendee_type === AttendeeType.deleted;
+        const email = !isDeletedAttendee ? item.email : '-';
+        const lastname = !isDeletedAttendee ? item.lastname : '-';
+        const firstname = !isDeletedAttendee
+          ? item.firstname
+          : this.cpI18n.translate('t_shared_closed_account');
+
         const row = {
-          [this.cpI18n.translate('t_events_csv_column_first_name')]: item.firstname,
+          [this.cpI18n.translate('t_events_csv_column_first_name')]: firstname,
 
-          [this.cpI18n.translate('t_events_csv_column_last_name')]: item.lastname,
+          [this.cpI18n.translate('t_events_csv_column_last_name')]: lastname,
 
-          [this.cpI18n.translate('t_events_csv_column_email')]: item.email,
+          [this.cpI18n.translate('t_events_csv_column_email')]: email,
 
           [this.cpI18n.translate('events_checked_in_method')]: check_in_method[
             item.check_in_method

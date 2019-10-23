@@ -15,9 +15,9 @@ import { EventUtilService } from './../events.utils.service';
 import { EventsComponent } from '../list/base/events.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { EventsAmplitudeService } from '../events.amplitude.service';
-import { CheckInMethod, CheckInOutTime, CheckInOut } from '../event.status';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
+import { CheckInMethod, CheckInOutTime, CheckInOut, AttendeeType } from '../event.status';
 import { canSchoolReadResource, canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { CP_PRIVILEGES_MAP, amplitudeEvents, SortDirection } from '@campus-cloud/shared/constants';
 import {
@@ -80,6 +80,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   appCheckIn = CheckInMethod.app;
   webCheckIn = CheckInMethod.web;
   dateFormat = FORMAT.DATETIME_SHORT;
+  deletedAttendee = AttendeeType.deleted;
   emptyCheckOutTime = CheckInOutTime.empty;
   updateQrCode = new BehaviorSubject(null);
   totalAttendees = new BehaviorSubject(null);
