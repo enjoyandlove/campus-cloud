@@ -1,0 +1,33 @@
+@import '~projects/campus-cloud/src/sass/core/typography';
+@import '~projects/campus-cloud/src/sass/components/form';
+
+.maps {
+  height: 200px;
+}
+
+form {
+  .margin-top {
+    margin-top: 24px;
+  }
+
+  p.title {
+    @include font-24px();
+    @include font-bold();
+
+    margin: 0;
+    display: inline-block;
+  }
+
+  .event-details {
+    margin-top: 40px;
+  }
+
+  label {
+    margin-top: 10px;
+    display: inline-block;
+  }
+
+  .checkbox {
+    margin-top: 20px;
+  }
+}
