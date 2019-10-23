@@ -87,12 +87,10 @@ export class EventsComponent extends BaseComponent {
     );
   }
 
-  handleError(message?) {
-    const body = message ? message : this.cpI18n.translate('something_went_wrong');
-
+  handleError() {
     this.store.dispatch(
       new baseActionClass.SnackbarError({
-        body
+        body: this.cpI18n.translate('something_went_wrong')
       })
     );
   }

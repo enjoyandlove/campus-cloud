@@ -1,160 +1,266 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { HttpClientModule, HttpParams } from '@angular/common/http';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { provideMockStore } from '@ngrx/store/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { of } from 'rxjs';
+import { FormBuilder } from '@angular/forms';
+import { of as observableOf } from 'rxjs';
 
 import { EventsModule } from '../events.module';
+import { EventsService } from '../events.service';
 import { EventAttendance } from '../event.status';
-import { CPSession } from '@campus-cloud/session';
 import { CPDate } from '@campus-cloud/shared/utils';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { EventUtilService } from '../events.utils.service';
-import { fillForm } from '@campus-cloud/shared/utils/tests';
-import { AdminService } from '@campus-cloud/shared/services';
-import { filledForm } from '@controlpanel/manage/events/tests';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { EventsCreateComponent } from './events-create.component';
-import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { AdminService, StoreService } from '@campus-cloud/shared/services';
+
+class MockService {
+  dummy;
+
+  createEvent(body: any, search: any) {
+    this.dummy = [search];
+
+    return observableOf({ body });
+  }
+}
 
 describe('EventCreateComponent', () => {
-  configureTestSuite();
-
-  beforeAll((done) => {
-    (async () => {
-      TestBed.configureTestingModule({
-        imports: [CPTestModule, EventsModule, HttpClientModule, RouterTestingModule],
-        providers: [AdminService, EventUtilService, provideMockStore()],
-        schemas: [NO_ERRORS_SCHEMA]
-      });
-      await TestBed.compileComponents();
-    })()
-      .then(done)
-      .catch(done.fail);
-  });
-
   let spy;
-  let session;
   let component: EventsCreateComponent;
   let fixture: ComponentFixture<EventsCreateComponent>;
 
   beforeEach(async(() => {
-    fixture = TestBed.createComponent(EventsCreateComponent);
+    TestBed.configureTestingModule({
+      imports: [CPTestModule, EventsModule, HttpClientModule, RouterTestingModule],
+      providers: [
+        FormBuilder,
+        AdminService,
+        StoreService,
+        EventUtilService,
+        provideMockStore(),
+        { provide: EventsService, useClass: MockService }
+      ]
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(EventsCreateComponent);
 
-    component = fixture.componentInstance;
-    session = TestBed.get(CPSession);
-    session.g.set('school', mockSchool);
+        component = fixture.componentInstance;
+        component.session.g.set('school', mockSchool);
+        component.attendance = true;
 
-    fixture.detectChanges();
+        fixture.detectChanges();
 
-    spyOn(component, 'buildHeader');
-    spyOn(component, 'handleError');
-    spyOn(component.router, 'navigate');
-    spy = spyOn(component.service, 'createEvent').and.returnValue(of({}));
+        spyOn(component, 'buildHeader');
+        spyOn(component.router, 'navigate');
+        spy = spyOn(component.service, 'createEvent').and.returnValue(observableOf({}));
+      });
   }));
 
-  describe('FORM VALIDATION', () => {
-    it('form validation should fail required fields missing', () => {
-      const errorMessage = component.cpI18n.translate('error_fill_out_marked_fields');
+  it('should toggle is_all_day', () => {
+    component.onAllDayToggle(true);
+    expect(component.form.controls['is_all_day'].value).toBeTruthy();
 
-      fillForm(component.form, filledForm);
-
-      component.form.get('title').setValue(null);
-      component.onSubmit();
-
-      expect(component.formError).toBe(true);
-      expect(component.form.valid).toBe(false);
-      expect(component.buttonData.disabled).toBe(false);
-      expect(component.handleError).toHaveBeenCalledWith(errorMessage);
-    });
-
-    it('form validation should fail - event manager is required', () => {
-      component.form.get('event_attendance').setValue(EventAttendance.enabled);
-
-      component.onSubmit();
-
-      expect(component.formError).toBe(true);
-      expect(component.buttonData.disabled).toBe(false);
-    });
-
-    it('form validation should fail - end date should be greater than start date', () => {
-      const dateError = component.cpI18n.translate('events_error_end_date_before_start');
-
-      fillForm(component.form, filledForm);
-
-      const future = CPDate.now(session.tz)
-        .add(1, 'day')
-        .unix();
-      const now = CPDate.now(session.tz).unix();
-      component.form.get('end').setValue(now);
-      component.form.get('start').setValue(future);
-
-      component.onSubmit();
-
-      expect(component.formError).toBe(true);
-      expect(component.buttonData.disabled).toBe(false);
-      expect(component.handleError).toHaveBeenCalledWith(dateError);
-    });
-
-    it('form validation should fail - event end date should be in future', () => {
-      const dateError = component.cpI18n.translate('events_error_end_date_after_now');
-
-      fillForm(component.form, filledForm);
-
-      component.form.get('start').setValue(1460806527);
-      component.form.get('end').setValue(1492342527);
-
-      component.onSubmit();
-
-      expect(component.formError).toBe(true);
-      expect(component.buttonData.disabled).toBe(false);
-      expect(component.handleError).toHaveBeenCalledWith(dateError);
-    });
+    component.onAllDayToggle(false);
+    expect(component.form.controls['is_all_day'].value).toBeFalsy();
   });
 
-  describe('CREATE EVENT', () => {
-    it('should create an orientation event', () => {
-      component.orientationId = 123;
-      const params = new HttpParams()
-        .set('school_id', session.g.get('school').id)
-        .set('calendar_id', component.orientationId.toString());
+  // it(
+  //   'should have event attendance type tooltip',
+  //   fakeAsync(() => {
+  //     fixture.detectChanges();
+  //     tick();
 
-      const future = CPDate.now(session.tz)
-        .add(1, 'day')
-        .unix();
-      const now = CPDate.now(session.tz).unix();
+  //     const toolTipInfoIcon = fixture.debugElement.query(
+  //       By.css('.row .attendance-type-tooltip button')
+  //     ).nativeElement;
+  //     toolTipInfoIcon.click();
+  //     tick();
 
-      fillForm(component.form, filledForm);
+  //     fixture.detectChanges();
 
-      component.form.get('start').setValue(now);
-      component.form.get('end').setValue(future);
+  //     tick();
+  //     const toolTipContent = fixture.debugElement.query(
+  //       By.css('.row .attendance-type-tooltip .popover .popover-content div')
+  //     ).nativeElement;
 
-      component.onSubmit();
+  //     expect(toolTipContent.textContent).toEqual('t_events_event_attendance_type_tooltip');
+  //   })
+  // );
 
-      expect(spy).toHaveBeenCalled();
-      expect(component.form.valid).toBe(true);
-      expect(component.formError).toBe(false);
-      expect(spy).toHaveBeenCalledWith(component.form.value, params);
-    });
+  // it(
+  //   'should have event QR enabled tooltip',
+  //   fakeAsync(() => {
+  //     fixture.detectChanges();
+  //     tick();
 
-    it('should create an event', () => {
-      const params = new HttpParams();
-      const future = CPDate.now(session.tz)
-        .add(1, 'day')
-        .unix();
-      const now = CPDate.now(session.tz).unix();
+  //     const toolTipInfoIcon = fixture.debugElement.query(
+  //       By.css('.row .event-qr-enable-tooltip button')
+  //     ).nativeElement;
+  //     toolTipInfoIcon.click();
+  //     tick();
 
-      fillForm(component.form, filledForm);
+  //     fixture.detectChanges();
 
-      component.form.get('start').setValue(now);
-      component.form.get('end').setValue(future);
+  //     tick();
+  //     const toolTipContent = fixture.debugElement.query(
+  //       By.css('.row .event-qr-enable-tooltip .popover .popover-content div')
+  //     ).nativeElement;
 
-      component.onSubmit();
+  //     expect(toolTipContent.textContent).toEqual('t_events_event_qr_code_tooltip');
+  //   })
+  // );
 
-      expect(spy).toHaveBeenCalled();
-      expect(component.form.valid).toBe(true);
-      expect(component.formError).toBe(false);
-      expect(spy).toHaveBeenCalledWith(component.form.value, params);
-    });
+  // it(
+  //   'should have event manager tooltip',
+  //   fakeAsync(() => {
+  //     fixture.detectChanges();
+  //     tick();
+
+  //     const toolTipInfoIcon = fixture.debugElement.query(
+  //       By.css('.row .event-manager-tooltip button')
+  //     ).nativeElement;
+  //     toolTipInfoIcon.click();
+  //     tick();
+
+  //     fixture.detectChanges();
+
+  //     tick();
+  //     const toolTipContent = fixture.debugElement.query(
+  //       By.css('.row .event-manager-tooltip .popover .popover-content div')
+  //     ).nativeElement;
+
+  //     expect(toolTipContent.textContent).toEqual('events_event_manager_tooltip');
+  //   })
+  // );
+
+  // it(
+  //   'should have attendance Manager tooltip',
+  //   fakeAsync(() => {
+  //     fixture.detectChanges();
+  //     tick();
+
+  //     const toolTipInfoIcon = fixture.debugElement.query(
+  //       By.css('.row .attendance-manager-tooltip button')
+  //     ).nativeElement;
+  //     toolTipInfoIcon.click();
+  //     tick();
+
+  //     fixture.detectChanges();
+
+  //     tick();
+  //     const toolTipContent = fixture.debugElement.query(
+  //       By.css('.row .attendance-manager-tooltip .popover .popover-content div')
+  //     ).nativeElement;
+
+  //     expect(toolTipContent.textContent).toEqual('events_attendance_manager_tooltip');
+  //   })
+  // );
+
+  // it(
+  //   'should have student feedback tooltip',
+  //   fakeAsync(() => {
+  //     fixture.detectChanges();
+  //     tick();
+
+  //     const toolTipInfoIcon = fixture.debugElement.query(
+  //       By.css('.row .student-feedback-tooltip button')
+  //     ).nativeElement;
+  //     toolTipInfoIcon.click();
+  //     tick();
+
+  //     fixture.detectChanges();
+
+  //     tick();
+  //     const toolTipContent = fixture.debugElement.query(
+  //       By.css('.row .student-feedback-tooltip .popover .popover-content div')
+  //     ).nativeElement;
+
+  //     expect(toolTipContent.textContent).toEqual('events_event_feedback_tooltip');
+  //   })
+  // );
+
+  it('form validation should fail required fields missing', () => {
+    component.form.controls['title'].setValue(null);
+    component.form.controls['end'].setValue(null);
+    component.form.controls['start'].setValue(null);
+    component.form.controls['poster_url'].setValue(null);
+    component.onSubmit();
+
+    expect(component.form.valid).toBeFalsy();
+    expect(component.formError).toBeTruthy();
+    expect(component.buttonData.disabled).toBeFalsy();
+  });
+
+  it('form validation should fail - event manager is required', () => {
+    component.form.controls['event_attendance'].setValue(EventAttendance.enabled);
+
+    component.onSubmit();
+
+    expect(component.formError).toBeTruthy();
+    expect(component.buttonData.disabled).toBeFalsy();
+  });
+
+  it('form validation should fail - end date should be greater than start date', () => {
+    const dateError = component.cpI18n.translate('events_error_end_date_before_start');
+
+    // required fields
+    component.form.controls['title'].setValue('hello');
+    component.form.controls['poster_url'].setValue('hello');
+    component.form.controls['poster_thumb_url'].setValue('hello');
+    component.form.controls['store_id'].setValue(1);
+    const future = CPDate.now(component.session.tz)
+      .add(1, 'day')
+      .unix();
+    const now = CPDate.now(component.session.tz).unix();
+    component.form.controls['end'].setValue(now);
+    component.form.controls['start'].setValue(future);
+
+    component.onSubmit();
+
+    expect(component.formError).toBeTruthy();
+    expect(component.isDateError).toBeTruthy();
+    expect(component.buttonData.disabled).toBeFalsy();
+    expect(component.dateErrorMessage).toEqual(dateError);
+  });
+
+  it('form validation should fail - event end date should be in future', () => {
+    // required fields
+    component.form.controls['title'].setValue('hello');
+    component.form.controls['poster_url'].setValue('hello');
+    component.form.controls['poster_thumb_url'].setValue('hello');
+    component.form.controls['store_id'].setValue(1);
+
+    component.form.controls['start'].setValue(1492342527);
+    component.form.controls['end'].setValue(1460806527);
+
+    component.onSubmit();
+
+    expect(component.formError).toBeTruthy();
+    expect(component.isDateError).toBeTruthy();
+    expect(component.buttonData.disabled).toBeFalsy();
+  });
+
+  it('should create an event', () => {
+    const future = CPDate.now(component.session.tz)
+      .add(1, 'day')
+      .unix();
+    const now = CPDate.now(component.session.tz).unix();
+
+    component.form.controls['title'].setValue('hello');
+    component.form.controls['poster_url'].setValue('hello');
+    component.form.controls['poster_thumb_url'].setValue('hello');
+    component.form.controls['store_id'].setValue(1);
+
+    component.form.controls['start'].setValue(now);
+    component.form.controls['end'].setValue(future);
+
+    component.onSubmit();
+
+    expect(spy).toHaveBeenCalled();
+    expect(component.form.valid).toBeTruthy();
+    expect(component.formError).toBeFalsy();
+    expect(component.isDateError).toBeFalsy();
   });
 });

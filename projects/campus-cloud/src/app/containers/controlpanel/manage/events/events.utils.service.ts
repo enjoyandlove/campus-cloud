@@ -21,7 +21,6 @@ import {
   canStoreReadResource,
   canSchoolWriteResource
 } from '@campus-cloud/shared/utils';
-import { CheckInMethod } from '@controlpanel/manage/events/event.status';
 
 export interface IEventType {
   event_id?: number;
@@ -32,55 +31,6 @@ export interface IEventType {
 @Injectable()
 export class EventUtilService {
   constructor(public session: CPSession, public cpI18n: CPI18nService) {}
-
-  static assessmentEnableCustomValidator(controls: FormGroup): ValidationErrors | null {
-    const managerId = controls.get('event_manager_id').value;
-    const eventFeedback = controls.get('event_feedback').value;
-    const eventAttendance = controls.get('event_attendance').value;
-    const feedbackLabel = controls.get('custom_basic_feedback_label').value;
-
-    const errors = {};
-
-    if (eventAttendance === EventAttendance.enabled) {
-      if (!managerId) {
-        errors['eventManagerRequired'] = true;
-      }
-
-      if (!feedbackLabel && eventFeedback) {
-        errors['feedbackLabelRequired'] = true;
-      }
-
-      return errors;
-    }
-
-    return null;
-  }
-
-  static getFromArray(arr: Array<any>, key: string, val: any) {
-    return arr.filter((item) => item[key] === val)[0];
-  }
-
-  static getQRCodeStatus(qrCodes) {
-    if (qrCodes) {
-      return qrCodes.includes(CheckInMethod.app);
-    }
-  }
-
-  static parseEventManagers(admins) {
-    return [
-      {
-        label: '---',
-        value: null
-      },
-      ...admins.map((admin) => {
-        return {
-          label: `${admin.firstname} ${admin.lastname}`,
-          value: admin.id
-        };
-      })
-    ];
-  }
-
   isPastEvent(event: IEvent): boolean {
     return event.end < CPDate.now(this.session.tz).unix();
   }
@@ -208,46 +158,27 @@ export class EventUtilService {
     ];
   }
 
-  clearDateErrors(form: FormGroup) {
-    const end = form.get('end');
-    const start = form.get('start');
+  assessmentEnableCustomValidator(controls: FormGroup): ValidationErrors | null {
+    const managerId = controls.get('event_manager_id').value;
+    const eventFeedback = controls.get('event_feedback').value;
+    const eventAttendance = controls.get('event_attendance').value;
+    const feedbackLabel = controls.get('custom_basic_feedback_label').value;
 
-    if (start.value) {
-      start.setErrors(null);
+    const errors = {};
+
+    if (eventAttendance === EventAttendance.enabled) {
+      if (!managerId) {
+        errors['eventManagerRequired'] = true;
+      }
+
+      if (!feedbackLabel && eventFeedback) {
+        errors['feedbackLabelRequired'] = true;
+      }
+
+      return errors;
     }
 
-    if (end.value) {
-      end.setErrors(null);
-    }
-  }
-
-  updateTime(form: FormGroup) {
-    const end = form.get('end');
-    const start = form.get('start');
-
-    const endDateAtMidnight = CPDate.fromEpoch(end.value, this.session.tz).endOf('day');
-
-    const startDateAtMidnight = CPDate.fromEpoch(start.value, this.session.tz).startOf('day');
-
-    end.setValue(CPDate.toEpoch(endDateAtMidnight, this.session.tz));
-    start.setValue(CPDate.toEpoch(startDateAtMidnight, this.session.tz));
-  }
-
-  setEventFormDateErrors(form: FormGroup) {
-    const end = form.get('end').value;
-    const start = form.get('start').value;
-
-    if (end <= start) {
-      form.get('end').setErrors({ required: true });
-
-      return this.cpI18n.translate('events_error_end_date_before_start');
-    }
-
-    if (end <= CPDate.now(this.session.tz).unix()) {
-      form.get('end').setErrors({ required: true });
-
-      return this.cpI18n.translate('events_error_end_date_after_now');
-    }
+    return null;
   }
 
   createExcel(stream, showStudentIds = false, event) {
