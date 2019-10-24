@@ -1,0 +1,139 @@
+  <form [formGroup]="form">
+  <div class="col">
+    <div class="row">
+      <div class="col-12">
+        <p class="title">{{ 'assessment' | cpI18n }}</p>
+        <span class="float-right">
+          <cp-switch (toggle)="toggleEventAttendance($event)"
+                     [isChecked]="form.controls.event_attendance.value === attendanceEnabled">
+          </cp-switch>
+        </span>
+      </div>
+    </div>
+
+    <div
+      *ngIf="form.controls.event_attendance.value === attendanceEnabled">
+      <div class="row margin-top">
+        <div class="col-6">
+          <div class="form-group attendance-type-tooltip">
+            <label class="with-tooltip">
+              {{ 't_events_attendance_type' | cpI18n }}
+              <button cpTooltip
+                      type="button"
+                      class="unstyled-button"
+                      [attr.title]="'t_events_event_attendance_type_tooltip' | cpI18n">
+                <i class="material-icons">
+                  info_outline
+                </i>
+              </button>
+
+            </label>
+            <cp-dropdown [items]="attendanceTypes"
+                         [selectedItem]="selectedAttendanceType"
+                         (selected)="onSelectedAttendanceType($event)">
+            </cp-dropdown>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group event-qr-enable-tooltip">
+            <label class="with-tooltip">
+              {{ 't_events_event_qr_enabled' | cpI18n }}
+
+              <button cpTooltip
+                      type="button"
+                      class="unstyled-button"
+                      [attr.title]="'t_events_event_qr_code_tooltip' | cpI18n">
+                <i class="material-icons">
+                  info_outline
+                </i>
+              </button>
+
+            </label>
+            <cp-dropdown [items]="eventQRCodes"
+                         [selectedItem]="selectedQRCode"
+                         (selected)="onSelectedQRCode($event.action)">
+            </cp-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6">
+          <div class="form-group event-manager-tooltip">
+            <label class="with-tooltip">
+              {{ 'events_event_manager' | cpI18n }}
+
+              <button cpTooltip
+                      type="button"
+                      class="unstyled-button"
+                      [attr.title]="'events_event_manager_tooltip' | cpI18n">
+                <i class="material-icons">
+                  info_outline
+                </i>
+              </button>
+
+            </label>
+            <cp-dropdown [items]="managers"
+                         [selectedItem]="selectedManager"
+                         (selected)="onSelectedManager($event)"
+                         [isRequiredError]="formError && form.errors?.eventManagerRequired">
+            </cp-dropdown>
+          </div>
+        </div>
+        <div class="col-6">
+          <div class="form-group attendance-manager-tooltip">
+            <label class="with-tooltip">
+              {{ 'events_attendance_manager_full' | cpI18n }}
+
+              <button cpTooltip
+                      type="button"
+                      class="unstyled-button"
+                      [attr.title]="'events_attendance_manager_tooltip' | cpI18n">
+                <i class="material-icons">
+                  info_outline
+                </i>
+              </button>
+
+            </label>
+            <input type="text"
+                   class="form-control"
+                   formControlName="attendance_manager_email"/>
+          </div>
+        </div>
+      </div>
+
+      <div class="row form-group student-feedback-tooltip">
+        <div class="col-6">
+          <label class="with-tooltip">
+            {{ 'student_feedback' | cpI18n }}
+
+            <button cpTooltip
+                    type="button"
+                    class="unstyled-button"
+                    [attr.title]="'events_event_feedback_tooltip' | cpI18n">
+              <i class="material-icons">
+                info_outline
+              </i>
+            </button>
+
+          </label>
+          <cp-dropdown [items]="attendanceFeedback"
+                       [selectedItem]="originalAttnFeedback"
+                       (selected)="onEventFeedbackChange($event)"
+                       [isRequiredError]="formError && form.get('event_feedback').invalid">
+          </cp-dropdown>
+        </div>
+      </div>
+
+      <div class="row form-group"
+           *ngIf="form.controls['event_feedback'].value === eventFeedbackEnabled">
+        <div class="col-12">
+          <label>{{ 'events_default_question' | cpI18n }}</label>
+          <input type="text"
+                 class="form-control"
+                 formControlName="custom_basic_feedback_label"
+                 [class.error]="event_feedback && form.errors?.feedbackLabelRequired"/>
+        </div>
+      </div>
+    </div>
+  </div>
+  </form>
