@@ -22,7 +22,11 @@ export class LocationsUtilsService {
 
     return controls.controls
       .filter((control: FormGroup) => control.controls['is_checked'].value && hasOpeningHours)
-      .map((ctr: FormGroup) => ctr.value);
+      .map((ctr: FormGroup) => {
+        const { is_checked, ...schedule } = ctr.value;
+
+        return schedule;
+      });
   }
 
   static setScheduleFormControls(form: FormGroup, schedule = []) {
