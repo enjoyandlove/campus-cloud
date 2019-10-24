@@ -30,6 +30,7 @@ import {
   CPAmplitudeService
 } from './services';
 
+import { CPTableModule } from './components/cp-table/cp-table.module';
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
 import { CPLineChartUtilsService } from './components/cp-line-chart/cp-line-chart.utils.service';
 import { CPRangePickerUtilsService } from './components/cp-range-picker/cp-range-picker.utils.service';
@@ -168,6 +169,7 @@ import {
     FormsModule,
     CommonModule,
     RouterModule,
+    CPTableModule,
     OverlayModule,
     CPTopBarModule,
     ReactiveFormsModule
@@ -191,6 +193,7 @@ import {
     CPUrlify,
     CPDatePipe,
     CPFilterPipe,
+    CPTableModule,
     CPTopBarModule,
     CPTabComponent,
     CPCardComponent,
