@@ -8,6 +8,9 @@ export enum AccessType {
 
 export enum ApiType {
   user = 'user',
+  campus = 'campus',
+  audience = 'audience',
+  experience = 'experience',
   notification = 'notification'
 }
 
