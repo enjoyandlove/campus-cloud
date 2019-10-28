@@ -171,14 +171,15 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       amplitudeEvents.ALL_STUDENTS
     );
 
-    const dateType = _get(this.filterState, ['dateRange', 'route_id'], DEFAULT);
-    const interval = AMPLITUDE_INTERVAL_MAP[dateType];
+    const dateType = _get(this.filterState, ['dateRange', 'label'], DEFAULT);
+    const interval = Object.values(AMPLITUDE_INTERVAL_MAP).includes(dateType)
+      ? dateType
+      : amplitudeEvents.CUSTOM;
 
     const eventProperties = {
       interval,
       filter_type,
-      provider_type: amplitudeEvents.ALL_PROVIDERS,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      provider_type: amplitudeEvents.ALL_PROVIDERS
     };
 
     this.cpTracking.amplitudeEmitEvent(

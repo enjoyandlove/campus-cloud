@@ -5,6 +5,8 @@ export const amplitudeEvents = {
 
   NEW: 'New',
 
+  ALL: 'All',
+
   WEB: 'Web',
 
   CSV: 'CSV',
@@ -55,6 +57,8 @@ export const amplitudeEvents = {
 
   SCHOOL: 'School',
 
+  CAMPUS: 'Campus',
+
   DEFAULT: 'Default',
 
   NO_DATE: 'No Date',
@@ -72,6 +76,8 @@ export const amplitudeEvents = {
   PENDING: 'Pending',
 
   ENABLED: 'Enabled',
+
+  AUDIENCE: 'Audience',
 
   END_DATE: 'End Date',
 

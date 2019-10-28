@@ -7,7 +7,6 @@ import { CPSession } from '@campus-cloud/session';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { PublicApiAccessTokenModel, IPublicApiAccessToken } from '../../model';
-import { ApiManagementUtilsService } from '@controlpanel/api-management/api-management.utils.service';
 
 @Mixin([Destroyable])
 @Component({
@@ -23,13 +22,12 @@ export class ApiManagementFormComponent implements OnInit, OnDestroy {
   @Input() formData: IPublicApiAccessToken;
 
   @Output() cancelEdit: EventEmitter<null> = new EventEmitter();
+  @Output() submitted: EventEmitter<FormGroup> = new EventEmitter();
   @Output() valueChanges: EventEmitter<FormGroup> = new EventEmitter();
-  @Output() submitted: EventEmitter<IPublicApiAccessToken> = new EventEmitter();
 
   formErrors = false;
   isSandbox: boolean;
   hasCampus: boolean;
-  formValue: IPublicApiAccessToken;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -45,8 +43,7 @@ export class ApiManagementFormComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.formValue = ApiManagementUtilsService.parseFormValue(this.form);
-    this.submitted.emit(this.formValue);
+    this.submitted.emit(this.form);
   }
 
   enableSubmitButton() {
@@ -76,7 +73,6 @@ export class ApiManagementFormComponent implements OnInit, OnDestroy {
     this.form.get('is_sandbox').setValue(is_sandbox);
     this.setCampusValueAndStatus(true);
 
-    this.formValue = ApiManagementUtilsService.parseFormValue(this.form);
     this.isSandbox = is_sandbox;
 
     const buttonText = this.isEdit ? 'save' : 't_api_management_generate_key';

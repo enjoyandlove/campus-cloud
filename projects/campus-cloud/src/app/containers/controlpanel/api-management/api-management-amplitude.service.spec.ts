@@ -48,17 +48,60 @@ describe('ApiManagementAmplitudeService', () => {
 
       expect(result).toEqual(amplitudeEvents.BOTH);
     });
+
+    it('should have audience type', () => {
+      permissionObject = { [ApiType.audience]: AccessType.write };
+
+      const result = ApiManagementAmplitudeService.getAudienceType(permissionObject);
+
+      expect(result).toEqual(amplitudeEvents.AUDIENCE);
+    });
+
+    it('should have experience type', () => {
+      permissionObject = { [ApiType.experience]: AccessType.write };
+
+      const result = ApiManagementAmplitudeService.getAudienceType(permissionObject);
+
+      expect(result).toEqual(amplitudeEvents.EXPERIENCE);
+    });
+
+    it('should have campus type', () => {
+      permissionObject = { [ApiType.campus]: AccessType.write };
+
+      const result = ApiManagementAmplitudeService.getAudienceType(permissionObject);
+
+      expect(result).toEqual(amplitudeEvents.CAMPUS);
+    });
+
+    it('should have all type', () => {
+      permissionObject = {
+        [ApiType.audience]: AccessType.write,
+        [ApiType.experience]: AccessType.write
+      };
+
+      const result = ApiManagementAmplitudeService.getAudienceType(permissionObject);
+
+      expect(result).toEqual(amplitudeEvents.ALL);
+    });
   });
 
   it('should get event properties', () => {
-    const permission_data = { [ApiType.user]: AccessType.write };
+    const permission_data = {
+      [ApiType.user]: AccessType.write,
+      [ApiType.audience]: AccessType.write
+    };
+
     const data = {
       id: 123,
       permission_data
     };
 
     const result = ApiManagementAmplitudeService.getEventProperties(data);
-    const properties = { api_key_id: 123, api_type: amplitudeEvents.USER_INFORMATION };
+    const properties = {
+      api_key_id: 123,
+      audience_type: amplitudeEvents.AUDIENCE,
+      api_type: amplitudeEvents.USER_INFORMATION
+    };
 
     expect(result).toEqual(properties);
   });

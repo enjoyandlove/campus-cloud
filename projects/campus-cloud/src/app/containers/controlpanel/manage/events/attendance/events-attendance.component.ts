@@ -276,7 +276,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
 
     const filter_type = _get(
       this.state,
-      ['student_filter', 'cohort_type'],
+      ['studentFilter', 'cohort_type'],
       amplitudeEvents.ALL_STUDENTS
     );
 
