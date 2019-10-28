@@ -10,9 +10,9 @@ import { EngagementService } from './engagement.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { AudienceType } from '../../audience/audience.status';
 import { canSchoolReadResource } from '@campus-cloud/shared/utils';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { amplitudeEvents, DEFAULT } from '@campus-cloud/shared/constants';
 import { AssessType, FilterType, PersonaType } from './engagement.status';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
-import { DEFAULT, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import * as DATE_RANGE from '@campus-cloud/shared/components/cp-range-picker';
 
 export interface IStudentFilter {
