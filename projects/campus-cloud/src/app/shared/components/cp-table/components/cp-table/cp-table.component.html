@@ -1,0 +1,33 @@
+<table>
+  <thead>
+    <tr>
+      <th *ngFor="let header of columns">
+        <button type="button"
+                class="unstyled-button"
+                *ngIf="header.sortable"
+                (click)="header.onClick && header.onClick(header)">
+          {{ header.label }}
+          <i class="material-icons"
+             *ngIf="header.sorting">
+            {{ header.sortingDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+          </i>
+        </button>
+        {{ header.sortable ? '' : header.label }}
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of rows">
+      <td *ngFor="let data of row">
+        <ng-container
+                      *ngTemplateOutlet="data.template || defaultCellTemplate; context: {row: data.context || data}">
+        </ng-container>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #defaultCellTemplate
+             let-row="row">
+  {{row.label}}
+</ng-template>

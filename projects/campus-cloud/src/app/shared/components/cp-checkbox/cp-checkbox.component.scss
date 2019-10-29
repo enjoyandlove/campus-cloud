@@ -80,7 +80,8 @@
 .control input:disabled ~ .control__indicator {
   pointer-events: none;
   opacity: 0.6;
-  // background: $color-white;
+  background: $color-med-grey;
+  border: 1px solid $color-grey;
 }
 
 /* Check mark */
@@ -108,5 +109,5 @@
 
 /* Disabled tick colour */
 .control--checkbox input:disabled ~ .control__indicator:after {
-  border-color: #7b7b7b;
+  border-color: $color-white;
 }

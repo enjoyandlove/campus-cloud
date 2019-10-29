@@ -1,6 +1,8 @@
 import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
+import { ApiType } from '@controlpanel/api-management/model';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { filledForm } from '@controlpanel/api-management/tests';
 import { ApiManagementFormComponent } from './api-management-form.component';
@@ -42,6 +44,32 @@ describe('ApiManagementFormComponent', () => {
     de = fixture.debugElement;
     fixture.detectChanges();
   }));
+
+  describe('onToggle audience or experience', () => {
+    it('should have campus permission if have audience or experience permissions ', () => {
+      const permissionDataCtrl = component.form.get('permission_data') as FormGroup;
+      permissionDataCtrl.get(ApiType.audience).setValue(true);
+      permissionDataCtrl.get(ApiType.experience).setValue(true);
+
+      component.setCampusValueAndStatus();
+      const campus = permissionDataCtrl.get(ApiType.campus).value;
+
+      expect(campus).toBe(true);
+      expect(component.hasCampus).toBe(true);
+    });
+
+    it('should not have campus permission if no audience and experience permission', () => {
+      const permissionDataCtrl = component.form.get('permission_data') as FormGroup;
+      permissionDataCtrl.get(ApiType.audience).setValue(false);
+      permissionDataCtrl.get(ApiType.experience).setValue(false);
+
+      component.setCampusValueAndStatus();
+      const campus = permissionDataCtrl.get(ApiType.campus).value;
+
+      expect(campus).toBe(false);
+      expect(component.hasCampus).toBe(false);
+    });
+  });
 
   it('should show warnings if user is in prod', () => {
     component.isSandbox = false;

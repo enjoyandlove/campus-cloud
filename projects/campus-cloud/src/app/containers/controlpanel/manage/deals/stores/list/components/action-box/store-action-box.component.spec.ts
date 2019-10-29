@@ -22,7 +22,7 @@ describe('DealsStoreActionBoxComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(StoreActionBoxComponent);
         component = fixture.componentInstance;
-        spyOn(component.cpTracking, 'getEventProperties');
+        spyOn(component.cpTracking, 'getAmplitudeMenuProperties');
 
         fixture.detectChanges();
       });

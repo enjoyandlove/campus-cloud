@@ -64,7 +64,7 @@ export class DataExportService {
 
   private trackExportDataSuccess(dataType: string) {
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.EXPORT_DATA_SUCCESS, {
-      ...this.cpTracking.getEventProperties(),
+      ...this.cpTracking.getAmplitudeMenuProperties(),
       data_type: dataType
     });
   }

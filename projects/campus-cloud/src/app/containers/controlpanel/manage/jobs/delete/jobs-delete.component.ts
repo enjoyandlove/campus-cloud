@@ -19,7 +19,6 @@ export class JobsDeleteComponent implements OnInit {
   @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
 
   buttonData;
-  eventProperties;
 
   constructor(
     public session: CPSession,
@@ -40,12 +39,10 @@ export class JobsDeleteComponent implements OnInit {
   }
 
   trackEvent() {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.cpTracking.getEventProperties()
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.cpTracking.getAmplitudeMenuProperties()
+    );
   }
   ngOnInit() {
     this.buttonData = {

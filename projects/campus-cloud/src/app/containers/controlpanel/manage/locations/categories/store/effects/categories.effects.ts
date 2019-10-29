@@ -177,9 +177,10 @@ export class CategoriesEffects {
           };
 
           const deletedItemEventProperties = {
-            ...this.cpTracking.getEventProperties(),
+            ...this.cpTracking.getAmplitudeMenuProperties(),
             page_type: amplitudeEvents.LOCATION_CATEGORY
           };
+          delete deletedItemEventProperties['page_name'];
 
           this.cpTracking.amplitudeEmitEvent(deletedItemEventName, deletedItemEventProperties);
           this.cpTracking.amplitudeEmitEvent(

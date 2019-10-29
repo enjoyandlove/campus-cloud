@@ -9,7 +9,7 @@
                class="form-control"
                formControlName="name"
                [class.error]="formErrors && form.get('name').invalid"
-               [placeholder]="'t_api_management_name_input_placeholder' | cpI18n" />
+               [placeholder]="'t_api_management_name_input_placeholder' | cpI18n"/>
       </div>
 
       <ng-container *ngIf="isEdit">
@@ -35,20 +35,42 @@
       <div class="row">
         <div class="col-5">
           <label>{{ 't_api_management_api_endpoints' | cpI18n }}</label>
-          <cp-checkbox class="checkbox"
-                       cpTarget="push_notification"
-                       formControlName="push_notification"
-                       (toggle)="onTogglePermission($event, apiType.notification)"
-                       [label]="'t_api_management_push_notification' | cpI18n"
-                       [hasError]="formErrors && form.get('permission_data').invalid">
-          </cp-checkbox>
-          <cp-checkbox class="checkbox"
-                       cpTarget="user_info"
-                       formControlName="user_info"
-                       (toggle)="onTogglePermission($event, apiType.user)"
-                       [label]="'t_api_management_user_information' | cpI18n"
-                       [hasError]="formErrors && form.get('permission_data').invalid">
-          </cp-checkbox>
+          <ng-container formGroupName="permission_data">
+            <cp-checkbox class="checkbox"
+                         [cpTarget]="'announcement'"
+                         formControlName="notification"
+                         [hasError]="formErrors && form.errors?.required"
+                         [label]="'t_api_management_push_notification' | cpI18n">
+            </cp-checkbox>
+            <cp-checkbox class="checkbox"
+                         [cpTarget]="'user'"
+                         formControlName="user"
+                         [hasError]="formErrors && form.errors?.required"
+                         [label]="'t_api_management_user_information' | cpI18n">
+            </cp-checkbox>
+            <cp-checkbox class="checkbox"
+                         [cpTarget]="'campus'"
+                         formControlName="campus"
+                         [isChecked]="hasCampus"
+                         [isDisabled]="hasCampus"
+                         [label]="'t_shared_campus' | cpI18n"
+                         [hasError]="formErrors && form.errors?.required">
+            </cp-checkbox>
+            <cp-checkbox class="checkbox"
+                         [cpTarget]="'experience'"
+                         formControlName="experience"
+                         [label]="'t_shared_experience' | cpI18n"
+                         (toggle)="setCampusValueAndStatus($event)"
+                         [hasError]="formErrors && form.errors?.required">
+            </cp-checkbox>
+            <cp-checkbox class="checkbox"
+                         [cpTarget]="'audience'"
+                         formControlName="audience"
+                         [label]="'t_shared_audience' | cpI18n"
+                         (toggle)="setCampusValueAndStatus($event)"
+                         [hasError]="formErrors && form.errors?.required">
+            </cp-checkbox>
+          </ng-container>
         </div>
       </div>
     </div>

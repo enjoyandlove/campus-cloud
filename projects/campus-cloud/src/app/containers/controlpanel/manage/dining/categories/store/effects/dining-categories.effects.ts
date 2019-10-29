@@ -177,9 +177,11 @@ export class DiningCategoriesEffects {
           const deletedCategoryEventName = amplitudeEvents.MANAGE_DELETED_CATEGORY;
 
           const deletedItemEventProperties = {
-            ...this.cpTracking.getEventProperties(),
+            ...this.cpTracking.getAmplitudeMenuProperties(),
             page_type: amplitudeEvents.DINING_CATEGORY
           };
+
+          delete deletedItemEventProperties['page_name'];
 
           const deletedCategoryEventProperties = {
             ...this.utils.getParsedCategoriesEventProperties(action.payload),

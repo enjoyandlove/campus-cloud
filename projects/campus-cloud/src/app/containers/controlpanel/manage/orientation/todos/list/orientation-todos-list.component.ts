@@ -137,15 +137,10 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
       due_date: this.cpI18n.translate('due_date')
     };
 
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.TODOS
-    };
-
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties
+      eventProperties: this.cpTracking.getAmplitudeMenuProperties()
     };
   }
 }

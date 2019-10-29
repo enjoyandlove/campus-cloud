@@ -5,14 +5,14 @@ import {
   canAccountLevelReadResource
 } from '@campus-cloud/shared/utils/privileges/privileges';
 
-import { FORMAT } from '@campus-cloud/shared/pipes';
-import { CPSession } from '@campus-cloud/session';
 import IEvent from '../../../event.interface';
+import { CPSession } from '@campus-cloud/session';
+import { FORMAT } from '@campus-cloud/shared/pipes';
 import { EventAttendance } from '../../../event.status';
-import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
 import { EventUtilService } from '../../../events.utils.service';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
-import { CPI18nService, CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
 import { EventsAmplitudeService } from '@controlpanel/manage/events/events.amplitude.service';
 
 interface ISort {
@@ -79,16 +79,16 @@ export class ListUpcomingComponent implements OnInit {
 
   setEventProperties() {
     return {
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth),
+      ...this.cpTracking.getAmplitudeMenuProperties(),
       page_type: amplitudeEvents.UPCOMING_EVENT
     };
   }
 
   trackCheckinEvent(event: IEvent) {
+    const menus = this.cpTracking.getAmplitudeMenuProperties();
     const eventProperties = {
       source_id: event.encrypted_id,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      sub_menu_name: menus['sub_menu_name'],
       assessment_type: EventsAmplitudeService.getEventCategoryType(event.store_category)
     };
 

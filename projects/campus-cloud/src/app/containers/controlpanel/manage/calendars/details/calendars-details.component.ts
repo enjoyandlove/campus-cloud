@@ -144,8 +144,7 @@ export class CalendarsDetailComponent extends BaseComponent implements OnInit {
     this.fetch();
 
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.CALENDAR_EVENTS
+      ...this.cpTracking.getAmplitudeMenuProperties()
     };
 
     this.eventData = {

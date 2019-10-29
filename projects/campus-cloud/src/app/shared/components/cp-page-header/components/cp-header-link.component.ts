@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { amplitudeEvents } from '../../../constants/analytics';
-import { CPTrackingService, RouteLevel } from '../../../services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-header-link',
@@ -34,13 +34,14 @@ export class CPHeaderLinkComponent {
   }
 
   setEventProperties(subMenu, isSubMenuItem) {
+    const menus = this.cpTracking.getAmplitudeMenuProperties();
     const subMenuProperties = {
-      menu_name: this.cpTracking.activatedRoute(RouteLevel.first),
+      menu_name: menus['menu_name'],
       sub_menu_name: subMenu
     };
 
     const subMenuItemProperties = {
-      ...this.cpTracking.getEventProperties(),
+      ...this.cpTracking.getAmplitudeMenuProperties(),
       page_name: subMenu
     };
 

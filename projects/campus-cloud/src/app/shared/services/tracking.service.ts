@@ -1,22 +1,8 @@
-import { PRIMARY_OUTLET, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import * as amplitude from 'amplitude-js';
+import { Router } from '@angular/router';
 
-import { get as _get } from 'lodash';
 import { EnvService } from '@campus-cloud/config/env';
-
-/**
- * i.e url = /manage/events/123/info
- * Route Level first = parent(manage), second = child(events),
- * third = sub-child and so on
- * {{first: number; second: number}}
- */
-export enum RouteLevel {
-  'first' = 0,
-  'second' = 1,
-  'third' = 2,
-  'fourth' = 3
-}
 
 export enum userType {
   new = 'New',
@@ -34,25 +20,6 @@ declare var window: any;
 @Injectable()
 export class CPTrackingService {
   constructor(public router: Router, private env: EnvService) {}
-
-  getEventProperties() {
-    return {
-      menu_name: this.activatedRoute(RouteLevel.first),
-      sub_menu_name: this.activatedRoute(RouteLevel.second)
-    };
-  }
-
-  activatedRoute(level) {
-    const tree = this.router.parseUrl(this.router.url);
-    const children = tree.root.children[PRIMARY_OUTLET];
-    const path = _get(children, ['segments', level, 'path'], null);
-
-    return path ? this.capitalizeFirstLetter(path) : null;
-  }
-
-  capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
 
   getAmplitudeMenuProperties() {
     const params = [];

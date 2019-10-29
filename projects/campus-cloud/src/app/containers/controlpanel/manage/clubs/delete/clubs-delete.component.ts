@@ -46,7 +46,7 @@ export class ClubsDeleteComponent implements OnInit {
 
   trackEvent() {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties()
+      ...this.cpTracking.getAmplitudeMenuProperties()
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, eventProperties);

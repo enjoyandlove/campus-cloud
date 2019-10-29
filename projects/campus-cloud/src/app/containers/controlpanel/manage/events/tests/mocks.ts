@@ -1,4 +1,5 @@
 import { of } from 'rxjs';
+import { MOCK_IMAGE } from '@campus-cloud/shared/tests';
 
 export const mockAttendees = [
   {
@@ -51,10 +52,37 @@ export class MockEventService {
   }
 }
 
+export const filledForm = {
+  end: 0,
+  start: 0,
+  city: '',
+  latitude: 0,
+  store_id: 1,
+  longitude: 0,
+  title: 'title',
+  room_data: 123,
+  is_all_day: true,
+  country: 'country',
+  has_checkout: true,
+  address: 'address',
+  event_manager_id: 1,
+  location: 'location',
+  province: 'province',
+  event_attendance: '',
+  postal_code: '75400',
+  poster_url: MOCK_IMAGE,
+  description: 'description',
+  event_feedback: 'feedback',
+  poster_thumb_url: MOCK_IMAGE,
+  attendance_manager_email: '',
+  custom_basic_feedback_label: '',
+  attend_verification_methods: ''
+};
+
 export const mockEvent = {
   id: 1678187,
   store_id: 43776,
-  title: '',
+  title: 'title',
   description: 'test',
   latitude: 0.0,
   longitude: 0.0,
@@ -84,7 +112,7 @@ export const mockEvent = {
   rating_scale_maximum: -1,
   num_ratings: 0,
   related_feedback_obj_id: -1,
-  attend_verification_methods: [],
+  attend_verification_methods: [1, 2, 3],
   has_checkout: false,
   encrypted_id: 'zLa8n2oT0F21GfKQucCxFA',
   source: -1,
