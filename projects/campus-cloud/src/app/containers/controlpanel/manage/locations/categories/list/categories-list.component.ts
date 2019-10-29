@@ -68,9 +68,11 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   onLaunchCreateModal() {
     const eventName = amplitudeEvents.CLICKED_CREATE_ITEM;
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
+      ...this.cpTracking.getAmplitudeMenuProperties(),
       page_type: amplitudeEvents.LOCATION_CATEGORY
     };
+
+    delete eventProperties['page_name'];
 
     this.showCreateModal = true;
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
@@ -82,7 +84,7 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     const eventName = amplitudeEvents.VIEWED_ITEM;
 
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
+      ...this.cpTracking.getAmplitudeMenuProperties(),
       page_name: amplitudeEvents.INFO,
       page_type: amplitudeEvents.LOCATION_CATEGORY
     };

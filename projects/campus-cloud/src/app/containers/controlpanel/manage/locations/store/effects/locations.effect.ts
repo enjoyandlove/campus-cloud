@@ -195,7 +195,7 @@ export class LocationsEffect {
         map(() => {
           const deletedItemEventName = amplitudeEvents.DELETED_ITEM;
           const deletedLocationEventName = amplitudeEvents.MANAGE_DELETED_LOCATION;
-          const deletedItemEventProperties = this.cpTracking.getEventProperties();
+          const deletedItemEventProperties = this.cpTracking.getAmplitudeMenuProperties();
           const deletedLocationEventProperties = {
             ...this.utils.parsedEventProperties(action.payload),
             location_id: action.payload.id

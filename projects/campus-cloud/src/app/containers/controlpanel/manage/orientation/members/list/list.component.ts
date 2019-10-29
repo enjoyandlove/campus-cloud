@@ -13,19 +13,14 @@ import { commonParams } from '@campus-cloud/shared/constants';
 import { IMember } from '@campus-cloud/libs/members/common/model';
 import { RouterParamsUtils } from '@campus-cloud/shared/utils/router';
 import { Destroyable } from '@campus-cloud/shared/mixins/destroyable';
+import { OrientationMembersEditComponent } from '../edit/edit.component';
 import { IPaginationParam, IFilterParam } from '@campus-cloud/shared/types';
 import { canSchoolReadResource } from '@campus-cloud/shared/utils/privileges';
-import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
-import { OrientationMembersEditComponent } from '../edit/edit.component';
-import { LibsCommonMembersUtilsService } from '@campus-cloud/libs/members/common/providers';
 import { OrientationMembersCreateComponent } from '../create/create.component';
 import { OrientationMembersDeleteComponent } from '../delete/delete.component';
-import {
-  CPI18nService,
-  CPTrackingService,
-  RouteLevel,
-  ModalService
-} from '@campus-cloud/shared/services';
+import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
+import { LibsCommonMembersUtilsService } from '@campus-cloud/libs/members/common/providers';
+import { ModalService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-orientation-members-list',
@@ -92,14 +87,10 @@ export class OrientationMembersListComponent implements OnInit {
   }
 
   trackEditEvent() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.MEMBER
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.VIEWED_ITEM, {
-      eventProperties
-    });
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.VIEWED_ITEM,
+      this.cpTracking.getAmplitudeMenuProperties()
+    );
   }
 
   onSearch(query: string) {
@@ -116,7 +107,8 @@ export class OrientationMembersListComponent implements OnInit {
   }
 
   trackDownloadedMembers() {
-    const sub_menu_name = this.cpTracking.activatedRoute(RouteLevel.second);
+    const menus = this.cpTracking.getAmplitudeMenuProperties();
+    const sub_menu_name = menus['sub_menu_name'];
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_MEMBER_DATA, {
       sub_menu_name

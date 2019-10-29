@@ -19,7 +19,6 @@ import {
   styleUrls: ['./services-delete.component.scss']
 })
 export class ServicesDeleteComponent implements OnInit {
-  eventProperties;
   service: IService;
   deleteWarnings = [
     this.cpI18n.translate('t_shared_delete_resource_warning_wall_posts'),
@@ -62,12 +61,10 @@ export class ServicesDeleteComponent implements OnInit {
   }
 
   trackEvent() {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.cpTracking.getEventProperties()
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.cpTracking.getAmplitudeMenuProperties()
+    );
   }
 
   ngOnInit() {

@@ -4,13 +4,13 @@ import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { CPSession } from '@campus-cloud/session';
-import { IMember } from '@campus-cloud/libs/members/common/model';
 import { ISocialGroup } from './../../../feeds/model';
-import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ClubsUtilsService } from './../../clubs.utils.service';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { IMember } from '@campus-cloud/libs/members/common/model';
 import { canSchoolReadResource } from '@campus-cloud/shared/utils/privileges';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
-import { CPI18nService, CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
 import {
   LibsCommonMembersService,
   LibsCommonMembersUtilsService
@@ -114,22 +114,18 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   }
 
   onEditClick(member: IMember) {
-    this.trackEditEvent();
+    this.trackViewedMemberEvent();
 
     this.isEdit = true;
     this.selectedMember = member;
     setTimeout(() => $('#membersEdit').modal({ keyboard: true, focus: true }));
   }
 
-  trackEditEvent() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.MEMBER
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.VIEWED_ITEM, {
-      eventProperties
-    });
+  trackViewedMemberEvent() {
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.VIEWED_ITEM,
+      this.cpTracking.getAmplitudeMenuProperties()
+    );
   }
 
   forceRefresh() {
@@ -155,7 +151,8 @@ export class ClubsMembersComponent extends BaseComponent implements OnInit {
   }
 
   trackDownloadedMembers() {
-    const sub_menu_name = this.cpTracking.activatedRoute(RouteLevel.second);
+    const menus = this.cpTracking.getAmplitudeMenuProperties();
+    const sub_menu_name = menus['sub_menu_name'];
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_MEMBER_DATA, {
       sub_menu_name

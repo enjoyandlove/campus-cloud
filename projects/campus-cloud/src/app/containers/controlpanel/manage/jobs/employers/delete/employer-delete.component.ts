@@ -23,7 +23,6 @@ export class EmployerDeleteComponent implements OnInit, OnDestroy {
   @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
 
   buttonData;
-  eventProperties;
   destroy$ = new Subject();
 
   constructor(
@@ -39,13 +38,14 @@ export class EmployerDeleteComponent implements OnInit, OnDestroy {
   }
 
   trackEvent() {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.cpTracking.getEventProperties(),
+    const eventProperties = {
+      ...this.cpTracking.getAmplitudeMenuProperties(),
       page_type: amplitudeEvents.EMPLOYER
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
+    delete eventProperties['page_name'];
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, eventProperties);
   }
 
   ngOnInit() {

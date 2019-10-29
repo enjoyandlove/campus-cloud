@@ -6,7 +6,7 @@ import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
-import { CPI18nService, CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 interface ISort {
   sort_field: string;
@@ -45,8 +45,7 @@ export class ListPastComponent implements OnInit {
 
   setEventProperties() {
     return {
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth),
+      ...this.cpTracking.getAmplitudeMenuProperties(),
       page_type: amplitudeEvents.PAST_EVENT
     };
   }

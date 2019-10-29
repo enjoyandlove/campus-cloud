@@ -200,7 +200,7 @@ export class DiningListComponent extends BaseComponent implements OnInit, OnDest
   onCategoriesClick() {
     const eventName = amplitudeEvents.CLICKED_PAGE_ITEM;
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
+      ...this.cpTracking.getAmplitudeMenuProperties(),
       page_type: amplitudeEvents.DINING_CATEGORY
     };
 

@@ -108,7 +108,7 @@ export class ClubsCreateComponent implements OnInit {
   }
 
   trackUploadImageEvent() {
-    const properties = this.cpTracking.getEventProperties();
+    const properties = this.cpTracking.getAmplitudeMenuProperties();
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }

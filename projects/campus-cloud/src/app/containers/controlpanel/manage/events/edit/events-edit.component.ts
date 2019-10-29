@@ -14,12 +14,7 @@ import { baseActions, IHeader } from '@campus-cloud/store/base';
 import { EventsComponent } from '../list/base/events.component';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { EventsAmplitudeService } from '../events.amplitude.service';
-import {
-  RouteLevel,
-  ModalService,
-  CPI18nService,
-  CPTrackingService
-} from '@campus-cloud/shared/services';
+import { ModalService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-events-edit',
@@ -158,10 +153,12 @@ export class EventsEditComponent extends EventsComponent implements OnInit {
   }
 
   trackQrCode(event: IEvent) {
+    const menus = this.cpTracking.getAmplitudeMenuProperties();
+
     const eventProperties = {
       ...EventsAmplitudeService.getQRCodeCheckOutStatus(event, true),
       source_id: event.encrypted_id,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      sub_menu_name: menus['sub_menu_name'],
       assessment_type: EventsAmplitudeService.getEventCategoryType(event.store_category)
     };
 
