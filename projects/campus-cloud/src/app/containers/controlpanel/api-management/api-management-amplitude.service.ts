@@ -12,6 +12,8 @@ export class ApiManagementAmplitudeService {
       return amplitudeEvents.USER_INFORMATION;
     } else if (ApiType.notification in type) {
       return amplitudeEvents.PUSH_NOTIFICATION;
+    } else {
+      return amplitudeEvents.NOT_SELECTED;
     }
   }
 
@@ -24,6 +26,8 @@ export class ApiManagementAmplitudeService {
       return amplitudeEvents.EXPERIENCE;
     } else if (ApiType.campus in type) {
       return amplitudeEvents.CAMPUS;
+    } else {
+      return amplitudeEvents.NOT_SELECTED;
     }
   }
 

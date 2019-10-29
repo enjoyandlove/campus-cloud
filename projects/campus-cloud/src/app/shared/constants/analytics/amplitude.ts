@@ -193,6 +193,8 @@ export const amplitudeEvents = {
 
   ANNOUNCEMENT: 'Announcement',
 
+  NOT_SELECTED: 'Not Selected',
+
   CHECKIN_ONLY: 'Check-in Only',
 
   RESENT_INVITE: 'Resent Invite',
