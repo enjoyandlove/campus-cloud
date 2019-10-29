@@ -5,10 +5,9 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
-import { CPTrackingService } from '@campus-cloud/shared/services';
 import * as fromDeals from '@campus-cloud/store/manage/deals';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-store-delete',
@@ -22,7 +21,6 @@ export class StoreDeleteComponent implements OnInit, OnDestroy {
   @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
 
   buttonData;
-  eventProperties;
   destroy$ = new Subject();
 
   constructor(
@@ -38,13 +36,14 @@ export class StoreDeleteComponent implements OnInit, OnDestroy {
   }
 
   trackEvent() {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.cpTracking.getEventProperties(),
+    const eventProperties = {
+      ...this.cpTracking.getAmplitudeMenuProperties(),
       page_type: amplitudeEvents.STORE
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
+    delete eventProperties['page_name'];
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, eventProperties);
   }
 
   ngOnInit() {

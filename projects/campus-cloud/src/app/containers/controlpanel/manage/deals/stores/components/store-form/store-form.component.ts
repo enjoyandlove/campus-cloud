@@ -35,8 +35,12 @@ export class StoreFormComponent implements OnInit {
   }
 
   trackUploadImageEvent() {
-    const properties = this.cpTracking.getEventProperties();
+    const properties = {
+      ...this.cpTracking.getAmplitudeMenuProperties(),
+      page_type: amplitudeEvents.STORE
+    };
 
+    delete properties['page_name'];
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 

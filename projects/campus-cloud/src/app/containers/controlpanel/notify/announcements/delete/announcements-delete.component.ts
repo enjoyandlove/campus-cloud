@@ -72,7 +72,7 @@ export class AnnouncementDeleteComponent implements OnInit {
   trackDeleteEvent(data) {
     this.cpTracking.amplitudeEmitEvent(
       amplitudeEvents.DELETED_ITEM,
-      this.cpTracking.getEventProperties()
+      this.cpTracking.getAmplitudeMenuProperties()
     );
 
     this.eventProperties = {

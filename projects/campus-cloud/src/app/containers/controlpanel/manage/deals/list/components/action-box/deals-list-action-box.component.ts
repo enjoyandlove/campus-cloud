@@ -58,10 +58,18 @@ export class DealsListActionBoxComponent implements OnInit {
   }
 
   setEventProperties(page_type = null) {
-    return {
-      ...this.cpTracking.getEventProperties(),
-      page_type
+    let properties = {
+      ...this.cpTracking.getAmplitudeMenuProperties()
     };
+
+    if (page_type) {
+      properties = {
+        ...properties,
+        page_type
+      };
+    }
+
+    return properties;
   }
 
   ngOnInit() {
@@ -70,6 +78,7 @@ export class DealsListActionBoxComponent implements OnInit {
       startWith([{ label: dropdownLabel }]),
       map((stores) => [{ label: dropdownLabel, action: null }, ...stores])
     );
+
     this.store.select(fromDeals.getDealsLoaded).subscribe((loaded: boolean) => {
       if (!loaded) {
         this.store.dispatch(new fromDeals.LoadStores());

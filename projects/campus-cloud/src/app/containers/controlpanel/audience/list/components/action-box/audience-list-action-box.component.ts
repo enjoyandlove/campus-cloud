@@ -29,7 +29,7 @@ export class AudienceListActionBoxComponent implements OnInit {
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
-      eventProperties: this.cpTracking.getEventProperties()
+      eventProperties: this.cpTracking.getAmplitudeMenuProperties()
     };
 
     this.listTypes = [

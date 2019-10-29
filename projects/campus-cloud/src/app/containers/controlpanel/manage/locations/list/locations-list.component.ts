@@ -203,7 +203,7 @@ export class LocationsListComponent extends BaseComponent implements OnInit, OnD
   onCategoriesClick() {
     const eventName = amplitudeEvents.CLICKED_PAGE_ITEM;
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
+      ...this.cpTracking.getAmplitudeMenuProperties(),
       page_type: amplitudeEvents.LOCATION_CATEGORY
     };
 

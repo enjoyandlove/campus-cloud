@@ -17,8 +17,6 @@ export class ServicesProviderDeleteComponent {
   @Input() serviceId: number;
   @Output() deleted: EventEmitter<number> = new EventEmitter();
 
-  eventProperties;
-
   constructor(private cpTracking: CPTrackingService, private providersService: ProvidersService) {}
 
   onDelete() {
@@ -32,12 +30,9 @@ export class ServicesProviderDeleteComponent {
   }
 
   trackEvent() {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.ASSESSMENT
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.cpTracking.getAmplitudeMenuProperties()
+    );
   }
 }

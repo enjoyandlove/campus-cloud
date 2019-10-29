@@ -4,13 +4,13 @@ import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 
 import { CPSession } from '@campus-cloud/session';
-import { IMember } from '@campus-cloud/libs/members/common/model';
 import { ISocialGroup } from './../../../feeds/model';
+import { IMember } from '@campus-cloud/libs/members/common/model';
 import { BaseComponent } from '@campus-cloud/base/base.component';
-import { canSchoolReadResource } from '@campus-cloud/shared/utils/privileges';
 import { ServicesUtilsService } from '../../services.utils.service';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils/privileges';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
-import { CPI18nService, CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
 import {
   LibsCommonMembersUtilsService,
   LibsCommonMembersService
@@ -124,14 +124,10 @@ export class ServicesListMembersComponent extends BaseComponent implements OnIni
   }
 
   trackEditEvent() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.MEMBER
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.VIEWED_ITEM, {
-      eventProperties
-    });
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.VIEWED_ITEM,
+      this.cpTracking.getAmplitudeMenuProperties()
+    );
   }
 
   forceRefresh() {
@@ -157,7 +153,7 @@ export class ServicesListMembersComponent extends BaseComponent implements OnIni
   }
 
   trackDownloadedMembers() {
-    const sub_menu_name = this.cpTracking.activatedRoute(RouteLevel.second);
+    const sub_menu_name = amplitudeEvents.SERVICES;
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_DOWNLOAD_MEMBER_DATA, {
       sub_menu_name

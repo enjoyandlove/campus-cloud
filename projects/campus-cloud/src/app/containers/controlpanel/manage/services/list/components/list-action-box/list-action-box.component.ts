@@ -59,7 +59,7 @@ export class ServicesListActionBoxComponent implements OnInit {
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
-      eventProperties: this.cpTracking.getEventProperties()
+      eventProperties: this.cpTracking.getAmplitudeMenuProperties()
     };
 
     this.canWriteSchoolWide = canSchoolWriteResource(this.session.g, CP_PRIVILEGES_MAP.services);

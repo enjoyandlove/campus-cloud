@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 
 import { IItem } from '@campus-cloud/shared/components';
 import { CPI18nService } from '@campus-cloud/shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 import { createSpreadSheet } from '@campus-cloud/shared/utils/csv';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { IMember, MemberType } from '@campus-cloud/libs/members/common/model';
-import { CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
 
 @Injectable()
 export class LibsCommonMembersUtilsService {
@@ -59,11 +59,9 @@ export class LibsCommonMembersUtilsService {
   }
 
   trackMemberDelete() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.cpTracking.getAmplitudeMenuProperties()
+    );
   }
 }
