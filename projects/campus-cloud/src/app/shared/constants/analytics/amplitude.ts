@@ -153,8 +153,6 @@ export const amplitudeEvents = {
 
   TEST_SCHOOL: 'Test School',
 
-  INTEGRATION: 'Integration',
-
   CUSTOM_LIST: 'Custom List',
 
   SINGLE_ITEM: 'Single Item',
@@ -178,6 +176,8 @@ export const amplitudeEvents = {
   VIEWED_ITEM: 'Viewed Item',
 
   INSTITUTION: 'Institution',
+
+  INTEGRATIONS: 'Integrations',
 
   LAST_30_DAYS: 'Last 30 Days',
 
