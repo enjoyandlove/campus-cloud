@@ -49,7 +49,7 @@ export class PersonasAmplitudeService {
     if (linkData.link_url === '' || linkData.link_url === null) {
       return amplitudeEvents.NO_CONTENT;
     } else if (linkData.link_url === CampusLink.integration) {
-      return amplitudeEvents.INTEGRATION;
+      return amplitudeEvents.INTEGRATIONS;
     } else if (resourceType === ContentUtilsProviders.contentTypes.thirdParty) {
       return amplitudeEvents.THIRD_PARTY_APP;
     } else if (resourceType === ContentUtilsProviders.contentTypes.resourceList) {
