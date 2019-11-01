@@ -179,8 +179,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     const eventProperties = {
       interval,
       filter_type,
-      provider_type: amplitudeEvents.ALL_PROVIDERS,
-      sub_menu_name: amplitudeEvents.SERVICES
+      provider_type: amplitudeEvents.ALL_PROVIDERS
     };
 
     this.cpTracking.amplitudeEmitEvent(
