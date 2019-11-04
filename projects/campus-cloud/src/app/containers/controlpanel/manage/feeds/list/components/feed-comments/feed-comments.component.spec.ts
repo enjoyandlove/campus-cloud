@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore } from '@ngrx/store/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { BehaviorSubject, of } from 'rxjs';
 
@@ -16,7 +17,7 @@ describe('FeedCommentsComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [CPTestModule],
-        providers: [FeedsService],
+        providers: [FeedsService, provideMockStore()],
         declarations: [FeedCommentsComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

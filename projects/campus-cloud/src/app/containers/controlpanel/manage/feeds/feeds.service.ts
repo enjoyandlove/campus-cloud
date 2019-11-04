@@ -117,7 +117,7 @@ export class FeedsService {
   getCampusWallCommentsByThreadId(search: HttpParams, endRage) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_COMMENT}/1;${endRage}`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search, true);
   }
 
   getGroupWallCommentsByThreadId(search: HttpParams, endRage) {
