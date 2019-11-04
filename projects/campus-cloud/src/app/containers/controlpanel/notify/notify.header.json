@@ -4,9 +4,14 @@
   "em": null,
   "children": [
     {
-      "label": "announcements",
+      "label": "t_notify_tab_sent",
       "amplitude": "Announcements",
-      "url": "/notify/announcements"
+      "url": "/notify/sent"
+    },
+    {
+      "label": "t_notify_tab_scheduled",
+      "amplitude": "Scheduled",
+      "url": "/notify/scheduled"
     },
     {
       "label": "templates",

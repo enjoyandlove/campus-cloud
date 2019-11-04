@@ -1,0 +1,39 @@
+<cp-announcements-list-action-box (filter)="doFilter($event)">
+</cp-announcements-list-action-box>
+
+<ng-container [ngSwitch]="state.loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+  <ng-container *ngSwitchCase="false">
+    <cp-no-content *ngIf="!state.announcements.length"
+                   [noContentText]="'t_notify_no_scheduled_data_found' | cpI18n">
+    </cp-no-content>
+
+    <cp-table [rows]="rows"
+              [columns]="columns"
+              *ngIf="state.announcements.length">
+    </cp-table>
+
+    <cp-pagination [pageNumber]="page"
+                   [pageNext]="state.pageNext"
+                   [pagePrev]="state.pagePrevious"
+                   (next)="onNavigate(page + 1)"
+                   (previous)="onNavigate(page - 1)">
+    </cp-pagination>
+  </ng-container>
+</ng-container>
+
+<ng-template #customActionCell
+             let-announcement="row">
+  <cp-scheduled-action-cell [announcement]="announcement"
+                            (deleteClick)="onDelete(announcement)">
+  </cp-scheduled-action-cell>
+</ng-template>
+
+<ng-template #customMainCell
+             let-announcement="row">
+  <header>
+    <h2>{{announcement | announcementRecipient}}</h2>
+    <p>{{announcement.subject}}</p>
+    <span class="text-muted">{{announcement.message}}</span>
+  </header>
+</ng-template>

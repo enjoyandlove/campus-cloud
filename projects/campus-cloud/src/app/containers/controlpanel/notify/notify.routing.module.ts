@@ -1,20 +1,18 @@
 import { RouterModule, Routes } from '@angular/router';
 import { NgModule } from '@angular/core';
 
-import { PrivilegesGuard } from '@campus-cloud/config/guards';
 import { NotifyComponent } from './notify.component';
+import { PrivilegesGuard } from '@campus-cloud/config/guards';
 import { CP_PRIVILEGES_MAP, pageTitle } from '@campus-cloud/shared/constants';
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'announcements', pathMatch: 'full' },
-
   {
     path: '',
     data: { amplitude: 'IGNORE' },
     component: NotifyComponent,
     children: [
       {
-        path: 'announcements',
+        path: '',
         canActivate: [PrivilegesGuard],
         loadChildren: () =>
           import('./announcements/announcements.module').then((m) => m.AnnouncementsModule),

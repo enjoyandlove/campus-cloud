@@ -1,8 +1,8 @@
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 
+import { AnnouncementPriority } from '../../model';
 import { CustomValidators } from '@campus-cloud/shared/validators';
 import { IntegrationTypes } from '@campus-cloud/libs/integrations/common/model';
-import { AnnouncementPriority } from './../../announcements.interface';
 import { IAnnouncementsIntegration } from './announcement-integration.interface';
 
 export class AnnouncementIntegrationModel {

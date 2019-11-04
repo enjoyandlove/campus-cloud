@@ -1,8 +1,8 @@
 import { FormGroup, AbstractControl } from '@angular/forms';
 
 import { defaultForm, filledForm } from '../tests';
+import { AnnouncementPriority } from '../../model';
 import { IntegrationTypes } from '@campus-cloud/libs/integrations/common/model';
-import { AnnouncementPriority } from '../../announcements.interface';
 import { AnnouncementIntegrationModel } from './announcement-integration.model';
 import {
   fillForm,

@@ -1,5 +1,5 @@
+import { AnnouncementPriority } from '../model';
 import { CPI18nService } from '@campus-cloud/shared/services';
-import { AnnouncementPriority } from '../announcements.interface';
 
 const cpI18n = new CPI18nService();
 

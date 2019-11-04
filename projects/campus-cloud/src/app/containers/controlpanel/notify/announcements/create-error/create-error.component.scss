@@ -1,0 +1,15 @@
+@import '~projects/campus-cloud/src/sass/components/button';
+
+:host {
+  width: 100%;
+  display: block;
+}
+
+footer {
+  display: flex;
+  justify-content: flex-end;
+
+  button:not(:last-child) {
+    margin-right: 0.5rem;
+  }
+}

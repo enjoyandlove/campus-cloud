@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, TemplateRef } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+
+import { CPTableRow, CPTableColumn } from '../../interfaces';
 
 @Component({
   selector: 'cp-table',
@@ -7,20 +9,10 @@ import { Component, OnInit, Input, TemplateRef } from '@angular/core';
 })
 export class CPTableComponent implements OnInit {
   @Input()
-  columns: {
-    label: string;
-    onClick?: () => {};
-    sortable?: boolean;
-    sorting?: boolean;
-    sortingDirection?: 'asc' | 'desc';
-  }[];
+  columns: CPTableColumn[];
 
   @Input()
-  rows: {
-    label?: string;
-    template?: TemplateRef<any>;
-    context?: any;
-  }[];
+  rows: CPTableRow[];
 
   constructor() {}
 

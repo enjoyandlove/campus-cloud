@@ -4,6 +4,37 @@
 @import '~projects/campus-cloud/src/sass/components/button';
 
 .flatpickr-calendar {
+  width: 230px;
+
+  .flatpickr-day.prevMonthDay,
+  .flatpickr-day.nextMonthDay {
+    visibility: hidden;
+  }
+
+  .flatpickr-time input {
+    &:hover,
+    &:active {
+      border: none;
+      background: #f1f1f1;
+    }
+  }
+
+  .flatpickr-day,
+  .flatpickr-current-month input.cur-year,
+  .flatpickr-current-month span.cur-month {
+    font-size: smaller;
+  }
+
+  .flatpickr-weekday {
+    color: inherit;
+    font-weight: 600;
+  }
+
+  .flatpickr-weekdays {
+    font-size: small;
+    margin-bottom: 1em;
+  }
+
   .flatpickr-day,
   .flatpickr-day.today,
   .flatpickr-time input,
@@ -20,20 +51,45 @@
 
   .flatpickr-current-month input.cur-year,
   .flatpickr-current-month span.cur-month {
+    font-weight: 600;
     font-family: inherit;
+  }
+
+  $dayWidth: 33px;
+  /*pixel square for each day - default is 39 */
+  $width: $dayWidth * 7;
+
+  .flatpickr-calendar {
+    width: $width;
+  }
+
+  .dayContainer {
+    width: $width;
+    min-width: $width;
+    max-width: $width;
+  }
+
+  .flatpickr-days {
+    width: $width;
+  }
+
+  .flatpickr-day {
+    max-width: $dayWidth;
+    height: $dayWidth;
+    line-height: $dayWidth;
   }
 
   .flatpickr-month {
     padding: 25px 0;
     color: $color-text;
-    background: $color-text-alt;
+    background: transparent;
     fill: #3c3f40;
     height: 28px;
     line-height: 35px;
     text-align: center;
     position: relative;
     user-select: none;
-    border-bottom: 1px solid $color-med-grey;
+    border-bottom: none;
   }
 
   .flatpickr-day.today {

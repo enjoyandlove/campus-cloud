@@ -27,10 +27,22 @@ export class CPDatePickerDirective implements OnInit {
   private _isOpen = false;
   private _static = false;
   private _altInput = true;
+  private _noCalendar = false;
   private _enableTime = false;
+  private _closeOnSelect = true;
   private _mode: 'single' | 'multiple' | 'range' = 'single';
 
   @Input() defaultDate: Date;
+
+  @Input()
+  set closeOnSelect(closeOnSelect: boolean | string) {
+    this._closeOnSelect = coerceBooleanProperty(closeOnSelect);
+  }
+
+  @Input()
+  set noCalendar(noCalendar: boolean | string) {
+    this._noCalendar = coerceBooleanProperty(noCalendar);
+  }
 
   @Input()
   set altInput(altInput: string) {
@@ -100,6 +112,8 @@ export class CPDatePickerDirective implements OnInit {
   }
 
   ngOnInit() {
+    flatpickr.l10ns.en.weekdays.shorthand = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
     this.picker = <flatpickr.Instance>flatpickr(this.el.nativeElement, this.getConfig());
     this.picker.set('altInput', true);
   }
@@ -156,11 +170,17 @@ export class CPDatePickerDirective implements OnInit {
       altInput: this._altInput,
       altFormat: this.dateFormat,
       enableTime: this._enableTime,
+      noCalendar: this._noCalendar,
       onOpen: this.onOpen.bind(this),
       onClose: this.onClose.bind(this),
+      closeOnSelect: this._closeOnSelect,
       onChange: this.onChange.bind(this),
       locale: CPI18nService.getLocale() === 'en-US' ? 'en' : 'fr',
-      defaultDate: this.defaultDate ? new Date(this.defaultDate) : undefined
+      defaultDate: this.defaultDate
+        ? this._noCalendar
+          ? this.defaultDate
+          : new Date(this.defaultDate)
+        : undefined
     };
   }
 }
