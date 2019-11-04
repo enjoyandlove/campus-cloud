@@ -67,7 +67,9 @@
                     <div class="col-12">
                       <cp-place-autocomplete [newAddress]="newAddress"
                                              (backToDefault)="onResetMap()"
-                                             (placeChange)="onPlaceChange($event)">
+                                             (placeChange)="onPlaceChange($event)"
+                                             [defaultValue]="form.get('location').value"
+                                             [isRequired]="formError && form.get('location').invalid">
                       </cp-place-autocomplete>
                     </div>
                   </div>

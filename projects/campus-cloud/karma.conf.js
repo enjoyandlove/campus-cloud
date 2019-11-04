@@ -15,6 +15,15 @@ module.exports = function(config) {
       require('@angular-devkit/build-angular/plugins/karma'),
       jasmineSeedReporter
     ],
+    files: [
+      {
+        type: 'js',
+        watched: false,
+        pattern:
+          'https://maps.googleapis.com/maps/api/js?key=AIzaSyAHJkTceJjbwCjpkd3RV7ehC8J2Huuj2I0&libraries=places'
+      },
+      { type: 'js', watched: false, pattern: 'src/app/shared/tests/google.mock.js' }
+    ],
     client: {
       jasmine: {
         random: true,

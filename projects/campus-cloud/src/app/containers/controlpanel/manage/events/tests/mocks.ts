@@ -86,7 +86,7 @@ export const mockEvent = {
   description: 'test',
   latitude: 0.0,
   longitude: 0.0,
-  address: '',
+  address: 'Montreal',
   country: '',
   province: '',
   city: '',

@@ -78,7 +78,7 @@ export class CalendarsItemCreateComponent implements OnInit {
       is_all_day: [ItemAllDay.false],
       city: [null],
       room_data: [null],
-      location: [null],
+      location: [null, Validators.required],
       country: [null],
       address: [null],
       street_name: [null],

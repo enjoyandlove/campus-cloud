@@ -87,17 +87,19 @@ describe('ServicesCreateComponent', () => {
     expect(component.form.controls['postal_code'].value).toEqual(mockLocation.postal_code);
   });
 
-  it('onLocationToggle', () => {
+  it('should show/hide location details & set location required/optional onLocationToggle ', () => {
     component.onLocationToggle(true);
 
     expect(component.showLocationDetails).toBe(true);
+    expect(component.form.get('address').invalid).toBe(true);
 
     // reset location
     component.onLocationToggle(false);
 
     expect(component.drawMarker.value).toBe(false);
     expect(component.showLocationDetails).toBe(false);
-    expect(component.form.controls['room_data'].value).toBeNull();
+    expect(component.form.get('room_data').value).toBe('');
+    expect(component.form.get('address').invalid).toBe(false);
     expect(component.mapCenter.value.lat).toEqual(mockSchool.latitude);
     expect(component.mapCenter.value.lng).toEqual(mockSchool.latitude);
   });
@@ -112,6 +114,7 @@ describe('ServicesCreateComponent', () => {
 
   it('should create service', () => {
     component.form.controls['category'].setValue(5);
+    component.form.controls['address'].setValue('address');
     component.form.controls['name'].setValue('Hello World');
     component.form.controls['logo_url'].setValue('log.jpg');
 
