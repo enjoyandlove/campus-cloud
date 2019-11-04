@@ -1,0 +1,19 @@
+<cp-delete-modal (cancelClick)="onClose()"
+                 [modalBody]="'t_announcement_timestamp_error_body' | cpI18n"
+                 [modalTitle]="'t_announcement_timestamp_error_title' | cpI18n"
+                 [modalFooterTemplate]="scheduleTemplateError">
+
+</cp-delete-modal>
+
+<ng-template #scheduleTemplateError>
+  <footer>
+    <button type="button"
+            (click)="onSendNow()"
+            [cpTarget]="'send-now-btn'"
+            class="cpbtn cpbtn--cancel">{{'t_announcement_send_now' | cpI18n}}</button>
+    <button type="button"
+            (click)="onGoBack()"
+            [cpTarget]="'go-back-btn'"
+            class="cpbtn cpbtn--danger">{{'t_shared_go_back' | cpI18n}}</button>
+  </footer>
+</ng-template>

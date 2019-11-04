@@ -6,12 +6,12 @@ import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
 import { CPSession } from '@campus-cloud/session';
+import { AnnouncementPriority } from '../../model';
 import { IItem } from '@campus-cloud/shared/components';
-import { Mixin, Destroyable } from '@campus-cloud/shared/mixins';
 import { AnnouncementIntegrationModel } from '../model';
 import { types } from '../../compose/announcement-types';
+import { Mixin, Destroyable } from '@campus-cloud/shared/mixins';
 import { IStore, IModal, MODAL_DATA } from '@campus-cloud/shared/services';
-import { AnnouncementPriority } from '../../announcements.interface';
 import { RSS_ITEM, ATOM_ITEM } from '@campus-cloud/libs/integrations/common/providers';
 import { IAnnouncementsIntegrationState } from '../store/reducers/integration.reducer';
 

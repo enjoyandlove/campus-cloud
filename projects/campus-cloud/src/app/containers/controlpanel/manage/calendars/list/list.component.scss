@@ -15,11 +15,15 @@ cp-table {
   }
 }
 
-.action-button {
-  font-size: 1.8em;
-  color: $color-secondary-text;
+.cell-actions {
+  text-align: right;
 
-  &:first-child {
-    margin-right: 10px;
+  .action-button {
+    font-size: 1.8em;
+    color: $color-secondary-text;
+
+    &:first-child {
+      margin-right: 10px;
+    }
   }
 }

@@ -1,0 +1,66 @@
+<div class="wrapper">
+  <div role="group"
+       class="wrapper__group"
+       [attr.aria-label]="label">
+    <button type="button"
+            data-toggle="dropdown"
+            (click)="triggerDropdown()"
+            [cpTarget]="'calendar-btn'"
+            class="unstyled-button wrapper__group__trigger">
+      <i class="material-icons">calendar_today</i>
+      {{ label }}
+    </button>
+    <button type="button"
+            *ngIf="clearable"
+            (click)="clearDate()"
+            [cpTarget]="'clear-calendar-btn'"
+            class="wrapper__group__clear unstyled-button">&times;</button>
+
+    <div class="wrapper__menu dropdown-menu dropdown-menu-right">
+      <div (click)="$event.stopPropagation()">
+        <div class="wrapper__calendar__wrapper">
+          <div [cpTarget]="'date-input-wrapper'"
+               class="wrapper__calendar__input wrapper__calendar__input--date">
+            <input inline
+                   type="text"
+                   cpDatePicker
+                   [minDate]="minDay"
+                   #datePicker="datePicker"
+                   (dateChange)="onDateChange($event)" />
+          </div>
+        </div>
+        <hr>
+        <div class="wrapper__time__wrapper">
+          {{'t_notify_scheduled_for' | cpI18n }}
+          <div [cpTarget]="'time-input-wrapper'"
+               class="wrapper__calendar__input wrapper__calendar__input--time">
+            <input static
+                   inline
+                   enableTime
+                   type="text"
+                   cpDatePicker
+                   noCalendar="true"
+                   [minDate]="minTime"
+                   [defaultDate]="minTime"
+                   (dateChange)="onTimeChange($event)" />
+          </div>
+        </div>
+        <hr>
+        <div class="wrapper__buttons__wrapper">
+          <button type="button"
+                  (click)="onCancel()"
+                  [cpTarget]="'cancel-btn'"
+                  class="cpbtn cpbtn--cancel">
+            {{'cancel' | cpI18n}}
+          </button>
+          <button type="button"
+                  (click)="onSetTime()"
+                  [cpTarget]="'set-time-btn'"
+                  class="cpbtn cpbtn--primary">
+            {{'t_notify_set_date_time' | cpI18n}}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2244,6 +2244,9 @@
   "t_announcements_list_external_source_tooltip": {
     "message": "Cette annonce était intégrée. Elle sera automatiquement mise à jour depuis l'intégration."
   },
+  "t_announcement_send_now": {
+    "message": "Send Now"
+  },
   "t_announcement_type": {
     "message": "Type d'annonce"
   },
@@ -2839,6 +2842,9 @@
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "Mes expériences"
+  },
+  "t_notify_tab_sent": {
+    "message": "Envoyé"
   },
   "t_orientation_everyone": {
     "message": "Membres de l'événement"

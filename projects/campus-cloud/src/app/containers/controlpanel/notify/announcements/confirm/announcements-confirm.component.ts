@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { CPI18nService, MODAL_DATA, IModal } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-announcements-confirm',
@@ -16,35 +16,37 @@ export class AnnouncementsConfirmComponent implements OnInit {
   title;
   body;
 
-  constructor(private cpI18n: CPI18nService) {}
+  constructor(private cpI18n: CPI18nService, @Inject(MODAL_DATA) public modal: IModal) {}
 
   doTeardown() {
-    $('#announcementConfirmModal').modal('hide');
+    this.modal.onClose();
     this.teardown.emit();
   }
 
   onCofirm() {
-    this.confirmed.emit();
+    this.modal.onAction();
   }
 
   getTitle() {
-    if (!this.state) {
+    const state = this.modal.data;
+
+    if (!this.modal) {
       return this.cpI18n.translate('announcement_confirm_campus_wide');
     }
 
-    if (this.state.isCampusWide && this.state.isEmergency) {
+    if (state.isCampusWide && state.isEmergency) {
       return this.cpI18n.translate('announcement_confirm_campus_wide_and_emergency');
     }
 
-    if (this.state.isCampusWide && this.state.isUrgent) {
+    if (state.isCampusWide && state.isUrgent) {
       return this.cpI18n.translate('announcement_confirm_campus_wide_and_urgent');
     }
 
-    if (!this.state.isCampusWide && this.state.isEmergency) {
+    if (!state.isCampusWide && state.isEmergency) {
       return this.cpI18n.translate('announcement_confirm_emergency');
     }
 
-    if (!this.state.isCampusWide && this.state.isUrgent) {
+    if (!state.isCampusWide && state.isUrgent) {
       return this.cpI18n.translate('announcement_confirm_urgent');
     }
 
@@ -52,22 +54,23 @@ export class AnnouncementsConfirmComponent implements OnInit {
   }
 
   getBody() {
-    if (!this.state) {
+    const state = this.modal.data;
+    if (!state) {
       return this.cpI18n.translate('announcement_confirm_campus_wide_body');
     }
-    if (this.state.isCampusWide && this.state.isEmergency) {
+    if (state.isCampusWide && state.isEmergency) {
       return this.cpI18n.translate('announcement_confirm_campus_wide_and_emergency_body');
     }
 
-    if (this.state.isCampusWide && this.state.isUrgent) {
+    if (state.isCampusWide && state.isUrgent) {
       return this.cpI18n.translate('announcement_confirm_campus_wide_and_urgent_body');
     }
 
-    if (!this.state.isCampusWide && this.state.isEmergency) {
+    if (!state.isCampusWide && state.isEmergency) {
       return this.cpI18n.translate('announcement_confirm_emergency_body');
     }
 
-    if (!this.state.isCampusWide && this.state.isUrgent) {
+    if (!state.isCampusWide && state.isUrgent) {
       return this.cpI18n.translate('announcement_confirm_urgent_body');
     }
 

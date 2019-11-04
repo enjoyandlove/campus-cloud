@@ -1,10 +1,10 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { CPI18nService, MODAL_DATA, IModal } from '@campus-cloud/shared/services';
 
 @Mixin([Destroyable])
 @Component({
@@ -13,24 +13,25 @@ import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
   styleUrls: ['./audience-save-modal.component.scss']
 })
 export class AudienceSaveModalComponent implements OnInit, OnDestroy {
-  @Output() teardown: EventEmitter<null> = new EventEmitter();
-  @Output() submitEvent: EventEmitter<{ name: string }> = new EventEmitter();
-
   buttonData;
   form: FormGroup;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
-  constructor(public fb: FormBuilder, public cpI18n: CPI18nService) {}
+  constructor(
+    public fb: FormBuilder,
+    public cpI18n: CPI18nService,
+    @Inject(MODAL_DATA) private modal: IModal
+  ) {}
 
   resetModal() {
     this.form.reset();
-    this.teardown.emit();
+    this.modal.onClose();
   }
 
   doSubmit() {
-    this.submitEvent.emit(this.form.value);
+    this.modal.onAction(this.form.value);
     this.form.reset();
   }
 
