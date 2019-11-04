@@ -11,6 +11,7 @@ import { AnnouncementRecipientPipe } from './../pipes';
 import { Announcement, IAnnouncement } from './../model';
 import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { AnnouncementsService } from './../announcements.service';
+import { notifyAtEpochNow } from './../model/announcement.interface';
 import { AnnouncementUtilsService } from './../announcement.utils.service';
 import { CPI18nService, ModalService } from '@campus-cloud/shared/services';
 import { AnnouncementCreateErrorComponent } from './../create-error/create-error.component';
@@ -57,7 +58,7 @@ export class ScheduledEditComponent implements OnInit {
   }
 
   onSendNow() {
-    this.form.get('notify_at_epoch').setValue(null);
+    this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
     this.onSubmit();
   }
 
@@ -68,10 +69,17 @@ export class ScheduledEditComponent implements OnInit {
 
   onSubmit() {
     const toBeSendNow = this.form.get('notify_at_epoch').value === null;
-    const isScheduledInThePast = AnnouncementUtilsService.isNotifyAtTimestampValid(
+    const isNotifyAtTimestampInThePast = AnnouncementUtilsService.isNotifyAtTimestampInThePast(
       this.form.value.notify_at_epoch
     );
-    if (!toBeSendNow && !isScheduledInThePast) {
+
+    const isScheduledWithinFiveMinutes = !AnnouncementUtilsService.withinFiveMinute(
+      this.form.value.notify_at_epoch
+    );
+
+    if (!toBeSendNow && isScheduledWithinFiveMinutes) {
+      this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
+    } else if (!toBeSendNow && !isNotifyAtTimestampInThePast) {
       this.modal = this.modalService.open(
         AnnouncementCreateErrorComponent,
         {},

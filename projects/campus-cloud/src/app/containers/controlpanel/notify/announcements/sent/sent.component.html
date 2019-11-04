@@ -53,6 +53,7 @@
                    [src]="message.source | integrationSourceToIcon" />
               <button type="button"
                       aria-label="close"
+                      *ngIf="message.is_school_wide"
                       class="hover delete-message unstyled-button"
                       (click)="onLauncDeleteModal(message)">
                 <span aria-hidden="true">&times;</span>
