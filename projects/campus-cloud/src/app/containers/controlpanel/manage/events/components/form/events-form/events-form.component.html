@@ -92,7 +92,8 @@
                   <cp-place-autocomplete [newAddress]="newAddress"
                                          (backToDefault)="onResetMap()"
                                          (placeChange)="onPlaceChange($event)"
-                                         [defaultValue]="form.controls.address.value">
+                                         [defaultValue]="form.controls.address.value"
+                                         [isRequired]="formError && form.get('address').invalid">
                   </cp-place-autocomplete>
                 </div>
               </div>

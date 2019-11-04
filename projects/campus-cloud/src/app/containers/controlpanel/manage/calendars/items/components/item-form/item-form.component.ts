@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
@@ -23,6 +23,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
 })
 export class CalendarsItemFormComponent implements OnInit {
   @Input() form: FormGroup;
+  @Input() isEdit: boolean;
   @Input() calendarId: number;
   @Output() submitted: EventEmitter<any> = new EventEmitter();
   @Output() amplitudeLocationStatus: EventEmitter<string> = new EventEmitter();
@@ -32,7 +33,7 @@ export class CalendarsItemFormComponent implements OnInit {
   buttonData;
   enddatePickerOpts;
   startdatePickerOpts;
-  showLocationDetails = false;
+  showLocationDetails = true;
   drawMarker = new BehaviorSubject(false);
   newAddress = new BehaviorSubject(null);
 
@@ -148,6 +149,9 @@ export class CalendarsItemFormComponent implements OnInit {
 
   onLocationToggle(value) {
     this.showLocationDetails = value;
+    const requiredValidator = value ? [Validators.required] : null;
+    this.form.get('location').setValidators(requiredValidator);
+    this.form.get('location').updateValueAndValidity();
 
     if (!value) {
       this.drawMarker.next(false);
@@ -188,12 +192,26 @@ export class CalendarsItemFormComponent implements OnInit {
     this.form.controls['end'].setValue(CPDate.toEpoch(date, this.session.tz));
   }
 
+  setLocationVisibility(lat, lng) {
+    if (!this.isEdit) {
+      return;
+    }
+
+    const address = this.form.get('location');
+    if (!address.value) {
+      address.setValidators(null);
+      address.updateValueAndValidity();
+    }
+
+    this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.session.g.get('school'));
+  }
+
   ngOnInit() {
     const _self = this;
     const lat = this.form.controls['latitude'].value;
     const lng = this.form.controls['longitude'].value;
 
-    this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.session.g.get('school'));
+    this.setLocationVisibility(lat, lng);
     this.drawMarker.next(this.showLocationDetails);
     this.mapCenter = new BehaviorSubject(
       CPMap.setDefaultMapCenter(lat, lng, this.session.g.get('school'))

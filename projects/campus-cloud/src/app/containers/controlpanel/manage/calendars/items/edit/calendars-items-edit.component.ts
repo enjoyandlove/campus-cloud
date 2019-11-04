@@ -99,7 +99,7 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
       is_all_day: [this.item.is_all_day],
       city: [this.item.city],
       room_data: [this.item.room_data],
-      location: [this.item.location],
+      location: [this.item.location, Validators.required],
       country: [this.item.country],
       address: [this.item.address],
       street_name: [this.item.street_name],
