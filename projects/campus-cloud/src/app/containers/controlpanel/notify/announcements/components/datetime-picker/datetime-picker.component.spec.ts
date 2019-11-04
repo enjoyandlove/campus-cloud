@@ -22,6 +22,7 @@ describe('AnnouncementsDatetimePickerComponent', () => {
     fixture = TestBed.createComponent(AnnouncementsDatetimePickerComponent);
     de = fixture.debugElement;
     component = fixture.componentInstance;
+
     fixture.detectChanges();
   });
 
@@ -70,7 +71,7 @@ describe('AnnouncementsDatetimePickerComponent', () => {
 
   describe('onDateChange', () => {
     it('should set selectedDate to a moment object', () => {
-      const date = new Date().toString();
+      const date = '2019-11-05';
       component.onDateChange(date);
       expect(component.selectedDate.toString()).toBe(moment(date).toString());
     });
