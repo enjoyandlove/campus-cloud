@@ -39,3 +39,5 @@ export enum AnnouncementPriority {
   regular = 2,
   emergency = 0
 }
+
+export const notifyAtEpochNow = -1;

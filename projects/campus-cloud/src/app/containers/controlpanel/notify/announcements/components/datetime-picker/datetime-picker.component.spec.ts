@@ -3,6 +3,7 @@ import { DebugElement } from '@angular/core';
 import * as moment from 'moment';
 
 import { CPTestModule } from '@campus-cloud/shared/tests';
+import { notifyAtEpochNow } from './../../model/announcement.interface';
 import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
 import { AnnouncementsDatetimePickerComponent } from './datetime-picker.component';
 
@@ -54,10 +55,10 @@ describe('AnnouncementsDatetimePickerComponent', () => {
   });
 
   describe('clearDate', () => {
-    it('should emit dataSet with null', () => {
+    it('should emit dataSet with notifyAtEpochNow', () => {
       spyOn(component.dateSet, 'emit');
       component.clearDate();
-      expect(component.dateSet.emit).toHaveBeenCalledWith(null);
+      expect(component.dateSet.emit).toHaveBeenCalledWith(notifyAtEpochNow);
     });
   });
 

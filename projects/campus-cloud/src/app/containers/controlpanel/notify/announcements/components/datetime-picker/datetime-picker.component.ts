@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import * as moment from 'moment';
 
+import { notifyAtEpochNow } from './../../model';
 import { AnnouncementUtilsService } from './../../announcement.utils.service';
 const now = new Date();
 const in5Minutes = new Date(AnnouncementUtilsService.validTimestamp);
@@ -50,7 +51,7 @@ export class AnnouncementsDatetimePickerComponent {
   }
 
   clearDate() {
-    this.dateSet.emit(null);
+    this.dateSet.emit(notifyAtEpochNow);
   }
 
   onTimeChange(time: string) {

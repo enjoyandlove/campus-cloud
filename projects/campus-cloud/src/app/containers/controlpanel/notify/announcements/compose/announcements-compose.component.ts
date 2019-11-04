@@ -14,6 +14,7 @@ import { AnnouncementsService } from '../announcements.service';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ModalService } from '@campus-cloud/shared/services/modal';
 import { CustomValidators } from '@campus-cloud/shared/validators';
+import { notifyAtEpochNow } from './../model/announcement.interface';
 import { AudienceType } from '@controlpanel/audience/audience.status';
 import { AnnouncementUtilsService } from './../announcement.utils.service';
 import { AudienceUtilsService } from '@controlpanel/audience/audience.utils.service';
@@ -112,7 +113,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   get isScheduledAnnouncement() {
-    return Boolean(this.form.value.notify_at_epoch);
+    return this.form.get('notify_at_epoch').value !== notifyAtEpochNow;
   }
 
   onImportError() {
@@ -387,16 +388,24 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   onSendNow() {
-    this.form.get('notify_at_epoch').setValue(null);
+    this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
     this.doSubmit();
   }
 
   doValidate() {
-    const isScheduledInThePast =
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: false
+    };
+    const isNotifyAtTimestampInThePast =
       this.isScheduledAnnouncement &&
-      !AnnouncementUtilsService.isNotifyAtTimestampValid(this.form.value.notify_at_epoch);
+      AnnouncementUtilsService.isNotifyAtTimestampInThePast(this.form.value.notify_at_epoch);
 
-    if (isScheduledInThePast) {
+    const withinFiveMinute =
+      this.isScheduledAnnouncement &&
+      !AnnouncementUtilsService.withinFiveMinute(this.form.value.notify_at_epoch);
+
+    if (isNotifyAtTimestampInThePast) {
       this.modal = this.modalService.open(
         AnnouncementCreateErrorComponent,
         {},
@@ -406,8 +415,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         }
       );
       return;
+    } else if (withinFiveMinute) {
+      this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
+      this.doValidate();
     }
-
     this.shouldConfirm = this.state.isEmergency || this.state.isCampusWide || this.state.isUrgent;
 
     if (!this.shouldConfirm) {
@@ -510,7 +521,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
           this.amplitudeEventProperties
         );
 
-        const redirectUrl = data.notify_at_epoch ? '/notify/scheduled' : '/notify/sent';
+        const redirectUrl = this.isScheduledAnnouncement ? '/notify/scheduled' : '/notify/sent';
 
         this.router.navigate([redirectUrl]);
       },
@@ -682,9 +693,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       filters: [[]],
       persona_id: [null],
       is_school_wide: true,
-      notify_at_epoch: [null],
+      notify_at_epoch: [notifyAtEpochNow],
       subject: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(128)]],
-      message: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(400)]],
+      message: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(1024)]],
       priority: [this.types[0].action, Validators.required]
     });
 

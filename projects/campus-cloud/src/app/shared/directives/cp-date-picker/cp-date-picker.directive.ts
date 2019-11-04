@@ -34,6 +34,8 @@ export class CPDatePickerDirective implements OnInit {
 
   @Input() defaultDate: Date;
 
+  @Input() minuteIncrement = 5;
+
   @Input()
   set closeOnSelect(closeOnSelect: boolean | string) {
     this._closeOnSelect = coerceBooleanProperty(closeOnSelect);
@@ -175,6 +177,7 @@ export class CPDatePickerDirective implements OnInit {
       onClose: this.onClose.bind(this),
       closeOnSelect: this._closeOnSelect,
       onChange: this.onChange.bind(this),
+      minuteIncrement: this.minuteIncrement,
       locale: CPI18nService.getLocale() === 'en-US' ? 'en' : 'fr',
       defaultDate: this.defaultDate
         ? this._noCalendar

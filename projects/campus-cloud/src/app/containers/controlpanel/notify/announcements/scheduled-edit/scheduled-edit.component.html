@@ -13,7 +13,6 @@
           </span>
         </div>
         <cp-datetime-picker (dateSet)="onSchedule($event)"
-                            [clearable]="true"
                             [label]="form.get('notify_at_epoch').value | cpDatePipe:dateTimeFormat">
 
         </cp-datetime-picker>
