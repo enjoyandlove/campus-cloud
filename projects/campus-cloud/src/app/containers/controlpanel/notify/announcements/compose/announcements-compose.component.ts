@@ -403,9 +403,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     const withinFiveMinute =
       this.isScheduledAnnouncement &&
-      !AnnouncementUtilsService.withinFiveMinute(this.form.value.notify_at_epoch);
+      AnnouncementUtilsService.withinFiveMinute(this.form.value.notify_at_epoch);
 
-    if (isNotifyAtTimestampInThePast) {
+    if (isNotifyAtTimestampInThePast && !withinFiveMinute) {
       this.modal = this.modalService.open(
         AnnouncementCreateErrorComponent,
         {},
@@ -522,6 +522,14 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
         const redirectUrl = this.isScheduledAnnouncement ? '/notify/scheduled' : '/notify/sent';
 
+        this.store.dispatch({
+          type: baseActions.SNACKBAR_SHOW,
+          payload: {
+            sticky: true,
+            class: 'success',
+            body: this.cpI18n.translate('t_shared_successful')
+          }
+        });
         this.router.navigate([redirectUrl]);
       },
       (_) => {
