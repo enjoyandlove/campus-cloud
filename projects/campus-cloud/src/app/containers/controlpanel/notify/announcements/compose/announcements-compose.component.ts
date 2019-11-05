@@ -392,6 +392,13 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.doSubmit();
   }
 
+  isWithinFiveMinutes() {
+    return (
+      this.isScheduledAnnouncement &&
+      AnnouncementUtilsService.withinFiveMinute(this.form.value.notify_at_epoch)
+    );
+  }
+
   doValidate() {
     this.buttonData = {
       ...this.buttonData,
@@ -401,11 +408,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       this.isScheduledAnnouncement &&
       AnnouncementUtilsService.isNotifyAtTimestampInThePast(this.form.value.notify_at_epoch);
 
-    const withinFiveMinute =
-      this.isScheduledAnnouncement &&
-      AnnouncementUtilsService.withinFiveMinute(this.form.value.notify_at_epoch);
-
-    if (isNotifyAtTimestampInThePast && !withinFiveMinute) {
+    if (isNotifyAtTimestampInThePast && !this.isWithinFiveMinutes()) {
       this.modal = this.modalService.open(
         AnnouncementCreateErrorComponent,
         {},
@@ -415,8 +418,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         }
       );
       return;
-    } else if (withinFiveMinute) {
-      this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
     }
     this.shouldConfirm = this.state.isEmergency || this.state.isCampusWide || this.state.isUrgent;
 
@@ -449,13 +450,17 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
+    const notifyAtEpoch = this.isWithinFiveMinutes()
+      ? notifyAtEpochNow
+      : this.form.value.notify_at_epoch;
+
     let data = {
+      notify_at_epoch: notifyAtEpoch,
       subject: this.form.value.subject,
       priority: this.form.value.priority,
       store_id: this.form.value.store_id,
       message: `${this.form.value.message}`,
-      is_school_wide: this.form.value.is_school_wide,
-      notify_at_epoch: this.form.value.notify_at_epoch
+      is_school_wide: this.form.value.is_school_wide
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
