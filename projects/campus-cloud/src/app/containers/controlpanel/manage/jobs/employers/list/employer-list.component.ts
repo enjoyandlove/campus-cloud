@@ -152,10 +152,11 @@ export class EmployerListComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
+      ...this.cpTracking.getAmplitudeMenuProperties(),
       page_type: amplitudeEvents.EMPLOYER
     };
 
+    delete eventProperties['page_name'];
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM,

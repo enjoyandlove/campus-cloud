@@ -1,3 +1,4 @@
+import { MODAL_DATA } from './../../../../../shared/services/modal/modal.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { TestBed, ComponentFixture } from '@angular/core/testing';
@@ -14,7 +15,16 @@ describe('AudienceSaveModalComponent', () => {
     TestBed.configureTestingModule({
       imports: [CPTestModule, ReactiveFormsModule, RouterTestingModule],
       declarations: [AudienceSaveModalComponent],
-      providers: [FormBuilder]
+      providers: [
+        FormBuilder,
+        {
+          provide: MODAL_DATA,
+          useValue: {
+            onAction: () => {},
+            onClose: () => {}
+          }
+        }
+      ]
     });
     fixture = TestBed.createComponent(AudienceSaveModalComponent);
     comp = fixture.componentInstance;
@@ -24,15 +34,6 @@ describe('AudienceSaveModalComponent', () => {
 
   it('should create', () => {
     expect(AudienceSaveModalComponent).toBeTruthy();
-  });
-
-  it('doSubmit', () => {
-    spyOn(comp.submitEvent, 'emit');
-
-    comp.doSubmit();
-
-    expect(comp.submitEvent.emit).toHaveBeenCalledTimes(1);
-    expect(comp.submitEvent.emit).toHaveBeenCalledWith({ name: null });
   });
 
   it('ngOnInit', () => {
@@ -61,15 +62,5 @@ describe('AudienceSaveModalComponent', () => {
     cancelButton.click();
 
     expect(comp.resetModal).toHaveBeenCalledTimes(2);
-  });
-
-  it('resetModal', () => {
-    spyOn(comp.teardown, 'emit');
-    spyOn(comp.form, 'reset');
-
-    comp.resetModal();
-
-    expect(comp.form.reset).toHaveBeenCalledTimes(1);
-    expect(comp.teardown.emit).toHaveBeenCalledTimes(1);
   });
 });

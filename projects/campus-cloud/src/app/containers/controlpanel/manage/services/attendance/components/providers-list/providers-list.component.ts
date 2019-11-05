@@ -8,9 +8,9 @@ import { ProvidersService } from '../../../providers.service';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { DEFAULT, amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { IFilterState, ProvidersUtilsService } from '../../../providers.utils.service';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking/tracking.directive';
-import { RouteLevel, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { AMPLITUDE_INTERVAL_MAP } from '@campus-cloud/containers/controlpanel/assess/engagement/engagement.utils.service';
 
 interface IState {
@@ -141,7 +141,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
     const eventProperties = {
       source_id,
       assessment_type: amplitudeEvents.SERVICE_PROVIDER,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      sub_menu_name: amplitudeEvents.SERVICES
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CC_WEB_CHECK_IN, eventProperties);
@@ -171,14 +171,15 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
       amplitudeEvents.ALL_STUDENTS
     );
 
-    const dateType = _get(this.filterState, ['dateRange', 'route_id'], DEFAULT);
-    const interval = AMPLITUDE_INTERVAL_MAP[dateType];
+    const dateType = _get(this.filterState, ['dateRange', 'label'], DEFAULT);
+    const interval = Object.values(AMPLITUDE_INTERVAL_MAP).includes(dateType)
+      ? dateType
+      : amplitudeEvents.CUSTOM;
 
     const eventProperties = {
       interval,
       filter_type,
-      provider_type: amplitudeEvents.ALL_PROVIDERS,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      provider_type: amplitudeEvents.ALL_PROVIDERS
     };
 
     this.cpTracking.amplitudeEmitEvent(
@@ -188,15 +189,10 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
   }
 
   trackProviderViewEvent() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: amplitudeEvents.SERVICE_PROVIDER
-    };
-
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.VIEWED_ITEM,
-      eventProperties
+      eventProperties: this.cpTracking.getAmplitudeMenuProperties()
     };
   }
 

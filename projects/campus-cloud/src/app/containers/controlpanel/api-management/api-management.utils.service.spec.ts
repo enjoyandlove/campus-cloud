@@ -1,8 +1,11 @@
 import { TestBed, async } from '@angular/core/testing';
+import { FormGroup } from '@angular/forms';
 
 import { configureTestSuite } from '@campus-cloud/shared/tests';
+import { defaultForm } from '@controlpanel/api-management/tests';
 import { AccessType, ApiType } from './model/api-management.interface';
 import { ApiManagementUtilsService } from './api-management.utils.service';
+import { PublicApiAccessTokenModel } from '@controlpanel/api-management/model';
 
 describe('ApiManagementUtilsService', () => {
   configureTestSuite();
@@ -16,36 +19,47 @@ describe('ApiManagementUtilsService', () => {
       .catch(done.fail);
   });
 
-  let permissionObject = {};
-  let hasPermission: boolean;
-  const apiType = ApiType.user;
+  let form: FormGroup;
 
-  beforeEach(async(() => {}));
+  beforeEach(async(() => {
+    form = PublicApiAccessTokenModel.form();
+  }));
 
-  it('should add user info api permission', () => {
-    hasPermission = true;
-    const expected = { [ApiType.user]: AccessType.write };
-
-    const result = ApiManagementUtilsService.getTokenPermission(
-      hasPermission,
-      apiType,
-      permissionObject
-    );
+  it('should get token prefix', () => {
+    const expected = 'live_';
+    const token = 'live_fpMjJ4BHfLcOWxgrjCXfXHgDchh';
+    const result = ApiManagementUtilsService.getAPIKeyPrefix(token);
 
     expect(result).toEqual(expected);
   });
 
-  it('should remove user info api permission', () => {
-    hasPermission = false;
-    permissionObject = { [ApiType.user]: AccessType.write };
-    const expected = {};
+  describe('parseFormValue', () => {
+    it('should add user info api permission', () => {
+      const permissionDataCtrl = form.get('permission_data') as FormGroup;
+      permissionDataCtrl.get(ApiType.user).setValue(true);
 
-    const result = ApiManagementUtilsService.getTokenPermission(
-      hasPermission,
-      apiType,
-      permissionObject
-    );
+      const expected = {
+        ...defaultForm,
+        permission_data: { [ApiType.user]: AccessType.write }
+      };
 
-    expect(result).toEqual(expected);
+      const result = ApiManagementUtilsService.parseFormValue(form);
+
+      expect(result).toEqual(expected);
+    });
+
+    it('should remove user info api permission', () => {
+      const permissionDataCtrl = form.get('permission_data') as FormGroup;
+      permissionDataCtrl.get(ApiType.user).setValue(false);
+
+      const expected = {
+        ...defaultForm,
+        permission_data: {}
+      };
+
+      const result = ApiManagementUtilsService.parseFormValue(form);
+
+      expect(result).toEqual(expected);
+    });
   });
 });

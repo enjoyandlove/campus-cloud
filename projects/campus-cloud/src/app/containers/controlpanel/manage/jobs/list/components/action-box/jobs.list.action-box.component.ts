@@ -62,7 +62,7 @@ export class JobsListActionBoxComponent implements OnInit {
 
   setEventProperties(page_type = null) {
     return {
-      ...this.cpTracking.getEventProperties(),
+      ...this.cpTracking.getAmplitudeMenuProperties(),
       page_type
     };
   }

@@ -2,20 +2,28 @@ import { ApiType, AccessType } from '../model/api-management.interface';
 
 export const defaultForm = {
   name: null,
-  user_info: null,
   client_id: null,
   is_sandbox: null,
-  push_notification: null,
-  permission_data: null
+  permission_data: {
+    user: false,
+    campus: false,
+    audience: false,
+    experience: false,
+    notification: false
+  }
 };
 
 export const filledForm = {
   client_id: 123,
-  user_info: true,
   is_sandbox: true,
-  push_notification: true,
   name: 'Printer network',
-  permission_data: { [ApiType.user]: AccessType.write }
+  permission_data: {
+    [ApiType.user]: AccessType.write,
+    [ApiType.campus]: AccessType.write,
+    [ApiType.audience]: AccessType.write,
+    [ApiType.experience]: AccessType.write,
+    [ApiType.notification]: AccessType.write
+  }
 };
 
 export const mockAPIData = [

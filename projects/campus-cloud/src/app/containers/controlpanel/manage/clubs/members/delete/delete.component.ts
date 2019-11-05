@@ -1,11 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
-import { amplitudeEvents } from '@campus-cloud//shared/constants/analytics';
-import { CPI18nService } from '@campus-cloud//shared/services/i18n.service';
-import { ICPButtonProps } from '@campus-cloud//shared/components';
-import { CPTrackingService, RouteLevel } from '@campus-cloud//shared/services';
-import { LibsCommonMembersService } from '@campus-cloud//libs/members/common/providers';
+import { ICPButtonProps } from '@campus-cloud/shared/components';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 import { IMember, MemerUpdateType } from '@campus-cloud/libs/members/common/model';
+import { LibsCommonMembersService } from '@campus-cloud//libs/members/common/providers';
 
 @Component({
   selector: 'cp-members-delete',
@@ -60,12 +59,10 @@ export class ClubsMembersDeleteComponent implements OnInit {
   }
 
   trackEvent() {
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.cpTracking.getAmplitudeMenuProperties()
+    );
   }
 
   ngOnInit() {

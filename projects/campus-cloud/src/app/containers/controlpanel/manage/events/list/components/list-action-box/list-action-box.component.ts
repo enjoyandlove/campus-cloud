@@ -10,19 +10,13 @@ import {
   Output
 } from '@angular/core';
 
+import { DATE_FILTER } from './events-filters';
 import { CPSession } from '@campus-cloud/session';
 import { CPDate } from '@campus-cloud/shared/utils/date';
-import { DATE_FILTER } from './events-filters';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { EventAttendance } from '../../../event.status';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking';
-import {
-  CPTrackingService,
-  RouteLevel,
-  StoreService,
-  CPI18nService
-} from '@campus-cloud/shared/services';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { StoreService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 import {
   canAccountLevelWriteResource,
@@ -176,15 +170,10 @@ export class ListActionBoxComponent implements OnInit {
   ngOnInit() {
     const eventName = amplitudeEvents.CLICKED_CREATE_ITEM;
 
-    const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
-    };
-
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName,
-      eventProperties
+      eventProperties: this.cpTracking.getAmplitudeMenuProperties()
     };
 
     this.viewedIntegrationEventData = {

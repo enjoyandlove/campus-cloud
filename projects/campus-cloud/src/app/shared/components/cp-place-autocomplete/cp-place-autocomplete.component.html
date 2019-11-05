@@ -3,6 +3,7 @@
        type="text"
        autocomplete="off"
        [value]="state.input"
+       [class.error]="isRequired"
        [placeholder]="placeHolder ? placeHolder : cpI18n.translate('search')" />
 
 <button type="button"

@@ -1,4 +1,4 @@
-import { Input, OnInit, Output, Component, EventEmitter } from '@angular/core';
+import { Input, OnInit, Output, Component, EventEmitter, TemplateRef } from '@angular/core';
 
 import { CPI18nService } from '@campus-cloud/shared/services';
 
@@ -26,6 +26,7 @@ export class CPDeleteModalComponent implements OnInit {
   @Input() modalBody: string;
   @Input() modalTitle: string;
   @Input() submitLabel = 'delete';
+  @Input() modalFooterTemplate: TemplateRef<any>;
 
   @Output() cancelClick: EventEmitter<null> = new EventEmitter();
   @Output() deleteClick: EventEmitter<null> = new EventEmitter();

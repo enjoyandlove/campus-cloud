@@ -1,5 +1,4 @@
 @import '~projects/campus-cloud/src/sass/core/colors';
-@import '~projects/campus-cloud/src/sass/components/form';
 @import '~projects/campus-cloud/src/sass/components/card';
 @import '~projects/campus-cloud/src/sass/components/button';
 
@@ -7,33 +6,24 @@
   @include card-margin();
 }
 
-.action-button {
-  font-size: 1.8em;
-  color: $color-secondary-text;
+cp-table {
+  display: block;
+  margin-top: $default_margin;
 
-  &:first-child {
-    margin-right: 10px;
+  td {
+    width: 3rem;
   }
 }
 
-.cp-form__header {
-  span.hover {
-    position: relative;
+.cell-actions {
+  text-align: right;
 
-    > span i {
-      top: 1px;
-      font-size: 17px;
-      position: absolute;
-      padding-left: 6px;
+  .action-button {
+    font-size: 1.8em;
+    color: $color-secondary-text;
+
+    &:first-child {
+      margin-right: 10px;
     }
   }
-}
-
-.calendars {
-  padding: 0;
-  list-style: none;
-}
-
-.delete-button {
-  font-size: 2em;
 }

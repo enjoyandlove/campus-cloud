@@ -1,4 +1,6 @@
-<div class="cpmodal">
+<div cdkTrapFocus
+     class="cpmodal"
+     cdkTrapFocusAutoCapture>
   <div class="cpmodal__header">
     <div class="row">
       <div class="col-12 text-center">
@@ -38,7 +40,7 @@
         </button>
 
         <button type="button"
-                (click)="onCofirm()"
+                (click)="onConfirm()"
                 class="cpbtn cpbtn--primary">
           {{ 'yes_i_am_sure' | cpI18n }}
         </button>

@@ -19,7 +19,7 @@ describe('EmployerActionBoxComponent', () => {
       .then(() => {
         fixture = TestBed.createComponent(EmployerActionBoxComponent);
         component = fixture.componentInstance;
-        spyOn(component.cpTracking, 'getEventProperties');
+        spyOn(component.cpTracking, 'getAmplitudeMenuProperties');
         fixture.detectChanges();
       });
   }));

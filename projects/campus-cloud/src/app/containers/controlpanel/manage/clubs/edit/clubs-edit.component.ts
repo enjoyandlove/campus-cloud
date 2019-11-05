@@ -97,8 +97,6 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
       this.isSJSU = this.helper.isSJSU(this.club);
 
-      this.buildForm();
-
       this.defaultStatus = this.getDefaultStatus(this.club.status);
 
       this.defaultMembership = this.getDefaultMembership(this.club.has_membership);
@@ -106,6 +104,8 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.school);
 
       this.drawMarker.next(this.showLocationDetails);
+
+      this.buildForm();
 
       this.mapCenter = new BehaviorSubject(CPMap.setDefaultMapCenter(lat, lng, this.school));
 
@@ -127,7 +127,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
       status: [{ value: this.club.status, disabled: this.limitedAdmin }, Validators.required],
       has_membership: [this.club.has_membership, Validators.required],
       location: [this.club.location],
-      address: [this.club.address],
+      address: [this.club.address, this.showLocationDetails ? Validators.required : null],
       city: [this.club.city],
       country: [this.club.country],
       postal_code: [this.club.postal_code],
@@ -212,7 +212,7 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   }
 
   trackUploadImageEvent() {
-    const properties = this.cpTracking.getEventProperties();
+    const properties = this.cpTracking.getAmplitudeMenuProperties();
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
@@ -290,6 +290,9 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
 
   onLocationToggle(value) {
     this.showLocationDetails = value;
+    const requiredValidator = value ? [Validators.required] : null;
+    this.form.get('address').setValidators(requiredValidator);
+    this.form.get('address').updateValueAndValidity();
 
     if (!value) {
       this.drawMarker.next(false);

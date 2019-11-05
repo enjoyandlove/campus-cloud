@@ -30,6 +30,7 @@ export class CPPlaceAutoCompleteComponent implements OnInit, AfterViewInit {
   @ViewChild('hostEl', { static: true }) hostEl: ElementRef;
 
   @Input() placeHolder: string;
+  @Input() isRequired: boolean;
   @Input() defaultValue: string;
   @Input() disableLocations: boolean;
   @Input() newAddress: Observable<string>;

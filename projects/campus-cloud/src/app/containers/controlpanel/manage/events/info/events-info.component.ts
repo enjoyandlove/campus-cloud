@@ -18,12 +18,7 @@ import { IResourceBanner } from '@campus-cloud/shared/components';
 import { EventsAmplitudeService } from '../events.amplitude.service';
 import { IHeader, baseActions, baseActionClass } from '@campus-cloud/store/base';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
-import {
-  RouteLevel,
-  ModalService,
-  CPI18nService,
-  CPTrackingService
-} from '@campus-cloud/shared/services';
+import { ModalService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Mixin([Destroyable])
 @Component({
@@ -146,9 +141,10 @@ export class EventsInfoComponent extends EventsComponent implements OnInit, OnDe
   }
 
   trackCheckinEvent(event: IEvent) {
+    const menus = this.cpTracking.getAmplitudeMenuProperties();
     const eventProperties = {
       source_id: event.encrypted_id,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      sub_menu_name: menus['sub_menu_name'],
       assessment_type: EventsAmplitudeService.getEventCategoryType(event.store_category)
     };
 

@@ -1,5 +1,6 @@
+import { Component, OnDestroy, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { OverlayRef } from '@angular/cdk/overlay';
 import { HttpParams } from '@angular/common/http';
 import { takeUntil } from 'rxjs/operators';
 import { Router } from '@angular/router';
@@ -7,15 +8,22 @@ import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
+import { FORMAT } from '@campus-cloud/shared/pipes';
 import { baseActions, IHeader } from '@campus-cloud/store';
 import { AnnouncementsService } from '../announcements.service';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { ModalService } from '@campus-cloud/shared/services/modal';
 import { CustomValidators } from '@campus-cloud/shared/validators';
+import { notifyAtEpochNow } from './../model/announcement.interface';
 import { AudienceType } from '@controlpanel/audience/audience.status';
+import { AnnouncementUtilsService } from './../announcement.utils.service';
 import { AudienceUtilsService } from '@controlpanel/audience/audience.utils.service';
 import { parseErrorResponse, canSchoolReadResource } from '@campus-cloud/shared/utils';
+import { AnnouncementCreateErrorComponent } from './../create-error/create-error.component';
 import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@campus-cloud/shared/constants';
+import { AnnouncementsConfirmComponent } from './../confirm/announcements-confirm.component';
 import { CPI18nService, StoreService, CPTrackingService } from '@campus-cloud/shared/services';
+import { AudienceSaveModalComponent } from '../../../audience/shared/audience-save-modal/audience-save-modal.component';
 
 interface IState {
   isUrgent: boolean;
@@ -50,13 +58,14 @@ const THROTTLED_STATUS = 1;
 export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   stores$;
   isError;
-  sendAsName;
   buttonData;
   errorMessage;
   selectedType;
   form: FormGroup;
   canReadAudience;
+  modal: OverlayRef;
   isAudienceImport = false;
+  dateTimeFormat = FORMAT.DATETIME;
 
   URGENT_TYPE = 1;
   REGULAR_TYPE = 2;
@@ -92,6 +101,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     public cpI18n: CPI18nService,
     public store: Store<IHeader>,
     public storeService: StoreService,
+    private modalService: ModalService,
     public service: AnnouncementsService,
     public cpTracking: CPTrackingService,
     private audienceUtils: AudienceUtilsService
@@ -100,6 +110,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     const search: HttpParams = new HttpParams().append('school_id', school.id.toString());
 
     this.stores$ = this.storeService.getStores(search);
+  }
+
+  get isScheduledAnnouncement() {
+    return this.form.get('notify_at_epoch').value !== notifyAtEpochNow;
   }
 
   onImportError() {
@@ -258,22 +272,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.validButton();
   }
 
-  getSubjectLength(): string {
-    let length = '';
-
-    if (this.subject_prefix.label) {
-      length += this.subject_prefix.label;
-    }
-
-    if (this.form.controls['subject'].value) {
-      length += this.form.controls['subject'].value;
-    }
-
-    return length;
-  }
-
   onSelectedStore(store) {
-    this.sendAsName = store.label;
     this.form.controls['store_id'].setValue(store.value);
     this.amplitudeEventProperties = {
       ...this.amplitudeEventProperties,
@@ -282,16 +281,20 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   onTeardownAudienceSaveModal() {
-    $('#audienceSaveModal').modal('hide');
+    this.modalService.close(this.modal);
+    this.modal = null;
   }
 
   onTeardownConfirm() {
+    this.modalService.close(this.modal);
+    this.modal = null;
     this.shouldConfirm = false;
     this.buttonData = { ...this.buttonData, disabled: false };
   }
 
   onAudienceNamed({ name }) {
-    $('#audienceSaveModal').modal('hide');
+    this.modalService.close(this.modal);
+    this.modal = null;
 
     let data = {};
     data = { ...data, name };
@@ -379,18 +382,55 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.hideEmergencyType(false);
   }
 
+  onComposeErrorTeardown() {
+    this.modalService.close(this.modal);
+    this.modal = null;
+  }
+
+  onSendNow() {
+    this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
+    this.doSubmit();
+  }
+
   doValidate() {
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: false
+    };
+    const isNotifyAtTimestampInThePast =
+      this.isScheduledAnnouncement &&
+      AnnouncementUtilsService.isNotifyAtTimestampInThePast(this.form.value.notify_at_epoch);
+
+    const withinFiveMinute =
+      this.isScheduledAnnouncement &&
+      !AnnouncementUtilsService.withinFiveMinute(this.form.value.notify_at_epoch);
+
+    if (isNotifyAtTimestampInThePast) {
+      this.modal = this.modalService.open(
+        AnnouncementCreateErrorComponent,
+        {},
+        {
+          onAction: this.onSendNow.bind(this),
+          onClose: this.onComposeErrorTeardown.bind(this)
+        }
+      );
+      return;
+    } else if (withinFiveMinute) {
+      this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
+    }
     this.shouldConfirm = this.state.isEmergency || this.state.isCampusWide || this.state.isUrgent;
 
     if (!this.shouldConfirm) {
       this.doSubmit();
     } else {
-      setTimeout(
-        () => {
-          $('#announcementConfirmModal').modal({ keyboard: true, focus: true });
-        },
-
-        1
+      this.modal = this.modalService.open(
+        AnnouncementsConfirmComponent,
+        {},
+        {
+          data: this.state,
+          onAction: this.onConfirmed.bind(this),
+          onClose: this.onTeardownConfirm.bind(this)
+        }
       );
     }
   }
@@ -406,18 +446,16 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   doSubmit() {
     this.isError = false;
-    $('#announcementConfirmModal').modal('hide');
 
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
-
     let data = {
+      subject: this.form.value.subject,
+      priority: this.form.value.priority,
       store_id: this.form.value.store_id,
+      message: `${this.form.value.message}`,
       is_school_wide: this.form.value.is_school_wide,
-      subject: `${prefix} ${this.form.value.subject}`,
-      message: `${this.form.value.message} \n ${this.sendAsName}`,
-      priority: this.form.value.priority
+      notify_at_epoch: this.form.value.notify_at_epoch
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
@@ -481,7 +519,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
           amplitudeEvents.NOTIFY_SEND_ANNOUNCEMENT,
           this.amplitudeEventProperties
         );
-        this.router.navigate(['/notify/announcements']);
+
+        const redirectUrl = this.isScheduledAnnouncement ? '/notify/scheduled' : '/notify/sent';
+
+        this.router.navigate([redirectUrl]);
       },
       (_) => {
         this.isError = true;
@@ -491,7 +532,19 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     );
   }
 
+  onSchedule(scheduledAt: number | null) {
+    this.form.get('notify_at_epoch').setValue(scheduledAt);
+    this.buttonData = {
+      ...this.buttonData,
+      text: scheduledAt
+        ? this.cpI18n.translate('t_notify_send_later')
+        : this.cpI18n.translate('send')
+    };
+  }
+
   onConfirmed() {
+    this.modalService.close(this.modal);
+    this.modal = null;
     this.doSubmit();
   }
 
@@ -574,7 +627,14 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   onSaveAudienceClick() {
-    $('#audienceSaveModal').modal({ keyboard: true, focus: true });
+    this.modal = this.modalService.open(
+      AudienceSaveModalComponent,
+      {},
+      {
+        onAction: this.onAudienceNamed.bind(this),
+        onClose: this.onTeardownAudienceSaveModal.bind(this)
+      }
+    );
   }
 
   validButton() {
@@ -607,8 +667,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     };
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 
-    this.sendAsName = this.session.defaultHost ? this.session.defaultHost.label : undefined;
-
     let canDoEmergency;
 
     const schoolPrivileges = this.session.g.get('user').school_level_privileges[
@@ -634,8 +692,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       filters: [[]],
       persona_id: [null],
       is_school_wide: true,
+      notify_at_epoch: [notifyAtEpochNow],
       subject: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(128)]],
-      message: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(400)]],
+      message: [null, [CustomValidators.requiredNonEmpty, Validators.maxLength(1024)]],
       priority: [this.types[0].action, Validators.required]
     });
 

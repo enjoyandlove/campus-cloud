@@ -31,7 +31,7 @@ export class ServicesCreateComponent implements OnInit {
   formError = false;
   defaultMembership;
   attendance = false;
-  showLocationDetails = false;
+  showLocationDetails = true;
   categories$: Observable<any>;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
@@ -90,7 +90,7 @@ export class ServicesCreateComponent implements OnInit {
   }
 
   trackUploadImageEvent() {
-    const properties = this.cpTracking.getEventProperties();
+    const properties = this.cpTracking.getAmplitudeMenuProperties();
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
@@ -204,6 +204,9 @@ export class ServicesCreateComponent implements OnInit {
 
   onLocationToggle(value) {
     this.showLocationDetails = value;
+    const requiredValidator = value ? [Validators.required] : null;
+    this.form.get('address').setValidators(requiredValidator);
+    this.form.get('address').updateValueAndValidity();
 
     if (!value) {
       this.drawMarker.next(false);
@@ -213,7 +216,7 @@ export class ServicesCreateComponent implements OnInit {
         lng: this.school.longitude
       });
 
-      this.form.controls['room_data'].setValue(null);
+      this.form.controls['room_data'].setValue('');
       CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
     }
   }
@@ -268,7 +271,6 @@ export class ServicesCreateComponent implements OnInit {
       email: [null],
       latitude: [0],
       longitude: [0],
-      address: [null],
       country: [null],
       location: [null],
       province: [null],
@@ -280,6 +282,7 @@ export class ServicesCreateComponent implements OnInit {
       has_membership: [null],
       service_attendance: [null],
       rating_scale_maximum: [null],
+      address: [null, Validators.required],
       logo_url: [null, Validators.required],
       category: [null, Validators.required],
       website: [null, Validators.maxLength(1024)],

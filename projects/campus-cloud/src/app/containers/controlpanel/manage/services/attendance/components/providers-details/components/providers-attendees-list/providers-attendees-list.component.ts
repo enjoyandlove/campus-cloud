@@ -4,11 +4,12 @@ import { get as _get } from 'lodash';
 
 import { FORMAT } from '@campus-cloud/shared/pipes/date';
 import { DEFAULT } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 import { BaseComponent } from '@campus-cloud/base/base.component';
+import { AttendeeType } from '@controlpanel/manage/events/event.status';
 import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
-import { CPTrackingService, RouteLevel } from '@campus-cloud/shared/services';
 import { IService } from '@campus-cloud/containers/controlpanel/manage/services/service.interface';
 import IServiceProvider from '@campus-cloud/containers/controlpanel/manage/services/providers.interface';
 import { ProvidersService } from '@campus-cloud/containers/controlpanel/manage/services/providers.service';
@@ -76,6 +77,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   isDeleteCheckInModal = false;
   dateFormat = FORMAT.DATETIME_SHORT;
   webCheckInMethod = CheckInMethod.web;
+  deletedAttendee = AttendeeType.deleted;
   emptyCheckOutTime = CheckInOutTime.empty;
   defaultImage = `${environment.root}assets/default/user.png`;
 
@@ -251,7 +253,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       ...EventsAmplitudeService.getQRCodeCheckOutStatus(this.provider),
       assessment_type: amplitudeEvents.SERVICE_PROVIDER,
       source_id: this.provider.encrypted_campus_service_id,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      sub_menu_name: amplitudeEvents.SERVICES
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHANGED_QR_CODE, eventProperties);
@@ -272,8 +274,10 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       amplitudeEvents.ALL_STUDENTS
     );
 
-    const dateType = _get(this.filterState, ['dateRange', 'route_id'], DEFAULT);
-    const interval = AMPLITUDE_INTERVAL_MAP[dateType];
+    const dateType = _get(this.filterState, ['dateRange', 'label'], DEFAULT);
+    const interval = Object.values(AMPLITUDE_INTERVAL_MAP).includes(dateType)
+      ? dateType
+      : amplitudeEvents.CUSTOM;
 
     this.eventProperties = {
       interval,
@@ -281,8 +285,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       feedback_status,
       assessment_status,
       source_id: this.provider.encrypted_id,
-      provider_type: amplitudeEvents.ONE_PROVIDER,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      provider_type: amplitudeEvents.ONE_PROVIDER
     };
 
     this.cpTracking.amplitudeEmitEvent(
@@ -296,7 +299,7 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       ...EventsAmplitudeService.getQRCodeCheckOutStatus(this.provider),
       source_id: this.provider.encrypted_campus_service_id,
       assessment_type: amplitudeEvents.SERVICE_PROVIDER,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      sub_menu_name: amplitudeEvents.SERVICES
     };
   }
 

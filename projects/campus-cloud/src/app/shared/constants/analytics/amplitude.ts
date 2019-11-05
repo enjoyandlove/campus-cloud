@@ -5,6 +5,8 @@ export const amplitudeEvents = {
 
   NEW: 'New',
 
+  ALL: 'All',
+
   WEB: 'Web',
 
   CSV: 'CSV',
@@ -55,6 +57,8 @@ export const amplitudeEvents = {
 
   SCHOOL: 'School',
 
+  CAMPUS: 'Campus',
+
   DEFAULT: 'Default',
 
   NO_DATE: 'No Date',
@@ -72,6 +76,8 @@ export const amplitudeEvents = {
   PENDING: 'Pending',
 
   ENABLED: 'Enabled',
+
+  AUDIENCE: 'Audience',
 
   END_DATE: 'End Date',
 
@@ -147,8 +153,6 @@ export const amplitudeEvents = {
 
   TEST_SCHOOL: 'Test School',
 
-  INTEGRATION: 'Integration',
-
   CUSTOM_LIST: 'Custom List',
 
   SINGLE_ITEM: 'Single Item',
@@ -173,6 +177,8 @@ export const amplitudeEvents = {
 
   INSTITUTION: 'Institution',
 
+  INTEGRATIONS: 'Integrations',
+
   LAST_30_DAYS: 'Last 30 Days',
 
   LAST_90_DAYS: 'Last 90 Days',
@@ -186,6 +192,8 @@ export const amplitudeEvents = {
   DELETED_ITEM: 'Deleted Item',
 
   ANNOUNCEMENT: 'Announcement',
+
+  NOT_SELECTED: 'Not Selected',
 
   CHECKIN_ONLY: 'Check-in Only',
 

@@ -1,7 +1,14 @@
-import { configure } from '@storybook/angular';
+import { configure, addDecorator } from '@storybook/angular';
+import { withNotes } from '@storybook/addon-notes';
+import { withA11y } from '@storybook/addon-a11y';
+
+addDecorator(withA11y);
+addDecorator(withNotes);
+
+const req = require.context('../', true, /\.stories\.ts$/);
 
 function loadStories() {
-  require('../stories/index.ts');
+  req.keys().forEach(req);
 }
 
 configure(loadStories, module);

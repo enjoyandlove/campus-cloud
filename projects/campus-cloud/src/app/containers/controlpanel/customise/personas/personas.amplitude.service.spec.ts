@@ -6,9 +6,10 @@ import { CPI18nService } from '@campus-cloud/shared/services';
 import { configureTestSuite } from '@campus-cloud/shared/tests';
 import { TilesUtilsService } from './tiles/tiles.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { PersonasAmplitudeService } from './personas.amplitude.service';
-import { mockTile } from '@controlpanel/customise/personas/tiles/tests/mocks';
 import { mockPersonas } from '@controlpanel/customise/personas/tests';
+import { PersonasAmplitudeService } from './personas.amplitude.service';
+import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
+import { mockTile } from '@controlpanel/customise/personas/tiles/tests/mocks';
 
 describe('PersonasAmplitudeService', () => {
   configureTestSuite();
@@ -49,7 +50,7 @@ describe('PersonasAmplitudeService', () => {
   });
 
   it('should get content type', () => {
-    const linkData = {
+    let linkData = {
       ...mockLinkData,
       link_url: null
     };
@@ -75,6 +76,16 @@ describe('PersonasAmplitudeService', () => {
     resourceType = 'singleItem';
     result = amplitudeEvents.CALENDAR;
     contentType = service.getContentType(mockLinkData, resourceType);
+
+    expect(contentType).toEqual(result);
+
+    resourceType = null;
+    linkData = {
+      ...mockLinkData,
+      link_url: CampusLink.integration
+    };
+    result = amplitudeEvents.INTEGRATIONS;
+    contentType = service.getContentType(linkData, resourceType);
 
     expect(contentType).toEqual(result);
   });

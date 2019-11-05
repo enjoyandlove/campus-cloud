@@ -92,10 +92,10 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
       this.categories = res.data[1];
 
-      this.buildForm(res.data[0]);
-
       this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.school);
       this.drawMarker.next(this.showLocationDetails);
+
+      this.buildForm(res.data[0]);
 
       this.mapCenter = new BehaviorSubject(CPMap.setDefaultMapCenter(lat, lng, this.school));
 
@@ -124,7 +124,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
       category: [service.category, Validators.required],
       location: [service.location],
       room_data: [service.room_data],
-      address: [service.address],
+      address: [service.address, this.showLocationDetails ? Validators.required : null],
       description: [service.description],
       email: [service.email],
       website: [service.website, Validators.maxLength(1024)],
@@ -185,7 +185,7 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
   }
 
   trackUploadImageEvent() {
-    const properties = this.cpTracking.getEventProperties();
+    const properties = this.cpTracking.getAmplitudeMenuProperties();
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
@@ -280,6 +280,9 @@ export class ServicesEditComponent extends BaseComponent implements OnInit {
 
   onLocationToggle(value) {
     this.showLocationDetails = value;
+    const requiredValidator = value ? [Validators.required] : null;
+    this.form.get('address').setValidators(requiredValidator);
+    this.form.get('address').updateValueAndValidity();
 
     if (!value) {
       this.drawMarker.next(false);

@@ -15,17 +15,12 @@ import { EventUtilService } from './../events.utils.service';
 import { EventsComponent } from '../list/base/events.component';
 import { isClubAthletic } from '../../clubs/clubs.athletics.labels';
 import { EventsAmplitudeService } from '../events.amplitude.service';
-import { CheckInMethod, CheckInOutTime, CheckInOut } from '../event.status';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { IStudentFilter } from '../../../assess/engagement/engagement.utils.service';
+import { CheckInMethod, CheckInOutTime, CheckInOut, AttendeeType } from '../event.status';
 import { canSchoolReadResource, canSchoolWriteResource } from '@campus-cloud/shared/utils';
+import { ModalService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { CP_PRIVILEGES_MAP, amplitudeEvents, SortDirection } from '@campus-cloud/shared/constants';
-import {
-  RouteLevel,
-  ModalService,
-  CPI18nService,
-  CPTrackingService
-} from '@campus-cloud/shared/services';
 
 interface IState {
   sortField: string;
@@ -61,6 +56,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   canMessage;
   messageData;
   checkInData;
+  subMenuName;
   sortingLabels;
   attendees = [];
   loading = true;
@@ -80,6 +76,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   appCheckIn = CheckInMethod.app;
   webCheckIn = CheckInMethod.web;
   dateFormat = FORMAT.DATETIME_SHORT;
+  deletedAttendee = AttendeeType.deleted;
   emptyCheckOutTime = CheckInOutTime.empty;
   updateQrCode = new BehaviorSubject(null);
   totalAttendees = new BehaviorSubject(null);
@@ -275,7 +272,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
 
     const filter_type = _get(
       this.state,
-      ['student_filter', 'cohort_type'],
+      ['studentFilter', 'cohort_type'],
       amplitudeEvents.ALL_STUDENTS
     );
 
@@ -284,7 +281,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
       feedback_status,
       assessment_status,
       source_id: this.event.encrypted_id,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      sub_menu_name: this.subMenuName,
       assessment_type: EventsAmplitudeService.getEventCategoryType(this.event.store_category)
     };
 
@@ -400,7 +397,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
       host_type,
       engagement_type,
       announcement_source: amplitudeEvents.EVENT_ASSESSMENT,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second)
+      sub_menu_name: this.subMenuName
     };
 
     this.cpTracking.amplitudeEmitEvent(
@@ -518,7 +515,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
   onTrackClickCheckinEvent(event: IEvent) {
     const eventProperties = {
       source_id: event.encrypted_id,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      sub_menu_name: this.subMenuName,
       assessment_type: EventsAmplitudeService.getEventCategoryType(event.store_category)
     };
 
@@ -529,7 +526,7 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     const eventProperties = {
       ...EventsAmplitudeService.getQRCodeCheckOutStatus(event, true),
       source_id: this.event.encrypted_id,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      sub_menu_name: this.subMenuName,
       assessment_type: EventsAmplitudeService.getEventCategoryType(this.event.store_category)
     };
 
@@ -540,12 +537,15 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
     this.checkInEventProperties = {
       ...EventsAmplitudeService.getQRCodeCheckOutStatus(this.event, true),
       source_id: this.event.encrypted_id,
-      sub_menu_name: this.cpTracking.activatedRoute(RouteLevel.second),
+      sub_menu_name: this.subMenuName,
       assessment_type: EventsAmplitudeService.getEventCategoryType(this.event.store_category)
     };
   }
 
   ngOnInit() {
+    const menus = this.cpTracking.getAmplitudeMenuProperties();
+    this.subMenuName = menus['sub_menu_name'];
+
     this.urlPrefix = this.utils.buildUrlPrefix(this.getEventType());
 
     this.sortingLabels = {

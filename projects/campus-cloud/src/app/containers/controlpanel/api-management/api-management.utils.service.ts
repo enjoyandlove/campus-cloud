@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { omit } from 'lodash';
 
 import { AccessType, apiPrefix } from './model/api-management.interface';
 
@@ -15,18 +15,19 @@ export class ApiManagementUtilsService {
     return prefix ? `${prefix}_` : null;
   }
 
-  static getPermissionData(object) {
-    return Object.keys(object).length ? object : null;
-  }
+  static parseFormValue(form: FormGroup) {
+    const { permission_data, ...token } = form.value;
+    let res = {};
 
-  static getTokenPermission(hasPermission, type, tokenPermissionData) {
-    if (hasPermission) {
-      return {
-        ...tokenPermissionData,
-        [type]: AccessType.write
-      };
-    }
+    Object.keys(permission_data)
+      .filter((permission: string) => permission_data[permission])
+      .forEach((permission: string) => {
+        res[permission] = AccessType.write;
+      });
 
-    return omit(tokenPermissionData, [type]);
+    return {
+      ...token,
+      permission_data: { ...res }
+    };
   }
 }

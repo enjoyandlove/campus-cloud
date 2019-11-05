@@ -3,10 +3,9 @@ import { TodosService } from './../todos.service';
 import { HttpParams } from '@angular/common/http';
 
 import { ITodo } from '../todos.interface';
-import { CPSession } from './../../../../../../session';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../../shared/services/i18n.service';
-import { CPTrackingService, RouteLevel } from '../../../../../../shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-orientation-todos-delete',
@@ -19,7 +18,6 @@ export class OrientationTodosDeleteComponent implements OnInit {
   @Output() resetDeleteModal: EventEmitter<null> = new EventEmitter();
 
   buttonData;
-  eventProperties;
 
   constructor(
     public session: CPSession,
@@ -44,13 +42,10 @@ export class OrientationTodosDeleteComponent implements OnInit {
   }
 
   trackEvent() {
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.cpTracking.getEventProperties(),
-      page_name: this.cpTracking.activatedRoute(RouteLevel.fourth)
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.DELETED_ITEM, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(
+      amplitudeEvents.DELETED_ITEM,
+      this.cpTracking.getAmplitudeMenuProperties()
+    );
   }
 
   ngOnInit() {

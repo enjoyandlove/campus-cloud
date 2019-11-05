@@ -1,0 +1,29 @@
+<ng-container [ngSwitch]="state.loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <cp-one-column [width]="width"
+                 *ngSwitchCase="false">
+    <cp-card>
+      <header>
+        <div>
+          <h2>{{'message' | cpI18n}}</h2>
+          <span>
+            <i class="material-icons">group</i>
+            {{ listName }}
+          </span>
+        </div>
+        <cp-datetime-picker (dateSet)="onSchedule($event)"
+                            [label]="form.get('notify_at_epoch').value | cpDatePipe:dateTimeFormat">
+
+        </cp-datetime-picker>
+      </header>
+
+      <main>
+        <cp-announcement-form [form]="form"></cp-announcement-form>
+      </main>
+
+      <cp-form-fixed-footer (cancelClick)="onCancel()"
+                            (submitClick)="onSubmit()"></cp-form-fixed-footer>
+    </cp-card>
+  </cp-one-column>
+</ng-container>

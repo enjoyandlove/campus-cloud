@@ -32,7 +32,7 @@ export class LocationsCommonListComponent implements OnInit {
     };
 
     const eventProperties = {
-      ...this.cpTracking.getEventProperties(),
+      ...this.cpTracking.getAmplitudeMenuProperties(),
       page_name: amplitudeEvents.INFO
     };
 

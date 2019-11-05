@@ -15,5 +15,6 @@ getTestBed().initTestEnvironment(BrowserDynamicTestingModule, platformBrowserDyn
 // one file? /integrations-create.component.spec
 // all tests /\.spec\.ts$/
 const context = require.context('./', true, /\.spec\.ts$/);
+
 // And load the modules.
 context.keys().map(context);

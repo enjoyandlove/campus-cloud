@@ -1,13 +1,14 @@
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Observable, of as observableOf } from 'rxjs';
 import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
   Input,
   OnInit,
-  Output
+  Output,
+  Component,
+  forwardRef,
+  EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
-
-import { Observable, of as observableOf } from 'rxjs';
 
 export interface IItem {
   label: string;
@@ -23,9 +24,12 @@ export function getItem(object: any, label: string, action: string): IItem {
   selector: 'cp-dropdown',
   templateUrl: './cp-dropdown.component.html',
   styleUrls: ['./cp-dropdown.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CPDropdownComponent), multi: true }
+  ]
 })
-export class CPDropdownComponent implements OnInit {
+export class CPDropdownComponent implements OnInit, ControlValueAccessor {
   @Input() items: IItem[];
   @Input() disabled = false;
   @Input() selectedItem: any;
@@ -48,6 +52,24 @@ export class CPDropdownComponent implements OnInit {
     };
   }
 
+  writeValue(obj: any): void {}
+
+  _onChanged(a) {}
+
+  _onTouched() {}
+
+  registerOnChange(fn: any): void {
+    this._onChanged = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this._onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
+  }
+
   onClick(item) {
     if (item.heading) {
       return;
@@ -55,6 +77,8 @@ export class CPDropdownComponent implements OnInit {
 
     this.selectedItem = item;
     this.selected.emit(item);
+    // stores.service returns IStore[] which differs from IItem
+    this._onChanged(item.action ? item.action : item.value);
     this.query = null;
   }
 

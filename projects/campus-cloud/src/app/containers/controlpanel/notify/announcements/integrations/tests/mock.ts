@@ -1,8 +1,8 @@
+import { AnnouncementPriority } from '../../model';
+import { IAnnouncementsIntegration } from './../model';
 import { IStore } from '@campus-cloud/shared/services';
 import { mockSchool } from '@campus-cloud/session/mock';
-import { IAnnouncementsIntegration } from './../model';
 import { IntegrationTypes } from '@campus-cloud/libs/integrations/common/model';
-import { AnnouncementPriority } from './../../announcements.interface';
 
 export const defaultForm = {
   school_id: null,

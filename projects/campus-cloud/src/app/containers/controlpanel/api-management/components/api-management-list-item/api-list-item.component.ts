@@ -28,7 +28,6 @@ export class ApiListItemComponent implements OnInit {
   widgetIndex: number;
   discardModal: OverlayRef;
   dateFormat = FORMAT.SHORT;
-  isPermissionChanged = false;
   loading$: Observable<boolean>;
   item$: Observable<IPublicApiAccessToken>;
 
@@ -49,7 +48,6 @@ export class ApiListItemComponent implements OnInit {
 
   onValueChanges(form: FormGroup) {
     this.formDirty = form.dirty;
-    this.isPermissionChanged = form.get('user_info').dirty || form.get('push_notification').dirty;
 
     this.formStatus.emit(form.dirty);
   }
@@ -141,8 +139,14 @@ export class ApiListItemComponent implements OnInit {
     this.item$ = this.store.select(fromStore.getTokenById);
   }
 
-  onFormSubmitted(tokenId, body) {
-    const payload = { tokenId, body, permissionStatus: this.isPermissionChanged };
+  onFormSubmitted(tokenId, form) {
+    const body = ApiManagementUtilsService.parseFormValue(form);
+    const permissionStatus = form.get('permission_data').dirty;
+    const payload = {
+      body,
+      tokenId,
+      permissionStatus
+    };
 
     this.store.dispatch(fromActions.editRequest({ payload }));
 

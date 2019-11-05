@@ -1,8 +1,8 @@
 import { OnInit, Output, Component, EventEmitter } from '@angular/core';
 
-import { CPTrackingService } from '../../../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-calendars-list-action-box',
@@ -29,7 +29,7 @@ export class CalendarsListActionBoxComponent implements OnInit {
     this.eventData = {
       type: CP_TRACK_TO.AMPLITUDE,
       eventName: amplitudeEvents.CLICKED_CREATE_ITEM,
-      eventProperties: this.cpTracking.getEventProperties()
+      eventProperties: this.cpTracking.getAmplitudeMenuProperties()
     };
   }
 }

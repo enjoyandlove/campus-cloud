@@ -27,33 +27,41 @@
     top: 45px;
     margin: 0;
     padding: 0;
+    z-index: 1;
     width: 450px;
     box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.12);
   }
+
   &__icon {
     i {
       vertical-align: -5px;
     }
   }
+
   &__item {
     padding: 15px;
     transition: all 300ms ease-in-out;
     border-bottom: 1px solid $border-color;
+
     &:hover {
       background: $color-light-grey;
     }
+
     &:last-child {
       border-bottom: none;
     }
+
     &--title {
       @include font-semi-bold();
 
       margin-bottom: 4px;
     }
+
     &--description {
       margin-bottom: 0;
       color: $color-secondary-text;
     }
+
     &.disabled {
       opacity: 0.5;
       cursor: not-allowed;

@@ -208,7 +208,7 @@ export class DiningEffect {
         map(() => {
           const deletedItemEventName = amplitudeEvents.DELETED_ITEM;
           const deletedDiningEventName = amplitudeEvents.MANAGE_DELETED_DINING;
-          const deletedItemEventProperties = this.cpTracking.getEventProperties();
+          const deletedItemEventProperties = this.cpTracking.getAmplitudeMenuProperties();
           const deletedDiningEventProperties = {
             ...this.utils.parsedEventProperties(action.payload),
             dining_id: action.payload.id
