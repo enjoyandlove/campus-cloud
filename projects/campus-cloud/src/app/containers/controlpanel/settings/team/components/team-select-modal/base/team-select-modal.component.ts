@@ -139,22 +139,16 @@ export class BaseTeamSelectModalComponent extends BaseComponent implements OnIni
           [CP_PRIVILEGES_MAP.event_attendance]: {
             r: true,
             w: true
+          },
+          [CP_PRIVILEGES_MAP.moderation]: {
+            r: true,
+            w: true
+          },
+          [CP_PRIVILEGES_MAP.membership]: {
+            r: true,
+            w: item.type === permissionType.write
           }
         };
-
-        // if its a club we grant them access to extra privileges
-        if (!('store_id' in item.data)) {
-          _item[item.data.id] = Object.assign({}, _item[item.data.id], {
-            [CP_PRIVILEGES_MAP.moderation]: {
-              r: true,
-              w: true
-            },
-            [CP_PRIVILEGES_MAP.membership]: {
-              r: true,
-              w: item.type === permissionType.write
-            }
-          });
-        }
       }
     });
 
