@@ -417,7 +417,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       return;
     } else if (withinFiveMinute) {
       this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
-      this.doValidate();
     }
     this.shouldConfirm = this.state.isEmergency || this.state.isCampusWide || this.state.isUrgent;
 

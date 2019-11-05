@@ -203,6 +203,7 @@ describe('AnnouncementScheduledComponent', () => {
       expect(params.get('priority')).toBe(component.state.priority);
       expect(params.get('search_str')).toBe(component.state.searchStr);
       expect(params.get('sort_field')).toBe(component.state.sortField);
+      expect(params.get('sort_direction')).toBe(component.state.sortDirection);
       expect(params.get('school_id')).toBe(session.school.id.toString());
     });
 
