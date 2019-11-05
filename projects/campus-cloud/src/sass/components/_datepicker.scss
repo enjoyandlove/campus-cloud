@@ -6,6 +6,10 @@
 .flatpickr-calendar {
   width: 230px;
 
+  .flatpickr-day.inRange {
+    box-shadow: none;
+  }
+
   .flatpickr-day.prevMonthDay,
   .flatpickr-day.nextMonthDay {
     visibility: hidden;

@@ -13,6 +13,7 @@
     padding: 0;
 
     .flatpickr-calendar {
+      margin: 0 auto;
       box-shadow: none;
       border-radius: 0;
     }
@@ -23,7 +24,7 @@
 
     .dropdown-item:last-child {
       display: flex;
-      padding: 15px 0;
+      padding: 15px 10px;
       justify-content: space-around;
     }
 
