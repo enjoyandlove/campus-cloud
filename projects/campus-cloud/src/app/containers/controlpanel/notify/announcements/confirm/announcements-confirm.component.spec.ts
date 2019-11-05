@@ -61,10 +61,10 @@ describe('AnnouncementsConfirmComponent', () => {
     });
   });
 
-  describe('onCofirm', () => {
+  describe('onConfirm', () => {
     it('should call modal onAction', () => {
       spyOn(modal, 'onAction');
-      component.onCofirm();
+      component.onConfirm();
       expect(modal.onAction).toHaveBeenCalled();
     });
   });

@@ -23,8 +23,9 @@ export class AnnouncementsConfirmComponent implements OnInit {
     this.teardown.emit();
   }
 
-  onCofirm() {
+  onConfirm() {
     this.modal.onAction();
+    this.modal.onClose();
   }
 
   getTitle() {

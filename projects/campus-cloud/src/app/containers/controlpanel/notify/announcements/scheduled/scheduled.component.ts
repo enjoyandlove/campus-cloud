@@ -170,6 +170,7 @@ export class AnnouncementScheduledComponent extends Paginated implements OnInit,
       .set('priority', this.state.priority)
       .set('search_str', this.state.searchStr)
       .set('sort_field', this.state.sortField)
+      .set('sort_direction', this.state.sortDirection)
       .set('school_id', this.session.school.id.toString());
 
     this.service
