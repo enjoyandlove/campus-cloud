@@ -7,10 +7,10 @@ import { AnnouncementStatus } from './../model';
 import { CPSession } from '@campus-cloud/session';
 import { AnnouncementDeleteComponent } from '../delete';
 import { FORMAT } from '@campus-cloud/shared/pipes/date';
-import { baseActions, IHeader } from '@campus-cloud/store/base';
 import { AnnouncementsService } from '../announcements.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { BaseComponent } from '@campus-cloud/base/base.component';
+import { baseActions, IHeader, baseActionClass } from '@campus-cloud/store/base';
 import { CPI18nService, ModalService, CPTrackingService } from '@campus-cloud/shared/services';
 
 interface IState {
@@ -69,9 +69,19 @@ export class AnnouncementSentComponent extends BaseComponent implements OnInit {
     this.fetch();
   }
 
-  onDeleteTeardown() {
+  onDeleteTeardown(withError = false) {
     this.modalService.close(this.modal);
     this.modal = null;
+
+    if (withError) {
+      this.errorHandler();
+    }
+  }
+
+  errorHandler() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({ body: this.cpI18n.translate('something_went_wrong') })
+    );
   }
 
   onLauncDeleteModal(item) {

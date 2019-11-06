@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 import { CPSession } from '@campus-cloud/session';
 import { FORMAT } from '@campus-cloud/shared/pipes';
 import { baseActions, IHeader } from '@campus-cloud/store';
+import { baseActionClass } from '@campus-cloud/store/base';
 import { AnnouncementsService } from '../announcements.service';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ModalService } from '@campus-cloud/shared/services/modal';
@@ -113,7 +114,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   get isScheduledAnnouncement() {
-    return this.form.get('notify_at_epoch').value !== notifyAtEpochNow;
+    return AnnouncementUtilsService.isScheduledAnnouncement(this.form.value);
   }
 
   onImportError() {
@@ -323,14 +324,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
             ? this.cpI18n.translate('audience_create_error_duplicate_audience')
             : this.cpI18n.translate('something_went_wrong');
 
-        this.store.dispatch({
-          type: baseActions.SNACKBAR_SHOW,
-          payload: {
-            sticky: true,
-            class: 'danger',
-            body
-          }
-        });
+        this.store.dispatch(new baseActionClass.SnackbarSuccess({ body }));
 
         this.buttonData = {
           ...this.buttonData,
@@ -392,23 +386,19 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.doSubmit();
   }
 
-  isWithinFiveMinutes() {
-    return (
-      this.isScheduledAnnouncement &&
-      AnnouncementUtilsService.withinFiveMinute(this.form.value.notify_at_epoch)
-    );
-  }
-
   doValidate() {
     this.buttonData = {
       ...this.buttonData,
       disabled: false
     };
     const isNotifyAtTimestampInThePast =
-      this.isScheduledAnnouncement &&
+      AnnouncementUtilsService.isScheduledAnnouncement(this.form.value) &&
       AnnouncementUtilsService.isNotifyAtTimestampInThePast(this.form.value.notify_at_epoch);
 
-    if (isNotifyAtTimestampInThePast && !this.isWithinFiveMinutes()) {
+    if (
+      isNotifyAtTimestampInThePast &&
+      !AnnouncementUtilsService.withinFiveMinute(this.form.value)
+    ) {
       this.modal = this.modalService.open(
         AnnouncementCreateErrorComponent,
         {},
@@ -450,17 +440,17 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    const notifyAtEpoch = this.isWithinFiveMinutes()
-      ? notifyAtEpochNow
-      : this.form.value.notify_at_epoch;
+    if (AnnouncementUtilsService.isScheduledAnnouncement(this.form.value)) {
+      this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
+    }
 
     let data = {
-      notify_at_epoch: notifyAtEpoch,
       subject: this.form.value.subject,
       priority: this.form.value.priority,
       store_id: this.form.value.store_id,
       message: `${this.form.value.message}`,
-      is_school_wide: this.form.value.is_school_wide
+      is_school_wide: this.form.value.is_school_wide,
+      notify_at_epoch: this.form.value.notify_at_epoch
     };
 
     if (this.state.isToUsers && !this.state.isCampusWide) {
@@ -525,7 +515,9 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
           this.amplitudeEventProperties
         );
 
-        const redirectUrl = this.isScheduledAnnouncement ? '/notify/scheduled' : '/notify/sent';
+        const redirectUrl = AnnouncementUtilsService.isScheduledAnnouncement(this.form.value)
+          ? '/notify/scheduled'
+          : '/notify/sent';
 
         this.store.dispatch({
           type: baseActions.SNACKBAR_SHOW,
