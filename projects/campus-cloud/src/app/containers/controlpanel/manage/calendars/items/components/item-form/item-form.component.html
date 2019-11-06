@@ -5,7 +5,17 @@
         <div class="row item-details">
           <div class="col-12">
             <p class="title">{{ 'calendars_item_details' | cpI18n }}</p>
+
             <div class="form-group margin-top">
+              <label>{{ 'calendars_item_image_label' | cpI18n }}</label>
+              <cp-image-upload id="items"
+                               (uploaded)="onUploadedImage($event)"
+                               [defaultImage]="form.controls['poster_url'].value"
+                               [required]="formError && form.get('poster_url').invalid">
+              </cp-image-upload>
+            </div>
+
+            <div class="form-group">
               <label
                      for="title">{{ 'calendars_item_name_label' | cpI18n }}</label>
               <input id="title"

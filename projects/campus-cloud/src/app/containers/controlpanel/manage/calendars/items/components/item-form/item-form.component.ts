@@ -59,6 +59,11 @@ export class CalendarsItemFormComponent implements OnInit {
     };
   }
 
+  onUploadedImage(image) {
+    this.form.get('poster_url').setValue(image);
+    this.form.get('poster_thumb_url').setValue(image);
+  }
+
   updateTime() {
     const startDateAtMidnight = CPDate.fromEpoch(
       this.form.controls['start'].value,

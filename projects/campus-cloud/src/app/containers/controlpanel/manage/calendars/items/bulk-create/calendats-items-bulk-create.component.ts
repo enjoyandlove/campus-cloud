@@ -108,7 +108,9 @@ export class CalendarsItemsBulkCreateComponent extends BaseComponent implements 
           end: [CPDate.toEpoch(item.end_date, this.session.tz), Validators.required],
           location: [null],
           latitude: [0],
-          longitude: [0]
+          longitude: [0],
+          poster_url: [null, Validators.required],
+          poster_thumb_url: [null, Validators.required]
         })
       );
     });

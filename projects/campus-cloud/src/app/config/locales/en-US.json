@@ -698,6 +698,9 @@
   "calendars_item_edit_heading": {
     "message": "Edit Calendar Item"
   },
+  "calendars_item_image_label": {
+    "message": "Item Image"
+  },
   "calendars_item_modal_title": {
     "message": "Delete Calendar Item"
   },
