@@ -9,6 +9,8 @@ import {
 import * as moment from 'moment';
 
 import { notifyAtEpochNow } from './../../model';
+import { CPSession } from '@campus-cloud/session';
+import { CPDate } from '@campus-cloud/shared/utils';
 import { AnnouncementUtilsService } from './../../announcement.utils.service';
 const now = new Date();
 const in5Minutes = new Date(AnnouncementUtilsService.validTimestamp);
@@ -33,7 +35,7 @@ export class AnnouncementsDatetimePickerComponent {
   @Output()
   dateSet: EventEmitter<number> = new EventEmitter();
 
-  constructor() {}
+  constructor(private session: CPSession) {}
 
   @HostBinding('class.cp-datetime-picker')
   triggerDropdown() {
@@ -47,7 +49,7 @@ export class AnnouncementsDatetimePickerComponent {
   onSetTime() {
     this.setTimeToDate();
     this.disposeDropdown();
-    this.dateSet.emit(this.selectedDate.unix());
+    this.dateSet.emit(CPDate.toEpoch(this.selectedDate, this.session.tz));
   }
 
   clearDate() {

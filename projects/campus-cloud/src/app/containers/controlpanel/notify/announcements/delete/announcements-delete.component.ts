@@ -41,7 +41,7 @@ export class AnnouncementDeleteComponent {
         this.modal.onClose();
         this.modal.onAction(this.modal.data.id);
       },
-      () => this.modal.onClose()
+      () => this.modal.onClose(true)
     );
   }
 

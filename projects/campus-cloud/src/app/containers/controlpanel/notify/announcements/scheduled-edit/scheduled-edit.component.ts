@@ -1,3 +1,4 @@
+import { AnnouncementsConfirmComponent } from './../confirm/announcements-confirm.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
@@ -11,7 +12,7 @@ import { AnnouncementRecipientPipe } from './../pipes';
 import { Announcement, IAnnouncement } from './../model';
 import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { AnnouncementsService } from './../announcements.service';
-import { notifyAtEpochNow } from './../model/announcement.interface';
+import { notifyAtEpochNow, AnnouncementPriority } from './../model/announcement.interface';
 import { AnnouncementUtilsService } from './../announcement.utils.service';
 import { CPI18nService, ModalService } from '@campus-cloud/shared/services';
 import { AnnouncementCreateErrorComponent } from './../create-error/create-error.component';
@@ -67,23 +68,26 @@ export class ScheduledEditComponent implements OnInit {
     this.modal = null;
   }
 
-  get isScheduledAnnouncement() {
-    return this.form.get('notify_at_epoch').value !== notifyAtEpochNow;
+  onTeardownConfirm() {
+    this.modalService.close(this.modal);
+    this.modal = null;
   }
 
-  isWithinFiveMinutes() {
-    return (
-      this.isScheduledAnnouncement &&
-      AnnouncementUtilsService.withinFiveMinute(this.form.value.notify_at_epoch)
-    );
+  onConfirmed() {
+    this.modalService.close(this.modal);
+    this.modal = null;
+    this.onSubmit(true);
   }
 
-  onSubmit() {
+  onSubmit(hasConfirmed = false) {
+    const isScheduled = AnnouncementUtilsService.isScheduledAnnouncement(this.form.value);
     const isNotifyAtTimestampInThePast =
-      this.isScheduledAnnouncement &&
+      isScheduled &&
       AnnouncementUtilsService.isNotifyAtTimestampInThePast(this.form.value.notify_at_epoch);
+    const isWithinFiveMinutes =
+      isScheduled && AnnouncementUtilsService.withinFiveMinute(this.form.value);
 
-    if (isNotifyAtTimestampInThePast && !this.isWithinFiveMinutes()) {
+    if (isNotifyAtTimestampInThePast && !isWithinFiveMinutes) {
       this.modal = this.modalService.open(
         AnnouncementCreateErrorComponent,
         {},
@@ -95,13 +99,32 @@ export class ScheduledEditComponent implements OnInit {
       return;
     }
 
+    const priority = this.form.get('priority').value;
+    const isCampusWide = this.form.get('is_school_wide').value;
+    const shouldConfirm =
+      priority === AnnouncementPriority.emergency ||
+      priority === AnnouncementPriority.urgent ||
+      isCampusWide;
+    if (shouldConfirm && !hasConfirmed) {
+      this.modal = this.modalService.open(
+        AnnouncementsConfirmComponent,
+        {},
+        {
+          data: this.state,
+          onAction: this.onConfirmed.bind(this),
+          onClose: this.onTeardownConfirm.bind(this)
+        }
+      );
+      return;
+    }
+
     const { id } = this.session.school;
     const { announcementId } = this.route.snapshot.params;
     const search = new HttpParams().set('school_id', id.toString());
 
-    const { store_id, subject, message, priority, notify_at_epoch } = this.form.value;
+    const { store_id, subject, message, notify_at_epoch } = this.form.value;
 
-    const notifyAtEpoch = this.isWithinFiveMinutes() ? notifyAtEpochNow : notify_at_epoch;
+    const notifyAtEpoch = isWithinFiveMinutes ? notifyAtEpochNow : notify_at_epoch;
 
     const editableFields = {
       subject,
@@ -149,9 +172,15 @@ export class ScheduledEditComponent implements OnInit {
     const { announcementId } = this.route.snapshot.params;
     const search = new HttpParams().set('school_id', id.toString());
 
-    this.service
-      .getAnnouncementById(search, announcementId)
-      .subscribe((r: IAnnouncement) => this.handleSucess(r), () => this.erroHandler());
+    this.service.getAnnouncementById(search, announcementId).subscribe(
+      (r: IAnnouncement) => this.handleSucess(r),
+      () => {
+        this.store.dispatch(
+          new baseActionClass.SnackbarError({ body: this.cpI18n.translate('something_went_wrong') })
+        );
+        this.router.navigate(['/notify/scheduled']);
+      }
+    );
   }
 
   handleSucess(data: IAnnouncement) {
