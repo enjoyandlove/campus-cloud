@@ -2245,7 +2245,13 @@
     "message": "Cette annonce était intégrée. Elle sera automatiquement mise à jour depuis l'intégration."
   },
   "t_announcement_send_now": {
-    "message": "Send Now"
+    "message": "Envoyer maintenant"
+  },
+  "t_announcement_timestamp_error_body": {
+    "message": "L'horaire d'envoi programmé semble être dans le passé. \nVeuillez réviser la date et l'heure sélectionnées."
+  },
+  "t_announcement_timestamp_error_title": {
+    "message": "Programmer l'envoi?"
   },
   "t_announcement_type": {
     "message": "Type d'annonce"
@@ -2257,7 +2263,7 @@
     "message": "Générer clé et sauvegarder"
   },
   "t_api_management_push_notification": {
-    "message": "Push Notification"
+    "message": "Notification Push"
   },
   "t_assess_all_orientations": {
     "message": "Tous les programmes d'orientation"
@@ -2843,6 +2849,24 @@
   "t_notify_announcement_audiences_my_experiences": {
     "message": "Mes expériences"
   },
+  "t_notify_edit_announcement": {
+    "message": "Modifier l'annonce"
+  },
+  "t_notify_no_scheduled_data_found": {
+    "message": "Aucune annonce programmée trouvée"
+  },
+  "t_notify_scheduled_for": {
+    "message": "Programmé pour"
+  },
+  "t_notify_send_later": {
+    "message": "Programmer l'envoi"
+  },
+  "t_notify_set_date_time": {
+    "message": "Confirmer"
+  },
+  "t_notify_tab_scheduled": {
+    "message": "Programmé"
+  },
   "t_notify_tab_sent": {
     "message": "Envoyé"
   },
@@ -3361,7 +3385,7 @@
     "message": "Erreur"
   },
   "t_shared_experience": {
-    "message": "Experience"
+    "message": "Expérience"
   },
   "t_shared_export": {
     "message": "Exporter"

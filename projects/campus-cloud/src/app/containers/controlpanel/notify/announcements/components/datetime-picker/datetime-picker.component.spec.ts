@@ -2,6 +2,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
 import * as moment from 'moment';
 
+import { CPSession } from '@campus-cloud/session';
+import { CPDate } from '@campus-cloud/shared/utils/date';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { notifyAtEpochNow } from './../../model/announcement.interface';
 import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
@@ -9,6 +11,7 @@ import { AnnouncementsDatetimePickerComponent } from './datetime-picker.componen
 
 describe('AnnouncementsDatetimePickerComponent', () => {
   let de: DebugElement;
+  let session: CPSession;
   let component: AnnouncementsDatetimePickerComponent;
   let fixture: ComponentFixture<AnnouncementsDatetimePickerComponent>;
 
@@ -22,6 +25,7 @@ describe('AnnouncementsDatetimePickerComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(AnnouncementsDatetimePickerComponent);
     de = fixture.debugElement;
+    session = TestBed.get(CPSession);
     component = fixture.componentInstance;
 
     fixture.detectChanges();
@@ -35,15 +39,21 @@ describe('AnnouncementsDatetimePickerComponent', () => {
     });
 
     it('should call disposeDropdown', () => {
+      component.selectedTime = '10:45';
+      fixture.detectChanges();
       spyOn(component, 'disposeDropdown');
       component.onSetTime();
       expect(component.disposeDropdown).toHaveBeenCalled();
     });
 
     it('should emit dateSet with right value', () => {
+      component.selectedTime = '10:45';
+      fixture.detectChanges();
       spyOn(component.dateSet, 'emit');
       component.onSetTime();
-      expect(component.dateSet.emit).toHaveBeenCalledWith(component.selectedDate.unix());
+      expect(component.dateSet.emit).toHaveBeenCalledWith(
+        CPDate.toEpoch(component.selectedDate, session.tz)
+      );
     });
 
     it('should be called on set time button click event', () => {

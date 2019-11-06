@@ -138,7 +138,7 @@ export class ScheduledEditComponent implements OnInit {
       () => {
         this.store.dispatch(
           new baseActionClass.SnackbarSuccess({
-            body: this.cpI18n.translate('t_shared_successful')
+            body: this.cpI18n.translate('t_announcement_edit_success')
           })
         );
         this.router.navigate(['/notify/scheduled']);

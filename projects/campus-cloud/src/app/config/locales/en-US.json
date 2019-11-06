@@ -2247,8 +2247,14 @@
   "t_announcements_list_external_source_tooltip": {
     "message": "This announcement was integrated. It will be automatically updated from the integration."
   },
+  "t_announcement_edit_success": {
+    "message": "Message saved"
+  },
   "t_announcement_send_now": {
     "message": "Send Now"
+  },
+  "t_announcement_sent_success": {
+    "message": "Message sent successfully "
   },
   "t_announcement_timestamp_error_body": {
     "message": "The scheduled time appears to be in the past. \nGo back to review the date and time selected."

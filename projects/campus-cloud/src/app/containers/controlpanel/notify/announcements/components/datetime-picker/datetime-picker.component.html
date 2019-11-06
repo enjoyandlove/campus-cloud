@@ -3,17 +3,19 @@
        class="wrapper__group"
        [attr.aria-label]="label">
     <button type="button"
+            data-flip="false"
             data-toggle="dropdown"
             (click)="triggerDropdown()"
             [cpTarget]="'calendar-btn'"
+            [attr.data-offset]="[clearable ? 140 : 10]"
             class="unstyled-button wrapper__group__trigger">
       <i class="material-icons">calendar_today</i>
       {{ label }}
     </button>
     <button type="button"
             *ngIf="clearable"
-            (click)="clearDate()"
             [cpTarget]="'clear-calendar-btn'"
+            (click)="clearDate(); datePicker.clear(); timePicker.clear()"
             class="wrapper__group__clear unstyled-button">&times;</button>
 
     <div class="wrapper__menu dropdown-menu dropdown-menu-right">
@@ -42,7 +44,8 @@
                    noCalendar="true"
                    [minDate]="minTime"
                    minuteIncrement="1"
-                   [defaultDate]="minTime"
+                   #timePicker="datePicker"
+                   [defaultDate]="selectedTime"
                    (dateChange)="onTimeChange($event)" />
           </div>
         </div>

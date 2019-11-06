@@ -440,7 +440,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    if (AnnouncementUtilsService.isScheduledAnnouncement(this.form.value)) {
+    if (AnnouncementUtilsService.withinFiveMinute(this.form.value)) {
       this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
     }
 
@@ -524,15 +524,17 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
           payload: {
             sticky: true,
             class: 'success',
-            body: this.cpI18n.translate('t_shared_successful')
+            body: this.cpI18n.translate('t_announcement_sent_success')
           }
         });
         this.router.navigate([redirectUrl]);
       },
       (_) => {
+        this.store.dispatch(
+          new baseActionClass.SnackbarError({ body: this.cpI18n.translate('something_went_wrong') })
+        );
         this.isError = true;
         this.shouldConfirm = false;
-        this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
       }
     );
   }
