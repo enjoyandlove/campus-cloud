@@ -67,19 +67,23 @@ export class ScheduledEditComponent implements OnInit {
     this.modal = null;
   }
 
+  get isScheduledAnnouncement() {
+    return this.form.get('notify_at_epoch').value !== notifyAtEpochNow;
+  }
+
+  isWithinFiveMinutes() {
+    return (
+      this.isScheduledAnnouncement &&
+      AnnouncementUtilsService.withinFiveMinute(this.form.value.notify_at_epoch)
+    );
+  }
+
   onSubmit() {
-    const toBeSendNow = this.form.get('notify_at_epoch').value === null;
-    const isNotifyAtTimestampInThePast = AnnouncementUtilsService.isNotifyAtTimestampInThePast(
-      this.form.value.notify_at_epoch
-    );
+    const isNotifyAtTimestampInThePast =
+      this.isScheduledAnnouncement &&
+      AnnouncementUtilsService.isNotifyAtTimestampInThePast(this.form.value.notify_at_epoch);
 
-    const isScheduledWithinFiveMinutes = !AnnouncementUtilsService.withinFiveMinute(
-      this.form.value.notify_at_epoch
-    );
-
-    if (!toBeSendNow && isScheduledWithinFiveMinutes) {
-      this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
-    } else if (!toBeSendNow && !isNotifyAtTimestampInThePast) {
+    if (isNotifyAtTimestampInThePast && !this.isWithinFiveMinutes()) {
       this.modal = this.modalService.open(
         AnnouncementCreateErrorComponent,
         {},
@@ -97,12 +101,14 @@ export class ScheduledEditComponent implements OnInit {
 
     const { store_id, subject, message, priority, notify_at_epoch } = this.form.value;
 
+    const notifyAtEpoch = this.isWithinFiveMinutes() ? notifyAtEpochNow : notify_at_epoch;
+
     const editableFields = {
       subject,
       message,
       store_id,
       priority,
-      notify_at_epoch
+      notify_at_epoch: notifyAtEpoch
     };
 
     this.service.updateAnnouncement(search, announcementId, editableFields).subscribe(
