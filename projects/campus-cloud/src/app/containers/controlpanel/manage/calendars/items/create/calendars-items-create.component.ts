@@ -86,7 +86,9 @@ export class CalendarsItemCreateComponent implements OnInit {
       street_number: [null],
       province: [null],
       latitude: [0, Validators.required],
-      longitude: [0, Validators.required]
+      longitude: [0, Validators.required],
+      poster_url: [null, Validators.required],
+      poster_thumb_url: [null, Validators.required]
     });
   }
 

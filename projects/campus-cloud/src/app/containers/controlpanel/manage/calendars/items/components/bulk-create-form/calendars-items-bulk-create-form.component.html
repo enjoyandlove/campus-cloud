@@ -9,20 +9,45 @@
           <div class="col-12">
             <div class="cp-card">
               <div class="row">
-                <div class="col-6">
-                  <label>{{ 'name' | cpI18n }}</label>
-                  <input type="text"
-                         class="form-control"
-                         formControlName="title" />
+                <div class="col-1">
+                  <label>{{ 't_shared_image' | cpI18n }}</label>
+                  <div class="form__thumbnail">
+                    <button type="button"
+                            aria-label="delete"
+                            (click)="onRemoveImage(i)"
+                            class="deleteButton hover unstyled-button"
+                            *ngIf="item.controls['poster_url'].value">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <cp-upload-button theme="small"
+                                      (fileUpload)="onImageUpload($event, i)"
+                                      *ngIf="!item.controls['poster_url'].value">
+                    </cp-upload-button>
+                    <img class="rounded img-fit-cover"
+                         [alt]="'t_shared_img_alt' | cpI18n: i + 1"
+                         *ngIf="item.controls['poster_url'].value"
+                         [src]="item.controls['poster_url'].value"/>
+                  </div>
                 </div>
-                <div class="col-6">
-                  <label>{{ 'location' | cpI18n }}</label>
+                <div class="col-11">
                   <div class="row">
-                    <div class="col-12">
-                      <cp-place-autocomplete (backToDefault)="onResetMap(i)"
-                                             (placeChange)="onPlaceChange($event, i)"
-                                             [defaultValue]="item.controls.location.value">
-                      </cp-place-autocomplete>
+                    <div class="col-6">
+                      <label for="title">{{ 'name' | cpI18n }}</label>
+                      <input id="title"
+                             type="text"
+                             class="form-control"
+                             formControlName="title"/>
+                    </div>
+                    <div class="col-6">
+                      <label>{{ 'location' | cpI18n }}</label>
+                      <div class="row">
+                        <div class="col-12">
+                          <cp-place-autocomplete (backToDefault)="onResetMap(i)"
+                                                 (placeChange)="onPlaceChange($event, i)"
+                                                 [defaultValue]="item.controls.location.value">
+                          </cp-place-autocomplete>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

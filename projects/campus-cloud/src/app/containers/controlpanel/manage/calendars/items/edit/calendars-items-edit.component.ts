@@ -107,7 +107,9 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
       street_number: [this.item.street_number],
       province: [this.item.province],
       latitude: [this.item.latitude, Validators.required],
-      longitude: [this.item.longitude, Validators.required]
+      longitude: [this.item.longitude, Validators.required],
+      poster_url: [this.item.poster_url, Validators.required],
+      poster_thumb_url: [this.item.poster_thumb_url, Validators.required]
     });
   }
 

@@ -23,11 +23,13 @@ import {
 // services
 import {
   StoreService,
+  ImageService,
   CPMapsService,
   CPTrackingService,
   FileUploadService,
   CPLocationsService,
-  CPAmplitudeService
+  CPAmplitudeService,
+  ImageValidatorService
 } from './services';
 
 import { CPTableModule } from './components/cp-table/cp-table.module';
@@ -178,6 +180,7 @@ import {
   providers: [
     CPDatePipe,
     StoreService,
+    ImageService,
     CPMapsService,
     LocationsService,
     LatLngValidators,
@@ -185,6 +188,7 @@ import {
     FileUploadService,
     CPLocationsService,
     CPAmplitudeService,
+    ImageValidatorService,
     CPLineChartUtilsService,
     CPRangePickerUtilsService
   ],
