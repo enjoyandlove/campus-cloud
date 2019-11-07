@@ -60,7 +60,7 @@ export class ScheduledEditComponent implements OnInit {
 
   onSendNow() {
     this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
-    this.onSubmit();
+    this.onSubmit(true);
   }
 
   onValidationTearDown() {
@@ -83,11 +83,12 @@ export class ScheduledEditComponent implements OnInit {
     const isScheduled = AnnouncementUtilsService.isScheduledAnnouncement(this.form.value);
     const isNotifyAtTimestampInThePast =
       isScheduled &&
-      AnnouncementUtilsService.isNotifyAtTimestampInThePast(this.form.value.notify_at_epoch);
-    const isWithinFiveMinutes =
-      isScheduled && AnnouncementUtilsService.withinFiveMinute(this.form.value);
+      AnnouncementUtilsService.isNotifyAtTimestampInThePast(this.form.get('notify_at_epoch').value);
+    const iswithinFiveMinutes =
+      isScheduled &&
+      AnnouncementUtilsService.withinFiveMinutes(this.form.get('notify_at_epoch').value);
 
-    if (isNotifyAtTimestampInThePast && !isWithinFiveMinutes) {
+    if (isNotifyAtTimestampInThePast && !iswithinFiveMinutes) {
       this.modal = this.modalService.open(
         AnnouncementCreateErrorComponent,
         {},
@@ -124,7 +125,7 @@ export class ScheduledEditComponent implements OnInit {
 
     const { store_id, subject, message, notify_at_epoch } = this.form.value;
 
-    const notifyAtEpoch = isWithinFiveMinutes ? notifyAtEpochNow : notify_at_epoch;
+    const notifyAtEpoch = iswithinFiveMinutes ? notifyAtEpochNow : notify_at_epoch;
 
     const editableFields = {
       subject,
@@ -141,7 +142,11 @@ export class ScheduledEditComponent implements OnInit {
             body: this.cpI18n.translate('t_announcement_edit_success')
           })
         );
-        this.router.navigate(['/notify/scheduled']);
+
+        const redirectUrl =
+          notifyAtEpoch !== notifyAtEpochNow ? '/notify/scheduled' : '/notify/sent';
+
+        this.router.navigate([redirectUrl]);
       },
       () => this.erroHandler()
     );
