@@ -9,11 +9,11 @@ export class AnnouncementUtilsService {
     return now.getTime() > timestamp * 1000;
   }
 
-  static withinFiveMinute(timestamp: number) {
+  static withinFiveMinutes(timestamp: number) {
     const now = new Date();
-    const in5Minutes = now.setUTCSeconds(now.getUTCSeconds() + 5 * 60);
 
-    return timestamp * 1000 >= now.getTime() && in5Minutes > timestamp * 1000;
+    const fiveMinutes = now.setUTCSeconds(now.getUTCSeconds() + 5 * 60);
+    return fiveMinutes > timestamp * 1000 && !this.isNotifyAtTimestampInThePast(timestamp);
   }
 
   static isScheduledAnnouncement(announcement: IAnnouncement) {

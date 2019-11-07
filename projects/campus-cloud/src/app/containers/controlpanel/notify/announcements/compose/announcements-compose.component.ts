@@ -397,7 +397,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     if (
       isNotifyAtTimestampInThePast &&
-      !AnnouncementUtilsService.withinFiveMinute(this.form.value)
+      !AnnouncementUtilsService.withinFiveMinutes(this.form.value)
     ) {
       this.modal = this.modalService.open(
         AnnouncementCreateErrorComponent,
@@ -440,7 +440,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    if (AnnouncementUtilsService.withinFiveMinute(this.form.value)) {
+    if (AnnouncementUtilsService.withinFiveMinutes(this.form.get('notify_at_epoch').value)) {
       this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
     }
 

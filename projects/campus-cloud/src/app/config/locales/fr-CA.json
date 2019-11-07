@@ -201,7 +201,7 @@
     "message": "Êtes-vous sûr de vouloir supprimer cette annonce ?"
   },
   "announcements_delete_modal_body_warning": {
-    "message": "Aucun étudiant ne la recevra."
+    "message": "Cette annonce ne sera plus visible."
   },
   "announcements_delete_modal_title": {
     "message": "Supprimer annonce"
@@ -2244,8 +2244,14 @@
   "t_announcements_list_external_source_tooltip": {
     "message": "Cette annonce était intégrée. Elle sera automatiquement mise à jour depuis l'intégration."
   },
+  "t_announcement_edit_success": {
+    "message": "Annonce enregistrée avec succès."
+  },
   "t_announcement_send_now": {
     "message": "Envoyer maintenant"
+  },
+  "t_announcement_sent_success": {
+    "message": "Annonce créée avec succès. Elle devrait apparaître sous peu."
   },
   "t_announcement_timestamp_error_body": {
     "message": "L'horaire d'envoi programmé semble être dans le passé. \nVeuillez réviser la date et l'heure sélectionnées."

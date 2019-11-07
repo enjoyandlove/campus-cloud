@@ -201,7 +201,7 @@
     "message": "Are you sure you want to delete this announcement?"
   },
   "announcements_delete_modal_body_warning": {
-    "message": "No more students will receive it."
+    "message": "This announcement will no longer be visible."
   },
   "announcements_delete_modal_title": {
     "message": "Delete Announcement"
@@ -2248,13 +2248,13 @@
     "message": "This announcement was integrated. It will be automatically updated from the integration."
   },
   "t_announcement_edit_success": {
-    "message": "Message saved"
+    "message": "Announcement successfully saved."
   },
   "t_announcement_send_now": {
     "message": "Send Now"
   },
   "t_announcement_sent_success": {
-    "message": "Message sent successfully "
+    "message": "Announcement successfully created. It may take a moment to appear."
   },
   "t_announcement_timestamp_error_body": {
     "message": "The scheduled time appears to be in the past. \nGo back to review the date and time selected."
