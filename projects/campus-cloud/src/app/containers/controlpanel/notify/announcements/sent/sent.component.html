@@ -41,7 +41,7 @@
             </span>
 
             <span class="col-3">
-              {{ message.created_on_epoch | cpDatePipe: dateFormat }}
+              {{ message.notify_at_epoch === notifyAtEpochNow ? (message.created_on_epoch | cpDatePipe: dateFormat) : (message.notify_at_epoch | cpDatePipe: dateFormat)  }}
             </span>
 
             <span class="col-1 text-right actions">
