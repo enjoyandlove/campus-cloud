@@ -1,6 +1,12 @@
 @import '~projects/campus-cloud/src/sass/core/colors';
 @import '~projects/campus-cloud/src/sass/core/typography';
 
+ready-ui-line-chart {
+  width: 100%;
+  height: 310px;
+  display: block;
+}
+
 h3.title {
   @include font-24px();
   @include font-bold();

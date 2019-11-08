@@ -8,21 +8,20 @@ import { CheckinMethod } from '../constants';
 import { CPSession } from '@campus-cloud/session';
 import { baseActions } from '@campus-cloud/store/base';
 import { EngagementService } from './engagement.service';
-import { kFormatter } from '@campus-cloud/shared/utils';
 import { AssessUtilsService } from '../assess.utils.service';
-import { CPTrackingService } from '@campus-cloud/shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { createSpreadSheet } from '@campus-cloud/shared/utils/csv/parser';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import {
   DivideBy,
   groupByYear,
   groupByWeek,
   groupByMonth,
+  CPI18nService,
   groupByQuarter,
-  CPLineChartUtilsService
-} from '@campus-cloud/shared/components/cp-line-chart/cp-line-chart.utils.service';
+  CPTrackingService,
+  ChartsUtilsService
+} from '@campus-cloud/shared/services';
 
 declare var $;
 
@@ -44,7 +43,6 @@ export class EngagementComponent extends BaseComponent implements OnInit {
   labels;
   series;
   statsData;
-  chartOptions;
   loading;
   messageData;
   filterState;
@@ -67,7 +65,7 @@ export class EngagementComponent extends BaseComponent implements OnInit {
     public utils: AssessUtilsService,
     public service: EngagementService,
     public cpTracking: CPTrackingService,
-    public chartUtils: CPLineChartUtilsService
+    public chartUtils: ChartsUtilsService
   ) {
     super();
     super.isLoading().subscribe((loading) => (this.loading = loading));
@@ -163,27 +161,13 @@ export class EngagementComponent extends BaseComponent implements OnInit {
         return Promise.resolve([res.data.series]);
       })
       .then((series: any) => {
-        this.chartOptions = {
-          ...this.chartUtils.chartOptions(this.divider, series),
-          axisY: {
-            onlyInteger: true,
-            labelInterpolationFnc: kFormatter
-          }
-        };
+        this.series = series.map((serie) => ({
+          data: serie,
+          type: 'line',
+          name: this.cpI18n.translate('t_assess_chart_tooltip_label_engagements')
+        }));
         this.labels = this.chartUtils.buildLabels(this.divider, this.range, series);
-        this.series = this.chartUtils.buildSeries(
-          this.divider,
-          this.range,
-          this.getTooltip(),
-          series
-        );
       });
-  }
-
-  getTooltip() {
-    return {
-      0: this.cpI18n.translate('t_assess_chart_tooltip_label_engagements')
-    };
   }
 
   onDoCompose(data): void {

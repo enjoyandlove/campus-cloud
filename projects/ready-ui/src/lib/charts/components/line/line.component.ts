@@ -3,6 +3,12 @@ import { Input, Component, OnInit, ViewChild, AfterViewInit, ElementRef } from '
 import { commonOptions } from './common.options';
 import { EChartsService } from '../../providers/echarts/echarts.service';
 
+interface ISerie {
+  name: string;
+  data: number[];
+  lineStyle?: { type: string };
+}
+
 @Component({
   selector: 'ready-ui-line-chart',
   templateUrl: './line.component.html',
@@ -12,8 +18,8 @@ import { EChartsService } from '../../providers/echarts/echarts.service';
 export class LineComponent implements OnInit, AfterViewInit {
   _chartInstance;
   @Input() colors: string[];
+  @Input() series: ISerie[];
   @Input() xLabels: string[] | number[];
-  @Input() series: { name: string; data: number[]; lineStyle?: { type: string } }[];
 
   @ViewChild('element', { static: true }) private element: ElementRef;
 
@@ -21,10 +27,19 @@ export class LineComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this._chartInstance = this.chart.init(this.element.nativeElement);
+    const highest = this.series.map(({ data }: ISerie) => data).reduce((a, b) => a.concat(b), []);
+
     this.chart.setOptions(this._chartInstance, {
       ...commonOptions,
       color: this.colors,
       series: this.series,
+      yAxis: {
+        ...commonOptions.yAxis,
+        max:
+          Math.max(...highest) < 5
+            ? Math.max(...highest) + 5 - ((Math.max(...highest) + 5) % 5)
+            : undefined
+      },
       xAxis: {
         ...commonOptions.xAxis,
         data: this.xLabels

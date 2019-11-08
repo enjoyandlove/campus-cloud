@@ -3,10 +3,10 @@
 
   <ng-container *ngSwitchCase="false">
     <h3 class="title">{{ 't_dashboard_total_app_opens' | cpI18n }}</h3>
-    <cp-line-chart [labels]="labels"
-                   [series]="series"
-                   [chartOptions]="chartOptions">
-    </cp-line-chart>
+    <ready-ui-line-chart [xLabels]="labels"
+                         [series]="series"
+                         [colors]="['#ffa941']">
+    </ready-ui-line-chart>
 
     <span class="label">
       <span class="pill"></span>
