@@ -10,6 +10,7 @@ import { Subject } from 'rxjs';
 import { CPSession } from '@campus-cloud/session';
 import { FORMAT } from '@campus-cloud/shared/pipes';
 import { baseActions, IHeader } from '@campus-cloud/store';
+import { baseActionClass } from '@campus-cloud/store/base';
 import { AnnouncementsService } from '../announcements.service';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ModalService } from '@campus-cloud/shared/services/modal';
@@ -113,7 +114,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
   }
 
   get isScheduledAnnouncement() {
-    return this.form.get('notify_at_epoch').value !== notifyAtEpochNow;
+    return AnnouncementUtilsService.isScheduledAnnouncement(this.form.value);
   }
 
   onImportError() {
@@ -323,14 +324,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
             ? this.cpI18n.translate('audience_create_error_duplicate_audience')
             : this.cpI18n.translate('something_went_wrong');
 
-        this.store.dispatch({
-          type: baseActions.SNACKBAR_SHOW,
-          payload: {
-            sticky: true,
-            class: 'danger',
-            body
-          }
-        });
+        this.store.dispatch(new baseActionClass.SnackbarSuccess({ body }));
 
         this.buttonData = {
           ...this.buttonData,
@@ -398,14 +392,13 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
       disabled: false
     };
     const isNotifyAtTimestampInThePast =
-      this.isScheduledAnnouncement &&
+      AnnouncementUtilsService.isScheduledAnnouncement(this.form.value) &&
       AnnouncementUtilsService.isNotifyAtTimestampInThePast(this.form.value.notify_at_epoch);
 
-    const withinFiveMinute =
-      this.isScheduledAnnouncement &&
-      !AnnouncementUtilsService.withinFiveMinute(this.form.value.notify_at_epoch);
-
-    if (isNotifyAtTimestampInThePast) {
+    if (
+      isNotifyAtTimestampInThePast &&
+      !AnnouncementUtilsService.withinFiveMinutes(this.form.value)
+    ) {
       this.modal = this.modalService.open(
         AnnouncementCreateErrorComponent,
         {},
@@ -415,8 +408,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
         }
       );
       return;
-    } else if (withinFiveMinute) {
-      this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
     }
     this.shouldConfirm = this.state.isEmergency || this.state.isCampusWide || this.state.isUrgent;
 
@@ -448,6 +439,10 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.isError = false;
 
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
+
+    if (AnnouncementUtilsService.withinFiveMinutes(this.form.get('notify_at_epoch').value)) {
+      this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
+    }
 
     let data = {
       subject: this.form.value.subject,
@@ -520,14 +515,26 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
           this.amplitudeEventProperties
         );
 
-        const redirectUrl = this.isScheduledAnnouncement ? '/notify/scheduled' : '/notify/sent';
+        const redirectUrl = AnnouncementUtilsService.isScheduledAnnouncement(this.form.value)
+          ? '/notify/scheduled'
+          : '/notify/sent';
 
+        this.store.dispatch({
+          type: baseActions.SNACKBAR_SHOW,
+          payload: {
+            sticky: true,
+            class: 'success',
+            body: this.cpI18n.translate('t_announcement_sent_success')
+          }
+        });
         this.router.navigate([redirectUrl]);
       },
       (_) => {
+        this.store.dispatch(
+          new baseActionClass.SnackbarError({ body: this.cpI18n.translate('something_went_wrong') })
+        );
         this.isError = true;
         this.shouldConfirm = false;
-        this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
       }
     );
   }

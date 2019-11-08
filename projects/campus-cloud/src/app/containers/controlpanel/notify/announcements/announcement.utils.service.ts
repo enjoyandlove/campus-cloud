@@ -1,18 +1,22 @@
 import { Injectable } from '@angular/core';
 
-const d = new Date();
-const now = new Date(d.getTime());
-const in5Minutes = d.setUTCSeconds(d.getUTCSeconds() + 5 * 60);
+import { IAnnouncement, notifyAtEpochNow } from './model/announcement.interface';
 
 @Injectable()
 export class AnnouncementUtilsService {
-  static readonly validTimestamp = in5Minutes;
-
   static isNotifyAtTimestampInThePast(timestamp: number) {
+    const now = new Date();
     return now.getTime() > timestamp * 1000;
   }
 
-  static withinFiveMinute(timestamp: number) {
-    return timestamp * 1000 >= now.getTime() && in5Minutes > timestamp * 1000;
+  static withinFiveMinutes(timestamp: number) {
+    const now = new Date();
+
+    const fiveMinutes = now.setUTCSeconds(now.getUTCSeconds() + 5 * 60);
+    return fiveMinutes > timestamp * 1000 && !this.isNotifyAtTimestampInThePast(timestamp);
+  }
+
+  static isScheduledAnnouncement(announcement: IAnnouncement) {
+    return announcement.notify_at_epoch !== notifyAtEpochNow;
   }
 }

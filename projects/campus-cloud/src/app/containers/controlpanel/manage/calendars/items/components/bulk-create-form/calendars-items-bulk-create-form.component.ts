@@ -1,10 +1,14 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { FormGroup, FormArray } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
+import { ISnackbar } from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
+import { baseActionClass } from '@campus-cloud/store/base';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { CPI18nService, ImageService } from '@campus-cloud/shared/services';
 
 @Mixin([Destroyable])
 @Component({
@@ -21,11 +25,42 @@ export class CalendarsItemsBulkCreateFormComponent implements OnInit, OnDestroy 
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
-  constructor(public session: CPSession) {}
+  constructor(
+    public session: CPSession,
+    private cpI18n: CPI18nService,
+    private store: Store<ISnackbar>,
+    public imageService: ImageService
+  ) {}
 
   onSubmit() {
     this.submitted.emit(this.form.value);
     this.enableSubmitButton();
+  }
+
+  onRemoveImage(index: number) {
+    const eventControl = <FormArray>this.form.controls['items'];
+    const control = <FormGroup>eventControl.at(index);
+    control.controls['poster_url'].setValue(null);
+    control.controls['poster_thumb_url'].setValue(null);
+  }
+
+  onImageUpload(image: File, index: number) {
+    const promise = this.imageService.upload(image).toPromise();
+
+    promise
+      .then((res: any) => {
+        const controls = <FormArray>this.form.controls['items'];
+        const control = <FormGroup>controls.controls[index];
+        control.controls['poster_url'].setValue(res.image_url);
+        control.controls['poster_thumb_url'].setValue(res.image_url);
+      })
+      .catch((err) => {
+        this.store.dispatch(
+          new baseActionClass.SnackbarError({
+            body: err ? err.message : this.cpI18n.translate('something_went_wrong')
+          })
+        );
+      });
   }
 
   onResetMap(index) {
@@ -75,7 +110,8 @@ export class CalendarsItemsBulkCreateFormComponent implements OnInit, OnDestroy 
   ngOnInit() {
     this.buttonData = {
       text: 'Import Items',
-      class: 'primary'
+      class: 'primary',
+      disabled: true
     };
 
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((_) => {

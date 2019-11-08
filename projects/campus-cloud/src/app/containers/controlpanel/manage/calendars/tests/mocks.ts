@@ -1,10 +1,28 @@
 import { FormBuilder } from '@angular/forms';
 import { of } from 'rxjs';
 
+import { MOCK_IMAGE } from '@campus-cloud/shared/tests';
+
 export const emptyCalendarFormGroup = new FormBuilder().group({
   name: [''],
   description: [''],
   has_membership: [0]
+});
+
+export const mockCalendarItemForm = new FormBuilder().group({
+  items: new FormBuilder().array([
+    new FormBuilder().group({
+      end: [0],
+      start: [0],
+      title: ['title'],
+      latitude: [0],
+      longitude: [0],
+      location: [null],
+      poster_url: [MOCK_IMAGE],
+      description: ['description'],
+      poster_thumb_url: [MOCK_IMAGE]
+    })
+  ])
 });
 
 export const filledForm = {

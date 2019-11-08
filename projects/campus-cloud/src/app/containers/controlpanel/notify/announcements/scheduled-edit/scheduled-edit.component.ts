@@ -1,3 +1,4 @@
+import { AnnouncementsConfirmComponent } from './../confirm/announcements-confirm.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
@@ -11,7 +12,7 @@ import { AnnouncementRecipientPipe } from './../pipes';
 import { Announcement, IAnnouncement } from './../model';
 import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { AnnouncementsService } from './../announcements.service';
-import { notifyAtEpochNow } from './../model/announcement.interface';
+import { notifyAtEpochNow, AnnouncementPriority } from './../model/announcement.interface';
 import { AnnouncementUtilsService } from './../announcement.utils.service';
 import { CPI18nService, ModalService } from '@campus-cloud/shared/services';
 import { AnnouncementCreateErrorComponent } from './../create-error/create-error.component';
@@ -59,7 +60,7 @@ export class ScheduledEditComponent implements OnInit {
 
   onSendNow() {
     this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
-    this.onSubmit();
+    this.onSubmit(true);
   }
 
   onValidationTearDown() {
@@ -67,19 +68,27 @@ export class ScheduledEditComponent implements OnInit {
     this.modal = null;
   }
 
-  onSubmit() {
-    const toBeSendNow = this.form.get('notify_at_epoch').value === null;
-    const isNotifyAtTimestampInThePast = AnnouncementUtilsService.isNotifyAtTimestampInThePast(
-      this.form.value.notify_at_epoch
-    );
+  onTeardownConfirm() {
+    this.modalService.close(this.modal);
+    this.modal = null;
+  }
 
-    const isScheduledWithinFiveMinutes = !AnnouncementUtilsService.withinFiveMinute(
-      this.form.value.notify_at_epoch
-    );
+  onConfirmed() {
+    this.modalService.close(this.modal);
+    this.modal = null;
+    this.onSubmit(true);
+  }
 
-    if (!toBeSendNow && isScheduledWithinFiveMinutes) {
-      this.form.get('notify_at_epoch').setValue(notifyAtEpochNow);
-    } else if (!toBeSendNow && !isNotifyAtTimestampInThePast) {
+  onSubmit(hasConfirmed = false) {
+    const isScheduled = AnnouncementUtilsService.isScheduledAnnouncement(this.form.value);
+    const isNotifyAtTimestampInThePast =
+      isScheduled &&
+      AnnouncementUtilsService.isNotifyAtTimestampInThePast(this.form.get('notify_at_epoch').value);
+    const iswithinFiveMinutes =
+      isScheduled &&
+      AnnouncementUtilsService.withinFiveMinutes(this.form.get('notify_at_epoch').value);
+
+    if (isNotifyAtTimestampInThePast && !iswithinFiveMinutes) {
       this.modal = this.modalService.open(
         AnnouncementCreateErrorComponent,
         {},
@@ -91,28 +100,53 @@ export class ScheduledEditComponent implements OnInit {
       return;
     }
 
+    const priority = this.form.get('priority').value;
+    const isCampusWide = this.form.get('is_school_wide').value;
+    const shouldConfirm =
+      priority === AnnouncementPriority.emergency ||
+      priority === AnnouncementPriority.urgent ||
+      isCampusWide;
+    if (shouldConfirm && !hasConfirmed) {
+      this.modal = this.modalService.open(
+        AnnouncementsConfirmComponent,
+        {},
+        {
+          data: this.state,
+          onAction: this.onConfirmed.bind(this),
+          onClose: this.onTeardownConfirm.bind(this)
+        }
+      );
+      return;
+    }
+
     const { id } = this.session.school;
     const { announcementId } = this.route.snapshot.params;
     const search = new HttpParams().set('school_id', id.toString());
 
-    const { store_id, subject, message, priority, notify_at_epoch } = this.form.value;
+    const { store_id, subject, message, notify_at_epoch } = this.form.value;
+
+    const notifyAtEpoch = iswithinFiveMinutes ? notifyAtEpochNow : notify_at_epoch;
 
     const editableFields = {
       subject,
       message,
       store_id,
       priority,
-      notify_at_epoch
+      notify_at_epoch: notifyAtEpoch
     };
 
     this.service.updateAnnouncement(search, announcementId, editableFields).subscribe(
       () => {
         this.store.dispatch(
           new baseActionClass.SnackbarSuccess({
-            body: this.cpI18n.translate('t_shared_successful')
+            body: this.cpI18n.translate('t_announcement_edit_success')
           })
         );
-        this.router.navigate(['/notify/scheduled']);
+
+        const redirectUrl =
+          notifyAtEpoch !== notifyAtEpochNow ? '/notify/scheduled' : '/notify/sent';
+
+        this.router.navigate([redirectUrl]);
       },
       () => this.erroHandler()
     );
@@ -143,9 +177,15 @@ export class ScheduledEditComponent implements OnInit {
     const { announcementId } = this.route.snapshot.params;
     const search = new HttpParams().set('school_id', id.toString());
 
-    this.service
-      .getAnnouncementById(search, announcementId)
-      .subscribe((r: IAnnouncement) => this.handleSucess(r), () => this.erroHandler());
+    this.service.getAnnouncementById(search, announcementId).subscribe(
+      (r: IAnnouncement) => this.handleSucess(r),
+      () => {
+        this.store.dispatch(
+          new baseActionClass.SnackbarError({ body: this.cpI18n.translate('something_went_wrong') })
+        );
+        this.router.navigate(['/notify/scheduled']);
+      }
+    );
   }
 
   handleSucess(data: IAnnouncement) {

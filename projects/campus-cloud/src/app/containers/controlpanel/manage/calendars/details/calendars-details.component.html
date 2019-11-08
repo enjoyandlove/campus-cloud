@@ -38,9 +38,12 @@
         </li>
 
         <li class="cp-form__item col-12"
-            *ngFor="let item of state.items">
+            *ngFor="let item of state.items; index as index">
           <div class="row">
-            <span class="col-5 text-truncate hover">
+            <span class="col-5 text-truncate">
+              <img class="rounded img-fit-cover"
+                   [alt]="'t_shared_img_alt' | cpI18n: index + 1"
+                   [src]="item.poster_url" />
               <a cpTracker
                  [eventData]="eventData"
                  [routerLink]="['items/' + item.id]">

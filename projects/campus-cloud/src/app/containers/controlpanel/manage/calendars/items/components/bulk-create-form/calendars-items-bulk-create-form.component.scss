@@ -12,6 +12,12 @@
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.16);
 }
 
+.deleteButton {
+  left: 55px;
+  font-size: 1.5em;
+  position: absolute;
+}
+
 .form {
   label {
     margin-bottom: 8px;
@@ -22,6 +28,13 @@
 
     .margin-top {
       margin-top: 15px;
+    }
+  }
+
+  &__thumbnail {
+    img {
+      height: 35px;
+      width: 35px;
     }
   }
 }
