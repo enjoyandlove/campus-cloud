@@ -3,12 +3,12 @@ import { HttpParams } from '@angular/common/http';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { Store } from '@ngrx/store';
 
-import { AnnouncementStatus } from './../model';
 import { CPSession } from '@campus-cloud/session';
 import { AnnouncementDeleteComponent } from '../delete';
 import { FORMAT } from '@campus-cloud/shared/pipes/date';
 import { AnnouncementsService } from '../announcements.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { AnnouncementStatus, notifyAtEpochNow } from './../model';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { baseActions, IHeader, baseActionClass } from '@campus-cloud/store/base';
 import { CPI18nService, ModalService, CPTrackingService } from '@campus-cloud/shared/services';
@@ -46,6 +46,7 @@ export class AnnouncementSentComponent extends BaseComponent implements OnInit {
   state: IState = state;
   deleteAnnouncement = null;
   dateFormat = FORMAT.DATETIME;
+  notifyAtEpochNow = notifyAtEpochNow;
   isExternalToolTip = this.cpI18n.translate('t_announcements_list_external_source_tooltip');
 
   constructor(
