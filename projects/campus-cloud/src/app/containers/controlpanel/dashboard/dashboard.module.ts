@@ -1,11 +1,13 @@
+import { ChartsModule } from '@ready-education/ready-ui';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
-import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { DashboardService } from './dashboard.service';
 import { DashboardComponent } from './dashboard.component';
 import { DashboardBaseComponent } from './base/base.component';
 import { DashboardUtilsService } from './dashboard.utils.service';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { ChartsUtilsService } from '@campus-cloud/shared/services';
 import { DashboardRoutingModule } from './dashboard.routing.module';
 import { EngagementModule } from '../assess/engagement/engagement.module';
 import { DashboardOnboardingComponent } from './onboarding/onboarding.component';
@@ -49,8 +51,8 @@ import {
     DashboardDownloadsRegistrationComponent
   ],
 
-  imports: [CommonModule, SharedModule, DashboardRoutingModule, EngagementModule],
+  imports: [CommonModule, ChartsModule, SharedModule, DashboardRoutingModule, EngagementModule],
 
-  providers: [DashboardService, DashboardUtilsService]
+  providers: [DashboardService, DashboardUtilsService, ChartsUtilsService]
 })
 export class DashboardModule {}
