@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 
 import { CPSession, ISchool } from '@campus-cloud/session';
@@ -22,6 +22,7 @@ const COMMON_DATE_PICKER_OPTIONS = {
 })
 export class EventsFormComponent implements OnInit {
   @Input() isClub;
+  @Input() isEdit;
   @Input() formError;
   @Input() isService;
   @Input() isOrientation;
@@ -37,7 +38,7 @@ export class EventsFormComponent implements OnInit {
   selectedManager;
   enddatePickerOpts;
   startdatePickerOpts;
-  showLocationDetails = false;
+  showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
   drawMarker = new BehaviorSubject(false);
@@ -195,6 +196,9 @@ export class EventsFormComponent implements OnInit {
 
   onLocationToggle(value) {
     this.showLocationDetails = value;
+    const requiredValidator = value ? [Validators.required] : null;
+    this.form.get('address').setValidators(requiredValidator);
+    this.form.get('address').updateValueAndValidity();
 
     if (!value) {
       this.drawMarker.next(false);
@@ -214,6 +218,20 @@ export class EventsFormComponent implements OnInit {
 
       this.amplitudeProperties.emit(this.eventProperties);
     }
+  }
+
+  setLocationVisibility(event) {
+    if (!this.isEdit) {
+      return;
+    }
+
+    const address = this.form.get('address');
+    if (!address.value) {
+      address.setValidators(null);
+      address.updateValueAndValidity();
+    }
+
+    this.showLocationDetails = CPMap.canViewLocation(event.latitude, event.longitude, this.school);
   }
 
   initialize() {
@@ -238,7 +256,7 @@ export class EventsFormComponent implements OnInit {
       CPMap.setDefaultMapCenter(event.latitude, event.longitude, this.school)
     );
 
-    this.showLocationDetails = CPMap.canViewLocation(event.latitude, event.longitude, this.school);
+    this.setLocationVisibility(event);
 
     this.drawMarker.next(this.showLocationDetails);
   }

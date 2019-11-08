@@ -1,0 +1,51 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
+@import '~projects/campus-cloud/src/sass/components/card';
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/components/button';
+
+cp-announcements-list-action-box {
+  display: block;
+  margin-bottom: $default_margin;
+}
+
+.no-content {
+  @include card-margin();
+}
+
+.cp-form {
+  overflow: visible;
+}
+
+.delete-message {
+  font-size: 2em;
+}
+
+.cp-form__header {
+  span.hover {
+    position: relative;
+
+    > span i {
+      top: 1px;
+      font-size: 17px;
+      position: absolute;
+      padding-left: 6px;
+    }
+  }
+}
+
+.messages {
+  padding: 0;
+  margin-top: 0;
+  list-style: none;
+}
+
+.actions {
+  color: $color-secondary-text;
+
+  i,
+  img {
+    top: -5px;
+    right: 10px;
+    position: relative;
+  }
+}

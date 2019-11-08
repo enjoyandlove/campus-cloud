@@ -1,5 +1,6 @@
 import { AudienceSharedService } from './audience.shared.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { A11yModule } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
@@ -16,6 +17,7 @@ import { AudienceService } from '@campus-cloud/containers/controlpanel/audience/
 import { AudienceUsersTypeaheadComponent } from './audience-users-typeahead/audience-users-typeahead.component';
 
 @NgModule({
+  entryComponents: [AudienceSaveModalComponent],
   declarations: [
     AudienceFilterPipe,
     AudienceCardComponent,
@@ -28,7 +30,7 @@ import { AudienceUsersTypeaheadComponent } from './audience-users-typeahead/audi
     AudienceUsersTypeaheadComponent
   ],
 
-  imports: [CommonModule, SharedModule, ReactiveFormsModule],
+  imports: [CommonModule, A11yModule, SharedModule, ReactiveFormsModule],
 
   providers: [AudienceService, AudienceSharedService],
 

@@ -84,7 +84,7 @@ describe('AnnouncementsIntegrationListComponent', () => {
       heading,
       crumbs: { url }
     } = payload;
-    const expectedUrl = 'announcements';
+    const expectedUrl = 'sent';
     const expectedHeading = 't_shared_feature_integrations';
 
     expect(url).toEqual(expectedUrl);

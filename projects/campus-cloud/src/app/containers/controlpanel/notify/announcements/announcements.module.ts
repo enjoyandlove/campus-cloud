@@ -1,33 +1,59 @@
 import { ReactiveFormsModule } from '@angular/forms';
+import { A11yModule } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import {
+  AnnouncementFormComponent,
   AnnouncementsListActionBoxComponent,
-  AnnouncementsListRecipientsComponent,
-  AnnouncementsListSummaryComponent
-} from './list/components';
+  AnnouncementsDatetimePickerComponent
+} from './components';
 
-import { AnnouncementsListComponent } from './list';
-import { SharedModule } from '@campus-cloud/shared/shared.module';
+import {
+  AnnouncementsListSummaryComponent,
+  AnnouncementsListRecipientsComponent
+} from './sent/components';
+
 import { AnnouncementDeleteComponent } from './delete';
 import { AnnouncementsConfirmComponent } from './confirm';
 import { AnnouncementsComposeComponent } from './compose';
+import { ModalService } from '@campus-cloud/shared/services';
+import { AnnouncementScheduledComponent } from './scheduled';
 import { AnnouncementsService } from './announcements.service';
 import { AudienceModule } from './../../audience/audience.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { AnnouncementSentComponent } from './sent/sent.component';
+import { AnnouncementCreateErrorComponent } from './create-error';
+import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
+import { ScheduledActionCellComponent } from './scheduled/components';
+import { PriorityToLabelPipe, AnnouncementRecipientPipe } from './pipes';
 import { AnnouncementsRoutingModule } from './announcements.routing.module';
+import { ScheduledEditComponent } from './scheduled-edit/scheduled-edit.component';
 import { AudienceSharedModule } from './../../audience/shared/audience.shared.module';
 import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common/common-integrations.module';
 
 @NgModule({
-  declarations: [
-    AnnouncementsListComponent,
+  entryComponents: [
     AnnouncementDeleteComponent,
+    AnnouncementsConfirmComponent,
+    AnnouncementCreateErrorComponent
+  ],
+  declarations: [
+    PriorityToLabelPipe,
+    ScheduledEditComponent,
+    AnnouncementFormComponent,
+    AnnouncementSentComponent,
+    AnnouncementRecipientPipe,
+    AnnouncementDeleteComponent,
+    ScheduledActionCellComponent,
     AnnouncementsComposeComponent,
     AnnouncementsConfirmComponent,
+    AnnouncementScheduledComponent,
+    AnnouncementCreateErrorComponent,
     AnnouncementsListSummaryComponent,
     AnnouncementsListActionBoxComponent,
-    AnnouncementsListRecipientsComponent
+    AnnouncementsListRecipientsComponent,
+    AnnouncementsDatetimePickerComponent
   ],
 
   exports: [
@@ -37,8 +63,10 @@ import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common
   ],
 
   imports: [
+    A11yModule,
     CommonModule,
     SharedModule,
+    LayoutsModule,
     AudienceSharedModule,
     AnnouncementsRoutingModule,
     CommonIntegrationsModule,
@@ -46,6 +74,6 @@ import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common
     ReactiveFormsModule
   ],
 
-  providers: [AnnouncementsService]
+  providers: [ModalService, AnnouncementsService, AnnouncementRecipientPipe]
 })
 export class AnnouncementsModule {}

@@ -12,8 +12,15 @@
                       (newAudienceTypeChange)="onNewAudienceTypeChange($event)">
     </cp-audience-card>
 
-    <div class="cp-card">
-      <p class="section__name">{{ 'message' | cpI18n }}</p>
+    <cp-card>
+      <header>
+        <h2 class="section__name">{{ 'message' | cpI18n }}</h2>
+        <cp-datetime-picker (dateSet)="onSchedule($event)"
+                            [clearable]="isScheduledAnnouncement"
+                            [label]="isScheduledAnnouncement ? (form.get('notify_at_epoch').value | cpDatePipe:dateTimeFormat) : 't_notify_send_later' | cpI18n">
+
+        </cp-datetime-picker>
+      </header>
       <div class="row">
         <div class="col-12">
           <form [formGroup]="form">
@@ -50,7 +57,7 @@
                 {{ 'subject' | cpI18n }}
                 <cp-char-counter class="float-right"
                                  [limit]="128"
-                                 [charCount]="getSubjectLength()">
+                                 [charCount]="form.get('subject').value">
                 </cp-char-counter>
               </label>
               <div class="cpInput subject-input">
@@ -76,7 +83,7 @@
               <label>
                 {{ 'message_noun' | cpI18n }}
                 <cp-char-counter class="float-right"
-                                 [limit]="400"
+                                 [limit]="1024"
                                  [charCount]="form.controls.message.value">
                 </cp-char-counter>
               </label>
@@ -86,7 +93,7 @@
           </form>
         </div>
       </div>
-    </div>
+    </cp-card>
   </div>
 </div>
 <div class="row">
@@ -96,7 +103,7 @@
         <div class="row">
           <div class="col-12">
             <div class="text-right">
-              <a [routerLink]="['../']"
+              <a routerLink="/notify/sent"
                  class="cpbtn cpbtn--cancel">
                 {{ 'cancel' | cpI18n }}
               </a>
@@ -116,19 +123,5 @@
                         (teardown)="isAudienceImport = !isAudienceImport"
                         (launchCreateModal)="onLaunchCreateModal($event)">
     </cp-audience-import>
-  </cp-modal>
-
-  <cp-modal modalId="audienceSaveModal">
-    <cp-audience-save-modal (submitEvent)="onAudienceNamed($event)"
-                            (teardown)="onTeardownAudienceSaveModal()">
-    </cp-audience-save-modal>
-  </cp-modal>
-
-  <cp-modal *ngIf="shouldConfirm"
-            modalId="announcementConfirmModal">
-    <cp-announcements-confirm [state]="state"
-                              (confirmed)="onConfirmed()"
-                              (teardown)="onTeardownConfirm()">
-    </cp-announcements-confirm>
   </cp-modal>
 </div>

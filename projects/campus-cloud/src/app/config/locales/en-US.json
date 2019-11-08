@@ -201,7 +201,7 @@
     "message": "Are you sure you want to delete this announcement?"
   },
   "announcements_delete_modal_body_warning": {
-    "message": "No more students will receive it."
+    "message": "This announcement will no longer be visible."
   },
   "announcements_delete_modal_title": {
     "message": "Delete Announcement"
@@ -697,6 +697,9 @@
   },
   "calendars_item_edit_heading": {
     "message": "Edit Calendar Item"
+  },
+  "calendars_item_image_label": {
+    "message": "Item Image"
   },
   "calendars_item_modal_title": {
     "message": "Delete Calendar Item"
@@ -2244,6 +2247,21 @@
   "t_announcements_list_external_source_tooltip": {
     "message": "This announcement was integrated. It will be automatically updated from the integration."
   },
+  "t_announcement_edit_success": {
+    "message": "Announcement successfully saved."
+  },
+  "t_announcement_send_now": {
+    "message": "Send Now"
+  },
+  "t_announcement_sent_success": {
+    "message": "Announcement successfully created. It may take a moment to appear."
+  },
+  "t_announcement_timestamp_error_body": {
+    "message": "The scheduled time appears to be in the past. \nGo back to review the date and time selected."
+  },
+  "t_announcement_timestamp_error_title": {
+    "message": "Send Later?"
+  },
   "t_announcement_type": {
     "message": "Announcement Type"
   },
@@ -2905,6 +2923,27 @@
   },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
+  },
+  "t_notify_edit_announcement": {
+    "message": "Edit Announcement"
+  },
+  "t_notify_no_scheduled_data_found": {
+    "message": "No scheduled announcements found"
+  },
+  "t_notify_scheduled_for": {
+    "message": "Scheduled for"
+  },
+  "t_notify_send_later": {
+    "message": "Send Later"
+  },
+  "t_notify_set_date_time": {
+    "message": "Set date & time"
+  },
+  "t_notify_tab_scheduled": {
+    "message": "Scheduled"
+  },
+  "t_notify_tab_sent": {
+    "message": "Sent"
   },
   "t_orientation_everyone": {
     "message": "Event Members"

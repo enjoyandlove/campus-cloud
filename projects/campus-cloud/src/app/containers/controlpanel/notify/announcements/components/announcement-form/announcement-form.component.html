@@ -1,0 +1,74 @@
+<form [formGroup]="form">
+  <div class="form-group">
+    <div class="row">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-12">
+            <label>{{ 'from' | cpI18n }}</label>
+            <cp-dropdown [items]="stores$ | async"
+                         [cpTarget]="'store_id'"
+                         formControlName="store_id"
+                         [selectedItem]="selectedStore"
+                         [isRequiredError]="form.get('store_id').invalid">
+            </cp-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <label>{{ 'announcements_type' | cpI18n }}</label>
+        <div class="row">
+          <div class="col-12">
+            <cp-check-dropdown [items]="types"
+                               [cpTarget]="'priority'"
+                               formControlName="priority"
+                               [selectedItem]="selectedType"
+                               buttonClass="cpbtn cpbtn--cancel">
+            </cp-check-dropdown>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>
+      {{ 'subject' | cpI18n }}
+      <cp-char-counter [limit]="128"
+                       class="float-right"
+                       [charCount]="form.get('subject').value">
+      </cp-char-counter>
+    </label>
+    <div class="cpInput subject-input">
+      <div class="row">
+        <div class="col-2 no-right-padding"
+             *ngIf="form.get('priority').value !== regularPriority">
+          <span
+                [class]="'subject-input__label text-center ' + labelConfig.class">
+            {{ labelConfig.label }}
+          </span>
+        </div>
+        <div
+             [class]="form.get('priority').value !== regularPriority ? 'col-10 no-left-padding' : 'col-12'">
+          <input type="text"
+                 [cpTarget]="'subject'"
+                 formControlName="subject"
+                 class="form-control transparent subject-input__input" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label>
+      {{ 'message_noun' | cpI18n }}
+      <cp-char-counter class="float-right"
+                       [limit]="1024"
+                       [charCount]="form.controls.message.value">
+      </cp-char-counter>
+    </label>
+    <textarea class="form-control"
+              [cpTarget]="'message'"
+              formControlName="message"> </textarea>
+  </div>
+</form>

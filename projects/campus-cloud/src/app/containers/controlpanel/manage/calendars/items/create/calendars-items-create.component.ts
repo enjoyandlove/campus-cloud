@@ -78,7 +78,7 @@ export class CalendarsItemCreateComponent implements OnInit {
       is_all_day: [ItemAllDay.false],
       city: [null],
       room_data: [null],
-      location: [null],
+      location: [null, Validators.required],
       country: [null],
       address: [null],
       street_name: [null],
@@ -86,7 +86,9 @@ export class CalendarsItemCreateComponent implements OnInit {
       street_number: [null],
       province: [null],
       latitude: [0, Validators.required],
-      longitude: [0, Validators.required]
+      longitude: [0, Validators.required],
+      poster_url: [null, Validators.required],
+      poster_thumb_url: [null, Validators.required]
     });
   }
 

@@ -33,6 +33,7 @@ describe('EventsFormComponent', () => {
     fixture = TestBed.createComponent(EventsFormComponent);
     component = fixture.componentInstance;
 
+    component.school = mockSchool;
     session = TestBed.get(CPSession);
     session.g.set('school', mockSchool);
     component.form = EventsModel.form(false);
@@ -54,6 +55,23 @@ describe('EventsFormComponent', () => {
     expect(component.amplitudeProperties.emit).toHaveBeenCalled();
     expect(component.form.get('poster_url').value).toEqual(MOCK_IMAGE);
     expect(component.form.get('poster_thumb_url').value).toEqual(MOCK_IMAGE);
+  });
+
+  it('should show/hide location details & set address required/optional onLocationToggle ', () => {
+    component.onLocationToggle(true);
+
+    expect(component.showLocationDetails).toBe(true);
+    expect(component.form.get('address').invalid).toBe(true);
+
+    // reset location
+    component.onLocationToggle(false);
+
+    expect(component.drawMarker.value).toBe(false);
+    expect(component.showLocationDetails).toBe(false);
+    expect(component.form.get('address').invalid).toBe(false);
+    expect(component.form.controls['room_data'].value).toBe('');
+    expect(component.mapCenter.value.lat).toEqual(mockSchool.latitude);
+    expect(component.mapCenter.value.lng).toEqual(mockSchool.latitude);
   });
 
   it('should set host on host select', () => {

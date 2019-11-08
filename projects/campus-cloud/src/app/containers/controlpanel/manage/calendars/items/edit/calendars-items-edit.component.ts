@@ -99,7 +99,7 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
       is_all_day: [this.item.is_all_day],
       city: [this.item.city],
       room_data: [this.item.room_data],
-      location: [this.item.location],
+      location: [this.item.location, Validators.required],
       country: [this.item.country],
       address: [this.item.address],
       street_name: [this.item.street_name],
@@ -107,7 +107,9 @@ export class CalendarsItemsEditComponent extends BaseComponent implements OnInit
       street_number: [this.item.street_number],
       province: [this.item.province],
       latitude: [this.item.latitude, Validators.required],
-      longitude: [this.item.longitude, Validators.required]
+      longitude: [this.item.longitude, Validators.required],
+      poster_url: [this.item.poster_url, Validators.required],
+      poster_thumb_url: [this.item.poster_thumb_url, Validators.required]
     });
   }
 

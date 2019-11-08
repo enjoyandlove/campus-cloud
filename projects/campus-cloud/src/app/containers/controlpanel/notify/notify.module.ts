@@ -1,10 +1,10 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SharedModule } from '../../../shared/shared.module';
+import { NgModule } from '@angular/core';
 
 import { NotifyComponent } from './notify.component';
-import { NotifyRoutingModule } from './notify.routing.module';
 import { NotifyUtilsService } from './notify.utils.service';
+import { NotifyRoutingModule } from './notify.routing.module';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
 
 @NgModule({
   declarations: [NotifyComponent],

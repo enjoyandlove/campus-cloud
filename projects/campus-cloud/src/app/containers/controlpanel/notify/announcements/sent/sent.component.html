@@ -1,0 +1,80 @@
+<cp-announcements-list-action-box (filter)="doFilter($event)">
+</cp-announcements-list-action-box>
+
+<ng-container [ngSwitch]="loading">
+  <cp-spinner *ngSwitchCase="true"></cp-spinner>
+
+  <ng-container *ngSwitchCase="false">
+    <cp-no-content class="no-content"
+                   *ngIf="!state.messages.length"
+                   noContentText="No messages found...">
+    </cp-no-content>
+
+    <div *ngIf="state.messages.length">
+      <ul class="messages cp-form">
+        <li class="cp-form__header col-12">
+          <div class="row">
+            <span class="col-5">{{ 'recipient' | cpI18n }}</span>
+            <span class="col-3">{{ 'announcements_type' | cpI18n }}</span>
+            <cp-sorting-header class="col-3"
+                               sortLabel="created_on_epoch"
+                               [label]="sortingLabels.sent"
+                               (click)="doSort('created_on_epoch')"
+                               [sortField]="state.sort_field"
+                               [sortDirection]="state.sort_direction">
+            </cp-sorting-header>
+            <span class="col-1"></span>
+          </div>
+        </li>
+
+        <li class="cp-form__item col-12"
+            *ngFor="let message of state.messages">
+          <div class="row">
+            <span class="col-5">
+              <cp-announcement-summary [message]="message"
+                                       (viewMoreModal)="onViewMoreModal($event)">
+              </cp-announcement-summary>
+            </span>
+
+            <span class="col-3">
+              {{ messageType[message.priority] }}
+            </span>
+
+            <span class="col-3">
+              {{ message.notify_at_epoch === notifyAtEpochNow ? (message.created_on_epoch | cpDatePipe: dateFormat) : (message.notify_at_epoch | cpDatePipe: dateFormat)  }}
+            </span>
+
+            <span class="col-1 text-right actions">
+              <img cpTooltip
+                   alt=""
+                   aria-hidden="true"
+                   *ngIf="message.is_external"
+                   [attr.title]="isExternalToolTip"
+                   [src]="message.source | integrationSourceToIcon" />
+              <button type="button"
+                      aria-label="close"
+                      class="hover delete-message unstyled-button"
+                      (click)="onLauncDeleteModal(message)">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </span>
+          </div>
+        </li>
+      </ul>
+
+      <cp-pagination [pageNext]="pageNext"
+                     [pagePrev]="pagePrev"
+                     [pageNumber]="pageNumber"
+                     (next)="onPaginationNext()"
+                     (previous)="onPaginationPrevious()">
+      </cp-pagination>
+    </div>
+  </ng-container>
+</ng-container>
+
+<cp-modal modalId="viewMoreModal">
+  <cp-list-modal [buttonText]="buttonText"
+                 [headerText]="headerText"
+                 [list]="viewMoreRecipients">
+  </cp-list-modal>
+</cp-modal>

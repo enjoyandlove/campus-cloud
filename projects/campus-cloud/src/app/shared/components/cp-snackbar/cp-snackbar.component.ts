@@ -16,15 +16,13 @@ export class CPSnackBarComponent implements OnDestroy, OnInit {
     this.store.select(getSnackbarState).subscribe((res: any) => {
       this.snack = res;
 
-      if (this.snack.autoClose) {
-        this.timeOut = setTimeout(
-          () => {
-            this.doClose();
-          },
+      this.timeOut = setTimeout(
+        () => {
+          this.doClose();
+        },
 
-          this.snack.autoCloseDelay
-        );
-      }
+        2000
+      );
     });
   }
 

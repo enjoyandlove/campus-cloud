@@ -285,7 +285,6 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       feedback_status,
       assessment_status,
       source_id: this.provider.encrypted_id,
-      sub_menu_name: amplitudeEvents.SERVICES,
       provider_type: amplitudeEvents.ONE_PROVIDER
     };
 

@@ -1,5 +1,4 @@
 @import '~projects/campus-cloud/src/sass/core/colors';
-@import '~projects/campus-cloud/src/sass/components/card';
 @import '~projects/campus-cloud/src/sass/core/typography';
 @import '~projects/campus-cloud/src/sass/components/form';
 @import '~projects/campus-cloud/src/sass/components/button';
@@ -9,11 +8,11 @@
   padding-bottom: 90px;
 }
 
-.cp-card {
-  @include card-margin();
-
-  &:first-child {
-    margin-top: 0;
+cp-card {
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 

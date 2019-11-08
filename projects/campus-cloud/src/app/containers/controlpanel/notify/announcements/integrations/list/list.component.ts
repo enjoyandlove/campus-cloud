@@ -56,8 +56,8 @@ export class AnnouncementsIntegrationListComponent extends BaseComponent
         subheading: null,
         em: null,
         crumbs: {
-          url: 'announcements',
-          label: 'announcements'
+          url: 'sent',
+          label: 't_notify_tab_sent'
         },
         children: []
       }

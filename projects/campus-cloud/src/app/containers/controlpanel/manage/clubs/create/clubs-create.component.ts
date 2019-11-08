@@ -32,7 +32,7 @@ export class ClubsCreateComponent implements OnInit {
   buttonData;
   form: FormGroup;
   statusTypes = statusTypes;
-  showLocationDetails = false;
+  showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
   membershipTypes = membershipTypes;
   newAddress = new BehaviorSubject(null);
@@ -186,6 +186,9 @@ export class ClubsCreateComponent implements OnInit {
 
   onLocationToggle(value) {
     this.showLocationDetails = value;
+    const requiredValidator = value ? [Validators.required] : null;
+    this.form.get('address').setValidators(requiredValidator);
+    this.form.get('address').updateValueAndValidity();
 
     if (!value) {
       this.drawMarker.next(false);
@@ -237,7 +240,7 @@ export class ClubsCreateComponent implements OnInit {
       status: [ClubStatus.active, Validators.required],
       has_membership: [true, Validators.required],
       location: [null],
-      address: [null],
+      address: [null, Validators.required],
       city: [null],
       country: [null],
       postal_code: [null],
