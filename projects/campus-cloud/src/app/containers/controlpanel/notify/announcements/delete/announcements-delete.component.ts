@@ -5,6 +5,7 @@ import { CPSession } from '@campus-cloud/session';
 import { AnnouncementsService } from '../announcements.service';
 import { NotifyUtilsService } from '../../notify.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { AnnouncementAmplitudeService } from './../announcement.amplitude.service';
 import { IModal, MODAL_DATA, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
@@ -37,8 +38,8 @@ export class AnnouncementDeleteComponent {
 
     this.service.deleteAnnouncement(this.modal.data.id, search).subscribe(
       (_) => {
-        this.trackDeleteEvent(this.modal.data);
         this.modal.onClose();
+        this.trackDeleteEvent(this.modal.data);
         this.modal.onAction(this.modal.data.id);
       },
       () => this.modal.onClose(true)
@@ -56,9 +57,9 @@ export class AnnouncementDeleteComponent {
       ...this.utils.setEventProperties(data, amplitudeEvents.ANNOUNCEMENT)
     };
 
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.NOTIFY_DELETED_LISTING,
-      this.eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_DELETED_COMMUNICATION, {
+      ...this.cpTracking.getAmplitudeMenuProperties(),
+      ...AnnouncementAmplitudeService.getAmplitudeProperties(data)
+    });
   }
 }
