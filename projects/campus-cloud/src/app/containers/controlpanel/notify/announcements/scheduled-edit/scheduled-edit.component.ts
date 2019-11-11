@@ -14,9 +14,11 @@ import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { AnnouncementsService } from './../announcements.service';
 import { notifyAtEpochNow, AnnouncementPriority } from './../model/announcement.interface';
 import { AnnouncementUtilsService } from './../announcement.utils.service';
-import { CPI18nService, ModalService } from '@campus-cloud/shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { AnnouncementAmplitudeService } from '../announcement.amplitude.service';
 import { AnnouncementCreateErrorComponent } from './../create-error/create-error.component';
 import { ISnackbar, baseActionClass, IHeader, baseActions } from '@campus-cloud/store/base';
+import { CPI18nService, ModalService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-scheduled-edit',
@@ -42,6 +44,7 @@ export class ScheduledEditComponent implements OnInit {
     private cpI18n: CPI18nService,
     private modalService: ModalService,
     private service: AnnouncementsService,
+    private cpTracking: CPTrackingService,
     private store: Store<ISnackbar | IHeader>,
     private recipientNamePipe: AnnouncementRecipientPipe
   ) {}
@@ -145,6 +148,11 @@ export class ScheduledEditComponent implements OnInit {
 
     this.service.updateAnnouncement(search, announcementId, editableFields).subscribe(
       () => {
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_UPDATED_COMMUNICATION, {
+          ...this.cpTracking.getAmplitudeMenuProperties(),
+          ...AnnouncementAmplitudeService.getAmplitudeProperties(this.form.value)
+        });
+
         this.store.dispatch(
           new baseActionClass.SnackbarSuccess({
             body: this.cpI18n.translate('t_announcement_edit_success')

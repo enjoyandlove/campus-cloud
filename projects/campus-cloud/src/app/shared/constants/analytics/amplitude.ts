@@ -59,11 +59,11 @@ export const amplitudeEvents = {
 
   CAMPUS: 'Campus',
 
+  BEAMER: 'Beamer',
+
   DEFAULT: 'Default',
 
   NO_DATE: 'No Date',
-
-  BEAMER: 'Beamer',
 
   COMMENT: 'Comment',
 
@@ -205,8 +205,6 @@ export const amplitudeEvents = {
 
   RESOURCE_LIST: 'Resource List',
 
-  CAROUSEL_WHEEL: 'Carousel Wheel',
-
   ALL_PROVIDERS: 'All Providers',
 
   SELECT_ACCESS: 'Select Access',
@@ -214,6 +212,8 @@ export const amplitudeEvents = {
   NO_ENGAGEMENT: 'No Engagement',
 
   SERVICE_EVENT: 'Service Event',
+
+  CAROUSEL_WHEEL: 'Carousel Wheel',
 
   ADDED_LOCATION: 'Added Location',
 
@@ -223,17 +223,7 @@ export const amplitudeEvents = {
 
   ATHLETIC_EVENT: 'Athletic Event',
 
-  CUSTOM_AUDIENCE: 'Custom Audience',
-
   UPLOADED_PHOTO: 'Uploaded Photo',
-
-  START_END_DATE: 'Start & End Date',
-
-  CREATED_ACCOUNT: 'Created Account',
-
-  UPCOMING_EVENT: 'Upcomping Event',
-
-  CALENDAR_EVENTS: 'Calendar Events',
 
   RESET_PASSWORD: 'Reset Password',
 
@@ -245,23 +235,33 @@ export const amplitudeEvents = {
 
   CHANGED_SCHOOL: 'Changed School',
 
+  UPCOMING_EVENT: 'Upcomping Event',
+
+  CLICKED_MENU: 'Clicked Menu Item',
+
+  CUSTOM_AUDIENCE: 'Custom Audience',
+
+  START_END_DATE: 'Start & End Date',
+
+  CREATED_ACCOUNT: 'Created Account',
+
+  CALENDAR_EVENTS: 'Calendar Events',
+
   DINING_CATEGORY: 'Dining Category',
 
   CC_WEB_CHECK_IN: 'CC Web Check-In',
 
+  CHANGE_PASSWORD: 'Changed Password',
+
   DYNAMIC_AUDIENCE: 'Dynamic Audience',
 
   REMOVED_LOCATION: 'Removed Location',
-
-  CLICKED_MENU: 'Clicked Menu Item',
 
   USER_INFORMATION: 'User Information',
 
   SERVICE_PROVIDER: 'Service Provider',
 
   EVENT_ASSESSMENT: 'Event Assessment',
-
-  CHANGE_PASSWORD: 'Changed Password',
 
   WALL_MOVED_POST: 'Wall - Moved Post',
 
@@ -287,13 +287,13 @@ export const amplitudeEvents = {
 
   WALL_DELETED_POST: 'Wall - Deleted Post',
 
+  CLICKED_SUB_MENU: 'Clicked Sub-Menu Item',
+
   VIEWED_NOTIFICATION: 'Viewed Notification',
 
   CLICKED_CREATE_ITEM: 'Clicked Create Item',
 
   CREATE_ACCOUNT_PAGE: 'Create Account Page',
-
-  CLICKED_SUB_MENU: 'Clicked Sub-Menu Item',
 
   INVITED_TEAM_MEMBER: 'Invited Team Member',
 
@@ -361,6 +361,8 @@ export const amplitudeEvents = {
 
   MANAGE_DELETED_DINING: 'Manage - Deleted Dining',
 
+  MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
+
   MANAGE_DELETED_CALENDAR: 'Manage Deleted Calendar',
 
   MANAGE_UPDATED_CALENDAR: 'Manage Updated Calendar',
@@ -377,29 +379,21 @@ export const amplitudeEvents = {
 
   MANAGE_CHANGED_QR_CODE: 'Manage - Changed QR Code',
 
-  MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
-
-  NOTIFY_DELETED_LISTING: 'Notify - Deleted Listing',
+  NOTIFY_DELETED_COMMUNICATION: 'Notify - Deleted Listing',
 
   WALL_SUBMITTED_COMMENT: 'Wall - Submitted Comment',
-
-  AUDIENCE_DOWNLOAD_DATA: 'Audience - Downloaded Data',
-
-  MANAGE_ADDED_ATTENDANCE: 'Manage - Added Attendance',
-
-  NOTIFY_CREATED_TEMPLATE: 'Notify - Created Template',
-
-  MANAGE_SENT_ANNOUNCEMENT: 'Manage - Sent Announcement',
-
-  ASSESS_SENT_ANNOUNCEMENT: 'Assess - Sent Announcement',
 
   MANAGE_CREATED_SERVICE: 'Manage - Created Service',
 
   MANAGE_UPDATED_SERVICE: 'Manage - Updated Service',
 
-  MANAGE_CREATED_LOCATION: 'Manage - Created Location',
-
   MANAGE_CC_WEB_CHECK_IN: 'Manage - CC  Web Check-In',
+
+  AUDIENCE_DOWNLOAD_DATA: 'Audience - Downloaded Data',
+
+  MANAGE_ADDED_ATTENDANCE: 'Manage - Added Attendance',
+
+  MANAGE_CREATED_LOCATION: 'Manage - Created Location',
 
   MANAGE_CREATED_CALENDAR: 'Manage - Created Calendar',
 
@@ -415,9 +409,13 @@ export const amplitudeEvents = {
 
   MANAGE_DELETED_AUDIENCE: 'Manage - Deleted Audience',
 
+  MANAGE_SENT_ANNOUNCEMENT: 'Manage - Sent Announcement',
+
+  ASSESS_SENT_ANNOUNCEMENT: 'Assess - Sent Announcement',
+
   MANAGE_ADDED_CLUB_MEMBER: 'Manage - Added Club Member',
 
-  NOTIFY_SEND_ANNOUNCEMENT: 'Notify - Send Announcement',
+  NOTIFY_CREATED_COMMUNICATION: 'Notify - Send Announcement',
 
   MANAGE_IMPORTED_AUDIENCE: 'Manage - Imported Audience',
 
@@ -446,6 +444,8 @@ export const amplitudeEvents = {
   API_MANAGEMENT_VIEWED_PAGE: 'API Management - Viewed Page',
 
   MANAGE_UPDATED_CLUB_MEMBER: 'Manage - Updated Club Member',
+
+  NOTIFY_UPDATED_COMMUNICATION: 'Notify - Updated Communication',
 
   MANAGE_DOWNLOAD_MEMBER_DATA: 'Manage - Downloaded Member Data',
 

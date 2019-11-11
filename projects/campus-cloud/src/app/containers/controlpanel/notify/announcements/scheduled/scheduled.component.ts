@@ -14,9 +14,9 @@ import { CPI18nService } from '@campus-cloud/shared/services';
 import { AnnouncementStatus, IAnnouncement } from './../model';
 import { AnnouncementsService } from './../announcements.service';
 import { FORMAT, CPDatePipe } from '@campus-cloud/shared/pipes/date';
-import { ModalService, CPLogger } from '@campus-cloud/shared/services';
 import { Paginated, PaginatedResult } from '@campus-cloud/shared/utils/http';
 import { AnnouncementDeleteComponent } from './../delete/announcements-delete.component';
+import { ModalService, CPLogger, CPTrackingService } from '@campus-cloud/shared/services';
 import {
   CPTableRow,
   CPTableColumn,
@@ -59,6 +59,7 @@ export class AnnouncementScheduledComponent extends Paginated implements OnInit,
     private cpDatePipe: CPDatePipe,
     private modalService: ModalService,
     private service: AnnouncementsService,
+    private cpTracking: CPTrackingService,
     private store: Store<ISnackbar | IHeader>,
     private priorityToLabelPipe: PriorityToLabelPipe
   ) {
@@ -105,6 +106,7 @@ export class AnnouncementScheduledComponent extends Paginated implements OnInit,
   }
 
   onAnnouncementDeleted(deletedId: number) {
+    const deletedAnnouncement = this.state.announcements.find((a) => a.id === deletedId);
     this.state = {
       ...this.state,
       announcements: this.state.announcements.filter((a: IAnnouncement) => a.id !== deletedId)
