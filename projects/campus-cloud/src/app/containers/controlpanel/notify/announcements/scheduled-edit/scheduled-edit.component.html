@@ -19,7 +19,8 @@
       </header>
 
       <main>
-        <cp-announcement-form [form]="form"></cp-announcement-form>
+        <cp-announcement-form [form]="form"
+                              [showErrors]="showErrors"></cp-announcement-form>
       </main>
 
       <cp-form-fixed-footer (cancelClick)="onCancel()"
