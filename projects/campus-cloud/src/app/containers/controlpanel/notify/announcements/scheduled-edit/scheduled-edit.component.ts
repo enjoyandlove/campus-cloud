@@ -25,8 +25,9 @@ import { ISnackbar, baseActionClass, IHeader, baseActions } from '@campus-cloud/
 })
 export class ScheduledEditComponent implements OnInit {
   form: FormGroup;
-  modal: OverlayRef;
   listName: string;
+  modal: OverlayRef;
+  showErrors = false;
   width = LayoutWidth.third;
   dateTimeFormat = FORMAT.DATETIME;
 
@@ -80,6 +81,13 @@ export class ScheduledEditComponent implements OnInit {
   }
 
   onSubmit(hasConfirmed = false) {
+    this.showErrors = false;
+
+    if (this.form.invalid) {
+      this.showErrors = true;
+      return;
+    }
+
     const isScheduled = AnnouncementUtilsService.isScheduledAnnouncement(this.form.value);
     const isNotifyAtTimestampInThePast =
       isScheduled &&
