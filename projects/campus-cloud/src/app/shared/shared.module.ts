@@ -66,6 +66,7 @@ import {
   CPCheckboxComponent,
   CPDropdownComponent,
   CPLightboxComponent,
+  CPTrackersComponent,
   CPTopBanerComponent,
   CPFormLabelComponent,
   CPTypeAheadComponent,
@@ -124,7 +125,7 @@ import {
     CPDropdownComponent,
     TextEditorDirective,
     CPCheckboxComponent,
-
+    CPTrackersComponent,
     CPSnackBarComponent,
     CPLightboxDirective,
     CPFormLabelComponent,
@@ -217,7 +218,7 @@ import {
     TextEditorDirective,
     CPDropdownComponent,
     CPMenuItemComponent,
-
+    CPTrackersComponent,
     CPCheckboxComponent,
     CPSnackBarComponent,
     CPTopBanerComponent,
