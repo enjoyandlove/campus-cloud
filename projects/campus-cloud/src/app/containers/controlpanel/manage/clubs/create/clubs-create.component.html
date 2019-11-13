@@ -1,177 +1,34 @@
-<div class="row margin-bottom">
+<div class="margin-bottom">
   <form [formGroup]="form">
-    <div class="row">
-      <div class="col-6">
-        <div class="cp-card">
+    <cp-two-columns>
+      <cp-card layout-left-column>
+        <cp-clubs-form
+          [form]="form"
+          [formError]="formError"
+          [isAthletic]="isAthletic">
+        </cp-clubs-form>
+      </cp-card>
+
+      <cp-card layout-right-column>
+        <cp-clubs-contact-details-form
+          [form]="form"
+          [formError]="formError">
+        </cp-clubs-contact-details-form>
+      </cp-card>
+    </cp-two-columns>
+
+    <div class="footer">
+      <div class="cp-wrapper cp-wrapper--outer">
+        <div class="col-12">
           <div class="row">
             <div class="col-12">
-              <p class="title">{{ labels.create_edit_banner | cpI18n }}</p>
-              <div class="row">
-                <cp-image-upload class="col-12"
-                                 (uploaded)="onUploadedImage($event)"
-                                 [required]="formError && form.controls['logo_url'].hasError('required')">
-                </cp-image-upload>
-              </div>
-            </div>
-          </div>
-
-          <div class="form-group club-details">
-            <div class="row">
-              <div class="col-12">
-                <p class="title">{{ labels.create_edit_details | cpI18n }}</p>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-12">
-                <label>{{ labels.create_edit_name | cpI18n }}</label>
-                <input type="text"
-                       class="form-control"
-                       formControlName="name"
-                       [class.error]="formError && form.controls['name'].hasError('required')" />
-              </div>
-            </div>
-          </div>
-
-          <div class="row form-group">
-            <div class="col-12">
-              <label>{{ labels.create_edit_description | cpI18n }}</label>
-              <textarea class="form-control"
-                        formControlName="description"> </textarea>
-            </div>
-          </div>
-
-          <div class="row form-group">
-            <div class="col-6">
-              <label>{{ labels.create_edit_status | cpI18n }}</label>
-              <div class="row">
-                <div class="col-12">
-                  <cp-check-dropdown [items]="statusTypes"
-                                     buttonClass="cpbtn cpbtn--cancel"
-                                     (selected)="onSelectedStatus($event)">
-                  </cp-check-dropdown>
-                </div>
-              </div>
-            </div>
-            <div class="col-6">
-              <label>{{ labels.create_edit_membership | cpI18n }}</label>
-              <div class="row">
-                <div class="col-12">
-                  <cp-check-dropdown [items]="membershipTypes"
-                                     buttonClass="cpbtn cpbtn--cancel"
-                                     (selected)="onSelectedMembership($event)">
-                  </cp-check-dropdown>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="row form-group">
-            <div class="col-12">
-              <cp-checkbox class="checkbox"
-                           [isChecked]="showLocationDetails"
-                           (toggle)="onLocationToggle($event)"
-                           [label]="cpI18n.translate('t_shared_label_location_toggle')">
-              </cp-checkbox>
-            </div>
-          </div>
-
-          <div *ngIf="showLocationDetails">
-            <div class="row form-group">
-              <div class="col-12">
-                <label>{{ 'location' | cpI18n }}</label>
-                <div class="row form-group">
-                  <div class="col-12">
-                    <cp-place-autocomplete [newAddress]="newAddress"
-                                           (backToDefault)="onResetMap()"
-                                           (placeChange)="onPlaceChange($event)"
-                                           [defaultValue]="form.controls.address.value"
-                                           [isRequired]="formError && form.get('address').invalid">
-                    </cp-place-autocomplete>
-                  </div>
-                </div>
-                <div class="row form-group">
-                  <div class="col-6">
-                    <label>{{ 'building' | cpI18n }}</label>
-                    <input type="text"
-                           class="form-control"
-                           formControlName="location" />
-                  </div>
-                  <div class="col-6">
-                    <label>{{ 'room' | cpI18n }}</label>
-                    <input type="text"
-                           class="form-control"
-                           formControlName="room_info" />
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="row form-group">
-              <div class="col-12 maps">
-                <cp-maps [center]="mapCenter"
-                         [drawMarker]="drawMarker"
-                         (mapSelection)="onMapSelection($event)">
-                </cp-maps>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-6">
-        <div class="cp-card">
-          <div class="row form-group">
-            <div class="col-12">
-              <p class="title">{{ 'contact_details' | cpI18n }}</p>
-
-              <div class="row form--group">
-                <div class="col-6">
-                  <label>{{ 'website' | cpI18n }}</label>
-                  <input type="text"
-                         class="form-control"
-                         formControlName="website" />
-                </div>
-
-                <div class="col-6">
-                  <label>{{ 'phone_number' | cpI18n }}</label>
-                  <input type="text"
-                         class="form-control"
-                         formControlName="phone" />
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-12">
-                  <label>{{ 'email' | cpI18n }}</label>
-                  <input type="text"
-                         class="form-control"
-                         formControlName="email" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="footer">
-        <div class="cp-wrapper cp-wrapper--outer">
-          <div class="col-12">
-            <div class="row">
-              <div class="col-12">
-                <div class="text-right">
-                  <label class="error"
-                         *ngIf="formError">
-                    <span>&#x26A0;</span>
-                    {{ 'error_fill_out_marked_fields' | cpI18n }}
-                  </label>
-                  <a [routerLink]="['../']"
-                     class="cpbtn cpbtn--cancel">
-                    {{ 'cancel' | cpI18n }}
-                  </a>
-                  <cp-button [props]="buttonData"
-                             (buttonClick)="onSubmit()"> </cp-button>
-                </div>
+              <div class="text-right">
+                <a [routerLink]="['../']"
+                   class="cpbtn cpbtn--cancel">
+                  {{ 'cancel' | cpI18n }}
+                </a>
+                <cp-button [props]="buttonData"
+                           (buttonClick)="onSubmit()"></cp-button>
               </div>
             </div>
           </div>

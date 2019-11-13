@@ -1,22 +1,17 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPMap } from '@campus-cloud/shared/utils';
-import { CPSession } from '@campus-cloud/session';
-import { ClubStatus } from '../club.status';
 import { ClubsService } from '../clubs.service';
-import { CPTrackingService } from '@campus-cloud/shared/services';
-import { CustomValidators } from '@campus-cloud/shared/validators';
+import { CPSession } from '@campus-cloud/session';
 import { ClubsUtilsService } from '../clubs.utils.service';
-import { membershipTypes, statusTypes } from './permissions';
-import { CPI18nService } from '@campus-cloud/shared/services/i18n.service';
-import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { baseActions, baseActionClass } from '@campus-cloud/store/base';
+import { ClubsModel } from '@controlpanel/manage/clubs/model/clubs.model';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-clubs-create',
@@ -27,16 +22,11 @@ export class ClubsCreateComponent implements OnInit {
   @Input() isAthletic = isClubAthletic.club;
 
   labels;
-  school;
   formError;
   buttonData;
   form: FormGroup;
-  statusTypes = statusTypes;
-  showLocationDetails = true;
-  mapCenter: BehaviorSubject<any>;
-  membershipTypes = membershipTypes;
-  newAddress = new BehaviorSubject(null);
-  drawMarker = new BehaviorSubject(false);
+  statusTypes = this.utils.getStatusTypes();
+  membershipTypes = this.utils.getMembershipTypes();
 
   eventProperties = {
     phone: null,
@@ -63,16 +53,17 @@ export class ClubsCreateComponent implements OnInit {
   onSubmit() {
     this.formError = false;
 
-    if (!this.form.valid) {
+    if (this.form.invalid) {
       this.formError = true;
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+      this.enableSubmitButton();
+      this.handleError(this.cpI18n.translate('error_fill_out_marked_fields'));
 
       return;
     }
 
     const search = new HttpParams()
-      .append('school_id', this.session.g.get('school').id.toString())
-      .append('category_id', this.isAthletic.toString());
+      .set('category_id', this.isAthletic.toString())
+      .set('school_id', this.session.g.get('school').id.toString());
 
     this.clubsService.createClub(this.form.value, search).subscribe(
       (res: any) => {
@@ -80,14 +71,25 @@ export class ClubsCreateComponent implements OnInit {
         this.router.navigate(['/manage/' + this.labels.club_athletic + '/' + res.id + '/info']);
       },
       () => {
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
-        });
-        this.store.dispatch(
-          new baseActionClass.SnackbarError({ body: this.cpI18n.translate('something_went_wrong') })
-        );
+        this.enableSubmitButton();
+        this.handleError(this.cpI18n.translate('something_went_wrong'));
       }
     );
+  }
+
+  handleError(body) {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body
+      })
+    );
+  }
+
+  enableSubmitButton() {
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: false
+    };
   }
 
   trackEvent(data) {
@@ -99,126 +101,7 @@ export class ClubsCreateComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CREATED_CLUB, this.eventProperties);
   }
 
-  onUploadedImage(image): void {
-    this.form.controls['logo_url'].setValue(image);
-
-    if (image) {
-      this.trackUploadImageEvent();
-    }
-  }
-
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getAmplitudeMenuProperties();
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
-  }
-
-  onSelectedMembership(type): void {
-    this.form.controls['has_membership'].setValue(type.action);
-
-    this.eventProperties = {
-      ...this.eventProperties,
-      membership_status: type.label
-    };
-  }
-
-  onSelectedStatus(type): void {
-    this.form.controls['status'].setValue(type.action);
-
-    this.eventProperties = {
-      ...this.eventProperties,
-      club_status: type.label
-    };
-  }
-
-  onResetMap() {
-    this.drawMarker.next(false);
-    this.form.controls['room_info'].setValue(null);
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
-    this.centerMap(this.school.latitude, this.school.longitude);
-  }
-
-  onMapSelection(data) {
-    const cpMap = CPMap.getBaseMapObject(data);
-
-    const location = { ...cpMap, address: data.formatted_address };
-
-    CPMap.setFormLocationData(this.form, location);
-
-    this.newAddress.next(this.form.controls['address'].value);
-  }
-
-  updateWithUserLocation(location) {
-    location = Object.assign({}, location, { location: location.name });
-
-    CPMap.setFormLocationData(this.form, location);
-
-    this.centerMap(location.latitude, location.longitude);
-  }
-
-  onPlaceChange(data) {
-    if (!data) {
-      return;
-    }
-
-    this.drawMarker.next(true);
-
-    if ('fromUsersLocations' in data) {
-      this.updateWithUserLocation(data);
-
-      return;
-    }
-
-    const cpMap = CPMap.getBaseMapObject(data);
-
-    const location = { ...cpMap, address: data.name };
-
-    const coords: google.maps.LatLngLiteral = data.geometry.location.toJSON();
-
-    CPMap.setFormLocationData(this.form, location);
-
-    this.centerMap(coords.lat, coords.lng);
-  }
-
-  centerMap(lat: number, lng: number) {
-    return this.mapCenter.next({ lat, lng });
-  }
-
-  onLocationToggle(value) {
-    this.showLocationDetails = value;
-    const requiredValidator = value ? [Validators.required] : null;
-    this.form.get('address').setValidators(requiredValidator);
-    this.form.get('address').updateValueAndValidity();
-
-    if (!value) {
-      this.drawMarker.next(false);
-
-      this.mapCenter = new BehaviorSubject({
-        lat: this.school.latitude,
-        lng: this.school.longitude
-      });
-
-      this.form.controls['room_info'].setValue(null);
-      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
-    }
-  }
-
-  ngOnInit() {
-    this.eventProperties = {
-      ...this.eventProperties,
-      club_status: this.statusTypes[0].label,
-      membership_status: this.membershipTypes[0].label
-    };
-
-    this.labels = clubAthleticLabels(this.isAthletic);
-
-    this.school = this.session.g.get('school');
-
-    this.mapCenter = new BehaviorSubject({
-      lat: this.school.latitude,
-      lng: this.school.longitude
-    });
-
+  buildHeader() {
     this.store.dispatch({
       type: baseActions.HEADER_UPDATE,
       payload: {
@@ -228,31 +111,16 @@ export class ClubsCreateComponent implements OnInit {
         children: []
       }
     });
+  }
+
+  ngOnInit() {
+    this.form = ClubsModel.form(this.isAthletic);
+    this.labels = clubAthleticLabels(this.isAthletic);
+    this.buildHeader();
 
     this.buttonData = {
       class: 'primary',
       text: this.cpI18n.translate(this.labels.create_button)
     };
-
-    this.form = this.fb.group({
-      name: [null, Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])],
-      logo_url: [null, Validators.required],
-      status: [ClubStatus.active, Validators.required],
-      has_membership: [true, Validators.required],
-      location: [null],
-      address: [null, Validators.required],
-      city: [null],
-      country: [null],
-      postal_code: [null],
-      province: [null],
-      latitude: [0],
-      longitude: [0],
-      room_info: [null],
-      description: [null],
-      website: [null],
-      phone: [null],
-      email: [null],
-      category_id: this.isAthletic
-    });
   }
 }

@@ -1,0 +1,29 @@
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+form {
+  .maps {
+    height: 200px;
+  }
+
+  p.title {
+    @include font-24px();
+    @include font-bold();
+
+    margin-bottom: 15px;
+    display: inline-block;
+  }
+
+  .club-details {
+    margin-top: 40px;
+  }
+
+  label {
+    margin-top: 10px;
+    display: inline-block;
+  }
+
+  .checkbox {
+    margin-top: 20px;
+  }
+}

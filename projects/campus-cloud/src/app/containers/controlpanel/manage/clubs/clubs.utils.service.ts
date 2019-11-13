@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 
 import { IClub } from './club.interface';
 import { ClubStatus, HasData } from './club.status';
-import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
-
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import {
   canStoreReadResource,
   canSchoolReadResource,
@@ -13,8 +13,10 @@ import {
 
 @Injectable()
 export class ClubsUtilsService {
-  isSJSU(club: IClub) {
-    return 'advisor_firstname' in club;
+  constructor(private cpI18n: CPI18nService) {}
+
+  static isSJSU(club: IClub) {
+    return club ? 'advisor_firstname' in club : false;
   }
 
   limitedAdmin(sessionG, storeId) {
@@ -32,13 +34,23 @@ export class ClubsUtilsService {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  getClubStatus(status) {
+    return this.getStatusTypes().find((s) => s.action === status).label;
+  }
+
   setEventProperties(data, club_type) {
+    const membership_status = data.has_membership
+      ? amplitudeEvents.ENABLED
+      : amplitudeEvents.DISABLED;
+
     return {
       club_id: data.id,
+      membership_status,
       phone: this.hasData(data.phone),
       email: this.hasData(data.email),
       website: this.hasData(data.website),
       location: this.hasData(data.location),
+      club_status: this.getClubStatus(data.status),
       club_type: this.capitalizeFirstLetter(club_type)
     };
   }
@@ -75,5 +87,40 @@ export class ClubsUtilsService {
     links = ['Info', ...links];
 
     return links;
+  }
+
+  getMembershipTypes() {
+    return [
+      {
+        action: true,
+        label: this.cpI18n.translate('club_membership_enabled_title'),
+        description: this.cpI18n.translate('clubs_membership_enabled')
+      },
+      {
+        action: false,
+        label: this.cpI18n.translate('club_membership_disabled_title'),
+        description: this.cpI18n.translate('clubs_membership_disabled')
+      }
+    ];
+  }
+
+  getStatusTypes() {
+    return [
+      {
+        action: ClubStatus.active,
+        label: this.cpI18n.translate('club_status_active'),
+        description: this.cpI18n.translate('clubs_status_active')
+      },
+      {
+        action: ClubStatus.inactive,
+        label: this.cpI18n.translate('club_status_inactive'),
+        description: this.cpI18n.translate('clubs_status_inactive')
+      },
+      {
+        action: ClubStatus.pending,
+        label: this.cpI18n.translate('club_status_pending'),
+        description: this.cpI18n.translate('clubs_status_pending')
+      }
+    ];
   }
 }
