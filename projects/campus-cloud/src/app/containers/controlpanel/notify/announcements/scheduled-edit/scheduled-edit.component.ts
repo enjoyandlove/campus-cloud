@@ -205,6 +205,16 @@ export class ScheduledEditComponent implements OnInit {
   }
 
   handleSucess(data: IAnnouncement) {
+    if (Date.now() >= data.notify_at_epoch * 1000) {
+      this.store.dispatch(
+        new baseActionClass.SnackbarError({
+          body: this.cpI18n.translate('t_notify_announcement_already_sent')
+        })
+      );
+
+      this.router.navigate(['/notify/scheduled']);
+      return;
+    }
     this.form = Announcement.form(data);
     this.listName = this.recipientNamePipe.transform(data);
 

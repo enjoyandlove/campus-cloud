@@ -544,13 +544,14 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSchedule(scheduledAt: number | null) {
+  onSchedule(scheduledAt: number) {
     this.form.get('notify_at_epoch').setValue(scheduledAt);
     this.buttonData = {
       ...this.buttonData,
-      text: scheduledAt
-        ? this.cpI18n.translate('t_notify_send_later')
-        : this.cpI18n.translate('send')
+      text:
+        scheduledAt !== notifyAtEpochNow
+          ? this.cpI18n.translate('t_notify_send_later')
+          : this.cpI18n.translate('send')
     };
   }
 
