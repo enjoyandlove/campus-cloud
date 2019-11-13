@@ -2921,6 +2921,9 @@
   "t_members_no_results_found": {
     "message": "No Members Found"
   },
+  "t_notify_announcement_already_sent": {
+    "message": "Announcement already sent"
+  },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "My Experiences"
   },
