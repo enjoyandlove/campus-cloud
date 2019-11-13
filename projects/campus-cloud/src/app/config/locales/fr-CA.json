@@ -2852,6 +2852,9 @@
   "t_members_no_results_found": {
     "message": "Aucun Membre Trouvé"
   },
+  "t_notify_announcement_already_sent": {
+    "message": "Annonce déjà envoyée"
+  },
   "t_notify_announcement_audiences_my_experiences": {
     "message": "Mes expériences"
   },

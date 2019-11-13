@@ -27,10 +27,10 @@
       </cp-persona-cant-delete>
 
       <cp-persona-delete [persona]="modal.data"
-                         [personas]="personas"
                          (cancelClick)="resetModal()"
                          (deleteClick)="onDelete($event)"
-                         *ngIf="personas?.length > 0">
+                         [personas]="personasDropDownItems"
+                         *ngIf="personasDropDownItems?.length > 0">
       </cp-persona-delete>
     </ng-container>
   </ng-container>

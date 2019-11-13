@@ -185,8 +185,8 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
     const stream$ = shouldCreateSecurityTile ? updatePersonaAndLink$ : updatePersona$;
 
     stream$.subscribe(
-      (persona: IPersona) => {
-        this.trackEditExperienceEvent(persona, securityService);
+      () => {
+        this.trackEditExperienceEvent(formData, securityService);
         this.router.navigate(['/studio/experiences']);
       },
       (err) => {
@@ -314,7 +314,8 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   trackEditExperienceEvent(persona, securityService) {
     const eventProperties = PersonasAmplitudeService.getExperienceAmplitudeProperties(
       persona,
-      securityService
+      securityService,
+      this.personaId
     );
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_UPDATED_EXPERIENCE, eventProperties);
@@ -335,8 +336,12 @@ export class PersonasEditComponent extends BaseComponent implements OnInit, OnDe
   }
 
   onDeleted() {
+    const data = {
+      ...this.persona,
+      campus_security: this.originalSecurityService
+    };
     this.modal = this.modalService.open(PersonasDeleteComponent, null, {
-      data: this.persona,
+      data,
       onClose: this.resetModal.bind(this),
       onAction: this.doAction.bind(this)
     });

@@ -11,6 +11,7 @@ import { DEFAULT, amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { IFilterState, ProvidersUtilsService } from '../../../providers.utils.service';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives/tracking/tracking.directive';
+import { EventsAmplitudeService } from '@controlpanel/manage/events/events.amplitude.service';
 import { AMPLITUDE_INTERVAL_MAP } from '@campus-cloud/containers/controlpanel/assess/engagement/engagement.utils.service';
 
 interface IState {
@@ -127,6 +128,7 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
 
   onEdited(editedProvider: IServiceProvider) {
     this.provider = null;
+    this.trackQrCode(editedProvider);
     this.showEditProviderModal = false;
 
     this.state = {
@@ -135,6 +137,22 @@ export class ServicesProvidersListComponent extends BaseComponent implements OnI
         return provider.id === editedProvider.id ? editedProvider : provider;
       })
     };
+  }
+
+  trackQrCode(serviceProvider: IServiceProvider) {
+    const checkout_status = serviceProvider.has_checkout
+      ? amplitudeEvents.ENABLED
+      : amplitudeEvents.DISABLED;
+
+    const eventProperties = {
+      checkout_status,
+      source_id: serviceProvider.id,
+      sub_menu_name: amplitudeEvents.SERVICES,
+      assessment_type: amplitudeEvents.SERVICE_PROVIDER,
+      qr_code_status: EventsAmplitudeService.getQRCodeStatus(serviceProvider)
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CHANGED_QR_CODE, eventProperties);
   }
 
   trackCheckinEvent(source_id) {

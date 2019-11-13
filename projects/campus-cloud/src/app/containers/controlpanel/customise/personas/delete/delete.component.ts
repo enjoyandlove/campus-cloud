@@ -24,9 +24,11 @@ import {
 })
 export class PersonasDeleteComponent implements OnInit {
   loading = true;
-  personas: IItem[];
   persona: IPersona;
   canDelete: boolean;
+  personas: IPersona[];
+  loginRequirement = null;
+  personasDropDownItems: IItem[];
 
   constructor(
     @Inject(MODAL_DATA) public modal: IModal,
@@ -43,6 +45,13 @@ export class PersonasDeleteComponent implements OnInit {
 
     if (substitutePersonaId) {
       search = search.set('substitute_persona_id', String(substitutePersonaId));
+      const loginRequirement = this.personas.find((p) => p.id === substitutePersonaId)
+        .login_requirement;
+
+      this.loginRequirement =
+        loginRequirement === PersonasLoginRequired.optional
+          ? amplitudeEvents.OPTIONAL
+          : amplitudeEvents.REQUIRED;
     }
 
     this.service.deletePersonaById(this.persona.id, search).subscribe(
@@ -86,7 +95,8 @@ export class PersonasDeleteComponent implements OnInit {
         ),
         map((persona: IPersona[]) => {
           this.loading = false;
-          this.personas = PersonasUtilsService.setPersonaDropDown(persona);
+          this.personas = persona;
+          this.personasDropDownItems = PersonasUtilsService.setPersonaDropDown(persona);
         }),
         startWith([{ label: '---', action: null }])
       )
@@ -94,10 +104,15 @@ export class PersonasDeleteComponent implements OnInit {
   }
 
   trackDeleteExperienceEvent() {
-    const {
-      campus_security, // ignoring campus_security property
-      ...eventProperties
-    } = PersonasAmplitudeService.getExperienceAmplitudeProperties(this.persona);
+    const properties = PersonasAmplitudeService.getExperienceAmplitudeProperties(
+      this.persona,
+      Boolean(this.modal.data.campus_security)
+    );
+
+    const eventProperties = {
+      ...properties,
+      moved_students: this.loginRequirement
+    };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_DELETED_EXPERIENCE, eventProperties);
   }
