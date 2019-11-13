@@ -53,7 +53,8 @@
           <input type="text"
                  [cpTarget]="'subject'"
                  formControlName="subject"
-                 class="form-control transparent subject-input__input" />
+                 class="form-control transparent subject-input__input"
+                 [class.error]="showErrors && form.get('subject').invalid" />
         </div>
       </div>
     </div>
@@ -69,6 +70,7 @@
     </label>
     <textarea class="form-control"
               [cpTarget]="'message'"
-              formControlName="message"> </textarea>
+              formControlName="message"
+              [class.error]="showErrors && form.get('message').invalid"></textarea>
   </div>
 </form>

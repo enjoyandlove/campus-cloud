@@ -25,10 +25,10 @@
         <p class="chart--title">
           {{ 'student_engagements' | cpI18n }}
         </p>
-        <cp-line-chart [series]="series"
-                       [labels]="labels"
-                       [chartOptions]="chartOptions">
-        </cp-line-chart>
+        <ready-ui-line-chart [xLabels]="labels"
+                             [series]="series"
+                             [colors]="['#2096f3']">
+        </ready-ui-line-chart>
       </div>
     </div>
   </ng-container>

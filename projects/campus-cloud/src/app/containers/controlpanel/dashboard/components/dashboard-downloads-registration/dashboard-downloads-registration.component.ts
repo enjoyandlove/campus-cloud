@@ -6,16 +6,16 @@ import { Subject } from 'rxjs';
 import { BaseComponent } from '@campus-cloud/base';
 import { CPSession } from '@campus-cloud/session';
 import { DashboardService } from './../../dashboard.service';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import {
   DivideBy,
   addGroup,
   groupByWeek,
   groupByMonth,
+  CPI18nService,
   groupByQuarter,
-  CPLineChartUtilsService
-} from '@campus-cloud/shared/components/cp-line-chart/cp-line-chart.utils.service';
+  ChartsUtilsService
+} from '@campus-cloud/shared/services';
 
 const year = 365;
 const threeMonths = 90;
@@ -35,7 +35,6 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent
   loading;
   series = [];
   labels = [];
-  chartOptions;
   downloads = 0;
   registrations = 0;
   divider = DivideBy.daily;
@@ -58,7 +57,7 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent
     private session: CPSession,
     private cpi18n: CPI18nService,
     private service: DashboardService,
-    private utils: CPLineChartUtilsService
+    private utils: ChartsUtilsService
   ) {
     super();
     super
@@ -123,21 +122,22 @@ export class DashboardDownloadsRegistrationComponent extends BaseComponent
         this.downloads = totals[0];
         this.registrations = totals[1];
 
-        this.chartOptions = this.utils.chartOptions(this.divider, series);
         this.labels = this.utils.buildLabels(this.divider, this.range, series);
-        this.series = this.utils.buildSeries(this.divider, this.range, this.getTooltips(), series);
+        this.series = series.map((data: number[], idx: number) => {
+          return {
+            data,
+            type: 'line',
+            lineStyle: {
+              type: idx === 1 ? 'dashed' : undefined
+            },
+            name:
+              idx === 0
+                ? this.cpi18n.translate('t_dashboard_chart_tooltip_label_downloads')
+                : this.cpi18n.translate('t_dashboard_chart_tooltip_label_registrations')
+          };
+        });
       })
-      .catch(() => {
-        this.loading = false;
-        this.chartOptions = this.utils.chartOptions(this.divider, [[], []]);
-      });
-  }
-
-  getTooltips() {
-    return {
-      0: this.cpi18n.translate('t_dashboard_chart_tooltip_label_downloads'),
-      1: this.cpi18n.translate('t_dashboard_chart_tooltip_label_registrations')
-    };
+      .catch(() => (this.loading = false));
   }
 
   ngOnInit() {}

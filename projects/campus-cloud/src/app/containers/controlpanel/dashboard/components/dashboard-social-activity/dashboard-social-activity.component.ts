@@ -52,7 +52,11 @@ export class DashboardSocialActivyComponent extends BaseComponent implements OnI
       0
     );
 
-    return data.series.map((item) => ((item * 100) / total).toFixed(1)).reverse();
+    if (total === 0) {
+      return data.series.map(() => 0);
+    }
+
+    return data.series.map((item) => ((item * 100) / total).toFixed(1));
   }
 
   fetch() {

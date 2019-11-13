@@ -14,9 +14,11 @@ import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { AnnouncementsService } from './../announcements.service';
 import { notifyAtEpochNow, AnnouncementPriority } from './../model/announcement.interface';
 import { AnnouncementUtilsService } from './../announcement.utils.service';
-import { CPI18nService, ModalService } from '@campus-cloud/shared/services';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { AnnouncementAmplitudeService } from '../announcement.amplitude.service';
 import { AnnouncementCreateErrorComponent } from './../create-error/create-error.component';
 import { ISnackbar, baseActionClass, IHeader, baseActions } from '@campus-cloud/store/base';
+import { CPI18nService, ModalService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-scheduled-edit',
@@ -25,8 +27,9 @@ import { ISnackbar, baseActionClass, IHeader, baseActions } from '@campus-cloud/
 })
 export class ScheduledEditComponent implements OnInit {
   form: FormGroup;
-  modal: OverlayRef;
   listName: string;
+  modal: OverlayRef;
+  showErrors = false;
   width = LayoutWidth.third;
   dateTimeFormat = FORMAT.DATETIME;
 
@@ -41,6 +44,7 @@ export class ScheduledEditComponent implements OnInit {
     private cpI18n: CPI18nService,
     private modalService: ModalService,
     private service: AnnouncementsService,
+    private cpTracking: CPTrackingService,
     private store: Store<ISnackbar | IHeader>,
     private recipientNamePipe: AnnouncementRecipientPipe
   ) {}
@@ -80,6 +84,13 @@ export class ScheduledEditComponent implements OnInit {
   }
 
   onSubmit(hasConfirmed = false) {
+    this.showErrors = false;
+
+    if (this.form.invalid) {
+      this.showErrors = true;
+      return;
+    }
+
     const isScheduled = AnnouncementUtilsService.isScheduledAnnouncement(this.form.value);
     const isNotifyAtTimestampInThePast =
       isScheduled &&
@@ -137,6 +148,11 @@ export class ScheduledEditComponent implements OnInit {
 
     this.service.updateAnnouncement(search, announcementId, editableFields).subscribe(
       () => {
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_UPDATED_COMMUNICATION, {
+          ...this.cpTracking.getAmplitudeMenuProperties(),
+          ...AnnouncementAmplitudeService.getAmplitudeProperties(this.form.value)
+        });
+
         this.store.dispatch(
           new baseActionClass.SnackbarSuccess({
             body: this.cpI18n.translate('t_announcement_edit_success')
@@ -189,6 +205,16 @@ export class ScheduledEditComponent implements OnInit {
   }
 
   handleSucess(data: IAnnouncement) {
+    if (Date.now() >= data.notify_at_epoch * 1000) {
+      this.store.dispatch(
+        new baseActionClass.SnackbarError({
+          body: this.cpI18n.translate('t_notify_announcement_already_sent')
+        })
+      );
+
+      this.router.navigate(['/notify/scheduled']);
+      return;
+    }
     this.form = Announcement.form(data);
     this.listName = this.recipientNamePipe.transform(data);
 

@@ -71,11 +71,11 @@ export class DashboardService {
           labels: []
         };
 
-        res.series.push([data.wall_post_likes]);
-        res.series.push([data.campus_posts]);
-        res.series.push([data.connections]);
-        res.series.push([data.wall_comments]);
         res.series.push([data.messages]);
+        res.series.push([data.wall_comments]);
+        res.series.push([data.connections]);
+        res.series.push([data.campus_posts]);
+        res.series.push([data.wall_post_likes]);
 
         res.labels.push('Messages', 'Comments', 'Connections', 'Wall Posts', 'Likes');
 

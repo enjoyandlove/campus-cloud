@@ -62,7 +62,6 @@ storiesOf('Chart', module)
         data: mockDataGenerator(xLabels.length)
       }
     ];
-
     return {
       props: {
         series,

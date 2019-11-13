@@ -12,8 +12,7 @@ import { mockUser } from '@campus-cloud/session/mock/user';
 import { EngagementComponent } from './engagement.component';
 import { AssessUtilsService } from '../assess.utils.service';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { CPAmplitudeService } from '@campus-cloud/shared/services';
-import { CPLineChartUtilsService } from '@campus-cloud/shared/components/cp-line-chart/cp-line-chart.utils.service';
+import { CPAmplitudeService, ChartsUtilsService } from '@campus-cloud/shared/services';
 
 const mockFilterState = {
   engagement: {
@@ -69,7 +68,7 @@ describe('EngagementComponent', () => {
         provideMockStore(),
         CPAmplitudeService,
         AssessUtilsService,
-        CPLineChartUtilsService,
+        ChartsUtilsService,
         { provide: Router, useClass: MockRouter },
         { provide: EngagementService, useClass: MockEngagementService }
       ],

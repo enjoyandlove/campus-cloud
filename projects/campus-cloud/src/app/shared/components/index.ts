@@ -22,7 +22,6 @@ export * from './cp-searchbox';
 export * from './cp-form-label';
 export * from './cp-list-modal';
 export * from './cp-typeahead';
-export * from './cp-line-chart';
 export * from './cp-top-banner';
 export * from './cp-no-content';
 export * from './cp-datepicker';

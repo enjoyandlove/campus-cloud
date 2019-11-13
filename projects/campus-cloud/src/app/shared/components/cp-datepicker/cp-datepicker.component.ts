@@ -10,7 +10,20 @@ export class CPDatePickerComponent {
   @ViewChild(CPDatePickerDirective, { static: true }) private picker: CPDatePickerDirective;
 
   @Input() options: any;
-  @Input() error: boolean;
+  @Input()
+  set error(error: boolean) {
+    const el: HTMLInputElement = (this.picker as any).el.nativeElement.nextElementSibling;
+
+    if (!el) {
+      return;
+    }
+
+    if (error) {
+      el.classList.add('error');
+    } else {
+      el.classList.remove('error');
+    }
+  }
   @Input() placeholder = '';
   @Input() clearable = false;
 

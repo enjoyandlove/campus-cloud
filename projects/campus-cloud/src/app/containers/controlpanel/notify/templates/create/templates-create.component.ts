@@ -140,10 +140,6 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
           announcement_id: res.id
         };
 
-        this.cpTracking.amplitudeEmitEvent(
-          amplitudeEvents.NOTIFY_CREATED_TEMPLATE,
-          this.amplitudeEventProperties
-        );
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();

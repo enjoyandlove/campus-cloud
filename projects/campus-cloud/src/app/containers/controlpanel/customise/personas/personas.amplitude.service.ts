@@ -5,7 +5,11 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPI18nService, CPLogger } from '@campus-cloud/shared/services';
 import { CampusLink } from '@controlpanel/customise/personas/tiles/tile';
 import { ContentUtilsProviders } from '@campus-cloud/libs/studio/providers';
-import { credentialType, PersonasType } from '@controlpanel/customise/personas/personas.status';
+import {
+  PersonasType,
+  credentialType,
+  PersonasLoginRequired
+} from '@controlpanel/customise/personas/personas.status';
 
 const contentTypeLabels = {
   webLink: amplitudeEvents.WEB_LINK,
@@ -33,15 +37,30 @@ export class PersonasAmplitudeService {
 
     const experience_id = personaId ? personaId : persona.id;
     const campus_security = isSecurityService ? amplitudeEvents.YES : amplitudeEvents.NO;
+    const isCustomizationDisabled =
+      persona.platform === PersonasType.web ||
+      persona.login_requirement === PersonasLoginRequired.forbidden;
+
+    const my_courses = isCustomizationDisabled
+      ? amplitudeEvents.DISABLED
+      : this.getStatus(persona.home_my_courses_enabled);
+
+    const upcoming_deadlines = isCustomizationDisabled
+      ? amplitudeEvents.DISABLED
+      : this.getStatus(persona.home_due_dates_enabled);
+
+    const todays_schedule = isCustomizationDisabled
+      ? amplitudeEvents.DISABLED
+      : this.getStatus(persona.home_todays_schedule_enabled);
 
     return {
+      my_courses,
       experience_id,
       experience_type,
       campus_security,
-      credential_type: credentialType[persona.login_requirement],
-      my_courses: PersonasAmplitudeService.getStatus(persona.home_my_courses_enabled),
-      upcoming_deadlines: PersonasAmplitudeService.getStatus(persona.home_due_dates_enabled),
-      todays_schedule: PersonasAmplitudeService.getStatus(persona.home_todays_schedule_enabled)
+      todays_schedule,
+      upcoming_deadlines,
+      credential_type: credentialType[persona.login_requirement]
     };
   }
 

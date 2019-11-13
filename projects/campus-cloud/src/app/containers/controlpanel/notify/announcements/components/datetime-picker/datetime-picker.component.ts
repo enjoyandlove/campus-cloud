@@ -61,6 +61,7 @@ export class AnnouncementsDatetimePickerComponent implements OnInit {
 
   onCancel() {
     this.disposeDropdown();
+    this.dateSet.emit(notifyAtEpochNow);
   }
 
   onSetTime() {

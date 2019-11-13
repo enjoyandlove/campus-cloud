@@ -36,7 +36,7 @@ export class EventsAmplitudeService {
       : Feedback.disabled;
   }
 
-  static getQRCodeStatus(data: IEvent | IServiceProvider, isEvent: boolean) {
+  static getQRCodeStatus(data: IEvent | IServiceProvider, isEvent = false) {
     const verificationMethod = isEvent
       ? data['attend_verification_methods']
       : data['checkin_verification_methods'];

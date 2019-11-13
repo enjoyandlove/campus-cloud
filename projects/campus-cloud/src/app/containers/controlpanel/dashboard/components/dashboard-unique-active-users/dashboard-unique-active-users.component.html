@@ -4,10 +4,11 @@
   <ng-container *ngSwitchCase="false">
     <h3 class="title">{{ 't_dashboard_unique_active_users' | cpI18n }}
       ({{ 'dashboard_last_90_days' | cpI18n }})</h3>
-    <cp-line-chart [labels]="labels"
-                   [series]="series"
-                   [chartOptions]="chartOptions">
-    </cp-line-chart>
+
+    <ready-ui-line-chart [xLabels]="labels"
+                         [series]="series"
+                         [colors]="['#2096f3']">
+    </ready-ui-line-chart>
 
     <span class="label">
       <span class="pill"></span>
