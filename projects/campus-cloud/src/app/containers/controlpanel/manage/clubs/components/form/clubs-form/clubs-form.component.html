@@ -1,0 +1,129 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-12">
+      <p class="title">{{ labels.create_edit_name | cpI18n }}</p>
+      <div class="row">
+        <cp-image-upload class="col-12"
+                         (uploaded)="onUploadedImage($event)"
+                         [defaultImage]="form.get('logo_url').value"
+                         [required]="formError && form.get('logo_url').invalid">
+        </cp-image-upload>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group club-details">
+    <div class="row">
+      <div class="col-12">
+        <p class="title">{{ labels.create_edit_details | cpI18n }}
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <label for="name">{{ labels.create_edit_name | cpI18n }}</label>
+        <input id="name"
+               type="text"
+               [cpTarget]="'name'"
+               class="form-control"
+               formControlName="name"
+               [class.error]="formError && form.get('name').invalid"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-12">
+      <label for="description">{{ labels.create_edit_description | cpI18n }}</label>
+      <textarea id="description"
+                class="form-control"
+                [cpTarget]="'description'"
+                formControlName="description"> </textarea>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-6">
+      <label>{{ labels.create_edit_status | cpI18n }}</label>
+      <div class="row">
+        <div class="col-12">
+          <fieldset [disabled]="limitedAdmin">
+            <cp-check-dropdown [items]="statusTypes"
+                               [selectedItem]="selectedStatus"
+                               buttonClass="cpbtn cpbtn--cancel"
+                               (selected)="onSelectedStatus($event)">
+            </cp-check-dropdown>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+    <div class="col-6">
+      <label>{{ labels.create_edit_membership | cpI18n }}</label>
+      <div class="row">
+        <div class="col-12">
+          <cp-check-dropdown [items]="membershipTypes"
+                             buttonClass="cpbtn cpbtn--cancel"
+                             [selectedItem]="selectedMembership"
+                             (selected)="onSelectedMembership($event)">
+          </cp-check-dropdown>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row form-group">
+    <div class="col-12">
+      <cp-checkbox class="checkbox"
+                   [isChecked]="showLocationDetails"
+                   (toggle)="onLocationToggle($event)"
+                   [label]="'t_shared_label_location_toggle' | cpI18n">
+      </cp-checkbox>
+    </div>
+  </div>
+
+  <div *ngIf="showLocationDetails">
+    <div class="row form-group">
+      <div class="col-12">
+        <label>{{ 'location' | cpI18n }}</label>
+        <div class="row form-group">
+          <div class="col-12">
+            <cp-place-autocomplete [newAddress]="newAddress"
+                                   (backToDefault)="onResetMap()"
+                                   (placeChange)="onPlaceChange($event)"
+                                   [defaultValue]="form.get('address').value"
+                                   [isRequired]="formError && form.get('address').invalid">
+            </cp-place-autocomplete>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-6">
+            <label for="location">{{ 'building' | cpI18n }}</label>
+            <input id="location"
+                   type="text"
+                   class="form-control"
+                   [cpTarget]="'location'"
+                   formControlName="location"/>
+          </div>
+          <div class="col-6">
+            <label for="room">{{ 'room' | cpI18n }}</label>
+            <input id="room"
+                   type="text"
+                   class="form-control"
+                   [cpTarget]="'room_info'"
+                   formControlName="room_info"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row form-group">
+      <div class="col-12 maps">
+        <cp-maps [center]="mapCenter"
+                 [drawMarker]="drawMarker"
+                 (mapSelection)="onMapSelection($event)">
+        </cp-maps>
+      </div>
+    </div>
+  </div>
+</form>

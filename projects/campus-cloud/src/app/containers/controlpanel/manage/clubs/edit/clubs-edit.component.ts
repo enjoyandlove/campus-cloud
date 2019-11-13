@@ -1,22 +1,20 @@
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { CPMap } from '@campus-cloud/shared/utils';
-import { CPSession } from '@campus-cloud/session';
-import { baseActions } from '@campus-cloud/store/base';
 import { ClubsService } from '../clubs.service';
-import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { CustomValidators } from '@campus-cloud/shared/validators';
-import { BaseComponent } from '@campus-cloud/base/base.component';
+import { CPSession } from '@campus-cloud/session';
+import { IHeader, ISnackbar } from '@campus-cloud/store';
+import { isClubAthletic } from '../clubs.athletics.labels';
 import { ClubsUtilsService } from './../clubs.utils.service';
-import { advisorDataRequired } from './custom-validators.directive';
-import { membershipTypes, statusTypes } from '../create/permissions';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { baseActionClass, baseActions } from '@campus-cloud/store/base';
+import { ClubsModel } from '@controlpanel/manage/clubs/model/clubs.model';
 import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
-import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { clubAthleticLabels } from '@controlpanel/manage/clubs/clubs.athletics.labels';
 
 @Component({
   selector: 'cp-clubs-edit',
@@ -27,24 +25,15 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   @Input() isAthletic = isClubAthletic.club;
 
   club;
-  school;
   labels;
   clubId;
+  isSJSU;
   loading;
   formError;
   buttonData;
-  defaultStatus;
+  limitedAdmin;
   form: FormGroup;
-  isSJSU: boolean;
-  defaultMembership;
   isFormReady = false;
-  limitedAdmin = true;
-  statusTypes = statusTypes;
-  showLocationDetails = false;
-  mapCenter: BehaviorSubject<any>;
-  membershipTypes = membershipTypes;
-  newAddress = new BehaviorSubject(null);
-  drawMarker = new BehaviorSubject(false);
 
   eventProperties = {
     phone: null,
@@ -60,115 +49,48 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
   constructor(
     public router: Router,
     public fb: FormBuilder,
-    public store: Store<any>,
     public session: CPSession,
     public cpI18n: CPI18nService,
     public route: ActivatedRoute,
     public helper: ClubsUtilsService,
     public clubsService: ClubsService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    public store: Store<IHeader | ISnackbar>
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
     this.clubId = this.route.snapshot.params['clubId'];
   }
 
-  getDefaultStatus(value) {
-    return this.statusTypes.filter((status) => status.action === value)[0];
-  }
-
-  getDefaultMembership(value) {
-    return this.membershipTypes.filter((membership) => membership.action === value)[0];
-  }
-
   fetch() {
     const search = new HttpParams()
-      .append('school_id', this.session.g.get('school').id.toString())
-      .append('category_id', this.isAthletic.toString());
+      .set('category_id', this.isAthletic.toString())
+      .set('school_id', this.session.g.get('school').id.toString());
 
     const stream$ = this.clubsService.getClubById(this.clubId, search);
 
     super.fetchData(stream$).then((res) => {
       this.club = res.data;
-
-      const lat = res.data.latitude;
-
-      const lng = res.data.longitude;
-
-      this.isSJSU = this.helper.isSJSU(this.club);
-
-      this.defaultStatus = this.getDefaultStatus(this.club.status);
-
-      this.defaultMembership = this.getDefaultMembership(this.club.has_membership);
-
-      this.showLocationDetails = CPMap.canViewLocation(lat, lng, this.school);
-
-      this.drawMarker.next(this.showLocationDetails);
-
-      this.buildForm();
-
-      this.mapCenter = new BehaviorSubject(CPMap.setDefaultMapCenter(lat, lng, this.school));
-
-      this.eventProperties = {
-        ...this.eventProperties,
-        club_status: this.defaultStatus.label,
-        membership_status: this.defaultMembership.label
-      };
+      this.form = ClubsModel.form(this.isAthletic, this.club, this.limitedAdmin);
+      this.isSJSU = ClubsUtilsService.isSJSU(this.club);
+      this.isFormReady = true;
     });
-  }
-
-  buildForm() {
-    this.form = this.fb.group({
-      name: [
-        { value: this.club.name, disabled: this.limitedAdmin },
-        Validators.compose([Validators.required, CustomValidators.requiredNonEmpty])
-      ],
-      logo_url: [this.club.logo_url, Validators.required],
-      status: [{ value: this.club.status, disabled: this.limitedAdmin }, Validators.required],
-      has_membership: [this.club.has_membership, Validators.required],
-      location: [this.club.location],
-      address: [this.club.address, this.showLocationDetails ? Validators.required : null],
-      city: [this.club.city],
-      country: [this.club.country],
-      postal_code: [this.club.postal_code],
-      province: [this.club.province],
-      latitude: [this.club.latitude],
-      longitude: [this.club.longitude],
-      room_info: [this.club.room_info],
-      description: [this.club.description],
-      website: [this.club.website],
-      phone: [this.club.phone],
-      email: [this.club.email],
-      advisor_firstname: [
-        { value: this.club.advisor_firstname, disabled: this.limitedAdmin },
-        advisorDataRequired(this.isSJSU)
-      ],
-      advisor_lastname: [
-        { value: this.club.advisor_lastname, disabled: this.limitedAdmin },
-        advisorDataRequired(this.isSJSU)
-      ],
-      advisor_email: [
-        { value: this.club.advisor_email, disabled: this.limitedAdmin },
-        advisorDataRequired(this.isSJSU)
-      ]
-    });
-
-    this.isFormReady = true;
   }
 
   onSubmit() {
     this.formError = false;
 
-    if (!this.form.valid) {
+    if (this.form.invalid) {
       this.formError = true;
-      this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+      this.enableSubmitButton();
+      this.handleError(this.cpI18n.translate('error_fill_out_marked_fields'));
 
       return;
     }
 
     const search = new HttpParams()
-      .append('school_id', this.session.g.get('school').id.toString())
-      .append('category_id', this.isAthletic.toString());
+      .set('category_id', this.isAthletic.toString())
+      .set('school_id', this.session.g.get('school').id.toString());
 
     this.clubsService.updateClub(this.form.value, this.clubId, search).subscribe(
       (res: any) => {
@@ -177,21 +99,26 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
           queryParams: this.route.snapshot.queryParams
         });
       },
-      (_) => {
-        this.buttonData = Object.assign({}, this.buttonData, {
-          disabled: false
-        });
-        this.store.dispatch({
-          type: baseActions.SNACKBAR_SHOW,
-          payload: {
-            body: this.cpI18n.translate('something_went_wrong'),
-            sticky: true,
-            class: 'danger',
-            autoClose: false
-          }
-        });
+      () => {
+        this.enableSubmitButton();
+        this.handleError(this.cpI18n.translate('something_went_wrong'));
       }
     );
+  }
+
+  handleError(body) {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body
+      })
+    );
+  }
+
+  enableSubmitButton() {
+    this.buttonData = {
+      ...this.buttonData,
+      disabled: false
+    };
   }
 
   trackEvent(data) {
@@ -203,125 +130,8 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_UPDATED_CLUB, this.eventProperties);
   }
 
-  onUploadedImage(image): void {
-    this.form.controls['logo_url'].setValue(image);
-
-    if (image) {
-      this.trackUploadImageEvent();
-    }
-  }
-
-  trackUploadImageEvent() {
-    const properties = this.cpTracking.getAmplitudeMenuProperties();
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
-  }
-
-  onSelectedMembership(type) {
-    this.form.controls['has_membership'].setValue(type.action);
-
-    this.eventProperties = {
-      ...this.eventProperties,
-      membership_status: type.label
-    };
-  }
-
-  onSelectedStatus(type) {
-    this.form.controls['status'].setValue(type.action);
-
-    this.eventProperties = {
-      ...this.eventProperties,
-      club_status: type.label
-    };
-  }
-
-  onResetMap() {
-    this.drawMarker.next(false);
-    this.form.controls['room_info'].setValue('');
-    CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
-    this.centerMap(this.school.latitude, this.school.longitude);
-  }
-
-  onMapSelection(data) {
-    const cpMap = CPMap.getBaseMapObject(data);
-
-    const location = { ...cpMap, address: data.formatted_address };
-
-    CPMap.setFormLocationData(this.form, location);
-
-    this.newAddress.next(this.form.controls['address'].value);
-  }
-
-  updateWithUserLocation(location) {
-    location = Object.assign({}, location, { location: location.name });
-
-    CPMap.setFormLocationData(this.form, location);
-
-    this.centerMap(location.latitude, location.longitude);
-  }
-
-  onPlaceChange(data) {
-    if (!data) {
-      return;
-    }
-
-    this.drawMarker.next(true);
-
-    if ('fromUsersLocations' in data) {
-      this.updateWithUserLocation(data);
-
-      return;
-    }
-
-    const cpMap = CPMap.getBaseMapObject(data);
-
-    const location = { ...cpMap, address: data.name };
-
-    const coords: google.maps.LatLngLiteral = data.geometry.location.toJSON();
-
-    CPMap.setFormLocationData(this.form, location);
-
-    this.centerMap(coords.lat, coords.lng);
-  }
-
-  centerMap(lat: number, lng: number) {
-    return this.mapCenter.next({ lat, lng });
-  }
-
-  onLocationToggle(value) {
-    this.showLocationDetails = value;
-    const requiredValidator = value ? [Validators.required] : null;
-    this.form.get('address').setValidators(requiredValidator);
-    this.form.get('address').updateValueAndValidity();
-
-    if (!value) {
-      this.drawMarker.next(false);
-
-      this.mapCenter = new BehaviorSubject({
-        lat: this.school.latitude,
-        lng: this.school.longitude
-      });
-
-      this.form.controls['room_info'].setValue('');
-      CPMap.setFormLocationData(this.form, CPMap.resetLocationFields());
-    }
-  }
-
-  ngOnInit() {
-    this.limitedAdmin =
-      this.isAthletic === isClubAthletic.club
-        ? this.helper.limitedAdmin(this.session.g, this.clubId)
-        : false;
-
+  buildHeader() {
     this.labels = clubAthleticLabels(this.isAthletic);
-    this.fetch();
-    this.school = this.session.g.get('school');
-
-    this.buttonData = {
-      text: this.cpI18n.translate('save'),
-      class: 'primary'
-    };
-
     this.store.dispatch({
       type: baseActions.HEADER_UPDATE,
       payload: {
@@ -331,5 +141,20 @@ export class ClubsEditComponent extends BaseComponent implements OnInit {
         children: []
       }
     });
+  }
+
+  ngOnInit() {
+    this.limitedAdmin =
+      this.isAthletic === isClubAthletic.club
+        ? this.helper.limitedAdmin(this.session.g, this.clubId)
+        : false;
+
+    this.fetch();
+    this.buildHeader();
+
+    this.buttonData = {
+      text: this.cpI18n.translate('save'),
+      class: 'primary'
+    };
   }
 }
