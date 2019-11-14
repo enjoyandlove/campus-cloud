@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
 import { switchMap, takeUntil } from 'rxjs/operators';
+import { HttpParams } from '@angular/common/http';
 import { merge, Subject } from 'rxjs';
 import { Store } from '@ngrx/store';
 
@@ -138,24 +138,47 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
 
       const createTileCategory = this.guideService.createSectionTileCategory(body);
       stream$ = createTileCategory.pipe(
-        switchMap((newCategory: ICampusGuide) => this.createGuideLink(newCategory.id))
+        switchMap((newCategory: ICampusGuide) => {
+          const newlyAddedSectionIndex = this.guideService.guides.findIndex(
+            (guide) => guide.id === -1
+          );
+          this.guideService.guides[newlyAddedSectionIndex].id = newCategory.id;
+
+          return this.createGuideLink(newCategory.id);
+        })
       );
     }
 
     return stream$.subscribe(
       (tile: ITile) => {
-        this.trackCreatedTile(tile);
+        const _tile = Array.isArray(tile) ? tile[0] : tile;
+        this.trackCreatedTile(_tile);
         this.disableSubmitButton = false;
+        const emptySection = this.guideUtils.isTemporaryGuide(this.guide);
 
-        this.router
-          .navigate(['/studio/experiences', this.personaId])
-          .then(() => this.handleSuccess('t_persona_tile_saved_successfully'));
+        if (emptySection && !this.guide._featuredTile) {
+          const body = {
+            school_persona_id: this.personaId,
+            school_id: this.session.g.get('school').id,
+            ids: this.guideService.guides.map((g) => g.id)
+          };
+
+          this.guideService.bulkUpdateTileCategory(body).subscribe(() => this.navigateOnSuccess());
+        } else {
+          this.navigateOnSuccess();
+        }
       },
       (_) => {
         this.handleError();
         this.disableSubmitButton = false;
       }
     );
+  }
+
+  navigateOnSuccess() {
+    this.router
+      .navigate(['/studio/experiences', this.personaId])
+      .then(() => this.handleSuccess('t_persona_tile_saved_successfully'));
   }
 
   doReset() {

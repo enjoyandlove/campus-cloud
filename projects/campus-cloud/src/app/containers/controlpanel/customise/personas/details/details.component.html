@@ -36,6 +36,7 @@
                                  [canMoveUp]="!first"
                                  [noMarginTop]="first"
                                  [canMoveDown]="!last"
+                                 [guides]="state.guides"
                                  [personaId]="personaId"
                                  [cpTarget]="['section-' + i]"
                                  (deleted)="onDeletedSection($event)"
