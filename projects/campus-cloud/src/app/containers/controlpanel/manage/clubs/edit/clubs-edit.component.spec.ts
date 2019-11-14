@@ -10,9 +10,9 @@ import { ClubsEditComponent } from './clubs-edit.component';
 import { mockClub } from '@controlpanel/manage/clubs/tests';
 import { mockSchool } from '@campus-cloud/session/mock/school';
 import { ClubsService } from '@controlpanel/manage/clubs/clubs.service';
-import { ClubsModel } from '@controlpanel/manage/clubs/model/clubs.model';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { ClubsUtilsService } from '@controlpanel/manage/clubs/clubs.utils.service';
+import { isClubAthletic } from '@controlpanel/manage/clubs/clubs.athletics.labels';
 
 describe('ClubsEditComponent', () => {
   configureTestSuite();
@@ -44,11 +44,11 @@ describe('ClubsEditComponent', () => {
     session = TestBed.get(CPSession);
     session.g.set('user', mockUser);
     session.g.set('school', mockSchool);
+    component.isAthletic = isClubAthletic.athletic;
 
     spyOn(component, 'trackEvent');
     spyOn(component, 'handleError');
     spyOn(component.router, 'navigate');
-    component.form = ClubsModel.form(false, mockClub);
     spyOn(component.clubsService, 'getClubById').and.returnValue(of(mockClub));
 
     fixture.detectChanges();
