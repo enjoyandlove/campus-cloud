@@ -1,7 +1,6 @@
-import { AnnouncementsConfirmComponent } from './../confirm/announcements-confirm.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -12,12 +11,13 @@ import { AnnouncementRecipientPipe } from './../pipes';
 import { Announcement, IAnnouncement } from './../model';
 import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { AnnouncementsService } from './../announcements.service';
-import { notifyAtEpochNow, AnnouncementPriority } from './../model/announcement.interface';
 import { AnnouncementUtilsService } from './../announcement.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { AnnouncementAmplitudeService } from '../announcement.amplitude.service';
+import { notifyAtEpochNow, AnnouncementPriority } from './../model/announcement.interface';
 import { AnnouncementCreateErrorComponent } from './../create-error/create-error.component';
 import { ISnackbar, baseActionClass, IHeader, baseActions } from '@campus-cloud/store/base';
+import { AnnouncementsConfirmComponent } from './../confirm/announcements-confirm.component';
 import { CPI18nService, ModalService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
@@ -164,7 +164,7 @@ export class ScheduledEditComponent implements OnInit {
 
         this.router.navigate([redirectUrl]);
       },
-      () => this.erroHandler()
+      (error: HttpErrorResponse) => this.errorUpdateHandler(error.status)
     );
   }
 
@@ -224,14 +224,17 @@ export class ScheduledEditComponent implements OnInit {
     };
   }
 
-  erroHandler() {
+  errorUpdateHandler(errorCode: number = 400) {
     this.state = {
       ...this.state,
       loading: false
     };
+
+    const errorKey =
+      errorCode === 409 ? 't_notify_announcement_already_sent' : 'something_went_wrong';
     this.store.dispatch(
       new baseActionClass.SnackbarError({
-        body: this.cpI18n.translate('something_went_wrong')
+        body: this.cpI18n.translate(errorKey)
       })
     );
   }
