@@ -40,6 +40,17 @@ export class AuthGuard implements CanActivate {
             this.setUserContext();
           }
 
+          if ('FS' in window) {
+            const { email, firstname, lastname, id } = this.session.g.get('user');
+
+            (window as any).FS.identify(id, {
+              displayName: `${firstname} ${lastname}`,
+              email: email,
+              school_id: this.session.school.id,
+              reviewsWritten_int: 14
+            });
+          }
+
           return users;
         })
       )

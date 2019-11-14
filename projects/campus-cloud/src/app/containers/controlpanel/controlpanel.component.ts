@@ -15,8 +15,6 @@ import { CPTrackingService, CPAmplitudeService, AdminService } from '@campus-clo
   templateUrl: './controlpanel.component.html'
 })
 export class ControlPanelComponent implements AfterViewInit, OnInit {
-  isProd = this.env.name === 'production';
-
   constructor(
     private router: Router,
     private env: EnvService,
@@ -104,7 +102,7 @@ export class ControlPanelComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
-    if (this.isProd) {
+    if (this.env.name === 'production') {
       setTimeout(() => {
         this.loadWhatsNew();
       }, 1000);
