@@ -37,7 +37,7 @@ export class StoreService {
       }
     ];
 
-    return this.api.get(url, search).pipe(
+    return this.api.get(url, search, true).pipe(
       startWith(placeHolder),
       map((res: any[]) => {
         const services = [
@@ -63,7 +63,7 @@ export class StoreService {
 
         return services.length === 1 ? [] : services;
       }),
-      catchError(() => of(placeHolder))
+      catchError(() => of([]))
     );
   }
 
@@ -83,7 +83,7 @@ export class StoreService {
       }
     ];
 
-    return this.api.get(url, search).pipe(
+    return this.api.get(url, search, true).pipe(
       startWith(placeHolder),
       map((res: any[]) => {
         const athletics = [
@@ -109,7 +109,7 @@ export class StoreService {
 
         return athletics.length === 1 ? [] : athletics;
       }),
-      catchError(() => of(placeHolder))
+      catchError(() => of([]))
     );
   }
 
@@ -127,7 +127,7 @@ export class StoreService {
       }
     ];
 
-    return this.api.get(url, search).pipe(
+    return this.api.get(url, search, true).pipe(
       startWith(placeHolder),
       map((res: any[]) => {
         const clubs = [
@@ -153,7 +153,7 @@ export class StoreService {
 
         return clubs.length === 1 ? [] : clubs;
       }),
-      catchError(() => of(placeHolder))
+      catchError(() => of([]))
     );
   }
 
