@@ -4,8 +4,14 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 
+import { CPSession } from '@campus-cloud/session';
 import { pageTitle } from '@campus-cloud/shared/constants';
-import { ZendeskService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import {
+  CPI18nService,
+  ZendeskService,
+  FullStoryService,
+  CPTrackingService
+} from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-app',
@@ -14,6 +20,7 @@ import { ZendeskService, CPI18nService, CPTrackingService } from '@campus-cloud/
 export class AppComponent implements OnInit {
   constructor(
     private router: Router,
+    private session: CPSession,
     private titleService: Title,
     private zendeskService: ZendeskService,
     private activatedRoute: ActivatedRoute,
@@ -54,12 +61,11 @@ export class AppComponent implements OnInit {
             main.focus();
           }
         }
-        if ('FS' in window) {
-          if (event.record) {
-            (window as any).FS.restart();
-          } else {
-            (window as any).FS.shutdown();
-          }
+
+        if (event.record) {
+          FullStoryService.restart();
+        } else {
+          FullStoryService.shutdown();
         }
         this.zendeskService.hide();
         this.setZendesk(event);
