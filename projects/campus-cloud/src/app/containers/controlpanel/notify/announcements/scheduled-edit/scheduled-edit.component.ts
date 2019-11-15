@@ -148,9 +148,10 @@ export class ScheduledEditComponent implements OnInit {
 
     this.service.updateAnnouncement(search, announcementId, editableFields).subscribe(
       () => {
+        const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
         this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_UPDATED_COMMUNICATION, {
-          ...this.cpTracking.getAmplitudeMenuProperties(),
-          ...AnnouncementAmplitudeService.getAmplitudeProperties(this.form.value)
+          sub_menu_name,
+          ...AnnouncementAmplitudeService.getAmplitudeProperties(this.form.value, announcementId)
         });
 
         this.store.dispatch(

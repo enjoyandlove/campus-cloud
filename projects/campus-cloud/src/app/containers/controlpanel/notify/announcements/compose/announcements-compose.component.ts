@@ -515,7 +515,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
         this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_CREATED_COMMUNICATION, {
           ...this.amplitudeEventProperties,
-          ...AnnouncementAmplitudeService.getAmplitudeProperties(res),
+          ...AnnouncementAmplitudeService.getAmplitudeProperties(data as any),
           host_type,
           audience_type
         });
