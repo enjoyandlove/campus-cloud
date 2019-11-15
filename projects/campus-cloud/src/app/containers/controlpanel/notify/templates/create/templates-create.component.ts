@@ -1,3 +1,4 @@
+import { TemplatesAmplitudeService } from './../templates.amplitude.service';
 import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
@@ -58,10 +59,6 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
   onTypeChanged(type) {
     super.onTypeChanged(type);
-    this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties,
-      announcement_type: type.label
-    };
   }
 
   doUserSearch(query) {
@@ -87,7 +84,6 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   resetModal() {
     this.form.reset();
     this.isError = false;
-    this.shouldConfirm = false;
     this.state.isCampusWide = false;
     this.resetCustomFields$.next(true);
 
@@ -135,10 +131,12 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
     this.childService.createTemplate(search, data).subscribe(
       (res: any) => {
-        this.amplitudeEventProperties = {
-          ...this.amplitudeEventProperties,
-          announcement_id: res.id
-        };
+        const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
+
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_CREATED_COMMUNICATION, {
+          sub_menu_name,
+          ...TemplatesAmplitudeService.getAmplitudeProperties(data as any)
+        });
 
         this.form.reset();
         this.created.emit(this.form.value);
@@ -149,10 +147,6 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
       }
     );
-  }
-
-  onConfirmed() {
-    super.onConfirmed();
   }
 
   getObjectFromTypesArray(id) {
@@ -177,11 +171,6 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   }
 
   ngOnInit() {
-    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
-    this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties,
-      host_type
-    };
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 
     this.toolTipOptions = {

@@ -59,7 +59,7 @@ export class AnnouncementDeleteComponent {
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_DELETED_COMMUNICATION, {
       ...this.cpTracking.getAmplitudeMenuProperties(),
-      ...AnnouncementAmplitudeService.getAmplitudeProperties(data)
+      ...AnnouncementAmplitudeService.getAmplitudeProperties(data, this.modal.data.id)
     });
   }
 }

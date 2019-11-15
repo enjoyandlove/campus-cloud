@@ -1,6 +1,4 @@
-<div [ngSwitch]="shouldConfirm">
-  <div class="cpmodal"
-       *ngSwitchCase="false">
+  <div class="cpmodal">
     <div class="cpmodal__header">
       <div class="row">
         <div class="col-12 text-center">
@@ -171,17 +169,10 @@
           <button type="button"
                   (click)="doSubmit()"
                   [disabled]="!isFormValid"
-                  class="cpbtn cpbtn--primary"
-                  i18n>
+                  class="cpbtn cpbtn--primary">
             {{ 'save' | cpI18n }}
           </button>
         </div>
       </div>
     </div>
   </div>
-
-  <cp-announcements-confirm *ngSwitchCase="true"
-                            (confirmed)="onConfirmed()"
-                            (teardown)="shouldConfirm = false">
-  </cp-announcements-confirm>
-</div>
