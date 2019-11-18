@@ -511,9 +511,11 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
           return;
         }
 
+        const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
         const { host_type, audience_type } = this.amplitudeEventProperties;
 
         this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_CREATED_COMMUNICATION, {
+          sub_menu_name,
           ...this.amplitudeEventProperties,
           ...AnnouncementAmplitudeService.getAmplitudeProperties(data as any),
           host_type,
