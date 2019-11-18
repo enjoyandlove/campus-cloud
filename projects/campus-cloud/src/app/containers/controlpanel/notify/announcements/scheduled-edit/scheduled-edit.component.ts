@@ -14,7 +14,11 @@ import { AnnouncementsService } from './../announcements.service';
 import { AnnouncementUtilsService } from './../announcement.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { AnnouncementAmplitudeService } from '../announcement.amplitude.service';
-import { notifyAtEpochNow, AnnouncementPriority } from './../model/announcement.interface';
+import {
+  notifyAtEpochNow,
+  AnnouncementPriority,
+  AnnouncementStatus
+} from './../model/announcement.interface';
 import { AnnouncementCreateErrorComponent } from './../create-error/create-error.component';
 import { ISnackbar, baseActionClass, IHeader, baseActions } from '@campus-cloud/store/base';
 import { AnnouncementsConfirmComponent } from './../confirm/announcements-confirm.component';
@@ -206,7 +210,7 @@ export class ScheduledEditComponent implements OnInit {
   }
 
   handleSucess(data: IAnnouncement) {
-    if (Date.now() >= data.notify_at_epoch * 1000) {
+    if (data.status === AnnouncementStatus.sent) {
       this.store.dispatch(
         new baseActionClass.SnackbarError({
           body: this.cpI18n.translate('t_notify_announcement_already_sent')

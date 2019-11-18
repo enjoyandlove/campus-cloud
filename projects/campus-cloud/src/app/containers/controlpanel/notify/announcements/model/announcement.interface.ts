@@ -28,9 +28,9 @@ export interface IUserDetail {
 }
 
 export enum AnnouncementStatus {
+  sent = 1,
   error = -1,
   pending = 0,
-  success = 1,
   processing = 2
 }
 
