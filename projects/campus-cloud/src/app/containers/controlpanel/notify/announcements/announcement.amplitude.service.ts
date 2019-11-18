@@ -1,4 +1,5 @@
 import { IAnnouncement, AnnouncementPriority } from './model';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { notifyAtEpochNow } from './model/announcement.interface';
 
 export class AnnouncementAmplitudeService {
@@ -21,35 +22,37 @@ export class AnnouncementAmplitudeService {
   static getAnnouncementType(priority: AnnouncementPriority) {
     switch (priority) {
       case AnnouncementPriority.emergency:
-        return 'Emergency';
+        return amplitudeEvents.ANNOUNCEMENT_TYPE_EMERGENCY;
       case AnnouncementPriority.urgent:
-        return 'Urgent';
+        return amplitudeEvents.ANNOUNCEMENT_TYPE_URGENT;
       default:
-        return 'Regular';
+        return amplitudeEvents.ANNOUNCEMENT_TYPE_REGULAR;
     }
   }
 
   static getCommunicationType(notifyAtEpoch: number): string {
-    return notifyAtEpoch === notifyAtEpochNow ? 'Sent Now' : 'Scheduled';
+    return notifyAtEpoch === notifyAtEpochNow
+      ? amplitudeEvents.COMMUNICATION_TYPE_SENT_NOW
+      : amplitudeEvents.COMMUNICATION_TYPE_SCHEDULED;
   }
 
   static getAudienceType(announcement: IAnnouncement) {
     if (announcement.is_school_wide) {
-      return 'Campus-Wide';
+      return amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_CAMPUS_WIDE;
     }
 
     if (
       ('list_ids' in announcement && (announcement as any).list_ids.length) ||
       ('list_details' in announcement && announcement.list_details.length)
     ) {
-      return 'Audience';
+      return amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_AUDIENCE;
     }
 
     if (
       ('user_details' in announcement && (announcement as any).user_details.length) ||
       ('user_ids' in announcement && (announcement as any).user_ids.length)
     ) {
-      return 'Audience';
+      return amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_EXPERIENCE;
     }
 
     return '';

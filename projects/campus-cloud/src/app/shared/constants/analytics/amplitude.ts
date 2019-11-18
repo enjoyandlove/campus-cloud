@@ -251,9 +251,13 @@ export const amplitudeEvents = {
 
   CC_WEB_CHECK_IN: 'CC Web Check-In',
 
+  ANNOUNCEMENT_TYPE_URGENT: 'Urgent',
+
   CHANGE_PASSWORD: 'Changed Password',
 
   DYNAMIC_AUDIENCE: 'Dynamic Audience',
+
+  ANNOUNCEMENT_TYPE_REGULAR: 'Regular',
 
   REMOVED_LOCATION: 'Removed Location',
 
@@ -281,13 +285,19 @@ export const amplitudeEvents = {
 
   INSTITUTION_EVENT: 'Institution Event',
 
+  COMMUNICATION_TYPE_SENT_NOW: 'Sent Now',
+
   MULTIPLE_RESOURCES: 'Multiple Resources',
+
+  ANNOUNCEMENT_TYPE_EMERGENCY: 'Emergency',
 
   EMAIL_WEB_CHECK_IN: 'Email Web Check-In',
 
   WALL_DELETED_POST: 'Wall - Deleted Post',
 
   CLICKED_SUB_MENU: 'Clicked Sub-Menu Item',
+
+  COMMUNICATION_TYPE_SCHEDULED: 'Scheduled',
 
   VIEWED_NOTIFICATION: 'Viewed Notification',
 
@@ -361,6 +371,8 @@ export const amplitudeEvents = {
 
   MANAGE_DELETED_DINING: 'Manage - Deleted Dining',
 
+  COMMUNICATION_AUDIENCE_TYPE_AUDIENCE: 'Audience',
+
   MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
 
   MANAGE_DELETED_CALENDAR: 'Manage Deleted Calendar',
@@ -379,8 +391,6 @@ export const amplitudeEvents = {
 
   MANAGE_CHANGED_QR_CODE: 'Manage - Changed QR Code',
 
-  NOTIFY_DELETED_COMMUNICATION: 'Notify - Deleted Listing',
-
   WALL_SUBMITTED_COMMENT: 'Wall - Submitted Comment',
 
   MANAGE_CREATED_SERVICE: 'Manage - Created Service',
@@ -388,6 +398,8 @@ export const amplitudeEvents = {
   MANAGE_UPDATED_SERVICE: 'Manage - Updated Service',
 
   MANAGE_CC_WEB_CHECK_IN: 'Manage - CC  Web Check-In',
+
+  COMMUNICATION_AUDIENCE_TYPE_EXPERIENCE: 'Experience',
 
   AUDIENCE_DOWNLOAD_DATA: 'Audience - Downloaded Data',
 
@@ -409,15 +421,17 @@ export const amplitudeEvents = {
 
   MANAGE_DELETED_AUDIENCE: 'Manage - Deleted Audience',
 
+  COMMUNICATION_AUDIENCE_TYPE_CAMPUS_WIDE: 'Campus-Wide',
+
   MANAGE_SENT_ANNOUNCEMENT: 'Manage - Sent Announcement',
 
   ASSESS_SENT_ANNOUNCEMENT: 'Assess - Sent Announcement',
 
   MANAGE_ADDED_CLUB_MEMBER: 'Manage - Added Club Member',
 
-  NOTIFY_CREATED_COMMUNICATION: 'Notify - Send Announcement',
-
   MANAGE_IMPORTED_AUDIENCE: 'Manage - Imported Audience',
+
+  NOTIFY_DELETED_COMMUNICATION: 'Notify - Deleted Listing',
 
   MANAGE_DELETED_ATTENDANCE: 'Manage - Deleted Attendance',
 
@@ -434,6 +448,8 @@ export const amplitudeEvents = {
   MANAGE_ADDED_WEB_CHECK_IN: 'Manage - Added Web Check-In',
 
   MANAGE_UPDATED_ATTENDANCE: 'Manage - Updated Attendance',
+
+  NOTIFY_CREATED_COMMUNICATION: 'Notify - Send Announcement',
 
   CUSTOMIZE_CHANGED_BRANDING: 'Customize - Changed Branding',
 

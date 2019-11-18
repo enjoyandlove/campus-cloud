@@ -1,3 +1,4 @@
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { AnnouncementAmplitudeService } from './../announcements/announcement.amplitude.service';
 
 export class TemplatesAmplitudeService extends AnnouncementAmplitudeService {
@@ -6,6 +7,6 @@ export class TemplatesAmplitudeService extends AnnouncementAmplitudeService {
   }
 
   static getCommunicationType() {
-    return 'Sent Now';
+    return amplitudeEvents.COMMUNICATION_TYPE_SENT_NOW;
   }
 }
