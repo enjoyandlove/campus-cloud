@@ -1,28 +1,18 @@
-/*tslint:disable:no-host-metadata-property */
-import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Component, Input } from '@angular/core';
 import { startWith } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
-import { kFormatter } from '@campus-cloud/shared/utils';
 import { DashboardService } from './../../dashboard.service';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import { DashboardUtilsService } from './../../dashboard.utils.service';
-import {
-  DivideBy,
-  CPLineChartUtilsService
-} from '@campus-cloud/shared/components/cp-line-chart/cp-line-chart.utils.service';
+import { CPI18nService, DivideBy, ChartsUtilsService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-dashboard-unique-active-users',
   templateUrl: './dashboard-unique-active-users.component.html',
-  styleUrls: ['./dashboard-unique-active-users.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  host: {
-    class: 'cp-dashboard-unique-active-users'
-  }
+  styleUrls: ['./dashboard-unique-active-users.component.scss']
 })
 export class DashboardUniqueActiveUsersComponent extends BaseComponent {
   @Input()
@@ -30,9 +20,8 @@ export class DashboardUniqueActiveUsersComponent extends BaseComponent {
     this.fetch();
   }
 
-  chartOptions;
+  series = [];
   labels: string[] = [];
-  series: number[] = [];
   divider = DivideBy.daily;
   loading$: Observable<boolean>;
   range: { start: string; end: string };
@@ -41,8 +30,8 @@ export class DashboardUniqueActiveUsersComponent extends BaseComponent {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private service: DashboardService,
-    private helper: DashboardUtilsService,
-    private utils: CPLineChartUtilsService
+    private utils: ChartsUtilsService,
+    private helper: DashboardUtilsService
   ) {
     super();
     this.loading$ = super.isLoading().pipe(startWith(true));
@@ -70,33 +59,15 @@ export class DashboardUniqueActiveUsersComponent extends BaseComponent {
 
   handleSuccess(series) {
     const [_, uniqueUsers] = series;
-    this.labels = this.utils.buildLabels(this.divider, this.range, [uniqueUsers]);
-    this.series = this.utils.buildSeries(
-      this.divider,
-      this.range,
-      [this.cpI18n.translate('t_dashboard_unique_active_users')],
-      [uniqueUsers]
-    );
 
-    this.chartOptions = {
-      height: '237px',
-      ...this.utils.chartOptions(this.divider, series),
-      high: Math.max(...uniqueUsers) + 5 - ((Math.max(...uniqueUsers) + 5) % 5),
-      axisY: {
-        onlyInteger: true,
-        labelInterpolationFnc: (value: number) => kFormatter(value, 0)
-      },
-      axisX: {
-        labelInterpolationFnc: function limitXAxisLabelsLength(value, index) {
-          // ignore last label
-          if (index === uniqueUsers.length - 1) {
-            return null;
-          }
-
-          return (value = index % 5 === 0 ? value : null);
-        }
+    this.labels = this.utils.buildLabels(this.divider, this.range, series);
+    this.series = [
+      {
+        type: 'line',
+        data: uniqueUsers,
+        name: this.cpI18n.translate('t_dashboard_unique_active_users')
       }
-    };
+    ];
   }
 
   groupSeries({ data }) {

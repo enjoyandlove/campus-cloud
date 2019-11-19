@@ -25,6 +25,7 @@ import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@campus-cloud/shared
 import { AnnouncementsConfirmComponent } from './../confirm/announcements-confirm.component';
 import { CPI18nService, StoreService, CPTrackingService } from '@campus-cloud/shared/services';
 import { AudienceSaveModalComponent } from '../../../audience/shared/audience-save-modal/audience-save-modal.component';
+import { AnnouncementAmplitudeService } from '../announcement.amplitude.service';
 
 interface IState {
   isUrgent: boolean;
@@ -510,10 +511,14 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
           return;
         }
 
-        this.cpTracking.amplitudeEmitEvent(
-          amplitudeEvents.NOTIFY_SEND_ANNOUNCEMENT,
-          this.amplitudeEventProperties
-        );
+        const { host_type, audience_type } = this.amplitudeEventProperties;
+
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_CREATED_COMMUNICATION, {
+          ...this.amplitudeEventProperties,
+          ...AnnouncementAmplitudeService.getAmplitudeProperties(res),
+          host_type,
+          audience_type
+        });
 
         const redirectUrl = AnnouncementUtilsService.isScheduledAnnouncement(this.form.value)
           ? '/notify/scheduled'
@@ -539,13 +544,14 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSchedule(scheduledAt: number | null) {
+  onSchedule(scheduledAt: number) {
     this.form.get('notify_at_epoch').setValue(scheduledAt);
     this.buttonData = {
       ...this.buttonData,
-      text: scheduledAt
-        ? this.cpI18n.translate('t_notify_send_later')
-        : this.cpI18n.translate('send')
+      text:
+        scheduledAt !== notifyAtEpochNow
+          ? this.cpI18n.translate('t_notify_send_later')
+          : this.cpI18n.translate('send')
     };
   }
 

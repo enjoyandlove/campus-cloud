@@ -137,6 +137,7 @@ export class AnnouncementSentComponent extends BaseComponent implements OnInit {
   }
 
   onDeleted(id) {
+    const deletedAnnouncement = this.state.messages.find((m) => m.id === id);
     this.state = Object.assign({}, this.state, {
       messages: this.state.messages.filter((message) => message.id !== id)
     });

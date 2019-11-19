@@ -1,9 +1,9 @@
-import { CPSession } from './../../../session/index';
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
 
-import { CPDate } from './../../../shared/utils/date/date';
-import { CPI18nService } from '../../services/i18n.service';
+import { CPI18nService } from '../i18n.service';
+import { CPSession } from '@campus-cloud/session';
+import { CPDate } from '@campus-cloud/shared/utils';
 
 export enum DivideBy {
   'daily' = 0,
@@ -68,7 +68,7 @@ export const groupByYear = (dates: any[], series: Number[]) => {
 };
 
 @Injectable()
-export class CPLineChartUtilsService {
+export class ChartsUtilsService {
   constructor(public session: CPSession) {}
 
   dailyLabel(range, index) {
@@ -194,12 +194,9 @@ export class CPLineChartUtilsService {
   }
 
   buildSeries(divider, range, tooltip, series) {
-    return series.map((serie, idx) => {
-      return serie.map((item, index) => {
-        return {
-          meta: `${tooltip[idx]}  ${this.labelByDivider(divider, range, index)}`,
-          value: item
-        };
+    return series.map((serie) => {
+      return serie.map((item) => {
+        return item;
       });
     });
   }

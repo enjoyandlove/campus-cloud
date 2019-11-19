@@ -80,7 +80,7 @@ export class TemplatesDeleteComponent implements OnInit {
     };
 
     this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.NOTIFY_DELETED_LISTING,
+      amplitudeEvents.NOTIFY_DELETED_COMMUNICATION,
       this.eventProperties
     );
   }

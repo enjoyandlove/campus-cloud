@@ -8,8 +8,10 @@ cp-announcements-list-action-box {
   margin-bottom: $default_margin;
 }
 
-.no-content {
+cp-no-content {
   @include card-margin();
+
+  margin-top: 0;
 }
 
 .cp-form {

@@ -1,4 +1,11 @@
 export const commonOptions = {
+  grid: {
+    top: 10,
+    left: 0,
+    right: 20,
+    bottom: 28,
+    containLabel: true
+  },
   tooltip: {
     trigger: 'axis',
 
@@ -10,7 +17,8 @@ export const commonOptions = {
   xAxis: {
     axisLine: {
       lineStyle: {
-        color: '#bdbdbd'
+        color: '#bdbdbd',
+        opacity: 0.4
       }
     },
     axisTick: {
@@ -19,12 +27,16 @@ export const commonOptions = {
     type: 'category',
     boundaryGap: false,
     axisLabel: {
-      color: '#757575'
+      color: '#757575',
+      showMinLabel: false
     }
   },
   yAxis: {
+    minInterval: 1,
     axisLabel: {
-      color: '#757575'
+      color: '#757575',
+      margin: 18,
+      showMinLabel: false
     },
     axisTick: {
       show: false
@@ -32,7 +44,8 @@ export const commonOptions = {
     splitLine: {
       show: true,
       lineStyle: {
-        color: ['#bdbdbd']
+        color: ['#bdbdbd'],
+        opacity: 0.4
       }
     },
     type: 'value',

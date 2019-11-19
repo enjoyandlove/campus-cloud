@@ -379,7 +379,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
           return;
         }
         this.cpTracking.amplitudeEmitEvent(
-          amplitudeEvents.NOTIFY_SEND_ANNOUNCEMENT,
+          amplitudeEvents.NOTIFY_CREATED_COMMUNICATION,
           this.amplitudeEventProperties
         );
         this.form.reset();

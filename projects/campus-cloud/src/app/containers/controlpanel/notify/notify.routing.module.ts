@@ -17,8 +17,8 @@ const appRoutes: Routes = [
         loadChildren: () =>
           import('./announcements/announcements.module').then((m) => m.AnnouncementsModule),
         data: {
+          amplitude: 'IGNORE',
           zendesk: 'announcements',
-          amplitude: 'Announcements',
           title: pageTitle.NOTIFY_ANNOUNCEMENT,
           privilege: CP_PRIVILEGES_MAP.campus_announcements
         }

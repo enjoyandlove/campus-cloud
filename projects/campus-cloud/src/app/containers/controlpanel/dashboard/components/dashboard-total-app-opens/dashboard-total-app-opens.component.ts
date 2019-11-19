@@ -1,29 +1,24 @@
-/*tslint:disable:no-host-metadata-property */
-import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Component, Input } from '@angular/core';
 import { startWith } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
-import { kFormatter } from '@campus-cloud/shared/utils';
 import { DashboardService } from './../../dashboard.service';
-import { CPI18nService } from '@campus-cloud/shared/services';
 import {
   DivideBy,
   groupByWeek,
   groupByMonth,
+  CPI18nService,
   groupByQuarter,
-  CPLineChartUtilsService
-} from '@campus-cloud/shared/components/cp-line-chart/cp-line-chart.utils.service';
+  ChartsUtilsService
+} from '@campus-cloud/shared/services';
+
 @Component({
   selector: 'cp-dashboard-total-app-opens',
   templateUrl: './dashboard-total-app-opens.component.html',
-  styleUrls: ['./dashboard-total-app-opens.component.scss'],
-  encapsulation: ViewEncapsulation.None,
-  host: {
-    class: 'cp-dashboard-total-app-opens'
-  }
+  styleUrls: ['./dashboard-total-app-opens.component.scss']
 })
 export class DashboardTotalAppOpensComponent extends BaseComponent {
   @Input()
@@ -33,9 +28,8 @@ export class DashboardTotalAppOpensComponent extends BaseComponent {
   }
 
   _dates;
-  chartOptions;
+  series;
   labels: string[] = [];
-  series: number[] = [];
   divider = DivideBy.daily;
   loading$: Observable<boolean>;
   range: { start: string; end: string };
@@ -44,7 +38,7 @@ export class DashboardTotalAppOpensComponent extends BaseComponent {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private service: DashboardService,
-    private utils: CPLineChartUtilsService
+    private utils: ChartsUtilsService
   ) {
     super();
     this.loading$ = super.isLoading().pipe(startWith(true));
@@ -73,26 +67,17 @@ export class DashboardTotalAppOpensComponent extends BaseComponent {
     const [appOpens] = series;
 
     this.labels = this.utils.buildLabels(this.divider, this.range, series);
-    this.series = this.utils.buildSeries(
-      this.divider,
-      this.range,
-      [this.cpI18n.translate('t_dashboard_total_app_opens')],
-      [appOpens]
-    );
-
-    this.chartOptions = {
-      height: '237px',
-      ...this.utils.chartOptions(this.divider, series),
-      high: Math.max(...appOpens) + 5 - ((Math.max(...appOpens) + 5) % 5),
-      axisY: {
-        onlyInteger: true,
-        labelInterpolationFnc: (value: number) => kFormatter(value, 0)
+    this.series = [
+      {
+        type: 'line',
+        data: appOpens,
+        name: this.cpI18n.translate('t_dashboard_total_app_opens')
       }
-    };
+    ];
   }
 
   groupSeries({ data }) {
-    const { labels, series } = data.app_opens;
+    const { labels } = data.app_opens;
 
     this.range = {
       start: labels[0],

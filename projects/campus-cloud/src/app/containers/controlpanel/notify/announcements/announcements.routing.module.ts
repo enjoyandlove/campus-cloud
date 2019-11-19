@@ -15,22 +15,22 @@ const appRoutes: Routes = [
       {
         path: 'sent',
         component: AnnouncementSentComponent,
-        data: { zendesk: 'notify', amplitude: 'IGNORE' }
+        data: { zendesk: 'notify', amplitude: 'Sent' }
       },
       {
         path: 'scheduled',
         component: AnnouncementScheduledComponent,
-        data: { zendesk: 'scheduled announcement', amplitude: 'IGNORE' }
+        data: { zendesk: 'scheduled announcement', amplitude: 'Scheduled' }
       },
       {
         path: 'scheduled/edit/:announcementId',
         component: ScheduledEditComponent,
-        data: { zendesk: 'scheduled announcement', amplitude: 'IGNORE' }
+        data: { zendesk: 'scheduled announcement', amplitude: 'Scheduled' }
       },
       {
         path: 'compose',
         component: AnnouncementsComposeComponent,
-        data: { zendesk: 'notify', amplitude: 'Compose' }
+        data: { zendesk: 'notify', amplitude: 'Scheduled' }
       },
       {
         path: 'integrations',

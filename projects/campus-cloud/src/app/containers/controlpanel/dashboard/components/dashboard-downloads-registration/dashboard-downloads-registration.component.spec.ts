@@ -1,20 +1,18 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { of as observableOf } from 'rxjs';
 
-import { CPSession } from '../../../../../session';
+import { CPSession } from '@campus-cloud/session';
 import { DashboardModule } from './../../dashboard.module';
 import { DashboardService } from './../../dashboard.service';
-import { CPI18nService } from '../../../../../shared/services';
-
 import { DashboardDownloadsRegistrationComponent } from './dashboard-downloads-registration.component';
-
 import {
   addGroup,
   aggregate,
   groupByWeek,
   groupByMonth,
-  groupByQuarter
-} from '../../../../../shared/components/cp-line-chart/cp-line-chart.utils.service';
+  groupByQuarter,
+  CPI18nService
+} from '@campus-cloud/shared/services';
 
 class MockDashboardService {
   getDownloads() {

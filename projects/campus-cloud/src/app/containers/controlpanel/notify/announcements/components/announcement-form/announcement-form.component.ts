@@ -18,6 +18,9 @@ export class AnnouncementFormComponent implements OnInit, OnDestroy {
   @Input()
   form: FormGroup;
 
+  @Input()
+  showErrors = false;
+
   types = [
     {
       action: AnnouncementPriority.regular,

@@ -1,18 +1,24 @@
-import { Input, OnInit, Component, ViewChild, ElementRef, ViewEncapsulation } from '@angular/core';
-
-const Chartist = (window as any).Chartist;
+import { Input, OnInit, Component } from '@angular/core';
 
 @Component({
   selector: 'cp-dashboard-social-activity-chart',
   templateUrl: './dashboard-social-activity-chart.component.html',
-  styleUrls: ['./dashboard-social-activity-chart.component.scss'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./dashboard-social-activity-chart.component.scss']
 })
 export class DashboardSocialActivyChartComponent implements OnInit {
-  @ViewChild('socialActivity', { static: true }) socialActivity: ElementRef;
   series;
   labels;
+  _series;
   percentages;
+  xAxis = {
+    show: false,
+    type: 'value'
+  };
+  yAxis = {
+    show: false,
+    type: 'category',
+    data: ['']
+  };
 
   @Input()
   set data(data) {
@@ -25,81 +31,15 @@ export class DashboardSocialActivyChartComponent implements OnInit {
 
   constructor() {}
 
-  buildSeries() {
-    return this.series.map((serie, index) => {
-      return serie.map((item) => {
-        return {
-          meta: `${this.labels[index]} (${this.percentages[index]}%)`,
-          value: item
-        };
-      });
-    });
-  }
-
   drawChart() {
-    const data = {
-      series: this.buildSeries()
-    };
-
-    const options = {
-      fullWidth: true,
-
-      chartPadding: {
-        right: 0
-      },
-
-      plugins: [
-        Chartist.plugins.tooltip({
-          class: 'cp-social-activity'
-        })
-      ],
-
-      lineSmooth: false,
-
-      reverseData: true,
-
-      stackBars: true,
-
-      seriesBarDistance: 0,
-
-      horizontalBars: true,
-
-      classNames: {
-        series: 'dsh-series'
-      },
-
-      axisY: {
-        offset: -10,
-
-        showLabel: false,
-
-        showGrid: false
-      },
-
-      axisX: {
-        showGrid: false,
-
-        showLabel: false
-      }
-    };
-
-    const chart = new Chartist.Bar(this.socialActivity.nativeElement, data, options);
-
-    chart.on(
-      'created',
-      function() {
-        this.isChartDataReady = true;
-      }.bind(this)
-    );
-
-    chart.on(
-      'draw',
-      function(d) {
-        d.element.attr({
-          style: 'stroke-width: 45px'
-        });
-      }.bind(this)
-    );
+    this._series = this.series.map((data: number[], index: number) => {
+      return {
+        data,
+        name: `${this.labels[index]} (${this.percentages[index]}%)`,
+        type: 'bar',
+        stack: 'singleStack'
+      };
+    });
   }
 
   ngOnInit() {}

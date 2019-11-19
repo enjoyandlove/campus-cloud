@@ -8,6 +8,7 @@ import {
   HostListener
 } from '@angular/core';
 import flatpickr from 'flatpickr';
+import 'flatpickr/dist/l10n/fr.js';
 import * as moment from 'moment';
 
 import { CPI18nService } from '@campus-cloud/shared/services';
@@ -115,6 +116,7 @@ export class CPDatePickerDirective implements OnInit {
 
   ngOnInit() {
     flatpickr.l10ns.en.weekdays.shorthand = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    flatpickr.l10ns.fr.weekdays.shorthand = ['D', 'L', 'M', 'M', 'J', 'V', 'S'];
 
     this.picker = <flatpickr.Instance>flatpickr(this.el.nativeElement, this.getConfig());
     this.picker.set('altInput', true);
@@ -178,7 +180,7 @@ export class CPDatePickerDirective implements OnInit {
       closeOnSelect: this._closeOnSelect,
       onChange: this.onChange.bind(this),
       minuteIncrement: this.minuteIncrement,
-      locale: CPI18nService.getLocale() === 'en-US' ? 'en' : 'fr',
+      locale: CPI18nService.getLocale() === 'en-US' ? 'en' : flatpickr.l10ns.fr,
       defaultDate: this.defaultDate
         ? this._noCalendar
           ? this.defaultDate
