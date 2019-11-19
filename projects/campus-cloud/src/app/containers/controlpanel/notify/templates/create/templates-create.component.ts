@@ -1,4 +1,3 @@
-import { TemplatesAmplitudeService } from './../templates.amplitude.service';
 import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
@@ -11,6 +10,7 @@ import { TemplatesService } from './../templates.service';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { CustomValidators } from '@campus-cloud/shared/validators';
+import { TemplatesAmplitudeService } from './../templates.amplitude.service';
 import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 import { TemplatesComposeComponent } from '../compose/templates-compose.component';
@@ -131,10 +131,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
     this.childService.createTemplate(search, data).subscribe(
       (res: any) => {
-        const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
-
         this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_CREATED_COMMUNICATION, {
-          sub_menu_name,
           ...TemplatesAmplitudeService.getAmplitudeProperties(data as any)
         });
 
