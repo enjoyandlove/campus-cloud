@@ -3411,6 +3411,9 @@
   "t_shared_from": {
     "message": "Depuis"
   },
+  "t_shared_go_back": {
+    "message": "Retour"
+  },
   "t_shared_help": {
     "message": "Aide"
   },
