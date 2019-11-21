@@ -220,6 +220,21 @@ export class ScheduledEditComponent implements OnInit {
       this.router.navigate(['/notify/scheduled']);
       return;
     }
+
+    if (data.list_details.length) {
+      data = {
+        ...data,
+        list_details: data.list_details.map((l) => l.id) as any
+      };
+    }
+
+    if (data.user_details.length) {
+      data = {
+        ...data,
+        user_details: data.user_details.map((u) => u.id) as any
+      };
+    }
+
     this.form = Announcement.form(data);
     this.listName = this.recipientNamePipe.transform(data);
 
