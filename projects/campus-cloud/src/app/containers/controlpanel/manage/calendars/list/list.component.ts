@@ -155,6 +155,7 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
   onCreated(newCalendar: ICalendar): void {
     this.launchCreateModal = false;
     this.state.calendars = [newCalendar, ...this.state.calendars];
+    this.formatTableData();
   }
 
   onEditedLink(editedCalendar: ICalendar) {

@@ -1,33 +1,60 @@
-import { notifyAtEpochNow } from './model/announcement.interface';
 import { IAnnouncement, AnnouncementPriority } from './model';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { notifyAtEpochNow } from './model/announcement.interface';
 
 export class AnnouncementAmplitudeService {
-  static getAmplitudeProperties(announcement: IAnnouncement) {
-    return {
-      announcement_id: announcement.id,
-      host_type: announcement.store_id,
-      audience_type: this.getAudienceType(announcement.store_id),
+  static getAmplitudeProperties(announcement: IAnnouncement, announcementId?: number) {
+    const required = {
+      audience_type: this.getAudienceType(announcement),
       announcement_type: this.getAnnouncementType(announcement.priority),
       communication_type: this.getCommunicationType(announcement.notify_at_epoch)
     };
+
+    if (announcementId) {
+      return {
+        ...required,
+        announcement_id: announcementId
+      };
+    }
+    return required;
   }
 
   static getAnnouncementType(priority: AnnouncementPriority) {
     switch (priority) {
       case AnnouncementPriority.emergency:
-        return 'Emergency';
+        return amplitudeEvents.ANNOUNCEMENT_TYPE_EMERGENCY;
       case AnnouncementPriority.urgent:
-        return 'Urgent';
+        return amplitudeEvents.ANNOUNCEMENT_TYPE_URGENT;
       default:
-        return 'Regular';
+        return amplitudeEvents.ANNOUNCEMENT_TYPE_REGULAR;
     }
   }
 
-  static getCommunicationType(notifyAtEpoch: number) {
-    return notifyAtEpoch === notifyAtEpochNow ? 'Sent Now' : 'Scheduled';
+  static getCommunicationType(notifyAtEpoch: number): string {
+    return notifyAtEpoch === notifyAtEpochNow
+      ? amplitudeEvents.COMMUNICATION_TYPE_SENT_NOW
+      : amplitudeEvents.COMMUNICATION_TYPE_SCHEDULED;
   }
 
-  static getAudienceType(storeID: number) {
-    return storeID;
+  static getAudienceType(announcement: IAnnouncement) {
+    if (announcement.is_school_wide) {
+      return amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_CAMPUS_WIDE;
+    }
+
+    if (
+      ('list_ids' in announcement && (announcement as any).list_ids.length) ||
+      ('list_details' in announcement && announcement.list_details.length)
+    ) {
+      return amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_AUDIENCE;
+    }
+
+    if (
+      ('user_details' in announcement && (announcement as any).user_details.length) ||
+      ('user_ids' in announcement && (announcement as any).user_ids.length)
+    ) {
+      return amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_EXPERIENCE;
+    }
+
+    return '';
   }
 }

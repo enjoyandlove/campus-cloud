@@ -57,9 +57,11 @@ export class AnnouncementDeleteComponent {
       ...this.utils.setEventProperties(data, amplitudeEvents.ANNOUNCEMENT)
     };
 
+    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
+
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_DELETED_COMMUNICATION, {
-      ...this.cpTracking.getAmplitudeMenuProperties(),
-      ...AnnouncementAmplitudeService.getAmplitudeProperties(data)
+      sub_menu_name,
+      ...AnnouncementAmplitudeService.getAmplitudeProperties(data, this.modal.data.id)
     });
   }
 }

@@ -1,3 +1,9 @@
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { HttpParams } from '@angular/common/http';
+import { OverlayRef } from '@angular/cdk/overlay';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { map, takeUntil } from 'rxjs/operators';
+import { TooltipOption } from 'bootstrap';
 import {
   Input,
   OnInit,
@@ -8,24 +14,20 @@ import {
   EventEmitter,
   HostListener
 } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpParams } from '@angular/common/http';
-import { BehaviorSubject, Subject } from 'rxjs';
-import { map, takeUntil } from 'rxjs/operators';
-import { TooltipOption } from 'bootstrap';
 
-import { CPSession } from '@campus-cloud/session';
-import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
-import { CustomValidators } from '@campus-cloud/shared/validators';
-import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
-import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@campus-cloud/shared/constants';
-import { AnnouncementsService } from './../../announcements/announcements.service';
 import {
   StoreService,
   CPI18nService,
   ZendeskService,
   CPTrackingService
 } from '@campus-cloud/shared/services';
+import { CPSession } from '@campus-cloud/session';
+import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { CustomValidators } from '@campus-cloud/shared/validators';
+import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
+import { TemplatesAmplitudeService } from './../templates.amplitude.service';
+import { AnnouncementsService } from './../../announcements/announcements.service';
+import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@campus-cloud/shared/constants';
 
 interface IState {
   isUrgent: boolean;
@@ -67,6 +69,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   selectedType;
   typeAheadOpts;
   form: FormGroup;
+  modal: OverlayRef;
   isFormValid = false;
   toolTipContent: string;
   toolTipOptions: TooltipOption;
@@ -83,18 +86,10 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   suggestions = [];
 
   state: IState = state;
-  shouldConfirm = false;
 
   subject_prefix = {
     label: null,
     type: null
-  };
-
-  amplitudeEventProperties = {
-    host_type: null,
-    sub_menu_name: null,
-    announcement_id: null,
-    announcement_type: amplitudeEvents.REGULAR
   };
 
   destroy$ = new Subject<null>();
@@ -244,7 +239,6 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   resetModal() {
     this.form.reset();
     this.isError = false;
-    this.shouldConfirm = false;
     this.state.isCampusWide = false;
     this.resetCustomFields$.next(true);
 
@@ -307,10 +301,6 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   onSelectedStore(store) {
     this.sendAsName = store.label;
     this.form.controls['store_id'].setValue(store.value);
-    this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties,
-      host_type: store.hostType
-    };
   }
 
   doChipsSelected() {
@@ -330,23 +320,8 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     }
   }
 
-  doValidate() {
-    if (this.state.isEmergency || this.state.isCampusWide) {
-      this.shouldConfirm = true;
-      this.doChipsSelected();
-
-      return;
-    }
-    this.doSubmit();
-  }
-
   doSubmit() {
     this.isError = false;
-
-    this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties,
-      announcement_type: this.selectedType.label
-    };
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
     const prefix = this.subject_prefix.label ? this.subject_prefix.label.toUpperCase() : '';
@@ -370,32 +345,28 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
     this.service.postAnnouncements(search, data).subscribe(
       (res: any) => {
         if (res.status === THROTTLED_STATUS) {
-          this.shouldConfirm = false;
-
           this.isError = true;
           this.errorMessage = `Message not sent, \n
           please wait ${(res.timeout / 60).toFixed()} minutes before trying again`;
 
           return;
         }
-        this.cpTracking.amplitudeEmitEvent(
-          amplitudeEvents.NOTIFY_CREATED_COMMUNICATION,
-          this.amplitudeEventProperties
-        );
+
+        const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
+
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_UPDATED_COMMUNICATION, {
+          sub_menu_name,
+          ...TemplatesAmplitudeService.getAmplitudeProperties(data as any, this.data.id)
+        });
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();
       },
       (_) => {
         this.isError = true;
-        this.shouldConfirm = false;
         this.errorMessage = STATUS.SOMETHING_WENT_WRONG;
       }
     );
-  }
-
-  onConfirmed() {
-    this.doSubmit();
   }
 
   getObjectFromTypesArray(id) {
@@ -524,11 +495,6 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
-    this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties,
-      sub_menu_name: amplitudeEvents.TEMPLATE,
-      host_type
-    };
 
     this.toolTipOptions = {
       html: true,

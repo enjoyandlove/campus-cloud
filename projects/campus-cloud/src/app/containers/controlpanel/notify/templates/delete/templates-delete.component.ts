@@ -1,12 +1,12 @@
 import { Component, OnInit, EventEmitter, Input, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 
+import { CPSession } from '@campus-cloud/session';
 import { TemplatesService } from './../templates.service';
-import { CPSession } from './../../../../../session/index';
 import { NotifyUtilsService } from '../../notify.utils.service';
-import { CPTrackingService } from '../../../../../shared/services';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { TemplatesAmplitudeService } from '../templates.amplitude.service';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 declare var $;
 
@@ -23,13 +23,6 @@ export class TemplatesDeleteComponent implements OnInit {
   isError;
   buttonData;
   errorMessage;
-
-  eventProperties = {
-    sub_menu_name: null,
-    audience_type: null,
-    announcement_id: null,
-    announcement_type: null
-  };
 
   constructor(
     private session: CPSession,
@@ -74,15 +67,10 @@ export class TemplatesDeleteComponent implements OnInit {
       this.cpTracking.getAmplitudeMenuProperties()
     );
 
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.utils.setEventProperties(data, amplitudeEvents.TEMPLATE)
-    };
-
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.NOTIFY_DELETED_COMMUNICATION,
-      this.eventProperties
-    );
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_DELETED_COMMUNICATION, {
+      sub_menu_name: amplitudeEvents.TEMPLATE,
+      ...TemplatesAmplitudeService.getAmplitudeProperties(this.item as any, this.item.id)
+    });
   }
 
   ngOnInit() {

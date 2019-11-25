@@ -1,0 +1,17 @@
+@import '~projects/campus-cloud/src/sass/components/form';
+@import '~projects/campus-cloud/src/sass/core/typography';
+
+form {
+  p.title {
+    @include font-24px();
+    @include font-bold();
+
+    margin-bottom: 15px;
+    display: inline-block;
+  }
+
+  label {
+    margin-top: 10px;
+    display: inline-block;
+  }
+}

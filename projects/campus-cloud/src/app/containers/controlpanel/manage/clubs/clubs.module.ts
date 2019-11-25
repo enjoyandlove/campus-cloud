@@ -18,16 +18,26 @@ import { ModalService } from '@campus-cloud/shared/services';
 import { ClubsExcelModalComponent } from './excel/components';
 import { ClubsListActionBoxComponent } from './list/components';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
+
+import {
+  ClubsFormComponent,
+  ClubsSjsuFormComponent,
+  ClubsContactDetailsForm
+} from '@controlpanel/manage/clubs/components';
 
 @NgModule({
   entryComponents: [ClubsDeleteComponent],
   declarations: [
     ClubsEditComponent,
     ClubsListComponent,
+    ClubsFormComponent,
     ClubsExcelComponent,
     ClubsCreateComponent,
     ClubsDeleteComponent,
+    ClubsSjsuFormComponent,
+    ClubsContactDetailsForm,
     ClubsExcelModalComponent,
     ClubsListActionBoxComponent
   ],
@@ -37,6 +47,7 @@ import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
     CommonModule,
     SharedModule,
     RouterModule,
+    LayoutsModule,
     ReactiveFormsModule,
     ClubsRoutingModule,
     FeedsModule,

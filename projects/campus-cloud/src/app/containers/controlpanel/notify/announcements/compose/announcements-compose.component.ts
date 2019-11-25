@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { HttpParams } from '@angular/common/http';
 import { takeUntil } from 'rxjs/operators';
@@ -18,6 +18,7 @@ import { CustomValidators } from '@campus-cloud/shared/validators';
 import { notifyAtEpochNow } from './../model/announcement.interface';
 import { AudienceType } from '@controlpanel/audience/audience.status';
 import { AnnouncementUtilsService } from './../announcement.utils.service';
+import { AnnouncementAmplitudeService } from '../announcement.amplitude.service';
 import { AudienceUtilsService } from '@controlpanel/audience/audience.utils.service';
 import { parseErrorResponse, canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { AnnouncementCreateErrorComponent } from './../create-error/create-error.component';
@@ -25,7 +26,6 @@ import { CP_PRIVILEGES_MAP, STATUS, amplitudeEvents } from '@campus-cloud/shared
 import { AnnouncementsConfirmComponent } from './../confirm/announcements-confirm.component';
 import { CPI18nService, StoreService, CPTrackingService } from '@campus-cloud/shared/services';
 import { AudienceSaveModalComponent } from '../../../audience/shared/audience-save-modal/audience-save-modal.component';
-import { AnnouncementAmplitudeService } from '../announcement.amplitude.service';
 
 interface IState {
   isUrgent: boolean;
@@ -86,7 +86,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
   amplitudeEventProperties = {
     host_type: null,
-    sub_menu_name: null,
     audience_type: null,
     announcement_type: amplitudeEvents.REGULAR
   };
@@ -515,7 +514,7 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
 
         this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_CREATED_COMMUNICATION, {
           ...this.amplitudeEventProperties,
-          ...AnnouncementAmplitudeService.getAmplitudeProperties(res),
+          ...AnnouncementAmplitudeService.getAmplitudeProperties(data as any),
           host_type,
           audience_type
         });
@@ -675,7 +674,6 @@ export class AnnouncementsComposeComponent implements OnInit, OnDestroy {
     this.amplitudeEventProperties = {
       ...this.amplitudeEventProperties,
       audience_type: amplitudeEvents.CAMPUS_WIDE,
-      sub_menu_name: amplitudeEvents.ANNOUNCEMENT,
       host_type
     };
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;

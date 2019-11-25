@@ -13,6 +13,7 @@ import {
   AdminService,
   StoreService,
   SchoolService,
+  FullStoryService,
   CPAmplitudeService
 } from '@campus-cloud/shared/services';
 
@@ -39,6 +40,11 @@ export class AuthGuard implements CanActivate {
           if (this.env.name !== 'development') {
             this.setUserContext();
           }
+
+          const user = this.session.g.get('user');
+          const school = this.session.g.get('school');
+
+          FullStoryService.indentify(user, school);
 
           return users;
         })
