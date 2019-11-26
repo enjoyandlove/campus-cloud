@@ -417,6 +417,10 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
       check_out
     };
 
+    this.event = {
+      ...this.event,
+      verified_checkins: this.event.verified_checkins + 1
+    };
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_ADDED_ATTENDANCE, eventProperties);
   }
 
@@ -444,6 +448,11 @@ export class EventsAttendanceComponent extends EventsComponent implements OnInit
       amplitudeEvents.MANAGE_DELETED_ATTENDANCE,
       this.checkInEventProperties
     );
+
+    this.event = {
+      ...this.event,
+      verified_checkins: this.event.verified_checkins - 1
+    };
 
     if (this.attendees.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
