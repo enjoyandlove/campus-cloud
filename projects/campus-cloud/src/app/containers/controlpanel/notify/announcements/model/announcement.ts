@@ -10,8 +10,8 @@ export class Announcement {
 
     return fb.group({
       store_id: [_get(announcement, 'store_id', null), Validators.required],
-      user_ids: [_get(announcement, 'list_details', [])],
-      list_ids: [_get(announcement, 'user_details', [])],
+      user_ids: [_get(announcement, 'user_details', [])],
+      list_ids: [_get(announcement, 'list_details', [])],
       filters: [_get(announcement, 'filters', [])],
       persona_id: [_get(announcement, 'persona_id', null)],
       is_school_wide: [_get(announcement, 'is_school_wide', true)],
