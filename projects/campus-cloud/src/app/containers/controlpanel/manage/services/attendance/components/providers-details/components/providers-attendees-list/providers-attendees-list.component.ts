@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { get as _get } from 'lodash';
 
@@ -53,6 +53,8 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
   @Input() serviceId: number;
   @Input() providerId: number;
   @Input() provider: IServiceProvider;
+
+  @Output() addRemoveAttendee: EventEmitter<IServiceProvider> = new EventEmitter();
 
   _filterState;
   get filterState(): IFilterState {
@@ -205,6 +207,13 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       check_out
     };
 
+    this.provider = {
+      ...this.provider,
+      total_visits: this.provider.total_visits + 1
+    };
+
+    this.addRemoveAttendee.emit(this.provider);
+
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_ADDED_ATTENDANCE, eventProperties);
   }
 
@@ -232,6 +241,13 @@ export class ServicesProvidersAttendeesListComponent extends BaseComponent imple
       amplitudeEvents.MANAGE_DELETED_ATTENDANCE,
       this.checkInEventProperties
     );
+
+    this.provider = {
+      ...this.provider,
+      total_visits: this.provider.total_visits - 1
+    };
+
+    this.addRemoveAttendee.emit(this.provider);
 
     if (this.assessments.length === 0 && this.pageNumber > 1) {
       this.resetPagination();
