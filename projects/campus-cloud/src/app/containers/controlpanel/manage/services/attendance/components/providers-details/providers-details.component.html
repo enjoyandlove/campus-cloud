@@ -25,7 +25,8 @@
                                      [provider]="provider"
                                      [filterState]="state"
                                      [serviceId]="serviceId"
-                                     [providerId]="providerId">
+                                     [providerId]="providerId"
+                                     (addRemoveAttendee)="onAddRemoveAttendee($event)">
         </cp-providers-attendees-list>
       </div>
     </div>
