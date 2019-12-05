@@ -2,13 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { ApiService } from '@campus-cloud/base';
-
-export enum Acronym {
-  'yes' = 'Yes',
-  'no' = 'No'
-}
-
-export const hasAcronym = (val) => (val ? Acronym.yes : Acronym.no);
+import { protocolCheck } from '@campus-cloud/shared/utils';
 
 @Injectable()
 export class LocationsService {
@@ -29,11 +23,15 @@ export class LocationsService {
   updateLocation(body, locationId: number, search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LOCATIONS}/${locationId}`;
 
+    body = this.validateLinkUrls(body);
+
     return this.api.update(url, body, search);
   }
 
   createLocation(body, search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LOCATIONS}/`;
+
+    body = this.validateLinkUrls(body);
 
     return this.api.post(url, body, search);
   }
@@ -42,5 +40,27 @@ export class LocationsService {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LOCATIONS}/${locationId}`;
 
     return this.api.delete(url, search);
+  }
+
+  private validateLinkUrls(body) {
+    const { links } = body;
+
+    if (!links || !Array.isArray(links)) {
+      return body;
+    }
+
+    return {
+      ...body,
+      links: links.map((l: { label: string; url: string }) => {
+        const { url } = l;
+        if (url.length) {
+          return {
+            ...l,
+            url: protocolCheck(url)
+          };
+        }
+        return l;
+      })
+    };
   }
 }
