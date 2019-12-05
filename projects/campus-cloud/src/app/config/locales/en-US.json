@@ -2286,6 +2286,9 @@
   "t_api_management_copied_to_clipboard": {
     "message": "Copied to clipboard"
   },
+  "t_api_management_created": {
+    "message": "Created"
+  },
   "t_api_management_create_new": {
     "message": "Create New"
   },
@@ -3455,9 +3458,6 @@
   },
   "t_shared_cpimage_icon_help": {
     "message": "Must be 128 x 128 in PNG format"
-  },
-  "t_shared_created": {
-    "message": "Created"
   },
   "t_shared_custom": {
     "message": "Custom"

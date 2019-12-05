@@ -2283,6 +2283,9 @@
   "t_api_management_copied_to_clipboard": {
     "message": "Copié dans le presse-papier"
   },
+  "t_api_management_created": {
+    "message": "Créé"
+  },
   "t_api_management_create_new": {
     "message": "Créer"
   },
@@ -3422,9 +3425,6 @@
   },
   "t_shared_cpimage_icon_help": {
     "message": "Doit être 128 x 128 au format PNG"
-  },
-  "t_shared_created": {
-    "message": "Créé"
   },
   "t_shared_custom": {
     "message": "Personnalisée"
