@@ -4,7 +4,9 @@
   "author": "andres@oohlalamobile.com",
   "description": "Ready Education UI library",
   "peerDependencies": {
+    "moment": "^2.24.0",
     "echarts": "4.3.0",
+    "flatpickr": "4.5.5",
     "@angular/common": "^8.0.1",
     "@angular/core": "^8.0.1"
   }

@@ -22,3 +22,6 @@ export * from './lib/charts/components/line/line.component';
 export * from './lib/charts/components/bar/bar.component';
 export * from './lib/charts/providers/chart.service';
 export * from './lib/charts/charts.module';
+
+export * from './lib/datepicker/directives/date-picker.directive';
+export * from './lib/datepicker/datepicker.module';

@@ -2265,11 +2265,80 @@
   "t_api_management": {
     "message": "Gestion API"
   },
+  "t_api_management_access_token_created": {
+    "message": "Token d'accès à l'API créé avec succès"
+  },
+  "t_api_management_access_token_delete": {
+    "message": "Token d'accès à l'API effacé avec succès"
+  },
+  "t_api_management_access_token_edited": {
+    "message": "Token d'accès à l'API modifié avec succès"
+  },
+  "t_api_management_api_endpoints": {
+    "message": "Points d'accès de l'API"
+  },
+  "t_api_management_api_key": {
+    "message": "Clé API"
+  },
+  "t_api_management_copied_to_clipboard": {
+    "message": "Copié dans le presse-papier"
+  },
+  "t_api_management_created": {
+    "message": "Créé"
+  },
+  "t_api_management_create_new": {
+    "message": "Créer"
+  },
+  "t_api_management_create_new_api": {
+    "message": "Créer une nouvelle intégration API"
+  },
+  "t_api_management_discard_modal_body": {
+    "message": "Vous avez des modifications non enregistrées. Voulez-vous revenir en arrière pour éviter de perdre vos données?"
+  },
+  "t_api_management_discard_modal_title": {
+    "message": "Modifications non enregistrées"
+  },
   "t_api_management_generate_key": {
-    "message": "Générer clé et sauvegarder"
+    "message": "Générer la clé et sauvegarder"
+  },
+  "t_api_management_how_to_use": {
+    "message": "Comment utiliser l'API Ready"
+  },
+  "t_api_management_key_id_label": {
+    "message": "Code d'identification"
+  },
+  "t_api_management_name_input_placeholder": {
+    "message": "Nom de l'intégration"
   },
   "t_api_management_push_notification": {
     "message": "Notification Push"
+  },
+  "t_api_management_ready_api_desc": {
+    "message": "Créez et gérez les tokens d'API pour vos applications. Un token d'API authorise votre application à recevoir programmatiquement des données de la plateforme Ready. Plus d'information sur l'utilisation de l'API Ready peuvent être trouvées sur notre site de support."
+  },
+  "t_api_management_ready_api_title": {
+    "message": "API Ready"
+  },
+  "t_api_management_revoke_modal_body": {
+    "message": "Êtes-vous sûr de vouloir révoquer tout accès à la clé API %s ?"
+  },
+  "t_api_management_revoke_modal_title": {
+    "message": "Révoquer la clé API"
+  },
+  "t_api_management_sanbox_school_tooltip_text": {
+    "message": "Vous pouvez passer à l'environnement de test dans le menu Changer d'école."
+  },
+  "t_api_management_tooltip_click_to_copy": {
+    "message": "Cliquer pour copier"
+  },
+  "t_api_management_user_information": {
+    "message": "Information de l'utilisateur"
+  },
+  "t_api_management_warning_text_1": {
+    "message": "Vous êtes dans l'environnement de Production."
+  },
+  "t_api_management_warning_text_2": {
+    "message": "Nous suggérons de tester les intégrations d'API dans l'environnement de Test d'abord."
   },
   "t_assess_all_orientations": {
     "message": "Tous les programmes d'orientation"
@@ -3318,6 +3387,9 @@
   "t_shared_btn_add_integration": {
     "message": "Ajouter intégration"
   },
+  "t_shared_campus": {
+    "message": "Campus"
+  },
   "t_shared_cancel": {
     "message": "Annuler"
   },
@@ -3383,6 +3455,9 @@
   },
   "t_shared_delete_resource_warning_wall_posts": {
     "message": "Toutes les publications et commentaires seront supprimées"
+  },
+  "t_shared_discard_changes": {
+    "message": "Ignorer les changements"
   },
   "t_shared_edit": {
     "message": "Éditer"
@@ -3488,6 +3563,9 @@
   },
   "t_shared_preview": {
     "message": "Aperçu"
+  },
+  "t_shared_revoke": {
+    "message": "Révoquer"
   },
   "t_shared_running": {
     "message": "En course"
