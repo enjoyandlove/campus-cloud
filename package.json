@@ -13,7 +13,7 @@
     "lint": "node_modules/@angular/cli/bin/ng lint",
     "start": "node_modules/@angular/cli/bin/ng serve",
     "analyze": "webpack-bundle-analyzer dist/stats-es2015.json",
-    "build-storybook": "build-storybook -c .storybook -o .out",
+    "build-storybook": "build-storybook -c .storybook -o .out && echo readyeducation.surge.sh > .out/CNAME",
     "generate-build-file": "node scripts/campus-cloud/build.js",
     "postbuild": "rimraf dist && mv _dist dist && mv dist/index.prod.html dist/index.html && gzipper ./dist",
     "test": "node_modules/@angular/cli/bin/ng test campus-cloud --watch=false --codeCoverage --sourceMap=false",

@@ -1,0 +1,114 @@
+<div class="group group--date">
+  <button type="button"
+          class="has_background"
+          (click)="setActive('month')"
+          (keyup.arrowUp)="setActive('month'); onIncrement()"
+          (keyup.arrowDown)="setActive('month'); onDecrement()"
+          [class.active]="activeButton === 'month'">{{month}}</button>
+
+  <button type="button"
+          (click)="setActive('day')"
+          class="has_background"
+          (keyup.arrowUp)="setActive('day'); onIncrement()"
+          (keyup.arrowDown)="setActive('day'); onDecrement()"
+          [class.active]="activeButton === 'day'"
+          [class.add_comma]="activeButton !== 'day'">{{day}}</button>
+
+  <button type="button"
+          class="has_background"
+          (click)="setActive('year')"
+          (keyup.arrowUp)="setActive('year'); onIncrement()"
+          (keyup.arrowDown)="setActive('year'); onDecrement()"
+          [class.active]="activeButton === 'year'">{{year}}</button>
+</div>
+
+<div class="group group--time">
+  <input min="1"
+         max="12"
+         type="text"
+         [value]="hours"
+         class="group--time__number"
+         (keyup.enter)="setActive('hours')"
+         (input)="onInput($event, '_hours')"
+         (keypress)="preventStrings($event)"
+         (blur)="onValidate($event, '_hours')"
+         [class.active]="activeButton === 'hours'"
+         (click)="setActive('hours'); focusInputValue($event)"
+         (keyup.arrowUp)="setActive('hours'); ; onIncrement()"
+         (keyup.arrowDown)="setActive('hours'); onDecrement()">
+
+  <span>:</span>
+
+  <input min="0"
+         max="59"
+         type="text"
+         [value]="minutes"
+         class="group--time__number"
+         (keypress)="preventStrings($event)"
+         (keyup.enter)="setActive('minutes')"
+         (input)="onInput($event, '_minutes')"
+         (blur)="onValidate($event, '_minutes')"
+         [class.active]="activeButton === 'minutes'"
+         (keyup.arrowUp)="setActive('minutes'); onIncrement()"
+         (click)="setActive('minutes'); focusInputValue($event)"
+         (keyup.arrowDown)="setActive('minutes'); onDecrement()">
+
+  <input type="text"
+         maxlength="2"
+         [value]="period"
+         pattern="([AaPp][Mm])"
+         (click)="setActive('period')"
+         (blur)="onPeriodBlur($event)"
+         (input)="onPeriodInput($event)"
+         (keyup.enter)="setActive('period')"
+         [class.active]="activeButton === 'period'"
+         (keyup.arrowUp)="setActive('period'); togglePeriod(); emitChange()"
+         (keyup.arrowDown)="setActive('period'); togglePeriod(); emitChange()">
+</div>
+
+
+<div class="group group--actions"
+     [class.muted]="!activeButton">
+  <button type="button"
+          aria-label="increment"
+          [disabled]="!activeButton"
+          class="toggles toggles--up"
+          (click)="onIncrement()"><svg height="6px"
+         viewBox="0 0 9 6"
+         version="1.1"
+         xmlns="http://www.w3.org/2000/svg"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g stroke="none"
+         stroke-width="1"
+         fill="none"
+         fill-rule="evenodd">
+        <polygon id="Path"
+                 points="4.59 2.83 7.76 6 9.17 4.59 4.59 0 0 4.59 1.42 6">
+        </polygon>
+      </g>
+    </svg></button>
+  <button type="button"
+          class="toggles"
+          [disabled]="!activeButton"
+          aria-label="decrement"
+          (click)="onDecrement()"><svg height="6px"
+         viewBox="0 0 9 6"
+         version="1.1"
+         xmlns="http://www.w3.org/2000/svg"
+         xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g id="Symbols"
+         stroke="none"
+         stroke-width="1"
+         fill="none"
+         fill-rule="evenodd">
+        <g id="Icons/Unfold-more"
+           transform="translate(-7.000000, -15.000000)"
+           fill="#000000"
+           fill-rule="nonzero">
+          <polygon id="chevron_down"
+                   points="11.59 18.17 8.42 15 7.01 16.41 11.59 21 16.18 16.41 14.76 15">
+          </polygon>
+        </g>
+      </g>
+    </svg></button>
+</div>
