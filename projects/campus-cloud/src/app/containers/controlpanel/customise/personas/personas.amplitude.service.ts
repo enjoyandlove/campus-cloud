@@ -15,7 +15,7 @@ const contentTypeLabels = {
   webLink: amplitudeEvents.WEB_LINK,
   resource: amplitudeEvents.RESOURCE,
   singleItem: amplitudeEvents.SINGLE_ITEM,
-  resourceList: amplitudeEvents.RESOURCE_LIST,
+  resourceList: amplitudeEvents.CUSTOM_LIST,
   thirdPartyApp: amplitudeEvents.THIRD_PARTY_APP
 };
 
@@ -83,11 +83,12 @@ export class PersonasAmplitudeService {
       }
     }
 
-    const linkLabel = ContentUtilsProviders.resourceTypes()[resourceType].find(
-      (l) => l.meta.link_url === linkData.link_url
-    ).label;
+    const resource = ContentUtilsProviders.getResourceType(
+      linkData,
+      ContentUtilsProviders.resourceTypes()[resourceType]
+    );
 
-    return this.cpI18n.translate(linkLabel);
+    return this.cpI18n.translate(resource.label);
   }
 
   getTileAmplitudeProperties(tile) {
