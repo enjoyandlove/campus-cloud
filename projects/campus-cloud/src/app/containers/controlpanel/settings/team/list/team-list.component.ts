@@ -114,12 +114,13 @@ export class TeamListComponent extends BaseComponent implements OnInit {
   }
 
   onResendInvite(data, index) {
+    const params = new HttpParams().set('school_id', this.session.g.get('school').id.toString());
     this.disabledSendInviteButtons[index] = true;
     const body = {
       resend_invite: RequestParams.resend
     };
 
-    this.adminService.updateAdmin(data.id, body).subscribe(
+    this.adminService.updateAdmin(data.id, body, params).subscribe(
       () => {
         this.trackResendInvite(data.email);
         this.handleSuccess(PhraseAppKeys.inviteSuccess);
