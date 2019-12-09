@@ -232,7 +232,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
       .toPromise()
       .then(() => this.fetch(() => this.handleSuccess()))
       .then(() => {
-        this.trackMovedTile(tileUpdates.movingTile);
+        this.trackMovedTile(tileUpdates.movingTile, body);
         this.zone.run(() => {
           this.state = { ...this.state, working: false };
         });
@@ -480,11 +480,18 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     this.state = { ...this.state, working: true };
     const search = new HttpParams().set('school_id', this.session.g.get('school').id);
     this.sectionService.deleteSectionTileCategory(sectionId, search).subscribe(
-      () => this.onRemoveSection(sectionId),
+      () => {
+        this.onRemoveSection(sectionId);
+        this.trackDeleteSection(sectionId);
+      },
       (_err) => {
         this.state = { ...this.state, working: false };
       }
     ); // ignore errors due to legacy issues
+  }
+
+  trackDeleteSection(section_id) {
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_DELETED_SECTION, { section_id });
   }
 
   onDeletedSection(section: ICampusGuide) {
@@ -741,11 +748,17 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     );
   }
 
-  trackMovedTile(tile: ITile) {
-    this.cpTracking.amplitudeEmitEvent(
-      amplitudeEvents.STUDIO_DRAG_DROP_TILE,
-      this.personaAmplitude.getTileAmplitudeProperties(tile)
-    );
+  trackMovedTile(tile: ITile, movedTiles) {
+    const tile_type = this.tileUtils.isFeatured(movedTiles[0])
+      ? amplitudeEvents.FEATURED
+      : amplitudeEvents.NORMAL;
+
+    const properties = {
+      ...this.personaAmplitude.getTileAmplitudeProperties(tile),
+      tile_type
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_DRAG_DROP_TILE, properties);
   }
 
   trackDeleteTile(tile: ITile) {
