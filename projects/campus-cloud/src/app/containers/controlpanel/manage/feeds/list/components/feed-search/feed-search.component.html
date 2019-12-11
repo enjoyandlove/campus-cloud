@@ -1,0 +1,20 @@
+<cp-card>
+  <form [formGroup]="form"
+        class="wrapper">
+    <span><i class="material-icons">search</i></span>
+    <input type="search"
+           formControlName="query"
+           [value]="value$ | async"
+           (keyup.enter)="emitValue()"
+           aria-label="Search Feeds Content"
+           [placeholder]="'search' | cpI18n"
+           (input)="input.next($event.target.value)">
+    <button type="button"
+            class="unstyled-button"
+            (click)="query.next('')"
+            [hidden]="!query.value.length"
+            [attr.aria-label]="'t_clear' | cpI18n">&times;</button>
+    <div class="wrapper__border"
+         aria-hidden="true"></div>
+  </form>
+</cp-card>

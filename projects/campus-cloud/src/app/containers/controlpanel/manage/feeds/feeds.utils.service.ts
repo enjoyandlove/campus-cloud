@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { amplitudeEvents } from '../../../../shared/constants/analytics';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 
 enum hasData {
   yes = 'Yes',

@@ -23,3 +23,21 @@ export interface ISocialGroup {
   last_message_user_display_name: string;
   last_message_time: number;
 }
+
+export interface SocialWallContent {
+  id: number;
+  obj_type: SocialWallContentObjectType;
+  highlight: Highlight;
+}
+
+export interface Highlight {
+  name?: string[];
+  description?: string[];
+}
+
+export enum SocialWallContentObjectType {
+  groupThread = 'group_thread',
+  campusThread = 'campus_thread',
+  groupComment = 'group_comment',
+  campusComment = 'campus_comment'
+}
