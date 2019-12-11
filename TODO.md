@@ -1,4 +1,5 @@
 Main concerns
+
 Performance (Initial Page Load, Time to Interactive, Time to navigate between pages, slow API request)
 Tests (Check coverage report for features with low coverage and write better tests)
 Refactor Code (Not all features in the app are coded correclty, we all know some feature that has a funny code, lets fix those)
