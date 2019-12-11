@@ -97,7 +97,7 @@ export class ContentUtilsProviders {
       (l) => {
         const regularWebLinkType = link_type === 0;
         return regularWebLinkType
-          ? Boolean(l.meta.open_in_browser) === open_in_browser
+          ? l.meta.open_in_browser === open_in_browser
           : l.link_type === link_type;
       }
     );
