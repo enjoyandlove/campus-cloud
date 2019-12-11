@@ -59,6 +59,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   loading = true;
   disablePost = 100;
   state: IState = state;
+  searchFlag = 'WALLS_SEARCH';
   isFilteredByRemovedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isCampusWallView$: BehaviorSubject<any> = new BehaviorSubject({
