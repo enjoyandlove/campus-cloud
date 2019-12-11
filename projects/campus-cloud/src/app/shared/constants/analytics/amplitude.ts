@@ -129,6 +129,8 @@ export const amplitudeEvents = {
 
   LAST_YEAR: 'Last Year',
 
+  ALL_POSTS: 'All Posts',
+
   EXPERIENCE: 'Experience',
 
   START_DATE: 'Start Date',
@@ -200,6 +202,8 @@ export const amplitudeEvents = {
   RESENT_INVITE: 'Resent Invite',
 
   VIEWED_BANNER: 'Viewed Banner',
+
+  FLAGGED_POSTS: 'Flagged Posts',
 
   NO_ASSESSMENT: 'No Assessment',
 
@@ -446,6 +450,8 @@ export const amplitudeEvents = {
   STUDIO_DELETED_EXPERIENCE: 'Studio - Deleted Experience',
 
   MANAGE_DOWNLOADED_QR_CODE: 'Manage - Downloaded QR Code',
+
+  WALL_SEARCHED_INFORMATION: 'Wall - Searched Information',
 
   MANAGE_EMAIL_WEB_CHECK_IN: 'Manage - Email Web Check-In',
 

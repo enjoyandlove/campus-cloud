@@ -1,12 +1,16 @@
+import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { map, switchMap, filter } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 
+import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../../feeds.service';
-import { CPSession } from '../../../../../../session';
-import { GroupType } from '../../feeds.utils.service';
-import { BaseComponent } from '../../../../../../base/base.component';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { FeedsAmplitudeService } from './../../feeds.amplitude.service';
+import { GroupType, FeedsUtilsService } from '../../feeds.utils.service';
+import { SocialWallContentObjectType, SocialWallContent } from './../../model';
 
 interface ICurrentView {
   label: string;
@@ -17,6 +21,7 @@ interface ICurrentView {
 }
 
 interface IState {
+  query: string;
   group_id: number;
   wall_type: number;
   feeds: Array<any>;
@@ -29,6 +34,7 @@ interface IState {
 
 const state: IState = {
   feeds: [],
+  query: '',
   post_types: 1,
   group_id: null,
   wall_type: null,
@@ -60,9 +66,188 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     group_id: null
   });
 
-  constructor(public session: CPSession, public service: FeedsService) {
+  constructor(
+    public session: CPSession,
+    public service: FeedsService,
+    public cpTracking: CPTrackingService
+  ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
+  }
+
+  searchHandler(query: string) {
+    query = query.trim();
+    // if query is empty do regular search
+    if (!query) {
+      this.state = {
+        ...this.state,
+        query: ''
+      };
+
+      this.pageNumber = 1;
+      this.fetch();
+      return;
+    }
+
+    this.state = {
+      ...this.state,
+      query
+    };
+
+    let amplitude = {};
+
+    amplitude = {
+      post_type: FeedsAmplitudeService.getPostType(this.state),
+      wall_source: FeedsAmplitudeService.getWallSource(this.state)
+    };
+
+    const validObjectTypes = [
+      SocialWallContentObjectType.campusThread,
+      SocialWallContentObjectType.campusComment
+    ];
+
+    if (!this.state.isCampusThread) {
+      validObjectTypes.push(
+        SocialWallContentObjectType.groupComment,
+        SocialWallContentObjectType.groupThread
+      );
+    }
+
+    const schoolParam = new HttpParams().set('school_id', this.session.school.id.toString());
+
+    let searchCampusParam: HttpParams = !this.state.isCampusThread
+      ? schoolParam.set('group_id', this.state.wall_type.toString())
+      : schoolParam;
+
+    searchCampusParam = searchCampusParam
+      .set('obj_types', validObjectTypes.join(','))
+      .set('search_str', query);
+
+    const matchingResources$ = this.service.searchCampusWall(
+      this.startRange,
+      this.endRange,
+      searchCampusParam
+    );
+
+    const stream$ = matchingResources$.pipe(
+      switchMap((results: SocialWallContent[]) => {
+        const campusThreadIds = results
+          .filter((r: SocialWallContent) => r.obj_type === SocialWallContentObjectType.campusThread)
+          .map((r: SocialWallContent) => r.id);
+
+        const groupThreadIds = results
+          .filter((r: SocialWallContent) => r.obj_type === SocialWallContentObjectType.groupThread)
+          .map((r: SocialWallContent) => r.id);
+
+        /**
+         * dont call the api unless we have matching results
+         */
+        if (this.state.isCampusThread && !campusThreadIds.length) {
+          return of([]);
+        } else if (!this.state.isCampusThread && !groupThreadIds.length) {
+          return of([]);
+        }
+
+        let threadSearch = this.getFilterParams();
+
+        threadSearch = this.state.isCampusThread
+          ? threadSearch
+              .set('school_id', this.session.g.get('school').id.toString())
+              .set('thread_ids', campusThreadIds.join(','))
+          : threadSearch
+              .set('group_id', this.state.wall_type.toString())
+              .set('group_thread_ids', groupThreadIds.join(','));
+
+        /**
+         * Convert the array of SocialWallContent into an object
+         * whose keys are the resources IDs and the value is the highlighted content
+         */
+        const replaceMatchedContent = (threads) => {
+          const resultsAsObject = results.reduce((result, current: SocialWallContent) => {
+            result[current.id] = current.highlight;
+            return result;
+          }, {});
+
+          return threads.map((thread) => {
+            if (thread.id in resultsAsObject) {
+              const { name, description } = resultsAsObject[thread.id];
+              return {
+                ...thread,
+                display_name: name ? name[0] : thread.display_name,
+                message: description ? description[0] : thread.description
+              };
+            }
+            return thread;
+          });
+        };
+
+        /**
+         * in order to preserve ES's ordering, we need to sort
+         * the results from GET by thread_ids request in the
+         * same order as we received them when doing the search
+         */
+        const orderBasedOnElasticSearchScore = (formattedResults) => {
+          const orderedSearchIds = results.map((r: SocialWallContent) => r.id);
+          const formattedResultsAsObject = formattedResults.reduce(
+            (result, current: SocialWallContent) => {
+              result[current.id] = current;
+              return result;
+            },
+            {}
+          );
+
+          return orderedSearchIds
+            .filter((resourceId: number) => resourceId in formattedResultsAsObject)
+            .map((resourceId: number) => formattedResultsAsObject[resourceId]);
+        };
+
+        const channels$ = this.service.getChannelsBySchoolId(1, 1000, schoolParam);
+
+        const groupThreads$ = this.service.getGroupThreadsByIds(threadSearch).pipe(
+          filter((threads: any) => threads.filter((t) => t.group_id === this.state.group_id)),
+          map((threads) => orderBasedOnElasticSearchScore(replaceMatchedContent(threads)))
+        );
+
+        const campusThreads$ = combineLatest([
+          this.service.getCampusThreadByIds(threadSearch),
+          channels$
+        ]).pipe(
+          map(([threads, channels]: any) => {
+            const name = !this.state.post_types
+              ? 'All Categories'
+              : channels.find((c) => c.id === this.state.post_types).name;
+
+            amplitude = {
+              ...amplitude,
+              campus_wall_category: name
+            };
+
+            threads = threads.map((t) => {
+              return {
+                ...t,
+                channelName: this.getChannelNameFromArray(channels, t)
+              };
+            });
+            return orderBasedOnElasticSearchScore(replaceMatchedContent(threads));
+          })
+        );
+
+        const threads$ = this.state.isCampusThread ? campusThreads$ : groupThreads$;
+
+        return threads$;
+      })
+    );
+
+    super
+      .fetchData(stream$)
+      .then((res) => {
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_SEARCHED_INFORMATION, amplitude);
+        this.state = Object.assign({}, this.state, { feeds: res.data });
+      })
+      .catch(() => {
+        this.loading = false;
+        this.state = Object.assign({}, this.state, { feeds: [] });
+      });
   }
 
   onFilterByCategory(category) {
@@ -100,6 +285,11 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       removed_by_moderators_only: data.removed_by_moderators_only
     });
 
+    if (this.state.query) {
+      this.searchHandler(this.state.query);
+      return;
+    }
+
     this.fetch();
   }
 
@@ -109,15 +299,24 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
   onPaginationNext() {
     super.goToNext();
-    this.fetch();
+
+    if (this.state.query) {
+      this.searchHandler(this.state.query);
+    } else {
+      this.fetch();
+    }
   }
 
   onPaginationPrevious() {
     super.goToPrevious();
-    this.fetch();
+    if (this.state.query) {
+      this.searchHandler(this.state.query);
+    } else {
+      this.fetch();
+    }
   }
 
-  private fetch() {
+  private getFilterParams(): HttpParams {
     const flagged = this.state.flagged_by_users_only
       ? this.state.flagged_by_users_only.toString()
       : null;
@@ -128,10 +327,14 @@ export class FeedsComponent extends BaseComponent implements OnInit {
 
     const type = this.state.post_types ? this.state.post_types.toString() : null;
 
-    let search = new HttpParams()
-      .append('post_types', type)
-      .append('flagged_by_users_only', flagged)
-      .append('removed_by_moderators_only', removed);
+    return new HttpParams()
+      .set('post_types', type)
+      .set('flagged_by_users_only', flagged)
+      .set('removed_by_moderators_only', removed);
+  }
+
+  private fetch() {
+    let search = this.getFilterParams();
 
     search = this.state.isCampusThread
       ? search.append('school_id', this.session.g.get('school').id.toString())

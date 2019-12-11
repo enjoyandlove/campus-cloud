@@ -4,7 +4,11 @@ export const environment: IEnvironment = {
   root: '/dist/',
   production: true,
   version: process.env.APP_VERSION,
-  flags: {},
+  flags: {
+    WALLS_SEARCH: {
+      whitelist: []
+    }
+  },
   keys: {
     readyApiKey: 'IUm65kXecFWch54mzJjpy63spWZX3AVp',
     beamerApiKey: 'b_Fi9BaLL/1kzue1MjGOiATUB5Kk8vkDKeO7nSqKSlFxo=',
