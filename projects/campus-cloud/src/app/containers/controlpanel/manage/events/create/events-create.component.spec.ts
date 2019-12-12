@@ -64,7 +64,6 @@ describe('EventCreateComponent', () => {
 
       expect(component.formError).toBe(true);
       expect(component.form.valid).toBe(false);
-      expect(component.buttonData.disabled).toBe(false);
       expect(component.handleError).toHaveBeenCalledWith(errorMessage);
     });
 
@@ -74,7 +73,6 @@ describe('EventCreateComponent', () => {
       component.onSubmit();
 
       expect(component.formError).toBe(true);
-      expect(component.buttonData.disabled).toBe(false);
     });
 
     it('form validation should fail - end date should be greater than start date', () => {
@@ -92,7 +90,6 @@ describe('EventCreateComponent', () => {
       component.onSubmit();
 
       expect(component.formError).toBe(true);
-      expect(component.buttonData.disabled).toBe(false);
       expect(component.handleError).toHaveBeenCalledWith(dateError);
     });
 
@@ -107,7 +104,6 @@ describe('EventCreateComponent', () => {
       component.onSubmit();
 
       expect(component.formError).toBe(true);
-      expect(component.buttonData.disabled).toBe(false);
       expect(component.handleError).toHaveBeenCalledWith(dateError);
     });
   });

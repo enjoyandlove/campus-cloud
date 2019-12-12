@@ -1,3 +1,4 @@
+import { DatepickerModule, ButtonModule, PopoverModule } from '@ready-education/ready-ui';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -70,6 +71,9 @@ import {
     SharedModule,
     CheckInModule,
     LayoutsModule,
+    PopoverModule,
+    DatepickerModule,
+    ButtonModule,
     ImageModule.forRoot(),
     EventsRoutingModule,
     ReactiveFormsModule,

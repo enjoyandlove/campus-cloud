@@ -1,0 +1,22 @@
+<div class="widget">
+  <div class="widget__section widget__section--calendar">
+    <div class="widget__wrapper widget__wrapper--calendar">
+      <div static
+           inline
+           [locale]="locale"
+           readyUiDatePicker
+           #datePicker="datePicker"
+           [defaultDate]="initialDate"
+           (dateChange)="onDateChange($event)"></div>
+    </div>
+  </div>
+
+  <div class="widget__section widget__section--time">
+    <header>{{timeLabel}}</header>
+    <div class="widget__wrapper widget__wrapper--time">
+      <ready-ui-date-previewer [date]="initialDate"
+                               (dateChange)="onPreviewChange($event)">
+      </ready-ui-date-previewer>
+    </div>
+  </div>
+</div>

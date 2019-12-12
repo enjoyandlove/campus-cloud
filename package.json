@@ -5,11 +5,6 @@
   "engines": {
     "node": ">=12.4.0"
   },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
   "scripts": {
     "i18n": "phraseapp pull",
     "precommit": "pretty-quick --staged",
@@ -45,7 +40,7 @@
     "@ngrx/router-store": "8.0.1",
     "@ngrx/store": "8.0.1",
     "@ngrx/store-devtools": "8.0.1",
-    "@ready-education/ready-ui": "0.0.12",
+    "@ready-education/ready-ui": "0.1.0",
     "@sentry/browser": "5.5.0",
     "@simonwep/pickr": "1.2.7",
     "amplitude-js": "5.2.2",
@@ -113,7 +108,6 @@
     "babel-loader": "^8.0.6",
     "codelyzer": "5.1.0",
     "gzipper": "2.8.0",
-    "husky": "3.1.0",
     "jasmine-core": "3.4.0",
     "jasmine-spec-reporter": "4.2.1",
     "karma": "4.1.0",
