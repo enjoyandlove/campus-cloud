@@ -32,10 +32,10 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
   @Input() isOrientation: boolean;
 
   urlPrefix;
-  buttonData;
   form: FormGroup;
   formError = false;
   addedHost = amplitudeEvents.NO;
+  disableSubmit$ = new BehaviorSubject(false);
 
   eventProperties = {
     event_id: null,
@@ -79,11 +79,12 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
 
   onSubmit() {
     this.formError = false;
+    this.disableSubmit$.next(true);
     this.utils.clearDateErrors(this.form);
 
     if (this.form.invalid) {
       this.formError = true;
-      this.enableSaveButton();
+      this.disableSubmit$.next(false);
       this.handleError(this.cpI18n.translate('error_fill_out_marked_fields'));
 
       return;
@@ -95,10 +96,10 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
 
     if (this.utils.setEventFormDateErrors(this.form)) {
       this.formError = true;
-      this.enableSaveButton();
       const errorMessage = this.utils.setEventFormDateErrors(this.form);
 
       this.handleError(errorMessage);
+      this.disableSubmit$.next(false);
 
       return;
     }
@@ -113,12 +114,13 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
     this.service.createEvent(this.form.value, search).subscribe(
       (res: any) => {
         this.trackCreateEvent(res);
+        this.disableSubmit$.next(false);
         this.urlPrefix = this.getUrlPrefix(res.id);
         this.router.navigate([this.urlPrefix]);
       },
       () => {
-        this.enableSaveButton();
         this.handleError();
+        this.disableSubmit$.next(false);
       }
     );
   }
@@ -155,13 +157,6 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MANAGE_CANCELED_EVENT, eventProperties);
   }
 
-  enableSaveButton() {
-    this.buttonData = {
-      ...this.buttonData,
-      disabled: false
-    };
-  }
-
   onSelectProperties(properties) {
     this.eventProperties = {
       ...this.eventProperties,
@@ -182,11 +177,6 @@ export class EventsCreateComponent extends EventsComponent implements OnInit {
     this.eventProperties = {
       ...this.eventProperties,
       host_type
-    };
-
-    this.buttonData = {
-      class: 'primary',
-      text: this.cpI18n.translate('events_button_new')
     };
 
     let store_id = this.session.defaultHost ? this.session.defaultHost.value : null;

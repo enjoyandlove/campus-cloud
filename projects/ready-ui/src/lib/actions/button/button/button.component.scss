@@ -1,0 +1,212 @@
+@import '../../../core/sass/variables';
+
+:host {
+  border: none;
+  outline: none;
+  padding: 0 1em;
+  cursor: pointer;
+  font-size: small;
+  line-height: 2.4;
+  box-shadow: none;
+  user-select: none;
+  border-radius: 4px;
+  border: 1px solid transparent;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &.primary {
+    color: white;
+    background: $color-primary;
+    transition: background 300ms ease-in-out;
+
+    &:hover:not(:disabled) {
+      background: darken($color-primary, 10%);
+    }
+
+    &.flat {
+      color: white;
+      background: $color-primary;
+
+      &:disabled {
+        color: white;
+        background: #b3b3b3;
+      }
+    }
+
+    &.basic {
+      color: $color-primary;
+      background: transparent;
+
+      &:disabled {
+        color: #b3b3b3;
+      }
+    }
+
+    &.inline {
+      padding: 0;
+      color: $color-primary;
+      border-radius: 0;
+      line-height: inherit;
+      background: transparent;
+
+      &:disabled {
+        color: #b3b3b3;
+      }
+    }
+
+    &.stroked {
+      color: $color-primary;
+      background: transparent;
+      border: 1px solid $color-primary;
+
+      &:disabled {
+        color: white;
+        background: #b3b3b3;
+        border-color: #b3b3b3;
+      }
+    }
+  }
+
+  &.danger {
+    color: white;
+    background: $color-danger;
+
+    &.flat {
+      color: white;
+      background: $color-danger;
+
+      &:disabled {
+        color: white;
+        background: #b3b3b3;
+      }
+    }
+
+    &.basic {
+      color: $color-danger;
+      background: transparent;
+
+      &:disabled {
+        color: #b3b3b3;
+      }
+    }
+
+    &.stroked {
+      color: $color-danger;
+      background: transparent;
+      border: 1px solid $color-danger;
+
+      &:disabled {
+        color: white;
+        background: #b3b3b3;
+        border-color: #b3b3b3;
+      }
+    }
+
+    &.inline {
+      padding: 0;
+      border-radius: 0;
+      color: $color-danger;
+      line-height: inherit;
+      background: transparent;
+
+      &:disabled {
+        color: #b3b3b3;
+      }
+    }
+  }
+
+  &.warning {
+    color: white;
+    background: $color-warning;
+
+    &.flat {
+      color: white;
+      background: $color-warning;
+
+      &:disabled {
+        color: white;
+        background: #b3b3b3;
+      }
+    }
+
+    &.basic {
+      color: $color-warning;
+      background: transparent;
+
+      &:disabled {
+        color: #b3b3b3;
+      }
+    }
+
+    &.stroked {
+      color: $color-warning;
+      background: transparent;
+      border: 1px solid $color-warning;
+
+      &:disabled {
+        color: #b3b3b3;
+        border-color: #b3b3b3;
+      }
+    }
+
+    &.inline {
+      padding: 0;
+      border-radius: 0;
+      line-height: inherit;
+      color: $color-warning;
+      background: transparent;
+
+      &:disabled {
+        color: #b3b3b3;
+      }
+    }
+  }
+
+  &.default {
+    &.inline {
+      padding: 0;
+      border-radius: 0;
+      color: $color-text;
+      line-height: inherit;
+      background: transparent;
+
+      &:disabled {
+        color: #b3b3b3;
+      }
+    }
+
+    &.stroked {
+      color: $color-text;
+      background: transparent;
+      transition: border 300ms ease-in;
+      border: 1px solid lighten($color-text, 50%);
+
+      &:hover:not(:disabled) {
+        border-color: $color-text;
+      }
+
+      &:disabled {
+        color: #b3b3b3;
+        border-color: #b3b3b3;
+      }
+    }
+  }
+
+  &.white {
+    color: white;
+    background: transparent;
+
+    &.inline {
+      padding: 0;
+      border-radius: 0;
+      line-height: inherit;
+
+      &:disabled {
+        color: white;
+        background: #b3b3b3;
+      }
+    }
+  }
+}

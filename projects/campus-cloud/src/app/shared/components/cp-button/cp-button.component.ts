@@ -13,6 +13,9 @@ export interface ICPButtonProps {
   };
 }
 
+/**
+ * @deprecated
+ */
 @Component({
   selector: 'cp-button',
   templateUrl: './cp-button.component.html',

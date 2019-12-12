@@ -2,25 +2,23 @@
   <form [formGroup]="form">
     <cp-two-columns>
       <cp-card layout-left-column>
-        <cp-events-form
-          [form]="form"
-          [isClub]="isClub"
-          [isService]="isService"
-          [formError]="formError"
-          [isOrientation]="isOrientation"
-          (selectHost)="onHostSelect($event)"
-          (amplitudeProperties)="onSelectProperties($event)">
+        <cp-events-form [form]="form"
+                        [isClub]="isClub"
+                        [isService]="isService"
+                        [formError]="formError"
+                        [isOrientation]="isOrientation"
+                        (selectHost)="onHostSelect($event)"
+                        (amplitudeProperties)="onSelectProperties($event)">
         </cp-events-form>
       </cp-card>
 
       <cp-card layout-right-column>
-        <cp-events-assessment-form
-          [form]="form"
-          [clubId]="clubId"
-          [storeId]="storeId"
-          [formError]="formError"
-          [changedHost$]="changedHost$"
-          [isOrientation]="isOrientation">
+        <cp-events-assessment-form [form]="form"
+                                   [clubId]="clubId"
+                                   [storeId]="storeId"
+                                   [formError]="formError"
+                                   [changedHost$]="changedHost$"
+                                   [isOrientation]="isOrientation">
         </cp-events-assessment-form>
       </cp-card>
     </cp-two-columns>
@@ -31,13 +29,18 @@
           <div class="row">
             <div class="col-12">
               <div class="text-right">
-                <a [routerLink]="['../']"
-                   class="cpbtn cpbtn--cancel">
+                <a ui-button
+                   variant="stroked"
+                   [routerLink]="['../']">
                   {{ 'cancel' | cpI18n }}
                 </a>
-                <cp-button [props]="buttonData"
-                           (buttonClick)="onSubmit()">
-                </cp-button>
+
+                <button ui-button
+                        type="button"
+                        variant="flat"
+                        color="primary"
+                        (click)="onSubmit()"
+                        [disabled]="disableSubmit$ | async">{{'events_button_new' | cpI18n}}</button>
               </div>
             </div>
           </div>

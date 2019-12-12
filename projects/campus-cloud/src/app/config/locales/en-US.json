@@ -3627,6 +3627,9 @@
   "t_shared_select_service": {
     "message": "Select Service"
   },
+  "t_shared_select_time": {
+    "message": "Select Time"
+  },
   "t_shared_show": {
     "message": "Show"
   },

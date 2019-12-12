@@ -21,7 +21,7 @@
                  type="text"
                  class="form-control"
                  formControlName="title"
-                 [class.error]="formError && form.get('title').invalid"/>
+                 [class.error]="formError && form.get('title').invalid" />
         </div>
 
         <div class="row form-group"
@@ -38,20 +38,38 @@
 
         <div class="row form-group">
           <div class="col-6">
-            <label>{{ 'start_date' | cpI18n }}</label>
-            <cp-datepicker cpTarget="start_date"
-                           [options]="startdatePickerOpts"
-                           [error]="formError && form.get('start').invalid"
-                           (dateSet)="setStart($event)">
-            </cp-datepicker>
+            <label for="start">{{ 'start_date' | cpI18n }}</label>
+            <ready-ui-popover>
+              <input id="start"
+                     type="text"
+                     readonly="readonly"
+                     uiPopoverYOffset="0"
+                     readyUiPopoverTrigger
+                     [class.error]="formError && form.get('start').invalid"
+                     [value]="form.get('start').value ? (form.get('start').value | cpDatePipe: dateFormat) : ''" />
+              <ready-ui-date-picker (dateChange)="setStart($event)"
+                                    (click)="$event.stopPropagation()"
+                                    [timeLabel]="'t_shared_select_time' | cpI18n"
+                                    [initialDate]="form.get('start').value * 1000 || undefined">
+              </ready-ui-date-picker>
+            </ready-ui-popover>
           </div>
           <div class="col-6">
-            <label>{{ 'end_date' | cpI18n }}</label>
-            <cp-datepicker cpTarget="end_date"
-                           [options]="enddatePickerOpts"
-                           [error]="formError && form.get('end').invalid"
-                           (dateSet)="setEnd($event)">
-            </cp-datepicker>
+            <label for="end">{{ 'end_date' | cpI18n }}</label>
+            <ready-ui-popover>
+              <input id="end"
+                     type="text"
+                     readonly="readonly"
+                     uiPopoverYOffset="0"
+                     readyUiPopoverTrigger
+                     [class.error]="formError && form.get('end').invalid"
+                     [value]="form.get('end').value ? (form.get('end').value | cpDatePipe: dateFormat) : ''" />
+              <ready-ui-date-picker (dateChange)="setEnd($event)"
+                                    (click)="$event.stopPropagation()"
+                                    [timeLabel]="'t_shared_select_time' | cpI18n"
+                                    [initialDate]="form.get('end').value * 1000 || undefined">
+              </ready-ui-date-picker>
+            </ready-ui-popover>
           </div>
         </div>
 
@@ -68,7 +86,7 @@
 
         <div class="form-group">
           <label
-            for="description">{{ 'events_event_description' | cpI18n }}</label>
+                 for="description">{{ 'events_event_description' | cpI18n }}</label>
           <textarea id="description"
                     formControlName="description"></textarea>
         </div>
@@ -103,7 +121,7 @@
                   <input for="location"
                          type="text"
                          class="form-control"
-                         formControlName="location"/>
+                         formControlName="location" />
                 </div>
 
                 <div class="col-6">
@@ -111,7 +129,7 @@
                   <input id="room_data"
                          type="text"
                          class="form-control"
-                         formControlName="room_data"/>
+                         formControlName="room_data" />
                 </div>
               </div>
             </div>
