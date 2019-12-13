@@ -2,6 +2,12 @@ import { IAnnouncement, AnnouncementPriority } from './model';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { notifyAtEpochNow } from './model/announcement.interface';
 
+const listTypeMap = {
+  0: amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_AUDIENCE,
+  1: amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_AUDIENCE,
+  2: amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_EXPERIENCE
+};
+
 export class AnnouncementAmplitudeService {
   static getAmplitudeProperties(announcement: IAnnouncement, announcementId?: number) {
     const required = {
@@ -41,11 +47,16 @@ export class AnnouncementAmplitudeService {
       return amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_CAMPUS_WIDE;
     }
 
-    if (
-      ('list_ids' in announcement && (announcement as any).list_ids.length) ||
-      ('list_details' in announcement && announcement.list_details.length)
-    ) {
+    if ('list_ids' in announcement && (announcement as any).list_ids.length) {
       return amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_AUDIENCE;
+    }
+
+    if (
+      'list_details' in announcement &&
+      announcement.list_details.length &&
+      announcement.list_details[0].type in listTypeMap
+    ) {
+      return listTypeMap[announcement.list_details[0].type];
     }
 
     if (
