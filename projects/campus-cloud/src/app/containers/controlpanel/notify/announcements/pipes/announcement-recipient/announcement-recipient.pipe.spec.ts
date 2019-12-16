@@ -41,7 +41,7 @@ describe('AnnouncementRecipientPipe', () => {
 
     announcement = {
       ...announcement,
-      list_details: [{ id: 1, name: 'List Name' }],
+      list_details: [{ id: 1, name: 'List Name', type: 0 }],
       user_details: []
     };
 
