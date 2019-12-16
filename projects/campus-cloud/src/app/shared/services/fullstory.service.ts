@@ -25,7 +25,7 @@ export class FullStoryService {
       return;
     }
 
-    FS.restart();
+    FS.shutdown();
   }
 
   static indentify(user: IUser, school: ISchool) {
