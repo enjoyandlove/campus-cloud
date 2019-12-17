@@ -2,6 +2,7 @@
   <button type="button"
           class="has_background"
           (click)="setActive('month')"
+          (keydown)="filterKeyUpAndDowns($event)"
           (keyup.arrowUp)="setActive('month'); onIncrement()"
           (keyup.arrowDown)="setActive('month'); onDecrement()"
           [class.active]="activeButton === 'month'">{{month}}</button>
@@ -9,6 +10,7 @@
   <button type="button"
           (click)="setActive('day')"
           class="has_background"
+          (keydown)="filterKeyUpAndDowns($event)"
           (keyup.arrowUp)="setActive('day'); onIncrement()"
           (keyup.arrowDown)="setActive('day'); onDecrement()"
           [class.active]="activeButton === 'day'"
@@ -17,6 +19,7 @@
   <button type="button"
           class="has_background"
           (click)="setActive('year')"
+          (keydown)="filterKeyUpAndDowns($event)"
           (keyup.arrowUp)="setActive('year'); onIncrement()"
           (keyup.arrowDown)="setActive('year'); onDecrement()"
           [class.active]="activeButton === 'year'">{{year}}</button>
