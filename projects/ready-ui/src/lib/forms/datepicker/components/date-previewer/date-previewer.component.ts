@@ -24,12 +24,13 @@ export class DatePreviewerComponent implements OnInit {
   @Input()
   set date(date: number | string) {
     this._date = moment(date);
-    this._minutes = String(this._date.minutes());
-
+    this._minutes = this.setLeadingZero(this._date.minutes());
     const hour =
-      this._date.hours() > 12 ? String(this._date.hours() - 12) : String(this._date.hours());
+      this._date.hours() > 12
+        ? this.setLeadingZero(this._date.hours() - 12)
+        : this.setLeadingZero(this._date.hours());
 
-    this._hours = hour === '0' ? '12' : hour;
+    this._hours = hour === '00' ? '12' : hour;
   }
 
   @Output()
@@ -80,10 +81,12 @@ export class DatePreviewerComponent implements OnInit {
         this._date.add(1, 'year');
         break;
       case 'hours':
-        this._hours = Number(this._hours) === 12 ? '01' : String(Number(this._hours) + 1);
+        this._hours =
+          Number(this._hours) === 12 ? '01' : this.setLeadingZero(Number(this._hours) + 1);
         break;
       case 'minutes':
-        this._minutes = Number(this._minutes) === 59 ? '00' : String(Number(this._minutes) + 1);
+        this._minutes =
+          Number(this._minutes) === 59 ? '00' : this.setLeadingZero(Number(this._minutes) + 1);
         break;
       case 'period':
         this.togglePeriod();
@@ -121,10 +124,12 @@ export class DatePreviewerComponent implements OnInit {
         this._date.subtract(1, 'year');
         break;
       case 'hours':
-        this._hours = Number(this._hours) === 1 ? '12' : String(Number(this._hours) - 1);
+        this._hours =
+          Number(this._hours) === 1 ? '12' : this.setLeadingZero(Number(this._hours) - 1);
         break;
       case 'minutes':
-        this._minutes = Number(this._minutes) === 0 ? '59' : String(Number(this._minutes) - 1);
+        this._minutes =
+          Number(this._minutes) === 0 ? '59' : this.setLeadingZero(Number(this._minutes) - 1);
         break;
       case 'period':
         this.togglePeriod();
@@ -147,14 +152,27 @@ export class DatePreviewerComponent implements OnInit {
   }
 
   onValidate(event, target) {
-    const { min, value } = event.target;
+    let { min, value, max } = event.target;
+
+    max = Number(max);
+    min = Number(min);
+    value = Number(value);
+
+    if (value > max) {
+      value = max;
+    }
+
+    if (value < min) {
+      value = min;
+    }
+
     if (!value) {
       const val = this.setLeadingZero(min);
       event.target.value = val;
       this[target] = val;
       this.emitChange();
     } else {
-      const val = this.setLeadingZero(event.target.value);
+      const val = this.setLeadingZero(value);
       event.target.value = val;
       this[target] = val;
       this.emitChange();
@@ -176,35 +194,6 @@ export class DatePreviewerComponent implements OnInit {
     input.select();
   }
 
-  onInput(event, target: string) {
-    let { min, max, value } = event.target;
-
-    // if empty let the blur event validate
-    if (!value || value === '0') {
-      return;
-    }
-    // at most 2 chars in input
-    if (value.length > 2) {
-      value = String(value).slice(0, 2);
-    }
-
-    max = Number(max);
-    min = Number(min);
-    value = Number(value);
-
-    if (value > max) {
-      value = String(max);
-    }
-
-    if (value < min) {
-      value = String(min);
-    }
-
-    event.target.value = value;
-    this[target] = value;
-    this.emitChange();
-  }
-
   emitChange() {
     const date = this._date.clone();
     const hours = this.period === 'PM' ? Number(this._hours) + 12 : Number(this._hours);
@@ -214,6 +203,7 @@ export class DatePreviewerComponent implements OnInit {
     if (date.day() !== this._date.day()) {
       date.day(this._date.day());
     }
+
     this.dateChange.emit(date.unix());
   }
 
