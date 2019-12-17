@@ -27,11 +27,9 @@ export class DatePreviewerComponent implements OnInit {
     this._minutes = String(this._date.minutes());
 
     const hour =
-      this._date.hours() > 12
-        ? this.setLeadingZero(this._date.hours() - 12)
-        : this.setLeadingZero(this._date.hours());
+      this._date.hours() > 12 ? String(this._date.hours() - 12) : String(this._date.hours());
 
-    this._hours = hour === '00' ? '12' : hour;
+    this._hours = hour === '0' ? '12' : hour;
   }
 
   @Output()
