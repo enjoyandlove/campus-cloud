@@ -24,7 +24,8 @@ export class DatePreviewerComponent implements OnInit {
   @Input()
   set date(date: number | string) {
     this._date = moment(date);
-    this._minutes = this.setLeadingZero(this._date.minutes());
+    this._minutes = String(this._date.minutes());
+
     const hour =
       this._date.hours() > 12
         ? this.setLeadingZero(this._date.hours() - 12)
@@ -162,6 +163,15 @@ export class DatePreviewerComponent implements OnInit {
     }
   }
 
+  filterKeyUpAndDowns(event: KeyboardEvent) {
+    const disabledKeys = ['ArrowDown', 'ArrowUp'];
+    const { code } = event;
+
+    if (disabledKeys.includes(code)) {
+      event.preventDefault();
+    }
+  }
+
   focusInputValue(event: Event) {
     const input = <HTMLInputElement>event.target;
     input.focus();
@@ -175,7 +185,6 @@ export class DatePreviewerComponent implements OnInit {
     if (!value || value === '0') {
       return;
     }
-
     // at most 2 chars in input
     if (value.length > 2) {
       value = String(value).slice(0, 2);
@@ -207,7 +216,6 @@ export class DatePreviewerComponent implements OnInit {
     if (date.day() !== this._date.day()) {
       date.day(this._date.day());
     }
-
     this.dateChange.emit(date.unix());
   }
 
