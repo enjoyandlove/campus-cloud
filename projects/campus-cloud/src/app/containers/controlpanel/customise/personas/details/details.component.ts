@@ -360,6 +360,7 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     this.state.guides
       .filter((guide: ICampusGuide) => guide.rank > rank)
       .forEach((guide: ICampusGuide) => {
+        this.trackAddedNewSection(guide.id);
         updateCategories = [
           ...updateCategories,
           this.service
@@ -777,6 +778,10 @@ export class PersonasDetailsComponent extends BaseComponent implements OnDestroy
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_MOVED_SECTION, eventProperties);
+  }
+
+  trackAddedNewSection(section_id) {
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_ADDED_SECTION, { section_id });
   }
 
   ngOnInit(): void {
