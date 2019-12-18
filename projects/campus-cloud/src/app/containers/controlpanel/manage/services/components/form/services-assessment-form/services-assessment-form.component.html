@@ -1,0 +1,16 @@
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-8">
+      <p class="title">
+        {{ 'services_label_service_assessment' | cpI18n }}</p>
+    </div>
+    <div class="col-4 float-right">
+      <span class="float-right">
+        <cp-switch [id]="false"
+                   (toggle)="onToggleAttendance($event)"
+                   [isChecked]="form.get('service_attendance').value">
+        </cp-switch>
+      </span>
+    </div>
+  </div>
+</form>

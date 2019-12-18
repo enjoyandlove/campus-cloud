@@ -1,0 +1,11 @@
+@import '~projects/campus-cloud/src/sass/components/form';
+
+form {
+  p.title {
+    @include font-24px();
+    @include font-bold();
+
+    margin: 0;
+    display: inline-block;
+  }
+}

@@ -26,6 +26,23 @@ import {
 
 @Injectable()
 export class ServicesUtilsService {
+  static getFromArray(arr: Array<any>, key: string, val: number) {
+    return arr.find((item) => item[key] === val);
+  }
+
+  static parseServiceCategories(categories) {
+    const _default = { label: '---', action: null };
+    const _categories = categories.map((category) => {
+      return {
+        action: category.id,
+        label: category.name
+      };
+    });
+
+    _categories.unshift(_default);
+    return _categories;
+  }
+
   membershipTypes = [
     {
       action: true,
