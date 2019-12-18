@@ -1,171 +1,75 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
-import { of as observableOf } from 'rxjs';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { of } from 'rxjs';
 
-import { ServicesModule } from '../services.module';
-import { ServicesService } from '../services.service';
-import { CPTestModule } from '@campus-cloud/shared/tests';
+import { CPSession } from '@campus-cloud/session';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { ServicesUtilsService } from '../services.utils.service';
 import { ServicesEditComponent } from './services-edit.component';
-import { RatingScale, ServiceAttendance } from '../services.status';
+import { mockService } from '@controlpanel/manage/services/tests';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { ServicesService } from '@controlpanel/manage/services/services.service';
+import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
 
-class MockService {
-  dummy;
+describe('ServicesEditComponent', () => {
+  configureTestSuite();
 
-  getServiceById(serviceId: number) {
-    this.dummy = [serviceId];
+  beforeAll((done) => {
+    (async () => {
+      TestBed.configureTestingModule({
+        declarations: [ServicesEditComponent],
+        providers: [ServicesService, provideMockStore(), ServicesUtilsService],
+        imports: [CPTestModule],
+        schemas: [NO_ERRORS_SCHEMA]
+      });
+      await TestBed.compileComponents();
+    })()
+      .then(done)
+      .catch(done.fail);
+  });
 
-    return observableOf({});
-  }
-
-  getCategories() {
-    return observableOf({});
-  }
-
-  updateService(body: any, serviceId: number) {
-    this.dummy = [body, serviceId];
-
-    return observableOf({});
-  }
-}
-
-const mockService = require('../mock.json');
-
-const mockCategories = [
-  {
-    id: 23,
-    name: 'Hello World 1'
-  },
-  {
-    id: 24,
-    name: 'Hello World 2'
-  }
-];
-
-const mockLocation = {
-  city: 'Montreal',
-  province: '',
-  country: 'Canada',
-  name: 'Milton Pizza',
-  postal_code: 'H3A 2A8',
-  fromUsersLocations: true,
-  latitude: 45.5068431590247,
-  longitude: -73.5762119293213,
-  address: '635-659 Milton St, Montreal, QC H3A 2A8, Canada'
-};
-
-describe('ServicesUpdateComponent', () => {
   let spy;
-  let component: ServicesEditComponent;
+  let session;
   let fixture: ComponentFixture<ServicesEditComponent>;
+  let component: ServicesEditComponent;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [CPTestModule, ServicesModule, HttpClientModule, RouterTestingModule],
-      providers: [
-        provideMockStore(),
-        ServicesUtilsService,
-        { provide: ServicesService, useClass: MockService }
-      ]
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ServicesEditComponent);
+    fixture = TestBed.createComponent(ServicesEditComponent);
+    component = fixture.componentInstance;
 
-        component = fixture.componentInstance;
-        component.session.g.set('school', mockSchool);
-        component.serviceId = 123;
+    session = TestBed.get(CPSession);
+    session.g.set('school', mockSchool);
 
-        spyOn(component.router, 'navigate');
-        spyOn(component.servicesService, 'getCategories').and.returnValue(
-          observableOf(mockCategories)
-        );
+    spyOn(component, 'trackEvent');
+    spyOn(component, 'handleError');
+    spyOn(component.router, 'navigate');
+    spyOn(component.servicesService, 'getServiceById').and.returnValue(of(mockService));
 
-        spyOn(component.servicesService, 'getServiceById').and.returnValue(
-          observableOf(mockService[0])
-        );
-
-        spy = spyOn(component.servicesService, 'updateService').and.returnValue(observableOf({}));
-
-        component.ngOnInit();
-      });
+    fixture.detectChanges();
   }));
 
-  it('onResetMap', () => {
-    component.onResetMap();
-
-    expect(component.drawMarker.value).toBe(false);
-    expect(component.form.controls['room_data'].value).toBe('');
-    expect(component.mapCenter.value.lat).toEqual(mockSchool.latitude);
-    expect(component.mapCenter.value.lng).toEqual(mockSchool.latitude);
-  });
-
-  it('onPlaceChange', () => {
-    component.onPlaceChange(mockLocation);
-
-    expect(component.form.controls['city'].value).toEqual(mockLocation.city);
-    expect(component.form.controls['location'].value).toEqual(mockLocation.name);
-    expect(component.form.controls['country'].value).toEqual(mockLocation.country);
-    expect(component.form.controls['address'].value).toEqual(mockLocation.address);
-    expect(component.form.controls['latitude'].value).toEqual(mockLocation.latitude);
-    expect(component.form.controls['longitude'].value).toEqual(mockLocation.longitude);
-    expect(component.form.controls['postal_code'].value).toEqual(mockLocation.postal_code);
-  });
-
-  it('should show/hide location details & set location required/optional onLocationToggle ', () => {
-    component.form.get('address').setValue(null);
-    component.onLocationToggle(true);
-
-    expect(component.showLocationDetails).toBe(true);
-    expect(component.form.get('address').invalid).toBe(true);
-
-    // reset location
-    component.onLocationToggle(false);
-
-    expect(component.drawMarker.value).toBe(false);
-    expect(component.showLocationDetails).toBe(false);
-    expect(component.form.get('room_data').value).toBe('');
-    expect(component.form.get('address').invalid).toBe(false);
-    expect(component.mapCenter.value.lat).toEqual(mockSchool.latitude);
-    expect(component.mapCenter.value.lng).toEqual(mockSchool.latitude);
-  });
-
   it('form validation should fail required fields missing', () => {
-    component.form.controls['name'].setValue(null);
-    component.form.controls['category'].setValue(null);
-    component.form.controls['logo_url'].setValue(null);
+    const errorMessage = component.cpI18n.translate('error_fill_out_marked_fields');
+    component.form.get('name').setValue(null);
 
     component.onSubmit();
 
     expect(component.formError).toBe(true);
     expect(component.form.valid).toBe(false);
+    expect(component.handleError).toHaveBeenCalled();
     expect(component.buttonData.disabled).toBe(false);
-  });
-
-  it('onToggleAttendance', () => {
-    const feedbackLabel = component.cpI18n.translate('services_default_feedback_question');
-    component.onToggleAttendance(true);
-
-    expect(component.form.controls['rating_scale_maximum'].value).toBe(RatingScale.maxScale);
-    expect(component.form.controls['default_basic_feedback_label'].value).toBe(feedbackLabel);
-    expect(component.form.controls['service_attendance'].value).toBe(ServiceAttendance.enabled);
-
-    component.onToggleAttendance(false);
-
-    expect(component.form.controls['default_basic_feedback_label'].value).toBeNull();
-    expect(component.form.controls['rating_scale_maximum'].value).toBe(RatingScale.noScale);
-    expect(component.form.controls['service_attendance'].value).toBe(ServiceAttendance.disabled);
+    expect(component.handleError).toHaveBeenCalledWith(errorMessage);
   });
 
   it('should update service', () => {
+    spy = spyOn(component.servicesService, 'updateService').and.returnValue(of({}));
+
     component.onSubmit();
 
     expect(spy).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalledTimes(1);
     expect(component.formError).toBe(false);
     expect(component.form.valid).toBe(true);
+    expect(component.trackEvent).toHaveBeenCalled();
+    expect(component.router.navigate).toHaveBeenCalled();
   });
 });

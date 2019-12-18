@@ -51,6 +51,8 @@ export interface IService {
 
   secondary_name: string;
 
+  has_membership: boolean;
+
   school_campus_id: number;
 
   campus_service_id: number;
