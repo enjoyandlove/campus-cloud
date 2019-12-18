@@ -85,9 +85,13 @@ export class FeedsComponent extends BaseComponent implements OnInit {
         query: ''
       };
 
-      this.pageNumber = 1;
+      this.resetPagination();
       this.fetch();
       return;
+    }
+
+    if (this.pageNumber > 1 && !this.state.query) {
+      this.resetPagination();
     }
 
     this.state = {
