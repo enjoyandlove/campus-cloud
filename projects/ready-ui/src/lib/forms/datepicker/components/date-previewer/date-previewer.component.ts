@@ -196,7 +196,14 @@ export class DatePreviewerComponent implements OnInit {
 
   emitChange() {
     const date = this._date.clone();
-    const hours = this.period === 'PM' ? Number(this._hours) + 12 : Number(this._hours);
+    let hours = this.period === 'PM' ? Number(this._hours) + 12 : Number(this._hours);
+
+    if (hours === 24 && this.period === 'PM') {
+      hours = 12;
+    } else if (hours === 12 && this.period === 'AM') {
+      hours = 0;
+    }
+
     date.hour(hours);
     date.minute(Number(this._minutes));
 
