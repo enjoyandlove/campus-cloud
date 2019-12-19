@@ -8,7 +8,7 @@
   "scripts": {
     "i18n": "phraseapp pull",
     "precommit": "pretty-quick --staged",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -c projects/ready-ui/.storybook/",
     "build-libs": "node scripts/ready-ui/build.js",
     "release": "node_modules/.bin/standard-version",
     "lint": "node_modules/@angular/cli/bin/ng lint",
@@ -79,6 +79,7 @@
     "@commitlint/cli": "8.2.0",
     "@commitlint/config-conventional": "8.2.0",
     "@storybook/addon-a11y": "5.0.11",
+    "@storybook/addon-centered": "5.0.11",
     "@storybook/addon-knobs": "5.0.11",
     "@storybook/addon-notes": "5.0.11",
     "@storybook/addons": "5.0.11",
