@@ -14,36 +14,35 @@ storiesOf('Chart', module)
       imports: [ChartsModule]
     })
   )
-  .add(
-    'Line Default',
-    () => {
-      const colors = ['#2096f3', '#ffa941'];
-      const xLabels = ['Oct 1', 'Oct2', 'Oct3'];
-      const series = [
-        {
-          name: 'Downloads',
-          type: 'line',
-          data: mockDataGenerator(xLabels.length)
-        },
-        {
-          name: 'Registrations',
-          type: 'line',
-          data: mockDataGenerator(xLabels.length)
-        }
-      ];
+  .add('Line Default', () => {
+    const colors = ['#2096f3', '#ffa941'];
+    const xLabels = ['Oct 1', 'Oct2', 'Oct3'];
+    const series = [
+      {
+        name: 'Downloads',
+        type: 'line',
+        data: mockDataGenerator(xLabels.length)
+      },
+      {
+        name: 'Registrations',
+        type: 'line',
+        data: mockDataGenerator(xLabels.length)
+      }
+    ];
 
-      return {
-        props: {
-          series,
-          colors,
-          xLabels
-        },
-        template:
-          '<ready-ui-line-chart [colors]="colors" [xLabels]="xLabels" [series]="series"></ready-ui-line-chart>'
-      };
-    },
-    { notes: 'A very simple example of addon notes' }
-  )
+    return {
+      props: {
+        series,
+        colors,
+        xLabels
+      },
+      template: `<ready-ui-line-chart
+          [colors]="colors"
+          [xLabels]="xLabels"
+          [series]="series"
+          style="display: block; width: 100%; height: 300px;" ></ready-ui-line-chart>`
+    };
+  })
   .add('Line Dashed', () => {
     const colors = ['#2096f3', '#ffa941'];
     const xLabels = ['Oct 1', 'Oct2', 'Oct3'];
@@ -68,8 +67,11 @@ storiesOf('Chart', module)
         colors,
         xLabels
       },
-      template:
-        '<ready-ui-line-chart [colors]="colors" [xLabels]="xLabels" [series]="series"></ready-ui-line-chart>'
+      template: `<ready-ui-line-chart
+          [colors]="colors"
+          [xLabels]="xLabels"
+          [series]="series"
+          style="display: block; width: 100%; height: 300px;"></ready-ui-line-chart>`
     };
   })
   .add('Bar Chart', () => {
@@ -122,7 +124,12 @@ storiesOf('Chart', module)
         yAxis,
         xAxis
       },
-      template: `<ready-ui-bar-chart [colors]="colors" [xAxis]="xAxis" [yAxis]="yAxis" [series]="series"></ready-ui-bar-chart>`
+      template: `<ready-ui-bar-chart
+        [colors]="colors"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [series]="series"
+        style="display: block; width: 100%; height: 300px;"></ready-ui-bar-chart>`
     };
   })
   .add('Bar Chart Update', () => {
@@ -165,6 +172,12 @@ storiesOf('Chart', module)
         colors,
         yAxis
       },
-      template: `<ready-ui-bar-chart [colors]="colors" [yAxis]="yAxis" [series]="series"></ready-ui-bar-chart>`
+      template: `
+        <ready-ui-bar-chart
+          [colors]="colors"
+          [yAxis]="yAxis"
+          [series]="series"
+          style="display: block; width: 100%; height: 300px;">
+        </ready-ui-bar-chart>`
     };
   });
