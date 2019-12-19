@@ -38,38 +38,21 @@
 
         <div class="row form-group">
           <div class="col-6">
-            <label for="start">{{ 'start_date' | cpI18n }}</label>
-            <ready-ui-popover>
-              <input id="start"
-                     type="text"
-                     readonly="readonly"
-                     uiPopoverYOffset="0"
-                     readyUiPopoverTrigger
-                     [class.error]="formError && form.get('start').invalid"
-                     [value]="form.get('start').value ? (form.get('start').value | cpDatePipe: dateFormat) : ''" />
-              <ready-ui-date-picker (dateChange)="setStart($event)"
-                                    (click)="$event.stopPropagation()"
-                                    [timeLabel]="'t_shared_select_time' | cpI18n"
-                                    [initialDate]="form.get('start').value * 1000 || undefined">
-              </ready-ui-date-picker>
-            </ready-ui-popover>
+            <label>{{ 'start_date' | cpI18n }}</label>
+            <cp-datepicker cpTarget="start_date"
+                           [options]="startdatePickerOpts"
+                           [error]="formError && form.get('start').invalid"
+                           (dateSet)="setStart($event)">
+            </cp-datepicker>
+
           </div>
           <div class="col-6">
-            <label for="end">{{ 'end_date' | cpI18n }}</label>
-            <ready-ui-popover>
-              <input id="end"
-                     type="text"
-                     readonly="readonly"
-                     uiPopoverYOffset="0"
-                     readyUiPopoverTrigger
-                     [class.error]="formError && form.get('end').invalid"
-                     [value]="form.get('end').value ? (form.get('end').value | cpDatePipe: dateFormat) : ''" />
-              <ready-ui-date-picker (dateChange)="setEnd($event)"
-                                    (click)="$event.stopPropagation()"
-                                    [timeLabel]="'t_shared_select_time' | cpI18n"
-                                    [initialDate]="form.get('end').value * 1000 || undefined">
-              </ready-ui-date-picker>
-            </ready-ui-popover>
+            <label>{{ 'end_date' | cpI18n }}</label>
+            <cp-datepicker cpTarget="end_date"
+                           [options]="enddatePickerOpts"
+                           [error]="formError && form.get('end').invalid"
+                           (dateSet)="setEnd($event)">
+            </cp-datepicker>
           </div>
         </div>
 

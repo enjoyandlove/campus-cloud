@@ -10,6 +10,12 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 import { CPI18nService, CPTrackingService, StoreService } from '@campus-cloud/shared/services';
 
+const FORMAT_WITH_TIME = 'F j, Y h:i K';
+const FORMAT_WITHOUT_TIME = 'F j, Y';
+const COMMON_DATE_PICKER_OPTIONS = {
+  enableTime: true
+};
+
 @Component({
   selector: 'cp-events-form',
   templateUrl: './events-form.component.html',
@@ -33,6 +39,8 @@ export class EventsFormComponent implements OnInit {
   eventProperties;
   school: ISchool;
   selectedManager;
+  enddatePickerOpts;
+  startdatePickerOpts;
   showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
   newAddress = new BehaviorSubject(null);
@@ -67,15 +75,47 @@ export class EventsFormComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.UPLOADED_PHOTO, properties);
   }
 
-  setStart(startTimeStamp: number) {
-    this.form.controls['start'].setValue(startTimeStamp);
+  setStart(date) {
+    this.form.controls['start'].setValue(CPDate.toEpoch(date, this.session.tz));
   }
 
-  setEnd(startTimeStamp: number) {
-    this.form.controls['end'].setValue(startTimeStamp);
+  setEnd(date) {
+    this.form.controls['end'].setValue(CPDate.toEpoch(date, this.session.tz));
+  }
+
+  updateDatePicker() {
+    const _self = this;
+    const end = this.form.controls['end'].value;
+    const start = this.form.controls['start'].value;
+
+    this.startdatePickerOpts = {
+      ...COMMON_DATE_PICKER_OPTIONS,
+      defaultDate: start ? CPDate.fromEpochLocal(start, _self.session.tz).format() : null
+    };
+    this.enddatePickerOpts = {
+      ...COMMON_DATE_PICKER_OPTIONS,
+      defaultDate: start ? CPDate.fromEpochLocal(end, _self.session.tz).format() : null
+    };
+  }
+
+  toggleDatePickerTime(checked) {
+    const dateFormat = checked ? FORMAT_WITHOUT_TIME : FORMAT_WITH_TIME;
+
+    this.startdatePickerOpts = {
+      ...this.startdatePickerOpts,
+      enableTime: !checked,
+      dateFormat
+    };
+
+    this.enddatePickerOpts = {
+      ...this.enddatePickerOpts,
+      enableTime: !checked,
+      dateFormat
+    };
   }
 
   onAllDayToggle(value) {
+    this.toggleDatePickerTime(value);
     this.form.controls['is_all_day'].setValue(value);
   }
 
@@ -227,5 +267,6 @@ export class EventsFormComponent implements OnInit {
   ngOnInit() {
     this.school = this.session.g.get('school');
     this.initialize();
+    this.updateDatePicker();
   }
 }
