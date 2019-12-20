@@ -1,9 +1,11 @@
+import { catchError, delay } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
+import { of, Observable } from 'rxjs';
 
+import { mockResult } from './search.mock';
 import { ApiService } from '@campus-cloud/base/services';
-import { of } from 'rxjs';
+import { SocialWallContent } from './model/feeds.interfaces';
 
 @Injectable()
 export class FeedsService {
@@ -130,5 +132,27 @@ export class FeedsService {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
 
     return this.api.update(url, data);
+  }
+
+  searchCampusWall(
+    startRange: number,
+    endRange: number,
+    search: HttpParams
+  ): Observable<SocialWallContent[]> {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.SEARCH_SOCIAL_WALL_CONTENT}/${startRange};${endRange}`;
+
+    return <Observable<SocialWallContent[]>>this.api.get(url, search, true);
+  }
+
+  getCampusThreadByIds(search: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}/`;
+
+    return this.api.get(url, search, true);
+  }
+
+  getGroupThreadsByIds(search: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_THREAD}/`;
+
+    return this.api.get(url, search, true);
   }
 }

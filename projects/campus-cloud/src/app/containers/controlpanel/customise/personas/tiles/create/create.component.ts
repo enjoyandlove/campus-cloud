@@ -129,6 +129,7 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     const emptySection = this.guideUtils.isTemporaryGuide(this.guide);
 
     if (emptySection && !this.guide._featuredTile) {
+      console.log('here not');
       const body = {
         ...this.guide,
         school_id: this.session.g.get('school').id
@@ -142,6 +143,9 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
           const newlyAddedSectionIndex = this.guideService.guides.findIndex(
             (guide) => guide.id === -1
           );
+
+          this.trackAddedNewSection(newCategory.id);
+
           this.guideService.guides[newlyAddedSectionIndex].id = newCategory.id;
 
           return this.createGuideLink(newCategory.id);
@@ -179,6 +183,10 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     this.router
       .navigate(['/studio/experiences', this.personaId])
       .then(() => this.handleSuccess('t_persona_tile_saved_successfully'));
+  }
+
+  trackAddedNewSection(section_id) {
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.STUDIO_ADDED_SECTION, { section_id });
   }
 
   doReset() {

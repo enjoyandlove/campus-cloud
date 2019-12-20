@@ -129,6 +129,8 @@ export const amplitudeEvents = {
 
   LAST_YEAR: 'Last Year',
 
+  ALL_POSTS: 'All Posts',
+
   EXPERIENCE: 'Experience',
 
   START_DATE: 'Start Date',
@@ -201,9 +203,11 @@ export const amplitudeEvents = {
 
   VIEWED_BANNER: 'Viewed Banner',
 
+  FLAGGED_POSTS: 'Flagged Posts',
+
   NO_ASSESSMENT: 'No Assessment',
 
-  RESOURCE_LIST: 'Resource List',
+  RESOURCE_LIST: 'Custom List',
 
   ALL_PROVIDERS: 'All Providers',
 
@@ -349,6 +353,8 @@ export const amplitudeEvents = {
 
   WALL_DELETED_COMMENT: 'Wall - Deleted Comment',
 
+  STUDIO_ADDED_SECTION: 'Studio - Added Section',
+
   MANAGE_UPDATED_EVENT: 'Manage - Updated Event',
 
   EXPORT_DATA_SUCCESS: 'Success - Exported Data',
@@ -374,6 +380,8 @@ export const amplitudeEvents = {
   COMMUNICATION_AUDIENCE_TYPE_AUDIENCE: 'Audience',
 
   MANAGE_CANCELED_EVENT: 'Manage - Cancelled Event',
+
+  STUDIO_DELETED_SECTION: 'Studio - Deleted Section',
 
   MANAGE_DELETED_CALENDAR: 'Manage Deleted Calendar',
 
@@ -442,6 +450,8 @@ export const amplitudeEvents = {
   STUDIO_DELETED_EXPERIENCE: 'Studio - Deleted Experience',
 
   MANAGE_DOWNLOADED_QR_CODE: 'Manage - Downloaded QR Code',
+
+  WALL_SEARCHED_INFORMATION: 'Wall - Searched Information',
 
   MANAGE_EMAIL_WEB_CHECK_IN: 'Manage - Email Web Check-In',
 

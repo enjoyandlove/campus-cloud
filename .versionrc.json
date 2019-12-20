@@ -1,0 +1,13 @@
+{
+  "changelogHeader": "# Campus Cloud Changelog",
+  "issueUrlFormat": "https://oohlalaproduct.atlassian.net/browse/{{id}}",
+  "compareUrlFormat": "https://gitlab.com/oohlalamobile-web/cc_front_end/compare/{{previousTag}}...{{currentTag}}",
+  "commitUrlFormat": "https://gitlab.com/oohlalamobile-web/cc_front_end/commit/{{hash}}",
+  "types": [
+    { "type": "feat", "section": "Features" },
+    { "type": "fix", "section": "Bug Fixes" },
+    { "type": "docs", "section": "Docs", "hidden": false },
+    { "type": "refactor", "section": "Refactor", "hidden": false },
+    { "type": "test", "hidden": false }
+  ]
+}

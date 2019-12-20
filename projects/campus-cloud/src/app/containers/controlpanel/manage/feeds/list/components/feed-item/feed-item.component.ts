@@ -17,6 +17,7 @@ declare var $: any;
 })
 export class FeedItemComponent implements OnInit, OnDestroy {
   @Input() feed: any;
+  @Input() query: string;
   @Input() groupId: number;
   @Input() groupType: GroupType;
   @Input() isCampusWallView: Observable<any>;

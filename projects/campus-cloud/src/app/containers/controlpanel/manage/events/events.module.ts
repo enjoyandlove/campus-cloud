@@ -1,3 +1,4 @@
+import { ButtonModule } from '@ready-education/ready-ui';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -70,6 +71,7 @@ import {
     SharedModule,
     CheckInModule,
     LayoutsModule,
+    ButtonModule,
     ImageModule.forRoot(),
     EventsRoutingModule,
     ReactiveFormsModule,

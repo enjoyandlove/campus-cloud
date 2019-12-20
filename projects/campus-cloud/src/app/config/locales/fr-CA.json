@@ -3588,6 +3588,9 @@
   "t_shared_select_service": {
     "message": "Sélectionnez un service"
   },
+  "t_shared_select_time": {
+    "message": "Sélectionnez l'heure"
+  },
   "t_shared_show": {
     "message": "Montrer"
   },

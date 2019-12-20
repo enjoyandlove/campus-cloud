@@ -33,7 +33,9 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   editable;
   campusLinkId;
   tile: ITile;
+  defaultContent;
   persona: IPersona;
+  initialized = true;
   personaId: number;
   filterByWeb = false;
   guide: ICampusGuide;
@@ -106,9 +108,12 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
     this.formHasErrors = false;
     this.selectedContent = selectedContentId;
 
+    const changed_section =
+      this.defaultContent === selectedContentId ? amplitudeEvents.NO : amplitudeEvents.YES;
+
     this.editedTileEventProperties = {
       ...this.editedTileEventProperties,
-      changed_section: amplitudeEvents.YES
+      changed_section
     };
   }
 
@@ -188,6 +193,7 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
       this.campusLinkForm.value
     );
 
+    this.defaultContent = this.selectedContent;
     merge(this.campusLinkForm.valueChanges, this.campusGuideTileForm.valueChanges)
       .pipe(takeUntil(this.destroy$))
       .subscribe(() => (this.formHasErrors = false));
@@ -218,12 +224,14 @@ export class PersonasTileEditComponent extends BaseComponent implements OnInit, 
   }
 
   onCampusLinkFormChange(newValues) {
+    if (!this.initialized) {
+      this.editedTileEventProperties = {
+        ...this.editedTileEventProperties,
+        changed_content: amplitudeEvents.YES
+      };
+    }
+    this.initialized = false;
     this.campusLinkForm.patchValue(newValues);
-
-    this.editedTileEventProperties = {
-      ...this.editedTileEventProperties,
-      changed_content: amplitudeEvents.YES
-    };
   }
 
   onChangedImage(isChanged: boolean) {

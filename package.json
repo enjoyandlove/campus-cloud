@@ -1,6 +1,6 @@
 {
   "name": "oohlalamobile_control_panel",
-  "version": "1.0.2",
+  "version": "1.3.0",
   "description": "Control Panel",
   "engines": {
     "node": ">=12.4.0"
@@ -8,13 +8,15 @@
   "scripts": {
     "i18n": "phraseapp pull",
     "precommit": "pretty-quick --staged",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -p 6006 -c projects/ready-ui/.storybook/",
     "build-libs": "node scripts/ready-ui/build.js",
+    "release": "node_modules/.bin/standard-version",
     "lint": "node_modules/@angular/cli/bin/ng lint",
     "start": "node_modules/@angular/cli/bin/ng serve",
     "analyze": "webpack-bundle-analyzer dist/stats-es2015.json",
-    "build-storybook": "build-storybook -c .storybook -o .out && echo readyeducation.surge.sh > .out/CNAME",
     "generate-build-file": "node scripts/campus-cloud/build.js",
+    "docs": "typedoc --out docs/campus-cloud/ projects/campus-cloud/",
+    "build-storybook": "build-storybook -c .storybook -o .out && echo readyeducation.surge.sh > .out/CNAME",
     "postbuild": "rimraf dist && mv _dist dist && mv dist/index.prod.html dist/index.html && gzipper ./dist",
     "test": "node_modules/@angular/cli/bin/ng test campus-cloud --watch=false --codeCoverage --sourceMap=false",
     "build": "yarn run generate-build-file && node --max_old_space_size=8192 node_modules/.bin/ng build --c=production"
@@ -38,7 +40,7 @@
     "@ngrx/router-store": "8.0.1",
     "@ngrx/store": "8.0.1",
     "@ngrx/store-devtools": "8.0.1",
-    "@ready-education/ready-ui": "0.0.12",
+    "@ready-education/ready-ui": "0.1.5",
     "@sentry/browser": "5.5.0",
     "@simonwep/pickr": "1.2.7",
     "amplitude-js": "5.2.2",
@@ -74,7 +76,10 @@
     "@angular/cli": "~8.0.3",
     "@angular/compiler-cli": "~8.0.1",
     "@babel/core": "^7.5.5",
+    "@commitlint/cli": "8.2.0",
+    "@commitlint/config-conventional": "8.2.0",
     "@storybook/addon-a11y": "5.0.11",
+    "@storybook/addon-centered": "5.0.11",
     "@storybook/addon-knobs": "5.0.11",
     "@storybook/addon-notes": "5.0.11",
     "@storybook/addons": "5.0.11",
@@ -120,9 +125,11 @@
     "remap-istanbul": "0.13.0",
     "rimraf": "^2.6.3",
     "shelljs": "0.8.3",
+    "standard-version": "7.0.1",
     "terser-webpack-plugin": "2.0.1",
     "tsickle": "^0.35.0",
     "tslint": "5.17.0",
+    "typedoc": "0.15.4",
     "typescript": "3.4.5",
     "webpack-bundle-analyzer": "3.3.2"
   },

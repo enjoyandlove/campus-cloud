@@ -1,3 +1,4 @@
+import { CPTrackingService } from './../../../../../shared/services/tracking.service';
 import { Component, OnInit } from '@angular/core';
 
 import { FeedsComponent } from './base';
@@ -18,9 +19,10 @@ export class FeedsListComponent extends FeedsComponent implements OnInit {
   constructor(
     public session: CPSession,
     public service: FeedsService,
+    public cpTracking: CPTrackingService,
     private headerService: ManageHeaderService
   ) {
-    super(session, service);
+    super(session, service, cpTracking);
     super.isLoading().subscribe((res) => (this.loading = res));
   }
 

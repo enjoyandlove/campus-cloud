@@ -37,6 +37,18 @@
         word-break: break-word;
       }
 
+      em {
+        color: white;
+        padding: 0px 4px;
+        border-radius: 3px;
+        font-style: normal;
+        background: $color-brand;
+
+        a {
+          color: white;
+        }
+      }
+
       a {
         max-width: 100%;
         color: $color-brand;

@@ -10,50 +10,54 @@ import { FeedsUtilsService } from './feeds.utils.service';
 import { FeedsRoutingModule } from './feeds.routing.module';
 import { FeedsComponent } from './list/base/feeds.component';
 import { SharedModule } from '../../../../shared/shared.module';
+import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
 
 import {
-  FeedApproveCommentModalComponent,
-  FeedApproveModalComponent,
   FeedBodyComponent,
-  FeedCommentComponent,
-  FeedCommentsComponent,
-  FeedDeleteCommentModalComponent,
-  FeedDeleteModalComponent,
-  FeedDropdownComponent,
-  FeedFiltersComponent,
-  FeedHeaderComponent,
-  FeedInputBoxComponent,
   FeedItemComponent,
   FeedMoveComponent,
-  FeedSettingsComponent
+  FeedHeaderComponent,
+  FeedSearchComponent,
+  FeedCommentComponent,
+  FeedFiltersComponent,
+  FeedCommentsComponent,
+  FeedSettingsComponent,
+  FeedDropdownComponent,
+  FeedInputBoxComponent,
+  FeedDeleteModalComponent,
+  FeedApproveModalComponent,
+  FeedDeleteCommentModalComponent,
+  FeedApproveCommentModalComponent
 } from './list/components';
 
 @NgModule({
   declarations: [
-    FeedsListComponent,
+    FeedsComponent,
     FeedMoveComponent,
     FeedItemComponent,
+    FeedBodyComponent,
+    FeedsListComponent,
+    FeedHeaderComponent,
+    FeedSearchComponent,
     FeedCommentComponent,
+    FeedFiltersComponent,
+    FeedDropdownComponent,
     FeedInputBoxComponent,
     FeedSettingsComponent,
-    FeedFiltersComponent,
     FeedCommentsComponent,
-    FeedHeaderComponent,
-    FeedBodyComponent,
-    FeedDropdownComponent,
     FeedDeleteModalComponent,
     FeedApproveModalComponent,
     FeedDeleteCommentModalComponent,
-    FeedApproveCommentModalComponent,
-    FeedsComponent
+    FeedApproveCommentModalComponent
   ],
 
   imports: [
     CommonModule,
     SharedModule,
-    FeedsRoutingModule,
     RouterModule,
+    LayoutsModule,
+    FeedsRoutingModule,
     ReactiveFormsModule,
     LazyLoadImagesModule,
     ImageModule.forRoot()
@@ -62,22 +66,23 @@ import {
   providers: [FeedsService, FeedsUtilsService],
 
   exports: [
-    FeedsListComponent,
+    FeedsComponent,
     FeedMoveComponent,
     FeedItemComponent,
+    FeedsListComponent,
+    FeedBodyComponent,
+    FeedHeaderComponent,
+    FeedSearchComponent,
     FeedCommentComponent,
+    FeedFiltersComponent,
+    FeedDropdownComponent,
     FeedInputBoxComponent,
     FeedSettingsComponent,
-    FeedFiltersComponent,
     FeedCommentsComponent,
-    FeedHeaderComponent,
-    FeedBodyComponent,
-    FeedDropdownComponent,
     FeedDeleteModalComponent,
     FeedApproveModalComponent,
     FeedDeleteCommentModalComponent,
-    FeedApproveCommentModalComponent,
-    FeedsComponent
+    FeedApproveCommentModalComponent
   ]
 })
 export class FeedsModule {}

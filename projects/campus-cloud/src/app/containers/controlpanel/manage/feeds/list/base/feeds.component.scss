@@ -3,3 +3,8 @@
 .no-content {
   @include card-margin();
 }
+
+cp-feed-search {
+  display: block;
+  margin-bottom: $default_margin;
+}

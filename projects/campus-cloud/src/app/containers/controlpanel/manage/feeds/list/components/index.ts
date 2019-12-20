@@ -1,6 +1,7 @@
 export * from './feed-body';
 export * from './feed-item';
 export * from './feed-header';
+export * from './feed-search';
 export * from './feed-filters';
 export * from './feed-comment';
 export * from './feed-dropdown';

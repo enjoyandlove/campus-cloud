@@ -1,0 +1,10 @@
+<ng-content select="[readyUiPopoverTrigger]"></ng-content>
+
+<ng-template #popoverBody>
+  <div cdkTrapFocus
+       cdkTrapFocusAutoCapture
+       class="popover-body"
+       (click)="onBodyClick()">
+    <ng-content></ng-content>
+  </div>
+</ng-template>

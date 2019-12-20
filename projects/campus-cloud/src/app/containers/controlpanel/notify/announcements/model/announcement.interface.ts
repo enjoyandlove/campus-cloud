@@ -18,6 +18,7 @@ export interface IAnnouncement {
 export interface IListDetail {
   id: number;
   name: string;
+  type: number;
 }
 
 export interface IUserDetail {
