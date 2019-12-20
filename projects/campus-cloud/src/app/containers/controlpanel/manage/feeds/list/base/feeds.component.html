@@ -1,7 +1,6 @@
 <ng-container [ngSwitch]="loading">
   <cp-one-column width="third">
-    <cp-feed-search (feedSearch)="searchHandler($event)"
-                    *cpFeatureToggle="searchFlag"></cp-feed-search>
+    <cp-feed-search (feedSearch)="searchHandler($event)"></cp-feed-search>
     <div class="row justify-content-around"
          lazy-load-images>
       <div class="col-12">

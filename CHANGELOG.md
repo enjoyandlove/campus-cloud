@@ -1,4 +1,23 @@
 # Campus Cloud Changelog
+## 1.3.0 (2019-12-20)
+
+
+### Features
+
+* Wall Search #WEB-4285 ([3f1cda3](https://gitlab.com/oohlalamobile-web/cc_front_end/commit/3f1cda3d51a83fe80670e4778d2242a53bcd0d11)), closes [#WEB-4285](https://oohlalaproduct.atlassian.net/browse/WEB-4285)
+
+
+### Bug Fixes
+
+* #WEB-4347 ([4ad7788](https://gitlab.com/oohlalamobile-web/cc_front_end/commit/4ad77880d7f84385a275b3fe32318a65c66bbf9e)), closes [#WEB-4347](https://oohlalaproduct.atlassian.net/browse/WEB-4347)
+* #WEB-4349 ([e206cee](https://gitlab.com/oohlalamobile-web/cc_front_end/commit/e206cee9482536052e4f5a972c03f0718624202d)), closes [#WEB-4349](https://oohlalaproduct.atlassian.net/browse/WEB-4349)
+* #WEB-4385 "Bugfix/ pagination reset on search" ([c854a49](https://gitlab.com/oohlalamobile-web/cc_front_end/commit/c854a49bab78770fef8c5afc484a3f37ab984c42)), closes [#WEB-4385](https://oohlalaproduct.atlassian.net/browse/WEB-4385)
+* WEB-4334 "Bugfix/ chrome search type input" ([ed6dc0a](https://gitlab.com/oohlalamobile-web/cc_front_end/commit/ed6dc0afa4f56a9e0c1cb5e93f5ecf2cf921a864))
+
+
+### Refactor
+
+* #WEB-4317 added single form for service create/edit ([c8cb0a8](https://gitlab.com/oohlalamobile-web/cc_front_end/commit/c8cb0a83bf93322a14bd8ee0aa383d1d05d3988c)), closes [#WEB-4317](https://oohlalaproduct.atlassian.net/browse/WEB-4317)
 
 ### [1.2.5](https://gitlab.com/oohlalamobile-web/cc_front_end/compare/v1.2.3...v1.2.5) (2019-12-11)
 
