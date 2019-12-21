@@ -1,8 +1,7 @@
+import { ButtonModule, IconsModule } from '@ready-education/ready-ui';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
 import { select, text } from '@storybook/addon-knobs';
-
-import { ButtonModule } from './button.module';
 
 const variants = {
   Flat: 'flat',
@@ -27,12 +26,12 @@ const disabled = {
 storiesOf('Button', module)
   .addDecorator(
     moduleMetadata({
-      imports: [ButtonModule]
+      imports: [ButtonModule, IconsModule]
     })
   )
   .addDecorator(centered)
   .add(
-    'Default',
+    'Button',
     () => {
       return {
         props: {
@@ -54,4 +53,23 @@ storiesOf('Button', module)
     {
       notes: require('./README.md')
     }
-  );
+  )
+  .add('Button with icon', () => {
+    return {
+      styles: [
+        `
+      ready-ui-icon {
+        margin-left: 0.2em;
+      }
+      `
+      ],
+      template: `
+        <ready-ui-symbol></ready-ui-symbol>
+        <button
+          ui-button
+          type="button"
+          color="primary"
+          variant="flat"
+          type="button">Like <ready-ui-icon name="thumb_up" color="fff" size="small"></ready-ui-icon></button>`
+    };
+  });

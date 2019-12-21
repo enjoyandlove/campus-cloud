@@ -1,7 +1,8 @@
 {
   "name": "@ready-education/ready-ui",
-  "version": "0.1.5",
+  "version": "0.2.0",
   "author": "andres@oohlalamobile.com",
+  "homepage": "https://www.npmjs.com/package/@ready-education/ready-ui",
   "description": "Ready Education UI library",
   "peerDependencies": {
     "moment": "^2.24.0",

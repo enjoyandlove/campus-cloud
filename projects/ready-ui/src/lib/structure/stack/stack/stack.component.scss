@@ -1,0 +1,93 @@
+.ui-stack {
+  display: flex !important;
+
+  &.alignment-center {
+    justify-content: center;
+  }
+
+  &.alignment-even {
+    justify-content: space-evenly;
+  }
+
+  &.alignment-between {
+    justify-content: space-between;
+  }
+
+  &--direction-vertical {
+    flex-direction: column;
+
+    &.alignment-start {
+      justify-content: flex-start;
+    }
+
+    &.alignment-start,
+    &.alignment-center {
+      .spacing-regular:not(:last-child) {
+        margin-bottom: 1em;
+      }
+
+      .spacing-tight:not(:last-child) {
+        margin-bottom: 0.5em;
+      }
+
+      .spacing-loose:not(:last-child) {
+        margin-bottom: 1.5em;
+      }
+    }
+
+    &.alignment-end {
+      justify-content: flex-end;
+
+      .spacing-regular:not(:first-child) {
+        margin-top: 1em;
+      }
+
+      .spacing-tight:not(:first-child) {
+        margin-top: 0.5em;
+      }
+
+      .spacing-loose:not(:first-child) {
+        margin-top: 1.5em;
+      }
+    }
+  }
+
+  &--direction-horizontal {
+    flex-direction: row;
+
+    &.alignment-start {
+      justify-content: flex-start;
+    }
+
+    &.alignment-start,
+    &.alignment-center {
+      .spacing-regular:not(:last-child) {
+        margin-right: 1em;
+      }
+
+      .spacing-tight:not(:last-child) {
+        margin-right: 0.5em;
+      }
+
+      .spacing-loose:not(:last-child) {
+        margin-right: 1.5em;
+      }
+    }
+
+    &.alignment-end {
+      justify-content: flex-end;
+
+      .spacing-regular:not(:first-child) {
+        margin-left: 1em;
+      }
+
+      .spacing-tight:not(:first-child) {
+        margin-left: 0.5em;
+      }
+
+      .spacing-loose:not(:first-child) {
+        margin-left: 1.5em;
+      }
+    }
+  }
+}

@@ -1,0 +1,21 @@
+:host {
+  width: 24px;
+  height: 24px;
+  display: flex;
+
+  &.icon--small {
+    width: 14px;
+    height: 14px;
+
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+  }
+}
+
+svg {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+}
