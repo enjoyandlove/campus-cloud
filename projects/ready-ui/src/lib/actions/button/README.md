@@ -20,6 +20,9 @@
 import { ButtonModule } from '@ready-education/ready-ui';
 ```
 
+## When to use it?
+TODO
+
 
 ## Selector
 `button[ui-button]`
@@ -27,21 +30,21 @@ import { ButtonModule } from '@ready-education/ready-ui';
 
 ## Inputs
 
-- Color
+- **Color**
 
-  **Type** `string`
+  Type `string`
 
-  **Required** `false`
+  Required `false`
 
-  **Options** `primary`, `danger`, `warning`, `default`, `white`
+  Options `primary`, `danger`, `warning`, `default`, `white`
 
-- Variant
+- **Variant**
 
-  **Type** `string`
+  Type `string`
 
-  **Required** `false`
+  Required `false`
 
-  **Options** `stroked`, `flat`, `basic`, `inline`
+  Options `stroked`, `flat`, `basic`, `inline`
 
 
 ## Outputs
