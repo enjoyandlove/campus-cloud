@@ -2373,6 +2373,9 @@
   "t_assess_list_event_names": {
     "message": "List of Events Attended"
   },
+  "t_assess_list_orientation_event_names": {
+    "message": "List of Orientation Events Attended"
+  },
   "t_assess_list_service_names": {
     "message": "List of Services Visited"
   },
@@ -2384,6 +2387,9 @@
   },
   "t_assess_number_events": {
     "message": "Number of Events"
+  },
+  "t_assess_number_orientation_events": {
+    "message": "Number of Orientation Events"
   },
   "t_assess_number_services": {
     "message": "Number of Services"
@@ -2404,10 +2410,10 @@
     "message": "Top Programs"
   },
   "t_assess_total_engagement": {
-    "message": "Total Engagement (Number of Events + Number of Services)"
+    "message": "Total Engagement (Number of Events + Number of Orientation Events + Number of Services)"
   },
   "t_assess_total_orientation_programs": {
-    "message": "Total Programs"
+    "message": "Orientation Events"
   },
   "t_assess_total_orientation_programs_assessed": {
     "message": "Programs Assessed"

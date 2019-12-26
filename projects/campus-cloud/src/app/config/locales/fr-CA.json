@@ -2400,11 +2400,8 @@
   "t_assess_top_orientation_programs": {
     "message": "Programmes populaires"
   },
-  "t_assess_total_engagement": {
-    "message": "Total de l'engagement (nombre d'événements + nombre de services)"
-  },
   "t_assess_total_orientation_programs": {
-    "message": "Total de programmes"
+    "message": "Orientation Events"
   },
   "t_assess_total_orientation_programs_assessed": {
     "message": "Programmes évalués"
