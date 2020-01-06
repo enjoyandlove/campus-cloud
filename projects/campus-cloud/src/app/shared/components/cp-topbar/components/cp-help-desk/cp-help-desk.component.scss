@@ -24,6 +24,17 @@
       margin-right: 0.5rem;
     }
 
+    &--whats-new:after {
+      top: 32px;
+      width: 6px;
+      right: 15px;
+      height: 6px;
+      content: "";
+      position: absolute;
+      border-radius: 5px;
+      background: $color-danger;
+    }
+
     &--timestamp {
       height: 100%;
       flex-direction: column;
