@@ -7,7 +7,8 @@
        (click)="trackHelpDeskAction('What\'s New')">
       <span class="emoji"
             role="img"
-            aria-label="new">🌟</span>
+            aria-label="new"
+            [class.help-desk__item--whats-new]="highlight">🌟</span>
 
       {{ 't_help_desk_whats_new' | cpI18n }}
     </a>
