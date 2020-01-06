@@ -129,7 +129,7 @@ export class ResourceSelectorTypeWebComponent implements OnInit, OnDestroy {
       const value =
         this.form.valid && this.selectedItem
           ? { ...this.form.value, link_url: protocolCheck(this.form.get('link_url').value) }
-          : { ...this.form.value, link_url: '' };
+          : { ...this.form.value };
       this.valueChanges.emit(value);
     });
 
