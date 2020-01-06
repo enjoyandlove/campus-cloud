@@ -26,6 +26,7 @@ interface IState {
   wall_type: number;
   feeds: Array<any>;
   post_types: number;
+  is_integrated: boolean;
   isCampusThread: boolean;
   currentView?: ICurrentView;
   flagged_by_users_only: number;
@@ -39,6 +40,7 @@ const state: IState = {
   group_id: null,
   wall_type: null,
   currentView: null,
+  is_integrated: false,
   isCampusThread: true,
   flagged_by_users_only: null,
   removed_by_moderators_only: null
@@ -218,12 +220,14 @@ export class FeedsComponent extends BaseComponent implements OnInit {
         ]).pipe(
           map(([threads, channels]: any) => {
             const name = !this.state.post_types
-              ? 'All Categories'
+              ? amplitudeEvents.All_CATEGORIES
               : channels.find((c) => c.id === this.state.post_types).name;
+
+            const categoryName = !this.state.is_integrated ? name : amplitudeEvents.INTEGRATED_FEED;
 
             amplitude = {
               ...amplitude,
-              campus_wall_category: name
+              campus_wall_category: categoryName
             };
 
             threads = threads.map((t) => {
@@ -284,6 +288,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
       wall_type: data.wall_type,
       post_types: data.post_types,
       currentView: data.currentView,
+      is_integrated: data.is_integrated,
       isCampusThread: data.wall_type === 1,
       flagged_by_users_only: data.flagged_by_users_only,
       removed_by_moderators_only: data.removed_by_moderators_only
