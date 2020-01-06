@@ -213,6 +213,8 @@ export const amplitudeEvents = {
 
   SELECT_ACCESS: 'Select Access',
 
+  All_CATEGORIES: 'All Categories',
+
   NO_ENGAGEMENT: 'No Engagement',
 
   SERVICE_EVENT: 'Service Event',
@@ -248,6 +250,8 @@ export const amplitudeEvents = {
   START_END_DATE: 'Start & End Date',
 
   CREATED_ACCOUNT: 'Created Account',
+
+  INTEGRATED_FEED: 'Integrated Feed',
 
   CALENDAR_EVENTS: 'Calendar Events',
 
