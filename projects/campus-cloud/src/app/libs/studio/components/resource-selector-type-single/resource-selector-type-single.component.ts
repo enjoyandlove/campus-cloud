@@ -150,8 +150,7 @@ export class ResourceSelectorTypeSingleComponent implements OnInit, OnDestroy {
       }
     );
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      const value = this.form.valid ? this.form.value : { ...this.form.value, link_url: null };
-      this.valueChanges.emit(value);
+      this.valueChanges.emit(this.form.value);
     });
   }
 

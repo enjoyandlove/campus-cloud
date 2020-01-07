@@ -90,33 +90,6 @@ describe('ResourceSelectorTypeWebComponent', () => {
 
         expect(valueChangesSpy).toHaveBeenCalledWith(component.form.value);
       });
-
-      it('should emit { link_url: "" } when invalid or selectedItem is not defined', () => {
-        component.selectedItem = null;
-        fixture.detectChanges();
-        const valueChangesSpy = spyOn(component.valueChanges, 'emit');
-        const invalidForm = {
-          link_url: null,
-          open_in_browser: 0
-        };
-
-        component.form.patchValue(invalidForm);
-
-        expect(valueChangesSpy).toHaveBeenCalledWith({ ...component.form.value, link_url: '' });
-
-        const validForm = {
-          link_type: 0,
-          link_url: 'http://google.com',
-          open_in_browser: 0
-        };
-
-        component.form.patchValue(validForm);
-
-        expect(valueChangesSpy).toHaveBeenCalledWith({ ...component.form.value, link_url: '' });
-
-        component.selectedItem = 'notNull';
-        fixture.detectChanges();
-      });
     });
   });
 

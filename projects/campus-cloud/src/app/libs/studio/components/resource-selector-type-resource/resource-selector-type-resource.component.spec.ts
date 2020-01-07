@@ -97,12 +97,6 @@ describe('ResourceSelectorTypeResourceComponent', () => {
 
         expect(valueChangesSpy).toHaveBeenCalledWith(component.form.value);
       });
-
-      it('should emit {link_url: null}, when form is invalid', () => {
-        component.form.patchValue({ link_url: null });
-
-        expect(valueChangesSpy).toHaveBeenCalledWith({ link_url: null });
-      });
     });
 
     it('should set correct filters based on filterByWebApp, filterByLoginStatus', fakeAsync(() => {
