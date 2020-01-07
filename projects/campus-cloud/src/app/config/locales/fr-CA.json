@@ -2403,9 +2403,6 @@
   "t_assess_total_orientation_programs": {
     "message": "Orientation Events"
   },
-  "t_assess_total_orientation_programs_assessed": {
-    "message": "Programmes évalués"
-  },
   "t_audience_dynamic_integration_disabled": {
     "message": "Pour activer cette fonctionalité, veuillez contacter votre consultant en engagement mobile."
   },
