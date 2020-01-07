@@ -2416,7 +2416,7 @@
     "message": "Orientation Events"
   },
   "t_assess_total_orientation_programs_assessed": {
-    "message": "Programs Assessed"
+    "message": "Events Assessed"
   },
   "t_audience_dynamic_integration_disabled": {
     "message": "To enable this feature, please contact your Customer Success manager."
