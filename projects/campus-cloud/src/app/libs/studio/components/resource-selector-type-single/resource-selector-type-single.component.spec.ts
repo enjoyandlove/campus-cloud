@@ -217,15 +217,6 @@ describe('ResourceSelectorTypeSingleComponent', () => {
         valueChangesSpy.calls.reset();
       });
 
-      it('should emit with { link_url: null }, when form is invalid', () => {
-        component.form.patchValue({ link_params: null });
-
-        expect(valueChangesSpy).toHaveBeenCalledWith({
-          ...component.form.value,
-          link_url: null
-        });
-      });
-
       it('should emit form value, when form is valid', () => {
         component.form.patchValue({ link_params: {}, link_url: CampusLink.storeList });
 
