@@ -473,6 +473,9 @@
   "assess_student_id": {
     "message": "Student ID"
   },
+  "assess_student_last_active": {
+    "message": "Last Active"
+  },
   "assess_student_name": {
     "message": "Student Name"
   },
