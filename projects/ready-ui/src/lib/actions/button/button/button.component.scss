@@ -29,13 +29,13 @@
     background: $color-primary;
     transition: background 300ms ease-in-out;
 
-    &:hover:not(:disabled) {
-      background: darken($color-primary, 10%);
-    }
-
     &.flat {
       color: white;
       background: $color-primary;
+
+      &:hover:not(:disabled) {
+        background: darken($color-primary, 10%);
+      }
 
       &:disabled {
         color: white;
@@ -54,9 +54,9 @@
 
     &.inline {
       padding: 0;
-      color: $color-primary;
       border-radius: 0;
       line-height: inherit;
+      color: $color-primary;
       background: transparent;
 
       &:disabled {
@@ -73,6 +73,10 @@
         color: white;
         background: #b3b3b3;
         border-color: #b3b3b3;
+      }
+
+      &:hover {
+        background: transparent;
       }
     }
   }

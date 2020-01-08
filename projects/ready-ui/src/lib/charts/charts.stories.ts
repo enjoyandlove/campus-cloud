@@ -16,7 +16,7 @@ function range(n: number) {
   return Array.from(Array(n).keys());
 }
 
-storiesOf('Chart', module)
+storiesOf('Charts', module)
   .addDecorator(
     moduleMetadata({
       imports: [ChartsModule]

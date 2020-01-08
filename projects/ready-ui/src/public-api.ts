@@ -42,3 +42,11 @@ export * from './lib/structure/card/card/card.component';
 export * from './lib/structure/stack/stack.module';
 export * from './lib/structure/card/card.module';
 export * from './lib/structure/structure.module';
+
+export * from './lib/table/table-cell/table-cell.component';
+export * from './lib/table/table-row/table-row.component';
+export * from './lib/table/table/table.component';
+export * from './lib/table/table.module';
+
+export * from './lib/text/styles/styles.directive';
+export * from './lib/text/text.module';

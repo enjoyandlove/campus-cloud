@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'ready-ui-stack',
+  selector: 'ready-ui-stack, [ui-stack]',
   templateUrl: './stack.component.html',
   styleUrls: ['./stack.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,

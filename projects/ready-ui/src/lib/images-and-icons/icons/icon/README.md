@@ -70,4 +70,6 @@ None
 `thumb_up`
 `mode_comment`
 `expand_more`
+`arrow_downward`
+`arrow_upward`
 
