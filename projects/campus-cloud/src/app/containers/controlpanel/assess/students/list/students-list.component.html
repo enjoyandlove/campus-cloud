@@ -61,7 +61,7 @@
             </span>
 
             <span class="col-3">
-              {{ student.last_active_epoch | cpDatePipe: dateFormat }}
+              {{ student.last_active_epoch > -1 ? (student.last_active_epoch | cpDatePipe: dateFormat) : '---'}}
             </span>
 
             <span class="col-2 text-right offset-1">
