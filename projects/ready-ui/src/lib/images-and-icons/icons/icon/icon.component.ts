@@ -14,7 +14,7 @@ export class IconComponent implements OnInit {
   size: 'small' | 'regular' = 'regular';
 
   @Input()
-  color = '0d0d0d';
+  color = '757575';
 
   constructor() {}
 
