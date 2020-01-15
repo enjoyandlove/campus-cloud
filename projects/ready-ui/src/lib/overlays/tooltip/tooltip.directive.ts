@@ -87,7 +87,6 @@ export class TooltipDirective implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    console.log('DESTROY');
     this.destroy$.next();
     this.destroy$.complete();
   }

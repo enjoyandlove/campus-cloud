@@ -4,7 +4,6 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 
-import { CPSession } from '@campus-cloud/session';
 import { pageTitle } from '@campus-cloud/shared/constants';
 import {
   CPI18nService,
@@ -20,7 +19,6 @@ import {
 export class AppComponent implements OnInit {
   constructor(
     private router: Router,
-    private session: CPSession,
     private titleService: Title,
     private zendeskService: ZendeskService,
     private activatedRoute: ActivatedRoute,
