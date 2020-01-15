@@ -72,4 +72,6 @@ None
 `expand_more`
 `arrow_downward`
 `arrow_upward`
+`close`
+`search`
 

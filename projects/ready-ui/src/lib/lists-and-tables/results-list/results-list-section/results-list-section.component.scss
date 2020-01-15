@@ -1,0 +1,11 @@
+:host {
+  flex: 1;
+}
+
+.section {
+  header {}
+  &__name {
+    margin: 0;
+    padding: 0 1em;
+  }
+}

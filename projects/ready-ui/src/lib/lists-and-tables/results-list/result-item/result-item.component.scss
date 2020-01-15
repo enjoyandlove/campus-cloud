@@ -1,0 +1,32 @@
+.content {
+  display: flex;
+  min-height: 2.5em;
+  align-items: center;
+
+  &--highlight {
+    background: #f4f4f4;
+  }
+
+  &:hover {
+    background: #ddd;
+  }
+
+  &__suffix,
+  &__prefix {
+    display: flex;
+    align-items: center;
+  }
+
+  &__prefix {
+    padding-left: 1em;
+  }
+
+  &__suffix {
+    padding-right: 1em;
+  }
+
+  &__wrapper {
+    flex: 1 1 0%;
+    padding: 0 1em;
+  }
+}

@@ -66,7 +66,6 @@ export class StackComponent implements AfterContentInit {
     const el: HTMLElement = this.el.nativeElement;
 
     Array.from(el.children).forEach((child: HTMLElement) => {
-      console.log(this.spacing);
       child.classList.add(`spacing-${this.spacing}`);
     });
   }

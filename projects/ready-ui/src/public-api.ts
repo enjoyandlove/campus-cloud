@@ -21,7 +21,13 @@ export * from './lib/feedback-and-indicators/spinner/spinner.module';
 export * from './lib/feedback-and-indicators/toast/toast.module';
 
 export * from './lib/forms/datepicker/components/date-picker/date-picker.component';
+export * from './lib/forms/color-picker/color-picker/color-picker.directive';
+export * from './lib/forms/text-editor/text-editor/text-editor.directive';
+export * from './lib/forms/text-field/text-field/text-field.component';
+export * from './lib/forms/color-picker/color-picker.module';
+export * from './lib/forms/text-editor/text-editor.module';
 export * from './lib/forms/datepicker/datepicker.module';
+export * from './lib/forms/text-field/text-field.module';
 export * from './lib/forms/forms.module';
 
 export * from './lib/images-and-icons/icons/symbol/symbol.component';
@@ -34,6 +40,8 @@ export * from './lib/images-and-icons/icons/icons.module';
 
 export * from './lib/overlays/popover/popover/popover.component';
 export * from './lib/overlays/popover/popover-trigger.directive';
+export * from './lib/overlays/tooltip/tooltip.directive';
+export * from './lib/overlays/tooltip/tooltip.module';
 export * from './lib/overlays/popover/popover.module';
 export * from './lib/overlays/overlays.module';
 
@@ -43,10 +51,15 @@ export * from './lib/structure/stack/stack.module';
 export * from './lib/structure/card/card.module';
 export * from './lib/structure/structure.module';
 
-export * from './lib/table/table-cell/table-cell.component';
-export * from './lib/table/table-row/table-row.component';
-export * from './lib/table/table/table.component';
-export * from './lib/table/table.module';
+export * from './lib/lists-and-tables/results-list/results-list-section/results-list-section.component';
+export * from './lib/lists-and-tables/results-list/results-list/results-list.component';
+export * from './lib/lists-and-tables/results-list/result-item/result-item.component';
+export * from './lib/lists-and-tables/table/table-cell/table-cell.component';
+export * from './lib/lists-and-tables/table/table-row/table-row.component';
+export * from './lib/lists-and-tables/results-list/results-list.module';
+export * from './lib/lists-and-tables/table/table/table.component';
+export * from './lib/lists-and-tables/lists-and-tables.module';
+export * from './lib/lists-and-tables/table/table.module';
 
-export * from './lib/text/styles/styles.directive';
+export * from './lib/text/styles/styles.component';
 export * from './lib/text/text.module';
