@@ -107,9 +107,9 @@ export class CPTopBarComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (this.env.name === 'production') {
-      this.showWhatsNew();
-    }
+    // if (this.env.name === 'production') {
+    //   this.showWhatsNew();
+    // }
 
     this.user = this.session.g.get('user');
     this.school = this.session.g.get('school');
