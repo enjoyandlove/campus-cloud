@@ -14,6 +14,7 @@ const icons = {
   link: 'link',
   close: 'close',
   thumb_up: 'thumb_up',
+  warning: 'warning',
   cloud_upload: 'cloud_upload',
   mode_comment: 'mode_comment',
   expand_more: 'expand_more',

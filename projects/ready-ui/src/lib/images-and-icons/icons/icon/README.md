@@ -74,4 +74,5 @@ None
 `arrow_upward`
 `close`
 `search`
+`warning`
 

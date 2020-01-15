@@ -3,6 +3,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { IconsModule } from '@ready-education/ready-ui';
 import { SortablejsModule } from 'angular-sortablejs';
 
 import { RootStoreModule } from '@campus-cloud/store';
@@ -20,6 +21,7 @@ export const APP_MODULES = [
   HttpClientModule,
   LayoutsModule,
   SharedModule,
+  IconsModule,
   ReactiveFormsModule,
   ControlPanelModule,
   TopLevelRoutesModule,

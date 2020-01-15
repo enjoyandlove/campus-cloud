@@ -22,7 +22,7 @@ import { baseActions, IHeader } from '../../../../../store/base';
 export class JobsCreateComponent implements OnInit {
   data;
   formError;
-  buttonData;
+  disableButton = true;
   isNewEmployer;
   form: FormGroup;
   dateErrorMessage;
@@ -126,7 +126,7 @@ export class JobsCreateComponent implements OnInit {
   formData(data) {
     this.data = data;
     const isFormValid = data.jobFormValid && data.employerFormValid;
-    this.buttonData = Object.assign({}, this.buttonData, { disabled: !isFormValid });
+    this.disableButton = !isFormValid;
   }
 
   onToggleEmployer(value) {
@@ -168,11 +168,5 @@ export class JobsCreateComponent implements OnInit {
     this.buildForm();
     this.buildHeader();
     this.buildEmployerForm();
-
-    this.buttonData = {
-      disabled: true,
-      class: 'primary',
-      text: this.cpI18n.translate('save')
-    };
   }
 }
