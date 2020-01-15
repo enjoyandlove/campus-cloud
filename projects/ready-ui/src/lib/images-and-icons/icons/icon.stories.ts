@@ -8,6 +8,20 @@ const sizes = {
   Regular: 'regular'
 };
 
+const icons = {
+  today: 'today',
+  info: 'info',
+  link: 'link',
+  close: 'close',
+  thumb_up: 'thumb_up',
+  cloud_upload: 'cloud_upload',
+  mode_comment: 'mode_comment',
+  expand_more: 'expand_more',
+  arrow_downward: 'arrow_downward',
+  arrow_upward: 'arrow_upward',
+  search: 'search'
+};
+
 storiesOf('Icons', module)
   .addDecorator(
     moduleMetadata({
@@ -21,7 +35,7 @@ storiesOf('Icons', module)
       return {
         props: {
           color: text('Color', '0d0d0d'),
-          name: text('Material icon name', 'cloud_upload'),
+          name: select('Icons', icons, 'cloud_upload'),
           size: select('Size', sizes, 'regular')
         },
         template: `

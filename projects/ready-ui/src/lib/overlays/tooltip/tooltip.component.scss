@@ -1,0 +1,55 @@
+:host {
+  display: flex;
+  color: white;
+  max-width: 18em;
+  font-size: small;
+  background: #000;
+  border-radius: 4px;
+  position: relative;
+  padding: 0.75em 1.25em;
+
+  &.position--top {
+    .tooltip-arrow {
+      bottom: -7px;
+      left: calc(50% - 7px);
+      border-top: 7px solid #000;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+    }
+  }
+
+  &.position--bottom {
+    .tooltip-arrow {
+      top: -7px;
+      left: calc(50% - 7px);
+      border-left: 7px solid transparent;
+      border-bottom: 7px solid #000;
+      border-right: 7px solid transparent;
+    }
+  }
+
+  &.position--left {
+    .tooltip-arrow {
+      right: -7px;
+      top: calc(50% - 7px);
+      border-left: 7px solid #000;
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+    }
+  }
+
+  &.position--right {
+    .tooltip-arrow {
+      left: -7px;
+      top: calc(50% - 7px);
+      border-right: 7px solid #000;
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+    }
+  }
+
+  .tooltip-arrow {
+    content: '';
+    position: absolute;
+  }
+}

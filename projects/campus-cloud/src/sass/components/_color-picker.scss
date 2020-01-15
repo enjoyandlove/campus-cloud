@@ -11,7 +11,7 @@
   }
 }
 
-.pcr-app[data-theme='classic'] {
+.pcr-app:not(.ready-ui-color-picker) {
   @include font_family();
 
   z-index: 9;

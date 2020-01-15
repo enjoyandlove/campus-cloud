@@ -27,6 +27,9 @@ export class PopoverTriggerDirective {
   uiPopoverTpl: TemplateRef<any>;
 
   @Input()
+  inheritWidth = false;
+
+  @Input()
   set uiPopoverYOffset(uiPopoverYOffset: string | number) {
     this.yAxisOffset = coerceNumberProperty(uiPopoverYOffset);
   }
@@ -48,7 +51,25 @@ export class PopoverTriggerDirective {
     this.overlayRef ? this.close() : this.open();
   }
 
+  // @HostListener('focus')
+  // handleFocus() {
+  //   this.open();
+  // }
+
+  // @HostListener('blur')
+  // handleBlur() {
+  //   this.close();
+  // }
+
   open() {
+    if (this.isOpen) {
+      return;
+    }
+
+    if (!this.uiPopoverTpl) {
+      return;
+    }
+
     this.overlayRef = this.overlay.create(this.getConfig());
     const portal: TemplatePortal = new TemplatePortal(this.uiPopoverTpl, this.viewContainerRef);
     this.overlayRef.attach(portal);
@@ -65,12 +86,15 @@ export class PopoverTriggerDirective {
   }
 
   private getConfig(): OverlayConfig {
+    const { offsetWidth } = this.el.nativeElement;
+
     return {
       hasBackdrop: true,
       maxHeight: '500px',
       disposeOnNavigation: true,
       backdropClass: 'ui-popover',
       positionStrategy: this.getPositionStrategy(),
+      width: this.inheritWidth ? `${offsetWidth}px` : undefined,
       scrollStrategy: this.overlay.scrollStrategies.reposition()
     };
   }

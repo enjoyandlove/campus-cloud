@@ -1,0 +1,31 @@
+@mixin centered {
+  height: 12em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host {
+  flex: 1;
+  height: 12em;
+  display: flex;
+  padding: 1em 0;
+  border-radius: 4px;
+  overflow-x: scroll;
+  background: white;
+  box-shadow: 1px 0 4px rgba(0, 0, 0, 0.12);
+}
+
+.list {
+  flex: 1;
+
+  &.no-scroll {
+    overflow: hidden;
+  }
+
+  &__loading {
+    @include centered();
+  }
+
+  &__content {}
+}

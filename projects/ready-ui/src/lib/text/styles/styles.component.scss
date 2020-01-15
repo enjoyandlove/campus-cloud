@@ -1,0 +1,27 @@
+@import '../../core/sass/variables';
+
+:host {
+  &.variant--bold {
+    font-weight: 600;
+  }
+
+  &.variant--caption {
+    font-size: 0.8em;
+  }
+
+  &.color--muted {
+    color: $color-grey-100;
+  }
+
+  &.color--info {
+    color: $color-info;
+  }
+
+  &.color--danger {
+    color: $color-danger;
+  }
+
+  &.color--success {
+    color: $color-success;
+  }
+}
