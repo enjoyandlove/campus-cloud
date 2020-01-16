@@ -1,4 +1,3 @@
-import { TemplatePortal } from '@angular/cdk/portal';
 import {
   Overlay,
   OverlayRef,
@@ -14,20 +13,24 @@ import {
   HostListener,
   ViewContainerRef
 } from '@angular/core';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
+import { TemplatePortal } from '@angular/cdk/portal';
 
 @Directive({
   exportAs: 'popover',
   selector: '[readyUiPopoverTrigger]'
 })
 export class PopoverTriggerDirective {
-  yAxisOffset = 40;
+  _inheritWidth = false;
+  yAxisOffset = 0;
 
   @Input()
   uiPopoverTpl: TemplateRef<any>;
 
   @Input()
-  inheritWidth = false;
+  set inheritWidth(inheritWidth: false) {
+    this._inheritWidth = coerceBooleanProperty(inheritWidth);
+  }
 
   @Input()
   set uiPopoverYOffset(uiPopoverYOffset: string | number) {
@@ -50,16 +53,6 @@ export class PopoverTriggerDirective {
   handleClick() {
     this.overlayRef ? this.close() : this.open();
   }
-
-  // @HostListener('focus')
-  // handleFocus() {
-  //   this.open();
-  // }
-
-  // @HostListener('blur')
-  // handleBlur() {
-  //   this.close();
-  // }
 
   open() {
     if (this.isOpen) {
@@ -94,7 +87,7 @@ export class PopoverTriggerDirective {
       disposeOnNavigation: true,
       backdropClass: 'ui-popover',
       positionStrategy: this.getPositionStrategy(),
-      width: this.inheritWidth ? `${offsetWidth}px` : undefined,
+      width: this._inheritWidth ? `${offsetWidth}px` : undefined,
       scrollStrategy: this.overlay.scrollStrategies.reposition()
     };
   }
@@ -112,15 +105,9 @@ export class PopoverTriggerDirective {
     return [
       {
         originX: this.position === 'left' ? 'start' : 'end',
-        originY: 'top',
-        overlayX: this.position === 'left' ? 'start' : 'end',
-        overlayY: 'top'
-      },
-      {
-        originX: this.position === 'left' ? 'start' : 'end',
         originY: 'bottom',
         overlayX: this.position === 'left' ? 'start' : 'end',
-        overlayY: 'bottom'
+        overlayY: 'top'
       }
     ];
   }

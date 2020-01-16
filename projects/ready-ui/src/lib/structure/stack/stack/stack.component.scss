@@ -1,5 +1,4 @@
 .ui-stack {
-  align-items: flex-start;
   display: flex !important;
 
   &.alignment-center {
@@ -54,6 +53,7 @@
   }
 
   &--direction-horizontal {
+    align-items: center;
     flex-direction: row;
 
     &.alignment-start {

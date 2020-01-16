@@ -23,7 +23,7 @@ storiesOf('Popover', module)
       return {
         props: {
           closeOnMenuItemClick: boolean('Close on menu item click', false),
-          offset: number('Veritcal Offset', 40),
+          offset: number('Veritcal Offset', 10),
           position: select('Position', positions, 'right')
         },
         styles: [
