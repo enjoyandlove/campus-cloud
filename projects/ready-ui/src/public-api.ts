@@ -4,6 +4,8 @@
 
 // https://github.com/angular/angular/issues/23912#issuecomment-391170154
 
+export * from './lib/ready-ui.module';
+
 export * from './lib/actions/button/button/button.component';
 export * from './lib/actions/button/button.module';
 export * from './lib/actions/actions.module';
