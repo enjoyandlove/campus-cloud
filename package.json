@@ -40,7 +40,7 @@
     "@ngrx/router-store": "8.0.1",
     "@ngrx/store": "8.0.1",
     "@ngrx/store-devtools": "8.0.1",
-    "@ready-education/ready-ui": "0.5.7",
+    "@ready-education/ready-ui": "0.5.9",
     "@sentry/browser": "5.5.0",
     "@simonwep/pickr": "1.2.7",
     "amplitude-js": "5.2.2",
