@@ -20,7 +20,7 @@ storiesOf('Tooltip', module)
   .add('Tooltip', () => {
     return {
       props: {
-        offset: number('Offset', 5),
+        // offset: number('Offset', 5),
         // delay: number('Delay', 200),
         title: text('Tooltip Text', 'Hello World'),
         template: boolean('Custom Template', false),
@@ -32,7 +32,6 @@ storiesOf('Tooltip', module)
           ui-tooltip
           type="button"
           [title]="title"
-          [offset]="offset"
           [placement]="placement"
           [template]="template ? customTemplate : undefined">Tooltip</button>
         <ng-template #customTemplate>

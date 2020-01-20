@@ -1,39 +1,41 @@
-<button type="button"
-        ui-button
-        position="right"
-        variant="stroked"
-        uiPopoverYOffset="-40"
-        readyUiPopoverTrigger
-        class="cp-datetime-picker"
-        [uiPopoverTpl]="popoverTpl">
-  <ready-ui-stack alignment="between">
+<ready-ui-button-group>
+  <button type="button"
+          ui-button
+          position="right"
+          variant="inline"
+          uiPopoverYOffset="-40"
+          readyUiPopoverTrigger
+          [uiPopoverTpl]="popoverTpl"
+          [uiPopoverXOffset]="clearable ? 25 : 10">
+
     <ready-ui-icon name="today"
                    color="212121"></ready-ui-icon>
     <span class="button__label">{{ label }}</span>
-    <button ui-button
-            type="button"
-            variant="inline"
-            *ngIf="clearable"
-            (click)="clearDate($event)">
-      <ready-ui-icon name="close"
-                     size="small"
-                     color="212121"></ready-ui-icon>
-    </button>
-  </ready-ui-stack>
-</button>
+  </button>
+
+  <button ui-button
+          type="button"
+          variant="inline"
+          *ngIf="clearable"
+          (click)="clearDate($event)">
+    <ready-ui-icon name="close"
+                   size="small"
+                   color="212121"></ready-ui-icon>
+  </button>
+</ready-ui-button-group>
 
 <ng-template #popoverTpl>
-  <div class="template cp-datetime-picker">
-    <div class="template">
+  <div class="template">
+    <div class="cp-datetime-picker__input">
       <input static="true"
-        type="text"
-        cpDatePicker
-        inline="true"
-        enableTime="true"
-        [minDate]="minDay"
-        #datePicker="datePicker"
-        [defaultDate]="selectedDate"
-        (dateChange)="onDateChange($event)" />
+             type="text"
+             cpDatePicker
+             inline="true"
+             enableTime="true"
+             [minDate]="minDay"
+             #datePicker="datePicker"
+             [defaultDate]="selectedDate"
+             (dateChange)="onDateChange($event)" />
     </div>
   </div>
 </ng-template>

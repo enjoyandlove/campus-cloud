@@ -70,7 +70,7 @@
         border-color: #b3b3b3;
       }
 
-      &:hover {
+      &:hover:not(.button-group-item) {
         background: transparent;
       }
     }
@@ -190,7 +190,7 @@
       transition: border 300ms ease-in;
       border: 1px solid lighten($color-text, 50%);
 
-      &:hover:not(:disabled) {
+      &:hover:not(:disabled):not(.button-group-item) {
         border-color: $color-text;
       }
 

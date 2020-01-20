@@ -1,17 +1,29 @@
-import { Input, OnInit, Component, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Component,
+  ElementRef,
+  TemplateRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { FocusableOption } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'ready-ui-result-item',
   templateUrl: './result-item.component.html',
   styleUrls: ['./result-item.component.scss'],
+  host: { tabindex: '-1' },
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ResultItemComponent implements OnInit {
+export class ResultItemComponent implements OnInit, FocusableOption {
   _disabled = false;
 
   @Input()
-  set disabled(disabled: string | boolean) {
+  label: string;
+
+  @Input()
+  set disabled(disabled: boolean) {
     this._disabled = coerceBooleanProperty(disabled);
   }
 
@@ -27,13 +39,21 @@ export class ResultItemComponent implements OnInit {
   @Input()
   suffix: TemplateRef<any>;
 
-  constructor() {}
-
-  ngOnInit() {}
-
   get wrapperClasses() {
     return {
       ['content--highlight']: this.highlight
     };
+  }
+
+  constructor(private el: ElementRef) {}
+
+  ngOnInit() {}
+
+  getLabel(): string {
+    return this.label;
+  }
+
+  focus(): void {
+    this.el.nativeElement.focus();
   }
 }

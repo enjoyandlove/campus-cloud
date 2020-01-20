@@ -75,4 +75,5 @@ None
 `close`
 `search`
 `warning`
+`done`
 

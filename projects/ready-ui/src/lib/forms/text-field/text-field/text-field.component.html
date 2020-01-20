@@ -27,6 +27,7 @@
            [uiPopoverTpl]="popOverTmpl"
            [value]="_value ? _value : ''"
            [attr.aria-labelledby]="ariaLabelledBy"
+           [attr.aria-describedby]="ariaDescribedby"
            (input)="writeValue($event.target.value)" />
 
     <textarea [id]="_id"
