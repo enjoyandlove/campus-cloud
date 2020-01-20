@@ -1321,10 +1321,10 @@
     react-lifecycles-compat "^3.0.4"
     warning "^3.0.0"
 
-"@ready-education/ready-ui@0.5.9":
-  version "0.5.9"
-  resolved "https://registry.yarnpkg.com/@ready-education/ready-ui/-/ready-ui-0.5.9.tgz#295167142b68dfcb1e1061de86937977e06fbad3"
-  integrity sha512-k0o1k3C+caXVe4iqXETPvXKvaUZAnAx68pTFkJgM0Cd1PCWNPw4KRvr6jvtD/DiOZwt6JmDCMW9XWDs3O534Vw==
+"@ready-education/ready-ui@0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@ready-education/ready-ui/-/ready-ui-0.6.0.tgz#5051ae8b67dc0c0ceb664dc4da0c812342a98526"
+  integrity sha512-9Z9gqBNIepB9/D+IalXP+0bz0rTxxpJkELuVZPK1STMSGNdeJ4liQTY493x9PkeCdsBEldLA89GWpmGOOSTaCQ==
   dependencies:
     tslib "^1.9.0"
 
