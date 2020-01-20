@@ -9,6 +9,7 @@ import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { boolean } from '@storybook/addon-knobs';
 
+const fruits = ['Banana', 'Apples', 'Pears', 'Kiwis', 'Coconut'];
 const searches = ['Summer', 'Semester', 'Exams', 'Friends', 'Stress', 'Help'];
 
 storiesOf('Results Lists (WIP)', module)
@@ -29,27 +30,41 @@ storiesOf('Results Lists (WIP)', module)
 
     return {
       props: {
-        searches: empty ? [] : searches,
+        fruits,
         loading: boolean('Loading', false),
         clickHandler: (search: string) => alert(search),
-        addHandler: (search: string) => alert(JSON.stringify(search))
+        addHandler: (search: string) => alert(JSON.stringify(search)),
+        searches: empty ? [] : searches.map((s: string) => ({ value: s, context: { item: s } }))
       },
       template: `
         <ready-ui-results-list [loading]="loading">
           <ready-ui-results-list-section name="Saved searches">
             <ready-ui-result-item
               [suffix]="suffix"
+              [label]="search.value"
+              [context]="search.context"
               *ngFor="let search of searches">
               <button
                 ui-button
                 type="button"
                 variant="inline"
-                (click)="clickHandler(search)">{{search}}</button>
+                (click)="clickHandler(search.value)">{{search.value}}</button>
+            </ready-ui-result-item>
+          </ready-ui-results-list-section>
+          <ready-ui-results-list-section name="Fruits">
+            <ready-ui-result-item
+              [label]="fruit"
+              *ngFor="let fruit of fruits">
+              <button
+                ui-button
+                type="button"
+                variant="inline"
+                (click)="clickHandler(fruit)">{{fruit}}</button>
             </ready-ui-result-item>
           </ready-ui-results-list-section>
         </ready-ui-results-list>
 
-        <ng-template #suffix let-item="searches">
+        <ng-template #suffix let-item="item">
           <button
             ui-button
             type="button"
@@ -60,6 +75,26 @@ storiesOf('Results Lists (WIP)', module)
           </button>
         </ng-template>
         <ng-template #prefix></ng-template>
+      `
+    };
+  })
+  .add('No Section', () => {
+    return {
+      props: {
+        fruits,
+        eventHandler: (name: string) => alert(name)
+      },
+      template: `
+      <ready-ui-results-list>
+        <ready-ui-result-item
+          [suffix]="suffix"
+          [label]="fruit"
+          *ngFor="let fruit of fruits"
+          (click)="eventHandler(fruit)"
+          (keyup.enter)="eventHandler(fruit)">
+          {{ fruit }}
+        </ready-ui-result-item>
+      </ready-ui-results-list>
       `
     };
   })
@@ -99,6 +134,7 @@ storiesOf('Results Lists (WIP)', module)
               formControlName="name"
               [prefix]="inputPrefix"
               [popOverTmpl]="popover"
+              uiPopoverYOffset="10"
               ariaLabelledBy="hiddenLabel"
               [suffix]="!form.get('name').value ? undefined : inputSuffix">
             </ready-ui-text-field>
@@ -119,6 +155,7 @@ storiesOf('Results Lists (WIP)', module)
               <ready-ui-results-list-section name="Saved searches">
                 <ready-ui-result-item
                   [suffix]="suffix"
+                  [label]="search.value"
                   [context]="search.context"
                   *ngFor="let search of searches"
                   [highlight]="search.value === form.get('name').value">

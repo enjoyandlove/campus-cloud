@@ -13,6 +13,7 @@ const icons = {
   info: 'info',
   link: 'link',
   close: 'close',
+  done: 'done',
   thumb_up: 'thumb_up',
   warning: 'warning',
   cloud_upload: 'cloud_upload',

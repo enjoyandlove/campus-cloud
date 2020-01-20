@@ -1,4 +1,12 @@
-import { Input, Output, OnInit, Component, EventEmitter, ViewEncapsulation } from '@angular/core';
+import {
+  Input,
+  Output,
+  OnInit,
+  Component,
+  EventEmitter,
+  ViewEncapsulation,
+  HostBinding
+} from '@angular/core';
 
 import { notifyAtEpochNow } from './../../model';
 import { CPSession } from '@campus-cloud/session';
@@ -29,6 +37,7 @@ export class AnnouncementsDatetimePickerComponent implements OnInit {
 
   constructor(private session: CPSession) {}
 
+  @HostBinding('class.cp-datetime-picker')
   ngOnInit() {}
 
   clearDate(event: Event) {

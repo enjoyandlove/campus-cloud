@@ -38,6 +38,9 @@ export class TextFieldComponent implements OnInit, ControlValueAccessor {
   ariaLabelledBy: string;
 
   @Input()
+  ariaDescribedby: string;
+
+  @Input()
   set textAreaElement(textAreaElement: string | boolean) {
     this._textArea = coerceBooleanProperty(textAreaElement);
   }

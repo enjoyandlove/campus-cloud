@@ -1,14 +1,32 @@
-import { Input, OnInit, Component, AfterContentInit } from '@angular/core';
-import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import {
+  Input,
+  OnInit,
+  Component,
+  QueryList,
+  HostBinding,
+  HostListener,
+  AfterContentInit,
+  ContentChildren,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 import { ResultItemComponent } from './../result-item/result-item.component';
+import { coerceBooleanProperty } from '@angular/cdk/coercion';
+import { FocusKeyManager } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'ready-ui-results-list',
   templateUrl: './results-list.component.html',
-  styleUrls: ['./results-list.component.scss']
+  styleUrls: ['./results-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  host: { tabindex: '0' }
 })
-export class ResultsListComponent implements OnInit {
+export class ResultsListComponent implements OnInit, AfterContentInit {
+  @ContentChildren(ResultItemComponent, { descendants: true }) items: QueryList<
+    ResultItemComponent
+  >;
+  private keyManager: FocusKeyManager<ResultItemComponent>;
+
   _loading = false;
 
   @Input()
@@ -16,13 +34,22 @@ export class ResultsListComponent implements OnInit {
     this._loading = coerceBooleanProperty(loading);
   }
 
-  constructor() {}
-
   get listClassess() {
     return {
       'no-scroll': this._loading
     };
   }
 
+  constructor() {}
+
+  @HostListener('keydown', ['$event'])
+  manage(event) {
+    this.keyManager.onKeydown(event);
+  }
+
   ngOnInit() {}
+
+  ngAfterContentInit(): void {
+    this.keyManager = new FocusKeyManager(this.items).withWrap();
+  }
 }

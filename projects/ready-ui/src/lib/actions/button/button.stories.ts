@@ -1,4 +1,10 @@
-import { ButtonModule, IconsModule, StackModule } from '@ready-education/ready-ui';
+import {
+  IconsModule,
+  StackModule,
+  ButtonModule,
+  PopoverModule,
+  ButtonGroupModule
+} from '@ready-education/ready-ui';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
 import { select, text } from '@storybook/addon-knobs';
@@ -26,7 +32,7 @@ const disabled = {
 storiesOf('Button', module)
   .addDecorator(
     moduleMetadata({
-      imports: [ButtonModule, IconsModule, StackModule]
+      imports: [ButtonModule, IconsModule, PopoverModule, StackModule, ButtonGroupModule]
     })
   )
   .addDecorator(centered)
@@ -69,5 +75,87 @@ storiesOf('Button', module)
               <ready-ui-icon name="thumb_up" color="fff" size="small"></ready-ui-icon>
             </ready-ui-stack>
           </button>`
+    };
+  })
+  .add('Only Icon', () => {
+    return {
+      template: `
+      <ready-ui-symbol></ready-ui-symbol>
+      <button
+        ui-button
+        type="button"
+        variant="flat"
+        color="primary"
+        readyUiPopoverTrigger
+        [uiPopoverTpl]="popover">
+          <ready-ui-icon name="link" size="small" color="fff"></ready-ui-icon>
+      </button>
+      `
+    };
+  })
+  .add('Button Group', () => {
+    return {
+      props: {
+        clickHandler: (message: string) => alert(message)
+      },
+      template: `
+        <ready-ui-button-group>
+        <button type="button" ui-button color="primary" variant="flat" (click)="clickHandler('Save')">Save</button>
+          <button type="button" ui-button color="primary" variant="flat" (click)="clickHandler('Create')">Create</button>
+          <button type="button" ui-button color="primary" variant="flat" (click)="clickHandler('Validate')">Validate</button>
+        </ready-ui-button-group>
+      `
+    };
+  })
+  .add('Button with dropdown', () => {
+    return {
+      styles: [
+        `
+        .popover {
+          width: 10.5em;
+          padding: 1em;
+          display: flex;
+          background: white;
+          text-align: right;
+          align-items: end;
+          flex-direction: column;
+        }
+        .popover button {
+          display: block;
+        }
+        .popover button:not(:last-child) {
+          margin-bottom: 0.5em;
+        }
+      `
+      ],
+      props: {
+        buttonHandler: () => alert('Button Clicked'),
+        handleAlert: (message: string) => alert(message)
+      },
+      template: `
+        <ready-ui-symbol></ready-ui-symbol>
+        <ready-ui-button-group>
+          <button ui-button type="button" variant="flat" color="primary" (click)="buttonHandler()">Create Event</button>
+          <button
+            ui-button
+            type="button"
+            variant="flat"
+            color="primary"
+            #menu="popover"
+            position="right"
+            uiPopoverYOffset="5"
+            uiPopoverXOffset="-147"
+            readyUiPopoverTrigger
+            [uiPopoverTpl]="popover">
+              <ready-ui-icon name="expand_more" size="small" color="fff"></ready-ui-icon>
+          </button>
+          <ng-template #popover>
+            <div class="popover">
+              <button type="button" ui-button variant="inline" (click)="handleAlert('From Url'); menu.close()">From URL</button>
+              <button type="button" ui-button variant="inline" (click)="handleAlert('From CSV'); menu.close()">Import from CSV</button>
+            </div>
+          </ng-template>
+        </ready-ui-button-group>
+      `
     };
   });

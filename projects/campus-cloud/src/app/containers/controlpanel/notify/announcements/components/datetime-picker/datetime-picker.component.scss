@@ -1,13 +1,27 @@
-button.cp-datetime-picker {
+@import '~projects/campus-cloud/src/sass/core/colors';
+
+.cp-datetime-picker {
+  /*
+  make the wrapper look like a button
+  to avoid hover inconsitencies
+  */
+  line-height: 2.4;
+  padding: 0 0.575em;
+  border-radius: 4px;
+  transition: border 300ms ease-in;
+  border: 1px solid $color-med-grey;
+
+  &:hover {
+    border-color: $color-text;
+  }
+
   .button__label {
     margin: 0 0.36em;
   }
 }
 
-.cp-datetime-picker {
-  .template {
-    .flatpickr-input {
-      display: none;
-    }
+.cp-datetime-picker__input {
+  .flatpickr-input {
+    display: none;
   }
 }

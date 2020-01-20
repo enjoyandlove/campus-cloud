@@ -1,3 +1,4 @@
+import { A11yModule } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
@@ -10,6 +11,6 @@ import { ResultsListSectionComponent } from './results-list-section/results-list
 @NgModule({
   exports: [ResultsListComponent, ResultItemComponent, ResultsListSectionComponent],
   declarations: [ResultsListComponent, ResultItemComponent, ResultsListSectionComponent],
-  imports: [CommonModule, TextModule, SpinnerModule]
+  imports: [CommonModule, TextModule, SpinnerModule, A11yModule]
 })
 export class ResultsListModule {}

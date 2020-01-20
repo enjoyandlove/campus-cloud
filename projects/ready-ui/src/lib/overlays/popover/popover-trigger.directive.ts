@@ -23,6 +23,7 @@ import { TemplatePortal } from '@angular/cdk/portal';
 export class PopoverTriggerDirective {
   _inheritWidth = false;
   yAxisOffset = 0;
+  xAxisOffset = 0;
 
   @Input()
   uiPopoverTpl: TemplateRef<any>;
@@ -35,6 +36,11 @@ export class PopoverTriggerDirective {
   @Input()
   set uiPopoverYOffset(uiPopoverYOffset: string | number) {
     this.yAxisOffset = coerceNumberProperty(uiPopoverYOffset);
+  }
+
+  @Input()
+  set uiPopoverXOffset(uiPopoverXOffset: string | number) {
+    this.xAxisOffset = coerceNumberProperty(uiPopoverXOffset);
   }
 
   @Input()
@@ -98,6 +104,7 @@ export class PopoverTriggerDirective {
       .flexibleConnectedTo(this.el)
       .withPositions(this.getPosition())
       .withDefaultOffsetY(this.yAxisOffset)
+      .withDefaultOffsetX(this.xAxisOffset)
       .withPush(false);
   }
 

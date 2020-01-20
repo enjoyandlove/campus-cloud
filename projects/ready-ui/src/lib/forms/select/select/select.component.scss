@@ -1,0 +1,66 @@
+@import '../../../core/sass/variables';
+
+label,
+button {
+  display: block;
+}
+
+.select {
+  &__input_group {
+    display: flex;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 4px;
+    position: relative;
+    align-items: center;
+    background: white;
+
+    input {
+      flex: 1 1 0%;
+      border: none;
+      padding: 0.5em;
+      cursor: pointer;
+      background-color: transparent;
+
+      &:focus ~ .select__bg:after,
+      &:active ~ .select__bg:after {
+        border: 1px solid $color-grey-50;
+      }
+
+      &:disabled ~ .select__bg:after {
+        color: $color-grey-100;
+        border: 1px solid $color-grey-100;
+        background: transparentize($color: $color-grey-100, $amount: 0.8);
+      }
+    }
+  }
+
+  &__input-suffix {
+  }
+
+  &__bg {
+    &:after {
+      top: 0;
+      left: 0;
+      width: 100%;
+      content: '';
+      height: 100%;
+      border-radius: 4px;
+      position: absolute;
+      pointer-events: none;
+      border: 1px solid $color-grey-100;
+    }
+  }
+}
+
+.select__menu {
+  width: 100%;
+  max-width: 18em;
+  max-height: 11em;
+  padding: 0.5em 0em;
+  overflow-x: scroll;
+  border-radius: 4px;
+  background: white;
+  min-width: calc(100% - 1.5em);
+  box-shadow: 1px 0 4px rgba(0, 0, 0, 0.12);
+}

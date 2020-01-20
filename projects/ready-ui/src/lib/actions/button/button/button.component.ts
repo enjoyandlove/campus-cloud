@@ -1,5 +1,6 @@
 /* tslint:disable:component-selector */
 import { Input, Component, HostBinding, ChangeDetectionStrategy } from '@angular/core';
+import { ElementRef } from '@angular/core';
 
 @Component({
   selector: 'button[ui-button], a[ui-button]',
@@ -59,5 +60,5 @@ export class ButtonComponent {
     return this.color === 'default';
   }
 
-  constructor() {}
+  constructor(public el: ElementRef) {}
 }

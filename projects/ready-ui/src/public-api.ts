@@ -6,6 +6,8 @@
 
 export * from './lib/ready-ui.module';
 
+export * from './lib/actions/button-group/button-group/button-group.component';
+export * from './lib/actions/button-group/button-group.module';
 export * from './lib/actions/button/button/button.component';
 export * from './lib/actions/button/button.module';
 export * from './lib/actions/actions.module';
@@ -26,10 +28,16 @@ export * from './lib/forms/datepicker/components/date-picker/date-picker.compone
 export * from './lib/forms/color-picker/color-picker/color-picker.directive';
 export * from './lib/forms/text-editor/text-editor/text-editor.directive';
 export * from './lib/forms/text-field/text-field/text-field.component';
+export * from './lib/forms/select/option-group/option-group.component';
+export * from './lib/forms/checkbox/checkbox/checkbox.component';
 export * from './lib/forms/color-picker/color-picker.module';
+export * from './lib/forms/select/option/option.component';
+export * from './lib/forms/select/select/select.component';
 export * from './lib/forms/text-editor/text-editor.module';
 export * from './lib/forms/datepicker/datepicker.module';
 export * from './lib/forms/text-field/text-field.module';
+export * from './lib/forms/checkbox/checkbox.module';
+export * from './lib/forms/select/select.module';
 export * from './lib/forms/forms.module';
 
 export * from './lib/images-and-icons/icons/symbol/symbol.component';
