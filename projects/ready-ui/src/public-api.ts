@@ -50,9 +50,12 @@ export * from './lib/images-and-icons/icons/icons.module';
 
 export * from './lib/overlays/popover/popover/popover.component';
 export * from './lib/overlays/popover/popover-trigger.directive';
+export * from './lib/overlays/modal/modal/modal.component';
 export * from './lib/overlays/tooltip/tooltip.directive';
 export * from './lib/overlays/tooltip/tooltip.module';
 export * from './lib/overlays/popover/popover.module';
+export * from './lib/overlays/modal/modal.service';
+export * from './lib/overlays/modal/modal.module';
 export * from './lib/overlays/overlays.module';
 
 export * from './lib/structure/stack/stack/stack.component';

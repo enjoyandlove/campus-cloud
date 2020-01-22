@@ -17,16 +17,18 @@ storiesOf('Tooltip', module)
     })
   )
   .addDecorator(centered)
-  .add('Tooltip', () => {
-    return {
-      props: {
-        // offset: number('Offset', 5),
-        // delay: number('Delay', 200),
-        title: text('Tooltip Text', 'Hello World'),
-        template: boolean('Custom Template', false),
-        placement: select('Placement', placement, 'bottom')
-      },
-      template: `
+  .add(
+    'Tooltip',
+    () => {
+      return {
+        props: {
+          // offset: number('Offset', 5),
+          // delay: number('Delay', 200),
+          title: text('Tooltip Text', 'Hello World'),
+          template: boolean('Custom Template', false),
+          placement: select('Placement', placement, 'bottom')
+        },
+        template: `
         <button
           ui-button
           ui-tooltip
@@ -42,5 +44,7 @@ storiesOf('Tooltip', module)
           </div>
         </ng-template>
       `
-    };
-  });
+      };
+    },
+    { notes: require('./README.md') }
+  );

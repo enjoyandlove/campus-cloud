@@ -2,23 +2,25 @@ import { TextFieldModule, ButtonModule, IconsModule, StackModule } from '@ready-
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { text, boolean, number } from '@storybook/addon-knobs';
 
-storiesOf('Text Field (WIP)', module)
+storiesOf('Text Field', module)
   .addDecorator(
     moduleMetadata({
       imports: [TextFieldModule, StackModule, ButtonModule, IconsModule]
     })
   )
-  .add('Simple', () => {
-    const maxLength = number('Max character length', 0);
+  .add(
+    'Simple',
+    () => {
+      const maxLength = number('Max character length', 0);
 
-    return {
-      props: {
-        maxLength,
-        textArea: boolean('Text Area', false),
-        readonly: boolean('Read Only Input', false)
-      },
-      styles: [
-        `
+      return {
+        props: {
+          maxLength,
+          textArea: boolean('Text Area', false),
+          readonly: boolean('Read Only Input', false)
+        },
+        styles: [
+          `
       .wrapper {
         width: 100vw;
         height: 100vh;
@@ -31,8 +33,8 @@ storiesOf('Text Field (WIP)', module)
         width: 90vw;
       }
       `
-      ],
-      template: `
+        ],
+        template: `
       <div class="wrapper">
         <div class="content">
           <ready-ui-text-field
@@ -45,8 +47,10 @@ storiesOf('Text Field (WIP)', module)
         </div>
       </div>
       `
-    };
-  })
+      };
+    },
+    { notes: require('./README.md') }
+  )
   .add('Advanced', () => {
     return {
       props: {

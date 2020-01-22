@@ -11,23 +11,25 @@ storiesOf('Checkbox', module)
     })
   )
   .addDecorator(centered)
-  .add('Checkbox', () => {
-    const label = text('Label', 'Active');
-    const checked = boolean('Checked', false);
-    const disabled = boolean('Disabled', false);
+  .add(
+    'Checkbox',
+    () => {
+      const label = text('Label', 'Active');
+      const checked = boolean('Checked', false);
+      const disabled = boolean('Disabled', false);
 
-    const form = new FormBuilder().group({
-      active: [{ value: checked, disabled: disabled }, Validators.required]
-    });
-    return {
-      props: {
-        form,
-        label,
-        checked,
-        disabled,
-        ariaLabelledBy: !label || label === '' ? 'ariaLabel' : undefined
-      },
-      template: `
+      const form = new FormBuilder().group({
+        active: [{ value: checked, disabled: disabled }, Validators.required]
+      });
+      return {
+        props: {
+          form,
+          label,
+          checked,
+          disabled,
+          ariaLabelledBy: !label || label === '' ? 'ariaLabel' : undefined
+        },
+        template: `
       <div id="ariaLabel" style="display: none">Hidden Label</div>
         <form [formGroup]="form">
           <ready-ui-checkbox
@@ -37,5 +39,9 @@ storiesOf('Checkbox', module)
             formControlName="active"></ready-ui-checkbox>
         </form>
       `
-    };
-  });
+      };
+    },
+    {
+      notes: require('./checkbox/README.md')
+    }
+  );

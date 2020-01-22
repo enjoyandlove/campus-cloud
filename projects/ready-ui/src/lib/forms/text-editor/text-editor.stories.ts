@@ -24,26 +24,28 @@ storiesOf('Text Editor', module)
     })
   )
   .addDecorator(centered)
-  .add('Text Editor', () => {
-    const hideToolbar = boolean('Hide Toolbar', false);
-    return {
-      styles: [
-        `
+  .add(
+    'Text Editor',
+    () => {
+      const hideToolbar = boolean('Hide Toolbar', false);
+      return {
+        styles: [
+          `
       .wrapper {
         width: 90vw;
       }
       `
-      ],
-      props: {
-        readOnly: boolean('Read Only', false),
-        placeholder: text('Placeholder', ''),
-        toolbar: hideToolbar ? false : toolbar,
-        events: ['text-change', 'editor-change'],
-        onChange({ event, args }: { event: string; args: any[] }) {
-          console.log(JSON.stringify({ event, args }));
-        }
-      },
-      template: `
+        ],
+        props: {
+          readOnly: boolean('Read Only', false),
+          placeholder: text('Placeholder', ''),
+          toolbar: hideToolbar ? false : toolbar,
+          events: ['text-change', 'editor-change'],
+          onChange({ event, args }: { event: string; args: any[] }) {
+            console.log(JSON.stringify({ event, args }));
+          }
+        },
+        template: `
         <div class="wrapper">
           <div
             [events]="events"
@@ -54,5 +56,7 @@ storiesOf('Text Editor', module)
             (editor)="onChange($event)">
           </div>
         </div>`
-    };
-  });
+      };
+    },
+    { notes: require('./README.md') }
+  );
