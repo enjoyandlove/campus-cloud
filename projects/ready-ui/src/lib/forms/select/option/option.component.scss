@@ -18,7 +18,8 @@
   }
 
   &.option--selected {
-    background: lighten($color: $color-grey-150, $amount: 10%);
+    color: white;
+    background: $color-primary;
   }
 
   &:hover:not(.option--disabled):not(.option--selected) {

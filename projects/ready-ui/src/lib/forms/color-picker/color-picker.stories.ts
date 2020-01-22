@@ -1,7 +1,7 @@
-import { boolean } from '@storybook/addon-knobs';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { ColorPickerModule } from '@ready-education/ready-ui';
 import { centered } from '@storybook/addon-centered/angular';
+import { boolean } from '@storybook/addon-knobs';
 
 storiesOf('Color Picker', module)
   .addDecorator(

@@ -18,21 +18,23 @@ storiesOf('Select', module)
     })
   )
   .addDecorator(centered)
-  .add('Select', () => {
-    const disabled = boolean('Disabled', false);
+  .add(
+    'Select',
+    () => {
+      const disabled = boolean('Disabled', false);
 
-    const form = new FormBuilder().group({
-      store_id: [{ value: 2, disabled: disabled }, Validators.required]
-    });
+      const form = new FormBuilder().group({
+        store_id: [{ value: 2, disabled: disabled }, Validators.required]
+      });
 
-    form.valueChanges.subscribe(() => console.log(form.value));
-    return {
-      props: {
-        form,
-        options,
-        disabled
-      },
-      template: `
+      form.valueChanges.subscribe(() => console.log(form.value));
+      return {
+        props: {
+          form,
+          options,
+          disabled
+        },
+        template: `
       <ready-ui-symbol></ready-ui-symbol>
       <form [formGroup]="form">
         <ready-ui-select label="Select a Host" formControlName="store_id">
@@ -46,8 +48,10 @@ storiesOf('Select', module)
         </ready-ui-select>
       </form>
     `
-    };
-  })
+      };
+    },
+    { notes: require('./README.md') }
+  )
   .add('With Placeholder Value', () => {
     const form = new FormBuilder().group({
       store_id: ['', Validators.required]

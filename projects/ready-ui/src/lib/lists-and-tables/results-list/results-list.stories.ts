@@ -25,18 +25,20 @@ storiesOf('Results Lists (WIP)', module)
       ]
     })
   )
-  .add('Results Lists', () => {
-    const empty = boolean('No Results', false);
+  .add(
+    'Results Lists',
+    () => {
+      const empty = boolean('No Results', false);
 
-    return {
-      props: {
-        fruits,
-        loading: boolean('Loading', false),
-        clickHandler: (search: string) => alert(search),
-        addHandler: (search: string) => alert(JSON.stringify(search)),
-        searches: empty ? [] : searches.map((s: string) => ({ value: s, context: { item: s } }))
-      },
-      template: `
+      return {
+        props: {
+          fruits,
+          loading: boolean('Loading', false),
+          clickHandler: (search: string) => alert(search),
+          addHandler: (search: string) => alert(JSON.stringify(search)),
+          searches: empty ? [] : searches.map((s: string) => ({ value: s, context: { item: s } }))
+        },
+        template: `
         <ready-ui-results-list [loading]="loading">
           <ready-ui-results-list-section name="Saved searches">
             <ready-ui-result-item
@@ -76,8 +78,10 @@ storiesOf('Results Lists (WIP)', module)
         </ng-template>
         <ng-template #prefix></ng-template>
       `
-    };
-  })
+      };
+    },
+    { notes: require('./README.md') }
+  )
   .add('No Section', () => {
     return {
       props: {
