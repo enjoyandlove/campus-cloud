@@ -26,7 +26,7 @@ export class ServicesModel {
       logo_url: [_get(service, 'logo_url', null), Validators.required],
       category: [_get(service, 'category', null), Validators.required],
       rating_scale_maximum: [_get(service, 'rating_scale_maximum', null)],
-      website: [_get(service, 'country', null), Validators.maxLength(1024)],
+      website: [_get(service, 'website', null), Validators.maxLength(1024)],
       default_basic_feedback_label: [_get(service, 'default_basic_feedback_label', null)],
       name: [
         _get(service, 'name', null),
