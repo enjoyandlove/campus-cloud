@@ -1,7 +1,7 @@
-import { TooltipModule, ButtonModule } from '@ready-education/ready-ui';
 import { text, select, number, boolean } from '@storybook/addon-knobs';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 
 const placement = {
   Top: 'top',
@@ -13,7 +13,7 @@ const placement = {
 storiesOf('Tooltip', module)
   .addDecorator(
     moduleMetadata({
-      imports: [TooltipModule, ButtonModule]
+      imports: [ReadyUiModule]
     })
   )
   .addDecorator(centered)

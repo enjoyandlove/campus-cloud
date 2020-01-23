@@ -1,6 +1,6 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
-import { TextEditorModule } from '@ready-education/ready-ui';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import { boolean, text } from '@storybook/addon-knobs';
 
 const toolbar = [
@@ -20,7 +20,7 @@ const toolbar = [
 storiesOf('Text Editor', module)
   .addDecorator(
     moduleMetadata({
-      imports: [TextEditorModule]
+      imports: [ReadyUiModule]
     })
   )
   .addDecorator(centered)

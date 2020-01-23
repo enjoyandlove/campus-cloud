@@ -18,9 +18,8 @@ import { fromEvent, Observable } from 'rxjs';
 import { OnInit } from '@angular/core';
 import { merge, Subject } from 'rxjs';
 
+import { TOOLTIP_DATA } from './tokens';
 import { TooltipComponent } from './tooltip.component';
-
-export const TOOLTIP_DATA = new InjectionToken('TOOLTIP_DATA');
 
 @Directive({
   selector: '[ui-tooltip]'

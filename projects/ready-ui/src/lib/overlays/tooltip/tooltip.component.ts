@@ -7,7 +7,7 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 
-import { TOOLTIP_DATA } from './tooltip.directive';
+import { TOOLTIP_DATA } from './tokens';
 
 @Component({
   selector: 'ready-ui-tooltip',

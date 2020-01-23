@@ -1,9 +1,3 @@
-import {
-  IconsModule,
-  ButtonModule,
-  PopoverModule,
-  ButtonGroupModule
-} from '@ready-education/ready-ui';
 import { ReactiveFormsModule } from '@angular/forms';
 import { A11yModule } from '@angular/cdk/a11y';
 import { CommonModule } from '@angular/common';
@@ -73,10 +67,6 @@ import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common
     CommonModule,
     SharedModule,
     LayoutsModule,
-    PopoverModule,
-    IconsModule,
-    ButtonModule,
-    ButtonGroupModule,
     AudienceSharedModule,
     AnnouncementsRoutingModule,
     CommonIntegrationsModule,

@@ -1,7 +1,7 @@
-import { SelectModule, IconsModule, TextModule } from '@ready-education/ready-ui';
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import { boolean } from '@storybook/addon-knobs';
 
 const options = [
@@ -14,7 +14,7 @@ const options = [
 storiesOf('Select', module)
   .addDecorator(
     moduleMetadata({
-      imports: [SelectModule, TextModule, IconsModule, ReactiveFormsModule]
+      imports: [ReadyUiModule, ReactiveFormsModule]
     })
   )
   .addDecorator(centered)

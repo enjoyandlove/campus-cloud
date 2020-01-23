@@ -1,4 +1,3 @@
-import { ButtonModule, StackModule, TextModule, IconsModule } from '@ready-education/ready-ui';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -38,13 +37,9 @@ import {
     JobsListActionBoxComponent
   ],
   imports: [
-    TextModule,
-    IconsModule,
-    StackModule,
     CommonModule,
     SharedModule,
     RouterModule,
-    ButtonModule,
     JobsRoutingModule,
     ReactiveFormsModule,
     EmployerModule

@@ -1,11 +1,8 @@
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import {
-  ModalModule,
-  StackModule,
-  IconsModule,
   ModalService,
-  ButtonModule,
   READY_MODAL_DATA
-} from '@ready-education/ready-ui';
+} from '@ready-education/ready-ui/overlays/modal/modal.service';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
 import { Component, TemplateRef, Inject, OnInit } from '@angular/core';
@@ -127,7 +124,7 @@ storiesOf('Modal', module)
     moduleMetadata({
       entryComponents: [ReadyUIModalComponent],
       declarations: [ReadyUIModalWrapperComponent, ReadyUIModalComponent],
-      imports: [ModalModule, IconsModule, ButtonModule, StackModule]
+      imports: [ReadyUiModule]
     })
   )
   .addDecorator(centered)

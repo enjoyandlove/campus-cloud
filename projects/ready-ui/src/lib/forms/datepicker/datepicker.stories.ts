@@ -1,11 +1,10 @@
-import { PopoverModule, ButtonModule } from '@ready-education/ready-ui';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { DatepickerModule } from '@ready-education/ready-ui';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 
 storiesOf('Date Picker (WIP)', module)
   .addDecorator(
     moduleMetadata({
-      imports: [PopoverModule, ButtonModule, DatepickerModule]
+      imports: [ReadyUiModule]
     })
   )
   .add(

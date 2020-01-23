@@ -1,13 +1,13 @@
 import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
-import { CheckboxModule } from '@ready-education/ready-ui';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import { text, boolean } from '@storybook/addon-knobs';
 
 storiesOf('Checkbox', module)
   .addDecorator(
     moduleMetadata({
-      imports: [CheckboxModule, ReactiveFormsModule]
+      imports: [ReadyUiModule, ReactiveFormsModule]
     })
   )
   .addDecorator(centered)
