@@ -1,16 +1,10 @@
-import {
-  IconsModule,
-  TableModule,
-  ImageModule,
-  StackModule,
-  ButtonModule
-} from '@ready-education/ready-ui';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 
 storiesOf('Table', module)
   .addDecorator(
     moduleMetadata({
-      imports: [TableModule, ButtonModule, ImageModule, StackModule, IconsModule]
+      imports: [ReadyUiModule]
     })
   )
   .add(

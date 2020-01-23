@@ -1,6 +1,6 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
-import { CardModule } from '@ready-education/ready-ui';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import { select, text } from '@storybook/addon-knobs';
 
 const spacing = {
@@ -18,7 +18,7 @@ const shadows = {
 storiesOf('Card', module)
   .addDecorator(
     moduleMetadata({
-      imports: [CardModule]
+      imports: [ReadyUiModule]
     })
   )
   .addDecorator(centered)

@@ -1,7 +1,7 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import { text, select } from '@storybook/addon-knobs';
-import { TextModule } from '@ready-education/ready-ui';
 
 const variants = {
   None: '',
@@ -20,7 +20,7 @@ const color = {
 storiesOf('Text', module)
   .addDecorator(
     moduleMetadata({
-      imports: [TextModule]
+      imports: [ReadyUiModule]
     })
   )
   .addDecorator(centered)

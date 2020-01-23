@@ -3,6 +3,9 @@ logs
 *.log
 docs/
 
+# Stories
+.ready-ui
+
 # Runtime data
 pids
 *.pid

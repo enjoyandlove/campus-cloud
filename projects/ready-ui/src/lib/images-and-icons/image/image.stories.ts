@@ -1,6 +1,6 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { select, text, boolean, number } from '@storybook/addon-knobs';
-import { ImageModule } from '@ready-education/ready-ui';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import { CommonModule } from '@angular/common';
 
 const sizes = {
@@ -14,7 +14,7 @@ const defaultImage = 'https://placehold.it/300x230';
 storiesOf('Image', module)
   .addDecorator(
     moduleMetadata({
-      imports: [CommonModule, ImageModule]
+      imports: [CommonModule, ReadyUiModule]
     })
   )
   .add(

@@ -1,5 +1,5 @@
-import { StackModule, CardModule, ButtonModule } from '@ready-education/ready-ui';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import { select, text } from '@storybook/addon-knobs';
 
 const directions = {
@@ -24,7 +24,7 @@ const spacing = {
 storiesOf('Stack', module)
   .addDecorator(
     moduleMetadata({
-      imports: [StackModule, CardModule, ButtonModule]
+      imports: [ReadyUiModule]
     })
   )
   .add(

@@ -1,6 +1,6 @@
+import { ToastService } from '@ready-education/ready-ui/feedback-and-indicators';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastService } from '@ready-education/ready-ui';
 
 import { CPSession } from '@campus-cloud/session';
 import { EnvService } from '@campus-cloud/config/env';

@@ -1,28 +1,15 @@
-import {
-  IconsModule,
-  ButtonModule,
-  PopoverModule,
-  TextFieldModule,
-  ResultsListModule
-} from '@ready-education/ready-ui';
 import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import { boolean } from '@storybook/addon-knobs';
 
 const fruits = ['Banana', 'Apples', 'Pears', 'Kiwis', 'Coconut'];
 const searches = ['Summer', 'Semester', 'Exams', 'Friends', 'Stress', 'Help'];
 
-storiesOf('Results Lists (WIP)', module)
+storiesOf('Results Lists', module)
   .addDecorator(
     moduleMetadata({
-      imports: [
-        IconsModule,
-        ButtonModule,
-        PopoverModule,
-        TextFieldModule,
-        ResultsListModule,
-        ReactiveFormsModule
-      ]
+      imports: [ReadyUiModule, ReactiveFormsModule]
     })
   )
   .add(

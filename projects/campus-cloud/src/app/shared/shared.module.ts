@@ -1,4 +1,5 @@
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -168,6 +169,7 @@ import {
     CommonModule,
     RouterModule,
     CPTableModule,
+    ReadyUiModule,
     OverlayModule,
     CPTopBarModule,
     ReactiveFormsModule
@@ -194,6 +196,7 @@ import {
     CPFilterPipe,
     CPBoldifyPipe,
     CPTableModule,
+    ReadyUiModule,
     CPTopBarModule,
     CPTabComponent,
     CPCardComponent,
@@ -218,7 +221,6 @@ import {
     TextEditorDirective,
     CPDropdownComponent,
     CPMenuItemComponent,
-
     CPCheckboxComponent,
     CPSnackBarComponent,
     CPTopBanerComponent,

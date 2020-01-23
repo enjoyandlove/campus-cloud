@@ -1,9 +1,7 @@
 import { number, select, boolean } from '@storybook/addon-knobs';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
-import { ButtonModule } from '@ready-education/ready-ui';
-
-import { PopoverModule } from './popover.module';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 
 const positions = {
   Left: 'left',
@@ -13,7 +11,7 @@ const positions = {
 storiesOf('Popover', module)
   .addDecorator(
     moduleMetadata({
-      imports: [PopoverModule, ButtonModule]
+      imports: [ReadyUiModule]
     })
   )
   .addDecorator(centered)

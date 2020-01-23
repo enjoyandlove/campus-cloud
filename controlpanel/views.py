@@ -4,7 +4,7 @@ import json
 import datetime
 
 from bs4 import UnicodeDammit
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponseRedirect
@@ -22,14 +22,14 @@ def handle_404(request):
 Shell to serve angular app
 '''
 def web_app(request):
-    return render_to_response("index.html")
+    return render(request, "index.html")
 
 
 '''
 Control Panel Login Page
 '''
 def app_login(request):
-    return render_to_response("controlpanel/login.html")
+    return render(request, "controlpanel/login.html")
 
 
 '''

@@ -1,12 +1,6 @@
-import {
-  IconsModule,
-  StackModule,
-  ButtonModule,
-  PopoverModule,
-  ButtonGroupModule
-} from '@ready-education/ready-ui';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import { select, text } from '@storybook/addon-knobs';
 
 const variants = {
@@ -32,7 +26,7 @@ const disabled = {
 storiesOf('Button', module)
   .addDecorator(
     moduleMetadata({
-      imports: [ButtonModule, IconsModule, PopoverModule, StackModule, ButtonGroupModule]
+      imports: [ReadyUiModule]
     })
   )
   .addDecorator(centered)

@@ -1,6 +1,6 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
-import { IconsModule } from '@ready-education/ready-ui';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import { select, text } from '@storybook/addon-knobs';
 
 const sizes = {
@@ -27,7 +27,7 @@ const icons = {
 storiesOf('Icons', module)
   .addDecorator(
     moduleMetadata({
-      imports: [IconsModule]
+      imports: [ReadyUiModule]
     })
   )
   .addDecorator(centered)

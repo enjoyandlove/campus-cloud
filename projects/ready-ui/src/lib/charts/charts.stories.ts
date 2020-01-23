@@ -1,6 +1,6 @@
 import { withKnobs, number, boolean } from '@storybook/addon-knobs';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-import { ChartsModule } from '@ready-education/ready-ui';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 
 function mockDataGenerator(dataPoints) {
   const entries = Array.from(Array(dataPoints).keys());
@@ -19,7 +19,7 @@ function range(n: number) {
 storiesOf('Charts', module)
   .addDecorator(
     moduleMetadata({
-      imports: [ChartsModule]
+      imports: [ReadyUiModule]
     })
   )
   .addDecorator(withKnobs)

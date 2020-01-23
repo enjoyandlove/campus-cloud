@@ -1,11 +1,11 @@
-import { TextFieldModule, ButtonModule, IconsModule, StackModule } from '@ready-education/ready-ui';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { text, boolean, number } from '@storybook/addon-knobs';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 
 storiesOf('Text Field', module)
   .addDecorator(
     moduleMetadata({
-      imports: [TextFieldModule, StackModule, ButtonModule, IconsModule]
+      imports: [ReadyUiModule]
     })
   )
   .add(

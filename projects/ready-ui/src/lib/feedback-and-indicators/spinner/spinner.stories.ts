@@ -1,6 +1,6 @@
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { select, text, boolean } from '@storybook/addon-knobs';
-import { SpinnerModule } from '@ready-education/ready-ui';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 
 const sizes = {
   Regular: 'regular',
@@ -10,7 +10,7 @@ const sizes = {
 storiesOf('Spinner', module)
   .addDecorator(
     moduleMetadata({
-      imports: [SpinnerModule]
+      imports: [ReadyUiModule]
     })
   )
   .add(
