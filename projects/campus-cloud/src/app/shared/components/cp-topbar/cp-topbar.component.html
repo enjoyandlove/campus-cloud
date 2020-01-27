@@ -39,16 +39,19 @@
       </ul>
     </nav>
     <div class="right-side">
-      <div class="extras nav__help-desk">
+      <div
+        class="extras nav__help-desk"
+        [class.nav__help-desk--whats-new]="highlight">
         <button type="button"
                 data-toggle="dropdown"
+                (click)="setWhatsNewCookie()"
                 class="cpbtn cpbtn--link--dark">
           <img [src]="helpIcon"
                alt="help">
         </button>
         <div
              class="nav__help-desk--menu nav__help-desk--right dropdown-menu dropdown-menu-right">
-          <cp-help-desk></cp-help-desk>
+          <cp-help-desk [releaseId]="releaseId"></cp-help-desk>
         </div>
       </div>
       <div class="dropdown nav__school noselect">

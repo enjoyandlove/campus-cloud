@@ -1,0 +1,54 @@
+<div class="text-field">
+  <header>
+    <label ui-text-style
+           variant="bold"
+           [for]="_id">{{ label }}</label>
+    <span *ngIf="_showCounter">{{count}}/{{_maxLength}}</span>
+  </header>
+  <span ui-text-style
+        color="muted"
+        *ngIf="helpText"
+        class="text-field__help"
+        variant="caption">{{ helpText }}</span>
+
+  <div class="text-field__main">
+    <div class="text-field__prefix">
+      <ng-container *ngTemplateOutlet="prefix"></ng-container>
+    </div>
+    <input [id]="_id"
+           [type]="_type"
+           *ngIf="!_textArea"
+           inheritWidth="true"
+           [readonly]="_readonly"
+           readyUiPopoverTrigger
+           [disabled]="_disabled"
+           [ngClass]="inputStyles"
+           class="text-field__input"
+           [uiPopoverTpl]="popOverTmpl"
+           [value]="_value ? _value : ''"
+           [attr.aria-labelledby]="ariaLabelledBy"
+           [attr.aria-describedby]="ariaDescribedby"
+           (input)="writeValue($event.target.value)" />
+
+    <textarea [id]="_id"
+              *ngIf="_textArea"
+              [readonly]="_readonly"
+              [disabled]="_disabled"
+              [ngClass]="inputStyles"
+              class="text-field__input"
+              [value]="_value ? _value : ''"
+              (input)="writeValue($event.target.value)">
+    </textarea>
+
+    <div class="text-field__suffix">
+      <ng-container *ngTemplateOutlet="suffix"></ng-container>
+    </div>
+    <div class="text-field__bg"></div>
+  </div>
+
+  <span ui-text-style
+        color="danger"
+        *ngIf="errorMessage"
+        class="text-field__error"
+        variant="caption">{{ errorMessage }}</span>
+</div>

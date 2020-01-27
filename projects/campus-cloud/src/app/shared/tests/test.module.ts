@@ -1,3 +1,4 @@
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -16,7 +17,7 @@ import { SharedModule } from '@projects/campus-cloud/src/app/shared/shared.modul
     CPTrackingService,
     { provide: EnvService, useClass: MockEnvService }
   ],
-  imports: [CommonModule, SharedModule, RouterTestingModule, HttpClientModule],
-  exports: [SharedModule, RouterTestingModule, HttpClientModule]
+  imports: [CommonModule, SharedModule, RouterTestingModule, HttpClientModule, ReadyUiModule],
+  exports: [SharedModule, RouterTestingModule, HttpClientModule, ReadyUiModule]
 })
 export class CPTestModule {}

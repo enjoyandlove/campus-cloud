@@ -1,39 +1,15 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { FormsModule, FormBuilder } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { of } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 import { EventsModule } from '../events.module';
-import { EventsService } from '../events.service';
 import { RootStoreModule } from '@campus-cloud/store';
 import { EventUtilService } from '../events.utils.service';
 import { EventsExcelComponent } from './events-excel.component';
+import { filledForm as mockEvent } from '@controlpanel/manage/events/tests';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { AdminService, StoreService, FileUploadService } from '@campus-cloud/shared/services';
-
-class MockService {
-  dummy;
-  createEvent(events, search) {
-    this.dummy = [events, search];
-
-    return of({});
-  }
-}
-
-const mockEvent: any = {
-  title: 'title',
-  store_id: 1,
-  description: 'description',
-  end: 'end',
-  room: 'room',
-  start: 'start',
-  location: 'location',
-  poster_url: 'poster_url',
-  has_checkout: true,
-  poster_thumb_url: 'poster_thumb_url',
-  event_attendance: 1
-};
 
 describe('EventsExcelComponent', () => {
   configureTestSuite();
@@ -48,28 +24,68 @@ describe('EventsExcelComponent', () => {
           HttpClientModule,
           RouterTestingModule
         ],
-        providers: [
-          AdminService,
-          StoreService,
-          EventUtilService,
-          FileUploadService,
-          {
-            provide: EventsService,
-            useClass: MockService
-          }
-        ]
+        providers: [AdminService, StoreService, EventUtilService, FileUploadService]
       });
     })()
       .then(done)
       .catch(done.fail);
   });
 
+  let event;
   let component: EventsExcelComponent;
   let fixture: ComponentFixture<EventsExcelComponent>;
 
   beforeEach(() => {
     fixture = TestBed.createComponent(EventsExcelComponent);
     component = fixture.componentInstance;
+    event = component.buildEvent(mockEvent);
+  });
+
+  describe('BUILD EVENT', () => {
+    it('should set store ID', () => {
+      component.storeId = 123;
+      event = component.buildEvent(mockEvent);
+
+      expect(event.store_id).toBe(component.storeId);
+    });
+
+    it('should set club ID', () => {
+      component.clubId = 123;
+      event = component.buildEvent(mockEvent);
+
+      expect(event.store_id).toBe(component.clubId);
+    });
+
+    it('should set default store ID', () => {
+      expect(event.store_id).toBe(mockEvent.store_id);
+    });
+
+    it('should set attendance manager email', () => {
+      expect(event.attendance_manager_email).toBeUndefined();
+
+      const mockEventData = {
+        ...mockEvent,
+        event_attendance: 1,
+        attendance_manager_email: 'hello@oohlalamobile.com'
+      };
+
+      event = component.buildEvent(mockEventData);
+      expect(event.attendance_manager_email).toBe(mockEventData.attendance_manager_email);
+    });
+
+    it('should set Feedback and Manager ID if attendance enabled', () => {
+      expect(event.event_feedback).toBeUndefined();
+      expect(event.event_manager_id).toBeUndefined();
+
+      const mockEventData = {
+        ...mockEvent,
+        event_attendance: 1
+      };
+
+      event = component.buildEvent(mockEventData);
+      expect(event.event_feedback).toBe(mockEvent.event_feedback);
+      expect(event.event_manager_id).toBe(mockEvent.event_manager_id);
+    });
   });
 
   it('should build event without assessment manager', () => {

@@ -1,4 +1,3 @@
-import { TemplatePortal } from '@angular/cdk/portal';
 import {
   Overlay,
   OverlayRef,
@@ -14,21 +13,34 @@ import {
   HostListener,
   ViewContainerRef
 } from '@angular/core';
-import { coerceNumberProperty } from '@angular/cdk/coercion';
+import { coerceNumberProperty, coerceBooleanProperty } from '@angular/cdk/coercion';
+import { TemplatePortal } from '@angular/cdk/portal';
 
 @Directive({
   exportAs: 'popover',
   selector: '[readyUiPopoverTrigger]'
 })
 export class PopoverTriggerDirective {
-  yAxisOffset = 40;
+  _inheritWidth = false;
+  yAxisOffset = 0;
+  xAxisOffset = 0;
 
   @Input()
   uiPopoverTpl: TemplateRef<any>;
 
   @Input()
+  set inheritWidth(inheritWidth: false) {
+    this._inheritWidth = coerceBooleanProperty(inheritWidth);
+  }
+
+  @Input()
   set uiPopoverYOffset(uiPopoverYOffset: string | number) {
     this.yAxisOffset = coerceNumberProperty(uiPopoverYOffset);
+  }
+
+  @Input()
+  set uiPopoverXOffset(uiPopoverXOffset: string | number) {
+    this.xAxisOffset = coerceNumberProperty(uiPopoverXOffset);
   }
 
   @Input()
@@ -49,6 +61,14 @@ export class PopoverTriggerDirective {
   }
 
   open() {
+    if (this.isOpen) {
+      return;
+    }
+
+    if (!this.uiPopoverTpl) {
+      return;
+    }
+
     this.overlayRef = this.overlay.create(this.getConfig());
     const portal: TemplatePortal = new TemplatePortal(this.uiPopoverTpl, this.viewContainerRef);
     this.overlayRef.attach(portal);
@@ -65,12 +85,15 @@ export class PopoverTriggerDirective {
   }
 
   private getConfig(): OverlayConfig {
+    const { offsetWidth } = this.el.nativeElement;
+
     return {
       hasBackdrop: true,
       maxHeight: '500px',
       disposeOnNavigation: true,
       backdropClass: 'ui-popover',
       positionStrategy: this.getPositionStrategy(),
+      width: this._inheritWidth ? `${offsetWidth}px` : undefined,
       scrollStrategy: this.overlay.scrollStrategies.reposition()
     };
   }
@@ -81,6 +104,7 @@ export class PopoverTriggerDirective {
       .flexibleConnectedTo(this.el)
       .withPositions(this.getPosition())
       .withDefaultOffsetY(this.yAxisOffset)
+      .withDefaultOffsetX(this.xAxisOffset)
       .withPush(false);
   }
 
@@ -88,15 +112,9 @@ export class PopoverTriggerDirective {
     return [
       {
         originX: this.position === 'left' ? 'start' : 'end',
-        originY: 'top',
-        overlayX: this.position === 'left' ? 'start' : 'end',
-        overlayY: 'top'
-      },
-      {
-        originX: this.position === 'left' ? 'start' : 'end',
         originY: 'bottom',
         overlayX: this.position === 'left' ? 'start' : 'end',
-        overlayY: 'bottom'
+        overlayY: 'top'
       }
     ];
   }

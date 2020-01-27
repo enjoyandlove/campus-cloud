@@ -3,14 +3,17 @@
 :host {
   border: none;
   outline: none;
-  padding: 0 1em;
   cursor: pointer;
-  font-size: small;
   line-height: 2.4;
   box-shadow: none;
   user-select: none;
   border-radius: 4px;
+  padding: 0 0.575em;
   border: 1px solid transparent;
+
+  span {
+    margin: 0 0.5em;
+  }
 
   &:disabled {
     cursor: not-allowed;
@@ -21,13 +24,13 @@
     background: $color-primary;
     transition: background 300ms ease-in-out;
 
-    &:hover:not(:disabled) {
-      background: darken($color-primary, 10%);
-    }
-
     &.flat {
       color: white;
       background: $color-primary;
+
+      &:hover:not(:disabled) {
+        background: darken($color-primary, 10%);
+      }
 
       &:disabled {
         color: white;
@@ -46,9 +49,9 @@
 
     &.inline {
       padding: 0;
-      color: $color-primary;
       border-radius: 0;
       line-height: inherit;
+      color: $color-primary;
       background: transparent;
 
       &:disabled {
@@ -65,6 +68,10 @@
         color: white;
         background: #b3b3b3;
         border-color: #b3b3b3;
+      }
+
+      &:hover:not(.button-group-item) {
+        background: transparent;
       }
     }
   }
@@ -183,7 +190,7 @@
       transition: border 300ms ease-in;
       border: 1px solid lighten($color-text, 50%);
 
-      &:hover:not(:disabled) {
+      &:hover:not(:disabled):not(.button-group-item) {
         border-color: $color-text;
       }
 

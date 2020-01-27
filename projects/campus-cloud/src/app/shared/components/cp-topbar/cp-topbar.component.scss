@@ -132,6 +132,16 @@
     position: absolute;
   }
 
+  &--whats-new:after {
+    width: 6px;
+    height: 6px;
+    content: "";
+    position: absolute;
+    border-radius: 5px;
+    margin: 2px 0 0 -7px;
+    background: $color-danger;
+  }
+
   &:hover,
   &--active {
     cursor: pointer;

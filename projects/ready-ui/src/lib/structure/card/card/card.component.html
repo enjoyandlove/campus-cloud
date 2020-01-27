@@ -1,0 +1,10 @@
+<div class="ready-ui-card"
+     [ngClass]="classes">
+  <div *ngIf="title"
+       class="ready-ui-card__header">
+    <p class="ready-ui-card__title">{{ title }}</p>
+  </div>
+  <div class="ready-ui-card__content">
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { EnvService } from '@campus-cloud/config/env';
+import { appStorage, base64 } from '@campus-cloud/shared/utils';
 import { CPSession, ISchool, IUser } from '@campus-cloud/session';
 import { CPTrackingService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
@@ -18,8 +19,10 @@ import {
 })
 export class CPTopBarComponent implements OnInit {
   user: IUser;
+  releaseId = 1;
   amplitudeEvents;
   school: ISchool;
+  highlight = false;
   canNotify = false;
   canManage = false;
   canAssess = false;
@@ -93,7 +96,21 @@ export class CPTopBarComponent implements OnInit {
     this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
 
+  setWhatsNewCookie() {
+    this.highlight = false;
+    appStorage.set(base64.encode(appStorage.keys.HELP_ICON), this.releaseId.toString());
+  }
+
+  showWhatsNew() {
+    const previousChangeLogKey = appStorage.get(base64.encode(appStorage.keys.HELP_ICON));
+    this.highlight = !previousChangeLogKey || previousChangeLogKey !== this.releaseId.toString();
+  }
+
   ngOnInit() {
+    // if (this.env.name === 'production') {
+    //   this.showWhatsNew();
+    // }
+
     this.user = this.session.g.get('user');
     this.school = this.session.g.get('school');
 

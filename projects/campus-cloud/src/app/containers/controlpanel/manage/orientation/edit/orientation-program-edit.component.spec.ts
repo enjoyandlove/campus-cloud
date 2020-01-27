@@ -84,15 +84,6 @@ describe('OrientationProgramEditComponent', () => {
     expect(component.form.valid).toBeFalsy();
   });
 
-  it('cp button should have disabled state TRUE', () => {
-    component.form.controls['name'].setValue(null);
-    expect(component.buttonData.disabled).toBeTruthy();
-  });
-
-  it('cp button should have disabled state FALSE', () => {
-    expect(component.buttonData.disabled).toBeFalsy();
-  });
-
   it('should update orientation program', () => {
     spyOn(component, 'resetModal');
     spy = spyOn(component.service, 'editProgram').and.returnValue(observableOf(editProgram));

@@ -1,0 +1,37 @@
+@import '../../../core/sass/variables';
+
+:host {
+  display: block;
+}
+
+.option {
+  display: flex;
+  cursor: pointer;
+  min-height: 3em;
+  padding: 0.5em 1em;
+  align-items: center;
+  transition: background 300ms ease-in-out;
+
+  &.option--disabled {
+    cursor: not-allowed;
+    color: lighten($color: $color-grey-150, $amount: 10%) !important;
+  }
+
+  &.option--selected {
+    color: white;
+    background: $color-primary;
+  }
+
+  &:hover:not(.option--disabled):not(.option--selected) {
+    background: lighten($color: $color-grey-150, $amount: 25%);
+  }
+
+  &__prefix {
+    width: 1.8em;
+    margin-right: 0.2em;
+  }
+
+  &__content {
+    // flex: 1 0%;
+  }
+}

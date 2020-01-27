@@ -1,4 +1,3 @@
-import { ChartsModule } from '@ready-education/ready-ui';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -36,7 +35,7 @@ import { EngagementRoutingModule } from './engagement.routing.module';
     CPStatsFormatterPipe
   ],
 
-  imports: [ReactiveFormsModule, ChartsModule, CommonModule, SharedModule, EngagementRoutingModule],
+  imports: [ReactiveFormsModule, CommonModule, SharedModule, EngagementRoutingModule],
 
   providers: [ChartsUtilsService, EngagementService, EngagementUtilsService],
 

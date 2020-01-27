@@ -1,0 +1,93 @@
+@import '../../../core/sass/variables';
+
+.control {
+  display: block;
+  cursor: pointer;
+  position: relative;
+
+  input {
+    width: 0;
+    opacity: 0;
+    z-index: -1;
+    position: absolute;
+
+    &:focus + .control__indicator {
+      outline: 1px dotted #797878;
+    }
+  }
+
+  &__indicator {
+    width: 20px;
+    height: 20px;
+    user-select: none;
+    border-radius: 4px;
+    background: #fff;
+    border: 1px solid $color-grey-100;
+    transition: border 300ms ease-in-out;
+    transition: background 200ms ease-in;
+
+    &:hover {
+      border: 1px solid $color-text;
+    }
+  }
+}
+
+/* Hover and focus states */
+.control:hover input ~ .control__indicator,
+.control input:focus ~ .control__indicator {
+  // background: #ccc;
+}
+
+/* Checked state */
+.control input:checked ~ .control__indicator {
+  background: $color-primary;
+  border: 1px solid $color-primary;
+}
+
+/* error state */
+.control input.error ~ .control__indicator {
+  border: 1px solid $color-danger;
+  background: rgba(255, 96, 89, 0.25);
+}
+
+/* Hover state whilst checked */
+.control:hover input:not([disabled]):checked ~ .control__indicator,
+.control input:checked:focus ~ .control__indicator {
+  border: 1px solid $color-grey-100;
+}
+
+/* Disabled state */
+.control input:disabled ~ .control__indicator {
+  opacity: 0.6;
+  pointer-events: none;
+  background: $color-grey-150;
+  border: 1px solid $color-grey-100;
+}
+
+/* Check mark */
+.control__indicator:after {
+  position: absolute;
+  display: none;
+  content: '';
+}
+
+/* Show check mark */
+.control input:checked ~ .control__indicator:after {
+  display: block;
+}
+
+/* Checkbox tick */
+.control--checkbox .control__indicator:after {
+  top: 1px;
+  width: 6px;
+  left: 7px;
+  height: 13px;
+  border: solid #fff;
+  transform: rotate(45deg);
+  border-width: 0 2px 2px 0;
+}
+
+/* Disabled tick colour */
+.control--checkbox input:disabled ~ .control__indicator:after {
+  border-color: #fff;
+}

@@ -129,7 +129,6 @@ export class PersonasTileCreateComponent extends BaseComponent implements OnInit
     const emptySection = this.guideUtils.isTemporaryGuide(this.guide);
 
     if (emptySection && !this.guide._featuredTile) {
-      console.log('here not');
       const body = {
         ...this.guide,
         school_id: this.session.g.get('school').id

@@ -22,26 +22,27 @@
 
         <div class="footer">
           <div class="cp-wrapper cp-wrapper--outer">
-            <div class="col-12">
-              <div class="row">
-                <div class="col-12">
-                  <div class="text-right">
-                    <label class="error"
-                           *ngIf="formError">
-                      <i class="material-icons">warning</i>
-                      {{ dateErrorMessage }}
-                    </label>
-                    <a [routerLink]="['../info']"
-                       class="cpbtn cpbtn--cancel"
-                       i18n>
-                      {{ 'cancel' | cpI18n }}
-                    </a>
-                    <cp-button [props]="buttonData"
-                               (buttonClick)="onSubmit()"> </cp-button>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ready-ui-stack alignment="end">
+              <label ui-text-style color="danger" *ngIf="formError">
+                <ready-ui-stack>
+                  <ready-ui-icon name="warning" color="ff6059"></ready-ui-icon>
+                  {{ dateErrorMessage }}
+                </ready-ui-stack>
+              </label>
+
+              <a ui-button variant="stroked" [routerLink]="['../info']">
+                {{ 'cancel' | cpI18n }}
+              </a>
+
+              <button ui-button
+                    type="button"
+                    variant="flat"
+                    color="primary"
+                    (click)="onSubmit()"
+                    [disabled]="disableButton">
+                {{ 'save' | cpI18n }}
+              </button>
+            </ready-ui-stack>
           </div>
         </div>
       </form>

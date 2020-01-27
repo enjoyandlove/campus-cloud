@@ -3,6 +3,9 @@ logs
 *.log
 docs/
 
+# Stories
+.ready-ui
+
 # Runtime data
 pids
 *.pid
@@ -26,7 +29,6 @@ build/Release
 # OS generated files #
 .DS_Store
 ehthumbs.db
-Icon?
 Thumbs.db
 
 # Node Files #
