@@ -1,9 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { HintModule } from './hint/hint.module';
+import { LabelModule } from './label/label.module';
+import { InputModule } from './input/input.module';
+import { ErrorModule } from './error/error.module';
 import { SelectModule } from './select/select.module';
 import { CheckboxModule } from './checkbox/checkbox.module';
-import { TextFieldModule } from './text-field/text-field.module';
+import { FormFieldModule } from './form-field/form-field.module';
 import { DatepickerModule } from './datepicker/datepicker.module';
 import { TextEditorModule } from './text-editor/text-editor.module';
 import { ColorPickerModule } from './color-picker/color-picker.module';
@@ -11,17 +15,26 @@ import { ColorPickerModule } from './color-picker/color-picker.module';
 @NgModule({
   declarations: [],
   exports: [
+    HintModule,
+    LabelModule,
+    InputModule,
+    ErrorModule,
     SelectModule,
     CheckboxModule,
-    TextFieldModule,
+    FormFieldModule,
     DatepickerModule,
     TextEditorModule,
     ColorPickerModule
   ],
   imports: [
+    HintModule,
+    LabelModule,
+    ErrorModule,
+    InputModule,
     SelectModule,
     CommonModule,
     CheckboxModule,
+    FormFieldModule,
     DatepickerModule,
     TextEditorModule,
     ColorPickerModule

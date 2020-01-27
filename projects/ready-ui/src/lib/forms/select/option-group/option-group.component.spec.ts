@@ -8,9 +8,8 @@ describe('OptionGroupComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ OptionGroupComponent ]
-    })
-    .compileComponents();
+      declarations: [OptionGroupComponent]
+    }).compileComponents();
   }));
 
   beforeEach(() => {

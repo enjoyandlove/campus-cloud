@@ -11,3 +11,17 @@ $color-warning: #ffa941;
 $color-danger: #ff6059;
 
 $color-text: $color-grey-50;
+
+$color-primary-map: (regular: #3498db,
+  dark: darken(#3498db, 20%),
+  light: lighten(#3498db, 20%),
+);
+
+$color-grey: (0: #fff,
+  100: #FAFAFA,
+  200: #E0E0E0,
+  400: #BDBDBD,
+  500: #9E9E9E,
+  800: #424242,
+  900: #000,
+);

@@ -1,0 +1,42 @@
+@import '../../../core/sass/variables';
+
+.tabs-nav {
+  display: flex;
+  min-height: 3em;
+  padding-left: 0;
+  list-style: none;
+  background: white;
+  align-items: center;
+  justify-content: space-around;
+
+  &__item {
+    flex: 1;
+    text-align: center;
+    position: relative;
+
+    &:after {
+      left: 0;
+      content: '';
+      height: 2px;
+      width: 100%;
+      bottom: -10px;
+      position: absolute;
+      transition: background 300ms ease-in-out;
+    }
+
+    &:not(.tabs-nav__item--active):hover:after {
+      background: map-get($color-grey, 200);
+    }
+
+    &--active {
+
+      &:after {
+        background: $color-primary;
+      }
+    }
+  }
+}
+
+.tab__content {
+  padding: 1em;
+}
