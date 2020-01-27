@@ -1,0 +1,29 @@
+@import '../../../core/sass/variables';
+
+.toggle {
+  padding: 12px 20px;
+  border-radius: 4px;
+  margin-bottom: 12px;
+  transition: all 200ms ease-in-out;
+  background: map-get($color-grey, 100);
+  border: 1px solid map-get($color-grey, 200);
+
+  &.active {
+    border: 1px solid $color-success;
+    background-color: rgba(40, 202, 66, 0.06);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__label {
+    font-size: 1.15em;
+    font-weight: 600;
+  }
+
+  &__content {
+    color: map-get($color-grey, 400);
+  }
+}

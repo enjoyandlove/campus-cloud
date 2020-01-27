@@ -6,7 +6,9 @@
 
 export * from './lib/ready-ui.module';
 
+export * from './lib/actions/settings-toggle/settings-toggle/settings-toggle.component';
 export * from './lib/actions/button-group/button-group/button-group.component';
+export * from './lib/actions/settings-toggle/settings-toggle.module';
 export * from './lib/actions/button-group/button-group.module';
 export * from './lib/actions/button/button/button.component';
 export * from './lib/actions/button/button.module';
@@ -26,11 +28,12 @@ export * from './lib/feedback-and-indicators/toast/toast.module';
 
 export * from './lib/forms/datepicker/components/date-picker/date-picker.component';
 export * from './lib/forms/color-picker/color-picker/color-picker.directive';
-export * from './lib/forms/form-field/form-field/form-field.component';
 export * from './lib/forms/text-editor/text-editor/text-editor.directive';
 export * from './lib/forms/select/option-group/option-group.component';
+export * from './lib/forms/form-field/form-field/form-field.component';
 export * from './lib/forms/checkbox/checkbox/checkbox.component';
 export * from './lib/forms/color-picker/color-picker.module';
+export * from './lib/forms/toggle/toggle/toggle.component';
 export * from './lib/forms/select/option/option.component';
 export * from './lib/forms/select/select/select.component';
 export * from './lib/forms/text-editor/text-editor.module';
@@ -40,6 +43,7 @@ export * from './lib/forms/input/ready-input.directive';
 export * from './lib/forms/checkbox/checkbox.module';
 export * from './lib/forms/label/label.component';
 export * from './lib/forms/error/error.component';
+export * from './lib/forms/toggle/toggle.module';
 export * from './lib/forms/hint/hint.component';
 export * from './lib/forms/select/select.module';
 export * from './lib/forms/input/input.module';

@@ -81,7 +81,8 @@ storiesOf('Button', module)
         variant="flat"
         color="primary"
         readyUiPopoverTrigger
-        [uiPopoverTpl]="popover">
+        [uiPopoverTpl]="popover"
+        aria-label="Go to Integrations">
           <ready-ui-icon name="link" size="small" color="fff"></ready-ui-icon>
       </button>
       `
