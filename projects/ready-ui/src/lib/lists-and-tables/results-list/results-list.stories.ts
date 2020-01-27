@@ -119,16 +119,17 @@ storiesOf('Results Lists', module)
         <div class="wrapper">
           <div id="hiddenLabel" style="display: none">Results for: {{form.get('name').value}}</div>
           <form [formGroup]="form">
-            <ready-ui-text-field
-              type="text"
-              readonly="true"
-              formControlName="name"
-              [prefix]="inputPrefix"
-              [popOverTmpl]="popover"
-              uiPopoverYOffset="10"
-              ariaLabelledBy="hiddenLabel"
-              [suffix]="!form.get('name').value ? undefined : inputSuffix">
-            </ready-ui-text-field>
+            <ready-ui-form-field [prefix]="inputPrefix" [suffix]="!form.get('name').value ? undefined : inputSuffix">
+              <input
+                type="text"
+                ready-ui-input
+                inheritWidth="true"
+                uiPopoverYOffset="10"
+                readyUiPopoverTrigger
+                formControlName="name"
+                [uiPopoverTpl]="popover"
+                [value]="form.get('name').value" />
+            </ready-ui-form-field>
           </form>
 
           <ng-template #inputPrefix>

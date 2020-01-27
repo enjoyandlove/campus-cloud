@@ -30,21 +30,10 @@ export class TooltipDirective implements OnInit, OnDestroy {
   _delay = 400;
   _show = false;
   _tooltip: OverlayRef;
+  destroy$ = new Subject();
   _template: TemplateRef<any>;
   _templateCompRef: ComponentRef<TooltipComponent>;
   _placement: 'top' | 'bottom' | 'left' | 'right' = 'bottom';
-
-  blur$: Observable<Event>;
-  hover$: Observable<Event>;
-  focus$: Observable<Event>;
-  escape$: Observable<Event>;
-  mousemove$: Observable<Event>;
-  hoverOutSideTriggerAndTooltip$: Observable<Event>;
-
-  openEvents$: Observable<Event>;
-  closeEvents$: Observable<Event>;
-
-  destroy$ = new Subject();
 
   @Input()
   tooltipClass = '';
@@ -208,12 +197,13 @@ export class TooltipDirective implements OnInit, OnDestroy {
   private attachListeners() {
     const el: HTMLElement = this.el.nativeElement;
 
-    this.blur$ = fromEvent(el, 'blur');
-    this.focus$ = fromEvent(el, 'focus');
-    this.hover$ = fromEvent(el, 'mouseenter');
-    this.mousemove$ = fromEvent(document, 'mousemove');
+    const blur$ = fromEvent(el, 'blur');
+    const focus$ = fromEvent(el, 'focus');
+    const mouseleave$ = fromEvent(el, 'mouseleave');
+    const mouseenter$ = fromEvent(el, 'mouseenter');
+    const mousemove$ = fromEvent(document, 'mousemove');
 
-    this.hoverOutSideTriggerAndTooltip$ = this.mousemove$.pipe(
+    const hoverOutSideTriggerAndTooltip$ = mousemove$.pipe(
       filter(() => this._show),
       filter((e: MouseEvent) => {
         // const { x, y } = this.getOffset();
@@ -238,21 +228,21 @@ export class TooltipDirective implements OnInit, OnDestroy {
       })
     );
 
-    this.escape$ = fromEvent(document, 'keyup').pipe(
+    const escape$ = fromEvent(document, 'keyup').pipe(
       filter((e: KeyboardEvent) => e.code === 'Escape')
     );
 
-    this.openEvents$ = merge(this.hover$, this.focus$).pipe(
+    const openEvents$ = merge(mouseenter$, focus$).pipe(
       filter(() => !this._show),
       tap(() => this.open())
     );
 
-    this.closeEvents$ = merge(this.blur$, this.escape$, this.hoverOutSideTriggerAndTooltip$).pipe(
+    const closeEvents$ = merge(blur$, escape$, mouseleave$).pipe(
       filter(() => this._show),
       tap(() => this.close())
     );
 
-    this.openEvents$.pipe(takeUntil(this.destroy$)).subscribe();
-    this.closeEvents$.pipe(takeUntil(this.destroy$)).subscribe();
+    openEvents$.pipe(takeUntil(this.destroy$)).subscribe();
+    closeEvents$.pipe(takeUntil(this.destroy$)).subscribe();
   }
 }

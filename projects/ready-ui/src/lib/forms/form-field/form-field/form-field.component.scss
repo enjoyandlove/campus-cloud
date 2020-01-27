@@ -1,0 +1,44 @@
+@import '../../../core/sass/variables';
+
+.form-field {
+  display: block;
+  margin-bottom: 2em;
+
+  &__prefix {
+    margin-right: 0.5em;
+  }
+
+  &__content {
+    display: flex;
+    position: relative;
+    padding: .5em .7em;
+    background: white;
+    position: relative;
+  }
+
+  &__error {
+    position: absolute;
+  }
+
+  &__bg {
+    &.form-field__bg--active:after {
+      border: 1px solid map-get($color-grey, 800);
+    }
+
+    &:after {
+      top: 0;
+      left: 0;
+      width: 100%;
+      content: '';
+      height: 100%;
+      border-radius: 4px;
+      position: absolute;
+      pointer-events: none;
+      border: 1px solid map-get($color-grey, 500);
+    }
+  }
+
+  &__suffix {
+    margin-left: 0.5em;
+  }
+}

@@ -1,0 +1,20 @@
+<div class="form-field">
+  <ng-content select="[ready-ui-label]"></ng-content>
+  <ng-content select="ready-ui-hint"></ng-content>
+  <div class="form-field__content">
+    <div class="form-field__prefix"
+         *ngIf="prefix">
+      <ng-container *ngTemplateOutlet="prefix"></ng-container>
+    </div>
+    <ng-content select="[ready-ui-input]"></ng-content>
+    <div class="form-field__suffix"
+         *ngIf="suffix">
+      <ng-container *ngTemplateOutlet="suffix"></ng-container>
+    </div>
+    <div class="form-field__bg"
+         [class.form-field__bg--active]="active$ | async"></div>
+  </div>
+  <div class="form-field__error">
+    <ng-content select="ready-ui-error"></ng-content>
+  </div>
+</div>

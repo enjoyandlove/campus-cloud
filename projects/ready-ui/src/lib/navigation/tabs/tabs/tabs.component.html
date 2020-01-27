@@ -1,0 +1,18 @@
+<ul class="tabs-nav">
+  <li class="tabs-nav__item"
+      *ngFor="let tab of tabs"
+      [class.tabs-nav__item--active]="tab.visible">
+    <button role="tab"
+            ui-button
+            tabindex="-1"
+            [id]="tab.id"
+            variant="inline"
+            [disabled]="tab._disabled"
+            (click)="showTabById(tab.id)"
+            [attr.aria-controls]="ariaControls"
+            [attr.aria-selected]="_visible">{{tab.label}}</button>
+  </li>
+</ul>
+<div class="tab__content">
+  <ng-content></ng-content>
+</div>

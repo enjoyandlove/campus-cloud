@@ -26,18 +26,26 @@ export * from './lib/feedback-and-indicators/toast/toast.module';
 
 export * from './lib/forms/datepicker/components/date-picker/date-picker.component';
 export * from './lib/forms/color-picker/color-picker/color-picker.directive';
+export * from './lib/forms/form-field/form-field/form-field.component';
 export * from './lib/forms/text-editor/text-editor/text-editor.directive';
-export * from './lib/forms/text-field/text-field/text-field.component';
 export * from './lib/forms/select/option-group/option-group.component';
 export * from './lib/forms/checkbox/checkbox/checkbox.component';
 export * from './lib/forms/color-picker/color-picker.module';
 export * from './lib/forms/select/option/option.component';
 export * from './lib/forms/select/select/select.component';
 export * from './lib/forms/text-editor/text-editor.module';
+export * from './lib/forms/form-field/form-field.module';
 export * from './lib/forms/datepicker/datepicker.module';
-export * from './lib/forms/text-field/text-field.module';
+export * from './lib/forms/input/ready-input.directive';
 export * from './lib/forms/checkbox/checkbox.module';
+export * from './lib/forms/label/label.component';
+export * from './lib/forms/error/error.component';
+export * from './lib/forms/hint/hint.component';
 export * from './lib/forms/select/select.module';
+export * from './lib/forms/input/input.module';
+export * from './lib/forms/error/error.module';
+export * from './lib/forms/label/label.module';
+export * from './lib/forms/hint/hint.module';
 export * from './lib/forms/forms.module';
 
 export * from './lib/images-and-icons/icons/symbol/symbol.component';
@@ -76,3 +84,8 @@ export * from './lib/lists-and-tables/table/table.module';
 
 export * from './lib/text/styles/styles.component';
 export * from './lib/text/text.module';
+
+export * from './lib/navigation/tabs/tabs/tabs.component';
+export * from './lib/navigation/tabs/tab/tab.component';
+export * from './lib/navigation/navigation.module';
+export * from './lib/navigation/tabs/tabs.module';
