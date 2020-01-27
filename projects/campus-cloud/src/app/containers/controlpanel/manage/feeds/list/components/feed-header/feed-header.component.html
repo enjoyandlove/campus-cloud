@@ -2,9 +2,8 @@
   <div class="avatar avatar--small"
        [attr.data-background-src]="feed.avatar_thumb"></div>
   <div>
-    <span class="name">
-      {{ feed.display_name }}
-    </span>
+    <span class="name"
+          [innerHTML]="feed.display_name | cpUrlify"></span>
     <span class="email"
           *ngIf="feed.email && feed.email !== ''">
       {{ emailTextContent }}

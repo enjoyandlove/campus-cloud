@@ -1,53 +1,50 @@
-import { CP_PRIVILEGES_MAP } from './../../../../shared/constants/privileges';
+import { TestBed, async } from '@angular/core/testing';
+
+import { CPSession } from '@campus-cloud/session';
 import { ClubsUtilsService } from './clubs.utils.service';
-import { CPSession } from '../../../../session';
-
-const mockUser = (w = true) => {
-  return {
-    school_level_privileges: {
-      157: {
-        [CP_PRIVILEGES_MAP.clubs]: {
-          r: true,
-          w
-        }
-      }
-    },
-    account_level_privileges: {
-      1: {
-        [CP_PRIVILEGES_MAP.clubs]: {
-          r: true,
-          w
-        }
-      }
-    }
-  };
-};
-
-const service = new ClubsUtilsService();
-const mockSession = new CPSession();
+import { mockClubUser } from '@controlpanel/manage/clubs/tests';
+import { mockSchool, mockUser } from '@campus-cloud/session/mock';
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 
 describe('ClubsUtilsService', () => {
-  let mockClub;
+  configureTestSuite();
 
-  beforeEach(() => {
-    mockClub = {};
+  beforeAll((done) => {
+    (async () => {
+      TestBed.configureTestingModule({ imports: [CPTestModule], providers: [ClubsUtilsService] });
+      await TestBed.compileComponents();
+    })()
+      .then(done)
+      .catch(done.fail);
   });
 
+  let mockClub;
+  let session: CPSession;
+  let service: ClubsUtilsService;
+
+  beforeEach(async(() => {
+    mockClub = {};
+    session = TestBed.get(CPSession);
+    session.g.set('user', mockUser);
+    session.g.set('school', mockSchool);
+    service = TestBed.get(ClubsUtilsService);
+  }));
+
   it('isSJSU', () => {
-    expect(service.isSJSU(mockClub)).toBeFalsy();
+    expect(ClubsUtilsService.isSJSU(mockClub)).toBeFalsy();
 
     mockClub = { ...mockClub, advisor_firstname: 'Andres' };
 
-    expect(service.isSJSU(mockClub)).toBeTruthy();
+    expect(ClubsUtilsService.isSJSU(mockClub)).toBeTruthy();
   });
 
   it('limitedAdmin', () => {
-    mockSession.g.set('user', mockUser(false));
-    mockSession.g.set('school', { id: 157 });
-    expect(service.limitedAdmin(mockSession.g, 1)).toBeTruthy();
+    session.g.set('user', mockClubUser(false));
+    session.g.set('school', { id: 157 });
+    expect(service.limitedAdmin(session.g, 1)).toBeTruthy();
 
-    mockSession.g.set('user', mockUser());
-    mockSession.g.set('school', { id: 157 });
-    expect(service.limitedAdmin(mockSession.g, 1)).toBeFalsy();
+    session.g.set('user', mockClubUser());
+    session.g.set('school', { id: 157 });
+    expect(service.limitedAdmin(session.g, 1)).toBeFalsy();
   });
 });

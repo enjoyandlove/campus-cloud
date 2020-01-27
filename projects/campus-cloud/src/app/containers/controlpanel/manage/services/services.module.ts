@@ -53,9 +53,12 @@ import {
   ServicesProvidersAttendeesActionBoxComponent
 } from './attendance/components/providers-details/components';
 
+import { ServicesFormComponent, ServicesAssessmentFormComponent } from './components/form';
+
 @NgModule({
   entryComponents: [ServicesDeleteComponent],
   declarations: [
+    ServicesFormComponent,
     ServicesEditComponent,
     ServicesInfoComponent,
     ServicesListComponent,
@@ -71,6 +74,7 @@ import {
     ServicesProvidersListComponent,
     ServicesProviderStatsComponent,
     ServicesListActionBoxComponent,
+    ServicesAssessmentFormComponent,
     ServicesProviderDeleteComponent,
     ServicesProviderDetailsComponent,
     ServicesProviderActionBoxComponent,

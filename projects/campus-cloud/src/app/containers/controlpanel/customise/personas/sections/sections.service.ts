@@ -7,6 +7,15 @@ import { ApiService } from '@campus-cloud/base/services';
 @Injectable()
 export class SectionsService {
   _guide;
+  _guides;
+
+  set guides(guides: ICampusGuide[]) {
+    this._guides = guides;
+  }
+
+  get guides(): ICampusGuide[] {
+    return this._guides;
+  }
 
   set guide(guide: ICampusGuide) {
     this._guide = guide;
@@ -28,5 +37,11 @@ export class SectionsService {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILE_CATEGORY}/`;
 
     return this.api.post(url, body, null, true);
+  }
+
+  bulkUpdateTileCategory(body) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GUIDE_TILE_CATEGORY}/`;
+
+    return this.api.update(url, body, null, true);
   }
 }

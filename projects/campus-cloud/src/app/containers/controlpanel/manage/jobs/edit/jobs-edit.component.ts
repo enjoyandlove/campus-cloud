@@ -25,10 +25,10 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
   jobId;
   loading;
   formError;
-  buttonData;
   isNewEmployer;
   dateErrorMessage;
   form: FormGroup;
+  disableButton = false;
   employerForm: FormGroup;
 
   constructor(
@@ -145,7 +145,7 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
   formData(data) {
     this.data = data;
     const isFormValid = data.jobFormValid && data.employerFormValid;
-    this.buttonData = Object.assign({}, this.buttonData, { disabled: !isFormValid });
+    this.disableButton = !isFormValid;
   }
 
   onToggleEmployer(value) {
@@ -187,11 +187,5 @@ export class JobsEditComponent extends BaseComponent implements OnInit {
     this.fetch();
     this.buildHeader();
     this.buildEmployerForm();
-
-    this.buttonData = {
-      disabled: false,
-      class: 'primary',
-      text: this.cpI18n.translate('save')
-    };
   }
 }

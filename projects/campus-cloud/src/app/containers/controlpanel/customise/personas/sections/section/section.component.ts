@@ -40,6 +40,7 @@ export class PersonasSectionComponent implements OnInit {
   @Input() noMarginTop: boolean;
   @Input() canMoveDown: boolean;
   @Input() showAddSection = true;
+  @Input() guides: ICampusGuide[];
   @Input() disableAddSection = false;
 
   @Output() swap: EventEmitter<any> = new EventEmitter();
@@ -110,6 +111,7 @@ export class PersonasSectionComponent implements OnInit {
       _featuredTile: this.guide._featuredTile
     };
 
+    this.service.guides = this.guides;
     this.router.navigate([`/studio/experiences/${this.personaId}/tiles`]);
   }
 

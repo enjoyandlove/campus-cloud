@@ -1,6 +1,6 @@
 import { Input, Component, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
-import { get as _get, isEmpty, isEqual, flatten } from 'lodash';
+import { get as _get, isEmpty, flatten } from 'lodash';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -13,7 +13,6 @@ import { ExtraDataType } from './../../models/integration-data.interface';
 import { ILink } from '@controlpanel/customise/personas/tiles/link.interface';
 import { IntegrationDataService, IStudioContentResource } from './../../providers';
 import { TilesUtilsService } from '@controlpanel/customise/personas/tiles/tiles.utils.service';
-import { CustomiseRoutingModule } from '@projects/campus-cloud/src/app/containers/controlpanel/customise/customise.routing.module';
 
 @Component({
   selector: 'cp-resource-selector-type-resource',
@@ -57,8 +56,7 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
       );
 
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      const value = this.form.valid ? this.form.value : { link_url: null };
-      this.valueChanges.emit(value);
+      this.valueChanges.emit(this.form.value);
     });
   }
 
@@ -190,19 +188,11 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
   }
 
   updateStateWith({ link_url, link_type, link_params }) {
-    /**
-     * check all available resources, if link_params is
-     * not empty, then ensure both link_url and link_params match
-     * (Athletics and Clubs have the same link_url but different link_params)
-     * else just check the link url matches
-     */
-    this.selectedItem = this.items
-      .filter((item: IStudioContentResource) => item.meta)
-      .find((item: IStudioContentResource) =>
-        isEmpty(item.meta.link_params)
-          ? item.meta.link_url === link_url
-          : item.meta.link_url === link_url && isEqual(item.meta.link_params, link_params)
-      );
+    this.selectedItem = ContentUtilsProviders.getResourceType(
+      { link_url, link_params },
+      this.items
+    );
+
     this.isServiceByCategory = link_url === CampusLink.campusServiceList;
     this.form.patchValue({ link_type, link_url, link_params });
   }

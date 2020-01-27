@@ -1,231 +1,49 @@
-<ng-container [ngSwitch]="isFormReady">
-  <cp-spinner *ngSwitchCase="false"></cp-spinner>
+<div class="margin-bottom">
+  <ng-container [ngSwitch]="isFormReady">
+    <cp-spinner *ngSwitchCase="false"></cp-spinner>
 
-  <ng-container *ngSwitchCase="true">
-    <div class="row margin-bottom">
+    <ng-container *ngSwitchCase="true">
       <form [formGroup]="form">
-        <div class="row">
-          <div class="col-6">
-            <div class="cp-card">
+        <cp-two-columns>
+          <cp-card layout-left-column>
+            <cp-clubs-form
+              [form]="form"
+              [club]="club"
+              [isEdit]="true"
+              [formError]="formError"
+              [isAthletic]="isAthletic"
+              [limitedAdmin]="limitedAdmin">
+            </cp-clubs-form>
+          </cp-card>
+
+          <cp-card layout-right-column>
+            <cp-clubs-contact-details-form
+              [form]="form"
+              [club]="club"
+              [formError]="formError">
+            </cp-clubs-contact-details-form>
+
+            <cp-clubs-sjsu-form
+              *ngIf="isSJSU"
+              [form]="form"
+              [formError]="formError">
+            </cp-clubs-sjsu-form>
+          </cp-card>
+        </cp-two-columns>
+
+        <div class="footer">
+          <div class="cp-wrapper cp-wrapper--outer">
+            <div class="col-12">
               <div class="row">
                 <div class="col-12">
-                  <p class="title">{{ labels.create_edit_name | cpI18n }}</p>
-                  <div class="row">
-                    <cp-image-upload class="col-12"
-                                     (uploaded)="onUploadedImage($event)"
-                                     [defaultImage]="form.controls['logo_url'].value"
-                                     [required]="formError && form.controls['logo_url'].hasError('required')">
-                    </cp-image-upload>
-                  </div>
-                </div>
-              </div>
-
-              <div class="form-group club-details">
-                <div class="row">
-                  <div class="col-12">
-                    <p class="title">{{ labels.create_edit_details | cpI18n }}
-                    </p>
-                  </div>
-                </div>
-
-                <div class="row">
-                  <div class="col-12">
-                    <label>{{ labels.create_edit_name | cpI18n }}</label>
-                    <input type="text"
-                           class="form-control"
-                           formControlName="name"
-                           [class.error]="formError && form.controls['name'].hasError('required')" />
-                  </div>
-                </div>
-              </div>
-
-              <div class="row form-group">
-                <div class="col-12">
-                  <label>{{ labels.create_edit_description | cpI18n }}</label>
-                  <textarea class="form-control"
-                            formControlName="description"> </textarea>
-                </div>
-              </div>
-
-              <div class="row form-group">
-                <div class="col-6">
-                  <label>{{ labels.create_edit_status | cpI18n }}</label>
-                  <div class="row">
-                    <div class="col-12">
-                      <fieldset [disabled]="limitedAdmin">
-                        <cp-check-dropdown [items]="statusTypes"
-                                           [selectedItem]="defaultStatus"
-                                           buttonClass="cpbtn cpbtn--cancel"
-                                           (selected)="onSelectedStatus($event)">
-                        </cp-check-dropdown>
-                      </fieldset>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <label>{{ labels.create_edit_membership | cpI18n }}</label>
-                  <div class="row">
-                    <div class="col-12">
-                      <cp-check-dropdown [items]="membershipTypes"
-                                         buttonClass="cpbtn cpbtn--cancel"
-                                         [selectedItem]="defaultMembership"
-                                         (selected)="onSelectedMembership($event)">
-                      </cp-check-dropdown>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row form-group">
-                <div class="col-12">
-                  <cp-checkbox class="checkbox"
-                               [isChecked]="showLocationDetails"
-                               (toggle)="onLocationToggle($event)"
-                               [label]="cpI18n.translate('t_shared_label_location_toggle')">
-                  </cp-checkbox>
-                </div>
-              </div>
-
-              <div *ngIf="showLocationDetails">
-                <div class="row form-group">
-                  <div class="col-12">
-                    <label>{{ 'location' | cpI18n }}</label>
-                    <div class="row form-group">
-                      <div class="col-12">
-                        <cp-place-autocomplete [newAddress]="newAddress"
-                                               (backToDefault)="onResetMap()"
-                                               (placeChange)="onPlaceChange($event)"
-                                               [defaultValue]="form.controls.address.value"
-                                               [isRequired]="formError && form.get('address').invalid">
-                        </cp-place-autocomplete>
-                      </div>
-                    </div>
-                    <div class="row form-group">
-                      <div class="col-6">
-                        <label>{{ 'building' | cpI18n }}</label>
-                        <input type="text"
-                               class="form-control"
-                               formControlName="location" />
-                      </div>
-                      <div class="col-6">
-                        <label>{{ 'room' | cpI18n }}</label>
-                        <input type="text"
-                               class="form-control"
-                               formControlName="room_info" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="row form-group">
-                  <div class="col-12 maps">
-                    <cp-maps [center]="mapCenter"
-                             [drawMarker]="drawMarker"
-                             (mapSelection)="onMapSelection($event)">
-                    </cp-maps>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-6">
-            <div class="cp-card contact">
-              <div class="row form-group">
-                <div class="col-12">
-                  <p class="title">{{ 'contact_details' | cpI18n }}</p>
-
-                  <div class="row form--group">
-                    <div class="col-6">
-                      <label>{{ 'website' | cpI18n }}</label>
-                      <input type="text"
-                             class="form-control"
-                             formControlName="website" />
-                    </div>
-
-                    <div class="col-6">
-                      <label>{{ 'phone_number' | cpI18n }}</label>
-                      <input type="text"
-                             class="form-control"
-                             formControlName="phone" />
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-12">
-                      <label>{{ 'email' | cpI18n }}</label>
-                      <input type="text"
-                             class="form-control"
-                             formControlName="email" />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div class="cp-card"
-                 *ngIf="isSJSU">
-              <div class="row form-group">
-                <div class="col-12">
-                  <p class="title">{{ 'clubs_label_advisor' | cpI18n }}</p>
-
-                  <div class="row form--group">
-                    <div class="col-6">
-                      <label>{{ 'first_name' | cpI18n }}</label>
-                      <input type="text"
-                             class="form-control"
-                             formControlName="advisor_firstname"
-                             [class.error]="
-                          formError && form.controls['advisor_firstname'].hasError('required')
-                        " />
-                    </div>
-
-                    <div class="col-6">
-                      <label>{{ 'last_name' | cpI18n }}</label>
-                      <input type="text"
-                             class="form-control"
-                             formControlName="advisor_lastname"
-                             [class.error]="
-                          formError && form.controls['advisor_lastname'].hasError('required')
-                        " />
-                    </div>
-                  </div>
-
-                  <div class="row">
-                    <div class="col-12">
-                      <label>{{ 'email' | cpI18n }}</label>
-                      <input type="text"
-                             class="form-control"
-                             formControlName="advisor_email"
-                             [class.error]="
-                          formError && form.controls['advisor_email'].hasError('required')
-                        " />
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="footer">
-            <div class="cp-wrapper cp-wrapper--outer">
-              <div class="col-12">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="text-right">
-                      <label class="error"
-                             *ngIf="formError">
-                        <span>&#x26A0;</span>
-                        {{ 'error_fill_out_marked_fields' | cpI18n }}
-                      </label>
-                      <a [routerLink]="['../info']"
-                         queryParamsHandling="merge"
-                         class="cpbtn cpbtn--cancel">
-                        {{ 'cancel' | cpI18n }}
-                      </a>
-                      <cp-button [props]="buttonData"
-                                 (buttonClick)="onSubmit()"> </cp-button>
-                    </div>
+                  <div class="text-right">
+                    <a [routerLink]="['../info']"
+                       queryParamsHandling="merge"
+                       class="cpbtn cpbtn--cancel">
+                      {{ 'cancel' | cpI18n }}
+                    </a>
+                    <cp-button [props]="buttonData"
+                               (buttonClick)="onSubmit()"></cp-button>
                   </div>
                 </div>
               </div>
@@ -233,6 +51,6 @@
           </div>
         </div>
       </form>
-    </div>
+    </ng-container>
   </ng-container>
-</ng-container>
+</div>

@@ -3,8 +3,9 @@ import { FormGroup, Validators } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 
-import { CPSession, ISchool } from '@campus-cloud/session';
+import { FORMAT } from '@campus-cloud/shared/pipes';
 import { CPDate, CPMap } from '@campus-cloud/shared/utils';
+import { CPSession, ISchool } from '@campus-cloud/session';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { EventUtilService } from '@controlpanel/manage/events/events.utils.service';
 import { CPI18nService, CPTrackingService, StoreService } from '@campus-cloud/shared/services';
@@ -27,6 +28,8 @@ export class EventsFormComponent implements OnInit {
   @Input() isService;
   @Input() isOrientation;
   @Input() form: FormGroup;
+
+  dateFormat = FORMAT.DATETIME;
 
   @Output() selectHost: EventEmitter<number> = new EventEmitter();
   @Output() amplitudeProperties: EventEmitter<any> = new EventEmitter();

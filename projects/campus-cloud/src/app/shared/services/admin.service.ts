@@ -55,9 +55,9 @@ export class AdminService {
     return this.api.post(url, data);
   }
 
-  updateAdmin(adminId: number, data: any) {
+  updateAdmin(adminId: number, data: any, params?: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.ADMIN}/${adminId}`;
 
-    return this.api.update(url, data, null, true);
+    return this.api.update(url, data, params, true);
   }
 }

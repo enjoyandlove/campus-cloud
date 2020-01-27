@@ -1,0 +1,51 @@
+.ready-ui-card {
+  --padding: 0;
+
+  border-radius: 4px;
+  background: white;
+  border: 1px solid #ddd;
+
+  &--spacing-tight {
+    --padding: 0.5em;
+  }
+
+  &--spacing-loose {
+    --padding: 1.2em;
+  }
+
+  &--spacing-regular {
+    --padding: 0.8em;
+  }
+
+  &--shadow-regular {
+    box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &--shadow-dark {
+    box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.25);
+  }
+
+  &--shadow-light {
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.1);
+  }
+
+  &__header {
+    padding: var(--padding);
+    padding-bottom: 0;
+
+    p.ready-ui-card__title {
+      margin: 0;
+      font-size: 1.5em;
+    }
+  }
+
+  &__footer {
+    padding-top: 0;
+    padding: var(--padding);
+  }
+
+  &__content {
+    padding-top: 0;
+    padding: var(--padding);
+  }
+}

@@ -1,4 +1,5 @@
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -37,7 +38,7 @@ import { LocationsService } from '../containers/controlpanel/manage/locations/lo
 import { CPRangePickerUtilsService } from './components/cp-range-picker/cp-range-picker.utils.service';
 
 // pipes
-import { CPUrlify, CPDatePipe, CPFilterPipe, CPFIlterByLength } from './pipes';
+import { CPUrlify, CPDatePipe, CPFilterPipe, CPFIlterByLength, CPBoldifyPipe } from './pipes';
 
 // components
 import { CPTabsComponent } from './components/cp-tabs/components/cp-tabs/cp-tabs.component';
@@ -66,7 +67,6 @@ import {
   CPCheckboxComponent,
   CPDropdownComponent,
   CPLightboxComponent,
-  CPTrackersComponent,
   CPTopBanerComponent,
   CPFormLabelComponent,
   CPTypeAheadComponent,
@@ -100,6 +100,7 @@ import {
     CPUrlify,
     CPDatePipe,
     CPFilterPipe,
+    CPBoldifyPipe,
     CPTabComponent,
     CPCardComponent,
     CPHostDirective,
@@ -125,7 +126,6 @@ import {
     CPDropdownComponent,
     TextEditorDirective,
     CPCheckboxComponent,
-    CPTrackersComponent,
     CPSnackBarComponent,
     CPLightboxDirective,
     CPFormLabelComponent,
@@ -169,6 +169,7 @@ import {
     CommonModule,
     RouterModule,
     CPTableModule,
+    ReadyUiModule,
     OverlayModule,
     CPTopBarModule,
     ReactiveFormsModule
@@ -193,7 +194,9 @@ import {
     CPUrlify,
     CPDatePipe,
     CPFilterPipe,
+    CPBoldifyPipe,
     CPTableModule,
+    ReadyUiModule,
     CPTopBarModule,
     CPTabComponent,
     CPCardComponent,
@@ -218,7 +221,6 @@ import {
     TextEditorDirective,
     CPDropdownComponent,
     CPMenuItemComponent,
-    CPTrackersComponent,
     CPCheckboxComponent,
     CPSnackBarComponent,
     CPTopBanerComponent,

@@ -31,6 +31,7 @@ interface IState {
   group_id: number;
   wall_type: number;
   post_types: number;
+  is_integrated: boolean;
   currentView?: ICurrentView;
   flagged_by_users_only: number;
   removed_by_moderators_only: number;
@@ -40,6 +41,7 @@ const state: IState = {
   wall_type: 1,
   group_id: null,
   post_types: null,
+  is_integrated: false,
   currentView: campusWall,
   flagged_by_users_only: null,
   removed_by_moderators_only: null
@@ -127,7 +129,8 @@ export class FeedFiltersComponent implements OnInit {
         channels.forEach((channel: any) => {
           const _channel = {
             label: channel.name,
-            action: channel.id
+            action: channel.id,
+            is_integrated: channel.is_integrated
           };
 
           _channels.push(_channel);
@@ -192,13 +195,17 @@ export class FeedFiltersComponent implements OnInit {
   }
 
   onFilterSelected(item, type) {
-    this.state = Object.assign({}, this.state, {
-      currentView: item.action === 1 ? campusWall : this.getWallSettings(item.action)
-    });
+    const is_integrated = item.is_integrated;
+    const group_id = item.group_id ? item.group_id : null;
+    const currentView = item.action === 1 ? campusWall : this.getWallSettings(item.action);
 
-    this.state = Object.assign({}, this.state, {
-      group_id: item.group_id ? item.group_id : null
-    });
+    this.state = {
+      ...this.state,
+      group_id,
+      currentView,
+      is_integrated
+    };
+
     this.updateState(type, item.action);
   }
 

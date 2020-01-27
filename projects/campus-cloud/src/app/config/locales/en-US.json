@@ -473,6 +473,9 @@
   "assess_student_id": {
     "message": "Student ID"
   },
+  "assess_student_last_active": {
+    "message": "Last Active"
+  },
   "assess_student_name": {
     "message": "Student Name"
   },
@@ -2286,6 +2289,9 @@
   "t_api_management_copied_to_clipboard": {
     "message": "Copied to clipboard"
   },
+  "t_api_management_created": {
+    "message": "Created"
+  },
   "t_api_management_create_new": {
     "message": "Create New"
   },
@@ -2370,6 +2376,9 @@
   "t_assess_list_event_names": {
     "message": "List of Events Attended"
   },
+  "t_assess_list_orientation_event_names": {
+    "message": "List of Orientation Events Attended"
+  },
   "t_assess_list_service_names": {
     "message": "List of Services Visited"
   },
@@ -2381,6 +2390,9 @@
   },
   "t_assess_number_events": {
     "message": "Number of Events"
+  },
+  "t_assess_number_orientation_events": {
+    "message": "Number of Orientation Events"
   },
   "t_assess_number_services": {
     "message": "Number of Services"
@@ -2401,13 +2413,13 @@
     "message": "Top Programs"
   },
   "t_assess_total_engagement": {
-    "message": "Total Engagement (Number of Events + Number of Services)"
+    "message": "Total Engagement (Number of Events + Number of Orientation Events + Number of Services)"
   },
   "t_assess_total_orientation_programs": {
-    "message": "Total Programs"
+    "message": "Orientation Events"
   },
   "t_assess_total_orientation_programs_assessed": {
-    "message": "Programs Assessed"
+    "message": "Events Assessed"
   },
   "t_audience_dynamic_integration_disabled": {
     "message": "To enable this feature, please contact your Customer Success manager."
@@ -3456,9 +3468,6 @@
   "t_shared_cpimage_icon_help": {
     "message": "Must be 128 x 128 in PNG format"
   },
-  "t_shared_created": {
-    "message": "Created"
-  },
   "t_shared_custom": {
     "message": "Custom"
   },
@@ -3626,6 +3635,9 @@
   },
   "t_shared_select_service": {
     "message": "Select Service"
+  },
+  "t_shared_select_time": {
+    "message": "Select Time"
   },
   "t_shared_show": {
     "message": "Show"

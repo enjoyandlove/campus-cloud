@@ -2,6 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { ApiService } from '@campus-cloud/base';
+import { protocolCheck } from '@campus-cloud/shared/utils';
 
 @Injectable()
 export class DiningService {
@@ -22,11 +23,15 @@ export class DiningService {
   createDining(body, search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LOCATIONS}/`;
 
+    body = this.validateLinkUrls(body);
+
     return this.api.post(url, body, search, true);
   }
 
   updateDining(body, diningId: number, search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LOCATIONS}/${diningId}`;
+
+    body = this.validateLinkUrls(body);
 
     return this.api.update(url, body, search, true);
   }
@@ -35,5 +40,27 @@ export class DiningService {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.LOCATIONS}/${diningId}`;
 
     return this.api.delete(url, search);
+  }
+
+  private validateLinkUrls(body) {
+    const { links } = body;
+
+    if (!links || !Array.isArray(links)) {
+      return body;
+    }
+
+    return {
+      ...body,
+      links: links.map((l: { label: string; url: string }) => {
+        const { url } = l;
+        if (url.length) {
+          return {
+            ...l,
+            url: protocolCheck(url)
+          };
+        }
+        return l;
+      })
+    };
   }
 }

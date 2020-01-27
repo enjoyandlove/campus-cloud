@@ -1,34 +1,40 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
 @import '~projects/campus-cloud/src/sass/core/typography';
 @import '~projects/campus-cloud/src/sass/components/button';
 
-:host {
-  display: block;
-  max-width: 100%;
-}
-
-.feed__meta {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.avatar {
-  width: 100%;
-  height: 144px;
-  margin-right: 8px;
-  border-radius: 4px;
-  display: inline-block;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-
-  &--small {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
+.cp-feed-header {
+  .feed__meta {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
   }
-}
 
-.name {
-  @include font-semi-bold();
+  .avatar {
+    width: 100%;
+    height: 144px;
+    margin-right: 8px;
+    border-radius: 4px;
+    display: inline-block;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+
+    &--small {
+      width: 40px;
+      height: 40px;
+      min-width: 40px;
+    }
+  }
+
+  .name {
+    @include font-semi-bold();
+  }
+
+  em {
+    color: white;
+    padding: 0px 4px;
+    border-radius: 3px;
+    font-style: normal;
+    background: $color-brand;
+  }
 }

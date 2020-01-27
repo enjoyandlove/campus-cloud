@@ -221,6 +221,8 @@ export class EngagementComponent extends BaseComponent implements OnInit {
           { label: 't_assess_checkin_method', key: 'checkin_method' },
           { label: 't_assess_number_events', key: 'event_checkins' },
           { label: 't_assess_list_event_names', key: 'event_names' },
+          { label: 't_assess_number_orientation_events', key: 'user_event_checkins' },
+          { label: 't_assess_list_orientation_event_names', key: 'user_event_names' },
           { label: 't_assess_number_services', key: 'service_checkins' },
           { label: 't_assess_list_service_names', key: 'service_names' },
           { label: 't_assess_total_engagement', key: 'total_checkins' }

@@ -1,0 +1,33 @@
+<div class="select">
+  <div class="select__label">
+    <label [for]="_id" ui-text-style variant="bold">{{ label }}</label>
+  </div>
+  <div
+    class="select__input_group">
+    <input readonly
+           [id]="_id"
+           type="text"
+           #menu="popover"
+           inheritWidth="true"
+           [uiPopoverTpl]="select"
+           [disabled]="_disabled"
+           [value]="triggerLabel"
+           readyUiPopoverTrigger>
+    <div class="select__input-suffix">
+      <ready-ui-icon name="expand_more"></ready-ui-icon>
+    </div>
+    <div class="select__bg"></div>
+  </div>
+</div>
+
+
+<ng-template #select>
+  <div class="select__menu"
+       (click)="menu.close()">
+    <ng-content></ng-content>
+  </div>
+</ng-template>
+
+<ng-template #suffix>
+  <ready-ui-icon name="expand_more"></ready-ui-icon>
+</ng-template>

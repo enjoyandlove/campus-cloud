@@ -18,8 +18,8 @@
       "@projects/*": ["projects/*"],
       "@campus-cloud/*": ["projects/campus-cloud/src/app/*"],
       "@controlpanel/*": ["projects/campus-cloud/src/app/containers/controlpanel/*"],
-      "ready-ui": ["dist/ready-ui"],
-      "ready-ui/*": ["dist/ready-ui/*"]
+      "@ready-education/ready-ui": ["projects/ready-ui/src/lib"],
+      "@ready-education/ready-ui/*": ["projects/ready-ui/src/lib/*"]
     }
   },
   "compileOnSave": false,

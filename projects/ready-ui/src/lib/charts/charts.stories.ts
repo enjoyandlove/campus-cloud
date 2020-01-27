@@ -1,6 +1,6 @@
+import { withKnobs, number, boolean } from '@storybook/addon-knobs';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
-
-import { ChartsModule } from './charts.module';
+import { ReadyUiModule } from '@ready-education/ready-ui';
 
 function mockDataGenerator(dataPoints) {
   const entries = Array.from(Array(dataPoints).keys());
@@ -8,29 +8,36 @@ function mockDataGenerator(dataPoints) {
   return entries.map(() => Math.floor(Math.random() * 100000));
 }
 
-storiesOf('Chart', module)
+function randomHexColor() {
+  return '#' + Math.floor(Math.random() * 16777215).toString(16);
+}
+
+function range(n: number) {
+  return Array.from(Array(n).keys());
+}
+
+storiesOf('Charts', module)
   .addDecorator(
     moduleMetadata({
-      imports: [ChartsModule]
+      imports: [ReadyUiModule]
     })
   )
+  .addDecorator(withKnobs)
   .add(
-    'Line Default',
+    'Line',
     () => {
-      const colors = ['#2096f3', '#ffa941'];
-      const xLabels = ['Oct 1', 'Oct2', 'Oct3'];
-      const series = [
-        {
-          name: 'Downloads',
+      const seriesToRender = range(number('# Series', 2));
+      const horizontalLabels = range(number('# Horizonal Labels', 8));
+
+      const colors = seriesToRender.map(() => randomHexColor());
+      const xLabels = horizontalLabels.map((_, idx) => `Oct ${idx + 1}`);
+      const series = seriesToRender.map((label) => {
+        return {
+          name: `Series ${label}`,
           type: 'line',
           data: mockDataGenerator(xLabels.length)
-        },
-        {
-          name: 'Registrations',
-          type: 'line',
-          data: mockDataGenerator(xLabels.length)
-        }
-      ];
+        };
+      });
 
       return {
         props: {
@@ -38,133 +45,60 @@ storiesOf('Chart', module)
           colors,
           xLabels
         },
-        template:
-          '<ready-ui-line-chart [colors]="colors" [xLabels]="xLabels" [series]="series"></ready-ui-line-chart>'
+        template: `
+      <ready-ui-line-chart
+        [colors]="colors"
+        [xLabels]="xLabels"
+        [series]="series"
+        style="display: block; width: 100%; height: 300px;"
+      ></ready-ui-line-chart>`
       };
     },
-    { notes: 'A very simple example of addon notes' }
+    {
+      notes: require('./components/line/README.md')
+    }
   )
-  .add('Line Dashed', () => {
-    const colors = ['#2096f3', '#ffa941'];
-    const xLabels = ['Oct 1', 'Oct2', 'Oct3'];
-    const series = [
-      {
-        name: 'Downloads',
-        type: 'line',
-        data: mockDataGenerator(xLabels.length)
-      },
-      {
-        name: 'Registrations',
-        type: 'line',
-        lineStyle: {
-          type: 'dashed'
+  .add(
+    'Bar',
+    () => {
+      const stacked = boolean('Stacked', false);
+      const seriesToRender = range(number('# Series', 2));
+
+      const colors = seriesToRender.map(() => randomHexColor());
+      const series = seriesToRender.map((label, idx) => {
+        return {
+          name: `Series ${label}`,
+          type: 'bar',
+          stack: stacked ? 'one' : idx,
+          data: mockDataGenerator(1)
+        };
+      });
+
+      const xAxis = {
+        show: false,
+        type: 'value'
+      };
+      const yAxis = {
+        show: false,
+        type: 'category',
+        data: ['']
+      };
+      return {
+        props: {
+          series,
+          colors,
+          yAxis,
+          xAxis
         },
-        data: mockDataGenerator(xLabels.length)
-      }
-    ];
-    return {
-      props: {
-        series,
-        colors,
-        xLabels
-      },
-      template:
-        '<ready-ui-line-chart [colors]="colors" [xLabels]="xLabels" [series]="series"></ready-ui-line-chart>'
-    };
-  })
-  .add('Bar Chart', () => {
-    const colors = ['#f65031', '#fbab42', '#8cdd51', '#609df5', '#989eb1'];
-    const xAxis = {
-      show: false,
-      type: 'value'
-    };
-    const yAxis = {
-      show: false,
-      type: 'category',
-      data: ['']
-    };
-    const series = [
-      {
-        name: 'Messages',
-        type: 'bar',
-        stack: 'one',
-        data: mockDataGenerator(yAxis.data.length)
-      },
-      {
-        name: 'Comments',
-        type: 'bar',
-        stack: 'one',
-        data: mockDataGenerator(yAxis.data.length)
-      },
-      {
-        name: 'Connections',
-        type: 'bar',
-        stack: 'one',
-        data: mockDataGenerator(yAxis.data.length)
-      },
-      {
-        name: 'Wall Posts',
-        type: 'bar',
-        stack: 'one',
-        data: mockDataGenerator(yAxis.data.length)
-      },
-      {
-        name: 'Likes',
-        type: 'bar',
-        stack: 'one',
-        data: mockDataGenerator(yAxis.data.length)
-      }
-    ];
-    return {
-      props: {
-        series,
-        colors,
-        yAxis,
-        xAxis
-      },
-      template: `<ready-ui-bar-chart [colors]="colors" [xAxis]="xAxis" [yAxis]="yAxis" [series]="series"></ready-ui-bar-chart>`
-    };
-  })
-  .add('Bar Chart Update', () => {
-    const colors = ['#f65031', '#fbab42', '#8cdd51', '#609df5', '#989eb1'];
-    const yAxis = {
-      show: true,
-      type: 'category',
-      data: ['October', 'November', 'December']
-    };
-    const series = [
-      {
-        name: 'Messages',
-        type: 'bar',
-        data: mockDataGenerator(yAxis.data.length)
-      },
-      {
-        name: 'Comments',
-        type: 'bar',
-        data: mockDataGenerator(yAxis.data.length)
-      },
-      {
-        name: 'Connections',
-        type: 'bar',
-        data: mockDataGenerator(yAxis.data.length)
-      },
-      {
-        name: 'Wall Posts',
-        type: 'bar',
-        data: mockDataGenerator(yAxis.data.length)
-      },
-      {
-        name: 'Likes',
-        type: 'bar',
-        data: mockDataGenerator(yAxis.data.length)
-      }
-    ];
-    return {
-      props: {
-        series,
-        colors,
-        yAxis
-      },
-      template: `<ready-ui-bar-chart [colors]="colors" [yAxis]="yAxis" [series]="series"></ready-ui-bar-chart>`
-    };
-  });
+        template: `<ready-ui-bar-chart
+        [colors]="colors"
+        [xAxis]="xAxis"
+        [yAxis]="yAxis"
+        [series]="series"
+        style="display: block; width: 100%; height: 300px;"></ready-ui-bar-chart>`
+      };
+    },
+    {
+      notes: require('./components/bar/README.md')
+    }
+  );

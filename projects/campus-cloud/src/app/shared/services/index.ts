@@ -10,6 +10,7 @@ export * from './admin.service';
 export * from './school.service';
 export * from './zendesk.service';
 export * from './tracking.service';
+export * from './fullstory.service';
 export * from './locations.service';
 export * from './amplitude.service';
 export * from './file-upload.service';

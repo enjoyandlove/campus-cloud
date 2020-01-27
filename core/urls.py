@@ -20,6 +20,6 @@ from django.conf.urls.static import static
 from controlpanel import views
 
 urlpatterns = [
-    url(r'^', include('controlpanel.urls', namespace="controlpanel")),
+    url(r'^', include('controlpanel.urls')),
     url(r'^.*/$', views.handle_404)
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

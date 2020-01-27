@@ -1,11 +1,16 @@
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import { Component, OnInit, Inject } from '@angular/core';
-import { filter, map, mergeMap } from 'rxjs/operators';
 import { Title } from '@angular/platform-browser';
 import { DOCUMENT } from '@angular/common';
 
 import { pageTitle } from '@campus-cloud/shared/constants';
-import { ZendeskService, CPI18nService } from '@campus-cloud/shared/services';
+import {
+  CPI18nService,
+  ZendeskService,
+  FullStoryService,
+  CPTrackingService
+} from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-app',
@@ -17,7 +22,8 @@ export class AppComponent implements OnInit {
     private titleService: Title,
     private zendeskService: ZendeskService,
     private activatedRoute: ActivatedRoute,
-    @Inject(DOCUMENT) private document: any
+    @Inject(DOCUMENT) private document: any,
+    private cpTrackingService: CPTrackingService
   ) {}
 
   setZendesk(routeObj) {
@@ -32,6 +38,9 @@ export class AppComponent implements OnInit {
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
+        tap((event: NavigationEnd) => {
+          this.cpTrackingService.gaTrackPage(event.urlAfterRedirects);
+        }),
         map(() => this.activatedRoute),
         map((route) => {
           while (route.firstChild) {
@@ -51,6 +60,11 @@ export class AppComponent implements OnInit {
           }
         }
 
+        if (event.record) {
+          FullStoryService.restart();
+        } else {
+          FullStoryService.shutdown();
+        }
         this.zendeskService.hide();
         this.setZendesk(event);
         const title = !event['title']

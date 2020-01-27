@@ -1,0 +1,107 @@
+:host {
+  display: flex;
+  padding: 0.5em;
+  border-radius: 4px;
+  align-items: center;
+  border: 1px solid #ddd;
+  justify-content: space-between;
+}
+
+.group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+
+  &--actions {
+    width: 1.5em;
+    height: 2.5em;
+    display: flex;
+    margin-left: 0.5em;
+    border-radius: 20px;
+    flex-direction: column;
+    border: 1.5px solid #2096f3;
+
+    polygon {
+      fill: #2096f3;
+    }
+
+    &.muted {
+      border-color: #757575;
+
+      polygon {
+        fill: #757575;
+      }
+    }
+
+    .toggles {
+      height: 50%;
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+button {
+  cursor: pointer;
+  box-shadow: none;
+  background: transparent;
+  border: 1px dotted transparent;
+
+  &.has_background {
+    padding: 3px 4px;
+
+    &:focus:not(.active) {
+      border-radius: 6px;
+      border-color: #a4a4a4;
+      outline: none !important;
+    }
+
+    &.active {
+      color: white;
+      border-radius: 6px;
+      background: #2096f3;
+      outline: none !important;
+    }
+  }
+
+  &.add_comma {
+    position: relative;
+
+    &:after {
+      right: 0px;
+      content: ',';
+      position: absolute;
+    }
+  }
+}
+
+input[type='text'] {
+  height: 2em;
+  min-width: 0;
+  border: none;
+  cursor: pointer;
+  padding: 3px 4px;
+  text-align: center;
+  transition: none !important;
+
+  &:focus:not(.active) {
+    outline: none;
+    border: 1px dotted #a4a4a4;
+  }
+
+  &.active {
+    color: white;
+    border-radius: 6px;
+    background: #2096f3;
+    outline: none !important;
+  }
+}
+
+input[type='text'] {
+  width: 30.5px;
+
+  &.group--time__number {
+    width: 27px;
+  }
+}

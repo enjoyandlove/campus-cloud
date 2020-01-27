@@ -18,6 +18,7 @@ export interface IAnnouncement {
 export interface IListDetail {
   id: number;
   name: string;
+  type: number;
 }
 
 export interface IUserDetail {
@@ -28,9 +29,9 @@ export interface IUserDetail {
 }
 
 export enum AnnouncementStatus {
+  sent = 1,
   error = -1,
   pending = 0,
-  success = 1,
   processing = 2
 }
 

@@ -201,6 +201,10 @@ export class ServicesProviderDetailsComponent extends BaseComponent implements O
     });
   }
 
+  onAddRemoveAttendee(updatedProvider: IServiceProvider) {
+    this.provider = updatedProvider;
+  }
+
   ngOnInit() {
     this.fetch();
   }

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
+import { EnvService } from '@campus-cloud/config/env';
+import { appStorage, base64 } from '@campus-cloud/shared/utils';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import * as buildJson from '@projects/campus-cloud/src/assets/build.json';
 import { CPTrackingService, ZendeskService } from '@campus-cloud/shared/services';
@@ -12,12 +14,20 @@ declare var window;
   styleUrls: ['./cp-help-desk.component.scss']
 })
 export class CPHelpDeskComponent implements OnInit {
+  highlight = false;
   helpDeskUrl = ZendeskService.zdRoot();
   lastBuildTime = buildJson.lastBuildTime;
 
-  constructor(private cpTracking: CPTrackingService, private zd: ZendeskService) {}
+  @Input() releaseId: number;
+
+  constructor(
+    private env: EnvService,
+    private zd: ZendeskService,
+    private cpTracking: CPTrackingService
+  ) {}
 
   trackHelpDeskAction(information_type) {
+    this.setWhatsNewCookie();
     const eventName = amplitudeEvents.VIEWED_INFORMATION;
 
     const eventProperties = {
@@ -54,5 +64,19 @@ export class CPHelpDeskComponent implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  setWhatsNewCookie() {
+    this.highlight = false;
+    appStorage.set(base64.encode(appStorage.keys.WHATS_NEW), this.releaseId.toString());
+  }
+
+  showWhatsNew() {
+    const previousChangeLogKey = appStorage.get(base64.encode(appStorage.keys.WHATS_NEW));
+    this.highlight = !previousChangeLogKey || previousChangeLogKey !== this.releaseId.toString();
+  }
+
+  ngOnInit() {
+    // if (this.env.name === 'production') {
+    //   this.showWhatsNew();
+    // }
+  }
 }

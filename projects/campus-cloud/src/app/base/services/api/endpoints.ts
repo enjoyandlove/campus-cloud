@@ -115,6 +115,8 @@ export const ENDPOINTS = {
 
   EXPORT_DATA_WALL_POST: 'export/campus_thread_data',
 
+  SEARCH_SOCIAL_WALL_CONTENT: 'social_wall_content',
+
   EXTERNAL_EVENT_FEEDBACK: 'external_event_feedback',
 
   ASSESS_ORIENTATION_EVENT: 'assess_orientation_event',

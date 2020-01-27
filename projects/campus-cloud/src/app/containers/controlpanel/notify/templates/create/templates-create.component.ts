@@ -10,6 +10,7 @@ import { TemplatesService } from './../templates.service';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { canSchoolWriteResource } from '@campus-cloud/shared/utils';
 import { CustomValidators } from '@campus-cloud/shared/validators';
+import { TemplatesAmplitudeService } from './../templates.amplitude.service';
 import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
 import { AnnouncementsService } from './../../announcements/announcements.service';
 import { TemplatesComposeComponent } from '../compose/templates-compose.component';
@@ -58,10 +59,6 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
   onTypeChanged(type) {
     super.onTypeChanged(type);
-    this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties,
-      announcement_type: type.label
-    };
   }
 
   doUserSearch(query) {
@@ -87,7 +84,6 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   resetModal() {
     this.form.reset();
     this.isError = false;
-    this.shouldConfirm = false;
     this.state.isCampusWide = false;
     this.resetCustomFields$.next(true);
 
@@ -135,10 +131,9 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
     this.childService.createTemplate(search, data).subscribe(
       (res: any) => {
-        this.amplitudeEventProperties = {
-          ...this.amplitudeEventProperties,
-          announcement_id: res.id
-        };
+        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_CREATED_COMMUNICATION, {
+          ...TemplatesAmplitudeService.getAmplitudeProperties(data as any)
+        });
 
         this.form.reset();
         this.created.emit(this.form.value);
@@ -149,10 +144,6 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
         this.errorMessage = this.cpI18n.translate('something_went_wrong');
       }
     );
-  }
-
-  onConfirmed() {
-    super.onConfirmed();
   }
 
   getObjectFromTypesArray(id) {
@@ -177,11 +168,6 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
   }
 
   ngOnInit() {
-    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
-    this.amplitudeEventProperties = {
-      ...this.amplitudeEventProperties,
-      host_type
-    };
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
 
     this.toolTipOptions = {

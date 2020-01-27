@@ -1,0 +1,7 @@
+<div class="tooltip-arrow"></div>
+<ng-container *ngTemplateOutlet="data.template || defaultTooltip">
+</ng-container>
+
+<ng-template #defaultTooltip>
+  {{ data.title }}
+</ng-template>

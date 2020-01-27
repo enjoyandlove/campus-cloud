@@ -1,0 +1,32 @@
+@import '../../../core/sass/variables';
+
+:host {
+  max-width: 12em;
+  padding: 1em 0.5em;
+
+  &.header {
+    height: 3em;
+    text-align: left;
+    padding: 0 0.5em;
+    font-weight: 600;
+    background: #ededee;
+    color: $color-grey-100;
+  }
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+
+    &.align-left {
+      justify-content: start;
+    }
+
+    &.align-right {
+      justify-content: end;
+    }
+
+    &.align-center {
+      justify-content: center;
+    }
+  }
+}

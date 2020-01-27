@@ -153,7 +153,7 @@ export class AnnouncementSentComponent extends BaseComponent implements OnInit {
 
     const search = new HttpParams()
       .set('priority', type)
-      .set('statuses', AnnouncementStatus.success.toString())
+      .set('statuses', AnnouncementStatus.sent.toString())
       .set('search_str', this.state.query)
       .set('sort_field', this.state.sort_field)
       .set('sort_direction', this.state.sort_direction)

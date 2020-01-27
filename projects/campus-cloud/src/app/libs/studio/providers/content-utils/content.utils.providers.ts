@@ -1,4 +1,4 @@
-import { get as _get, sortBy } from 'lodash';
+import { get as _get, sortBy, isEmpty, isEqual } from 'lodash';
 import { Injectable } from '@angular/core';
 
 import { ExtraDataType } from '../../models';
@@ -97,7 +97,7 @@ export class ContentUtilsProviders {
       (l) => {
         const regularWebLinkType = link_type === 0;
         return regularWebLinkType
-          ? Boolean(l.meta.open_in_browser) === open_in_browser
+          ? l.meta.open_in_browser === open_in_browser
           : l.link_type === link_type;
       }
     );
@@ -339,6 +339,25 @@ export class ContentUtilsProviders {
     }
 
     return resources.filter((resource) => filters.every((filterByFn) => filterByFn(resource)));
+  }
+
+  static getResourceType(
+    { link_url, link_params },
+    resource: IStudioContentResource[]
+  ): IStudioContentResource {
+    /**
+     * check all available resources, if link_params is
+     * not empty, then ensure both link_url and link_params match
+     * (Athletics and Clubs have the same link_url but different link_params)
+     * else just check the link url matches
+     */
+    return resource
+      .filter((item: IStudioContentResource) => item.meta)
+      .find((item: IStudioContentResource) =>
+        isEmpty(item.meta.link_params)
+          ? item.meta.link_url === link_url
+          : item.meta.link_url === link_url && isEqual(item.meta.link_params, link_params)
+      );
   }
 
   resourcesToIItem(resources: IStudioContentResource[]): Array<IStudioContentResource> {

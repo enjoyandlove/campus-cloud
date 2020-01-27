@@ -1,129 +1,76 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { HttpClientModule } from '@angular/common/http';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { provideMockStore } from '@ngrx/store/testing';
-import { of as observableOf } from 'rxjs';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { of } from 'rxjs';
 
-import { ServicesModule } from '../services.module';
-import { ServicesService } from '../services.service';
-import { CPTestModule } from '@campus-cloud/shared/tests';
+import { CPSession } from '@campus-cloud/session';
+import { fillForm } from '@campus-cloud/shared/utils/tests';
 import { mockSchool } from '@campus-cloud/session/mock/school';
-import { ServicesUtilsService } from '../services.utils.service';
+import { filledForm } from '@controlpanel/manage/services/tests';
 import { ServicesCreateComponent } from './services-create.component';
-
-class MockService {
-  dummy;
-
-  getCategories() {
-    return observableOf({});
-  }
-
-  createService(body: any) {
-    this.dummy = [body];
-
-    return observableOf({});
-  }
-}
-
-const mockLocation = {
-  city: 'Montreal',
-  province: '',
-  country: 'Canada',
-  name: 'Milton Pizza',
-  postal_code: 'H3A 2A8',
-  fromUsersLocations: true,
-  latitude: 45.5068431590247,
-  longitude: -73.5762119293213,
-  address: '635-659 Milton St, Montreal, QC H3A 2A8, Canada'
-};
+import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
+import { ServicesService } from '@controlpanel/manage/services/services.service';
+import { ServicesUtilsService } from '@controlpanel/manage/services/services.utils.service';
 
 describe('ServicesCreateComponent', () => {
+  configureTestSuite();
+
+  beforeAll((done) => {
+    (async () => {
+      TestBed.configureTestingModule({
+        declarations: [ServicesCreateComponent],
+        providers: [ServicesService, provideMockStore(), ServicesUtilsService],
+        imports: [CPTestModule],
+        schemas: [NO_ERRORS_SCHEMA]
+      });
+      await TestBed.compileComponents();
+    })()
+      .then(done)
+      .catch(done.fail);
+  });
+
   let spy;
-  let component: ServicesCreateComponent;
+  let session;
   let fixture: ComponentFixture<ServicesCreateComponent>;
+  let component: ServicesCreateComponent;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [CPTestModule, ServicesModule, HttpClientModule, RouterTestingModule],
-      providers: [
-        provideMockStore(),
-        ServicesUtilsService,
-        { provide: ServicesService, useClass: MockService }
-      ]
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(ServicesCreateComponent);
+    fixture = TestBed.createComponent(ServicesCreateComponent);
+    component = fixture.componentInstance;
 
-        component = fixture.componentInstance;
+    session = TestBed.get(CPSession);
+    session.g.set('school', mockSchool);
 
-        spyOn(component.router, 'navigate');
-        spyOn(component.servicesService, 'getCategories');
+    spyOn(component, 'trackEvent');
+    spyOn(component, 'handleError');
+    spyOn(component.router, 'navigate');
+    spy = spyOn(component.servicesService, 'createService').and.returnValue(of([]));
 
-        component.session.g.set('school', mockSchool);
-        spy = spyOn(component.servicesService, 'createService').and.returnValue(observableOf({}));
-        component.ngOnInit();
-      });
+    fixture.detectChanges();
   }));
 
-  it('onResetMap', () => {
-    component.onResetMap();
-
-    expect(component.drawMarker.value).toBe(false);
-    expect(component.form.controls['room_data'].value).toBeNull();
-    expect(component.mapCenter.value.lat).toEqual(mockSchool.latitude);
-    expect(component.mapCenter.value.lng).toEqual(mockSchool.latitude);
-  });
-
-  it('onPlaceChange', () => {
-    component.onPlaceChange(mockLocation);
-
-    expect(component.form.controls['city'].value).toEqual(mockLocation.city);
-    expect(component.form.controls['location'].value).toEqual(mockLocation.name);
-    expect(component.form.controls['country'].value).toEqual(mockLocation.country);
-    expect(component.form.controls['address'].value).toEqual(mockLocation.address);
-    expect(component.form.controls['latitude'].value).toEqual(mockLocation.latitude);
-    expect(component.form.controls['longitude'].value).toEqual(mockLocation.longitude);
-    expect(component.form.controls['postal_code'].value).toEqual(mockLocation.postal_code);
-  });
-
-  it('should show/hide location details & set location required/optional onLocationToggle ', () => {
-    component.onLocationToggle(true);
-
-    expect(component.showLocationDetails).toBe(true);
-    expect(component.form.get('address').invalid).toBe(true);
-
-    // reset location
-    component.onLocationToggle(false);
-
-    expect(component.drawMarker.value).toBe(false);
-    expect(component.showLocationDetails).toBe(false);
-    expect(component.form.get('room_data').value).toBe('');
-    expect(component.form.get('address').invalid).toBe(false);
-    expect(component.mapCenter.value.lat).toEqual(mockSchool.latitude);
-    expect(component.mapCenter.value.lng).toEqual(mockSchool.latitude);
-  });
-
   it('form validation should fail required fields missing', () => {
+    const errorMessage = component.cpI18n.translate('error_fill_out_marked_fields');
+
     component.onSubmit();
 
     expect(component.formError).toBe(true);
     expect(component.form.valid).toBe(false);
+    expect(component.handleError).toHaveBeenCalled();
     expect(component.buttonData.disabled).toBe(false);
+    expect(component.handleError).toHaveBeenCalledWith(errorMessage);
   });
 
   it('should create service', () => {
-    component.form.controls['category'].setValue(5);
-    component.form.controls['address'].setValue('address');
-    component.form.controls['name'].setValue('Hello World');
-    component.form.controls['logo_url'].setValue('log.jpg');
+    fillForm(component.form, filledForm);
 
     component.onSubmit();
 
     expect(spy).toHaveBeenCalled();
-    expect(spy).toHaveBeenCalledTimes(1);
     expect(component.formError).toBe(false);
     expect(component.form.valid).toBe(true);
+    expect(component.trackEvent).toHaveBeenCalled();
     expect(component.buttonData.disabled).toBe(false);
+    expect(component.router.navigate).toHaveBeenCalled();
   });
 });

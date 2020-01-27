@@ -1,7 +1,6 @@
-import { AnnouncementsConfirmComponent } from './../confirm/announcements-confirm.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { HttpParams } from '@angular/common/http';
+import { HttpParams, HttpErrorResponse } from '@angular/common/http';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
@@ -12,12 +11,17 @@ import { AnnouncementRecipientPipe } from './../pipes';
 import { Announcement, IAnnouncement } from './../model';
 import { LayoutWidth } from '@campus-cloud/layouts/interfaces';
 import { AnnouncementsService } from './../announcements.service';
-import { notifyAtEpochNow, AnnouncementPriority } from './../model/announcement.interface';
 import { AnnouncementUtilsService } from './../announcement.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { AnnouncementAmplitudeService } from '../announcement.amplitude.service';
+import {
+  notifyAtEpochNow,
+  AnnouncementPriority,
+  AnnouncementStatus
+} from './../model/announcement.interface';
 import { AnnouncementCreateErrorComponent } from './../create-error/create-error.component';
 import { ISnackbar, baseActionClass, IHeader, baseActions } from '@campus-cloud/store/base';
+import { AnnouncementsConfirmComponent } from './../confirm/announcements-confirm.component';
 import { CPI18nService, ModalService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
@@ -147,10 +151,11 @@ export class ScheduledEditComponent implements OnInit {
     };
 
     this.service.updateAnnouncement(search, announcementId, editableFields).subscribe(
-      () => {
+      (r: IAnnouncement) => {
+        const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
         this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_UPDATED_COMMUNICATION, {
-          ...this.cpTracking.getAmplitudeMenuProperties(),
-          ...AnnouncementAmplitudeService.getAmplitudeProperties(this.form.value)
+          sub_menu_name,
+          ...AnnouncementAmplitudeService.getAmplitudeProperties(r, announcementId)
         });
 
         this.store.dispatch(
@@ -164,7 +169,7 @@ export class ScheduledEditComponent implements OnInit {
 
         this.router.navigate([redirectUrl]);
       },
-      () => this.erroHandler()
+      (error: HttpErrorResponse) => this.errorUpdateHandler(error.status)
     );
   }
 
@@ -205,7 +210,7 @@ export class ScheduledEditComponent implements OnInit {
   }
 
   handleSucess(data: IAnnouncement) {
-    if (Date.now() >= data.notify_at_epoch * 1000) {
+    if (data.status === AnnouncementStatus.sent) {
       this.store.dispatch(
         new baseActionClass.SnackbarError({
           body: this.cpI18n.translate('t_notify_announcement_already_sent')
@@ -215,6 +220,21 @@ export class ScheduledEditComponent implements OnInit {
       this.router.navigate(['/notify/scheduled']);
       return;
     }
+
+    if (data.list_details.length) {
+      data = {
+        ...data,
+        list_details: data.list_details.map((l) => l.id) as any
+      };
+    }
+
+    if (data.user_details.length) {
+      data = {
+        ...data,
+        user_details: data.user_details.map((u) => u.id) as any
+      };
+    }
+
     this.form = Announcement.form(data);
     this.listName = this.recipientNamePipe.transform(data);
 
@@ -224,14 +244,17 @@ export class ScheduledEditComponent implements OnInit {
     };
   }
 
-  erroHandler() {
+  errorUpdateHandler(errorCode: number = 400) {
     this.state = {
       ...this.state,
       loading: false
     };
+
+    const errorKey =
+      errorCode === 409 ? 't_notify_announcement_already_sent' : 'something_went_wrong';
     this.store.dispatch(
       new baseActionClass.SnackbarError({
-        body: this.cpI18n.translate('something_went_wrong')
+        body: this.cpI18n.translate(errorKey)
       })
     );
   }

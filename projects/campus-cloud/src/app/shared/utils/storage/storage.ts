@@ -2,7 +2,9 @@ import { base64 } from '../encrypt';
 
 const STORAGE_KEYS = {
   SESSION: 'session',
+  WHATS_NEW: 'whats_new',
   CHANGE_LOG: 'change_log',
+  HELP_ICON: 'help_icon',
   DEFAULT_SCHOOL_ID: 'default_school_id'
 };
 

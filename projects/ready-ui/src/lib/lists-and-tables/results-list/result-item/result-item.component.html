@@ -1,0 +1,15 @@
+<div class="content"
+     [ngClass]="wrapperClasses">
+  <div class="content__prefix"
+       *ngIf="prefix">
+    <ng-container *ngTemplateOutlet="prefix; context: context"></ng-container>
+  </div>
+  <div class="content__wrapper">
+    <ng-content></ng-content>
+  </div>
+  <div class="content__suffix"
+       *ngIf="suffix">
+    <ng-container *ngTemplateOutlet="suffix; context: context">
+    </ng-container>
+  </div>
+</div>

@@ -1,14 +1,19 @@
-import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+/*tslint:disable:no-host-metadata-property */
+import { Component, Input, Output, EventEmitter, OnInit, ViewEncapsulation } from '@angular/core';
 
 import { UserStatus } from './../../feeds.status';
-import { CPDate } from '../../../../../../../shared/utils';
-import { FORMAT } from '../../../../../../../shared/pipes/date';
-import { CPI18nService } from '../../../../../../../shared/services';
+import { FORMAT } from '@campus-cloud/shared/pipes';
+import { CPDate } from '@campus-cloud/shared/utils';
+import { CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-feed-header',
   templateUrl: './feed-header.component.html',
-  styleUrls: ['./feed-header.component.scss']
+  styleUrls: ['./feed-header.component.scss'],
+  encapsulation: ViewEncapsulation.None,
+  host: {
+    class: 'cp-feed-header'
+  }
 })
 export class FeedHeaderComponent implements OnInit {
   @Input() feed: any;

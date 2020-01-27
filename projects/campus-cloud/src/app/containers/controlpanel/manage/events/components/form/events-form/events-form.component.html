@@ -21,7 +21,7 @@
                  type="text"
                  class="form-control"
                  formControlName="title"
-                 [class.error]="formError && form.get('title').invalid"/>
+                 [class.error]="formError && form.get('title').invalid" />
         </div>
 
         <div class="row form-group"
@@ -44,6 +44,7 @@
                            [error]="formError && form.get('start').invalid"
                            (dateSet)="setStart($event)">
             </cp-datepicker>
+
           </div>
           <div class="col-6">
             <label>{{ 'end_date' | cpI18n }}</label>
@@ -68,7 +69,7 @@
 
         <div class="form-group">
           <label
-            for="description">{{ 'events_event_description' | cpI18n }}</label>
+                 for="description">{{ 'events_event_description' | cpI18n }}</label>
           <textarea id="description"
                     formControlName="description"></textarea>
         </div>
@@ -103,7 +104,7 @@
                   <input for="location"
                          type="text"
                          class="form-control"
-                         formControlName="location"/>
+                         formControlName="location" />
                 </div>
 
                 <div class="col-6">
@@ -111,7 +112,7 @@
                   <input id="room_data"
                          type="text"
                          class="form-control"
-                         formControlName="room_data"/>
+                         formControlName="room_data" />
                 </div>
               </div>
             </div>

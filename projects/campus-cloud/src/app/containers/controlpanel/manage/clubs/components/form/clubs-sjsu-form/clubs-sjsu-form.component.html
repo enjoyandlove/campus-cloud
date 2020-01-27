@@ -1,0 +1,41 @@
+<form [formGroup]="form">
+  <div class="row form-group">
+    <div class="col-12">
+      <p class="title">{{ 'clubs_label_advisor' | cpI18n }}</p>
+
+      <div class="row form--group">
+        <div class="col-6">
+          <label for="first_name">{{ 'first_name' | cpI18n }}</label>
+          <input type="text"
+                 id="first_name"
+                 class="form-control"
+                 [cpTarget]="'advisor_firstname'"
+                 formControlName="advisor_firstname"
+                 [class.error]="formError && form.get('advisor_firstname').invalid"/>
+        </div>
+
+        <div class="col-6">
+          <label for="last_name">{{ 'last_name' | cpI18n }}</label>
+          <input type="text"
+                 id="last_name"
+                 class="form-control"
+                 [cpTarget]="'advisor_lastname'"
+                 formControlName="advisor_lastname"
+                 [class.error]="formError && form.get('advisor_lastname').invalid"/>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <label for="email">{{ 'email' | cpI18n }}</label>
+          <input type="text"
+                 id="email"
+                 class="form-control"
+                 [cpTarget]="'advisor_email'"
+                 formControlName="advisor_email"
+                 [class.error]="formError && form.get('advisor_email').invalid"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
