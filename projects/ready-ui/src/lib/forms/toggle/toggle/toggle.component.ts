@@ -10,32 +10,39 @@ import {
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 let nextUniqueId = 0;
+
 @Component({
-  selector: 'cp-switch',
-  templateUrl: './cp-switch.component.html',
-  styleUrls: ['./cp-switch.component.scss'],
+  selector: 'ready-ui-toggle',
+  templateUrl: './toggle.component.html',
+  styleUrls: ['./toggle.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
-    { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CPSwitchComponent), multi: true }
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ToggleComponent),
+      multi: true
+    }
   ]
 })
-export class CPSwitchComponent implements ControlValueAccessor {
-  protected _uid = `cp-switch-${nextUniqueId++}`;
+export class ToggleComponent {
+  protected _uid = `ready-ui-toggle-${nextUniqueId++}`;
   protected _id: string;
 
-  @Input() isChecked: boolean;
+  @Input()
+  isChecked: boolean;
 
-  @Output() toggle: EventEmitter<boolean> = new EventEmitter();
+  @Input()
+  ariaLabelledBy: string;
+
+  @Output()
+  toggle: EventEmitter<boolean> = new EventEmitter();
 
   onChanged: any = () => {};
   onTouched: any = () => {};
 
   @Input()
   get id(): string {
-    return this._id;
-  }
-  set id(value: string) {
-    this._id = value || this._uid;
+    return this._uid;
   }
 
   constructor() {}
