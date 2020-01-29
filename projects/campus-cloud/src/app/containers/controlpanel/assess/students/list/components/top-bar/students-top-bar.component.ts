@@ -1,15 +1,16 @@
-import { HttpParams } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { combineLatest, Observable, of } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
+import { ActivatedRoute } from '@angular/router';
 import { map, startWith } from 'rxjs/operators';
-import { CPSession } from './../../../../../../../session';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants/privileges';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { canSchoolReadResource } from './../../../../../../../shared/utils/privileges/privileges';
-import { PersonaType } from './../../../../../audience/audience.status';
+
+import { CPSession } from '@campus-cloud/session';
 import { StudentsService } from './../../../students.service';
+import { CPI18nService } from '@campus-cloud/shared/services';
 import { StudentListFilter } from './../../../students.status';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { PersonaType } from '@controlpanel/audience/audience.status';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils/privileges';
 
 interface IFilterBy {
   id: number;
@@ -18,6 +19,7 @@ interface IFilterBy {
 }
 
 interface IState {
+  muted: boolean;
   search_str: string;
   filterBy: IFilterBy;
 }
@@ -30,7 +32,6 @@ interface IState {
 export class StudentsTopBarComponent implements OnInit {
   @Input() listIdFromUrl: number;
   @Output() filter: EventEmitter<IState> = new EventEmitter();
-  @Output() query: EventEmitter<string> = new EventEmitter();
 
   selectedItem;
   canAudience = false;
@@ -38,7 +39,8 @@ export class StudentsTopBarComponent implements OnInit {
 
   state: IState = {
     search_str: null,
-    filterBy: null
+    filterBy: null,
+    muted: false
   };
 
   constructor(
@@ -50,6 +52,15 @@ export class StudentsTopBarComponent implements OnInit {
 
   onListSelected(filterBy) {
     this.state = { ...this.state, filterBy };
+
+    this.filter.emit(this.state);
+  }
+
+  onMuted(muted: boolean) {
+    this.state = {
+      ...this.state,
+      muted
+    };
 
     this.filter.emit(this.state);
   }
@@ -89,7 +100,7 @@ export class StudentsTopBarComponent implements OnInit {
           {
             id: null,
             heading: false,
-            label: this.cpI18n.translate('assess_all_students')
+            label: this.cpI18n.translate('t_shared_all_experiences_and_audiences')
           }
         ];
 

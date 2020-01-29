@@ -2346,6 +2346,9 @@
   "t_api_management_warning_text_2": {
     "message": "We suggest testing API integrations in the Test Environment first."
   },
+  "t_app_users": {
+    "message": "App Users"
+  },
   "t_assess_all_orientations": {
     "message": "All Orientation Programs"
   },
@@ -3411,6 +3414,9 @@
   "t_shared_add": {
     "message": "Add"
   },
+  "t_shared_all_experiences_and_audiences": {
+    "message": "All Experiences & Audiences"
+  },
   "t_shared_announcement": {
     "message": "Announcement"
   },
@@ -3644,6 +3650,9 @@
   },
   "t_shared_status": {
     "message": "Status"
+  },
+  "t_shared_student_muted": {
+    "message": "Muted"
   },
   "t_shared_successful": {
     "message": "Successful"

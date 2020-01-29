@@ -1,22 +1,20 @@
+import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 
 import {
   StudentsProfileHeaderComponent,
   StudentsProfileTopBarComponent
 } from './profile/components';
 
-import { SharedModule } from '../../../../shared/shared.module';
-import { StudentsRoutingModule } from './students.routing.module';
-
-import { StudentsService } from './students.service';
-import { PersonasUtilsService } from './../../customise/personas/personas.utils.service';
-
 import { StudentsListComponent } from './list';
 import { StudentsProfileComponent } from './profile';
+import { StudentsService } from './students.service';
 import { StudentsTopBarComponent } from './list/components';
+import { SharedModule } from '@campus-cloud/shared/shared.module';
+import { StudentsRoutingModule } from './students.routing.module';
 import { StudentsComposeComponent } from './compose/students-compose.component';
+import { PersonasUtilsService } from './../../customise/personas/personas.utils.service';
 
 @NgModule({
   declarations: [
