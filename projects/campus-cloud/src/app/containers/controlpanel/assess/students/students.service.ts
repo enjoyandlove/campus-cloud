@@ -61,6 +61,6 @@ export class StudentsService {
 
     const url = `${common}/${startRange};${endRange}`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search, true);
   }
 }

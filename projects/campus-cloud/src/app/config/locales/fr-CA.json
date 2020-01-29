@@ -2340,6 +2340,9 @@
   "t_api_management_warning_text_2": {
     "message": "Nous suggérons de tester les intégrations d'API dans l'environnement de Test d'abord."
   },
+  "t_app_users": {
+    "message": "App Users"
+  },
   "t_assess_all_orientations": {
     "message": "Tous les programmes d'orientation"
   },
@@ -3368,6 +3371,9 @@
   },
   "t_shared_add": {
     "message": "Ajouter"
+  },
+  "t_shared_all_experiences_and_audiences": {
+    "message": "All Experiences & Audiences"
   },
   "t_shared_app": {
     "message": "App"
