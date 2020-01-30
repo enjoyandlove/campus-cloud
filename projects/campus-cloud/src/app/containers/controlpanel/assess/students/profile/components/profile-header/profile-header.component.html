@@ -1,25 +1,32 @@
-<div class="student">
-  <div class="_col-12">
-    <div class="cp-card card">
-      <div class="row">
-        <div class="col-3 student__profile">
-          <img alt="student avatar"
-               [src]="avatarUrl"
-               class="rounded img-fit-cover" />
-        </div>
-        <div class="col-8 student__details">
-          <p class="student__name">{{ student.firstname }}
-            {{ student.lastname }}</p>
-          <p class="student__email text-muted">{{ student.email }}</p>
+<ready-ui-card>
+    <div class="wrapper">
+        <ready-ui-avatar [src]="avatarUrl"
+                         size="big"
+                         [alt]="[student.firstname + ' ' + student.lastname]"></ready-ui-avatar>
+        <div class="wrapper__meta">
+            <header>
+                <h2>
+                    <ready-ui-icon
+                            name="volume_off"
+                            color="212121"
+                            *ngIf="isMuted"
+                            [attr.aria-label]="[student.firstname + ' ' + student.lastname + ' is muted']">
+                    </ready-ui-icon>{{ student.firstname }} {{ student.lastname }}
+                    <span class="text-muted" *ngIf="isMuted">{{ 't_is_muted' | cpI18n }}</span>
+                </h2>
 
-          <button type="buton"
-                  (click)="message.emit()"
-                  class="cpbtn cpbtn--primary student__message"
-                  i18n>
-            {{ 'message_action' | cpI18n }}
-          </button>
+            </header>
+            <p class="text-muted">{{ student.email }}</p>
+            <button type="button"
+                    ui-button
+                    variant="flat"
+                    (click)="message.emit()"
+                    color="primary">{{ 'message_action' | cpI18n }}</button>
+            <ready-ui-settings-toggle (toggle)="onMute($event)"
+                                      [isChecked]="isMuted"
+                                      [label]="'t_student_profile_mute_toggle_title' | cpI18n: fullName ">
+                {{ 't_student_profile_mute_toggle_body' | cpI18n: fullName }}
+            </ready-ui-settings-toggle>
         </div>
-      </div>
     </div>
-  </div>
-</div>
+</ready-ui-card>
