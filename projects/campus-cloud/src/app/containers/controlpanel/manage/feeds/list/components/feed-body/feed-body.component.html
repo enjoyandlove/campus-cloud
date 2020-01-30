@@ -9,7 +9,7 @@
          [eventData]="viewImageEventData"
          [images]="mapImages(feed.image_list)"
          [selectedImageIndex]="i">
-      <img [attr.data-src]="image.url"
+      <img ready-ui-image [dataSrc]="image.url"
            class="img-fluid feed__image"
            [alt]="'t_shared_img_alt' | cpI18n: i + 1" />
     </div>
