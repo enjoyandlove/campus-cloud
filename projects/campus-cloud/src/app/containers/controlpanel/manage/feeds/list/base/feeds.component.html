@@ -1,8 +1,7 @@
 <ng-container [ngSwitch]="loading">
   <cp-one-column width="third">
     <cp-feed-search (feedSearch)="searchHandler($event)"></cp-feed-search>
-    <div class="row justify-content-around"
-         lazy-load-images>
+    <div class="row justify-content-around">
       <div class="col-12">
         <cp-feed-filters [groupId]="groupId"
                          [groupType]="groupType"

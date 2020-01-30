@@ -52,6 +52,11 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
         action: 3,
         isPostOnly: false,
         label: this.cpI18n.translate(this.isComment ? 'feeds_delete_comment' : 'feeds_delete_post')
+      },
+      {
+        action: 4,
+        isPostOnly: false,
+        label: this.cpI18n.translate('t_shared_student_mute')
       }
     ];
 

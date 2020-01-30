@@ -1,5 +1,12 @@
 /* tslint:disable:component-selector */
-import { Input, OnInit, Component, ElementRef, ChangeDetectionStrategy } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  NgZone,
+  Component,
+  ElementRef,
+  ChangeDetectionStrategy
+} from '@angular/core';
 
 @Component({
   selector: 'img[ready-ui-image]',
@@ -11,21 +18,23 @@ export class ImageComponent implements OnInit {
   @Input()
   dataSrc: string;
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef, private ngZone: NgZone) {}
 
   ngOnInit() {
     if ('IntersectionObserver' in window) {
-      const lazyImageObserver = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const lazyImage: any = entry.target;
-            lazyImage.src = this.dataSrc;
-            lazyImageObserver.unobserve(lazyImage);
-          }
+      this.ngZone.runOutsideAngular(() => {
+        const lazyImageObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              const lazyImage: any = entry.target;
+              lazyImage.src = this.dataSrc;
+              lazyImageObserver.unobserve(lazyImage);
+            }
+          });
         });
-      });
 
-      lazyImageObserver.observe(this.el.nativeElement);
+        lazyImageObserver.observe(this.el.nativeElement);
+      });
     }
   }
 }
