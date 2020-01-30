@@ -1,7 +1,7 @@
 <div class="toggle" [class.active]="_checked">
   <div class="toggle__header">
     <div class="toggle__label" [id]="id">{{ label }}</div>
-    <ready-ui-toggle [isChecked]="_checked" (toggle)="_checked = $event" [ariaLabelledBy]="id"></ready-ui-toggle>
+    <ready-ui-toggle [isChecked]="_checked" (toggle)="onToggle($event)" [ariaLabelledBy]="id"></ready-ui-toggle>
   </div>
   <div class="toggle__content">
     <ng-content></ng-content>

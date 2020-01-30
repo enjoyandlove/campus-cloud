@@ -1,20 +1,19 @@
-import { CPI18nService } from './../../../../../shared/services/i18n.service';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 
+import { CPSession } from '@campus-cloud/session';
 import { StudentsService } from './../students.service';
-import { CPSession } from './../../../../../session/index';
-import { CPDate } from './../../../../../shared/utils/date';
-import { FORMAT } from './../../../../../shared/pipes/date';
+import { CPDate } from '@campus-cloud/shared/utils/date';
+import { FORMAT } from '@campus-cloud/shared/pipes/date';
 import { AssessUtilsService } from '../../assess.utils.service';
-import { CPTrackingService } from '../../../../../shared/services';
-import { BaseComponent } from './../../../../../base/base.component';
+import { BaseComponent } from '@campus-cloud/base/base.component';
 import { CheckInOutTime } from '../../../manage/events/event.status';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { baseActions, IHeader, ISnackbar } from './../../../../../store/base';
-import { STAR_SIZE } from './../../../../../shared/components/cp-stars/cp-stars.component';
+import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
+import { baseActions, IHeader, ISnackbar } from '@campus-cloud/store/base';
+import { CPTrackingService, CPI18nService } from '@campus-cloud/shared/services';
+import { STAR_SIZE } from '@campus-cloud/shared/components/cp-stars/cp-stars.component';
 
 declare var $;
 
@@ -160,7 +159,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
         subheading: null,
         crumbs: {
           url: 'students',
-          label: 'students'
+          label: 't_app_users'
         },
         em: null,
         children: []

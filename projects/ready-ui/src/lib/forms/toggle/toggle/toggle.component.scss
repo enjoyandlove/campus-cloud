@@ -28,8 +28,8 @@ input.cmn-toggle-round:focus + label {
 
 input.cmn-toggle-round + label {
   padding: 2px;
-  width: 64px;
-  height: 32px;
+  width: 40px;
+  height: 22px;
   background-color: #b5b4b4;
   border-radius: 60px;
 }
@@ -49,8 +49,8 @@ input.cmn-toggle-round + label:before {
   transition: background 0.4s;
 }
 input.cmn-toggle-round + label:after {
-  width: 28px;
-  margin-left: 1px;
+  width: 18px;
+  margin-left: 0px;
   border-radius: 100%;
   transition: margin 0.4s;
   background-color: #fff;
@@ -60,5 +60,5 @@ input.cmn-toggle-round.isChecked + label:before {
   background-color: $color-success;
 }
 input.cmn-toggle-round.isChecked + label:after {
-  margin-left: 33px;
+  margin-left: 20px;
 }
