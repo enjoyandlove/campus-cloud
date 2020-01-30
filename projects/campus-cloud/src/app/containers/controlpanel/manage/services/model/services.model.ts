@@ -20,7 +20,7 @@ export class ServicesModel {
       postal_code: [_get(service, 'postal_code', null)],
       contactphone: [_get(service, 'contactphone', null)],
       secondary_name: [_get(service, 'secondary_name', null)],
-      has_membership: [_get(service, 'has_membership', null)],
+      has_membership: [_get(service, 'has_membership', true)],
       address: [_get(service, 'address', null), Validators.required],
       service_attendance: [_get(service, 'service_attendance', null)],
       logo_url: [_get(service, 'logo_url', null), Validators.required],
