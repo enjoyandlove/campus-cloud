@@ -75,8 +75,8 @@ export class CPHelpDeskComponent implements OnInit {
   }
 
   ngOnInit() {
-    // if (this.env.name === 'production') {
-    //   this.showWhatsNew();
-    // }
+    if (this.env.name === 'production') {
+      this.showWhatsNew();
+    }
   }
 }
