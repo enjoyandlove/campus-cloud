@@ -31,7 +31,6 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
   admins: IAdmin[];
   serviceId: number;
   draggable = false;
-  hasMetaData = false;
   showLocationDetails = true;
   mapCenter: BehaviorSubject<any>;
   layoutWidth = LayoutWidth.third;
@@ -85,12 +84,6 @@ export class ServicesInfoComponent extends BaseComponent implements OnInit {
           image: this.service.logo_url,
           heading: this.service.name
         };
-
-        this.hasMetaData =
-          !!this.service.contactphone ||
-          !!this.service.email ||
-          !!this.service.website ||
-          !!this.service.address;
       },
       () => this.handleError()
     );
