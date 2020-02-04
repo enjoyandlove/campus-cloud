@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { HttpParams } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
 import { of } from 'rxjs';
 
 import { OrientationModule } from '../orientation.module';
@@ -17,7 +18,17 @@ describe('OrientationProgramDeleteComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [CPTestModule, OrientationModule, RouterTestingModule],
+        imports: [
+          CPTestModule,
+          OrientationModule,
+          RouterTestingModule,
+          StoreModule.forRoot(
+            {},
+            {
+              runtimeChecks: {}
+            }
+          )
+        ],
         providers: [
           CPTrackingService,
           {

@@ -5,13 +5,14 @@
         <header>
             <ready-ui-icon
                     size="small"
+                    color="212121"
                     name="volume_off"
-                    *ngIf="feed.social_restriction"
+                    *ngIf="muted$ | async"
                     aria-label="Student is Muted"></ready-ui-icon>
             <span class="name"
                   [innerHTML]="feed.display_name | cpUrlify"></span>
             <span class="email"
-                  *ngIf="feed.email && feed.email !== ''">{{ emailTextContent }}</span>
+                  *ngIf="feed.email && feed.email !== ''"> {{ emailTextContent }}</span>
             <ng-container *ngIf="!isComment && feed.channelName">
               <span class="text-muted">
                 {{ 'feeds_posted_in' | cpI18n }}

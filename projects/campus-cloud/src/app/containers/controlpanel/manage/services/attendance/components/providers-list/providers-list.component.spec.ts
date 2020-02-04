@@ -1,7 +1,7 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { provideMockStore } from '@ngrx/store/testing';
 import { HttpParams } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
 import { mockFilter } from '../../tests/mock';
@@ -59,9 +59,13 @@ describe('ProvidersListComponent', () => {
   beforeAll((done) => {
     (async () => {
       TestBed.configureTestingModule({
-        imports: [CPTestModule, ServicesModule, RouterTestingModule],
+        imports: [
+          CPTestModule,
+          ServicesModule,
+          RouterTestingModule,
+          StoreModule.forRoot({}, { runtimeChecks: {} })
+        ],
         providers: [
-          provideMockStore(),
           ServicesUtilsService,
           ProvidersUtilsService,
           { provide: ProvidersService, useClass: MockService }

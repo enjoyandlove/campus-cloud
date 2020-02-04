@@ -3780,6 +3780,12 @@
   "t_walls_integration_form_default_image": {
     "message": "Wall Image"
   },
+  "t_walls_mute_student": {
+    "message": "Mute Student"
+  },
+  "t_walls_unmute_student": {
+    "message": "Unmute User"
+  },
   "update": {
     "message": "Update",
     "description": "Verb"

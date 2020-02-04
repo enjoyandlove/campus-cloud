@@ -7,6 +7,7 @@ import { CPSession } from '@campus-cloud/session';
 import { StudentsService } from './../students.service';
 import { CPDate } from '@campus-cloud/shared/utils/date';
 import { FORMAT } from '@campus-cloud/shared/pipes/date';
+import { UserService } from '@campus-cloud/shared/services';
 import { AssessUtilsService } from '../../assess.utils.service';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { CheckInOutTime } from '../../../manage/events/event.status';
@@ -69,6 +70,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
     public cpI18n: CPI18nService,
     public service: StudentsService,
     public utils: AssessUtilsService,
+    private userService: UserService,
     public cpTracking: CPTrackingService,
     public store: Store<ISnackbar | IHeader>
   ) {
@@ -81,7 +83,7 @@ export class StudentsProfileComponent extends BaseComponent implements OnInit {
   fetchStudentData() {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-    this.service.getStudentById(search, this.studentId).subscribe((student) => {
+    this.userService.getById(this.studentId).subscribe((student) => {
       this.student = student;
 
       this.buildHeader({
