@@ -95,6 +95,7 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit, OnDe
         res.data.map((comment) => {
           _comments.push({
             id: comment.id,
+            user_id: comment.user_id,
             avatar_thumb: comment.avatar_thumb,
             image_list: comment.image_list,
             message: comment.comment,

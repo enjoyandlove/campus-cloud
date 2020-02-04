@@ -6,10 +6,10 @@ import {
   StudentsProfileHeaderComponent,
   StudentsProfileTopBarComponent
 } from './profile/components';
-
 import { StudentsListComponent } from './list';
 import { StudentsProfileComponent } from './profile';
 import { StudentsService } from './students.service';
+import { UserService } from '@campus-cloud/shared/services';
 import { StudentsTopBarComponent } from './list/components';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 import { StudentsRoutingModule } from './students.routing.module';
@@ -28,7 +28,7 @@ import { PersonasUtilsService } from './../../customise/personas/personas.utils.
 
   imports: [SharedModule, CommonModule, ReactiveFormsModule, StudentsRoutingModule],
 
-  providers: [StudentsService, PersonasUtilsService],
+  providers: [StudentsService, PersonasUtilsService, UserService],
 
   exports: [StudentsComposeComponent]
 })

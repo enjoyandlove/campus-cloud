@@ -76,7 +76,7 @@ describe('ClubsInfoComponent', () => {
         imports: [CPTestModule, ClubsDetailsModule, RouterTestingModule.withRoutes([])],
         providers: [
           ClubsUtilsService,
-          provideMockStore(),
+          // provideMockStore(),
           {
             provide: ActivatedRoute,
             useValue: {

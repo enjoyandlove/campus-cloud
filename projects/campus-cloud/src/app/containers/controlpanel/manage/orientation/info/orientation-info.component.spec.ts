@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { provideMockStore } from '@ngrx/store/testing';
 import { HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
 import { of as observableOf } from 'rxjs';
 
 import { CPSession } from '@campus-cloud/session';
@@ -44,11 +45,19 @@ describe('OrientationInfoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule, OrientationDetailsModule],
+      imports: [
+        RouterTestingModule,
+        OrientationDetailsModule,
+        StoreModule.forRoot(
+          {},
+          {
+            runtimeChecks: {}
+          }
+        )
+      ],
       providers: [
         CPSession,
         CPTrackingService,
-        provideMockStore(),
         OrientationUtilsService,
         { provide: OrientationService, useClass: MockOrientationService },
         {

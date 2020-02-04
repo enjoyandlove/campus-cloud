@@ -1,6 +1,5 @@
 import { async, ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { provideMockStore } from '@ngrx/store/testing';
 import { HttpParams } from '@angular/common/http';
 import { of } from 'rxjs';
 
@@ -22,7 +21,6 @@ describe('OrientationListComponent', () => {
         imports: [CPTestModule, OrientationModule, RouterTestingModule],
         providers: [
           CPTrackingService,
-          provideMockStore(),
           ManageHeaderService,
           { provide: OrientationService, useClass: MockOrientationService }
         ]

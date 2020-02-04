@@ -1,6 +1,5 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { provideMockStore } from '@ngrx/store/testing';
 import { of as observableOf } from 'rxjs';
 
 import { CPTestModule } from '@campus-cloud/shared/tests';
@@ -35,11 +34,7 @@ describe('ServicesProviderAddComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CPTestModule, ServicesModule, RouterTestingModule],
-      providers: [
-        provideMockStore(),
-        ServicesUtilsService,
-        { provide: ProvidersService, useClass: MockService }
-      ]
+      providers: [ServicesUtilsService, { provide: ProvidersService, useClass: MockService }]
     })
       .compileComponents()
       .then(() => {

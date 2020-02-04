@@ -1,5 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { of as observableOf } from 'rxjs';
 
@@ -42,7 +43,16 @@ describe('OrientationProgramCreateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CPTestModule, OrientationModule],
+      imports: [
+        CPTestModule,
+        OrientationModule,
+        StoreModule.forRoot(
+          {},
+          {
+            runtimeChecks: {}
+          }
+        )
+      ],
       providers: [
         FormBuilder,
         { provide: Router, useClass: RouterMock },

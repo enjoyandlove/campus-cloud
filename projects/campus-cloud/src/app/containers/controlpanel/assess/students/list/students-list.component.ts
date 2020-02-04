@@ -13,9 +13,9 @@ import { FORMAT } from '@campus-cloud/shared/pipes/date';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { AssessUtilsService } from '../../assess.utils.service';
-import { CPTrackingService } from '@campus-cloud/shared/services';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService, UserService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
 
 interface IState {

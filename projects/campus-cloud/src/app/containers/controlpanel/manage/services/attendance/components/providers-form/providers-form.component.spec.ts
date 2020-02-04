@@ -1,9 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { provideMockStore } from '@ngrx/store/testing';
 
 import { CPSession } from '@campus-cloud/session';
 import { ServicesModule } from '../../../services.module';
+import { CPTestModule } from '@campus-cloud/shared/tests';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { ServicesUtilsService } from '../../../services.utils.service';
 import { EventUtilService } from '../../../../events/events.utils.service';
@@ -15,14 +15,8 @@ describe('ServicesProviderFormComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [ServicesModule, RouterTestingModule],
-      providers: [
-        CPSession,
-        CPI18nService,
-        EventUtilService,
-        provideMockStore(),
-        ServicesUtilsService
-      ]
+      imports: [CPTestModule, ServicesModule, RouterTestingModule],
+      providers: [CPSession, CPI18nService, EventUtilService, ServicesUtilsService]
     })
       .compileComponents()
       .then(() => {
