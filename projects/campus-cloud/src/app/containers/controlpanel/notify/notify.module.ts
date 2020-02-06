@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { NotifyComponent } from './notify.component';
-import { NotifyUtilsService } from './notify.utils.service';
 import { NotifyRoutingModule } from './notify.routing.module';
 import { SharedModule } from '@campus-cloud/shared/shared.module';
 
@@ -11,6 +10,6 @@ import { SharedModule } from '@campus-cloud/shared/shared.module';
 
   imports: [CommonModule, SharedModule, NotifyRoutingModule],
 
-  providers: [NotifyUtilsService]
+  providers: []
 })
 export class NotifyModule {}

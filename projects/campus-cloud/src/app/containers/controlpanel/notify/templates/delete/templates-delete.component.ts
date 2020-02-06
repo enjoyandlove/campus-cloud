@@ -3,7 +3,6 @@ import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '@campus-cloud/session';
 import { TemplatesService } from './../templates.service';
-import { NotifyUtilsService } from '../../notify.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { TemplatesAmplitudeService } from '../templates.amplitude.service';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
@@ -28,7 +27,6 @@ export class TemplatesDeleteComponent implements OnInit {
     private session: CPSession,
     private cpI18n: CPI18nService,
     private service: TemplatesService,
-    private utils: NotifyUtilsService,
     private cpTracking: CPTrackingService
   ) {}
 

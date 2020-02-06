@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 
 import IEvent from './event.interface';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPAmplitudeService } from '@campus-cloud/shared/services';
 import IServiceProvider from '@controlpanel/manage/services/providers.interface';
 import { EventFeedback, Feedback, CheckInMethod, EventCategory } from './event.status';
 
@@ -85,8 +86,12 @@ export class EventsAmplitudeService {
       ? amplitudeEvents.CHECKIN_AND_CHECKOUT
       : amplitudeEvents.CHECKIN_ONLY;
 
+    const hostType = CPAmplitudeService.storeCategoryIdToAmplitudeName(event.store_category);
+    const host_type = hostType ? hostType[event.store_category] : amplitudeEvents.ORIENTATION;
+
     const events = {
       feedback,
+      host_type,
       qr_code_status,
       assessment_status
     };
