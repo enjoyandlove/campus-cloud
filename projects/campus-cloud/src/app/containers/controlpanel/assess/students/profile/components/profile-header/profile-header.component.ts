@@ -12,7 +12,7 @@ import { environment } from '@projects/campus-cloud/src/environments/environment
   styleUrls: ['./profile-header.component.scss']
 })
 export class StudentsProfileHeaderComponent implements OnInit {
-  muted = false;
+  muted;
   @Input() student: any;
   @Output() message: EventEmitter<null> = new EventEmitter();
 
@@ -26,7 +26,7 @@ export class StudentsProfileHeaderComponent implements OnInit {
   }
 
   get isMuted() {
-    return this.student.social_restriction || this.muted;
+    return typeof this.muted === 'undefined' ? this.student.social_restriction : this.muted;
   }
 
   ngOnInit() {
