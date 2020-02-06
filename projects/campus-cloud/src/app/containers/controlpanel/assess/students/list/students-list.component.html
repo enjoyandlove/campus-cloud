@@ -45,8 +45,8 @@
                     </a>
                 </td>
                 <td ui-table-cell>
-                    {{ student.last_active_epoch > -1 ?
-                  (student.last_active_epoch | cpDatePipe: dateFormat) :
+                    {{ student.last_login_epoch > -1 ?
+                  (student.last_login_epoch | cpDatePipe: dateFormat) :
                   '---'
                     }}
                 </td>

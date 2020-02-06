@@ -94,7 +94,9 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     search = search.set('sort_direction', this.state.sort_direction);
     search = search.set('user_list_id', audience_id);
     search = search.set('persona_id', experience_id);
-    search = search.set('social_restriction', this.state.muted ? '1' : '0');
+    if (this.state.muted) {
+      search = search.set('social_restriction', '1');
+    }
 
     const stream$ = this.service.getStudentsByList(search, this.startRange, this.endRange).pipe(
       catchError(() => {
