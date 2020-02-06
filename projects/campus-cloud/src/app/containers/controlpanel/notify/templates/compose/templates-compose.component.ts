@@ -19,7 +19,8 @@ import {
   StoreService,
   CPI18nService,
   ZendeskService,
-  CPTrackingService
+  CPTrackingService,
+  CPAmplitudeService
 } from '@campus-cloud/shared/services';
 import { CPSession } from '@campus-cloud/session';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
@@ -68,6 +69,7 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   errorMessage;
   selectedType;
   typeAheadOpts;
+  hostType = null;
   form: FormGroup;
   modal: OverlayRef;
   isFormValid = false;
@@ -301,6 +303,10 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   onSelectedStore(store) {
     this.sendAsName = store.label;
     this.form.controls['store_id'].setValue(store.value);
+
+    if (store.hostType) {
+      this.hostType = store.hostType;
+    }
   }
 
   doChipsSelected() {
@@ -352,12 +358,20 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
           return;
         }
 
+        const host_type = this.hostType
+          ? this.hostType
+          : CPAmplitudeService.storeCategoryIdToAmplitudeName(this.data['store_category_id']);
         const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
+        const properties = {
+          ...TemplatesAmplitudeService.getAmplitudeProperties(data as any, this.data.id),
+          host_type,
+          sub_menu_name
+        };
 
-        this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_UPDATED_COMMUNICATION, {
-          sub_menu_name,
-          ...TemplatesAmplitudeService.getAmplitudeProperties(data as any, this.data.id)
-        });
+        this.cpTracking.amplitudeEmitEvent(
+          amplitudeEvents.NOTIFY_UPDATED_COMMUNICATION,
+          properties
+        );
         this.form.reset();
         this.created.emit(this.form.value);
         this.resetModal();
@@ -494,8 +508,6 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
-
     this.toolTipOptions = {
       html: true,
       trigger: 'click'

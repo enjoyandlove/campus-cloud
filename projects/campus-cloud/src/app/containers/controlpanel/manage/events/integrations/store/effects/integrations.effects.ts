@@ -4,16 +4,22 @@ import { Actions, Effect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
 import * as fromActions from '../actions';
+import { CPSession } from '@campus-cloud/session';
 import { CPDate } from '@campus-cloud/shared/utils/date';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { IntegrationsService } from './../../integrations.service';
 import { IEventIntegration } from '@campus-cloud/libs/integrations/events/model';
-import { StoreService, CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 import { EventIntegration } from '@projects/campus-cloud/src/app/libs/integrations/events/model';
 import { CommonIntegrationUtilsService } from '@campus-cloud/libs/integrations/common/providers';
 import { IntegrationsUitlsService } from '@controlpanel/manage/events/integrations/integrations.utils.service';
+
+import {
+  StoreService,
+  CPI18nService,
+  CPTrackingService,
+  CPAmplitudeService
+} from '@campus-cloud/shared/services';
 
 @Injectable()
 export class IntegrationsEffects {
@@ -56,8 +62,8 @@ export class IntegrationsEffects {
       return this.service.createIntegration(body, this.defaultParams()).pipe(
         map((integration: IEventIntegration) => {
           const eventProperties = {
-            host_type: hostType,
-            ...this.getEventProperties(integration)
+            ...this.getEventProperties(integration),
+            host_type: hostType
           };
 
           this.cpTracking.amplitudeEmitEvent(
@@ -205,7 +211,8 @@ export class IntegrationsEffects {
     return {
       feed_id: integration.id,
       sub_menu_name: amplitudeEvents.EVENT,
-      feed_type: CommonIntegrationUtilsService.getSelectedType(integration.feed_type).label
+      feed_type: CommonIntegrationUtilsService.getSelectedType(integration.feed_type).label,
+      host_type: CPAmplitudeService.storeCategoryIdToAmplitudeName(integration['store_category_id'])
     };
   }
 

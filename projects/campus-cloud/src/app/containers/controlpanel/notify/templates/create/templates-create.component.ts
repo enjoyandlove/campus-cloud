@@ -132,7 +132,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
     this.childService.createTemplate(search, data).subscribe(
       (res: any) => {
         this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_CREATED_COMMUNICATION, {
-          ...TemplatesAmplitudeService.getAmplitudeProperties(data as any)
+          ...TemplatesAmplitudeService.getAmplitudeProperties(res as any)
         });
 
         this.form.reset();

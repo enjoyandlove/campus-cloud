@@ -1,6 +1,7 @@
 import { IAnnouncement, AnnouncementPriority } from './model';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { notifyAtEpochNow } from './model/announcement.interface';
+import { CPAmplitudeService } from '@campus-cloud/shared/services';
 
 const listTypeMap = {
   0: amplitudeEvents.COMMUNICATION_AUDIENCE_TYPE_AUDIENCE,
@@ -13,7 +14,10 @@ export class AnnouncementAmplitudeService {
     const required = {
       audience_type: this.getAudienceType(announcement),
       announcement_type: this.getAnnouncementType(announcement.priority),
-      communication_type: this.getCommunicationType(announcement.notify_at_epoch)
+      communication_type: this.getCommunicationType(announcement.notify_at_epoch),
+      host_type: CPAmplitudeService.storeCategoryIdToAmplitudeName(
+        announcement['store_category_id']
+      )
     };
 
     if (announcementId) {
