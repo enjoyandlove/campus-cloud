@@ -22,8 +22,9 @@
                     variant="flat"
                     (click)="message.emit()"
                     color="primary">{{ 'message_action' | cpI18n }}</button>
-            <ready-ui-settings-toggle (toggle)="onMute($event)"
+            <ready-ui-settings-toggle *ngIf="canManageAppUsers"
                                       [isChecked]="isMuted"
+                                      (toggle)="onMute($event)"
                                       [label]="'t_student_profile_mute_toggle_title' | cpI18n: fullName ">
                 {{ 't_student_profile_mute_toggle_body' | cpI18n: fullName }}
             </ready-ui-settings-toggle>
