@@ -57,7 +57,7 @@ export class StudentsService {
   }
 
   getStudentsByList(search: HttpParams, startRange: number, endRange: number) {
-    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.STUDENT_PROFILE}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.USER}`;
 
     const url = `${common}/${startRange};${endRange}`;
 

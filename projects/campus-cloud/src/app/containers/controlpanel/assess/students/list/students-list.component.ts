@@ -43,7 +43,7 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
     search_str: null,
     audience_id: null,
     experience_id: null,
-    sort_field: 'firstname',
+    sort_field: 'username',
     sort_direction: 'asc'
   };
 

@@ -16,8 +16,8 @@
             <thead>
             <tr ui-table-row>
                 <th ui-table-cell
-                    (sort)="doSort('firstname')"
-                    [sorting]="state.sort_field === 'firstname'"
+                    (sort)="doSort('username')"
+                    [sorting]="state.sort_field === 'username'"
                     [sortDirection]="state.sort_direction">{{ 'name' | cpI18n }}</th>
                 <th ui-table-cell>{{ 'assess_student_last_active' | cpI18n }}</th>
                 <th ui-table-cell>{{ 't_shared_student_muted' | cpI18n }}</th>

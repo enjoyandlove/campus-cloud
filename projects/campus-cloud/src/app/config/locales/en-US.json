@@ -2529,6 +2529,9 @@
   "t_data_export": {
     "message": "Data Export"
   },
+  "t_data_export_app_users": {
+    "message": "App Users"
+  },
   "t_data_export_csv_posts_comments_count": {
     "message": "# of Comments"
   },
@@ -2815,6 +2818,12 @@
   "t_event_check_in_attendee_already_exist": {
     "message": "This person has already checked in."
   },
+  "t_export_data_csv_app_users_last_activity": {
+    "message": "Last Activity"
+  },
+  "t_export_data_csv_app_users_registration_date": {
+    "message": "Registration Date"
+  },
   "t_external_checkin_already_checked_in": {
     "message": "This person has already checked in."
   },
@@ -2968,6 +2977,9 @@
   },
   "t_orientation_everyone": {
     "message": "Event Members"
+  },
+  "t_permission_app_user_management": {
+    "message": "App User Management"
   },
   "t_personas": {
     "message": "App Experiences"

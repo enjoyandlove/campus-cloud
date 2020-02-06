@@ -6,7 +6,10 @@ import { get as _get } from 'lodash';
 
 import * as fromStore from '../../../store';
 
+import { CPSession } from '@campus-cloud/session';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { canSchoolReadResource } from '@campus-cloud/shared/utils';
+import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
 import { CPI18nService, UserService } from '@campus-cloud/shared/services';
 
 @Mixin([Destroyable])
@@ -33,6 +36,7 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
   emitDestroy() {}
 
   constructor(
+    private session: CPSession,
     public cpI18n: CPI18nService,
     private userService: UserService,
     private store: Store<fromStore.IWallsState>
@@ -73,7 +77,12 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
       items = [approveMenu, ...items];
     }
 
-    if (this.isByAppUser()) {
+    const canManageAppUsers = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.app_user_management
+    );
+
+    if (this.isByAppUser() && canManageAppUsers) {
       items = [
         ...items,
         {
@@ -98,7 +107,7 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
 
     this.options = this.isComment ? items.filter((item) => !item.isPostOnly) : items;
 
-    if (this.isByAppUser()) {
+    if (this.isByAppUser() && canManageAppUsers) {
       this.bannedEmails$.pipe(takeUntil(this.destroy$)).subscribe((emails: string[]) => {
         const muted = emails.includes(this.getFeedEmail());
         const phraseAppKey = muted ? 't_walls_unmute_student' : 't_walls_mute_student';
