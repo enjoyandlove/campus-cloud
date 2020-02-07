@@ -87,7 +87,7 @@ export class EventsAmplitudeService {
       : amplitudeEvents.CHECKIN_ONLY;
 
     const hostType = CPAmplitudeService.storeCategoryIdToAmplitudeName(event.store_category);
-    const host_type = hostType ? hostType[event.store_category] : amplitudeEvents.ORIENTATION;
+    const host_type = hostType ? hostType : amplitudeEvents.ORIENTATION;
 
     const events = {
       feedback,
