@@ -39,9 +39,6 @@ export class EventsAttendanceActionBoxComponent implements OnInit {
   studentFilter$: Observable<any[]>;
   disableMessageAttendees: boolean;
   messageAttendeesTooltipText: string;
-  tooltipOptions: TooltipOption = {
-    placement: 'left'
-  };
 
   constructor(
     public session: CPSession,

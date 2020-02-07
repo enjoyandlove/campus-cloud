@@ -18,9 +18,5 @@ export class CategoriesCommonListComponent implements OnInit {
   @Output() editClick: EventEmitter<ICategory> = new EventEmitter();
   @Output() deleteClick: EventEmitter<ICategory> = new EventEmitter();
 
-  tooltipOptions: TooltipOption = {
-    placement: 'left'
-  };
-
   ngOnInit() {}
 }

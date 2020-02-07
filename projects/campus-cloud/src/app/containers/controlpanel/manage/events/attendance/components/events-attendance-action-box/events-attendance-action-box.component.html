@@ -40,7 +40,8 @@
         <div class="dropdown-item"
              [class.no-hover]="disableMessageAttendees">
           <button class="unstyled-button"
-                  [cpTooltip]="tooltipOptions"
+                  ui-tooltip
+                  placement="left"
                   (click)="sendAttendeesMessage()"
                   [disabled]="disableMessageAttendees"
                   [attr.title]="messageAttendeesTooltipText"
