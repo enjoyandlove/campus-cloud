@@ -147,11 +147,11 @@
                           [class.disabled]="!canMessage"
                           (click)="messageAttendee(attendee)"
                           *ngIf="attendee.check_in_method === appCheckIn && attendee.attendee_type !== deletedAttendee">
-                    <i cpTooltip
+                    <i ui-tooltip
                        aria-hidden="true"
                        aria-label="message"
                        class="material-icons"
-                       [attr.title]="messageAttendeesTooltipText">
+                       [title]="messageAttendeesTooltipText">
                       chat_bubble
                     </i>
                   </button>

@@ -53,9 +53,9 @@
               <label class="with-tooltip">
                 {{ 'recipient' | cpI18n }}
                 <button type="button"
+                        ui-tooltip
                         class="unstyled-button"
-                        [cpTooltip]="toolTipOptions"
-                        [attr.title]="toolTipContent">
+                        [template]="tooltipTpl">
                   <i class="material-icons hover">
                     info_outline
                   </i>
@@ -176,3 +176,11 @@
       </div>
     </div>
   </div>
+
+  <ng-template #tooltipTpl>
+  <div>{{ 'notify_announcement_template_to_tooltip' | cpI18n }}
+      <a [href]="tooltipLink">
+          {{ 'lists_button_create' | cpI18n }}
+      </a>
+  </div>
+</ng-template>

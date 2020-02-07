@@ -71,7 +71,9 @@ export class TooltipDirective implements OnInit, OnDestroy {
   constructor(private el: ElementRef, private overlay: Overlay, private injector: Injector) {}
 
   ngOnInit() {
-    this.attachListeners();
+    if (this._title !== '' || typeof this._template !== 'undefined') {
+      this.attachListeners();
+    }
   }
 
   ngOnDestroy() {
@@ -121,7 +123,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
 
   private getConfig(): OverlayConfig {
     const { x, y } = this.getOffset();
-    const panelClass = ['ui-tooltip', this.tooltipClass].filter((c) => c);
+    const panelClass = ['ui-tooltip', this.tooltipClass].filter((c) => c).join(' ');
     return {
       panelClass,
       disposeOnNavigation: true,
@@ -237,7 +239,7 @@ export class TooltipDirective implements OnInit, OnDestroy {
       tap(() => this.open())
     );
 
-    const closeEvents$ = merge(blur$, escape$, mouseleave$).pipe(
+    const closeEvents$ = merge(blur$, escape$, hoverOutSideTriggerAndTooltip$).pipe(
       filter(() => this._show),
       tap(() => this.close())
     );

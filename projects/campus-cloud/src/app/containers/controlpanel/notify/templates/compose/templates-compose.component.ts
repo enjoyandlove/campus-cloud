@@ -3,7 +3,6 @@ import { HttpParams } from '@angular/common/http';
 import { OverlayRef } from '@angular/cdk/overlay';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { map, takeUntil } from 'rxjs/operators';
-import { TooltipOption } from 'bootstrap';
 import {
   Input,
   OnInit,
@@ -73,10 +72,9 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   form: FormGroup;
   modal: OverlayRef;
   isFormValid = false;
-  toolTipContent: string;
-  toolTipOptions: TooltipOption;
   resetChips$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetCustomFields$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  tooltipLink = `${ZendeskService.zdRoot()}/articles/115004330554-Create-a-List-of-Students`;
 
   URGENT_TYPE = 1;
   EMERGENCY_TYPE = 0;
@@ -508,20 +506,6 @@ export class TemplatesComposeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.toolTipOptions = {
-      html: true,
-      trigger: 'click'
-    };
-
-    this.toolTipContent = `
-      <span class="d-block text-left">
-        ${this.cpI18n.translate('notify_announcement_template_to_tooltip')}
-      </span>
-      <a class="text-left d-block" href='${ZendeskService.zdRoot()}/articles/115004330554-Create-a-List-of-Students}'>
-        ${this.cpI18n.translate('lists_button_create')}
-      </a>
-    `;
-
     let canDoEmergency;
 
     this.typeAheadOpts = {

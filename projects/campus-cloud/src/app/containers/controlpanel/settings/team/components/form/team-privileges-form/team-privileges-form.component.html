@@ -215,9 +215,9 @@
                     "
                                      [isDisabled]="!formData.content.appCustomizaton.active">
                         </cp-checkbox>
-                        <button cpTooltip
+                        <button ui-tooltip
                                 class="cpbtn cpbtn--link danger"
-                                [attr.title]="'t_admin_invite_studio_limited_tooltip' | cpI18n"
+                                [title]="'t_admin_invite_studio_limited_tooltip' | cpI18n"
                                 *ngIf="
                       utils.hasStudio(schoolPrivileges) &&
                       !utils.hasFullStudioPrivilege(schoolPrivileges)
@@ -282,11 +282,11 @@
                     <div class="col-12">
                         <p class="section-sub-title">
                             {{ 'notify' | cpI18n }}
-                            <button cpTooltip
+                            <button ui-tooltip
                                     type="button"
                                     class="unstyled-button"
                                     *ngIf="!hasStorePrivileges()"
-                                    [attr.title]="'t_admin_invite_notify_permission_tooltip' | cpI18n">
+                                    [title]="'t_admin_invite_notify_permission_tooltip' | cpI18n">
                                 <i class="material-icons">
                                     lock
                                 </i>
