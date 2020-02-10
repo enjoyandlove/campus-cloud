@@ -7,6 +7,7 @@ import { get as _get } from 'lodash';
 import * as fromStore from '../../../store';
 
 import { CPSession } from '@campus-cloud/session';
+import { User } from '@campus-cloud/shared/models';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
@@ -77,12 +78,7 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
       items = [approveMenu, ...items];
     }
 
-    const canManageAppUsers = canSchoolReadResource(
-      this.session.g,
-      CP_PRIVILEGES_MAP.app_user_management
-    );
-
-    if (this.isByAppUser() && canManageAppUsers) {
+    if (this.showMuteOption()) {
       items = [
         ...items,
         {
@@ -107,7 +103,7 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
 
     this.options = this.isComment ? items.filter((item) => !item.isPostOnly) : items;
 
-    if (this.isByAppUser() && canManageAppUsers) {
+    if (this.showMuteOption()) {
       this.bannedEmails$.pipe(takeUntil(this.destroy$)).subscribe((emails: string[]) => {
         const muted = emails.includes(this.getFeedEmail());
         const phraseAppKey = muted ? 't_walls_unmute_student' : 't_walls_mute_student';
@@ -152,6 +148,16 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
           this.store.dispatch(fromStore.unBanEmail({ email }));
         }
       });
+  }
+
+  private showMuteOption() {
+    const hasAppUserManagementPrivileges = canSchoolReadResource(
+      this.session.g,
+      CP_PRIVILEGES_MAP.app_user_management
+    );
+    return (
+      this.isByAppUser() && hasAppUserManagementPrivileges && User.isActive(this.feed.user_status)
+    );
   }
 
   private getFeedEmail(): string {
