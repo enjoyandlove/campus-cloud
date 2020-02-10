@@ -473,6 +473,9 @@
   "assess_student_id": {
     "message": "ID Étudiant"
   },
+  "assess_student_last_active": {
+    "message": "Dernière Activité"
+  },
   "assess_student_name": {
     "message": "Nom de l'Étudiant"
   },
@@ -2341,7 +2344,7 @@
     "message": "Nous suggérons de tester les intégrations d'API dans l'environnement de Test d'abord."
   },
   "t_app_users": {
-    "message": "App Users"
+    "message": "Utilisateurs de l'application"
   },
   "t_assess_all_orientations": {
     "message": "Tous les programmes d'orientation"
@@ -2372,6 +2375,9 @@
   },
   "t_assess_list_event_names": {
     "message": "Liste présence aux événements"
+  },
+  "t_assess_list_orientation_event_names": {
+    "message": "Liste présence aux événements d'orientation"
   },
   "t_assess_list_service_names": {
     "message": "Liste de services visités"
@@ -2411,6 +2417,9 @@
   },
   "t_audience_save_modal_button_submit": {
     "message": "Enregistrer"
+  },
+  "t_campus_app_management": {
+    "message": "Gestion de l'Application du Campus"
   },
   "t_categories_can_not_be_delete": {
     "message": "Les catégories avec des lieux ne peuvent pas être supprimées."
@@ -2510,6 +2519,9 @@
   },
   "t_data_export": {
     "message": "Export De Données"
+  },
+  "t_data_export_app_users": {
+    "message": "Utilisateurs de l'application"
   },
   "t_data_export_csv_posts_comments_count": {
     "message": "# de Commentaires"
@@ -2797,6 +2809,12 @@
   "t_event_check_in_attendee_already_exist": {
     "message": "Cette personne s'est déjà enregistrée."
   },
+  "t_export_data_csv_app_users_last_activity": {
+    "message": "Dernière Activité"
+  },
+  "t_export_data_csv_app_users_registration_date": {
+    "message": "Date d'Enregistrement"
+  },
   "t_external_checkin_already_checked_in": {
     "message": "Cette personne s'est déjà enregistrée."
   },
@@ -2948,6 +2966,9 @@
   "t_orientation_everyone": {
     "message": "Membres de l'événement"
   },
+  "t_permission_app_user_management": {
+    "message": "Gestion des Utilisateurs de l'Application"
+  },
   "t_personas": {
     "message": "Expériences d'application"
   },
@@ -3026,6 +3047,9 @@
   "t_personas_form_dropdown_login_required": {
     "message": "Requis"
   },
+  "t_personas_form_heading_todays_schedule": {
+    "message": "Horaire de la journée"
+  },
   "t_personas_form_heading_upcoming_deadlines": {
     "message": "Dates limites à venir"
   },
@@ -3049,6 +3073,9 @@
   },
   "t_personas_form_sub_heading_upcoming_deadlines": {
     "message": "Devoirs et examens à venir"
+  },
+  "t_personas_form_title_home_customization": {
+    "message": "Personnalisation de l'Accueil"
   },
   "t_personas_list_dropdown_all_experiences": {
     "message": "Tout"
