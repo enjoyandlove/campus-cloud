@@ -70,7 +70,9 @@ export class PopoverTriggerDirective {
     }
 
     this.overlayRef = this.overlay.create(this.getConfig());
-    const portal: TemplatePortal = new TemplatePortal(this.uiPopoverTpl, this.viewContainerRef);
+    const portal: TemplatePortal = new TemplatePortal(this.uiPopoverTpl, this.viewContainerRef, {
+      popover: this
+    });
     this.overlayRef.attach(portal);
 
     this.overlayRef.backdropClick().subscribe(() => this.close());
