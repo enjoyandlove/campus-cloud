@@ -1,4 +1,11 @@
-import { OnInit, Component, QueryList, ContentChildren, AfterContentInit } from '@angular/core';
+import {
+  Input,
+  OnInit,
+  Component,
+  QueryList,
+  ContentChildren,
+  AfterContentInit
+} from '@angular/core';
 
 import { TabComponent } from './../tab/tab.component';
 
@@ -9,6 +16,9 @@ import { TabComponent } from './../tab/tab.component';
   host: { role: 'tabpanel' }
 })
 export class TabsComponent implements OnInit, AfterContentInit {
+  @Input()
+  ariaControls: string;
+
   @ContentChildren(TabComponent) public tabs: QueryList<TabComponent>;
 
   constructor() {}
