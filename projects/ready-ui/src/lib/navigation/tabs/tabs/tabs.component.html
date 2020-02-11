@@ -10,7 +10,7 @@
             [disabled]="tab._disabled"
             (click)="showTabById(tab.id)"
             [attr.aria-controls]="ariaControls"
-            [attr.aria-selected]="_visible">{{tab.label}}</button>
+            [attr.aria-selected]="tab.visible">{{tab.label}}</button>
   </li>
 </ul>
 <div class="tab__content">
