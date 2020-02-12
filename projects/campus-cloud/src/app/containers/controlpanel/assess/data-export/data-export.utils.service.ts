@@ -141,14 +141,7 @@ export class DataExportUtilsService {
     };
 
     const formattedData = data.map((d: IDataExportAppUsers) => {
-      const { status, firstname, lastname, email, student_id, last_login, date_joined } = d;
-      const isDeletedUser = status < 0;
-      const lastName = !isDeletedUser ? lastname : '-';
-      const emailAddress = !isDeletedUser ? email : '-';
-
-      const firstName = !isDeletedUser
-        ? firstname
-        : this.cpI18n.translate('t_shared_closed_account');
+      const { firstname, lastname, email, student_id, last_login, date_joined } = d;
 
       const dateJoined =
         date_joined > 0
@@ -161,9 +154,9 @@ export class DataExportUtilsService {
           : '-';
 
       return {
-        [columns.firstname]: firstName,
-        [columns.lastname]: lastName,
-        [columns.email]: emailAddress,
+        [columns.firstname]: firstname,
+        [columns.lastname]: lastname,
+        [columns.email]: email,
         [columns.student_id]: student_id,
         [columns.date_joined]: dateJoined,
         [columns.last_login]: lastLogin

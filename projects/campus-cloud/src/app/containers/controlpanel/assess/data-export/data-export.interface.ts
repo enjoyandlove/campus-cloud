@@ -10,8 +10,8 @@ export enum DataExportType {
 }
 
 export const dataExportAmplitudeMap = {
-  [DataExportType.appUsers]: 'App Users',
   [DataExportType.wallPosts]: 'Campus Wall Post',
+  [DataExportType.appUsers]: 'Campus App Users List',
   [DataExportType.wallComments]: 'Campus Wall Comment'
 };
 
