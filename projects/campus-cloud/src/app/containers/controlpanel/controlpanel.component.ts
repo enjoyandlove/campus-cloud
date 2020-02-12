@@ -1,11 +1,8 @@
-import { ToastService } from '@ready-education/ready-ui/feedback-and-indicators';
 import { Component, AfterViewInit, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CPSession } from '@campus-cloud/session';
 import { EnvService } from '@campus-cloud/config/env';
-import { appStorage, base64 } from '../../shared/utils';
-import { ControlPanelService } from './controlpanel.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { CPTrackingService, CPAmplitudeService, AdminService } from '@campus-cloud/shared/services';
 
@@ -21,8 +18,6 @@ export class ControlPanelComponent implements AfterViewInit, OnInit {
     private session: CPSession,
     private route: ActivatedRoute,
     private adminService: AdminService,
-    private toastService: ToastService,
-    private service: ControlPanelService,
     private cpTrackingService: CPTrackingService,
     private cpAmplitudeService: CPAmplitudeService
   ) {}
@@ -58,60 +53,11 @@ export class ControlPanelComponent implements AfterViewInit, OnInit {
     });
   }
 
-  trackBannerClick(interaction_type: string) {
-    this.cpTrackingService.amplitudeEmitEvent(amplitudeEvents.VIEWED_BANNER, {
-      interaction_type
-    });
-  }
-  onToastDissmised(id: number) {
-    this.setBannerCookie(id);
-    this.trackBannerClick('Dismissed');
-  }
-
-  onToastLearnMoreClicked(id: number) {
-    this.setBannerCookie(id);
-    this.trackBannerClick('Interacted');
-  }
-
-  setBannerCookie(id: number) {
-    appStorage.set(base64.encode(appStorage.keys.CHANGE_LOG), id.toString());
-  }
-
-  showToast({ linkText, linkUrl, title, id }) {
-    this.toastService.show({
-      type: 'info',
-      text: title,
-      cta: {
-        text: linkText,
-        url: linkUrl,
-        ctaClickHandler: this.onToastLearnMoreClicked.bind(this, id)
-      },
-      dismissClickHandler: this.onToastDissmised.bind(this, id)
-    });
-  }
-
-  loadWhatsNew() {
-    this.service.getBeamerPosts().subscribe(({ id, translations }: any) => {
-      const { linkText, linkUrl, title } = translations[0];
-      const previousChangeLogKey = appStorage.get(base64.encode(appStorage.keys.CHANGE_LOG));
-
-      if (!previousChangeLogKey || previousChangeLogKey !== id.toString()) {
-        this.showToast({ linkText, linkUrl, title, id });
-      }
-    });
-  }
-
-  ngOnInit() {
-    if (this.env.name === 'production') {
-      setTimeout(() => {
-        this.loadWhatsNew();
-      }, 1000);
-    }
-  }
+  ngOnInit() {}
 
   ngAfterViewInit() {
     /**
-     * this gets initilized only once
+     * this gets initialized only once
      * so we track the first page load here
      */
     this.cpAmplitudeService.loadAmplitude();

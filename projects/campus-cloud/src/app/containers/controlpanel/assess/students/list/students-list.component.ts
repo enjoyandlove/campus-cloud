@@ -1,24 +1,27 @@
 import { StudentListFilter } from '../students.status';
 import { HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { catchError, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { of } from 'rxjs';
 
+import { CPSession } from '@campus-cloud/session';
 import { StudentsService } from '../students.service';
-import { baseActions } from '../../../../../store/base';
-import { FORMAT } from '../../../../../shared/pipes/date';
-import { CPSession } from '../../../../../session/index';
+import { baseActions } from '@campus-cloud/store/base';
+import { FORMAT } from '@campus-cloud/shared/pipes/date';
+import { CPI18nService } from '@campus-cloud/shared/services';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { AssessUtilsService } from '../../assess.utils.service';
-import { CPTrackingService } from '../../../../../shared/services';
-import { BaseComponent } from '../../../../../base/base.component';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
+import { BaseComponent } from '@campus-cloud/base/base.component';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService, UserService } from '@campus-cloud/shared/services';
 import { environment } from '@projects/campus-cloud/src/environments/environment';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService } from '../../../../../shared/services/i18n.service';
 
 interface IState {
   search_str: string;
   audience_id: number;
+  muted: boolean;
   experience_id: number;
   sort_field: string;
   sort_direction: string;
@@ -36,10 +39,11 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
   students = [];
 
   state: IState = {
+    muted: false,
     search_str: null,
     audience_id: null,
     experience_id: null,
-    sort_field: 'firstname',
+    sort_field: 'username',
     sort_direction: 'asc'
   };
 
@@ -85,27 +89,21 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
 
     let search = new HttpParams().set('school_id', this.session.g.get('school').id.toString());
 
-    if (this.state.search_str) {
-      search = search.set('search_str', this.state.search_str);
+    search = search.set('search_str', this.state.search_str);
+    search = search.set('sort_field', this.state.sort_field);
+    search = search.set('sort_direction', this.state.sort_direction);
+    search = search.set('user_list_id', audience_id);
+    search = search.set('persona_id', experience_id);
+    if (this.state.muted) {
+      search = search.set('social_restriction', '1');
     }
 
-    if (this.state.sort_field) {
-      search = search.set('sort_field', this.state.sort_field);
-    }
-
-    if (this.state.sort_direction) {
-      search = search.set('sort_direction', this.state.sort_direction);
-    }
-
-    if (audience_id) {
-      search = search.set('user_list_id', audience_id);
-    }
-
-    if (experience_id) {
-      search = search.set('persona_id', experience_id);
-    }
-
-    const stream$ = this.service.getStudentsByList(search, this.startRange, this.endRange);
+    const stream$ = this.service.getStudentsByList(search, this.startRange, this.endRange).pipe(
+      catchError(() => {
+        const data = [];
+        return of({ data });
+      })
+    );
 
     super.fetchData(stream$).then((res) => (this.students = res.data));
   }
@@ -169,10 +167,12 @@ export class StudentsListComponent extends BaseComponent implements OnInit {
 
     const isAudience = filterBy ? filterBy.queryParam === StudentListFilter.audienceId : null;
     const isExperience = filterBy ? filterBy.queryParam === StudentListFilter.experienceId : null;
+    const { muted, search_str } = filter;
 
     this.state = {
       ...this.state,
-      search_str: filter.search_str,
+      muted,
+      search_str,
       audience_id: isAudience ? filterBy.id : null,
       experience_id: isExperience ? filterBy.id : null
     };

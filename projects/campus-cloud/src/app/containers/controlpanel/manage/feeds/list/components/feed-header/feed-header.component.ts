@@ -1,5 +1,11 @@
 /*tslint:disable:no-host-metadata-property */
 import { Component, Input, Output, EventEmitter, OnInit, ViewEncapsulation } from '@angular/core';
+import { Store, select } from '@ngrx/store';
+import { get as _get } from 'lodash';
+import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+import * as fromStore from '../../../store';
 
 import { UserStatus } from './../../feeds.status';
 import { FORMAT } from '@campus-cloud/shared/pipes';
@@ -19,14 +25,16 @@ export class FeedHeaderComponent implements OnInit {
   @Input() feed: any;
   @Input() isComment: boolean;
   @Output() filterByCategory: EventEmitter<any> = new EventEmitter();
+
   state: any;
   CPDate = CPDate;
   emailTextContent;
   FORMAT = FORMAT.DATETIME;
+  muted$: Observable<boolean>;
   activeUser = UserStatus.active;
   deletedUser = UserStatus.deleted;
 
-  constructor(public cpI18n: CPI18nService) {}
+  constructor(public cpI18n: CPI18nService, private store: Store<fromStore.IWallsState>) {}
 
   loadCategory(item) {
     this.state = Object.assign({}, this.state, {
@@ -39,6 +47,11 @@ export class FeedHeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+    const feedEmail = _get(this.feed, 'email', '');
+    this.muted$ = this.store
+      .pipe(select(fromStore.getBannedEmails))
+      .pipe(map((emails: string[]) => emails.includes(feedEmail)));
+
     this.emailTextContent =
       this.feed.user_status >= UserStatus.activeWithUnverifiedEmail
         ? `(${this.feed.email})`

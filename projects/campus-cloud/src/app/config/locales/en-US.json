@@ -2346,6 +2346,9 @@
   "t_api_management_warning_text_2": {
     "message": "We suggest testing API integrations in the Test Environment first."
   },
+  "t_app_users": {
+    "message": "App Users"
+  },
   "t_assess_all_orientations": {
     "message": "All Orientation Programs"
   },
@@ -2426,6 +2429,9 @@
   },
   "t_audience_save_modal_button_submit": {
     "message": "Save"
+  },
+  "t_campus_app_management": {
+    "message": "Campus App Management"
   },
   "t_categories_can_not_be_delete": {
     "message": "Categories with locations cannot be deleted."
@@ -2525,6 +2531,9 @@
   },
   "t_data_export": {
     "message": "Data Export"
+  },
+  "t_data_export_app_users": {
+    "message": "App Users"
   },
   "t_data_export_csv_posts_comments_count": {
     "message": "# of Comments"
@@ -2812,6 +2821,12 @@
   "t_event_check_in_attendee_already_exist": {
     "message": "This person has already checked in."
   },
+  "t_export_data_csv_app_users_last_activity": {
+    "message": "Last Activity"
+  },
+  "t_export_data_csv_app_users_registration_date": {
+    "message": "Registration Date"
+  },
   "t_external_checkin_already_checked_in": {
     "message": "This person has already checked in."
   },
@@ -2868,6 +2883,9 @@
   },
   "t_integration_sync_button_int_running_tooltip": {
     "message": "Integration in progress"
+  },
+  "t_is_muted": {
+    "message": "is Muted"
   },
   "t_jobs_ongoing": {
     "message": "Ongoing",
@@ -2962,6 +2980,9 @@
   },
   "t_orientation_everyone": {
     "message": "Event Members"
+  },
+  "t_permission_app_user_management": {
+    "message": "App User Management"
   },
   "t_personas": {
     "message": "App Experiences"
@@ -3411,6 +3432,9 @@
   "t_shared_add": {
     "message": "Add"
   },
+  "t_shared_all_experiences_and_audiences": {
+    "message": "All Experiences & Audiences"
+  },
   "t_shared_announcement": {
     "message": "Announcement"
   },
@@ -3612,6 +3636,12 @@
   "t_shared_preview": {
     "message": "Preview"
   },
+  "t_shared_ready_education": {
+    "message": "Ready Education"
+  },
+  "t_shared_read_only": {
+    "message": "Read Only"
+  },
   "t_shared_revoke": {
     "message": "Revoke"
   },
@@ -3644,6 +3674,12 @@
   },
   "t_shared_status": {
     "message": "Status"
+  },
+  "t_shared_student_mute": {
+    "message": "Mute"
+  },
+  "t_shared_student_muted": {
+    "message": "Muted"
   },
   "t_shared_successful": {
     "message": "Successful"
@@ -3696,6 +3732,12 @@
   "t_students_profile_students": {
     "message": "Students"
   },
+  "t_student_profile_mute_toggle_body": {
+    "message": "Muting %s prevents them from posting, commenting, liking and flagging on walls. They are still able to view."
+  },
+  "t_student_profile_mute_toggle_title": {
+    "message": "Mute %s"
+  },
   "t_studio": {
     "message": "Studio"
   },
@@ -3738,6 +3780,42 @@
   "t_team_settings_resend_invite_success": {
     "message": "Invite Resent!"
   },
+  "t_terms_of_use_button_publish": {
+    "message": "Publish"
+  },
+  "t_terms_of_use_disclaimer": {
+    "message": "By signing up, you agree to the Ready Education privacy policy and terms of service."
+  },
+  "t_terms_of_use_menu": {
+    "message": "Terms Of Use"
+  },
+  "t_terms_of_use_paragraph_1": {
+    "message": "Campus Cloud allows you to publish your campus Terms Of Use to inform app users of how the Campus App is intended to be used."
+  },
+  "t_terms_of_use_paragraph_2": {
+    "message": "The Ready Education privacy policy and terms of service are already part of the sign up process as a disclaimer."
+  },
+  "t_terms_of_use_paragraph_3": {
+    "message": "Once you publish your terms for the first time, app users will be prompted to approve them by proceeding to sign in or sign up. The same thing will happen every time you update them. Users who refuse to agree will be kept logged out."
+  },
+  "t_terms_of_use_placeholder": {
+    "message": "Place Your Terms Of Use Here"
+  },
+  "t_terms_of_use_published_successfully": {
+    "message": "Terms Of Use published successfully"
+  },
+  "t_terms_of_use_publish_terms_modal_body": {
+    "message": "The Terms Of Use will be sent out to all Campus App users as a disclaimer part of the sign in and sign up process."
+  },
+  "t_terms_of_use_publish_terms_modal_title": {
+    "message": "Publish Terms?"
+  },
+  "t_terms_of_use_terms_heading": {
+    "message": "Your Campus Terms Of Use"
+  },
+  "t_terms_of_use_title": {
+    "message": "Campus App Terms Of Use"
+  },
   "t_tile_button_default": {
     "message": "Default"
   },
@@ -3758,6 +3836,12 @@
   },
   "t_walls_integration_form_default_image": {
     "message": "Wall Image"
+  },
+  "t_walls_mute_student": {
+    "message": "Mute User"
+  },
+  "t_walls_unmute_student": {
+    "message": "Unmute User"
   },
   "update": {
     "message": "Update",

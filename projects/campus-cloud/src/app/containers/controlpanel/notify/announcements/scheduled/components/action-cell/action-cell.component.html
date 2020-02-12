@@ -4,21 +4,21 @@
      class="cpbtn cpbtn--link"
      [routerLink]="['edit/' + announcement.id]">{{'edit' | cpI18n}}</a>
 
-  <button cpTooltip
+  <button ui-tooltip
           type="button"
           *ngIf="hasError"
           class="unstyled-button"
-          [attr.title]="'something_went_wrong' | cpI18n">
+          [title]="'something_went_wrong' | cpI18n">
     <i class="material-icons">warning</i>
   </button>
 </span>
 
 <span>
   <img alt=""
-       cpTooltip
+       ui-tooltip
        aria-hidden="true"
        *ngIf="isExternal"
-       [attr.title]="isExternalToolTip"
+       [title]="isExternalToolTip"
        [src]="announcement.source | integrationSourceToIcon" />
 
   <cp-table-close [cpTarget]="'delete-btn'"

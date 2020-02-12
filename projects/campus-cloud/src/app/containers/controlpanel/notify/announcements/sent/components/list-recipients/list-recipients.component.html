@@ -14,10 +14,16 @@
     <div class="recipients__more col-6"
          *ngIf="recipients_more.length">
       <button class="cpbtn cpbtn--link"
-              [cpTooltip]="tooltipOptions"
-              [attr.title]="tooltipContent">
+              ui-tooltip
+              [template]="tooltipTpl">
         {{ 'tooltip_more_text' | cpI18n: recipients_more.length }}
       </button>
     </div>
   </div>
 </div>
+
+<ng-template #tooltipTpl>
+    <div>
+        <p *ngFor="let r of tooltipRecipients">{{r}}</p>
+    </div>
+</ng-template>

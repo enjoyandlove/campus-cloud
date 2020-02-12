@@ -17,6 +17,8 @@ export interface IAssessStudent {
 
   last_event: number;
 
+  is_banned?: boolean;
+
   last_service: number;
 
   orientation_events: number;

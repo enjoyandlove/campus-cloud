@@ -3,7 +3,6 @@ import { HttpParams } from '@angular/common/http';
 
 import { CPSession } from '@campus-cloud/session';
 import { AnnouncementsService } from '../announcements.service';
-import { NotifyUtilsService } from '../../notify.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { AnnouncementAmplitudeService } from './../announcement.amplitude.service';
 import { IModal, MODAL_DATA, CPTrackingService } from '@campus-cloud/shared/services';
@@ -14,16 +13,8 @@ import { IModal, MODAL_DATA, CPTrackingService } from '@campus-cloud/shared/serv
   styleUrls: ['./announcements-delete.component.scss']
 })
 export class AnnouncementDeleteComponent {
-  eventProperties = {
-    sub_menu_name: null,
-    audience_type: null,
-    announcement_id: null,
-    announcement_type: null
-  };
-
   constructor(
     private session: CPSession,
-    private utils: NotifyUtilsService,
     private service: AnnouncementsService,
     private cpTracking: CPTrackingService,
     @Inject(MODAL_DATA) private modal: IModal
@@ -51,11 +42,6 @@ export class AnnouncementDeleteComponent {
       amplitudeEvents.DELETED_ITEM,
       this.cpTracking.getAmplitudeMenuProperties()
     );
-
-    this.eventProperties = {
-      ...this.eventProperties,
-      ...this.utils.setEventProperties(data, amplitudeEvents.ANNOUNCEMENT)
-    };
 
     const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
 

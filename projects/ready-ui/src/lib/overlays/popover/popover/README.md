@@ -56,6 +56,12 @@ None
 
 ## Inputs
 
+- **uiPopoverTpl**
+
+  Type TemplateRef<any>
+
+  Required `false`
+
 - **uiPopoverYOffset**
 
   Type `String | Number`

@@ -20,8 +20,8 @@ let nextUniqueId = 0;
   ]
 })
 export class CPSwitchComponent implements ControlValueAccessor {
-  protected _id: string;
   protected _uid = `cp-switch-${nextUniqueId++}`;
+  protected _id: string;
 
   @Input() isChecked: boolean;
 

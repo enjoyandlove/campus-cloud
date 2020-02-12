@@ -21,7 +21,8 @@ const icons = {
   expand_more: 'expand_more',
   arrow_downward: 'arrow_downward',
   arrow_upward: 'arrow_upward',
-  search: 'search'
+  search: 'search',
+  volume_off: 'volume_off'
 };
 
 storiesOf('Icons', module)

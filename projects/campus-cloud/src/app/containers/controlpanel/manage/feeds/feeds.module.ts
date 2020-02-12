@@ -1,12 +1,14 @@
-import { LazyLoadImagesModule } from 'ngx-lazy-load-images';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { StoreModule } from '@ngrx/store';
 import { NgModule } from '@angular/core';
 
 import { FeedsListComponent } from './list';
+import * as fromWalls from './store/reducers';
 import { FeedsService } from './feeds.service';
 import { FeedsUtilsService } from './feeds.utils.service';
+import { UserService } from '@campus-cloud/shared/services';
 import { FeedsRoutingModule } from './feeds.routing.module';
 import { FeedsComponent } from './list/base/feeds.component';
 import { SharedModule } from '../../../../shared/shared.module';
@@ -59,11 +61,11 @@ import {
     LayoutsModule,
     FeedsRoutingModule,
     ReactiveFormsModule,
-    LazyLoadImagesModule,
-    ImageModule.forRoot()
+    ImageModule.forRoot(),
+    StoreModule.forFeature('WALLS_STATE', fromWalls.reducer)
   ],
 
-  providers: [FeedsService, FeedsUtilsService],
+  providers: [FeedsService, FeedsUtilsService, UserService],
 
   exports: [
     FeedsComponent,

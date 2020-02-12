@@ -11,7 +11,6 @@ import { mockSchool } from '@campus-cloud/session/mock';
 import { CPTestModule } from '@campus-cloud/shared/tests';
 import { AnnouncementsModule } from './../announcements.module';
 import { AnnouncementsService } from './../announcements.service';
-import { NotifyUtilsService } from './../../notify.utils.service';
 import { CPDeleteModalComponent } from '@campus-cloud/shared/components';
 import { AnnouncementDeleteComponent } from './announcements-delete.component';
 import { ModalService, MODAL_DATA, IModal } from '@campus-cloud/shared/services';
@@ -29,7 +28,6 @@ describe('AnnouncementDeleteComponent', () => {
     TestBed.configureTestingModule({
       imports: [CPTestModule, AnnouncementsModule],
       providers: [
-        NotifyUtilsService,
         {
           provide: MODAL_DATA,
           useValue: {

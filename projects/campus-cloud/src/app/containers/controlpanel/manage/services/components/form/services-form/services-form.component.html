@@ -30,9 +30,10 @@
         <div class="col-6">
           <label class="with-tooltip">
             {{ 'select_category' | cpI18n }}
-            <button cpTooltiptype="button"
+            <button ui-tooltip
+                    type="button"
                     class="unstyled-button"
-                    [attr.title]="categoryTooltip">
+                    [title]="categoryTooltip">
               <i class="material-icons">
                 info_outline
               </i>

@@ -19,10 +19,6 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
   @Output() viewMoreModal: EventEmitter<null> = new EventEmitter();
 
   moreText;
-  tooltipContent: string;
-  tooltipOptions: TooltipOption = {
-    html: true
-  };
   maxAllowed = maxAllowed.inList;
   maxToolTipAllowed = maxAllowed.inTooltip;
   recipients: Array<string> = [];
@@ -82,7 +78,6 @@ export class AnnouncementsListRecipientsComponent implements OnInit {
           : '';
 
       this.tooltipRecipients.push(this.moreText);
-      this.tooltipContent = this.tooltipRecipients.join('</br>');
     }
   }
 }

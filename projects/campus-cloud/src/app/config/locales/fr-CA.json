@@ -473,6 +473,9 @@
   "assess_student_id": {
     "message": "ID Étudiant"
   },
+  "assess_student_last_active": {
+    "message": "Dernière Activité"
+  },
   "assess_student_name": {
     "message": "Nom de l'Étudiant"
   },
@@ -2340,6 +2343,9 @@
   "t_api_management_warning_text_2": {
     "message": "Nous suggérons de tester les intégrations d'API dans l'environnement de Test d'abord."
   },
+  "t_app_users": {
+    "message": "Utilisateurs de l'application"
+  },
   "t_assess_all_orientations": {
     "message": "Tous les programmes d'orientation"
   },
@@ -2369,6 +2375,9 @@
   },
   "t_assess_list_event_names": {
     "message": "Liste présence aux événements"
+  },
+  "t_assess_list_orientation_event_names": {
+    "message": "Liste présence aux événements d'orientation"
   },
   "t_assess_list_service_names": {
     "message": "Liste de services visités"
@@ -2408,6 +2417,9 @@
   },
   "t_audience_save_modal_button_submit": {
     "message": "Enregistrer"
+  },
+  "t_campus_app_management": {
+    "message": "Gestion de l'Application du Campus"
   },
   "t_categories_can_not_be_delete": {
     "message": "Les catégories avec des lieux ne peuvent pas être supprimées."
@@ -2507,6 +2519,9 @@
   },
   "t_data_export": {
     "message": "Export De Données"
+  },
+  "t_data_export_app_users": {
+    "message": "Utilisateurs de l'application"
   },
   "t_data_export_csv_posts_comments_count": {
     "message": "# de Commentaires"
@@ -2794,6 +2809,12 @@
   "t_event_check_in_attendee_already_exist": {
     "message": "Cette personne s'est déjà enregistrée."
   },
+  "t_export_data_csv_app_users_last_activity": {
+    "message": "Dernière Activité"
+  },
+  "t_export_data_csv_app_users_registration_date": {
+    "message": "Date d'Enregistrement"
+  },
   "t_external_checkin_already_checked_in": {
     "message": "Cette personne s'est déjà enregistrée."
   },
@@ -2850,6 +2871,9 @@
   },
   "t_integration_sync_button_int_running_tooltip": {
     "message": "Intégration en cours"
+  },
+  "t_is_muted": {
+    "message": "est Désactivé"
   },
   "t_jobs_ongoing": {
     "message": "En cours",
@@ -2945,6 +2969,9 @@
   "t_orientation_everyone": {
     "message": "Membres de l'événement"
   },
+  "t_permission_app_user_management": {
+    "message": "Gestion des Utilisateurs de l'Application"
+  },
   "t_personas": {
     "message": "Expériences d'application"
   },
@@ -3023,6 +3050,9 @@
   "t_personas_form_dropdown_login_required": {
     "message": "Requis"
   },
+  "t_personas_form_heading_todays_schedule": {
+    "message": "Horaire de la journée"
+  },
   "t_personas_form_heading_upcoming_deadlines": {
     "message": "Dates limites à venir"
   },
@@ -3046,6 +3076,9 @@
   },
   "t_personas_form_sub_heading_upcoming_deadlines": {
     "message": "Devoirs et examens à venir"
+  },
+  "t_personas_form_title_home_customization": {
+    "message": "Personnalisation de l'Accueil"
   },
   "t_personas_list_dropdown_all_experiences": {
     "message": "Tout"
@@ -3369,6 +3402,9 @@
   "t_shared_add": {
     "message": "Ajouter"
   },
+  "t_shared_all_experiences_and_audiences": {
+    "message": "All Experiences & Audiences"
+  },
   "t_shared_app": {
     "message": "App"
   },
@@ -3591,6 +3627,12 @@
   "t_shared_status": {
     "message": "Statut"
   },
+  "t_shared_student_mute": {
+    "message": "Désactiver"
+  },
+  "t_shared_student_muted": {
+    "message": "Désactivé"
+  },
   "t_shared_successful": {
     "message": "Réussi"
   },
@@ -3641,6 +3683,12 @@
   },
   "t_students_profile_students": {
     "message": "Élèves"
+  },
+  "t_student_profile_mute_toggle_body": {
+    "message": "Désactiver %s l'empêche de publier, commenter, aimer et signaler sur les murs. Il leur sera uniquement possible de lire."
+  },
+  "t_student_profile_mute_toggle_title": {
+    "message": "Désactiver %s"
   },
   "t_studio": {
     "message": "Studio"
@@ -3704,6 +3752,12 @@
   },
   "t_walls_integration_form_default_image": {
     "message": "Image du mur"
+  },
+  "t_walls_mute_student": {
+    "message": "Désactiver l'utilisateur"
+  },
+  "t_walls_unmute_student": {
+    "message": "Réactiver l'utilisateur"
   },
   "update": {
     "message": "Mettre à jour",

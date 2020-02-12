@@ -7,9 +7,9 @@
             repeatEngagementPercentage
           }}%)
         </p>
-        <p cpTooltip
+        <p ui-tooltip
            class="text-muted with-tooltip"
-           [attr.title]="'assess_repeat_engagement_tooltip' | cpI18n">
+           [title]="'assess_repeat_engagement_tooltip' | cpI18n">
           {{ 'assess_repeat_engagement' | cpI18n }}
           <i class="material-icons">info_outline</i>
         </p>
@@ -38,9 +38,9 @@
           {{ props.one_engagements.length | cpStatsFormatter }}
           ({{ oneEngagementPercentage }}%)
         </p>
-        <p cpTooltip
+        <p ui-tooltip
            class="text-muted with-tooltip"
-           [attr.title]="'assess_one_engagement_tooltip' | cpI18n">
+           [title]="'assess_one_engagement_tooltip' | cpI18n">
           {{ 'assess_one_engagement' | cpI18n }}
           <i class="material-icons">
             info_outline
@@ -71,9 +71,9 @@
           {{ props.zero_engagements.length | cpStatsFormatter }}
           ({{ noEngagementPercentage }}%)
         </p>
-        <p cpTooltip
+        <p ui-tooltip
            class="text-muted with-tooltip"
-           [attr.title]="'assess_no_engagement_tooltip' | cpI18n">
+           [title]="'assess_no_engagement_tooltip' | cpI18n">
           {{ 'assess_no_engagement' | cpI18n }}
           <i class="material-icons">info_outline</i>
         </p>

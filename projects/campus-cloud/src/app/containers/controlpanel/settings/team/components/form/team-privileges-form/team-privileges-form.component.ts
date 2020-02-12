@@ -522,7 +522,6 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
 
       return;
     }
-
     const privilege = this.user.school_level_privileges[this.schoolId][privilegeNo];
 
     this.schoolPrivileges = {
