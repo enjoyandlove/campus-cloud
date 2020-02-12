@@ -3636,6 +3636,12 @@
   "t_shared_preview": {
     "message": "Preview"
   },
+  "t_shared_ready_education": {
+    "message": "Ready Education"
+  },
+  "t_shared_read_only": {
+    "message": "Read Only"
+  },
   "t_shared_revoke": {
     "message": "Revoke"
   },
@@ -3727,7 +3733,7 @@
     "message": "Students"
   },
   "t_student_profile_mute_toggle_body": {
-    "message": "Muting %s prevents them from posting or commenting on walls. They are still able to view and like."
+    "message": "Muting %s prevents them from posting, commenting, liking and flagging on walls. They are still able to view."
   },
   "t_student_profile_mute_toggle_title": {
     "message": "Mute %s"
@@ -3774,6 +3780,42 @@
   "t_team_settings_resend_invite_success": {
     "message": "Invite Resent!"
   },
+  "t_terms_of_use_button_publish": {
+    "message": "Publish"
+  },
+  "t_terms_of_use_disclaimer": {
+    "message": "By signing up, you agree to the Ready Education privacy policy and terms of service."
+  },
+  "t_terms_of_use_menu": {
+    "message": "Terms Of Use"
+  },
+  "t_terms_of_use_paragraph_1": {
+    "message": "Campus Cloud allows you to publish your campus Terms Of Use to inform app users of how the Campus App is intended to be used."
+  },
+  "t_terms_of_use_paragraph_2": {
+    "message": "The Ready Education privacy policy and terms of service are already part of the sign up process as a disclaimer."
+  },
+  "t_terms_of_use_paragraph_3": {
+    "message": "Once you publish your terms for the first time, app users will be prompted to approve them by proceeding to sign in or sign up. The same thing will happen every time you update them. Users who refuse to agree will be kept logged out."
+  },
+  "t_terms_of_use_placeholder": {
+    "message": "Place Your Terms Of Use Here"
+  },
+  "t_terms_of_use_published_successfully": {
+    "message": "Terms Of Use published successfully"
+  },
+  "t_terms_of_use_publish_terms_modal_body": {
+    "message": "The Terms Of Use will be sent out to all Campus App users as a disclaimer part of the sign in and sign up process."
+  },
+  "t_terms_of_use_publish_terms_modal_title": {
+    "message": "Publish Terms?"
+  },
+  "t_terms_of_use_terms_heading": {
+    "message": "Your Campus Terms Of Use"
+  },
+  "t_terms_of_use_title": {
+    "message": "Campus App Terms Of Use"
+  },
   "t_tile_button_default": {
     "message": "Default"
   },
@@ -3796,10 +3838,10 @@
     "message": "Wall Image"
   },
   "t_walls_mute_student": {
-    "message": "Mute Student"
+    "message": "Mute User"
   },
   "t_walls_unmute_student": {
-    "message": "Unmute Student"
+    "message": "Unmute User"
   },
   "update": {
     "message": "Update",

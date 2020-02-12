@@ -2872,6 +2872,9 @@
   "t_integration_sync_button_int_running_tooltip": {
     "message": "Intégration en cours"
   },
+  "t_is_muted": {
+    "message": "est Désactivé"
+  },
   "t_jobs_ongoing": {
     "message": "En cours",
     "description": "Indicates that a job posting has no end date"
@@ -3624,6 +3627,12 @@
   "t_shared_status": {
     "message": "Statut"
   },
+  "t_shared_student_mute": {
+    "message": "Désactiver"
+  },
+  "t_shared_student_muted": {
+    "message": "Désactivé"
+  },
   "t_shared_successful": {
     "message": "Réussi"
   },
@@ -3674,6 +3683,12 @@
   },
   "t_students_profile_students": {
     "message": "Élèves"
+  },
+  "t_student_profile_mute_toggle_body": {
+    "message": "Désactiver %s l'empêche de publier, commenter, aimer et signaler sur les murs. Il leur sera uniquement possible de lire."
+  },
+  "t_student_profile_mute_toggle_title": {
+    "message": "Désactiver %s"
   },
   "t_studio": {
     "message": "Studio"
@@ -3737,6 +3752,12 @@
   },
   "t_walls_integration_form_default_image": {
     "message": "Image du mur"
+  },
+  "t_walls_mute_student": {
+    "message": "Désactiver l'utilisateur"
+  },
+  "t_walls_unmute_student": {
+    "message": "Réactiver l'utilisateur"
   },
   "update": {
     "message": "Mettre à jour",
