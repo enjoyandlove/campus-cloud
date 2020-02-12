@@ -460,7 +460,7 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     this.fetchBannedEmails();
   }
 
-  private fetchBannedEmails() {
+  fetchBannedEmails() {
     const params = new HttpParams().set('school_id', this.session.school.id.toString());
     this.userService
       .getAll(params, 1, 10000)

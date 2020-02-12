@@ -32,6 +32,7 @@ export class FeedsListComponent extends FeedsComponent implements OnInit {
   }
 
   ngOnInit() {
+    super.fetchBannedEmails();
     this.headerService.updateHeader();
     this.groupType = GroupType.campus;
   }
