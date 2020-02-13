@@ -2982,7 +2982,7 @@
     "message": "Event Members"
   },
   "t_permission_app_user_management": {
-    "message": "App User Management"
+    "message": "Mute Users"
   },
   "t_personas": {
     "message": "App Experiences"
@@ -3822,6 +3822,9 @@
   "t_tile_button_locked": {
     "message": "Locked"
   },
+  "t_walls_hide_post": {
+    "message": "Hide Post"
+  },
   "t_walls_integrations_error_could_not_create_channel": {
     "message": "Error while creating channel"
   },
@@ -3839,6 +3842,9 @@
   },
   "t_walls_mute_student": {
     "message": "Mute User"
+  },
+  "t_walls_show_post": {
+    "message": "Show Post"
   },
   "t_walls_unmute_student": {
     "message": "Unmute User"
