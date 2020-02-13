@@ -1,6 +1,7 @@
+import { map, catchError } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 import { ApiService } from '@campus-cloud/base/services';
 import { PersonaPermission } from './../engagement/engagement.status';
@@ -52,7 +53,8 @@ export class StudentsService {
             label: PersonasUtilsService.getLocalizedLabel(p.localized_name_map)
           };
         })
-      )
+      ),
+      catchError((_) => of([]))
     );
   }
 
