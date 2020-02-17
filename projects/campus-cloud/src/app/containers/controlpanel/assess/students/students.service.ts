@@ -16,7 +16,7 @@ export class StudentsService {
     const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.USER_LIST}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search, true).pipe(catchError(() => of([])));
   }
 
   postAnnouncements(search: HttpParams, body: any) {
@@ -44,7 +44,7 @@ export class StudentsService {
   getExperiences(search: HttpParams, startRange: number, endRange: number) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PERSONAS}/${startRange};${endRange}`;
 
-    return this.api.get(url, search).pipe(
+    return this.api.get(url, search, true).pipe(
       map((res: any) => res.filter((p) => p.login_requirement !== PersonaPermission.forbidden)),
       map((personas: IPersona[]) =>
         personas.map((p) => {
