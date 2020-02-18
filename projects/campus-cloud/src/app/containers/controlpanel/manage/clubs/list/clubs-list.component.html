@@ -1,7 +1,8 @@
 <div class="row">
   <div class="col-12">
     <cp-clubs-list-action-box [isAthletic]="isAthletic"
-                              (filter)="doFilter($event)">
+                              (filter)="doFilter($event)"
+                              (search)="doSearch($event)">
     </cp-clubs-list-action-box>
   </div>
 </div>

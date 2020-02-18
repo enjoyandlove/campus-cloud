@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CPSession } from './../../../../../../../session';
-import { CP_PRIVILEGES_MAP } from './../../../../../../../shared/constants';
-import { CPI18nService } from './../../../../../../../shared/services/i18n.service';
-import { amplitudeEvents } from '../../../../../../../shared/constants/analytics';
-import { CP_TRACK_TO } from '../../../../../../../shared/directives/tracking';
-import { CPTrackingService } from '../../../../../../../shared/services';
-import { canSchoolWriteResource } from '../../../../../../../shared/utils/privileges';
+
+import { CPSession } from '@campus-cloud/session';
 import { ClubStatus } from '../../../club.status';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { canSchoolWriteResource } from '@campus-cloud/shared/utils/privileges';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { CP_PRIVILEGES_MAP, amplitudeEvents } from '@campus-cloud/shared/constants';
 import { clubAthleticLabels, isClubAthletic } from '../../../clubs.athletics.labels';
 
 interface IState {
@@ -27,7 +26,9 @@ const state: IState = {
 })
 export class ClubsListActionBoxComponent implements OnInit {
   @Input() isAthletic = isClubAthletic.club;
+
   @Output() filter: EventEmitter<IState> = new EventEmitter();
+  @Output() search: EventEmitter<IState> = new EventEmitter();
 
   labels;
   eventData;
@@ -46,7 +47,8 @@ export class ClubsListActionBoxComponent implements OnInit {
 
   onUpdateState(data, key: string): void {
     this.state = Object.assign({}, this.state, { [key]: data });
-    this.filter.emit(this.state);
+
+    key === 'type' ? this.filter.emit(this.state) : this.search.emit(this.state);
   }
 
   updateStateFromUrl() {
