@@ -4,19 +4,19 @@ import { OverlayRef } from '@angular/cdk/overlay';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '@campus-cloud/session';
 import { IClub } from '../club.interface';
-import { baseActions } from '@campus-cloud/store/base';
 import { ClubsService } from '../clubs.service';
 import { ClubsDeleteComponent } from '../delete';
+import { CPSession } from '@campus-cloud/session';
+import { baseActions } from '@campus-cloud/store/base';
+import { ClubsUtilsService } from '../clubs.utils.service';
+import { ManageHeaderService } from './../../utils/header';
+import { ClubSocialGroup, ClubStatus } from '../club.status';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { BaseComponent } from '@campus-cloud/base/base.component';
-import { ManageHeaderService } from './../../utils/header';
-import { ClubsUtilsService } from '../clubs.utils.service';
-import { ClubSocialGroup, ClubStatus } from '../club.status';
-import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { clubAthleticLabels, isClubAthletic } from '../clubs.athletics.labels';
+import { environment } from '@projects/campus-cloud/src/environments/environment';
 import { CPI18nService, CPTrackingService, ModalService } from '@campus-cloud/shared/services';
 
 interface IState {
@@ -174,15 +174,21 @@ export class ClubsListComponent extends BaseComponent implements OnInit {
       }
     });
 
-    this.state = Object.assign({}, this.state, {
-      query: filter.query,
+    this.state = {
+      ...this.state,
       type: filter.type
-    });
+    };
 
-    if (filter.query) {
-      this.resetPagination();
-    }
+    this.fetch();
+  }
 
+  doSearch(search) {
+    this.state = {
+      ...this.state,
+      query: search.query
+    };
+
+    this.resetPagination();
     this.fetch();
   }
 
