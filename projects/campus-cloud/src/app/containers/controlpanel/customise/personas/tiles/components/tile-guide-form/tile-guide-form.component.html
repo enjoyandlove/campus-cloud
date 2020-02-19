@@ -13,10 +13,11 @@
     <div class="col-6">
       <label>{{ 't_shared_color' | cpI18n }}</label>
       <input type="text"
-             cpColorPicker
+             [events]="['save']"
              class="form-control"
-             (changed)="onColorChange($event)"
-             [defaultColor]="form.controls['color'].value" />
+             ready-ui-color-picker
+             (pickr)="onPickerEvents($event)"
+             [default]="form.controls['color'].value" />
       <input #hexInput
              class="hex"
              type="text"
