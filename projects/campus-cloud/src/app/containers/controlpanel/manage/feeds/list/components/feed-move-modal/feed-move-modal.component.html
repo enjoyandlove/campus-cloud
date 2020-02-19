@@ -20,7 +20,7 @@
       <div class="col-12 text-center">
         <p>
           {{ 'feeds_move_post_from' | cpI18n }}
-          <strong>{{ currentChannel }}</strong>
+          <strong>{{ currentChannel$ | async }}</strong>
           {{ 'to' | cpI18n }}
         </p>
         <br />

@@ -33,6 +33,7 @@ export class FeedHeaderComponent implements OnInit {
   muted$: Observable<boolean>;
   activeUser = UserStatus.active;
   deletedUser = UserStatus.deleted;
+  postCategoryName$: Observable<string>;
 
   constructor(public cpI18n: CPI18nService, private store: Store<fromStore.IWallsState>) {}
 
@@ -43,10 +44,14 @@ export class FeedHeaderComponent implements OnInit {
       label: item.channelName,
       action: item.post_type
     });
+    this.store.dispatch(fromStore.setPostType({ postType: item.post_type }));
     this.filterByCategory.emit(this.state);
   }
 
   ngOnInit() {
+    this.postCategoryName$ = this.store.pipe(
+      select(fromStore.getSocialPostCategoryNameByPostType(this.feed.post_type))
+    );
     const feedEmail = _get(this.feed, 'email', '');
     this.muted$ = this.store
       .pipe(select(fromStore.getBannedEmails))

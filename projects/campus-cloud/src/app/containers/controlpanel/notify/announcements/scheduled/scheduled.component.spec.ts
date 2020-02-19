@@ -66,7 +66,7 @@ describe('AnnouncementScheduledComponent', () => {
   });
 
   describe('doFilter', () => {
-    it('should udpate state with priority and query', () => {
+    it('should update state with priority and query', () => {
       component.state = {
         ...component.state,
         priority: AnnouncementPriority.regular,

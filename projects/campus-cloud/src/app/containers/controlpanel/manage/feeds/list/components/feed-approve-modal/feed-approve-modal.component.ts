@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+
+import * as fromStore from '../../../store';
 
 import { FeedsService } from '../../../feeds.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
@@ -44,7 +47,8 @@ export class FeedApproveModalComponent implements OnInit, OnDestroy {
     private cpI18n: CPI18nService,
     private utils: FeedsUtilsService,
     public feedsService: FeedsService,
-    private cpTracking: CPTrackingService
+    private cpTracking: CPTrackingService,
+    private store: Store<fromStore.IWallsState>
   ) {}
 
   onSubmit() {
@@ -56,11 +60,12 @@ export class FeedApproveModalComponent implements OnInit, OnDestroy {
 
     const stream$ = this._isCampusWallView ? approveCampusWallThread$ : approveGroupWallThread$;
 
-    stream$.subscribe((_) => {
+    stream$.subscribe((approvedThread) => {
       this.trackAmplitudeEvent(this.feed);
       $('#approveFeedModal').modal('hide');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: true });
-      this.approved.emit(this.feed.id);
+      this.store.dispatch(fromStore.updateThread({ thread: approvedThread }));
+      this.approved.emit(this.feed);
       this.teardown.emit();
     });
   }

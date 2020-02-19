@@ -7,8 +7,8 @@
 ---
 
 ```html
-<ready-ui-icon [name]="name" [size]="size" [color]="color"></ready-ui-icon>
 ```
+<ready-ui-icon [name]="name" [size]="size" [color]="color"></ready-ui-icon>
 
 ---
 
@@ -76,5 +76,7 @@ None
 `search`
 `warning`
 `done`
-`volume_off`        
+`volume_off`
+`chevron_right`
+`expand_less`
 

@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+
+import * as fromStore from '../../../store';
 
 import { FeedsService } from '../../../feeds.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
@@ -44,7 +47,8 @@ export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
     private cpI18n: CPI18nService,
     private utils: FeedsUtilsService,
     public feedsService: FeedsService,
-    private cpTracking: CPTrackingService
+    private cpTracking: CPTrackingService,
+    private store: Store<fromStore.IWallsState>
   ) {}
 
   onDelete() {
@@ -57,6 +61,7 @@ export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
       $('#deleteFeedCommentModal').modal('hide');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.deleted.emit(this.feed.id);
+      this.store.dispatch(fromStore.removeComment({ commentId: this.feed.id }));
       this.teardown.emit();
     });
   }

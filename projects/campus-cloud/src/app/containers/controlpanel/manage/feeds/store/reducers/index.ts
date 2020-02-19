@@ -1,36 +1,10 @@
-import { createReducer, on } from '@ngrx/store';
-import * as WallsActions from '../actions';
+import { IWallsFeedsState } from './feeds.reducer';
+import { IWallsBannedEmailsState, bannedEmailsReducer } from './banned-emails.reducer';
 
 export interface IWallsState {
-  bannedEmails: string[];
+  feeds: IWallsFeedsState;
+  bannedEmails: IWallsBannedEmailsState;
 }
 
-export const initialState: IWallsState = {
-  bannedEmails: []
-};
-
-const counterReducer = createReducer(
-  initialState,
-  on(WallsActions.banEmail, (state: IWallsState, { email }) => {
-    return {
-      ...state,
-      bannedEmails: Array.from(new Set([...state.bannedEmails, email]))
-    };
-  }),
-  on(WallsActions.unBanEmail, (state: IWallsState, { email }) => {
-    return {
-      ...state,
-      bannedEmails: state.bannedEmails.filter((e) => e !== email)
-    };
-  }),
-  on(WallsActions.setBannedEmails, (state: IWallsState, { emails }) => {
-    return {
-      ...state,
-      bannedEmails: emails
-    };
-  })
-);
-
-export function reducer(state, action) {
-  return counterReducer(state, action);
-}
+export { feedsReducer } from './feeds.reducer';
+export { bannedEmailsReducer } from './banned-emails.reducer';

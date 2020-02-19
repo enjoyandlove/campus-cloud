@@ -67,12 +67,12 @@ describe('FeedMoveComponent', () => {
 
   it('should move feed onSubmit', () => {
     spyOn(component, 'trackAmplitudeEvent');
-    spyOn(component.feedsService, 'moveCampusWallThreadToChannel').and.returnValue(of({}));
+    spyOn(component.feedsService, 'moveCampusWallThreadToChannel').and.returnValue(of(mockFeed));
 
     component.onSubmit();
 
     expect(component.moved.emit).toHaveBeenCalled();
     expect(component.trackAmplitudeEvent).toHaveBeenCalled();
-    expect(component.moved.emit).toHaveBeenCalledWith(mockFeed.id);
+    expect(component.moved.emit).toHaveBeenCalledWith(mockFeed);
   });
 });
