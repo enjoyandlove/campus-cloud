@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 
 import * as fromStore from '../store';
-
 import { FeedsComponent } from './base';
 import { FeedsService } from '../feeds.service';
 import { CPSession } from '@campus-cloud/session';
@@ -32,7 +31,7 @@ export class FeedsListComponent extends FeedsComponent implements OnInit {
   }
 
   ngOnInit() {
-    super.fetchBannedEmails();
+    super.ngOnInit();
     this.headerService.updateHeader();
     this.groupType = GroupType.campus;
   }

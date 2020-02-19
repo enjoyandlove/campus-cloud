@@ -22,7 +22,9 @@ const icons = {
   arrow_downward: 'arrow_downward',
   arrow_upward: 'arrow_upward',
   search: 'search',
-  volume_off: 'volume_off'
+  volume_off: 'volume_off',
+  chevron_right: 'chevron_right',
+  expand_less: 'expand_less'
 };
 
 storiesOf('Icons', module)

@@ -6,6 +6,7 @@
   ready-ui-avatar {
     margin-right: 0.5em;
   }
+
   .feed__meta {
     display: flex;
     align-items: flex-start;
@@ -14,8 +15,6 @@
 
   .name {
     @include font-semi-bold();
-
-    margin-left: 0.25em;
   }
 
   em {

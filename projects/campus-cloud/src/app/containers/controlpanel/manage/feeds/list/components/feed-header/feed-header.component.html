@@ -1,30 +1,31 @@
 <div class="feed__meta">
-    <ready-ui-avatar [src]="feed.avatar_thumb"
-                     [alt]="feed.display_name"></ready-ui-avatar>
-    <div class="feed__details">
-        <header>
-            <ready-ui-icon
-                    size="small"
-                    color="212121"
-                    name="volume_off"
-                    *ngIf="muted$ | async"
-                    aria-label="Student is Muted"></ready-ui-icon>
-            <span class="name"
-                  [innerHTML]="feed.display_name | cpUrlify"></span>
-            <span class="email"
-                  *ngIf="feed.email && feed.email !== ''"> {{ emailTextContent }}</span>
-            <ng-container *ngIf="!isComment && feed.channelName">
-              <span class="text-muted">
-                {{ 'feeds_posted_in' | cpI18n }}
-              </span>
-                <span class="cpbtn cpbtn--link"
-                      (click)="loadCategory(feed)">{{ feed.channelName }}</span>
-            </ng-container>
-        </header>
-        <footer>
-            <span class="text-muted">
-                {{ feed.added_time | cpDatePipe: FORMAT }}
-            </span>
-        </footer>
-    </div>
+  <ready-ui-avatar [src]="feed.avatar_thumb"
+                   [alt]="feed.display_name"></ready-ui-avatar>
+  <div class="feed__details">
+    <header>
+      <ready-ui-icon size="small"
+                     color="212121"
+                     name="volume_off"
+                     *ngIf="muted$ | async"
+                     aria-label="Student is Muted"></ready-ui-icon>
+      <span class="name"
+            [innerHTML]="feed.display_name | cpUrlify"></span>
+      <span class="email"
+            *ngIf="feed.email && feed.email !== ''">
+        {{ emailTextContent }}</span>
+      <ng-container *ngIf="!isComment && postCategoryName$ | async">
+        <span class="text-muted">
+          {{ 'feeds_posted_in' | cpI18n }}
+        </span>
+        <span class="cpbtn cpbtn--link"
+              (click)="loadCategory(feed)">
+          {{ postCategoryName$ | async }}</span>
+      </ng-container>
+    </header>
+    <footer>
+      <span class="text-muted">
+        {{ feed.added_time | cpDatePipe: FORMAT }}
+      </span>
+    </footer>
+  </div>
 </div>

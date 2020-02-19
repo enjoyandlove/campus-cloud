@@ -9,8 +9,11 @@ import {
   EventEmitter,
   ViewEncapsulation
 } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { Observable, Subject, combineLatest } from 'rxjs';
+import { takeUntil, map } from 'rxjs/operators';
+import { Store, select } from '@ngrx/store';
+
+import * as fromStore from '../../../store';
 
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
@@ -30,7 +33,7 @@ import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services'
 })
 export class FeedBodyComponent implements OnInit, OnDestroy {
   @Input() feed: any;
-  @Input() replyView: number;
+  @Input() replyView = false;
   @Input() isComment: boolean;
   @Input() wallCategory: string;
   @Input() groupType: GroupType;
@@ -41,6 +44,9 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
   @Output() toggleReplies: EventEmitter<boolean> = new EventEmitter();
 
   @ViewChild(CPHostDirective, { static: true }) cpHost: CPHostDirective;
+
+  commentCount$: Observable<number>;
+  isCommentsOpen$: Observable<boolean>;
 
   eventProperties = {
     post_id: null,
@@ -61,8 +67,13 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
   constructor(
     public cpI18n: CPI18nService,
     public utils: FeedsUtilsService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    private store: Store<fromStore.IWallsState>
   ) {}
+
+  onToggleComments() {
+    this.store.dispatch(fromStore.expandComments({ threadId: this.feed.id }));
+  }
 
   trackEvent(isCommentsOpen) {
     if (isCommentsOpen) {
@@ -117,6 +128,23 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const results$ = this.store.pipe(select(fromStore.getResults));
+
+    this.commentCount$ = combineLatest([results$]).pipe(
+      map(([results]) => {
+        const { comment_count, id } = this.feed;
+        const matchedPost = results.find((r) => r.type === 'THREAD' && r.id === id);
+
+        return matchedPost && matchedPost.children
+          ? comment_count - matchedPost.children.length
+          : comment_count;
+      })
+    );
+
+    this.isCommentsOpen$ = this.store
+      .pipe(select(fromStore.getExpandedThreadIds))
+      .pipe(map((expandedThreadIds) => expandedThreadIds.includes(this.feed.id)));
+
     this.trackViewLightBoxEvent();
 
     this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res: any) => {

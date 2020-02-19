@@ -16,27 +16,35 @@
                            [isCampusWallView]="isCampusWallView$"
                            [disablePost]="
           state.currentView ? state.currentView.postingMemberType === disablePost : false
-        "
-                           (created)="onCreated($event)">
+        ">
         </cp-feed-input-box>
 
         <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
         <ng-container *ngSwitchCase="false">
-          <cp-feed-item *ngFor="let feed of state.feeds"
-                        [feed]="feed"
-                        [groupId]="groupId"
-                        [query]="state.query"
-                        [groupType]="groupType"
-                        [isCampusWallView]="isCampusWallView$"
-                        [isFilteredByRemovedPosts]="isFilteredByRemovedPosts$"
-                        (moved)="fetch()"
-                        (deleted)="onDeleted($event)"
-                        (filterByCategory)="onFilterByCategory($event)">
-          </cp-feed-item>
+          <ng-container *ngFor="let feed of results$ | async">
+            <cp-feed-item [feed]="feed"
+                          [groupId]="groupId"
+                          [groupType]="groupType"
+                          [isCampusWallView]="isCampusWallView$"
+                          (filterByCategory)="onFilterByCategory($event)"
+                          *ngIf="!feed.campus_thread_id && !feed.group_thread_id"
+                          [isFilteredByRemovedPosts]="isFilteredByRemovedPosts$">
+            </cp-feed-item>
+            <cp-feed-comment [last]="last"
+                             [comment]="feed"
+                             [replyView]="[true]"
+                             showParentThread="true"
+                             [groupType]="groupType"
+                             [isCampusWallView]="isCampusWallView$"
+                             *ngIf="!!feed.campus_thread_id || !!feed.group_thread_id">
+            </cp-feed-comment>
+          </ng-container>
+
+
 
           <cp-no-content class="no-content"
-                         *ngIf="!state.feeds.length"
+                         *ngIf="!(results$ | async).length"
                          noContentText="No Posts found...">
           </cp-no-content>
 

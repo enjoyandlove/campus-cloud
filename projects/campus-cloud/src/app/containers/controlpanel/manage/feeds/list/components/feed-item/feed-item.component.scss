@@ -4,7 +4,6 @@
 
 :host {
   display: block;
-  @include card-margin();
 }
 
 .feed {
@@ -36,5 +35,10 @@
     background: $color-text-alt;
     padding-top: $default_padding;
     border-top: 1px solid $color-med-grey;
+
+    &--embedded {
+      margin-left: -$default_padding;
+      margin-right: -$default_padding;
+    }
   }
 }
