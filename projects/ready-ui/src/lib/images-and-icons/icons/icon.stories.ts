@@ -25,6 +25,7 @@ const icons = {
   volume_off: 'volume_off',
   chevron_right: 'chevron_right',
   expand_less: 'expand_less'
+  help_outline: 'help_outline'
 };
 
 storiesOf('Icons', module)
