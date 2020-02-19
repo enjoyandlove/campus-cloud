@@ -79,4 +79,5 @@ None
 `volume_off`
 `chevron_right`
 `expand_less`
+`help_outline`
 
