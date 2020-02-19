@@ -1,12 +1,12 @@
+import { ColorPickerModule } from '@ready-education/ready-ui/forms';
 import { storiesOf, moduleMetadata } from '@storybook/angular';
 import { centered } from '@storybook/addon-centered/angular';
-import { ReadyUiModule } from '@ready-education/ready-ui';
 import { boolean } from '@storybook/addon-knobs';
 
 storiesOf('Color Picker', module)
   .addDecorator(
     moduleMetadata({
-      imports: [ReadyUiModule]
+      imports: [ColorPickerModule]
     })
   )
   .addDecorator(centered)

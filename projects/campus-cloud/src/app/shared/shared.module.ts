@@ -15,7 +15,6 @@ import {
   TextEditorDirective,
   CPDatePickerDirective,
   CPImageRatioDirective,
-  CPColorPickerDirective,
   CPImageCropperDirective,
   CPCopyClipboardDirective
 } from './directives';
@@ -139,7 +138,6 @@ import {
     CPDatePickerDirective,
     CPHeaderLinkComponent,
     CPUploadModalComponent,
-    CPColorPickerDirective,
     CPDeleteModalComponent,
     CPImageUploadComponent,
     CPRangePickerComponent,
@@ -238,7 +236,6 @@ import {
     CPImageUploadComponent,
     CPUploadModalComponent,
     CPCharCounterComponent,
-    CPColorPickerDirective,
     CPRangePickerComponent,
     CPUploadButtonComponent,
     CPImageCropperComponent,
