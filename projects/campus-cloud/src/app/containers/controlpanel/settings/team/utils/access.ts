@@ -51,6 +51,10 @@ function getMenu(privileges = {}) {
       dining: {
         active: false,
         deps: []
+      },
+      appUserManagement: {
+        active: false,
+        deps: []
       }
     },
     notify: {
@@ -117,6 +121,9 @@ function getMenu(privileges = {}) {
     }
     if (+p === CP_PRIVILEGES_MAP.dining) {
       form.content.dining.active = true;
+    }
+    if (+p === CP_PRIVILEGES_MAP.app_user_management) {
+      form.content.appUserManagement.active = true;
     }
   });
 

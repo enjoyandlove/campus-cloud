@@ -2,14 +2,17 @@ import { BehaviorSubject, combineLatest, of } from 'rxjs';
 import { Component, Input, OnInit } from '@angular/core';
 import { map, switchMap, filter } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
+
+import * as fromStore from '../../store';
 
 import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../../feeds.service';
+import { GroupType } from '../../feeds.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { CPTrackingService } from '@campus-cloud/shared/services';
 import { BaseComponent } from '@campus-cloud/base/base.component';
 import { FeedsAmplitudeService } from './../../feeds.amplitude.service';
-import { GroupType, FeedsUtilsService } from '../../feeds.utils.service';
+import { CPTrackingService, UserService } from '@campus-cloud/shared/services';
 import { SocialWallContentObjectType, SocialWallContent } from './../../model';
 
 interface ICurrentView {
@@ -71,7 +74,9 @@ export class FeedsComponent extends BaseComponent implements OnInit {
   constructor(
     public session: CPSession,
     public service: FeedsService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    public store: Store<fromStore.IWallsState>,
+    public userService: UserService
   ) {
     super();
     super.isLoading().subscribe((res) => (this.loading = res));
@@ -451,5 +456,20 @@ export class FeedsComponent extends BaseComponent implements OnInit {
     this.state = Object.assign({}, this.state, { feeds: _state.feeds });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.fetchBannedEmails();
+  }
+
+  fetchBannedEmails() {
+    const params = new HttpParams().set('school_id', this.session.school.id.toString());
+    this.userService
+      .getAll(params, 1, 10000)
+      .pipe(
+        map((students: any[]) => students.filter((s) => s.social_restriction).map((s) => s.email))
+      )
+      .subscribe(
+        (emails) => this.store.dispatch(fromStore.setBannedEmails({ emails })),
+        () => this.store.dispatch(fromStore.setBannedEmails({ emails: [] }))
+      );
+  }
 }

@@ -49,25 +49,24 @@
       </span>
       <span class="col-2 action-icons text-right">
         <span *ngIf="!category.is_default">
-          <button cpTarget="edit"
+          <button ui-button
                   type="button"
+                  cpTarget="edit"
+                  variant="inline"
                   class="unstyled-button action-button"
                   (click)="editClick.emit(category)">
             <i class="material-icons margin-right">edit</i>
           </button>
-          <button type="button"
+          <button ui-button
+                  ui-tooltip
+                  type="button"
+                  variant="inline"
                   cpTarget="delete"
-                  class="unstyled-button action-button"
-                  *ngIf="!category.locations_count"
-                  (click)="deleteClick.emit(category)">
-            &times;
-          </button>
-          <button type="button"
-                  cpTarget="delete"
-                  [cpTooltip]="tooltipOptions"
-                  *ngIf="category.locations_count"
-                  class="unstyled-button action-button disabled"
-                  [attr.title]="'t_categories_can_not_be_delete' | cpI18n">
+                  placement="left"
+                  class="action-button"
+                  (click)="deleteClick.emit(category)"
+                  [attr.disabled]="category.locations_count > 0 ? true : null"
+                  [title]="category.locations_count > 0 ? ('t_categories_can_not_be_delete' | cpI18n) : ''">
             &times;
           </button>
 

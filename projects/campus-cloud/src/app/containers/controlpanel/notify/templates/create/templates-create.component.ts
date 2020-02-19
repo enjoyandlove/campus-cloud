@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, HostListener, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { HttpParams } from '@angular/common/http';
-import { TooltipOption } from 'bootstrap';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
@@ -30,8 +29,7 @@ import {
 export class TemplatesCreateComponent extends TemplatesComposeComponent
   implements OnInit, OnDestroy {
   form: FormGroup;
-  toolTipContent: string;
-  toolTipOptions: TooltipOption;
+  tooltipLink = `${ZendeskService.zdRoot()}/articles/115004330554-Create-a-List-of-Students`;
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -132,7 +130,7 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
     this.childService.createTemplate(search, data).subscribe(
       (res: any) => {
         this.cpTracking.amplitudeEmitEvent(amplitudeEvents.NOTIFY_CREATED_COMMUNICATION, {
-          ...TemplatesAmplitudeService.getAmplitudeProperties(data as any)
+          ...TemplatesAmplitudeService.getAmplitudeProperties(res as any)
         });
 
         this.form.reset();
@@ -169,20 +167,6 @@ export class TemplatesCreateComponent extends TemplatesComposeComponent
 
   ngOnInit() {
     const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
-
-    this.toolTipOptions = {
-      html: true,
-      trigger: 'click'
-    };
-
-    this.toolTipContent = `
-      <span class="d-block text-left">
-        ${this.cpI18n.translate('notify_announcement_template_to_tooltip')}
-      </span>
-      <a class="text-left d-block" href='${ZendeskService.zdRoot()}/articles/115004330554-Create-a-List-of-Students}'>
-        ${this.cpI18n.translate('lists_button_create')}
-      </a>
-    `;
 
     let canDoEmergency;
 

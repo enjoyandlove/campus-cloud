@@ -1,4 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy, Input, forwardRef } from '@angular/core';
+import {
+  OnInit,
+  Input,
+  Output,
+  Component,
+  forwardRef,
+  EventEmitter,
+  ChangeDetectionStrategy
+} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
@@ -39,6 +47,9 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
     this._checked = coerceBooleanProperty(checked);
   }
 
+  @Output()
+  changed: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   constructor() {}
 
   ngOnInit() {}
@@ -50,6 +61,7 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
   writeValue(val: boolean) {
     this._value = val;
     this.onChange(val);
+    this.changed.emit(val);
   }
 
   registerOnChange(fn: (val: boolean) => void): void {

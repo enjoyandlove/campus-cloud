@@ -44,11 +44,11 @@
             </span>
 
             <span class="col-1 text-right actions">
-              <img cpTooltip
+              <img ui-tooltip
                    alt=""
                    aria-hidden="true"
                    *ngIf="message.is_external"
-                   [attr.title]="isExternalToolTip"
+                   [title]="isExternalToolTip"
                    [src]="message.source | integrationSourceToIcon" />
               <button type="button"
                       aria-label="close"

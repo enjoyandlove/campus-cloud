@@ -1,23 +1,32 @@
-<div *ngIf="options.length === 1">
+<ng-container *ngIf="options.length === 1">
   <button type="button"
           class="cpbtn cpbtn--link-dark"
           (click)="selected.emit(3)">
-    <i class="material-icons">close</i>
+    <ready-ui-icon name="close"></ready-ui-icon>
   </button>
-</div>
+</ng-container>
 
-<div class="cp-dropdown"
-     *ngIf="options.length > 1">
-  <button type="button"
-          data-toggle="dropdown"
-          class="cpbtn cpbtn--link-dark">
-    <i class="material-icons">keyboard_arrow_down</i>
-  </button>
-  <ul class="dropdown-menu dropdown-menu-right">
-    <li class="list-as-anchor"
-        *ngFor="let option of options"
-        (click)="selected.emit(option.action)">
-      {{ option.label }}
+<button ui-button
+        type="button"
+        variant="inline"
+        position="right"
+        readyUiPopoverTrigger
+        *ngIf="options.length > 1"
+        [uiPopoverTpl]="dropdownTpl">
+  <ready-ui-icon name="expand_more"
+                 aria-label="Close"></ready-ui-icon>
+</button>
+
+<ng-template #dropdownTpl
+             let-popover="popover">
+  <ul>
+    <li *ngFor="let option of options"
+        (click)="onOptionClicked(option.action); popover.close()">
+      <button ui-button
+              type="button"
+              variant="inline">
+        {{ option.label }}
+      </button>
     </li>
   </ul>
-</div>
+</ng-template>

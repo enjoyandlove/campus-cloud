@@ -3,6 +3,7 @@ export * from './image';
 export * from './logger';
 export * from './charts';
 export * from './maps.service';
+export * from './user.service';
 export * from './i18n.service';
 export * from './error.service';
 export * from './store.service';

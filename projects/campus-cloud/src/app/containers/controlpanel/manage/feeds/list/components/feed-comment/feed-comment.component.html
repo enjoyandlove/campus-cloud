@@ -7,7 +7,8 @@
             <cp-feed-header [feed]="comment"
                             [isComment]="isComment"> </cp-feed-header>
             <div class="comment__more">
-              <cp-feed-dropdown [isComment]="isComment"
+              <cp-feed-dropdown [feed]="comment"
+                                [isComment]="isComment"
                                 (selected)="onSelected($event)"
                                 [isCampusWallView]="isCampusWallView"
                                 [requiresApproval]="requiresApproval$">

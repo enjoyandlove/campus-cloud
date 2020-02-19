@@ -68,13 +68,13 @@
       </span>
 
       <span class="col-2 text-right actions">
-        <img cpTooltip
+        <img ui-tooltip
              alt=""
              tabindex="-1"
              aria-hidden="true"
              class="js_event_external"
              *ngIf="event.is_external"
-             [attr.title]="isExternalToolTip"
+             [title]="isExternalToolTip"
              [src]="event.source | integrationSourceToIcon" />
         <button type="button"
                 aria-label="delete"

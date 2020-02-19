@@ -10,7 +10,7 @@
       "hasParams": true
     },
     {
-      "label": "students",
+      "label": "t_app_users",
       "amplitude": "Students",
       "url": "/assess/students"
     },

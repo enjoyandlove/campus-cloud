@@ -36,11 +36,7 @@ describe('ServicesProviderUpdateComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [CPTestModule, ServicesModule, RouterTestingModule],
-      providers: [
-        provideMockStore(),
-        ServicesUtilsService,
-        { provide: ProvidersService, useClass: MockService }
-      ]
+      providers: [ServicesUtilsService, { provide: ProvidersService, useClass: MockService }]
     })
       .compileComponents()
       .then(() => {

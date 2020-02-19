@@ -27,7 +27,6 @@ storiesOf('Select', module)
         store_id: [{ value: 2, disabled: disabled }, Validators.required]
       });
 
-      form.valueChanges.subscribe(() => console.log(form.value));
       return {
         props: {
           form,
@@ -57,7 +56,6 @@ storiesOf('Select', module)
       store_id: ['', Validators.required]
     });
 
-    form.valueChanges.subscribe(() => console.log(form.value));
     const newOptions = [{ label: 'Pick One', value: '', disabled: false }, ...options];
 
     return {
@@ -83,8 +81,6 @@ storiesOf('Select', module)
     const form = new FormBuilder().group({
       store_id: ['', Validators.required]
     });
-
-    form.valueChanges.subscribe(() => console.log(form.value));
 
     return {
       props: {

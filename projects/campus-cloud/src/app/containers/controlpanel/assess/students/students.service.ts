@@ -1,6 +1,7 @@
+import { map, catchError } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 import { ApiService } from '@campus-cloud/base/services';
 import { PersonaPermission } from './../engagement/engagement.status';
@@ -15,7 +16,7 @@ export class StudentsService {
     const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.USER_LIST}`;
     const url = `${common}/${startRange};${endRange}`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search, true).pipe(catchError(() => of([])));
   }
 
   postAnnouncements(search: HttpParams, body: any) {
@@ -43,7 +44,7 @@ export class StudentsService {
   getExperiences(search: HttpParams, startRange: number, endRange: number) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.PERSONAS}/${startRange};${endRange}`;
 
-    return this.api.get(url, search).pipe(
+    return this.api.get(url, search, true).pipe(
       map((res: any) => res.filter((p) => p.login_requirement !== PersonaPermission.forbidden)),
       map((personas: IPersona[]) =>
         personas.map((p) => {
@@ -52,15 +53,16 @@ export class StudentsService {
             label: PersonasUtilsService.getLocalizedLabel(p.localized_name_map)
           };
         })
-      )
+      ),
+      catchError((_) => of([]))
     );
   }
 
   getStudentsByList(search: HttpParams, startRange: number, endRange: number) {
-    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.STUDENT_PROFILE}`;
+    const common = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.USER}`;
 
     const url = `${common}/${startRange};${endRange}`;
 
-    return this.api.get(url, search);
+    return this.api.get(url, search, true);
   }
 }

@@ -61,7 +61,9 @@ export const CP_PRIVILEGES_MAP = {
 
   test_users: 37,
 
-  api_management: 38
+  api_management: 38,
+
+  app_user_management: 39
 };
 
 export const CP_PRIVILEGES = {
@@ -127,5 +129,7 @@ export const CP_PRIVILEGES = {
 
   37: 'Test Users',
 
-  38: 'Api Management'
+  38: 'Api Management',
+
+  39: 'App User Management'
 };

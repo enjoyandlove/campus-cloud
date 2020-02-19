@@ -12,7 +12,7 @@
 
 ## Import From
 ```typescript
-import { TextEditorModule } from '@ready-education/ready-ui';
+import { TextEditorModule } from '@ready-education/ready-ui/forms';
 ```
 
 ## Export As

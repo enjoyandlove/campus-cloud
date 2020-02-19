@@ -7,6 +7,7 @@ import { ChartsModule } from './charts/charts.module';
 import { ActionsModule } from './actions/actions.module';
 import { OverlaysModule } from './overlays/overlays.module';
 import { StructureModule } from './structure/structure.module';
+import { NavigationModule } from './navigation/navigation.module';
 import { ImagesAndIconsModule } from './images-and-icons/images-and-icons.module';
 import { ListsAndTablesModule } from './lists-and-tables/lists-and-tables.module';
 import { FeedbackAndIndicatorsModule } from './feedback-and-indicators/feedback-and-indicators.module';
@@ -19,6 +20,7 @@ import { FeedbackAndIndicatorsModule } from './feedback-and-indicators/feedback-
     ActionsModule,
     OverlaysModule,
     StructureModule,
+    NavigationModule,
     ImagesAndIconsModule,
     ListsAndTablesModule,
     FeedbackAndIndicatorsModule
