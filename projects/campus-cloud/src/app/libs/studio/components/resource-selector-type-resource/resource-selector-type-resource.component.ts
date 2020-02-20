@@ -87,23 +87,13 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
   }
 
   initResources(integrationData = null) {
-    let legacyIntegrations = integrationData
-      ? integrationData.filter(({ client_int }) => client_int.length)
-      : [];
-    const schoolIntegrationData = this.getSchoolIntegrationConfigByIntegrationData(integrationData);
-
-    if (legacyIntegrations) {
-      legacyIntegrations = legacyIntegrations.map(({ id, integration_name }) => {
-        return {
-          id,
-          meta: {
-            link_params: { id },
-            link_url: CampusLink.integration
-          },
-          label: `[NOTRANSLATE]${integration_name}[NOTRANSLATE]`
-        };
-      });
-    }
+    /**
+     * A key value pair where the key is the integration
+     * extra data type and the value is the integration config data
+     */
+    const integrationExtraDataMap = this.getSchoolIntegrationConfigByIntegrationData(
+      integrationData
+    );
 
     const filters = [
       this.filterByWebApp ? ContentUtilsProviders.isWebAppContent : null,
@@ -123,9 +113,9 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
          * Directory's visibility is controlled
          * by the school's config
          */
-        if (extraDataType === ExtraDataType.DIRECTORY && extraDataType in schoolIntegrationData) {
+        if (extraDataType === ExtraDataType.DIRECTORY && extraDataType in integrationExtraDataMap) {
           const loginRequired = _get(
-            schoolIntegrationData,
+            integrationExtraDataMap,
             [ExtraDataType.DIRECTORY, 'client_int', 0, 'request', 'cookies', 'rea.auth'],
             undefined
           );
@@ -133,7 +123,7 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
           return loginRequired ? !this.filterByLoginStatus : true;
         }
 
-        return extraDataType in schoolIntegrationData;
+        return extraDataType in integrationExtraDataMap;
       }
     ].filter((f) => f);
 
@@ -142,9 +132,34 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
       filters
     );
 
-    if (!this.filterByLoginStatus && !this.filterByWebApp && legacyIntegrations) {
-      this.resources = [...this.resources, ...legacyIntegrations];
-    }
+    /**
+     * Update resource details with Integration Extra Data
+     */
+    this.resources = this.resources.map((r: IStudioContentResource) => {
+      const hasExtraData = _get(r, ['meta', 'extra_data_type'], false);
+      if (
+        hasExtraData &&
+        ContentUtilsProviders.html5ExtraDataTypes.includes(r.meta.extra_data_type)
+      ) {
+        const { id, short_name, school_integration_data_id } = integrationExtraDataMap[
+          r.meta.extra_data_type
+        ];
+        return {
+          ...r,
+          label: short_name,
+          meta: {
+            ...r.meta,
+            link_params: {
+              extra_data_id: id,
+              id: school_integration_data_id
+            }
+          }
+        };
+      }
+
+      return r;
+    });
+
     this.items = this.contentUtils.resourcesToIItem(this.resources);
 
     this.updateStateWith(this.getInitialFormValues());
