@@ -23,6 +23,20 @@ export interface IStudioContentResource {
 export class ContentUtilsProviders {
   constructor(private cpI18n: CPI18nService) {}
 
+  static readonly html5ExtraDataTypes = [
+    ExtraDataType.HOLDS_WEB,
+    ExtraDataType.BURSAR_WEB,
+    ExtraDataType.FINANCIAL_AID_WEB,
+    ExtraDataType.ENROLLMENT_WEB,
+    ExtraDataType.TODO_WEB,
+    ExtraDataType.COURSE_CATALOG_WEB,
+    ExtraDataType.CLASS_SEARCH_WEB,
+    ExtraDataType.ASI_VOTING_WEB,
+    ExtraDataType.TUITION_CALCULATOR_WEB,
+    ExtraDataType.EXAM_SCHEDULED_WEB,
+    ExtraDataType.SURVEY_WEB
+  ];
+
   static readonly contentTypes = {
     web: 'webLink',
     list: 'resource',
@@ -208,6 +222,105 @@ export class ContentUtilsProviders {
             link_params: {},
             link_url: CampusLink.follett,
             extra_data_type: ExtraDataType.FOLLETT
+          }
+        },
+        {
+          id: 'survey_web',
+          label: '[NOTRANSLATE]survey_web[NOTRANSLATE]',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.integration,
+            extra_data_type: ExtraDataType.SURVEY_WEB
+          }
+        },
+        {
+          id: 'exam_scheduled_web',
+          label: '[NOTRANSLATE]exam_scheduled_web[NOTRANSLATE]',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.integration,
+            extra_data_type: ExtraDataType.EXAM_SCHEDULED_WEB
+          }
+        },
+        {
+          id: 'tuition_calculator_web',
+          label: '[NOTRANSLATE]tuition_calculator_web[NOTRANSLATE]',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.integration,
+            extra_data_type: ExtraDataType.TUITION_CALCULATOR_WEB
+          }
+        },
+        {
+          id: 'asi_voting_web',
+          label: '[NOTRANSLATE]asi_voting_web[NOTRANSLATE]',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.integration,
+            extra_data_type: ExtraDataType.ASI_VOTING_WEB
+          }
+        },
+        {
+          id: 'class_search_web',
+          label: '[NOTRANSLATE]class_search_web[NOTRANSLATE]',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.integration,
+            extra_data_type: ExtraDataType.CLASS_SEARCH_WEB
+          }
+        },
+        {
+          id: 'course_catalog_web',
+          label: '[NOTRANSLATE]course_catalog_web[NOTRANSLATE]',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.integration,
+            extra_data_type: ExtraDataType.COURSE_CATALOG_WEB
+          }
+        },
+        {
+          id: 'todo_web',
+          label: '[NOTRANSLATE]todo_web[NOTRANSLATE]',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.integration,
+            extra_data_type: ExtraDataType.TODO_WEB
+          }
+        },
+        {
+          id: 'enrollment_web',
+          label: '[NOTRANSLATE]enrollment_web[NOTRANSLATE]',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.integration,
+            extra_data_type: ExtraDataType.ENROLLMENT_WEB
+          }
+        },
+        {
+          id: 'financial_aid_web',
+          label: '[NOTRANSLATE]financial_aid_web[NOTRANSLATE]',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.integration,
+            extra_data_type: ExtraDataType.FINANCIAL_AID_WEB
+          }
+        },
+        {
+          id: 'bursar_web',
+          label: '[NOTRANSLATE]bursar_web[NOTRANSLATE]',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.integration,
+            extra_data_type: ExtraDataType.BURSAR_WEB
+          }
+        },
+        {
+          id: 'holds_web',
+          label: '[NOTRANSLATE]holds_web[NOTRANSLATE]',
+          meta: {
+            link_params: {},
+            link_url: CampusLink.integration,
+            extra_data_type: ExtraDataType.HOLDS_WEB
           }
         },
         {
