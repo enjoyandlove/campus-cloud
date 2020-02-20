@@ -49,6 +49,7 @@ export class CPAmplitudeService {
         school_name: this.school.name,
         test_school: this.school.is_sandbox,
         jobs: userPermissions.jobs_permission,
+        mute_users: userPermissions.mute_users,
         links: userPermissions.links_permission,
         deals: userPermissions.deals_permission,
         walls: userPermissions.walls_permission,
@@ -135,7 +136,10 @@ export class CPAmplitudeService {
 
     const studioPermission = this.getUserPermissionsAccessType(CP_PRIVILEGES_MAP.app_customization);
 
+    const muteUsers = this.getUserPermissionsAccessType(CP_PRIVILEGES_MAP.app_user_management);
+
     return {
+      mute_users: muteUsers,
       club_permission: clubPermission,
       jobs_permission: jobsPermission,
       links_permission: linksPermission,
