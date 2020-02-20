@@ -70,20 +70,28 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
       return {};
     }
 
-    const extraDataTypeConfig: any[] = flatten(integrationData.map((data) => data.extra_data))
-      // filter by school id or school id = 0 (all campuses)
-      .filter(({ school_id }) => school_id === this.session.school.id || school_id === 0)
-      .filter(({ config_data }) => !isEmpty(config_data));
+    const extraDataTypeConfig = integrationData
+      .filter(({ extra_data }) => extra_data.length)
+      .map(({ id, extra_data }) => {
+        return extra_data.map((extraDataInfo) => {
+          const { short_name, config_data, extra_data_type } = extraDataInfo;
+          return {
+            short_name,
+            config_data,
+            extra_data_type,
+            school_integration_data_id: id,
+            extra_data_id: extraDataInfo.id
+          };
+        });
+      });
 
-    const result = {};
-
-    extraDataTypeConfig.forEach(({ extra_data_type, config_data }) => {
-      result[extra_data_type] = {
-        ...config_data
+    return flatten(extraDataTypeConfig).reduce((obj, current) => {
+      const { extra_data_type, ...rest } = current;
+      obj[extra_data_type] = {
+        ...rest
       };
-    });
-
-    return result;
+      return obj;
+    }, {});
   }
 
   initResources(integrationData = null) {
@@ -141,17 +149,18 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
         hasExtraData &&
         ContentUtilsProviders.html5ExtraDataTypes.includes(r.meta.extra_data_type)
       ) {
-        const { id, short_name, school_integration_data_id } = integrationExtraDataMap[
+        const { extra_data_id, short_name, school_integration_data_id } = integrationExtraDataMap[
           r.meta.extra_data_type
         ];
+
         return {
           ...r,
-          label: short_name,
+          label: `[NOTRANSLATE]${short_name}[NOTRANSLATE]`,
           meta: {
             ...r.meta,
             link_params: {
-              extra_data_id: id,
-              id: school_integration_data_id
+              extra_data_id,
+              school_integration_data_id
             }
           }
         };
