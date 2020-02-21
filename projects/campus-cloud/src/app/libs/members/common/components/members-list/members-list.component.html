@@ -1,74 +1,75 @@
-<ul class="members cp-form">
-  <li class="cp-form__header col-12">
-    <div class="row">
-      <cp-sorting-header class="col-3"
-                         [sortField]="sortBy"
-                         sortLabel="username"
-                         [label]="['name' | cpI18n]"
-                         (click)="sort.emit('username')"
-                         [sortDirection]="sortDirection">
-      </cp-sorting-header>
+<table ui-table>
+  <thead>
+    <tr ui-table-row>
+      <th ui-table-cell
+          (sort)="sort.emit('username')"
+          [sorting]="sortBy === 'username'"
+          [sortDirection]="sortDirection">{{ 'name' | cpI18n }}
+      </th>
+      <th ui-table-cell
+          (sort)="sort.emit('member_type')"
+          [sorting]="sortBy === 'member_type'"
+          [sortDirection]="sortDirection">
+        {{ 'clubs_label_member_type' | cpI18n }}
+      </th>
 
-      <cp-sorting-header class="col-2"
-                         [sortField]="sortBy"
-                         sortLabel="member_type"
-                         [sortDirection]="sortDirection"
-                         (click)="sort.emit('member_type')"
-                         [label]="['clubs_label_member_type' | cpI18n]">
-      </cp-sorting-header>
+      <th ui-table-cell>{{ 'email' | cpI18n }}</th>
+      <th ui-table-cell
+          *ngIf="withStudentIdentifier">{{ 'student_id' | cpI18n }} </th>
+      <th ui-table-cell>
+      </th>
+    </tr>
+  </thead>
 
-      <span class="col-4">{{ 'email' | cpI18n }}</span>
-      <span class="col-2"
-            *ngIf="withStudentIdentifier">{{ 'student_id' | cpI18n }} </span>
-      <span [class]="withStudentIdentifier ? 'col-1' : 'col-1 offset-2'">
-      </span>
-    </div>
-  </li>
-
-  <li class="cp-form__item col-12"
-      *ngFor="let member of members">
-    <div class="row">
-      <span class="col-3 text-truncate members__thumbnail">
-        <img [src]="member.avatar_url"
-             cp-image
-             rounded
-             small
-             fitCover />
-        <strong>
-          <button (click)="onMemberClick(member)"
-                  class="cpbtn cpbtn--link-dark member__title"
-                  [ngClass]="[canEdit ? '' : 'cpbtn--no-hover']">
-            {{ member.firstname }} {{ member.lastname }}
-          </button>
-        </strong>
-        <br />
-        <span class="text-muted"
-              *ngIf="member.member_type === executiveLeaderType">
-          {{ member.member_position }}
-        </span>
-      </span>
-      <span class="col-2 text-truncate">
+  <tbody>
+    <tr ui-table-row
+        *ngFor="let member of members">
+      <td ui-table-cell>
+        <ready-ui-stack>
+          <ready-ui-avatar [src]="member.avatar_url"
+                           [alt]="[member.firstname + ' ' + member.lastname]">
+          </ready-ui-avatar>
+          <div>
+            <strong>
+              <button ui-button
+                      type="button"
+                      variant="inline"
+                      (click)="onMemberClick(member)"
+                      [ngClass]="[canEdit ? '' : 'cpbtn--no-hover']">
+                {{ member.firstname }} {{ member.lastname }}
+              </button>
+            </strong>
+            <br />
+            <span class="text-muted"
+                  *ngIf="member.member_type === executiveLeaderType">
+              {{ member.member_position }}
+            </span>
+          </div>
+        </ready-ui-stack>
+      </td>
+      <td ui-table-cell>
         {{ member.member_type | memberTypeToLabel: executiveLabel | cpI18n }}
-      </span>
+      </td>
 
-      <span class="col-4 text-truncate">
+      <td ui-table-cell>
         {{ member.email }}
-      </span>
+      </td>
 
-      <span class="col-2 text-truncate"
-            *ngIf="withStudentIdentifier">
+      <td ui-table-cell
+          *ngIf="withStudentIdentifier">
         {{ member.student_identifier }}
-      </span>
+      </td>
 
-      <span class="col-1 text-right"
-            [class.offset-2]="!withStudentIdentifier">
-        <button type="button"
+      <td ui-table-cell
+          align="right">
+        <button ui-button
+                type="button"
+                variant="inline"
                 *ngIf="canDelete"
-                (click)="deleteClick.emit(member)"
-                class="delete-member unstyled-button">
-          <span aria-hidden="true">&times;</span>
+                (click)="deleteClick.emit(member)">
+          <ready-ui-icon name="close"></ready-ui-icon>
         </button>
-      </span>
-    </div>
-  </li>
-</ul>
+      </td>
+    </tr>
+  </tbody>
+</table>

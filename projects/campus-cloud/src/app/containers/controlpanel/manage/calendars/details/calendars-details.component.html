@@ -14,11 +14,23 @@
                    [noContentText]="cpI18n.translate('calendars_items_no_results_found')">
     </cp-no-content>
 
-    <div *ngIf="state.items.length">
-      <ul class="items cp-form">
-        <li class="cp-form__header col-12">
-          <div class="row">
-            <cp-sorting-header class="col-5"
+    <ng-container *ngIf="state.items.length">
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell
+                (sort)="doSort('title')"
+                [sorting]="state.sort_field === 'title'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.name }}
+            </th>
+            <th ui-table-cell
+                (sort)="doSort('start')"
+                [sorting]="state.sort_field === 'start'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.start_date }}
+            </th>
+            <!-- <cp-sorting-header class="col-5"
                                sortLabel="title"
                                (click)="doSort('title')"
                                [label]="sortingLabels.name"
@@ -31,45 +43,56 @@
                                (click)="doSort('start')"
                                [sortField]="state.sort_field"
                                [label]="sortingLabels.start_date"
+                               [sortField]="state.sort_field"
                                [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
-            <span class="col-2"></span>
-          </div>
-        </li>
+            </cp-sorting-header> -->
+            <th ui-table-cell></th>
+        </thead>
 
-        <li class="cp-form__item col-12"
-            *ngFor="let item of state.items; index as index">
-          <div class="row">
-            <span class="col-5 text-truncate">
-              <img class="rounded img-fit-cover"
-                   [alt]="'t_shared_img_alt' | cpI18n: index + 1"
-                   [src]="item.poster_url" />
-              <a cpTracker
-                 [eventData]="eventData"
-                 [routerLink]="['items/' + item.id]">
-                <strong>
-                  {{ item.title }}
-                </strong>
-              </a>
-              <br />
-              {{ item.description }}
-            </span>
-            <span class="col-5 text-truncate">
+        <tbody>
+          <tr ui-table-row
+              *ngFor="let item of state.items; index as index">
+            <td ui-table-cell>
+              <ready-ui-stack>
+                <ready-ui-avatar [src]="item.poster_url"
+                                 [alt]="'t_shared_img_alt' | cpI18n: index + 1">
+                </ready-ui-avatar>
+                <a cpTracker
+                   [eventData]="eventData"
+                   [routerLink]="['items/' + item.id]">
+                  <strong>
+                    {{ item.title }}
+                  </strong>
+                </a>
+              </ready-ui-stack>
+            </td>
+            <td ui-table-cell>
               {{ item.start | cpDatePipe: dateFormat }}
-            </span>
-            <span class="col-2 text-right">
-              <button type="button"
+            </td>
+            <td ui-table-cell
+                align="right">
+              <button ui-button
+                      type="submit"
+                      variant="inline"
+                      data-toggle="modal"
+                      (click)="selectedItem = item"
+                      (click)="launchDeleteModal = true"
+                      data-target="#deleteCalendarItemModal">
+                <ready-ui-icon name="close"
+                               aria-label="Delete Item"></ready-ui-icon>
+              </button>
+              <!-- <button type="button"
                       data-toggle="modal"
                       (click)="selectedItem = item"
                       (click)="launchDeleteModal = true"
                       data-target="#deleteCalendarItemModal"
                       class="hover action-button delete-button text-center unstyled-button">
                 &times;
-              </button>
-            </span>
-          </div>
-        </li>
-      </ul>
+              </button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <cp-pagination [pageNext]="pageNext"
                      [pagePrev]="pagePrev"
@@ -77,7 +100,7 @@
                      (next)="onPaginationNext()"
                      (previous)="onPaginationPrevious()">
       </cp-pagination>
-    </div>
+    </ng-container>
   </div>
 </div>
 

@@ -6,121 +6,120 @@
                    noContentText="No attendees found...">
     </cp-no-content>
 
-    <div class="row"
-         *ngIf="assessments.length">
-      <div class="col-12">
-        <div class="cp-table">
-          <div class="cp-table__header">
-            <div class="row">
-              <div class="col-3">
-                <span>
-                  {{ 'services_label_attendee_name' | cpI18n }}
-                </span>
-              </div>
-              <div [class]="provider.has_checkout ? 'col-2' : 'col-3'">
-                <cp-sorting-header sortLabel="check_in_time_epoch"
-                                   (click)="doSort('check_in_time_epoch')"
-                                   [sortField]="state.sort_field"
-                                   [sortDirection]="state.sort_direction"
-                                   [label]="sortingLabels.checkin_time">
-                </cp-sorting-header>
-              </div>
-              <div class="col-2"
-                   *ngIf="provider.has_checkout">
-                <cp-sorting-header sortLabel="check_out_time_epoch"
-                                   (click)="doSort('check_out_time_epoch')"
-                                   [sortField]="state.sort_field"
-                                   [sortDirection]="state.sort_direction"
-                                   [label]="sortingLabels.checkout_time">
-                </cp-sorting-header>
-              </div>
-              <div [class]="provider.has_checkout ? 'col-1' : 'col-2'">
-                <cp-sorting-header sortLabel="check_in_method"
-                                   (click)="doSort('check_in_method')"
-                                   [label]="sortingLabels.checkin_method"
-                                   [sortField]="state.sort_field"
-                                   [sortDirection]="state.sort_direction">
-                </cp-sorting-header>
-              </div>
-              <div class="col-3">
-                <span>{{ 'rating' | cpI18n }}</span>
-              </div>
-              <div class="col-1"></div>
-            </div>
-          </div>
+    <ng-container *ngIf="assessments.length">
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell>
+              {{ 'services_label_attendee_name' | cpI18n }}
+            </th>
+            <th ui-table-cell
+                (sort)="doSort('check_in_time_epoch')"
+                [sorting]="state.sort_field === 'check_in_time_epoch'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.checkin_time }}
+            </th>
+            <th ui-table-cell
+                *ngIf="provider.has_checkout"
+                (sort)="doSort('check_out_time_epoch')"
+                [sorting]="state.sort_field === 'check_out_time_epoch'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.checkout_time }}
+            </th>
+            <th ui-table-cell
+                (sort)="doSort('check_in_method')"
+                [sorting]="state.sort_field === 'check_in_method'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.checkin_method }}
+            </th>
+            <th ui-table-cell>
+              {{ 'rating' | cpI18n }}
+            </th>
+            <th ui-table-cell></th>
+          </tr>
+        </thead>
 
-          <div class="cp-table__item"
-               *ngFor="let assessment of assessments; index as i">
-            <div class="row">
-              <div class="col-3">
-                <img [alt]="'t_shared_img_alt' | cpI18n: i + 1"
-                     class="rounded img-fit-cover float-left avatar"
-                     [src]="assessment.avatar_thumb_url ? assessment.avatar_thumb_url : defaultImage" />
-                <div class="meta text-truncate">
-                  <strong *ngIf="assessment.attendee_type !== deletedAttendee">
-                    {{ assessment.firstname }} {{ assessment.lastname }}
-                  </strong>
-                  <strong *ngIf="assessment.attendee_type === deletedAttendee">
-                    {{'t_shared_closed_account' | cpI18n}}
-                  </strong>
-                  <br />
-                  <small class="text-muted">
-                    {{ assessment.attendee_type !== deletedAttendee ? assessment.email : '-'}}
-                  </small>
-                </div>
-              </div>
-              <div [class]="provider.has_checkout ? 'col-2' : 'col-3'">
-                <span>{{ assessment.check_in_time_epoch | cpDatePipe: dateFormat }}</span>
-              </div>
-              <div class="col-2"
-                   *ngIf="provider.has_checkout">
-                <span *ngIf="
+        <tbody>
+          <ng-container *ngFor="let assessment of assessments; index as i">
+            <tr ui-table-row>
+              <td ui-table-cell>
+                <ready-ui-stack>
+                  <ready-ui-avatar [alt]="'t_shared_img_alt' | cpI18n: i + 1"
+                                   [src]="assessment.avatar_thumb_url ? assessment.avatar_thumb_url : defaultImage">
+                  </ready-ui-avatar>
+                  <div class="meta">
+                    <strong
+                            *ngIf="assessment.attendee_type !== deletedAttendee">
+                      {{ assessment.attendee_type !== deletedAttendee ? assessment.firstname + ' ' + assessment.lastname : ('t_shared_closed_account' | cpI18n) }}
+                      {{ assessment.firstname }} {{ assessment.lastname }}
+                    </strong>
+                    <br />
+                    <small class="text-muted">
+                      {{ assessment.attendee_type !== deletedAttendee ? assessment.email : '-'}}
+                    </small>
+                  </div>
+                </ready-ui-stack>
+              </td>
+              <td ui-table-cell>
+                {{ assessment.check_in_time_epoch | cpDatePipe: dateFormat }}
+              </td>
+              <td ui-table-cell
+                  *ngIf="provider.has_checkout">
+                <ng-container *ngIf="
                     assessment.check_out_time_epoch &&
                     assessment.check_out_time_epoch !== emptyCheckOutTime
                   ">
                   {{ assessment.check_out_time_epoch | cpDatePipe: dateFormat }}
-                </span>
-              </div>
-              <div [class]="provider.has_checkout ? 'col-1' : 'col-2'">
-                <span>
-                  <i class="material-icons">
-                    {{
-                      assessment.check_in_method === webCheckInMethod ? 'computer' : 'smartphone'
-                    }}
-                  </i>
-                </span>
-              </div>
-              <div class="col-3">
+                </ng-container>
+              </td>
+              <td ui-table-cell>
+                <ready-ui-icon
+                               [name]="[assessment.check_in_method === webCheckInMethod ? 'computer' : 'smartphone']">
+                </ready-ui-icon>
+
+              </td>
+              <td ui-table-cell>
                 <cp-stars [maxRate]="5"
                           [avgRate]="assessment.feedback_rating"> </cp-stars>
-              </div>
-              <div class="col-1 text-center">
-                <span *ngIf="assessment.check_in_method === webCheckInMethod">
-                  <i (click)="onEditCheckIn(assessment)"
-                     class="material-icons hover margin-right action-button">edit</i>
-                  <i (click)="onDeleteCheckIn(assessment)"
-                     class="material-icons hover action-button">close</i>
-                </span>
-              </div>
-            </div>
-            <div class="row cp-table__feedback"
-                 *ngIf="assessment.feedback_text.trim()">
-              <small class="text-wrap">{{ assessment.feedback_text }}</small>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row text-center">
-      <div class="col-12">
-        <cp-pagination [pageNext]="pageNext"
-                       [pagePrev]="pagePrev"
-                       [pageNumber]="pageNumber"
-                       (next)="onPaginationNext()"
-                       (previous)="onPaginationPrevious()">
-        </cp-pagination>
-      </div>
-    </div>
+              </td>
+              <td ui-table-cell
+                  align="right">
+                <ng-container
+                              *ngIf="assessment.check_in_method === webCheckInMethod">
+                  <button type="button"
+                          ui-button
+                          variant="inline"
+                          aria-label="Edit Checkin"
+                          (click)="onEditCheckIn(assessment)">
+                    <ready-ui-icon name="edit"></ready-ui-icon>
+                  </button>
+                  <button type="button"
+                          ui-button
+                          variant="inline"
+                          aria-label="Delete Checkin"
+                          (click)="onDeleteCheckIn(assessment)">
+                    <ready-ui-icon name="close"></ready-ui-icon>
+                  </button>
+                </ng-container>
+              </td>
+            </tr>
+            <tr ui-table-row
+                *ngIf="assessment.feedback_text.trim()">
+              <td class="feedback"
+                  [attr.colspan]="[provider.has_checkout ? 6 : 5]">
+                {{ assessment.feedback_text }}</td>
+            </tr>
+          </ng-container>
+        </tbody>
+      </table>
+    </ng-container>
+
+    <cp-pagination [pageNext]="pageNext"
+                   [pagePrev]="pagePrev"
+                   [pageNumber]="pageNumber"
+                   (next)="onPaginationNext()"
+                   (previous)="onPaginationPrevious()">
+    </cp-pagination>
   </div>
 </div>
 

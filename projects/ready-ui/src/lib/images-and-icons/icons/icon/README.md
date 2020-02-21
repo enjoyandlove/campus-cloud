@@ -79,5 +79,14 @@ None
 `volume_off`
 `chevron_right`
 `expand_less`
+`save_alt`
+`keyboard_arrow_up`
+`keyboard_arrow_down`
+`settings_applications`
+`edit`
+`control_point_duplicate`
+`computer`
+`smartphone`
 `help_outline`
+`chat_bubble`
 

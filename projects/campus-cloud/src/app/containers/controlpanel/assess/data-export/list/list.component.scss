@@ -1,7 +1,6 @@
 @import '~projects/campus-cloud/src/sass/core/colors';
 @import '~projects/campus-cloud/src/sass/core/typography';
 @import '~projects/campus-cloud/src/sass/components/card';
-@import '~projects/campus-cloud/src/sass/components/table';
 @import '~projects/campus-cloud/src/sass/components/button';
 
 cp-data-export-top-bar {
@@ -20,9 +19,8 @@ cp-data-export-top-bar {
   }
 }
 
-ul {
-  padding-left: 0;
-  list-style: none;
+table {
+  margin-top: 2em;
 
   h2,
   h3 {
@@ -34,11 +32,5 @@ ul {
 
   h3 {
     color: $color-text;
-  }
-
-  li {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
   }
 }

@@ -31,7 +31,6 @@ import {
   ImageValidatorService
 } from './services';
 
-import { CPTableModule } from './components/cp-table/cp-table.module';
 import { LocationsService } from '../containers/controlpanel/manage/locations/locations.service';
 import { CPRangePickerUtilsService } from './components/cp-range-picker/cp-range-picker.utils.service';
 
@@ -54,7 +53,6 @@ import {
   CPAlertComponent,
   CPModalComponent,
   CPStarsComponent,
-  CPImageComponent,
   CPAvatarComponent,
   CPButtonComponent,
   CPSwitchComponent,
@@ -106,7 +104,6 @@ import {
     CPMenuComponent,
     CPTabsComponent,
     CPChipComponent,
-    CPImageComponent,
     CPStarsComponent,
     CPModalComponent,
     CPAlertComponent,
@@ -164,7 +161,6 @@ import {
     FormsModule,
     CommonModule,
     RouterModule,
-    CPTableModule,
     ReadyUiModule,
     OverlayModule,
     CPTopBarModule,
@@ -191,7 +187,6 @@ import {
     CPDatePipe,
     CPFilterPipe,
     CPBoldifyPipe,
-    CPTableModule,
     ReadyUiModule,
     CPTopBarModule,
     CPTabComponent,
@@ -201,7 +196,6 @@ import {
     CPHostDirective,
     CPTabsComponent,
     CPChipComponent,
-    CPImageComponent,
     CPFIlterByLength,
     CPStarsComponent,
     CPAlertComponent,

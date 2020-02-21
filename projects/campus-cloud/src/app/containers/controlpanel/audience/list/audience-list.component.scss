@@ -1,31 +1,8 @@
-@import '~projects/campus-cloud/src/sass/core/colors';
-@import '~projects/campus-cloud/src/sass/components/form';
-@import '~projects/campus-cloud/src/sass/components/card';
-@import '~projects/campus-cloud/src/sass/components/button';
-
+table,
 .no-content {
-  @include card-margin();
+  margin-top: 2em;
 }
 
-.delete-list {
-  font-size: 2em;
-}
-
-.cp-form__item {
-  span i {
-    font-size: 18px;
-    vertical-align: -6px;
-  }
-}
-
-.audiences {
-  padding: 0;
-  list-style: none;
-}
-
-button.download-file {
-  display: flex;
-  i {
-    margin-right: 0.5rem;
-  }
+ready-ui-icon[name="save_alt"] {
+  margin-right: 0.5rem;
 }

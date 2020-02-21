@@ -8,10 +8,58 @@
                    [noContentText]="'t_notify_no_scheduled_data_found' | cpI18n">
     </cp-no-content>
 
-    <cp-table [rows]="rows"
-              [columns]="columns"
-              *ngIf="state.announcements.length">
-    </cp-table>
+    <table ui-table>
+      <thead>
+        <tr ui-table-row>
+          <th ui-table-cell>{{ 'recipient' | cpI18n }}</th>
+          <th ui-table-cell>{{ 'announcements_type' | cpI18n }}</th>
+          <th ui-table-cell
+              [sortDirection]="state.sortDirection"
+              (sort)="handleSort('notify_at_epoch')"
+              [sorting]="state.sortField === 'notify_at_epoch'">
+            {{ 't_notify_scheduled_for' | cpI18n }}</th>
+          <th ui-table-cell></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr ui-table-row
+            *ngFor="let announcement of state.announcements">
+          <td ui-table-cell>
+            <ready-ui-stack spacing="tight"
+                            direction="vertical">
+              <h2>{{announcement | announcementRecipient}}</h2>
+              <p>{{announcement.subject}}</p>
+              <span class="text-muted">{{announcement.message}}</span>
+            </ready-ui-stack>
+          </td>
+          <td ui-table-cell>
+            {{ announcement.priority | priorityToLabel}}
+          </td>
+          <td ui-table-cell>
+            {{ announcement.notify_at_epoch | cpDatePipe:dateFormat }}
+          </td>
+          <td ui-table-cell
+              align="right">
+            <ready-ui-stack>
+              <a ui-button
+                 type="button"
+                 variant="inline"
+                 color="primary"
+                 [routerLink]="['edit/' + announcement.id]">
+                {{ 'edit' | cpI18n }}
+              </a>
+              <button type="button"
+                      ui-button
+                      variant="inline"
+                      (click)="onDelete(announcement)">
+                <ready-ui-icon name="close"></ready-ui-icon>
+              </button>
+            </ready-ui-stack>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
     <cp-pagination [pageNumber]="page"
                    [pageNext]="state.pageNext"
@@ -21,19 +69,3 @@
     </cp-pagination>
   </ng-container>
 </ng-container>
-
-<ng-template #customActionCell
-             let-announcement="row">
-  <cp-scheduled-action-cell [announcement]="announcement"
-                            (deleteClick)="onDelete(announcement)">
-  </cp-scheduled-action-cell>
-</ng-template>
-
-<ng-template #customMainCell
-             let-announcement="row">
-  <header>
-    <h2>{{announcement | announcementRecipient}}</h2>
-    <p>{{announcement.subject}}</p>
-    <span class="text-muted">{{announcement.message}}</span>
-  </header>
-</ng-template>

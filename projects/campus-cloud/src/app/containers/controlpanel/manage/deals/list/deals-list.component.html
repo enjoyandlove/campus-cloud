@@ -1,10 +1,6 @@
-<div class="row">
-  <div class="col-12">
-    <cp-deals-action-box (search)="onSearch($event)"
-                         (listAction)="doFilter($event)">
-    </cp-deals-action-box>
-  </div>
-</div>
+<cp-deals-action-box (search)="onSearch($event)"
+                     (listAction)="doFilter($event)">
+</cp-deals-action-box>
 
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
@@ -15,89 +11,84 @@
                    [noContentText]="cpI18n.translate('deals_no_results_found')">
     </cp-no-content>
 
-    <div *ngIf="state.deals.length">
-      <ul class="cp-form">
-        <li class="cp-form__header col-12">
-          <div class="row">
-            <cp-sorting-header class="col-4"
-                               sortLabel="title"
-                               (click)="doSort('title')"
-                               [label]="sortingLabels.name"
-                               [sortField]="state.sort_field"
-                               [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
+    <ng-container *ngIf="state.deals.length">
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell
+                (sort)="doSort('title')"
+                [sorting]="state.sort_field === 'title'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.name }}
+            </th>
+            <th ui-table-cell
+                (sort)="doSort('start')"
+                [sorting]="state.sort_field === 'start'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.start }}
+            </th>
+            <th ui-table-cell
+                (sort)="doSort('expiration')"
+                [sortDirection]="state.sort_direction"
+                [sorting]="state.sort_field === 'expiration'">
+              {{ sortingLabels.expiration }}
+            </th>
+            <th ui-table-cell
+                (sort)="doSort('store_name')"
+                [sortDirection]="state.sort_direction"
+                [sorting]="state.sort_field === 'store_name'">
+              {{ sortingLabels.store_name }}
+            </th>
+            <th ui-table-cell></th>
+        </thead>
 
-            <cp-sorting-header class="col-2"
-                               sortLabel="start"
-                               (click)="doSort('start')"
-                               [label]="sortingLabels.start"
-                               [sortField]="state.sort_field"
-                               [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
-
-            <cp-sorting-header class="col-2"
-                               sortLabel="expiration"
-                               (click)="doSort('expiration')"
-                               [label]="sortingLabels.expiration"
-                               [sortField]="state.sort_field"
-                               [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
-
-            <cp-sorting-header class="col-3"
-                               sortLabel="store_name"
-                               (click)="doSort('store_name')"
-                               [sortField]="state.sort_field"
-                               [label]="sortingLabels.store_name"
-                               [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
-            <span class="col-1 hover"></span>
-          </div>
-        </li>
-
-        <li class="cp-form__item col-12"
-            *ngFor="let deal of state.deals; index as index">
-          <div class="row">
-            <span class="col-4 text-truncate cp-form__thumbnail">
-              <img *ngIf="deal.image_url"
-                   [src]="deal.image_url"
-                   class="rounded img-fit-cover"
-                   [alt]="'t_shared_img_alt' | cpI18n: index + 1" />
-              <a cpTracker
-                 [eventData]="eventData"
-                 [routerLink]="[deal.id + '/info']">
-                <strong>
-                  {{ deal.title }}
-                </strong>
-              </a>
-              <br />
-              {{ deal.description }}
-            </span>
-            <span class="col-2"
-                  [ngClass]="{ 'pre-tab': deal.start <= 0 }">
+        <tbody>
+          <tr ui-table-row
+              *ngFor="let deal of state.deals; index as index">
+            <td ui-table-cell>
+              <ready-ui-stack>
+                <ready-ui-avatar [src]="deal.image_url"
+                                 [alt]="'t_shared_img_alt' | cpI18n: index + 1">
+                </ready-ui-avatar>
+                <a cpTracker
+                   [eventData]="eventData"
+                   [routerLink]="[deal.id + '/info']">
+                  <strong>
+                    {{ deal.title }}
+                  </strong>
+                </a>
+              </ready-ui-stack>
+            </td>
+            <td ui-table-cell
+                [ngClass]="{ 'pre-tab': deal.start <= 0 }">
               {{ deal.start <= 0 ? '--' : (deal.start | cpDatePipe: dateFormat) }}
-            </span>
-            <span class="col-2">
+            </td>
+            <td ui-table-cell>
               {{
                 deal.expiration < 0
                   ? ('t_deals_ongoing' | cpI18n)
                   : (deal.expiration | cpDatePipe: dateFormat)
               }}
-            </span>
-            <span class="col-3">
+            </td>
+            <td ui-table-cell>
               {{ deal.store_name }}
-            </span>
-            <span class="col-1  text-right">
-              <button type="button"
+            </td>
+            <td ui-table-cell
+                align="right">
+              <button ui-button
+                      variant="inline"
+                      type="button"
                       (click)="deleteDeal = deal; launchDeleteModal = true"
                       data-toggle="modal"
                       data-target="#deleteModal"
+                      aria-label="Delete Deal"
                       class="delete-deal unstyled-button">
-                &times;
+                <ready-ui-icon name="close"></ready-ui-icon>
               </button>
-            </span>
-          </div>
-        </li>
-      </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <cp-pagination [pageNext]="pageNext"
                      [pagePrev]="pagePrev"
@@ -105,7 +96,7 @@
                      (next)="onPaginationNext()"
                      (previous)="onPaginationPrevious()">
       </cp-pagination>
-    </div>
+    </ng-container>
   </div>
 </div>
 

@@ -1,11 +1,6 @@
-<div class="row">
-  <div class="col-12">
-    <cp-store-action-box (search)="onSearch($event)"
-                         (launchCreateModal)="onLaunchCreateModal()">
-    </cp-store-action-box>
-  </div>
-</div>
-
+<cp-store-action-box (search)="onSearch($event)"
+                     (launchCreateModal)="onLaunchCreateModal()">
+</cp-store-action-box>
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
@@ -15,51 +10,56 @@
                    [noContentText]="cpI18n.translate('stores_no_results_found')">
     </cp-no-content>
 
-    <div *ngIf="state.stores.length">
-      <ul class="cp-form">
-        <li class="cp-form__header col-12">
-          <div class="row">
-            <cp-sorting-header class="col-11"
-                               sortLabel="name"
-                               (click)="doSort('name')"
-                               [label]="sortingLabels.name"
-                               [sortField]="state.sort_field"
-                               [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
+    <ng-container *ngIf="state.stores.length">
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell
+                (sort)="doSort('name')"
+                [sorting]="state.sort_field === 'name'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.name }}
+            </th>
+            <th ui-table-cell></th>
+          </tr>
+        </thead>
 
-            <span class="col-1 hover"></span>
-          </div>
-        </li>
-
-        <li class="cp-form__item col-12"
-            *ngFor="let store of state.stores; index as index">
-          <div class="row">
-            <span class="col-11 text-truncate cp-form__thumbnail">
-              <img [alt]="'t_shared_img_alt' | cpI18n: index + 1"
-                   [src]="store.logo_url"
-                   class="rounded img-fit-cover" />
-              <span cpTracker
-                    [eventData]="eventData"
-                    data-toggle="modal"
-                    data-target="#editModal"
-                    (click)="launchEditModal = true; selectedStore = store">
-                <strong class="hover">
-                  {{ store.name }}
-                </strong>
-                <br />
-              </span>
-              {{ store.description }}
-            </span>
-            <button type="button"
-                    (click)="deleteStore = store; launchDeleteModal = true"
-                    data-toggle="modal"
-                    data-target="#deleteModal"
-                    class="col-1 hover text-truncate delete-store text-center unstyled-button">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-        </li>
-      </ul>
+        <tbody>
+          <tr ui-table-row
+              *ngFor="let store of state.stores; index as index">
+            <td ui-table-cell>
+              <ready-ui-stack>
+                <ready-ui-avatar [alt]="'t_shared_img_alt' | cpI18n: index + 1"
+                                 [src]="store.logo_url"></ready-ui-avatar>
+                <button ui-button
+                        cpTracker
+                        type="button"
+                        variant="inline"
+                        data-toggle="modal"
+                        [eventData]="eventData"
+                        data-target="#editModal"
+                        (click)="launchEditModal = true; selectedStore = store">
+                  <strong>
+                    {{ store.name }}
+                  </strong>
+                </button>
+              </ready-ui-stack>
+            </td>
+            <td ui-table-cell
+                align="right">
+              <button ui-button
+                      variant="inline"
+                      type="button"
+                      data-toggle="modal"
+                      aria-label="Delete Store"
+                      data-target="#deleteModal"
+                      (click)="deleteStore = store; launchDeleteModal = true">
+                <ready-ui-icon name="close"></ready-ui-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <cp-pagination [pageNext]="pageNext"
                      [pagePrev]="pagePrev"
@@ -67,7 +67,7 @@
                      (next)="onPaginationNext()"
                      (previous)="onPaginationPrevious()">
       </cp-pagination>
-    </div>
+    </ng-container>
   </div>
 </div>
 

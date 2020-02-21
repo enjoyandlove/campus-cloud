@@ -1,96 +1,82 @@
-<div class="row">
-  <div class="col-12">
-    <cp-services-list-action-box (listAction)="doFilter($event)">
-    </cp-services-list-action-box>
-  </div>
-</div>
+<cp-services-list-action-box (listAction)="doFilter($event)">
+</cp-services-list-action-box>
 
-<div [ngSwitch]="loading">
+<ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div *ngSwitchCase="false">
+  <ng-container *ngSwitchCase="false">
     <cp-no-content class="add-card-margin"
                    *ngIf="!state.services.length"
                    [noContentText]="cpI18n.translate('services_no_service_found')">
     </cp-no-content>
 
-    <ul class="services cp-form"
-        *ngIf="state.services.length">
-      <li class="cp-form__header col-12">
-        <div class="row">
-          <cp-sorting-header class="col-4"
-                             sortLabel="name"
-                             (click)="doSort('name')"
-                             [label]="sortingLabels.name"
-                             [sortField]="state.sort_field"
-                             [sortDirection]="state.sort_direction">
-          </cp-sorting-header>
+    <table ui-table
+           *ngIf="state.services.length">
+      <thead>
+        <tr ui-table-row>
+          <th ui-table-cell
+              (sort)="doSort('name')"
+              [sorting]="state.sort_field === 'name'"
+              [sortDirection]="state.sort_direction">
+            {{ sortingLabels.name }}
+          </th>
 
-          <span class="col-2">
+          <th ui-table-cell>
             {{ 'services_visits' | cpI18n }}
-          </span>
-          <span class="col-2">{{ 'ratings' | cpI18n }}</span>
-          <span class="col-3">{{ 't_shared_average_rating' | cpI18n }}</span>
-          <span class="col-1 hover"></span>
-        </div>
-      </li>
+          </th>
+          <th ui-table-cell>{{ 'ratings' | cpI18n }}</th>
+          <th ui-table-cell>{{ 't_shared_average_rating' | cpI18n }}</th>
+          <th ui-table-cell></th>
+        </tr>
+      </thead>
 
-      <li class="cp-form__item col-12"
-          *ngFor="let service of state.services; index as i">
-        <div class="row">
-          <span class="col-4 text-truncate">
-            <div class="row">
-              <div class="col-2 services__thumbnail">
-                <img class="rounded img-fit-cover"
-                     [src]="service.logo_url"
-                     [alt]="'t_shared_img_alt' | cpI18n: i + 1" />
-              </div>
-              <div class="col-9 text-truncate no-left-padding">
-                <strong class="services__title">
-                  <a cpTracker
-                     [eventData]="eventData"
-                     [routerLink]="[service.service_attendance ? service.id : service.id + '/info']">
-                    {{ service.name }}
-                  </a>
-                </strong>
-                <br />
-                {{ service.description }}
-              </div>
-            </div>
-          </span>
-          <span class="col-2">{{ service.total_visits }}</span>
-          <span class="col-2">{{ service.num_ratings }}</span>
-          <span class="col-3">
+      <tbody>
+        <tr ui-table-row
+            *ngFor="let service of state.services; index as i">
+          <td ui-table-cell>
+            <ready-ui-stack>
+              <ready-ui-avatar [src]="service.logo_url"
+                               [alt]="'t_shared_img_alt' | cpI18n: i + 1">
+              </ready-ui-avatar>
+              <strong class="services__title">
+                <a cpTracker
+                   [eventData]="eventData"
+                   [routerLink]="[service.service_attendance ? service.id : service.id + '/info']">
+                  {{ service.name }}
+                </a>
+              </strong>
+            </ready-ui-stack>
+          </td>
+          <td ui-table-cell>{{ service.total_visits }}</td>
+          <td ui-table-cell>{{ service.num_ratings }}</td>
+          <td ui-table-cell>
             <cp-stars *ngIf="service.service_attendance === attendanceEnabled"
                       [maxRate]="service.rating_scale_maximum"
                       [avgRate]="service.avg_rating_percent">
             </cp-stars>
-          </span>
-          <span class="col-1 text-right">
-            <button type="button"
+          </td>
+          <td ui-table-cell
+              align="right">
+            <button ui-button
+                    type="button"
+                    variant="inline"
                     aria-label="delete"
-                    (click)="onDelete(service)"
-                    class="delete-service unstyled-button">
-              <span aria-hidden="true">&times;</span>
+                    (click)="onDelete(service)">
+              <ready-ui-icon name="close"></ready-ui-icon>
             </button>
-          </span>
-        </div>
-      </li>
-    </ul>
+          </td>
+      </tbody>
+    </table>
 
-    <div class="row"
-         *ngIf="state.services.length">
-      <div class="col-12">
-        <cp-pagination [pageNext]="pageNext"
-                       [pagePrev]="pagePrev"
-                       [pageNumber]="pageNumber"
-                       (next)="onPaginationNext()"
-                       (previous)="onPaginationPrevious()">
-        </cp-pagination>
-      </div>
-    </div>
-  </div>
-</div>
+    <cp-pagination [pageNext]="pageNext"
+                   [pagePrev]="pagePrev"
+                   [pageNumber]="pageNumber"
+                   (next)="onPaginationNext()"
+                   *ngIf="state.services.length"
+                   (previous)="onPaginationPrevious()">
+    </cp-pagination>
+  </ng-container>
+</ng-container>
 
 <cp-modal modalId="excelServicesModal">
   <cp-services-excel-modal></cp-services-excel-modal>

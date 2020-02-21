@@ -1,41 +1,4 @@
-@import '~projects/campus-cloud/src/sass/components/form';
-@import '~projects/campus-cloud/src/sass/components/card';
-
-.no-content {
-  @include card-margin();
-}
-
-.cp-form {
-  padding: 0;
-  list-style: none;
-  &__header {
-    span.hover {
-      position: relative;
-
-      > span i {
-        top: 1px;
-        font-size: 17px;
-        position: absolute;
-        padding-left: 6px;
-      }
-    }
-  }
-
-  &__thumbnail {
-    img {
-      float: left;
-      width: 30px;
-      height: 30px;
-      margin-top: 5px;
-      margin-right: 10px;
-    }
-  }
-
-  .delete-deal {
-    font-size: 2em;
-  }
-}
-
-.pre-tab {
-  padding-left: 30px;
+table,
+cp-no-content {
+  margin-top: 2em;
 }
