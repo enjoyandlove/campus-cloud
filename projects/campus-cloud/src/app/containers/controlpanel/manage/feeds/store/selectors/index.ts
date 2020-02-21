@@ -38,9 +38,10 @@ export const getComments = createSelector(
 export const getSocialPostCategoryNameByPostType = (postType: number) =>
   createSelector(
     getFeedsState,
-    ({ socialPostCategories }: IWallsFeedsState) => {
+    ({ socialPostCategories, groupId }: IWallsFeedsState) => {
       const postCategory = socialPostCategories.find((c) => c.id === postType);
-      return postCategory ? postCategory.name : '';
+      // Group Threads do not belong to a Post Category
+      return postCategory && !groupId ? postCategory.name : '';
     }
   );
 
