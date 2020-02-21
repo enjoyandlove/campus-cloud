@@ -8,7 +8,6 @@ import { CPTestModule } from '@campus-cloud/shared/tests';
 import { ScheduledActionCellComponent } from './action-cell.component';
 import { getElementByCPTargetValue } from '@campus-cloud/shared/utils/tests';
 import { CommonIntegrationsModule } from '@campus-cloud/libs/integrations/common/common-integrations.module';
-import { CPTableCloseComponent } from '@campus-cloud/shared/components/cp-table/components';
 
 describe('ScheduledActionCellComponent', () => {
   let de: DebugElement;
@@ -101,12 +100,11 @@ describe('ScheduledActionCellComponent', () => {
     it('should render a delete button listening to the handleClick event', () => {
       spyOn(component.deleteClick, 'emit');
 
-      const closeBtn: CPTableCloseComponent = de.query(By.directive(CPTableCloseComponent))
-        .componentInstance;
+      const closeBtn: HTMLButtonElement = getElementByCPTargetValue(de, 'delete-btn').nativeElement;
 
       expect(closeBtn).toBeDefined();
 
-      closeBtn.handleClick.emit();
+      closeBtn.click();
       expect(component.deleteClick.emit).toHaveBeenCalled();
     });
 

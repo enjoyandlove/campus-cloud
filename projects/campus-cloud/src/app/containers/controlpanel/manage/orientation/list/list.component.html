@@ -16,90 +16,87 @@
     </cp-no-content>
 
     <div *ngIf="state.orientationPrograms.length">
-      <div class="row">
-        <div class="col-12">
-          <ul class="orientation cp-form">
-            <li class="cp-form__header">
-              <div class="row">
-                <cp-sorting-header class="col-5"
-                                   sortLabel="name"
-                                   [label]="label.name"
-                                   (click)="doSort('name')"
-                                   [sortField]="state.sort_field"
-                                   [sortDirection]="state.sort_direction">
-                </cp-sorting-header>
-                <span class="col-3">
-                  {{ 'duration' | cpI18n }}
-                </span>
-                <span class="col-2">
-                  {{ 'members' | cpI18n }}
-                </span>
-                <span class="col-1">
-                  {{ 'events' | cpI18n }}
-                </span>
-                <span class="col-1 hover"></span>
-              </div>
-            </li>
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell
+                (sort)="doSort('name')"
+                [sorting]="state.sort_field === 'name'"
+                [sortDirection]="state.sort_direction">{{ label.name }}</th>
+            <th ui-table-cell>
+              {{ 'duration' | cpI18n }}
+            </th>
+            <th ui-table-cell>
+              {{ 'members' | cpI18n }}
+            </th>
+            <th ui-table-cell>
+              {{ 'events' | cpI18n }}
+            </th>
+            <th ui-table-cell></th>
+          </tr>
+        </thead>
 
-            <li class="cp-form__item col-12"
-                *ngFor="let program of state.orientationPrograms">
-              <div class="row">
-                <span class="col-5 text-truncate">
-                  <a cpTracker
-                     [eventData]="eventData"
-                     [routerLink]="[program.id + '/events']">
-                    <strong>
-                      {{ program.name }}
-                    </strong>
-                  </a>
-                  <br />
-                  {{ program.description }}
-                </span>
-                <span class="col-3 text-truncate">
-                  <div *ngIf="
+        <tbody>
+          <tr ui-table-row
+              *ngFor="let program of state.orientationPrograms">
+            <td ui-table-cell>
+              <a ui-button
+                 variant="inline"
+                 cpTracker
+                 [eventData]="eventData"
+                 [routerLink]="[program.id + '/events']">
+                <strong>
+                  {{ program.name }}
+                </strong>
+              </a>
+            </td>
+            <td ui-table-cell>
+              <div *ngIf="
                       program.active_from !== noDuration && program.active_until !== noDuration
                     ">
-                    {{ program.active_from | cpDatePipe: dateFormat }} -
-                    {{ program.active_until | cpDatePipe: dateFormat }}
-                  </div>
-                </span>
-                <span class="col-2">
-                  {{ program.members_count }}
-                </span>
-                <span class="col-1">
-                  {{ program.events_count }}
-                </span>
-                <span class="col-1 action">
-                  <button data-toggle="modal"
-                          aria-label="duplicate"
-                          data-target="#programDuplicate"
-                          class="cpbtn cpbtn--link-dark"
-                          (click)="onClickDuplicate(program)">
-                    <i class="material-icons"
-                       aria-hidden="true">control_point_duplicate</i>
-                  </button>
-                  <button aria-label="delete"
-                          class="cpbtn cpbtn--link-dark action__delete"
-                          (click)="onClickDelete(program)">
-                    <span aria-hidden="true">&times;</span>
-                  </button>
-                </span>
+                {{ program.active_from | cpDatePipe: dateFormat }} -
+                {{ program.active_until | cpDatePipe: dateFormat }}
               </div>
-            </li>
-          </ul>
-        </div>
-      </div>
+            </td>
+            <td ui-table-cell>
+              {{ program.members_count }}
+            </td>
+            <td ui-table-cell>
+              {{ program.events_count }}
+            </td>
+            <td ui-table-cell
+                align="right">
+              <ready-ui-stack>
+                <button ui-button
+                        type="button"
+                        variant="inline"
+                        data-toggle="modal"
+                        aria-label="duplicate"
+                        data-target="#programDuplicate"
+                        (click)="onClickDuplicate(program)">
+                  <ready-ui-icon name="control_point_duplicate"
+                                 aria-label="Duplicate Program"></ready-ui-icon>
+                </button>
+                <button ui-button
+                        type="button"
+                        variant="inline"
+                        aria-label="delete"
+                        (click)="onClickDelete(program)">
+                  <ready-ui-icon name="close"
+                                 aria-label="Delete Program"></ready-ui-icon>
+                </button>
+              </ready-ui-stack>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-      <div class="row">
-        <div class="col-12">
-          <cp-pagination [pageNext]="pageNext"
-                         [pagePrev]="pagePrev"
-                         [pageNumber]="pageNumber"
-                         (next)="onPaginationNext()"
-                         (previous)="onPaginationPrevious()">
-          </cp-pagination>
-        </div>
-      </div>
+      <cp-pagination [pageNext]="pageNext"
+                     [pagePrev]="pagePrev"
+                     [pageNumber]="pageNumber"
+                     (next)="onPaginationNext()"
+                     (previous)="onPaginationPrevious()">
+      </cp-pagination>
     </div>
   </div>
 </div>

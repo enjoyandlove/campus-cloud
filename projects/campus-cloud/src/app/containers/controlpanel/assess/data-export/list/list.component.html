@@ -14,18 +14,32 @@
                    *ngIf="!reports.length"
                    [noContentText]="'t_data_export_no_data_found' | cpI18n">
     </cp-no-content>
-    <ul class="cp-table"
-        *ngIf="reports.length">
-      <li class="cp-table__header">
-        <h2>{{ 't_data_export_data_source' | cpI18n }}</h2>
-      </li>
-      <li class="cp-table__item"
-          *ngFor="let report of reports; trackBy: trackByFn">
-        <h3>{{report.name | cpI18n}}</h3>
-        <button type="button"
-                (click)="downloadReportByType.next(report)"
-                class="cpbtn cpbtn--link">{{ 't_shared_export' | cpI18n }}</button>
-      </li>
-    </ul>
+    <table ui-table
+           *ngIf="reports.length">
+      <thead class="cp-table__header">
+        <tr ui-table-row>
+          <th ui-table-cell>
+            <h2>{{ 't_data_export_data_source' | cpI18n }}</h2>
+          </th>
+          <th ui-table-cell></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ui-table-row
+            *ngFor="let report of reports; trackBy: trackByFn">
+          <td ui-table-cell>
+            <h3>{{report.name | cpI18n}}</h3>
+          </td>
+          <td ui-table-cell
+              align="right">
+            <button ui-button
+                    type="button"
+                    variant="inline"
+                    color="primary"
+                    (click)="downloadReportByType.next(report)">{{ 't_shared_export' | cpI18n }}</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </ng-container>
 </ng-container>

@@ -14,10 +14,10 @@ import { coerceBooleanProperty } from '@angular/cdk/coercion';
 @Component({
   selector: 'td[ui-table-cell], th[ui-table-cell]',
   template: `
-    <div class="wrapper" [ngClass]="wrapperClassess">
+    <div class="wrapper" [ngClass]="wrapperClassess" (click)="handleSort()">
       <ng-content></ng-content>
 
-      <button ui-button variant="inline" (click)="handleSort()" *ngIf="_sorting">
+      <button ui-button variant="inline" *ngIf="_sorting">
         <ready-ui-icon
           size="small"
           [name]="sortDirection === 'asc' ? 'arrow_upward' : 'arrow_downward'"

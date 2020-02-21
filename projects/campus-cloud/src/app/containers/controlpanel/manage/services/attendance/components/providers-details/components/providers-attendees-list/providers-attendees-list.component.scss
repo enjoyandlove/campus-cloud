@@ -1,45 +1,8 @@
 @import '~projects/campus-cloud/src/sass/core/colors';
-@import '~projects/campus-cloud/src/sass/components/card';
-@import '~projects/campus-cloud/src/sass/components/table';
-@import '~projects/campus-cloud/src/sass/components/button';
 
-.cp-table {
-  &__item {
-    span i.action-button {
-      color: $color-secondary-text;
-    }
-  }
-
-  &__header {
-    span.hover {
-      position: relative;
-
-      > span i {
-        top: 1px;
-        font-size: 17px;
-        position: absolute;
-        padding-left: 6px;
-      }
-    }
-  }
-
-  &__feedback {
-    padding: 10px;
-    margin: 5px 0 0 0;
-    background-color: $color-light-grey;
-  }
-
-  .avatar {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-  }
-
-  .meta {
-    margin-left: 40px;
-  }
-
-  .margin-right {
-    margin-right: 10px;
-  }
+.feedback {
+  padding: 10px;
+  margin: 5px 0 0 0;
+  font-size: small;
+  background-color: $color-light-grey;
 }

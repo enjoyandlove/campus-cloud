@@ -1,46 +1,4 @@
-@import '~projects/campus-cloud/src/sass/core/colors';
-@import '~projects/campus-cloud/src/sass/components/form';
-@import '~projects/campus-cloud/src/sass/components/card';
-@import '~projects/campus-cloud/src/sass/components/button';
-
-.cp-form {
-  &__title {
-    display: inherit;
-  }
-
-  &__header {
-    span.hover {
-      position: relative;
-
-      > span i {
-        top: 1px;
-        font-size: 17px;
-        position: absolute;
-        padding-left: 6px;
-      }
-    }
-  }
-}
-
-.delete-club {
-  font-size: 2em;
-}
-
-.no-content {
-  @include card-margin();
-}
-
-.clubs {
-  padding: 0;
-  list-style: none;
-
-  &__thumbnail {
-    img {
-      float: left;
-      width: 30px;
-      height: 30px;
-      margin-top: 5px;
-      margin-right: 10px;
-    }
-  }
+table,
+cp-no-content {
+  margin-top: 2em;
 }
