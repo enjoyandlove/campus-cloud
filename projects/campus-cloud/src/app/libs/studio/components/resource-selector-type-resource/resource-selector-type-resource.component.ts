@@ -70,6 +70,9 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
       return {};
     }
 
+    /**
+     * get the keys we need from each integration data object
+     */
     const extraDataTypeConfig = integrationData
       .filter(({ extra_data }) => extra_data.length)
       .map(({ id, extra_data }) => {
@@ -85,6 +88,10 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
         });
       });
 
+    /**
+     * returns an object which keys are the extra_data_type and
+     * values are all the keys we pluck in the last iteration
+     */
     return flatten(extraDataTypeConfig).reduce((obj, current) => {
       const { extra_data_type, ...rest } = current;
       obj[extra_data_type] = {
@@ -149,9 +156,7 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
         hasExtraData &&
         ContentUtilsProviders.html5ExtraDataTypes.includes(r.meta.extra_data_type)
       ) {
-        const { extra_data_id, short_name, school_integration_data_id } = integrationExtraDataMap[
-          r.meta.extra_data_type
-        ];
+        const { extra_data_id, short_name } = integrationExtraDataMap[r.meta.extra_data_type];
 
         return {
           ...r,
@@ -159,8 +164,7 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
           meta: {
             ...r.meta,
             link_params: {
-              extra_data_id,
-              school_integration_data_id
+              int_extra_data_id: extra_data_id
             }
           }
         };
