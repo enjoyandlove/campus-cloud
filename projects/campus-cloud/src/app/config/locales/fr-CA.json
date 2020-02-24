@@ -2265,9 +2265,6 @@
   "t_announcement_type": {
     "message": "Type d'annonce"
   },
-  "t_api_management": {
-    "message": "Gestion API"
-  },
   "t_api_management_access_token_created": {
     "message": "Token d'accès à l'API créé avec succès"
   },
@@ -2410,7 +2407,7 @@
     "message": "Programmes populaires"
   },
   "t_assess_total_orientation_programs": {
-    "message": "Orientation Events"
+    "message": "Événements d'orientation"
   },
   "t_audience_dynamic_integration_disabled": {
     "message": "Pour activer cette fonctionalité, veuillez contacter votre consultant en engagement mobile."
@@ -3403,7 +3400,7 @@
     "message": "Ajouter"
   },
   "t_shared_all_experiences_and_audiences": {
-    "message": "All Experiences & Audiences"
+    "message": "Toutes les audiences & expériences"
   },
   "t_shared_app": {
     "message": "App"
@@ -3594,6 +3591,9 @@
   "t_shared_preview": {
     "message": "Aperçu"
   },
+  "t_shared_read_only": {
+    "message": "Lecture Seule"
+  },
   "t_shared_revoke": {
     "message": "Révoquer"
   },
@@ -3732,11 +3732,59 @@
   "t_team_settings_resend_invite_success": {
     "message": "Invitation renvoyée !"
   },
+  "t_terms_of_use_button_publish": {
+    "message": "Publier"
+  },
+  "t_terms_of_use_disclaimer": {
+    "message": "En vous inscrivant, vous acceptez la Politique de confidentialité et les Conditions d’utilisation de Ready Education."
+  },
+  "t_terms_of_use_menu": {
+    "message": "Conditions d'Utilisation"
+  },
+  "t_terms_of_use_paragraph_1": {
+    "message": "Campus Cloud vous permet de publier vos Conditions d'Utilisation pour informer les utilisateurs de comment l'application devrait être utilisée."
+  },
+  "t_terms_of_use_paragraph_2": {
+    "message": "La Politique de confidentialité et les Conditions d’utilisation de Ready Education sont déjà une clause faisant partie du processus d'inscription."
+  },
+  "t_terms_of_use_paragraph_3": {
+    "message": "Une fois que vous publierez vos conditions pour la première fois, les utilisateurs de l'application seront invités à les accepter en procédant au processus d'inscription ou de connexion. La même chose va se produire à chaque fois que vous les mettrez à jour. Les utilisateurs qui refuseront d'accepter les conditions seront gardés déconnectés."
+  },
+  "t_terms_of_use_placeholder": {
+    "message": "Placez Vos Conditions Ici"
+  },
+  "t_terms_of_use_privacy_policy": {
+    "message": "Politique de confidentialité"
+  },
+  "t_terms_of_use_published_successfully": {
+    "message": "Conditions d'Utilisation publiées avec succès"
+  },
+  "t_terms_of_use_publish_terms_modal_body": {
+    "message": "Les Conditions d'Utilisation vont être envoyées à tous les utilisateurs de l'Application du Campus en tant que clause lors du processus d'inscription et de connexion."
+  },
+  "t_terms_of_use_publish_terms_modal_title": {
+    "message": "Publier les Conditions?"
+  },
+  "t_terms_of_use_terms_heading": {
+    "message": "Vos Conditions d'Utilisation du Campus"
+  },
+  "t_terms_of_use_title": {
+    "message": "Conditions d'Utilisation de l'Application du Campus"
+  },
+  "t_terms_of_use_tos": {
+    "message": "Conditions d’utilisation"
+  },
+  "t_terms_use_tooltip_text": {
+    "message": "La Politique de confidentialité et les Conditions d’utilisation de Ready Education sont déjà une clause faisant partie du processus d'inscription."
+  },
   "t_tile_button_default": {
     "message": "Défaut"
   },
   "t_tile_button_locked": {
     "message": "Verrouillé"
+  },
+  "t_walls_hide_post": {
+    "message": "Masquer la publication"
   },
   "t_walls_integrations_error_could_not_create_channel": {
     "message": "Erreur lors de la création de la section"
@@ -3755,6 +3803,9 @@
   },
   "t_walls_mute_student": {
     "message": "Désactiver l'utilisateur"
+  },
+  "t_walls_show_post": {
+    "message": "Afficher la publication"
   },
   "t_walls_unmute_student": {
     "message": "Réactiver l'utilisateur"
