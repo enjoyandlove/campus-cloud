@@ -1,61 +1,62 @@
-<div>
-  <ul class="locations cp-form">
-    <li class="cp-form__header col-12">
-      <div class="row">
-        <cp-sorting-header class="col-7"
-                           sortLabel="name"
-                           [sortField]="sortBy"
-                           (click)="doSort.emit('name')"
-                           [sortDirection]="sortDirection"
-                           [label]="sortingLabels.locations">
-        </cp-sorting-header>
+  <table ui-table>
+    <thead>
+      <tr ui-table-row>
+        <th ui-table-cell
+            [sorting]="sortBy === 'name'"
+            (sort)="doSort.emit('name')"
+            [sortDirection]="sortDirection">
+          {{ sortingLabels.locations }}
+        </th>
+        <th ui-table-cell>{{ 'locations_label_acronym' | cpI18n }}</th>
+        <th ui-table-cell>{{ 'category' | cpI18n }}</th>
+        <th ui-table-cell></th>
 
-        <span class="col-2">{{ 'locations_label_acronym' | cpI18n }}</span>
-        <span class="col-2">{{ 'category' | cpI18n }}</span>
-        <span class="col-1"></span>
-      </div>
-    </li>
+      </tr>
+    </thead>
 
-    <li class="cp-form__item col-12"
-        *ngFor="let location of data$ | async; index as i">
-      <div class="row">
-        <span class="col-7 text-truncate">
-          <img class="rounded img-fit-cover float-left avatar"
-               [src]="location.image_url ? location.image_url : defaultImage"
-               [alt]="'t_shared_img_alt' | cpI18n: i + 1" />
-          <strong>
-            <a cpTracker
-               cpTarget="view_info"
-               class="cp-form__title"
-               [eventData]="eventData"
-               [routerLink]="[location.id + '/info']">
-              {{ location.name }}
-            </a>
-          </strong>
+    <tbody>
+      <tr ui-table-row
+          *ngFor="let location of data$ | async; index as i">
+        <td ui-table-cell>
+          <ready-ui-stack>
+            <ready-ui-avatar [alt]="'t_shared_img_alt' | cpI18n: i + 1"
+                             [src]="location.image_url ? location.image_url : defaultImage">
+            </ready-ui-avatar>
+            <ready-ui-stack direction="vertical">
+              <strong>
+                <a ui-button
+                   cpTracker
+                   variant="inline"
+                   cpTarget="view_info"
+                   [eventData]="eventData"
+                   [routerLink]="[location.id + '/info']">
+                  {{ location.name }}
+                </a>
+              </strong>
 
-          <br />
-          {{ location.address }}
-        </span>
+              {{ location.address }}
+            </ready-ui-stack>
+          </ready-ui-stack>
+        </td>
 
-        <span cpTarget="acronym"
-              class="col-2 text-truncate margin-top">
+        <td ui-table-cell>
           {{ location.short_name }}
-        </span>
+        </td>
 
-        <span cpTarget="category_name"
-              class="col-2 text-truncate margin-top">
+        <td ui-table-cell>
           {{ location.category_name }}
-        </span>
+        </td>
 
-        <span class="col-1 text-right">
-          <button type="button"
+        <td ui-table-cell
+            align="right">
+          <button ui-button
+                  type="button"
+                  variant="inline"
                   cpTarget="delete"
-                  class="unstyled-button action-button"
                   (click)="deleteClick.emit(location)">
-            &times;
+            <ready-ui-icon name="close"></ready-ui-icon>
           </button>
-        </span>
-      </div>
-    </li>
-  </ul>
-</div>
+        </td>
+      </tr>
+    </tbody>
+  </table>

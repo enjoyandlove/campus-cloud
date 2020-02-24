@@ -1,25 +1,8 @@
-@import '~projects/campus-cloud/src/sass/components/form';
-@import '~projects/campus-cloud/src/sass/components/card';
-@import '~projects/campus-cloud/src/sass/components/button';
-
-ul {
-  padding-left: 0;
-  list-style: none;
+cp-searchbox {
+  width: 18em;
+  display: block;
 }
 
-.cp-form__header {
-  span.hover {
-    position: relative;
-
-    > span i {
-      top: 1px;
-      font-size: 17px;
-      position: absolute;
-      padding-left: 6px;
-    }
-  }
-}
-
-.deletebutton {
-  font-size: 2em;
+table {
+  margin-top: 2em;
 }
