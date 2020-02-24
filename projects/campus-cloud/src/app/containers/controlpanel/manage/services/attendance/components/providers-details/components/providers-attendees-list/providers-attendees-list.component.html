@@ -48,10 +48,8 @@
                                    [src]="assessment.avatar_thumb_url ? assessment.avatar_thumb_url : defaultImage">
                   </ready-ui-avatar>
                   <div class="meta">
-                    <strong
-                            *ngIf="assessment.attendee_type !== deletedAttendee">
+                    <strong>
                       {{ assessment.attendee_type !== deletedAttendee ? assessment.firstname + ' ' + assessment.lastname : ('t_shared_closed_account' | cpI18n) }}
-                      {{ assessment.firstname }} {{ assessment.lastname }}
                     </strong>
                     <br />
                     <small class="text-muted">
