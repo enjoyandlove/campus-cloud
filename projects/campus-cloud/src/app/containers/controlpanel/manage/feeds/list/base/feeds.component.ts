@@ -86,6 +86,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
   searchHandler(query: string) {
     query = query.trim();
+
     // if query is empty do regular search
     if (!query) {
       this.state = {

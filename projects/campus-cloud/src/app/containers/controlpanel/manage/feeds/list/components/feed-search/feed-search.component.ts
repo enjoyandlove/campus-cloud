@@ -1,6 +1,6 @@
-import { tap, distinctUntilChanged, debounceTime, skip } from 'rxjs/operators';
 import { OnInit, Output, Component, EventEmitter } from '@angular/core';
 import { Subject, Observable, BehaviorSubject, merge } from 'rxjs';
+import { tap, debounceTime, skip } from 'rxjs/operators';
 import { FormBuilder } from '@angular/forms';
 
 @Component({
@@ -31,7 +31,6 @@ export class FeedSearchComponent implements OnInit {
   input = new Subject();
   input$ = this.input.asObservable().pipe(
     debounceTime(1000),
-    distinctUntilChanged(),
     tap((value: string) => this.query.next(value))
   );
 

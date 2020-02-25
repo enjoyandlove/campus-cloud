@@ -158,6 +158,7 @@ const _feedsReducer = createReducer(
         ...state,
         threads,
         comments,
+        expandedThreadIds: [],
         results: results.map((r) => ({ id: r.id, type: 'THREAD' }))
       };
     }
@@ -166,6 +167,7 @@ const _feedsReducer = createReducer(
       ...state,
       threads,
       comments,
+      expandedThreadIds: [],
       results: groupThreads(results)
     };
   })
