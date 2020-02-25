@@ -26,7 +26,7 @@ enum FeedsActions {
 
   RESET_STATE = '[manage.walls] reset state',
 
-  EXPAND_COMMENTS = 'manage.walls expand comments'
+  EXPAND_COMMENTS = '[manage.walls] expand comments'
 }
 
 export const setSocialPostCategories = createAction(
