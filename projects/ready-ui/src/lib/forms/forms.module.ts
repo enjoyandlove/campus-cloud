@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
+import { TagModule } from './tag/tag.module';
 import { HintModule } from './hint/hint.module';
 import { LabelModule } from './label/label.module';
 import { InputModule } from './input/input.module';
@@ -16,6 +17,7 @@ import { ColorPickerModule } from './color-picker/color-picker.module';
 @NgModule({
   declarations: [],
   exports: [
+    TagModule,
     HintModule,
     LabelModule,
     InputModule,
@@ -29,6 +31,7 @@ import { ColorPickerModule } from './color-picker/color-picker.module';
     ColorPickerModule
   ],
   imports: [
+    TagModule,
     HintModule,
     LabelModule,
     ErrorModule,

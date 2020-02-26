@@ -1,5 +1,6 @@
-export * from './error';
+export * from './tag';
 export * from './hint';
+export * from './error';
 export * from './input';
 export * from './label';
 export * from './select';

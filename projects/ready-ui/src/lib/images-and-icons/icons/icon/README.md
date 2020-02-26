@@ -89,4 +89,7 @@ None
 `smartphone`
 `help_outline`
 `chat_bubble`
+`filter_list`
+`flag`
+`person`
 

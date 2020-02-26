@@ -13,7 +13,7 @@ export class ButtonComponent {
   variant: 'stroked' | 'flat' | 'basic' | 'inline' = 'basic';
 
   @Input()
-  color: 'primary' | 'danger' | 'warning' | 'default' | 'white' = 'default';
+  color: 'primary' | 'danger' | 'warning' | 'default' | 'white' | 'inherit' = 'default';
 
   @HostBinding('class.stroked')
   get stroked() {
@@ -38,6 +38,11 @@ export class ButtonComponent {
   @HostBinding('class.primary')
   get primary() {
     return this.color === 'primary';
+  }
+
+  @HostBinding('class.inherit')
+  get inherit() {
+    return this.color === 'inherit';
   }
 
   @HostBinding('class.white')
