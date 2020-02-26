@@ -34,7 +34,11 @@ const icons = {
   computer: 'computer',
   smartphone: 'smartphone',
   help_outline: 'help_outline',
-  chat_bubble: 'chat_bubble'
+  chat_bubble: 'chat_bubble',
+  'ready-app': 'ready-app',
+  filter_list: 'filter_list',
+  flag: 'flag',
+  person: 'person'
 };
 
 storiesOf('Icons', module)

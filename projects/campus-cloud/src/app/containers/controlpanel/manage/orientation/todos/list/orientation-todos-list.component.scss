@@ -1,39 +1,4 @@
-@import '~projects/campus-cloud/src/sass/core/colors';
-@import '~projects/campus-cloud/src/sass/components/form';
-@import '~projects/campus-cloud/src/sass/components/card';
-@import '~projects/campus-cloud/src/sass/components/button';
-
-.no-content {
-  @include card-margin();
-}
-
-.delete-button {
-  font-size: 2em;
-}
-
-.action-button {
-  line-height: 1;
-  color: $color-secondary-text;
-
-  &:first-child {
-    margin-right: 10px;
-  }
-}
-
-.cp-form__header {
-  span.hover {
-    position: relative;
-
-    > span i {
-      top: 1px;
-      font-size: 17px;
-      position: absolute;
-      padding-left: 6px;
-    }
-  }
-}
-
-.todos {
-  padding: 0;
-  list-style: none;
+table,
+cp-no-content {
+  margin-top: 2em;
 }

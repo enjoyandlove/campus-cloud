@@ -4,12 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 
 import { ITodo } from '../todos.interface';
 import { TodosService } from '../todos.service';
-import { CPSession } from '../../../../../../session';
-import { BaseComponent } from '../../../../../../base';
-import { FORMAT } from '../../../../../../shared/pipes/date/date.pipe';
-import { amplitudeEvents } from '../../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../../shared/services';
-import { CP_TRACK_TO } from '../../../../../../shared/directives/tracking/tracking.directive';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
+import { FORMAT } from '@campus-cloud/shared/pipes';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-orientation-todos-list',
@@ -30,7 +30,7 @@ export class OrientationTodosListComponent extends BaseComponent implements OnIn
   state = {
     todos: [],
     search_str: null,
-    sort_field: null,
+    sort_field: 'title',
     sort_direction: 'asc'
   };
 
