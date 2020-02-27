@@ -1,4 +1,4 @@
-<ng-container [ngSwitch]="loading">
+<ng-container [ngSwitch]="loading$ | async">
   <cp-one-column width="third">
     <cp-feed-search (feedSearch)="searchHandler($event)"></cp-feed-search>
     <div class="row justify-content-around">
