@@ -1,5 +1,5 @@
-import { BehaviorSubject, combineLatest, of, zip, Observable, merge } from 'rxjs';
-import { map, switchMap, filter, tap, mergeMap, take } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, of, zip, Observable, merge, Subject } from 'rxjs';
+import { map, switchMap, filter, tap, mergeMap, take, startWith } from 'rxjs/operators';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
@@ -65,6 +65,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   loading = true;
   disablePost = 100;
   state: IState = state;
+  loading$: Observable<boolean>;
+  searching: Subject<boolean> = new Subject();
   isFilteredByRemovedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   isFilteredByFlaggedPosts$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   results$: Observable<Array<{ id: number; type: string; children?: number[] }> | any[]>;
@@ -81,7 +83,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     public userService: UserService
   ) {
     super();
-    super.isLoading().subscribe((res) => (this.loading = res));
   }
 
   searchHandler(query: string) {
@@ -102,6 +103,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     if (this.pageNumber > 1 && !this.state.query) {
       this.resetPagination();
     }
+
+    this.searching.next(true);
 
     this.state = {
       ...this.state,
@@ -140,11 +143,9 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     /**
      * do ranged search on all valid object types
      */
-    const matchingResources$ = this.service.searchCampusWall(
-      this.startRange,
-      this.endRange,
-      searchCampusParam
-    );
+    const matchingResources$ = this.service
+      .searchCampusWall(this.startRange, this.endRange, searchCampusParam)
+      .pipe(map((results) => super.updatePagination(results)));
 
     const stream$ = matchingResources$.pipe(
       switchMap((results: SocialWallContent[]) => {
@@ -304,19 +305,20 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       })
     );
 
-    super
-      .fetchData(stream$)
-      .then((res) => {
-        this.store.dispatch(fromStore.setResults({ results: res.data }));
+    stream$.subscribe(
+      (results) => {
+        this.searching.next(false);
+        this.store.dispatch(fromStore.setResults({ results }));
         this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_SEARCHED_INFORMATION, amplitude);
         this.state = Object.assign({}, this.state, {
-          feeds: FeedsUtilsService.groupThreads(res.data)
+          feeds: FeedsUtilsService.groupThreads(results)
         });
-      })
-      .catch(() => {
-        this.loading = false;
+      },
+      () => {
+        this.searching.next(false);
         this.state = Object.assign({}, this.state, { feeds: [] });
-      });
+      }
+    );
   }
 
   onFilterByCategory(category) {
@@ -462,6 +464,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.loading$ = merge(super.isLoading(), this.searching.asObservable()).pipe(startWith(true));
+
     const posts$ = this.store.pipe(select(fromStore.getThreads));
     const results$ = this.store.pipe(select(fromStore.getResults));
     const comments$ = this.store.pipe(select(fromStore.getComments));
