@@ -118,15 +118,17 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       wall_source: FeedsAmplitudeService.getWallSource(this.state)
     };
 
-    const validObjectTypes = [
-      SocialWallContentObjectType.campusThread,
-      SocialWallContentObjectType.campusComment
-    ];
+    const validObjectTypes = [];
 
     if (!this.state.isCampusThread) {
       validObjectTypes.push(
         SocialWallContentObjectType.groupComment,
         SocialWallContentObjectType.groupThread
+      );
+    } else {
+      validObjectTypes.push(
+        SocialWallContentObjectType.campusThread,
+        SocialWallContentObjectType.campusComment
       );
     }
 
