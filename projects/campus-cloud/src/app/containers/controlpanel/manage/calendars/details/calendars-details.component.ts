@@ -4,15 +4,15 @@ import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
-import { CPSession } from '../../../../../session';
-import { BaseComponent } from '../../../../../base';
+import { CPSession } from '@campus-cloud/session';
+import { BaseComponent } from '@campus-cloud/base';
+import { FORMAT } from '@campus-cloud/shared/pipes';
 import { ICalendar } from './../calendars.interface';
 import { CalendarsService } from './../calendars.services';
-import { baseActions, IHeader } from './../../../../../store/base';
-import { FORMAT } from './../../../../../shared/pipes/date/date.pipe';
-import { CP_TRACK_TO } from '../../../../../shared/directives/tracking';
-import { amplitudeEvents } from '../../../../../shared/constants/analytics';
-import { CPI18nService, CPTrackingService } from '../../../../../shared/services';
+import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
+import { baseActions, IHeader } from '@campus-cloud/store/base';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-calendars-details',

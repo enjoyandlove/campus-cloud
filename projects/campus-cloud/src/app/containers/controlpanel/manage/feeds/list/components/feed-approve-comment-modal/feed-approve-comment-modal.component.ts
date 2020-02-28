@@ -1,6 +1,9 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { takeUntil } from 'rxjs/operators';
 import { Observable, Subject } from 'rxjs';
+import { Store } from '@ngrx/store';
+
+import * as fromStore from '../../../store';
 
 import { FeedsService } from '../../../feeds.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
@@ -26,7 +29,11 @@ export class FeedApproveCommentModalComponent implements OnInit, OnDestroy {
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
-  constructor(private cpI18n: CPI18nService, public feedsService: FeedsService) {}
+  constructor(
+    private cpI18n: CPI18nService,
+    public feedsService: FeedsService,
+    private store: Store<fromStore.IWallsState>
+  ) {}
 
   onSubmit() {
     const data = { flag: 2 };
@@ -40,9 +47,10 @@ export class FeedApproveCommentModalComponent implements OnInit, OnDestroy {
 
     const stream$ = this._isCampusWallView ? approveCampusWallComment$ : approveGroupWallComment$;
 
-    stream$.subscribe((_) => {
+    stream$.subscribe((updatedComment) => {
       $('#approveCommentModal').modal('hide');
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
+      this.store.dispatch(fromStore.updateComment({ comment: updatedComment }));
       this.approved.emit(this.feed.id);
       this.teardown.emit();
     });

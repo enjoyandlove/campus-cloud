@@ -6,8 +6,10 @@ import { get as _get } from 'lodash';
 
 import * as fromStore from '../../../store';
 
+import { ISnackbar } from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
 import { User } from '@campus-cloud/shared/models';
+import { baseActionClass } from '@campus-cloud/store/base';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { canSchoolReadResource } from '@campus-cloud/shared/utils';
 import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
@@ -40,7 +42,7 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
     private session: CPSession,
     public cpI18n: CPI18nService,
     private userService: UserService,
-    private store: Store<fromStore.IWallsState>
+    private store: Store<fromStore.IWallsState | ISnackbar>
   ) {}
 
   ngOnInit() {
@@ -141,13 +143,16 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
           });
         })
       )
-      .subscribe(({ social_restriction }: any) => {
-        if (social_restriction) {
-          this.store.dispatch(fromStore.banEmail({ email }));
-        } else {
-          this.store.dispatch(fromStore.unBanEmail({ email }));
-        }
-      });
+      .subscribe(
+        ({ social_restriction }: any) => {
+          if (social_restriction) {
+            this.store.dispatch(fromStore.banEmail({ email }));
+          } else {
+            this.store.dispatch(fromStore.unBanEmail({ email }));
+          }
+        },
+        () => this.handleError()
+      );
   }
 
   private showMuteOption() {
@@ -167,5 +172,13 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
   private isByAppUser() {
     const email = this.getFeedEmail();
     return Boolean(email.length);
+  }
+
+  private handleError() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body: this.cpI18n.translate('something_went_wrong')
+      })
+    );
   }
 }

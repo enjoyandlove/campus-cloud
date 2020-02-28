@@ -66,7 +66,7 @@ describe('ListUpcomingComponent', () => {
     ];
     fixture.detectChanges();
 
-    const listElements = de.queryAll(By.css('.cp-form__item'));
+    const listElements = de.queryAll(By.css('tbody tr[ui-table-row]'));
     expect(listElements.length).toBe(2);
   });
 
@@ -77,7 +77,7 @@ describe('ListUpcomingComponent', () => {
     ];
     fixture.detectChanges();
 
-    const listElements = de.queryAll(By.css('.cp-form__item'));
+    const listElements = de.queryAll(By.css('tbody tr[ui-table-row]'));
     const [integratedEventEl, notIntegratedEventEl] = listElements;
 
     const integratedEventIcon = integratedEventEl.query(By.css('.js_event_external'));

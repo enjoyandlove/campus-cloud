@@ -1,87 +1,78 @@
-<div class="row">
-  <div class="col-12">
-    <div class="cp-card">
-      <div class="row">
-        <div class="col-4">
-          <cp-searchbox (query)="onSearch($event)"
-                        [placeholder]="'admin_search_by_email_or_email' | cpI18n">
-          </cp-searchbox>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<ready-ui-card>
+  <cp-searchbox (query)="onSearch($event)"
+                [placeholder]="'admin_search_by_email_or_email' | cpI18n">
+  </cp-searchbox>
+</ready-ui-card>
 
-<div [ngSwitch]="loading">
+<ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div *ngSwitchCase="false">
-    <ul class="cp-form">
-      <li class="cp-form__header col-12">
-        <div class="row">
-          <cp-sorting-header class="col-5"
-                             sortLabel="firstname"
-                             [label]="sortingLabels.name"
-                             (click)="doSort('firstname')"
-                             [sortField]="state.sort_field"
-                             [sortDirection]="state.sort_direction">
-          </cp-sorting-header>
+  <ng-container *ngSwitchCase="false">
+    <table ui-table>
+      <thead>
+        <tr ui-tabler-row>
+          <th ui-table-cell
+              (sort)="doSort('firstname')"
+              [sortDirection]="state.sort_direction"
+              [sorting]="state.sort_field === 'firstname'">
+            {{ sortingLabels.name }}</th>
+          <th ui-table-cell
+              (sort)="doSort('status')"
+              [sortDirection]="state.sort_direction"
+              [sorting]="state.sort_field === 'status'">
+            {{ sortingLabels.status }}</th>
+          <th ui-table-cell></th>
+          <th ui-table-cell></th>
+        </tr>
+      </thead>
 
-          <cp-sorting-header class="col-4"
-                             sortLabel="status"
-                             (click)="doSort('status')"
-                             [label]="sortingLabels.status"
-                             [sortField]="state.sort_field"
-                             [sortDirection]="state.sort_direction">
-          </cp-sorting-header>
+      <tbody>
+        <tr ui-table-row
+            *ngFor="let admin of state.admins; let i = index">
+          <td ui-table-cell>
+            <ready-ui-stack direction="vertical"
+                            spacing="tight">
+              <strong>
+                <a [routerLink]="[admin.id + '/edit']">
+                  {{ admin.firstname }} {{ admin.lastname }}
+                  <span
+                        *ngIf="admin.is_current_user">({{ 'you' | cpI18n }})</span>
+                </a>
+              </strong>
+              <small class="text-muted">{{ admin.email }}</small>
+            </ready-ui-stack>
+          </td>
 
-          <span class="col-2"></span>
-          <span class="col-1"></span>
-        </div>
-      </li>
-
-      <li class="cp-form__item col-12"
-          *ngFor="let admin of state.admins; let i = index">
-        <div class="row">
-          <span class="col-5 text-truncate">
-            <strong>
-              <a [routerLink]="[admin.id + '/edit']">
-                {{ admin.firstname }} {{ admin.lastname }}
-                <span
-                      *ngIf="admin.is_current_user">({{ 'you' | cpI18n }})</span>
-              </a>
-            </strong>
-            <br>
-            <small class="text-muted">{{ admin.email }}</small>
-          </span>
-
-          <span class="col-4 text-truncate">
+          <td ui-table-cell>
             {{ admin.account_activated ? cpI18n.translate('active') : cpI18n.translate('pending') }}
-          </span>
+          </td>
 
-          <span class="col-2">
-            <button cpTarget="resend_invite"
-                    class="cpbtn cpbtn--link"
+          <td ui-table-cell>
+            <button ui-button
+                    color="primary"
+                    variant="inline"
+                    cpTarget="resend_invite"
                     *ngIf="!admin.account_activated"
                     (click)="onResendInvite(admin, i)"
                     [disabled]="disabledSendInviteButtons[i]">
               {{ 't_team_settings_resend_invite' | cpI18n }}
             </button>
-          </span>
+          </td>
 
-          <span class="col-1 text-right">
-            <button type="button"
+          <td ui-table-cell
+              align="right">
+            <button ui-button
+                    type="button"
+                    variant="inline"
+                    data-toggle="modal"
                     (click)="deleteAdmin = admin"
                     *ngIf="!admin.is_current_user"
-                    class="cpbtn cpbtn--link-dark deletebutton"
-                    data-toggle="modal"
                     data-target="#teamDeleteModal">
-              <span aria-hidden="true">&times;</span>
+              <ready-ui-icon name="close"></ready-ui-icon>
             </button>
-          </span>
-        </div>
-      </li>
-    </ul>
+          </td>
+        </tr>
+    </table>
 
     <div class="row">
       <div class="col-12">
@@ -93,8 +84,8 @@
         </cp-pagination>
       </div>
     </div>
-  </div>
-</div>
+  </ng-container>
+</ng-container>
 
 <cp-modal modalId="teamDeleteModal">
   <cp-team-delete [admin]="deleteAdmin"

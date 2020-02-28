@@ -62,7 +62,10 @@ import {
     FeedsRoutingModule,
     ReactiveFormsModule,
     ImageModule.forRoot(),
-    StoreModule.forFeature('WALLS_STATE', fromWalls.reducer)
+    StoreModule.forFeature('WALLS_STATE', {
+      feeds: fromWalls.feedsReducer,
+      bannedEmails: fromWalls.bannedEmailsReducer
+    })
   ],
 
   providers: [FeedsService, FeedsUtilsService, UserService],

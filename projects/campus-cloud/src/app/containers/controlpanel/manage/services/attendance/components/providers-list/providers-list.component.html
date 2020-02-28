@@ -7,108 +7,107 @@
     </cp-no-content>
 
     <ng-container *ngIf="state.providers.length">
-      <div class="row">
-        <div class="col-12">
-          <div class="cp-table">
-            <div class="cp-table__header">
-              <div class="row">
-                <div class="col-4">
-                  <cp-sorting-header sortLabel="provider_name"
-                                     (click)="doSort('provider_name')"
-                                     [sortField]="state.sort_field"
-                                     [label]="sortingLabels.provider_name"
-                                     [sortDirection]="state.sort_direction">
-                  </cp-sorting-header>
-                </div>
-                <div class="col-1">
-                  <span>
-                    {{ 'services_visits' | cpI18n }}
-                  </span>
-                </div>
-                <div class="col-1">
-                  <cp-sorting-header sortLabel="num_ratings"
-                                     (click)="doSort('num_ratings')"
-                                     [sortField]="state.sort_field"
-                                     [label]="sortingLabels.rating"
-                                     [sortDirection]="state.sort_direction">
-                  </cp-sorting-header>
-                </div>
-                <div class="col-3">
-                  <span>{{ 't_shared_average_rating' | cpI18n }}</span>
-                </div>
-                <div class="col-2">
-                  <span>{{ 'assessment' | cpI18n }}</span>
-                </div>
-                <div class="col-1"></div>
-              </div>
-            </div>
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell
+                (sort)="doSort('provider_name')"
+                [sorting]="state.sort_field === 'provider_name'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.provider_name }}
+            </th>
+            <th ui-table-cell>
+              {{ 'services_visits' | cpI18n }}
+            </th>
+            <th ui-table-cell
+                (sort)="doSort('num_ratings')"
+                [sorting]="state.sort_field === 'num_ratings'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.rating }}
+            </th>
+            <th ui-table-cell>
+              {{ 't_shared_average_rating' | cpI18n }}
+            </th>
+            <th ui-table-cell>
+              {{ 'assessment' | cpI18n }}
+            </th>
+            <th ui-table-cell></th>
+          </tr>
+        </thead>
 
-            <div class="cp-table__item"
-                 *ngFor="let provider of state.providers">
-              <div class="row">
-                <div class="col-4 text-truncate">
-                  <a cpTracker
-                     [eventData]="eventData"
-                     [routerLink]="['provider/' + provider.id]">
-                    <span>
-                      <strong>{{ provider.provider_name }}</strong>
-                      <br />
-                      {{ provider.email }}
-                    </span>
-                  </a>
-                </div>
-                <div class="col-1">
-                  <span>{{ provider.total_visits }}</span>
-                </div>
-                <div class="col-1">
-                  <span>{{ provider.has_feedback ? provider.num_ratings : '---' }}</span>
-                </div>
-                <div class="col-3">
-                  <cp-stars [maxRate]="5"
-                            [size]="listStarSize"
-                            *ngIf="provider.has_feedback"
-                            [avgRate]="provider.avg_rating_percent">
-                  </cp-stars>
-                </div>
-                <div class="col-2">
-                  <a target="_blank"
-                     (click)="trackCheckinEvent(provider.encrypted_campus_service_id)"
-                     [routerLink]="[
-                      '/cb/checkin/s/' +
-                        provider.encrypted_campus_service_id +
-                        '/' +
-                        provider.encrypted_id
-                    ]"
-                     class="startcheckin cpbtn cpbtn--no-border cpbtn--secondary">
-                    {{ 't_shared_web_checkin' | cpI18n }}
-                  </a>
-                </div>
-                <div class="col-1">
-                  <span>
-                    <i (click)="showEditModal(provider)"
-                       class="material-icons hover margin-right action-button">edit</i>
-                    <i data-toggle="modal"
-                       data-target="#deleteProvider"
-                       class="material-icons hover action-button"
-                       (click)="deleteProvider = provider">close</i>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+        <tbody>
+          <tr ui-table-row
+              *ngFor="let provider of state.providers">
+            <td ui-table-cell>
+              <a cpTracker
+                 [eventData]="eventData"
+                 [routerLink]="['provider/' + provider.id]">
+                <span>
+                  <strong>{{ provider.provider_name }}</strong>
+                  <br />
+                  {{ provider.email }}
+                </span>
+              </a>
+            </td>
+            <td ui-table-cell>
+              {{ provider.total_visits }}
+            </td>
+            <td ui-table-cell>
+              {{ provider.has_feedback ? provider.num_ratings : '---' }}
+            </td>
+            <td ui-table-cell>
+              <cp-stars [maxRate]="5"
+                        [size]="listStarSize"
+                        *ngIf="provider.has_feedback"
+                        [avgRate]="provider.avg_rating_percent">
+              </cp-stars>
+            </td>
+            <td ui-table-cell>
+              <a ui-button
+                 variant="inline"
+                 target="_blank"
+                 (click)="trackCheckinEvent(provider.encrypted_campus_service_id)"
+                 [routerLink]="[
+                    '/cb/checkin/s/' +
+                      provider.encrypted_campus_service_id +
+                      '/' +
+                      provider.encrypted_id
+                  ]">
+                {{ 't_shared_web_checkin' | cpI18n }}
+              </a>
+            </td>
+            <td ui-table-cell
+                align="right">
+              <ready-ui-stack>
+                <button ui-button
+                        type="button"
+                        variant="inline"
+                        aria-label="Edit Provider"
+                        (click)="showEditModal(provider)">
+                  <ready-ui-icon name="edit"></ready-ui-icon>
+                </button>
+                <button ui-button
+                        type="button"
+                        variant="inline"
+                        aria-label="Delete Provider"
+                        data-toggle="modal"
+                        data-target="#deleteProvider"
+                        (click)="deleteProvider = provider">
+                  <ready-ui-icon name="close"></ready-ui-icon>
+                </button>
+              </ready-ui-stack>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
-      <div class="row">
-        <div class="col-12">
-          <cp-pagination [pageNext]="pageNext"
-                         [pagePrev]="pagePrev"
-                         [pageNumber]="pageNumber"
-                         (next)="onPaginationNext()"
-                         (previous)="onPaginationPrevious()">
-          </cp-pagination>
-        </div>
-      </div>
+
+      <cp-pagination [pageNext]="pageNext"
+                     [pagePrev]="pagePrev"
+                     [pageNumber]="pageNumber"
+                     (next)="onPaginationNext()"
+                     (previous)="onPaginationPrevious()">
+      </cp-pagination>
     </ng-container>
 
     <cp-modal modalId="deleteProvider">

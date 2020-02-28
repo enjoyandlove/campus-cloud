@@ -1,36 +1,30 @@
-<ul class="categories cp-form">
-  <li class="cp-form__header col-12">
-    <div class="row">
-      <cp-sorting-header sortLabel="name"
-                         [sortField]="sortBy"
-                         [label]="'name' | cpI18n"
-                         [sortDirection]="sortDirection"
-                         class="col-3 js_test_sorting_name"
-                         (click)="doSort.emit('name')">
-      </cp-sorting-header>
-      <span class="col-2">{{ 't_shared_type' | cpI18n }}</span>
-      <span class="col-1">{{ 't_shared_icon' | cpI18n }}</span>
-      <span class="col-2">{{ 't_shared_default' | cpI18n }}</span>
-      <span class="col-2">{{ 'locations' | cpI18n }}</span>
-      <span class="col-2"></span>
-    </div>
-  </li>
+<table ui-table>
+  <thead>
+    <tr ui-table-row>
+      <th ui-table-cell
+          (sort)="doSort.emit('name')"
+          [sorting]="sortBy === 'name'"
+          [sortDirection]="sortDirection">
+        {{ 'name' | cpI18n }}
+      </th>
+      <th ui-table-cell>{{ 't_shared_type' | cpI18n }}</th>
+      <th ui-table-cell>{{ 't_shared_icon' | cpI18n }}</th>
+      <th ui-table-cell>{{ 't_shared_default' | cpI18n }}</th>
+      <th ui-table-cell>{{ 'locations' | cpI18n }}</th>
+      <th ui-table-cell></th>
+    </tr>
+  </thead>
 
-  <li class="cp-form__item col-12"
-      *ngFor="let category of categories$ | async; index as i">
-    <div class="row">
-      <span cpTarget="name"
-            class="col-3 text-truncate"
-            [attr.title]="category.name">
+  <tbody>
+    <tr ui-table-row
+        *ngFor="let category of categories$ | async; index as i">
+      <td ui-table-cell>
         {{ category.name }}
-      </span>
-      <span class="col-2"
-            cpTarget="category_type">
+      </td>
+      <td ui-table-cell>
         {{ category.category_type_name }}
-      </span>
-      <span class="col-1"
-            role="group"
-            [attr.aria-label]="category.category_type_name">
+      </td>
+      <td ui-table-cell>
         <span class="icon"
               [ngStyle]="{ background: '#' + category.color }">
           <img cpTarget="image"
@@ -38,24 +32,24 @@
                [src]="category.img_url"
                [alt]="'t_shared_img_alt' | cpI18n: i + 1" />
         </span>
-      </span>
-      <span class="col-2"
-            cpTarget="is_default">
+      </td>
+      <td ui-table-cell>
         {{ category.is_default | cpIsDefaultCategory | cpI18n }}
-      </span>
-      <span class="col-2"
-            cpTarget="locations_count">
+      </td>
+      <td ui-table-cell>
         {{ category.locations_count }}
-      </span>
-      <span class="col-2 action-icons text-right">
-        <span *ngIf="!category.is_default">
+      </td>
+      <td ui-table-cell
+          align="right">
+        <ready-ui-stack *ngIf="!category.is_default">
           <button ui-button
                   type="button"
                   cpTarget="edit"
                   variant="inline"
+                  aria-label="Edit Category"
                   class="unstyled-button action-button"
                   (click)="editClick.emit(category)">
-            <i class="material-icons margin-right">edit</i>
+            <ready-ui-icon name="edit"></ready-ui-icon>
           </button>
           <button ui-button
                   ui-tooltip
@@ -63,17 +57,14 @@
                   variant="inline"
                   cpTarget="delete"
                   placement="left"
-                  class="action-button"
+                  aria-label="Delete Category"
                   (click)="deleteClick.emit(category)"
                   [attr.disabled]="category.locations_count > 0 ? true : null"
                   [title]="category.locations_count > 0 ? ('t_categories_can_not_be_delete' | cpI18n) : ''">
-            &times;
+            <ready-ui-icon name="close"></ready-ui-icon>
           </button>
-
-
-
-        </span>
-      </span>
-    </div>
-  </li>
-</ul>
+        </ready-ui-stack>
+      </td>
+    </tr>
+  </tbody>
+</table>

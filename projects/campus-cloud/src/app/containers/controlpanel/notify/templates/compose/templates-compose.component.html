@@ -19,36 +19,23 @@
     <div class="row">
       <div class="col-12">
         <form [formGroup]="form">
-          <div class="form-group campus-switch"
-               [class.isActive]="state.isCampusWide">
-            <div class="row">
-              <div class="col-8">
-                <p class="title">{{ 'campus_wide' | cpI18n }}</p>
-                <p class="text-muted">
-                  {{ 'templates_create_label_all_students' | cpI18n }}</p>
-              </div>
-              <div class="col-4">
-                <div class="float-right">
-                  <cp-switch class="campus-switch__toggle"
-                             (toggle)="onHandleToggle($event)"
-                             [isChecked]="state.isCampusWide">
-                  </cp-switch>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ready-ui-settings-toggle [isChecked]="state.isCampusWide"
+                                    (toggle)="onHandleToggle($event)"
+                                    [label]="'campus_wide' | cpI18n">
+            {{ 'templates_create_label_all_students' | cpI18n }}
+          </ready-ui-settings-toggle>
 
           <div class="form-group"
                *ngIf="!state.isCampusWide">
-            <label class="with-tooltip">
+            <label>
               {{ 'recipient' | cpI18n }}
-              <button type="button"
-                      class="unstyled-button"
+              <button ui-button
                       ui-tooltip
+                      type="button"
+                      variant="inline"
                       [template]="tooltipTpl">
-                <i class="material-icons hover">
-                  info_outline
-                </i>
+                <ready-ui-icon name="help_outline"
+                               size="small"></ready-ui-icon>
               </button>
             </label>
             <div class="row">
@@ -167,9 +154,13 @@
 
 
 <ng-template #tooltipTpl>
-    <div>{{ 'notify_announcement_template_to_tooltip' | cpI18n }}
-        <a href="tooltipLink">
-            {{ 'lists_button_create' | cpI18n }}
-        </a>
-    </div>
+  <div>{{ 'notify_announcement_template_to_tooltip' | cpI18n }}
+    <a ui-button
+       target="_blank"
+       color="primary"
+       variant="inline"
+       [href]="tooltipLink">
+      {{ 'lists_button_create' | cpI18n }}
+    </a>
+  </div>
 </ng-template>

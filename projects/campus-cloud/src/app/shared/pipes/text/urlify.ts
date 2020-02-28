@@ -6,6 +6,9 @@ import { urlify } from '@campus-cloud/shared/utils';
 export class CPUrlify implements PipeTransform {
   constructor() {}
   transform(input: string) {
+    if (!input) {
+      return input;
+    }
     return urlify(input);
   }
 }

@@ -1,0 +1,35 @@
+@import '../../../core/sass/variables';
+
+.tag {
+  height: 1.8em;
+  display: flex;
+  line-height: 1;
+  border-radius: 4px;
+  align-items: center;
+  padding: 0.1em 0.3em;
+  justify-content: center;
+
+  &--variant-flat {
+    &.tag--color-primary {
+      color: white;
+      background: map-get($color-primary-map, 'regular');
+    }
+
+    &.tag--color-default {
+      color: map-get($color-grey, 800);
+      background: map-get($color-grey, 300);
+    }
+  }
+
+  &--variant-stroked {
+    &.tag--color-primary {
+      color: map-get($color-primary-map, 'regular');
+      border: 1px solid map-get($color-primary-map, 'regular');
+    }
+
+    &.tag--color-default {
+      color: map-get($color-grey, 800);
+      border: 1px solid map-get($color-grey, 500);
+    }
+  }
+}

@@ -50,7 +50,12 @@ const appRoutes: Routes = [
       {
         path: 'feeds',
         canActivate: [PrivilegesGuard],
-        data: { zendesk: 'walls', privilege: CP_PRIVILEGES_MAP.moderation, amplitude: 'Walls' },
+        data: {
+          record: true,
+          zendesk: 'walls',
+          amplitude: 'Walls',
+          privilege: CP_PRIVILEGES_MAP.moderation
+        },
         loadChildren: () => import('./feeds/feeds.module').then((m) => m.FeedsModule)
       },
 

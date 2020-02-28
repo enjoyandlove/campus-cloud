@@ -1,52 +1,57 @@
-<ul class="integrations cp-form">
-  <li class="cp-form__header col-12">
-    <div class="row">
-      <span class="col-3">{{ 't_shared_url' | cpI18n }}</span>
-      <span class="col-2">{{ 't_shared_channel' | cpI18n }}</span>
-      <span class="col-2">{{ 't_shared_status' | cpI18n }}</span>
-      <span class="col-1">{{ 't_shared_type' | cpI18n }}</span>
-      <span class="col-3">{{ 't_shared_last_synced' | cpI18n }}</span>
-      <span class="col-1"></span>
-    </div>
-  </li>
+<table ui-table>
+  <thead>
+    <tr ui-table-row>
+      <th ui-table-cell>{{ 't_shared_url' | cpI18n }}</th>
+      <th ui-table-cell>{{ 't_shared_channel' | cpI18n }}</th>
+      <th ui-table-cell>{{ 't_shared_status' | cpI18n }}</th>
+      <th ui-table-cell>{{ 't_shared_type' | cpI18n }}</th>
+      <th ui-table-cell>{{ 't_shared_last_synced' | cpI18n }}</th>
+      <th ui-table-cell></th>
+    </tr>
+  </thead>
 
-  <li class="cp-form__item col-12"
-      [cpTarget]="'item_' + integration.id"
-      *ngFor="let integration of integrations$ | async">
-    <div class="row">
-      <span class="col-3 hover text-truncate"
-            [attr.title]="integration.feed_url"
-            (click)="editClick.emit(integration)">
-        {{ integration.feed_url }}
-      </span>
-      <span class="col-2">
+  <tbody>
+    <tr ui-table-row
+        [cpTarget]="'item_' + integration.id"
+        *ngFor="let integration of integrations$ | async">
+      <td ui-table-cell>
+        <button ui-button
+                type="button"
+                variant="inline"
+                class="integration__url"
+                (click)="editClick.emit(integration)"
+                [attr.title]="integration.feed_url">{{ integration.feed_url }}</button>
+      </td>
+      <td ui-table-cell>
         {{ integration.social_post_category_id | socialPostcategoryIdToName: channels }}
-      </span>
-      <span class="col-2">
+      </td>
+      <td ui-table-cell>
         {{ integration.sync_status | cpIntegrationStatus | cpI18n }}
-      </span>
-      <span class="col-1">
+      </td>
+      <td ui-table-cell>
         {{ integration.feed_type | cpIntegrationType }}
-      </span>
-      <span class="col-3">
+      </td>
+      <td ui-table-cell>
         {{
           integration.last_successful_sync_epoch > notSynced
             ? (integration.last_successful_sync_epoch | cpDatePipe: dateFormat)
             : null
         }}
-      </span>
-      <span
-            class="col-1 justify-content-end d-flex align-items-start no-left-padding">
+      </td>
+      <td td
+          ui-table-cell
+          align="right">
         <cp-integrations-sync-now-button [integration]="integration"
                                          (syncClick)="syncClick.emit(integration.id)">
         </cp-integrations-sync-now-button>
-        <button type="button"
-                aria-label="delete"
-                class="hover delete-integration unstyled-button"
+        <button ui-button
+                variant="inline"
+                type="button"
+                aria-label="Delete Integration"
                 (click)="deleteClick.emit(integration)">
-          <span aria-hidden="true">&times;</span>
+          <ready-ui-icon name="close"></ready-ui-icon>
         </button>
-      </span>
-    </div>
-  </li>
-</ul>
+      </td>
+    </tr>
+  </tbody>
+</table>

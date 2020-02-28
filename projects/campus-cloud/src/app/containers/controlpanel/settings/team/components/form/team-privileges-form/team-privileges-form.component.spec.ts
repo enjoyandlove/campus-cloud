@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
 import { CPSession } from '@campus-cloud/session';
 import { TeamUtilsService } from '../../../team.utils.service';
@@ -41,6 +42,7 @@ describe('TeamPrivilegesFormComponent', () => {
 
   let user;
   let school;
+  let de: DebugElement;
   let session: CPSession;
   let component: TeamPrivilegesFormComponent;
   let fixture: ComponentFixture<TeamPrivilegesFormComponent>;
@@ -49,6 +51,7 @@ describe('TeamPrivilegesFormComponent', () => {
     fixture = TestBed.createComponent(TeamPrivilegesFormComponent);
     component = fixture.componentInstance;
 
+    de = fixture.debugElement;
     session = TestBed.get(CPSession);
     session.g.set('user', mockUser);
     session.g.set('school', mockSchool);
@@ -89,29 +92,13 @@ describe('TeamPrivilegesFormComponent', () => {
   });
 
   describe('Select Regular/Emergency Announcement Privileges', () => {
-    it('should disable form submit if regular or emergency announcement with no store privilege', () => {
-      component.ngOnInit();
-
-      component.accountPrivileges = {}; // no store privileges
-      component.schoolPrivileges = {
-        [CP_PRIVILEGES_MAP.campus_announcements]: privilegeSet,
-        [CP_PRIVILEGES_MAP.emergency_announcement]: privilegeSet
-      };
-
-      component.form.get('email').setValue(null);
-
-      component.hasStorePrivileges();
-
-      expect(component.buttonData.disabled).toBe(true);
-      expect(component.hasStorePrivileges()).toBe(false);
-    });
-
     it('should enable form submit if regular or emergency announcement with any of the store privilege', () => {
       component.ngOnInit();
 
       component.hasStorePrivileges();
+      const submitButton = de.query(By.css('button[type="submit"]')).nativeElement;
 
-      expect(component.buttonData.disabled).toBe(false);
+      expect(submitButton.disabled).toBe(false);
       expect(component.hasStorePrivileges()).toBe(true);
     });
   });

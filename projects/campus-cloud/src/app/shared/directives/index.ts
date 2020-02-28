@@ -3,7 +3,6 @@ export * from './tracking';
 export * from './cp-target';
 export * from './text-editor';
 export * from './cp-lightbox';
-export * from './color-picker';
 export * from './feature-toggle';
 export * from './cp-image-ratio';
 export * from './cp-date-picker';

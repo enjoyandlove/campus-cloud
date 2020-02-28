@@ -7,8 +7,8 @@
 ---
 
 ```html
-<ready-ui-icon [name]="name" [size]="size" [color]="color"></ready-ui-icon>
 ```
+<ready-ui-icon [name]="name" [size]="size" [color]="color"></ready-ui-icon>
 
 ---
 
@@ -76,5 +76,20 @@ None
 `search`
 `warning`
 `done`
-`volume_off`        
+`volume_off`
+`chevron_right`
+`expand_less`
+`save_alt`
+`keyboard_arrow_up`
+`keyboard_arrow_down`
+`settings_applications`
+`edit`
+`control_point_duplicate`
+`computer`
+`smartphone`
+`help_outline`
+`chat_bubble`
+`filter_list`
+`flag`
+`person`
 

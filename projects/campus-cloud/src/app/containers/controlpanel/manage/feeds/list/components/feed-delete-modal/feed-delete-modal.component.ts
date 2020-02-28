@@ -1,6 +1,9 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+
+import * as fromStore from '../../../store';
 
 import { FeedsService } from '../../../feeds.service';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
@@ -43,7 +46,8 @@ export class FeedDeleteModalComponent implements OnInit, OnDestroy {
     public cpI18n: CPI18nService,
     public utils: FeedsUtilsService,
     public feedsService: FeedsService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    private store: Store<fromStore.IWallsState>
   ) {}
 
   onDelete() {
@@ -55,6 +59,7 @@ export class FeedDeleteModalComponent implements OnInit, OnDestroy {
       this.trackAmplitudeEvent(this.feed);
       $('#deleteFeedModal').modal('hide');
       this.deleted.emit(this.feed.id);
+      this.store.dispatch(fromStore.removeThread({ threadId: this.feed.id }));
       this.buttonData = Object.assign({}, this.buttonData, { disabled: false });
       this.teardown.emit();
     });

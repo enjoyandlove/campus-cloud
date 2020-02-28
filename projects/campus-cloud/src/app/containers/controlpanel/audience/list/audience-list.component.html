@@ -17,68 +17,71 @@
                    [noContentText]="cpI18n.translate('lists_no_results_found')">
     </cp-no-content>
 
-    <div *ngIf="state.audiences.length">
-      <ul class="audiences cp-form">
-        <li class="cp-form__header col-12">
-          <div class="row">
-            <cp-sorting-header class="col-5"
-                               sortLabel="name"
-                               (click)="doSort('name')"
-                               [label]="sortingLabels.name"
-                               [sortField]="state.sort_field"
-                               [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
-            <span class="col-2">
+    <ng-container *ngIf="state.audiences.length">
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell
+                (sort)="doSort('name')"
+                [sorting]="state.sort_field === 'name'"
+                [sortDirection]="state.sort_direction">{{ sortingLabels.name }}
+            </th>
+            <th ui-table-cell>
               {{ 't_shared_type' | cpI18n }}
-            </span>
-            <span class="col-2">
+            </th>
+            <th ui-table-cell>
               {{ 'lists_number_of_users' | cpI18n }}
-            </span>
-            <span class="col-2"></span>
-          </div>
-        </li>
+            </th>
+            <th ui-table-cell></th>
+          </tr>
+        </thead>
 
-        <li class="cp-form__item col-12"
-            *ngFor="let audience of state.audiences">
-          <div class="row">
-            <span class="col-5 text-truncate">
+        <tbody>
+          <tr ui-table-row
+              *ngFor="let audience of state.audiences">
+            <td ui-table-cell>
               <button cpTracker
-                      [eventData]="eventData"
-                      class="cpbtn cpbtn--link-dark"
-                      (click)="isAudienceEdit = true; editAudience = audience"
+                      ui-button
+                      type="button"
+                      variant="inline"
                       data-toggle="modal"
-                      data-target="#audienceEdit">
+                      [eventData]="eventData"
+                      data-target="#audienceEdit"
+                      (click)="isAudienceEdit = true; editAudience = audience">
                 <strong>{{ audience.name }}</strong>
               </button>
-            </span>
+            </td>
 
-            <span class="col-2">
-              <ng-container *ngIf="audience.type === custom">
-                {{ 'audience_type_custom' | cpI18n }}
-              </ng-container>
-              <ng-container *ngIf="audience.type !== custom">
-                {{ 'audience_type_dynamic' | cpI18n }}
-              </ng-container>
-            </span>
-            <span class="col-2">
-              <button class="unstyled-button download-file"
+            <td ui-table-cell>
+              {{ audience.type === custom ? ('audience_type_custom' | cpI18n) : ('audience_type_dynamic' | cpI18n) }}
+            </td>
+            <td ui-table-cell>
+              <button ui-button
+                      variant="inline"
+                      type="button"
+                      class="unstyled-button download-file"
                       (click)="downloadAudience(audience)">
-                <i class="material-icons">file_download</i>
-                {{ audience.count }} {{ 'users' | cpI18n }}
+                <ready-ui-stack>
+                  <ready-ui-icon name="save_alt"></ready-ui-icon>
+                  {{ audience.count }} {{ 'users' | cpI18n }}
+                </ready-ui-stack>
               </button>
-            </span>
-            <span class="col-1 offset-2 text-right">
-              <button type="button"
-                      (click)="deleteAudience = audience; isAudienceDelete = true"
+            </td>
+            <td ui-table-cell
+                align="right">
+              <button ui-button
+                      type="button"
+                      variant="inline"
                       data-toggle="modal"
                       data-target="#audienceDeleteModal"
-                      class="delete-list unstyled-button">
-                &times;
+                      (click)="deleteAudience = audience; isAudienceDelete = true">
+                <ready-ui-icon name="close"
+                               aria-label="Delete Audience"></ready-ui-icon>
               </button>
-            </span>
-          </div>
-        </li>
-      </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <cp-pagination [pageNext]="pageNext"
                      [pagePrev]="pagePrev"
@@ -86,7 +89,7 @@
                      (next)="onPaginationNext()"
                      (previous)="onPaginationPrevious()">
       </cp-pagination>
-    </div>
+    </ng-container>
   </div>
 </div>
 

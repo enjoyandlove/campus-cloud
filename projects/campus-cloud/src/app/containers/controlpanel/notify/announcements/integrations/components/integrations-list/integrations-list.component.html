@@ -1,51 +1,52 @@
-<ul class="integrations cp-form">
-  <li class="cp-form__header col-12">
-    <div class="row">
-      <span class="col-4">{{ 't_shared_url' | cpI18n }}</span>
-      <span class="col-2">{{ 't_shared_status' | cpI18n }}</span>
-      <span class="col-1">{{ 't_shared_type' | cpI18n }}</span>
-      <span class="col-2">{{ 'host' | cpI18n }}</span>
-      <span class="col-2">{{ 't_shared_last_synced' | cpI18n }}</span>
-      <span class="col-1"></span>
-    </div>
-  </li>
+<table ui-table>
+  <thead>
+    <tr ui-table-row>
+      <th ui-table-cell>{{ 't_shared_url' | cpI18n }}</th>
+      <th ui-table-cell>{{ 't_shared_status' | cpI18n }}</th>
+      <th ui-table-cell>{{ 't_shared_type' | cpI18n }}</th>
+      <th ui-table-cell>{{ 'host' | cpI18n }}</th>
+      <th ui-table-cell>{{ 't_shared_last_synced' | cpI18n }}</th>
+      <th ui-table-cell></th>
+    </tr>
+  </thead>
 
-  <li [cpTarget]="['feed_' + i]"
-      class="cp-form__item col-12"
-      *ngFor="let integration of integrations$ | async; let i = index">
-    <div class="row">
-      <span class="col-4 text-truncate"
-            [cpTarget]="['feed_title_' + i]"
-            [attr.title]="integration.feed_url">
+  <tbody>
+    <tr ui-table-row
+        [cpTarget]="['feed_' + i]"
+        *ngFor="let integration of integrations$ | async; let i = index">
+      <td ui-table-cell
+          [cpTarget]="['feed_title_' + i]">
         {{ integration.feed_url }}
-      </span>
-      <span class="col-2">
+      </td>
+      <td ui-table-cell>
         {{ integration.sync_status | cpIntegrationStatus | cpI18n }}
-      </span>
-      <span class="col-1">
+      </td>
+      <td ui-table-cell>
         {{ integration.feed_type | cpIntegrationType }}
-      </span>
-      <span class="col-2 sender-name"
-            [ngSwitch]="!getSender(integration.store_id)">
+      </td>
+      <td ui-table-cell
+          [ngSwitch]="!getSender(integration.store_id)">
         <cp-working *ngSwitchCase="true"></cp-working>
         <span
               *ngSwitchCase="false">{{ getSender(integration.store_id).label }}</span>
-      </span>
-      <span class="col-2">
+      </td>
+      <td ui-table-cell>
         {{
           integration.last_successful_sync_epoch > notSynced
             ? (integration.last_successful_sync_epoch | cpDatePipe: dateFormat)
             : null
         }}
-      </span>
-      <span class="col-1 text-right">
-        <button type="button"
+      </td>
+      <td ui-table-cell
+          align="right">
+        <button ui-button
+                type="button"
+                variant="inline"
                 aria-label="close"
-                class="hover delete-integration unstyled-button"
                 (click)="deleteClick.emit(integration)">
-          <span aria-hidden="true">&times;</span>
+          <ready-ui-icon name="close"></ready-ui-icon>
         </button>
-      </span>
-    </div>
-  </li>
-</ul>
+      </td>
+    </tr>
+  </tbody>
+</table>

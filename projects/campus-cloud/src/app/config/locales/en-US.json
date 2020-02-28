@@ -2269,7 +2269,7 @@
     "message": "Announcement Type"
   },
   "t_api_management": {
-    "message": "API Management"
+    "message": "Ready API"
   },
   "t_api_management_access_token_created": {
     "message": "API access token successfully created"
@@ -3784,7 +3784,7 @@
     "message": "Publish"
   },
   "t_terms_of_use_disclaimer": {
-    "message": "By signing up, you agree to the Ready Education privacy policy and terms of service."
+    "message": "By signing up, you agree to the Ready Education %privacy and %tos."
   },
   "t_terms_of_use_menu": {
     "message": "Terms Of Use"
@@ -3801,6 +3801,9 @@
   "t_terms_of_use_placeholder": {
     "message": "Place Your Terms Of Use Here"
   },
+  "t_terms_of_use_privacy_policy": {
+    "message": "privacy policy"
+  },
   "t_terms_of_use_published_successfully": {
     "message": "Terms Of Use published successfully"
   },
@@ -3815,6 +3818,12 @@
   },
   "t_terms_of_use_title": {
     "message": "Campus App Terms Of Use"
+  },
+  "t_terms_of_use_tos": {
+    "message": "terms of service"
+  },
+  "t_terms_use_tooltip_text": {
+    "message": "The Ready Education privacy policy and terms of service are already part of the sign up process as a disclaimer."
   },
   "t_tile_button_default": {
     "message": "Default"

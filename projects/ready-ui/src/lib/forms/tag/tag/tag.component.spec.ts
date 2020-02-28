@@ -1,19 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CPTableComponent } from './cp-table.component';
+import { TagComponent } from './tag.component';
 
-describe('CPTableComponent', () => {
-  let component: CPTableComponent;
-  let fixture: ComponentFixture<CPTableComponent>;
+describe('TagComponent', () => {
+  let component: TagComponent;
+  let fixture: ComponentFixture<TagComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CPTableComponent]
-    }).compileComponents();
+      declarations: [ TagComponent ]
+    })
+    .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CPTableComponent);
+    fixture = TestBed.createComponent(TagComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

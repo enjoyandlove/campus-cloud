@@ -150,8 +150,31 @@ export class FeedsService {
     return this.api.get(url, search, true);
   }
 
+  getGroupThreadById(threadId: number, search: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_THREAD}/${threadId}`;
+    return this.api.get(url, search, true);
+  }
+
+  getCampusThreadById(threadId: number, search: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
+
+    return this.api.get(url, search, true);
+  }
+
   getGroupThreadsByIds(search: HttpParams) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_THREAD}/`;
+
+    return this.api.get(url, search, true);
+  }
+
+  getCampusCommentsByIds(search: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_COMMENT}/`;
+
+    return this.api.get(url, search, true);
+  }
+
+  getGroupCommentsByIds(search: HttpParams) {
+    const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_COMMENT}/`;
 
     return this.api.get(url, search, true);
   }

@@ -13,6 +13,8 @@ import { map, startWith, takeUntil } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
+import * as fromStore from '../../../store';
+
 import { validThread } from '../../../validators';
 import { FeedsService } from '../../../feeds.service';
 import { CPSession, ISchool } from '@campus-cloud/session';
@@ -77,12 +79,12 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
-    public store: Store<ISnackbar>,
     public utils: FeedsUtilsService,
     private imageService: ImageService,
     private feedsService: FeedsService,
     private storeService: StoreService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    public store: Store<ISnackbar | fromStore.IWallsState>
   ) {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
@@ -179,7 +181,11 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
       .then((res) => {
         this.trackAmplitudeEvents(res);
         this.buttonData = { ...this.buttonData, disabled: false };
-
+        if (this.replyView) {
+          this.store.dispatch(fromStore.addComment({ comment: res }));
+        } else {
+          this.store.dispatch(fromStore.addThread({ thread: res }));
+        }
         this.resetFormValues();
         this.created.emit(res);
       })

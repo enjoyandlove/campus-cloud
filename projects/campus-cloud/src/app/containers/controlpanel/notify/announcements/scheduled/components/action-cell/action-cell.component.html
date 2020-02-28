@@ -20,7 +20,12 @@
        *ngIf="isExternal"
        [title]="isExternalToolTip"
        [src]="announcement.source | integrationSourceToIcon" />
+  <button ui-button
+          type="button"
+          variant="inline"
+          [cpTarget]="'delete-btn'"
+          (click)="deleteClick.emit($event)">
+    <ready-ui-icon name="close"></ready-ui-icon>
+  </button>
 
-  <cp-table-close [cpTarget]="'delete-btn'"
-                  (handleClick)="deleteClick.emit($event)"></cp-table-close>
 </span>
