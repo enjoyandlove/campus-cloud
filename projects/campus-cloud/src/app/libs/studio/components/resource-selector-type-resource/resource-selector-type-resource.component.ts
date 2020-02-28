@@ -70,45 +70,40 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
       return {};
     }
 
-    /**
-     * get the keys we need from each integration data object
-     */
-    const extraDataTypeConfig = integrationData
-      .filter(({ extra_data }) => extra_data.length)
-      .map(({ id, extra_data }) => {
-        return extra_data.map((extraDataInfo) => {
-          const { short_name, config_data, extra_data_type } = extraDataInfo;
-          return {
-            short_name,
-            config_data,
-            extra_data_type,
-            school_integration_data_id: id,
-            extra_data_id: extraDataInfo.id
-          };
-        });
-      });
+    const extraDataTypeConfig: any[] = flatten(integrationData.map((data) => data.extra_data))
+      // filter by school id or school id = 0 (all campuses)
+      .filter(({ school_id }) => school_id === this.session.school.id || school_id === 0)
+      .filter(({ config_data }) => !isEmpty(config_data));
 
-    /**
-     * returns an object which keys are the extra_data_type and
-     * values are all the keys we pluck in the last iteration
-     */
-    return flatten(extraDataTypeConfig).reduce((obj, current) => {
-      const { extra_data_type, ...rest } = current;
-      obj[extra_data_type] = {
-        ...rest
+    const result = {};
+
+    extraDataTypeConfig.forEach(({ extra_data_type, config_data }) => {
+      result[extra_data_type] = {
+        ...config_data
       };
-      return obj;
-    }, {});
+    });
+
+    return result;
   }
 
   initResources(integrationData = null) {
-    /**
-     * A key value pair where the key is the integration
-     * extra data type and the value is the integration config data
-     */
-    const integrationExtraDataMap = this.getSchoolIntegrationConfigByIntegrationData(
-      integrationData
-    );
+    let legacyIntegrations = integrationData
+      ? integrationData.filter(({ client_int }) => client_int.length)
+      : [];
+    const schoolIntegrationData = this.getSchoolIntegrationConfigByIntegrationData(integrationData);
+
+    if (legacyIntegrations) {
+      legacyIntegrations = legacyIntegrations.map(({ id, integration_name }) => {
+        return {
+          id,
+          meta: {
+            link_params: { id },
+            link_url: CampusLink.integration
+          },
+          label: `[NOTRANSLATE]${integration_name}[NOTRANSLATE]`
+        };
+      });
+    }
 
     const filters = [
       this.filterByWebApp ? ContentUtilsProviders.isWebAppContent : null,
@@ -128,9 +123,9 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
          * Directory's visibility is controlled
          * by the school's config
          */
-        if (extraDataType === ExtraDataType.DIRECTORY && extraDataType in integrationExtraDataMap) {
+        if (extraDataType === ExtraDataType.DIRECTORY && extraDataType in schoolIntegrationData) {
           const loginRequired = _get(
-            integrationExtraDataMap,
+            schoolIntegrationData,
             [ExtraDataType.DIRECTORY, 'client_int', 0, 'request', 'cookies', 'rea.auth'],
             undefined
           );
@@ -138,7 +133,7 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
           return loginRequired ? !this.filterByLoginStatus : true;
         }
 
-        return extraDataType in integrationExtraDataMap;
+        return extraDataType in schoolIntegrationData;
       }
     ].filter((f) => f);
 
@@ -147,32 +142,9 @@ export class ResourceSelectorTypeResourceComponent implements OnInit, OnDestroy 
       filters
     );
 
-    /**
-     * Update resource details with Integration Extra Data
-     */
-    this.resources = this.resources.map((r: IStudioContentResource) => {
-      const hasExtraData = _get(r, ['meta', 'extra_data_type'], false);
-      if (
-        hasExtraData &&
-        ContentUtilsProviders.html5ExtraDataTypes.includes(r.meta.extra_data_type)
-      ) {
-        const { extra_data_id, short_name } = integrationExtraDataMap[r.meta.extra_data_type];
-
-        return {
-          ...r,
-          label: `[NOTRANSLATE]${short_name}[NOTRANSLATE]`,
-          meta: {
-            ...r.meta,
-            link_params: {
-              int_extra_data_id: extra_data_id
-            }
-          }
-        };
-      }
-
-      return r;
-    });
-
+    if (!this.filterByLoginStatus && !this.filterByWebApp && legacyIntegrations) {
+      this.resources = [...this.resources, ...legacyIntegrations];
+    }
     this.items = this.contentUtils.resourcesToIItem(this.resources);
 
     this.updateStateWith(this.getInitialFormValues());
