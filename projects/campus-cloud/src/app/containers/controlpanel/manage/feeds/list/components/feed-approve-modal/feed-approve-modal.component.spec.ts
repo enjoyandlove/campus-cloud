@@ -8,6 +8,7 @@ import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { FeedsUtilsService } from '@controlpanel/manage/feeds/feeds.utils.service';
 import { FeedApproveModalComponent } from '@controlpanel/manage/feeds/list/components';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 describe('FeedApproveModalComponent', () => {
   configureTestSuite();
@@ -16,7 +17,7 @@ describe('FeedApproveModalComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [CPTestModule],
-        providers: [FeedsService, FeedsUtilsService],
+        providers: [FeedsService, FeedsUtilsService, FeedsAmplitudeService],
         declarations: [FeedApproveModalComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

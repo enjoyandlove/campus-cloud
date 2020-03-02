@@ -35,6 +35,7 @@ interface IState {
   wall_type: number;
   post_types: number;
   is_integrated: boolean;
+  store_category_id: number;
   currentView?: ICurrentView;
   flagged_by_users_only: number;
   removed_by_moderators_only: number;
@@ -46,6 +47,7 @@ const state: IState = {
   post_types: null,
   is_integrated: false,
   currentView: campusWall,
+  store_category_id: null,
   flagged_by_users_only: null,
   removed_by_moderators_only: null
 };
@@ -107,6 +109,7 @@ export class FeedFiltersComponent implements OnInit {
           const _wall = {
             label: wall.name,
             action: wall.id,
+            store_category_id: wall.store_category_id,
             commentingMemberType: wall.min_commenting_member_type,
             postingMemberType: wall.min_posting_member_type,
             group_id: wall.related_obj_id
@@ -213,6 +216,7 @@ export class FeedFiltersComponent implements OnInit {
 
   onFilterSelected(item, type) {
     const is_integrated = item.is_integrated;
+    const store_category_id = item.store_category_id;
     const group_id = item.group_id ? item.group_id : null;
     const currentView = item.action === 1 ? campusWall : this.getWallSettings(item.action);
 
@@ -220,7 +224,8 @@ export class FeedFiltersComponent implements OnInit {
       ...this.state,
       group_id,
       currentView,
-      is_integrated
+      is_integrated,
+      store_category_id
     };
 
     this.updateState(type, item.action);

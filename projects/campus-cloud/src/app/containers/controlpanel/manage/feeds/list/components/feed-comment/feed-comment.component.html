@@ -15,7 +15,6 @@
   <div class="parent-thread__body"
        *ngIf="embbededPost$ | async as feed">
     <cp-feed-item [feed]="feed"
-                  [groupType]="groupType"
                   (moved)="parentThreadUpdated.next()"
                   [isCampusWallView]="isCampusWallView"
                   (deleted)="onDeleteNestedThread($feed)"
@@ -50,7 +49,6 @@
         <div class="col-12">
           <cp-feed-body [feed]="_comment"
                         [isComment]="true"
-                        [groupType]="groupType"
                         [replyView]="replyView"
                         [wallCategory]="wallCategory"
                         [isCampusWallView]="isCampusWallView">
@@ -64,8 +62,6 @@
 <cp-modal *ngIf="isDeleteModal"
           modalId="deleteFeedCommentModal">
   <cp-feed-delete-comment-modal [feed]="_comment"
-                                [groupType]="groupType"
-                                [wallCategory]="wallCategory"
                                 [isCampusWallView]="isCampusWallView"
                                 (deleted)="deleted.emit($event)"
                                 (teardown)="isDeleteModal = false">
