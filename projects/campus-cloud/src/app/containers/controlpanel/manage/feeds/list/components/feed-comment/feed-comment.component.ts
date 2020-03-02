@@ -16,8 +16,10 @@ import { Store, select } from '@ngrx/store';
 import * as fromStore from '../../../store';
 import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from './../../../feeds.service';
-import { GroupType } from '../../../feeds.utils.service';
+import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
 import { FeedsUtilsService } from '@controlpanel/manage/feeds/feeds.utils.service';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 declare var $: any;
 
@@ -41,7 +43,6 @@ export class FeedCommentComponent implements OnInit {
   @Input() last: boolean;
   @Input() replyView: number;
   @Input() wallCategory: string;
-  @Input() groupType: GroupType;
 
   @Input() isCampusWallView: Observable<number>;
   @Output() deleted: EventEmitter<number> = new EventEmitter();
@@ -64,7 +65,9 @@ export class FeedCommentComponent implements OnInit {
   constructor(
     private service: FeedsService,
     private session: CPSession,
-    private store: Store<fromStore.IWallsState>
+    private cpTracking: CPTrackingService,
+    private store: Store<fromStore.IWallsState>,
+    private feedsAmplitudeService: FeedsAmplitudeService
   ) {}
 
   @HostBinding('class.nested-item')
@@ -118,6 +121,11 @@ export class FeedCommentComponent implements OnInit {
         );
         const stream$ = this.isGroupThread() ? groupThread$ : campusThread$;
         return this.threadIsExpanded ? stream$ : of(null);
+      }),
+      tap((res) => {
+        if (this.threadIsExpanded) {
+          this.trackShowPost(res);
+        }
       })
     );
 
@@ -155,6 +163,13 @@ export class FeedCommentComponent implements OnInit {
         );
         break;
     }
+  }
+
+  trackShowPost(feed) {
+    const amplitude = this.feedsAmplitudeService.getWallCommonAmplitudeProperties(feed);
+    delete amplitude['post_type'];
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_VIEWED_POST, amplitude);
   }
 
   private isGroupThread() {

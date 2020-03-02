@@ -1,14 +1,105 @@
+import { take, map } from 'rxjs/internal/operators';
+import { select, Store } from '@ngrx/store';
 import { Injectable } from '@angular/core';
 
+import * as fromStore from '@controlpanel/manage/feeds/store';
+import { StoreCategoryType } from '@campus-cloud/shared/models';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
+import { CPTrackingService } from '@campus-cloud/shared/services';
+
+enum hasData {
+  yes = 'Yes',
+  no = 'No'
+}
 
 @Injectable()
 export class FeedsAmplitudeService {
-  static getWallSource({ isCampusThread }) {
-    return isCampusThread ? amplitudeEvents.CAMPUS_WALL : amplitudeEvents.OTHER_WALLS;
+  constructor(private cpTracking: CPTrackingService, private store: Store<fromStore.IWallsState>) {}
+
+  getWallSource() {
+    let amplitude = null;
+
+    this.store
+      .pipe(select(fromStore.getViewFilters))
+      .pipe(
+        take(1),
+        map(({ postType, isIntegrated, storeCategoryId }) => {
+          // storeCategoryId can be 0 as well to avoid failing condition we are checking integer
+          if (Number.isInteger(storeCategoryId)) {
+            amplitude = FeedsAmplitudeService.storeCategoryIdToAmplitudeName(storeCategoryId);
+          } else if (!postType) {
+            amplitude = amplitudeEvents.All_CATEGORIES;
+          } else if (isIntegrated) {
+            amplitude = amplitudeEvents.INTEGRATED_FEED_CHANNEL;
+          } else {
+            this.store
+              .select(fromStore.getSocialPostCategories)
+              .pipe(take(1))
+              .subscribe((channels) => {
+                amplitude = channels.find((c) => c.id === postType).name;
+              });
+          }
+        })
+      )
+      .subscribe();
+
+    return amplitude;
   }
 
-  static getPostType({ flagged_by_users_only }) {
-    return flagged_by_users_only ? amplitudeEvents.FLAGGED_POSTS : amplitudeEvents.ALL_POSTS;
+  getWallAmplitudeProperties() {
+    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
+    return {
+      sub_menu_name,
+      post_type: this.getPostType(),
+      wall_source: this.getWallSource()
+    };
+  }
+
+  getWallCommonAmplitudeProperties(feed) {
+    const { wall_source, post_type, sub_menu_name } = this.getWallAmplitudeProperties();
+    return {
+      post_type,
+      wall_source,
+      sub_menu_name,
+      post_id: feed.id,
+      likes: FeedsAmplitudeService.hasData(feed.likes),
+      comments: FeedsAmplitudeService.hasData(feed.comment_count),
+      upload_image: FeedsAmplitudeService.hasImage(feed.has_image)
+    };
+  }
+
+  getPostType() {
+    let amplitude = '';
+    this.store
+      .pipe(select(fromStore.getViewFilters))
+      .pipe(
+        take(1),
+        map(({ flaggedByUser }) => {
+          amplitude = flaggedByUser ? amplitudeEvents.FLAGGED : amplitudeEvents.DEFAULT;
+        })
+      )
+      .subscribe();
+
+    return amplitude;
+  }
+
+  static storeCategoryIdToAmplitudeName(storeCategory) {
+    if (storeCategory === StoreCategoryType.athletics) {
+      return 'Athletic Channel';
+    } else if (storeCategory === StoreCategoryType.club) {
+      return 'Club Channel';
+    } else if (storeCategory === StoreCategoryType.services) {
+      return 'Service Channel';
+    }
+
+    return null;
+  }
+
+  static hasData(data) {
+    return data > 0 ? hasData.yes : hasData.no;
+  }
+
+  static hasImage(image) {
+    return image ? hasData.yes : hasData.no;
   }
 }
