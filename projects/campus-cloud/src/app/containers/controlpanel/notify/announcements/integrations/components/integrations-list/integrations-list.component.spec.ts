@@ -53,7 +53,6 @@ describe('IntegrationsListComponent', () => {
     fixture.detectChanges();
 
     listItems = de.queryAll(By.css(listItem));
-    console.log(listItems);
     expect(listItems.length).toBe(1);
   });
 });
