@@ -221,6 +221,8 @@ export class ScheduledEditComponent implements OnInit {
       return;
     }
 
+    this.listName = this.recipientNamePipe.transform(data);
+
     if (data.list_details.length) {
       data = {
         ...data,
@@ -236,7 +238,6 @@ export class ScheduledEditComponent implements OnInit {
     }
 
     this.form = Announcement.form(data);
-    this.listName = this.recipientNamePipe.transform(data);
 
     this.state = {
       ...this.state,
