@@ -9,57 +9,61 @@
                    noContentText="No messages found...">
     </cp-no-content>
 
-    <div *ngIf="state.messages.length">
-      <ul class="messages cp-form">
-        <li class="cp-form__header col-12">
-          <div class="row">
-            <span class="col-5">{{ 'recipient' | cpI18n }}</span>
-            <span class="col-3">{{ 'announcements_type' | cpI18n }}</span>
-            <cp-sorting-header class="col-3"
-                               sortLabel="created_on_epoch"
-                               [label]="sortingLabels.sent"
-                               (click)="doSort('created_on_epoch')"
-                               [sortField]="state.sort_field"
-                               [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
-            <span class="col-1"></span>
-          </div>
-        </li>
+    <ng-container *ngIf="state.messages.length">
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell>{{ 'recipient' | cpI18n }}</th>
+            <th ui-table-cell>{{ 'announcements_type' | cpI18n }}</th>
+            <th ui-table-cell
+                (sort)="doSort('created_on_epoch')"
+                [sortDirection]="state.sort_direction"
+                [sorting]="state.sort_field === 'created_on_epoch'">
+              {{ sortingLabels.sent }}
+            </th>
+            <th ui-table-cell></th>
+          </tr>
+        </thead>
 
-        <li class="cp-form__item col-12"
-            *ngFor="let message of state.messages">
-          <div class="row">
-            <span class="col-5">
+        <tbody>
+          <tr ui-table-row
+              *ngFor="let message of state.messages">
+            <td ui-table-cell>
               <cp-announcement-summary [message]="message"
                                        (viewMoreModal)="onViewMoreModal($event)">
               </cp-announcement-summary>
-            </span>
+            </td>
 
-            <span class="col-3">
+            <td ui-table-cell>
               {{ messageType[message.priority] }}
-            </span>
+            </td>
 
-            <span class="col-3">
+            <td ui-table-cell>
               {{ message.notify_at_epoch === notifyAtEpochNow ? (message.created_on_epoch | cpDatePipe: dateFormat) : (message.notify_at_epoch | cpDatePipe: dateFormat)  }}
-            </span>
+            </td>
 
-            <span class="col-1 text-right actions">
-              <img ui-tooltip
-                   alt=""
-                   aria-hidden="true"
-                   *ngIf="message.is_external"
-                   [title]="isExternalToolTip"
-                   [src]="message.source | integrationSourceToIcon" />
-              <button type="button"
-                      aria-label="close"
-                      class="hover delete-message unstyled-button"
-                      (click)="onLauncDeleteModal(message)">
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </span>
-          </div>
-        </li>
-      </ul>
+            <td ui-table-cell
+                align="right">
+              <ready-ui-stack>
+                <img alt=""
+                     ui-tooltip
+                     aria-hidden="true"
+                     *ngIf="message.is_external"
+                     [title]="isExternalToolTip"
+                     [src]="message.source | integrationSourceToIcon" />
+                <button ui-button
+                        type="button"
+                        variant="inline"
+                        aria-label="close"
+                        aria-label="Delete announcement"
+                        (click)="onLauncDeleteModal(message)">
+                  <ready-ui-icon name="close"></ready-ui-icon>
+                </button>
+              </ready-ui-stack>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <cp-pagination [pageNext]="pageNext"
                      [pagePrev]="pagePrev"
@@ -67,7 +71,7 @@
                      (next)="onPaginationNext()"
                      (previous)="onPaginationPrevious()">
       </cp-pagination>
-    </div>
+    </ng-container>
   </ng-container>
 </ng-container>
 

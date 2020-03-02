@@ -1,3 +1,4 @@
+/* tslint:disable:directive-selector */
 import {
   OnInit,
   Input,
@@ -19,7 +20,7 @@ const ALT_FORMAT_TIME = 'F j, Y h:i K';
 
 @Directive({
   exportAs: 'datePicker',
-  selector: '[readyUiDatePicker]'
+  selector: '[ready-ui-date-picker]'
 })
 export class DatePickerDirective implements OnInit {
   private _minDate: Date;
