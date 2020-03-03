@@ -2,78 +2,81 @@
                       (create)="onLaunchCreateModal()">
 </cp-templates-top-bar>
 
-<div [ngSwitch]="loading">
+<ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div *ngSwitchCase="false">
+  <ng-container *ngSwitchCase="false">
     <cp-no-content class="no-content"
                    *ngIf="!state.templates.length"
                    noContentText="No Templates Found...">
     </cp-no-content>
 
-    <div *ngIf="state.templates.length">
-      <ul class="templates cp-form">
-        <li class="cp-form__header col-12">
-          <div class="row">
-            <cp-sorting-header class="col-2"
-                               sortLabel="name"
-                               (click)="doSort('name')"
-                               [label]="sortingLabels.name"
-                               [sortField]="state.sort_field"
-                               [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
-            <span class="col-2">{{ 'recipient' | cpI18n }}</span>
-            <span class="col-3">{{ 'subject' | cpI18n }}</span>
-            <span class="col-4">{{ 'body' | cpI18n }}</span>
-            <span class="col-1"></span>
-          </div>
-        </li>
+    <ng-container *ngIf="state.templates.length">
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell
+                (sort)="doSort('name')"
+                [sorting]="state.sort_field === 'name'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.name }}
+            </th>
+            <th ui-table-cell>{{ 'recipient' | cpI18n }}</th>
+            <th ui-table-cell>{{ 'subject' | cpI18n }}</th>
+            <th ui-table-cell>{{ 'body' | cpI18n }}</th>
+            <th ui-table-cell></th>
+          </tr>
+        </thead>
 
-        <li class="cp-form__item col-12"
-            *ngFor="let template of state.templates">
-          <div class="row">
-            <span class="col-2">
-              <strong cpTracker
-                      class="hover"
+        <tbody>
+          <tr ui-table-row
+              *ngFor="let template of state.templates">
+            <td ui-table-cell>
+              <button cpTracker
+                      ui-button
+                      type="button"
+                      variant="inline"
                       [eventData]="eventData"
                       (click)="onLaunchComposeModal(template)">
                 {{ template.name }}
-              </strong>
-            </span>
+              </button>
+            </td>
 
-            <span class="col-2"
-                  *ngIf="template.is_school_wide">
+            <td ui-table-cell
+                *ngIf="template.is_school_wide">
               {{ 'campus_wide' | cpI18n }}
-            </span>
+            </td>
 
-            <span class="col-2"
-                  *ngIf="!template.is_school_wide">
+            <td ui-table-cell
+                *ngIf="!template.is_school_wide">
               <cp-list-recipients [lists]="template.list_details"
                                   [users]="template.user_details"
                                   (viewMoreModal)="onViewMoreModal($event)">
               </cp-list-recipients>
-            </span>
+            </td>
 
-            <span class="col-3">
+            <td ui-table-cell>
               {{ template.subject }}
-            </span>
+            </td>
 
-            <span class="col-4 text-muted">
+            <td ui-table-cell>
               {{ template.message }}
-            </span>
-            <span class="col-1 text-right ">
-              <button type="button"
+            </td>
+            <td ui-table-cell
+                align="right">
+              <button ui-button
+                      type="button"
+                      variant="inline"
                       aria-label="delete"
                       data-toggle="modal"
                       data-target="#templatesDelete"
-                      (click)="onLauncDeleteModal(template)"
-                      class="delete-template unstyled-button">
-                <span aria-hidden="true">&times;</span>
+                      (click)="onLauncDeleteModal(template)">
+                <ready-ui-icon name="close"></ready-ui-icon>
               </button>
-            </span>
-          </div>
-        </li>
-      </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <div class="row">
         <div class="col-12">
@@ -85,9 +88,9 @@
           </cp-pagination>
         </div>
       </div>
-    </div>
-  </div>
-</div>
+    </ng-container>
+  </ng-container>
+</ng-container>
 
 <cp-modal modalId="templateComposeModal"
           *ngIf="isTemplateComposeModal">

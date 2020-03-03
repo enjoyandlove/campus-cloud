@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 
 import { TextModule } from './text/text.module';
-import { FormsModule } from './forms/forms.module';
 import { ChartsModule } from './charts/charts.module';
+import { ReadyFormsModule } from './forms/forms.module';
 import { ActionsModule } from './actions/actions.module';
 import { OverlaysModule } from './overlays/overlays.module';
 import { StructureModule } from './structure/structure.module';
@@ -15,11 +15,11 @@ import { FeedbackAndIndicatorsModule } from './feedback-and-indicators/feedback-
 @NgModule({
   exports: [
     TextModule,
-    FormsModule,
     ChartsModule,
     ActionsModule,
     OverlaysModule,
     StructureModule,
+    ReadyFormsModule,
     NavigationModule,
     ImagesAndIconsModule,
     ListsAndTablesModule,

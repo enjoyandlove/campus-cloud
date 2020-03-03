@@ -46,4 +46,4 @@ import { ColorPickerModule } from './color-picker/color-picker.module';
     ColorPickerModule
   ]
 })
-export class FormsModule {}
+export class ReadyFormsModule {}

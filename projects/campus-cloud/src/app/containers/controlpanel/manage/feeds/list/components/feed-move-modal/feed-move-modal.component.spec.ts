@@ -10,6 +10,7 @@ import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { FeedMoveComponent } from '@controlpanel/manage/feeds/list/components';
 import { FeedsUtilsService } from '@controlpanel/manage/feeds/feeds.utils.service';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 describe('FeedMoveComponent', () => {
   configureTestSuite();
@@ -18,7 +19,7 @@ describe('FeedMoveComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [CPTestModule],
-        providers: [FeedsService, FeedsUtilsService],
+        providers: [FeedsService, FeedsUtilsService, FeedsAmplitudeService],
         declarations: [FeedMoveComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

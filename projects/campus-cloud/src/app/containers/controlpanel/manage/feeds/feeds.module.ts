@@ -12,6 +12,7 @@ import { UserService } from '@campus-cloud/shared/services';
 import { FeedsRoutingModule } from './feeds.routing.module';
 import { FeedsComponent } from './list/base/feeds.component';
 import { SharedModule } from '../../../../shared/shared.module';
+import { FeedsAmplitudeService } from './feeds.amplitude.service';
 import { LayoutsModule } from '@campus-cloud/layouts/layouts.module';
 import { ImageModule } from '@campus-cloud/shared/services/image/image.module';
 
@@ -68,7 +69,7 @@ import {
     })
   ],
 
-  providers: [FeedsService, FeedsUtilsService, UserService],
+  providers: [FeedsService, FeedsUtilsService, UserService, FeedsAmplitudeService],
 
   exports: [
     FeedsComponent,

@@ -7,6 +7,7 @@ import { mockFeed } from '@controlpanel/manage/feeds/tests';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
 import { configureTestSuite, CPTestModule } from '@campus-cloud/shared/tests';
 import { FeedsUtilsService } from '@controlpanel/manage/feeds/feeds.utils.service';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 import { FeedDeleteCommentModalComponent } from '@controlpanel/manage/feeds/list/components';
 
 describe('FeedDeleteCommentModalComponent', () => {
@@ -16,7 +17,7 @@ describe('FeedDeleteCommentModalComponent', () => {
     (async () => {
       TestBed.configureTestingModule({
         imports: [CPTestModule],
-        providers: [FeedsService, FeedsUtilsService],
+        providers: [FeedsService, FeedsUtilsService, FeedsAmplitudeService],
         declarations: [FeedDeleteCommentModalComponent],
         schemas: [NO_ERRORS_SCHEMA]
       });

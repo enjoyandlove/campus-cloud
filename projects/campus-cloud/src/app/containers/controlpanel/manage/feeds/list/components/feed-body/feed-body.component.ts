@@ -16,10 +16,11 @@ import { Store, select } from '@ngrx/store';
 import * as fromStore from '../../../store';
 
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { FeedsUtilsService } from '../../../feeds.utils.service';
+import { CPHostDirective } from '@campus-cloud/shared/directives';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
-import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
-import { CP_TRACK_TO, CPHostDirective } from '@campus-cloud/shared/directives';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 @Mixin([Destroyable])
 @Component({
@@ -36,7 +37,6 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
   @Input() replyView = false;
   @Input() isComment: boolean;
   @Input() wallCategory: string;
-  @Input() groupType: GroupType;
   @Input() isRemovedPosts: boolean;
   @Input() isCampusWallView: Observable<{}>;
 
@@ -45,30 +45,19 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
 
   @ViewChild(CPHostDirective, { static: true }) cpHost: CPHostDirective;
 
+  _isCampusWallView;
+  destroy$ = new Subject<null>();
   commentCount$: Observable<number>;
   isCommentsOpen$: Observable<boolean>;
 
-  eventProperties = {
-    post_id: null,
-    likes: null,
-    comments: null,
-    wall_page: null,
-    wall_source: null,
-    upload_image: null,
-    campus_wall_category: null
-  };
-
-  _isCampusWallView;
-  viewImageEventData;
-
-  destroy$ = new Subject<null>();
   emitDestroy() {}
 
   constructor(
     public cpI18n: CPI18nService,
     public utils: FeedsUtilsService,
     public cpTracking: CPTrackingService,
-    private store: Store<fromStore.IWallsState>
+    private store: Store<fromStore.IWallsState>,
+    public feedsAmplitudeService: FeedsAmplitudeService
   ) {}
 
   onToggleComments() {
@@ -77,23 +66,10 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
 
   trackEvent(isCommentsOpen) {
     if (isCommentsOpen) {
-      const campus_wall_category = this.feed.channelName ? this.feed.channelName : null;
-      const wall_source = this._isCampusWallView
-        ? amplitudeEvents.CAMPUS_WALL
-        : amplitudeEvents.OTHER_WALLS;
+      const amplitude = this.feedsAmplitudeService.getWallCommonAmplitudeProperties(this.feed);
+      delete amplitude['post_type'];
 
-      this.eventProperties = {
-        ...this.eventProperties,
-        wall_source,
-        campus_wall_category,
-        post_id: this.feed.id,
-        likes: this.utils.hasLikes(this.feed.likes),
-        upload_image: this.utils.hasImage(this.feed.has_image),
-        comments: this.utils.hasComments(this.feed.comment_count),
-        wall_page: this.utils.wallPage(this.groupType)
-      };
-
-      this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_VIEWED_COMMENT, this.eventProperties);
+      this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_VIEWED_COMMENT, amplitude);
     }
   }
 
@@ -102,29 +78,17 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
   }
 
   trackViewLightBoxEvent() {
-    const wallCategory = this.wallCategory ? this.wallCategory : null;
-    const channelName = this.feed.channelName ? this.feed.channelName : null;
-    const campus_wall_category = channelName ? channelName : wallCategory;
-
     const message_type = this.isComment ? amplitudeEvents.COMMENT : amplitudeEvents.POST;
+    const { wall_source, sub_menu_name } = this.feedsAmplitudeService.getWallAmplitudeProperties();
 
-    const wall_source = this._isCampusWallView
-      ? amplitudeEvents.CAMPUS_WALL
-      : amplitudeEvents.OTHER_WALLS;
-
-    const eventProperties = {
-      message_type,
+    const amplitude = {
       wall_source,
-      campus_wall_category,
-      likes: this.utils.hasLikes(this.feed.likes),
-      wall_page: this.utils.wallPage(this.groupType)
+      message_type,
+      sub_menu_name,
+      likes: FeedsAmplitudeService.hasData(this.feed.likes)
     };
 
-    this.viewImageEventData = {
-      type: CP_TRACK_TO.AMPLITUDE,
-      eventName: amplitudeEvents.WALL_CLICKED_IMAGE,
-      eventProperties: eventProperties
-    };
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_CLICKED_IMAGE, amplitude);
   }
 
   ngOnInit() {
@@ -144,8 +108,6 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
     this.isCommentsOpen$ = this.store
       .pipe(select(fromStore.getExpandedThreadIds))
       .pipe(map((expandedThreadIds) => expandedThreadIds.includes(this.feed.id)));
-
-    this.trackViewLightBoxEvent();
 
     this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res: any) => {
       this._isCampusWallView = res.type === 1;

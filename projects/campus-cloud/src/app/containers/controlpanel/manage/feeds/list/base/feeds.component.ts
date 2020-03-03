@@ -80,7 +80,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     public service: FeedsService,
     public cpTracking: CPTrackingService,
     public store: Store<fromStore.IWallsState>,
-    public userService: UserService
+    public userService: UserService,
+    public feedsAmplitudeService: FeedsAmplitudeService
   ) {
     super();
   }
@@ -111,11 +112,11 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       query
     };
 
-    let amplitude = {};
+    const { post_type, wall_source } = this.feedsAmplitudeService.getWallAmplitudeProperties();
 
-    amplitude = {
-      post_type: FeedsAmplitudeService.getPostType(this.state),
-      wall_source: FeedsAmplitudeService.getWallSource(this.state)
+    const amplitude = {
+      post_type,
+      wall_source
     };
 
     const validObjectTypes = [];
@@ -271,25 +272,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
           })
         );
 
-        const campusThreads$ = combineLatest([
-          this.service.getCampusThreadByIds(threadSearch),
-          this.store.pipe(select(fromStore.getSocialPostCategories))
-        ]).pipe(
-          map(([threads, channels]: any) => {
-            const name = !this.state.post_types
-              ? amplitudeEvents.All_CATEGORIES
-              : channels.find((c) => c.id === this.state.post_types).name;
-
-            const categoryName = !this.state.is_integrated ? name : amplitudeEvents.INTEGRATED_FEED;
-
-            amplitude = {
-              ...amplitude,
-              campus_wall_category: categoryName
-            };
-            return threads;
-          })
-        );
-
+        const campusThreads$ = this.service.getCampusThreadByIds(threadSearch);
         const campusComments$ = this.service.getCampusCommentsByIds(threadSearch);
         const campusWallResults$ = zip(campusThreads$, campusComments$).pipe(
           map(([threads, comments]) => {
@@ -329,9 +312,18 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   onDoFilter(data) {
-    const { wall_type, post_types, flagged_by_users_only, removed_by_moderators_only } = data;
+    const {
+      wall_type,
+      post_types,
+      is_integrated,
+      store_category_id,
+      flagged_by_users_only,
+      removed_by_moderators_only
+    } = data;
     this.store.dispatch(fromStore.setGroupId({ groupId: wall_type === 1 ? null : wall_type }));
     this.store.dispatch(fromStore.setPostType({ postType: post_types }));
+    this.store.dispatch(fromStore.setStoreCategoryId({ storeCategoryId: store_category_id }));
+    this.store.dispatch(fromStore.setIsIntegrated({ isIntegrated: is_integrated }));
     this.store.dispatch(
       fromStore.setFlaggedByModerator({ flagged: Boolean(removed_by_moderators_only) })
     );
@@ -363,6 +355,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       currentView: data.currentView,
       is_integrated: data.is_integrated,
       isCampusThread: wall_type === 1,
+      store_category_id: data.store_category_id,
       flagged_by_users_only: flagged_by_users_only,
       removed_by_moderators_only: removed_by_moderators_only
     });

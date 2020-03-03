@@ -8,8 +8,9 @@ import * as fromStore from '../../../store';
 import { FeedsService } from '../../../feeds.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
-import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
+import { FeedsUtilsService } from '../../../feeds.utils.service';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 declare var $: any;
 
@@ -21,8 +22,6 @@ declare var $: any;
 })
 export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
   @Input() feed: any;
-  @Input() groupType: GroupType;
-  @Input() wallCategory: string;
   @Input() isCampusWallView: Observable<{}>;
 
   @Output() teardown: EventEmitter<null> = new EventEmitter();
@@ -30,16 +29,6 @@ export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
 
   buttonData;
   _isCampusWallView;
-
-  eventProperties = {
-    likes: null,
-    wall_page: null,
-    comment_id: null,
-    wall_source: null,
-    upload_image: null,
-    campus_wall_category: null
-  };
-
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
@@ -48,7 +37,8 @@ export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
     private utils: FeedsUtilsService,
     public feedsService: FeedsService,
     private cpTracking: CPTrackingService,
-    private store: Store<fromStore.IWallsState>
+    private store: Store<fromStore.IWallsState>,
+    private feedsAmplitudeService: FeedsAmplitudeService
   ) {}
 
   onDelete() {
@@ -67,23 +57,22 @@ export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
   }
 
   trackAmplitudeEvent(comment) {
-    const campus_wall_category = this.wallCategory ? this.wallCategory : null;
-
-    const wall_source = this._isCampusWallView
-      ? amplitudeEvents.CAMPUS_WALL
-      : amplitudeEvents.OTHER_WALLS;
-
-    this.eventProperties = {
-      ...this.eventProperties,
+    const {
+      likes,
       wall_source,
-      campus_wall_category,
-      comment_id: comment.id,
-      likes: this.utils.hasLikes(comment.likes),
-      upload_image: this.utils.hasImage(comment.has_image),
-      wall_page: this.utils.wallPage(this.groupType)
+      upload_image,
+      sub_menu_name
+    } = this.feedsAmplitudeService.getWallCommonAmplitudeProperties(comment);
+
+    const amplitude = {
+      likes,
+      wall_source,
+      upload_image,
+      sub_menu_name,
+      comment_id: comment.id
     };
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_DELETED_COMMENT, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_DELETED_COMMENT, amplitude);
   }
 
   ngOnInit() {

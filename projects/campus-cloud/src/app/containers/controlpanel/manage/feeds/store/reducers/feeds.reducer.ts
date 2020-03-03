@@ -6,9 +6,11 @@ import * as WallsActions from '../actions';
 export interface IWallsFeedsState {
   threads: any[];
   comments: any[];
+  isIntegrated: boolean;
   groupId: number | null;
   postType: number | null;
   flaggedByUser: boolean;
+  storeCategoryId: number;
   expandedThreadIds: number[];
   socialPostCategories: any[];
   flaggedByModerators: boolean;
@@ -19,10 +21,12 @@ export const feedsinitialState: IWallsFeedsState = {
   threads: [],
   comments: [],
   results: [],
+  isIntegrated: false,
   expandedThreadIds: [],
   groupId: null, // Campus Wall
   postType: null, // All Categories,
   flaggedByUser: false,
+  storeCategoryId: null,
   socialPostCategories: [],
   flaggedByModerators: false
 };
@@ -73,6 +77,20 @@ const _feedsReducer = createReducer(
     return {
       ...state,
       postType
+    };
+  }),
+
+  on(WallsActions.setStoreCategoryId, (state: IWallsFeedsState, { storeCategoryId }) => {
+    return {
+      ...state,
+      storeCategoryId
+    };
+  }),
+
+  on(WallsActions.setIsIntegrated, (state: IWallsFeedsState, { isIntegrated }) => {
+    return {
+      ...state,
+      isIntegrated
     };
   }),
 

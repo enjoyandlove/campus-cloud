@@ -17,7 +17,6 @@
   <div class="row feed__body">
     <div class="col-12">
       <cp-feed-body [feed]="feed"
-                    [groupType]="groupType"
                     [replyView]="!!feedIsAComment"
                     [isComment]="!!feedIsAComment"
                     [isRemovedPosts]="isRemovedPosts"
@@ -36,7 +35,6 @@
         <cp-feed-comment [last]="last"
                          [comment]="comment"
                          [replyView]="[true]"
-                         [groupType]="groupType"
                          [isCampusWallView]="isCampusWallView">
         </cp-feed-comment>
       </div>
@@ -70,7 +68,6 @@
 <cp-modal modalId="deleteFeedModal"
           *ngIf="isDeleteModal">
   <cp-feed-delete-modal [feed]="feed"
-                        [groupType]="groupType"
                         [isCampusWallView]="isCampusWallView"
                         (teardown)="isDeleteModal = false; deleted.emit($event)">
   </cp-feed-delete-modal>
@@ -79,7 +76,6 @@
 <cp-modal modalId="approveFeedModal"
           *ngIf="isApproveModal">
   <cp-feed-approve-modal [feed]="feed"
-                         [groupType]="groupType"
                          [isCampusWallView]="isCampusWallView"
                          (teardown)="isApproveModal = false"
                          (approved)="onApprovedPost($event)">

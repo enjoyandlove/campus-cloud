@@ -6,7 +6,6 @@
     <cp-feed-comment *ngFor="let comment of state.comments; let last = last"
                      [last]="last"
                      [comment]="comment"
-                     [groupType]="groupType"
                      [replyView]="isReplyView"
                      [wallCategory]="feed.channelName"
                      [isCampusWallView]="isCampusWallView"

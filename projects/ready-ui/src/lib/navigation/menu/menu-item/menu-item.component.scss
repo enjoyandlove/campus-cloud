@@ -1,0 +1,16 @@
+@import '../../../core/sass/variables';
+
+:host {
+  padding: 0.5em 1em;
+  transition: all 300ms ease-in-out;
+
+  &.disabled,
+  &.disabled:hover {
+    background: map-get($map: $color-grey, $key: 300);
+  }
+
+  &:hover {
+    background: map-get($color-grey, 100);
+  }
+
+}

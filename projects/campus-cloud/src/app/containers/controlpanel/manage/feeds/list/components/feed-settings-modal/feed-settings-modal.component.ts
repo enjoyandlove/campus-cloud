@@ -10,6 +10,7 @@ import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 const TYPE_STRINGS = {
   [GroupType.orientation]: {
@@ -49,11 +50,6 @@ export class FeedSettingsComponent implements OnInit, OnDestroy {
   form: FormGroup;
   _isCampusWallView;
 
-  eventProperties = {
-    wall_page: null,
-    wall_source: null
-  };
-
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
@@ -63,7 +59,8 @@ export class FeedSettingsComponent implements OnInit, OnDestroy {
     public cpI18n: CPI18nService,
     private utils: FeedsUtilsService,
     public feedsService: FeedsService,
-    private cpTracking: CPTrackingService
+    private cpTracking: CPTrackingService,
+    private feedsAmplitudeService: FeedsAmplitudeService
   ) {
     this.feedsService.getSocialGroups();
   }
@@ -159,17 +156,12 @@ export class FeedSettingsComponent implements OnInit, OnDestroy {
   }
 
   trackAmplitudeEvent() {
-    const wall_source = this._isCampusWallView
-      ? amplitudeEvents.CAMPUS_WALL
-      : amplitudeEvents.OTHER_WALLS;
+    const { wall_source, sub_menu_name } = this.feedsAmplitudeService.getWallAmplitudeProperties();
 
-    this.eventProperties = {
-      ...this.eventProperties,
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_UPDATED_SETTINGS, {
       wall_source,
-      wall_page: this.utils.wallPage(this.groupType)
-    };
-
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_UPDATED_SETTINGS, this.eventProperties);
+      sub_menu_name
+    });
   }
 
   ngOnInit() {

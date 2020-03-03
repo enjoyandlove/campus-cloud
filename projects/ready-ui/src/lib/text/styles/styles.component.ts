@@ -2,7 +2,7 @@
 import { Input, Component, OnInit, HostBinding } from '@angular/core';
 
 @Component({
-  selector: '[ui-text-style]',
+  selector: 'ui-text-style, [ui-text-style]',
   templateUrl: './styles.component.html',
   styleUrls: ['./styles.component.scss']
 })

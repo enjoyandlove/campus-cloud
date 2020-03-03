@@ -47,10 +47,19 @@ export const getSocialPostCategoryNameByPostType = (postType: number) =>
 
 export const getViewFilters = createSelector(
   getFeedsState,
-  ({ groupId, postType, flaggedByUser, flaggedByModerators }: IWallsFeedsState) => ({
+  ({
     groupId,
     postType,
+    isIntegrated,
+    storeCategoryId,
     flaggedByUser,
+    flaggedByModerators
+  }: IWallsFeedsState) => ({
+    groupId,
+    postType,
+    isIntegrated,
+    flaggedByUser,
+    storeCategoryId,
     flaggedByModerators
   })
 );

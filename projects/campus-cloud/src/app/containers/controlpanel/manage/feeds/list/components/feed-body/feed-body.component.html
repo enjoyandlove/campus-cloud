@@ -1,12 +1,11 @@
 <div class="feed">
   <div class="row feed__image-wrapper"
        *ngIf="feed.image_list.length">
-    <div cpTracker
-         class="col-3"
+    <div class="col-3"
          *ngFor="let image of feed.image_list; let i = index"
          [cpLightbox]="lightbox"
          [host]="cpHost"
-         [eventData]="viewImageEventData"
+         (click)="trackViewLightBoxEvent()"
          [images]="mapImages(feed.image_list)"
          [selectedImageIndex]="i">
       <img ready-ui-image
