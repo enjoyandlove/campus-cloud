@@ -305,12 +305,10 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     );
 
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      // console.log(this.form.value);
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
 
     this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res) => {
-      // console.log('isCampusWallView', res);
       // Not Campus Wall
       if (res.type !== 1) {
         this.campusGroupId = res.type;

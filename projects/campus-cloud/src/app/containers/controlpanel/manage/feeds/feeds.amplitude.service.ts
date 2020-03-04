@@ -23,7 +23,8 @@ export class FeedsAmplitudeService {
       .pipe(select(fromStore.getViewFilters))
       .pipe(
         take(1),
-        map(({ postType, isIntegrated, storeCategoryId }) => {
+        map(({ postType, storeCategoryId }) => {
+          const isIntegrated = postType.is_integrated;
           // storeCategoryId can be 0 as well to avoid failing condition we are checking integer
           if (Number.isInteger(storeCategoryId)) {
             amplitude = FeedsAmplitudeService.storeCategoryIdToAmplitudeName(storeCategoryId);

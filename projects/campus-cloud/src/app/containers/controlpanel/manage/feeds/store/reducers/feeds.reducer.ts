@@ -11,7 +11,6 @@ export interface IWallsFeedsState {
   end: number | null;
   start: number | null;
   postType: any | null;
-  isIntegrated: boolean;
   flaggedByUser: boolean;
   storeCategoryId: number;
   expandedThreadIds: number[];
@@ -27,7 +26,6 @@ export const feedsinitialState: IWallsFeedsState = {
   results: [],
   threads: [],
   comments: [],
-  isIntegrated: false,
   expandedThreadIds: [],
   group: null, // Campus Wall
   postType: null, // All Categories,
@@ -118,14 +116,6 @@ const _feedsReducer = createReducer(
     return {
       ...state,
       storeCategoryId
-    };
-  }),
-
-  // TODO DEPRECATE
-  on(WallsActions.setIsIntegrated, (state: IWallsFeedsState, { isIntegrated }) => {
-    return {
-      ...state,
-      isIntegrated
     };
   }),
 

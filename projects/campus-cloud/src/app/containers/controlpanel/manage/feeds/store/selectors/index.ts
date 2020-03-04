@@ -58,7 +58,6 @@ export const getViewFilters = createSelector(
     group,
     users,
     postType,
-    isIntegrated,
     storeCategoryId,
     flaggedByUser,
     flaggedByModerators
@@ -68,7 +67,6 @@ export const getViewFilters = createSelector(
     start,
     users,
     postType,
-    isIntegrated,
     flaggedByUser,
     storeCategoryId,
     flaggedByModerators
