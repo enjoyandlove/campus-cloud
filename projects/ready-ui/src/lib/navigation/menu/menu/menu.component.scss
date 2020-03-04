@@ -1,8 +1,16 @@
 .ui-menu {
   display: flex;
+  max-width: 30em;
   overflow: hidden;
   background: white;
   border-radius: 4px;
+  line-break: anywhere;
   flex-direction: column;
-  box-shadow: 1px 0 4px rgba(0, 0, 0, 0.13);
+  box-shadow: 1px 0 4px rgba(0, 0, 0, 0.17);
+
+  &.scrollable {
+    max-height: 16em;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
 }

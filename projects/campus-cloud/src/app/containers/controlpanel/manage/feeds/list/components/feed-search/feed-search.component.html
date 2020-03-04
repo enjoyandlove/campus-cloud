@@ -1,20 +1,281 @@
 <cp-card>
-  <form [formGroup]="form"
-        class="wrapper">
-    <span><i class="material-icons">search</i></span>
-    <input type="search"
-           formControlName="query"
-           [value]="value$ | async"
-           (keyup.enter)="emitValue()"
-           aria-label="Search Feeds Content"
-           [placeholder]="'search' | cpI18n"
-           (input)="input.next($event.target.value)">
-    <button type="button"
-            class="unstyled-button"
-            (click)="query.next('')"
-            [hidden]="!query.value.length"
-            [attr.aria-label]="'t_clear' | cpI18n">&times;</button>
-    <div class="wrapper__border"
-         aria-hidden="true"></div>
-  </form>
+  <ready-ui-stack spacing="tight">
+    <button ui-button
+            variant="stroked"
+            [triggerFor]="primary"
+            ready-ui-menu-trigger
+            [color]="(hasFiltersActive$ | async) ? 'primary' : 'default'">
+      <ready-ui-stack>
+        <ready-ui-icon name="filter_list">Filter</ready-ui-icon>
+        {{ 't_shared_filter' | cpI18n }}
+      </ready-ui-stack>
+    </button>
+
+    <form [formGroup]="form"
+          class="wrapper">
+      <ready-ui-icon name="search"></ready-ui-icon>
+      <input type="search"
+             formControlName="query"
+             [value]="value$ | async"
+             (keyup.enter)="emitValue()"
+             aria-label="Search Feeds Content"
+             [placeholder]="'search' | cpI18n"
+             (input)="input.next($event.target.value)">
+      <button type="button"
+              class="unstyled-button"
+              (click)="query.next('')"
+              [hidden]="!query.value.length"
+              [attr.aria-label]="'t_clear' | cpI18n">&times;</button>
+      <div class="wrapper__border"
+           aria-hidden="true"></div>
+    </form>
+    <a ui-button
+       cpTracker
+       variant="stroked"
+       [eventData]="eventData"
+       *ngIf="!hideIntegrations"
+       routerLink="integrations">
+      <ready-ui-icon name="link"></ready-ui-icon>
+    </a>
+    <button ui-button
+            type="button"
+            variant="stroked"
+            data-toggle="modal"
+            data-target="#settingsModal">
+      <ready-ui-icon name="settings_applications"></ready-ui-icon>
+    </button>
+  </ready-ui-stack>
+
+  <cp-feed-tags></cp-feed-tags>
 </cp-card>
+
+<ready-ui-menu #primary="menu">
+  <ng-container *ngIf="primaryMenu$ | async as primaryMenu">
+
+    <ready-ui-menu-item ready-ui-menu-trigger
+                        [triggerFor]="users">
+      <button ui-button
+              type="button"
+              color="inherit"
+              variant="inline"
+              fullWidth="true"
+              [class.active]="primaryMenu.usersSelected">
+        <ready-ui-icon name="person"
+                       size="small"></ready-ui-icon>
+        {{ 'users' | cpI18n }}
+      </button>
+    </ready-ui-menu-item>
+    <ready-ui-menu-item *ngIf="!groupId"
+                        ready-ui-menu-trigger
+                        [triggerFor]="channels">
+      <button ui-button
+              type="button"
+              color="inherit"
+              variant="inline"
+              fullWidth="true"
+              [class.active]="primaryMenu.channelsSelected">
+        <ready-ui-icon name="ready-app"
+                       size="small"></ready-ui-icon>
+        {{ 't_shared_channels' | cpI18n }}
+      </button>
+    </ready-ui-menu-item>
+    <ready-ui-menu-item ready-ui-menu-trigger
+                        [triggerFor]="status">
+      <button ui-button
+              type="button"
+              color="inherit"
+              variant="inline"
+              fullWidth="true"
+              [class.active]="primaryMenu.statusSelected">
+        <ready-ui-icon name="flag"
+                       size="small"></ready-ui-icon>
+        {{ 't_shared_status' | cpI18n }}
+      </button>
+    </ready-ui-menu-item>
+    <ready-ui-menu-item ready-ui-menu-trigger
+                        [triggerFor]="date">
+      <button ui-button
+              type="button"
+              color="inherit"
+              variant="inline"
+              fullWidth="true"
+              [class.active]="primaryMenu.datesSelected">
+        <ready-ui-icon name="today"
+                       size="small"></ready-ui-icon>
+        {{ 't_shared_date' | cpI18n }}
+      </button>
+    </ready-ui-menu-item>
+    <ready-ui-menu-divider></ready-ui-menu-divider>
+    <ready-ui-menu-item>
+      <button ui-button
+              type="button"
+              variant="inline"
+              (click)="handleClearFilters()">
+        <ui-text-style color="muted"
+                       variant="caption">
+          <ready-ui-stack>
+            <ready-ui-icon name="close"
+                           size="small"></ready-ui-icon>
+            {{ 't_shared_clear_filters' | cpI18n }}
+          </ready-ui-stack>
+        </ui-text-style>
+      </button>
+    </ready-ui-menu-item>
+  </ng-container>
+</ready-ui-menu>
+
+<ready-ui-menu #users="menu"
+               maxHeight="20em">
+  <ng-container *ngIf="(studentsMenu$ | async) as studentMenu">
+    <ready-ui-menu-search (search)="studentTerm.next($event)"
+                          [placeholder]="'t_walls_search_placeholder' | cpI18n">
+    </ready-ui-menu-search>
+    <ready-ui-menu-item *ngFor="let student of studentMenu.students">
+      <ready-ui-stack>
+        <ready-ui-checkbox (changed)="handleStudent(student) "
+                           [label]="[student.firstname + ' ' + student.lastname]"
+                           [checked]="studentMenu.selectedUserids.includes(student.id)"
+                           [disabled]="!studentMenu.canSelect && !studentMenu.selectedUserids.includes(student.id)">
+        </ready-ui-checkbox>
+      </ready-ui-stack>
+    </ready-ui-menu-item>
+
+    <ready-ui-menu-item *ngIf="!studentMenu.students.length">
+      {{ 't_walls_no_users_found' | cpI18n }}
+    </ready-ui-menu-item>
+    <ready-ui-menu-item *ngIf="studentMenu.students.length">
+      <button ui-button
+              type="button"
+              variant="inline"
+              (click)="loadMore.next(studentMenu.students.length)">
+        <ui-text-style color="muted"
+                       variant="caption"
+                       fullWidth="true">{{ 't_load_more' | cpI18n }}
+        </ui-text-style>
+      </button>
+    </ready-ui-menu-item>
+  </ng-container>
+</ready-ui-menu>
+
+<ready-ui-menu #channels="menu"
+               maxHeight="20em">
+  <ng-container *ngIf="channelsMenu$ | async as channelsMenu">
+
+    <ready-ui-menu-search (search)="channelTerm.next($event)"
+                          [placeholder]="'t_walls_search_placeholder' | cpI18n">
+    </ready-ui-menu-search>
+    <ready-ui-menu-section [name]="'t_walls_campus_walls_channels' | cpI18n">
+      <ready-ui-menu-item>
+        <button ui-button
+                type="button"
+                variant="inline"
+                (click)="handleChannel(-1)">{{ 't_all_walls_campus_walls_channels' | cpI18n}}</button>
+      </ready-ui-menu-item>
+      <ready-ui-menu-item
+                          *ngFor="let channel of channelsMenu.nonIntegratedChannels">
+        <button ui-button
+                type="button"
+                variant="inline"
+                fullWidth="true"
+                (click)="handleChannel(channel)"
+                [class.active]="channelsMenu.selectedChannel === channel.id">{{channel.name}}</button>
+      </ready-ui-menu-item>
+    </ready-ui-menu-section>
+
+    <ready-ui-menu-section [name]="'t_walls_host_walls_channels' | cpI18n"
+                           *ngIf="channelsMenu.socialGroups.length">
+      <ready-ui-menu-item *ngFor="let group of channelsMenu.socialGroups">
+        <button ui-button
+                type="button"
+                variant="inline"
+                fullWidth="true"
+                (click)="handleGroup(group)"
+                [class.active]="channelsMenu.selectedHostWall === group.id">{{group.name}}</button>
+      </ready-ui-menu-item>
+    </ready-ui-menu-section>
+
+    <ready-ui-menu-section [name]="'t_walls_integrated_feed_channels' | cpI18n"
+                           *ngIf="channelsMenu.integratedChannels.length">
+      <ready-ui-menu-item
+                          *ngFor="let channel of channelsMenu.integratedChannels">
+        <button ui-button
+                type="button"
+                variant="inline"
+                fullWidth="true"
+                (click)="handleChannel(channel)"
+                [class.active]="channelsMenu.selectedChannel === channel.id">{{channel.name}}</button>
+      </ready-ui-menu-item>
+    </ready-ui-menu-section>
+  </ng-container>
+</ready-ui-menu>
+
+<ready-ui-menu #status="menu">
+  <ng-container *ngIf="statusMenu$ | async as statusMenu">
+    <ready-ui-menu-item>
+      <button ui-button
+              type="button"
+              variant="inline"
+              fullWidth="true"
+              (click)="handleStatus('flagged')"
+              [class.active]="statusMenu.flaggedByUser">{{ 'feeds_flagged_posts' | cpI18n }}</button>
+    </ready-ui-menu-item>
+    <ready-ui-menu-item>
+      <button ui-button
+              type="button"
+              variant="inline"
+              fullWidth="true"
+              (click)="handleStatus('archived')"
+              [class.active]="statusMenu.flaggedByModerators">{{ 'feeds_removed_posts' | cpI18n }}</button>
+    </ready-ui-menu-item>
+  </ng-container>
+</ready-ui-menu>
+
+<ready-ui-menu #date="menu">
+  <ng-container *ngIf="dateMenu$ | async as dateMenu">
+    <ready-ui-stack class="dates">
+      <ul ui-stack
+          direction="vertical">
+        <li><button ui-button
+                  type="button"
+                  variant="inline"
+                  (click)="handleDate(presetDates.lastWeek)"
+                  [class.selected-date]="dateMenu.presetDateSelected === 'lastWeek'">{{ 'assess_last_seven_days' | cpI18n }}</button>
+        </li>
+        <li><button ui-button
+                  type="button"
+                  variant="inline"
+                  (click)="handleDate(presetDates.last30Days)"
+                  [class.selected-date]="dateMenu.presetDateSelected === 'last30Days'">{{ 'dashboard_last_30_days' | cpI18n }}</button>
+        </li>
+        <li><button ui-button
+                  type="button"
+                  variant="inline"
+                  (click)="handleDate(presetDates.last90Days)"
+                  [class.selected-date]="dateMenu.presetDateSelected === 'last90Days'">{{ 'dashboard_last_90_days' | cpI18n }}</button>
+        </li>
+        <li><button ui-button
+                  type="button"
+                  variant="inline"
+                  (click)="handleDate(presetDates.lastYear)"
+                  [class.selected-date]="dateMenu.presetDateSelected === 'lastYear'">{{ 'dashboard_last_year' | cpI18n }}</button>
+        </li>
+      </ul>
+      <input readonly
+             type="text"
+             mode="range"
+             inline="true"
+             static="true"
+             [maxDate]="maxDate"
+             ready-ui-date-picker
+             [defaultDate]="dateMenu.defaultDate"
+             (dateChange)="parseCalendarDate($event)" />
+    </ready-ui-stack>
+  </ng-container>
+</ready-ui-menu>
+
+<cp-modal modalId="settingsModal">
+  <cp-feed-settings-modal [groupId]="groupId"
+                          [groupType]="groupType"
+                          [isCampusWallView]="isCampusWallView">
+  </cp-feed-settings-modal>
+</cp-modal>

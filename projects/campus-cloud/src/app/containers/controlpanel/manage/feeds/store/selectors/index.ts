@@ -30,32 +30,43 @@ export const getSocialPostCategories = createSelector(
   ({ socialPostCategories }: IWallsFeedsState) => socialPostCategories
 );
 
+export const getFilterUsers = createSelector(
+  getFeedsState,
+  ({ users }: IWallsFeedsState) => users
+);
+
 export const getComments = createSelector(
   getFeedsState,
   ({ comments }: IWallsFeedsState) => comments
 );
 
-export const getSocialPostCategoryNameByPostType = (postType: number) =>
+export const getSocialPostCategoryNameByPostType = (postType: any) =>
   createSelector(
     getFeedsState,
-    ({ socialPostCategories, groupId }: IWallsFeedsState) => {
+    ({ socialPostCategories, group }: IWallsFeedsState) => {
       const postCategory = socialPostCategories.find((c) => c.id === postType);
       // Group Threads do not belong to a Post Category
-      return postCategory && !groupId ? postCategory.name : '';
+      return postCategory && !group ? postCategory.name : '';
     }
   );
 
 export const getViewFilters = createSelector(
   getFeedsState,
   ({
-    groupId,
+    end,
+    start,
+    group,
+    users,
     postType,
     isIntegrated,
     storeCategoryId,
     flaggedByUser,
     flaggedByModerators
   }: IWallsFeedsState) => ({
-    groupId,
+    end,
+    group,
+    start,
+    users,
     postType,
     isIntegrated,
     flaggedByUser,
@@ -74,20 +85,20 @@ export const getResults = createSelector(
     const {
       results,
       threads,
+      group,
       comments,
-      groupId,
       postType,
       flaggedByUser,
       flaggedByModerators
     } = state;
 
     const filters = [];
-    const postTypeFilter = (thread) => thread.post_type === postType;
+    const postTypeFilter = (thread) => thread.post_type === postType.id;
     const flaggedByUserFilter = (thread) => thread.dislikes > 0;
     const flaggedByModeratorsFilter = (thread) => thread.flag < 0;
-    const groupIdFilter = (thread) => thread.group_id === groupId;
+    const groupIdFilter = (thread) => thread.group_id === group.id;
 
-    if (groupId) {
+    if (group) {
       filters.push(groupIdFilter);
     }
 

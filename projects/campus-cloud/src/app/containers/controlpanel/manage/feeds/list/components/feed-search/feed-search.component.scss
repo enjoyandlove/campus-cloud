@@ -1,9 +1,64 @@
 @import '~projects/campus-cloud/src/sass/core/colors';
 
+ready-ui-icon[name="flag"] {
+  margin-left: -5px;
+  margin-right: 5px;
+}
+
+cp-feed-tags {
+  margin-top: 1em;
+}
+
+ready-ui-stack.dates {
+  padding: 1em;
+  height: 21em;
+
+  ul {
+    margin: 0;
+    height: 100%;
+    padding-left: 0;
+    list-style: none;
+  }
+}
+
+ready-ui-menu-item {
+  button[ui-button] {
+    text-align: left;
+    position: relative;
+    padding-right: 5px;
+
+    &.active {
+      $width: 4px;
+
+      &:after {
+        left: 100%;
+        content: '';
+        width: $width;
+        height: $width;
+        border-radius: 50%;
+        position: absolute;
+        background: $color-brand;
+        top: calc(50% - #{$width} / 2);
+      }
+    }
+  }
+}
+
+button.selected-date {
+  font-weight: 600 !important;
+}
+
+
 cp-card {
   .wrapper {
+    flex: 1;
     display: flex;
     position: relative;
+    align-items: center;
+
+    ready-ui-icon[name="search"] {
+      margin-left: 0.5em;
+    }
 
     span {
       display: flex;
@@ -20,10 +75,16 @@ cp-card {
       flex: 1 1 0%;
       border: none;
       caret-color: $color-brand;
+
+      &:focus,
+      &:active {
+        outline: none;
+      }
     }
 
     input,
     button {
+
       &:hover ~ .wrapper__border:after,
       &:focus ~ .wrapper__border:after,
       &:active ~ .wrapper__border:after {

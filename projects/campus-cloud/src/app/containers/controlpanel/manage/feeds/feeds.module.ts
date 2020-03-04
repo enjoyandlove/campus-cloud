@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { FeedsListComponent } from './list';
 import * as fromWalls from './store/reducers';
 import { FeedsService } from './feeds.service';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
 import { FeedsUtilsService } from './feeds.utils.service';
 import { UserService } from '@campus-cloud/shared/services';
 import { FeedsRoutingModule } from './feeds.routing.module';
@@ -20,10 +21,10 @@ import {
   FeedBodyComponent,
   FeedItemComponent,
   FeedMoveComponent,
+  FeedTagsComponent,
   FeedHeaderComponent,
   FeedSearchComponent,
   FeedCommentComponent,
-  FeedFiltersComponent,
   FeedCommentsComponent,
   FeedSettingsComponent,
   FeedDropdownComponent,
@@ -40,11 +41,12 @@ import {
     FeedMoveComponent,
     FeedItemComponent,
     FeedBodyComponent,
+    FeedTagsComponent,
     FeedsListComponent,
     FeedHeaderComponent,
     FeedSearchComponent,
     FeedCommentComponent,
-    FeedFiltersComponent,
+
     FeedDropdownComponent,
     FeedInputBoxComponent,
     FeedSettingsComponent,
@@ -69,7 +71,7 @@ import {
     })
   ],
 
-  providers: [FeedsService, FeedsUtilsService, UserService, FeedsAmplitudeService],
+  providers: [FeedsService, FeedsUtilsService, CPI18nPipe, UserService, FeedsAmplitudeService],
 
   exports: [
     FeedsComponent,
@@ -77,10 +79,11 @@ import {
     FeedItemComponent,
     FeedsListComponent,
     FeedBodyComponent,
+    FeedTagsComponent,
     FeedHeaderComponent,
     FeedSearchComponent,
     FeedCommentComponent,
-    FeedFiltersComponent,
+
     FeedDropdownComponent,
     FeedInputBoxComponent,
     FeedSettingsComponent,

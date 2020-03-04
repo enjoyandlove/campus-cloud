@@ -19,11 +19,11 @@
     <cp-feed-input-box [groupId]="groupId"
                        [threadId]="feed.id"
                        [groupType]="groupType"
+                       (created)="onReplied()"
                        [replyView]="isReplyView"
                        [postType]="feed.post_type"
                        [wallCategory]="feed.channelName"
-                       [isCampusWallView]="isCampusWallView"
-                       (created)="onReplied()">
+                       [isCampusWallView]="isCampusWallView">
     </cp-feed-input-box>
   </div>
 </div>

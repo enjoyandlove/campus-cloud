@@ -1,0 +1,7 @@
+:host {
+  display: flex;
+
+  ready-ui-tag:not(:last-child) {
+    margin-right: 0.5em;
+  }
+}

@@ -4,11 +4,14 @@ import { flatten } from 'lodash';
 import * as WallsActions from '../actions';
 
 export interface IWallsFeedsState {
+  users: any[];
   threads: any[];
   comments: any[];
+  group: any | null;
+  end: number | null;
+  start: number | null;
+  postType: any | null;
   isIntegrated: boolean;
-  groupId: number | null;
-  postType: number | null;
   flaggedByUser: boolean;
   storeCategoryId: number;
   expandedThreadIds: number[];
@@ -18,12 +21,15 @@ export interface IWallsFeedsState {
 }
 
 export const feedsinitialState: IWallsFeedsState = {
+  end: null,
+  users: [],
+  start: null,
+  results: [],
   threads: [],
   comments: [],
-  results: [],
   isIntegrated: false,
   expandedThreadIds: [],
-  groupId: null, // Campus Wall
+  group: null, // Campus Wall
   postType: null, // All Categories,
   flaggedByUser: false,
   storeCategoryId: null,
@@ -33,6 +39,34 @@ export const feedsinitialState: IWallsFeedsState = {
 
 const _feedsReducer = createReducer(
   feedsinitialState,
+  on(WallsActions.setFilterUsers, (state: IWallsFeedsState, { user }) => {
+    const userExists = state.users.find((u) => u.id === user.id);
+    const users = userExists ? state.users.filter((u) => u.id !== user.id) : [...state.users, user];
+
+    return {
+      ...state,
+      users
+    };
+  }),
+  on(WallsActions.clearFilterUsers, (state: IWallsFeedsState) => {
+    return {
+      ...state,
+      users: []
+    };
+  }),
+  on(WallsActions.setStartFilter, (state: IWallsFeedsState, { start }) => {
+    return {
+      ...state,
+      start
+    };
+  }),
+
+  on(WallsActions.setEndFilter, (state: IWallsFeedsState, { end }) => {
+    return {
+      ...state,
+      end
+    };
+  }),
   on(WallsActions.removeResult, (state: IWallsFeedsState, { payload }) => {
     const { resultId, type } = payload;
     return {
@@ -66,10 +100,10 @@ const _feedsReducer = createReducer(
     };
   }),
 
-  on(WallsActions.setGroupId, (state: IWallsFeedsState, { groupId }) => {
+  on(WallsActions.setGroup, (state: IWallsFeedsState, { group }) => {
     return {
       ...state,
-      groupId
+      group
     };
   }),
 
@@ -87,6 +121,7 @@ const _feedsReducer = createReducer(
     };
   }),
 
+  // TODO DEPRECATE
   on(WallsActions.setIsIntegrated, (state: IWallsFeedsState, { isIntegrated }) => {
     return {
       ...state,

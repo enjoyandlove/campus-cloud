@@ -1,3 +1,8 @@
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { map, startWith, takeUntil } from 'rxjs/operators';
+import { HttpParams } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 import {
   Input,
   OnInit,
@@ -7,11 +12,6 @@ import {
   ViewChild,
   EventEmitter
 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { map, startWith, takeUntil } from 'rxjs/operators';
-import { HttpParams } from '@angular/common/http';
-import { Store } from '@ngrx/store';
 
 import * as fromStore from '../../../store';
 
@@ -46,7 +46,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   @Input() replyView: boolean;
   @Input() groupType: GroupType;
   @Input() wallCategory: string;
-  @Input() disablePost: boolean; // TODO REMOVE
   @Input() isCampusWallView: Observable<any>;
   @Output() created: EventEmitter<null> = new EventEmitter();
 
@@ -306,10 +305,12 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     );
 
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      // console.log(this.form.value);
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
 
     this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res) => {
+      // console.log('isCampusWallView', res);
       // Not Campus Wall
       if (res.type !== 1) {
         this.campusGroupId = res.type;
