@@ -22,10 +22,10 @@
     "message": "Copier mes permissions Campus Cloud"
   },
   "admin_all_athletics": {
-    "message": "Tous les clubs sportifs"
+    "message": "Toutes les Organisations Sportives"
   },
   "admin_all_clubs": {
-    "message": "Tous les clubs"
+    "message": "Toutes les Organisations"
   },
   "admin_all_services": {
     "message": "Tous les services"
@@ -40,10 +40,10 @@
     "message": "Voir le tableau de bord d'évaluation"
   },
   "admin_athletics_owner": {
-    "message": "Gestionnaire de club sportif"
+    "message": "Gestionnaire d'Organisation Sportive"
   },
   "admin_athletics_owner_help": {
-    "message": "Créer de nouveaux clubs sportifs; gérer les coordonnées, les événements et les membres pour tous les clubs ou une sélection de clubs"
+    "message": "Créer de nouvelles organisations sportives; gérer les coordonnées, les événements et les membres pour toutes les organisations ou une sélection d'organisations."
   },
   "admin_audience_help": {
     "message": "Notifier et évaluer des segments spécifiques (audiences) d'utilisateurs"
@@ -68,14 +68,14 @@
     "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
   },
   "admin_can_read_help": {
-    "message": "Voir le contenu et créer le contenu, mais pas éditer les informations de tous les clubs",
+    "message": "Voir le contenu et créer le contenu, mais pas éditer les informations de toutes les organisations",
     "description": "Create Team Member > Select Clubs > Select a club > drop down menu"
   },
   "admin_club_owner": {
-    "message": "Gestionnaire de groupe"
+    "message": "Gestionnaire de l'Organisation"
   },
   "admin_club_owner_help": {
-    "message": "Créer de nouveaux clubs; gérer les coordonnées, les événements et les membres"
+    "message": "Créer de nouvelles organisations; gérer les coordonnées, les événements et les membres"
   },
   "admin_club_service_modal_title": {
     "message": "Sélectionner %s"
@@ -108,10 +108,10 @@
     "message": "Vue d'événement"
   },
   "admin_form_label_athletics": {
-    "message": "Équipe(s) sportive(s)"
+    "message": "Organisation(s) Sportive(s)"
   },
   "admin_form_label_clubs": {
-    "message": "Club(s)"
+    "message": "Organisation(s)"
   },
   "admin_form_label_services": {
     "message": "Service(s)"
@@ -159,10 +159,10 @@
     "message": "Rechercher par nom ou courriel..."
   },
   "admin_select_athletics": {
-    "message": "Sélectionner club sportif"
+    "message": "Sélectionner Organisation Sportive"
   },
   "admin_select_clubs": {
-    "message": "Sélectionner clubs"
+    "message": "Sélectionner Organisations"
   },
   "admin_select_services": {
     "message": "Sélectionner services"
@@ -495,28 +495,28 @@
     "message": "Total des services"
   },
   "athletics": {
-    "message": "Clubs sportifs"
+    "message": "Organisations Sportives"
   },
   "athletics_all_athletics": {
-    "message": "Tous les clubs sportifs"
+    "message": "Toutes les Organisations Sportives"
   },
   "athletics_button_create": {
-    "message": "Créer club sportif"
+    "message": "Créer Organisation Sportive"
   },
   "athletics_delete_modal_title": {
-    "message": "Supprimer club sportif"
+    "message": "Supprimer Organisation Sportive"
   },
   "athletics_import_button_submit": {
-    "message": "Importer clubs sportifs"
+    "message": "Importer Organisations Sportives"
   },
   "athletics_import_heading": {
-    "message": "Importer des clubs sportifs depuis un fichier"
+    "message": "Importer des organisations sportives depuis un fichier"
   },
   "athletics_import_items_to_import": {
-    "message": "Le fichier contient des données pour %s club(s) sportif(s)"
+    "message": "Le fichier contient des données pour %s organisation(s) sportive(s)"
   },
   "athletics_label_athletic_banner": {
-    "message": "Bannière du club sportif"
+    "message": "Bannière de l'Organisation Sportive"
   },
   "athletics_label_athletic_description": {
     "message": "Description"
@@ -534,7 +534,7 @@
     "message": "Statut"
   },
   "athletics_label_edit_athletic": {
-    "message": "Éditer club sportif"
+    "message": "Éditer Organisation Sportive"
   },
   "attendee": {
     "message": "Présent"
@@ -769,44 +769,44 @@
     "message": "Clics"
   },
   "clubs": {
-    "message": "Clubs"
+    "message": "Organisations"
   },
   "clubs_all_clubs": {
-    "message": "Tous les clubs"
+    "message": "Toutes les organisations"
   },
   "clubs_and_groups": {
-    "message": "Clubs & groupes"
+    "message": "Organisations"
   },
   "clubs_button_create": {
-    "message": "Créer club"
+    "message": "Créer une Organisation"
   },
   "clubs_create_heading": {
-    "message": "Créer club"
+    "message": "Créer une Organisation"
   },
   "clubs_delete_error_unauthorized": {
-    "message": "Vous n'avez pas la permission de supprimer ce club.",
+    "message": "Vous n'avez pas la permission de supprimer cette organisation.",
     "description": "In Manage Clubs, try to delete a club for which you have only the Limited Edit permission"
   },
   "clubs_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s ?"
   },
   "clubs_delete_modal_title": {
-    "message": "Supprimer club"
+    "message": "Supprimer Organisation"
   },
   "clubs_disabled": {
     "message": "Désactivé"
   },
   "clubs_edit_heading": {
-    "message": "Éditer club"
+    "message": "Éditer l'Organisation"
   },
   "clubs_import_button_submit": {
-    "message": "Importer clubs"
+    "message": "Importer Organisations"
   },
   "clubs_import_heading": {
-    "message": "Importer des clubs depuis un fichier"
+    "message": "Importer des organisations depuis un fichier"
   },
   "clubs_import_items_to_import": {
-    "message": "Le fichier contient des données pour %s clubs"
+    "message": "Le fichier contient des données pour %s organisation(s)"
   },
   "clubs_inactive": {
     "message": "Inactif"
@@ -815,29 +815,29 @@
     "message": "Conseiller"
   },
   "clubs_label_club_banner": {
-    "message": "Bannière du club"
+    "message": "Bannière de l'Organisation"
   },
   "clubs_label_club_description": {
-    "message": "Description du club"
+    "message": "Description de l'Organisation"
   },
   "clubs_label_club_details": {
-    "message": "Détails du club"
+    "message": "Détails de l'Organisation"
   },
   "clubs_label_club_membership": {
-    "message": "Membres du club"
+    "message": "Membres de l'Organisation"
   },
   "clubs_label_club_name": {
-    "message": "Nom du club"
+    "message": "Nom de l'Organisation"
   },
   "clubs_label_club_status": {
-    "message": "Statut du club"
+    "message": "Statut de l'Organisation"
   },
   "clubs_label_constitution": {
     "message": "Constitution",
     "description": "Form Label "
   },
   "clubs_label_edit_club": {
-    "message": "Éditer club"
+    "message": "Éditer l'Organisation"
   },
   "clubs_label_executive_position": {
     "message": "Position"
@@ -846,10 +846,10 @@
     "message": "Type de membre"
   },
   "clubs_membership_disabled": {
-    "message": "Les utilisateurs peuvent voir le club mais ne peuvent pas le rejoindre ou voir les autres membres"
+    "message": "Les utilisateurs peuvent voir l'organisation mais ne peuvent pas la rejoindre ou voir les autres membres"
   },
   "clubs_membership_enabled": {
-    "message": "Permet aux utilisateurs de rejoindre le club et de contacter les autres membres"
+    "message": "Permet aux utilisateurs de rejoindre l'organisation et de contacter les autres membres"
   },
   "clubs_member_button_create": {
     "message": "Ajouter membre"
@@ -873,19 +873,19 @@
     "message": "Aucun membres trouvés"
   },
   "clubs_no_results": {
-    "message": "Aucun clubs trouvés"
+    "message": "Aucunes organisations trouvées"
   },
   "clubs_status_active": {
-    "message": "Le club est approuvé et est listé dans l'application du campus"
+    "message": "L'organisation est approuvée et est listée dans l'application du campus"
   },
   "clubs_status_inactive": {
-    "message": "Le club est suspendu et n'est pas listé dans l'application du campus"
+    "message": "L'organisation est suspendue et n'est pas listée dans l'application du campus"
   },
   "clubs_status_pending": {
-    "message": "Le club attend l'approbation et n'est pas listé dans l'application du campus"
+    "message": "L'organisation est en attente d'approbation et n'est pas listée dans l'application du campus"
   },
   "club_info_notes": {
-    "message": "Notes du club",
+    "message": "Notes de l'Organisation",
     "description": "As a club super editor, view a club info page with club notes. "
   },
   "club_membership_disabled_title": {
@@ -1010,7 +1010,7 @@
     "message": "Activité de Tuile de Campus"
   },
   "dashboard_club_views": {
-    "message": "Vues du club"
+    "message": "Vues de l'Organisation"
   },
   "dashboard_downloads_title": {
     "message": "Téléchargement & inscriptions"
@@ -1073,7 +1073,7 @@
     "message": "Palmarès des événements"
   },
   "dashboard_top_five_clubs_title": {
-    "message": "Palmarès des clubs"
+    "message": "Palmarès des Organisations"
   },
   "dashboard_top_services": {
     "message": "Palmarès des services"
@@ -1192,7 +1192,7 @@
     "message": "Extension invalide"
   },
   "error_no_hosts_found_help": {
-    "message": "Vous n'avez pas des privilèges suffisants pour associer cet événement avec un service ou un club."
+    "message": "Vous n'avez pas des privilèges suffisants pour associer cet événement avec un service ou une organisation."
   },
   "event": {
     "message": "Événement"
@@ -1261,7 +1261,7 @@
     "message": "Gestionnaire de l'événement"
   },
   "events_event_manager_tooltip": {
-    "message": "Sélectionnez un hôte (un club ou service) avant de sélectionner un gestionnaire d'événement. Le gestionnaire d'événement reçoit des courriels liés à la vérification de présence des utilisateurs et aux rapports d'évaluation une fois que l'événement est terminé."
+    "message": "Sélectionnez un hôte (Service ou Organisation) avant de sélectionner un gestionnaire d'événement. Le gestionnaire d'événement reçoit des courriels liés à la vérification de présence des utilisateurs et aux rapports d'évaluation une fois que l'événement est terminé."
   },
   "events_event_name": {
     "message": "Nom de l'événement"
@@ -1356,7 +1356,7 @@
     "message": "Merci pour votre retour"
   },
   "feeds": {
-    "message": "Murs"
+    "message": "Communauté"
   },
   "feeds_all_posts": {
     "message": "Toutes les publications"
@@ -1392,7 +1392,7 @@
     "message": "Administrateurs Campus Cloud"
   },
   "feeds_club_members": {
-    "message": "Membres du club"
+    "message": "Membres de l'Organisation"
   },
   "feeds_delete_comment": {
     "message": "Supprimer commentaire"
@@ -1416,7 +1416,7 @@
     "message": "Pour autoriser les publications, changez les réglages pour ce mur."
   },
   "feeds_everyone": {
-    "message": "Membres du club"
+    "message": "Membres de l'Organisation"
   },
   "feeds_flagged_posts": {
     "message": "Publications signalées"
@@ -1437,7 +1437,7 @@
     "message": "a publié dans"
   },
   "feeds_post_as": {
-    "message": "Sélectionner un hôte"
+    "message": "Publier Sous"
   },
   "feeds_post_to": {
     "message": "Publier vers"
@@ -1449,10 +1449,10 @@
     "message": "Administrateurs de Campus Cloud"
   },
   "feeds_wall_name": {
-    "message": "Nom du club"
+    "message": "Nom de l'organisation"
   },
   "feeds_wall_settings_modal_title": {
-    "message": "Réglages du mur du club"
+    "message": "Réglages du mur de l'Organisation"
   },
   "first_name": {
     "message": "Prénom"
@@ -1900,7 +1900,7 @@
     "message": "Nouveautés du 10 Juillet 2017 :"
   },
   "release_notes_june_2_item_one": {
-    "message": "Les administrateurs peuvent créer des clubs et des groupes"
+    "message": "Les administrateurs peuvent créer des organisations"
   },
   "release_notes_june_2_title": {
     "message": "Nouveau depuis le 2 juin 2017 :"
@@ -1972,7 +1972,7 @@
     "message": "Sélectionner valeur"
   },
   "select_host": {
-    "message": "Sélectionner un hôte"
+    "message": "Publier Sous"
   },
   "send": {
     "message": "Envoyer"
@@ -2239,10 +2239,10 @@
     "message": "Votre compte a déjà été activé, cliquez ci-dessous pour vous connecter"
   },
   "t_admin_invite_notify_permission_tooltip": {
-    "message": "Envoyer des notifications requiert l'accès à un hôte (club, service ou club sportif). Veuillez ajouter au moins une permission afin d'activer la permission de notification."
+    "message": "Envoyer des notifications requiert l'accès à un hôte (Service ou Organisation). Veuillez ajouter au moins une permission afin d'activer la permission de notification."
   },
   "t_admin_invite_studio_limited_tooltip": {
-    "message": "Un accès complet à Studio nécessite les permissions vers les clubs sportifs, les événements, les clubs, les services, les calendriers et l'orientation. Votre accès pour ajouter des ressources sera limité sans ces permissions."
+    "message": "Un accès complet à Studio nécessite les permissions vers les événements, les services, les organisations, les calendriers et l'orientation. Votre accès pour ajouter des ressources sera limité sans ces permissions."
   },
   "t_announcements_list_external_source_tooltip": {
     "message": "Cette annonce était intégrée. Elle sera automatiquement mise à jour depuis l'intégration."
@@ -3129,7 +3129,7 @@
     "message": "Liste de conseillers"
   },
   "t_personas_tile_create_resource_type_athletics_club": {
-    "message": "Club sportif"
+    "message": "Organisation Sportive"
   },
   "t_personas_tile_create_resource_type_campus_poi_list": {
     "message": "Carte"
@@ -3165,10 +3165,10 @@
     "message": "Liste des services par catégories"
   },
   "t_personas_tile_create_resource_type_store": {
-    "message": "Service ou club"
+    "message": "Organisation"
   },
   "t_personas_tile_create_resource_type_store_list": {
-    "message": "Liste des clubs par type"
+    "message": "Liste des Organisations par Type"
   },
   "t_personas_tile_create_resource_type_subscribable_calendar": {
     "message": "Calendrier"
@@ -3180,7 +3180,7 @@
     "message": "Mes calendriers d'orientation"
   },
   "t_personas_tile_create_store_list_groups_and_clubs": {
-    "message": "Groupes et clubs"
+    "message": "Organisations"
   },
   "t_personas_tile_create_type_resource_external_link": {
     "message": "Lien Web externe"
@@ -3430,7 +3430,10 @@
     "message": "Nom de la catégorie"
   },
   "t_shared_channel": {
-    "message": "Canal"
+    "message": "Chaîne"
+  },
+  "t_shared_channels": {
+    "message": "Chaînes"
   },
   "t_shared_checkin": {
     "message": "Présence"
@@ -3455,6 +3458,9 @@
   },
   "t_shared_custom": {
     "message": "Personnalisée"
+  },
+  "t_shared_date": {
+    "message": "Date"
   },
   "t_shared_default": {
     "message": "Défaut"
@@ -3613,7 +3619,7 @@
     "message": "Sélectionnez le calendrier"
   },
   "t_shared_select_group_and_club": {
-    "message": "Sélectionner Clubs & groupes"
+    "message": "Sélectionner Organisation"
   },
   "t_shared_select_service": {
     "message": "Sélectionnez un service"
@@ -3787,16 +3793,16 @@
     "message": "Masquer la publication"
   },
   "t_walls_integrations_error_could_not_create_channel": {
-    "message": "Erreur lors de la création de la section"
+    "message": "Erreur lors de la création de la chaîne"
   },
   "t_walls_integrations_form_label_channel_name": {
-    "message": "Nom de la section"
+    "message": "Nom de la chaîne"
   },
   "t_walls_integrations_form_label_poster_name": {
     "message": "Nom de l'auteur"
   },
   "t_walls_integrations_new_channel": {
-    "message": "Nouvelle section"
+    "message": "Nouvelle Chaîne"
   },
   "t_walls_integration_form_default_image": {
     "message": "Image du mur"
@@ -3806,6 +3812,9 @@
   },
   "t_walls_show_post": {
     "message": "Afficher la publication"
+  },
+  "t_walls_tags_users": {
+    "message": "%s users"
   },
   "t_walls_unmute_student": {
     "message": "Réactiver l'utilisateur"
