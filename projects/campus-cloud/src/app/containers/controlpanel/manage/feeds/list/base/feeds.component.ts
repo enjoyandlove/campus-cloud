@@ -1,11 +1,20 @@
 import { BehaviorSubject, combineLatest, of, zip, Observable, merge, Subject } from 'rxjs';
-import { map, switchMap, filter, tap, mergeMap, take, startWith } from 'rxjs/operators';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
+import { isEqual } from 'lodash';
+import {
+  map,
+  tap,
+  take,
+  filter,
+  switchMap,
+  mergeMap,
+  startWith,
+  distinctUntilChanged
+} from 'rxjs/operators';
 
 import * as fromStore from '../../store';
-
 import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../../feeds.service';
 import { GroupType } from '../../feeds.utils.service';
@@ -16,23 +25,16 @@ import { FeedsAmplitudeService } from './../../feeds.amplitude.service';
 import { CPTrackingService, UserService } from '@campus-cloud/shared/services';
 import { SocialWallContentObjectType, SocialWallContent } from './../../model';
 
-interface ICurrentView {
-  label: string;
-  action: number;
-  group_id: number;
-  commentingMemberType: number;
-  postingMemberType: number;
-}
-
 interface IState {
   query: string;
   group_id: number;
-  wall_type: number;
   feeds: Array<any>;
   post_types: number;
+  user_ids: number[];
+  end: null | number;
+  start: null | number;
   is_integrated: boolean;
   isCampusThread: boolean;
-  currentView?: ICurrentView;
   flagged_by_users_only: number;
   removed_by_moderators_only: number;
 }
@@ -40,10 +42,11 @@ interface IState {
 const state: IState = {
   feeds: [],
   query: '',
+  end: null,
+  start: null,
+  user_ids: [],
   post_types: 1,
   group_id: null,
-  wall_type: null,
-  currentView: null,
   is_integrated: false,
   isCampusThread: true,
   flagged_by_users_only: null,
@@ -57,7 +60,6 @@ const state: IState = {
 })
 export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   @Input() groupId: number;
-  @Input() selectedItem: any;
   @Input() groupType: GroupType;
   @Input() hideIntegrations = false;
 
@@ -136,7 +138,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     const schoolParam = new HttpParams().set('school_id', this.session.school.id.toString());
 
     let searchCampusParam: HttpParams = !this.state.isCampusThread
-      ? schoolParam.set('group_id', this.state.wall_type.toString())
+      ? schoolParam.set('group_id', this.state.group_id.toString())
       : schoolParam;
 
     searchCampusParam = searchCampusParam
@@ -200,7 +202,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
                 campusThreadCommentIds.length ? campusThreadCommentIds.join(',') : null
               )
           : threadSearch
-              .set('group_id', this.state.wall_type.toString())
+              .set('group_id', this.state.group_id.toString())
               .set('group_thread_ids', groupThreadIds.length ? groupThreadIds.join(',') : null)
               .set(
                 'comment_ids',
@@ -308,30 +310,25 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
   onFilterByCategory(category) {
     this.onDoFilter(category);
-    this.setItemInCategory(category);
   }
 
   onDoFilter(data) {
     const {
-      wall_type,
+      end,
+      start,
+      user_ids,
+      group_id,
       post_types,
       is_integrated,
-      store_category_id,
+      related_obj_id,
       flagged_by_users_only,
       removed_by_moderators_only
     } = data;
-    this.store.dispatch(fromStore.setGroupId({ groupId: wall_type === 1 ? null : wall_type }));
-    this.store.dispatch(fromStore.setPostType({ postType: post_types }));
-    this.store.dispatch(fromStore.setStoreCategoryId({ storeCategoryId: store_category_id }));
-    this.store.dispatch(fromStore.setIsIntegrated({ isIntegrated: is_integrated }));
-    this.store.dispatch(
-      fromStore.setFlaggedByModerator({ flagged: Boolean(removed_by_moderators_only) })
-    );
-    this.store.dispatch(fromStore.setFlaggedByUser({ flagged: Boolean(flagged_by_users_only) }));
 
+    // TODO fix this
     this.isCampusWallView$.next({
-      type: wall_type,
-      group_id: data.group_id
+      type: !post_types && !group_id ? 1 : group_id ? group_id : 1,
+      group_id: related_obj_id
     });
 
     // filter by removed posts
@@ -349,13 +346,13 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     }
 
     this.state = Object.assign({}, this.state, {
-      group_id: data.group_id,
-      wall_type: wall_type,
+      end,
+      start,
+      user_ids,
+      group_id: group_id,
       post_types: post_types,
-      currentView: data.currentView,
-      is_integrated: data.is_integrated,
-      isCampusThread: wall_type === 1,
-      store_category_id: data.store_category_id,
+      is_integrated: is_integrated,
+      isCampusThread: group_id === null,
       flagged_by_users_only: flagged_by_users_only,
       removed_by_moderators_only: removed_by_moderators_only
     });
@@ -366,10 +363,6 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     }
 
     this.fetch();
-  }
-
-  setItemInCategory(category) {
-    this.selectedItem = category;
   }
 
   onPaginationNext() {
@@ -392,6 +385,12 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   private getFilterParams(): HttpParams {
+    const nullOrString = (stateKey: string) =>
+      this.state[stateKey] ? this.state[stateKey].toString() : null;
+
+    const end = nullOrString('end');
+    const start = nullOrString('start');
+
     const flagged = this.state.flagged_by_users_only
       ? this.state.flagged_by_users_only.toString()
       : null;
@@ -405,18 +404,19 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     return new HttpParams()
       .set('post_types', type)
       .set('flagged_by_users_only', flagged)
-      .set('removed_by_moderators_only', removed);
+      .set('removed_by_moderators_only', removed)
+      .set('end', start && end ? this.state.end.toString() : null)
+      .set('start', start && end ? this.state.start.toString() : null)
+      .set('user_ids', this.state.user_ids.length ? this.state.user_ids.join(',') : null);
   }
 
   private fetch() {
     let search = this.getFilterParams();
-
     search = this.state.isCampusThread
       ? search.append('school_id', this.session.g.get('school').id.toString())
-      : search.append('group_id', this.state.wall_type.toString());
+      : search.append('group_id', this.state.group_id.toString());
 
     const stream$ = this.doAdvancedSearch(search);
-
     super
       .fetchData(stream$)
       .then((res) => {
@@ -459,12 +459,56 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    const filters$ = this.store.pipe(select(fromStore.getViewFilters));
+
+    /**
+     * when rendered inside a host wall (service, clubs...)
+     * we need to fetch the GroupWall from the groupId @Input()
+     */
+    let groupStream$: Observable<any> = of(null);
+
+    if (this.groupId) {
+      const search = new HttpParams()
+        .append('school_id', this.session.g.get('school').id.toString())
+        .append(
+          this.groupType === GroupType.orientation ? 'calendar_id' : 'store_id',
+          this.groupId.toString()
+        );
+      groupStream$ = this.service.getSocialGroups(search).pipe(map((groups) => groups[0]));
+    }
+
+    /**
+     * call onDoFilter (temporarily, will be replaced with a call to fetch)
+     * whenever the viewFilterState changes 'select' emits any time the state
+     * changes, thus we need to ensure the prevState !== currentState to avoid 503's
+     */
+    const uniqueFilterChanges$ = filters$.pipe(
+      distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState))
+    );
+
+    combineLatest([groupStream$, uniqueFilterChanges$]).subscribe(([parentGroup, filters]) => {
+      const { users, start, end, postType, flaggedByModerators, flaggedByUser } = filters;
+      const group = parentGroup ? parentGroup : filters.group ? filters.group : null;
+      const filtersObj = {
+        end,
+        start,
+        user_ids: users.map((u) => u.id),
+        group_id: group ? group.id : null,
+        post_types: postType ? postType.id : null,
+        is_integrated: postType ? postType.is_integrated : false,
+        flagged_by_users_only: flaggedByUser ? 1 : null,
+        related_obj_id: group ? group.related_obj_id : null,
+        removed_by_moderators_only: flaggedByModerators ? 1 : null
+      };
+      this.onDoFilter(filtersObj);
+    });
+
     this.loading$ = merge(super.isLoading(), this.searching.asObservable()).pipe(startWith(true));
 
     const posts$ = this.store.pipe(select(fromStore.getThreads));
     const results$ = this.store.pipe(select(fromStore.getResults));
     const comments$ = this.store.pipe(select(fromStore.getComments));
-    const filters$ = this.store.pipe(select(fromStore.getViewFilters));
+
     /**
      * whenever either of these observables
      * emits iterate over the results and append the

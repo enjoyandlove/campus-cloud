@@ -1,21 +1,53 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { By } from '@angular/platform-browser';
-import { DebugElement } from '@angular/core';
+import { StoreModule } from '@ngrx/store';
+import { of } from 'rxjs';
 
+import * as fromStore from '../../../store';
+
+import { CPSession } from '@campus-cloud/session';
+import { mockSchool } from '@campus-cloud/session/mock';
+import { UserService } from '@campus-cloud/shared/services';
 import { FeedSearchComponent } from './feed-search.component';
 import { CPTestModule } from '@campus-cloud/shared/tests/test.module';
+import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
+
+class MockFeedsService {
+  getSocialGroups() {
+    return of([]);
+  }
+}
+class MockUserService {
+  getAll() {
+    return of([]);
+  }
+}
 
 describe('FeedSearchComponent', () => {
   let de: DebugElement;
+  let session: CPSession;
   let formBuilder: FormBuilder;
   let component: FeedSearchComponent;
   let fixture: ComponentFixture<FeedSearchComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [CPTestModule, ReactiveFormsModule],
-      declarations: [FeedSearchComponent]
+      imports: [
+        CPTestModule,
+        ReactiveFormsModule,
+        StoreModule.forFeature('WALLS_STATE', {
+          feeds: fromStore.feedsReducer,
+          bannedEmails: fromStore.bannedEmailsReducer
+        })
+      ],
+      declarations: [FeedSearchComponent],
+      providers: [
+        { provide: FeedsService, useClass: MockFeedsService },
+        { provide: UserService, useClass: MockUserService }
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
   }));
 
@@ -24,6 +56,9 @@ describe('FeedSearchComponent', () => {
     component = fixture.componentInstance;
     formBuilder = TestBed.get(FormBuilder);
     de = fixture.debugElement;
+
+    session = TestBed.get(CPSession);
+    session.g.set('school', mockSchool);
 
     component.form = formBuilder.group({
       query: ['']

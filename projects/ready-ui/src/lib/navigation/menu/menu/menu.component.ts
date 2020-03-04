@@ -23,7 +23,12 @@ import { MenuItemComponent } from './../menu-item/menu-item.component';
   styleUrls: ['./menu.component.scss']
 })
 export class MenuComponent implements OnInit, AfterContentInit, OnDestroy {
-  @Input() public id: string;
+  _maxHeight: string | undefined;
+
+  @Input()
+  set maxHeight(maxHeight: string | number) {
+    this._maxHeight = typeof maxHeight === 'number' ? `${maxHeight}em` : maxHeight;
+  }
 
   childrenClick$: Observable<MenuComponent>;
 
@@ -37,6 +42,12 @@ export class MenuComponent implements OnInit, AfterContentInit, OnDestroy {
   closed: EventEmitter<string | null> = new EventEmitter();
 
   @ViewChild(TemplateRef, { static: true }) public template: TemplateRef<any>;
+
+  get menuClasses() {
+    return {
+      scrollable: Boolean(this._maxHeight)
+    };
+  }
 
   constructor() {}
 

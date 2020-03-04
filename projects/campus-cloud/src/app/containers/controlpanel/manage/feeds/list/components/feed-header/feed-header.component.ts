@@ -1,6 +1,7 @@
 /*tslint:disable:no-host-metadata-property */
-import { Component, Input, Output, EventEmitter, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { Store, select } from '@ngrx/store';
+import { take } from 'rxjs/operators';
 import { get as _get } from 'lodash';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -24,7 +25,6 @@ import { CPI18nService } from '@campus-cloud/shared/services';
 export class FeedHeaderComponent implements OnInit {
   @Input() feed: any;
   @Input() isComment: boolean;
-  @Output() filterByCategory: EventEmitter<any> = new EventEmitter();
 
   state: any;
   CPDate = CPDate;
@@ -37,15 +37,16 @@ export class FeedHeaderComponent implements OnInit {
 
   constructor(public cpI18n: CPI18nService, private store: Store<fromStore.IWallsState>) {}
 
-  loadCategory(item) {
-    this.state = Object.assign({}, this.state, {
-      post_types: item.post_type,
-      wall_type: 1,
-      label: item.channelName,
-      action: item.post_type
-    });
-    this.store.dispatch(fromStore.setPostType({ postType: item.post_type }));
-    this.filterByCategory.emit(this.state);
+  loadCategory({ post_type }) {
+    this.store
+      .pipe(
+        select(fromStore.getSocialPostCategories),
+        take(1)
+      )
+      .subscribe((postCategories) => {
+        const postType = postCategories.find((p) => p.id === post_type);
+        this.store.dispatch(fromStore.setPostType({ postType }));
+      });
   }
 
   ngOnInit() {

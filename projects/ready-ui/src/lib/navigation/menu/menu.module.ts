@@ -7,24 +7,28 @@ import { NgModule } from '@angular/core';
 import { MenuComponent } from './menu/menu.component';
 import { MenuTriggerDirective } from './menu-trigger.directive';
 import { MenuItemComponent } from './menu-item/menu-item.component';
+import { MenuSearchComponent } from './menu-search/menu-search.component';
 import { MenuDividerComponent } from './menu-divider/menu-divider.component';
 import { MenuSectionComponent } from './menu-section/menu-section.component';
+import { ImagesAndIconsModule } from '../../images-and-icons/images-and-icons.module';
 
 @NgModule({
   exports: [
     MenuComponent,
     MenuItemComponent,
-    MenuTriggerDirective,
+    MenuSearchComponent,
     MenuDividerComponent,
-    MenuSectionComponent
+    MenuSectionComponent,
+    MenuTriggerDirective
   ],
   declarations: [
     MenuComponent,
     MenuItemComponent,
+    MenuSearchComponent,
     MenuTriggerDirective,
     MenuDividerComponent,
     MenuSectionComponent
   ],
-  imports: [CommonModule, TextModule, OverlayModule, PortalModule]
+  imports: [CommonModule, TextModule, OverlayModule, PortalModule, ImagesAndIconsModule]
 })
 export class MenuModule {}
