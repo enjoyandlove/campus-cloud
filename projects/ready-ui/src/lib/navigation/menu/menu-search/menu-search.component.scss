@@ -8,6 +8,7 @@
 }
 
 form,
+input,
 .form__control {
   width: 100%
 }
@@ -23,5 +24,10 @@ form,
   input {
     border: none;
     box-shadow: none;
+
+    &:focus,
+    &:active {
+      outline: none;
+    }
   }
 }
