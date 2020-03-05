@@ -325,7 +325,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       removed_by_moderators_only
     } = data;
 
-    // TODO fix this
+    // TODO: fix this
     this.isCampusWallView$.next({
       type: !post_types && !group_id ? 1 : group_id ? group_id : 1,
       group_id: related_obj_id

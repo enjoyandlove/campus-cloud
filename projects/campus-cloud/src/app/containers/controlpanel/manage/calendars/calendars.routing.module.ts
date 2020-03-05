@@ -22,7 +22,7 @@ const appRoutes: Routes = [
     component: CalendarsDetailComponent,
     data: { zendesk: 'calendars', title: pageTitle.MANAGE_CALENDARS, amplitude: 'Calendar Events' }
   },
-  // TODO Split to its own module
+  // TODO: Split to its own module
   {
     path: ':calendarId/items/create',
     component: CalendarsItemCreateComponent,

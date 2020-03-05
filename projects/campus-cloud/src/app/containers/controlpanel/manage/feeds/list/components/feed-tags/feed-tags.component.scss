@@ -4,4 +4,13 @@
   ready-ui-tag:not(:last-child) {
     margin-right: 0.5em;
   }
+
+  span.enforce-max-length {
+    min-width: 0;
+    max-width: 12em;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block;
+    text-overflow: ellipsis;
+  }
 }

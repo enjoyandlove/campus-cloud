@@ -1,9 +1,10 @@
 <ready-ui-tag [color]="tag.canClose ? 'primary' : 'default'"
-              *ngFor="let tag of tags$ | async">
+              *ngFor="let tag of tags$ | async as tags">
   <ready-ui-stack spacing="tight">
     <ready-ui-icon [name]="tag.icon"
                    size="small"></ready-ui-icon>
-    <span>{{ tag.label | cpI18n }}</span>
+    <span [attr.title]="tag.label"
+          [class.enforce-max-length]="tag.canClose">{{ tag.label }}</span>
     <button ui-button
             type="button"
             color="inherit"
