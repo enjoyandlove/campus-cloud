@@ -8,9 +8,10 @@ import {
   tap,
   take,
   filter,
-  switchMap,
   mergeMap,
+  switchMap,
   startWith,
+  debounceTime,
   distinctUntilChanged
 } from 'rxjs/operators';
 
@@ -483,7 +484,9 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
      * changes, thus we need to ensure the prevState !== currentState to avoid 503's
      */
     const uniqueFilterChanges$ = filters$.pipe(
-      distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState))
+      distinctUntilChanged((prevState, currentState) => isEqual(prevState, currentState)),
+      // prevent potential 503
+      debounceTime(700)
     );
 
     combineLatest([groupStream$, uniqueFilterChanges$]).subscribe(([parentGroup, filters]) => {
