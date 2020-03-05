@@ -35,10 +35,10 @@ export class FeedTagsComponent implements OnInit {
         const dateTag = {
           icon: 'today',
           canClose: true,
-          label: `[NOTRANSLATE]${this.datePipe.transform(
-            start,
+          label: `${this.datePipe.transform(start, FORMAT.SHORT)} - ${this.datePipe.transform(
+            end,
             FORMAT.SHORT
-          )} - ${this.datePipe.transform(end, FORMAT.SHORT)}[NOTRANSLATE]`,
+          )}`,
           onClick: () => {
             this.store.dispatch(fromStore.setEndFilter({ end: null }));
             this.store.dispatch(fromStore.setStartFilter({ start: null }));
@@ -48,35 +48,35 @@ export class FeedTagsComponent implements OnInit {
         const groupTag = (groupName: string) => ({
           icon: 'ready-app',
           canClose: true,
-          label: `[NOTRANSLATE]${groupName}[NOTRANSLATE]`,
+          label: groupName,
           onClick: () => this.store.dispatch(fromStore.setGroup({ group: null }))
         });
 
         const postTag = (categoryName: string) => ({
           icon: 'ready-app',
           canClose: true,
-          label: `[NOTRANSLATE]${categoryName}[NOTRANSLATE]`,
+          label: categoryName,
           onClick: () => this.store.dispatch(fromStore.setPostType({ postType: null }))
         });
 
         const flaggedByUserTag = {
           icon: 'flag',
           canClose: true,
-          label: 'feeds_flagged_posts',
+          label: this.cpI18nPipe.transform('feeds_flagged_posts'),
           onClick: () => this.store.dispatch(fromStore.setFlaggedByUser({ flagged: false }))
         };
 
         const usersTag = (label: string) => ({
           icon: 'person',
           canClose: true,
-          label: `[NOTRANSLATE]${label}[NOTRANSLATE]`,
+          label,
           onClick: () => this.store.dispatch(fromStore.clearFilterUsers())
         });
 
         const flaggedByModeratorTag = {
           canClose: true,
           icon: 'flag',
-          label: 'feeds_removed_posts',
+          label: this.cpI18nPipe.transform('feeds_removed_posts'),
           onClick: () => this.store.dispatch(fromStore.setFlaggedByModerator({ flagged: false }))
         };
 
@@ -114,7 +114,7 @@ export class FeedTagsComponent implements OnInit {
           tags.unshift({
             canClose: false,
             icon: 'ready-app',
-            label: 't_all_walls_campus_walls_channels'
+            label: this.cpI18nPipe.transform('t_all_walls_campus_walls_channels')
           });
         }
 
