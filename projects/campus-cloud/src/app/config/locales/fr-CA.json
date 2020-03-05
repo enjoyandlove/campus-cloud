@@ -818,19 +818,19 @@
     "message": "Bannière de l'Organisation"
   },
   "clubs_label_club_description": {
-    "message": "Description de l'Organisation"
+    "message": "Description"
   },
   "clubs_label_club_details": {
     "message": "Détails de l'Organisation"
   },
   "clubs_label_club_membership": {
-    "message": "Membres de l'Organisation"
+    "message": "Membres"
   },
   "clubs_label_club_name": {
-    "message": "Nom de l'Organisation"
+    "message": "Nom"
   },
   "clubs_label_club_status": {
-    "message": "Statut de l'Organisation"
+    "message": "Statut"
   },
   "clubs_label_constitution": {
     "message": "Constitution",
@@ -1052,7 +1052,7 @@
     "message": "Commentaires"
   },
   "dashboard_social_activity_connections": {
-    "message": "Connexions"
+    "message": "Amitiés"
   },
   "dashboard_social_activity_likes": {
     "message": "Likes"
@@ -1443,7 +1443,7 @@
     "message": "Publier vers"
   },
   "feeds_removed_posts": {
-    "message": "Publications supprimées"
+    "message": "Supprimés"
   },
   "feeds_team_members": {
     "message": "Administrateurs de Campus Cloud"
@@ -1785,7 +1785,7 @@
     "message": "Destinataires"
   },
   "notify_announcement_template_to_tooltip": {
-    "message": "Les notifications peuvent être envoyées aux utilisateurs de l'application que vous pouvez regrouper en audiences. Pour plus d'info:"
+    "message": "Les notifications peuvent être envoyées aux utilisateurs de l'application que vous pouvez regrouper en audiences."
   },
   "no_admins_found": {
     "message": "Aucun administrateur trouvé"
@@ -1972,7 +1972,7 @@
     "message": "Sélectionner valeur"
   },
   "select_host": {
-    "message": "Publier Sous"
+    "message": "Sélectionner Hôte"
   },
   "send": {
     "message": "Envoyer"
@@ -2879,6 +2879,9 @@
   "t_latitude": {
     "message": "Latitude"
   },
+  "t_load_more": {
+    "message": "Afficher plus"
+  },
   "t_locations_category_create_category": {
     "message": "Créer catégorie"
   },
@@ -3441,6 +3444,9 @@
   "t_shared_checkins": {
     "message": "Vérifications de présence"
   },
+  "t_shared_clear_filters": {
+    "message": "Réinitialiser les filtres"
+  },
   "t_shared_closed": {
     "message": "Fermé"
   },
@@ -3512,6 +3518,9 @@
   },
   "t_shared_feature_integrations": {
     "message": "Intégrations"
+  },
+  "t_shared_filter": {
+    "message": "Filtrer"
   },
   "t_shared_friday": {
     "message": "Vendredi"
@@ -3691,7 +3700,7 @@
     "message": "Élèves"
   },
   "t_student_profile_mute_toggle_body": {
-    "message": "Désactiver %s l'empêche de publier, commenter, aimer et signaler sur les murs. Il leur sera uniquement possible de lire."
+    "message": "Désactiver %s l'empêche de publier, commenter, aimer et signaler sur les communautés. Il leur sera uniquement possible de lire."
   },
   "t_student_profile_mute_toggle_title": {
     "message": "Désactiver %s"

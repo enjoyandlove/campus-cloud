@@ -821,19 +821,19 @@
     "message": "Organization Banner"
   },
   "clubs_label_club_description": {
-    "message": "Organization Description"
+    "message": "Description"
   },
   "clubs_label_club_details": {
     "message": "Organization Details"
   },
   "clubs_label_club_membership": {
-    "message": "Organization Membership"
+    "message": "Membership"
   },
   "clubs_label_club_name": {
-    "message": "Organization Name"
+    "message": "Name"
   },
   "clubs_label_club_status": {
-    "message": "Organization Status"
+    "message": "Status"
   },
   "clubs_label_constitution": {
     "message": "Constitution",
@@ -1055,7 +1055,7 @@
     "message": "Comments"
   },
   "dashboard_social_activity_connections": {
-    "message": "Connections"
+    "message": "Friendships"
   },
   "dashboard_social_activity_likes": {
     "message": "Likes"
@@ -1446,7 +1446,7 @@
     "message": "Post to"
   },
   "feeds_removed_posts": {
-    "message": "Archived"
+    "message": "Deleted"
   },
   "feeds_team_members": {
     "message": "Campus Cloud Admins"
@@ -1788,7 +1788,7 @@
     "message": "Recipients"
   },
   "notify_announcement_template_to_tooltip": {
-    "message": "Notifications can be sent to app users, which you can group together into Audiences.  For more info:"
+    "message": "Notifications can be sent to app users, which you can group together into Audiences."
   },
   "no_admins_found": {
     "message": "No Admins found"
@@ -1975,7 +1975,7 @@
     "message": "Select Value"
   },
   "select_host": {
-    "message": "Post As"
+    "message": "Select Host"
   },
   "send": {
     "message": "Send"
@@ -3751,7 +3751,7 @@
     "message": "Students"
   },
   "t_student_profile_mute_toggle_body": {
-    "message": "Muting %s prevents them from posting, commenting, liking and flagging on walls. They are still able to view."
+    "message": "Muting %s prevents them from posting, commenting, liking and flagging on communities. They are still able to view."
   },
   "t_student_profile_mute_toggle_title": {
     "message": "Mute %s"
