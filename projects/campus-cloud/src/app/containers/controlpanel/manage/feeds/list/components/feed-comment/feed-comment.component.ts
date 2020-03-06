@@ -46,6 +46,7 @@ export class FeedCommentComponent implements OnInit {
 
   @Input() isCampusWallView: Observable<number>;
   @Output() deleted: EventEmitter<number> = new EventEmitter();
+  @Output() approved: EventEmitter<number> = new EventEmitter();
 
   _comment;
   isDeleteModal;
