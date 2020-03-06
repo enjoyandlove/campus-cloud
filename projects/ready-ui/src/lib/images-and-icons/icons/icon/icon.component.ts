@@ -1,4 +1,4 @@
-import { Input, HostBinding, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Input, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'ready-ui-icon',
@@ -14,15 +14,23 @@ export class IconComponent implements OnInit {
   size: 'small' | 'regular' = 'regular';
 
   @Input()
+  height: string;
+
+  @Input()
+  width: string;
+
+  @Input()
   color = 'inherit';
 
   constructor() {}
 
   ngOnInit() {}
 
-  @HostBinding('class.icon--small')
-  get isSmall() {
-    return this.size === 'small';
+  get svgClasses() {
+    return {
+      small: this.size === 'small',
+      regular: this.size === 'regular'
+    };
   }
 
   get absUrl() {

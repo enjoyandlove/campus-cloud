@@ -20,11 +20,11 @@
     align-items: center;
 
     &.align-left {
-      justify-content: start;
+      justify-content: flex-start;
     }
 
     &.align-right {
-      justify-content: end;
+      justify-content: flex-end;
     }
 
     &.align-center {

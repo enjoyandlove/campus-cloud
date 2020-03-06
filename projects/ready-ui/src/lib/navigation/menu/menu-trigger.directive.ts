@@ -26,6 +26,9 @@ export class MenuTriggerDirective implements OnDestroy {
   overlayRef: OverlayRef;
   _closingActionsSubscription = Subscription.EMPTY;
 
+  @Input()
+  overlayWidth: string;
+
   @Input('triggerFor')
   get menu() {
     return this._menu;
@@ -148,6 +151,7 @@ export class MenuTriggerDirective implements OnDestroy {
 
   private getConfig(): OverlayConfig {
     return {
+      width: this.overlayWidth,
       backdropClass: 'ready-ui-menu',
       positionStrategy: this.getPosition(),
       hasBackdrop: this.triggersSubmenu() ? false : true,

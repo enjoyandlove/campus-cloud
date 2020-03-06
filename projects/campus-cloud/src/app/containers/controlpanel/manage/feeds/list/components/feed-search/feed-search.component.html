@@ -2,6 +2,7 @@
   <ready-ui-stack spacing="tight">
     <button ui-button
             variant="stroked"
+            overlayWidth="10em"
             [triggerFor]="primary"
             ready-ui-menu-trigger
             [color]="(hasFiltersActive$ | async) ? 'primary' : 'default'">
@@ -35,14 +36,16 @@
        [eventData]="eventData"
        *ngIf="!hideIntegrations"
        routerLink="integrations">
-      <ready-ui-icon name="link"></ready-ui-icon>
+      <ready-ui-icon name="link"
+                     height="33px"></ready-ui-icon>
     </a>
     <button ui-button
             type="button"
             variant="stroked"
             data-toggle="modal"
             data-target="#settingsModal">
-      <ready-ui-icon name="settings_applications"></ready-ui-icon>
+      <ready-ui-icon name="settings_applications"
+                     height="33px"></ready-ui-icon>
     </button>
   </ready-ui-stack>
 
