@@ -91,7 +91,9 @@ export const getResults = createSelector(
     } = state;
 
     const filters = [];
-    const postTypeFilter = (thread) => thread.post_type === postType.id;
+    // the post_type field in comments is not a Social Post Category
+    const postTypeFilter = (thread, isComment = false) =>
+      isComment ? true : thread.post_type === postType.id;
     const flaggedByUserFilter = (thread) => thread.dislikes > 0;
     const flaggedByModeratorsFilter = (thread) => thread.flag < 0;
     const groupIdFilter = (thread) => thread.group_id === group.id;
@@ -116,7 +118,7 @@ export const getResults = createSelector(
       .filter((thread) => filters.every((filterFn) => filterFn(thread)))
       .map((t) => t.id);
     const validCommentIds = comments
-      .filter((thread) => filters.every((filterFn) => filterFn(thread)))
+      .filter((thread) => filters.every((filterFn) => filterFn(thread, true)))
       .map((t) => t.id);
 
     return results

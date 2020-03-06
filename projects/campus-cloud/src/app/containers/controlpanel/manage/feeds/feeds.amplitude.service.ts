@@ -37,7 +37,7 @@ export class FeedsAmplitudeService {
               .select(fromStore.getSocialPostCategories)
               .pipe(take(1))
               .subscribe((channels) => {
-                amplitude = channels.find((c) => c.id === postType).name;
+                amplitude = channels.find((c) => c.id === postType.id).name;
               });
           }
         })

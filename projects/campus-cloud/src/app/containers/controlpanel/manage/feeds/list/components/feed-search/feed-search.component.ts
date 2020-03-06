@@ -139,7 +139,7 @@ export class FeedSearchComponent implements OnInit {
           query
         ]) => {
           const searchByName = (item) =>
-            item.name.toLowerCase().startsWith((query as string).toLowerCase());
+            item.name.toLowerCase().startsWith((query as string).toLowerCase().trim());
 
           return {
             selectedChannel,
