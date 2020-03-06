@@ -20,7 +20,9 @@
             "outputPath": "_dist",
             "customWebpackConfig": {
               "path": "./webpack.config.js",
-              "mergeStrategies": { "externals": "replace" }
+              "mergeStrategies": {
+                "externals": "replace"
+              }
             },
             "index": "projects/campus-cloud/src/index.html",
             "main": "projects/campus-cloud/src/main.ts",
@@ -43,7 +45,9 @@
               "projects/ready-ui/src/lib/core/sass/styles.scss"
             ],
             "stylePreprocessorOptions": {
-              "includePaths": ["projects/campus-cloud/src/styles"]
+              "includePaths": [
+                "projects/campus-cloud/src/styles"
+              ]
             },
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -109,9 +113,13 @@
             "polyfills": "projects/campus-cloud/src/polyfills.ts",
             "tsConfig": "projects/campus-cloud/tsconfig.spec.json",
             "karmaConfig": "projects/campus-cloud/karma.conf.js",
-            "styles": ["projects/campus-cloud/src/styles.scss"],
+            "styles": [
+              "projects/campus-cloud/src/styles.scss"
+            ],
             "stylePreprocessorOptions": {
-              "includePaths": ["projects/campus-cloud/src/styles"]
+              "includePaths": [
+                "projects/campus-cloud/src/styles"
+              ]
             },
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
@@ -132,7 +140,9 @@
               "projects/campus-cloud/tsconfig.app.json",
               "projects/campus-cloud/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
@@ -165,7 +175,9 @@
               "projects/ready-ui/tsconfig.lib.json",
               "projects/ready-ui/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**"]
+            "exclude": [
+              "**/node_modules/**"
+            ]
           }
         }
       }
@@ -176,5 +188,8 @@
     "@schematics/angular:component": {
       "styleext": "scss"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }
