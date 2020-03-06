@@ -148,9 +148,10 @@ const _feedsReducer = createReducer(
   }),
 
   on(WallsActions.updateThread, (state: IWallsFeedsState, { thread }) => {
+    const { message, display_name, ...editableFields } = thread;
     return {
       ...state,
-      threads: state.threads.map((t) => (t.id === thread.id ? thread : t))
+      threads: state.threads.map((t) => (t.id === thread.id ? { ...t, ...editableFields } : t))
     };
   }),
 
