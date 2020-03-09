@@ -1,9 +1,8 @@
-import { catchError, delay } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
+import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { of, Observable } from 'rxjs';
 
-import { mockResult } from './search.mock';
 import { ApiService } from '@campus-cloud/base/services';
 import { SocialWallContent } from './model/feeds.interfaces';
 
@@ -71,25 +70,25 @@ export class FeedsService {
   deleteCampusWallMessageByThreadId(threadId: number) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_THREAD}/${threadId}`;
 
-    return this.api.delete(url);
+    return this.api.delete(url, null, true);
   }
 
   deleteGroupWallMessageByThreadId(threadId: number) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_THREAD}/${threadId}`;
 
-    return this.api.delete(url);
+    return this.api.delete(url, null, true);
   }
 
   deleteCampusWallCommentByThreadId(commentId: number) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.CAMPUS_COMMENT}/${commentId}`;
 
-    return this.api.delete(url);
+    return this.api.delete(url, null, true);
   }
 
   deleteGroupWallCommentByThreadId(commentId: number) {
     const url = `${this.api.BASE_URL}/${this.api.VERSION.V1}/${this.api.ENDPOINTS.GROUP_COMMENT}/${commentId}`;
 
-    return this.api.delete(url);
+    return this.api.delete(url, null, true);
   }
 
   approveCampusWallThread(threadId: number, data: any) {
