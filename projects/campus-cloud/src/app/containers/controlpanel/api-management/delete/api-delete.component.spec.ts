@@ -45,9 +45,9 @@ describe('ApiDeleteComponent', () => {
   });
 
   let de: DebugElement;
+  let component: ApiDeleteComponent;
   let cpDeleteModal: CPDeleteModalComponent;
   let fixture: ComponentFixture<ApiDeleteComponent>;
-  let component: ApiDeleteComponent;
 
   beforeEach(async(() => {
     fixture = TestBed.createComponent(ApiDeleteComponent);
