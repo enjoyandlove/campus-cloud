@@ -41,3 +41,106 @@ export enum SocialWallContentObjectType {
   groupComment = 'group_comment',
   campusComment = 'campus_comment'
 }
+
+export interface ICampusThread {
+  id?: number;
+  school_id: number;
+  added_time: number;
+  user_id: number;
+  display_name: string;
+  message: string;
+  has_image: boolean;
+  image_url: string;
+  image_url_list: string[];
+  comment_count: number;
+  is_anonymous: boolean;
+  likes: number;
+  dislikes: number;
+  post_type: number;
+  last_comment_time: number;
+  is_global: boolean;
+  image_list: any[];
+  image_thumb_url: string;
+  avatar_thumb: string;
+  extern_poster_id: number;
+  integration_feed_id: number;
+  flag: number;
+  email: string;
+  user_status: number;
+}
+
+export interface ICampusThreadComment {
+  id?: number;
+  campus_thread_id: number;
+  added_time: number;
+  user_id: number;
+  display_name: string;
+  comment: string;
+  has_image: boolean;
+  image_url: string;
+  image_url_list: string[];
+  is_anonymous: boolean;
+  likes: number;
+  dislikes: number;
+  post_type: number;
+  image_list: any[];
+  image_thumb_url: string;
+  avatar_thumb: string;
+  extern_poster_id: number;
+  flag: number;
+  email: string;
+  user_status: number;
+}
+
+export interface ISocialGroupThread {
+  group_id: number;
+  school_id: number;
+  added_time: number;
+  user_id: number;
+  display_name: string;
+  subject: string;
+  message: string;
+  message_html: string;
+  has_image: boolean;
+  image_url: string;
+  image_url_list: string[];
+  comment_count: number;
+  is_anonymous: boolean;
+  likes: number;
+  dislikes: number;
+  post_type: number;
+  last_comment_time: number;
+  id?: number;
+  flag: number;
+  extern_poster_id: number;
+  user_status: number;
+  avatar_thumb: string;
+  image_thumb_url: string;
+  image_list: any[];
+}
+
+export interface ISocialGroupThreadComment {
+  group_thread_id: number;
+  added_time: number;
+  user_id: number;
+  display_name: string;
+  subject: string;
+  comment: string;
+  comment_html: string;
+  has_image: boolean;
+  image_url: string;
+  image_url_list: string[];
+  sub_comment_count: number;
+  is_anonymous: boolean;
+  likes: number;
+  dislikes: number;
+  post_type: number;
+  id?: number;
+  group_id: number;
+  flag: number;
+  extern_poster_id: number;
+  user_status: number;
+  avatar_thumb: string;
+  image_thumb_url: string;
+  image_list: any[];
+}

@@ -69,8 +69,8 @@ describe('FeedApproveModalComponent', () => {
 
   it('should approve comment onSubmit', () => {
     spyOn(component, 'trackAmplitudeEvent');
-    spyOn(component.feedsService, 'approveGroupWallThread').and.returnValue(of({}));
-    spyOn(component.feedsService, 'approveCampusWallThread').and.returnValue(of({}));
+    spyOn(component.feedsService, 'approveGroupWallThread').and.returnValue(of(mockFeed));
+    spyOn(component.feedsService, 'approveCampusWallThread').and.returnValue(of(mockFeed));
 
     component.onSubmit();
 

@@ -31,6 +31,7 @@ export const mockFeed = {
   image_list: [],
   post_type: 1,
   likes: 0,
+  integration_feed_id: 1,
   message: 'yay2',
   id: 548942,
   user_status: 1,
