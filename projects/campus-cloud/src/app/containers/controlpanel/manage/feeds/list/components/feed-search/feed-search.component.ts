@@ -1,5 +1,5 @@
+import { tap, skip, switchMap, debounceTime, map, startWith } from 'rxjs/operators';
 import { Subject, Observable, BehaviorSubject, merge, combineLatest } from 'rxjs';
-import { tap, skip, switchMap, debounceTime, map, startWith, withLatestFrom } from 'rxjs/operators';
 import { OnInit, Output, Component, EventEmitter, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { FormBuilder } from '@angular/forms';
@@ -79,17 +79,23 @@ export class FeedSearchComponent implements OnInit {
 
   ngOnInit() {
     const viewFilters$ = this.store.pipe(select(fromStore.getViewFilters));
-    this.studentsMenu$ = combineLatest([this.fetchStudents(), viewFilters$]).pipe(
-      map(([students, filters]) => {
+    this.studentsMenu$ = combineLatest([
+      this.fetchStudents(),
+      viewFilters$,
+      this.studentTerm.asObservable().pipe(startWith(''))
+    ]).pipe(
+      map(([students, filters, searchTerm]) => {
         const { users } = filters;
+        const selectedUserids = users.map((u) => u.id);
         return {
-          students,
+          selectedUserids,
+          selectedUsers: users,
           canSelect: users.length < 5,
-          selectedUserids: users.map((u) => u.id)
+          isSearching: searchTerm !== '',
+          students: students.filter((s) => !selectedUserids.includes(s.id))
         };
       })
     );
-
     this.dateMenu$ = this.getDateMenu();
 
     this.statusMenu$ = combineLatest([viewFilters$]).pipe(
@@ -140,12 +146,13 @@ export class FeedSearchComponent implements OnInit {
         ]) => {
           const searchByName = (item) =>
             item.name.toLowerCase().startsWith((query as string).toLowerCase().trim());
-
           return {
             selectedChannel,
             selectedHostWall,
+            isSearching: query !== '',
             socialGroups: socialGroups.filter(searchByName),
             integratedChannels: integratedChannels.filter(searchByName),
+            allCampusWallChannels: !selectedChannel && !selectedHostWall,
             nonIntegratedChannels: nonIntegratedChannels.filter(searchByName)
           };
         }
@@ -241,6 +248,8 @@ export class FeedSearchComponent implements OnInit {
     let cutOff = 15;
     const increaseBy = 15;
     let params = new HttpParams()
+      .set('sort_direction', 'asc')
+      .set('sort_field', 'username')
       .set('school_id', this.session.school.id.toString())
       .set('is_sandbox', String(this.session.school.is_sandbox))
       .set('client_id', this.session.school.client_id.toString());

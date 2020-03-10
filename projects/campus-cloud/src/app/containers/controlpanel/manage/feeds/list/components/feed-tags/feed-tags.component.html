@@ -3,8 +3,9 @@
   <ready-ui-stack spacing="tight">
     <ready-ui-icon [name]="tag.icon"
                    size="small"></ready-ui-icon>
-    <span [attr.title]="tag.label"
-          [class.enforce-max-length]="tag.canClose || !tag.canClose && tags.length > 1">{{ tag.label }}</span>
+    <span [class]="tag.cssClass"
+          [attr.title]="tag.label"
+          [class.enforce-max-length]="tags.length > 1">{{ tag.label }}</span>
     <button ui-button
             type="button"
             color="inherit"

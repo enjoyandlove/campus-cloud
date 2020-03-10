@@ -3876,6 +3876,9 @@
   "t_walls_mute_student": {
     "message": "Mute User"
   },
+  "t_walls_no_channels_found": {
+    "message": "No channels found"
+  },
   "t_walls_no_users_found": {
     "message": "No users found"
   },

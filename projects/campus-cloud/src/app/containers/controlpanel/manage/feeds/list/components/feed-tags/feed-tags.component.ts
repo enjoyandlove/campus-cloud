@@ -35,6 +35,7 @@ export class FeedTagsComponent implements OnInit {
         const dateTag = {
           icon: 'today',
           canClose: true,
+          cssClass: 'date-tag',
           label: `${this.datePipe.transform(start, FORMAT.SHORT)} - ${this.datePipe.transform(
             end,
             FORMAT.SHORT
@@ -46,36 +47,41 @@ export class FeedTagsComponent implements OnInit {
         };
 
         const groupTag = (groupName: string) => ({
-          icon: 'ready-app',
           canClose: true,
           label: groupName,
+          icon: 'ready-app',
+          cssClass: 'channel-tag',
           onClick: () => this.store.dispatch(fromStore.setGroup({ group: null }))
         });
 
         const postTag = (categoryName: string) => ({
-          icon: 'ready-app',
           canClose: true,
+          icon: 'ready-app',
           label: categoryName,
+          cssClass: 'channel-tag',
           onClick: () => this.store.dispatch(fromStore.setPostType({ postType: null }))
         });
 
         const flaggedByUserTag = {
           icon: 'flag',
           canClose: true,
+          cssClass: 'status-tag',
           label: this.cpI18nPipe.transform('feeds_flagged_posts'),
           onClick: () => this.store.dispatch(fromStore.setFlaggedByUser({ flagged: false }))
         };
 
         const usersTag = (label: string) => ({
+          label,
           icon: 'person',
           canClose: true,
-          label,
+          cssClass: 'user-tag',
           onClick: () => this.store.dispatch(fromStore.clearFilterUsers())
         });
 
         const flaggedByModeratorTag = {
-          canClose: true,
           icon: 'flag',
+          canClose: true,
+          cssClass: 'status-tag',
           label: this.cpI18nPipe.transform('feeds_removed_posts'),
           onClick: () => this.store.dispatch(fromStore.setFlaggedByModerator({ flagged: false }))
         };
@@ -114,6 +120,7 @@ export class FeedTagsComponent implements OnInit {
           tags.unshift({
             canClose: false,
             icon: 'ready-app',
+            cssClass: 'default-tag',
             label: this.cpI18nPipe.transform('t_all_walls_campus_walls_channels')
           });
         }

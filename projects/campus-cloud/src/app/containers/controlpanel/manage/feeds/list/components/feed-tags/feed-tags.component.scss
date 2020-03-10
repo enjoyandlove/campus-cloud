@@ -13,5 +13,10 @@
     white-space: nowrap;
     display: inline-block;
     text-overflow: ellipsis;
+
+    &.date-tag,
+    &.default-tag {
+      max-width: none;
+    }
   }
 }
