@@ -28,7 +28,6 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
   clubs;
   labels;
   formError;
-  buttonData;
   form: FormGroup;
   isFormReady = false;
 
@@ -159,16 +158,5 @@ export class ClubsExcelComponent extends BaseComponent implements OnInit, OnDest
     this.labels = clubAthleticLabels(this.isAthletic);
     this.buildHeader();
     this.buildForm();
-    this.buttonData = {
-      text: this.cpI18n.translate(this.labels.import_button),
-      class: 'primary',
-      disabled: true
-    };
-
-    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.buttonData = Object.assign({}, this.buttonData, {
-        disabled: !this.form.valid
-      });
-    });
   }
 }
