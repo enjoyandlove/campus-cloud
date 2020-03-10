@@ -40,12 +40,13 @@
                      height="33px"></ready-ui-icon>
     </a>
     <button ui-button
+            size="small"
             type="button"
             variant="stroked"
             data-toggle="modal"
             data-target="#settingsModal">
-      <ready-ui-icon name="settings_applications"
-                     height="33px"></ready-ui-icon>
+      <ready-ui-icon height="33px"
+                     name="settings_applications"></ready-ui-icon>
     </button>
   </ready-ui-stack>
 
@@ -116,10 +117,10 @@
               (click)="handleClearFilters()">
         <ui-text-style color="muted"
                        variant="caption">
-          <ready-ui-stack>
+          <ready-ui-stack spacing="tight">
             <ready-ui-icon name="close"
                            size="small"></ready-ui-icon>
-            {{ 't_shared_clear_filters' | cpI18n }}
+            <span>{{ 't_shared_clear_filters' | cpI18n }}</span>
           </ready-ui-stack>
         </ui-text-style>
       </button>
@@ -146,14 +147,14 @@
     <ready-ui-menu-item *ngIf="!studentMenu.students.length">
       {{ 't_walls_no_users_found' | cpI18n }}
     </ready-ui-menu-item>
-    <ready-ui-menu-item *ngIf="studentMenu.students.length">
+    <ready-ui-menu-item class="load-more"
+                        *ngIf="studentMenu.students.length">
       <button ui-button
               type="button"
               variant="inline"
+              fullWidth="true"
               (click)="loadMore.next(studentMenu.students.length)">
-        <ui-text-style color="muted"
-                       variant="caption"
-                       fullWidth="true">{{ 't_load_more' | cpI18n }}
+        <ui-text-style color="muted">{{ 't_load_more' | cpI18n }}
         </ui-text-style>
       </button>
     </ready-ui-menu-item>

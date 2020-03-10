@@ -171,7 +171,7 @@ export class MenuTriggerDirective implements OnDestroy {
           overlayY: 'top'
         }
       ])
-      .withDefaultOffsetY(this.triggersSubmenu() ? 0 : 5)
-      .withDefaultOffsetX(this.triggersSubmenu() ? 5 : 0);
+      .withDefaultOffsetY(this.triggersSubmenu() ? 0 : 4)
+      .withDefaultOffsetX(this.triggersSubmenu() ? 4 : 0);
   }
 }

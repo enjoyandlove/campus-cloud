@@ -10,7 +10,7 @@
   }
 
   &.color--muted {
-    color: $color-grey-100;
+    color: map-get($color-grey, 800);
   }
 
   &.color--info {
