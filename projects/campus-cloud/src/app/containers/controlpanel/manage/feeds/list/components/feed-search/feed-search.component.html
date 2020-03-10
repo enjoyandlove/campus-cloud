@@ -5,9 +5,11 @@
             overlayWidth="10em"
             [triggerFor]="primary"
             ready-ui-menu-trigger
+            class="centered-button"
             [color]="(hasFiltersActive$ | async) ? 'primary' : 'default'">
       <ready-ui-stack>
-        <ready-ui-icon name="filter_list">Filter</ready-ui-icon>
+        <ready-ui-icon width="20px"
+                       name="filter_list">Filter</ready-ui-icon>
         {{ 't_shared_filter' | cpI18n }}
       </ready-ui-stack>
     </button>
@@ -33,19 +35,21 @@
     <a ui-button
        cpTracker
        variant="stroked"
+       class="centered-button"
        [eventData]="eventData"
        *ngIf="!hideIntegrations"
        routerLink="integrations">
       <ready-ui-icon name="link"
-                     height="33px"></ready-ui-icon>
+                     width="20px"></ready-ui-icon>
     </a>
     <button ui-button
             size="small"
             type="button"
             variant="stroked"
             data-toggle="modal"
+            class="centered-button"
             data-target="#settingsModal">
-      <ready-ui-icon height="33px"
+      <ready-ui-icon width="20px"
                      name="settings_applications"></ready-ui-icon>
     </button>
   </ready-ui-stack>
@@ -134,6 +138,19 @@
     <ready-ui-menu-search (search)="studentTerm.next($event)"
                           [placeholder]="'t_walls_search_placeholder' | cpI18n">
     </ready-ui-menu-search>
+
+    <ng-container *ngIf="!studentMenu.isSearching">
+      <ready-ui-menu-item *ngFor="let student of studentMenu.selectedUsers">
+        <ready-ui-stack>
+          <ready-ui-checkbox checked="true"
+                             (changed)="handleStudent(student) "
+                             [label]="[student.firstname + ' ' + student.lastname]"
+                             [disabled]="!studentMenu.canSelect && !studentMenu.selectedUserids.includes(student.id)">
+          </ready-ui-checkbox>
+        </ready-ui-stack>
+      </ready-ui-menu-item>
+    </ng-container>
+
     <ready-ui-menu-item *ngFor="let student of studentMenu.students">
       <ready-ui-stack>
         <ready-ui-checkbox (changed)="handleStudent(student) "
@@ -168,11 +185,18 @@
     <ready-ui-menu-search (search)="channelTerm.next($event)"
                           [placeholder]="'t_walls_search_placeholder' | cpI18n">
     </ready-ui-menu-search>
-    <ready-ui-menu-section [name]="'t_walls_campus_walls_channels' | cpI18n">
-      <ready-ui-menu-item>
+    <ready-ui-menu-item
+                        *ngIf="!channelsMenu.integratedChannels.length && !channelsMenu.nonIntegratedChannels.length && !channelsMenu.socialGroups.length">
+      {{ 't_walls_no_channels_found' | cpI18n }}
+    </ready-ui-menu-item>
+    <ready-ui-menu-section [name]="'t_walls_campus_walls_channels' | cpI18n"
+                           *ngIf="channelsMenu.nonIntegratedChannels.length">
+      <ready-ui-menu-item *ngIf="!channelsMenu.isSearching">
         <button ui-button
                 type="button"
                 variant="inline"
+                fullWidth="true"
+                [class.active]="channelsMenu.allCampusWallChannels"
                 (click)="handleChannel(-1)">{{ 't_all_walls_campus_walls_channels' | cpI18n}}</button>
       </ready-ui-menu-item>
       <ready-ui-menu-item

@@ -1,5 +1,15 @@
 @import '~projects/campus-cloud/src/sass/core/colors';
 
+.centered-button {
+  height: 36px;
+
+  ready-ui-icon {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+}
+
 
 ready-ui-icon[name="flag"] {
   margin-left: -5px;
