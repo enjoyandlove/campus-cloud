@@ -11,8 +11,7 @@
                 [formGroup]="feedbackForm">
             <div class="form-group">
               <p class="title text-center"
-                 *ngIf="!defaultQuestion"
-                 i18n>
+                 *ngIf="!defaultQuestion">
                 {{
                   isEvent
                     ? cpI18n.translate('feedback_form_event_help')
@@ -20,8 +19,7 @@
                 }}
               </p>
               <p class="title text-center"
-                 *ngIf="defaultQuestion"
-                 i18n>
+                 *ngIf="defaultQuestion">
                 {{ defaultQuestion }}
               </p>
             </div>
@@ -41,8 +39,7 @@
               <div class="col-12">
                 <button type="submit"
                         [disabled]="!feedbackForm.valid"
-                        class="cpbtn cpbtn--tall cpbtn--full-width cpbtn--primary"
-                        i18n>
+                        class="cpbtn cpbtn--tall cpbtn--full-width cpbtn--primary">
                   {{
                     isEvent
                       ? cpI18n.translate('feedback_label_rate_event')
