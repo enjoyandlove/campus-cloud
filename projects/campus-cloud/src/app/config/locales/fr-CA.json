@@ -716,9 +716,6 @@
   "calendars_no_results_found": {
     "message": "Aucun calendrier trouvé"
   },
-  "campus_wall": {
-    "message": "Mur du campus"
-  },
   "campus_wide": {
     "message": "Tout le campus"
   },
@@ -1276,7 +1273,7 @@
     "message": "Fournissez le lien vers la page de l'événement Facebook (e.g., https://www.facebook.com/readyeducation/events/)."
   },
   "events_facebook_label_host": {
-    "message": "Sélectionner l'hôte"
+    "message": "Sélectionner Hôte"
   },
   "events_facebook_label_link": {
     "message": "Lien d'événement Facebook"
@@ -2243,6 +2240,9 @@
   },
   "t_admin_invite_studio_limited_tooltip": {
     "message": "Un accès complet à Studio nécessite les permissions vers les événements, les services, les organisations, les calendriers et l'orientation. Votre accès pour ajouter des ressources sera limité sans ces permissions."
+  },
+  "t_all_walls_campus_walls_channels": {
+    "message": "Toutes les Chaînes du Campus"
   },
   "t_announcements_list_external_source_tooltip": {
     "message": "Cette annonce était intégrée. Elle sera automatiquement mise à jour depuis l'intégration."
@@ -3798,8 +3798,17 @@
   "t_tile_button_locked": {
     "message": "Verrouillé"
   },
+  "t_walls_campus_walls_channels": {
+    "message": "Chaînes du Campus"
+  },
   "t_walls_hide_post": {
     "message": "Masquer la publication"
+  },
+  "t_walls_host_walls_channels": {
+    "message": "Chaînes d'Hôtes"
+  },
+  "t_walls_integrated_feed_channels": {
+    "message": "Chaînes des Flux"
   },
   "t_walls_integrations_error_could_not_create_channel": {
     "message": "Erreur lors de la création de la chaîne"
@@ -3818,6 +3827,9 @@
   },
   "t_walls_mute_student": {
     "message": "Désactiver l'utilisateur"
+  },
+  "t_walls_search_placeholder": {
+    "message": "rechercher"
   },
   "t_walls_show_post": {
     "message": "Afficher la publication"

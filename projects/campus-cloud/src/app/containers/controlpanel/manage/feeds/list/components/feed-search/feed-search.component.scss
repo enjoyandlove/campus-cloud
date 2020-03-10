@@ -7,7 +7,7 @@ ready-ui-icon[name="flag"] {
 }
 
 cp-feed-tags {
-  margin-top: 1em;
+  margin-top: 0.86em;
 }
 
 ready-ui-stack.dates {
@@ -23,13 +23,20 @@ ready-ui-stack.dates {
 }
 
 ready-ui-menu-item {
+  &.load-more {
+    background: #EEEEEE;
+
+    button[ui-button] {
+      text-align: center;
+    }
+  }
+
   button[ui-button] {
     text-align: left;
     position: relative;
-    padding-right: 5px;
 
     &.active {
-      $width: 4px;
+      $width: 6px;
 
       &:after {
         left: 100%;

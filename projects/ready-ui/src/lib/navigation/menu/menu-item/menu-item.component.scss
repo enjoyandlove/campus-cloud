@@ -1,12 +1,13 @@
 @import '../../../core/sass/variables';
 
 :host {
+  line-break: auto;
   padding: 0.5em 1em;
   transition: all 300ms ease-in-out;
 
   &.disabled,
   &.disabled:hover {
-    background: map-get($map: $color-grey, $key: 300);
+    background: map-get($map: $color-grey, $key: 400);
   }
 
   &:hover {

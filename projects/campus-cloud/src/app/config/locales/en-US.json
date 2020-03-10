@@ -22,7 +22,7 @@
     "message": "Copy my Campus Cloud Permissions"
   },
   "admin_all_athletics": {
-    "message": "All Athletics Organizations"
+    "message": "All Athletics"
   },
   "admin_all_clubs": {
     "message": "All Organizations"
@@ -40,7 +40,7 @@
     "message": "View the Assessment Dashboard"
   },
   "admin_athletics_owner": {
-    "message": "Athletics Organization Owner"
+    "message": "Athletics Owner"
   },
   "admin_athletics_owner_help": {
     "message": "Create new athletics organizations; manage information, events and membership for all organizations or select organizations."
@@ -108,7 +108,7 @@
     "message": "Event Viewer"
   },
   "admin_form_label_athletics": {
-    "message": "Athletics Organization(s)"
+    "message": "Athletics"
   },
   "admin_form_label_clubs": {
     "message": "Organization(s)"
@@ -159,7 +159,7 @@
     "message": "Search by name or email..."
   },
   "admin_select_athletics": {
-    "message": "Select Athletics Organization"
+    "message": "Select Athletics"
   },
   "admin_select_clubs": {
     "message": "Select Organizations"
@@ -495,28 +495,28 @@
     "message": "Total Services"
   },
   "athletics": {
-    "message": "Athletics Organizations"
+    "message": "Athletics"
   },
   "athletics_all_athletics": {
-    "message": "All Athletics Organizations"
+    "message": "All Athletics"
   },
   "athletics_button_create": {
-    "message": "Create Athletics Organization"
+    "message": "Create Athletics"
   },
   "athletics_delete_modal_title": {
-    "message": "Delete Athletics Organization"
+    "message": "Delete Athletics"
   },
   "athletics_import_button_submit": {
-    "message": "Import Athletics Organizations"
+    "message": "Import Athletics"
   },
   "athletics_import_heading": {
-    "message": "Import Athletics Organizations from File"
+    "message": "Import Athletics from File"
   },
   "athletics_import_items_to_import": {
-    "message": "File contains data for %s athletics organization(s)."
+    "message": "File contains data for %s athletics."
   },
   "athletics_label_athletic_banner": {
-    "message": "Athletics Organization Banner"
+    "message": "Athletics Banner"
   },
   "athletics_label_athletic_description": {
     "message": "Description"
@@ -534,7 +534,7 @@
     "message": "Status"
   },
   "athletics_label_edit_athletic": {
-    "message": "Edit Athletics Organization"
+    "message": "Edit Athletics"
   },
   "attendee": {
     "message": "Attendee"
@@ -718,9 +718,6 @@
   },
   "calendars_no_results_found": {
     "message": "No calendars found"
-  },
-  "campus_wall": {
-    "message": "Campus Wall"
   },
   "campus_wide": {
     "message": "Campus-Wide"
@@ -2248,7 +2245,7 @@
     "message": "Full access to Studio requires permission to Services, Events, Organizations, Calendar and Orientation. Your access to add resources will be limited without those permissions."
   },
   "t_all_walls_campus_walls_channels": {
-    "message": "All Campus Wall Channels"
+    "message": "All Campus Channels"
   },
   "t_announcements_list_external_source_tooltip": {
     "message": "This announcement was integrated. It will be automatically updated from the integration."
@@ -3159,7 +3156,7 @@
     "message": "Advisor List"
   },
   "t_personas_tile_create_resource_type_athletics_club": {
-    "message": "Athletics Organization"
+    "message": "Athletics"
   },
   "t_personas_tile_create_resource_type_campus_poi_list": {
     "message": "Map"
@@ -3850,16 +3847,16 @@
     "message": "Locked"
   },
   "t_walls_campus_walls_channels": {
-    "message": "Campus Walls Channels"
+    "message": "Campus Channels"
   },
   "t_walls_hide_post": {
     "message": "Hide Post"
   },
   "t_walls_host_walls_channels": {
-    "message": "Host Wall Channels"
+    "message": "Host Channels"
   },
   "t_walls_integrated_feed_channels": {
-    "message": "Integrated Feed Channels"
+    "message": "Feed Channels"
   },
   "t_walls_integrations_error_could_not_create_channel": {
     "message": "Error while creating channel"
@@ -3883,7 +3880,7 @@
     "message": "No users found"
   },
   "t_walls_search_placeholder": {
-    "message": "typed to search"
+    "message": "type to search"
   },
   "t_walls_show_post": {
     "message": "Show Post"
@@ -3893,6 +3890,9 @@
   },
   "t_walls_unmute_student": {
     "message": "Unmute User"
+  },
+  "t_walls_users_menu_limit_reached": {
+    "message": "You can select a maximum of 5 items at a time"
   },
   "update": {
     "message": "Update",

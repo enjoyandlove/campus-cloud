@@ -31,7 +31,7 @@
     &--active {
 
       &:after {
-        background: $color-primary;
+        background: map-get($color-primary, 'regular');
       }
     }
   }
