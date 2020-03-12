@@ -1,9 +1,14 @@
 @import '../../../core/sass/variables';
 
 .control {
-  display: block;
+  display: flex;
   margin-bottom: 0;
   position: relative;
+
+  span {
+    margin-top: -3px;
+    margin-left: 12px;
+  }
 
   input {
     width: 0;
@@ -22,12 +27,12 @@
     user-select: none;
     border-radius: 4px;
     background: #fff;
-    border: 1px solid map-get($color-grey, 800);
+    border: 1px solid map-get($ready-grey, 700);
     transition: border 300ms ease-in-out;
     transition: background 200ms ease-in;
 
     &:hover {
-      border: 1px solid map-get($color-grey, 900);
+      border: 1px solid map-get($ready-grey, 900);
     }
   }
 }
@@ -40,8 +45,8 @@
 
 /* Checked state */
 .control input:checked ~ .control__indicator {
-  background: map-get($color-primary, 'regular');
-  border: 1px solid map-get($color-primary, 'regular');
+  background: map-get($ready-primary, 'regular');
+  border: 1px solid map-get($ready-primary, 'regular');
 }
 
 /* error state */
@@ -53,15 +58,15 @@
 /* Hover state whilst checked */
 .control:hover input:not([disabled]):checked ~ .control__indicator,
 .control input:checked:focus ~ .control__indicator {
-  border: 1px solid map-get($color-grey, 800);
+  border: 1px solid map-get($ready-grey, 700);
 }
 
 /* Disabled state */
 .control input:disabled ~ .control__indicator {
   opacity: 0.6;
   pointer-events: none;
-  background: map-get($color-grey, 400);
-  border: 1px solid map-get($color-grey, 800);
+  background: map-get($ready-grey, 400);
+  border: 1px solid map-get($ready-grey, 700);
 }
 
 /* Check mark */

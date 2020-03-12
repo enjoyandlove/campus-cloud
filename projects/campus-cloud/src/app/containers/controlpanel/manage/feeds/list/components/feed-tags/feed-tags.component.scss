@@ -18,5 +18,17 @@
     &.default-tag {
       max-width: none;
     }
+
+    &.status-tag {
+      max-width: 50px;
+    }
+
+    &.user-tag {
+      max-width: 104px;
+    }
+
+    &.channel-tag {
+      max-width: 104px;
+    }
   }
 }

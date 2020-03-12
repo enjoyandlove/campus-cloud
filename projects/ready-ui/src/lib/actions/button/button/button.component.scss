@@ -27,15 +27,15 @@
 
   &.primary {
     color: white;
-    background: map-get($color-primary, 'regular');
+    background: map-get($ready-primary,'regular');
     transition: background 300ms ease-in-out;
 
     &.flat {
       color: white;
-      background: map-get($color-primary, 'regular');
+      background: map-get($ready-primary,'regular');
 
       &:hover:not(:disabled) {
-        background: map-get($color-primary, 'dark');
+        background: map-get($ready-primary,'dark');
       }
 
       &:disabled {
@@ -45,7 +45,7 @@
     }
 
     &.basic {
-      color: map-get($color-primary, 'regular');
+      color: map-get($ready-primary,'regular');
       background: transparent;
 
       &:disabled {
@@ -57,7 +57,7 @@
       padding: 0;
       border-radius: 0;
       line-height: inherit;
-      color: map-get($color-primary, 'regular');
+      color: map-get($ready-primary,'regular');
       background: transparent;
 
       &:disabled {
@@ -66,9 +66,9 @@
     }
 
     &.stroked {
-      color: map-get($color-primary, 'regular');
+      color: map-get($ready-primary,'regular');
       background: transparent;
-      border: 1px solid map-get($color-primary, 'regular');
+      border: 1px solid map-get($ready-primary,'regular');
 
       &:disabled {
         color: white;
@@ -183,7 +183,7 @@
       border-radius: 0;
       line-height: inherit;
       background: transparent;
-      color: map-get($color-grey, 900);
+      color: map-get($ready-grey, 900);
 
       &:disabled {
         color: #b3b3b3;
@@ -191,13 +191,13 @@
     }
 
     &.stroked {
-      color: map-get($color-grey, 900);
+      color: map-get($ready-grey, 900);
       background: transparent;
       transition: border 300ms ease-in;
-      border: 1px solid map-get($color-grey, 200);
+      border: 1px solid map-get($ready-grey, 200);
 
       &:hover:not(:disabled):not(.button-group-item) {
-        border-color: map-get($color-grey, 900);
+        border-color: map-get($ready-grey, 900);
       }
 
       &:disabled {

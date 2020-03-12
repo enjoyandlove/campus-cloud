@@ -24,13 +24,13 @@ button {
 
       &:focus ~ .select__bg:after,
       &:active ~ .select__bg:after {
-        border: 1px solid map-get($color-grey, 900);
+        border: 1px solid map-get($ready-grey, 900);
       }
 
       &:disabled ~ .select__bg:after {
-        color: map-get($color-grey, 800);
-        border: 1px solid map-get($color-grey, 800);
-        background: transparentize($color: map-get($color-grey, 800), $amount: 0.8);
+        color: map-get($ready-grey, 700);
+        border: 1px solid map-get($ready-grey, 700);
+        background: transparentize($color: map-get($ready-grey, 700), $amount: 0.8);
       }
     }
   }
@@ -47,7 +47,7 @@ button {
       border-radius: 4px;
       position: absolute;
       pointer-events: none;
-      border: 1px solid map-get($color-grey, 800);
+      border: 1px solid map-get($ready-grey, 700);
     }
   }
 }

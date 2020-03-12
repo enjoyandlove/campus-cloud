@@ -10,6 +10,10 @@
   }
 }
 
+button.primary {
+  display: flex;
+}
+
 
 ready-ui-icon[name="flag"] {
   margin-left: -5px;
@@ -20,21 +24,44 @@ cp-feed-tags {
   margin-top: 0.86em;
 }
 
-ready-ui-stack.dates {
-  padding: 1em;
-  height: 21em;
+.dates {
+  padding: 2em;
+  height: 24em;
+  display: flex;
 
   ul {
     margin: 0;
     height: 100%;
+    width: 130px;
     padding-left: 0;
     list-style: none;
+    padding-right: 2em;
+    position: relative;
+
+    button {
+      text-align: left;
+    }
+
+    &:after {
+      top: -2em;
+      right: 0;
+      width: 1px;
+      content: '';
+      position: absolute;
+      height: calc(100% + 4em);
+      background: $color-light-grey;
+    }
+  }
+
+  .calendar {
+    width: 225px;
+    margin-left: 1em;
   }
 }
 
 ready-ui-menu-item {
   &.load-more {
-    background: #EEEEEE;
+    background: $color-light-grey;
 
     button[ui-button] {
       text-align: center;
@@ -49,13 +76,13 @@ ready-ui-menu-item {
       $width: 6px;
 
       &:after {
-        left: 100%;
         content: '';
         width: $width;
         height: $width;
         border-radius: 50%;
         position: absolute;
         background: $color-brand;
+        left: calc(100% - #{$width});
         top: calc(50% - #{$width} / 2);
       }
     }
@@ -127,8 +154,13 @@ cp-card {
       border-radius: 4px;
       position: absolute;
       pointer-events: none;
-      border: 1px solid $border-color;
+      border: 1px solid #E5E7ED;
       transition: border 300ms ease-in;
     }
   }
+}
+
+.custom-section-header {
+  display: flex;
+  flex-direction: column;
 }

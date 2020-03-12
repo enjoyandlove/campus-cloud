@@ -6,11 +6,11 @@
   }
 
   &.variant--caption {
-    font-size: 0.8em;
+    font-size: 0.85em;
   }
 
   &.color--muted {
-    color: map-get($color-grey, 800);
+    color: map-get($ready-grey, 700);
   }
 
   &.color--info {

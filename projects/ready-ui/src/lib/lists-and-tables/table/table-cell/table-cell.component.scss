@@ -9,9 +9,9 @@
   &.header {
     text-align: left;
     font-weight: 600;
-    color: map-get($color-grey, 800);
-    background: map-get($color-grey, 100);
-    border-bottom: 1px solid map-get($color-grey, 200);
+    color: map-get($ready-grey, 700);
+    background: map-get($ready-grey, 100);
+    border-bottom: 1px solid map-get($ready-grey, 200);
   }
 
   .wrapper {

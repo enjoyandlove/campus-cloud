@@ -1,13 +1,11 @@
 <label [attr.for]="_id"
        class="control control--checkbox">
-  <ready-ui-stack spacing="tight">
-    <input [attr.id]="_id"
-          type="checkbox"
-          [checked]="_checked"
-          [disabled]="_disabled"
-          [attr.aria-labelledby]="ariaLabelledBy"
-          (change)="writeValue($event.target.checked)" />
-    <div class="control__indicator"></div>
-    <span>{{ label }}</span>
-  </ready-ui-stack>
+  <input [attr.id]="_id"
+         type="checkbox"
+         [checked]="_checked"
+         [disabled]="_disabled"
+         [attr.aria-labelledby]="ariaLabelledBy"
+         (change)="writeValue($event.target.checked)" />
+  <div class="control__indicator"></div>
+  <span>{{ label }}</span>
 </label>

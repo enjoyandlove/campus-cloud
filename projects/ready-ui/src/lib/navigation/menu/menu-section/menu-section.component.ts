@@ -3,6 +3,7 @@ import {
   OnInit,
   Component,
   HostBinding,
+  TemplateRef,
   ViewEncapsulation,
   ChangeDetectionStrategy
 } from '@angular/core';
@@ -18,6 +19,9 @@ export class MenuSectionComponent implements OnInit {
   @HostBinding('class.ready-ui-menu-section')
   @Input()
   name: string;
+
+  @Input()
+  headerTpl: TemplateRef<any>;
 
   constructor() {}
 

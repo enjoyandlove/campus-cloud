@@ -60,4 +60,8 @@ export class MenuComponent implements OnInit, AfterContentInit, OnDestroy {
   ngAfterContentInit() {
     this.childrenClick$ = merge(...this.items.map(({ itemClick }) => itemClick)).pipe(mapTo(this));
   }
+
+  close() {
+    this.closed.emit();
+  }
 }

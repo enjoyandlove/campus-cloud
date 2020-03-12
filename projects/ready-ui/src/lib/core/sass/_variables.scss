@@ -3,16 +3,17 @@ $color-danger: #ff6059;
 $color-success: #28ca42;
 $color-warning: #ffa941;
 
-$color-primary: (regular: #2096f3,
-  dark: darken(#2096f3, 20%),
-  light: lighten(#2096f3, 20%),
+$ready-primary: (regular: #2096f3,
+  dark: #2196EE,
+  light: #20B8F7,
 );
 
-$color-grey: (0: #fff,
+$ready-grey: (0: #fff,
   100: #f9f9fb,
-  200: #E5E7ED,
+  200: #E6E6E6,
   400: #BDBDBD,
-  500: #9E9E9E,
-  800: #757575,
+  500: #C9C9C9,
+  700: #757575,
+  800: #1F2532,
   900: #212121,
-);
+  1000: #000000);
