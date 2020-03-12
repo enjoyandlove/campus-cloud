@@ -1,4 +1,4 @@
-import { BehaviorSubject, combineLatest, of, zip, Observable, merge, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, of, zip, Observable, merge, concat, Subject } from 'rxjs';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
@@ -464,9 +464,9 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
 
     /**
      * when rendered inside a host wall (service, clubs...)
-     * we need to fetch the GroupWall from the groupId @Input()
+     * we need to fetch the Social Group from the groupId @Input()
      */
-    let groupStream$: Observable<any> = of(null);
+    let hostSocialGroup$: Observable<any> = of(null);
 
     if (this.groupId) {
       const search = new HttpParams()
@@ -475,7 +475,9 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
           this.groupType === GroupType.orientation ? 'calendar_id' : 'store_id',
           this.groupId.toString()
         );
-      groupStream$ = this.service.getSocialGroups(search).pipe(map((groups) => groups[0]));
+      hostSocialGroup$ = this.service
+        .getSocialGroups(search)
+        .pipe(tap((groups) => this.store.dispatch(fromStore.setGroup({ group: groups[0] }))));
     }
 
     /**
@@ -489,9 +491,8 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       debounceTime(700)
     );
 
-    combineLatest([groupStream$, uniqueFilterChanges$]).subscribe(([parentGroup, filters]) => {
-      const { users, start, end, postType, flaggedByModerators, flaggedByUser } = filters;
-      const group = parentGroup ? parentGroup : filters.group ? filters.group : null;
+    hostSocialGroup$.pipe(switchMap(() => uniqueFilterChanges$)).subscribe((filters) => {
+      const { users, start, group, end, postType, flaggedByModerators, flaggedByUser } = filters;
       const filtersObj = {
         end,
         start,
@@ -516,7 +517,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
      * whenever either of these observables
      * emits iterate over the results and append the
      * correspondant object (comment, thread) as long
-     * as it still active, clean up the potential undefined
+     * as it is still active, clean up the potential undefined
      * results at the end
      */
     const searchResults$ = combineLatest([results$, posts$, comments$]).pipe(

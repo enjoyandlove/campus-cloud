@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Store, select } from '@ngrx/store';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
@@ -19,6 +19,9 @@ interface Tag {
   styleUrls: ['./feed-tags.component.scss']
 })
 export class FeedTagsComponent implements OnInit {
+  @Input()
+  canCloseChannelTag: boolean;
+
   tags$: Observable<Tag[]>;
   constructor(
     private datePipe: CPDatePipe,
@@ -47,10 +50,10 @@ export class FeedTagsComponent implements OnInit {
         };
 
         const groupTag = (groupName: string) => ({
-          canClose: true,
           label: groupName,
           icon: 'ready-app',
           cssClass: 'channel-tag',
+          canClose: typeof this.canCloseChannelTag !== 'undefined' ? this.canCloseChannelTag : true,
           onClick: () => this.store.dispatch(fromStore.setGroup({ group: null }))
         });
 

@@ -17,14 +17,9 @@
 
 <div class="row">
   <div class="col-12">
-    <cp-feed-input-box [groupId]="groupId"
-                       [threadId]="feed.id"
-                       [groupType]="groupType"
+    <cp-feed-input-box [threadId]="feed.id"
                        (created)="onReplied()"
-                       [replyView]="isReplyView"
-                       [postType]="feed.post_type"
-                       [wallCategory]="feed.channelName"
-                       [isCampusWallView]="isCampusWallView">
+                       [replyView]="isReplyView">
     </cp-feed-input-box>
   </div>
 </div>
