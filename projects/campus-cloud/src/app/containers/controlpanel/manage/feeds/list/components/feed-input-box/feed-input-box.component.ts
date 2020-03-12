@@ -1,8 +1,9 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { map, startWith, takeUntil } from 'rxjs/operators';
+import { map, startWith, takeUntil, tap } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { Store } from '@ngrx/store';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { get as _get } from 'lodash';
 import {
   Input,
   OnInit,
@@ -15,9 +16,10 @@ import {
 
 import * as fromStore from '../../../store';
 
+import { ISocialGroup } from '../../../model';
 import { validThread } from '../../../validators';
+import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../../../feeds.service';
-import { CPSession, ISchool } from '@campus-cloud/session';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
@@ -31,6 +33,13 @@ import {
   CPTrackingService
 } from '@campus-cloud/shared/services';
 
+interface IState {
+  postType: any;
+  groupType: GroupType;
+  isCampusWallView: boolean;
+  group: ISocialGroup | null;
+}
+
 @Mixin([Destroyable])
 @Component({
   selector: 'cp-feed-input-box',
@@ -40,13 +49,9 @@ import {
 export class FeedInputBoxComponent implements OnInit, OnDestroy {
   @ViewChild(TextEditorDirective, { static: true }) private editor: TextEditorDirective;
 
-  @Input() groupId: number;
   @Input() threadId: number;
-  @Input() postType: number;
   @Input() replyView: boolean;
-  @Input() groupType: GroupType;
-  @Input() wallCategory: string;
-  @Input() isCampusWallView: Observable<any>;
+
   @Output() created: EventEmitter<null> = new EventEmitter();
 
   stores$;
@@ -56,12 +61,16 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   buttonData;
   campusGroupId;
   form: FormGroup;
-  school: ISchool;
-  _isCampusWallView;
-  DISABLED_MEMBER_TYPE = 100;
   image$: BehaviorSubject<string> = new BehaviorSubject(null);
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetTextEditor$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+
+  state$: BehaviorSubject<IState> = new BehaviorSubject({
+    group: null,
+    postType: null,
+    groupType: null,
+    isCampusWallView: false
+  });
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
@@ -77,33 +86,14 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     public cpTracking: CPTrackingService,
     public feedsAmplitudeService: FeedsAmplitudeService,
     public store: Store<ISnackbar | fromStore.IWallsState>
-  ) {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
+  ) {}
 
-    this.stores$ = this.storeService.getStores(search);
+  get state(): IState {
+    return this.state$.value;
+  }
 
-    this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search).pipe(
-      startWith([{ label: '---' }]),
-      map((channels: any[]) => {
-        const _channels = [
-          {
-            label: '---',
-            action: null
-          }
-        ];
-
-        channels.forEach((channel: any) => {
-          const _channel = {
-            label: channel.name,
-            action: channel.id
-          };
-
-          _channels.push(_channel);
-        });
-
-        return _channels;
-      })
-    );
+  get defaultHost() {
+    return this.session.defaultHost ? this.session.defaultHost.value : null;
   }
 
   replyToThread({ message, message_image_url_list, school_id, store_id }): Promise<any> {
@@ -119,34 +109,35 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
         comment_image_url_list: [...message_image_url_list]
       });
     }
+    const { groupType, isCampusWallView } = this.state;
 
-    if (this.groupType === GroupType.orientation) {
+    if (groupType === GroupType.orientation) {
       body = this.asCalendarFormat(body);
     }
 
     const groupWall$ = this.feedsService.replyToGroupThread(body);
     const campusWall$ = this.feedsService.replyToCampusThread(body);
-    const stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
+    const stream$ = isCampusWallView ? campusWall$ : groupWall$;
 
     return stream$.toPromise();
   }
 
   postToWall(formData): Promise<any> {
-    if (this.groupType === GroupType.orientation) {
+    const { groupType, isCampusWallView } = this.state;
+    if (groupType === GroupType.orientation) {
       formData = this.asCalendarFormat(formData);
     }
 
     const groupWall$ = this.feedsService.postToGroupWall(formData);
     const campusWall$ = this.feedsService.postToCampusWall(formData);
-    const stream$ = this._isCampusWallView ? groupWall$ : campusWall$;
+    const stream$ = isCampusWallView ? campusWall$ : groupWall$;
 
     return stream$.toPromise();
   }
 
   asCalendarFormat(data) {
-    delete data['store_id'];
-
-    return { ...data, calendar_id: this.groupId };
+    const { store_id, ...rest } = data;
+    return { ...rest, calendar_id: store_id };
   }
 
   handleError({ status = 400 }) {
@@ -165,9 +156,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(data) {
-    const submit = this.replyView
-      ? this.replyToThread(this.parseData(data))
-      : this.postToWall(this.parseData(data));
+    const submit = this.replyView ? this.replyToThread(data) : this.postToWall(data);
 
     submit
       .then((res) => {
@@ -188,24 +177,10 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
       });
   }
 
-  parseData(data) {
-    const _data = {
-      post_type: data.post_type || null,
-      store_id: data.store_id,
-      school_id: this.session.g.get('school').id,
-      message: data.message,
-      message_image_url_list: data.message_image_url_list
-    };
-
-    if (this._isCampusWallView) {
-      _data['group_id'] = this.campusGroupId;
-    }
-
-    return _data;
-  }
-
   resetFormValues() {
-    if (!this.groupId && !this._isCampusWallView && !this.replyView) {
+    const { group, isCampusWallView } = this.state;
+
+    if (!group && !isCampusWallView && !this.replyView) {
       this.form.controls['group_id'].setValue(null);
       this.form.controls['post_type'].setValue(null);
     }
@@ -282,22 +257,13 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     this.hostType = isCampusWallView ? null : host_type;
   }
 
-  ngOnInit() {
-    this.buttonData = {
-      class: 'primary',
-      text: this.cpI18n.translate('walls_button_create_post')
-    };
-
-    const defaultHost = this.session.defaultHost ? this.session.defaultHost.value : null;
-
-    this.school = this.session.g.get('school');
-
+  buildForm() {
     this.form = this.fb.group(
       {
         group_id: [null],
         school_id: [this.session.g.get('school').id],
-        store_id: [defaultHost, Validators.required],
-        post_type: [this.replyView ? this.postType : null, Validators.required],
+        store_id: [this.defaultHost, Validators.required],
+        post_type: [null],
         message: ['', [Validators.maxLength(500)]],
         message_image_url_list: [[]]
       },
@@ -307,27 +273,75 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
       this.buttonData = { ...this.buttonData, disabled: !this.form.valid };
     });
+  }
 
-    this.isCampusWallView.pipe(takeUntil(this.destroy$)).subscribe((res) => {
-      // Not Campus Wall
-      if (res.type !== 1) {
-        this.campusGroupId = res.type;
-        this.form.controls['store_id'].setValue(res.group_id);
-        this.form.removeControl('post_type');
-        this._isCampusWallView = true;
-        this.setDefaultHostWallCategory(this._isCampusWallView);
+  ngOnInit() {
+    this.buildForm();
 
-        return;
-      }
+    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
-      if (this.form) {
-        this.form.registerControl('post_type', new FormControl(null, Validators.required));
-        this.form.controls['store_id'].setValue(defaultHost);
-      }
+    this.stores$ = this.storeService.getStores(search);
 
-      this._isCampusWallView = false;
-      this.setDefaultHostWallCategory(this._isCampusWallView);
-    });
+    this.channels$ = this.feedsService.getChannelsBySchoolId(1, 100, search).pipe(
+      startWith([{ label: '---' }]),
+      map((channels: any[]) => {
+        const _channels = [
+          {
+            label: '---',
+            action: null
+          }
+        ];
+
+        channels.forEach((channel: any) => {
+          const _channel = {
+            label: channel.name,
+            action: channel.id
+          };
+
+          _channels.push(_channel);
+        });
+
+        return _channels;
+      })
+    );
+
+    this.store
+      .pipe(select(fromStore.getViewFilters))
+      .pipe(
+        takeUntil(this.destroy$),
+        tap(({ postType, group }) => {
+          this.state$.next({
+            group,
+            postType: _get(postType, 'id', null),
+            isCampusWallView: !postType && !group,
+            groupType: _get(group, 'group_type', null)
+          });
+
+          if (this.form) {
+            const { isCampusWallView } = this.state;
+            this.setDefaultHostWallCategory(isCampusWallView);
+
+            if (this.replyView && postType) {
+              this.form.get('post_type').setValue(postType.id);
+            }
+
+            if (group) {
+              this.form.removeControl('post_type');
+              this.form.get('group_id').setValue(group.id);
+              this.form.get('store_id').setValue(group.related_obj_id);
+            } else {
+              this.form.registerControl('post_type', new FormControl(null, Validators.required));
+              this.form.controls['store_id'].setValue(this.defaultHost);
+            }
+          }
+        })
+      )
+      .subscribe();
+
+    this.buttonData = {
+      class: 'primary',
+      text: this.cpI18n.translate('walls_button_create_post')
+    };
   }
 
   ngOnDestroy() {

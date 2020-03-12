@@ -1,11 +1,17 @@
 import { Injectable } from '@angular/core';
 import { flatten } from 'lodash';
 
+/**
+ * @deprecated
+ * TODO:
+ * Avoid this enum, its confusing, the
+ * values do not match the values on the API...
+ * */
 export enum GroupType {
   campus = 0,
-  club = 1,
-  athletics = 2,
-  orientation = 3,
+  club = 6,
+  athletics = 6,
+  orientation = 7,
   service = 4
 }
 
