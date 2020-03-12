@@ -2,16 +2,17 @@
 
 :host {
   line-break: auto;
-  padding: 0.5em 1em;
+  line-height: 1.8;
+  padding: 0.5em 1em 0.5em 0.7em;
   transition: all 300ms ease-in-out;
 
   &.disabled,
   &.disabled:hover {
-    background: map-get($map: $color-grey, $key: 400);
+    background: map-get($map: $ready-grey, $key: 400);
   }
 
-  &:hover {
-    background: map-get($color-grey, 100);
+  &:not(.no-hover):hover {
+    background: #ddd;
   }
 
 }

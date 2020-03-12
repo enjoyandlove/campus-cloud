@@ -19,7 +19,7 @@ input,
   padding: 0.5em 1em;
   align-items: center;
   justify-content: flex-start;
-  border-bottom: 1px solid map-get($color-grey, 200);
+  border-bottom: 1px solid map-get($ready-grey, 200);
 
   input {
     border: none;

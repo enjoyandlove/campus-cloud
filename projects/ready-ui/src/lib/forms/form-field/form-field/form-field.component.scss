@@ -22,7 +22,7 @@
 
   &__bg {
     &.form-field__bg--active:after {
-      border: 1px solid map-get($color-grey, 800);
+      border: 1px solid map-get($ready-grey, 700);
     }
 
     &:after {
@@ -34,7 +34,7 @@
       border-radius: 4px;
       position: absolute;
       pointer-events: none;
-      border: 1px solid map-get($color-grey, 500);
+      border: 1px solid map-get($ready-grey, 500);
     }
   }
 

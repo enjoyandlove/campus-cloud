@@ -2595,9 +2595,6 @@
   "t_data_export_wall_posts": {
     "message": "Wall Posts"
   },
-  "t_datepicker_clear": {
-    "message": "Clear"
-  },
   "t_deals_delete_modal_body": {
     "message": "Are you sure you want to delete %s?"
   },
@@ -3480,6 +3477,9 @@
   "t_shared_checkins": {
     "message": "Check-ins"
   },
+  "t_shared_clear": {
+    "message": "Clear"
+  },
   "t_shared_clear_filters": {
     "message": "Clear Filters"
   },
@@ -3671,6 +3671,9 @@
   },
   "t_shared_saved_update_success_message": {
     "message": "Success! "
+  },
+  "t_shared_selection": {
+    "message": "Selection"
   },
   "t_shared_select_calendar": {
     "message": "Select Calendar"
@@ -3872,6 +3875,9 @@
   },
   "t_walls_integration_form_default_image": {
     "message": "Wall Image"
+  },
+  "t_walls_max_user_selection_help_text": {
+    "message": "(max 5)"
   },
   "t_walls_mute_student": {
     "message": "Mute User"

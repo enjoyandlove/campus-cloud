@@ -2580,9 +2580,6 @@
   "t_data_export_wall_posts": {
     "message": "Publications Du Mur"
   },
-  "t_datepicker_clear": {
-    "message": "Réinitialiser"
-  },
   "t_deals_delete_modal_body": {
     "message": "Êtes-vous sûr de vouloir supprimer %s?"
   },
@@ -3444,6 +3441,9 @@
   "t_shared_checkins": {
     "message": "Vérifications de présence"
   },
+  "t_shared_clear": {
+    "message": "Réinitialiser"
+  },
   "t_shared_clear_filters": {
     "message": "Réinitialiser les filtres"
   },
@@ -3623,6 +3623,9 @@
   },
   "t_shared_saved_update_success_message": {
     "message": "Succès !"
+  },
+  "t_shared_selection": {
+    "message": "Sélection"
   },
   "t_shared_select_calendar": {
     "message": "Sélectionnez le calendrier"

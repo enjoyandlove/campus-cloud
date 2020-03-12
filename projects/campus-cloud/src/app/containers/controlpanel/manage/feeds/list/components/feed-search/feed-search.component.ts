@@ -88,11 +88,11 @@ export class FeedSearchComponent implements OnInit {
         const { users } = filters;
         const selectedUserids = users.map((u) => u.id);
         return {
+          students,
           selectedUserids,
           selectedUsers: users,
           canSelect: users.length < 5,
-          isSearching: searchTerm !== '',
-          students: students.filter((s) => !selectedUserids.includes(s.id))
+          isSearching: searchTerm !== ''
         };
       })
     );
@@ -318,5 +318,9 @@ export class FeedSearchComponent implements OnInit {
 
   parseCalendarDate(date: Date[]) {
     this.handleDate(date.map((d) => CPDate.toEpoch(d, this.session.tz)));
+  }
+
+  handleClearSelectedStudents() {
+    this.store.dispatch(fromStore.clearFilterUsers());
   }
 }
