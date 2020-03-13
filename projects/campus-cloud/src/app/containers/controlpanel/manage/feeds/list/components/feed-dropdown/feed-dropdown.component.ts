@@ -143,6 +143,7 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
         mergeMap((emails: string[]) => {
           return this.userService
             .updateById(user_id, {
+              school_id: this.session.school.id,
               social_restriction: !emails.includes(this.getFeedEmail())
             })
             .pipe(tap((res) => this.trackMuteUser(res)));
