@@ -3445,7 +3445,7 @@
     "message": "Réinitialiser"
   },
   "t_shared_clear_filters": {
-    "message": "Réinitialiser les filtres"
+    "message": "Réinitialiser"
   },
   "t_shared_closed": {
     "message": "Fermé"
@@ -3830,6 +3830,12 @@
   },
   "t_walls_mute_student": {
     "message": "Désactiver l'utilisateur"
+  },
+  "t_walls_no_results": {
+    "message": "Aucun résultat.."
+  },
+  "t_walls_no_users_found": {
+    "message": "Aucun résultat.."
   },
   "t_walls_search_placeholder": {
     "message": "rechercher"

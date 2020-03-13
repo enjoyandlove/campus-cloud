@@ -3,9 +3,10 @@ import {
   OnInit,
   Output,
   Component,
+  TemplateRef,
+  HostBinding,
   HostListener,
-  EventEmitter,
-  HostBinding
+  EventEmitter
 } from '@angular/core';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 
@@ -26,6 +27,9 @@ export class MenuItemComponent implements OnInit {
   set noHover(noHover: string | boolean) {
     this._noHover = coerceBooleanProperty(noHover);
   }
+
+  @Input()
+  suffixTpl: TemplateRef<any>;
 
   @Input()
   set disabled(disabled: string | boolean) {

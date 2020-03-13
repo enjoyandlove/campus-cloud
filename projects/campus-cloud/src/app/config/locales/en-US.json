@@ -2866,6 +2866,9 @@
   "t_external_check_in_not_found_error": {
     "message": "The event cannot be found"
   },
+  "t_feeds_campus_wall": {
+    "message": "Campus Wall"
+  },
   "t_help_desk_faq": {
     "message": "Guides & FAQ"
   },
@@ -3885,6 +3888,9 @@
   "t_walls_no_channels_found": {
     "message": "No channels found"
   },
+  "t_walls_no_results": {
+    "message": "No Posts found..."
+  },
   "t_walls_no_users_found": {
     "message": "No users found"
   },
@@ -3893,6 +3899,9 @@
   },
   "t_walls_show_post": {
     "message": "Show Post"
+  },
+  "t_walls_snackbar_success_posted_with_filters": {
+    "message": "Successfully posted in %s but not visible with the current filters."
   },
   "t_walls_tags_users": {
     "message": "%s users"

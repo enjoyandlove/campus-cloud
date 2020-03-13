@@ -15,15 +15,6 @@ button.primary {
 }
 
 
-ready-ui-icon[name="flag"] {
-  margin-left: -5px;
-  margin-right: 5px;
-}
-
-cp-feed-tags {
-  margin-top: 0.86em;
-}
-
 .dates {
   padding: 2em;
   height: 24em;
@@ -32,7 +23,7 @@ cp-feed-tags {
   ul {
     margin: 0;
     height: 100%;
-    width: 130px;
+    width: 160px;
     padding-left: 0;
     list-style: none;
     padding-right: 2em;
@@ -70,22 +61,6 @@ ready-ui-menu-item {
 
   button[ui-button] {
     text-align: left;
-    position: relative;
-
-    &.active {
-      $width: 6px;
-
-      &:after {
-        content: '';
-        width: $width;
-        height: $width;
-        border-radius: 50%;
-        position: absolute;
-        background: $color-brand;
-        left: calc(100% - #{$width});
-        top: calc(50% - #{$width} / 2);
-      }
-    }
   }
 }
 
@@ -160,7 +135,6 @@ cp-card {
   }
 }
 
-.custom-section-header {
-  display: flex;
-  flex-direction: column;
+.custom-section-header ready-ui-menu-divider {
+  margin: 1em 0;
 }

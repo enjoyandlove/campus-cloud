@@ -1,1 +1,6 @@
-<ng-content></ng-content>
+<div class="wrapper">
+  <div class="wrapper__content">
+    <ng-content></ng-content>
+  </div>
+  <ng-container *ngTemplateOutlet="suffixTpl"></ng-container>
+</div>

@@ -1,0 +1,17 @@
+@import '../../../core/sass/variables';
+
+$width: 6px;
+
+:host {
+  width: $width;
+  height: $width;
+  border-radius: 50%;
+
+  &.color--primary {
+    background: map-get($map: $ready-primary, $key: 'regular');
+  }
+
+  &.color--danger {
+    background: map-get($map: $ready-danger, $key: 'regular');
+  }
+}

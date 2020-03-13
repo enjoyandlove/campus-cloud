@@ -1,4 +1,4 @@
-import { BehaviorSubject, combineLatest, of, zip, Observable, merge, concat, Subject } from 'rxjs';
+import { BehaviorSubject, combineLatest, of, zip, Observable, merge, Subject } from 'rxjs';
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
@@ -99,6 +99,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
         query: ''
       };
       this.store.dispatch(fromStore.setResults({ results: [] }));
+      this.store.dispatch(fromStore.setSearchTerm({ term: '' }));
       this.resetPagination();
       this.fetch();
       return;
@@ -115,6 +116,7 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       query
     };
 
+    this.store.dispatch(fromStore.setSearchTerm({ term: query }));
     const { post_type, wall_source } = this.feedsAmplitudeService.getWallAmplitudeProperties();
 
     const amplitude = {
@@ -492,16 +494,16 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
     );
 
     hostSocialGroup$.pipe(switchMap(() => uniqueFilterChanges$)).subscribe((filters) => {
-      const { users, start, group, end, postType, flaggedByModerators, flaggedByUser } = filters;
+      const { users, group, start, end, postType, flaggedByModerators, flaggedByUser } = filters;
       const filtersObj = {
         end,
         start,
         user_ids: users.map((u) => u.id),
         group_id: group ? group.id : null,
         post_types: postType ? postType.id : null,
-        is_integrated: postType ? postType.is_integrated : false,
         flagged_by_users_only: flaggedByUser ? 1 : null,
         related_obj_id: group ? group.related_obj_id : null,
+        is_integrated: postType ? postType.is_integrated : false,
         removed_by_moderators_only: flaggedByModerators ? 1 : null
       };
       this.onDoFilter(filtersObj);
@@ -540,24 +542,11 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
       })
     );
 
-    /**
-     * prevent new posts from being added to the list
-     * while filtering by Flagged/Removed posts or while
-     * performing a search
-     */
-    const regularThreads$ = combineLatest([posts$, filters$, results$]).pipe(
-      map(([posts, filters, results]) => {
+    const regularThreads$ = combineLatest([posts$, results$]).pipe(
+      map(([posts, results]) => {
         if (results.length) {
           const resultPostIds = results.filter((r) => r.type === 'THREAD').map((r) => r.id);
           return posts.filter((p) => resultPostIds.includes(p.id));
-        }
-
-        const { flaggedByUser, flaggedByModerators } = filters;
-        if (flaggedByUser) {
-          return posts.filter((p) => p.dislikes > 0);
-        }
-        if (flaggedByModerators) {
-          return posts.filter((p) => p.flag === -3);
         }
         return posts;
       })

@@ -1,8 +1,7 @@
 @import '../../../core/sass/variables';
 
 :host {
-  line-break: auto;
-  line-height: 1.8;
+  display: block;
   padding: 0.5em 1em 0.5em 0.7em;
   transition: all 300ms ease-in-out;
 
@@ -15,4 +14,17 @@
     background: #ddd;
   }
 
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+
+
+    &__content {
+      flex: 1 1;
+      line-break: auto;
+      line-height: 1.8;
+    }
+  }
 }

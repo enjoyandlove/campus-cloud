@@ -10,10 +10,10 @@ import * as fromStore from '../../../store';
 import { CPSession } from '@campus-cloud/session';
 import { CPDate } from '@campus-cloud/shared/utils';
 import { GroupType } from '../../../feeds.utils.service';
-import { UserService } from '@campus-cloud/shared/services';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { FeedsService } from '@controlpanel/manage/feeds/feeds.service';
+import { UserService, CPI18nService } from '@campus-cloud/shared/services';
 import { now, last7Days, lastYear, last90Days, last30Days } from '@campus-cloud/shared/components';
 @Component({
   selector: 'cp-feed-search',
@@ -68,6 +68,8 @@ export class FeedSearchComponent implements OnInit {
   value$ = merge(this.query$, this.input$);
   hasFiltersActive$: Observable<boolean>;
   presetDates: { [key: string]: number[] };
+  viewFilters$: BehaviorSubject<any> = new BehaviorSubject({});
+  locale = CPI18nService.getLocale().startsWith('fr') ? 'fr' : 'en';
 
   constructor(
     private fb: FormBuilder,
@@ -77,8 +79,15 @@ export class FeedSearchComponent implements OnInit {
     private store: Store<fromStore.IWallsState>
   ) {}
 
+  get state$() {
+    return this.viewFilters$.value;
+  }
+
   ngOnInit() {
-    const viewFilters$ = this.store.pipe(select(fromStore.getViewFilters));
+    const viewFilters$ = this.store
+      .pipe(select(fromStore.getViewFilters))
+      .pipe(tap((filters) => this.viewFilters$.next(filters)));
+
     this.studentsMenu$ = combineLatest([
       this.fetchStudents(),
       viewFilters$,
@@ -277,8 +286,14 @@ export class FeedSearchComponent implements OnInit {
   }
 
   handleChannel(channel) {
+    const { postType } = this.state$;
     this.store.dispatch(fromStore.setGroup({ group: null }));
-    this.store.dispatch(fromStore.setPostType({ postType: channel === -1 ? null : channel }));
+
+    if (channel === -1 || (postType && postType.id === channel.id)) {
+      channel = null;
+    }
+
+    this.store.dispatch(fromStore.setPostType({ postType: channel }));
   }
 
   handleGroup(group) {
@@ -287,11 +302,12 @@ export class FeedSearchComponent implements OnInit {
   }
 
   handleStatus(status: string) {
+    const { flaggedByModerators, flaggedByUser } = this.state$;
     if (status === 'archived') {
       this.store.dispatch(fromStore.setFlaggedByUser({ flagged: false }));
-      this.store.dispatch(fromStore.setFlaggedByModerator({ flagged: true }));
+      this.store.dispatch(fromStore.setFlaggedByModerator({ flagged: !flaggedByModerators }));
     } else {
-      this.store.dispatch(fromStore.setFlaggedByUser({ flagged: true }));
+      this.store.dispatch(fromStore.setFlaggedByUser({ flagged: !flaggedByUser }));
       this.store.dispatch(fromStore.setFlaggedByModerator({ flagged: false }));
     }
   }
@@ -301,8 +317,8 @@ export class FeedSearchComponent implements OnInit {
   }
 
   handleClearFilters() {
+    this.clearGroup();
     this.store.dispatch(fromStore.clearFilterUsers());
-    this.store.dispatch(fromStore.setGroup({ group: null }));
     this.store.dispatch(fromStore.setEndFilter({ end: null }));
     this.store.dispatch(fromStore.setStartFilter({ start: null }));
     this.store.dispatch(fromStore.setPostType({ postType: null }));
@@ -310,10 +326,20 @@ export class FeedSearchComponent implements OnInit {
     this.store.dispatch(fromStore.setFlaggedByModerator({ flagged: false }));
   }
 
+  clearGroup() {
+    if (!this.groupId) {
+      this.store.dispatch(fromStore.setGroup({ group: null }));
+    }
+  }
+
   handleDate(date: number[]) {
-    const [start, end] = date;
-    this.store.dispatch(fromStore.setEndFilter({ end }));
-    this.store.dispatch(fromStore.setStartFilter({ start }));
+    let [startDate, endDate] = date;
+    const { start, end } = this.state$;
+    endDate = endDate === end ? null : endDate;
+    startDate = startDate === start ? null : startDate;
+
+    this.store.dispatch(fromStore.setEndFilter({ end: endDate }));
+    this.store.dispatch(fromStore.setStartFilter({ start: startDate }));
   }
 
   parseCalendarDate(date: Date[]) {

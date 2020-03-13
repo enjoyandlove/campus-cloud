@@ -20,7 +20,7 @@ interface Tag {
 })
 export class FeedTagsComponent implements OnInit {
   @Input()
-  canCloseChannelTag: boolean;
+  canCloseGroupTag: boolean;
 
   tags$: Observable<Tag[]>;
   constructor(
@@ -53,8 +53,8 @@ export class FeedTagsComponent implements OnInit {
           label: groupName,
           icon: 'ready-app',
           cssClass: 'channel-tag',
-          canClose: typeof this.canCloseChannelTag !== 'undefined' ? this.canCloseChannelTag : true,
-          onClick: () => this.store.dispatch(fromStore.setGroup({ group: null }))
+          onClick: () => this.store.dispatch(fromStore.setGroup({ group: null })),
+          canClose: typeof this.canCloseGroupTag === 'undefined' ? true : this.canCloseGroupTag
         });
 
         const postTag = (categoryName: string) => ({
@@ -89,14 +89,6 @@ export class FeedTagsComponent implements OnInit {
           onClick: () => this.store.dispatch(fromStore.setFlaggedByModerator({ flagged: false }))
         };
 
-        if (postType) {
-          tags.push(postTag(postType.name));
-        }
-
-        if (start && end) {
-          tags.push(dateTag);
-        }
-
         if (users.length) {
           tags.push(
             usersTag(
@@ -105,6 +97,10 @@ export class FeedTagsComponent implements OnInit {
                 : `${users[0].firstname} ${users[0].lastname}`
             )
           );
+        }
+
+        if (postType) {
+          tags.push(postTag(postType.name));
         }
 
         if (group) {
@@ -117,6 +113,10 @@ export class FeedTagsComponent implements OnInit {
 
         if (flaggedByModerators) {
           tags.push(flaggedByModeratorTag);
+        }
+
+        if (start && end) {
+          tags.push(dateTag);
         }
 
         if (!group && !postType) {

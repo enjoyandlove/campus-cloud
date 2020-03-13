@@ -56,7 +56,7 @@
     </button>
   </ready-ui-stack>
 
-  <cp-feed-tags [canCloseChannelTag]="!groupId"></cp-feed-tags>
+  <cp-feed-tags [canCloseGroupTag]="!groupId"></cp-feed-tags>
 </cp-card>
 
 <ready-ui-menu #primary="menu">
@@ -64,58 +64,66 @@
 
     <ready-ui-menu-item ready-ui-menu-trigger
                         [triggerFor]="users"
-                        overlayWidth="300px">
+                        overlayWidth="300px"
+                        [suffixTpl]="primaryMenu.usersSelected ? activeItem : undefined">
       <button ui-button
               type="button"
               color="inherit"
               variant="inline"
-              fullWidth="true"
-              [class.active]="primaryMenu.usersSelected">
-        <ready-ui-icon name="person"
-                       size="small"></ready-ui-icon>
-        {{ 'users' | cpI18n }}
+              fullWidth="true">
+        <ready-ui-stack spacing="tight">
+          <ready-ui-icon name="person"
+                         size="small"></ready-ui-icon>
+          <span>{{ 'users' | cpI18n }}</span>
+        </ready-ui-stack>
       </button>
     </ready-ui-menu-item>
     <ready-ui-menu-item *ngIf="!groupId"
                         ready-ui-menu-trigger
                         overlayWidth="300px"
-                        [triggerFor]="channels">
+                        [triggerFor]="channels"
+                        [suffixTpl]="primaryMenu.channelsSelected ? activeItem : undefined">
       <button ui-button
               type="button"
               color="inherit"
               variant="inline"
-              fullWidth="true"
-              [class.active]="primaryMenu.channelsSelected">
-        <ready-ui-icon name="ready-app"
-                       size="small"></ready-ui-icon>
-        {{ 't_shared_channels' | cpI18n }}
+              fullWidth="true">
+        <ready-ui-stack spacing="tight">
+          <ready-ui-icon name="ready-app"
+                         size="small"></ready-ui-icon>
+          <span>{{ 't_shared_channels' | cpI18n }}</span>
+        </ready-ui-stack>
       </button>
     </ready-ui-menu-item>
     <ready-ui-menu-item overlayWidth="200px"
                         ready-ui-menu-trigger
-                        [triggerFor]="status">
+                        [triggerFor]="status"
+                        [suffixTpl]="primaryMenu.statusSelected ? activeItem : undefined">
       <button ui-button
               type="button"
               color="inherit"
               variant="inline"
-              fullWidth="true"
-              [class.active]="primaryMenu.statusSelected">
-        <ready-ui-icon name="flag"
-                       size="small"></ready-ui-icon>
-        {{ 't_shared_status' | cpI18n }}
+              fullWidth="true">
+        <ready-ui-stack spacing="tight">
+          <ready-ui-icon name="flag"
+                         size="small"></ready-ui-icon>
+          <span>{{ 't_shared_status' | cpI18n }}</span>
+        </ready-ui-stack>
       </button>
     </ready-ui-menu-item>
     <ready-ui-menu-item ready-ui-menu-trigger
-                        [triggerFor]="date">
+                        [triggerFor]="date"
+                        [suffixTpl]="primaryMenu.datesSelected ? activeItem : undefined">
       <button ui-button
               type="button"
               color="inherit"
               variant="inline"
-              fullWidth="true"
-              [class.active]="primaryMenu.datesSelected">
-        <ready-ui-icon name="today"
-                       size="small"></ready-ui-icon>
-        {{ 't_shared_date' | cpI18n }}
+              fullWidth="true">
+        <ready-ui-stack spacing="tight">
+          <ready-ui-icon name="today"
+                         size="small"></ready-ui-icon>
+          <span>{{ 't_shared_date' | cpI18n }}</span>
+        </ready-ui-stack>
       </button>
     </ready-ui-menu-item>
     <ready-ui-menu-divider></ready-ui-menu-divider>
@@ -144,20 +152,22 @@
                           [placeholder]="'t_walls_search_placeholder' | cpI18n">
     </ready-ui-menu-search>
 
-    <ready-ui-menu-section [headerTpl]="headerTpl"
-                           class="custom-section-header"
-                           *ngIf="studentMenu.selectedUsers.length">
-      <ready-ui-menu-item *ngFor="let student of studentMenu.selectedUsers">
-        <ready-ui-stack>
-          <ready-ui-checkbox checked="true"
-                             (changed)="handleStudent(student) "
-                             [label]="[student.firstname + ' ' + student.lastname]"
-                             [disabled]="!studentMenu.canSelect && !studentMenu.selectedUserids.includes(student.id)">
-          </ready-ui-checkbox>
-        </ready-ui-stack>
-      </ready-ui-menu-item>
-      <ready-ui-menu-divider></ready-ui-menu-divider>
-    </ready-ui-menu-section>
+    <ng-container
+                  *ngIf="studentMenu.selectedUsers.length && !studentMenu.isSearching">
+      <ready-ui-menu-section [headerTpl]="headerTpl"
+                             class="custom-section-header">
+        <ready-ui-menu-item *ngFor="let student of studentMenu.selectedUsers">
+          <ready-ui-stack>
+            <ready-ui-checkbox checked="true"
+                               (changed)="handleStudent(student) "
+                               [label]="[student.firstname + ' ' + student.lastname]"
+                               [disabled]="!studentMenu.canSelect && !studentMenu.selectedUserids.includes(student.id)">
+            </ready-ui-checkbox>
+          </ready-ui-stack>
+        </ready-ui-menu-item>
+        <ready-ui-menu-divider></ready-ui-menu-divider>
+      </ready-ui-menu-section>
+    </ng-container>
 
     <ready-ui-menu-item *ngFor="let student of studentMenu.students">
       <ready-ui-stack>
@@ -199,47 +209,45 @@
     </ready-ui-menu-item>
     <ready-ui-menu-section [name]="'t_walls_campus_walls_channels' | cpI18n"
                            *ngIf="channelsMenu.nonIntegratedChannels.length">
-      <ready-ui-menu-item *ngIf="!channelsMenu.isSearching">
+      <ready-ui-menu-item *ngIf="!channelsMenu.isSearching"
+                          [suffixTpl]="channelsMenu.allCampusWallChannels ? activeItem : undefined">
         <button ui-button
                 type="button"
                 variant="inline"
                 fullWidth="true"
-                [class.active]="channelsMenu.allCampusWallChannels"
                 (click)="handleChannel(-1)">{{ 't_all_walls_campus_walls_channels' | cpI18n}}</button>
       </ready-ui-menu-item>
-      <ready-ui-menu-item
-                          *ngFor="let channel of channelsMenu.nonIntegratedChannels">
+      <ready-ui-menu-item *ngFor="let channel of channelsMenu.nonIntegratedChannels"
+                          [suffixTpl]="channelsMenu.selectedChannel === channel.id ? activeItem : undefined">
         <button ui-button
                 type="button"
                 variant="inline"
                 fullWidth="true"
-                (click)="handleChannel(channel)"
-                [class.active]="channelsMenu.selectedChannel === channel.id">{{channel.name}}</button>
+                (click)="handleChannel(channel)">{{channel.name}}</button>
       </ready-ui-menu-item>
     </ready-ui-menu-section>
 
     <ready-ui-menu-section [name]="'t_walls_host_walls_channels' | cpI18n"
                            *ngIf="channelsMenu.socialGroups.length">
-      <ready-ui-menu-item *ngFor="let group of channelsMenu.socialGroups">
+      <ready-ui-menu-item *ngFor="let group of channelsMenu.socialGroups"
+                          [suffixTpl]="channelsMenu.selectedHostWall === group.id ? activeItem : undefined">
         <button ui-button
                 type="button"
                 variant="inline"
                 fullWidth="true"
-                (click)="handleGroup(group)"
-                [class.active]="channelsMenu.selectedHostWall === group.id">{{group.name}}</button>
+                (click)="handleGroup(group)">{{group.name}}</button>
       </ready-ui-menu-item>
     </ready-ui-menu-section>
 
     <ready-ui-menu-section [name]="'t_walls_integrated_feed_channels' | cpI18n"
                            *ngIf="channelsMenu.integratedChannels.length">
-      <ready-ui-menu-item
-                          *ngFor="let channel of channelsMenu.integratedChannels">
+      <ready-ui-menu-item *ngFor="let channel of channelsMenu.integratedChannels"
+                          [suffixTpl]="channelsMenu.selectedChannel === channel.id ? activeItem : undefined">
         <button ui-button
                 type="button"
                 variant="inline"
                 fullWidth="true"
-                (click)="handleChannel(channel)"
-                [class.active]="channelsMenu.selectedChannel === channel.id">{{channel.name}}</button>
+                (click)="handleChannel(channel)">{{channel.name}}</button>
       </ready-ui-menu-item>
     </ready-ui-menu-section>
   </ng-container>
@@ -247,21 +255,21 @@
 
 <ready-ui-menu #status="menu">
   <ng-container *ngIf="statusMenu$ | async as statusMenu">
-    <ready-ui-menu-item>
+    <ready-ui-menu-item
+                        [suffixTpl]="statusMenu.flaggedByUser ? activeItem : undefined">
       <button ui-button
               type="button"
               variant="inline"
               fullWidth="true"
-              (click)="handleStatus('flagged')"
-              [class.active]="statusMenu.flaggedByUser">{{ 'feeds_flagged_posts' | cpI18n }}</button>
+              (click)="handleStatus('flagged')">{{ 'feeds_flagged_posts' | cpI18n }}</button>
     </ready-ui-menu-item>
-    <ready-ui-menu-item>
+    <ready-ui-menu-item
+                        [suffixTpl]="statusMenu.flaggedByModerators ? activeItem : undefined">
       <button ui-button
               type="button"
               variant="inline"
               fullWidth="true"
-              (click)="handleStatus('archived')"
-              [class.active]="statusMenu.flaggedByModerators">{{ 'feeds_removed_posts' | cpI18n }}</button>
+              (click)="handleStatus('archived')">{{ 'feeds_removed_posts' | cpI18n }}</button>
     </ready-ui-menu-item>
   </ng-container>
 </ready-ui-menu>
@@ -306,6 +314,7 @@
                mode="range"
                inline="true"
                static="true"
+               [locale]="locale"
                [maxDate]="maxDate"
                ready-ui-date-picker
                [defaultDate]="dateMenu.defaultDate"
@@ -336,4 +345,8 @@
       {{ 't_shared_clear' | cpI18n }}
     </button>
   </ready-ui-stack>
+</ng-template>
+
+<ng-template #activeItem>
+  <ready-ui-menu-dot></ready-ui-menu-dot>
 </ng-template>

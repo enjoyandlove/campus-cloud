@@ -1,34 +1,23 @@
 :host {
+  width: 100%;
   display: flex;
+  flex-wrap: wrap;
 
   ready-ui-tag:not(:last-child) {
     margin-right: 0.5em;
   }
 
-  span.enforce-max-length {
-    min-width: 0;
-    line-height: 2;
-    max-width: 10em;
-    overflow: hidden;
-    white-space: nowrap;
-    display: inline-block;
-    text-overflow: ellipsis;
+  ready-ui-tag {
+    margin-top: 0.86em;
 
-    &.date-tag,
-    &.default-tag {
-      max-width: none;
-    }
-
-    &.status-tag {
-      max-width: 50px;
-    }
-
-    &.user-tag {
-      max-width: 104px;
-    }
-
-    &.channel-tag {
-      max-width: 104px;
+    span {
+      min-width: 0;
+      line-height: 2;
+      max-width: 618px;
+      overflow: hidden;
+      white-space: nowrap;
+      display: inline-block;
+      text-overflow: ellipsis;
     }
   }
 }
