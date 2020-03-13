@@ -13,6 +13,8 @@ import { map, startWith, takeUntil } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Store } from '@ngrx/store';
 
+import * as fromStore from '../../../store';
+
 import { validThread } from '../../../validators';
 import { FeedsService } from '../../../feeds.service';
 import { CPSession, ISchool } from '@campus-cloud/session';
@@ -21,6 +23,7 @@ import { ISnackbar, baseActions } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
 import { TextEditorDirective } from '@projects/campus-cloud/src/app/shared/directives';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 import {
   ImageService,
   StoreService,
@@ -49,6 +52,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   stores$;
   channels$;
+  hostType;
   imageError;
   buttonData;
   campusGroupId;
@@ -60,16 +64,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   reset$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   resetTextEditor$: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  eventProperties = {
-    post_id: null,
-    wall_page: null,
-    host_type: null,
-    comment_id: null,
-    wall_source: null,
-    upload_image: null,
-    campus_wall_category: null
-  };
-
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
@@ -77,12 +71,13 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
-    public store: Store<ISnackbar>,
     public utils: FeedsUtilsService,
     private imageService: ImageService,
     private feedsService: FeedsService,
     private storeService: StoreService,
-    public cpTracking: CPTrackingService
+    public cpTracking: CPTrackingService,
+    public feedsAmplitudeService: FeedsAmplitudeService,
+    public store: Store<ISnackbar | fromStore.IWallsState>
   ) {
     const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
 
@@ -179,7 +174,11 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
       .then((res) => {
         this.trackAmplitudeEvents(res);
         this.buttonData = { ...this.buttonData, disabled: false };
-
+        if (this.replyView) {
+          this.store.dispatch(fromStore.addComment({ comment: res }));
+        } else {
+          this.store.dispatch(fromStore.addThread({ thread: res }));
+        }
         this.resetFormValues();
         this.created.emit(res);
       })
@@ -223,21 +222,12 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
   }
 
   onSelectedHost(host): void {
+    this.hostType = host.hostType;
     this.form.controls['store_id'].setValue(host.value);
-
-    this.eventProperties = {
-      ...this.eventProperties,
-      host_type: host.hostType
-    };
   }
 
   onSelectedChannel(channel): void {
     this.form.controls['post_type'].setValue(channel.action);
-
-    this.eventProperties = {
-      ...this.eventProperties,
-      campus_wall_category: channel.label
-    };
   }
 
   onFileUpload(file) {
@@ -262,42 +252,35 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
   trackAmplitudeEvents(data) {
     let eventName;
+    let eventProperties;
 
     eventName = amplitudeEvents.WALL_SUBMITTED_POST;
 
-    const wall_source = this._isCampusWallView
-      ? amplitudeEvents.OTHER_WALLS
-      : amplitudeEvents.CAMPUS_WALL;
-
-    this.eventProperties = {
-      ...this.eventProperties,
-      wall_source,
+    eventProperties = {
+      ...this.feedsAmplitudeService.getWallAmplitudeProperties(),
       post_id: data.id,
-      upload_image: this.utils.hasImage(data.has_image),
-      wall_page: this.utils.wallPage(this.groupType)
+      host_type: this.hostType,
+      upload_image: FeedsAmplitudeService.hasImage(data.has_image)
     };
 
     if (this.replyView) {
       eventName = amplitudeEvents.WALL_SUBMITTED_COMMENT;
 
-      this.eventProperties = {
-        ...this.eventProperties,
-        post_id: null,
-        comment_id: data.id,
-        campus_wall_category: this.wallCategory
+      eventProperties = {
+        ...eventProperties,
+        comment_id: data.id
       };
+
+      delete eventProperties['post_id'];
+      delete eventProperties['post_type'];
     }
 
-    this.cpTracking.amplitudeEmitEvent(eventName, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
   }
 
   setDefaultHostWallCategory(isCampusWallView) {
     const host_type = this.session.defaultHost ? this.session.defaultHost.hostType : null;
-    this.eventProperties = {
-      ...this.eventProperties,
-      host_type: isCampusWallView ? null : host_type,
-      campus_wall_category: null
-    };
+    this.hostType = isCampusWallView ? null : host_type;
   }
 
   ngOnInit() {

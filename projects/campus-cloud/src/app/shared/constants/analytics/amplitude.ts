@@ -129,8 +129,6 @@ export const amplitudeEvents = {
 
   LAST_YEAR: 'Last Year',
 
-  ALL_POSTS: 'All Posts',
-
   EXPERIENCE: 'Experience',
 
   START_DATE: 'Start Date',
@@ -150,6 +148,8 @@ export const amplitudeEvents = {
   ASSESSMENT: 'Assessment',
 
   NEW_INVITE: 'New Invite',
+
+  MUTED_USER: 'Muted User',
 
   MENU_AUDIENCE: 'Audience',
 
@@ -201,9 +201,7 @@ export const amplitudeEvents = {
 
   RESENT_INVITE: 'Resent Invite',
 
-  VIEWED_BANNER: 'Viewed Banner',
-
-  FLAGGED_POSTS: 'Flagged Posts',
+  FLAGGED: 'Flagged',
 
   NO_ASSESSMENT: 'No Assessment',
 
@@ -251,8 +249,6 @@ export const amplitudeEvents = {
 
   CREATED_ACCOUNT: 'Created Account',
 
-  INTEGRATED_FEED: 'Integrated Feed',
-
   CALENDAR_EVENTS: 'Calendar Events',
 
   DINING_CATEGORY: 'Dining Category',
@@ -280,6 +276,8 @@ export const amplitudeEvents = {
   FEED_INTEGRATION: 'Feed Integration',
 
   EXISTING_SECTION: 'Existing Section',
+
+  WALL_VIEWED_POST: 'Wall - Viewed Post',
 
   ADDED_DESCRIPTION: 'Added Description',
 
@@ -408,6 +406,8 @@ export const amplitudeEvents = {
   MANAGE_CREATED_SERVICE: 'Manage - Created Service',
 
   MANAGE_UPDATED_SERVICE: 'Manage - Updated Service',
+
+  INTEGRATED_FEED_CHANNEL: 'Integrated Feed Channel',
 
   MANAGE_CC_WEB_CHECK_IN: 'Manage - CC  Web Check-In',
 

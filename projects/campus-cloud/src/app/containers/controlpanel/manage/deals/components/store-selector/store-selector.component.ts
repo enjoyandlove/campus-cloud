@@ -4,9 +4,9 @@ import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
 
 import { DealsService } from '../../deals.service';
-import { BaseComponent } from '../../../../../../base';
-import * as fromDeals from '../../../../../../store/manage';
-import { CPI18nService } from '../../../../../../shared/services';
+import { BaseComponent } from '@campus-cloud/base';
+import * as fromDeals from '@campus-cloud/store/manage';
+import { CPI18nService } from '@campus-cloud/shared/services';
 
 @Component({
   selector: 'cp-store-selector',

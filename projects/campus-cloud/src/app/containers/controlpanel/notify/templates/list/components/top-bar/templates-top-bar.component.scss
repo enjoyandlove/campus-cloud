@@ -1,8 +1,1 @@
-@import '~projects/campus-cloud/src/sass/components/card';
 @import '~projects/campus-cloud/src/sass/components/button';
-
-.cp-card {
-  @include card-margin();
-
-  margin-top: 0;
-}

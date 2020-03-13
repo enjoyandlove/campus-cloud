@@ -1,3 +1,4 @@
+@import '~projects/campus-cloud/src/sass/core/colors';
 @import '~projects/campus-cloud/src/sass/components/card';
 
 .no-content {
@@ -7,4 +8,25 @@
 cp-feed-search {
   display: block;
   margin-bottom: $default_margin;
+}
+
+cp-feed-comment {
+  @include card-shadow();
+
+  border-radius: 4px;
+  padding-bottom: 10px;
+  border-radius: 0 0 4px 4px;
+  background: $color-text-alt;
+  padding-left: $default_padding;
+  padding-right: $default_padding;
+  border: 1px solid rgba(122, 136, 163, 0.2);
+}
+
+cp-feed-item,
+cp-feed-comment {
+  display: block;
+
+  &:not(:last-child) {
+    @include card-margin();
+  }
 }

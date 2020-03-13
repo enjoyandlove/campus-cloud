@@ -15,7 +15,6 @@ import { AnnouncementsService } from './../announcements.service';
 import { AnnouncementPriority, AnnouncementStatus } from '../model';
 import { AnnouncementScheduledComponent } from './scheduled.component';
 import { AnnouncementDeleteComponent } from './../delete/announcements-delete.component';
-import { CPTableSorting } from '@projects/campus-cloud/src/app/shared/components/cp-table/interfaces';
 
 describe('AnnouncementScheduledComponent', () => {
   let session: CPSession;
@@ -66,7 +65,7 @@ describe('AnnouncementScheduledComponent', () => {
   });
 
   describe('doFilter', () => {
-    it('should udpate state with priority and query', () => {
+    it('should update state with priority and query', () => {
       component.state = {
         ...component.state,
         priority: AnnouncementPriority.regular,
@@ -112,7 +111,7 @@ describe('AnnouncementScheduledComponent', () => {
       const expectedSortField = 'sortMe';
       component.state = {
         ...component.state,
-        sortDirection: CPTableSorting.desc
+        sortDirection: 'desc'
       };
 
       fixture.detectChanges();
@@ -120,7 +119,7 @@ describe('AnnouncementScheduledComponent', () => {
 
       const { sortField, sortDirection } = component.state;
       expect(sortField).toBe(expectedSortField);
-      expect(sortDirection).toBe(CPTableSorting.asc);
+      expect(sortDirection).toBe('asc');
     });
 
     it('should call fetch', () => {
@@ -141,17 +140,6 @@ describe('AnnouncementScheduledComponent', () => {
       component.onAnnouncementDeleted(mockAnnouncement.id);
       expect(component.state.announcements.length).toBe(0);
     });
-
-    it('should update component rows', () => {
-      spyOn(component, 'setRows');
-      component.state = {
-        ...component.state,
-        announcements: [mockAnnouncement]
-      };
-      component.onAnnouncementDeleted(mockAnnouncement.id);
-
-      expect(component.setRows).toHaveBeenCalled();
-    });
   });
 
   describe('onDelete', () => {
@@ -167,18 +155,6 @@ describe('AnnouncementScheduledComponent', () => {
       expect(onAction).toBeDefined();
       expect(data).toBe(mockAnnouncement);
       expect(new deleteComponent() instanceof AnnouncementDeleteComponent).toBe(true);
-    });
-  });
-
-  describe('setColumns', () => {
-    it('should set sortable columns', () => {
-      const columns = component.setColumns();
-      const [, , notifyAtColumn] = columns;
-
-      expect(columns.length).toBe(4);
-      expect(notifyAtColumn.sortable).toBe(true);
-      expect(notifyAtColumn.onClick).toBeDefined();
-      expect(notifyAtColumn.sortingDirection).toBeDefined();
     });
   });
 
@@ -216,15 +192,6 @@ describe('AnnouncementScheduledComponent', () => {
       expect(component.state.loading).toBe(false);
       expect(component.state.announcements.length).toBe(1);
     }));
-
-    it('should set rows and columns', () => {
-      spyOn(service, 'getAnnouncements').and.returnValue(of([mockAnnouncement]));
-
-      component.fetch();
-      fixture.detectChanges();
-      expect(component.rows.length).toBe(1);
-      expect(component.columns.length).toBe(4);
-    });
 
     it('should handle errors', () => {
       spyOn(service, 'getAnnouncements').and.returnValue(

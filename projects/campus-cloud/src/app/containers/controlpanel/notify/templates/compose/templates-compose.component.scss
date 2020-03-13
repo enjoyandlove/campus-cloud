@@ -3,7 +3,6 @@
 @import '~projects/campus-cloud/src/sass/components/form';
 @import '~projects/campus-cloud/src/sass/components/modal';
 @import '~projects/campus-cloud/src/sass/components/button';
-@import '~projects/campus-cloud/src/sass/components/tooltip';
 
 .cpmodal__body {
   margin-top: 15px;
@@ -45,12 +44,6 @@ label {
 
     color: $color-secondary-text;
   }
-
-  &.with-tooltip {
-    i {
-      @include toolTipIcon();
-    }
-  }
 }
 
 .cpmodal__footer {
@@ -61,28 +54,4 @@ label {
 
 .form-group {
   margin-bottom: 15px;
-}
-
-.campus-switch {
-  padding: 12px 20px;
-  border-radius: 4px;
-  margin-bottom: 15px;
-  background: $color-text-alt;
-  border: 1px solid $border-color;
-  transition: all 200ms ease-in-out;
-
-  &__toggle {
-    top: 5px;
-    position: relative;
-  }
-
-  .title {
-    @include font-16px();
-    @include font-semi-bold();
-  }
-
-  &.isActive {
-    border: 1px solid $color-success;
-    background-color: rgba(40, 202, 66, 0.06);
-  }
 }

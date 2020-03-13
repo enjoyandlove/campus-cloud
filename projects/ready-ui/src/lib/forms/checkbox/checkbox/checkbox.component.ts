@@ -47,6 +47,11 @@ export class CheckboxComponent implements OnInit, ControlValueAccessor {
     this._checked = coerceBooleanProperty(checked);
   }
 
+  @Input()
+  set disabled(disabled: string | boolean) {
+    this._disabled = coerceBooleanProperty(disabled);
+  }
+
   @Output()
   changed: EventEmitter<boolean> = new EventEmitter<boolean>();
 

@@ -99,6 +99,10 @@ export class CPTopBarComponent implements OnInit {
   setWhatsNewCookie() {
     this.highlight = false;
     appStorage.set(base64.encode(appStorage.keys.HELP_ICON), this.releaseId.toString());
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.VIEWED_INFORMATION, {
+      information_type: 'Dropdown'
+    });
   }
 
   showWhatsNew() {

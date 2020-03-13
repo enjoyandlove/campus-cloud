@@ -30,12 +30,7 @@ export class CPHelpDeskComponent implements OnInit {
     this.setWhatsNewCookie();
     const eventName = amplitudeEvents.VIEWED_INFORMATION;
 
-    const eventProperties = {
-      ...this.cpTracking.getAmplitudeMenuProperties(),
-      information_type
-    };
-
-    this.cpTracking.amplitudeEmitEvent(eventName, eventProperties);
+    this.cpTracking.amplitudeEmitEvent(eventName, { information_type });
   }
 
   loadHelpDeskWidget() {

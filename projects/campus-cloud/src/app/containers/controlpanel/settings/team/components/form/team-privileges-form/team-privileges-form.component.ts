@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { isEmpty, get as _get } from 'lodash';
 import { FormGroup } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
@@ -37,11 +37,12 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
 
   @Output() formSubmitted: EventEmitter<any> = new EventEmitter();
 
+  preventSubmit$ = new BehaviorSubject(false);
+
   user;
   formData;
   clubsMenu;
   formError;
-  buttonData;
   eventsMenu;
   audienceMenu;
   servicesMenu;
@@ -215,10 +216,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
     );
 
     if (regular || emergency) {
-      this.buttonData = {
-        ...this.buttonData,
-        disabled: this.form.invalid || !hasStorePrivileges
-      };
+      this.preventSubmit$.next(this.form.invalid || !hasStorePrivileges);
     }
 
     return hasStorePrivileges;
@@ -413,7 +411,6 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
     }
   }
 
-  //athletics
   onAthleticsSelected(athletic) {
     if (athletic.action === athleticMenu.selectAthletic) {
       this.isAthleticsModal = true;
@@ -588,10 +585,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
     this.isFormError = false;
 
     if (this.form.invalid) {
-      this.buttonData = {
-        ...this.buttonData,
-        disabled: false
-      };
+      this.preventSubmit$.next(false);
 
       this.isFormError = true;
       this.formError = this.cpI18n.translate('all_fields_are_required');
@@ -617,10 +611,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
       this.isFormError = true;
       this.formError = this.cpI18n.translate('admins_error_no_access_granted');
 
-      this.buttonData = {
-        ...this.buttonData,
-        disabled: false
-      };
+      this.preventSubmit$.next(false);
 
       return;
     }
@@ -708,12 +699,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
       servicesPrivilegeAccount
     );
 
-    const key = this.isEdit ? 'update' : 'admin_create_button';
-    this.buttonData = {
-      class: 'primary',
-      disabled: this.form.invalid,
-      text: this.cpI18n.translate(key)
-    };
+    this.preventSubmit$.next(this.form.invalid);
 
     if (!this.schoolPrivileges[CP_PRIVILEGES_MAP.services]) {
       this.updateServicesDropdownLabel();
@@ -728,10 +714,7 @@ export class TeamPrivilegesFormComponent implements OnInit, OnDestroy {
     }
 
     this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.buttonData = {
-        ...this.buttonData,
-        disabled: !this.form.valid
-      };
+      this.preventSubmit$.next(!this.form.valid);
     });
   }
 

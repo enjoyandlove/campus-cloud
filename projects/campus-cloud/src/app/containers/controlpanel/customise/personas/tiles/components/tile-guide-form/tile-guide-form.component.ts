@@ -4,13 +4,14 @@ import {
   Output,
   Component,
   ViewChild,
+  OnDestroy,
   ElementRef,
   EventEmitter,
   AfterViewInit,
   ChangeDetectorRef,
-  ComponentFactoryResolver,
-  OnDestroy
+  ComponentFactoryResolver
 } from '@angular/core';
+import { ColorPickerDirective } from '@ready-education/ready-ui/forms';
 import { map, filter, takeUntil } from 'rxjs/operators';
 import { FormGroup } from '@angular/forms';
 import { fromEvent, Subject } from 'rxjs';
@@ -19,10 +20,10 @@ import { Store } from '@ngrx/store';
 import { TilesService } from './../../tiles.service';
 import { TilesUtilsService } from './../../tiles.utils.service';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
+import { CPHostDirective } from '@campus-cloud/shared/directives';
 import { ISnackbar, baseActionClass } from '@campus-cloud/store/base';
 import { CPImageCropperComponent } from '@campus-cloud/shared/components';
 import { CPI18nService, ImageService } from '@campus-cloud/shared/services';
-import { CPHostDirective, CPColorPickerDirective } from '@campus-cloud/shared/directives';
 
 @Mixin([Destroyable])
 @Component({
@@ -38,7 +39,7 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit, On
   @ViewChild('base', { static: true }) base;
   @ViewChild('hexInput', { static: true }) hexInput: ElementRef;
   @ViewChild(CPHostDirective, { static: true }) cpHost: CPHostDirective;
-  @ViewChild(CPColorPickerDirective, { static: true }) cpColorPicker: CPColorPickerDirective;
+  @ViewChild(ColorPickerDirective, { static: true }) readyColorPicker: ColorPickerDirective;
 
   @Output() imageChanged: EventEmitter<boolean> = new EventEmitter();
   @Output() formChange: EventEmitter<FormGroup> = new EventEmitter();
@@ -62,9 +63,15 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit, On
     public componentFactoryResolver: ComponentFactoryResolver
   ) {}
 
-  onColorChange(hexColor: string) {
-    const colorStr = hexColor.replace('#', '');
-    this.form.controls['color'].setValue(colorStr);
+  onPickerEvents({ event, args }) {
+    if (event === 'save') {
+      const [hsva] = args;
+      const colorStr = hsva
+        .toHEXA()
+        .join('')
+        .replace('#', '');
+      this.form.controls['color'].setValue(colorStr);
+    }
   }
 
   errorHandler(err?: string) {
@@ -137,7 +144,7 @@ export class PersonasTileGuideFormComponent implements AfterViewInit, OnInit, On
         }),
         filter((val) => !!val)
       )
-      .subscribe((colorString) => this.cpColorPicker.setColor(`${colorString}`));
+      .subscribe((colorString) => this.readyColorPicker.instance.setColor(`${colorString}`));
   }
 
   ngAfterViewInit() {

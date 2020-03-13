@@ -4,6 +4,7 @@ import {
   OnInit,
   NgZone,
   Component,
+  OnDestroy,
   ElementRef,
   ChangeDetectionStrategy
 } from '@angular/core';
@@ -14,27 +15,32 @@ import {
   styleUrls: ['./image.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ImageComponent implements OnInit {
+export class ImageComponent implements OnInit, OnDestroy {
   @Input()
   dataSrc: string;
+
+  observer: IntersectionObserver;
 
   constructor(private el: ElementRef, private ngZone: NgZone) {}
 
   ngOnInit() {
     if ('IntersectionObserver' in window) {
       this.ngZone.runOutsideAngular(() => {
-        const lazyImageObserver = new IntersectionObserver((entries) => {
+        this.observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
               const lazyImage: any = entry.target;
               lazyImage.src = this.dataSrc;
-              lazyImageObserver.unobserve(lazyImage);
+              this.observer.unobserve(lazyImage);
             }
           });
         });
-
-        lazyImageObserver.observe(this.el.nativeElement);
+        this.observer.observe(this.el.nativeElement);
       });
     }
+  }
+
+  ngOnDestroy() {
+    this.observer.disconnect();
   }
 }

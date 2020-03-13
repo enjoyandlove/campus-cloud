@@ -50,7 +50,7 @@ describe('EventIntegrationsListComponent', () => {
   }));
 
   it('should render items on list', () => {
-    const list = de.queryAll(By.css('.cp-form__item'));
+    const list = de.queryAll(By.css('tbody tr[ui-table-row]'));
 
     expect(list.length).toBe(1);
   });

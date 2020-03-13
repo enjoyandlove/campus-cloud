@@ -1,15 +1,17 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { map, takeUntil, startWith } from 'rxjs/operators';
-import { HttpParams } from '@angular/common/http';
+import { Store, select } from '@ngrx/store';
 import { Subject } from 'rxjs';
 
-import { CPSession } from '@campus-cloud/session';
+import * as fromStore from '../../../store';
+
 import { FeedsService } from '../../../feeds.service';
 import { FeedsUtilsService } from '../../../feeds.utils.service';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 
 declare var $: any;
 
@@ -21,33 +23,25 @@ declare var $: any;
 })
 export class FeedMoveComponent implements OnInit, OnDestroy {
   @Input() feed: any;
-  @Output() moved: EventEmitter<number> = new EventEmitter();
+  @Output() moved: EventEmitter<any> = new EventEmitter();
   @Output() teardown: EventEmitter<null> = new EventEmitter();
 
   channels$;
   buttonData;
-  currentChannel;
+  currentChannel$;
   form: FormGroup;
-
-  eventProperties = {
-    post_id: null,
-    likes: null,
-    comments: null,
-    wall_page: null,
-    upload_image: null,
-    campus_wall_category: null
-  };
 
   destroy$ = new Subject<null>();
   emitDestroy() {}
 
   constructor(
     private fb: FormBuilder,
-    private session: CPSession,
     private cpI18n: CPI18nService,
     private utils: FeedsUtilsService,
     public feedsService: FeedsService,
-    private cpTracking: CPTrackingService
+    private cpTracking: CPTrackingService,
+    private store: Store<fromStore.IWallsState>,
+    private feedsAmplitudeService: FeedsAmplitudeService
   ) {
     this.form = this.fb.group({
       post_type: [null, Validators.required]
@@ -56,62 +50,40 @@ export class FeedMoveComponent implements OnInit, OnDestroy {
 
   onSelectedChannel(post_type) {
     this.form.controls['post_type'].setValue(post_type.action);
-
-    this.eventProperties = {
-      ...this.eventProperties,
-      campus_wall_category: post_type.label
-    };
   }
 
   onSubmit() {
     this.feedsService
       .moveCampusWallThreadToChannel(this.feed.id, this.form.value)
-      .subscribe((_) => {
+      .subscribe((res) => {
+        this.store.dispatch(fromStore.updateThread({ thread: res }));
         this.trackAmplitudeEvent(this.feed);
         $('#moveFeedModal').modal('hide');
-        this.moved.emit(this.feed.id);
+        this.moved.emit(res);
       });
   }
 
   trackAmplitudeEvent(feed) {
-    this.eventProperties = {
-      ...this.eventProperties,
-      post_id: feed.id,
-      likes: this.utils.hasLikes(feed.likes),
-      upload_image: this.utils.hasImage(feed.has_image),
-      comments: this.utils.hasComments(feed.comment_count)
-    };
+    const amplitude = this.feedsAmplitudeService.getWallCommonAmplitudeProperties(feed);
+    delete amplitude['post_type'];
+    delete amplitude['sub_menu_name'];
 
-    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_MOVED_POST, this.eventProperties);
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_MOVED_POST, amplitude);
   }
 
   ngOnInit() {
-    const search = new HttpParams().append('school_id', this.session.g.get('school').id.toString());
+    this.currentChannel$ = this.store.pipe(
+      select(fromStore.getSocialPostCategoryNameByPostType(this.feed.post_type))
+    );
 
-    this.channels$ = this.feedsService.getChannelsBySchoolId(1, 1000, search).pipe(
-      startWith([{ label: '---' }]),
-      map((channels: any[]) => {
-        const _channels = [
-          {
-            label: '---',
-            action: null
-          }
+    this.channels$ = this.store.pipe(select(fromStore.getSocialPostCategories)).pipe(
+      map((channels) => {
+        return [
+          { label: '---', action: null },
+          ...channels.map((c) => ({ label: c.name, action: c.id }))
         ];
-
-        channels.forEach((channel: any) => {
-          if (this.feed.post_type === channel.id) {
-            this.currentChannel = channel.name;
-          }
-          const _channel = {
-            label: channel.name,
-            action: channel.id
-          };
-
-          _channels.push(_channel);
-        });
-
-        return _channels;
-      })
+      }),
+      startWith([{ label: '---' }])
     );
 
     this.buttonData = {

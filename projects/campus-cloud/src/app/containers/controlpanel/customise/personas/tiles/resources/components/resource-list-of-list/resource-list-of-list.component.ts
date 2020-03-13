@@ -153,7 +153,7 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
       resources: [newResource, ...this.state.resources]
     };
 
-    this.udpateMetaAndEmit();
+    this.updateMetaAndEmit();
   }
 
   onEditedResource(editedResource: ILink) {
@@ -164,10 +164,10 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
       })
     };
 
-    this.udpateMetaAndEmit();
+    this.updateMetaAndEmit();
   }
 
-  udpateMetaAndEmit() {
+  updateMetaAndEmit() {
     const ids = this.state.resources.map((r) => r.id);
 
     this.meta = {
@@ -227,11 +227,11 @@ export class PersonasResourceListOfListComponent implements OnInit, AfterViewIni
       resources: this.state.resources.filter((r) => r.id !== resource.id)
     };
 
-    this.udpateMetaAndEmit();
+    this.updateMetaAndEmit();
   }
 
   onDragged() {
-    this.udpateMetaAndEmit();
+    this.updateMetaAndEmit();
   }
 
   ngAfterViewInit() {

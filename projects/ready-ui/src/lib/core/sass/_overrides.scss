@@ -1,3 +1,14 @@
+// allow tooltips on modals
 .cdk-overlay-container {
   z-index: 9999 !important;
+}
+
+// hide flatpicker input field when static
+input.flatpickr-input[readonly] {
+  display: none;
+}
+
+// no shadow when static
+.flatpickr-input[static="true"] ~ .flatpickr-calendar {
+  box-shadow: none;
 }

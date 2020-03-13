@@ -6,7 +6,12 @@ cp-announcements-list-action-box {
   margin-bottom: $default_margin;
 }
 
-header {
+table,
+cp-no-content {
+  margin-top: 2em;
+}
+
+table {
   h2 {
     @include font-semi-bold();
 

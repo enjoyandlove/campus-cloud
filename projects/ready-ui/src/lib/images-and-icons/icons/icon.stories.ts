@@ -22,7 +22,23 @@ const icons = {
   arrow_downward: 'arrow_downward',
   arrow_upward: 'arrow_upward',
   search: 'search',
-  volume_off: 'volume_off'
+  volume_off: 'volume_off',
+  chevron_right: 'chevron_right',
+  expand_less: 'expand_less',
+  save_alt: 'save_alt',
+  keyboard_arrow_up: 'keyboard_arrow_up',
+  keyboard_arrow_down: 'keyboard_arrow_down',
+  settings_applications: 'settings_applications',
+  edit: 'edit',
+  control_point_duplicate: 'control_point_duplicate',
+  computer: 'computer',
+  smartphone: 'smartphone',
+  help_outline: 'help_outline',
+  chat_bubble: 'chat_bubble',
+  'ready-app': 'ready-app',
+  filter_list: 'filter_list',
+  flag: 'flag',
+  person: 'person'
 };
 
 storiesOf('Icons', module)

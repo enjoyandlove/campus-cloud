@@ -6,7 +6,6 @@ export * from './cp-card';
 export * from './cp-stars';
 export * from './cp-alert';
 export * from './cp-modal';
-export * from './cp-image';
 export * from './cp-avatar';
 export * from './cp-topbar';
 export * from './cp-switch';

@@ -1,15 +1,15 @@
 <div class="feed">
   <div class="row feed__image-wrapper"
        *ngIf="feed.image_list.length">
-    <div cpTracker
-         class="col-3"
+    <div class="col-3"
          *ngFor="let image of feed.image_list; let i = index"
          [cpLightbox]="lightbox"
          [host]="cpHost"
-         [eventData]="viewImageEventData"
+         (click)="trackViewLightBoxEvent()"
          [images]="mapImages(feed.image_list)"
          [selectedImageIndex]="i">
-      <img ready-ui-image [dataSrc]="image.url"
+      <img ready-ui-image
+           [dataSrc]="image.url"
            class="img-fluid feed__image"
            [alt]="'t_shared_img_alt' | cpI18n: i + 1" />
     </div>
@@ -39,19 +39,17 @@
         {{ feed.dislikes }}
       </span>
     </div>
-    <div *ngIf="feed.comment_count > 0 && !isRemovedPosts"
+    <div *ngIf="(commentCount$ | async) > 0 && !isRemovedPosts"
          class="col-6 float-right text-right">
       <button class="cpbtn cpbtn--link-dark"
-              (click)="isCommentsOpen = !isCommentsOpen"
-              (click)="viewComments.emit(isCommentsOpen)"
-              (click)="trackEvent(isCommentsOpen)">
+              (click)="onToggleComments()">
         <i class="material-icons"
-           *ngIf="!isCommentsOpen">chevron_right</i>
+           *ngIf="!(isCommentsOpen$ | async)">chevron_right</i>
         <i class="material-icons"
-           *ngIf="isCommentsOpen">expand_more</i>
-        {{ isCommentsOpen ? cpI18n.translate('hide') : cpI18n.translate('show') }}
-        {{ feed.comment_count }}
-        {{ feed.comment_count > 1 ? cpI18n.translate('comments') : cpI18n.translate('comment') }}
+           *ngIf="isCommentsOpen$ | async">expand_more</i>
+        {{ (isCommentsOpen$ | async) ? cpI18n.translate('hide') : cpI18n.translate('show') }}
+        {{ commentCount$ | async }}
+        {{ (commentCount$ | async) > 1 ? cpI18n.translate('comments') : cpI18n.translate('comment') }}
       </button>
     </div>
   </div>

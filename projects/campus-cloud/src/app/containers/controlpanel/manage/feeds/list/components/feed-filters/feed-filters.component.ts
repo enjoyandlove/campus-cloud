@@ -1,15 +1,18 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { map, startWith, filter } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
-import { map, startWith } from 'rxjs/operators';
+import { Observable, combineLatest } from 'rxjs';
+import { Store, select } from '@ngrx/store';
 import { get as _get, sortBy } from 'lodash';
-import { Observable } from 'rxjs';
+
+import * as fromStore from '../../../store';
 
 import { CPSession } from '@campus-cloud/session';
+import { FeedsService } from '../../../feeds.service';
+import { GroupType } from '../../../feeds.utils.service';
 import { CP_TRACK_TO } from '@campus-cloud/shared/directives';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { amplitudeEvents } from '@campus-cloud/shared/constants';
-import { FeedsService } from '../../../feeds.service';
-import { GroupType } from '../../../feeds.utils.service';
 
 const campusWall = {
   label: 'Campus Wall',
@@ -32,6 +35,7 @@ interface IState {
   wall_type: number;
   post_types: number;
   is_integrated: boolean;
+  store_category_id: number;
   currentView?: ICurrentView;
   flagged_by_users_only: number;
   removed_by_moderators_only: number;
@@ -43,6 +47,7 @@ const state: IState = {
   post_types: null,
   is_integrated: false,
   currentView: campusWall,
+  store_category_id: null,
   flagged_by_users_only: null,
   removed_by_moderators_only: null
 };
@@ -68,12 +73,14 @@ export class FeedFiltersComponent implements OnInit {
   state: IState;
   campusWallView;
   socialGroups = [];
+  selectedPostType$;
   walls$: Observable<any>;
 
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private feedsService: FeedsService
+    private feedsService: FeedsService,
+    private store: Store<fromStore.IWallsState>
   ) {
     this.state = state;
   }
@@ -102,6 +109,7 @@ export class FeedFiltersComponent implements OnInit {
           const _wall = {
             label: wall.name,
             action: wall.id,
+            store_category_id: wall.store_category_id,
             commentingMemberType: wall.min_commenting_member_type,
             postingMemberType: wall.min_posting_member_type,
             group_id: wall.related_obj_id
@@ -139,6 +147,17 @@ export class FeedFiltersComponent implements OnInit {
         return _channels;
       })
     );
+
+    const selectedPostType$ = this.store
+      .pipe(select(fromStore.getViewFilters))
+      .pipe(map(({ postType }) => postType));
+
+    this.selectedPostType$ = combineLatest([this.channels$, selectedPostType$]).pipe(
+      filter(([_, selectedPostType]) => !!selectedPostType),
+      map(([channels, selectedPostType]) => {
+        return (channels as any[]).find((c) => c.action === selectedPostType);
+      })
+    );
   }
 
   onFlaggedOrRemoved(action) {
@@ -163,6 +182,7 @@ export class FeedFiltersComponent implements OnInit {
           removed_by_moderators_only: null
         });
     }
+
     this.doFilter.emit(this.state);
   }
 
@@ -196,6 +216,7 @@ export class FeedFiltersComponent implements OnInit {
 
   onFilterSelected(item, type) {
     const is_integrated = item.is_integrated;
+    const store_category_id = item.store_category_id;
     const group_id = item.group_id ? item.group_id : null;
     const currentView = item.action === 1 ? campusWall : this.getWallSettings(item.action);
 
@@ -203,7 +224,8 @@ export class FeedFiltersComponent implements OnInit {
       ...this.state,
       group_id,
       currentView,
-      is_integrated
+      is_integrated,
+      store_category_id
     };
 
     this.updateState(type, item.action);

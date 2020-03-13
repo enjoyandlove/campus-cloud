@@ -11,6 +11,8 @@ import Pickr from '@simonwep/pickr';
 })
 export class ColorPickerDirective implements OnInit {
   constructor(private element: ElementRef) {}
+  _pickr: Pickr;
+
   _hue = true;
   _preview = true;
   _opacity = false;
@@ -101,6 +103,10 @@ export class ColorPickerDirective implements OnInit {
     this._opacity = coerceBooleanProperty(opacity);
   }
 
+  get instance() {
+    return this._pickr;
+  }
+
   ngOnInit() {
     const pickr = Pickr.create({
       el: this.element.nativeElement,
@@ -144,5 +150,7 @@ export class ColorPickerDirective implements OnInit {
         this.pickr.emit({ event: e, args });
       });
     });
+
+    this._pickr = pickr;
   }
 }

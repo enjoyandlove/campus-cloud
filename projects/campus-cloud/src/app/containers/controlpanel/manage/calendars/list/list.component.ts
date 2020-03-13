@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 
 import { CPSession } from '@campus-cloud/session';
 import { BaseComponent } from '@campus-cloud/base';
@@ -18,16 +18,9 @@ import { CPI18nService, CPTrackingService } from '@campus-cloud/shared/services'
   styleUrls: ['./list.component.scss']
 })
 export class CalendarsListComponent extends BaseComponent implements OnInit {
-  @ViewChild('customMainCell', { static: true, read: TemplateRef })
-  private customMainCell: TemplateRef<any>;
-  @ViewChild('actionCell', { static: true, read: TemplateRef })
-  private actionCell: TemplateRef<any>;
-
   loading;
   eventData;
   sortingLabels;
-  rows = [];
-  columns = [];
   selectedCalendar = null;
   launchEditModal = false;
   launchDeleteModal = false;
@@ -92,41 +85,6 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
 
     super.fetchData(this.service.getCalendars(start, end, search)).then((res) => {
       this.state = { ...this.state, calendars: res.data };
-      this.formatTableData();
-    });
-  }
-
-  formatTableData() {
-    this.columns = [
-      {
-        sortable: true,
-        label: this.sortingLabels.name,
-        sorting: this.state.sort_field === 'name',
-        sortingDirection: this.state.sort_direction,
-        onClick: () => this.doSort.call(this, 'name')
-      },
-      {
-        sortable: true,
-        label: this.sortingLabels.created,
-        sorting: this.state.sort_field === 'created_time',
-        sortingDirection: this.state.sort_direction,
-        onClick: () => this.doSort.call(this, 'created_time')
-      },
-      { label: '', sortable: false }
-    ];
-
-    this.rows = this.state.calendars.map((calendar) => {
-      return [
-        {
-          template: this.customMainCell,
-          context: { ...calendar }
-        },
-        { label: this.cpDatePipe.transform(calendar.created_time, this.dateFormat) },
-        {
-          template: this.actionCell,
-          context: { ...calendar }
-        }
-      ];
     });
   }
 
@@ -155,7 +113,6 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
   onCreated(newCalendar: ICalendar): void {
     this.launchCreateModal = false;
     this.state.calendars = [newCalendar, ...this.state.calendars];
-    this.formatTableData();
   }
 
   onEditedLink(editedCalendar: ICalendar) {
@@ -167,8 +124,6 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
         calendar.id === editedCalendar.id ? editedCalendar : calendar
       )
     });
-
-    this.formatTableData();
   }
 
   onDeleted(calendarId: number) {
@@ -178,8 +133,6 @@ export class CalendarsListComponent extends BaseComponent implements OnInit {
     this.state = Object.assign({}, this.state, {
       calendars: this.state.calendars.filter((calendar) => calendar.id !== calendarId)
     });
-
-    this.formatTableData();
 
     if (this.state.calendars.length === 0 && this.pageNumber > 1) {
       this.resetPagination();

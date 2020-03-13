@@ -1,17 +1,20 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { mergeMap, startWith, takeUntil, take } from 'rxjs/operators';
+import { mergeMap, startWith, takeUntil, take, tap } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
 import { get as _get } from 'lodash';
 
 import * as fromStore from '../../../store';
 
+import { ISnackbar } from '@campus-cloud/store';
 import { CPSession } from '@campus-cloud/session';
 import { User } from '@campus-cloud/shared/models';
+import { baseActionClass } from '@campus-cloud/store/base';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { canSchoolReadResource } from '@campus-cloud/shared/utils';
-import { CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
-import { CPI18nService, UserService } from '@campus-cloud/shared/services';
+import { amplitudeEvents, CP_PRIVILEGES_MAP } from '@campus-cloud/shared/constants';
+import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
+import { CPI18nService, CPTrackingService, UserService } from '@campus-cloud/shared/services';
 
 @Mixin([Destroyable])
 @Component({
@@ -40,7 +43,9 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
     private session: CPSession,
     public cpI18n: CPI18nService,
     private userService: UserService,
-    private store: Store<fromStore.IWallsState>
+    private cpTracking: CPTrackingService,
+    private feedsAmplitudeService: FeedsAmplitudeService,
+    private store: Store<fromStore.IWallsState | ISnackbar>
   ) {}
 
   ngOnInit() {
@@ -136,18 +141,33 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
       .pipe(
         take(1),
         mergeMap((emails: string[]) => {
-          return this.userService.updateById(user_id, {
-            social_restriction: !emails.includes(this.getFeedEmail())
-          });
+          return this.userService
+            .updateById(user_id, {
+              social_restriction: !emails.includes(this.getFeedEmail())
+            })
+            .pipe(tap((res) => this.trackMuteUser(res)));
         })
       )
-      .subscribe(({ social_restriction }: any) => {
-        if (social_restriction) {
-          this.store.dispatch(fromStore.banEmail({ email }));
-        } else {
-          this.store.dispatch(fromStore.unBanEmail({ email }));
-        }
-      });
+      .subscribe(
+        ({ social_restriction }: any) => {
+          if (social_restriction) {
+            this.store.dispatch(fromStore.banEmail({ email }));
+          } else {
+            this.store.dispatch(fromStore.unBanEmail({ email }));
+          }
+        },
+        () => this.handleError()
+      );
+  }
+
+  trackMuteUser(user) {
+    const amplitude = {
+      user_id: user.id,
+      status: user.social_restriction ? 'Muted' : 'Unmuted',
+      ...this.feedsAmplitudeService.getWallAmplitudeProperties()
+    };
+
+    this.cpTracking.amplitudeEmitEvent(amplitudeEvents.MUTED_USER, amplitude);
   }
 
   private showMuteOption() {
@@ -167,5 +187,13 @@ export class FeedDropdownComponent implements OnInit, OnDestroy {
   private isByAppUser() {
     const email = this.getFeedEmail();
     return Boolean(email.length);
+  }
+
+  private handleError() {
+    this.store.dispatch(
+      new baseActionClass.SnackbarError({
+        body: this.cpI18n.translate('something_went_wrong')
+      })
+    );
   }
 }

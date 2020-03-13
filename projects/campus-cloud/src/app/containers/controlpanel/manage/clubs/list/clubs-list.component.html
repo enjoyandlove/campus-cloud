@@ -1,89 +1,94 @@
-<div class="row">
-  <div class="col-12">
-    <cp-clubs-list-action-box [isAthletic]="isAthletic"
-                              (filter)="doFilter($event)">
-    </cp-clubs-list-action-box>
-  </div>
-</div>
+<cp-clubs-list-action-box [isAthletic]="isAthletic"
+                          (filter)="doFilter($event)"
+                          (search)="doSearch($event)">
+</cp-clubs-list-action-box>
+
 
 <div [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
   <div *ngSwitchCase="false">
     <div *ngIf="state.clubs.length">
-      <ul class="cp-form clubs">
-        <li class="cp-form__header col-12">
-          <div class="row">
-            <cp-sorting-header class="col-5"
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell
+                (sort)="doSort('name')"
+                [sorting]="state.sort_field === 'name'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.name }}
+            </th>
+            <!-- <cp-sorting-header class="col-5"
                                sortLabel="name"
                                (click)="doSort('name')"
                                [label]="sortingLabels.name"
                                [sortField]="state.sort_field"
                                [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
+            </cp-sorting-header> -->
 
-            <span class="col-2">
+            <th ui-table-cell>
               {{ 't_shared_status' | cpI18n }}
-            </span>
-            <span class="col-2">
+            </th>
+            <th ui-table-cell>
               {{ 'members' | cpI18n }}
-            </span>
-            <span class="col-2">{{ 'events' | cpI18n }}</span>
-            <span class="col-1"></span>
-          </div>
-        </li>
+            </th>
+            <th ui-table-cell>{{ 'events' | cpI18n }}</th>
+            <th ui-table-cell></th>
+        </thead>
 
-        <li class="cp-form__item col-12"
-            *ngFor="let club of state.clubs">
-          <div class="row">
-            <span class="col-5 text-truncate clubs__thumbnail">
-              <img class="rounded img-fit-cover"
-                   [alt]="'t_shared_img_alt' | cpI18n:club.id"
-                   [src]="club.logo_url ? club.logo_url : defaultImage" />
-
-              <strong>
-                <a cpTracker
-                   class="cp-form__title"
-                   [eventData]="eventData"
-                   queryParamsHandling="merge"
-                   [routerLink]="[club.id + '/info']">
-                  {{ club.name }}
-                </a>
-              </strong>
-              <br />
-              {{ club.description }}
-            </span>
-            <span class="col-2 text-truncate">
+        <tbody>
+          <tr ui-table-row
+              *ngFor="let club of state.clubs">
+            <td ui-table-cell>
+              <ready-ui-stack>
+                <ready-ui-avatar [src]="club.logo_url ? club.logo_url : defaultImage"
+                                 [alt]="'t_shared_img_alt' | cpI18n:club.id">
+                </ready-ui-avatar>
+                <strong>
+                  <a cpTracker
+                     [eventData]="eventData"
+                     queryParamsHandling="merge"
+                     [routerLink]="[club.id + '/info']">
+                    {{ club.name }}
+                  </a>
+                </strong>
+              </ready-ui-stack>
+            </td>
+            <td ui-table-cell>
               {{ clubStatus[club.status] }}
               <ng-container *ngIf="club.status === PENDING_STATUS">
-                <button type="button"
-                        class="cpbtn cpbtn--link"
+                <button ui-button
+                        type="button"
+                        color="primary"
+                        variant="inline"
                         (click)="onApproveClub(club.id)">
                   ({{ 'approve' | cpI18n }})
                 </button>
               </ng-container>
-            </span>
-            <span class="col-2 text-truncate">
+            </td>
+            <td ui-table-cell>
               {{
                 club.member_count === disabledWall
                   ? cpI18n.translate('clubs_disabled')
                   : club.member_count
               }}
-            </span>
-            <span class="col-2 text-truncate">
+            </td>
+            <td ui-table-cell>
               {{ club.total_item_count }}
-            </span>
+            </td>
 
-            <span class="col-1">
-              <button type="button"
+            <td ui-table-cell
+                align="right">
+              <button ui-button
+                      variant="inline"
+                      type="button"
                       (click)="onDelete(club)"
-                      class="hover text-right text-truncate delete-club float-right unstyled-button">
-                &times;
+                      aria-label="Delete Club">
+                <ready-ui-icon name="close"></ready-ui-icon>
               </button>
-            </span>
-          </div>
-        </li>
-      </ul>
+            </td>
+        </tbody>
+      </table>
 
       <div class="row">
         <div class="col-12">

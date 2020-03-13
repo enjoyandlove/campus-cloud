@@ -1,13 +1,40 @@
-<div class="row">
+<div class="parent-thread"
+     *ngIf="_showParentThread"
+     [class.parent-thread--expanded]="parentThreadHasCommentsExpanded$ | async">
+  <div class="parent-thread__header">
+    <button ui-button
+            type="button"
+            variant="inline"
+            (click)="loadEmbbedPost.next()">
+      <ready-ui-icon
+                     [name]="[threadIsExpanded ? 'expand_less' : 'chevron_right']">
+      </ready-ui-icon>
+      {{ threadIsExpanded ? ('t_walls_hide_post' | cpI18n) : ('t_walls_show_post' | cpI18n) }}
+    </button>
+  </div>
+  <div class="parent-thread__body"
+       *ngIf="embbededPost$ | async as feed">
+    <cp-feed-item [feed]="feed"
+                  (moved)="parentThreadUpdated.next()"
+                  [isCampusWallView]="isCampusWallView"
+                  (deleted)="onDeleteNestedThread($feed)"
+                  (filterByCategory)="onFilterByCategory($event)"
+                  [isFilteredByRemovedPosts]="isFilteredByRemovedPosts$">
+    </cp-feed-item>
+  </div>
+</div>
+<div class="row"
+     [class.nested]="_showParentThread"
+     [hidden]="parentThreadHasCommentsExpanded$ | async">
   <div class="col-12">
     <div [class]="[last ? 'comment isLast' : 'comment']">
       <div class="row">
         <div class="col-12">
           <div class="comment__header">
-            <cp-feed-header [feed]="comment"
+            <cp-feed-header [feed]="_comment"
                             [isComment]="isComment"> </cp-feed-header>
             <div class="comment__more">
-              <cp-feed-dropdown [feed]="comment"
+              <cp-feed-dropdown [feed]="_comment"
                                 [isComment]="isComment"
                                 (selected)="onSelected($event)"
                                 [isCampusWallView]="isCampusWallView"
@@ -20,9 +47,8 @@
 
       <div class="row">
         <div class="col-12">
-          <cp-feed-body [feed]="comment"
+          <cp-feed-body [feed]="_comment"
                         [isComment]="true"
-                        [groupType]="groupType"
                         [replyView]="replyView"
                         [wallCategory]="wallCategory"
                         [isCampusWallView]="isCampusWallView">
@@ -35,9 +61,7 @@
 
 <cp-modal *ngIf="isDeleteModal"
           modalId="deleteFeedCommentModal">
-  <cp-feed-delete-comment-modal [feed]="comment"
-                                [groupType]="groupType"
-                                [wallCategory]="wallCategory"
+  <cp-feed-delete-comment-modal [feed]="_comment"
                                 [isCampusWallView]="isCampusWallView"
                                 (deleted)="deleted.emit($event)"
                                 (teardown)="isDeleteModal = false">
@@ -46,7 +70,7 @@
 
 <cp-modal modalId="approveCommentModal"
           *ngIf="isApproveModal">
-  <cp-feed-approve-comment-modal [feed]="comment"
+  <cp-feed-approve-comment-modal [feed]="_comment"
                                  (teardown)="isApproveModal = false"
                                  [isCampusWallView]="isCampusWallView">
   </cp-feed-approve-comment-modal>

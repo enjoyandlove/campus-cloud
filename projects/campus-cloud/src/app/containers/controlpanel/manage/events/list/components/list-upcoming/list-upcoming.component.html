@@ -1,63 +1,54 @@
-<ul class="events cp-form">
-  <li class="cp-form__header col-12">
-    <div class="row">
-      <cp-sorting-header [class]="[isOrientation ? 'col-6' : 'col-4']"
-                         sortLabel="title"
-                         (click)="doSort('title')"
-                         [label]="sortingLabels.name"
-                         [sortField]="state.sort_field"
-                         [sortDirection]="state.sort_direction">
-      </cp-sorting-header>
+<table ui-table>
+  <thead>
+    <tr ui-table-row>
+      <th ui-table-cell
+          (sort)="doSort('title')"
+          [sorting]="state.sort_field === 'title'"
+          [sortDirection]="state.sort_direction">
+        {{ sortingLabels.name }}
+      </th>
+      <th ui-table-cell
+          *ngIf="!isOrientation">{{ 'host' | cpI18n }}</th>
+      <th ui-table-cell
+          (sort)="doSort('start')"
+          [sorting]="state.sort_field === 'start'"
+          [sortDirection]="state.sort_direction">{{sortingLabels.start_date}}
+      </th>
+      <th ui-table-cell>{{ 'assessment' | cpI18n }}</th>
+      <th ui-table-cell></th>
+    </tr>
+  </thead>
 
-      <span class="col-2"
-            *ngIf="!isOrientation">{{ 'host' | cpI18n }}</span>
+  <tbody>
+    <tr ui-table-row
+        *ngFor="let event of events; index as index">
+      <td ui-table-cell>
+        <ready-ui-stack>
+          <ready-ui-avatar [alt]="'t_shared_img_alt' | cpI18n:index + 1"
+                           [src]="event.poster_thumb_url ? event.poster_thumb_url : event.store_logo_url">
+          </ready-ui-avatar>
 
-      <cp-sorting-header class="col-2"
-                         sortLabel="start"
-                         (click)="doSort('start')"
-                         [sortField]="state.sort_field"
-                         [label]="sortingLabels.start_date"
-                         [sortDirection]="state.sort_direction">
-      </cp-sorting-header>
+          <strong>
+            <a cpTracker
+               [eventData]="eventData"
+               class="event__title"
+               [routerLink]="[event.id + '/info']"
+               queryParamsHandling="merge">
+              {{ event.title }}
+            </a>
+          </strong>
 
-      <span class="col-2">{{ 'assessment' | cpI18n }}</span>
-      <span class="col-2"></span>
-    </div>
-  </li>
-
-  <li class="cp-form__item col-12"
-      *ngFor="let event of events; index as index">
-    <div class="row">
-      <span [class]="[
-          isOrientation
-            ? 'text-truncate events__thumbnail col-6 '
-            : 'text-truncate events__thumbnail col-4'
-        ]">
-        <img class="rounded img-fit-cover"
-             [alt]="'t_shared_img_alt' | cpI18n:index + 1"
-             [src]="event.poster_thumb_url ? event.poster_thumb_url : event.store_logo_url" />
-
-        <strong>
-          <a cpTracker
-             [eventData]="eventData"
-             class="event__title"
-             [routerLink]="[event.id + '/info']"
-             queryParamsHandling="merge">
-            {{ event.title }}
-          </a>
-        </strong>
-        <br />
-        {{ event.description }}
-      </span>
-      <span class="col-2 text-truncate"
-            *ngIf="!isOrientation">
+        </ready-ui-stack>
+      </td>
+      <td ui-table-cell
+          *ngIf="!isOrientation">
         {{ event.store_name }}
-      </span>
-      <span class="col-2 text-truncate">
+      </td>
+      <td ui-table-cell>
         {{ event.start | cpDatePipe: dateFormat }}
-      </span>
+      </td>
 
-      <span class="col-2 text-truncate">
+      <td ui-table-cell>
         <a target="_blank"
            (click)="trackCheckinEvent(event)"
            [routerLink]="[eventCheckinRoute + event.encrypted_id]"
@@ -65,24 +56,27 @@
            class="cpbtn cpbtn--no-border cpbtn--no-padding cpbtn--secondary">
           {{ 't_shared_web_checkin' | cpI18n }}
         </a>
-      </span>
+      </td>
 
-      <span class="col-2 text-right actions">
-        <img ui-tooltip
-             alt=""
-             tabindex="-1"
-             aria-hidden="true"
-             class="js_event_external"
-             *ngIf="event.is_external"
-             [title]="isExternalToolTip"
-             [src]="event.source | integrationSourceToIcon" />
-        <button type="button"
-                aria-label="delete"
-                (click)="onDelete(event)"
-                class="hover text-truncate delete-event unstyled-button">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </span>
-    </div>
-  </li>
-</ul>
+      <td ui-table-cell
+          align="right">
+        <ready-ui-stack>
+          <img ui-tooltip
+               alt=""
+               tabindex="-1"
+               aria-hidden="true"
+               class="js_event_external"
+               *ngIf="event.is_external"
+               [title]="isExternalToolTip"
+               [src]="event.source | integrationSourceToIcon" />
+          <button ui-button
+                  type="button"
+                  variant="inline"
+                  aria-label="Delete Event"
+                  (click)="onDelete(event)">
+            <ready-ui-icon name="close"></ready-ui-icon>
+          </button>
+        </ready-ui-stack>
+      </td>
+  </tbody>
+</table>

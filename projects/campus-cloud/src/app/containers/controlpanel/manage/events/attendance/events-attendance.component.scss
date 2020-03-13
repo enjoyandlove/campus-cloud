@@ -1,53 +1,19 @@
-@import '~projects/campus-cloud/src/sass/core/colors';
 @import '~projects/campus-cloud/src/sass/components/card';
 @import '~projects/campus-cloud/src/sass/core/typography';
-@import '~projects/campus-cloud/src/sass/components/table';
 
-.cp-table {
-  &__item {
-    button.action-button--delete {
-      font-size: 2em;
-    }
-    button.action-button {
-      &:not(:last-child) {
-        margin-right: 0.5rem;
-      }
-
-      i,
-      span {
-        color: $color-secondary-text;
-      }
-    }
-  }
-
-  span.disabled {
-    cursor: default;
-    color: $color-med-grey;
-  }
-
-  &__feedback {
-    padding: 10px;
-    margin: 5px 0 0 0;
-    background-color: $color-light-grey;
-  }
-
-  .margin-right {
-    margin-right: 10px;
-  }
-
-  .avatar {
-    width: 30px;
-    height: 30px;
-    margin-right: 10px;
-  }
+table,
+cp-no-content {
+  margin-top: 2em;
 }
 
-.add-card-margin {
-  @include card-margin();
+.feedback {
+  padding: 10px;
+  background-color: $color-light-grey;
 }
 
 .header {
   @include card-margin();
+
   margin-top: 0;
 
   &__digit {

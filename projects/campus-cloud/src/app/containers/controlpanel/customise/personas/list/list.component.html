@@ -16,60 +16,78 @@
     </cp-no-content>
 
     <div *ngIf="state.personas.length">
-      <ul class="personas cp-form">
-        <li class="cp-form__header col-12">
-          <div class="row">
-            <span class="col-4">{{ 'name' | cpI18n }}</span>
-            <span class="col-2">{{ 't_shared_type' | cpI18n }}</span>
-            <span
-                  class="col-2">{{ 't_persona_list_column_heading_authentication' | cpI18n }}</span>
-            <span class="col-4"></span>
-          </div>
-        </li>
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell>{{ 'name' | cpI18n }}</th>
+            <th ui-table-cell>{{ 't_shared_type' | cpI18n }}</th>
+            <th ui-table-cell>
+              {{ 't_persona_list_column_heading_authentication' | cpI18n }}
+            </th>
+            <th ui-table-cell></th>
+          </tr>
+        </thead>
 
-        <li class="cp-form__item col-12"
-            *ngFor="let persona of state.personas; let i = index">
-          <div class="row">
-            <span class="col-4 text-truncate personas__name">
+        <tbody>
+          <tr ui-table-row
+              *ngFor="let persona of state.personas; let i = index">
+            <td ui-table-cell>
               {{ persona.localized_name_map.en }}
-            </span>
+            </td>
 
-            <span
-                  class="col-2">{{ personaType[persona.platform] | cpI18n }}</span>
+            <td ui-table-cell>{{ personaType[persona.platform] | cpI18n }}</td>
 
-            <span
-                  class="col-2">{{ personaAuthentication[persona.login_requirement] | cpI18n }}</span>
+            <td ui-table-cell>
+              {{ personaAuthentication[persona.login_requirement] | cpI18n }}
+            </td>
 
-            <span class="col-4 float-right personas__actions text-right">
+            <td ui-table-cell
+                align="right">
               <fieldset [disabled]="state.updating">
-                <button type="button"
-                        [disabled]="i === 0"
-                        class="cpbtn cpbtn--link"
-                        (click)="onRankUp(persona, i)">
-                  <i class="material-icons">keyboard_arrow_up</i>
-                </button>
-                <button type="button"
-                        class="cpbtn cpbtn--link"
-                        (click)="onRankDown(persona, i)"
-                        [disabled]="i === state.personas.length - 1">
-                  <i class="material-icons">keyboard_arrow_down</i>
-                </button>
-                <a [routerLink]="[persona.id]"
-                   class="cpbtn cpbtn--link"
-                   (click)="trackViewedMovedExperience(persona, true)">
-                  <i class="material-icons">settings_applications</i>
-                  {{ 't_persona_list_button_customize' | cpI18n }}
-                </a>
-                <a [routerLink]="[persona.id + '/edit']"
-                   class="cpbtn cpbtn--link">
-                  <i class="material-icons">edit</i>
-                  {{ 't_persona_list_button_edit' | cpI18n }}
-                </a>
+                <ready-ui-stack>
+                  <button ui-button
+                          type="button"
+                          color="primary"
+                          variant="inline"
+                          [disabled]="i === 0"
+                          (click)="onRankUp(persona, i)">
+                    <ready-ui-icon name="keyboard_arrow_up"
+                                   [color]="[i === 0 ? 'ccc' : '2096f3']">
+                    </ready-ui-icon>
+                  </button>
+                  <button ui-button
+                          type="button"
+                          color="primary"
+                          variant="inline"
+                          (click)="onRankDown(persona, i)"
+                          [disabled]="i === state.personas.length - 1">
+                    <ready-ui-icon name="keyboard_arrow_down"
+                                   [color]="[i === state.personas.length - 1 ? 'ccc' : '2096f3']">
+                    </ready-ui-icon>
+                  </button>
+                  <a ui-button
+                     color="primary"
+                     variant="inline"
+                     [routerLink]="[persona.id]"
+                     (click)="trackViewedMovedExperience(persona, true)">
+                    <ready-ui-icon name="settings_applications"
+                                   color="2096f3"></ready-ui-icon>
+                    {{ 't_persona_list_button_customize' | cpI18n }}
+                  </a>
+                  <a ui-button
+                     color="primary"
+                     variant="inline"
+                     [routerLink]="[persona.id + '/edit']">
+                    <ready-ui-icon name="edit"
+                                   color="2096f3"></ready-ui-icon>
+                    {{ 't_persona_list_button_edit' | cpI18n }}
+                  </a>
+                </ready-ui-stack>
               </fieldset>
-            </span>
-          </div>
-        </li>
-      </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <cp-pagination [pageNumber]="pageNumber"
                      (next)="onPaginationNext()"

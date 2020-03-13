@@ -42,7 +42,7 @@ describe('IntegrationsListComponent', () => {
 
   it('should display integrations in list', () => {
     let listItems: DebugElement[];
-    const listItem = '.cp-form__item';
+    const listItem = 'tbody tr[ui-table-row]';
 
     listItems = de.queryAll(By.css(listItem));
 

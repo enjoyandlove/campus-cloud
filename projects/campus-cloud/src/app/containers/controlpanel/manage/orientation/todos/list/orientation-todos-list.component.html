@@ -1,74 +1,68 @@
-<div class="row">
-  <div class="col-12">
-    <cp-todos-list-action-box (search)="onSearch($event)"
-                              (launchCreateModal)="onLaunchCreateModal()">
-    </cp-todos-list-action-box>
-  </div>
-</div>
+<cp-todos-list-action-box (search)="onSearch($event)"
+                          (launchCreateModal)="onLaunchCreateModal()">
+</cp-todos-list-action-box>
 
-<div [ngSwitch]="loading">
+<ng-container [ngSwitch]="loading">
   <cp-spinner *ngSwitchCase="true"></cp-spinner>
 
-  <div *ngSwitchCase="false">
+  <ng-container *ngSwitchCase="false">
     <cp-no-content class="no-content"
                    *ngIf="!state.todos.length"
                    [noContentText]="cpI18n.translate('todos_no_results_found')">
     </cp-no-content>
 
-    <div *ngIf="state.todos.length">
-      <ul class="todos cp-form">
-        <li class="cp-form__header col-12">
-          <div class="row">
-            <cp-sorting-header class="col-5"
-                               sortLabel="title"
-                               (click)="doSort('title')"
-                               [label]="sortingLabels.name"
-                               [sortField]="state.sort_field"
-                               [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
+    <ng-container *ngIf="state.todos.length">
+      <table ui-table>
+        <thead>
+          <tr ui-table-row>
+            <th ui-table-cell
+                (sort)="doSort('title')"
+                [sortDirection]="state.sort_direction"
+                [sorting]="state.sort_field === 'title'">
+              {{ sortingLabels.name }}
+            </th>
+            <th ui-table-cell
+                (sort)="doSort('end')"
+                [sorting]="state.sort_field === 'end'"
+                [sortDirection]="state.sort_direction">
+              {{ sortingLabels.due_date }}</th>
+            <th ui-table-cell></th>
+          </tr>
+        </thead>
 
-            <cp-sorting-header class="col-5"
-                               sortLabel="end"
-                               (click)="doSort('end')"
-                               [sortField]="state.sort_field"
-                               [label]="sortingLabels.due_date"
-                               [sortDirection]="state.sort_direction">
-            </cp-sorting-header>
-            <span class="col-2"></span>
-          </div>
-        </li>
-
-        <li class="cp-form__item col-12"
-            *ngFor="let todo of state.todos">
-          <div class="row">
-            <span cpTracker
-                  [eventData]="eventData"
-                  data-toggle="modal"
-                  data-target="#todoEdit"
-                  class="col-5 text-truncate hover"
-                  (click)="launchEditModal = true; selectedTodo = todo">
-              <strong>
+        <tbody>
+          <tr ui-table-row
+              *ngFor="let todo of state.todos">
+            <td ui-table-cell>
+              <button ui-button
+                      cpTracker
+                      type="button"
+                      variant="inline"
+                      data-toggle="modal"
+                      data-target="#todoEdit"
+                      [eventData]="eventData"
+                      (click)="launchEditModal = true; selectedTodo = todo">
                 {{ todo.title }}
-              </strong>
-              <br />
-              {{ todo.description }}
-            </span>
-            <span class="col-5 text-truncate">
+              </button>
+            </td>
+            <td ui-table-cell>
               {{ todo.end | cpDatePipe: dateFormat }}
-            </span>
-            <span class="col-2 text-right">
-              <button type="button"
+            </td>
+            <td ui-table-cell
+                align="right">
+              <button ui-button
+                      type="button"
+                      variant="inline"
                       aria-label="close"
                       data-toggle="modal"
                       data-target="#todoDelete"
-                      (click)="launchDeleteModal = true; selectedTodo = todo"
-                      class="hover action-button delete-button text-center unstyled-button">
-                <span aria-hidden="true">&times;</span>
+                      (click)="launchDeleteModal = true; selectedTodo = todo">
+                <ready-ui-icon name="close"></ready-ui-icon>
               </button>
-            </span>
-          </div>
-        </li>
-      </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
 
       <cp-pagination [pageNext]="pageNext"
                      [pagePrev]="pagePrev"
@@ -76,9 +70,9 @@
                      (next)="onPaginationNext()"
                      (previous)="onPaginationPrevious()">
       </cp-pagination>
-    </div>
-  </div>
-</div>
+    </ng-container>
+  </ng-container>
+</ng-container>
 
 <cp-modal modalId="todoCreate"
           *ngIf="launchCreateModal">

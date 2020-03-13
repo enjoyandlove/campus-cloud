@@ -1,8 +1,10 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { takeUntil, withLatestFrom } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
+
+import * as fromStore from '../../../store';
 
 import { CPSession } from '@campus-cloud/session';
 import { FeedsService } from '../../../feeds.service';
@@ -10,7 +12,7 @@ import { GroupType } from '../../../feeds.utils.service';
 import { CPI18nService } from '@campus-cloud/shared/services';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { BaseComponent } from '@campus-cloud/base/base.component';
-import { baseActionClass, IHeader, ISnackbar } from '@campus-cloud/store/base';
+import { baseActionClass, ISnackbar } from '@campus-cloud/store/base';
 
 interface IState {
   comments: Array<any>;
@@ -48,8 +50,8 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit, OnDe
   constructor(
     private session: CPSession,
     private cpI18n: CPI18nService,
-    private store: Store<ISnackbar>,
-    public feedsService: FeedsService
+    public feedsService: FeedsService,
+    private store: Store<ISnackbar | fromStore.IWallsState>
   ) {
     super();
     this.endRange = 10000;
@@ -86,29 +88,21 @@ export class FeedCommentsComponent extends BaseComponent implements OnInit, OnDe
       search,
       this.feed.comment_count + 1
     );
-    const stream$ = this._isCampusWallView ? campusWallComments$ : groupWallComments$;
+    let stream$ = this._isCampusWallView ? campusWallComments$ : groupWallComments$;
+    stream$ = stream$.pipe(withLatestFrom(this.store.pipe(select(fromStore.getComments))));
 
     super.fetchData(stream$).then(
       (res) => {
-        const _comments = [];
+        const [comments, matchedComments = []] = res.data;
+        const matchedCommentIds = matchedComments.map((c) => c.id);
+        const getMatchedCommentById = (commentId) =>
+          matchedComments.find((c) => c.id === commentId);
 
-        res.data.map((comment) => {
-          _comments.push({
-            id: comment.id,
-            user_id: comment.user_id,
-            avatar_thumb: comment.avatar_thumb,
-            image_list: comment.image_list,
-            message: comment.comment,
-            likes: comment.likes,
-            flag: comment.flag,
-            email: comment.email,
-            dislikes: comment.dislikes,
-            user_status: comment.user_status,
-            display_name: comment.display_name,
-            added_time: comment.added_time
-          });
+        this.state = Object.assign({}, this.state, {
+          comments: comments.map((c) =>
+            matchedCommentIds.includes(c.id) ? getMatchedCommentById(c.id) : c
+          )
         });
-        this.state = Object.assign({}, this.state, { comments: _comments });
       },
       () => this.handleError()
     );
