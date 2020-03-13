@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 
 import { MenuComponent } from './menu/menu.component';
 import { MenuTriggerDirective } from './menu-trigger.directive';
+import { MenuDotComponent } from './menu-dot/menu-dot.component';
 import { MenuItemComponent } from './menu-item/menu-item.component';
 import { MenuSearchComponent } from './menu-search/menu-search.component';
 import { MenuDividerComponent } from './menu-divider/menu-divider.component';
@@ -15,6 +16,7 @@ import { ImagesAndIconsModule } from '../../images-and-icons/images-and-icons.mo
 @NgModule({
   exports: [
     MenuComponent,
+    MenuDotComponent,
     MenuItemComponent,
     MenuSearchComponent,
     MenuDividerComponent,
@@ -23,6 +25,7 @@ import { ImagesAndIconsModule } from '../../images-and-icons/images-and-icons.mo
   ],
   declarations: [
     MenuComponent,
+    MenuDotComponent,
     MenuItemComponent,
     MenuSearchComponent,
     MenuTriggerDirective,

@@ -19,6 +19,7 @@ enum FeedsActions {
   REMOVE_RESULT = '[manage.walls] remove result',
 
   SET_GROUP = '[manage.walls] set group',
+  SET_SEARCH_TERM = '[manage.walls] set search term',
   SET_FILTER_USERS = '[manage.walls] set filter users',
   CLEAR_FILTER_USERS = '[manage.walls] clear filter users',
   SET_START_FILTER = '[manage.walls] set start date',
@@ -35,6 +36,7 @@ enum FeedsActions {
 }
 
 export const clearFilterUsers = createAction(FeedsActions.CLEAR_FILTER_USERS);
+export const setSearchTerm = createAction(FeedsActions.SET_SEARCH_TERM, props<{ term: string }>());
 export const setFilterUsers = createAction(FeedsActions.SET_FILTER_USERS, props<{ user: any }>());
 
 export const setEndFilter = createAction(FeedsActions.SET_END_FILTER, props<{ end: number }>());

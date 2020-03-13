@@ -1,5 +1,5 @@
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { map, startWith, takeUntil, tap } from 'rxjs/operators';
+import { map, startWith, takeUntil, tap, take, withLatestFrom } from 'rxjs/operators';
 import { HttpParams } from '@angular/common/http';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Store, select } from '@ngrx/store';
@@ -17,9 +17,11 @@ import {
 import * as fromStore from '../../../store';
 
 import { ISocialGroup } from '../../../model';
-import { validThread } from '../../../validators';
 import { CPSession } from '@campus-cloud/session';
+import { validThread } from '../../../validators';
 import { FeedsService } from '../../../feeds.service';
+import { CPI18nPipe } from '@campus-cloud/shared/pipes';
+import { baseActionClass } from '@campus-cloud/store/base';
 import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
@@ -79,6 +81,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private session: CPSession,
     public cpI18n: CPI18nService,
+    private cpI18nPipe: CPI18nPipe,
     public utils: FeedsUtilsService,
     private imageService: ImageService,
     private feedsService: FeedsService,
@@ -155,6 +158,62 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
     });
   }
 
+  launchSuccessSnackBar(newThread) {
+    this.store
+      .pipe(select(fromStore.getViewFilters))
+      .pipe(
+        take(1),
+        withLatestFrom(this.store.pipe(select(fromStore.getSocialPostCategories))),
+        tap(([filters, socialPostCategories]) => {
+          const {
+            end,
+            group,
+            users,
+            start,
+            postType,
+            searchTerm,
+            flaggedByUser,
+            flaggedByModerators
+          } = filters;
+
+          const filterByGroup = !!group;
+          const isSearching = searchTerm !== '';
+          const filterBySocialPost = !!postType;
+          const filterByUsers = users.length > 0;
+          const isCampusWall = !group && !postType;
+          const filterByDate = Boolean(start) && Boolean(end);
+          const filteredByStatus = flaggedByUser || flaggedByModerators;
+          const postedInSameGroup = filterByGroup && group.id === newThread.extern_poster_id;
+          const postedInSamePostCategory =
+            filterBySocialPost && postType.id === newThread.post_type;
+
+          const needsSnackBar = isSearching || filterByDate || filterByUsers || filteredByStatus;
+
+          if (!needsSnackBar && (isCampusWall || postedInSameGroup || postedInSamePostCategory)) {
+            return;
+          }
+
+          let channelName = this.cpI18nPipe.transform('t_feeds_campus_wall');
+          if (group) {
+            channelName = group.name;
+          } else if (postType) {
+            const postCategory = socialPostCategories.find((c) => c.id === newThread.post_type);
+            channelName = _get(postCategory, 'name', '');
+          }
+
+          this.store.dispatch(
+            new baseActionClass.SnackbarSuccess({
+              body: this.cpI18nPipe.transform(
+                't_walls_snackbar_success_posted_with_filters',
+                channelName
+              )
+            })
+          );
+        })
+      )
+      .subscribe();
+  }
+
   onSubmit(data) {
     const submit = this.replyView ? this.replyToThread(data) : this.postToWall(data);
 
@@ -165,6 +224,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
         if (this.replyView) {
           this.store.dispatch(fromStore.addComment({ comment: res }));
         } else {
+          this.launchSuccessSnackBar(res);
           this.store.dispatch(fromStore.addThread({ thread: res }));
         }
         this.resetFormValues();
@@ -312,8 +372,8 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
         tap(({ postType, group }) => {
           this.state$.next({
             group,
+            isCampusWallView: !group,
             postType: _get(postType, 'id', null),
-            isCampusWallView: !postType && !group,
             groupType: _get(group, 'group_type', null)
           });
 
@@ -321,7 +381,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
             const { isCampusWallView } = this.state;
             this.setDefaultHostWallCategory(isCampusWallView);
 
-            if (this.replyView && postType) {
+            if (postType) {
               this.form.get('post_type').setValue(postType.id);
             }
 

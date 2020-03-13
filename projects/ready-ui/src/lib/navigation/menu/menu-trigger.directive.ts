@@ -7,12 +7,7 @@ import {
   HostListener,
   ViewContainerRef
 } from '@angular/core';
-import {
-  Overlay,
-  OverlayConfig,
-  PositionStrategy,
-  CloseScrollStrategy
-} from '@angular/cdk/overlay';
+import { Overlay, OverlayConfig, PositionStrategy } from '@angular/cdk/overlay';
 import { TemplatePortal } from '@angular/cdk/portal';
 import { Directive, Input } from '@angular/core';
 import { OverlayRef } from '@angular/cdk/overlay';
@@ -161,7 +156,7 @@ export class MenuTriggerDirective implements OnDestroy {
       backdropClass: 'ready-ui-menu',
       positionStrategy: this.getPosition(),
       hasBackdrop: this.triggersSubmenu() ? false : true,
-      scrollStrategy: this.overlay.scrollStrategies.block()
+      scrollStrategy: this.overlay.scrollStrategies.close()
     };
   }
 

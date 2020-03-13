@@ -34,7 +34,7 @@
 
           <cp-no-content class="no-content"
                          *ngIf="!(results$ | async).length"
-                         noContentText="No Posts found...">
+                         [noContentText]="'t_walls_no_results' | cpI18n">
           </cp-no-content>
 
           <div class="row">

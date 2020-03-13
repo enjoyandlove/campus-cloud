@@ -8,6 +8,7 @@ export interface IWallsFeedsState {
   threads: any[];
   comments: any[];
   group: any | null;
+  searchTerm: string;
   end: number | null;
   start: number | null;
   postType: any | null;
@@ -26,6 +27,7 @@ export const feedsinitialState: IWallsFeedsState = {
   results: [],
   threads: [],
   comments: [],
+  searchTerm: '',
   expandedThreadIds: [],
   group: null, // Campus Wall
   postType: null, // All Categories,
@@ -37,6 +39,13 @@ export const feedsinitialState: IWallsFeedsState = {
 
 const _feedsReducer = createReducer(
   feedsinitialState,
+  on(WallsActions.setSearchTerm, (state: IWallsFeedsState, { term }) => {
+    return {
+      ...state,
+      searchTerm: term
+    };
+  }),
+
   on(WallsActions.setFilterUsers, (state: IWallsFeedsState, { user }) => {
     const userExists = state.users.find((u) => u.id === user.id);
     const users = userExists ? state.users.filter((u) => u.id !== user.id) : [...state.users, user];
