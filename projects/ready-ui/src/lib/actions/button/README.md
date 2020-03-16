@@ -1,6 +1,6 @@
 # Button
 
-> Default HTML button accepts all attributes a regular HTML buton does
+> Default HTML button accepts all attributes a regular HTML buton does (test 2)
 
 ---
 

@@ -63,6 +63,18 @@ Deploying Web Production:
     - master
   environment: Production
 
+## Ready UI
+
+Deploy Ready UI:
+  stage: deploy
+  script:
+    - echo "Building Ready UI..."
+    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py ready_ui_deploy
+    - echo "Ready UI successfully deployed"
+  only:
+    changes:
+      - 'projects/ready-ui/**/*'
+
 ## Development
 
 Testing Web Development:
