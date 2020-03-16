@@ -32,7 +32,7 @@ const appRoutes: Routes = [
       {
         path: 'clubs',
         canActivate: [PrivilegesGuard],
-        data: { zendesk: 'clubs', privilege: CP_PRIVILEGES_MAP.clubs, amplitude: 'Clubs' },
+        data: { zendesk: 'clubs', privilege: CP_PRIVILEGES_MAP.clubs, amplitude: 'Clubs & Groups' },
         loadChildren: () => import('./clubs/clubs.module').then((m) => m.ClubsModule)
       },
 
