@@ -26,6 +26,7 @@ import { Destroyable, Mixin } from '@campus-cloud/shared/mixins';
 import { ISnackbar, baseActions } from '@campus-cloud/store/base';
 import { amplitudeEvents } from '@campus-cloud/shared/constants/analytics';
 import { FeedsUtilsService, GroupType } from '../../../feeds.utils.service';
+import { IFeedIntegration } from '@campus-cloud/libs/integrations/common/model';
 import { TextEditorDirective } from '@projects/campus-cloud/src/app/shared/directives';
 import { FeedsAmplitudeService } from '@controlpanel/manage/feeds/feeds.amplitude.service';
 import {
@@ -51,8 +52,8 @@ interface IState {
 export class FeedInputBoxComponent implements OnInit, OnDestroy {
   @ViewChild(TextEditorDirective, { static: true }) private editor: TextEditorDirective;
 
-  @Input() threadId: number;
   @Input() replyView: boolean;
+  @Input() feed: IFeedIntegration;
 
   @Output() created: EventEmitter<null> = new EventEmitter();
 
@@ -104,7 +105,7 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
       school_id,
       store_id,
       comment: message,
-      thread_id: this.threadId
+      thread_id: this.feed.id
     };
 
     if (message_image_url_list) {
@@ -302,7 +303,9 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
 
       eventProperties = {
         ...eventProperties,
-        comment_id: data.id
+        comment_id: data.id,
+        likes: FeedsAmplitudeService.hasData(this.feed['likes']),
+        creation_source: this.feedsAmplitudeService.getPostCreationSource(this.feed['post_type'])
       };
 
       delete eventProperties['post_id'];

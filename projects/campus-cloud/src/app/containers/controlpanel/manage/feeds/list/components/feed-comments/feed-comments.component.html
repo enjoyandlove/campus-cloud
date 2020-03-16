@@ -17,7 +17,7 @@
 
 <div class="row">
   <div class="col-12">
-    <cp-feed-input-box [threadId]="feed.id"
+    <cp-feed-input-box [feed]="feed"
                        (created)="onReplied()"
                        [replyView]="isReplyView">
     </cp-feed-input-box>

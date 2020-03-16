@@ -54,7 +54,6 @@ export const getViewFilters = createSelector(
     users,
     postType,
     searchTerm,
-    storeCategoryId,
     flaggedByUser,
     flaggedByModerators
   }: IWallsFeedsState) => ({
@@ -65,7 +64,6 @@ export const getViewFilters = createSelector(
     postType,
     searchTerm,
     flaggedByUser,
-    storeCategoryId,
     flaggedByModerators
   })
 );

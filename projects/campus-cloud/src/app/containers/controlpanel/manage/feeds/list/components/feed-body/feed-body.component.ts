@@ -85,7 +85,8 @@ export class FeedBodyComponent implements OnInit, OnDestroy {
       wall_source,
       message_type,
       sub_menu_name,
-      likes: FeedsAmplitudeService.hasData(this.feed.likes)
+      likes: FeedsAmplitudeService.hasData(this.feed.likes),
+      creation_source: this.feedsAmplitudeService.getPostCreationSource(this.feed.post_type)
     };
 
     this.cpTracking.amplitudeEmitEvent(amplitudeEvents.WALL_CLICKED_IMAGE, amplitude);

@@ -75,7 +75,8 @@ export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
       likes,
       wall_source,
       upload_image,
-      sub_menu_name
+      sub_menu_name,
+      creation_source
     } = this.feedsAmplitudeService.getWallCommonAmplitudeProperties(comment);
 
     const amplitude = {
@@ -83,6 +84,7 @@ export class FeedDeleteCommentModalComponent implements OnInit, OnDestroy {
       wall_source,
       upload_image,
       sub_menu_name,
+      creation_source,
       comment_id: comment.id
     };
 
