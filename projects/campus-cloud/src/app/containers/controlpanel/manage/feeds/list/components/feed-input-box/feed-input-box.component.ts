@@ -326,7 +326,6 @@ export class FeedInputBoxComponent implements OnInit, OnDestroy {
         group_id: [null],
         school_id: [this.session.g.get('school').id],
         store_id: [this.defaultHost, Validators.required],
-        post_type: [null],
         message: ['', [Validators.maxLength(500)]],
         message_image_url_list: [[]]
       },
