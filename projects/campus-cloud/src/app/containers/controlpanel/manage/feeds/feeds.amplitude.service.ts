@@ -12,18 +12,28 @@ enum hasData {
   no = 'No'
 }
 
+enum wallType {
+  manual = 'Manual',
+  integration = 'Feed Integration'
+}
+
 @Injectable()
 export class FeedsAmplitudeService {
   constructor(private cpTracking: CPTrackingService, private store: Store<fromStore.IWallsState>) {}
 
   getWallSource() {
-    let amplitude = null;
+    let amplitude = 'Not Applicable';
+
+    if (!this.isWallMenu()) {
+      return amplitude;
+    }
 
     this.store
       .pipe(select(fromStore.getViewFilters))
       .pipe(
         take(1),
-        map(({ postType, storeCategoryId }) => {
+        map(({ postType, group }) => {
+          const storeCategoryId = group ? group.store_category_id : null;
           const isIntegrated = (postType && postType.is_integrated) || false;
           // storeCategoryId can be 0 as well to avoid failing condition we are checking integer
           if (Number.isInteger(storeCategoryId)) {
@@ -64,9 +74,27 @@ export class FeedsAmplitudeService {
       sub_menu_name,
       post_id: feed.id,
       likes: FeedsAmplitudeService.hasData(feed.likes),
+      creation_source: this.getPostCreationSource(feed.post_type),
       comments: FeedsAmplitudeService.hasData(feed.comment_count),
       upload_image: FeedsAmplitudeService.hasImage(feed.has_image)
     };
+  }
+
+  getPostCreationSource(postTypeId) {
+    let isIntegrated = false;
+
+    if (!this.isWallMenu()) {
+      return wallType.manual;
+    }
+
+    this.store
+      .select(fromStore.getSocialPostCategories)
+      .pipe(take(1))
+      .subscribe((channels) => {
+        isIntegrated = channels.find((c) => c.id === postTypeId).is_integrated;
+      });
+
+    return isIntegrated ? wallType.integration : wallType.manual;
   }
 
   getPostType() {
@@ -82,6 +110,11 @@ export class FeedsAmplitudeService {
       .subscribe();
 
     return amplitude;
+  }
+
+  isWallMenu() {
+    const { sub_menu_name } = this.cpTracking.getAmplitudeMenuProperties() as any;
+    return sub_menu_name === 'Walls';
   }
 
   static storeCategoryIdToAmplitudeName(storeCategory) {

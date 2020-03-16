@@ -24,7 +24,6 @@ enum FeedsActions {
   CLEAR_FILTER_USERS = '[manage.walls] clear filter users',
   SET_START_FILTER = '[manage.walls] set start date',
   SET_END_FILTER = '[manage.walls] set end date',
-  SET_STORE_CATEGORY_ID = '[manage.walls] set store category id',
   SET_POST_TYPE = '[manage.walls] set post type',
   SET_FLAGGED_BY_USER = '[manage.walls] set flagged by user',
   SET_SOCIAL_POST_CATEGORIES = '[manage.walls] set social post categories',
@@ -61,11 +60,6 @@ export const expandComments = createAction(
 );
 
 export const setGroup = createAction(FeedsActions.SET_GROUP, props<{ group: any | null }>());
-
-export const setStoreCategoryId = createAction(
-  FeedsActions.SET_STORE_CATEGORY_ID,
-  props<{ storeCategoryId: number | null }>()
-);
 
 export const resetState = createAction(FeedsActions.RESET_STATE);
 

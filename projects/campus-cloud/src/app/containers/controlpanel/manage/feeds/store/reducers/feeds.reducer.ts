@@ -13,7 +13,6 @@ export interface IWallsFeedsState {
   start: number | null;
   postType: any | null;
   flaggedByUser: boolean;
-  storeCategoryId: number;
   expandedThreadIds: number[];
   socialPostCategories: any[];
   flaggedByModerators: boolean;
@@ -32,7 +31,6 @@ export const feedsinitialState: IWallsFeedsState = {
   group: null, // Campus Wall
   postType: null, // All Categories,
   flaggedByUser: false,
-  storeCategoryId: null,
   socialPostCategories: [],
   flaggedByModerators: false
 };
@@ -118,13 +116,6 @@ const _feedsReducer = createReducer(
     return {
       ...state,
       postType
-    };
-  }),
-
-  on(WallsActions.setStoreCategoryId, (state: IWallsFeedsState, { storeCategoryId }) => {
-    return {
-      ...state,
-      storeCategoryId
     };
   }),
 
