@@ -1,12 +1,11 @@
 import { IMember } from '../model';
-import { Gender } from '@campus-cloud/shared/models/user';
 import { MemberType } from '@campus-cloud/libs/members/common/model';
 
 export const mockMember: IMember = {
   id: 365241,
   school_group_id: 3062,
   username: 'John-Paul du Loup',
-  gender: Gender.male,
+  gender: 'male',
   school_id: 13190,
   school_persona_id: 1,
   status: 1,
@@ -35,7 +34,10 @@ export const mockMember: IMember = {
   last_login_epoch: 1551301639,
   has_avatar: true,
   specific_gender: 'M',
-  student_identifier: ''
+  student_identifier: '',
+  access_level: 1,
+  social_restriction: false,
+  social_restriction_school_ids: []
 };
 
 export const filledForm = {
