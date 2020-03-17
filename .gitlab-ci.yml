@@ -93,6 +93,21 @@ Deploy Ready UI:
     changes:
       - 'projects/ready-ui/**/*'
 
+## Playground
+
+Deploy Playground:
+  stage: deploy
+  script:
+    - echo "Building Playground..."
+    - /ops_data/gitlab-runner/oohlala_env/bin/fab -f /ops_data/gitlab-runner/oohlala-ci/scripts/oohlala_cd.py ready_playground_deploy
+    - echo "Playground successfully deployed"
+
+  only:
+    refs:
+      - staging
+    changes:
+      - 'projects/playground/**/*'
+
 ## Development
 
 Testing Web Development:
