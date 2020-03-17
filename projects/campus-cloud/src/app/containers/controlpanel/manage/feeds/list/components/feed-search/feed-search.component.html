@@ -28,7 +28,7 @@
              (input)="input.next($event.target.value)">
       <button type="button"
               class="unstyled-button"
-              [hidden]="!query.value.length"
+              [hidden]="query.value.length < 2"
               (click)="query.next(''); emitValue()"
               [attr.aria-label]="'t_clear' | cpI18n">&times;</button>
       <div class="wrapper__border"
