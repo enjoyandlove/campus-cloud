@@ -1,4 +1,4 @@
-import { tap, skip, switchMap, debounceTime, map, startWith } from 'rxjs/operators';
+import { tap, map, switchMap, takeUntil, startWith, debounceTime } from 'rxjs/operators';
 import { Subject, Observable, BehaviorSubject, merge, combineLatest } from 'rxjs';
 import { OnInit, Output, Component, EventEmitter, Input } from '@angular/core';
 import { HttpParams } from '@angular/common/http';
@@ -40,20 +40,21 @@ export class FeedSearchComponent implements OnInit {
     eventProperties: { sub_menu_name: amplitudeEvents.WALL }
   };
   query: BehaviorSubject<string> = new BehaviorSubject('');
-  query$: Observable<string> = this.query.asObservable().pipe(
-    skip(1),
-    tap((value: string) => {
-      if (value.length >= 3 || value.length === 0) {
-        this.feedSearch.emit(value);
-      }
-    })
-  );
 
   input = new Subject();
-  input$ = this.input.asObservable().pipe(
-    debounceTime(1000),
-    tap((value: string) => this.query.next(value))
-  );
+  input$ = this.input
+    .asObservable()
+    .pipe(
+      takeUntil(this.destroy$),
+      debounceTime(1000),
+      tap((value: string) => this.query.next(value)),
+      tap((value) => {
+        if (value.length > 3 || value.length === 0) {
+          this.feedSearch.emit(value);
+        }
+      })
+    )
+    .subscribe();
 
   loadMore = new Subject();
   channelTerm = new Subject();
@@ -65,7 +66,6 @@ export class FeedSearchComponent implements OnInit {
   channelsMenu$: Observable<any>;
   studentsMenu$: Observable<any>;
 
-  value$ = merge(this.query$, this.input$);
   hasFiltersActive$: Observable<boolean>;
   presetDates: { [key: string]: number[] };
   viewFilters$: BehaviorSubject<any> = new BehaviorSubject({});
@@ -333,13 +333,16 @@ export class FeedSearchComponent implements OnInit {
   }
 
   handleDate(date: number[]) {
-    let [startDate, endDate] = date;
+    const [startDate, endDate] = date;
     const { start, end } = this.state$;
-    endDate = endDate === end ? null : endDate;
-    startDate = startDate === start ? null : startDate;
 
-    this.store.dispatch(fromStore.setEndFilter({ end: endDate }));
-    this.store.dispatch(fromStore.setStartFilter({ start: startDate }));
+    if (endDate === end && startDate === start) {
+      this.store.dispatch(fromStore.setEndFilter({ end: null }));
+      this.store.dispatch(fromStore.setStartFilter({ start: null }));
+    } else {
+      this.store.dispatch(fromStore.setEndFilter({ end: endDate }));
+      this.store.dispatch(fromStore.setStartFilter({ start: startDate }));
+    }
   }
 
   parseCalendarDate(date: Date[]) {
