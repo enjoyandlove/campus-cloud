@@ -59,6 +59,8 @@ export const ENDPOINTS = {
 
   CAMPUS_THREAD: 'campus_thread',
 
+  CLIENT_CONFIG: 'client_config',
+
   CALENDARS: 'academic_calendar',
 
   CAMPUS_COMMENT: 'campus_comment',

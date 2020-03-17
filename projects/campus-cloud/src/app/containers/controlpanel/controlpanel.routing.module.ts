@@ -55,10 +55,12 @@ const appRoutes: Routes = [
       },
 
       {
-        path: 'api-management',
-        data: { amplitude: 'Api Management' },
+        path: 'campus-app-management',
+        data: { amplitude: 'Campus App Management' },
         loadChildren: () =>
-          import('./api-management/api-management.module').then((m) => m.ApiManagementModule)
+          import('./campus-app-management/campus-app-management.module').then(
+            (m) => m.CampusAppManagementModule
+          )
       },
 
       {
