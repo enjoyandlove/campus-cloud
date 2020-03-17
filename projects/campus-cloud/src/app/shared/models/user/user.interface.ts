@@ -1,30 +1,12 @@
-export enum Gender {
-  male = 'M',
-  female = 'F',
-  other = 0
-}
-
-enum UserType {
-  register_with_integrations_or_before_field = 0,
-  student = 1,
-  faculty = 2
-}
-
-enum Status {
-  verified = 1,
-  unverified = 0,
-  deleted = -1
-}
-
 export interface IUser {
   readonly id: number;
   school_group_id: number;
   username: string;
-  gender: Gender;
+  gender: string;
   school_id: number;
   school_persona_id: number;
-  status: Status;
-  user_type: UserType;
+  status: number;
+  user_type: number;
   looking_for: string;
   firstname: string;
   lastname: string;
@@ -43,11 +25,12 @@ export interface IUser {
   instagram_handler: string;
   instagram_uid: number;
   cover_photo_url: string;
-  member_type: number;
-  member_position: string;
   email: string;
   last_login_epoch: number;
   has_avatar: boolean;
   specific_gender: string;
-  student_identifier: string;
+  access_level: number;
+  date_of_last_sync: number;
+  social_restriction: boolean;
+  social_restriction_school_ids: any[];
 }

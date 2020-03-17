@@ -1,3 +1,7 @@
+/**
+ * @deprecated
+ * shared/models.user
+ * */
 export interface IUser {
   account_activated: boolean;
   account_level_privileges: any;

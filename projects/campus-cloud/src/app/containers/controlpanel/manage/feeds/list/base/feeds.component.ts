@@ -566,11 +566,19 @@ export class FeedsComponent extends BaseComponent implements OnInit, OnDestroy {
   }
 
   fetchBannedEmails() {
-    const params = new HttpParams().set('school_id', this.session.school.id.toString());
+    const { is_sandbox, client_id } = this.session.g.get('school');
+    const params = new HttpParams().set('client_id', client_id).set('is_sandbox', is_sandbox);
     this.userService
       .getAll(params, 1, 10000)
       .pipe(
-        map((students: any[]) => students.filter((s) => s.social_restriction).map((s) => s.email))
+        map((students: any[]) =>
+          students
+            .filter((s) => s.social_restriction_school_ids.length)
+            .filter(({ social_restriction_school_ids }) =>
+              social_restriction_school_ids.includes(this.session.school.id)
+            )
+            .map((s) => s.email)
+        )
       )
       .subscribe(
         (emails) => this.store.dispatch(fromStore.setBannedEmails({ emails })),
