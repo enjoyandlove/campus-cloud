@@ -98,7 +98,7 @@ describe('FeedSearchComponent', () => {
     it('should only be visble when input is not empty', () => {
       let button: HTMLButtonElement;
 
-      component.query$.subscribe(() => {
+      component.input$.subscribe(() => {
         component.input.next('');
         button = de.query(By.css('button.unstyled-button')).nativeElement;
         expect(button.hidden).toBe(true);
@@ -114,15 +114,15 @@ describe('FeedSearchComponent', () => {
     it('should emit feedSearch when, querys length is zero or greater than 3', () => {
       const spy = spyOn(component.feedSearch, 'emit');
 
-      component.query$.subscribe(() => {
+      component.input$.subscribe(() => {
         // skip first
-        component.query.next('');
+        component.input.next('');
         expect(spy).not.toHaveBeenCalled();
 
-        component.query.next('123');
+        component.input.next('123');
         expect(spy).toHaveBeenCalledWith('123');
 
-        component.query.next('');
+        component.input.next('');
         expect(spy).toHaveBeenCalledWith('');
       });
     });

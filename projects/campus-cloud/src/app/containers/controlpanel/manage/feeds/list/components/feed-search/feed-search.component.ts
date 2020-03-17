@@ -42,19 +42,16 @@ export class FeedSearchComponent implements OnInit {
   query: BehaviorSubject<string> = new BehaviorSubject('');
 
   input = new Subject();
-  input$ = this.input
-    .asObservable()
-    .pipe(
-      takeUntil(this.destroy$),
-      debounceTime(1000),
-      tap((value: string) => this.query.next(value)),
-      tap((value) => {
-        if (value.length > 3 || value.length === 0) {
-          this.feedSearch.emit(value);
-        }
-      })
-    )
-    .subscribe();
+  input$ = this.input.asObservable().pipe(
+    takeUntil(this.destroy$),
+    debounceTime(1000),
+    tap((value: string) => this.query.next(value)),
+    tap((value) => {
+      if (value.length >= 3 || value.length === 0) {
+        this.feedSearch.emit(value);
+      }
+    })
+  );
 
   loadMore = new Subject();
   channelTerm = new Subject();
@@ -84,6 +81,7 @@ export class FeedSearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.input$.subscribe();
     const viewFilters$ = this.store
       .pipe(select(fromStore.getViewFilters))
       .pipe(tap((filters) => this.viewFilters$.next(filters)));
